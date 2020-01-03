@@ -69,6 +69,42 @@ public:
         return *this;
     }
 
+    constexpr fixed_size& operator*=(int value)
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        _width *= value;
+        _height *= value;
+        return *this;
+    }
+
+    constexpr fixed_size& operator*=(fixed value)
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        _width *= value;
+        _height *= value;
+        return *this;
+    }
+
+    constexpr fixed_size& operator/=(int value)
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        _width /= value;
+        _height /= value;
+        return *this;
+    }
+
+    constexpr fixed_size& operator/=(fixed value)
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        _width /= value;
+        _height /= value;
+        return *this;
+    }
+
     [[nodiscard]] constexpr fixed_size operator+(const fixed_size& other) const
     {
         return fixed_size(_width + other._width, _height + other._height);
@@ -77,6 +113,34 @@ public:
     [[nodiscard]] constexpr fixed_size operator-(const fixed_size& other) const
     {
         return fixed_size(_width - other._width, _height - other._height);
+    }
+
+    [[nodiscard]] constexpr fixed_size operator*(int value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        return fixed_size(_width * value, _height * value);
+    }
+
+    [[nodiscard]] constexpr fixed_size operator*(fixed value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        return fixed_size(_width * value, _height * value);
+    }
+
+    [[nodiscard]] constexpr fixed_size operator/(int value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        return fixed_size(_width / value, _height / value);
+    }
+
+    [[nodiscard]] constexpr fixed_size operator/(fixed value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        return fixed_size(_width / value, _height / value);
     }
 
     [[nodiscard]] constexpr bool operator==(const fixed_size& other) const

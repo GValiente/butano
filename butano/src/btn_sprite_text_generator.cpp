@@ -76,7 +76,7 @@ namespace
                                                ivector<sprite_ptr>& output_sprites) :
             _palette_ptr(palette_ptr),
             _output_sprites(output_sprites),
-            _current_position(position),
+            _current_position(position.x() + (fixed_character_width / 2), position.y()),
             _character_shape(character_shape),
             _bg_priority(bg_priority),
             _z_order(z_order)
@@ -123,7 +123,8 @@ namespace
                           int z_order, ivector<sprite_ptr>& output_sprites) :
             _palette_ptr(palette_ptr),
             _output_sprites(output_sprites),
-            _current_position(position),
+            _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
+                              position.y()),
             _bg_priority(bg_priority),
             _z_order(z_order)
         {
@@ -200,7 +201,8 @@ namespace
                            int z_order, ivector<sprite_ptr>& output_sprites) :
             _palette_ptr(palette_ptr),
             _output_sprites(output_sprites),
-            _current_position(position),
+            _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
+                              position.y()),
             _bg_priority(bg_priority),
             _z_order(z_order)
         {

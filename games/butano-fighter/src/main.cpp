@@ -20,13 +20,17 @@
 #include "btn_fixed_8x8_font_sprite_item.h"
 #include "btn_fixed_8x16_font_sprite_item.h"
 
+#include "btn_sprite_move_by_action.h"
+
 int main()
 {
     btn::core::init();
 
     btn::bg_palettes::set_transparent_color(btn::colors::gray);
 
-    btn::sprite_ptr sprite = btn::sprite_ptr::create(120 - 16, 86 - 16, btn::sprite_items::hero);
+    int display_width = btn::display::width();
+    int display_height = btn::display::height();
+    btn::sprite_ptr sprite = btn::sprite_ptr::create(display_width / 2, display_height / 2, btn::sprite_items::hero);
     auto sprite_animate_action = btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
     sprite_animate_action.run();
 
@@ -44,14 +48,14 @@ int main()
     text_stream.append(btn::used_static_iwram());
     text_stream.append("B");
 
-    auto iwram_text_sprites = text_generator.generate<4>(8, 160 - (text_height * 2) - 8, text);
+    auto iwram_text_sprites = text_generator.generate<4>(8, 160 - (text_height * 2) - (text_height / 2), text);
 
     text_stream.clear();
     text_stream.append("EWRAM: ");
     text_stream.append(btn::used_static_ewram());
     text_stream.append("B");
 
-    auto ewram_text_sprites = text_generator.generate<4>(8, 160 - text_height - 8, text);
+    auto ewram_text_sprites = text_generator.generate<4>(8, 160 - text_height - (text_height / 2), text);
 
     btn::vector<btn::sprite_ptr, 4> cpu_text_sprites;
     btn::fixed max_cpu_usage = 0;
@@ -107,7 +111,7 @@ int main()
             text_stream.append("CPU: ");
             text_stream.append(max_cpu_usage * 100);
             text_stream.append("%");
-            text_generator.generate(8, 160 - (text_height * 3) - 8, text, cpu_text_sprites);
+            text_generator.generate(8, 160 - (text_height * 3) - (text_height / 2), text, cpu_text_sprites);
             max_cpu_usage = 0;
         }
 

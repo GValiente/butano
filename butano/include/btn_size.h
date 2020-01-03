@@ -63,6 +63,24 @@ public:
         return *this;
     }
 
+    constexpr size& operator*=(int value)
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        _width *= value;
+        _height *= value;
+        return *this;
+    }
+
+    constexpr size& operator/=(int value)
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        _width /= value;
+        _height /= value;
+        return *this;
+    }
+
     [[nodiscard]] constexpr size operator+(const size& other) const
     {
         return size(_width + other._width, _height + other._height);
@@ -71,6 +89,20 @@ public:
     [[nodiscard]] constexpr size operator-(const size& other) const
     {
         return size(_width - other._width, _height - other._height);
+    }
+
+    [[nodiscard]] constexpr size operator*(int value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+
+        return size(_width * value, _height * value);
+    }
+
+    [[nodiscard]] constexpr size operator/(int value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+
+        return size(_width / value, _height / value);
     }
 
     [[nodiscard]] constexpr bool operator==(const size& other) const

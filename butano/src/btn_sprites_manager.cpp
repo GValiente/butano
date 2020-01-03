@@ -108,13 +108,13 @@ namespace
                 {
                     size dimensions = hw::sprites::dimensions(item->handle);
                     const fixed_point& position = item->position;
-                    int x = position.x().integer();
+                    int x = position.x().integer() - (dimensions.width() / 2);
                     bool on_screen = false;
                     item->check_on_screen = false;
 
                     if(x + dimensions.width() > 0 && x < display_width)
                     {
-                        int y = position.y().integer();
+                        int y = position.y().integer() - (dimensions.height() / 2);
 
                         if(y + dimensions.height() > 0 && y < display_height)
                         {

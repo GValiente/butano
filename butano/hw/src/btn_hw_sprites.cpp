@@ -34,17 +34,25 @@ void setup(sprite_shape shape, sprite_size size, int tile_id, int palette_id, bo
     BTN_ASSERT(bg_priority >= 0 && bg_priority <= max_bg_priority(), "Invalid bg_priority: ", bg_priority);
 
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    int a0 = ATTR0_BUILD(y, int(shape), eight_bits_per_pixel, 0, 0, 0, 0);
-    int a1 = ATTR1_BUILDR(x, int(size), 0, 0);
+    int a0 = ATTR0_BUILD(0, int(shape), eight_bits_per_pixel, 0, 0, 0, 0);
+    int a1 = ATTR1_BUILDR(0, int(size), 0, 0);
     int a2 = ATTR2_BUILD(tile_id, palette_id, bg_priority);
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+    set_position(x, y, sprite);
 }
 
 size dimensions(const handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
     const uint8_t* obj_size = obj_get_size(sprite_ptr);
-    return size(obj_size[0], obj_size[1]);
+    size result(obj_size[0], obj_size[1]);
+
+    if(sprite_ptr->attr0 & ATTR0_AFF_DBL_BIT)
+    {
+        result *= 2;
+    }
+
+    return result;
 }
 
 void set_tile(int tile_id, handle& sprite)
@@ -66,7 +74,8 @@ void set_palette(int palette_id, handle& sprite)
 void set_position(int x, int y, handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    obj_set_pos(sprite_ptr, x, y);
+    size dims = dimensions(sprite);
+    obj_set_pos(sprite_ptr, x - (dims.width() / 2), y - (dims.height() / 2));
 }
 
 void set_bg_priority(int bg_priority, handle& sprite)

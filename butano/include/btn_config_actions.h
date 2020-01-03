@@ -1,0 +1,8 @@
+#ifndef BTN_CONFIG_ACTIONS_H
+#define BTN_CONFIG_ACTIONS_H
+
+#ifndef BTN_CFG_ACTIONS_MAX_RUNNING
+    #define BTN_CFG_ACTIONS_MAX_RUNNING 256
+#endif
+
+#endif

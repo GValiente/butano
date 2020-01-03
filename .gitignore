@@ -1,0 +1,11 @@
+build/
+*.gba
+*.elf
+*.sav
+*.creator
+*.user
+*.files
+*.includes
+*.config
+*.cflags
+*.cxxflags

@@ -1,0 +1,13 @@
+{
+    "sprites": {
+        "hero": {
+            "height": 32
+        },
+        "fixed_8x8_font": {
+            "height": 8
+        },
+        "fixed_8x16_font": {
+            "height": 16
+        }
+    }
+}

@@ -9,18 +9,19 @@
 #include "btn_algorithm.h"
 #include "btn_bg_palettes.h"
 #include "btn_fixed_point.h"
-#include "btn_sprite_animate_action.h"
 
 #include "btn_music_items.h"
 #include "btn_sound_items.h"
 #include "btn_hero_sprite_item.h"
 
+#include "btn_random.h"
+#include "btn_sprite_move_to_action.h"
+#include "btn_sprite_animate_action.h"
+
 #include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_fixed_8x8_font_sprite_item.h"
 #include "btn_fixed_8x16_font_sprite_item.h"
-
-#include "btn_sprite_move_by_action.h"
 
 int main()
 {
@@ -33,6 +34,9 @@ int main()
     btn::sprite_ptr sprite = btn::sprite_ptr::create(display_width / 2, display_height / 2, btn::sprite_items::hero);
     auto sprite_animate_action = btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
     sprite_animate_action.run();
+
+    btn::random random;
+    btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
 
     static constexpr btn::string_view utf8_characters[] = {
         "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
@@ -106,6 +110,11 @@ int main()
 
         if(counter % 64 == 0)
         {
+            int x = (display_width / 4) + int(random.get() % (unsigned(display_width) / 2));
+            int y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
+            sprite_move_to_action = btn::sprite_move_to_action(sprite, 64, x, y);
+            sprite_move_to_action.run();
+
             cpu_text_sprites.clear();
             text_stream.clear();
             text_stream.append("CPU: ");

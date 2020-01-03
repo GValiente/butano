@@ -68,9 +68,34 @@ public:
         }
     }
 
-    bool done() const override
+    [[nodiscard]] bool done() const override
     {
         return _current_graphics_id_index == _graphic_ids.size();
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return _sprite;
+    }
+
+    [[nodiscard]] int wait_frames() const
+    {
+        return _wait_frames;
+    }
+
+    [[nodiscard]] const sprite_tiles_item& tiles_item() const
+    {
+        return _tiles_item;
+    }
+
+    [[nodiscard]] const array<uint16_t, Size>& graphic_ids() const
+    {
+        return _graphic_ids;
+    }
+
+    [[nodiscard]] bool update_forever() const
+    {
+        return _forever;
     }
 
 protected:

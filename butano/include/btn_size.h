@@ -45,6 +45,34 @@ public:
         _height = height;
     }
 
+    constexpr size& operator+=(const size& other)
+    {
+        _width += other._width;
+        _height += other._height;
+        return *this;
+    }
+
+    constexpr size& operator-=(const size& other)
+    {
+        _width -= other._width;
+        BTN_CONSTEXPR_ASSERT(_width >= 0, "Invalid width");
+
+        _height -= other._height;
+        BTN_CONSTEXPR_ASSERT(_height >= 0, "Invalid height");
+
+        return *this;
+    }
+
+    [[nodiscard]] constexpr size operator+(const size& other) const
+    {
+        return size(_width + other._width, _height + other._height);
+    }
+
+    [[nodiscard]] constexpr size operator-(const size& other) const
+    {
+        return size(_width - other._width, _height - other._height);
+    }
+
     [[nodiscard]] constexpr bool operator==(const size& other) const
     {
         return _width == other._width && _height == other._height;

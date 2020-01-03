@@ -45,6 +45,30 @@ public:
         _y = y;
     }
 
+    constexpr fixed_point& operator+=(const fixed_point& other)
+    {
+        _x += other._x;
+        _y += other._y;
+        return *this;
+    }
+
+    constexpr fixed_point& operator-=(const fixed_point& other)
+    {
+        _x -= other._x;
+        _y -= other._y;
+        return *this;
+    }
+
+    [[nodiscard]] constexpr fixed_point operator+(const fixed_point& other) const
+    {
+        return fixed_point(_x + other._x, _y + other._y);
+    }
+
+    [[nodiscard]] constexpr fixed_point operator-(const fixed_point& other) const
+    {
+        return fixed_point(_x - other._x, _y - other._y);
+    }
+
     [[nodiscard]] constexpr bool operator==(const fixed_point& other) const
     {
         return _x == other._x && _y == other._y;

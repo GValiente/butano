@@ -31,12 +31,14 @@ public:
 
     virtual void update() = 0;
 
-    virtual bool done() const = 0;
+    [[nodiscard]] virtual bool done() const = 0;
 
 protected:
     action() = default;
 
 private:
+    friend class actions_manager_impl;
+
     bool _running = false;
 };
 

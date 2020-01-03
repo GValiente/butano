@@ -38,6 +38,30 @@ public:
         _y = y;
     }
 
+    constexpr point& operator+=(const point& other)
+    {
+        _x += other._x;
+        _y += other._y;
+        return *this;
+    }
+
+    constexpr point& operator-=(const point& other)
+    {
+        _x -= other._x;
+        _y -= other._y;
+        return *this;
+    }
+
+    [[nodiscard]] constexpr point operator+(const point& other) const
+    {
+        return point(_x + other._x, _y + other._y);
+    }
+
+    [[nodiscard]] constexpr point operator-(const point& other) const
+    {
+        return point(_x - other._x, _y - other._y);
+    }
+
     [[nodiscard]] constexpr bool operator==(const point& other) const
     {
         return _x == other._x && _y == other._y;

@@ -6,19 +6,67 @@
 #include "btn_hash_set.h"
 #include "btn_config_actions.h"
 
-namespace btn::actions_manager
+namespace btn
 {
 
 namespace
 {
     static_assert(BTN_CFG_ACTIONS_MAX_RUNNING > 0);
     static_assert(power_of_two(BTN_CFG_ACTIONS_MAX_RUNNING));
+}
 
+class actions_manager_impl
+{
+
+public:
+    void run(actions_manager::action_type& action)
+    {
+        BTN_ASSERT(! _actions.full(), "Too much running actions");
+
+        _actions.insert(&action);
+    }
+
+    void stop(actions_manager::action_type& action)
+    {
+        _actions.erase(&action);
+    }
+
+    void update()
+    {
+        auto it = _actions.begin();
+        auto end = _actions.end();
+
+        while(it != end)
+        {
+            actions_manager::action_type* action = *it;
+
+            if(action->done())
+            {
+                action->_running = false;
+                it = _actions.erase(it);
+            }
+            else
+            {
+                action->update();
+                ++it;
+            }
+        }
+    }
+
+private:
+    hash_set<action*, BTN_CFG_ACTIONS_MAX_RUNNING> _actions;
+};
+
+namespace actions_manager
+{
+
+namespace
+{
     class static_data
     {
 
     public:
-        hash_set<action*, BTN_CFG_ACTIONS_MAX_RUNNING> actions;
+        actions_manager_impl impl;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -26,36 +74,18 @@ namespace
 
 void run(action_type& action)
 {
-    BTN_ASSERT(! action.done(), "Action is done");
-    BTN_ASSERT(! data.actions.full(), "Too much running actions");
-
-    data.actions.insert(&action);
+    data.impl.run(action);
 }
 
 void stop(action_type& action)
 {
-    data.actions.erase(&action);
+    data.impl.stop(action);
 }
 
 void update()
 {
-    auto it = data.actions.begin();
-    auto end = data.actions.end();
-
-    while(it != end)
-    {
-        action_type* action = *it;
-        action->update();
-
-        if(action->done())
-        {
-            it = data.actions.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
+    data.impl.update();
 }
 
+}
 }

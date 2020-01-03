@@ -551,9 +551,18 @@ public:
 
         if(_size == 1)
         {
-            _first_valid_index = index;
-            _last_valid_index = index;
-            return end();
+            if(index == _first_valid_index)
+            {
+                index = _last_valid_index;
+                _first_valid_index = _last_valid_index;
+            }
+            else
+            {
+                index = _first_valid_index;
+                _last_valid_index = _first_valid_index;
+            }
+
+            return iterator(index, *this);
         }
 
         hasher hasher_functor;

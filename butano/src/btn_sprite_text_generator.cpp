@@ -19,8 +19,8 @@ namespace
     constexpr const int fixed_max_characters_per_sprite = 32 / fixed_character_width;
 
     template<sprite_size size, int max_tiles_per_sprite>
-    tile* build_sprite(const fixed_point& current_position, const sprite_palette_ptr& palette_ptr, int bg_priority,
-                       int z_order, ivector<sprite_ptr>& output_sprites)
+    tile* build_sprite(const sprite_text_generator& generator, const fixed_point& current_position,
+                       ivector<sprite_ptr>& output_sprites)
     {
         BTN_ASSERT(! output_sprites.full(), "Output sprites vector is full");
 
@@ -28,10 +28,10 @@ namespace
         optional<span<tile>> tiles_vram = tiles_ptr.vram();
         BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
-        sprite_builder builder(sprite_shape::WIDE, size, move(tiles_ptr), palette_ptr);
+        sprite_builder builder(sprite_shape::WIDE, size, move(tiles_ptr), generator.palette());
         builder.set_position(current_position);
-        builder.set_bg_priority(bg_priority);
-        builder.set_z_order(z_order);
+        builder.set_bg_priority(generator.bg_priority());
+        builder.set_z_order(generator.z_order());
         output_sprites.push_back(builder.build_and_release());
         return tiles_vram->data();
     }
@@ -68,15 +68,11 @@ namespace
     {
 
     public:
-        fixed_one_sprite_per_character_painter(const sprite_palette_ptr& palette_ptr, const fixed_point& position,
-                                               sprite_shape character_shape, int bg_priority, int z_order,
+        fixed_one_sprite_per_character_painter(const sprite_text_generator& generator, const fixed_point& position,
                                                ivector<sprite_ptr>& output_sprites) :
-            _palette_ptr(palette_ptr),
+            _generator(generator),
             _output_sprites(output_sprites),
-            _current_position(position.x() + (fixed_character_width / 2), position.y()),
-            _character_shape(character_shape),
-            _bg_priority(bg_priority),
-            _z_order(z_order)
+            _current_position(position.x() + (fixed_character_width / 2), position.y())
         {
         }
 
@@ -95,35 +91,31 @@ namespace
             BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
 
             sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
-            sprite_builder builder(_character_shape, sprite_size::SMALL, move(source_tiles_ptr), _palette_ptr);
+            sprite_builder builder(_generator.font().item().shape(), sprite_size::SMALL, move(source_tiles_ptr),
+                                   _generator.palette());
             builder.set_position(_current_position);
-            builder.set_bg_priority(_bg_priority);
-            builder.set_z_order(_z_order);
+            builder.set_bg_priority(_generator.bg_priority());
+            builder.set_z_order(_generator.z_order());
             _output_sprites.push_back(builder.build_and_release());
             _current_position.set_x(_current_position.x() + fixed_character_width);
         }
 
     private:
-        const sprite_palette_ptr& _palette_ptr;
+        const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
         fixed_point _current_position;
-        sprite_shape _character_shape;
-        int _bg_priority;
-        int _z_order;
     };
 
     class fixed_8x8_painter
     {
 
     public:
-        fixed_8x8_painter(const sprite_palette_ptr& palette_ptr, const fixed_point& position, int bg_priority,
-                          int z_order, ivector<sprite_ptr>& output_sprites) :
-            _palette_ptr(palette_ptr),
+        fixed_8x8_painter(const sprite_text_generator& generator, const fixed_point& position,
+                          ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
             _output_sprites(output_sprites),
             _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
-                              position.y()),
-            _bg_priority(bg_priority),
-            _z_order(z_order)
+                              position.y())
         {
         }
 
@@ -154,7 +146,7 @@ namespace
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
                 _tiles_vram = build_sprite<sprite_size::NORMAL, fixed_max_characters_per_sprite>(
-                            _current_position, _palette_ptr, _bg_priority, _z_order, _output_sprites);
+                            _generator, _current_position, _output_sprites);
                 _sprite_character_index = 0;
             }
 
@@ -166,12 +158,10 @@ namespace
         }
 
     private:
-        const sprite_palette_ptr& _palette_ptr;
+        const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
-        int _bg_priority;
-        int _z_order;
         int _sprite_character_index = fixed_max_characters_per_sprite;
 
         void _clear(int characters)
@@ -194,14 +184,12 @@ namespace
     {
 
     public:
-        fixed_8x16_painter(const sprite_palette_ptr& palette_ptr, const fixed_point& position, int bg_priority,
-                           int z_order, ivector<sprite_ptr>& output_sprites) :
-            _palette_ptr(palette_ptr),
+        fixed_8x16_painter(const sprite_text_generator& generator, const fixed_point& position,
+                           ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
             _output_sprites(output_sprites),
             _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
-                              position.y()),
-            _bg_priority(bg_priority),
-            _z_order(z_order)
+                              position.y())
         {
         }
 
@@ -232,7 +220,7 @@ namespace
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
                 _tiles_vram = build_sprite<sprite_size::BIG, fixed_max_characters_per_sprite * 2>(
-                            _current_position, _palette_ptr, _bg_priority, _z_order, _output_sprites);
+                            _generator, _current_position, _output_sprites);
                 _sprite_character_index = 0;
             }
 
@@ -248,12 +236,10 @@ namespace
         }
 
     private:
-        const sprite_palette_ptr& _palette_ptr;
+        const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
-        int _bg_priority;
-        int _z_order;
         int _sprite_character_index = fixed_max_characters_per_sprite;
 
         void _clear(int characters)
@@ -404,20 +390,19 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
 
     if(_one_sprite_per_character)
     {
-        fixed_one_sprite_per_character_painter painter(_palette_ptr, aligned_position, sprite_item.shape(),
-                                                       _bg_priority, _z_order, output_sprites);
+        fixed_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
         paint(text, tiles_item, _ut8_characters_map, painter);
     }
     else
     {
         if(sprite_item.shape_size().height() == 8)
         {
-            fixed_8x8_painter painter(_palette_ptr, aligned_position, _bg_priority, _z_order, output_sprites);
+            fixed_8x8_painter painter(*this, aligned_position, output_sprites);
             paint(text, tiles_item, _ut8_characters_map, painter);
         }
         else
         {
-            fixed_8x16_painter painter(_palette_ptr, aligned_position, _bg_priority, _z_order, output_sprites);
+            fixed_8x16_painter painter(*this, aligned_position, output_sprites);
             paint(text, tiles_item, _ut8_characters_map, painter);
         }
     }

@@ -1,13 +1,10 @@
 #include "btn_sprite_text_generator.h"
 
-#include "btn_optional.h"
 #include "btn_sprite_ptr.h"
 #include "btn_string_view.h"
-#include "btn_power_of_two.h"
 #include "btn_utf8_character.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprites_manager.h"
-#include "btn_sprite_tiles_ptr.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 namespace btn
@@ -31,11 +28,11 @@ namespace
         optional<span<tile>> tiles_vram = tiles_ptr.vram();
         BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
-        sprite_builder builder(sprite_shape::WIDE, size, tiles_ptr, palette_ptr);
+        sprite_builder builder(sprite_shape::WIDE, size, move(tiles_ptr), palette_ptr);
         builder.set_position(current_position);
         builder.set_bg_priority(bg_priority);
         builder.set_z_order(z_order);
-        output_sprites.push_back(builder.build());
+        output_sprites.push_back(builder.build_and_release());
         return tiles_vram->data();
     }
 
@@ -98,11 +95,11 @@ namespace
             BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
 
             sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
-            sprite_builder builder(_character_shape, sprite_size::SMALL, source_tiles_ptr, _palette_ptr);
+            sprite_builder builder(_character_shape, sprite_size::SMALL, move(source_tiles_ptr), _palette_ptr);
             builder.set_position(_current_position);
             builder.set_bg_priority(_bg_priority);
             builder.set_z_order(_z_order);
-            _output_sprites.push_back(builder.build());
+            _output_sprites.push_back(builder.build_and_release());
             _current_position.set_x(_current_position.x() + fixed_character_width);
         }
 

@@ -6,11 +6,8 @@
 #include "btn_color.h"
 #include "btn_vector.h"
 #include "btn_display.h"
-#include "btn_utility.h"
 #include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_palette_ptr.h"
 #include "../hw/include/btn_hw_sprites.h"
 
 namespace btn::sprites_manager
@@ -34,12 +31,16 @@ namespace
         unsigned on_screen: 1;
         unsigned check_on_screen: 1;
 
-        explicit item_type(const sprite_builder& builder) :
+        explicit item_type(sprite_builder&& builder) :
             position(builder.position()),
-            tiles_ptr(builder.tiles_ptr()),
-            palette_ptr(builder.palette_ptr())
+            tiles_ptr(builder.release_tiles()),
+            palette_ptr(builder.release_palette())
         {
-            update_sort_key(builder.bg_priority(), builder.z_order());
+            int bg_priority = builder.bg_priority();
+            hw::sprites::setup(builder.shape(), builder.size(), tiles_ptr.id(), palette_ptr.id(),
+                               palette_ptr.colors_count() > 16, position.x().integer(), position.y().integer(),
+                               bg_priority, handle);
+            update_sort_key(bg_priority, builder.z_order());
             on_screen = false;
 
             if(builder.visible())
@@ -211,7 +212,7 @@ void init()
     hw::sprites::init();
 }
 
-id_type create(const sprite_builder& builder)
+id_type create(sprite_builder&& builder)
 {
     if(data.items_pool.full())
     {
@@ -219,11 +220,7 @@ id_type create(const sprite_builder& builder)
         BTN_ASSERT(! data.items_pool.full(), "No more items allowed");
     }
 
-    const fixed_point& position = builder.position();
-    item_type* new_item = data.items_pool.create<item_type>(builder);
-    hw::sprites::setup(builder.shape(), builder.size(), new_item->tiles_ptr.id(), new_item->palette_ptr.id(),
-                       new_item->palette_ptr.colors_count() > 16, position.x().integer(), position.y().integer(),
-                       builder.bg_priority(), new_item->handle);
+    item_type* new_item = data.items_pool.create<item_type>(move(builder));
     data.sorted_items_vector.push_back(new_item);
     data.sort_items = true;
 

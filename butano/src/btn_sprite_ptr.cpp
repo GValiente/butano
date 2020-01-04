@@ -1,14 +1,8 @@
 #include "btn_sprite_ptr.h"
 
 #include "btn_size.h"
-#include "btn_span.h"
-#include "btn_utility.h"
-#include "btn_optional.h"
-#include "btn_sprite_item.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprites_manager.h"
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_palette_ptr.h"
 
 namespace btn
 {
@@ -22,12 +16,17 @@ sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& it
 {
     sprite_builder builder(item, graphics_id);
     builder.set_position(position);
-    return sprite_ptr(sprites_manager::create(builder));
+    return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_builder& builder)
 {
-    return sprite_ptr(sprites_manager::create(builder));
+    return sprite_ptr(sprites_manager::create(sprite_builder(builder)));
+}
+
+sprite_ptr sprite_ptr::create(sprite_builder&& builder)
+{
+    return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
 sprite_ptr::sprite_ptr(const sprite_ptr& other) :

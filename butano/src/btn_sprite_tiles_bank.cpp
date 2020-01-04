@@ -2,7 +2,6 @@
 
 #include "btn_span.h"
 #include "btn_optional.h"
-#include "btn_power_of_two.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED

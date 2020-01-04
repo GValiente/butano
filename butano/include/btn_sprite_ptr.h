@@ -27,6 +27,8 @@ public:
 
     [[nodiscard]] static sprite_ptr create(const sprite_builder& builder);
 
+    [[nodiscard]] static sprite_ptr create(sprite_builder&& builder);
+
     sprite_ptr(const sprite_ptr& other);
 
     sprite_ptr& operator=(const sprite_ptr& other);

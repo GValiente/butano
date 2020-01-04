@@ -1,8 +1,6 @@
 #include "btn_actions_manager.h"
 
 #include "btn_action.h"
-#include "btn_assert.h"
-#include "btn_power_of_two.h"
 #include "btn_hash_set.h"
 #include "btn_config_actions.h"
 

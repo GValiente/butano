@@ -1,15 +1,18 @@
 #ifndef BTN_SPRITE_BUILDER_H
 #define BTN_SPRITE_BUILDER_H
 
+#include "btn_optional.h"
+#include "btn_sprite_item.h"
 #include "btn_fixed_point.h"
 #include "btn_create_mode.h"
+#include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_shape_size.h"
+#include "btn_sprite_palette_ptr.h"
 
 namespace btn
 {
 
 class sprite_ptr;
-class sprite_item;
 class sprite_tiles_ptr;
 class sprite_palette_ptr;
 
@@ -17,14 +20,13 @@ class sprite_builder
 {
 
 public:
-    sprite_builder(const sprite_item& item_ref, int graphics_id = 0);
+    sprite_builder(const sprite_item& item, int graphics_id = 0);
 
-    sprite_builder(sprite_shape shape, sprite_size size, const sprite_tiles_ptr& tiles_ptr_ref,
-                   const sprite_palette_ptr& palette_ptr_ref);
+    sprite_builder(sprite_shape shape, sprite_size size, sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr);
 
-    [[nodiscard]] const sprite_item* item() const
+    [[nodiscard]] const optional<sprite_item>& item() const
     {
-        return _item_ref;
+        return _item;
     }
 
     [[nodiscard]] int graphics_id() const
@@ -132,16 +134,22 @@ public:
         _visible = visible;
     }
 
-    sprite_ptr build() const;
+    [[nodiscard]] sprite_ptr build() const;
 
-    [[nodiscard]] sprite_tiles_ptr tiles_ptr() const;
+    [[nodiscard]] sprite_ptr build_and_release();
 
-    [[nodiscard]] sprite_palette_ptr palette_ptr() const;
+    [[nodiscard]] sprite_tiles_ptr tiles() const;
+
+    [[nodiscard]] sprite_palette_ptr palette() const;
+
+    [[nodiscard]] sprite_tiles_ptr release_tiles();
+
+    [[nodiscard]] sprite_palette_ptr release_palette();
 
 private:
-    const sprite_item* _item_ref;
-    const sprite_tiles_ptr* _tiles_ptr_ref;
-    const sprite_palette_ptr* _palette_ptr_ref;
+    optional<sprite_item> _item;
+    optional<sprite_tiles_ptr> _tiles_ptr;
+    optional<sprite_palette_ptr> _palette_ptr;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     fixed_point _position;

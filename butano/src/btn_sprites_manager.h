@@ -25,7 +25,7 @@ namespace sprites_manager
 
     void init();
 
-    [[nodiscard]] id_type create(const sprite_builder& builder);
+    [[nodiscard]] id_type create(sprite_builder&& builder);
 
     void increase_usages(id_type id);
 

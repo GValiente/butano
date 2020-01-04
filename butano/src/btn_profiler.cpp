@@ -2,10 +2,8 @@
 
 #if BTN_CFG_PROFILER_ENABLED
     #include "btn_timer.h"
-    #include "btn_assert.h"
     #include "btn_optional.h"
     #include "btn_hash_map.h"
-    #include "btn_power_of_two.h"
 
     namespace _btn::profiler
     {

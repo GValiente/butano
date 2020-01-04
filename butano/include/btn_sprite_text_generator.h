@@ -58,6 +58,16 @@ public:
 
     void set_z_order(int z_order);
 
+    [[nodiscard]] bool ignore_camera() const
+    {
+        return _ignore_camera;
+    }
+
+    void set_ignore_camera(bool ignore_camera)
+    {
+        _ignore_camera = ignore_camera;
+    }
+
     [[nodiscard]] bool one_sprite_per_character() const
     {
         return _one_sprite_per_character;
@@ -97,6 +107,7 @@ private:
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 0;
     int _z_order = 0;
+    bool _ignore_camera = true;
     bool _one_sprite_per_character = false;
 };
 

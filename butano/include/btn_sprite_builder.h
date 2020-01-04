@@ -134,6 +134,16 @@ public:
         _visible = visible;
     }
 
+    [[nodiscard]] bool ignore_camera() const
+    {
+        return _ignore_camera;
+    }
+
+    void set_ignore_camera(bool ignore_camera)
+    {
+        _ignore_camera = ignore_camera;
+    }
+
     [[nodiscard]] sprite_ptr build() const;
 
     [[nodiscard]] sprite_ptr build_and_release();
@@ -159,6 +169,7 @@ private:
     int _bg_priority = 2;
     int _z_order = 0;
     bool _visible = true;
+    bool _ignore_camera = false;
 };
 
 }

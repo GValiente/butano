@@ -5,6 +5,7 @@
 #include "btn_size.h"
 #include "btn_color.h"
 #include "btn_vector.h"
+#include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
@@ -28,6 +29,7 @@ namespace
         unsigned sort_key;
         sprite_palette_ptr palette_ptr;
         unsigned visible: 1;
+        unsigned ignore_camera: 1;
         unsigned on_screen: 1;
         unsigned check_on_screen: 1;
 
@@ -36,10 +38,18 @@ namespace
             tiles_ptr(builder.release_tiles()),
             palette_ptr(builder.release_palette())
         {
+            fixed_point real_position = position;
+            ignore_camera = builder.ignore_camera();
+
+            if(! ignore_camera)
+            {
+                real_position -= btn::camera::position();
+            }
+
             int bg_priority = builder.bg_priority();
             hw::sprites::setup(builder.shape(), builder.size(), tiles_ptr.id(), palette_ptr.id(),
-                               palette_ptr.colors_count() > 16, position.x().integer(), position.y().integer(),
-                               bg_priority, handle);
+                               palette_ptr.colors_count() > 16, real_position.x().integer(),
+                               real_position.y().integer(), bg_priority, handle);
             update_sort_key(bg_priority, builder.z_order());
             on_screen = false;
 
@@ -107,8 +117,14 @@ namespace
             {
                 if(item->check_on_screen)
                 {
+                    fixed_point position = item->position;
+
+                    if(! item->ignore_camera)
+                    {
+                        position -= btn::camera::position();
+                    }
+
                     size dimensions = hw::sprites::dimensions(item->handle);
-                    const fixed_point& position = item->position;
                     int x = position.x().integer() - (dimensions.width() / 2);
                     bool on_screen = false;
                     item->check_on_screen = false;
@@ -328,7 +344,14 @@ void set_position(id_type id, const fixed_point& position)
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(item->usages, "Sprite item is not used");
 
-    hw::sprites::set_position(position.x().integer(), position.y().integer(), item->handle);
+    fixed_point real_position = position;
+
+    if(! item->ignore_camera)
+    {
+        real_position -= btn::camera::position();
+    }
+
+    hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), item->handle);
     item->position = position;
 
     if(item->visible)
@@ -418,6 +441,36 @@ void set_visible(id_type id, bool visible)
         item->on_screen = false;
         item->check_on_screen = false;
         data.rebuild_handles = true;
+    }
+}
+
+bool ignore_camera(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    BTN_ASSERT(item->usages, "Sprite item is not used");
+
+    return item->ignore_camera;
+}
+
+void set_ignore_camera(id_type id, bool ignore_camera)
+{
+    auto item = static_cast<item_type*>(id);
+    BTN_ASSERT(item->usages, "Sprite item is not used");
+
+    item->ignore_camera = ignore_camera;
+    set_position(id, item->position);
+}
+
+void update_camera()
+{
+    _sort_items();
+
+    for(item_type* item : data.sorted_items_vector)
+    {
+        if(! item->ignore_camera)
+        {
+            set_position(static_cast<id_type>(item), item->position);
+        }
     }
 }
 

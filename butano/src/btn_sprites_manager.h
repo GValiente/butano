@@ -57,6 +57,12 @@ namespace sprites_manager
 
     void set_visible(id_type id, bool visible);
 
+    [[nodiscard]] bool ignore_camera(id_type id);
+
+    void set_ignore_camera(id_type id, bool ignore_camera);
+
+    void update_camera();
+
     void update();
 
     void commit();

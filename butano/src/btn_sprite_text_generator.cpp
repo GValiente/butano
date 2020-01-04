@@ -32,6 +32,7 @@ namespace
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
+        builder.set_ignore_camera(generator.ignore_camera());
         output_sprites.push_back(builder.build_and_release());
         return tiles_vram->data();
     }
@@ -96,6 +97,7 @@ namespace
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
+            builder.set_ignore_camera(_generator.ignore_camera());
             _output_sprites.push_back(builder.build_and_release());
             _current_position.set_x(_current_position.x() + fixed_character_width);
         }

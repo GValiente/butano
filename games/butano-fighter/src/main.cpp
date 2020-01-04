@@ -1,9 +1,10 @@
 #include "btn_core.h"
 #include "btn_music.h"
 #include "btn_sound.h"
-#include "btn_memory.h"
-#include "btn_keypad.h"
+#include "btn_camera.h"
 #include "btn_colors.h"
+#include "btn_keypad.h"
+#include "btn_memory.h"
 #include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_algorithm.h"
@@ -84,27 +85,27 @@ int main()
             btn::core::sleep(btn::keypad::button_type::SELECT);
         }
 
-        btn::fixed_point position = sprite.position();
+        btn::fixed_point camera_position = btn::camera::position();
 
         if(btn::keypad::held(btn::keypad::button_type::LEFT))
         {
-            position.set_x(position.x() - 1);
+            camera_position.set_x(camera_position.x() - 1);
         }
         else if(btn::keypad::held(btn::keypad::button_type::RIGHT))
         {
-            position.set_x(position.x() + 1);
+            camera_position.set_x(camera_position.x() + 1);
         }
 
         if(btn::keypad::held(btn::keypad::button_type::UP))
         {
-            position.set_y(position.y() - 1);
+            camera_position.set_y(camera_position.y() - 1);
         }
         else if(btn::keypad::held(btn::keypad::button_type::DOWN))
         {
-            position.set_y(position.y() + 1);
+            camera_position.set_y(camera_position.y() + 1);
         }
 
-        sprite.set_position(position);
+        btn::camera::set_position(camera_position);
 
         max_cpu_usage = btn::max(max_cpu_usage, btn::core::cpu_usage());
 

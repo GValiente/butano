@@ -175,6 +175,16 @@ void sprite_ptr::set_visible(bool visible)
     sprites_manager::set_visible(_id, visible);
 }
 
+bool sprite_ptr::ignore_camera() const
+{
+    return sprites_manager::ignore_camera(_id);
+}
+
+void sprite_ptr::set_ignore_camera(bool ignore_camera)
+{
+    sprites_manager::set_ignore_camera(_id, ignore_camera);
+}
+
 void sprite_ptr::_destroy()
 {
     if(_id)

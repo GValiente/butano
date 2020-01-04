@@ -90,6 +90,10 @@ public:
 
     void set_visible(bool visible);
 
+    [[nodiscard]] bool ignore_camera() const;
+
+    void set_ignore_camera(bool ignore_camera);
+
     [[nodiscard]] size_t hash() const
     {
         return make_hash(_id);

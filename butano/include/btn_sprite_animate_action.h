@@ -101,21 +101,21 @@ public:
     }
 
 protected:
+    bool _forever = true;
+    uint16_t _wait_frames = 0;
     sprite_ptr _sprite;
     sprite_tiles_item _tiles_item;
     array<uint16_t, Size> _graphic_ids;
-    uint16_t _wait_frames = 0;
     uint16_t _current_graphics_id_index = 0;
     uint16_t _current_wait_frames = 0;
-    bool _forever = true;
 
     sprite_animate_action(sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
                           const array<uint16_t, Size>& graphic_ids) :
+        _forever(forever),
+        _wait_frames(uint16_t(wait_frames)),
         _sprite(move(sprite)),
         _tiles_item(tiles_item),
-        _graphic_ids(graphic_ids),
-        _wait_frames(uint16_t(wait_frames)),
-        _forever(forever)
+        _graphic_ids(graphic_ids)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
         BTN_ASSERT(wait_frames <= integral_limits<decltype(_wait_frames)>::max, "Too much wait frames: ", wait_frames);

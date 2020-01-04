@@ -1,5 +1,5 @@
-#ifndef BTN_SPRITE_MOVE_TO_ACTION_H
-#define BTN_SPRITE_MOVE_TO_ACTION_H
+#ifndef BTN_SPRITE_MOVE_LOOP_ACTION_H
+#define BTN_SPRITE_MOVE_LOOP_ACTION_H
 
 #include "btn_action.h"
 #include "btn_sprite_ptr.h"
@@ -8,13 +8,13 @@
 namespace btn
 {
 
-class sprite_move_to_action : public action
+class sprite_move_loop_action : public action
 {
 
 public:
-    sprite_move_to_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y);
+    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y);
 
-    sprite_move_to_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position);
+    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position);
 
     void reset();
 
@@ -22,7 +22,7 @@ public:
 
     bool done() const override
     {
-        return _current_frame == _duration_frames;
+        return false;
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -41,6 +41,7 @@ public:
     }
 
 protected:
+    bool _reverse = false;
     uint16_t _current_frame = 0;
     sprite_ptr _sprite;
     fixed_point _final_position;

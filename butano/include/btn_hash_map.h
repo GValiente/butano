@@ -2,8 +2,7 @@
 #define BTN_HASH_MAP_H
 
 #include <new>
-#include "btn_assert.h"
-#include "btn_utility.h"
+#include "btn_memory.h"
 #include "btn_algorithm.h"
 #include "btn_power_of_two.h"
 #include "btn_hash_map_fwd.h"
@@ -641,7 +640,7 @@ public:
             }
 
             size_type max_size = _max_size;
-            memset(allocated, false, sizeof(bool) * max_size);
+            memory::clear(int(max_size), *allocated);
             _first_valid_index = max_size;
             _last_valid_index = 0;
             _size = 0;
@@ -733,7 +732,7 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memcpy(allocated, other._allocated, sizeof(bool) * _max_size);
+        memory::copy(*other._allocated, _max_size, *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
@@ -755,7 +754,7 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memcpy(allocated, other._allocated, sizeof(bool) * _max_size);
+        memory::copy(*other._allocated, _max_size, *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {

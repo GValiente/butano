@@ -1,10 +1,9 @@
 #ifndef BTN_STRING_VIEW_H
 #define BTN_STRING_VIEW_H
 
-#include "btn_assert.h"
 #include "btn_string.h"
 #include "btn_limits.h"
-#include "btn_utility.h"
+#include "btn_memory.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 
@@ -157,7 +156,7 @@ public:
         if(pos < sz)
         {
             n = min(count, sz - pos);
-            memcpy(destination, _begin + pos, n);
+            memory::copy(_begin[pos], int(n), *destination);
         }
 
         return n;

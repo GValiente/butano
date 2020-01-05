@@ -2,8 +2,8 @@
 
 #include "btn_math.h"
 #include "btn_array.h"
+#include "btn_memory.h"
 #include "btn_string_view.h"
-#include "../include/btn_hw_memory.h"
 
 extern "C"
 {
@@ -187,7 +187,7 @@ int parse(const void* ptr, array<char, 32>& output)
     {
         const char tag[] = "nullptr";
         size = sizeof(tag);
-        memcpy(output_data, tag, size);
+        btn::memory::copy(*tag, size, *output_data);
     }
 
     return size;

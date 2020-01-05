@@ -250,15 +250,6 @@ private:
     }
 };
 
-template<typename Type>
-void memcpy(void* destination, const span<Type>& source)
-{
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(! source.empty(), "Source is empty");
-
-    memcpy(destination, source.data(), source.size() * sizeof(Type));
-}
-
 }
 
 #endif

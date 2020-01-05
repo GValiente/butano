@@ -13,10 +13,10 @@ public:
     constexpr explicit utf8_character(const char* text)
     {
         // https://www.coranac.com/tonc/text/tte.htm
+        BTN_CONSTEXPR_ASSERT(text, "Text is null");
 
         auto src = text;
         auto ch8 = unsigned(*src);
-        BTN_CONSTEXPR_ASSERT(text, "Text is null");
 
         if(ch8 < 0x80)
         {

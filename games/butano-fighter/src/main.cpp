@@ -50,14 +50,14 @@ int main()
     btn::string<32> text;
     btn::input_string_stream text_stream(text);
     text_stream.append("IWRAM: ");
-    text_stream.append(btn::used_static_iwram());
+    text_stream.append(btn::memory::used_static_iwram());
     text_stream.append("B");
 
     auto iwram_text_sprites = text_generator.generate<4>(8, 160 - (text_height * 2) - (text_height / 2), text);
 
     text_stream.clear();
     text_stream.append("EWRAM: ");
-    text_stream.append(btn::used_static_ewram());
+    text_stream.append(btn::memory::used_static_ewram());
     text_stream.append("B");
 
     auto ewram_text_sprites = text_generator.generate<4>(8, 160 - text_height - (text_height / 2), text);

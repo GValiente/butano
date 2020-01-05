@@ -61,7 +61,7 @@ private:
 
     void _create_item(item_type::list_iterator iterator, const tile* tiles_data, int tiles_count);
 
-    void _commit_item(item_type::list_iterator iterator, const tile* tiles_data, bool delay_commit);
+    void _commit_item(item_type::list_iterator iterator, const tile& tiles_data, bool delay_commit);
 
     bool _remove_adjacent_item(item_type::list_iterator adjacent_iterator, item_type& current_item);
 };

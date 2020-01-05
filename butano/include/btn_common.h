@@ -37,17 +37,9 @@ namespace btn
 
     void memcpy(void* destination, const void* source, int bytes);
 
-    void memcpy16(void* destination, const void* source, int half_words);
-
-    void memcpy32(void* destination, const void* source, int words);
-
     void memset(void* destination, uint8_t value, size_t bytes);
 
     void memset(void* destination, uint8_t value, int bytes);
-
-    void memset16(void* destination, uint16_t value, int half_words);
-
-    void memset32(void* destination, unsigned value, int words);
 }
 
 void* operator new(size_t bytes);

@@ -152,9 +152,7 @@ namespace
                 _sprite_character_index = 0;
             }
 
-            tile* tiles_vram_ptr = _tiles_vram + _sprite_character_index;
-            hw::sprite_tiles::copy_tiles(source_tiles_ref.data(), 1, tiles_vram_ptr);
-
+            hw::sprite_tiles::copy_tiles(source_tiles_ref[0], 1, _tiles_vram[_sprite_character_index]);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
         }
@@ -168,8 +166,7 @@ namespace
 
         void _clear(int characters)
         {
-            tile* tiles_vram_ptr = _tiles_vram + _sprite_character_index;
-            hw::sprite_tiles::clear_tiles(characters, tiles_vram_ptr);
+            hw::sprite_tiles::clear_tiles(characters, _tiles_vram[_sprite_character_index]);
         }
 
         void _clear_left()
@@ -228,10 +225,10 @@ namespace
 
             auto source_tiles_data = source_tiles_ref.data();
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
-            hw::sprite_tiles::copy_tiles(source_tiles_data, 1, up_tiles_vram_ptr);
+            hw::sprite_tiles::copy_tiles(source_tiles_data[0], 1, *up_tiles_vram_ptr);
 
             tile* down_tiles_vram_ptr = up_tiles_vram_ptr + fixed_max_characters_per_sprite;
-            hw::sprite_tiles::copy_tiles(source_tiles_data + 1, 1, down_tiles_vram_ptr);
+            hw::sprite_tiles::copy_tiles(source_tiles_data[1], 1, *down_tiles_vram_ptr);
 
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
@@ -247,10 +244,10 @@ namespace
         void _clear(int characters)
         {
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
-            hw::sprite_tiles::clear_tiles(characters, up_tiles_vram_ptr);
+            hw::sprite_tiles::clear_tiles(characters, *up_tiles_vram_ptr);
 
             tile* down_tiles_vram_ptr = up_tiles_vram_ptr + fixed_max_characters_per_sprite;
-            hw::sprite_tiles::clear_tiles(characters, down_tiles_vram_ptr);
+            hw::sprite_tiles::clear_tiles(characters, *down_tiles_vram_ptr);
         }
 
         void _clear_left()

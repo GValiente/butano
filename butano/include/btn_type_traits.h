@@ -7,6 +7,8 @@ namespace btn
 {
     using etl::remove_reference;
 
+    using std::is_trivial;
+
     using std::is_trivially_copyable;
 }
 

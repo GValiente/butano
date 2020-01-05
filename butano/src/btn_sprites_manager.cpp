@@ -485,7 +485,7 @@ void commit()
 {
     if(data.commit_items_count)
     {
-        hw::sprites::commit(data.handles, data.commit_items_count);
+        hw::sprites::commit(data.handles[0], data.commit_items_count);
         data.commit_items_count = 0;
     }
 }

@@ -3,6 +3,7 @@
 #include "btn_math.h"
 #include "btn_span.h"
 #include "btn_limits.h"
+#include "btn_memory.h"
 #include "btn_algorithm.h"
 
 namespace btn
@@ -354,27 +355,27 @@ void palettes_bank::update()
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
 
-                color* pal_colors_ptr = colors_ptr + (int(index) * pal_colors_count);
-                memcpy16(pal_colors_ptr, pal.colors_ref, pal_colors_count);
+                color& pal_colors_ref = colors_ptr[int(index) * pal_colors_count];
+                memory::copy(*pal.colors_ref, int(pal_colors_count), pal_colors_ref);
 
                 if(int pal_inverse_intensity = (pal.inverse_intensity * intensity_scale()).integer())
                 {
-                    hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ptr);
+                    hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ref);
                 }
 
                 if(int pal_grayscale_intensity = (pal.grayscale_intensity * intensity_scale()).integer())
                 {
-                    hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ptr);
+                    hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ref);
                 }
 
                 if(int pal_fade_intensity = (pal.fade_intensity * intensity_scale()).integer())
                 {
-                    hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ptr);
+                    hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ref);
                 }
 
                 if(pal.rotate_count)
                 {
-                    hw::palettes::rotate(pal.rotate_count, pal_colors_count, pal_colors_ptr);
+                    hw::palettes::rotate(pal.rotate_count, pal_colors_count, pal_colors_ref);
                 }
             }
         }
@@ -387,37 +388,37 @@ void palettes_bank::update()
 
         if(update_all && first_index != integral_limits<size_t>::max)
         {
-            color* all_colors_ptr = colors_ptr + (int(first_index) * pal_colors_count);
-            int all_colors_count = (int(last_index) - int(first_index) + 1) * pal_colors_count;
+            color& all_colors_ref = colors_ptr[int(first_index) * pal_colors_count];
+            int all_colors_count = int(last_index - first_index + 1) * pal_colors_count;
 
             if(brightness)
             {
-                hw::palettes::brightness(brightness, all_colors_count, all_colors_ptr);
+                hw::palettes::brightness(brightness, all_colors_count, all_colors_ref);
             }
 
             if(contrast)
             {
-                hw::palettes::contrast(contrast, all_colors_count, all_colors_ptr);
+                hw::palettes::contrast(contrast, all_colors_count, all_colors_ref);
             }
 
             if(intensity)
             {
-                hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
+                hw::palettes::intensity(intensity, all_colors_count, all_colors_ref);
             }
 
             if(inverse_intensity)
             {
-                hw::palettes::inverse(inverse_intensity, all_colors_count, all_colors_ptr);
+                hw::palettes::inverse(inverse_intensity, all_colors_count, all_colors_ref);
             }
 
             if(grayscale_intensity)
             {
-                hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ptr);
+                hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ref);
             }
 
             if(fade_intensity)
             {
-                hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ptr);
+                hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ref);
             }
         }
     }

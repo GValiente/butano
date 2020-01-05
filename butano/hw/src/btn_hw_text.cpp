@@ -185,7 +185,7 @@ int parse(const void* ptr, array<char, 32>& output)
     }
     else
     {
-        char tag[] = "nullptr";
+        const char tag[] = "nullptr";
         size = sizeof(tag);
         memcpy(output_data, tag, size);
     }

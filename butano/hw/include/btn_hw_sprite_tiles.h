@@ -15,13 +15,13 @@ namespace hw::sprite_tiles
         return 512;
     }
 
-    void copy_tiles(const tile* source_tiles_ptr, int tiles_count, tile* destination_tiles_ptr);
+    void copy_tiles(const tile& source_tiles_ref, int tiles_count, tile& destination_tiles_ref);
 
-    void clear_tiles(int tiles_count, tile* output_tiles_ptr);
+    void clear_tiles(int tiles_count, tile& tiles_ref);
 
-    [[nodiscard]] tile* vram(int tile_index);
+    [[nodiscard]] tile& vram(int tile_index);
 
-    void commit(const tile* source_tiles_ptr, int tile_index, int tiles_count);
+    void commit(const tile& source_tiles_ref, int tile_index, int tiles_count);
 }
 
 }

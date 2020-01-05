@@ -150,7 +150,7 @@ void sprite_tiles_bank::set_tiles_ref(item_type::list_iterator iterator, const s
                    "Multiple copies of the same tiles data not supported");
 
         _items_map.erase(item.data);
-        _commit_item(iterator, tiles_data, true);
+        _commit_item(iterator, *tiles_data, true);
     }
 }
 
@@ -258,7 +258,7 @@ bool sprite_tiles_bank::commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::sprite_tiles::commit(item.data, item.start_tile, item.tiles_count);
+                    hw::sprite_tiles::commit(*item.data, item.start_tile, item.tiles_count);
                 }
             }
         }
@@ -378,7 +378,7 @@ void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const ti
 
     if(tiles_data)
     {
-        _commit_item(iterator, tiles_data, _delay_commit);
+        _commit_item(iterator, *tiles_data, _delay_commit);
     }
 
     if(new_item_tiles_count)
@@ -408,11 +408,11 @@ void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const ti
     }
 }
 
-void sprite_tiles_bank::_commit_item(item_type::list_iterator iterator, const tile* tiles_data, bool delay_commit)
+void sprite_tiles_bank::_commit_item(item_type::list_iterator iterator, const tile& tiles_data, bool delay_commit)
 {
     item_type& item = *iterator;
-    item.data = tiles_data;
-    _items_map.insert(tiles_data, iterator);
+    item.data = &tiles_data;
+    _items_map.insert(&tiles_data, iterator);
 
     if(delay_commit)
     {

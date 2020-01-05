@@ -2,14 +2,14 @@
 
 #include <malloc.h>
 #include "tonc.h"
-#include "btn_alignment.h"
+#include "btn_assert.h"
 
 extern unsigned __iwram_start__;
 extern unsigned __iwram_end__;
 extern unsigned __ewram_start;
 extern unsigned __ewram_end;
 
-namespace btn::hw
+namespace btn::hw::memory
 {
 
 int used_static_iwram()
@@ -34,67 +34,37 @@ int used_static_ewram()
 
 int used_malloc_ewram()
 {
-    auto result = int(mallinfo().uordblks);
-    BTN_ASSERT(result >= 0, "Invalid used malloc ewram: ", result);
-
-    return result;
+    return int(mallinfo().uordblks);
 }
 
-void memcpy(void* destination, const void* source, int bytes)
+void copy(const void* source, int bytes, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(source, "Source is null");
-    BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-
     tonccpy(destination, source, unsigned(bytes));
 }
 
-void memcpy16(void* destination, const void* source, int half_words)
+void copy16(const void* source, int half_words, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 2), "Destination is not aligned");
-    BTN_ASSERT(source, "Source is null");
-    BTN_ASSERT(aligned(source, 2), "Source is not aligned");
-    BTN_ASSERT(half_words >= 0, "Invalid half words: ", half_words);
-
-    ::memcpy16(destination, source, unsigned(half_words));
+    memcpy16(destination, source, unsigned(half_words));
 }
 
-void memcpy32(void* destination, const void* source, int words)
+void copy32(const void* source, int words, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 4), "Destination is not aligned");
-    BTN_ASSERT(source, "Source is null");
-    BTN_ASSERT(aligned(source, 4), "Source is not aligned");
-    BTN_ASSERT(words >= 0, "Invalid words: ", words);
-
-    ::memcpy32(destination, source, unsigned(words));
+    memcpy32(destination, source, unsigned(words));
 }
 
-void memset(void* destination, uint8_t value, int bytes)
+void set(uint8_t value, int bytes, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-
     toncset(destination, value, unsigned(bytes));
 }
 
-void memset16(void* destination, uint16_t value, int half_words)
+void set16(uint16_t value, int half_words, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 2), "Destination is not aligned");
-    BTN_ASSERT(half_words >= 0, "Invalid half words: ", half_words);
-
-    ::memset16(destination, value, unsigned(half_words));
+    memset16(destination, value, unsigned(half_words));
 }
 
-void memset32(void* destination, unsigned value, int words)
+void set32(unsigned value, int words, void* destination)
 {
-    BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 4), "Destination is not aligned");
-    BTN_ASSERT(words >= 0, "Invalid words: ", words);
-
-    ::memset32(destination, value, unsigned(words));
+    memset32(destination, value, unsigned(words));
 }
 
 }

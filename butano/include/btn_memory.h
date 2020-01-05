@@ -4,6 +4,7 @@
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_functional.h"
+#include "btn_type_traits.h"
 
 namespace btn
 {
@@ -317,13 +318,82 @@ namespace btn
             return make_hash(value.get());
         }
     };
+}
 
 
+namespace _btn::memory
+{
+    void unsafe_copy(const void* source, int bytes, void* destination);
+
+    void unsafe_copy16(const void* source, int half_words, void* destination);
+
+    void unsafe_copy32(const void* source, int words, void* destination);
+
+    void unsafe_clear(int bytes, void* destination);
+
+    void unsafe_clear16(int half_words, void* destination);
+
+    void unsafe_clear32(int words, void* destination);
+}
+
+
+namespace btn::memory
+{
     [[nodiscard]] int used_static_iwram();
 
     [[nodiscard]] int used_static_ewram();
 
     [[nodiscard]] int used_malloc_ewram();
+
+    template<typename Type>
+    void copy(const Type& source, int elements, Type& destination)
+    {
+        static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
+        BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
+
+        int bytes = elements * sizeof(Type);
+
+        if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
+        {
+            _btn::memory::unsafe_copy32(&source, bytes / 4, &destination);
+        }
+        else if(sizeof(Type) % 2 == 0 && alignof(Type) % 2 == 0)
+        {
+            _btn::memory::unsafe_copy16(&source, bytes / 2, &destination);
+        }
+        else
+        {
+            _btn::memory::unsafe_copy(&source, bytes, &destination);
+        }
+    }
+
+    template<typename Type>
+    void clear(int elements, Type& destination)
+    {
+        static_assert(is_trivial<Type>(), "Type is not trivial");
+        BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
+
+        int bytes = elements * sizeof(Type);
+
+        if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
+        {
+            _btn::memory::unsafe_clear32(bytes / 4, &destination);
+        }
+        else if(sizeof(Type) % 2 == 0 && alignof(Type) % 2 == 0)
+        {
+            _btn::memory::unsafe_clear16(bytes / 2, &destination);
+        }
+        else
+        {
+            _btn::memory::unsafe_clear(bytes, &destination);
+        }
+    }
+
+    void set(uint8_t value, int bytes, void* destination);
+
+    void set16(uint16_t value, int half_words, void* destination);
+
+    void set32(unsigned value, int words, void* destination);
 }
 
 #endif

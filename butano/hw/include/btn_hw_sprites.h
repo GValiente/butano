@@ -46,7 +46,7 @@ namespace hw::sprites
 
     void hide(handle& sprite);
 
-    void commit(const handle* sprites_ptr, int count);
+    void commit(const handle& sprites_ref, int count);
 }
 }
 

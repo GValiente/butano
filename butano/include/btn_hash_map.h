@@ -709,14 +709,12 @@ public:
     }
 
 protected:
-    ihash_map(pointer storage, bool* allocated, size_type max_size) :
-        _storage(storage),
-        _allocated(allocated),
+    ihash_map(reference storage, bool& allocated, size_type max_size) :
+        _storage(&storage),
+        _allocated(&allocated),
         _max_size(max_size),
         _first_valid_index(max_size)
     {
-        BTN_ASSERT(storage, "Storage is null");
-        BTN_ASSERT(allocated, "Allocated is null");
         BTN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
 
@@ -799,7 +797,8 @@ public:
     using const_pointer = const value_type*;
 
     hash_map() :
-        ihash_map<Key, Value, KeyHash, KeyEqual>(reinterpret_cast<pointer>(_storage_buffer), _allocated_buffer, MaxSize)
+        ihash_map<Key, Value, KeyHash, KeyEqual>(*reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer,
+                                                 MaxSize)
     {
     }
 

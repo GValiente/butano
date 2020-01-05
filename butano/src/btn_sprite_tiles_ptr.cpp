@@ -103,7 +103,7 @@ optional<span<tile>> sprite_tiles_ptr::vram()
 
     if(! item.data)
     {
-        result.emplace(hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
+        result.emplace(&hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
     }
 
     return result;

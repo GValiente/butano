@@ -16,8 +16,7 @@
 #include "btn_hero_sprite_item.h"
 
 #include "btn_random.h"
-#include "btn_sprite_move_to_action.h"
-#include "btn_sprite_animate_action.h"
+#include "btn_sprite_actions.h"
 
 #include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"

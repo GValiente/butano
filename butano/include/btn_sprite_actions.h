@@ -1,15 +1,115 @@
-#ifndef BTN_SPRITE_ANIMATE_ACTION_H
-#define BTN_SPRITE_ANIMATE_ACTION_H
+#ifndef BTN_SPRITE_ACTIONS_H
+#define BTN_SPRITE_ACTIONS_H
 
 #include "btn_array.h"
-#include "btn_action.h"
-#include "btn_limits.h"
-#include "btn_utility.h"
 #include "btn_sprite_ptr.h"
+#include "btn_fixed_point.h"
 #include "btn_sprite_item.h"
+#include "btn_template_actions.h"
 
 namespace btn
 {
+
+// position
+
+class sprite_position_manager
+{
+
+public:
+    [[nodiscard]] static const fixed_point& get(const sprite_ptr& sprite)
+    {
+        return sprite.position();
+    }
+
+    static void set(const fixed_point& position, sprite_ptr& sprite)
+    {
+        sprite.set_position(position);
+    }
+};
+
+
+class sprite_move_by_action :
+        public by_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+{
+
+public:
+    sprite_move_by_action(sprite_ptr sprite, fixed delta_x, fixed delta_y) :
+        by_template_action(move(sprite), fixed_point(delta_x, delta_y))
+    {
+    }
+
+    sprite_move_by_action(sprite_ptr sprite, const fixed_point& delta_position) :
+        by_template_action(move(sprite), delta_position)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] const fixed_point& delta_position() const
+    {
+        return delta_property();
+    }
+};
+
+
+class sprite_move_to_action :
+        public to_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+{
+
+public:
+    sprite_move_to_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y) :
+        to_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    sprite_move_to_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position) :
+        to_template_action(move(sprite), duration_frames, final_position)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] const fixed_point& final_position() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_move_loop_action :
+        public loop_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+{
+
+public:
+    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y) :
+        loop_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position) :
+        loop_template_action(move(sprite), duration_frames, final_position)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] const fixed_point& final_position() const
+    {
+        return final_property();
+    }
+};
+
+
+// animation
 
 template<size_t Size>
 class sprite_animate_action : public action
@@ -100,7 +200,7 @@ public:
         return _forever;
     }
 
-protected:
+private:
     bool _forever = true;
     uint16_t _wait_frames = 0;
     sprite_ptr _sprite;

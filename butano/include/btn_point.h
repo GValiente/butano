@@ -1,6 +1,7 @@
 #ifndef BTN_POINT_H
 #define BTN_POINT_H
 
+#include "btn_assert.h"
 #include "btn_functional.h"
 
 namespace btn
@@ -52,6 +53,22 @@ public:
         return *this;
     }
 
+    constexpr point& operator*=(int value)
+    {
+        _x *= value;
+        _y *= value;
+        return *this;
+    }
+
+    constexpr point& operator/=(int value)
+    {
+        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
+
+        _x /= value;
+        _y /= value;
+        return *this;
+    }
+
     [[nodiscard]] constexpr point operator+(const point& other) const
     {
         return point(_x + other._x, _y + other._y);
@@ -60,6 +77,18 @@ public:
     [[nodiscard]] constexpr point operator-(const point& other) const
     {
         return point(_x - other._x, _y - other._y);
+    }
+
+    [[nodiscard]] constexpr point operator*(int value) const
+    {
+        return point(_x * value, _y * value);
+    }
+
+    [[nodiscard]] constexpr point operator/(int value) const
+    {
+        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
+
+        return point(_x / value, _y / value);
     }
 
     [[nodiscard]] constexpr bool operator==(const point& other) const

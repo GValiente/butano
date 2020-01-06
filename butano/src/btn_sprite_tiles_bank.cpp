@@ -113,16 +113,12 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::allocat
 void sprite_tiles_bank::increase_usages(item_type::list_iterator iterator)
 {
     item_type& item = *iterator;
-    BTN_ASSERT(item.usages, "Sprite tiles item is not used");
-
     ++item.usages;
 }
 
 void sprite_tiles_bank::decrease_usages(item_type::list_iterator iterator)
 {
     item_type& item = *iterator;
-    BTN_ASSERT(item.usages, "Sprite tiles item is not used");
-
     --item.usages;
 
     if(! item.usages)
@@ -138,7 +134,6 @@ void sprite_tiles_bank::set_tiles_ref(item_type::list_iterator iterator, const s
 
     item_type& item = *iterator;
     BTN_ASSERT(item.data, "Sprite tiles item has no data");
-    BTN_ASSERT(item.usages, "Sprite tiles item is not used");
     BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match item tiles count: ",
                int(tiles_ref.size()), " - ", item.tiles_count);
 
@@ -158,7 +153,6 @@ void sprite_tiles_bank::reload_tiles_ref(item_type::list_iterator iterator)
 {
     item_type& item = *iterator;
     BTN_ASSERT(item.data, "Sprite tiles item has no data");
-    BTN_ASSERT(item.usages, "Sprite tiles item is not used");
 
     item.commit = true;
     _check_commit = true;

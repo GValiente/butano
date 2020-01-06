@@ -111,9 +111,12 @@ optional<span<tile>> sprite_tiles_ptr::vram()
 
 void sprite_tiles_ptr::_destroy()
 {
-    if(_iterator != sprite_tiles_manager::invalid_iterator())
+    item_type::list_iterator invalid_iterator = sprite_tiles_manager::invalid_iterator();
+
+    if(_iterator != invalid_iterator)
     {
         sprite_tiles_manager::decrease_usages(_iterator);
+        _iterator = invalid_iterator;
     }
 }
 

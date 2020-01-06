@@ -107,21 +107,13 @@ int palettes_bank::create(const span<const color>& colors_ref)
 
 void palettes_bank::increase_usages(int id)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     ++pal.usages;
 }
 
 void palettes_bank::decrease_usages(int id)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     --pal.usages;
 
     if(! pal.usages)
@@ -130,22 +122,11 @@ void palettes_bank::decrease_usages(int id)
     }
 }
 
-span<const color> palettes_bank::colors_ref(int id) const
-{
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-    BTN_ASSERT(_palettes[size_t(id)].usages, "Palette is not used: ", id);
-
-    return _color_ptr_span(id);
-}
-
 void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
-    palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
     BTN_ASSERT(colors_ref.size() == colors_per_palette(), "Invalid colors count: ", colors_ref.size());
 
+    palette& pal = _palettes[size_t(id)];
     pal.colors_ref = colors_ref.data();
     pal.update = true;
     _perform_update = true;
@@ -154,11 +135,7 @@ void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 
 void palettes_bank::reload_colors_ref(int id)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     pal.update = true;
     _perform_update = true;
     _last_used_index = id;
@@ -166,22 +143,15 @@ void palettes_bank::reload_colors_ref(int id)
 
 fixed palettes_bank::inverse_intensity(int id) const
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     const palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     return pal.inverse_intensity;
 }
 
 void palettes_bank::set_inverse_intensity(int id, fixed intensity)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
-    palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    palette& pal = _palettes[size_t(id)];
     pal.inverse_intensity = intensity;
     pal.update = true;
     _perform_update = true;
@@ -190,22 +160,15 @@ void palettes_bank::set_inverse_intensity(int id, fixed intensity)
 
 fixed palettes_bank::grayscale_intensity(int id) const
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     const palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     return pal.grayscale_intensity;
 }
 
 void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
-    palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    palette& pal = _palettes[size_t(id)];
     pal.grayscale_intensity = intensity;
     pal.update = true;
     _perform_update = true;
@@ -214,32 +177,21 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
 
 color palettes_bank::fade_color(int id) const
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     const palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     return pal.fade_color;
 }
 
 fixed palettes_bank::fade_intensity(int id) const
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     const palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     return pal.fade_intensity;
 }
 
 void palettes_bank::set_fade(int id, color color, fixed intensity)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
-    palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    palette& pal = _palettes[size_t(id)];
     pal.fade_color = color;
     pal.fade_intensity = intensity;
     pal.update = true;
@@ -249,22 +201,15 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
 
 int palettes_bank::rotate_count(int id) const
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
     const palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
-
     return pal.rotate_count;
 }
 
 void palettes_bank::set_rotate_count(int id, int count)
 {
-    BTN_ASSERT(id >= 0 && id < hw::palettes::count(), "Invalid palette id: ", id);
-
-    palette& pal = _palettes[size_t(id)];
-    BTN_ASSERT(pal.usages, "Palette is not used: ", id);
     BTN_ASSERT(abs(count) < colors_per_palette(), "Invalid count: ", count);
 
+    palette& pal = _palettes[size_t(id)];
     pal.rotate_count = count;
     pal.update = true;
     _perform_update = true;

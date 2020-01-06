@@ -190,6 +190,7 @@ void sprite_ptr::_destroy()
     if(_id)
     {
         sprites_manager::decrease_usages(_id);
+        _id = nullptr;
     }
 }
 

@@ -137,6 +137,7 @@ void sprite_palette_ptr::_destroy()
     if(_id >= 0)
     {
         palettes_manager::sprite_palettes_bank().decrease_usages(_id);
+        _id = -1;
     }
 }
 

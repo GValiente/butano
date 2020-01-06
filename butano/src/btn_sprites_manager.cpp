@@ -251,16 +251,12 @@ id_type create(sprite_builder&& builder)
 void increase_usages(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     ++item->usages;
 }
 
 void decrease_usages(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     --item->usages;
 
     if(! item->usages)
@@ -278,23 +274,18 @@ void decrease_usages(id_type id)
 size dimensions(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return hw::sprites::dimensions(item->handle);
 }
 
 const sprite_tiles_ptr& tiles_ptr(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->tiles_ptr;
 }
 
 void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
     BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid sprite tiles count: ",
                item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
 
@@ -310,15 +301,12 @@ void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
 const sprite_palette_ptr& palette_ptr(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->palette_ptr;
 }
 
 void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
     BTN_ASSERT(item->palette_ptr.colors_count() == palette_ptr.colors_count(), "Invalid sprite palette colors count: ",
                item->palette_ptr.colors_count(), " - ", palette_ptr.colors_count());
 
@@ -334,16 +322,12 @@ void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 const fixed_point& position(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->position;
 }
 
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     fixed_point real_position = position;
 
     if(! item->ignore_camera)
@@ -364,8 +348,6 @@ void set_position(id_type id, const fixed_point& position)
 int bg_priority(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->bg_priority();
 }
 
@@ -374,7 +356,6 @@ void set_bg_priority(id_type id, int bg_priority)
     BTN_ASSERT(bg_priority >= 0 && bg_priority <= hw::sprites::max_bg_priority(), "Invalid bg_priority: ", bg_priority);
 
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
 
     if(bg_priority != item->bg_priority())
     {
@@ -392,8 +373,6 @@ void set_bg_priority(id_type id, int bg_priority)
 int z_order(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->z_order();
 }
 
@@ -402,7 +381,6 @@ void set_z_order(id_type id, int z_order)
     BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z_order: ", z_order);
 
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
 
     if(z_order != item->z_order())
     {
@@ -419,16 +397,12 @@ void set_z_order(id_type id, int z_order)
 bool visible(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->visible;
 }
 
 void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     item->visible = visible;
 
     if(visible)
@@ -447,16 +421,12 @@ void set_visible(id_type id, bool visible)
 bool ignore_camera(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     return item->ignore_camera;
 }
 
 void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->usages, "Sprite item is not used");
-
     item->ignore_camera = ignore_camera;
     set_position(id, item->position);
 }

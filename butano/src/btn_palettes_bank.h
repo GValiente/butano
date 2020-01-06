@@ -32,7 +32,10 @@ public:
 
     void decrease_usages(int id);
 
-    [[nodiscard]] span<const color> colors_ref(int id) const;
+    [[nodiscard]] span<const color> colors_ref(int id) const
+    {
+        return _color_ptr_span(id);
+    }
 
     void set_colors_ref(int id, const span<const color>& colors_ref);
 

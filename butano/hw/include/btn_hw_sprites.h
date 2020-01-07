@@ -7,6 +7,7 @@ namespace btn
 {
 
 class size;
+class sprite_builder;
 enum class sprite_shape;
 enum class sprite_size;
 
@@ -31,10 +32,10 @@ namespace hw::sprites
 
     void init();
 
-    void setup(sprite_shape shape, sprite_size size, int tile_id, int palette_id, bool eight_bits_per_pixel,
-               int x, int y, int bg_priority, handle& sprite);
+    void setup(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+               int x, int y, handle& sprite);
 
-    size dimensions(const handle& sprite);
+    [[nodiscard]] size dimensions(const handle& sprite);
 
     void set_tile(int tile_id, handle& sprite);
 
@@ -43,6 +44,18 @@ namespace hw::sprites
     void set_position(int x, int y, handle& sprite);
 
     void set_bg_priority(int bg_priority, handle& sprite);
+
+    [[nodiscard]] bool horizontal_flip(const handle& sprite);
+
+    void set_horizontal_flip(bool horizontal_flip, handle& sprite);
+
+    [[nodiscard]] bool vertical_flip(const handle& sprite);
+
+    void set_vertical_flip(bool vertical_flip, handle& sprite);
+
+    [[nodiscard]] bool mosaic_enabled(const handle& sprite);
+
+    void set_mosaic_enabled(bool mosaic_enabled, handle& sprite);
 
     void hide(handle& sprite);
 

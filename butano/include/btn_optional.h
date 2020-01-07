@@ -95,21 +95,12 @@ public:
     {
         if(this != &other)
         {
+            reset();
+
             if(other)
             {
-                if(_valid)
-                {
-                    _value_impl() = other._value_impl();
-                }
-                else
-                {
-                    ::new(_storage) Type(other._value_impl());
-                    _valid = true;
-                }
-            }
-            else
-            {
-                reset();
+                ::new(_storage) Type(other._value_impl());
+                _valid = true;
             }
         }
 
@@ -120,21 +111,12 @@ public:
     {
         if(this != &other)
         {
+            reset();
+
             if(other)
             {
-                if(_valid)
-                {
-                    _value_impl() = move(other._value_impl());
-                }
-                else
-                {
-                    ::new(_storage) Type(move(other._value_impl()));
-                    _valid = true;
-                }
-            }
-            else
-            {
-                reset();
+                ::new(_storage) Type(move(other._value_impl()));
+                _valid = true;
             }
         }
 
@@ -144,16 +126,9 @@ public:
     template<typename OtherType>
     constexpr optional& operator=(OtherType&& value)
     {
-        if(_valid)
-        {
-            _value_impl() = forward<OtherType>(value);
-        }
-        else
-        {
-            ::new(_storage) Type(forward<OtherType>(value));
-            _valid = true;
-        }
-
+        reset();
+        ::new(_storage) Type(forward<OtherType>(value));
+        _valid = true;
         return *this;
     }
 
@@ -162,21 +137,12 @@ public:
     {
         if(this != &other)
         {
+            reset();
+
             if(other)
             {
-                if(_valid)
-                {
-                    _value_impl() = other._value_impl();
-                }
-                else
-                {
-                    ::new(_storage) Type(other._value_impl());
-                    _valid = true;
-                }
-            }
-            else
-            {
-                reset();
+                ::new(_storage) Type(other._value_impl());
+                _valid = true;
             }
         }
 
@@ -188,21 +154,12 @@ public:
     {
         if(this != &other)
         {
+            reset();
+
             if(other)
             {
-                if(_valid)
-                {
-                    _value_impl() = move(other._value_impl());
-                }
-                else
-                {
-                    ::new(_storage) Type(move(other._value_impl()));
-                    _valid = true;
-                }
-            }
-            else
-            {
-                reset();
+                ::new(_storage) Type(move(other._value_impl()));
+                _valid = true;
             }
         }
 
@@ -286,15 +243,9 @@ public:
     template<typename... Args>
     constexpr void emplace(Args&&... args)
     {
-        if(_valid)
-        {
-            _value_impl() = Type(forward<Args>(args)...);
-        }
-        else
-        {
-            ::new(_storage) Type(forward<Args>(args)...);
-            _valid = true;
-        }
+        reset();
+        ::new(_storage) Type(forward<Args>(args)...);
+        _valid = true;
     }
 
     [[nodiscard]] constexpr bool operator==(const optional& other) const

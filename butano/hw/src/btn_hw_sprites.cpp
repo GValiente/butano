@@ -3,7 +3,7 @@
 #include "tonc.h"
 #include "btn_size.h"
 #include "btn_memory.h"
-#include "btn_sprite_shape_size.h"
+#include "btn_sprite_builder.h"
 
 namespace btn::hw::sprites
 {
@@ -24,13 +24,13 @@ void init()
     oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(available_sprites()));
 }
 
-void setup(sprite_shape shape, sprite_size size, int tile_id, int palette_id, bool eight_bits_per_pixel,
-           int x, int y, int bg_priority, handle& sprite)
+void setup(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+           int x, int y, handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    int a0 = ATTR0_BUILD(0, int(shape), eight_bits_per_pixel, 0, 0, 0, 0);
-    int a1 = ATTR1_BUILDR(0, int(size), 0, 0);
-    int a2 = ATTR2_BUILD(tile_id, palette_id, bg_priority);
+    int a0 = ATTR0_BUILD(0, int(builder.shape()), eight_bits_per_pixel, 0, builder.mosaic_enabled(), 0, 0);
+    int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
+    int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     set_position(x, y, sprite);
 }
@@ -72,6 +72,66 @@ void set_bg_priority(int bg_priority, handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
     BFN_SET(sprite_ptr->attr2, bg_priority, ATTR2_PRIO);
+}
+
+bool horizontal_flip(const handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+    return sprite_ptr->attr1 & ATTR1_HFLIP;
+}
+
+void set_horizontal_flip(bool horizontal_flip, handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+    if(horizontal_flip)
+    {
+        sprite_ptr->attr1 |= ATTR1_HFLIP;
+    }
+    else
+    {
+        sprite_ptr->attr1 &= ~ATTR1_HFLIP;
+    }
+}
+
+bool vertical_flip(const handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+    return sprite_ptr->attr1 & ATTR1_VFLIP;
+}
+
+void set_vertical_flip(bool vertical_flip, handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+    if(vertical_flip)
+    {
+        sprite_ptr->attr1 |= ATTR1_VFLIP;
+    }
+    else
+    {
+        sprite_ptr->attr1 &= ~ATTR1_VFLIP;
+    }
+}
+
+bool mosaic_enabled(const handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+    return sprite_ptr->attr0 & ATTR0_MOSAIC;
+}
+
+void set_mosaic_enabled(bool mosaic_enabled, handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+    if(mosaic_enabled)
+    {
+        sprite_ptr->attr0 |= ATTR0_MOSAIC;
+    }
+    else
+    {
+        sprite_ptr->attr0 &= ~ATTR0_MOSAIC;
+    }
 }
 
 void hide(handle& sprite)

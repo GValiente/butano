@@ -19,6 +19,9 @@ namespace hw::sprite_tiles
 
     void clear_tiles(int tiles_count, tile& tiles_ref);
 
+    BTN_CODE_IWRAM void plot_tiles(int width, const tile& source_tiles_ref, int source_height, int source_y,
+                                   int destination_y, tile& destination_tiles_ref);
+
     [[nodiscard]] tile& vram(int tile_index);
 
     void commit(const tile& source_tiles_ref, int tile_index, int tiles_count);

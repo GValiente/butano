@@ -165,6 +165,36 @@ void sprite_ptr::set_z_order(int z_order)
     sprites_manager::set_z_order(_id, z_order);
 }
 
+bool sprite_ptr::horizontal_flip() const
+{
+    return sprites_manager::horizontal_flip(_id);
+}
+
+void sprite_ptr::set_horizontal_flip(bool horizontal_flip)
+{
+    sprites_manager::set_horizontal_flip(_id, horizontal_flip);
+}
+
+bool sprite_ptr::vertical_flip() const
+{
+    return sprites_manager::vertical_flip(_id);
+}
+
+void sprite_ptr::set_vertical_flip(bool vertical_flip)
+{
+    sprites_manager::set_vertical_flip(_id, vertical_flip);
+}
+
+bool sprite_ptr::mosaic_enabled() const
+{
+    return sprites_manager::mosaic_enabled(_id);
+}
+
+void sprite_ptr::set_mosaic_enabled(bool mosaic_enabled)
+{
+    sprites_manager::set_mosaic_enabled(_id, mosaic_enabled);
+}
+
 bool sprite_ptr::visible() const
 {
     return sprites_manager::visible(_id);

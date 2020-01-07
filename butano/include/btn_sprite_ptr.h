@@ -86,6 +86,18 @@ public:
 
     void set_z_order(int z_order);
 
+    [[nodiscard]] bool horizontal_flip() const;
+
+    void set_horizontal_flip(bool horizontal_flip);
+
+    [[nodiscard]] bool vertical_flip() const;
+
+    void set_vertical_flip(bool vertical_flip);
+
+    [[nodiscard]] bool mosaic_enabled() const;
+
+    void set_mosaic_enabled(bool mosaic_enabled);
+
     [[nodiscard]] bool visible() const;
 
     void set_visible(bool visible);

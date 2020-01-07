@@ -15,8 +15,9 @@ namespace
     static_assert(BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > 0);
     static_assert(power_of_two(BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS));
 
+    constexpr const int max_columns_per_sprite = 32;
     constexpr const int fixed_character_width = 8;
-    constexpr const int fixed_max_characters_per_sprite = 32 / fixed_character_width;
+    constexpr const int fixed_max_characters_per_sprite = max_columns_per_sprite / fixed_character_width;
 
     template<sprite_size size, int max_tiles_per_sprite>
     tile* build_sprite(const sprite_text_generator& generator, const fixed_point& current_position,
@@ -37,10 +38,21 @@ namespace
         return tiles_vram->data();
     }
 
+
     class fixed_width_painter
     {
 
     public:
+        explicit fixed_width_painter(const sprite_text_generator& generator) :
+            _generator(generator)
+        {
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
         [[nodiscard]] fixed width() const
         {
             return _width;
@@ -56,14 +68,56 @@ namespace
             _width += (fixed_character_width * 4);
         }
 
-        void paint_character(const span<const tile>&)
+        void paint_character([[maybe_unused]] int graphics_id)
         {
             _width += fixed_character_width;
         }
 
     private:
+        const sprite_text_generator& _generator;
         fixed _width = 0;
     };
+
+
+    class variable_width_painter
+    {
+
+    public:
+        explicit variable_width_painter(const sprite_text_generator& generator) :
+            _generator(generator)
+        {
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
+        [[nodiscard]] fixed width() const
+        {
+            return _width;
+        }
+
+        void paint_space()
+        {
+            _width += _generator.font().character_widths()[0];
+        }
+
+        void paint_tab()
+        {
+            _width += (_generator.font().character_widths()[0] * 4);
+        }
+
+        void paint_character(int graphics_id)
+        {
+            _width += _generator.font().character_widths()[size_t(graphics_id + 1)];
+        }
+
+    private:
+        const sprite_text_generator& _generator;
+        fixed _width = 0;
+    };
+
 
     class fixed_one_sprite_per_character_painter
     {
@@ -77,6 +131,11 @@ namespace
         {
         }
 
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
         void paint_space()
         {
             _current_position.set_x(_current_position.x() + fixed_character_width);
@@ -87,13 +146,14 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(const span<const tile>& source_tiles_ref)
+        void paint_character(int graphics_id)
         {
             BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
 
+            const sprite_item& item = _generator.font().item();
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
             sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
-            sprite_builder builder(_generator.font().item().shape(), sprite_size::SMALL, move(source_tiles_ptr),
-                                   _generator.palette());
+            sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
@@ -108,6 +168,58 @@ namespace
         fixed_point _current_position;
     };
 
+
+    class variable_one_sprite_per_character_painter
+    {
+
+    public:
+        variable_one_sprite_per_character_painter(const sprite_text_generator& generator, const fixed_point& position,
+                                                  ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
+            _output_sprites(output_sprites),
+            _current_position(position.x() + (fixed_character_width / 2), position.y())
+        {
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
+        void paint_space()
+        {
+            _current_position.set_x(_current_position.x() + _generator.font().character_widths()[0]);
+        }
+
+        void paint_tab()
+        {
+            _current_position.set_x(_current_position.x() + (_generator.font().character_widths()[0] * 4));
+        }
+
+        void paint_character(int graphics_id)
+        {
+            BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
+
+            const sprite_font& font = _generator.font();
+            const sprite_item& item = font.item();
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
+            sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
+            sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
+            builder.set_position(_current_position);
+            builder.set_bg_priority(_generator.bg_priority());
+            builder.set_z_order(_generator.z_order());
+            builder.set_ignore_camera(_generator.ignore_camera());
+            _output_sprites.push_back(builder.build_and_release());
+            _current_position.set_x(_current_position.x() + font.character_widths()[size_t(graphics_id + 1)]);
+        }
+
+    private:
+        const sprite_text_generator& _generator;
+        ivector<sprite_ptr>& _output_sprites;
+        fixed_point _current_position;
+    };
+
+
     class fixed_8x8_painter
     {
 
@@ -116,14 +228,18 @@ namespace
                           ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
-            _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
-                              position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
 
         ~fixed_8x8_painter()
         {
             _clear_left();
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
         }
 
         void paint_space()
@@ -143,7 +259,7 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(const span<const tile>& source_tiles_ref)
+        void paint_character(int graphics_id)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
@@ -152,6 +268,8 @@ namespace
                 _sprite_character_index = 0;
             }
 
+            const sprite_item& item = _generator.font().item();
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
             hw::sprite_tiles::copy_tiles(source_tiles_ref[0], 1, _tiles_vram[_sprite_character_index]);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
@@ -179,6 +297,75 @@ namespace
         }
     };
 
+
+    class variable_8x8_painter
+    {
+
+    public:
+        variable_8x8_painter(const sprite_text_generator& generator, const fixed_point& position,
+                              ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
+            _output_sprites(output_sprites),
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+        {
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
+        void paint_space()
+        {
+            int width = _generator.font().character_widths()[0];
+            _sprite_column += width;
+            _current_position.set_x(_current_position.x() + width);
+        }
+
+        void paint_tab()
+        {
+            int width = _generator.font().character_widths()[0] * 4;
+            _sprite_column += width;
+            _current_position.set_x(_current_position.x() + width);
+        }
+
+        void paint_character(int graphics_id)
+        {
+            const sprite_font& font = _generator.font();
+
+            if(int width = font.character_widths()[size_t(graphics_id + 1)])
+            {
+                if(_sprite_column + width > max_columns_per_sprite)
+                {
+                    _tiles_vram = build_sprite<sprite_size::NORMAL, _tiles>(
+                                _generator, _current_position, _output_sprites);
+                    hw::sprite_tiles::clear_tiles(_tiles, *_tiles_vram);
+                    _sprite_column = 0;
+                }
+
+                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const tile& source_tiles_ref = tiles_item.tiles().front();
+                int source_height = tiles_item.graphics() * _character_height;
+                int source_y = graphics_id * _character_height;
+                hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height, source_y, _sprite_column,
+                                             *_tiles_vram);
+                _current_position.set_x(_current_position.x() + width);
+                _sprite_column += width;
+            }
+        }
+
+    private:
+        static constexpr const int _character_height = 8;
+        static constexpr const int _tiles = 4;
+
+        const sprite_text_generator& _generator;
+        ivector<sprite_ptr>& _output_sprites;
+        fixed_point _current_position;
+        tile* _tiles_vram = nullptr;
+        int _sprite_column = max_columns_per_sprite;
+    };
+
+
     class fixed_8x16_painter
     {
 
@@ -187,14 +374,18 @@ namespace
                            ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
-            _current_position(position.x() + ((fixed_max_characters_per_sprite * fixed_character_width) / 2),
-                              position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
 
         ~fixed_8x16_painter()
         {
             _clear_left();
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
         }
 
         void paint_space()
@@ -214,7 +405,7 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(const span<const tile>& source_tiles_ref)
+        void paint_character(int graphics_id)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
@@ -223,6 +414,8 @@ namespace
                 _sprite_character_index = 0;
             }
 
+            const sprite_item& item = _generator.font().item();
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
             auto source_tiles_data = source_tiles_ref.data();
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
             hw::sprite_tiles::copy_tiles(source_tiles_data[0], 1, *up_tiles_vram_ptr);
@@ -260,11 +453,84 @@ namespace
         }
     };
 
-    template<class Painter>
-    void paint(const string_view& text, const sprite_tiles_item& tiles_item,
-               const hash_map<int, int16_t, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>& ut8_characters_map,
-               Painter& painter)
+
+    class variable_8x16_painter
     {
+
+    public:
+        variable_8x16_painter(const sprite_text_generator& generator, const fixed_point& position,
+                              ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
+            _output_sprites(output_sprites),
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+        {
+        }
+
+        [[nodiscard]] const sprite_text_generator& generator() const
+        {
+            return _generator;
+        }
+
+        void paint_space()
+        {
+            int width = _generator.font().character_widths()[0];
+            _sprite_column += width;
+            _current_position.set_x(_current_position.x() + width);
+        }
+
+        void paint_tab()
+        {
+            int width = _generator.font().character_widths()[0] * 4;
+            _sprite_column += width;
+            _current_position.set_x(_current_position.x() + width);
+        }
+
+        void paint_character(int graphics_id)
+        {
+            const sprite_font& font = _generator.font();
+
+            if(int width = font.character_widths()[size_t(graphics_id + 1)])
+            {
+                if(_sprite_column + width > max_columns_per_sprite)
+                {
+                    _tiles_vram = build_sprite<sprite_size::BIG, _tiles>(
+                                _generator, _current_position, _output_sprites);
+                    hw::sprite_tiles::clear_tiles(_tiles, *_tiles_vram);
+                    _sprite_column = 0;
+                }
+
+                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const tile& source_tiles_ref = tiles_item.tiles().front();
+                int source_height = tiles_item.graphics() * _character_height;
+                int source_y = graphics_id * _character_height;
+                hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height,
+                                             source_y,
+                                             _sprite_column, *_tiles_vram);
+                hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height,
+                                             source_y + (_character_height / 2),
+                                             _sprite_column + (_character_height * 2), *_tiles_vram);
+                _current_position.set_x(_current_position.x() + width);
+                _sprite_column += width;
+            }
+        }
+
+    private:
+        static constexpr const int _character_height = 16;
+        static constexpr const int _tiles = 8;
+
+        const sprite_text_generator& _generator;
+        ivector<sprite_ptr>& _output_sprites;
+        fixed_point _current_position;
+        tile* _tiles_vram = nullptr;
+        int _sprite_column = max_columns_per_sprite;
+    };
+
+
+    template<class Painter>
+    void paint(const string_view& text, Painter& painter)
+    {
+        const sprite_text_generator& generator = painter.generator();
+        const auto& utf8_characters_map = generator.utf8_characters_map();
         const char* text_data = text.data();
         size_t text_index = 0;
         size_t text_size = text.size();
@@ -295,14 +561,14 @@ namespace
                 else
                 {
                     utf8_character utf8_char(text_data + text_index);
-                    auto it = ut8_characters_map.find(utf8_char.value());
-                    BTN_ASSERT(it != ut8_characters_map.end(), "Utf8 character not found: ", text);
+                    auto it = utf8_characters_map.find(utf8_char.value());
+                    BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
 
                     graphics_id = it->second;
                     text_index += size_t(utf8_char.size());
                 }
 
-                painter.paint_character(tiles_item.tiles_ref(graphics_id));
+                painter.paint_character(graphics_id);
             }
             else
             {
@@ -321,7 +587,7 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     for(const string_view& utf8_character_text : font.utf8_characters())
     {
         utf8_character utf8_char(utf8_character_text.data());
-        _ut8_characters_map.insert(utf8_char.value(), utf8_character_index);
+        _utf8_characters_map.insert(utf8_char.value(), utf8_character_index);
         ++utf8_character_index;
     }
 }
@@ -351,11 +617,15 @@ void sprite_text_generator::set_z_order(int z_order)
 
 fixed sprite_text_generator::width(const string_view& text) const
 {
-    const sprite_item& sprite_item = _font.item();
-    const sprite_tiles_item& tiles_item = sprite_item.tiles_item();
+    if(_font.character_widths().empty())
+    {
+        fixed_width_painter painter(*this);
+        paint(text, painter);
+        return painter.width();
+    }
 
-    fixed_width_painter painter;
-    paint(text, tiles_item, _ut8_characters_map, painter);
+    variable_width_painter painter(*this);
+    paint(text, painter);
     return painter.width();
 }
 
@@ -369,7 +639,6 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
                                      ivector<sprite_ptr>& output_sprites) const
 {
     const sprite_item& sprite_item = _font.item();
-    const sprite_tiles_item& tiles_item = sprite_item.tiles_item();
     fixed_point aligned_position = position;
 
     switch(_alignment)
@@ -389,20 +658,44 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
 
     if(_one_sprite_per_character)
     {
-        fixed_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
-        paint(text, tiles_item, _ut8_characters_map, painter);
+        if(_font.character_widths().empty())
+        {
+            fixed_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
+            paint(text, painter);
+        }
+        else
+        {
+            variable_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
+            paint(text, painter);
+        }
     }
     else
     {
         if(sprite_item.shape_size().height() == 8)
         {
-            fixed_8x8_painter painter(*this, aligned_position, output_sprites);
-            paint(text, tiles_item, _ut8_characters_map, painter);
+            if(_font.character_widths().empty())
+            {
+                fixed_8x8_painter painter(*this, aligned_position, output_sprites);
+                paint(text, painter);
+            }
+            else
+            {
+                variable_8x8_painter painter(*this, aligned_position, output_sprites);
+                paint(text, painter);
+            }
         }
         else
         {
-            fixed_8x16_painter painter(*this, aligned_position, output_sprites);
-            paint(text, tiles_item, _ut8_characters_map, painter);
+            if(_font.character_widths().empty())
+            {
+                fixed_8x16_painter painter(*this, aligned_position, output_sprites);
+                paint(text, painter);
+            }
+            else
+            {
+                variable_8x16_painter painter(*this, aligned_position, output_sprites);
+                paint(text, painter);
+            }
         }
     }
 }

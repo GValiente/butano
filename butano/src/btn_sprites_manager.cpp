@@ -48,11 +48,9 @@ namespace
                 real_position -= btn::camera::position();
             }
 
-            int bg_priority = builder.bg_priority();
-            hw::sprites::setup(builder.shape(), builder.size(), tiles_ptr.id(), palette_ptr.id(),
-                               palette_ptr.colors_count() > 16, real_position.x().integer(),
-                               real_position.y().integer(), bg_priority, handle);
-            update_sort_key(bg_priority, builder.z_order());
+            hw::sprites::setup(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.colors_count() > 16,
+                               real_position.x().integer(), real_position.y().integer(), handle);
+            update_sort_key(builder.bg_priority(), builder.z_order());
             on_screen = false;
 
             if(builder.visible())
@@ -409,6 +407,45 @@ void set_z_order(id_type id, int z_order)
             data.rebuild_handles = true;
         }
     }
+}
+
+bool horizontal_flip(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::horizontal_flip(item->handle);
+}
+
+void set_horizontal_flip(id_type id, bool horizontal_flip)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::set_horizontal_flip(horizontal_flip, item->handle);
+    _update_handles(*item);
+}
+
+bool vertical_flip(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::vertical_flip(item->handle);
+}
+
+void set_vertical_flip(id_type id, bool vertical_flip)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::set_vertical_flip(vertical_flip, item->handle);
+    _update_handles(*item);
+}
+
+bool mosaic_enabled(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::mosaic_enabled(item->handle);
+}
+
+void set_mosaic_enabled(id_type id, bool mosaic_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::set_mosaic_enabled(mosaic_enabled, item->handle);
+    _update_handles(*item);
 }
 
 bool visible(id_type id)

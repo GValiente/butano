@@ -13,13 +13,6 @@ int sqrt(int value)
     return hw::sqrt(value);
 }
 
-int bios_sqrt(int value)
-{
-    BTN_ASSERT(value >= 0, "Value must be positive: ", value);
-
-    return hw::bios_sqrt(value);
-}
-
 fixed degrees_sin(fixed degrees_angle)
 {
     BTN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,

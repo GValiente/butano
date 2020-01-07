@@ -6,19 +6,19 @@
 namespace btn
 {
     class size;
+}
 
-    namespace display
-    {
-        [[nodiscard]] BTN_CODE_CONST int width();
+namespace btn::display
+{
+    [[nodiscard]] BTN_CODE_CONST int width();
 
-        [[nodiscard]] BTN_CODE_CONST int height();
+    [[nodiscard]] BTN_CODE_CONST int height();
 
-        [[nodiscard]] BTN_CODE_CONST size dimensions();
+    [[nodiscard]] BTN_CODE_CONST size dimensions();
 
-        [[nodiscard]] bool green_swap_enabled();
+    [[nodiscard]] bool green_swap_enabled();
 
-        void set_green_swap_enabled(bool enabled);
-    }
+    void set_green_swap_enabled(bool enabled);
 }
 
 #endif

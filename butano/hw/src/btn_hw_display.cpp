@@ -11,6 +11,13 @@ void init()
     REG_DISPCNT = DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
 }
 
+void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
+                int bgs_horizontal_stretch, int bgs_vertical_stretch)
+{
+    REG_MOSAIC = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
+                           unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
+}
+
 void set_green_swap_enabled(bool enabled)
 {
     if(enabled)

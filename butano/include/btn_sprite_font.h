@@ -16,8 +16,15 @@ public:
     static constexpr const int minimum_graphics = 94;
 
     constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters) :
+        sprite_font(item, utf8_characters, span<const int8_t>())
+    {
+    }
+
+    constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters,
+                          const span<const int8_t>& character_widths) :
         _item(item),
-        _utf8_characters(utf8_characters)
+        _utf8_characters(utf8_characters),
+        _character_widths(character_widths)
     {
         BTN_CONSTEXPR_ASSERT((item.shape() == sprite_shape::SQUARE || item.shape() == sprite_shape::TALL) &&
                              item.size() == sprite_size::SMALL, "Invalid shape or size");
@@ -28,6 +35,9 @@ public:
                              "Invalid utf8 characters count");
         BTN_CONSTEXPR_ASSERT(_validate_utf8_characters(utf8_characters), "Utf8 characters validation failed");
         BTN_CONSTEXPR_ASSERT(! _duplicated_utf8_characters(utf8_characters), "There's duplicated utf8 characters");
+        BTN_CONSTEXPR_ASSERT(character_widths.empty() || character_widths.size() == 1 + minimum_graphics +
+                             utf8_characters.size(), "Invalid characters width count");
+        BTN_CONSTEXPR_ASSERT(_validate_character_widths(character_widths), "Character widths validation failed");
     }
 
     [[nodiscard]] constexpr const sprite_item& item() const
@@ -40,9 +50,15 @@ public:
         return _utf8_characters;
     }
 
+    [[nodiscard]] constexpr const span<const int8_t>& character_widths() const
+    {
+        return _character_widths;
+    }
+
     [[nodiscard]] constexpr bool operator==(const sprite_font& other) const
     {
-        return _item == other._item && _utf8_characters == other._utf8_characters;
+        return _item == other._item && _utf8_characters == other._utf8_characters &&
+                _character_widths == other._character_widths;
     }
 
     [[nodiscard]] constexpr bool operator!=(const sprite_font& other) const
@@ -53,6 +69,7 @@ public:
 private:
     sprite_item _item;
     span<const string_view> _utf8_characters;
+    span<const int8_t> _character_widths;
 
     [[nodiscard]] static constexpr bool _validate_utf8_characters(const span<const string_view>& utf8_characters)
     {
@@ -92,6 +109,19 @@ private:
         }
 
         return false;
+    }
+
+    [[nodiscard]] static constexpr bool _validate_character_widths(const span<const int8_t>& character_widths)
+    {
+        for(int character_width : character_widths)
+        {
+            if(character_width < 0 || character_width > 8)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 };
 

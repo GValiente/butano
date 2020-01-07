@@ -53,6 +53,18 @@ namespace sprites_manager
 
     void set_z_order(id_type id, int z_order);
 
+    [[nodiscard]] bool horizontal_flip(id_type id);
+
+    void set_horizontal_flip(id_type id, bool horizontal_flip);
+
+    [[nodiscard]] bool vertical_flip(id_type id);
+
+    void set_vertical_flip(id_type id, bool vertical_flip);
+
+    [[nodiscard]] bool mosaic_enabled(id_type id);
+
+    void set_mosaic_enabled(id_type id, bool mosaic_enabled);
+
     [[nodiscard]] bool visible(id_type id);
 
     void set_visible(id_type id, bool visible);

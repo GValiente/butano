@@ -3,7 +3,6 @@
 
 #include "btn_assert.h"
 #include "btn_fixed_fwd.h"
-#include "btn_math_bios_division.h"
 
 namespace _btn
 {
@@ -118,11 +117,6 @@ namespace btn
      * @brief Integer square root.
      */
     [[nodiscard]] int sqrt(int value);
-
-    /**
-     * @brief Integer square root.
-     */
-    [[nodiscard]] int bios_sqrt(int value);
 
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)

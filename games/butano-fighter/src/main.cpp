@@ -20,8 +20,9 @@
 
 #include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"
-#include "btn_fixed_8x8_font_sprite_item.h"
-#include "btn_fixed_8x16_font_sprite_item.h"
+
+#include "bf_stats.h"
+#include "bf_sprite_fonts.h"
 
 int main()
 {
@@ -32,37 +33,16 @@ int main()
     int display_width = btn::display::width();
     int display_height = btn::display::height();
     btn::sprite_ptr sprite = btn::sprite_ptr::create(display_width / 2, display_height / 2, btn::sprite_items::hero);
+    sprite.set_mosaic_enabled(true);
+
     auto sprite_animate_action = btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
     sprite_animate_action.run();
 
     btn::random random;
     btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
 
-    static constexpr btn::string_view utf8_characters[] = {
-        "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
-    };
-
-    constexpr btn::sprite_font font(btn::sprite_items::fixed_8x8_font, utf8_characters);
-    btn::sprite_text_generator text_generator(font);
-    int text_height = font.item().shape_size().height();
-
-    btn::string<32> text;
-    btn::input_string_stream text_stream(text);
-    text_stream.append("IWRAM: ");
-    text_stream.append(btn::memory::used_static_iwram());
-    text_stream.append("B");
-
-    auto iwram_text_sprites = text_generator.generate<4>(8, 160 - (text_height * 2) - (text_height / 2), text);
-
-    text_stream.clear();
-    text_stream.append("EWRAM: ");
-    text_stream.append(btn::memory::used_static_ewram());
-    text_stream.append("B");
-
-    auto ewram_text_sprites = text_generator.generate<4>(8, 160 - text_height - (text_height / 2), text);
-
-    btn::vector<btn::sprite_ptr, 4> cpu_text_sprites;
-    btn::fixed max_cpu_usage = 0;
+    btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
+    bf::stats stats(text_generator);
     int counter = 0;
     btn::music::play(btn::music_items::battle_clean);
     btn::core::update();
@@ -77,6 +57,16 @@ int main()
         if(btn::keypad::pressed(btn::keypad::button_type::B))
         {
             btn::display::set_green_swap_enabled(! btn::display::green_swap_enabled());
+        }
+
+        if(btn::keypad::pressed(btn::keypad::button_type::L))
+        {
+            sprite.set_horizontal_flip(! sprite.horizontal_flip());
+        }
+
+        if(btn::keypad::pressed(btn::keypad::button_type::R))
+        {
+            sprite.set_vertical_flip(! sprite.vertical_flip());
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::SELECT))
@@ -106,22 +96,12 @@ int main()
 
         btn::camera::set_position(camera_position);
 
-        max_cpu_usage = btn::max(max_cpu_usage, btn::core::cpu_usage());
-
         if(counter % 64 == 0)
         {
             int x = (display_width / 4) + int(random.get() % (unsigned(display_width) / 2));
             int y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
             sprite_move_to_action = btn::sprite_move_to_action(sprite, 64, x, y);
             sprite_move_to_action.run();
-
-            cpu_text_sprites.clear();
-            text_stream.clear();
-            text_stream.append("CPU: ");
-            text_stream.append(max_cpu_usage * 100);
-            text_stream.append("%");
-            text_generator.generate(8, 160 - (text_height * 3) - (text_height / 2), text, cpu_text_sprites);
-            max_cpu_usage = 0;
         }
 
         btn::core::update();

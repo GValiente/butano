@@ -124,6 +124,36 @@ public:
 
     void set_z_order(int z_order);
 
+    [[nodiscard]] bool horizontal_flip() const
+    {
+        return _horizontal_flip;
+    }
+
+    void set_horizontal_flip(bool horizontal_flip)
+    {
+        _horizontal_flip = horizontal_flip;
+    }
+
+    [[nodiscard]] bool vertical_flip() const
+    {
+        return _vertical_flip;
+    }
+
+    void set_vertical_flip(bool vertical_flip)
+    {
+        _vertical_flip = vertical_flip;
+    }
+
+    [[nodiscard]] bool mosaic_enabled() const
+    {
+        return _mosaic_enabled;
+    }
+
+    void set_mosaic_enabled(bool mosaic_enabled)
+    {
+        _mosaic_enabled = mosaic_enabled;
+    }
+
     [[nodiscard]] bool visible() const
     {
         return _visible;
@@ -168,6 +198,9 @@ private:
     int _graphics_id;
     int _bg_priority = 2;
     int _z_order = 0;
+    bool _horizontal_flip = false;
+    bool _vertical_flip = false;
+    bool _mosaic_enabled = false;
     bool _visible = true;
     bool _ignore_camera = false;
 };

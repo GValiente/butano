@@ -490,7 +490,10 @@ public:
         }
         else
         {
-            it->second = move(value);
+            pointer storage = _storage;
+            size_type index = it._index;
+            storage[index].~value_type();
+            ::new(storage + index) value_type(move(value));
         }
 
         return it;

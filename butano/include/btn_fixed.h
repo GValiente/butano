@@ -4,7 +4,6 @@
 #include "btn_assert.h"
 #include "btn_limits.h"
 #include "btn_functional.h"
-#include "btn_math_bios_division.h"
 
 namespace btn
 {
@@ -120,20 +119,6 @@ public:
         BTN_CONSTEXPR_ASSERT(scale() > integer() * (other.integer() - 1), "Precision is too low");
 
         return *this * other.reciprocal();
-    }
-
-    [[nodiscard]] inline fixed_t bios_division(fixed_t other) const
-    {
-        BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
-
-        return fixed_t::create(btn::bios_division(_value * scale(), other._value));
-    }
-
-    [[nodiscard]] inline fixed_t bios_division(int integer) const
-    {
-        BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
-
-        return fixed_t::create(btn::bios_division(_value, integer));
     }
 
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const

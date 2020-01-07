@@ -20,6 +20,8 @@ class sprite_text_generator
 {
 
 public:
+    using utf8_characters_map_type = hash_map<int, int16_t, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;
+
     explicit sprite_text_generator(const sprite_font& font);
 
     [[nodiscard]] const sprite_font& font() const
@@ -78,6 +80,11 @@ public:
         _one_sprite_per_character = one_sprite_per_character;
     }
 
+    [[nodiscard]] const utf8_characters_map_type& utf8_characters_map() const
+    {
+        return _utf8_characters_map;
+    }
+
     [[nodiscard]] fixed width(const string_view& text) const;
 
     template<size_t MaxSprites>
@@ -103,7 +110,7 @@ public:
 private:
     sprite_font _font;
     sprite_palette_ptr _palette_ptr;
-    hash_map<int, int16_t, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _ut8_characters_map;
+    utf8_characters_map_type _utf8_characters_map;
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 0;
     int _z_order = 0;

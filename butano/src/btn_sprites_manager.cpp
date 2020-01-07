@@ -7,6 +7,7 @@
 #include "btn_vector.h"
 #include "btn_camera.h"
 #include "btn_display.h"
+#include "btn_algorithm.h"
 #include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
 #include "../hw/include/btn_hw_sprites.h"
@@ -28,6 +29,7 @@ namespace
         unsigned usages = 1;
         unsigned sort_key;
         sprite_palette_ptr palette_ptr;
+        int8_t handles_index = -1;
         unsigned visible: 1;
         unsigned ignore_camera: 1;
         unsigned on_screen: 1;
@@ -95,7 +97,8 @@ namespace
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
         sorted_items_type sorted_items_vector;
         hw::sprites::handle handles[hw::sprites::available_sprites()];
-        int commit_items_count = 0;
+        int first_index_to_commit = hw::sprites::available_sprites();
+        int last_index_to_commit = 0;
         int last_visible_items_count = 0;
         bool sort_items = false;
         bool check_items_on_screen = false;
@@ -139,7 +142,7 @@ namespace
                         }
                     }
 
-                    if(on_screen || on_screen != item->on_screen)
+                    if(on_screen != item->on_screen)
                     {
                         item->on_screen = on_screen;
                         rebuild_handles = true;
@@ -200,7 +203,12 @@ namespace
                     BTN_ASSERT(visible_items_count < hw::sprites::available_sprites(), "Too much sprites on screen");
 
                     data.handles[visible_items_count] = item->handle;
+                    item->handles_index = int8_t(visible_items_count);
                     ++visible_items_count;
+                }
+                else
+                {
+                    item->handles_index = -1;
                 }
             }
 
@@ -213,7 +221,23 @@ namespace
                 ++visible_items_count;
             }
 
-            data.commit_items_count = visible_items_count;
+            if(visible_items_count)
+            {
+                data.first_index_to_commit = 0;
+                data.last_index_to_commit = visible_items_count - 1;
+            }
+        }
+    }
+
+    void _update_handles(item_type& item)
+    {
+        int handles_index = item.handles_index;
+
+        if(handles_index >= 0)
+        {
+            data.handles[handles_index] = item.handle;
+            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
+            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
         }
     }
 }
@@ -291,11 +315,7 @@ void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
 
     hw::sprites::set_tile(tiles_ptr.id(), item->handle);
     item->tiles_ptr = move(tiles_ptr);
-
-    if(item->on_screen)
-    {
-        data.rebuild_handles = true;
-    }
+    _update_handles(*item);
 }
 
 const sprite_palette_ptr& palette_ptr(id_type id)
@@ -312,11 +332,7 @@ void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 
     hw::sprites::set_palette(palette_ptr.id(), item->handle);
     item->palette_ptr = move(palette_ptr);
-
-    if(item->on_screen)
-    {
-        data.rebuild_handles = true;
-    }
+    _update_handles(*item);
 }
 
 const fixed_point& position(id_type id)
@@ -337,6 +353,7 @@ void set_position(id_type id, const fixed_point& position)
 
     hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), item->handle);
     item->position = position;
+    _update_handles(*item);
 
     if(item->visible)
     {
@@ -403,6 +420,7 @@ bool visible(id_type id)
 void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
+
     item->visible = visible;
 
     if(visible)
@@ -412,9 +430,13 @@ void set_visible(id_type id, bool visible)
     }
     else
     {
+        if(item->on_screen)
+        {
+            data.rebuild_handles = true;
+        }
+
         item->on_screen = false;
         item->check_on_screen = false;
-        data.rebuild_handles = true;
     }
 }
 
@@ -453,10 +475,12 @@ void update()
 
 void commit()
 {
-    if(data.commit_items_count)
+    if(data.first_index_to_commit < hw::sprites::available_sprites())
     {
-        hw::sprites::commit(data.handles[0], data.commit_items_count);
-        data.commit_items_count = 0;
+        int commit_items_count = data.last_index_to_commit - data.first_index_to_commit + 1;
+        hw::sprites::commit(data.handles[0], data.first_index_to_commit, commit_items_count);
+        data.first_index_to_commit = hw::sprites::available_sprites();
+        data.last_index_to_commit = 0;
     }
 }
 

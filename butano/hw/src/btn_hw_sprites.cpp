@@ -80,9 +80,9 @@ void hide(handle& sprite)
     obj_hide(sprite_ptr);
 }
 
-void commit(const handle& sprites_ref, int count)
+void commit(const handle& sprites_ref, int offset, int count)
 {
-    memory::copy(sprites_ref, count, *vram());
+    memory::copy((&sprites_ref)[offset], count, vram()[offset]);
 }
 
 }

@@ -93,7 +93,7 @@ namespace
 
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
-        sorted_items_type sorted_items_vector;
+        sorted_items_type sorted_items;
         hw::sprites::handle handles[hw::sprites::available_sprites()];
         int first_index_to_commit = hw::sprites::available_sprites();
         int last_index_to_commit = 0;
@@ -114,7 +114,7 @@ namespace
             bool rebuild_handles = data.rebuild_handles;
             data.check_items_on_screen = false;
 
-            for(item_type* item : data.sorted_items_vector)
+            for(item_type* item : data.sorted_items)
             {
                 if(item->check_on_screen)
                 {
@@ -163,21 +163,21 @@ namespace
                 return (*a)->sort_key < (*b)->sort_key;
             };
 
-            shell_sort<sorted_items_type::iterator, decltype(comparator)>(data.sorted_items_vector.begin(),
-                                                                          data.sorted_items_vector.end(), comparator);
+            shell_sort<sorted_items_type::iterator, decltype(comparator)>(data.sorted_items.begin(),
+                                                                          data.sorted_items.end(), comparator);
 
-            size_t items_count = data.sorted_items_vector.size();
+            size_t items_count = data.sorted_items.size();
 
             while(items_count)
             {
                 --items_count;
 
-                item_type* item = data.sorted_items_vector[items_count];
+                item_type* item = data.sorted_items[items_count];
 
                 if(! item->usages)
                 {
                     data.items_pool.destroy<item_type>(item);
-                    data.sorted_items_vector.pop_back();
+                    data.sorted_items.pop_back();
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace
             int visible_items_count = 0;
             data.rebuild_handles = false;
 
-            for(item_type* item : data.sorted_items_vector)
+            for(item_type* item : data.sorted_items)
             {
                 if(item->on_screen)
                 {
@@ -259,8 +259,14 @@ id_type create(sprite_builder&& builder)
     }
 
     item_type* new_item = data.items_pool.create<item_type>(move(builder));
-    data.sorted_items_vector.push_back(new_item);
-    data.sort_items = true;
+    sorted_items_type& sorted_items = data.sorted_items;
+
+    if(! data.sort_items && ! sorted_items.empty() && new_item->sort_key < sorted_items.back()->sort_key)
+    {
+        data.sort_items = true;
+    }
+
+    sorted_items.push_back(new_item);
 
     if(builder.visible())
     {
@@ -494,7 +500,7 @@ void update_camera()
 {
     _sort_items();
 
-    for(item_type* item : data.sorted_items_vector)
+    for(item_type* item : data.sorted_items)
     {
         if(! item->ignore_camera)
         {

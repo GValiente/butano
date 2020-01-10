@@ -16,6 +16,7 @@
 #include "btn_hero_sprite_item.h"
 
 #include "btn_random.h"
+#include "btn_green_swap.h"
 #include "btn_sprite_actions.h"
 
 #include "btn_input_string_stream.h"
@@ -56,7 +57,7 @@ int main()
 
         if(btn::keypad::pressed(btn::keypad::button_type::B))
         {
-            btn::display::set_green_swap_enabled(! btn::display::green_swap_enabled());
+            btn::green_swap::set_enabled(! btn::green_swap::enabled());
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::L))

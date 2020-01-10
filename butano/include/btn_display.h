@@ -15,10 +15,6 @@ namespace btn::display
     [[nodiscard]] BTN_CODE_CONST int height();
 
     [[nodiscard]] BTN_CODE_CONST size dimensions();
-
-    [[nodiscard]] bool green_swap_enabled();
-
-    void set_green_swap_enabled(bool enabled);
 }
 
 #endif

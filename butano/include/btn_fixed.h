@@ -32,12 +32,12 @@ public:
     constexpr fixed_t() = default;
 
     constexpr fixed_t(int integer) :
-        _value(integer * scale())
+        _value(integer << Precision)
     {
     }
 
     constexpr fixed_t(int integer, int fraction) :
-        _value((integer * scale()) + fraction)
+        _value((integer << Precision) + fraction)
     {
         BTN_CONSTEXPR_ASSERT(fraction >= 0, "Fraction is negative");
     }
@@ -55,7 +55,7 @@ public:
     template<size_t OtherPrecision>
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _value(Precision < OtherPrecision ?
-                   other.value() >> (OtherPrecision - Precision) :
+                   other.value() / (other.scale() - scale()) :
                    other.value() << (Precision - OtherPrecision))
     {
     }
@@ -68,6 +68,11 @@ public:
     [[nodiscard]] constexpr int integer() const
     {
         return _value / scale();
+    }
+
+    [[nodiscard]] constexpr unsigned unsigned_integer() const
+    {
+        return _value >> Precision;
     }
 
     [[nodiscard]] constexpr int fraction() const
@@ -87,7 +92,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
-        return fixed_t::create(int((int64_t(_value) * other._value) / scale()));
+        return fixed_t::create(int((int64_t(_value) * other._value) >> Precision));
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(int integer) const
@@ -97,7 +102,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(fixed_t other) const
     {
-        return fixed_t::create((_value * other._value) / scale());
+        return fixed_t::create((_value * other._value) >> Precision);
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(int integer) const
@@ -105,27 +110,19 @@ public:
         return multiplication(integer);
     }
 
-    [[nodiscard]] constexpr fixed_t reciprocal() const
+    [[nodiscard]] constexpr fixed_t reciprocal_division(int integer) const
     {
-        BTN_CONSTEXPR_ASSERT(integer(), "Integer is zero");
+        BTN_CONSTEXPR_ASSERT(_value >= 0, "Internal value is not positive");
+        BTN_CONSTEXPR_ASSERT(integer >= 0, "Integer is not greater than 0");
 
-        return fixed_t::create((scale() + integer() - 1) / integer());
-    }
-
-    [[nodiscard]] constexpr fixed_t reciprocal_division(fixed_t other) const
-    {
-        BTN_CONSTEXPR_ASSERT(reciprocal_division_threshold(other) <= 0 ||
-                             integer() < scale() / reciprocal_division_threshold(other), "Numerator is too high");
-        BTN_CONSTEXPR_ASSERT(scale() > integer() * (other.integer() - 1), "Precision is too low");
-
-        return *this * other.reciprocal();
+        return *this * fixed_t::create((scale() + integer - 1) / integer);
     }
 
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
         BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
 
-        return fixed_t::create(int((int64_t(_value) * scale()) / other._value));
+        return fixed_t::create(int((int64_t(_value) << Precision) / other._value));
     }
 
     [[nodiscard]] constexpr fixed_t division(int integer) const
@@ -160,12 +157,13 @@ public:
      */
     [[nodiscard]] constexpr fixed_t ts_sqrt(int iterations) const
     {
+        BTN_CONSTEXPR_ASSERT(_value > 0, "Internal value is not greater than zero");
         BTN_CONSTEXPR_ASSERT(iterations >= 1, "Invalid iterations");
 
-        int result = (_value + (1 << Precision)) >> 1;
-        int factor = ((1 << Precision) - _value) >> 1;
+        int coefficient = scale();
+        int result = (_value + coefficient) >> 1;
+        int factor = (coefficient - _value) >> 1;
         int power = factor;
-        int coefficient = 1 << Precision;
 
         auto multiply = [](int first, int second)
         {
@@ -315,11 +313,6 @@ private:
     constexpr fixed_t(int value, bool) :
         _value(value)
     {
-    }
-
-    [[nodiscard]] constexpr int reciprocal_division_threshold(fixed_t other) const
-    {
-        return other.reciprocal()._value * other.integer() - scale();
     }
 };
 

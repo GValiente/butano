@@ -105,16 +105,17 @@ public:
 
         if(int fraction = value.fraction())
         {
-            int digits = 10000;
+            auto scale = unsigned(value.scale());
+            unsigned digits = 10000;
             append('.');
 
-            if(uint64_t(1 << Precision) * digits < integral_limits<unsigned>::max)
+            if(uint64_t(scale) * digits < integral_limits<unsigned>::max)
             {
-                append((unsigned(fraction) * digits) / (1 << Precision));
+                append((unsigned(fraction) * digits) / scale);
             }
             else
             {
-                append((uint64_t(fraction) * digits) / (1 << Precision));
+                append((uint64_t(fraction) * digits) / scale);
             }
         }
     }

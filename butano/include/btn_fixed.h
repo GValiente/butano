@@ -198,6 +198,12 @@ public:
         return create(result);
     }
 
+    constexpr fixed_t& operator-()
+    {
+        _value = -_value;
+        return *this;
+    }
+
     constexpr fixed_t& operator+=(fixed_t other)
     {
         _value += other._value;
@@ -224,87 +230,74 @@ public:
 
     constexpr fixed_t& operator/=(fixed_t other)
     {
-        BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
-
         *this = division(other);
         return *this;
     }
 
     constexpr fixed_t& operator/=(int integer)
     {
-        BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
-
         *this = division(integer);
         return *this;
     }
 
-    [[nodiscard]] constexpr fixed_t operator+(fixed_t other) const
+    [[nodiscard]] constexpr friend fixed_t operator+(fixed_t a, fixed_t b)
     {
-        return fixed_t::create(_value + other._value);
+        return fixed_t::create(a._value + b._value);
     }
 
-    [[nodiscard]] constexpr fixed_t operator-(fixed_t other) const
+    [[nodiscard]] constexpr friend fixed_t operator-(fixed_t a, fixed_t b)
     {
-        return fixed_t::create(_value - other._value);
+        return fixed_t::create(a._value - b._value);
     }
 
-    [[nodiscard]] constexpr fixed_t operator-() const
+    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, fixed_t b)
     {
-        return fixed_t() - *this;
+        return a.multiplication(b);
     }
 
-    [[nodiscard]] constexpr fixed_t operator*(fixed_t other) const
+    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, int b)
     {
-        return multiplication(other);
+        return a.multiplication(b);
     }
 
-    [[nodiscard]] constexpr fixed_t operator*(int integer) const
+    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, fixed_t b)
     {
-        return multiplication(integer);
+        return a.division(b);
     }
 
-    [[nodiscard]] constexpr fixed_t operator/(fixed_t other) const
+    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
-
-        return division(other);
+        return a.division(b);
     }
 
-    [[nodiscard]] constexpr fixed_t operator/(int integer) const
+    [[nodiscard]] constexpr friend bool operator==(fixed_t a, fixed_t b)
     {
-        BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
-
-        return division(integer);
+        return a._value == b._value;
     }
 
-    [[nodiscard]] constexpr bool operator==(fixed_t other) const
+    [[nodiscard]] constexpr friend bool operator!=(fixed_t a, fixed_t b)
     {
-        return _value == other._value;
+        return a._value != b._value;
     }
 
-    [[nodiscard]] constexpr bool operator!=(fixed_t other) const
+    [[nodiscard]] constexpr friend bool operator<(fixed_t a, fixed_t b)
     {
-        return _value != other._value;
+        return a._value < b._value;
     }
 
-    [[nodiscard]] constexpr bool operator<(fixed_t other) const
+    [[nodiscard]] constexpr friend bool operator<=(fixed_t a, fixed_t b)
     {
-        return _value < other._value;
+        return a._value <= b._value;
     }
 
-    [[nodiscard]] constexpr bool operator<=(fixed_t other) const
+    [[nodiscard]] constexpr friend bool operator>(fixed_t a, fixed_t b)
     {
-        return _value <= other._value;
+        return a._value > b._value;
     }
 
-    [[nodiscard]] constexpr bool operator>(fixed_t other) const
+    [[nodiscard]] constexpr friend bool operator>=(fixed_t a, fixed_t b)
     {
-        return _value > other._value;
-    }
-
-    [[nodiscard]] constexpr bool operator>=(fixed_t other) const
-    {
-        return _value >= other._value;
+        return a._value >= b._value;
     }
 
 private:

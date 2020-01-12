@@ -136,14 +136,14 @@ public:
             return _map->_storage + _index;
         }
 
-        [[nodiscard]] bool operator==(const iterator& other) const
+        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
-            return  _index == other._index;
+            return  a._index == b._index;
         }
 
-        [[nodiscard]] bool operator!=(const iterator& other) const
+        [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
-            return ! (*this == other);
+            return ! (a == b);
         }
 
     private:
@@ -253,14 +253,14 @@ public:
             return _map->_storage + _index;
         }
 
-        [[nodiscard]] bool operator==(const const_iterator& other) const
+        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
-            return  _index == other._index;
+            return  a._index == b._index;
         }
 
-        [[nodiscard]] bool operator!=(const const_iterator& other) const
+        [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
-            return ! (*this == other);
+            return ! (a == b);
         }
 
     private:
@@ -673,30 +673,29 @@ public:
         return it->second;
     }
 
-    bool operator==(const ihash_map& other) const
+    [[nodiscard]] friend bool operator==(const ihash_map& a, const ihash_map& b)
     {
-        size_type first_valid_index = _first_valid_index;
-        size_type last_valid_index = _last_valid_index;
+        size_type first_valid_index = a._first_valid_index;
+        size_type last_valid_index = a._last_valid_index;
 
-        if(_size != other._size || first_valid_index != other._first_valid_index ||
-                last_valid_index != other._last_valid_index)
+        if(a._size != b._size || first_valid_index != b._first_valid_index || last_valid_index != b._last_valid_index)
         {
             return false;
         }
 
-        const_pointer storage = _storage;
-        const_pointer other_storage = other._storage;
-        const bool* allocated = _allocated;
-        const bool* other_allocated = other._allocated;
+        const_pointer a_storage = a._storage;
+        const_pointer b_storage = b._storage;
+        const bool* a_allocated = a._allocated;
+        const bool* b_allocated = b._allocated;
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
-            if(allocated[index] != other_allocated[index])
+            if(a_allocated[index] != b_allocated[index])
             {
                 return false;
             }
 
-            if(allocated[index] && storage[index] != other_storage[index])
+            if(a_allocated[index] && a_storage[index] != b_storage[index])
             {
                 return false;
             }
@@ -705,9 +704,9 @@ public:
         return true;
     }
 
-    bool operator!=(const ihash_map& other) const
+    [[nodiscard]] bool friend operator!=(const ihash_map& a, const ihash_map& b)
     {
-        return ! (operator==(other));
+        return ! (a == b);
     }
 
 protected:

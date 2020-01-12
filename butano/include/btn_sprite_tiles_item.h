@@ -50,15 +50,15 @@ public:
 
     [[nodiscard]] sprite_tiles_ptr tiles_ptr(int graphics_id, create_mode create_mode) const;
 
-    [[nodiscard]] constexpr bool operator==(const sprite_tiles_item& other) const
+    [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {
-        return _tiles.data() == other._tiles.data() && _tiles.size() == other._tiles.size() &&
-                _graphics == other._graphics;
+        return a._tiles.data() == b._tiles.data() && a._tiles.size() == b._tiles.size() &&
+                a._graphics == b._graphics;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const sprite_tiles_item& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

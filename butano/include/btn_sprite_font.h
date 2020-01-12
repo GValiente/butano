@@ -55,15 +55,15 @@ public:
         return _character_widths;
     }
 
-    [[nodiscard]] constexpr bool operator==(const sprite_font& other) const
+    [[nodiscard]] constexpr friend bool operator==(const sprite_font& a, const sprite_font& b)
     {
-        return _item == other._item && _utf8_characters == other._utf8_characters &&
-                _character_widths == other._character_widths;
+        return a._item == b._item && a._utf8_characters == b._utf8_characters &&
+                a._character_widths == b._character_widths;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const sprite_font& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_font& a, const sprite_font& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

@@ -20,14 +20,14 @@ public:
         return _id;
     }
 
-    [[nodiscard]] constexpr bool operator==(music_item other) const
+    [[nodiscard]] constexpr friend bool operator==(music_item a, music_item b)
     {
-        return _id == other._id;
+        return a._id == b._id;
     }
 
-    [[nodiscard]] constexpr bool operator!=(music_item other) const
+    [[nodiscard]] constexpr friend bool operator!=(music_item a, music_item b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

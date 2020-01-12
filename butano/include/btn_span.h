@@ -204,38 +204,38 @@ public:
         return span(new_begin, new_begin + count);
     }
 
-    [[nodiscard]] constexpr bool operator==(span other) const
+    [[nodiscard]] constexpr friend bool operator==(const span& a, const span& b)
     {
-        if(size() != other.size())
+        if(a.size() != b.size())
         {
             return false;
         }
 
-        auto it = _begin;
-        auto other_it = other._begin;
+        auto a_it = a._begin;
+        auto b_it = b._begin;
 
-        if(it != other_it)
+        if(a_it != b_it)
         {
-            auto end = _end;
+            auto a_end = a._end;
 
-            while(it != end)
+            while(a_it != a_end)
             {
-                if(*it != *other_it)
+                if(*a_it != *b_it)
                 {
                     return false;
                 }
 
-                ++it;
-                ++other_it;
+                ++a_it;
+                ++b_it;
             }
         }
 
         return true;
     }
 
-    [[nodiscard]] constexpr bool operator!=(span other) const
+    [[nodiscard]] constexpr friend bool operator!=(const span& a, const span& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

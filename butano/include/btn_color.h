@@ -32,14 +32,14 @@ public:
         return _value;
     }
 
-    [[nodiscard]] constexpr bool operator==(color other) const
+    [[nodiscard]] constexpr friend bool operator==(color a, color b)
     {
-        return _value == other._value;
+        return a._value == b._value;
     }
 
-    [[nodiscard]] constexpr bool operator!=(color other) const
+    [[nodiscard]] constexpr friend bool operator!=(color a, color b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

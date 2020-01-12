@@ -248,130 +248,130 @@ public:
         _valid = true;
     }
 
-    [[nodiscard]] constexpr bool operator==(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, const optional& b)
     {
-        if(_valid != other._valid)
+        if(a._valid != b._valid)
         {
             return false;
         }
 
-        if(! _valid && ! other._valid)
+        if(! a._valid && ! b._valid)
         {
             return true;
         }
 
-        return _value_impl() == other._value_impl();
+        return a._value_impl() == b._value_impl();
     }
 
-    [[nodiscard]] constexpr bool operator!=(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const optional& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
-    [[nodiscard]] constexpr bool operator<(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator<(const optional& a, const optional& b)
     {
-        if(! other._valid)
+        if(! b._valid)
         {
             return false;
         }
 
-        if(! _valid)
+        if(! a._valid)
         {
             return true;
         }
 
-        return _value_impl() < other._value_impl();
+        return a._value_impl() < b._value_impl();
     }
 
-    [[nodiscard]] constexpr bool operator<=(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const optional& b)
     {
-        if(! _valid)
+        if(! a._valid)
         {
             return true;
         }
 
-        if(! other._valid)
+        if(! b._valid)
         {
             return false;
         }
 
-        return _value_impl() <= other._value_impl();
+        return a._value_impl() <= b._value_impl();
     }
 
-    [[nodiscard]] constexpr bool operator>(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, const optional& b)
     {
-        return ! (*this <= other);
+        return ! (a <= b);
     }
 
-    [[nodiscard]] constexpr bool operator>=(const optional& other) const
+    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const optional& b)
     {
-        return ! (*this < other);
+        return ! (a < b);
     }
 
-    [[nodiscard]] constexpr bool operator==(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, nullopt_t)
     {
-        return ! _valid;
+        return ! a._valid;
     }
 
-    [[nodiscard]] constexpr bool operator!=(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, nullopt_t)
     {
-        return _valid;
+        return a._valid;
     }
 
-    [[nodiscard]] constexpr bool operator<(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator<(const optional&, nullopt_t)
     {
         return false;
     }
 
-    [[nodiscard]] constexpr bool operator<=(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, nullopt_t)
     {
-        return ! _valid;
+        return ! a._valid;
     }
 
-    [[nodiscard]] constexpr bool operator>(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, nullopt_t)
     {
-        return _valid;
+        return a._valid;
     }
 
-    [[nodiscard]] constexpr bool operator>=(nullopt_t) const
+    [[nodiscard]] constexpr friend bool operator>=(const optional&, nullopt_t)
     {
         return true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator==(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, const OtherType& b)
     {
-        return _valid ? _value_impl() == value : false;
+        return a._valid ? a._value_impl() == b : false;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator!=(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const OtherType& b)
     {
-        return ! (*this == value);
+        return ! (a == b);
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator<(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator<(const optional& a, const OtherType& b)
     {
-        return _valid ? _value_impl() < value : true;
+        return a._valid ? a._value_impl() < b : true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator<=(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const OtherType& b)
     {
-        return _valid ? _value_impl() <= value : true;
+        return a._valid ? a._value_impl() <= b : true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator>(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, const OtherType& b)
     {
-        return ! (*this <= value);
+        return ! (a <= b);
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr bool operator>=(const OtherType& value) const
+    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const OtherType& b)
     {
-        return ! (*this < value);
+        return ! (a < b);
     }
 
 private:

@@ -39,6 +39,13 @@ public:
         _y = y;
     }
 
+    constexpr point& operator-()
+    {
+        _x = -_x;
+        _y = -_y;
+        return *this;
+    }
+
     constexpr point& operator+=(const point& other)
     {
         _x += other._x;
@@ -69,36 +76,36 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr point operator+(const point& other) const
+    [[nodiscard]] constexpr friend point operator+(const point& a, const point& b)
     {
-        return point(_x + other._x, _y + other._y);
+        return point(a._x + b._x, a._y + b._y);
     }
 
-    [[nodiscard]] constexpr point operator-(const point& other) const
+    [[nodiscard]] constexpr friend point operator-(const point& a, const point& b)
     {
-        return point(_x - other._x, _y - other._y);
+        return point(a._x - b._x, a._y - b._y);
     }
 
-    [[nodiscard]] constexpr point operator*(int value) const
+    [[nodiscard]] constexpr friend point operator*(const point& a, int b)
     {
-        return point(_x * value, _y * value);
+        return point(a._x * b, a._y * b);
     }
 
-    [[nodiscard]] constexpr point operator/(int value) const
+    [[nodiscard]] constexpr friend point operator/(const point& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b != 0, "Invalid value");
 
-        return point(_x / value, _y / value);
+        return point(a._x / b, a._y / b);
     }
 
-    [[nodiscard]] constexpr bool operator==(const point& other) const
+    [[nodiscard]] constexpr friend bool operator==(const point& a, const point& b)
     {
-        return _x == other._x && _y == other._y;
+        return a._x == b._x && a._y == b._y;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const point& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const point& a, const point& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

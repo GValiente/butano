@@ -130,34 +130,34 @@ namespace btn
             return _ptr;
         }
 
-        [[nodiscard]] bool operator==(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr == other._ptr;
+            return a._ptr == b._ptr;
         }
 
-        [[nodiscard]] bool operator!=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr != other._ptr;
+            return a._ptr != b._ptr;
         }
 
-        [[nodiscard]] bool operator<(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator<(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr < other._ptr;
+            return a._ptr < b._ptr;
         }
 
-        [[nodiscard]] bool operator<=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr <= other._ptr;
+            return a._ptr <= b._ptr;
         }
 
-        [[nodiscard]] bool operator>(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr > other._ptr;
+            return a._ptr > b._ptr;
         }
 
-        [[nodiscard]] bool operator>=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator>=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr >= other._ptr;
+            return a._ptr >= b._ptr;
         }
 
     private:
@@ -267,34 +267,64 @@ namespace btn
             return _ptr;
         }
 
-        [[nodiscard]] bool operator==(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr == other._ptr;
+            return a._ptr == b._ptr;
         }
 
-        [[nodiscard]] bool operator!=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr != other._ptr;
+            return a._ptr != b._ptr;
         }
 
-        [[nodiscard]] bool operator<(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator<(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr < other._ptr;
+            return a._ptr < b._ptr;
         }
 
-        [[nodiscard]] bool operator<=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr <= other._ptr;
+            return a._ptr <= b._ptr;
         }
 
-        [[nodiscard]] bool operator>(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr > other._ptr;
+            return a._ptr > b._ptr;
         }
 
-        [[nodiscard]] bool operator>=(const unique_ptr& other) const
+        [[nodiscard]] friend bool operator>=(const unique_ptr& a, const unique_ptr& b)
         {
-            return _ptr >= other._ptr;
+            return a._ptr >= b._ptr;
+        }
+
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, nullptr_t)
+        {
+            return ! a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, nullptr_t)
+        {
+            return a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator<(const unique_ptr&, nullptr_t)
+        {
+            return false;
+        }
+
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, nullptr_t)
+        {
+            return ! a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, nullptr_t)
+        {
+            return a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator>=(const unique_ptr&, nullptr_t)
+        {
+            return true;
         }
 
     private:

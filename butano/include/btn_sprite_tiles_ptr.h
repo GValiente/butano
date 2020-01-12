@@ -52,14 +52,14 @@ public:
         return _iterator->tiles_count;
     }
 
-    [[nodiscard]] bool operator==(const sprite_tiles_ptr& other) const
+    [[nodiscard]] friend bool operator==(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
     {
-        return _iterator == other._iterator;
+        return a._iterator == b._iterator;
     }
 
-    [[nodiscard]] bool operator!=(const sprite_tiles_ptr& other) const
+    [[nodiscard]] friend bool operator!=(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

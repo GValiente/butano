@@ -105,52 +105,52 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr fixed_size operator+(const fixed_size& other) const
+    [[nodiscard]] constexpr friend fixed_size operator+(const fixed_size& a, const fixed_size& b)
     {
-        return fixed_size(_width + other._width, _height + other._height);
+        return fixed_size(a._width + b._width, a._height + b._height);
     }
 
-    [[nodiscard]] constexpr fixed_size operator-(const fixed_size& other) const
+    [[nodiscard]] constexpr friend fixed_size operator-(const fixed_size& a, const fixed_size& b)
     {
-        return fixed_size(_width - other._width, _height - other._height);
+        return fixed_size(a._width - b._width, a._height - b._height);
     }
 
-    [[nodiscard]] constexpr fixed_size operator*(int value) const
+    [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b >= 0, "Invalid value");
 
-        return fixed_size(_width * value, _height * value);
+        return fixed_size(a._width * b, a._height * b);
     }
 
-    [[nodiscard]] constexpr fixed_size operator*(fixed value) const
+    [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, fixed b)
     {
-        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b >= 0, "Invalid value");
 
-        return fixed_size(_width * value, _height * value);
+        return fixed_size(a._width * b, a._height * b);
     }
 
-    [[nodiscard]] constexpr fixed_size operator/(int value) const
+    [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b > 0, "Invalid value");
 
-        return fixed_size(_width / value, _height / value);
+        return fixed_size(a._width / b, a._height / b);
     }
 
-    [[nodiscard]] constexpr fixed_size operator/(fixed value) const
+    [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, fixed b)
     {
-        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b > 0, "Invalid value");
 
-        return fixed_size(_width / value, _height / value);
+        return fixed_size(a._width / b, a._height / b);
     }
 
-    [[nodiscard]] constexpr bool operator==(const fixed_size& other) const
+    [[nodiscard]] constexpr friend bool operator==(const fixed_size& a, const fixed_size& b)
     {
-        return _width == other._width && _height == other._height;
+        return a._width == b._width && a._height == b._height;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const fixed_size& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const fixed_size& a, const fixed_size& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

@@ -27,14 +27,14 @@ public:
 
     [[nodiscard]] sprite_palette_ptr palette_ptr(create_mode create_mode) const;
 
-    [[nodiscard]] constexpr bool operator==(sprite_palette_item other) const
+    [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a, const sprite_palette_item& b)
     {
-        return _palette.data() == other._palette.data() && _palette.size() == other._palette.size();
+        return a._palette.data() == b._palette.data() && a._palette.size() == b._palette.size();
     }
 
-    [[nodiscard]] constexpr bool operator!=(sprite_palette_item other) const
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_palette_item& a, const sprite_palette_item& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

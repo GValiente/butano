@@ -55,15 +55,15 @@ public:
         return _palette_item;
     }
 
-    [[nodiscard]] constexpr bool operator==(const sprite_item& other) const
+    [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b)
     {
-        return _shape == other._shape && _size == other._size && _tiles_item == other._tiles_item &&
-                _palette_item == other._palette_item;
+        return a._shape == b._shape && a._size == b._size && a._tiles_item == b._tiles_item &&
+                a._palette_item == b._palette_item;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const sprite_item& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_item& a, const sprite_item& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

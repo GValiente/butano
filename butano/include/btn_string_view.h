@@ -235,34 +235,34 @@ public:
         return ! empty() && back() == c;
     }
 
-    [[nodiscard]] constexpr bool operator==(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator==(const string_view& a, const string_view& b)
     {
-        return size() == other.size() && _equal_characters(_begin, other._begin);
+        return a.size() == b.size() && _equal_characters(a._begin, b._begin);
     }
 
-    [[nodiscard]] constexpr bool operator!=(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const string_view& a, const string_view& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
-    [[nodiscard]] constexpr bool operator<(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator<(const string_view& a, const string_view& b)
     {
-        return _lexicographical_compare(begin(), end(), other.begin(), other.end());
+        return _lexicographical_compare(a._begin, a._end, b._begin, b._end);
     }
 
-    [[nodiscard]] constexpr bool operator>(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator>(const string_view& a, const string_view& b)
     {
-        return other < *this;
+        return b < a;
     }
 
-    [[nodiscard]] constexpr bool operator<=(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator<=(const string_view& a, const string_view& b)
     {
-        return ! (*this > other);
+        return ! (a > b);
     }
 
-    [[nodiscard]] constexpr bool operator>=(const string_view& other) const
+    [[nodiscard]] constexpr friend bool operator>=(const string_view& a, const string_view& b)
     {
-        return ! (*this < other);
+        return ! (a < b);
     }
 
 private:

@@ -27,6 +27,8 @@
 
 namespace btn
 {
+    using nullptr_t = decltype(nullptr);
+
     [[nodiscard]] void* malloc(size_t bytes);
 
     [[nodiscard]] void* malloc(int bytes);

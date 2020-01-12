@@ -111,14 +111,14 @@ public:
         return make_hash(_id);
     }
 
-    [[nodiscard]] bool operator==(const sprite_ptr& other) const
+    [[nodiscard]] friend bool operator==(const sprite_ptr& a, const sprite_ptr& b)
     {
-        return _id == other._id;
+        return a._id == b._id;
     }
 
-    [[nodiscard]] bool operator!=(const sprite_ptr& other) const
+    [[nodiscard]] friend bool operator!=(const sprite_ptr& a, const sprite_ptr& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

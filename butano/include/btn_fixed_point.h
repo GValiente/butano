@@ -45,6 +45,13 @@ public:
         _y = y;
     }
 
+    constexpr fixed_point& operator-()
+    {
+        _x = -_x;
+        _y = -_y;
+        return *this;
+    }
+
     constexpr fixed_point& operator+=(const fixed_point& other)
     {
         _x += other._x;
@@ -91,48 +98,48 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr fixed_point operator+(const fixed_point& other) const
+    [[nodiscard]] constexpr friend fixed_point operator+(const fixed_point& a, const fixed_point& b)
     {
-        return fixed_point(_x + other._x, _y + other._y);
+        return fixed_point(a._x + b._x, a._y + b._y);
     }
 
-    [[nodiscard]] constexpr fixed_point operator-(const fixed_point& other) const
+    [[nodiscard]] constexpr friend fixed_point operator-(const fixed_point& a, const fixed_point& b)
     {
-        return fixed_point(_x - other._x, _y - other._y);
+        return fixed_point(a._x - b._x, a._y - b._y);
     }
 
-    [[nodiscard]] constexpr fixed_point operator*(int value) const
+    [[nodiscard]] constexpr friend fixed_point operator*(const fixed_point& a, int b)
     {
-        return fixed_point(_x * value, _y * value);
+        return fixed_point(a._x * b, a._y * b);
     }
 
-    [[nodiscard]] constexpr fixed_point operator*(fixed value) const
+    [[nodiscard]] constexpr friend fixed_point operator*(const fixed_point& a, fixed b)
     {
-        return fixed_point(_x * value, _y * value);
+        return fixed_point(a._x * b, a._y * b);
     }
 
-    [[nodiscard]] constexpr fixed_point operator/(int value) const
+    [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b != 0, "Invalid value");
 
-        return fixed_point(_x / value, _y / value);
+        return fixed_point(a._x / b, a._y / b);
     }
 
-    [[nodiscard]] constexpr fixed_point operator/(fixed value) const
+    [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, fixed b)
     {
-        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
+        BTN_CONSTEXPR_ASSERT(b != 0, "Invalid value");
 
-        return fixed_point(_x / value, _y / value);
+        return fixed_point(a._x / b, a._y / b);
     }
 
-    [[nodiscard]] constexpr bool operator==(const fixed_point& other) const
+    [[nodiscard]] constexpr friend bool operator==(const fixed_point& a, const fixed_point& b)
     {
-        return _x == other._x && _y == other._y;
+        return a._x == b._x && a._y == b._y;
     }
 
-    [[nodiscard]] constexpr bool operator!=(const fixed_point& other) const
+    [[nodiscard]] constexpr friend bool operator!=(const fixed_point& a, const fixed_point& b)
     {
-        return ! (*this == other);
+        return ! (a == b);
     }
 
 private:

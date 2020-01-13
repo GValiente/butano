@@ -10,6 +10,7 @@
 #include "sprite_font.h"
 
 #include "fixed_tests.h"
+#include "math_tests.h"
 
 int main()
 {
@@ -24,6 +25,7 @@ int main()
 
     #if BTN_CFG_ASSERT_ENABLED
         fixed_tests();
+        math_tests();
 
         auto text = text_generator.generate<8>(text_x, text_y, "All tests passed :D");
     #else

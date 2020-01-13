@@ -147,13 +147,13 @@ public:
     }
 
     /**
-     * @brief Taylor series square root aproximation. It gives usable results for values between 0.5 and 2.
+     * @brief Taylor series square root approximation. It gives usable results for values between 0.5 and 2.
      *
      * Thanks to ax6.
      * Source: https://pastebin.com/raw/PsDBJXDV
      *
-     * @param iterations Aproximation iterations [1, ...)
-     * @return Aproximated square root.
+     * @param iterations Approximation iterations [1, ...)
+     * @return Approximated square root.
      */
     [[nodiscard]] constexpr fixed_t ts_sqrt(int iterations) const
     {

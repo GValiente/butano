@@ -12,7 +12,7 @@ namespace
 {
     int hw_volume(fixed volume)
     {
-        return volume.unsafe_multiplication(1024).integer();
+        return fixed_t<10>(volume).value();
     }
 }
 

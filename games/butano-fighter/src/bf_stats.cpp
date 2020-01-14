@@ -2,9 +2,8 @@
 
 #include "btn_core.h"
 #include "btn_display.h"
+#include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"
-
-#include "btn_hash_map.h"
 
 namespace bf
 {
@@ -13,13 +12,6 @@ stats::stats(const btn::sprite_text_generator& text_generator) :
     _text_generator(text_generator)
 {
     set_mode(_mode);
-
-    btn::hash_map<int, action, 4> map;
-    map.insert(1, action(text_generator, btn::fixed_point(), false));
-    map.insert_or_assign(1, action(text_generator, btn::fixed_point(), false));
-
-    action act1(text_generator, btn::fixed_point(), false);
-    action act2 = move(act1);
 }
 
 void stats::set_mode(mode_type mode)

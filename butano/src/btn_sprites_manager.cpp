@@ -45,7 +45,7 @@ namespace
 
             if(! ignore_camera)
             {
-                real_position -= btn::camera::position();
+                real_position -= camera::position();
             }
 
             hw::sprites::setup(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.colors_count() > 16,
@@ -122,7 +122,7 @@ namespace
 
                     if(! item->ignore_camera)
                     {
-                        position -= btn::camera::position();
+                        position -= camera::position();
                     }
 
                     size dimensions = hw::sprites::dimensions(item->handle);
@@ -352,7 +352,7 @@ void set_position(id_type id, const fixed_point& position)
 
     if(! item->ignore_camera)
     {
-        real_position -= btn::camera::position();
+        real_position -= camera::position();
     }
 
     hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), item->handle);

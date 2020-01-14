@@ -18,8 +18,6 @@
 #include "btn_random.h"
 #include "btn_green_swap.h"
 #include "btn_sprite_actions.h"
-
-#include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"
 
 #include "bf_stats.h"

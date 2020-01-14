@@ -15,11 +15,6 @@ namespace
     {
         return hw::palettes::colors_per_palette();
     }
-
-    constexpr int intensity_scale()
-    {
-        return 32;
-    }
 }
 
 optional<int> palettes_bank::find(const span<const color>& colors)
@@ -282,9 +277,9 @@ void palettes_bank::update()
         int brightness = fixed_t<8>(_brightness).value();
         int contrast = fixed_t<8>(_contrast).value();
         int intensity = fixed_t<8>(_intensity).value();
-        int inverse_intensity = (_inverse_intensity * intensity_scale()).integer();
-        int grayscale_intensity = (_grayscale_intensity * intensity_scale()).integer();
-        int fade_intensity = (_fade_intensity * intensity_scale()).integer();
+        int inverse_intensity = fixed_t<5>(_inverse_intensity).value();
+        int grayscale_intensity = fixed_t<5>(_grayscale_intensity).value();
+        int fade_intensity = fixed_t<5>(_fade_intensity).value();
         bool update_all = brightness || contrast || intensity || inverse_intensity || grayscale_intensity ||
                 fade_intensity;
         int pal_colors_count = colors_per_palette();
@@ -303,17 +298,17 @@ void palettes_bank::update()
                 color& pal_colors_ref = colors_ptr[int(index) * pal_colors_count];
                 memory::copy(*pal.colors_ref, int(pal_colors_count), pal_colors_ref);
 
-                if(int pal_inverse_intensity = (pal.inverse_intensity * intensity_scale()).integer())
+                if(int pal_inverse_intensity = fixed_t<5>(pal.inverse_intensity).value())
                 {
                     hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ref);
                 }
 
-                if(int pal_grayscale_intensity = (pal.grayscale_intensity * intensity_scale()).integer())
+                if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).value())
                 {
                     hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ref);
                 }
 
-                if(int pal_fade_intensity = (pal.fade_intensity * intensity_scale()).integer())
+                if(int pal_fade_intensity = fixed_t<5>(pal.fade_intensity).value())
                 {
                     hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ref);
                 }

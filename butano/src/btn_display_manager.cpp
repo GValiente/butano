@@ -88,10 +88,10 @@ void commit()
 {
     if(data.commit_mosaic)
     {
-        hw::display::set_mosaic((data.sprites_mosaic_horizontal_stretch * 16).integer(),
-                                (data.sprites_mosaic_vertical_stretch * 16).integer(),
-                                (data.bgs_mosaic_horizontal_stretch * 16).integer(),
-                                (data.bgs_mosaic_vertical_stretch * 16).integer());
+        hw::display::set_mosaic(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).value(),
+                                fixed_t<4>(data.sprites_mosaic_vertical_stretch).value(),
+                                fixed_t<4>(data.bgs_mosaic_horizontal_stretch).value(),
+                                fixed_t<4>(data.bgs_mosaic_vertical_stretch).value());
         data.commit_mosaic = false;
     }
 

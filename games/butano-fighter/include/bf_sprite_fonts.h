@@ -6,11 +6,11 @@
 
 namespace bf
 {
-    static constexpr btn::string_view sprite_font_utf8_characters[] = {
+    constexpr const btn::string_view sprite_font_utf8_characters[] = {
         "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
     };
 
-    static constexpr int8_t variable_8x8_sprite_font_character_widths[] = {
+    constexpr const int8_t variable_8x8_sprite_font_character_widths[] = {
         6,  // 32
         5,  // 33 !
         8,  // 34 "
@@ -124,7 +124,7 @@ namespace bf
         7,  // ¿
     };
 
-    static constexpr int8_t variable_8x16_sprite_font_character_widths[] = {
+    constexpr const int8_t variable_8x16_sprite_font_character_widths[] = {
         6,  // 32
         5,  // 33 !
         7,  // 34 "
@@ -238,17 +238,17 @@ namespace bf
         7,  // ¿
     };
 
-    static constexpr btn::sprite_font fixed_8x8_sprite_font(
+    constexpr const btn::sprite_font fixed_8x8_sprite_font(
             btn::sprite_items::fixed_8x8_font, sprite_font_utf8_characters);
 
-    static constexpr btn::sprite_font fixed_8x16_sprite_font(
+    constexpr const btn::sprite_font fixed_8x16_sprite_font(
             btn::sprite_items::fixed_8x16_font, sprite_font_utf8_characters);
 
-    static constexpr btn::sprite_font variable_8x8_sprite_font(
+    constexpr const btn::sprite_font variable_8x8_sprite_font(
             btn::sprite_items::variable_8x8_font, sprite_font_utf8_characters,
             variable_8x8_sprite_font_character_widths);
 
-    static constexpr btn::sprite_font variable_8x16_sprite_font(
+    constexpr const btn::sprite_font variable_8x16_sprite_font(
             btn::sprite_items::variable_8x16_font, sprite_font_utf8_characters,
             variable_8x16_sprite_font_character_widths);
 }

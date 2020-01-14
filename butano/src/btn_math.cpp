@@ -17,11 +17,11 @@ int sqrt(int value)
 fixed degrees_sin(fixed degrees_angle)
 {
     BTN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
-               "Angle must be in the range [0, 360]: ", degrees_angle.integer());
+               "Angle must be in the range [0, 360]: ", degrees_angle);
 
     constexpr rule_of_three_approximation rule_of_three(360, 65536);
     fixed s16_angle = rule_of_three.calculate(degrees_angle);
-    return lut_sin(int(s16_angle.unsigned_integer()));
+    return fixed::create(hw::lut_sin(int(s16_angle.unsigned_integer())));
 }
 
 fixed lut_sin(int s16_angle)
@@ -34,11 +34,11 @@ fixed lut_sin(int s16_angle)
 fixed degrees_cos(fixed degrees_angle)
 {
     BTN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
-               "Angle must be in the range [0, 360]: ", degrees_angle.integer());
+               "Angle must be in the range [0, 360]: ", degrees_angle);
 
     constexpr rule_of_three_approximation rule_of_three(360, 65536);
     fixed s16_angle = rule_of_three.calculate(degrees_angle);
-    return lut_cos(int(s16_angle.unsigned_integer()));
+    return fixed::create(hw::lut_cos(int(s16_angle.unsigned_integer())));
 }
 
 fixed lut_cos(int s16_angle)

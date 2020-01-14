@@ -21,18 +21,28 @@ namespace
 
 void init()
 {
-    oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(available_sprites()));
+    oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(count()));
 }
 
-void setup(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
-           int x, int y, handle& sprite)
+void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+                   handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
     int a0 = ATTR0_BUILD(0, int(builder.shape()), eight_bits_per_pixel, 0, builder.mosaic_enabled(), 0, 0);
     int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
     int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
-    set_position(x, y, sprite);
+}
+
+void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, int affine_mat_id,
+                  bool eight_bits_per_pixel, handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+    int affine_mode = (builder.double_size() * 2) + 1;
+    int a0 = ATTR0_BUILD(0, int(builder.shape()), eight_bits_per_pixel, affine_mode, builder.mosaic_enabled(), 0, 0);
+    int a1 = ATTR1_BUILDA(0, int(builder.size()), affine_mat_id);
+    int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
+    obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
 }
 
 size dimensions(const handle& sprite)
@@ -59,6 +69,21 @@ void set_palette(int palette_id, handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
     BFN_SET(sprite_ptr->attr2, palette_id, ATTR2_PALBANK);
+}
+
+void set_affine_mat(int affine_mat_id, bool double_size, handle& sprite)
+{
+    remove_affine_mat(sprite);
+
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+    sprite_ptr->attr0 |= double_size ? ATTR0_AFF_DBL : ATTR0_AFF;
+    BFN_SET(sprite_ptr->attr1, affine_mat_id, ATTR1_AFF_ID);
+}
+
+void remove_affine_mat(handle& sprite)
+{
+    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+    sprite_ptr->attr0 &= ~ATTR0_AFF_DBL;
 }
 
 void set_position(int x, int y, handle& sprite)

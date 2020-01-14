@@ -2,6 +2,7 @@
 #define BTN_SPRITES_MANAGER_H
 
 #include "btn_limits.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -11,6 +12,7 @@ class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_palette_ptr;
+class sprite_affine_mat_ptr;
 
 namespace sprites_manager
 {
@@ -65,6 +67,10 @@ namespace sprites_manager
 
     void set_mosaic_enabled(id_type id, bool mosaic_enabled);
 
+    [[nodiscard]] bool double_size(id_type id);
+
+    void set_double_size(id_type id, bool double_size);
+
     [[nodiscard]] bool visible(id_type id);
 
     void set_visible(id_type id, bool visible);
@@ -72,6 +78,14 @@ namespace sprites_manager
     [[nodiscard]] bool ignore_camera(id_type id);
 
     void set_ignore_camera(id_type id, bool ignore_camera);
+
+    [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat_ptr(id_type id);
+
+    void set_affine_mat_ptr(id_type id, optional<sprite_affine_mat_ptr> affine_mat_ptr);
+
+    [[nodiscard]] bool remove_affine_mat_when_not_needed(id_type id);
+
+    void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
 
     void update_camera();
 

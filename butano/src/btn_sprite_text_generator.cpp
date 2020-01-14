@@ -602,7 +602,7 @@ void sprite_text_generator::set_palette(sprite_palette_ptr palette_ptr)
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg_priority: ",
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg priority: ",
                bg_priority);
 
     _bg_priority = bg_priority;
@@ -610,7 +610,7 @@ void sprite_text_generator::set_bg_priority(int bg_priority)
 
 void sprite_text_generator::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z_order: ", z_order);
+    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z order: ", z_order);
 
     _z_order = z_order;
 }

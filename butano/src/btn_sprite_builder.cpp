@@ -2,6 +2,7 @@
 
 #include "btn_sprite_ptr.h"
 #include "btn_sprites_manager.h"
+#include "btn_sprite_affine_mat_builder.h"
 
 namespace btn
 {
@@ -26,23 +27,112 @@ sprite_builder::sprite_builder(sprite_shape shape, sprite_size size, sprite_tile
     _graphics_id(0)
 {
     BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles(_palette_ptr->colors_count() > 16),
-               "Invalid tiles_ptr size: ", _tiles_ptr->tiles_count(), " - ",
+               "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
                shape_size().tiles(_palette_ptr->colors_count() > 16));
 }
 
-void sprite_builder::set_bg_priority(int bg_priority)
+sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg_priority: ",
+    BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
+
+    if(_affine_mat_ptr)
+    {
+        _affine_mat_ptr->set_rotation_angle(rotation_angle);
+    }
+    else
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_rotation_angle(rotation_angle);
+        affine_mat_builder.set_horizontal_flip(_horizontal_flip);
+        affine_mat_builder.set_vertical_flip(_vertical_flip);
+        _affine_mat_ptr = affine_mat_builder.build();
+        _remove_affine_mat_when_not_needed = true;
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
+{
+    BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
+
+    if(_affine_mat_ptr)
+    {
+        _affine_mat_ptr->set_scale_x(scale_x);
+    }
+    else
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_scale_x(scale_x);
+        affine_mat_builder.set_horizontal_flip(_horizontal_flip);
+        affine_mat_builder.set_vertical_flip(_vertical_flip);
+        _affine_mat_ptr = affine_mat_builder.build();
+        _remove_affine_mat_when_not_needed = true;
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
+{
+    BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+
+    if(_affine_mat_ptr)
+    {
+        _affine_mat_ptr->set_scale_y(scale_y);
+    }
+    else
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_scale_y(scale_y);
+        affine_mat_builder.set_horizontal_flip(_horizontal_flip);
+        affine_mat_builder.set_vertical_flip(_vertical_flip);
+        _affine_mat_ptr = affine_mat_builder.build();
+        _remove_affine_mat_when_not_needed = true;
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
+{
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg priority: ",
                bg_priority);
 
     _bg_priority = bg_priority;
+    return *this;
 }
 
-void sprite_builder::set_z_order(int z_order)
+sprite_builder& sprite_builder::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z_order: ", z_order);
+    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z order: ", z_order);
 
     _z_order = z_order;
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_horizontal_flip(bool horizontal_flip)
+{
+    _horizontal_flip = horizontal_flip;
+
+    if(_affine_mat_ptr)
+    {
+        _affine_mat_ptr->set_horizontal_flip(horizontal_flip);
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
+{
+    _vertical_flip = vertical_flip;
+
+    if(_affine_mat_ptr)
+    {
+        _affine_mat_ptr->set_vertical_flip(vertical_flip);
+    }
+
+    return *this;
 }
 
 sprite_ptr sprite_builder::build() const

@@ -8,6 +8,7 @@
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_palette_ptr.h"
+#include "btn_sprite_affine_mat_ptr.h"
 
 namespace btn
 {
@@ -49,6 +50,28 @@ public:
         return sprite_shape_size(_shape, _size);
     }
 
+    [[nodiscard]] create_mode tiles_create_mode() const
+    {
+        return _tiles_create_mode;
+    }
+
+    sprite_builder& set_tiles_create_mode(create_mode create_mode)
+    {
+        _tiles_create_mode = create_mode;
+        return *this;
+    }
+
+    [[nodiscard]] create_mode palette_create_mode() const
+    {
+        return _palette_create_mode;
+    }
+
+    sprite_builder& set_palette_create_mode(create_mode create_mode)
+    {
+        _palette_create_mode = create_mode;
+        return *this;
+    }
+
     [[nodiscard]] fixed x() const
     {
         return _position.x();
@@ -88,70 +111,75 @@ public:
         return *this;
     }
 
-    [[nodiscard]] create_mode tiles_create_mode() const
+    [[nodiscard]] fixed rotation_angle() const
     {
-        return _tiles_create_mode;
+        return _affine_mat_ptr ? _affine_mat_ptr->rotation_angle() : 0;
     }
 
-    sprite_builder& set_tiles_create_mode(create_mode create_mode)
+    sprite_builder& set_rotation_angle(fixed rotation_angle);
+
+    [[nodiscard]] fixed scale_x() const
     {
-        _tiles_create_mode = create_mode;
-        return *this;
+        return _affine_mat_ptr ? _affine_mat_ptr->scale_x() : 1;
     }
 
-    [[nodiscard]] create_mode palette_create_mode() const
+    sprite_builder& set_scale_x(fixed scale_x);
+
+    [[nodiscard]] fixed scale_y() const
     {
-        return _palette_create_mode;
+        return _affine_mat_ptr ? _affine_mat_ptr->scale_y() : 1;
     }
 
-    sprite_builder& set_palette_create_mode(create_mode create_mode)
-    {
-        _palette_create_mode = create_mode;
-        return *this;
-    }
+    sprite_builder& set_scale_y(fixed scale_y);
 
     [[nodiscard]] int bg_priority() const
     {
         return _bg_priority;
     }
 
-    void set_bg_priority(int bg_priority);
+    sprite_builder& set_bg_priority(int bg_priority);
 
     [[nodiscard]] int z_order() const
     {
         return _z_order;
     }
 
-    void set_z_order(int z_order);
+    sprite_builder& set_z_order(int z_order);
 
     [[nodiscard]] bool horizontal_flip() const
     {
-        return _horizontal_flip;
+        return _affine_mat_ptr ? _affine_mat_ptr->horizontal_flip() : _horizontal_flip;
     }
 
-    void set_horizontal_flip(bool horizontal_flip)
-    {
-        _horizontal_flip = horizontal_flip;
-    }
+    sprite_builder& set_horizontal_flip(bool horizontal_flip);
 
     [[nodiscard]] bool vertical_flip() const
     {
-        return _vertical_flip;
+        return _affine_mat_ptr ? _affine_mat_ptr->vertical_flip() : _vertical_flip;
     }
 
-    void set_vertical_flip(bool vertical_flip)
-    {
-        _vertical_flip = vertical_flip;
-    }
+    sprite_builder& set_vertical_flip(bool vertical_flip);
 
     [[nodiscard]] bool mosaic_enabled() const
     {
         return _mosaic_enabled;
     }
 
-    void set_mosaic_enabled(bool mosaic_enabled)
+    sprite_builder& set_mosaic_enabled(bool mosaic_enabled)
     {
         _mosaic_enabled = mosaic_enabled;
+        return *this;
+    }
+
+    [[nodiscard]] bool double_size() const
+    {
+        return _double_size;
+    }
+
+    sprite_builder& set_double_size(bool double_size)
+    {
+        _double_size = double_size;
+        return *this;
     }
 
     [[nodiscard]] bool visible() const
@@ -159,9 +187,10 @@ public:
         return _visible;
     }
 
-    void set_visible(bool visible)
+    sprite_builder& set_visible(bool visible)
     {
         _visible = visible;
+        return *this;
     }
 
     [[nodiscard]] bool ignore_camera() const
@@ -169,9 +198,10 @@ public:
         return _ignore_camera;
     }
 
-    void set_ignore_camera(bool ignore_camera)
+    sprite_builder& set_ignore_camera(bool ignore_camera)
     {
         _ignore_camera = ignore_camera;
+        return *this;
     }
 
     [[nodiscard]] sprite_ptr build() const;
@@ -186,10 +216,37 @@ public:
 
     [[nodiscard]] sprite_palette_ptr release_palette();
 
+    [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const
+    {
+        return _affine_mat_ptr;
+    }
+
+    sprite_builder& set_affine_mat(sprite_affine_mat_ptr affine_mat)
+    {
+        _affine_mat_ptr = move(affine_mat);
+        return *this;
+    }
+
+    [[nodiscard]] optional<sprite_affine_mat_ptr> release_affine_mat()
+    {
+        return move(_affine_mat_ptr);
+    }
+
+    [[nodiscard]] bool remove_affine_mat_when_not_needed() const
+    {
+        return _remove_affine_mat_when_not_needed;
+    }
+
+    void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed)
+    {
+        _remove_affine_mat_when_not_needed = remove_when_not_needed;
+    }
+
 private:
     optional<sprite_item> _item;
     optional<sprite_tiles_ptr> _tiles_ptr;
     optional<sprite_palette_ptr> _palette_ptr;
+    optional<sprite_affine_mat_ptr> _affine_mat_ptr;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     fixed_point _position;
@@ -202,7 +259,9 @@ private:
     bool _vertical_flip = false;
     bool _mosaic_enabled = false;
     bool _visible = true;
+    bool _double_size = false;
     bool _ignore_camera = false;
+    bool _remove_affine_mat_when_not_needed = true;
 };
 
 }

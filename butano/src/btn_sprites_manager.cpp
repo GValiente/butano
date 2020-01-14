@@ -10,7 +10,10 @@
 #include "btn_algorithm.h"
 #include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
+#include "btn_sprite_affine_mat_ptr.h"
+#include "btn_sprite_affine_mats_manager.h"
 #include "../hw/include/btn_hw_sprites.h"
+#include "../hw/include/btn_hw_sprite_affine_mats.h"
 
 namespace btn::sprites_manager
 {
@@ -28,18 +31,43 @@ namespace
         sprite_tiles_ptr tiles_ptr;
         unsigned usages = 1;
         unsigned sort_key;
+        optional<sprite_affine_mat_ptr> affine_mat_ptr;
         sprite_palette_ptr palette_ptr;
         int8_t handles_index = -1;
         unsigned visible: 1;
+        unsigned double_size: 1;
         unsigned ignore_camera: 1;
+        unsigned remove_affine_mat_when_not_needed: 1;
         unsigned on_screen: 1;
         unsigned check_on_screen: 1;
 
         explicit item_type(sprite_builder&& builder) :
             position(builder.position()),
             tiles_ptr(builder.release_tiles()),
+            affine_mat_ptr(builder.release_affine_mat()),
             palette_ptr(builder.release_palette())
         {
+            bool eight_bits_per_pixel = palette_ptr.colors_count() > 16;
+            remove_affine_mat_when_not_needed = builder.remove_affine_mat_when_not_needed();
+
+            if(affine_mat_ptr)
+            {
+                if(remove_affine_mat_when_not_needed && affine_mat_ptr->is_identity())
+                {
+                    affine_mat_ptr.reset();
+                    hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+                }
+                else
+                {
+                    hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), affine_mat_ptr->id(),
+                                              eight_bits_per_pixel, handle);
+                }
+            }
+            else
+            {
+                hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+            }
+
             fixed_point real_position = position;
             ignore_camera = builder.ignore_camera();
 
@@ -48,9 +76,9 @@ namespace
                 real_position -= camera::position();
             }
 
-            hw::sprites::setup(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.colors_count() > 16,
-                               real_position.x().integer(), real_position.y().integer(), handle);
+            hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), handle);
             update_sort_key(builder.bg_priority(), builder.z_order());
+            double_size = builder.double_size();
             on_screen = false;
 
             if(builder.visible())
@@ -94,8 +122,8 @@ namespace
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
         sorted_items_type sorted_items;
-        hw::sprites::handle handles[hw::sprites::available_sprites()];
-        int first_index_to_commit = hw::sprites::available_sprites();
+        hw::sprites::handle handles[hw::sprites::count()];
+        int first_index_to_commit = hw::sprites::count();
         int last_index_to_commit = 0;
         int last_visible_items_count = 0;
         bool sort_items = false;
@@ -104,6 +132,97 @@ namespace
     };
 
     BTN_DATA_EWRAM static_data data;
+
+    void _update_handles(item_type& item)
+    {
+        int handles_index = item.handles_index;
+
+        if(handles_index >= 0)
+        {
+            item.handle.copy_to(data.handles[handles_index]);
+            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
+            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+        }
+    }
+
+    void _assign_affine_mat(sprite_affine_mat_ptr affine_mat_ptr, item_type& item)
+    {
+        hw::sprites::set_affine_mat(affine_mat_ptr.id(), item.double_size, item.handle);
+        item.affine_mat_ptr = move(affine_mat_ptr);
+
+        if(item.double_size)
+        {
+            set_position(static_cast<id_type>(&item), item.position);
+        }
+        else
+        {
+            _update_handles(item);
+        }
+    }
+
+    void _remove_affine_mat(item_type& item)
+    {
+        sprite_affine_mat_ptr& affine_mat_ptr = *item.affine_mat_ptr;
+        hw::sprites::set_horizontal_flip(affine_mat_ptr.horizontal_flip(), item.handle);
+        hw::sprites::set_vertical_flip(affine_mat_ptr.vertical_flip(), item.handle);
+        hw::sprites::remove_affine_mat(item.handle);
+        item.affine_mat_ptr.reset();
+
+        if(item.double_size)
+        {
+            set_position(static_cast<id_type>(&item), item.position);
+        }
+        else
+        {
+            _update_handles(item);
+        }
+    }
+
+    void _sort_items()
+    {
+        if(data.sort_items)
+        {
+            data.sort_items = false;
+
+            auto comparator = [](const sorted_items_type::iterator& a, const sorted_items_type::iterator& b)
+            {
+                return (*a)->sort_key < (*b)->sort_key;
+            };
+
+            shell_sort<sorted_items_type::iterator, decltype(comparator)>(data.sorted_items.begin(),
+                                                                          data.sorted_items.end(), comparator);
+
+            size_t items_count = data.sorted_items.size();
+
+            while(items_count)
+            {
+                --items_count;
+
+                item_type* item = data.sorted_items[items_count];
+
+                if(! item->usages)
+                {
+                    data.items_pool.destroy<item_type>(item);
+                    data.sorted_items.pop_back();
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    void _remove_unneeded_affine_mats()
+    {
+        for(item_type* item : data.sorted_items)
+        {
+            if(item->affine_mat_ptr && item->remove_affine_mat_when_not_needed && item->affine_mat_ptr->is_identity())
+            {
+                _remove_affine_mat(*item);
+            }
+        }
+    }
 
     void _check_items_on_screen()
     {
@@ -152,41 +271,6 @@ namespace
         }
     }
 
-    void _sort_items()
-    {
-        if(data.sort_items)
-        {
-            data.sort_items = false;
-
-            auto comparator = [](const sorted_items_type::iterator& a, const sorted_items_type::iterator& b)
-            {
-                return (*a)->sort_key < (*b)->sort_key;
-            };
-
-            shell_sort<sorted_items_type::iterator, decltype(comparator)>(data.sorted_items.begin(),
-                                                                          data.sorted_items.end(), comparator);
-
-            size_t items_count = data.sorted_items.size();
-
-            while(items_count)
-            {
-                --items_count;
-
-                item_type* item = data.sorted_items[items_count];
-
-                if(! item->usages)
-                {
-                    data.items_pool.destroy<item_type>(item);
-                    data.sorted_items.pop_back();
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-    }
-
     void _rebuild_handles()
     {
         if(data.rebuild_handles)
@@ -198,9 +282,9 @@ namespace
             {
                 if(item->on_screen)
                 {
-                    BTN_ASSERT(visible_items_count < hw::sprites::available_sprites(), "Too much sprites on screen");
+                    BTN_ASSERT(visible_items_count < hw::sprites::count(), "Too much sprites on screen");
 
-                    data.handles[visible_items_count] = item->handle;
+                    item->handle.copy_to(data.handles[visible_items_count]);
                     item->handles_index = int8_t(visible_items_count);
                     ++visible_items_count;
                 }
@@ -226,18 +310,6 @@ namespace
             }
         }
     }
-
-    void _update_handles(item_type& item)
-    {
-        int handles_index = item.handles_index;
-
-        if(handles_index >= 0)
-        {
-            data.handles[handles_index] = item.handle;
-            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
-            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
-        }
-    }
 }
 
 int max_bg_priority()
@@ -248,6 +320,7 @@ int max_bg_priority()
 void init()
 {
     hw::sprites::init();
+    sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
 }
 
 id_type create(sprite_builder&& builder)
@@ -374,7 +447,7 @@ int bg_priority(id_type id)
 
 void set_bg_priority(id_type id, int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= hw::sprites::max_bg_priority(), "Invalid bg_priority: ", bg_priority);
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= hw::sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     auto item = static_cast<item_type*>(id);
 
@@ -399,7 +472,7 @@ int z_order(id_type id)
 
 void set_z_order(id_type id, int z_order)
 {
-    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z_order: ", z_order);
+    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z order: ", z_order);
 
     auto item = static_cast<item_type*>(id);
 
@@ -418,27 +491,55 @@ void set_z_order(id_type id, int z_order)
 bool horizontal_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
+
+    if(item->affine_mat_ptr)
+    {
+        return item->affine_mat_ptr->horizontal_flip();
+    }
+
     return hw::sprites::horizontal_flip(item->handle);
 }
 
 void set_horizontal_flip(id_type id, bool horizontal_flip)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::set_horizontal_flip(horizontal_flip, item->handle);
-    _update_handles(*item);
+
+    if(item->affine_mat_ptr)
+    {
+        item->affine_mat_ptr->set_horizontal_flip(horizontal_flip);
+    }
+    else
+    {
+        hw::sprites::set_horizontal_flip(horizontal_flip, item->handle);
+        _update_handles(*item);
+    }
 }
 
 bool vertical_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
+
+    if(item->affine_mat_ptr)
+    {
+        return item->affine_mat_ptr->vertical_flip();
+    }
+
     return hw::sprites::vertical_flip(item->handle);
 }
 
 void set_vertical_flip(id_type id, bool vertical_flip)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::set_vertical_flip(vertical_flip, item->handle);
-    _update_handles(*item);
+
+    if(item->affine_mat_ptr)
+    {
+        item->affine_mat_ptr->set_vertical_flip(vertical_flip);
+    }
+    else
+    {
+        hw::sprites::set_vertical_flip(vertical_flip, item->handle);
+        _update_handles(*item);
+    }
 }
 
 bool mosaic_enabled(id_type id)
@@ -452,6 +553,28 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
     auto item = static_cast<item_type*>(id);
     hw::sprites::set_mosaic_enabled(mosaic_enabled, item->handle);
     _update_handles(*item);
+}
+
+bool double_size(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->double_size;
+}
+
+void set_double_size(id_type id, bool double_size)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->double_size != double_size)
+    {
+        item->double_size = double_size;
+
+        if(item->affine_mat_ptr)
+        {
+            hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), double_size, item->handle);
+            set_position(id, item->position);
+        }
+    }
 }
 
 bool visible(id_type id)
@@ -496,6 +619,66 @@ void set_ignore_camera(id_type id, bool ignore_camera)
     set_position(id, item->position);
 }
 
+optional<sprite_affine_mat_ptr>& affine_mat_ptr(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->affine_mat_ptr;
+}
+
+void set_affine_mat_ptr(id_type id, optional<sprite_affine_mat_ptr> affine_mat_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(affine_mat_ptr)
+    {
+        sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
+
+        if(item->affine_mat_ptr)
+        {
+            if(item->affine_mat_ptr == affine_mat)
+            {
+                return;
+            }
+        }
+
+        if(item->remove_affine_mat_when_not_needed && affine_mat.is_identity())
+        {
+            if(item->affine_mat_ptr)
+            {
+                _remove_affine_mat(*item);
+            }
+        }
+        else
+        {
+            _assign_affine_mat(move(affine_mat), *item);
+        }
+    }
+    else
+    {
+        if(item->affine_mat_ptr)
+        {
+            _remove_affine_mat(*item);
+        }
+    }
+}
+
+bool remove_affine_mat_when_not_needed(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->remove_affine_mat_when_not_needed;
+}
+
+void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed)
+{
+    auto item = static_cast<item_type*>(id);
+    item->remove_affine_mat_when_not_needed = remove_when_not_needed;
+
+    if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->is_identity())
+    {
+        _remove_affine_mat(*item);
+    }
+}
+
 void update_camera()
 {
     _sort_items();
@@ -512,17 +695,30 @@ void update_camera()
 void update()
 {
     _sort_items();
+    _remove_unneeded_affine_mats();
     _check_items_on_screen();
     _rebuild_handles();
 }
 
 void commit()
 {
-    if(data.first_index_to_commit < hw::sprites::available_sprites())
+    int first_index_to_commit = data.first_index_to_commit;
+    int last_index_to_commit = data.last_index_to_commit;
+
+    if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int commit_items_count = data.last_index_to_commit - data.first_index_to_commit + 1;
-        hw::sprites::commit(data.handles[0], data.first_index_to_commit, commit_items_count);
-        data.first_index_to_commit = hw::sprites::available_sprites();
+        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+        int first_mat_index_to_commit = commit_data->offset * multiplier;
+        int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
+        first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);
+        last_index_to_commit = max(last_index_to_commit, last_mat_index_to_commit);
+    }
+
+    if(first_index_to_commit < hw::sprites::count())
+    {
+        int commit_items_count = last_index_to_commit - first_index_to_commit + 1;
+        hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count);
+        data.first_index_to_commit = hw::sprites::count();
         data.last_index_to_commit = 0;
     }
 }

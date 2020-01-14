@@ -18,6 +18,7 @@
 #include "btn_random.h"
 #include "btn_green_swap.h"
 #include "btn_sprite_actions.h"
+#include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 
 #include "bf_stats.h"
@@ -31,9 +32,14 @@ int main()
 
     int display_width = btn::display::width();
     int display_height = btn::display::height();
-    btn::sprite_ptr sprite = btn::sprite_ptr::create(display_width / 2, display_height / 2, btn::sprite_items::hero);
-    sprite.set_mosaic_enabled(true);
 
+    btn::sprite_builder sprite_builder(btn::sprite_items::hero);
+    sprite_builder.set_position(display_width / 2, display_height / 2);
+    sprite_builder.set_scale_x(2);
+    sprite_builder.set_scale_y(2);
+    sprite_builder.set_mosaic_enabled(true);
+
+    btn::sprite_ptr sprite = sprite_builder.build_and_release();
     auto sprite_animate_action = btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
     sprite_animate_action.run();
 
@@ -50,7 +56,7 @@ int main()
     {
         if(btn::keypad::pressed(btn::keypad::button_type::A))
         {
-            btn::sound::play(btn::sound_items::cure);
+            sprite.set_double_size(! sprite.double_size());
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::B))
@@ -58,14 +64,14 @@ int main()
             btn::green_swap::set_enabled(! btn::green_swap::enabled());
         }
 
-        if(btn::keypad::pressed(btn::keypad::button_type::L))
+        if(btn::keypad::held(btn::keypad::button_type::L))
         {
-            sprite.set_horizontal_flip(! sprite.horizontal_flip());
+            sprite.set_rotation_angle(btn::max(sprite.rotation_angle() - 1, btn::fixed(0)));
         }
 
-        if(btn::keypad::pressed(btn::keypad::button_type::R))
+        if(btn::keypad::held(btn::keypad::button_type::R))
         {
-            sprite.set_vertical_flip(! sprite.vertical_flip());
+            sprite.set_rotation_angle(btn::min(sprite.rotation_angle() + 1, btn::fixed(360)));
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::SELECT))

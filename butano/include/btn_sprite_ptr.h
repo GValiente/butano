@@ -4,6 +4,7 @@
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_create_mode.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -16,6 +17,7 @@ class sprite_tiles_ptr;
 class sprite_tiles_item;
 class sprite_palette_ptr;
 class sprite_palette_item;
+class sprite_affine_mat_ptr;
 
 class sprite_ptr
 {
@@ -78,6 +80,18 @@ public:
 
     void set_position(const fixed_point& position);
 
+    [[nodiscard]] fixed rotation_angle() const;
+
+    void set_rotation_angle(fixed rotation_angle);
+
+    [[nodiscard]] fixed scale_x() const;
+
+    void set_scale_x(fixed scale_x);
+
+    [[nodiscard]] fixed scale_y() const;
+
+    void set_scale_y(fixed scale_y);
+
     [[nodiscard]] int bg_priority() const;
 
     void set_bg_priority(int bg_priority);
@@ -98,6 +112,10 @@ public:
 
     void set_mosaic_enabled(bool mosaic_enabled);
 
+    [[nodiscard]] bool double_size() const;
+
+    void set_double_size(bool double_size);
+
     [[nodiscard]] bool visible() const;
 
     void set_visible(bool visible);
@@ -105,6 +123,14 @@ public:
     [[nodiscard]] bool ignore_camera() const;
 
     void set_ignore_camera(bool ignore_camera);
+
+    [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
+
+    void set_affine_mat(optional<sprite_affine_mat_ptr> affine_mat_ptr);
+
+    [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
+
+    void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
 
     [[nodiscard]] size_t hash() const
     {

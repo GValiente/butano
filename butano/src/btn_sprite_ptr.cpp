@@ -3,6 +3,7 @@
 #include "btn_size.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprites_manager.h"
+#include "btn_sprite_affine_mat_builder.h"
 
 namespace btn
 {
@@ -145,6 +146,87 @@ void sprite_ptr::set_position(const fixed_point& position)
     sprites_manager::set_position(_id, position);
 }
 
+fixed sprite_ptr::rotation_angle() const
+{
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        return affine_mat->rotation_angle();
+    }
+
+    return 0;
+}
+
+void sprite_ptr::set_rotation_angle(fixed rotation_angle)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        affine_mat->set_rotation_angle(rotation_angle);
+    }
+    else if(rotation_angle != 0)
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_rotation_angle(rotation_angle);
+        affine_mat_builder.set_horizontal_flip(horizontal_flip());
+        affine_mat_builder.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        set_affine_mat(affine_mat_builder.build());
+    }
+}
+
+fixed sprite_ptr::scale_x() const
+{
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        return affine_mat->scale_x();
+    }
+
+    return 0;
+}
+
+void sprite_ptr::set_scale_x(fixed scale_x)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        affine_mat->set_scale_x(scale_x);
+    }
+    else if(scale_x != 1)
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_scale_x(scale_x);
+        affine_mat_builder.set_horizontal_flip(horizontal_flip());
+        affine_mat_builder.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        set_affine_mat(affine_mat_builder.build());
+    }
+}
+
+fixed sprite_ptr::scale_y() const
+{
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        return affine_mat->scale_y();
+    }
+
+    return 0;
+}
+
+void sprite_ptr::set_scale_y(fixed scale_y)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_id))
+    {
+        affine_mat->set_scale_y(scale_y);
+    }
+    else if(scale_y != 1)
+    {
+        sprite_affine_mat_builder affine_mat_builder;
+        affine_mat_builder.set_scale_y(scale_y);
+        affine_mat_builder.set_horizontal_flip(horizontal_flip());
+        affine_mat_builder.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        set_affine_mat(affine_mat_builder.build());
+    }
+}
+
 int sprite_ptr::bg_priority() const
 {
     return sprites_manager::bg_priority(_id);
@@ -195,6 +277,16 @@ void sprite_ptr::set_mosaic_enabled(bool mosaic_enabled)
     sprites_manager::set_mosaic_enabled(_id, mosaic_enabled);
 }
 
+bool sprite_ptr::double_size() const
+{
+    return sprites_manager::double_size(_id);
+}
+
+void sprite_ptr::set_double_size(bool double_size)
+{
+    sprites_manager::set_double_size(_id, double_size);
+}
+
 bool sprite_ptr::visible() const
 {
     return sprites_manager::visible(_id);
@@ -213,6 +305,26 @@ bool sprite_ptr::ignore_camera() const
 void sprite_ptr::set_ignore_camera(bool ignore_camera)
 {
     sprites_manager::set_ignore_camera(_id, ignore_camera);
+}
+
+const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
+{
+    return sprites_manager::affine_mat_ptr(_id);
+}
+
+void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr> affine_mat_ptr)
+{
+    sprites_manager::set_affine_mat_ptr(_id, move(affine_mat_ptr));
+}
+
+bool sprite_ptr::remove_affine_mat_when_not_needed() const
+{
+    return sprites_manager::remove_affine_mat_when_not_needed(_id);
+}
+
+void sprite_ptr::set_remove_affine_mat_when_not_needed(bool remove_when_not_needed)
+{
+    sprites_manager::set_remove_affine_mat_when_not_needed(_id, remove_when_not_needed);
 }
 
 void sprite_ptr::_destroy()

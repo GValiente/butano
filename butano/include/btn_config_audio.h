@@ -4,7 +4,7 @@
 #include "btn_audio_khz.h"
 
 #ifndef BTN_CFG_AUDIO_KHZ
-    #define BTN_CFG_AUDIO_KHZ BTN_AUDIO_KHZ_21
+    #define BTN_CFG_AUDIO_KHZ BTN_AUDIO_KHZ_16
 #endif
 
 #ifndef BTN_CFG_AUDIO_MAX_CHANNELS

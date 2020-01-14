@@ -55,7 +55,7 @@ public:
     template<size_t OtherPrecision>
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _value(Precision < OtherPrecision ?
-                   other.value() / (other.scale() - scale()) :
+                   other.value() / (other.scale() / scale()) :
                    other.value() << (Precision - OtherPrecision))
     {
     }

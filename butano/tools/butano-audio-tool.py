@@ -44,8 +44,7 @@ def write_audio_desc(audio_desc, audio_desc_path):
 
 
 def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path):
-    command = []
-    command.append('mmutil')
+    command = ['mmutil']
 
     if not audio_file_paths:
         dummy_file_path = build_folder_path + '/_btn_dummy_audio_file.txt'

@@ -27,20 +27,24 @@ class BMP:
         self.colors = None
 
         with open(file_path, 'rb') as file:
-            type = file.read(2).decode()
+            file_type = file.read(2).decode()
 
-            if type != 'BM':
-                raise ValueError('Invalid image type: ' + type)
+            if file_type != 'BM':
+                raise ValueError('Invalid file type: ' + file_type)
 
-            size = struct.unpack('I', file.read(4))
-            reserved_1 = struct.unpack('H', file.read(2))
-            reserved_2 = struct.unpack('H', file.read(2))
-            offset = struct.unpack('I', file.read(4))
+            _ = struct.unpack('I', file.read(4))
+            _ = struct.unpack('H', file.read(2))
+            _ = struct.unpack('H', file.read(2))
+            offset = struct.unpack('I', file.read(4))[0]
 
-            header_size = struct.unpack('I', file.read(4))
+            header_size = struct.unpack('I', file.read(4))[0]
+
+            if header_size != 40:
+                raise ValueError('Invalid header size: ' + str(header_size))
+
             self.width = struct.unpack('I', file.read(4))[0]
             self.height = struct.unpack('I', file.read(4))[0]
-            color_planes = struct.unpack('H', file.read(2))
+            _ = struct.unpack('H', file.read(2))
             bits_per_pixel = struct.unpack('H', file.read(2))[0]
 
             if bits_per_pixel != 4 and bits_per_pixel != 8:
@@ -51,16 +55,35 @@ class BMP:
             if compression_method != 0:
                 raise ValueError('Compression method not supported: ' + str(compression_method))
 
-            raw_image_size = struct.unpack('I', file.read(4))
-            horizontal_resolution = struct.unpack('I', file.read(4))
-            vertical_resolution = struct.unpack('I', file.read(4))
+            _ = struct.unpack('I', file.read(4))
+            _ = struct.unpack('I', file.read(4))
+            _ = struct.unpack('I', file.read(4))
             colors = struct.unpack('I', file.read(4))[0]
+            _ = struct.unpack('I', file.read(4))
 
             if colors > 256:
                 raise ValueError('Invalid colors count: ' + str(colors))
 
-            self.colors = max(colors, 16)
-            important_colors = struct.unpack('I', file.read(4))
+            if colors <= 16:
+                colors = 16
+            else:
+                file.seek(offset)
+                pixels_count = self.width * self.height  # no padding, multiple of 8.
+                pixels = struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))
+                colors = 16
+
+                for pixel in pixels:
+                    colors = max(ord(pixel), colors)
+
+                extra_colors = colors % 16
+
+                if extra_colors > 0:
+                    colors += 16 - extra_colors
+
+                if colors > 256:
+                    raise ValueError('Invalid calculated colors count: ' + str(colors))
+
+            self.colors = colors
 
 
 class Item:
@@ -76,7 +99,8 @@ class Item:
             height = int(item_info['height'])
 
             if bmp.height % height:
-                raise ValueError('File height is not divisible by item height: ' + str(bmp.height) + ' - ' + str(height))
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(height))
         except KeyError:
             height = bmp.height
 
@@ -142,7 +166,6 @@ class Item:
         else:
             raise ValueError('Invalid sprite width: ' + str(width))
 
-
     def write_header(self, build_folder_path):
         name = self.__file_name_no_ext
         grit_file_path = build_folder_path + '/' + name + '_btn_graphics.h'
@@ -167,11 +190,11 @@ class Item:
             header_file.write('namespace btn::sprite_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr const sprite_item ' + name + '(' +
-                    'sprite_shape::' + self.__shape + ', ' +
-                    'sprite_size::' + self.__size + ', ' + '\n            ' +
-                    'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                    'span<const color>(' + name + '_btn_graphicsPal), ' +
-                    str(self.__graphics) + ');' + '\n')
+                              'sprite_shape::' + self.__shape + ', ' +
+                              'sprite_size::' + self.__size + ', ' + '\n            ' +
+                              'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
+                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors) + '), ' +
+                              str(self.__graphics) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -180,10 +203,7 @@ class Item:
         print('sprite_item file written in ' + header_file_path)
 
     def process(self, build_folder_path):
-        command = []
-        command.append('grit')
-        command.append(self.__file_path)
-        command.append('-gt')
+        command = ['grit', self.__file_path, '-gt']
 
         if self.__colors == 16:
             command.append('-gB4')
@@ -227,10 +247,8 @@ def read_graphics_desc(graphics_desc_path):
 
 
 def build_graphics_desc(graphics_file_path):
-    graphics_desc = []
-    graphics_desc.append(graphics_file_path)
-    graphics_desc.append(str(os.path.getsize(graphics_file_path)))
-    graphics_desc.append(str(os.path.getmtime(graphics_file_path)))
+    graphics_desc = [graphics_file_path, str(os.path.getsize(graphics_file_path)),
+                     str(os.path.getmtime(graphics_file_path))]
     return '\n'.join(graphics_desc)
 
 

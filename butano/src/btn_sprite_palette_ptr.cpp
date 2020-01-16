@@ -23,7 +23,22 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
 
 sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_ref)
 {
-    return sprite_palette_ptr(palettes_manager::sprite_palettes_bank().create(colors_ref));
+    optional<sprite_palette_ptr> result = optional_create(colors_ref);
+    BTN_ASSERT(result, "Sprite palette allocation failed");
+
+    return *result;
+}
+
+optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<const color>& colors_ref)
+{
+    optional<sprite_palette_ptr> result;
+
+    if(optional<int> id = palettes_manager::sprite_palettes_bank().create(colors_ref))
+    {
+        result = sprite_palette_ptr(*id);
+    }
+
+    return result;
 }
 
 sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& colors_ref)
@@ -32,7 +47,20 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
 
     if(! result)
     {
-        result = create(colors_ref);
+        result = optional_create(colors_ref);
+        BTN_ASSERT(result, "Sprite palette allocation failed");
+    }
+
+    return *result;
+}
+
+optional<sprite_palette_ptr> sprite_palette_ptr::find_or_optional_create(const span<const color>& colors_ref)
+{
+    optional<sprite_palette_ptr> result = find(colors_ref);
+
+    if(! result)
+    {
+        result = optional_create(colors_ref);
     }
 
     return *result;

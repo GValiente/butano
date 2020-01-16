@@ -95,7 +95,7 @@ optional<int> palettes_bank::find(const span<const color>& colors_ref)
     return nullopt;
 }
 
-int palettes_bank::create(const span<const color>& colors_ref)
+optional<int> palettes_bank::create(const span<const color>& colors_ref)
 {
     BTN_ASSERT(valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
@@ -117,8 +117,6 @@ int palettes_bank::create(const span<const color>& colors_ref)
                 return index;
             }
         }
-
-        BTN_ERROR("All bank palettes are used");
     }
     else
     {
@@ -128,12 +126,11 @@ int palettes_bank::create(const span<const color>& colors_ref)
         if(eight_bits_per_pixel_palettes >= required_palettes)
         {
             ++pal.usages;
+            return 0;
         }
-        else
-        {
-            BTN_ASSERT(required_palettes <= _first_4bpp_palette_index(),
-                       "There's not enough space for a 8bpp palette");
 
+        if(required_palettes <= _first_4bpp_palette_index())
+        {
             if(pal.usages)
             {
                 ++pal.usages;
@@ -146,10 +143,11 @@ int palettes_bank::create(const span<const color>& colors_ref)
 
             _eight_bits_per_pixel_palettes = required_palettes;
             set_colors_ref(0, colors_ref);
+            return 0;
         }
     }
 
-    return 0;
+    return nullopt;
 }
 
 void palettes_bank::increase_usages(int id)

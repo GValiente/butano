@@ -91,7 +91,7 @@ optional<item_type::list_iterator> find(const span<const tile>& tiles_ref)
     return result;
 }
 
-item_type::list_iterator create(const span<const tile>& tiles_ref)
+optional<item_type::list_iterator> create(const span<const tile>& tiles_ref)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_ref.data(), " - ", tiles_ref.size());
 
@@ -104,16 +104,23 @@ item_type::list_iterator create(const span<const tile>& tiles_ref)
     else
     {
         result = data.low_bank.create(tiles_ref);
-        BTN_ASSERT(result, "Low bank create failed: ", tiles_ref.size());
-        BTN_SPRITE_TILES_LOG("CREATED in low bank. start_tile: ", (*result)->start_tile);
+
+        if(result)
+        {
+            BTN_SPRITE_TILES_LOG("CREATED in low bank. start_tile: ", (*result)->start_tile);
+        }
+        else
+        {
+            BTN_SPRITE_TILES_LOG("NOT CREATED in any bank");
+        }
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
 
-    return *result;
+    return result;
 }
 
-item_type::list_iterator allocate(int tiles)
+optional<item_type::list_iterator> allocate(int tiles)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles);
 
@@ -126,13 +133,20 @@ item_type::list_iterator allocate(int tiles)
     else
     {
         result = data.low_bank.allocate(tiles);
-        BTN_ASSERT(result, "Low bank allocate failed: ", tiles);
-        BTN_SPRITE_TILES_LOG("ALLOCATED in low bank. start_tile: ", (*result)->start_tile);
+
+        if(result)
+        {
+            BTN_SPRITE_TILES_LOG("ALLOCATED in low bank. start_tile: ", (*result)->start_tile);
+        }
+        else
+        {
+            BTN_SPRITE_TILES_LOG("NOT ALLOCATED in any bank");
+        }
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
 
-    return *result;
+    return result;
 }
 
 item_type::list_iterator invalid_iterator()

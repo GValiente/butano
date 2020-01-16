@@ -13,9 +13,9 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] optional<item_type::list_iterator> find(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] item_type::list_iterator create(const span<const tile>& tiles_ref);
+    [[nodiscard]] optional<item_type::list_iterator> create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] item_type::list_iterator allocate(int tiles);
+    [[nodiscard]] optional<item_type::list_iterator> allocate(int tiles);
 
     [[nodiscard]] item_type::list_iterator invalid_iterator();
 

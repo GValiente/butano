@@ -23,24 +23,71 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_
 
 sprite_tiles_ptr sprite_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
-    return sprite_tiles_ptr(sprite_tiles_manager::create(tiles_ref));
+    optional<item_type::list_iterator> iterator = sprite_tiles_manager::create(tiles_ref);
+    BTN_ASSERT(iterator, "Sprite tiles create failed");
+
+    return sprite_tiles_ptr(*iterator);
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_create(const span<const tile>& tiles_ref)
+{
+    optional<sprite_tiles_ptr> result;
+
+    if(optional<item_type::list_iterator> iterator = sprite_tiles_manager::create(tiles_ref))
+    {
+        result = sprite_tiles_ptr(*iterator);
+    }
+
+    return result;
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
 {
-    optional<sprite_tiles_ptr> result = find(tiles_ref);
+    optional<item_type::list_iterator> iterator = sprite_tiles_manager::find(tiles_ref);
 
-    if(! result)
+    if(! iterator)
     {
-        result = create(tiles_ref);
+        iterator = sprite_tiles_manager::create(tiles_ref);
+        BTN_ASSERT(iterator, "Sprite tiles find or create failed");
     }
 
-    return *result;
+    return sprite_tiles_ptr(*iterator);
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_find_or_create(const span<const tile>& tiles_ref)
+{
+    optional<sprite_tiles_ptr> result;
+
+    if(optional<item_type::list_iterator> iterator = sprite_tiles_manager::find(tiles_ref))
+    {
+        result = sprite_tiles_ptr(*iterator);
+    }
+    else if(optional<item_type::list_iterator> iterator = sprite_tiles_manager::create(tiles_ref))
+    {
+        result = sprite_tiles_ptr(*iterator);
+    }
+
+    return result;
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles)
 {
-    return sprite_tiles_ptr(sprite_tiles_manager::allocate(tiles));
+    optional<item_type::list_iterator> iterator = sprite_tiles_manager::allocate(tiles);
+    BTN_ASSERT(iterator, "Sprite tiles allocate failed");
+
+    return sprite_tiles_ptr(*iterator);
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_allocate(int tiles)
+{
+    optional<sprite_tiles_ptr> result;
+
+    if(optional<item_type::list_iterator> iterator = sprite_tiles_manager::allocate(tiles))
+    {
+        result = sprite_tiles_ptr(*iterator);
+    }
+
+    return result;
 }
 
 sprite_tiles_ptr::sprite_tiles_ptr(const sprite_tiles_ptr& other) :

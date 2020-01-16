@@ -23,10 +23,10 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
 
 sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_ref)
 {
-    optional<sprite_palette_ptr> result = optional_create(colors_ref);
-    BTN_ASSERT(result, "Sprite palette allocation failed");
+    optional<int> id = palettes_manager::sprite_palettes_bank().create(colors_ref);
+    BTN_ASSERT(id, "Sprite palette create failed");
 
-    return *result;
+    return sprite_palette_ptr(*id);
 }
 
 optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<const color>& colors_ref)
@@ -43,27 +43,33 @@ optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<cons
 
 sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& colors_ref)
 {
-    optional<sprite_palette_ptr> result = find(colors_ref);
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+    optional<int> id = sprite_palettes_bank.find(colors_ref);
 
-    if(! result)
+    if(! id)
     {
-        result = optional_create(colors_ref);
-        BTN_ASSERT(result, "Sprite palette allocation failed");
+        id = sprite_palettes_bank.create(colors_ref);
+        BTN_ASSERT(id, "Sprite palette find or create failed");
     }
 
-    return *result;
+    return sprite_palette_ptr(*id);
 }
 
-optional<sprite_palette_ptr> sprite_palette_ptr::find_or_optional_create(const span<const color>& colors_ref)
+optional<sprite_palette_ptr> sprite_palette_ptr::optional_find_or_create(const span<const color>& colors_ref)
 {
-    optional<sprite_palette_ptr> result = find(colors_ref);
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+    optional<sprite_palette_ptr> result;
 
-    if(! result)
+    if(optional<int> id = sprite_palettes_bank.find(colors_ref))
     {
-        result = optional_create(colors_ref);
+        result = sprite_palette_ptr(*id);
+    }
+    else if(optional<int> id = sprite_palettes_bank.create(colors_ref))
+    {
+        result = sprite_palette_ptr(*id);
     }
 
-    return *result;
+    return result;
 }
 
 sprite_palette_ptr::sprite_palette_ptr(const sprite_palette_ptr& other) :

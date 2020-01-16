@@ -41,6 +41,8 @@ public:
 
     [[nodiscard]] int colors_count() const;
 
+    [[nodiscard]] bool eight_bits_per_pixel() const;
+
     [[nodiscard]] fixed inverse_intensity() const;
 
     void set_inverse_intensity(fixed intensity);

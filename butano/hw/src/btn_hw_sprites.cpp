@@ -28,7 +28,9 @@ void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, b
                    handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    int a0 = ATTR0_BUILD(0, int(builder.shape()), eight_bits_per_pixel, 0, builder.mosaic_enabled(), 0, 0);
+    int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), 0, 0);
+    a0 |= eight_bits_per_pixel * ATTR0_8BPP;
+
     int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
     int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
@@ -39,7 +41,9 @@ void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, in
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
     int affine_mode = (builder.double_size() * 2) + 1;
-    int a0 = ATTR0_BUILD(0, int(builder.shape()), eight_bits_per_pixel, affine_mode, builder.mosaic_enabled(), 0, 0);
+    int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, affine_mode, builder.mosaic_enabled(), 0, 0);
+    a0 |= eight_bits_per_pixel * ATTR0_8BPP;
+
     int a1 = ATTR1_BUILDA(0, int(builder.size()), affine_mat_id);
     int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));

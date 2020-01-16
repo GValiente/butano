@@ -26,7 +26,7 @@ public:
         _palette_item(palette_item)
     {
         BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles().size()) ==
-                             shape_size().tiles(palette_item.colors() > 16) * tiles_item.graphics(),
+                             shape_size().tiles(palette_item.eight_bits_per_pixel()) * tiles_item.graphics(),
                              "Invalid shape or size");
     }
 

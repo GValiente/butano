@@ -26,9 +26,9 @@ sprite_builder::sprite_builder(sprite_shape shape, sprite_size size, sprite_tile
     _size(size),
     _graphics_index(0)
 {
-    BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles(_palette_ptr->colors_count() > 16),
+    BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles(_palette_ptr->eight_bits_per_pixel()),
                "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-               shape_size().tiles(_palette_ptr->colors_count() > 16));
+               shape_size().tiles(_palette_ptr->eight_bits_per_pixel()));
 }
 
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)

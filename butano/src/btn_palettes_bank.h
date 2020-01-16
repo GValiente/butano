@@ -24,7 +24,7 @@ public:
         int count;
     };
 
-    [[nodiscard]] optional<int> find(const span<const color>& _colors);
+    [[nodiscard]] optional<int> find(const span<const color>& colors_ref);
 
     [[nodiscard]] int create(const span<const color>& colors_ref);
 
@@ -32,10 +32,7 @@ public:
 
     void decrease_usages(int id);
 
-    [[nodiscard]] span<const color> colors_ref(int id) const
-    {
-        return _color_ptr_span(id);
-    }
+    [[nodiscard]] span<const color> colors_ref(int id) const;
 
     void set_colors_ref(int id, const span<const color>& colors_ref);
 
@@ -148,15 +145,19 @@ private:
     fixed _grayscale_intensity;
     fixed _fade_intensity;
     color _fade_color;
-    optional<int> _last_used_index;
+    optional<int> _last_used_4bpp_index;
     optional<int> _first_index_to_commit;
     optional<int> _last_index_to_commit;
+    int _eight_bits_per_pixel_palettes = 0;
     bool _perform_update = false;
 
-    [[nodiscard]] span<const color> _color_ptr_span(int index) const
-    {
-        return span<const color>(_palettes[size_t(index)].colors_ref, hw::palettes::colors_per_palette());
-    }
+    [[nodiscard]] span<const color> _color_ptr_span(int index) const;
+
+    span<const color> _4bpp_color_ptr_span(int index) const;
+
+    [[nodiscard]] int _colors_per_palette(int id) const;
+
+    [[nodiscard]] int _first_4bpp_palette_index() const;
 };
 
 }

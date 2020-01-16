@@ -4,6 +4,7 @@
 #include "btn_utility.h"
 #include "btn_palettes_bank.h"
 #include "btn_palettes_manager.h"
+#include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
 {
@@ -85,6 +86,11 @@ void sprite_palette_ptr::reload_colors_ref()
 int sprite_palette_ptr::colors_count() const
 {
     return int(colors_ref().size());
+}
+
+bool sprite_palette_ptr::eight_bits_per_pixel() const
+{
+    return colors_ref().size() > hw::palettes::colors_per_palette();
 }
 
 fixed sprite_palette_ptr::inverse_intensity() const

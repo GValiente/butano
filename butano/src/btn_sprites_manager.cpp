@@ -47,7 +47,7 @@ namespace
             affine_mat_ptr(builder.release_affine_mat()),
             palette_ptr(builder.release_palette())
         {
-            bool eight_bits_per_pixel = palette_ptr.colors_count() > 16;
+            bool eight_bits_per_pixel = palette_ptr.eight_bits_per_pixel();
             remove_affine_mat_when_not_needed = builder.remove_affine_mat_when_not_needed();
 
             if(affine_mat_ptr)
@@ -391,9 +391,12 @@ void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
     BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid sprite tiles count: ",
                item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
 
-    hw::sprites::set_tile(tiles_ptr.id(), item->handle);
-    item->tiles_ptr = move(tiles_ptr);
-    _update_handles(*item);
+    if(tiles_ptr != item->tiles_ptr)
+    {
+        hw::sprites::set_tile(tiles_ptr.id(), item->handle);
+        item->tiles_ptr = move(tiles_ptr);
+        _update_handles(*item);
+    }
 }
 
 const sprite_palette_ptr& palette_ptr(id_type id)
@@ -405,12 +408,16 @@ const sprite_palette_ptr& palette_ptr(id_type id)
 void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->palette_ptr.colors_count() == palette_ptr.colors_count(), "Invalid sprite palette colors count: ",
-               item->palette_ptr.colors_count(), " - ", palette_ptr.colors_count());
+    BTN_ASSERT(item->palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
+               "Sprite palette colors bpp mode mismatch: ",
+               item->palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
 
-    hw::sprites::set_palette(palette_ptr.id(), item->handle);
-    item->palette_ptr = move(palette_ptr);
-    _update_handles(*item);
+    if(palette_ptr != item->palette_ptr)
+    {
+        hw::sprites::set_palette(palette_ptr.id(), item->handle);
+        item->palette_ptr = move(palette_ptr);
+        _update_handles(*item);
+    }
 }
 
 const fixed_point& position(id_type id)

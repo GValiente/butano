@@ -21,7 +21,7 @@ class sprite_builder
 {
 
 public:
-    sprite_builder(const sprite_item& item, int graphics_id = 0);
+    sprite_builder(const sprite_item& item, int graphics_index = 0);
 
     sprite_builder(sprite_shape shape, sprite_size size, sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr);
 
@@ -30,9 +30,9 @@ public:
         return _item;
     }
 
-    [[nodiscard]] int graphics_id() const
+    [[nodiscard]] int graphics_index() const
     {
-        return _graphics_id;
+        return _graphics_index;
     }
 
     [[nodiscard]] sprite_shape shape() const
@@ -252,7 +252,7 @@ private:
     fixed_point _position;
     sprite_shape _shape;
     sprite_size _size;
-    int _graphics_id;
+    int _graphics_index;
     int _bg_priority = 2;
     int _z_order = 0;
     bool _horizontal_flip = false;

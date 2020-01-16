@@ -39,16 +39,16 @@ public:
         return int(_tiles.size()) / _graphics;
     }
 
-    [[nodiscard]] constexpr span<const tile> tiles_ref(int graphics_id) const
+    [[nodiscard]] constexpr span<const tile> tiles_ref(int graphics_index) const
     {
-        BTN_CONSTEXPR_ASSERT(graphics_id >= 0, "Invalid graphics_id");
-        BTN_CONSTEXPR_ASSERT(graphics_id < _graphics, "Invalid graphics_id");
+        BTN_CONSTEXPR_ASSERT(graphics_index >= 0, "Invalid graphics index");
+        BTN_CONSTEXPR_ASSERT(graphics_index < _graphics, "Invalid graphics index");
 
         auto tiles_size = size_t(tiles_per_graphic());
-        return span<const tile>(_tiles.data() + (size_t(graphics_id) * tiles_size), tiles_size);
+        return span<const tile>(_tiles.data() + (size_t(graphics_index) * tiles_size), tiles_size);
     }
 
-    [[nodiscard]] sprite_tiles_ptr tiles_ptr(int graphics_id, create_mode create_mode) const;
+    [[nodiscard]] sprite_tiles_ptr tiles_ptr(int graphics_index, create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

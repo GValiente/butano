@@ -8,14 +8,14 @@
 namespace btn
 {
 
-sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_id)
+sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    return create(fixed_point(x, y), item, graphics_id);
+    return create(fixed_point(x, y), item, graphics_index);
 }
 
-sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_id)
+sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_index)
 {
-    sprite_builder builder(item, graphics_id);
+    sprite_builder builder(item, graphics_index);
     builder.set_position(position);
     return sprite_ptr(sprites_manager::create(move(builder)));
 }
@@ -75,14 +75,14 @@ void sprite_ptr::set_tiles(sprite_tiles_ptr tiles_ptr)
     sprites_manager::set_tiles_ptr(_id, move(tiles_ptr));
 }
 
-void sprite_ptr::set_tiles(const sprite_item& item, int graphics_id, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(item.tiles_item(), graphics_id, create_mode);
+    set_tiles(item.tiles_item(), graphics_index, create_mode);
 }
 
-void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_id, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(tiles_item.tiles_ptr(graphics_id, create_mode));
+    set_tiles(tiles_item.tiles_ptr(graphics_index, create_mode));
 }
 
 const sprite_palette_ptr& sprite_ptr::palette() const
@@ -105,9 +105,9 @@ void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mod
     set_palette(palette_item.palette_ptr(create_mode));
 }
 
-void sprite_ptr::set_tiles_and_palette(const sprite_item& item, int graphics_id, create_mode create_mode)
+void sprite_ptr::set_tiles_and_palette(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(item, graphics_id, create_mode);
+    set_tiles(item, graphics_index, create_mode);
     set_palette(item, create_mode);
 }
 

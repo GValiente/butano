@@ -68,7 +68,7 @@ namespace
             _width += (fixed_character_width * 4);
         }
 
-        void paint_character([[maybe_unused]] int graphics_id)
+        void paint_character([[maybe_unused]] int graphics_index)
         {
             _width += fixed_character_width;
         }
@@ -108,9 +108,9 @@ namespace
             _width += (_generator.font().character_widths()[0] * 4);
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
-            _width += _generator.font().character_widths()[size_t(graphics_id + 1)];
+            _width += _generator.font().character_widths()[size_t(graphics_index + 1)];
         }
 
     private:
@@ -146,12 +146,12 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
             sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
             builder.set_position(_current_position);
@@ -196,13 +196,13 @@ namespace
             _current_position.set_x(_current_position.x() + (_generator.font().character_widths()[0] * 4));
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
 
             const sprite_font& font = _generator.font();
             const sprite_item& item = font.item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
             sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
             builder.set_position(_current_position);
@@ -210,7 +210,7 @@ namespace
             builder.set_z_order(_generator.z_order());
             builder.set_ignore_camera(_generator.ignore_camera());
             _output_sprites.push_back(builder.build_and_release());
-            _current_position.set_x(_current_position.x() + font.character_widths()[size_t(graphics_id + 1)]);
+            _current_position.set_x(_current_position.x() + font.character_widths()[size_t(graphics_index + 1)]);
         }
 
     private:
@@ -259,7 +259,7 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
@@ -269,7 +269,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             hw::sprite_tiles::copy_tiles(source_tiles_ref[0], 1, _tiles_vram[_sprite_character_index]);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
@@ -329,11 +329,11 @@ namespace
             _current_position.set_x(_current_position.x() + width);
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             const sprite_font& font = _generator.font();
 
-            if(int width = font.character_widths()[size_t(graphics_id + 1)])
+            if(int width = font.character_widths()[size_t(graphics_index + 1)])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -346,7 +346,7 @@ namespace
                 const sprite_tiles_item& tiles_item = font.item().tiles_item();
                 const tile& source_tiles_ref = tiles_item.tiles().front();
                 int source_height = tiles_item.graphics() * _character_height;
-                int source_y = graphics_id * _character_height;
+                int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height, source_y, _sprite_column,
                                              *_tiles_vram);
                 _current_position.set_x(_current_position.x() + width);
@@ -405,7 +405,7 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
@@ -415,7 +415,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_id);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             auto source_tiles_data = source_tiles_ref.data();
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
             hw::sprite_tiles::copy_tiles(source_tiles_data[0], 1, *up_tiles_vram_ptr);
@@ -485,11 +485,11 @@ namespace
             _current_position.set_x(_current_position.x() + width);
         }
 
-        void paint_character(int graphics_id)
+        void paint_character(int graphics_index)
         {
             const sprite_font& font = _generator.font();
 
-            if(int width = font.character_widths()[size_t(graphics_id + 1)])
+            if(int width = font.character_widths()[size_t(graphics_index + 1)])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -502,7 +502,7 @@ namespace
                 const sprite_tiles_item& tiles_item = font.item().tiles_item();
                 const tile& source_tiles_ref = tiles_item.tiles().front();
                 int source_height = tiles_item.graphics() * _character_height;
-                int source_y = graphics_id * _character_height;
+                int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height,
                                              source_y,
                                              _sprite_column, *_tiles_vram);
@@ -551,11 +551,11 @@ namespace
             }
             else if(character >= '!')
             {
-                int graphics_id;
+                int graphics_index;
 
                 if(character <= '~')
                 {
-                    graphics_id = character - '!';
+                    graphics_index = character - '!';
                     ++text_index;
                 }
                 else
@@ -564,11 +564,11 @@ namespace
                     auto it = utf8_characters_map.find(utf8_char.value());
                     BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
 
-                    graphics_id = it->second;
+                    graphics_index = it->second;
                     text_index += size_t(utf8_char.size());
                 }
 
-                painter.paint_character(graphics_id);
+                painter.paint_character(graphics_index);
             }
             else
             {

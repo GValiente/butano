@@ -30,7 +30,7 @@ public:
                              item.size() == sprite_size::SMALL, "Invalid shape or size");
         BTN_CONSTEXPR_ASSERT(item.tiles_item().graphics() >= minimum_graphics + int(utf8_characters.size()),
                              "Invalid graphics or utf8 characters count");
-        BTN_CONSTEXPR_ASSERT(item.palette_item().palette().size() == 16, "Invalid colors count");
+        BTN_CONSTEXPR_ASSERT(item.palette_item().colors() == 16, "Invalid colors count");
         BTN_CONSTEXPR_ASSERT(utf8_characters.size() <= BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
                              "Invalid utf8 characters count");
         BTN_CONSTEXPR_ASSERT(_validate_utf8_characters(utf8_characters), "Utf8 characters validation failed");

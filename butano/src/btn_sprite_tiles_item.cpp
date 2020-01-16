@@ -6,9 +6,9 @@
 namespace btn
 {
 
-sprite_tiles_ptr sprite_tiles_item::tiles_ptr(int graphics_id, create_mode create_mode) const
+sprite_tiles_ptr sprite_tiles_item::tiles_ptr(int graphics_index, create_mode create_mode) const
 {
-    span<const tile> graphics_tiles_ref = tiles_ref(graphics_id);
+    span<const tile> graphics_tiles_ref = tiles_ref(graphics_index);
 
     switch(create_mode)
     {

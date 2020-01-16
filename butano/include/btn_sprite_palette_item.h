@@ -17,12 +17,17 @@ public:
     constexpr explicit sprite_palette_item(const span<const color>& palette) :
         _palette(palette)
     {
-        BTN_CONSTEXPR_ASSERT(palette.size() >= 16 && palette.size() <= 256, "Invalid palette size");
+        BTN_CONSTEXPR_ASSERT(colors() >= 16 && colors() <= 256, "Invalid colors count");
     }
 
     [[nodiscard]] constexpr const span<const color>& palette() const
     {
         return _palette;
+    }
+
+    [[nodiscard]] constexpr int colors() const
+    {
+        return int(_palette.size());
     }
 
     [[nodiscard]] sprite_palette_ptr palette_ptr(create_mode create_mode) const;

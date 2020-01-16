@@ -74,7 +74,7 @@ namespace hw::sprites
 
     void set_mosaic_enabled(bool mosaic_enabled, handle& sprite);
 
-    void hide(handle& sprite);
+    void hide(int count, handle& sprites_ref);
 
     void commit(const handle& sprites_ref, int offset, int count);
 }

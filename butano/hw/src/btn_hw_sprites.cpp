@@ -159,10 +159,10 @@ void set_mosaic_enabled(bool mosaic_enabled, handle& sprite)
     }
 }
 
-void hide(handle& sprite)
+void hide(int count, handle& sprites_ref)
 {
-    auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    obj_hide(sprite_ptr);
+    auto sprites_ptr = reinterpret_cast<OBJ_ATTR*>(&sprites_ref);
+    obj_hide_multi(sprites_ptr, unsigned(count));
 }
 
 void commit(const handle& sprites_ref, int offset, int count)

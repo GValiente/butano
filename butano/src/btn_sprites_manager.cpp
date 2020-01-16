@@ -295,12 +295,13 @@ namespace
             }
 
             int last_visible_items_count = data.last_visible_items_count;
+            int items_to_hide = last_visible_items_count - visible_items_count;
             data.last_visible_items_count = visible_items_count;
 
-            while(visible_items_count < last_visible_items_count)
+            if(items_to_hide > 0)
             {
-                hw::sprites::hide(data.handles[visible_items_count]);
-                ++visible_items_count;
+                hw::sprites::hide(items_to_hide, data.handles[visible_items_count]);
+                visible_items_count = last_visible_items_count;
             }
 
             if(visible_items_count)

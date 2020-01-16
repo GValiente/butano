@@ -45,13 +45,14 @@
 
                 if(auto size = int(message.size()))
                 {
-                    #define REG_DEBUG_ENABLE    *(volatile uint16_t*) 0x4FFF780
-                    #define REG_DEBUG_FLAGS     *(volatile uint16_t*) 0x4FFF700
-                    #define REG_DEBUG_STRING    *(char*) 0x4FFF600
+                    volatile uint16_t& reg_debug_enable = *reinterpret_cast<uint16_t*>(0x4FFF780);
+                    reg_debug_enable = 0xC0DE;
 
-                    REG_DEBUG_ENABLE = 0xC0DE;
-                    memory::copy(message.front(), size, REG_DEBUG_STRING);
-                    REG_DEBUG_FLAGS = 2 | 0x100;
+                    char& reg_debug_string = *reinterpret_cast<char*>(0x4FFF600);
+                    memory::copy(message.front(), size, reg_debug_string);
+
+                    volatile uint16_t& reg_debug_flags = *reinterpret_cast<uint16_t*>(0x4FFF700);
+                    reg_debug_flags = 2 | 0x100;
                 }
             }
         #else

@@ -3,6 +3,7 @@
 
 #include "btn_span.h"
 #include "btn_color.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -35,7 +36,7 @@ public:
         return _palette.size() > 16;
     }
 
-    [[nodiscard]] sprite_palette_ptr palette_ptr(create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_palette_ptr> palette_ptr(create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a, const sprite_palette_item& b)
     {

@@ -2,6 +2,7 @@
 #define BTN_SPRITE_AFFINE_MAT_BUILDER_H
 
 #include "btn_fixed.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -56,6 +57,8 @@ public:
     }
 
     [[nodiscard]] sprite_affine_mat_ptr build() const;
+
+    [[nodiscard]] optional<sprite_affine_mat_ptr> optional_build() const;
 
 private:
     fixed _rotation_angle = 0;

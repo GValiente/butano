@@ -32,6 +32,16 @@ public:
 
     [[nodiscard]] static sprite_ptr create(sprite_builder&& builder);
 
+    [[nodiscard]] static optional<sprite_ptr> optional_create(fixed x, fixed y, const sprite_item& item,
+                                                              int graphics_index = 0);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(const fixed_point& position, const sprite_item& item,
+                                                              int graphics_index = 0);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(const sprite_builder& builder);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(sprite_builder&& builder);
+
     sprite_ptr(const sprite_ptr& other);
 
     sprite_ptr& operator=(const sprite_ptr& other);

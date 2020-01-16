@@ -21,7 +21,7 @@ namespace btn::sprite_affine_mats_manager
 
     void init(int handles_size, void* handles);
 
-    [[nodiscard]] int create(const sprite_affine_mat_builder& builder);
+    [[nodiscard]] optional<int> create(const sprite_affine_mat_builder& builder);
 
     void increase_usages(int id);
 

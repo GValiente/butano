@@ -17,13 +17,13 @@ public:
 
     [[nodiscard]] static sprite_tiles_ptr create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static optional<sprite_tiles_ptr> optional_create(const span<const tile>& tiles_ref);
-
     [[nodiscard]] static sprite_tiles_ptr find_or_create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static optional<sprite_tiles_ptr> optional_find_or_create(const span<const tile>& tiles_ref);
-
     [[nodiscard]] static sprite_tiles_ptr allocate(int tiles);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> optional_create(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> optional_find_or_create(const span<const tile>& tiles_ref);
 
     [[nodiscard]] static optional<sprite_tiles_ptr> optional_allocate(int tiles);
 

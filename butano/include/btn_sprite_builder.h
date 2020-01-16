@@ -208,13 +208,17 @@ public:
 
     [[nodiscard]] sprite_ptr build_and_release();
 
-    [[nodiscard]] sprite_tiles_ptr tiles() const;
+    [[nodiscard]] optional<sprite_ptr> optional_build() const;
 
-    [[nodiscard]] sprite_palette_ptr palette() const;
+    [[nodiscard]] optional<sprite_ptr> optional_build_and_release();
 
-    [[nodiscard]] sprite_tiles_ptr release_tiles();
+    [[nodiscard]] optional<sprite_tiles_ptr> tiles() const;
 
-    [[nodiscard]] sprite_palette_ptr release_palette();
+    [[nodiscard]] optional<sprite_palette_ptr> palette() const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> release_tiles();
+
+    [[nodiscard]] optional<sprite_palette_ptr> release_palette();
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const
     {

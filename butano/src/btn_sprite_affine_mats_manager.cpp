@@ -72,9 +72,12 @@ void init(int handles_size, void* handles)
     }
 }
 
-int create(const sprite_affine_mat_builder& builder)
+optional<int> create(const sprite_affine_mat_builder& builder)
 {
-    BTN_ASSERT(! data.free_item_indexes.empty(), "No more items allowed");
+    if(data.free_item_indexes.empty())
+    {
+        return nullopt;
+    }
 
     int item_index = data.free_item_indexes.back();
     data.free_item_indexes.pop_back();

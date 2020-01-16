@@ -1,5 +1,6 @@
 #include "btn_sprite_affine_mat_builder.h"
 
+#include "btn_optional.h"
 #include "btn_sprite_affine_mat_ptr.h"
 
 namespace btn
@@ -32,6 +33,11 @@ sprite_affine_mat_builder& sprite_affine_mat_builder::set_scale_y(fixed scale_y)
 sprite_affine_mat_ptr sprite_affine_mat_builder::build() const
 {
     return sprite_affine_mat_ptr::create(*this);
+}
+
+optional<sprite_affine_mat_ptr> sprite_affine_mat_builder::optional_build() const
+{
+    return sprite_affine_mat_ptr::optional_create(*this);
 }
 
 }

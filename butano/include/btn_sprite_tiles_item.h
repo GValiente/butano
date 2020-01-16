@@ -3,6 +3,7 @@
 
 #include "btn_span.h"
 #include "btn_tile.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -48,7 +49,7 @@ public:
         return span<const tile>(_tiles.data() + (size_t(graphics_index) * tiles_size), tiles_size);
     }
 
-    [[nodiscard]] sprite_tiles_ptr tiles_ptr(int graphics_index, create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_tiles_ptr> tiles_ptr(int graphics_index, create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

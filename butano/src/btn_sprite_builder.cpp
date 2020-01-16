@@ -145,56 +145,88 @@ sprite_ptr sprite_builder::build_and_release()
     return sprite_ptr::create(move(*this));
 }
 
-sprite_tiles_ptr sprite_builder::tiles() const
+optional<sprite_ptr> sprite_builder::optional_build() const
 {
-    if(_tiles_ptr)
-    {
-        return *_tiles_ptr;
-    }
-
-    BTN_ASSERT(_item, "Sprite item is null");
-
-    return _item->tiles_item().tiles_ptr(_graphics_index, _tiles_create_mode);
+    return sprite_ptr::optional_create(*this);
 }
 
-sprite_palette_ptr sprite_builder::palette() const
+optional<sprite_ptr> sprite_builder::optional_build_and_release()
 {
+    return sprite_ptr::optional_create(move(*this));
+}
+
+optional<sprite_tiles_ptr> sprite_builder::tiles() const
+{
+    optional<sprite_tiles_ptr> result;
+
+    if(_tiles_ptr)
+    {
+        result = _tiles_ptr;
+    }
+    else
+    {
+        BTN_ASSERT(_item, "Sprite item is null");
+
+        result = _item->tiles_item().tiles_ptr(_graphics_index, _tiles_create_mode);
+    }
+
+    return result;
+}
+
+optional<sprite_palette_ptr> sprite_builder::palette() const
+{
+    optional<sprite_palette_ptr> result;
+
     if(_palette_ptr)
     {
-        return *_palette_ptr;
+        result = _palette_ptr;
+    }
+    else
+    {
+        BTN_ASSERT(_item, "Sprite item is null");
+
+        result = _item->palette_item().palette_ptr(_palette_create_mode);
     }
 
-    BTN_ASSERT(_item, "Sprite item is null");
-
-    return _item->palette_item().palette_ptr(_palette_create_mode);
+    return result;
 }
 
-sprite_tiles_ptr sprite_builder::release_tiles()
+optional<sprite_tiles_ptr> sprite_builder::release_tiles()
 {
+    optional<sprite_tiles_ptr> result;
+
     if(_tiles_ptr)
     {
-        sprite_tiles_ptr result = move(*_tiles_ptr);
+        result = move(_tiles_ptr);
         _tiles_ptr.reset();
-        return result;
+    }
+    else
+    {
+        BTN_ASSERT(_item, "Sprite item is null");
+
+        result = _item->tiles_item().tiles_ptr(_graphics_index, _tiles_create_mode);
     }
 
-    BTN_ASSERT(_item, "Sprite item is null");
-
-    return _item->tiles_item().tiles_ptr(_graphics_index, _tiles_create_mode);
+    return result;
 }
 
-sprite_palette_ptr sprite_builder::release_palette()
+optional<sprite_palette_ptr> sprite_builder::release_palette()
 {
+    optional<sprite_palette_ptr> result;
+
     if(_palette_ptr)
     {
-        sprite_palette_ptr result = move(*_palette_ptr);
+        result = move(_palette_ptr);
         _palette_ptr.reset();
-        return result;
+    }
+    else
+    {
+        BTN_ASSERT(_item, "Sprite item is null");
+
+        result = _item->palette_item().palette_ptr(_palette_create_mode);
     }
 
-    BTN_ASSERT(_item, "Sprite item is null");
-
-    return _item->palette_item().palette_ptr(_palette_create_mode);
+    return result;
 }
 
 }

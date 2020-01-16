@@ -17,17 +17,60 @@ sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& it
 {
     sprite_builder builder(item, graphics_index);
     builder.set_position(position);
-    return sprite_ptr(sprites_manager::create(move(builder)));
+    return create(move(builder));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_builder& builder)
 {
-    return sprite_ptr(sprites_manager::create(sprite_builder(builder)));
+    optional<id_type> id = sprites_manager::create(sprite_builder(builder));
+    BTN_ASSERT(id, "Sprite create failed");
+
+    return sprite_ptr(*id);
 }
 
 sprite_ptr sprite_ptr::create(sprite_builder&& builder)
 {
-    return sprite_ptr(sprites_manager::create(move(builder)));
+    optional<id_type> id = sprites_manager::create(move(builder));
+    BTN_ASSERT(id, "Sprite create failed");
+
+    return sprite_ptr(*id);
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
+{
+    return optional_create(fixed_point(x, y), item, graphics_index);
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
+                                                 int graphics_index)
+{
+    sprite_builder builder(item, graphics_index);
+    builder.set_position(position);
+    return optional_create(move(builder));
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(const sprite_builder& builder)
+{
+    optional<sprite_ptr> result;
+
+    if(optional<id_type> id = sprites_manager::create(sprite_builder(builder)))
+    {
+        result = sprite_ptr(*id);
+    }
+
+    return result;
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(sprite_builder&& builder)
+{
+    optional<sprite_ptr> result;
+
+    if(optional<id_type> id = sprites_manager::create(move(builder)))
+    {
+        result = sprite_ptr(*id);
+    }
+
+    return result;
 }
 
 sprite_ptr::sprite_ptr(const sprite_ptr& other) :
@@ -82,7 +125,10 @@ void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_m
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(tiles_item.tiles_ptr(graphics_index, create_mode));
+    optional<sprite_tiles_ptr> tiles_ptr = tiles_item.tiles_ptr(graphics_index, create_mode);
+    BTN_ASSERT(tiles_ptr, "Tiles create failed");
+
+    set_tiles(move(*tiles_ptr));
 }
 
 const sprite_palette_ptr& sprite_ptr::palette() const
@@ -102,7 +148,10 @@ void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
 
 void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mode create_mode)
 {
-    set_palette(palette_item.palette_ptr(create_mode));
+    optional<sprite_palette_ptr> palette_ptr = palette_item.palette_ptr(create_mode);
+    BTN_ASSERT(palette_ptr, "Palette create failed");
+
+    set_palette(move(*palette_ptr));
 }
 
 void sprite_ptr::set_tiles_and_palette(const sprite_item& item, int graphics_index, create_mode create_mode)

@@ -3,6 +3,7 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -16,6 +17,10 @@ public:
     [[nodiscard]] static sprite_affine_mat_ptr create();
 
     [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_builder& builder);
+
+    [[nodiscard]] static optional<sprite_affine_mat_ptr> optional_create();
+
+    [[nodiscard]] static optional<sprite_affine_mat_ptr> optional_create(const sprite_affine_mat_builder& builder);
 
     sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other);
 

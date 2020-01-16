@@ -29,18 +29,6 @@ sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_re
     return sprite_palette_ptr(*id);
 }
 
-optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<const color>& colors_ref)
-{
-    optional<sprite_palette_ptr> result;
-
-    if(optional<int> id = palettes_manager::sprite_palettes_bank().create(colors_ref))
-    {
-        result = sprite_palette_ptr(*id);
-    }
-
-    return result;
-}
-
 sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& colors_ref)
 {
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
@@ -53,6 +41,18 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
     }
 
     return sprite_palette_ptr(*id);
+}
+
+optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<const color>& colors_ref)
+{
+    optional<sprite_palette_ptr> result;
+
+    if(optional<int> id = palettes_manager::sprite_palettes_bank().create(colors_ref))
+    {
+        result = sprite_palette_ptr(*id);
+    }
+
+    return result;
 }
 
 optional<sprite_palette_ptr> sprite_palette_ptr::optional_find_or_create(const span<const color>& colors_ref)

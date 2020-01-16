@@ -41,11 +41,11 @@ namespace
         unsigned on_screen: 1;
         unsigned check_on_screen: 1;
 
-        explicit item_type(sprite_builder&& builder) :
+        item_type(sprite_builder&& builder, sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette) :
             position(builder.position()),
-            tiles_ptr(builder.release_tiles()),
+            tiles_ptr(move(tiles)),
             affine_mat_ptr(builder.release_affine_mat()),
-            palette_ptr(builder.release_palette())
+            palette_ptr(move(palette))
         {
             bool eight_bits_per_pixel = palette_ptr.eight_bits_per_pixel();
             remove_affine_mat_when_not_needed = builder.remove_affine_mat_when_not_needed();
@@ -324,15 +324,33 @@ void init()
     sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
 }
 
-id_type create(sprite_builder&& builder)
+optional<id_type> create(sprite_builder&& builder)
 {
     if(data.items_pool.full())
     {
         _sort_items();
-        BTN_ASSERT(! data.items_pool.full(), "No more items allowed");
+
+        if(data.items_pool.full())
+        {
+            return nullptr;
+        }
     }
 
-    item_type* new_item = data.items_pool.create<item_type>(move(builder));
+    optional<sprite_tiles_ptr> tiles = builder.release_tiles();
+
+    if(! tiles)
+    {
+        return nullptr;
+    }
+
+    optional<sprite_palette_ptr> palette = builder.release_palette();
+
+    if(! palette)
+    {
+        return nullptr;
+    }
+
+    item_type* new_item = data.items_pool.create<item_type>(move(builder), move(*tiles), move(*palette));
     sorted_items_type& sorted_items = data.sorted_items;
 
     if(! data.sort_items && ! sorted_items.empty() && new_item->sort_key < sorted_items.back()->sort_key)

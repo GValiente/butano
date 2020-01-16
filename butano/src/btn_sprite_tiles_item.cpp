@@ -1,27 +1,30 @@
 #include "btn_sprite_tiles_item.h"
 
+#include "btn_optional.h"
 #include "btn_create_mode.h"
 #include "btn_sprite_tiles_ptr.h"
 
 namespace btn
 {
 
-sprite_tiles_ptr sprite_tiles_item::tiles_ptr(int graphics_index, create_mode create_mode) const
+optional<sprite_tiles_ptr> sprite_tiles_item::tiles_ptr(int graphics_index, create_mode create_mode) const
 {
     span<const tile> graphics_tiles_ref = tiles_ref(graphics_index);
+    optional<sprite_tiles_ptr> result;
 
     switch(create_mode)
     {
 
     case create_mode::FIND_OR_CREATE:
-        return sprite_tiles_ptr::find_or_create(graphics_tiles_ref);
+        result = sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref);
+        break;
 
     case create_mode::FORCE_CREATE:
-        return sprite_tiles_ptr::create(graphics_tiles_ref);
+        result = sprite_tiles_ptr::optional_create(graphics_tiles_ref);
+        break;
     }
 
-    BTN_ERROR("Invalid create mode: ", int(create_mode));
-    return sprite_tiles_ptr::create(graphics_tiles_ref);
+    return result;
 }
 
 }

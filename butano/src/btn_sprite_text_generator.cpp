@@ -19,6 +19,14 @@ namespace
     constexpr const int fixed_character_width = 8;
     constexpr const int fixed_max_characters_per_sprite = max_columns_per_sprite / fixed_character_width;
 
+    sprite_palette_ptr create_palette(const sprite_font& font)
+    {
+        optional<sprite_palette_ptr> palette_ptr = font.item().palette_item().palette_ptr(create_mode::FIND_OR_CREATE);
+        BTN_ASSERT(palette_ptr, "Palette create failed");
+
+        return *palette_ptr;
+    }
+
     template<sprite_size size, int max_tiles_per_sprite>
     tile* build_sprite(const sprite_text_generator& generator, const fixed_point& current_position,
                        ivector<sprite_ptr>& output_sprites)
@@ -580,7 +588,7 @@ namespace
 
 sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     _font(font),
-    _palette_ptr(font.item().palette_item().palette_ptr(create_mode::FIND_OR_CREATE))
+    _palette_ptr(create_palette(font))
 {
     int utf8_character_index = sprite_font::minimum_graphics;
 

@@ -1,6 +1,7 @@
 #include "btn_sprite_affine_mat_ptr.h"
 
 #include "btn_utility.h"
+#include "btn_optional.h"
 #include "btn_sprite_affine_mat_builder.h"
 #include "btn_sprite_affine_mats_manager.h"
 
@@ -9,12 +10,42 @@ namespace btn
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create()
 {
-    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(sprite_affine_mat_builder()));
+    optional<int> id = sprite_affine_mats_manager::create(sprite_affine_mat_builder());
+    BTN_ASSERT(id, "Sprite affine mat create failed");
+
+    return sprite_affine_mat_ptr(*id);
 }
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_builder& builder)
 {
-    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(builder));
+    optional<int> id = sprite_affine_mats_manager::create(builder);
+    BTN_ASSERT(id, "Sprite affine mat create failed");
+
+    return sprite_affine_mat_ptr(*id);
+}
+
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
+{
+    optional<sprite_affine_mat_ptr> result;
+
+    if(optional<int> id = sprite_affine_mats_manager::create(sprite_affine_mat_builder()))
+    {
+        result = sprite_affine_mat_ptr(*id);
+    }
+
+    return result;
+}
+
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_builder& builder)
+{
+    optional<sprite_affine_mat_ptr> result;
+
+    if(optional<int> id = sprite_affine_mats_manager::create(builder))
+    {
+        result = sprite_affine_mat_ptr(*id);
+    }
+
+    return result;
 }
 
 sprite_affine_mat_ptr::sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other) :

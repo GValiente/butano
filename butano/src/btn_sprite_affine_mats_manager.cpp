@@ -23,8 +23,9 @@ namespace
         fixed scale_y;
         unsigned usages;
         hw::sprite_affine_mats::item_type hw_item;
-        bool horizontal_flip;
-        bool vertical_flip;
+        unsigned horizontal_flip: 1;
+        unsigned vertical_flip: 1;
+        unsigned updated: 1;
 
         void init(const sprite_affine_mat_builder& builder)
         {
@@ -34,6 +35,7 @@ namespace
             usages = 1;
             horizontal_flip = builder.horizontal_flip();
             vertical_flip = builder.vertical_flip();
+            updated = false;
             hw_item.init(builder);
         }
     };
@@ -51,10 +53,11 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void _update_indexes_to_commit(int index)
+    void _update(int index)
     {
         data.first_index_to_commit = min(data.first_index_to_commit, index);
         data.last_index_to_commit = max(data.last_index_to_commit, index);
+        data.items[index].updated = true;
     }
 }
 
@@ -85,7 +88,7 @@ optional<int> create(const sprite_affine_mat_builder& builder)
     item_type& new_item = data.items[item_index];
     new_item.init(builder);
     hw::sprite_affine_mats::setup(new_item.hw_item, data.handles_ptr[item_index]);
-    _update_indexes_to_commit(item_index);
+    _update(item_index);
     return item_index;
 }
 
@@ -117,7 +120,7 @@ void set_rotation_angle(int id, fixed rotation_angle)
     item.rotation_angle = rotation_angle;
     item.hw_item.set_rotation_angle(rotation_angle);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+    _update(id);
 }
 
 fixed scale_x(int id)
@@ -131,7 +134,7 @@ void set_scale_x(int id, fixed scale_x)
     item.scale_x = scale_x;
     item.hw_item.set_scale_x(scale_x);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+    _update(id);
 }
 
 fixed scale_y(int id)
@@ -145,7 +148,7 @@ void set_scale_y(int id, fixed scale_y)
     item.scale_y = scale_y;
     item.hw_item.set_scale_y(scale_y);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+    _update(id);
 }
 
 bool horizontal_flip(int id)
@@ -159,7 +162,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
     item.horizontal_flip = horizontal_flip;
     item.hw_item.set_horizontal_flip(horizontal_flip);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+    _update(id);
 }
 
 bool vertical_flip(int id)
@@ -173,7 +176,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     item.vertical_flip = vertical_flip;
     item.hw_item.set_vertical_flip(vertical_flip);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+    _update(id);
 }
 
 bool is_identity(int id)
@@ -182,11 +185,39 @@ bool is_identity(int id)
     return item.rotation_angle == 0 && item.scale_x == 1 && item.scale_y == 1;
 }
 
+bool double_size(int id)
+{
+    item_type& item = data.items[id];
+    return hw::sprite_affine_mats::double_size(item.hw_item, max(item.scale_x, item.scale_y));
+}
+
+bool updated(int id)
+{
+    item_type& item = data.items[id];
+    return item.updated;
+}
+
+bool updated()
+{
+    return data.first_index_to_commit < hw::sprite_affine_mats::count();
+}
+
+void update()
+{
+    if(updated())
+    {
+        for(item_type& item : data.items)
+        {
+            item.updated = false;
+        }
+    }
+}
+
 optional<commit_data> retrieve_commit_data()
 {
     optional<commit_data> result;
 
-    if(data.first_index_to_commit < hw::sprite_affine_mats::count())
+    if(updated())
     {
         int offset = data.first_index_to_commit;
         int count = data.last_index_to_commit - data.first_index_to_commit + 1;

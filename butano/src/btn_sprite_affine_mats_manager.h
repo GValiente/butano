@@ -49,6 +49,14 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] bool is_identity(int id);
 
+    [[nodiscard]] bool double_size(int id);
+
+    [[nodiscard]] bool updated(int id);
+
+    [[nodiscard]] bool updated();
+
+    void update();
+
     [[nodiscard]] optional<commit_data> retrieve_commit_data();
 }
 

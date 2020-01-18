@@ -46,6 +46,8 @@ namespace btn::hw::sprite_affine_mats
         return 32;
     }
 
+    [[nodiscard]] bool double_size(const item_type& item, fixed scale);
+
     void setup(const item_type& item, handle& affine_mat);
 }
 

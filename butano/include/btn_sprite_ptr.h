@@ -18,6 +18,7 @@ class sprite_tiles_item;
 class sprite_palette_ptr;
 class sprite_palette_item;
 class sprite_affine_mat_ptr;
+enum class sprite_double_size_mode;
 
 class sprite_ptr
 {
@@ -126,7 +127,9 @@ public:
 
     [[nodiscard]] bool double_size() const;
 
-    void set_double_size(bool double_size);
+    [[nodiscard]] sprite_double_size_mode double_size_mode() const;
+
+    void set_double_size_mode(sprite_double_size_mode double_size_mode);
 
     [[nodiscard]] bool visible() const;
 

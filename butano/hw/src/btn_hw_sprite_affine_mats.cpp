@@ -51,6 +51,14 @@ void item_type::set_vertical_flip(bool vertical_flip)
     vflip = 1 - (2 * vertical_flip);
 }
 
+bool double_size(const item_type& item, fixed scale)
+{
+    int cos = abs(int(item.cos));
+    int sin = abs(int(item.sin));
+    int size = (cos + sin) * scale.value();
+    return size > 256 << 16;
+}
+
 void setup(const item_type& item, handle& affine_mat)
 {
     auto affine_mat_ptr = reinterpret_cast<OBJ_AFFINE*>(&affine_mat);

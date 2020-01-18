@@ -45,8 +45,10 @@ namespace hw::sprites
     void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
                        handle& sprite);
 
-    void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, int affine_mat_id,
-                      bool eight_bits_per_pixel, handle& sprite);
+    void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+                      handle& sprite);
+
+    [[nodiscard]] bool double_size(const handle& sprite);
 
     [[nodiscard]] size dimensions(const handle& sprite);
 

@@ -331,9 +331,14 @@ bool sprite_ptr::double_size() const
     return sprites_manager::double_size(_id);
 }
 
-void sprite_ptr::set_double_size(bool double_size)
+sprite_double_size_mode sprite_ptr::double_size_mode() const
 {
-    sprites_manager::set_double_size(_id, double_size);
+    return sprites_manager::double_size_mode(_id);
+}
+
+void sprite_ptr::set_double_size_mode(sprite_double_size_mode double_size_mode)
+{
+    sprites_manager::set_double_size_mode(_id, double_size_mode);
 }
 
 bool sprite_ptr::visible() const

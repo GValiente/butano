@@ -34,8 +34,8 @@ namespace
         optional<sprite_affine_mat_ptr> affine_mat_ptr;
         sprite_palette_ptr palette_ptr;
         int8_t handles_index = -1;
+        unsigned double_size_mode: 2;
         unsigned visible: 1;
-        unsigned double_size: 1;
         unsigned ignore_camera: 1;
         unsigned remove_affine_mat_when_not_needed: 1;
         unsigned on_screen: 1;
@@ -49,6 +49,7 @@ namespace
         {
             bool eight_bits_per_pixel = palette_ptr.eight_bits_per_pixel();
             remove_affine_mat_when_not_needed = builder.remove_affine_mat_when_not_needed();
+            double_size_mode = unsigned(builder.double_size_mode());
 
             if(affine_mat_ptr)
             {
@@ -59,8 +60,8 @@ namespace
                 }
                 else
                 {
-                    hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), affine_mat_ptr->id(),
-                                              eight_bits_per_pixel, handle);
+                    hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+                    hw::sprites::set_affine_mat(affine_mat_ptr->id(), double_size(), handle);
                 }
             }
             else
@@ -78,7 +79,6 @@ namespace
 
             hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), handle);
             update_sort_key(builder.bg_priority(), builder.z_order());
-            double_size = builder.double_size();
             on_screen = false;
 
             if(builder.visible())
@@ -91,6 +91,24 @@ namespace
                 visible = false;
                 check_on_screen = false;
             }
+        }
+
+        [[nodiscard]] bool double_size() const
+        {
+            switch(sprite_double_size_mode(double_size_mode))
+            {
+
+            case sprite_double_size_mode::AUTO:
+                return sprite_affine_mats_manager::double_size(affine_mat_ptr->id());
+
+            case sprite_double_size_mode::ENABLED:
+                return true;
+
+            case sprite_double_size_mode::DISABLED:
+                return false;
+            }
+
+            return false;
         }
 
         [[nodiscard]] int bg_priority() const
@@ -147,12 +165,14 @@ namespace
 
     void _assign_affine_mat(sprite_affine_mat_ptr affine_mat_ptr, item_type& item)
     {
-        hw::sprites::set_affine_mat(affine_mat_ptr.id(), item.double_size, item.handle);
         item.affine_mat_ptr = move(affine_mat_ptr);
 
-        if(item.double_size)
+        bool double_size = item.double_size();
+        hw::sprites::set_affine_mat(item.affine_mat_ptr->id(), double_size, item.handle);
+
+        if(double_size)
         {
-            set_position(static_cast<id_type>(&item), item.position);
+            set_position(&item, item.position);
         }
         else
         {
@@ -163,14 +183,15 @@ namespace
     void _remove_affine_mat(item_type& item)
     {
         sprite_affine_mat_ptr& affine_mat_ptr = *item.affine_mat_ptr;
+        bool double_size = hw::sprites::double_size(item.handle);
         hw::sprites::set_horizontal_flip(affine_mat_ptr.horizontal_flip(), item.handle);
         hw::sprites::set_vertical_flip(affine_mat_ptr.vertical_flip(), item.handle);
         hw::sprites::remove_affine_mat(item.handle);
         item.affine_mat_ptr.reset();
 
-        if(item.double_size)
+        if(double_size)
         {
-            set_position(static_cast<id_type>(&item), item.position);
+            set_position(&item, item.position);
         }
         else
         {
@@ -213,15 +234,40 @@ namespace
         }
     }
 
-    void _remove_unneeded_affine_mats()
+    void _check_affine_mats()
     {
-        for(item_type* item : data.sorted_items)
+        if(sprite_affine_mats_manager::updated())
         {
-            if(item->affine_mat_ptr && item->remove_affine_mat_when_not_needed && item->affine_mat_ptr->is_identity())
+            for(item_type* item : data.sorted_items)
             {
-                _remove_affine_mat(*item);
+                if(item->affine_mat_ptr)
+                {
+                    const sprite_affine_mat_ptr& affine_mat_ptr = *item->affine_mat_ptr;
+                    int affine_mat_ptr_id = affine_mat_ptr.id();
+
+                    if(sprite_affine_mats_manager::updated(affine_mat_ptr_id))
+                    {
+                        if(item->remove_affine_mat_when_not_needed && affine_mat_ptr.is_identity())
+                        {
+                            _remove_affine_mat(*item);
+                        }
+                        else if(sprite_double_size_mode(item->double_size_mode) == sprite_double_size_mode::AUTO)
+                        {
+                            bool old_double_size = hw::sprites::double_size(item->handle);
+                            bool new_double_size = sprite_affine_mats_manager::double_size(affine_mat_ptr_id);
+
+                            if(old_double_size != new_double_size)
+                            {
+                                hw::sprites::set_affine_mat(affine_mat_ptr_id, new_double_size, item->handle);
+                                set_position(item, item->position);
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        sprite_affine_mats_manager::update();
     }
 
     void _check_items_on_screen()
@@ -584,20 +630,29 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 bool double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->double_size;
+    return hw::sprites::double_size(item->handle);
 }
 
-void set_double_size(id_type id, bool double_size)
+sprite_double_size_mode double_size_mode(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return sprite_double_size_mode(item->double_size_mode);
+}
+
+void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->double_size != double_size)
-    {
-        item->double_size = double_size;
+    item->double_size_mode = unsigned(double_size_mode);
 
-        if(item->affine_mat_ptr)
+    if(item->affine_mat_ptr)
+    {
+        bool old_double_size = double_size(id);
+        bool new_double_size = item->double_size();
+
+        if(old_double_size != new_double_size)
         {
-            hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), double_size, item->handle);
+            hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), new_double_size, item->handle);
             set_position(id, item->position);
         }
     }
@@ -713,7 +768,7 @@ void update_camera()
     {
         if(! item->ignore_camera)
         {
-            set_position(static_cast<id_type>(item), item->position);
+            set_position(item, item->position);
         }
     }
 }
@@ -721,7 +776,7 @@ void update_camera()
 void update()
 {
     _sort_items();
-    _remove_unneeded_affine_mats();
+    _check_affine_mats();
     _check_items_on_screen();
     _rebuild_handles();
 }

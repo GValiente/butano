@@ -20,8 +20,8 @@ public:
 
     enum class bank_type
     {
-        LOW,
-        HIGH
+        HIGH,
+        LOW
     };
 
     using list_iterator = btn::iforward_list<sprite_tiles_manager_item>::iterator;

@@ -13,6 +13,7 @@ class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
+enum class sprite_double_size_mode;
 
 namespace sprites_manager
 {
@@ -69,7 +70,9 @@ namespace sprites_manager
 
     [[nodiscard]] bool double_size(id_type id);
 
-    void set_double_size(id_type id, bool double_size);
+    [[nodiscard]] sprite_double_size_mode double_size_mode(id_type id);
+
+    void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode);
 
     [[nodiscard]] bool visible(id_type id);
 

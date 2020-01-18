@@ -56,7 +56,6 @@ int main()
     {
         if(btn::keypad::pressed(btn::keypad::button_type::A))
         {
-            sprite.set_double_size(! sprite.double_size());
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::B))

@@ -9,6 +9,7 @@
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_palette_ptr.h"
 #include "btn_sprite_affine_mat_ptr.h"
+#include "btn_sprite_double_size_mode.h"
 
 namespace btn
 {
@@ -171,14 +172,14 @@ public:
         return *this;
     }
 
-    [[nodiscard]] bool double_size() const
+    [[nodiscard]] sprite_double_size_mode double_size_mode() const
     {
-        return _double_size;
+        return _double_size_mode;
     }
 
-    sprite_builder& set_double_size(bool double_size)
+    sprite_builder& set_double_size(sprite_double_size_mode double_size_mode)
     {
-        _double_size = double_size;
+        _double_size_mode = double_size_mode;
         return *this;
     }
 
@@ -253,6 +254,7 @@ private:
     optional<sprite_affine_mat_ptr> _affine_mat_ptr;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
+    sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;
     sprite_shape _shape;
     sprite_size _size;
@@ -263,7 +265,6 @@ private:
     bool _vertical_flip = false;
     bool _mosaic_enabled = false;
     bool _visible = true;
-    bool _double_size = false;
     bool _ignore_camera = false;
     bool _remove_affine_mat_when_not_needed = true;
 };

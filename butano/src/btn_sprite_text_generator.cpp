@@ -121,7 +121,7 @@ namespace
 
         void paint_tab()
         {
-            _width += (_generator.font().character_widths()[0] * 4);
+            _width += _generator.font().character_widths()[0] * 4;
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
@@ -238,36 +238,41 @@ namespace
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            if(_output_sprites.full())
-            {
-                return false;
-            }
-
             const sprite_font& font = _generator.font();
-            const sprite_item& item = font.item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
-            optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
 
-            if(! source_tiles_ptr)
+            if(int character_width = font.character_widths()[size_t(graphics_index + 1)])
             {
-                return false;
+                if(_output_sprites.full())
+                {
+                    return false;
+                }
+
+                const sprite_item& item = font.item();
+                span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
+                optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+
+                if(! source_tiles_ptr)
+                {
+                    return false;
+                }
+
+                sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
+                builder.set_position(_current_position);
+                builder.set_bg_priority(_generator.bg_priority());
+                builder.set_z_order(_generator.z_order());
+                builder.set_ignore_camera(_generator.ignore_camera());
+
+                optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+
+                if(! sprite_ptr)
+                {
+                    return false;
+                }
+
+                _output_sprites.push_back(move(*sprite_ptr));
+                _current_position.set_x(_current_position.x() + character_width);
             }
 
-            sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
-            builder.set_position(_current_position);
-            builder.set_bg_priority(_generator.bg_priority());
-            builder.set_z_order(_generator.z_order());
-            builder.set_ignore_camera(_generator.ignore_camera());
-
-            optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
-
-            if(! sprite_ptr)
-            {
-                return false;
-            }
-
-            _output_sprites.push_back(move(*sprite_ptr));
-            _current_position.set_x(_current_position.x() + font.character_widths()[size_t(graphics_index + 1)]);
             return true;
         }
 

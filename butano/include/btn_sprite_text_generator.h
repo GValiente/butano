@@ -5,7 +5,6 @@
 #include "btn_vector.h"
 #include "btn_hash_map.h"
 #include "btn_sprite_font.h"
-#include "btn_sprite_palette_ptr.h"
 #include "btn_config_sprite_text.h"
 #include "btn_horizontal_alignment_type.h"
 
@@ -14,7 +13,6 @@ namespace btn
 
 class sprite_ptr;
 class fixed_point;
-class string_view;
 
 class sprite_text_generator
 {
@@ -28,13 +26,6 @@ public:
     {
         return _font;
     }
-
-    [[nodiscard]] const sprite_palette_ptr& palette() const
-    {
-        return _palette_ptr;
-    }
-
-    void set_palette(sprite_palette_ptr palette_ptr);
 
     [[nodiscard]] horizontal_alignment_type alignment() const
     {
@@ -107,9 +98,14 @@ public:
 
     void generate(const fixed_point& position, const string_view& text, ivector<sprite_ptr>& output_sprites) const;
 
+    [[nodiscard]] bool optional_generate(fixed x, fixed y, const string_view& text,
+                                         ivector<sprite_ptr>& output_sprites) const;
+
+    [[nodiscard]] bool optional_generate(const fixed_point& position, const string_view& text,
+                                         ivector<sprite_ptr>& output_sprites) const;
+
 private:
     sprite_font _font;
-    sprite_palette_ptr _palette_ptr;
     utf8_characters_map_type _utf8_characters_map;
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 0;

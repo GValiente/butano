@@ -1,8 +1,6 @@
 #include "btn_sprite_text_generator.h"
 
 #include "btn_sprite_ptr.h"
-#include "btn_string_view.h"
-#include "btn_utf8_character.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
@@ -19,30 +17,39 @@ namespace
     constexpr const int fixed_character_width = 8;
     constexpr const int fixed_max_characters_per_sprite = max_columns_per_sprite / fixed_character_width;
 
-    sprite_palette_ptr create_palette(const sprite_font& font)
-    {
-        optional<sprite_palette_ptr> palette_ptr = font.item().palette_item().palette_ptr(create_mode::FIND_OR_CREATE);
-        BTN_ASSERT(palette_ptr, "Palette create failed");
-
-        return *palette_ptr;
-    }
-
     template<sprite_size size, int max_tiles_per_sprite>
-    tile* build_sprite(const sprite_text_generator& generator, const fixed_point& current_position,
-                       ivector<sprite_ptr>& output_sprites)
+    [[nodiscard]] tile* build_sprite(const sprite_text_generator& generator, const sprite_palette_ptr& palette_ptr,
+                                     const fixed_point& current_position, ivector<sprite_ptr>& output_sprites)
     {
-        BTN_ASSERT(! output_sprites.full(), "Output sprites vector is full");
+        if(output_sprites.full())
+        {
+            return nullptr;
+        }
 
-        sprite_tiles_ptr tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite);
-        optional<span<tile>> tiles_vram = tiles_ptr.vram();
+        optional<sprite_tiles_ptr> tiles_ptr = sprite_tiles_ptr::optional_allocate(max_tiles_per_sprite);
+
+        if(! tiles_ptr)
+        {
+            return nullptr;
+        }
+
+        optional<span<tile>> tiles_vram = tiles_ptr->vram();
         BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
-        sprite_builder builder(sprite_shape::WIDE, size, move(tiles_ptr), generator.palette());
+        sprite_builder builder(sprite_shape::WIDE, size, move(*tiles_ptr), palette_ptr);
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
         builder.set_ignore_camera(generator.ignore_camera());
-        output_sprites.push_back(builder.build_and_release());
+
+        optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+
+        if(! sprite_ptr)
+        {
+            return nullptr;
+        }
+
+        output_sprites.push_back(move(*sprite_ptr));
         return tiles_vram->data();
     }
 
@@ -76,9 +83,10 @@ namespace
             _width += (fixed_character_width * 4);
         }
 
-        void paint_character([[maybe_unused]] int graphics_index)
+        [[nodiscard]] bool paint_character([[maybe_unused]] int graphics_index)
         {
             _width += fixed_character_width;
+            return true;
         }
 
     private:
@@ -116,9 +124,10 @@ namespace
             _width += (_generator.font().character_widths()[0] * 4);
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
             _width += _generator.font().character_widths()[size_t(graphics_index + 1)];
+            return true;
         }
 
     private:
@@ -131,10 +140,12 @@ namespace
     {
 
     public:
-        fixed_one_sprite_per_character_painter(const sprite_text_generator& generator, const fixed_point& position,
-                                               ivector<sprite_ptr>& output_sprites) :
+        fixed_one_sprite_per_character_painter(
+                const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
+                const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (fixed_character_width / 2), position.y())
         {
         }
@@ -154,25 +165,44 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
-            BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
+            if(_output_sprites.full())
+            {
+                return false;
+            }
 
             const sprite_item& item = _generator.font().item();
             span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
-            sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
-            sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
+            optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+
+            if(! source_tiles_ptr)
+            {
+                return false;
+            }
+
+            sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
             builder.set_ignore_camera(_generator.ignore_camera());
-            _output_sprites.push_back(builder.build_and_release());
+
+            optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+
+            if(! sprite_ptr)
+            {
+                return false;
+            }
+
+            _output_sprites.push_back(move(*sprite_ptr));
             _current_position.set_x(_current_position.x() + fixed_character_width);
+            return true;
         }
 
     private:
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
     };
 
@@ -181,10 +211,12 @@ namespace
     {
 
     public:
-        variable_one_sprite_per_character_painter(const sprite_text_generator& generator, const fixed_point& position,
-                                                  ivector<sprite_ptr>& output_sprites) :
+        variable_one_sprite_per_character_painter(
+                const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr, const fixed_point& position,
+                ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (fixed_character_width / 2), position.y())
         {
         }
@@ -204,26 +236,45 @@ namespace
             _current_position.set_x(_current_position.x() + (_generator.font().character_widths()[0] * 4));
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
-            BTN_ASSERT(! _output_sprites.full(), "Output sprites vector is full");
+            if(_output_sprites.full())
+            {
+                return false;
+            }
 
             const sprite_font& font = _generator.font();
             const sprite_item& item = font.item();
             span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
-            sprite_tiles_ptr source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
-            sprite_builder builder(item.shape(), sprite_size::SMALL, move(source_tiles_ptr), _generator.palette());
+            optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+
+            if(! source_tiles_ptr)
+            {
+                return false;
+            }
+
+            sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
             builder.set_ignore_camera(_generator.ignore_camera());
-            _output_sprites.push_back(builder.build_and_release());
+
+            optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+
+            if(! sprite_ptr)
+            {
+                return false;
+            }
+
+            _output_sprites.push_back(move(*sprite_ptr));
             _current_position.set_x(_current_position.x() + font.character_widths()[size_t(graphics_index + 1)]);
+            return true;
         }
 
     private:
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
     };
 
@@ -232,10 +283,11 @@ namespace
     {
 
     public:
-        fixed_8x8_painter(const sprite_text_generator& generator, const fixed_point& position,
-                          ivector<sprite_ptr>& output_sprites) :
+        fixed_8x8_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
+                          const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
@@ -267,12 +319,18 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
                 _tiles_vram = build_sprite<sprite_size::NORMAL, fixed_max_characters_per_sprite>(
-                            _generator, _current_position, _output_sprites);
+                            _generator, _palette_ptr, _current_position, _output_sprites);
+
+                if(! _tiles_vram)
+                {
+                    return false;
+                }
+
                 _sprite_character_index = 0;
             }
 
@@ -281,11 +339,13 @@ namespace
             hw::sprite_tiles::copy_tiles(source_tiles_ref[0], 1, _tiles_vram[_sprite_character_index]);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
+            return true;
         }
 
     private:
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = fixed_max_characters_per_sprite;
@@ -310,10 +370,11 @@ namespace
     {
 
     public:
-        variable_8x8_painter(const sprite_text_generator& generator, const fixed_point& position,
-                              ivector<sprite_ptr>& output_sprites) :
+        variable_8x8_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
+                             const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
@@ -337,7 +398,7 @@ namespace
             _current_position.set_x(_current_position.x() + width);
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
             const sprite_font& font = _generator.font();
 
@@ -346,7 +407,13 @@ namespace
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
                     _tiles_vram = build_sprite<sprite_size::NORMAL, _tiles>(
-                                _generator, _current_position, _output_sprites);
+                                _generator, _palette_ptr, _current_position, _output_sprites);
+
+                    if(! _tiles_vram)
+                    {
+                        return false;
+                    }
+
                     hw::sprite_tiles::clear_tiles(_tiles, *_tiles_vram);
                     _sprite_column = 0;
                 }
@@ -360,6 +427,8 @@ namespace
                 _current_position.set_x(_current_position.x() + width);
                 _sprite_column += width;
             }
+
+            return true;
         }
 
     private:
@@ -368,6 +437,7 @@ namespace
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_column = max_columns_per_sprite;
@@ -378,10 +448,11 @@ namespace
     {
 
     public:
-        fixed_8x16_painter(const sprite_text_generator& generator, const fixed_point& position,
-                           ivector<sprite_ptr>& output_sprites) :
+        fixed_8x16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
+                           const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
@@ -413,12 +484,18 @@ namespace
             _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
                 _tiles_vram = build_sprite<sprite_size::BIG, fixed_max_characters_per_sprite * 2>(
-                            _generator, _current_position, _output_sprites);
+                            _generator, _palette_ptr, _current_position, _output_sprites);
+
+                if(! _tiles_vram)
+                {
+                    return false;
+                }
+
                 _sprite_character_index = 0;
             }
 
@@ -433,11 +510,13 @@ namespace
 
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
+            return true;
         }
 
     private:
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = fixed_max_characters_per_sprite;
@@ -466,10 +545,11 @@ namespace
     {
 
     public:
-        variable_8x16_painter(const sprite_text_generator& generator, const fixed_point& position,
-                              ivector<sprite_ptr>& output_sprites) :
+        variable_8x16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
+                              const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
+            _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
         {
         }
@@ -493,7 +573,7 @@ namespace
             _current_position.set_x(_current_position.x() + width);
         }
 
-        void paint_character(int graphics_index)
+        [[nodiscard]] bool paint_character(int graphics_index)
         {
             const sprite_font& font = _generator.font();
 
@@ -502,7 +582,13 @@ namespace
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
                     _tiles_vram = build_sprite<sprite_size::BIG, _tiles>(
-                                _generator, _current_position, _output_sprites);
+                                _generator, _palette_ptr, _current_position, _output_sprites);
+
+                    if(! _tiles_vram)
+                    {
+                        return false;
+                    }
+
                     hw::sprite_tiles::clear_tiles(_tiles, *_tiles_vram);
                     _sprite_column = 0;
                 }
@@ -520,6 +606,8 @@ namespace
                 _current_position.set_x(_current_position.x() + width);
                 _sprite_column += width;
             }
+
+            return true;
         }
 
     private:
@@ -528,6 +616,7 @@ namespace
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_column = max_columns_per_sprite;
@@ -535,7 +624,7 @@ namespace
 
 
     template<class Painter>
-    void paint(const string_view& text, Painter& painter)
+    [[nodiscard]] bool paint(const string_view& text, Painter& painter)
     {
         const sprite_text_generator& generator = painter.generator();
         const auto& utf8_characters_map = generator.utf8_characters_map();
@@ -576,19 +665,23 @@ namespace
                     text_index += size_t(utf8_char.size());
                 }
 
-                painter.paint_character(graphics_index);
+                if(! painter.paint_character(graphics_index))
+                {
+                    return false;
+                }
             }
             else
             {
                 BTN_ERROR("Invalid character: ", character, " (text: ", text, ")");
             }
         }
+
+        return true;
     }
 }
 
 sprite_text_generator::sprite_text_generator(const sprite_font& font) :
-    _font(font),
-    _palette_ptr(create_palette(font))
+    _font(font)
 {
     int utf8_character_index = sprite_font::minimum_graphics;
 
@@ -598,14 +691,6 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
         _utf8_characters_map.insert(utf8_char.value(), utf8_character_index);
         ++utf8_character_index;
     }
-}
-
-void sprite_text_generator::set_palette(sprite_palette_ptr palette_ptr)
-{
-    BTN_ASSERT(palette_ptr.colors_count() == _palette_ptr.colors_count(), "Invalid colors count: ",
-               palette_ptr.colors_count(), " - ", _palette_ptr.colors_count());
-
-    _palette_ptr = move(palette_ptr);
 }
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
@@ -628,25 +713,52 @@ fixed sprite_text_generator::width(const string_view& text) const
     if(_font.character_widths().empty())
     {
         fixed_width_painter painter(*this);
-        paint(text, painter);
+        [[maybe_unused]] bool success = paint(text, painter);
+        BTN_ASSERT(success, "Text width calculation failed");
+
         return painter.width();
     }
+    else
+    {
+        variable_width_painter painter(*this);
+        [[maybe_unused]] bool success = paint(text, painter);
+        BTN_ASSERT(success, "Text width calculation failed");
 
-    variable_width_painter painter(*this);
-    paint(text, painter);
-    return painter.width();
+        return painter.width();
+    }
 }
 
 void sprite_text_generator::generate(fixed x, fixed y, const string_view& text,
                                      ivector<sprite_ptr>& output_sprites) const
 {
-    generate(fixed_point(x, y), text, output_sprites);
+    [[maybe_unused]] bool success = optional_generate(fixed_point(x, y), text, output_sprites);
+    BTN_ASSERT(success, "Text generation failed");
 }
 
 void sprite_text_generator::generate(const fixed_point& position, const string_view& text,
                                      ivector<sprite_ptr>& output_sprites) const
 {
+    [[maybe_unused]] bool success = optional_generate(position, text, output_sprites);
+    BTN_ASSERT(success, "Text generation failed");
+}
+
+bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_view& text,
+                                              ivector<sprite_ptr>& output_sprites) const
+{
+    return optional_generate(fixed_point(x, y), text, output_sprites);
+}
+
+bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
+                                              ivector<sprite_ptr>& output_sprites) const
+{
     const sprite_item& sprite_item = _font.item();
+    optional<sprite_palette_ptr> palette_ptr = sprite_item.palette_item().palette_ptr(create_mode::FIND_OR_CREATE);
+
+    if(! palette_ptr)
+    {
+        return false;
+    }
+
     fixed_point aligned_position = position;
 
     switch(_alignment)
@@ -664,17 +776,22 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
         break;
     }
 
+    size_t output_sprites_count = output_sprites.size();
+    bool success;
+
     if(_one_sprite_per_character)
     {
         if(_font.character_widths().empty())
         {
-            fixed_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
-            paint(text, painter);
+            fixed_one_sprite_per_character_painter painter(*this, move(*palette_ptr), aligned_position,
+                                                           output_sprites);
+            success = paint(text, painter);
         }
         else
         {
-            variable_one_sprite_per_character_painter painter(*this, aligned_position, output_sprites);
-            paint(text, painter);
+            variable_one_sprite_per_character_painter painter(*this, move(*palette_ptr), aligned_position,
+                                                              output_sprites);
+            success = paint(text, painter);
         }
     }
     else
@@ -683,29 +800,39 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
         {
             if(_font.character_widths().empty())
             {
-                fixed_8x8_painter painter(*this, aligned_position, output_sprites);
-                paint(text, painter);
+                fixed_8x8_painter painter(*this, move(*palette_ptr), aligned_position, output_sprites);
+                success = paint(text, painter);
             }
             else
             {
-                variable_8x8_painter painter(*this, aligned_position, output_sprites);
-                paint(text, painter);
+                variable_8x8_painter painter(*this, move(*palette_ptr), aligned_position, output_sprites);
+                success = paint(text, painter);
             }
         }
         else
         {
             if(_font.character_widths().empty())
             {
-                fixed_8x16_painter painter(*this, aligned_position, output_sprites);
-                paint(text, painter);
+                fixed_8x16_painter painter(*this, move(*palette_ptr), aligned_position, output_sprites);
+                success = paint(text, painter);
             }
             else
             {
-                variable_8x16_painter painter(*this, aligned_position, output_sprites);
-                paint(text, painter);
+                variable_8x16_painter painter(*this, move(*palette_ptr), aligned_position, output_sprites);
+                success = paint(text, painter);
             }
         }
     }
+
+    if(! success)
+    {
+        while(output_sprites.size() > output_sprites_count)
+        {
+            output_sprites.pop_back();
+        }
+    }
+
+    return success;
 }
 
 }

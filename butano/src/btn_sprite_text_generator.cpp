@@ -681,7 +681,8 @@ namespace
 }
 
 sprite_text_generator::sprite_text_generator(const sprite_font& font) :
-    _font(font)
+    _font(font),
+    _palette_item(font.item().palette_item())
 {
     int utf8_character_index = sprite_font::minimum_graphics;
 
@@ -691,6 +692,13 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
         _utf8_characters_map.insert(utf8_char.value(), utf8_character_index);
         ++utf8_character_index;
     }
+}
+
+void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
+{
+    BTN_ASSERT(! palette_item.eight_bits_per_pixel(), "8bpp fonts not supported");
+
+    _palette_item = palette_item;
 }
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
@@ -751,8 +759,7 @@ bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_vie
 bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
-    const sprite_item& sprite_item = _font.item();
-    optional<sprite_palette_ptr> palette_ptr = sprite_item.palette_item().palette_ptr(create_mode::FIND_OR_CREATE);
+    optional<sprite_palette_ptr> palette_ptr = _palette_item.palette_ptr(create_mode::FIND_OR_CREATE);
 
     if(! palette_ptr)
     {
@@ -796,7 +803,7 @@ bool sprite_text_generator::optional_generate(const fixed_point& position, const
     }
     else
     {
-        if(sprite_item.shape_size().height() == 8)
+        if(_font.item().shape_size().height() == 8)
         {
             if(_font.character_widths().empty())
             {

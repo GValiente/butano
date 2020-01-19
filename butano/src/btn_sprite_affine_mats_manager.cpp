@@ -204,12 +204,9 @@ bool updated()
 
 void update()
 {
-    if(updated())
+    for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
     {
-        for(item_type& item : data.items)
-        {
-            item.updated = false;
-        }
+        data.items[index].updated = false;
     }
 }
 

@@ -1,6 +1,7 @@
 #include "btn_sprite_tiles_bank.h"
 
 #include "btn_span.h"
+#include "btn_tile.h"
 #include "btn_optional.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
@@ -39,35 +40,34 @@ namespace
     }
 }
 
-void sprite_tiles_bank::init(item_type::bank_type bank_type)
+void sprite_tiles_bank::init(type bank_type)
 {
     item_type new_item;
     new_item.tiles_count = hw::sprite_tiles::count_per_bank();
-    new_item.set_bank(bank_type);
 
-    if(bank_type == item_type::bank_type::HIGH)
+    if(bank_type == type::HIGH)
     {
         new_item.start_tile = hw::sprite_tiles::count_per_bank();
     }
 
+    _items.init();
     _items.push_front(new_item);
     _biggest_free_iterator = _items.begin();
     _free_tiles_count = new_item.tiles_count;
-    _bank_type = bank_type;
 }
 
-optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::find(const span<const tile>& tiles_ref)
+optional<int> sprite_tiles_bank::find(const span<const tile>& tiles_ref)
 {
     BTN_ASSERT(valid_tiles(int(tiles_ref.size())), "Invalid tiles ref size: ", tiles_ref.size());
 
     auto items_map_iterator = _items_map.find(tiles_ref.data());
-    optional<item_type::list_iterator> result;
+    optional<int> result;
 
     if(items_map_iterator != _items_map.end())
     {
-        item_type::list_iterator iterator = items_map_iterator->second;
-        item_type& item = *iterator;
-        result.emplace(iterator);
+        auto id = int(items_map_iterator->second);
+        item_type& item = _items.item(id);
+        result.emplace(id);
 
         BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match tiles item count: ",
                    tiles_ref.size(), " - ", item.tiles_count);
@@ -94,7 +94,7 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::find(co
     return result;
 }
 
-optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::create(const span<const tile>& tiles_ref)
+optional<int> sprite_tiles_bank::create(const span<const tile>& tiles_ref)
 {
     BTN_ASSERT(valid_tiles(int(tiles_ref.size())), "Invalid tiles ref size: ", tiles_ref.size());
     BTN_ASSERT(_items_map.find(tiles_ref.data()) == _items_map.end(),
@@ -103,22 +103,22 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::create(
     return _create_impl(tiles_ref.data(), int(tiles_ref.size()));
 }
 
-optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::allocate(int tiles)
+optional<int> sprite_tiles_bank::allocate(int tiles)
 {
     BTN_ASSERT(valid_tiles(tiles), "Invalid tiles: ", tiles);
 
     return _create_impl(nullptr, tiles);
 }
 
-void sprite_tiles_bank::increase_usages(item_type::list_iterator iterator)
+void sprite_tiles_bank::increase_usages(int id)
 {
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     ++item.usages;
 }
 
-void sprite_tiles_bank::decrease_usages(item_type::list_iterator iterator)
+void sprite_tiles_bank::decrease_usages(int id)
 {
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     --item.usages;
 
     if(! item.usages)
@@ -128,11 +128,24 @@ void sprite_tiles_bank::decrease_usages(item_type::list_iterator iterator)
     }
 }
 
-void sprite_tiles_bank::set_tiles_ref(item_type::list_iterator iterator, const span<const tile>& tiles_ref)
+optional<span<const tile>> sprite_tiles_bank::tiles_ref(int id) const
+{
+    const item_type& item = _items.item(id);
+    optional<span<const tile>> result;
+
+    if(item.data)
+    {
+        result.emplace(item.data, item.tiles_count);
+    }
+
+    return result;
+}
+
+void sprite_tiles_bank::set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
     BTN_ASSERT(valid_tiles(int(tiles_ref.size())), "Invalid tiles ref size: ", tiles_ref.size());
 
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     BTN_ASSERT(item.data, "Sprite tiles item has no data");
     BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match item tiles count: ",
                int(tiles_ref.size()), " - ", item.tiles_count);
@@ -145,17 +158,30 @@ void sprite_tiles_bank::set_tiles_ref(item_type::list_iterator iterator, const s
                    "Multiple copies of the same tiles data not supported");
 
         _items_map.erase(item.data);
-        _commit_item(iterator, *tiles_data, true);
+        _commit_item(id, *tiles_data, true);
     }
 }
 
-void sprite_tiles_bank::reload_tiles_ref(item_type::list_iterator iterator)
+void sprite_tiles_bank::reload_tiles_ref(int id)
 {
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     BTN_ASSERT(item.data, "Sprite tiles item has no data");
 
     item.commit = true;
     _check_commit = true;
+}
+
+optional<span<tile>> sprite_tiles_bank::vram(int id)
+{
+    item_type& item = _items.item(id);
+    optional<span<tile>> result;
+
+    if(! item.data)
+    {
+        result.emplace(&hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
+    }
+
+    return result;
 }
 
 bool sprite_tiles_bank::update()
@@ -192,7 +218,7 @@ bool sprite_tiles_bank::update()
 
                 while(next_iterator != end)
                 {
-                    if(_remove_adjacent_item(next_iterator, item))
+                    if(_remove_adjacent_item(next_iterator.id(), item))
                     {
                         next_iterator = _items.erase_after(iterator);
                     }
@@ -204,7 +230,7 @@ bool sprite_tiles_bank::update()
 
                 if(before_previous_iterator != end)
                 {
-                    if(_remove_adjacent_item(previous_iterator, item))
+                    if(_remove_adjacent_item(previous_iterator.id(), item))
                     {
                         item.start_tile = previous_iterator->start_tile;
                         _items.erase_after(before_previous_iterator);
@@ -263,12 +289,12 @@ bool sprite_tiles_bank::commit()
 }
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
-    void sprite_tiles_bank::log() const
+    void sprite_tiles_bank::log()
     {
         BTN_LOG("items: ", _items.size());
         BTN_LOG('[');
 
-        for(const item_type& item : _items)
+        for(item_type& item : _items)
         {
             BTN_LOG("    ",
                     (item.status() == item_type::status_type::FREE ? "free" :
@@ -277,7 +303,6 @@ bool sprite_tiles_bank::commit()
                     " - start_tile: ", item.start_tile,
                     " - tiles_count: ", item.tiles_count,
                     " - usages: ", item.usages,
-                    (item.bank() == item_type::bank_type::LOW ? " - low" : " - high"),
                     (item.commit ? " - commit" : " - no_commit"));
         }
 
@@ -289,7 +314,7 @@ bool sprite_tiles_bank::commit()
         for(const auto& items_map_item : _items_map)
         {
             BTN_LOG("    data: ", items_map_item.first,
-                    " - start_tile: ", items_map_item.second->start_tile);
+                    " - start_tile: ", _items.item(items_map_item.second).start_tile);
         }
 
         BTN_LOG(']');
@@ -311,8 +336,7 @@ bool sprite_tiles_bank::commit()
     }
 #endif
 
-optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::_create_impl(const tile* tiles_data,
-                                                                                      int tiles_count)
+optional<int> sprite_tiles_bank::_create_impl(const tile* tiles_data, int tiles_count)
 {
     if(! tiles_data && _delay_commit)
     {
@@ -327,8 +351,9 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::_create
 
             if(item.status() == item_type::status_type::FREE && item.tiles_count >= tiles_count)
             {
-                _create_item(iterator, tiles_data, tiles_count);
-                return optional<item_type::list_iterator>(iterator);
+                int id = iterator.id();
+                _create_item(id, tiles_data, tiles_count);
+                return id;
             }
         }
 
@@ -338,15 +363,16 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::_create
 
             if(item.status() == item_type::status_type::FREE && item.tiles_count >= tiles_count)
             {
-                _create_item(iterator, tiles_data, tiles_count);
-                return optional<item_type::list_iterator>(iterator);
+                int id = iterator.id();
+                _create_item(id, tiles_data, tiles_count);
+                return id;
             }
         }
     }
 
     if(tiles_data && tiles_count <= _to_remove_tiles_count)
     {
-        update();
+        [[maybe_unused]] bool updated = update();
         _delay_commit = true;
         return _create_impl(tiles_data, tiles_count);
     }
@@ -354,9 +380,9 @@ optional<sprite_tiles_bank::item_type::list_iterator> sprite_tiles_bank::_create
     return nullopt;
 }
 
-void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const tile* tiles_data, int tiles_count)
+void sprite_tiles_bank::_create_item(int id, const tile* tiles_data, int tiles_count)
 {
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     int new_item_tiles_count = item.tiles_count - tiles_count;
     item.data = tiles_data;
     item.tiles_count = uint16_t(tiles_count);
@@ -365,14 +391,14 @@ void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const ti
     item.commit = false;
     _free_tiles_count -= tiles_count;
 
-    if(_biggest_free_iterator == iterator)
+    if(_biggest_free_iterator == _items.it(id))
     {
         _biggest_free_iterator = _items.end();
     }
 
     if(tiles_data)
     {
-        _commit_item(iterator, *tiles_data, _delay_commit);
+        _commit_item(id, *tiles_data, _delay_commit);
     }
 
     if(new_item_tiles_count)
@@ -382,9 +408,8 @@ void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const ti
         item_type new_item;
         new_item.start_tile = item.start_tile + item.tiles_count;
         new_item.tiles_count = uint16_t(new_item_tiles_count);
-        new_item.set_bank(_bank_type);
 
-        item_type::list_iterator new_item_iterator = _items.insert_after(iterator, new_item);
+        items_list::iterator new_item_iterator = _items.insert_after(_items.it(id), new_item);
 
         if(_biggest_free_iterator != _items.end())
         {
@@ -402,11 +427,11 @@ void sprite_tiles_bank::_create_item(item_type::list_iterator iterator, const ti
     }
 }
 
-void sprite_tiles_bank::_commit_item(item_type::list_iterator iterator, const tile& tiles_data, bool delay_commit)
+void sprite_tiles_bank::_commit_item(int id, const tile& tiles_data, bool delay_commit)
 {
-    item_type& item = *iterator;
+    item_type& item = _items.item(id);
     item.data = &tiles_data;
-    _items_map.insert(&tiles_data, iterator);
+    _items_map.insert(&tiles_data, id);
 
     if(delay_commit)
     {
@@ -419,9 +444,9 @@ void sprite_tiles_bank::_commit_item(item_type::list_iterator iterator, const ti
     }
 }
 
-bool sprite_tiles_bank::_remove_adjacent_item(item_type::list_iterator adjacent_iterator, item_type& current_item)
+bool sprite_tiles_bank::_remove_adjacent_item(int adjacent_id, item_type& current_item)
 {
-    const item_type& adjacent_item = *adjacent_iterator;
+    const item_type& adjacent_item = _items.item(adjacent_id);
     item_type::status_type adjacent_item_status = adjacent_item.status();
     bool remove = adjacent_item_status != item_type::status_type::USED;
 
@@ -440,7 +465,7 @@ bool sprite_tiles_bank::_remove_adjacent_item(item_type::list_iterator adjacent_
         }
         else
         {
-            if(_biggest_free_iterator == adjacent_iterator)
+            if(_biggest_free_iterator == _items.it(adjacent_id))
             {
                 _biggest_free_iterator = _items.end();
             }

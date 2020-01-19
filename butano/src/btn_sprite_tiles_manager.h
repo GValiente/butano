@@ -3,29 +3,37 @@
 
 #include "btn_span_fwd.h"
 #include "btn_optional_fwd.h"
-#include "_btn_sprite_tiles_manager_item.h"
+
+namespace btn
+{
+    class tile;
+}
 
 namespace btn::sprite_tiles_manager
 {
-    using item_type = _btn::sprite_tiles_manager_item;
-
     void init();
 
-    [[nodiscard]] optional<item_type::list_iterator> find(const span<const tile>& tiles_ref);
+    [[nodiscard]] optional<int> find(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<item_type::list_iterator> create(const span<const tile>& tiles_ref);
+    [[nodiscard]] optional<int> create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<item_type::list_iterator> allocate(int tiles);
+    [[nodiscard]] optional<int> allocate(int tiles);
 
-    [[nodiscard]] item_type::list_iterator invalid_iterator();
+    void increase_usages(int id);
 
-    void increase_usages(item_type::list_iterator iterator);
+    void decrease_usages(int id);
 
-    void decrease_usages(item_type::list_iterator iterator);
+    [[nodiscard]] int start_tile(int id);
 
-    void set_tiles_ref(item_type::list_iterator iterator, const span<const tile>& tiles_ref);
+    [[nodiscard]] int tiles_count(int id);
 
-    void reload_tiles_ref(item_type::list_iterator iterator);
+    [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
+
+    void set_tiles_ref(int id, const span<const tile>& tiles_ref);
+
+    void reload_tiles_ref(int id);
+
+    [[nodiscard]] optional<span<tile>> vram(int id);
 
     void update();
 

@@ -6,6 +6,7 @@
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
     #include "btn_log.h"
+    #include "btn_tile.h"
 
     static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
 #endif
@@ -15,6 +16,8 @@ namespace btn::sprite_tiles_manager
 
 namespace
 {
+    constexpr const int high_bank_delta = sprite_tiles_bank::max_items;
+
     class static_data
     {
 
@@ -56,21 +59,23 @@ void init()
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 
-    data.high_bank.init(item_type::bank_type::HIGH);
-    data.low_bank.init(item_type::bank_type::LOW);
+    data.high_bank.init(sprite_tiles_bank::type::HIGH);
+    data.low_bank.init(sprite_tiles_bank::type::LOW);
 
     BTN_SPRITE_TILES_LOG_BANKS();
 }
 
-optional<item_type::list_iterator> find(const span<const tile>& tiles_ref)
+optional<int> find(const span<const tile>& tiles_ref)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND: ", tiles_ref.data(), " - ", tiles_ref.size());
 
-    optional<item_type::list_iterator> result = data.high_bank.find(tiles_ref);
+    optional<int> result = data.high_bank.find(tiles_ref);
 
     if(result)
     {
-        BTN_SPRITE_TILES_LOG("FOUND in high bank. start_tile: ", (*result)->start_tile);
+        BTN_SPRITE_TILES_LOG("FOUND in high bank. start_tile: ", data.high_bank.start_tile(*result));
+
+        *result += high_bank_delta;
     }
     else
     {
@@ -78,7 +83,7 @@ optional<item_type::list_iterator> find(const span<const tile>& tiles_ref)
 
         if(result)
         {
-            BTN_SPRITE_TILES_LOG("FOUND in low bank. start_tile: ", (*result)->start_tile);
+            BTN_SPRITE_TILES_LOG("FOUND in low bank. start_tile: ", data.low_bank.start_tile(*result));
         }
         else
         {
@@ -91,15 +96,17 @@ optional<item_type::list_iterator> find(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<item_type::list_iterator> create(const span<const tile>& tiles_ref)
+optional<int> create(const span<const tile>& tiles_ref)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_ref.data(), " - ", tiles_ref.size());
 
-    optional<item_type::list_iterator> result = data.high_bank.create(tiles_ref);
+    optional<int> result = data.high_bank.create(tiles_ref);
 
     if(result)
     {
-        BTN_SPRITE_TILES_LOG("CREATED in high bank. start_tile: ", (*result)->start_tile);
+        BTN_SPRITE_TILES_LOG("CREATED in high bank. start_tile: ", data.high_bank.start_tile(*result));
+
+        *result += high_bank_delta;
     }
     else
     {
@@ -107,7 +114,7 @@ optional<item_type::list_iterator> create(const span<const tile>& tiles_ref)
 
         if(result)
         {
-            BTN_SPRITE_TILES_LOG("CREATED in low bank. start_tile: ", (*result)->start_tile);
+            BTN_SPRITE_TILES_LOG("CREATED in low bank. start_tile: ", data.low_bank.start_tile(*result));
         }
         else
         {
@@ -120,15 +127,17 @@ optional<item_type::list_iterator> create(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<item_type::list_iterator> allocate(int tiles)
+optional<int> allocate(int tiles)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles);
 
-    optional<item_type::list_iterator> result = data.high_bank.allocate(tiles);
+    optional<int> result = data.high_bank.allocate(tiles);
 
     if(result)
     {
-        BTN_SPRITE_TILES_LOG("ALLOCATED in high bank. start_tile: ", (*result)->start_tile);
+        BTN_SPRITE_TILES_LOG("ALLOCATED in high bank. start_tile: ", data.high_bank.start_tile(*result));
+
+        *result += high_bank_delta;
     }
     else
     {
@@ -136,7 +145,7 @@ optional<item_type::list_iterator> allocate(int tiles)
 
         if(result)
         {
-            BTN_SPRITE_TILES_LOG("ALLOCATED in low bank. start_tile: ", (*result)->start_tile);
+            BTN_SPRITE_TILES_LOG("ALLOCATED in low bank. start_tile: ", data.low_bank.start_tile(*result));
         }
         else
         {
@@ -149,74 +158,126 @@ optional<item_type::list_iterator> allocate(int tiles)
     return result;
 }
 
-item_type::list_iterator invalid_iterator()
+void increase_usages(int id)
 {
-    return data.high_bank.invalid_iterator();
-}
-
-void increase_usages(item_type::list_iterator iterator)
-{
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INCREASE_USAGES: ", iterator->start_tile);
-
-    if(iterator->bank() == item_type::bank_type::HIGH)
+    if(id >= high_bank_delta)
     {
-        data.high_bank.increase_usages(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INCREASE_USAGES: ", data.high_bank.start_tile(id - high_bank_delta));
+
+        data.high_bank.increase_usages(id - high_bank_delta);
     }
     else
     {
-        data.low_bank.increase_usages(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INCREASE_USAGES: ", data.low_bank.start_tile(id));
+
+        data.low_bank.increase_usages(id);
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
 }
 
-void decrease_usages(item_type::list_iterator iterator)
+void decrease_usages(int id)
 {
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - DECREASE_USAGES: ", iterator->start_tile);
-
-    if(iterator->bank() == item_type::bank_type::HIGH)
+    if(id >= high_bank_delta)
     {
-        data.high_bank.decrease_usages(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - DECREASE_USAGES: ", data.high_bank.start_tile(id - high_bank_delta));
+
+        data.high_bank.decrease_usages(id - high_bank_delta);
     }
     else
     {
-        data.low_bank.decrease_usages(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - DECREASE_USAGES: ", data.low_bank.start_tile(id));
+
+        data.low_bank.decrease_usages(id);
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
 }
 
-void set_tiles_ref(item_type::list_iterator iterator, const span<const tile>& tiles_ref)
+int start_tile(int id)
 {
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", iterator->start_tile, " - ",
-                         tiles_ref.data(), " - ", tiles_ref.size());
-
-    if(iterator->bank() == item_type::bank_type::HIGH)
+    if(id >= high_bank_delta)
     {
-        data.high_bank.set_tiles_ref(iterator, tiles_ref);
+        return data.high_bank.start_tile(id - high_bank_delta);
     }
     else
     {
-        data.low_bank.set_tiles_ref(iterator, tiles_ref);
+        return data.low_bank.start_tile(id);
+    }
+}
+
+int tiles_count(int id)
+{
+    if(id >= high_bank_delta)
+    {
+        return data.high_bank.tiles_count(id - high_bank_delta);
+    }
+    else
+    {
+        return data.low_bank.tiles_count(id);
+    }
+}
+
+optional<span<const tile>> tiles_ref(int id)
+{
+    if(id >= high_bank_delta)
+    {
+        return data.high_bank.tiles_ref(id - high_bank_delta);
+    }
+    else
+    {
+        return data.low_bank.tiles_ref(id);
+    }
+}
+
+void set_tiles_ref(int id, const span<const tile>& tiles_ref)
+{
+    if(id >= high_bank_delta)
+    {
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", data.high_bank.start_tile(id - high_bank_delta),
+                             " - ", tiles_ref.data(), " - ", tiles_ref.size());
+
+        data.high_bank.set_tiles_ref(id - high_bank_delta, tiles_ref);
+    }
+    else
+    {
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", data.low_bank.start_tile(id),
+                             " - ", tiles_ref.data(), " - ", tiles_ref.size());
+
+        data.low_bank.set_tiles_ref(id, tiles_ref);
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
 }
 
-void reload_tiles_ref(item_type::list_iterator iterator)
+void reload_tiles_ref(int id)
 {
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - RELOAD_TILES_REF: ", iterator->start_tile);
-
-    if(iterator->bank() == item_type::bank_type::HIGH)
+    if(id >= high_bank_delta)
     {
-        data.high_bank.reload_tiles_ref(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - RELOAD_TILES_REF: ", data.high_bank.start_tile(id - high_bank_delta));
+
+        data.high_bank.reload_tiles_ref(id - high_bank_delta);
     }
     else
     {
-        data.low_bank.reload_tiles_ref(iterator);
+        BTN_SPRITE_TILES_LOG("sprite_tiles_manager - RELOAD_TILES_REF: ", data.low_bank.start_tile(id));
+
+        data.low_bank.reload_tiles_ref(id);
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
+}
+
+optional<span<tile>> vram(int id)
+{
+    if(id >= high_bank_delta)
+    {
+        return data.high_bank.vram(id - high_bank_delta);
+    }
+    else
+    {
+        return data.low_bank.vram(id);
+    }
 }
 
 void update()
@@ -226,12 +287,14 @@ void update()
     if(data.high_bank.update())
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE: high bank");
+
         updated = true;
     }
 
     if(data.low_bank.update())
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE: low bank");
+
         updated = true;
     }
 
@@ -248,12 +311,14 @@ void commit()
     if(data.high_bank.commit())
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT: high bank");
+
         committed = true;
     }
 
     if(data.low_bank.commit())
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT: low bank");
+
         committed = true;
     }
 

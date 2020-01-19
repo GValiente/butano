@@ -28,12 +28,12 @@ namespace
     public:
         hw::sprites::handle handle;
         fixed_point position;
-        sprite_tiles_ptr tiles_ptr;
         unsigned usages = 1;
         unsigned sort_key;
+        sprite_tiles_ptr tiles_ptr;
+        int8_t handles_index = -1;
         optional<sprite_affine_mat_ptr> affine_mat_ptr;
         sprite_palette_ptr palette_ptr;
-        int8_t handles_index = -1;
         unsigned double_size_mode: 2;
         unsigned visible: 1;
         unsigned ignore_camera: 1;

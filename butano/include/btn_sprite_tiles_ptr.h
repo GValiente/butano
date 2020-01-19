@@ -4,10 +4,11 @@
 #include "btn_span_fwd.h"
 #include "btn_functional.h"
 #include "btn_optional_fwd.h"
-#include "_btn_sprite_tiles_manager_item.h"
 
 namespace btn
 {
+
+class tile;
 
 class sprite_tiles_ptr
 {
@@ -40,10 +41,7 @@ public:
         _destroy();
     }
 
-    [[nodiscard]] int id() const
-    {
-        return _iterator->start_tile;
-    }
+    [[nodiscard]] int id() const;
 
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
@@ -53,14 +51,16 @@ public:
 
     [[nodiscard]] optional<span<tile>> vram();
 
-    [[nodiscard]] int tiles_count() const
+    [[nodiscard]] int tiles_count() const;
+
+    [[nodiscard]] size_t hash() const
     {
-        return _iterator->tiles_count;
+        return make_hash(_handle);
     }
 
     [[nodiscard]] friend bool operator==(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
     {
-        return a._iterator == b._iterator;
+        return a._handle == b._handle;
     }
 
     [[nodiscard]] friend bool operator!=(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
@@ -69,12 +69,10 @@ public:
     }
 
 private:
-    using item_type = _btn::sprite_tiles_manager_item;
+    int16_t _handle;
 
-    item_type::list_iterator _iterator;
-
-    explicit sprite_tiles_ptr(item_type::list_iterator iterator) :
-        _iterator(iterator)
+    explicit sprite_tiles_ptr(int handle) :
+        _handle(int16_t(handle))
     {
     }
 

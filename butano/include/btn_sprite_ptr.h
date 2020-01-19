@@ -149,12 +149,12 @@ public:
 
     [[nodiscard]] size_t hash() const
     {
-        return make_hash(_id);
+        return make_hash(_handle);
     }
 
     [[nodiscard]] friend bool operator==(const sprite_ptr& a, const sprite_ptr& b)
     {
-        return a._id == b._id;
+        return a._handle == b._handle;
     }
 
     [[nodiscard]] friend bool operator!=(const sprite_ptr& a, const sprite_ptr& b)
@@ -163,12 +163,12 @@ public:
     }
 
 private:
-    using id_type = void*;
+    using handle_type = void*;
 
-    id_type _id;
+    handle_type _handle;
 
-    explicit sprite_ptr(id_type id) :
-        _id(id)
+    explicit sprite_ptr(handle_type handle) :
+        _handle(handle)
     {
     }
 

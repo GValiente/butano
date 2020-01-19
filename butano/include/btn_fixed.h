@@ -169,14 +169,14 @@ public:
         {
             int64_t result = (int64_t(first) * int64_t(second) + (int64_t(1) << (Precision - 1))) >> Precision;
 
-            if(result > integral_limits<int>::max)
+            if(result > numeric_limits<int>::max())
             {
-                return integral_limits<int>::max;
+                return numeric_limits<int>::max();
             }
 
-            if(result < integral_limits<int>::min)
+            if(result < numeric_limits<int>::min())
             {
-                return integral_limits<int>::min;
+                return numeric_limits<int>::min();
             }
 
             return int(result);

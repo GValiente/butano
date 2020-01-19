@@ -128,7 +128,7 @@ namespace
 
         void delete_sort_key()
         {
-            sort_key = integral_limits<unsigned>::max;
+            sort_key = numeric_limits<unsigned>::max();
         }
     };
 

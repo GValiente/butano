@@ -109,7 +109,7 @@ public:
             unsigned digits = 10000;
             append('.');
 
-            if(uint64_t(scale) * digits < integral_limits<unsigned>::max)
+            if(uint64_t(scale) * digits < numeric_limits<unsigned>::max())
             {
                 append((unsigned(fraction) * digits) / scale);
             }

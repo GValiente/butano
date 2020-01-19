@@ -218,7 +218,7 @@ private:
         _graphics_indexes(graphics_indexes)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
-        BTN_ASSERT(wait_frames <= integral_limits<decltype(_wait_frames)>::max, "Too much wait frames: ", wait_frames);
+        BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
     }
 };
 

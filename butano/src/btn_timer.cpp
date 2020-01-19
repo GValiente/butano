@@ -29,7 +29,7 @@ int timer::elapsed_ticks() const
     if(BTN_UNLIKELY(ticks < _last_ticks))
     {
         uint64_t overflow_result = ticks;
-        overflow_result += integral_limits<unsigned>::max;
+        overflow_result += numeric_limits<unsigned>::max();
         overflow_result -= _last_ticks;
         return int(overflow_result);
     }

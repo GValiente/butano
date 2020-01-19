@@ -121,7 +121,7 @@ private:
     [[nodiscard]] Property _calculate_delta_property(int duration_frames) const
     {
         BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
-        BTN_ASSERT(duration_frames <= integral_limits<decltype(_current_frame)>::max,
+        BTN_ASSERT(duration_frames <= numeric_limits<decltype(_current_frame)>::max(),
                    "Too much duration frames: ", duration_frames);
 
         return (_final_property - _initial_property) / duration_frames;
@@ -215,7 +215,7 @@ private:
     [[nodiscard]] Property _calculate_delta_property(int duration_frames) const
     {
         BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
-        BTN_ASSERT(duration_frames <= integral_limits<decltype(_current_frame)>::max,
+        BTN_ASSERT(duration_frames <= numeric_limits<decltype(_current_frame)>::max(),
                    "Too much duration frames: ", duration_frames);
 
         return (_final_property - _initial_property) / duration_frames;

@@ -21,7 +21,7 @@ namespace sprites_manager
 
     [[nodiscard]] constexpr unsigned z_orders()
     {
-        return btn::integral_limits<uint16_t>::max;
+        return btn::numeric_limits<uint16_t>::max();
     }
 
     [[nodiscard]] BTN_CODE_CONST int max_bg_priority();

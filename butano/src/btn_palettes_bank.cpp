@@ -361,7 +361,7 @@ void palettes_bank::set_fade(color color, fixed intensity)
 
 void palettes_bank::update()
 {
-    size_t first_index = integral_limits<size_t>::max;
+    size_t first_index = numeric_limits<size_t>::max();
     size_t last_index = 0;
 
     if(_perform_update)
@@ -428,7 +428,7 @@ void palettes_bank::update()
             first_index = 0;
         }
 
-        if(update_all && first_index != integral_limits<size_t>::max)
+        if(update_all && first_index != numeric_limits<size_t>::max())
         {
             color& all_colors_ref = colors_ptr[int(first_index) * hw::palettes::colors_per_palette()];
             int all_colors_count = hw::palettes::colors_per_palette();
@@ -477,7 +477,7 @@ void palettes_bank::update()
         }
     }
 
-    if(first_index == integral_limits<size_t>::max)
+    if(first_index == numeric_limits<size_t>::max())
     {
         _first_index_to_commit.reset();
         _last_index_to_commit.reset();

@@ -69,7 +69,7 @@ optional<int> sprite_tiles_bank::find(const span<const tile>& tiles_ref)
         item_type& item = _items.item(id);
         result.emplace(id);
 
-        BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match tiles item count: ",
+        BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match item tiles count: ",
                    tiles_ref.size(), " - ", item.tiles_count);
 
         switch(item.status())
@@ -146,9 +146,9 @@ void sprite_tiles_bank::set_tiles_ref(int id, const span<const tile>& tiles_ref)
     BTN_ASSERT(valid_tiles(int(tiles_ref.size())), "Invalid tiles ref size: ", tiles_ref.size());
 
     item_type& item = _items.item(id);
-    BTN_ASSERT(item.data, "Sprite tiles item has no data");
+    BTN_ASSERT(item.data, "Tiles item has no data");
     BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match item tiles count: ",
-               int(tiles_ref.size()), " - ", item.tiles_count);
+               tiles_ref.size(), " - ", item.tiles_count);
 
     const tile* tiles_data = tiles_ref.data();
 
@@ -165,7 +165,7 @@ void sprite_tiles_bank::set_tiles_ref(int id, const span<const tile>& tiles_ref)
 void sprite_tiles_bank::reload_tiles_ref(int id)
 {
     item_type& item = _items.item(id);
-    BTN_ASSERT(item.data, "Sprite tiles item has no data");
+    BTN_ASSERT(item.data, "Tiles item has no data");
 
     item.commit = true;
     _check_commit = true;
@@ -220,7 +220,7 @@ bool sprite_tiles_bank::update()
                 {
                     if(_remove_adjacent_item(next_iterator.id(), item))
                     {
-                        next_iterator = _items.erase_after(iterator);
+                        next_iterator = _items.erase_after(iterator.id());
                     }
                     else
                     {
@@ -233,7 +233,7 @@ bool sprite_tiles_bank::update()
                     if(_remove_adjacent_item(previous_iterator.id(), item))
                     {
                         item.start_tile = previous_iterator->start_tile;
-                        _items.erase_after(before_previous_iterator);
+                        _items.erase_after(before_previous_iterator.id());
                         previous_iterator = before_previous_iterator;
                     }
                 }
@@ -391,7 +391,7 @@ void sprite_tiles_bank::_create_item(int id, const tile* tiles_data, int tiles_c
     item.commit = false;
     _free_tiles_count -= tiles_count;
 
-    if(_biggest_free_iterator == _items.it(id))
+    if(_biggest_free_iterator.id() == id)
     {
         _biggest_free_iterator = _items.end();
     }
@@ -409,7 +409,7 @@ void sprite_tiles_bank::_create_item(int id, const tile* tiles_data, int tiles_c
         new_item.start_tile = item.start_tile + item.tiles_count;
         new_item.tiles_count = uint16_t(new_item_tiles_count);
 
-        items_list::iterator new_item_iterator = _items.insert_after(_items.it(id), new_item);
+        items_list::iterator new_item_iterator = _items.insert_after(id, new_item);
 
         if(_biggest_free_iterator != _items.end())
         {
@@ -465,7 +465,7 @@ bool sprite_tiles_bank::_remove_adjacent_item(int adjacent_id, item_type& curren
         }
         else
         {
-            if(_biggest_free_iterator == _items.it(adjacent_id))
+            if(_biggest_free_iterator.id() == adjacent_id)
             {
                 _biggest_free_iterator = _items.end();
             }

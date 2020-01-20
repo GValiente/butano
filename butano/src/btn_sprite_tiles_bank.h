@@ -130,21 +130,9 @@ private:
                 return *this;
             }
 
-            [[nodiscard]] iterator operator++(int)
-            {
-                iterator result(*this);
-                ++result;
-                return result;
-            }
-
             [[nodiscard]] item_type& operator*()
             {
                 return _list->_items[_index];
-            }
-
-            [[nodiscard]] item_type* operator&()
-            {
-                return _list->_items + _index;
             }
 
             item_type* operator->()
@@ -219,28 +207,22 @@ private:
             return iterator(_max_list_items, *this);
         }
 
-        [[nodiscard]] iterator it(int index)
-        {
-            return iterator(index, *this);
-        }
-
         void push_front(const item_type& value)
         {
-            insert_after(before_begin(), value);
+            insert_after(0, value);
         }
 
-        iterator insert_after(iterator position, const item_type& value)
+        iterator insert_after(int index, const item_type& value)
         {
             int free_index = _free_indices.back();
             _free_indices.pop_back();
             _items[free_index] = value;
-            _insert_node_after(position.id(), free_index);
+            _insert_node_after(index, free_index);
             return iterator(free_index, *this);
         }
 
-        iterator erase_after(iterator pos)
+        iterator erase_after(int index)
         {
-            auto index = pos.id();
             _remove_node_after(index);
             return iterator(_items[index].next_index, *this);
         }

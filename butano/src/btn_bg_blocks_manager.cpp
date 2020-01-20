@@ -3,10 +3,16 @@
 #include "btn_span.h"
 #include "btn_vector.h"
 #include "btn_limits.h"
-#include "btn_bg_block.h"
 #include "btn_optional.h"
 #include "btn_hash_map.h"
+#include "btn_config_bg_blocks.h"
 #include "../hw/include/btn_hw_bg_blocks.h"
+
+#if BTN_CFG_BG_BLOCKS_LOG_ENABLED
+    #include "btn_log.h"
+
+    static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
+#endif
 
 namespace btn::bg_blocks_manager
 {
@@ -15,6 +21,7 @@ namespace
 {
     constexpr const size_t max_items = hw::bg_blocks::count();
     constexpr const size_t max_list_items = max_items + 1;
+    constexpr const int max_half_words = max_items * hw::bg_blocks::half_words_per_block();
 
 
     class item_type
@@ -28,23 +35,19 @@ namespace
             TO_REMOVE
         };
 
-        const bg_block* data = nullptr;
+        const uint16_t* data = nullptr;
         unsigned usages = 0;
+        uint16_t width = 0;
+        uint8_t height = 0;
         uint8_t start_block = 0;
         uint8_t blocks_count = 0;
         uint8_t next_index = max_list_items;
-        unsigned commit: 1;
+        bool commit = false;
 
     private:
-        unsigned _status: 2;
+        uint8_t _status = uint8_t(status_type::FREE);
 
     public:
-        item_type()
-        {
-            commit = false;
-            _status = uint8_t(status_type::FREE);
-        }
-
         [[nodiscard]] status_type status() const
         {
             return static_cast<status_type>(_status);
@@ -119,13 +122,17 @@ namespace
 
         void init()
         {
-            _items[0].next_index = 1;
             _free_indices.resize(max_items);
 
             for(size_t index = 0; index < max_items; ++index)
             {
-                _free_indices[index] = int8_t(index);
+                _free_indices[index] = int8_t(index + 1);
             }
+        }
+
+        [[nodiscard]] size_t size() const
+        {
+            return _free_indices.available();
         }
 
         [[nodiscard]] bool full() const
@@ -205,7 +212,7 @@ namespace
 
     public:
         items_list items;
-        hash_map<const bg_block*, uint16_t, max_items * 2> items_map;
+        hash_map<const uint16_t*, uint16_t, max_items * 2> items_map;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         bool check_commit = false;
@@ -214,11 +221,81 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void _commit_item(int id, const bg_block& blocks_data, bool delay_commit)
+
+    #if BTN_CFG_BG_BLOCKS_LOG_ENABLED
+        void _log_status()
+        {
+            BTN_LOG("items: ", data.items.size());
+            BTN_LOG('[');
+
+            for(item_type& item : data.items)
+            {
+                BTN_LOG("    ",
+                        (item.status() == item_type::status_type::FREE ? "free" :
+                                item.status() == item_type::status_type::USED ? "used" : "to_remove"),
+                        " - data: ", item.data,
+                        " - start_block: ", item.start_block,
+                        " - blocks_count: ", item.blocks_count,
+                        " - width: ", item.width,
+                        " - height: ", item.height,
+                        " - usages: ", item.usages,
+                        " - next_index: ", item.next_index,
+                        (item.commit ? " - commit" : " - no_commit"));
+            }
+
+            BTN_LOG(']');
+
+            BTN_LOG("items_map: ", data.items_map.size());
+            BTN_LOG('[');
+
+            for(const auto& items_map_item : data.items_map)
+            {
+                BTN_LOG("    data: ", items_map_item.first,
+                        " - start_block: ", data.items.item(items_map_item.second).start_block);
+            }
+
+            BTN_LOG(']');
+
+            BTN_LOG("free_blocks_count: ", data.free_blocks_count);
+            BTN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
+            BTN_LOG("check_commit: ", (data.check_commit ? "true" : "false"));
+            BTN_LOG("delay_commit: ", (data.delay_commit ? "true" : "false"));
+        }
+
+        #define BTN_BG_BLOCKS_LOG BTN_LOG
+
+        #define BTN_BG_BLOCKS_LOG_STATUS \
+            _log_status
+    #else
+        #define BTN_BG_BLOCKS_LOG(...) \
+            do \
+            { \
+            } while(false)
+
+        #define BTN_BG_BLOCKS_LOG_STATUS(...) \
+            do \
+            { \
+            } while(false)
+    #endif
+
+
+    [[nodiscard]] int _blocks(int half_words)
+    {
+        int result = half_words / hw::bg_blocks::half_words_per_block();
+
+        if(half_words % hw::bg_blocks::half_words_per_block())
+        {
+            ++result;
+        }
+
+        return result;
+    }
+
+    void _commit_item(int id, const uint16_t& data_ref, bool delay_commit)
     {
         item_type& item = data.items.item(id);
-        item.data = &blocks_data;
-        data.items_map.insert(&blocks_data, id);
+        item.data = &data_ref;
+        data.items_map.insert(&data_ref, id);
 
         if(delay_commit)
         {
@@ -227,12 +304,12 @@ namespace
         }
         else
         {
-            hw::bg_blocks::commit(blocks_data, item.start_block, item.blocks_count);
+            hw::bg_blocks::commit(data_ref, item.start_block, item.width * item.height);
         }
     }
 
     template<bool aligned>
-    [[nodiscard]] int _create_item(int id, const bg_block* blocks_data, int blocks_count)
+    [[nodiscard]] int _create_item(int id, const uint16_t* data_ptr, int blocks_count, int width, int height)
     {
         if(aligned)
         {
@@ -257,16 +334,18 @@ namespace
 
         item_type& item = data.items.item(id);
         int new_item_blocks_count = item.blocks_count - blocks_count;
-        item.data = blocks_data;
+        item.data = data_ptr;
         item.blocks_count = uint8_t(blocks_count);
+        item.width = uint16_t(width);
+        item.height = uint8_t(height);
         item.usages = 1;
         item.set_status(item_type::status_type::USED);
         item.commit = false;
         data.free_blocks_count -= blocks_count;
 
-        if(blocks_data)
+        if(data_ptr)
         {
-            _commit_item(id, *blocks_data, data.delay_commit);
+            _commit_item(id, *data_ptr, data.delay_commit);
         }
 
         if(new_item_blocks_count)
@@ -307,9 +386,9 @@ namespace
     }
 
     template<bool aligned>
-    optional<int> _create_impl(const bg_block* blocks_data, int blocks_count)
+    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, int width, int height)
     {
-        if(! blocks_data && data.delay_commit)
+        if(! data_ptr && data.delay_commit)
         {
             return nullopt;
         }
@@ -335,7 +414,7 @@ namespace
                         }
                     }
 
-                    if(item.blocks_count <= required_blocks_count)
+                    if(item.blocks_count >= required_blocks_count)
                     {
                         if(item.blocks_count < smallest_blocks_count)
                         {
@@ -348,15 +427,15 @@ namespace
 
             if(smallest_iterator != data.items.end())
             {
-                return _create_item<aligned>(smallest_iterator.id(), blocks_data, blocks_count);
+                return _create_item<aligned>(smallest_iterator.id(), data_ptr, blocks_count, width, height);
             }
         }
 
-        if(blocks_data && blocks_count <= data.to_remove_blocks_count)
+        if(data_ptr && blocks_count <= data.to_remove_blocks_count)
         {
             update();
             data.delay_commit = true;
-            return _create_impl<aligned>(blocks_data, blocks_count);
+            return _create_impl<aligned>(data_ptr, blocks_count, width, height);
         }
 
         return nullopt;
@@ -365,18 +444,22 @@ namespace
 
 void init()
 {
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
+
     item_type new_item;
     new_item.blocks_count = hw::bg_blocks::count();
     data.items.init();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
+
+    BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-optional<int> find(const span<const bg_block>& blocks_ref)
+optional<int> find(const uint16_t& data_ref, int width, int height)
 {
-    BTN_ASSERT(blocks_ref.size() > 0 && blocks_ref.size() < max_items, "Invalid blocks ref size: ", blocks_ref.size());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND: ", &data_ref, " - ", width, " - ", height);
 
-    auto items_map_iterator = data.items_map.find(blocks_ref.data());
+    auto items_map_iterator = data.items_map.find(&data_ref);
     optional<int> result;
 
     if(items_map_iterator != data.items_map.end())
@@ -384,9 +467,8 @@ optional<int> find(const span<const bg_block>& blocks_ref)
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
         result.emplace(id);
-
-        BTN_ASSERT(int(blocks_ref.size()) == item.blocks_count, "Blocks count does not match item blocks count: ",
-                   blocks_ref.size(), " - ", item.blocks_count);
+        BTN_ASSERT(width == item.width, "Width does not match item width: ", width, " - ", item.width);
+        BTN_ASSERT(height == item.height, "Height does not match item height: ", height, " - ", item.height);
 
         switch(item.status())
         {
@@ -407,47 +489,105 @@ optional<int> find(const span<const bg_block>& blocks_ref)
         }
     }
 
+    if(result)
+    {
+        BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(*result).start_block);
+    }
+    else
+    {
+        BTN_BG_BLOCKS_LOG("NOT FOUND");
+    }
+
+    BTN_BG_BLOCKS_LOG_STATUS();
+
     return result;
 }
 
-optional<int> create(const span<const bg_block>& blocks_ref, bool aligned)
+optional<int> create(const uint16_t& data_ref, int width, int height, bool aligned)
 {
-    BTN_ASSERT(blocks_ref.size() > 0 && blocks_ref.size() < max_items, "Invalid blocks ref size: ", blocks_ref.size());
-    BTN_ASSERT(data.items_map.find(blocks_ref.data()) == data.items_map.end(),
-               "Multiple copies of the same blocks data not supported");
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE: ", &data_ref, " - ", width, " - ", height, " - ", aligned);
+
+    BTN_ASSERT(width > 0, "Invalid width: ", width);
+    BTN_ASSERT(height > 0, "Invalid height: ", height);
+
+    int half_words = width * height;
+    BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid data size: ", half_words);
+    BTN_ASSERT(data.items_map.find(&data_ref) == data.items_map.end(), "Multiple copies of the same data not supported");
+
+    optional<int> result;
 
     if(aligned)
     {
-        return _create_impl<true>(blocks_ref.data(), int(blocks_ref.size()));
+        result = _create_impl<true>(&data_ref, _blocks(half_words), width, height);
     }
     else
     {
-        return _create_impl<false>(blocks_ref.data(), int(blocks_ref.size()));
+        result = _create_impl<false>(&data_ref, _blocks(half_words), width, height);
     }
+
+    if(result)
+    {
+        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(*result).start_block);
+    }
+    else
+    {
+        BTN_BG_BLOCKS_LOG("NOT CREATED");
+    }
+
+    BTN_BG_BLOCKS_LOG_STATUS();
+
+    return result;
 }
 
-optional<int> allocate(int blocks, bool aligned)
+optional<int> allocate(int width, int height, bool aligned)
 {
-    BTN_ASSERT(blocks > 0 && blocks < int(max_items), "Invalid blocks: ", blocks);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE: ", width, " - ", height, " - ", aligned);
+
+    BTN_ASSERT(width > 0, "Invalid width: ", width);
+    BTN_ASSERT(height > 0, "Invalid height: ", height);
+
+    int half_words = width * height;
+    BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid data size: ", half_words);
+
+    optional<int> result;
 
     if(aligned)
     {
-        return _create_impl<true>(nullptr, blocks);
+        result = _create_impl<true>(nullptr, _blocks(half_words), width, height);
     }
     else
     {
-        return _create_impl<false>(nullptr, blocks);
+        result = _create_impl<false>(nullptr, _blocks(half_words), width, height);
     }
+
+    if(result)
+    {
+        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(*result).start_block);
+    }
+    else
+    {
+        BTN_BG_BLOCKS_LOG("NOT ALLOCATED");
+    }
+
+    BTN_BG_BLOCKS_LOG_STATUS();
+
+    return result;
 }
 
 void increase_usages(int id)
 {
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+
     item_type& item = data.items.item(id);
     ++item.usages;
+
+    BTN_BG_BLOCKS_LOG_STATUS();
 }
 
 void decrease_usages(int id)
 {
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+
     item_type& item = data.items.item(id);
     --item.usages;
 
@@ -456,71 +596,84 @@ void decrease_usages(int id)
         item.set_status(item_type::status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
     }
+
+    BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-int start_block(int id)
-{
-    item_type& item = data.items.item(id);
-    return item.start_block;
-}
-
-int blocks_count(int id)
-{
-    item_type& item = data.items.item(id);
-    return item.blocks_count;
-}
-
-optional<span<const bg_block>> blocks_ref(int id)
+int hw_id(int id, bool aligned)
 {
     const item_type& item = data.items.item(id);
-    optional<span<const bg_block>> result;
+    int result = item.start_block;
 
-    if(item.data)
+    if(aligned)
     {
-        result.emplace(item.data, item.blocks_count);
+        result /= hw::bg_blocks::alignment();
     }
 
     return result;
 }
 
-void set_blocks_ref(int id, const span<const bg_block>& blocks_ref)
+int width(int id)
 {
-    BTN_ASSERT(blocks_ref.size() > 0 && blocks_ref.size() < max_items, "Invalid blocks ref size: ", blocks_ref.size());
-
-    item_type& item = data.items.item(id);
-    BTN_ASSERT(item.data, "Blocks item has no data");
-    BTN_ASSERT(int(blocks_ref.size()) == item.blocks_count, "Blocks count does not match item blocks count: ",
-               blocks_ref.size(), " - ", item.blocks_count);
-
-    const bg_block* blocks_data = blocks_ref.data();
-
-    if(item.data != blocks_data)
-    {
-        BTN_ASSERT(data.items_map.find(blocks_data) == data.items_map.end(),
-                   "Multiple copies of the same blocks data not supported");
-
-        data.items_map.erase(item.data);
-        _commit_item(id, *blocks_data, true);
-    }
+    const item_type& item = data.items.item(id);
+    return item.width;
 }
 
-void reload_blocks_ref(int id)
+int height(int id)
 {
+    const item_type& item = data.items.item(id);
+    return item.height;
+}
+
+const uint16_t* data_ref(int id)
+{
+    const item_type& item = data.items.item(id);
+    return item.data;
+}
+
+void set_data_ref(int id, const uint16_t& data_ref, int width, int height)
+{
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET_DATA_REF: ", id, " - ", data.items.item(id).start_block, " - ",
+                      &data_ref, " - ", width, " - ", height);
+
     item_type& item = data.items.item(id);
-    BTN_ASSERT(item.data, "Blocks item has no data");
+    BTN_ASSERT(item.data, "Item has no data");
+    BTN_ASSERT(width == item.width, "Width does not match item width: ", width, " - ", item.width);
+    BTN_ASSERT(height == item.height, "Height does not match item height: ", height, " - ", item.height);
+
+    if(item.data != &data_ref)
+    {
+        BTN_ASSERT(data.items_map.find(&data_ref) == data.items_map.end(),
+                   "Multiple copies of the same data not supported");
+
+        data.items_map.erase(item.data);
+        _commit_item(id, data_ref, true);
+    }
+
+    BTN_BG_BLOCKS_LOG_STATUS();
+}
+
+void reload_data_ref(int id)
+{
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD_DATA_REF: ", id, " - ", data.items.item(id).start_block);
+
+    item_type& item = data.items.item(id);
+    BTN_ASSERT(item.data, "Item has no data");
 
     item.commit = true;
     data.check_commit = true;
+
+    BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-optional<span<bg_block>> vram(int id)
+optional<span<uint16_t>> vram(int id)
 {
     item_type& item = data.items.item(id);
-    optional<span<bg_block>> result;
+    optional<span<uint16_t>> result;
 
     if(! item.data)
     {
-        result.emplace(&hw::bg_blocks::vram(item.start_block), item.blocks_count);
+        result.emplace(&hw::bg_blocks::vram(item.start_block), item.width * item.height);
     }
 
     return result;
@@ -530,6 +683,8 @@ void update()
 {
     if(data.to_remove_blocks_count)
     {
+        BTN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
+
         auto end = data.items.end();
         auto before_previous_iterator = end;
         auto previous_iterator = data.items.before_begin();
@@ -549,6 +704,8 @@ void update()
                 }
 
                 item.data = nullptr;
+                item.width = 0;
+                item.height = 0;
                 item.set_status(item_type::status_type::FREE);
                 item.commit = false;
                 data.free_blocks_count += item.blocks_count;
@@ -583,13 +740,19 @@ void update()
             previous_iterator = iterator;
             ++iterator;
         }
+
+        BTN_BG_BLOCKS_LOG_STATUS();
     }
 }
 
 void commit()
 {
-    if(data.check_commit)
+    bool do_commit = data.check_commit;
+
+    if(do_commit)
     {
+        BTN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
+
         data.check_commit = false;
 
         for(item_type& item : data.items)
@@ -600,13 +763,18 @@ void commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::bg_blocks::commit(*item.data, item.start_block, item.blocks_count);
+                    hw::bg_blocks::commit(*item.data, item.start_block, item.width * item.height);
                 }
             }
         }
     }
 
     data.delay_commit = false;
+
+    if(do_commit)
+    {
+        BTN_BG_BLOCKS_LOG_STATUS();
+    }
 }
 
 }

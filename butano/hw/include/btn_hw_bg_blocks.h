@@ -3,12 +3,7 @@
 
 #include "btn_common.h"
 
-namespace btn
-{
-
-class bg_block;
-
-namespace hw::bg_blocks
+namespace btn::hw::bg_blocks
 {
     [[nodiscard]] constexpr int count()
     {
@@ -20,11 +15,14 @@ namespace hw::bg_blocks
         return 8;
     }
 
-    [[nodiscard]] bg_block& vram(int index);
+    [[nodiscard]] constexpr int half_words_per_block()
+    {
+        return 1024;
+    }
 
-    void commit(const bg_block& source_blocks_ref, int index, int count);
-}
+    [[nodiscard]] uint16_t& vram(int block_index);
 
+    void commit(const uint16_t& source_data_ref, int block_index, int half_words);
 }
 
 #endif

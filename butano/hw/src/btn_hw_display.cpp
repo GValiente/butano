@@ -11,6 +11,18 @@ void init()
     REG_DISPCNT = DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
 }
 
+void set_bg_enabled(int bg, bool enabled)
+{
+    if(enabled)
+    {
+        REG_DISPCNT |= unsigned(DCNT_BG0 << bg);
+    }
+    else
+    {
+        REG_DISPCNT &= unsigned(DCNT_BG0 << bg);
+    }
+}
+
 void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
                 int bgs_horizontal_stretch, int bgs_vertical_stretch)
 {

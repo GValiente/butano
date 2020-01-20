@@ -2,30 +2,26 @@
 
 #include "tonc.h"
 #include "btn_memory.h"
-#include "btn_bg_block.h"
 
 namespace btn::hw::bg_blocks
 {
 
 namespace
 {
-    static_assert(sizeof(SCREENBLOCK) == sizeof(bg_block));
-    static_assert(alignof(SCREENBLOCK) == alignof(bg_block));
-
-    bg_block& bg_block_vram(int index)
+    uint16_t& bg_block_vram(int block_index)
     {
-        return reinterpret_cast<bg_block*>(MEM_VRAM)[index];
+        return reinterpret_cast<uint16_t*>(MEM_VRAM)[block_index * half_words_per_block()];
     }
 }
 
-bg_block& vram(int index)
+uint16_t& vram(int block_index)
 {
-    return bg_block_vram(index);
+    return bg_block_vram(block_index);
 }
 
-void commit(const bg_block& source_blocks_ref, int index, int count)
+void commit(const uint16_t& source_data_ref, int block_index, int half_words)
 {
-    memory::copy(source_blocks_ref, count, bg_block_vram(index));
+    memory::copy(source_data_ref, half_words, bg_block_vram(block_index));
 }
 
 }

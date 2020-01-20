@@ -11,12 +11,13 @@ class Info:
         with open(file_path) as file:
             data = json.load(file)
             self.__sprites = data['sprites']
+            self.__bgs = data['bgs']
 
-    def get(self, file_name_no_ext):
-        try:
-            return self.__sprites[file_name_no_ext]
-        except KeyError:
-            raise ValueError(file_name_no_ext + ' not found in graphics.json')
+    def get_sprite(self, file_name_no_ext):
+        return self.__sprites[file_name_no_ext]
+
+    def get_bg(self, file_name_no_ext):
+        return self.__bgs[file_name_no_ext]
 
 
 class BMP:
@@ -86,17 +87,16 @@ class BMP:
             self.colors = colors
 
 
-class Item:
+class SpriteItem:
 
     def __init__(self, file_path, file_name_no_ext, info):
-        item_info = info.get(file_name_no_ext)
         bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__colors = bmp.colors
 
         try:
-            height = int(item_info['height'])
+            height = int(info['height'])
 
             if bmp.height % height:
                 raise ValueError('File height is not divisible by item height: ' +
@@ -118,7 +118,7 @@ class Item:
                 self.__shape = 'TALL'
                 self.__size = 'NORMAL'
             elif height == 64:
-                raise ValueError('Invalid sprite width and height: ' + str(width) + ' - ' + str(height))
+                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
             else:
                 raise ValueError('Invalid sprite height: ' + str(height))
         elif width == 16:
@@ -132,7 +132,7 @@ class Item:
                 self.__shape = 'TALL'
                 self.__size = 'BIG'
             elif height == 64:
-                raise ValueError('Invalid sprite width and height: ' + str(width) + ' - ' + str(height))
+                raise ValueError('Invalid sprite size: (: ' + str(width) + ' - ' + str(height) + ')')
             else:
                 raise ValueError('Invalid sprite height: ' + str(height))
         elif width == 32:
@@ -152,9 +152,9 @@ class Item:
                 raise ValueError('Invalid sprite height: ' + str(height))
         elif width == 64:
             if height == 8:
-                raise ValueError('Invalid sprite width and height: ' + str(width) + ' - ' + str(height))
+                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
             elif height == 16:
-                raise ValueError('Invalid sprite width and height: ' + str(width) + ' - ' + str(height))
+                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
             elif height == 32:
                 self.__shape = 'WIDE'
                 self.__size = 'HUGE'
@@ -209,6 +209,92 @@ class Item:
             command.append('-gB4')
         else:
             command.append('-gB8')
+
+        command.append('-o' + build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output([command], shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
+class BgItem:
+
+    def __init__(self, file_path, file_name_no_ext, info):
+        bmp = BMP(file_path)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__colors = bmp.colors
+        self.__bpp4 = False
+
+        if self.__colors > 16:
+            try:
+                self.__bpp4 = bool(info['bpp4'])
+            except KeyError:
+                pass
+
+        width = bmp.width
+        height = bmp.height
+
+        if width == 256 and height == 256:
+            self.__sbb = False
+        elif (width == 256 and height == 512) or (width == 512 and height == 256) or (width == 512 and height == 512):
+            self.__sbb = True
+        else:
+            raise ValueError('Invalid BG size: (' + str(width) + ' - ' + str(height) + ')')
+
+        self.__width = width / 8
+        self.__height = height / 8
+
+    def write_header(self, build_folder_path):
+        name = self.__file_name_no_ext
+        grit_file_path = build_folder_path + '/' + name + '_btn_graphics.h'
+        header_file_path = build_folder_path + '/btn_' + name + '_bg_item.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned int', 'btn::tile', 1)
+            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(unsigned int))]', 1)
+            grit_data = grit_data.replace('unsigned short', 'btn::bg_map_cell', 1)
+            grit_data = grit_data.replace('unsigned short', 'btn::color', 1)
+
+        os.remove(grit_file_path)
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BTN_' + name.upper() + '_BG_ITEM_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "btn_bg_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace btn::bg_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr const bg_item ' + name + '(' +
+                              'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
+                              name + '_btn_graphicsMap[0], ' + str(self.__width) + ', ' + str(self.__height) + ','
+                              '\n            ' +
+                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors) + '));' + '\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        print('bg_item file written in ' + header_file_path)
+
+    def process(self, build_folder_path):
+        command = ['grit', self.__file_path]
+
+        if self.__bpp4:
+            command.append('-gB4 -mR4')
+        else:
+            command.append('-gB8 -mR8')
+
+        if self.__sbb:
+            command.append('-mLs')
+        else:
+            command.append('-mLf')
 
         command.append('-o' + build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
         command = ' '.join(command)
@@ -274,7 +360,16 @@ def process(info_file_path, graphics_folder_paths, build_folder_path):
             if info is None:
                 info = Info(info_file_path)
 
-            item = Item(graphics_file_path, graphics_file_name_no_ext, info)
+            try:
+                item_info = info.get_sprite(graphics_file_name_no_ext)
+                item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+            except KeyError:
+                try:
+                    item_info = info.get_bg(graphics_file_name_no_ext)
+                    item = BgItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+                except KeyError:
+                    raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
+
             item.process(build_folder_path)
             item.write_header(build_folder_path)
             write_graphics_desc(new_graphics_desc, graphics_desc_path)

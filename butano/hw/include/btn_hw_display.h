@@ -22,6 +22,8 @@ namespace btn::hw::display
 
     void init();
 
+    void set_bg_enabled(int bg, bool enabled);
+
     void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
                     int bgs_horizontal_stretch, int bgs_vertical_stretch);
 

@@ -15,5 +15,9 @@
         "variable_8x16_font": {
             "height": 16
         }
+    },
+    "bgs": {
+        "tank": {
+        }
     }
 }

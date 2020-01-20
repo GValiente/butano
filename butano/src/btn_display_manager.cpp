@@ -1,6 +1,7 @@
 #include "btn_display_manager.h"
 
 #include "btn_fixed.h"
+#include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
 
 namespace btn::display_manager
@@ -12,10 +13,12 @@ namespace
     {
 
     public:
+        bool bg_enabled[hw::bgs::count()] = { false };
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
         fixed bgs_mosaic_horizontal_stretch;
         fixed bgs_mosaic_vertical_stretch;
+        bool commit_bg[hw::bgs::count()] = { false };
         bool green_swap_enabled = false;
         bool commit_mosaic = false;
         bool commit_green_swap = false;
@@ -27,6 +30,17 @@ namespace
 void init()
 {
     hw::display::init();
+}
+
+bool bg_enabled(int bg)
+{
+    return data.bg_enabled[bg];
+}
+
+void set_bg_enabled(int bg, bool enabled)
+{
+    data.bg_enabled[bg] = enabled;
+    data.commit_bg[bg] = true;
 }
 
 fixed sprites_mosaic_horizontal_stretch()
@@ -86,6 +100,15 @@ void set_green_swap_enabled(bool enabled)
 
 void commit()
 {
+    for(int index = 0; index < hw::bgs::count(); ++index)
+    {
+        if(data.commit_bg[index])
+        {
+            hw::display::set_bg_enabled(index, data.bg_enabled[index]);
+            data.commit_bg[index] = false;
+        }
+    }
+
     if(data.commit_mosaic)
     {
         hw::display::set_mosaic(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).value(),

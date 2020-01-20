@@ -12,12 +12,14 @@
 #include "btn_keypad.h"
 #include "btn_optional.h"
 #include "btn_profiler.h"
+#include "btn_bgs_manager.h"
 #include "btn_display_manager.h"
 #include "btn_actions_manager.h"
+#include "btn_sprites_manager.h"
 #include "btn_palettes_manager.h"
+#include "btn_bg_blocks_manager.h"
 #include "btn_input_string_stream.h"
 #include "btn_sprite_tiles_manager.h"
-#include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_irq.h"
 #include "../hw/include/btn_hw_core.h"
 #include "../hw/include/btn_hw_sram.h"
@@ -113,6 +115,10 @@ namespace
         sprites_manager::update();
         BTN_PROFILER_ENGINE_STOP();
 
+        BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
+        bg_blocks_manager::update();
+        BTN_PROFILER_ENGINE_STOP();
+
         BTN_PROFILER_ENGINE_START("eng_audio");
         hw::audio::pause_commits();
         BTN_PROFILER_ENGINE_STOP();
@@ -141,6 +147,14 @@ namespace
 
         BTN_PROFILER_ENGINE_START("eng_sprites_commit");
         sprites_manager::commit();
+        BTN_PROFILER_ENGINE_STOP();
+
+        BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
+        bg_blocks_manager::commit();
+        BTN_PROFILER_ENGINE_STOP();
+
+        BTN_PROFILER_ENGINE_START("eng_bgs_commit");
+        bgs_manager::commit();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_audio");
@@ -183,6 +197,7 @@ void init()
     // Init high level systems:
     sprite_tiles_manager::init();
     sprites_manager::init();
+    bg_blocks_manager::init();
 
     // Init timer system:
     hw::timer::init();

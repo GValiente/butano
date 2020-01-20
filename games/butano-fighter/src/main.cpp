@@ -21,6 +21,9 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 
+#include "btn_bg_ptr.h"
+#include "btn_tank_bg_item.h"
+
 #include "bf_stats.h"
 #include "bf_sprite_fonts.h"
 
@@ -28,6 +31,7 @@ int main()
 {
     btn::core::init();
 
+    btn::bg_ptr bg = btn::bg_ptr::create(0, 0, btn::bg_items::tank);
     btn::bg_palettes::set_transparent_color(btn::colors::gray);
 
     int display_width = btn::display::width();

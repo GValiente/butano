@@ -7,6 +7,10 @@ namespace btn::display_manager
 {
     void init();
 
+    [[nodiscard]] bool bg_enabled(int bg);
+
+    void set_bg_enabled(int bg, bool enabled);
+
     [[nodiscard]] fixed sprites_mosaic_horizontal_stretch();
 
     void set_sprites_mosaic_horizontal_stretch(fixed stretch);

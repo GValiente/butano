@@ -175,20 +175,10 @@ int parse(uint64_t value, array<char, 32>& output)
 int parse(const void* ptr, array<char, 32>& output)
 {
     char* output_data = output.data();
-    int size;
+    posprintf(output_data, "0x%x", ptr);
 
-    if(ptr)
-    {
-        posprintf(output_data, "0x%x", ptr);
-        size = int(string_view(output_data).size());
-        BTN_ASSERT(size > 0, "posprintf call failed");
-    }
-    else
-    {
-        const char tag[] = "nullptr";
-        size = sizeof(tag);
-        btn::memory::copy(*tag, size, *output_data);
-    }
+    int size = int(string_view(output_data).size());
+    BTN_ASSERT(size > 0, "posprintf call failed");
 
     return size;
 }

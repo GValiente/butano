@@ -97,9 +97,16 @@ void input_string_stream::append(long double value)
 
 void input_string_stream::append(const void* ptr)
 {
-    array<char, 32> buffer;
-    int size = btn::hw::text::parse(ptr, buffer);
-    _string.append(buffer.data(), size_t(size));
+    if(ptr)
+    {
+        array<char, 32> buffer;
+        int size = btn::hw::text::parse(ptr, buffer);
+        _string.append(buffer.data(), size_t(size));
+    }
+    else
+    {
+        _string.append("nullptr");
+    }
 }
 
 }

@@ -39,11 +39,9 @@ public:
         _y = y;
     }
 
-    constexpr point& operator-()
+    [[nodiscard]] constexpr point operator-() const
     {
-        _x = -_x;
-        _y = -_y;
-        return *this;
+        return point(-_x, -_y);
     }
 
     constexpr point& operator+=(const point& other)

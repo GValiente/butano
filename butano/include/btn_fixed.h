@@ -198,10 +198,9 @@ public:
         return create(result);
     }
 
-    constexpr fixed_t& operator-()
+    [[nodiscard]] constexpr fixed_t operator-() const
     {
-        _value = -_value;
-        return *this;
+        return fixed_t::create(0 - _value);
     }
 
     constexpr fixed_t& operator+=(fixed_t other)

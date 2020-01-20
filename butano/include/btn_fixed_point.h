@@ -45,11 +45,9 @@ public:
         _y = y;
     }
 
-    constexpr fixed_point& operator-()
+    [[nodiscard]] constexpr fixed_point operator-() const
     {
-        _x = -_x;
-        _y = -_y;
-        return *this;
+        return fixed_point(-_x, -_y);
     }
 
     constexpr fixed_point& operator+=(const fixed_point& other)

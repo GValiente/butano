@@ -200,7 +200,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t operator-() const
     {
-        return fixed_t::create(0 - _value);
+        return fixed_t::create(-_value);
     }
 
     constexpr fixed_t& operator+=(fixed_t other)

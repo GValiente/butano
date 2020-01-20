@@ -71,12 +71,14 @@ optional<int> create(bg_builder&& builder)
 
     while(new_index < hw::bgs::count())
     {
-        if(! data.items[new_index])
+        if(data.items[new_index])
+        {
+            ++new_index;
+        }
+        else
         {
             break;
         }
-
-        ++new_index;
     }
 
     if(new_index == hw::bgs::count())

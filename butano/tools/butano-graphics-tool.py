@@ -174,7 +174,7 @@ class SpriteItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'btn::tile')
-            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(unsigned int))]', 1)
+            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::color')
 
         os.remove(grit_file_path)
@@ -255,7 +255,7 @@ class BgItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'btn::tile', 1)
-            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(unsigned int))]', 1)
+            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::bg_map_cell', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::color', 1)
 

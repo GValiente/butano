@@ -378,7 +378,7 @@ optional<id_type> create(sprite_builder&& builder)
 
         if(data.items_pool.full())
         {
-            return nullptr;
+            return nullopt;
         }
     }
 
@@ -386,14 +386,14 @@ optional<id_type> create(sprite_builder&& builder)
 
     if(! tiles)
     {
-        return nullptr;
+        return nullopt;
     }
 
     optional<sprite_palette_ptr> palette = builder.release_palette();
 
     if(! palette)
     {
-        return nullptr;
+        return nullopt;
     }
 
     item_type* new_item = data.items_pool.create<item_type>(move(builder), move(*tiles), move(*palette));
@@ -452,12 +452,12 @@ const sprite_tiles_ptr& tiles_ptr(id_type id)
 void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid sprite tiles count: ",
+    BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid tiles count: ",
                item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
 
     if(tiles_ptr != item->tiles_ptr)
     {
-        hw::sprites::set_tile(tiles_ptr.id(), item->handle);
+        hw::sprites::set_tiles(tiles_ptr.id(), item->handle);
         item->tiles_ptr = move(tiles_ptr);
         _update_handles(*item);
     }
@@ -473,7 +473,7 @@ void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 {
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(item->palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-               "Sprite palette colors bpp mode mismatch: ",
+               "Palette colors bpp mode mismatch: ",
                item->palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
 
     if(palette_ptr != item->palette_ptr)

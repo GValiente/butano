@@ -8,8 +8,6 @@ namespace btn
 
 class size;
 class sprite_builder;
-enum class sprite_shape;
-enum class sprite_size;
 
 namespace hw::sprites
 {
@@ -42,17 +40,17 @@ namespace hw::sprites
 
     void init();
 
-    void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+    void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
                        handle& sprite);
 
-    void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+    void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
                       handle& sprite);
 
     [[nodiscard]] bool double_size(const handle& sprite);
 
     [[nodiscard]] size dimensions(const handle& sprite);
 
-    void set_tile(int tile_id, handle& sprite);
+    void set_tiles(int tiles_id, handle& sprite);
 
     void set_palette(int palette_id, handle& sprite);
 

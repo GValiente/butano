@@ -24,7 +24,7 @@ void init()
     oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(count()));
 }
 
-void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
                    handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
@@ -32,11 +32,11 @@ void setup_regular(const sprite_builder& builder, int tile_id, int palette_id, b
     a0 |= eight_bits_per_pixel * ATTR0_8BPP;
 
     int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
-    int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
+    int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
 }
 
-void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, bool eight_bits_per_pixel,
+void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
                   handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
@@ -44,7 +44,7 @@ void setup_affine(const sprite_builder& builder, int tile_id, int palette_id, bo
     a0 |= eight_bits_per_pixel * ATTR0_8BPP;
 
     int a1 = ATTR1_BUILDA(0, int(builder.size()), 0);
-    int a2 = ATTR2_BUILD(tile_id, palette_id, builder.bg_priority());
+    int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());
     obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
 }
 
@@ -68,10 +68,10 @@ size dimensions(const handle& sprite)
     return result;
 }
 
-void set_tile(int tile_id, handle& sprite)
+void set_tiles(int tiles_id, handle& sprite)
 {
     auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-    BFN_SET(sprite_ptr->attr2, tile_id, ATTR2_ID);
+    BFN_SET(sprite_ptr->attr2, tiles_id, ATTR2_ID);
 }
 
 void set_palette(int palette_id, handle& sprite)

@@ -764,7 +764,7 @@ bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_vie
 bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
-    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette(create_mode::FIND_OR_CREATE);
+    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette_ptr(create_mode::FIND_OR_CREATE);
 
     if(! palette_ptr)
     {

@@ -49,7 +49,7 @@ public:
         return span<const tile>(_tiles.data() + (size_t(graphics_index) * tiles_size), tiles_size);
     }
 
-    [[nodiscard]] optional<sprite_tiles_ptr> tiles_ptr(int graphics_index, create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_ptr(int graphics_index, create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

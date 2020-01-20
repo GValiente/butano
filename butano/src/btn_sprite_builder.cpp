@@ -165,9 +165,9 @@ optional<sprite_tiles_ptr> sprite_builder::tiles() const
     }
     else
     {
-        BTN_ASSERT(_item, "Sprite item is null");
+        BTN_ASSERT(_item, "Item is null");
 
-        result = _item->tiles().tiles_ptr(_graphics_index, _tiles_create_mode);
+        result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -183,9 +183,9 @@ optional<sprite_palette_ptr> sprite_builder::palette() const
     }
     else
     {
-        BTN_ASSERT(_item, "Sprite item is null");
+        BTN_ASSERT(_item, "Item is null");
 
-        result = _item->palette().create_sprite_palette(_palette_create_mode);
+        result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
     }
 
     return result;
@@ -202,9 +202,9 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles()
     }
     else
     {
-        BTN_ASSERT(_item, "Sprite item is null");
+        BTN_ASSERT(_item, "Item is null");
 
-        result = _item->tiles().tiles_ptr(_graphics_index, _tiles_create_mode);
+        result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -221,9 +221,9 @@ optional<sprite_palette_ptr> sprite_builder::release_palette()
     }
     else
     {
-        BTN_ASSERT(_item, "Sprite item is null");
+        BTN_ASSERT(_item, "Item is null");
 
-        result = _item->palette().create_sprite_palette(_palette_create_mode);
+        result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
     }
 
     return result;

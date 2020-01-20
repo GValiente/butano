@@ -15,8 +15,6 @@ namespace btn
 {
 
 class sprite_ptr;
-class sprite_tiles_ptr;
-class sprite_palette_ptr;
 
 class sprite_builder
 {

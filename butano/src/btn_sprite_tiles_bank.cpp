@@ -146,7 +146,7 @@ void sprite_tiles_bank::set_tiles_ref(int id, const span<const tile>& tiles_ref)
     BTN_ASSERT(valid_tiles(int(tiles_ref.size())), "Invalid tiles ref size: ", tiles_ref.size());
 
     item_type& item = _items.item(id);
-    BTN_ASSERT(item.data, "Tiles item has no data");
+    BTN_ASSERT(item.data, "Item has no data");
     BTN_ASSERT(int(tiles_ref.size()) == item.tiles_count, "Tiles count does not match item tiles count: ",
                tiles_ref.size(), " - ", item.tiles_count);
 
@@ -165,7 +165,7 @@ void sprite_tiles_bank::set_tiles_ref(int id, const span<const tile>& tiles_ref)
 void sprite_tiles_bank::reload_tiles_ref(int id)
 {
     item_type& item = _items.item(id);
-    BTN_ASSERT(item.data, "Tiles item has no data");
+    BTN_ASSERT(item.data, "Item has no data");
 
     item.commit = true;
     _check_commit = true;

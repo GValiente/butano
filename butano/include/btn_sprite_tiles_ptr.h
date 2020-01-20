@@ -43,6 +43,8 @@ public:
 
     [[nodiscard]] int id() const;
 
+    [[nodiscard]] int tiles_count() const;
+
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
     void set_tiles_ref(const span<const tile>& tiles_ref);
@@ -50,8 +52,6 @@ public:
     void reload_tiles_ref();
 
     [[nodiscard]] optional<span<tile>> vram();
-
-    [[nodiscard]] int tiles_count() const;
 
     [[nodiscard]] size_t hash() const
     {

@@ -7,7 +7,7 @@
 namespace btn
 {
 
-optional<sprite_tiles_ptr> sprite_tiles_item::tiles_ptr(int graphics_index, create_mode create_mode) const
+optional<sprite_tiles_ptr> sprite_tiles_item::create_tiles_ptr(int graphics_index, create_mode create_mode) const
 {
     span<const tile> graphics_tiles_ref = tiles_ref(graphics_index);
     optional<sprite_tiles_ptr> result;

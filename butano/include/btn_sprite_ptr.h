@@ -76,8 +76,8 @@ public:
 
     void set_palette(const palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_tiles_and_palette(const sprite_item& item, int graphics_index = 0,
-                               create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_item(const sprite_item& item, int graphics_index = 0,
+                  create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     [[nodiscard]] fixed x() const;
 

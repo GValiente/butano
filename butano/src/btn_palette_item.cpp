@@ -8,7 +8,7 @@
 namespace btn
 {
 
-optional<sprite_palette_ptr> palette_item::create_sprite_palette(create_mode create_mode) const
+optional<sprite_palette_ptr> palette_item::create_sprite_palette_ptr(create_mode create_mode) const
 {
     optional<sprite_palette_ptr> result;
 
@@ -27,7 +27,7 @@ optional<sprite_palette_ptr> palette_item::create_sprite_palette(create_mode cre
     return result;
 }
 
-optional<bg_palette_ptr> palette_item::create_bg_palette(create_mode create_mode) const
+optional<bg_palette_ptr> palette_item::create_bg_palette_ptr(create_mode create_mode) const
 {
     optional<bg_palette_ptr> result;
 

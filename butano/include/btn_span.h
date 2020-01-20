@@ -60,13 +60,6 @@ public:
     {
     }
 
-    template<class OtherType>
-    constexpr span(const span<OtherType>& other) :
-        _begin(other.begin()),
-        _end(other.end())
-    {
-    }
-
     [[nodiscard]] constexpr const_iterator begin() const
     {
         return _begin;

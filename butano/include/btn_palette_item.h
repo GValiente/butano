@@ -37,9 +37,9 @@ public:
         return _palette.size() > 16;
     }
 
-    [[nodiscard]] optional<sprite_palette_ptr> create_sprite_palette(create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_palette_ptr> create_sprite_palette_ptr(create_mode create_mode) const;
 
-    [[nodiscard]] optional<bg_palette_ptr> create_bg_palette(create_mode create_mode) const;
+    [[nodiscard]] optional<bg_palette_ptr> create_bg_palette_ptr(create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const palette_item& a, const palette_item& b)
     {

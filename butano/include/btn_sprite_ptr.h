@@ -12,11 +12,11 @@ namespace btn
 class size;
 class fixed_point;
 class sprite_item;
+class palette_item;
 class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_tiles_item;
 class sprite_palette_ptr;
-class sprite_palette_item;
 class sprite_affine_mat_ptr;
 enum class sprite_double_size_mode;
 
@@ -74,7 +74,7 @@ public:
 
     void set_palette(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_palette(const sprite_palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     void set_tiles_and_palette(const sprite_item& item, int graphics_index = 0,
                                create_mode create_mode = create_mode::FIND_OR_CREATE);

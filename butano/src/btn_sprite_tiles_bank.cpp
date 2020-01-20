@@ -409,7 +409,7 @@ void sprite_tiles_bank::_create_item(int id, const tile* tiles_data, int tiles_c
         new_item.start_tile = item.start_tile + item.tiles_count;
         new_item.tiles_count = uint16_t(new_item_tiles_count);
 
-        items_list::iterator new_item_iterator = _items.insert_after(id, new_item);
+        auto new_item_iterator = _items.insert_after(id, new_item);
 
         if(_biggest_free_iterator != _items.end())
         {

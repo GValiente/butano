@@ -2,6 +2,7 @@
 
 #include "btn_span.h"
 #include "btn_vector.h"
+#include "btn_limits.h"
 #include "btn_bg_block.h"
 #include "btn_optional.h"
 #include "btn_hash_map.h"

@@ -1,6 +1,5 @@
 #include "btn_sprite_affine_mat_ptr.h"
 
-#include "btn_utility.h"
 #include "btn_optional.h"
 #include "btn_sprite_affine_mat_builder.h"
 #include "btn_sprite_affine_mats_manager.h"

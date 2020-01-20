@@ -1,5 +1,5 @@
-#ifndef BTN_SPRITE_PALETTE_ITEM_H
-#define BTN_SPRITE_PALETTE_ITEM_H
+#ifndef BTN_PALETTE_ITEM_H
+#define BTN_PALETTE_ITEM_H
 
 #include "btn_span.h"
 #include "btn_color.h"
@@ -8,14 +8,15 @@
 namespace btn
 {
 
+class bg_palette_ptr;
 class sprite_palette_ptr;
 enum class create_mode;
 
-class sprite_palette_item
+class palette_item
 {
 
 public:
-    constexpr explicit sprite_palette_item(const span<const color>& palette) :
+    constexpr explicit palette_item(const span<const color>& palette) :
         _palette(palette)
     {
         BTN_CONSTEXPR_ASSERT(colors() >= 16 && colors() <= 256 && colors() % 16 == 0, "Invalid colors count");
@@ -36,14 +37,16 @@ public:
         return _palette.size() > 16;
     }
 
-    [[nodiscard]] optional<sprite_palette_ptr> palette_ptr(create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_palette_ptr> create_sprite_palette(create_mode create_mode) const;
 
-    [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a, const sprite_palette_item& b)
+    [[nodiscard]] optional<bg_palette_ptr> create_bg_palette(create_mode create_mode) const;
+
+    [[nodiscard]] constexpr friend bool operator==(const palette_item& a, const palette_item& b)
     {
         return a._palette.data() == b._palette.data() && a._palette.size() == b._palette.size();
     }
 
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_palette_item& a, const sprite_palette_item& b)
+    [[nodiscard]] constexpr friend bool operator!=(const palette_item& a, const palette_item& b)
     {
         return ! (a == b);
     }

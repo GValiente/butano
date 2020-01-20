@@ -32,6 +32,13 @@ public:
 
     void decrease_usages(int id);
 
+    [[nodiscard]] int colors_count(int id) const;
+
+    [[nodiscard]] bool eight_bits_per_pixel(int id) const
+    {
+        return id == 0 && _eight_bits_per_pixel_palettes;
+    }
+
     [[nodiscard]] span<const color> colors_ref(int id) const;
 
     void set_colors_ref(int id, const span<const color>& colors_ref);
@@ -154,8 +161,6 @@ private:
     [[nodiscard]] span<const color> _color_ptr_span(int index) const;
 
     span<const color> _4bpp_color_ptr_span(int index) const;
-
-    [[nodiscard]] int _colors_per_palette(int id) const;
 
     [[nodiscard]] int _first_4bpp_palette_index() const;
 };

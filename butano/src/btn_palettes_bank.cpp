@@ -165,37 +165,48 @@ void palettes_bank::decrease_usages(int id)
     {
         pal = palette();
 
-        if(id == 0 && _eight_bits_per_pixel_palettes)
+        if(eight_bits_per_pixel(id))
         {
             _eight_bits_per_pixel_palettes = 0;
         }
     }
 }
 
+int palettes_bank::colors_count(int id) const
+{
+    int result = hw::palettes::colors_per_palette();
+
+    if(eight_bits_per_pixel(id))
+    {
+        result *= _eight_bits_per_pixel_palettes;
+    }
+
+    return result;
+}
+
 span<const color> palettes_bank::colors_ref(int id) const
 {
-    auto eight_bits_per_pixel_palettes = size_t(_eight_bits_per_pixel_palettes);
-
-    if(id > 0 || ! eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         return _4bpp_color_ptr_span(id);
     }
 
-    return span<const color>(_palettes[0].colors_ref, hw::palettes::colors_per_palette() * eight_bits_per_pixel_palettes);
+    return span<const color>(_palettes[0].colors_ref,
+            hw::palettes::colors_per_palette() * size_t(_eight_bits_per_pixel_palettes));
 }
 
 void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 {
     BTN_ASSERT(valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
-    BTN_ASSERT(int(colors_ref.size()) == _colors_per_palette(id), "Colors count mismatch: ",
-               colors_ref.size(), " - ", _colors_per_palette(id));
+    BTN_ASSERT(int(colors_ref.size()) == colors_count(id), "Colors count mismatch: ",
+               colors_ref.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[size_t(id)];
     pal.colors_ref = colors_ref.data();
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -207,7 +218,7 @@ void palettes_bank::reload_colors_ref(int id)
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -228,7 +239,7 @@ void palettes_bank::set_inverse_intensity(int id, fixed intensity)
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -249,7 +260,7 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -277,7 +288,7 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -291,14 +302,14 @@ int palettes_bank::rotate_count(int id) const
 
 void palettes_bank::set_rotate_count(int id, int count)
 {
-    BTN_ASSERT(abs(count) < _colors_per_palette(id), "Invalid count: ", count, " - ", _colors_per_palette(id));
+    BTN_ASSERT(abs(count) < colors_count(id), "Invalid count: ", count, " - ", colors_count(id));
 
     palette& pal = _palettes[size_t(id)];
     pal.rotate_count = count;
     pal.update = true;
     _perform_update = true;
 
-    if(id > 0 || ! _eight_bits_per_pixel_palettes)
+    if(! eight_bits_per_pixel(id))
     {
         _last_used_4bpp_index = id;
     }
@@ -521,18 +532,6 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
 span<const color> palettes_bank::_4bpp_color_ptr_span(int index) const
 {
     return span<const color>(_palettes[size_t(index)].colors_ref, hw::palettes::colors_per_palette());
-}
-
-int palettes_bank::_colors_per_palette(int id) const
-{
-    int result = hw::palettes::colors_per_palette();
-
-    if(id == 0 && _eight_bits_per_pixel_palettes)
-    {
-        result *= _eight_bits_per_pixel_palettes;
-    }
-
-    return result;
 }
 
 int palettes_bank::_first_4bpp_palette_index() const

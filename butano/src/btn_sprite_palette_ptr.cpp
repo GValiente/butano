@@ -1,10 +1,7 @@
 #include "btn_sprite_palette_ptr.h"
 
-#include "btn_span.h"
-#include "btn_utility.h"
 #include "btn_palettes_bank.h"
 #include "btn_palettes_manager.h"
-#include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
 {
@@ -24,7 +21,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
 sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_ref)
 {
     optional<int> id = palettes_manager::sprite_palettes_bank().create(colors_ref);
-    BTN_ASSERT(id, "Sprite palette create failed");
+    BTN_ASSERT(id, "Palette create failed");
 
     return sprite_palette_ptr(*id);
 }
@@ -37,7 +34,7 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
     if(! id)
     {
         id = sprite_palettes_bank.create(colors_ref);
-        BTN_ASSERT(id, "Sprite palette find or create failed");
+        BTN_ASSERT(id, "Palette find or create failed");
     }
 
     return sprite_palette_ptr(*id);
@@ -73,7 +70,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::optional_find_or_create(const s
 }
 
 sprite_palette_ptr::sprite_palette_ptr(const sprite_palette_ptr& other) :
-    palette_ptr(other._id)
+    _id(other._id)
 {
     palettes_manager::sprite_palettes_bank().increase_usages(_id);
 }
@@ -91,7 +88,7 @@ sprite_palette_ptr& sprite_palette_ptr::operator=(const sprite_palette_ptr& othe
 }
 
 sprite_palette_ptr::sprite_palette_ptr(sprite_palette_ptr&& other) :
-    palette_ptr(other._id)
+    _id(other._id)
 {
     other._id = -1;
 }
@@ -119,12 +116,12 @@ void sprite_palette_ptr::reload_colors_ref()
 
 int sprite_palette_ptr::colors_count() const
 {
-    return int(colors_ref().size());
+    return palettes_manager::sprite_palettes_bank().colors_count(_id);
 }
 
 bool sprite_palette_ptr::eight_bits_per_pixel() const
 {
-    return colors_ref().size() > hw::palettes::colors_per_palette();
+    return palettes_manager::sprite_palettes_bank().eight_bits_per_pixel(_id);
 }
 
 fixed sprite_palette_ptr::inverse_intensity() const

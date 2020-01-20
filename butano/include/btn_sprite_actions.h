@@ -127,7 +127,7 @@ public:
     [[nodiscard]] static sprite_animate_action once(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles(), false, graphics_indexes);
     }
 
     [[nodiscard]] static sprite_animate_action forever(
@@ -140,7 +140,7 @@ public:
     [[nodiscard]] static sprite_animate_action forever(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles(), true, graphics_indexes);
     }
 
     void reset()

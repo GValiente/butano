@@ -4,13 +4,14 @@
 #include "btn_span_fwd.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
-#include "btn_palette_ptr.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
 {
 
-class sprite_palette_ptr : public palette_ptr
+class color;
+
+class sprite_palette_ptr
 {
 
 public:
@@ -35,6 +36,11 @@ public:
     ~sprite_palette_ptr()
     {
         _destroy();
+    }
+
+    [[nodiscard]] int id() const
+    {
+        return _id;
     }
 
     [[nodiscard]] span<const color> colors_ref() const;
@@ -76,7 +82,12 @@ public:
     }
 
 private:
-    using palette_ptr::palette_ptr;
+    int8_t _id;
+
+    explicit sprite_palette_ptr(int id) :
+        _id(int8_t(id))
+    {
+    }
 
     void _destroy();
 };

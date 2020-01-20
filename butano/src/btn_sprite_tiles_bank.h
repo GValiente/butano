@@ -163,12 +163,11 @@ private:
 
         void init()
         {
-            _items[0].next_index = 1;
             _free_indices.resize(max_items);
 
             for(size_t index = 0; index < max_items; ++index)
             {
-                _free_indices[index] = int16_t(index);
+                _free_indices[index] = int16_t(index + 1);
             }
         }
 

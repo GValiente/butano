@@ -4,7 +4,7 @@
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork
 
-CFLAGS      :=	-Wall -Wextra -g -O2 -flto -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -DNDEBUG $(ARCH)
+CFLAGS      :=	-Wall -Wextra -g -O2 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -DNDEBUG $(ARCH)
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 

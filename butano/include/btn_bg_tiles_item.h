@@ -28,8 +28,14 @@ public:
 
     [[nodiscard]] constexpr bool valid_tiles_count(bool eight_bits_per_pixel) const
     {
-        size_t tiles_count = _tiles.size();
-        return tiles_count && (! eight_bits_per_pixel || (tiles_count % 2) == 0);
+        size_t count = _tiles.size();
+
+        if(eight_bits_per_pixel)
+        {
+            return count && count < 2048 && (count % 2) == 0;
+        }
+
+        return count && count < 1024;
     }
 
     [[nodiscard]] optional<bg_tiles_ptr> create_tiles_ptr(create_mode create_mode) const;

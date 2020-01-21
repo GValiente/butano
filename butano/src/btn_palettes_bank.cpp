@@ -11,7 +11,7 @@ namespace btn
 
 namespace
 {
-    bool valid_colors_count(const span<const color>& colors_ref)
+    [[maybe_unused]] bool valid_colors_count(const span<const color>& colors_ref)
     {
         size_t colors_count = colors_ref.size();
         return colors_count >= hw::palettes::colors_per_palette() &&

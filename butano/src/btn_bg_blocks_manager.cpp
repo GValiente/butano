@@ -1,5 +1,6 @@
 #include "btn_bg_blocks_manager.h"
 
+#include "btn_size.h"
 #include "btn_span.h"
 #include "btn_vector.h"
 #include "btn_limits.h"
@@ -309,7 +310,7 @@ namespace
     }
 
     template<bool aligned>
-    [[nodiscard]] int _create_item(int id, const uint16_t* data_ptr, int blocks_count, int width, int height)
+    [[nodiscard]] int _create_item(int id, const uint16_t* data_ptr, int blocks_count, const size& dimensions)
     {
         if(aligned)
         {
@@ -336,8 +337,8 @@ namespace
         int new_item_blocks_count = item.blocks_count - blocks_count;
         item.data = data_ptr;
         item.blocks_count = uint8_t(blocks_count);
-        item.width = uint16_t(width);
-        item.height = uint8_t(height);
+        item.width = uint16_t(dimensions.width());
+        item.height = uint8_t(dimensions.height());
         item.usages = 1;
         item.set_status(item_type::status_type::USED);
         item.commit = false;
@@ -386,7 +387,7 @@ namespace
     }
 
     template<bool aligned>
-    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, int width, int height)
+    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions)
     {
         if(! data_ptr && data.delay_commit)
         {
@@ -427,7 +428,7 @@ namespace
 
             if(smallest_iterator != data.items.end())
             {
-                return _create_item<aligned>(smallest_iterator.id(), data_ptr, blocks_count, width, height);
+                return _create_item<aligned>(smallest_iterator.id(), data_ptr, blocks_count, dimensions);
             }
         }
 
@@ -435,7 +436,7 @@ namespace
         {
             update();
             data.delay_commit = true;
-            return _create_impl<aligned>(data_ptr, blocks_count, width, height);
+            return _create_impl<aligned>(data_ptr, blocks_count, dimensions);
         }
 
         return nullopt;
@@ -455,9 +456,9 @@ void init()
     BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-optional<int> find(const uint16_t& data_ref, int width, int height)
+optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimensions)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND: ", &data_ref, " - ", width, " - ", height);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND: ", &data_ref, " - ", dimensions.width(), " - ", dimensions.height());
 
     auto items_map_iterator = data.items_map.find(&data_ref);
     optional<int> result;
@@ -467,8 +468,10 @@ optional<int> find(const uint16_t& data_ref, int width, int height)
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
         result.emplace(id);
-        BTN_ASSERT(width == item.width, "Width does not match item width: ", width, " - ", item.width);
-        BTN_ASSERT(height == item.height, "Height does not match item height: ", height, " - ", item.height);
+        BTN_ASSERT(dimensions.width() == item.width, "Width does not match item width: ",
+                   dimensions.width(), " - ", item.width);
+        BTN_ASSERT(dimensions.height() == item.height, "Height does not match item height: ",
+                   dimensions.height(), " - ", item.height);
 
         switch(item.status())
         {
@@ -503,14 +506,15 @@ optional<int> find(const uint16_t& data_ref, int width, int height)
     return result;
 }
 
-optional<int> create(const uint16_t& data_ref, int width, int height, bool aligned)
+optional<int> create(const uint16_t& data_ref, const size& dimensions, bool aligned)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE: ", &data_ref, " - ", width, " - ", height, " - ", aligned);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE: ", &data_ref, " - ",
+                      dimensions.width(), " - ", dimensions.height(), " - ", aligned);
 
-    BTN_ASSERT(width > 0, "Invalid width: ", width);
-    BTN_ASSERT(height > 0, "Invalid height: ", height);
+    BTN_ASSERT(dimensions.width() > 0, "Invalid width: ", dimensions.width());
+    BTN_ASSERT(dimensions.height() > 0, "Invalid height: ", dimensions.height());
 
-    int half_words = width * height;
+    int half_words = dimensions.width() * dimensions.height();
     BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid data size: ", half_words);
     BTN_ASSERT(data.items_map.find(&data_ref) == data.items_map.end(), "Multiple copies of the same data not supported");
 
@@ -518,11 +522,11 @@ optional<int> create(const uint16_t& data_ref, int width, int height, bool align
 
     if(aligned)
     {
-        result = _create_impl<true>(&data_ref, _blocks(half_words), width, height);
+        result = _create_impl<true>(&data_ref, _blocks(half_words), dimensions);
     }
     else
     {
-        result = _create_impl<false>(&data_ref, _blocks(half_words), width, height);
+        result = _create_impl<false>(&data_ref, _blocks(half_words), dimensions);
     }
 
     if(result)
@@ -539,25 +543,25 @@ optional<int> create(const uint16_t& data_ref, int width, int height, bool align
     return result;
 }
 
-optional<int> allocate(int width, int height, bool aligned)
+optional<int> allocate(const size& dimensions, bool aligned)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE: ", width, " - ", height, " - ", aligned);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE: ", dimensions.width(), " - ", dimensions.height(), " - ", aligned);
 
-    BTN_ASSERT(width > 0, "Invalid width: ", width);
-    BTN_ASSERT(height > 0, "Invalid height: ", height);
+    BTN_ASSERT(dimensions.width() > 0, "Invalid width: ", dimensions.width());
+    BTN_ASSERT(dimensions.height() > 0, "Invalid height: ", dimensions.height());
 
-    int half_words = width * height;
+    int half_words = dimensions.width() * dimensions.height();
     BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid data size: ", half_words);
 
     optional<int> result;
 
     if(aligned)
     {
-        result = _create_impl<true>(nullptr, _blocks(half_words), width, height);
+        result = _create_impl<true>(nullptr, _blocks(half_words), dimensions);
     }
     else
     {
-        result = _create_impl<false>(nullptr, _blocks(half_words), width, height);
+        result = _create_impl<false>(nullptr, _blocks(half_words), dimensions);
     }
 
     if(result)
@@ -613,16 +617,10 @@ int hw_id(int id, bool aligned)
     return result;
 }
 
-int width(int id)
+size dimensions(int id)
 {
     const item_type& item = data.items.item(id);
-    return item.width;
-}
-
-int height(int id)
-{
-    const item_type& item = data.items.item(id);
-    return item.height;
+    return size(item.width, item.height);
 }
 
 const uint16_t* data_ref(int id)
@@ -631,15 +629,17 @@ const uint16_t* data_ref(int id)
     return item.data;
 }
 
-void set_data_ref(int id, const uint16_t& data_ref, int width, int height)
+void set_data_ref(int id, const uint16_t& data_ref, [[maybe_unused]] const size& dimensions)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET_DATA_REF: ", id, " - ", data.items.item(id).start_block, " - ",
-                      &data_ref, " - ", width, " - ", height);
+                      &data_ref, " - ", dimensions.width(), " - ", dimensions.height());
 
     item_type& item = data.items.item(id);
     BTN_ASSERT(item.data, "Item has no data");
-    BTN_ASSERT(width == item.width, "Width does not match item width: ", width, " - ", item.width);
-    BTN_ASSERT(height == item.height, "Height does not match item height: ", height, " - ", item.height);
+    BTN_ASSERT(dimensions.width() == item.width, "Width does not match item width: ",
+               dimensions.width(), " - ", item.width);
+    BTN_ASSERT(dimensions.height() == item.height, "Height does not match item height: ",
+               dimensions.height(), " - ", item.height);
 
     if(item.data != &data_ref)
     {

@@ -8,23 +8,10 @@
 namespace btn::hw::bgs
 {
 
-void setup(const bg_builder& builder, int tiles_id, int map_id, int map_width, int map_height,
+void setup(const bg_builder& builder, int tiles_id, int map_id, const size& map_dimensions,
            bool eight_bits_per_pixel, handle& bg)
 {
-    bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id) | BG_SBB(map_id));
-
-    if(map_width == 64 && map_height == 64)
-    {
-        bg.cnt |= BG_REG_64x64;
-    }
-    else if(map_width == 64 && map_height == 32)
-    {
-        bg.cnt |= BG_REG_64x32;
-    }
-    else if(map_width == 32 && map_height == 64)
-    {
-        bg.cnt |= BG_REG_32x64;
-    }
+    bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id));
 
     if(eight_bits_per_pixel)
     {
@@ -35,6 +22,8 @@ void setup(const bg_builder& builder, int tiles_id, int map_id, int map_width, i
     {
         bg.cnt |= BG_MOSAIC;
     }
+
+    set_map(map_id, map_dimensions, bg);
 }
 
 void set_tiles(int tiles_id, handle& bg)
@@ -42,9 +31,12 @@ void set_tiles(int tiles_id, handle& bg)
     BFN_SET(bg.cnt, tiles_id, BG_CBB);
 }
 
-void set_map(int map_id, handle& bg)
+void set_map(int map_id, const size& map_dimensions, handle& bg)
 {
     BFN_SET(bg.cnt, map_id, BG_SBB);
+
+    int size = (map_dimensions.width() > 32) + ((map_dimensions.height() > 32) * 2);
+    BFN_SET(bg.cnt, size, BG_SIZE);
 }
 
 void set_position(int x, int y, handle& bg)

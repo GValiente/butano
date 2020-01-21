@@ -45,10 +45,7 @@ public:
 
     [[nodiscard]] int tiles_count() const;
 
-    [[nodiscard]] bool valid_tiles_count(bool eight_bits_per_pixel) const
-    {
-        return ! eight_bits_per_pixel || (tiles_count() % 2) == 0;
-    }
+    [[nodiscard]] bool valid_tiles_count(bool eight_bits_per_pixel) const;
 
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 

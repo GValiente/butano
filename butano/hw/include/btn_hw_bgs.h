@@ -6,6 +6,7 @@
 namespace btn
 {
 
+class size;
 class bg_builder;
 
 namespace hw::bgs
@@ -29,12 +30,12 @@ namespace hw::bgs
         return count() - 1;
     }
 
-    void setup(const bg_builder& builder, int tiles_id, int map_id, int map_width, int map_height,
+    void setup(const bg_builder& builder, int tiles_id, int map_id, const size& map_dimensions,
                bool eight_bits_per_pixel, handle& bg);
 
     void set_tiles(int tiles_id, handle& bg);
 
-    void set_map(int map_id, handle& bg);
+    void set_map(int map_id, const size& map_dimensions, handle& bg);
 
     void set_position(int x, int y, handle& bg);
 

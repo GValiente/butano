@@ -12,9 +12,9 @@ class bg_item
 {
 
 public:
-    constexpr bg_item(const span<const tile>& tiles, const bg_map_cell& map_cells_ref, int map_width, int map_height,
+    constexpr bg_item(const span<const tile>& tiles, const bg_map_cell& map_cells_ref, const size& map_dimensions,
                       const span<const color>& palette) :
-        bg_item(bg_tiles_item(tiles), bg_map_item(map_cells_ref, map_width, map_height), palette_item(palette))
+        bg_item(bg_tiles_item(tiles), bg_map_item(map_cells_ref, map_dimensions), palette_item(palette))
     {
     }
 

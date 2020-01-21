@@ -1,7 +1,7 @@
 #ifndef BTN_BG_MAP_ITEM_H
 #define BTN_BG_MAP_ITEM_H
 
-#include "btn_assert.h"
+#include "btn_size.h"
 #include "btn_bg_map_cell.h"
 #include "btn_optional_fwd.h"
 
@@ -15,13 +15,12 @@ class bg_map_item
 {
 
 public:
-    constexpr bg_map_item(const bg_map_cell& cells_ref, int width, int height) :
+    constexpr bg_map_item(const bg_map_cell& cells_ref, const size& dimensions) :
         _cells_ptr(&cells_ref),
-        _width(uint16_t(width)),
-        _height(uint16_t(height))
+        _dimensions(dimensions)
     {
-        BTN_CONSTEXPR_ASSERT(width == 32 || width == 64, "Invalid width");
-        BTN_CONSTEXPR_ASSERT(height == 32 || height == 64, "Invalid height");
+        BTN_CONSTEXPR_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width");
+        BTN_CONSTEXPR_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height");
     }
 
     [[nodiscard]] constexpr const bg_map_cell& cells_ref() const
@@ -29,21 +28,16 @@ public:
         return *_cells_ptr;
     }
 
-    [[nodiscard]] constexpr int width() const
+    [[nodiscard]] constexpr const size& dimensions() const
     {
-        return _width;
-    }
-
-    [[nodiscard]] constexpr int height() const
-    {
-        return _height;
+        return _dimensions;
     }
 
     [[nodiscard]] optional<bg_map_ptr> create_map_ptr(create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_map_item& a, const bg_map_item& b)
     {
-        return a._cells_ptr == b._cells_ptr && a._width == b._width && a._height == b._height;
+        return a._cells_ptr == b._cells_ptr && a._dimensions == b._dimensions;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const bg_map_item& a, const bg_map_item& b)
@@ -53,8 +47,7 @@ public:
 
 private:
     const bg_map_cell* _cells_ptr;
-    uint16_t _width;
-    uint16_t _height;
+    size _dimensions;
 };
 
 }

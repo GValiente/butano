@@ -273,7 +273,7 @@ class BgItem:
             header_file.write('{' + '\n')
             header_file.write('    constexpr const bg_item ' + name + '(' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                              name + '_btn_graphicsMap[0], ' + str(self.__width) + ', ' + str(self.__height) + ','
+                              name + '_btn_graphicsMap[0], size(' + str(self.__width) + ', ' + str(self.__height) + '),'
                               '\n            ' +
                               'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors) + '));' + '\n')
             header_file.write('}' + '\n')

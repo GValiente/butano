@@ -9,24 +9,26 @@
 namespace btn
 {
 
+class size;
+
 class bg_map_ptr
 {
 
 public:
-    [[nodiscard]] static optional<bg_map_ptr> find(const bg_map_cell& cells_ref, int width, int height);
+    [[nodiscard]] static optional<bg_map_ptr> find(const bg_map_cell& cells_ref, const size& dimensions);
 
-    [[nodiscard]] static bg_map_ptr create(const bg_map_cell& cells_ref, int width, int height);
+    [[nodiscard]] static bg_map_ptr create(const bg_map_cell& cells_ref, const size& dimensions);
 
-    [[nodiscard]] static bg_map_ptr find_or_create(const bg_map_cell& cells_ref, int width, int height);
+    [[nodiscard]] static bg_map_ptr find_or_create(const bg_map_cell& cells_ref, const size& dimensions);
 
-    [[nodiscard]] static bg_map_ptr allocate(int width, int height);
+    [[nodiscard]] static bg_map_ptr allocate(const size& dimensions);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_create(const bg_map_cell& cells_ref, int width, int height);
+    [[nodiscard]] static optional<bg_map_ptr> optional_create(const bg_map_cell& cells_ref, const size& dimensions);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_find_or_create(const bg_map_cell& cells_ref, int width,
-                                                                      int height);
+    [[nodiscard]] static optional<bg_map_ptr> optional_find_or_create(const bg_map_cell& cells_ref,
+                                                                      const size& dimensions);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_allocate(int width, int height);
+    [[nodiscard]] static optional<bg_map_ptr> optional_allocate(const size& dimensions);
 
     bg_map_ptr(const bg_map_ptr& other);
 
@@ -43,13 +45,11 @@ public:
 
     [[nodiscard]] int id() const;
 
-    [[nodiscard]] int width() const;
-
-    [[nodiscard]] int height() const;
+    [[nodiscard]] size dimensions() const;
 
     [[nodiscard]] const bg_map_cell* cells_ref() const;
 
-    void set_cells_ref(const bg_map_cell& cells_ref, int width, int height);
+    void set_cells_ref(const bg_map_cell& cells_ref, const size& dimensions);
 
     void reload_cells_ref();
 

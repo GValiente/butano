@@ -28,13 +28,12 @@ namespace
         item_type(bg_builder&& builder, bg_tiles_ptr&& tiles, bg_map_ptr&& map, bg_palette_ptr&& palette,
                   hw::bgs::handle& handle) :
             position(builder.position()),
-            dimensions(map.width(), map.height()),
+            dimensions(map.dimensions()),
             tiles_ptr(move(tiles)),
             map_ptr(move(map)),
             palette_ptr(move(palette))
         {
-            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.id(), dimensions.width(), dimensions.height(),
-                           palette_ptr.eight_bits_per_pixel(), handle);
+            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.id(), dimensions, palette_ptr.eight_bits_per_pixel(), handle);
 
             fixed_point real_position = -position;
             ignore_camera = builder.ignore_camera();
@@ -157,11 +156,12 @@ const bg_tiles_ptr& tiles_ptr(int id)
 void set_tiles_ptr(int id, bg_tiles_ptr tiles_ptr)
 {
     item_type& item = *data.items[id];
-    BTN_ASSERT(item.tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid tiles count: ",
-               item.tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
 
     if(tiles_ptr != item.tiles_ptr)
     {
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.palette_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+                   tiles_ptr.tiles_count());
+
         hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
         item.tiles_ptr = move(tiles_ptr);
 
@@ -181,15 +181,13 @@ const bg_map_ptr& map_ptr(int id)
 void set_map_ptr(int id, bg_map_ptr map_ptr)
 {
     item_type& item = *data.items[id];
-    BTN_ASSERT(item.map_ptr.width() == map_ptr.width(), "Invalid map width: ",
-               item.map_ptr.width(), " - ", map_ptr.width());
-    BTN_ASSERT(item.map_ptr.height() == map_ptr.height(), "Invalid map height: ",
-               item.map_ptr.height(), " - ", map_ptr.height());
 
     if(map_ptr != item.map_ptr)
     {
-        hw::bgs::set_map(map_ptr.id(), data.handles[id]);
+        size dimensions = map_ptr.dimensions();
+        hw::bgs::set_map(map_ptr.id(), dimensions, data.handles[id]);
         item.map_ptr = move(map_ptr);
+        item.dimensions = dimensions;
 
         if(display_manager::bg_enabled(id))
         {
@@ -207,12 +205,13 @@ const bg_palette_ptr& palette_ptr(int id)
 void set_palette_ptr(int id, bg_palette_ptr palette_ptr)
 {
     item_type& item = *data.items[id];
-    BTN_ASSERT(item.palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-               "Palette colors bpp mode mismatch: ",
-               item.palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
 
     if(palette_ptr != item.palette_ptr)
     {
+        BTN_ASSERT(item.palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
+                   "Palette colors bpp mode mismatch: ",
+                   item.palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
+
         item.palette_ptr = move(palette_ptr);
     }
 }

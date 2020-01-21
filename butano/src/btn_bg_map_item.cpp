@@ -15,11 +15,11 @@ optional<bg_map_ptr> bg_map_item::create_map_ptr(create_mode create_mode) const
     {
 
     case create_mode::FIND_OR_CREATE:
-        result = bg_map_ptr::optional_find_or_create(*_cells_ptr, _width, _height);
+        result = bg_map_ptr::optional_find_or_create(*_cells_ptr, _dimensions);
         break;
 
     case create_mode::FORCE_CREATE:
-        result = bg_map_ptr::optional_create(*_cells_ptr, _width, _height);
+        result = bg_map_ptr::optional_create(*_cells_ptr, _dimensions);
         break;
     }
 

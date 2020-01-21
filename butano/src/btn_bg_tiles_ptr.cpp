@@ -1,5 +1,6 @@
 #include "btn_bg_tiles_ptr.h"
 
+#include "btn_size.h"
 #include "btn_span.h"
 #include "btn_tile.h"
 #include "btn_optional.h"
@@ -23,14 +24,14 @@ namespace
         return *data_ptr;
     }
 
-    [[nodiscard]] int data_width(int tiles)
+    [[nodiscard]] size data_size(int tiles)
     {
-        return tiles * half_words_per_tile();
+        return size(tiles * half_words_per_tile(), 1);
     }
 
-    [[nodiscard]] int data_width(const span<const tile>& tiles_ref)
+    [[nodiscard]] size data_size(const span<const tile>& tiles_ref)
     {
-        return data_width(int(tiles_ref.size()));
+        return size(int(tiles_ref.size() * half_words_per_tile()), 1);
     }
 
     [[nodiscard]] span<const tile> to_tiles_ref(const uint16_t* data_ref, int tiles_count)
@@ -52,7 +53,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::find(const span<const tile>& tiles_ref)
 
     optional<bg_tiles_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::find(to_data_ref(tiles_ref), data_width(tiles_ref), 1))
+    if(optional<int> handle = bg_blocks_manager::find(to_data_ref(tiles_ref), data_size(tiles_ref)))
     {
         result = bg_tiles_ptr(*handle);
     }
@@ -64,7 +65,7 @@ bg_tiles_ptr bg_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
     BTN_ASSERT(! tiles_ref.empty(), "Tiles ref is null");
 
-    optional<int> handle = bg_blocks_manager::create(to_data_ref(tiles_ref), data_width(tiles_ref), 1, aligned);
+    optional<int> handle = bg_blocks_manager::create(to_data_ref(tiles_ref), data_size(tiles_ref), aligned);
     BTN_ASSERT(handle, "Tiles create failed");
 
     return bg_tiles_ptr(*handle);
@@ -75,12 +76,12 @@ bg_tiles_ptr bg_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
     BTN_ASSERT(! tiles_ref.empty(), "Tiles ref is null");
 
     const uint16_t& data_ref = to_data_ref(tiles_ref);
-    int width = data_width(tiles_ref);
-    optional<int> handle = bg_blocks_manager::find(data_ref, width, 1);
+    size data_s = data_size(tiles_ref);
+    optional<int> handle = bg_blocks_manager::find(data_ref, data_s);
 
     if(! handle)
     {
-        handle = bg_blocks_manager::create(data_ref, width, 1, aligned);
+        handle = bg_blocks_manager::create(data_ref, data_s, aligned);
         BTN_ASSERT(handle, "Tiles find or create failed");
     }
 
@@ -91,7 +92,7 @@ bg_tiles_ptr bg_tiles_ptr::allocate(int tiles)
 {
     BTN_ASSERT(tiles >= 0, "Invalid tiles: ", tiles);
 
-    optional<int> handle = bg_blocks_manager::allocate(data_width(tiles), 1, aligned);
+    optional<int> handle = bg_blocks_manager::allocate(data_size(tiles), aligned);
     BTN_ASSERT(handle, "Tiles allocate failed");
 
     return bg_tiles_ptr(*handle);
@@ -103,7 +104,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_create(const span<const tile>& til
 
     optional<bg_tiles_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::create(to_data_ref(tiles_ref), data_width(tiles_ref), 1, aligned))
+    if(optional<int> handle = bg_blocks_manager::create(to_data_ref(tiles_ref), data_size(tiles_ref), aligned))
     {
         result = bg_tiles_ptr(*handle);
     }
@@ -116,14 +117,14 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_find_or_create(const span<const ti
     BTN_ASSERT(! tiles_ref.empty(), "Tiles ref is null");
 
     const uint16_t& data_ref = to_data_ref(tiles_ref);
-    int width = data_width(tiles_ref);
+    size data_s = data_size(tiles_ref);
     optional<bg_tiles_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::find(data_ref, width, 1))
+    if(optional<int> handle = bg_blocks_manager::find(data_ref, data_s))
     {
         result = bg_tiles_ptr(*handle);
     }
-    else if(optional<int> handle = bg_blocks_manager::create(data_ref, width, 1, aligned))
+    else if(optional<int> handle = bg_blocks_manager::create(data_ref, data_s, aligned))
     {
         result = bg_tiles_ptr(*handle);
     }
@@ -137,7 +138,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_allocate(int tiles)
 
     optional<bg_tiles_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::allocate(data_width(tiles), 1, aligned))
+    if(optional<int> handle = bg_blocks_manager::allocate(data_size(tiles), aligned))
     {
         result = bg_tiles_ptr(*handle);
     }
@@ -182,7 +183,19 @@ int bg_tiles_ptr::id() const
 
 int bg_tiles_ptr::tiles_count() const
 {
-    return bg_blocks_manager::width(_handle) / half_words_per_tile();
+    return bg_blocks_manager::dimensions(_handle).width() / half_words_per_tile();
+}
+
+bool bg_tiles_ptr::valid_tiles_count(bool eight_bits_per_pixel) const
+{
+    int count = tiles_count();
+
+    if(eight_bits_per_pixel)
+    {
+        return count > 0 && count < 2048 && (count % 2) == 0;
+    }
+
+    return count > 0 && count < 1024;
 }
 
 optional<span<const tile>> bg_tiles_ptr::tiles_ref() const
@@ -201,7 +214,7 @@ void bg_tiles_ptr::set_tiles_ref(const span<const tile>& tiles_ref)
 {
     BTN_ASSERT(! tiles_ref.empty(), "Tiles ref is null");
 
-    bg_blocks_manager::set_data_ref(_handle, to_data_ref(tiles_ref), data_width(tiles_ref), 1);
+    bg_blocks_manager::set_data_ref(_handle, to_data_ref(tiles_ref), data_size(tiles_ref));
 }
 
 void bg_tiles_ptr::reload_tiles_ref()

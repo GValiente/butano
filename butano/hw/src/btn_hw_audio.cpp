@@ -17,18 +17,6 @@ namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_CHANNELS > 0, "Invalid max audio channels");
 
-    constexpr mm_mixmode mix_mode()
-    {
-        return BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_8 ? MM_MIX_8KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_10 ? MM_MIX_10KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_13 ? MM_MIX_13KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_16 ? MM_MIX_16KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_18 ? MM_MIX_18KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_21 ? MM_MIX_21KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_27 ? MM_MIX_27KHZ :
-                MM_MIX_31KHZ;
-    }
-
     constexpr int mix_length()
     {
         return BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_8 ? MM_MIXLEN_8KHZ :
@@ -85,7 +73,7 @@ namespace
 void init()
 {
     mm_gba_system maxmod_info;
-    maxmod_info.mixing_mode = mix_mode();
+    maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);
     maxmod_info.mod_channel_count = BTN_CFG_AUDIO_MAX_CHANNELS;
     maxmod_info.mix_channel_count = BTN_CFG_AUDIO_MAX_CHANNELS;
     maxmod_info.module_channels = mm_addr(maxmod_engine_buffer);

@@ -716,7 +716,7 @@ void sprite_text_generator::set_bg_priority(int bg_priority)
 
 void sprite_text_generator::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= 0 && z_order < int(sprites_manager::z_orders()), "Invalid z order: ", z_order);
+    BTN_ASSERT(z_order >= 0 && z_order < sprites_manager::z_orders(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
 }

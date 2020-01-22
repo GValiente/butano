@@ -19,12 +19,9 @@ namespace sprites_manager
 {
     using id_type = void*;
 
-    [[nodiscard]] constexpr unsigned z_orders()
-    {
-        return btn::numeric_limits<uint16_t>::max();
-    }
-
     [[nodiscard]] BTN_CODE_CONST int max_bg_priority();
+
+    [[nodiscard]] BTN_CODE_CONST int z_orders();
 
     void init();
 

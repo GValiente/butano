@@ -205,13 +205,13 @@ namespace
         {
             data.sort_items = false;
 
-            auto comparator = [](const sorted_items_type::iterator& a, const sorted_items_type::iterator& b)
+            auto comparator = [](const item_type* a, const item_type* b)
             {
-                return (*a)->sort_key < (*b)->sort_key;
+                return a->sort_key < b->sort_key;
             };
 
-            shell_sort<sorted_items_type::iterator, decltype(comparator)>(data.sorted_items.begin(),
-                                                                          data.sorted_items.end(), comparator);
+            insertion_sort<sorted_items_type::iterator, decltype(comparator)>(
+                        data.sorted_items.begin(), data.sorted_items.end(), comparator);
 
             size_t items_count = data.sorted_items.size();
 

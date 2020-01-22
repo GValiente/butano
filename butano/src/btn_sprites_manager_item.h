@@ -3,7 +3,6 @@
 
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
-#include "btn_sorted_sprites.h"
 #include "btn_sprites_manager.h"
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_ptr.h"
@@ -15,7 +14,15 @@ namespace btn
 
 class sprite_builder;
 
-class sprites_manager_item
+class sprites_manager_node
+{
+
+public:
+    sprites_manager_node* prev = nullptr;
+    sprites_manager_node* next = nullptr;
+};
+
+class sprites_manager_item : public sprites_manager_node
 {
 
 public:
@@ -28,7 +35,6 @@ public:
     fixed_point position;
     unsigned usages = 1;
     unsigned sort_key;
-    sorted_sprites::iterator sort_iterator;
     sprite_tiles_ptr tiles_ptr;
     int8_t handles_index = -1;
     optional<sprite_affine_mat_ptr> affine_mat_ptr;

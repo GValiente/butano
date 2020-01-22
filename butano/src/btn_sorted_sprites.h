@@ -2,22 +2,11 @@
 #define BTN_SORTED_SPRITES_H
 
 #include "../3rd_party/etl/include/etl/map.h"
-
-namespace btn
-{
-    class sprites_manager_item;
-}
+#include "btn_sprites_manager_item.h"
 
 namespace btn::sorted_sprites
 {
-    class node
-    {
-
-    public:
-        node* prev = nullptr;
-        sprites_manager_item* item = nullptr;
-        node* next = nullptr;
-    };
+    using node_type = sprites_manager_node;
 
 
     class iterator
@@ -40,22 +29,22 @@ namespace btn::sorted_sprites
 
         [[nodiscard]] sprites_manager_item& operator*()
         {
-            return *_node->item;
+            return static_cast<sprites_manager_item&>(*_node);
         }
 
         [[nodiscard]] const sprites_manager_item& operator*() const
         {
-            return *_node->item;
+            return static_cast<sprites_manager_item&>(*_node);
         }
 
         sprites_manager_item* operator->()
         {
-            return _node->item;
+            return static_cast<sprites_manager_item*>(_node);
         }
 
         const sprites_manager_item* operator->() const
         {
-            return _node->item;
+            return static_cast<sprites_manager_item*>(_node);
         }
 
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
@@ -72,9 +61,9 @@ namespace btn::sorted_sprites
         friend class list;
         friend class const_iterator;
 
-        node* _node = nullptr;
+        node_type* _node = nullptr;
 
-        explicit iterator(node* node) :
+        explicit iterator(node_type* node) :
             _node(node)
         {
         }
@@ -106,12 +95,12 @@ namespace btn::sorted_sprites
 
         [[nodiscard]] const sprites_manager_item& operator*() const
         {
-            return *_node->item;
+            return static_cast<const sprites_manager_item&>(*_node);
         }
 
         const sprites_manager_item* operator->() const
         {
-            return _node->item;
+            return static_cast<const sprites_manager_item*>(_node);
         }
 
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
@@ -127,9 +116,9 @@ namespace btn::sorted_sprites
     private:
         friend class list;
 
-        const node* _node = nullptr;
+        const node_type* _node = nullptr;
 
-        explicit const_iterator(const node* node) :
+        explicit const_iterator(const node_type* node) :
             _node(node)
         {
         }
@@ -142,6 +131,8 @@ namespace btn::sorted_sprites
     public:
         list();
 
+        ~list();
+
         list(const list& other);
 
         list& operator=(const list& other);
@@ -150,9 +141,9 @@ namespace btn::sorted_sprites
 
         list& operator=(list&& other);
 
-        ~list()
+        [[nodiscard]] bool empty() const
         {
-            clear();
+            return _size == 0;
         }
 
         [[nodiscard]] int size() const
@@ -187,21 +178,20 @@ namespace btn::sorted_sprites
 
         iterator insert(iterator pos, sprites_manager_item& item);
 
-        iterator erase(iterator pos);
-
-        void clear();
+        iterator erase(sprites_manager_item& item);
 
     private:
-        node _first_node;
-        node _last_node;
+        node_type _first_node;
+        node_type _last_node;
         int _size = 0;
     };
+
 
     using layers_type = etl::imap<unsigned, list>;
 
     void insert(sprites_manager_item& item);
 
-    void erase(const sprites_manager_item& item);
+    void erase(sprites_manager_item& item);
 
     layers_type& layers();
 }

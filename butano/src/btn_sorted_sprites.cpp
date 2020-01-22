@@ -1,6 +1,5 @@
 #include "btn_sorted_sprites.h"
 
-#include "btn_pool.h"
 #include "btn_assert.h"
 #include "btn_config_sprites.h"
 #include "btn_sprites_manager_item.h"
@@ -18,7 +17,6 @@ namespace
     {
 
     public:
-        pool<node, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
         etl::map<unsigned, list, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layers;
     };
 
@@ -31,27 +29,20 @@ list::list()
     _last_node.prev = &_first_node;
 }
 
+list::~list()
+{
+    BTN_ASSERT(empty(), "Clear not supported");
+}
+
 list::list(const list& other) :
     list()
 {
-    for(const sprites_manager_item& item : other)
-    {
-        push_back(const_cast<sprites_manager_item&>(item));
-    }
+    BTN_ASSERT(other.empty(), "Copy not supported");
 }
 
 list& list::operator=(const list& other)
 {
-    if(this != &other)
-    {
-        clear();
-
-        for(const sprites_manager_item& item : other)
-        {
-            push_back(const_cast<sprites_manager_item&>(item));
-        }
-    }
-
+    BTN_ASSERT(other.empty(), "Copy not supported");
     return *this;
 }
 
@@ -86,11 +77,9 @@ list& list::operator=(list&& other)
 
 iterator list::insert(iterator pos, sprites_manager_item& item)
 {
-    node* new_node = data.items_pool.create<node>();
-    new_node->item = &item;
-
-    node* pos_node = pos._node;
-    node* prev_node = pos_node->prev;
+    node_type* new_node = &item;
+    node_type* pos_node = pos._node;
+    node_type* prev_node = pos_node->prev;
     prev_node->next = new_node;
     new_node->prev = prev_node;
     new_node->next = pos_node;
@@ -99,31 +88,15 @@ iterator list::insert(iterator pos, sprites_manager_item& item)
     return iterator(new_node);
 }
 
-iterator list::erase(iterator pos)
+iterator list::erase(sprites_manager_item& item)
 {
-    node* pos_node = pos._node;
-    node* prev_node = pos_node->prev;
-    node* next_node = pos_node->next;
+    node_type* pos_node = &item;
+    node_type* prev_node = pos_node->prev;
+    node_type* next_node = pos_node->next;
     prev_node->next = next_node;
     next_node->prev = prev_node;
-    data.items_pool.destroy<node>(pos_node);
     --_size;
     return iterator(next_node);
-}
-
-void list::clear()
-{
-    node* current_node = _first_node.next;
-    node* last_node = &_last_node;
-
-    while(current_node != last_node)
-    {
-        node* current_node_copy = current_node;
-        current_node = current_node->next;
-        data.items_pool.destroy<node>(current_node_copy);
-    }
-
-    _size = 0;
 }
 
 void insert(sprites_manager_item& item)
@@ -138,18 +111,18 @@ void insert(sprites_manager_item& item)
     }
 
     list& layer = layer_it->second;
-    item.sort_iterator = layer.push_back(item);
+    layer.push_back(item);
 }
 
-void erase(const sprites_manager_item& item)
+void erase(sprites_manager_item& item)
 {
     auto layer_it = data.layers.find(item.sort_key);
     BTN_ASSERT(layer_it != data.layers.end(), "Sprite sort key not found: ", item.sort_key);
 
     list& layer = layer_it->second;
-    layer.erase(item.sort_iterator);
+    layer.erase(item);
 
-    if(layer.size() == 0)
+    if(layer.empty())
     {
         data.layers.erase(layer_it);
     }

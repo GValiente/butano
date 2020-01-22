@@ -7,6 +7,7 @@
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
+#include "btn_sorted_sprites.h"
 #include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
 #include "btn_sprites_manager_item.h"
@@ -288,6 +289,7 @@ void decrease_usages(id_type id)
         }
 
         sorted_sprites::erase(*item);
+        data.items_pool.destroy<item_type>(item);
     }
 }
 

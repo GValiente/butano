@@ -24,6 +24,7 @@ namespace
         void init_tte()
         {
             btn::hw::display::set_show_mode();
+            m3_fill(0);
 
             // Init TTE in mode 3:
             auto margin = 12;

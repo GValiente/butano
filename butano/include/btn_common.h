@@ -16,6 +16,11 @@
 #define BTN_UNLIKELY(condition) __builtin_expect(!!(condition), false)
 
 /*!
+ * @brief If control flow reaches the point of this macro, the program is undefined.
+ */
+#define BTN_UNREACHABLE __builtin_unreachable
+
+/*!
  * @brief Const function (return value depends only on the parameters).
  */
 #define BTN_CODE_CONST __attribute__((const))

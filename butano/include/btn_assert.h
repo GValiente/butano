@@ -33,8 +33,8 @@
 
     namespace _btn::assert
     {
-        void show(const char* condition, const char* file_name, const char* function, int line,
-                  const btn::istring& message);
+        [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
+                               const btn::istring& message);
 
         template<size_t Size>
         [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], size_t index) noexcept
@@ -52,7 +52,7 @@
             return base_name_impl(char_array, 2);
         }
 
-        inline void constexpr_error(const char* file, const char* function, int line, const char* message)
+        [[noreturn]] inline void constexpr_error(const char* file, const char* function, int line, const char* message)
         {
             btn::string<BTN_CFG_ASSERT_BUFFER_SIZE> message_string;
             message_string.append(message);
@@ -62,9 +62,12 @@
         constexpr bool constexpr_check(bool condition, const char* file, const char* function, int line,
                                        const char* message)
         {
-            return BTN_LIKELY(condition) ?
-                        true :
-                        (constexpr_error(file, function, line, message), false);
+            if(BTN_LIKELY(condition))
+            {
+                return true;
+            }
+
+            constexpr_error(file, function, line, message);
         }
     }
 #else
@@ -79,6 +82,7 @@
     #define BTN_ERROR(...) \
         do \
         { \
+            BTN_UNREACHABLE(); \
         } while(false)
 
     namespace _btn::assert

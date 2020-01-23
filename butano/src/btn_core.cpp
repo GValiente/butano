@@ -68,10 +68,6 @@ namespace
         optional<etl::error_handler::free_function> etl_error_callback;
         optional<timer> cpu_usage_timer;
         fixed cpu_usage;
-
-        #if BTN_CFG_ASSERT_ENABLED
-            bool showing_error = false;
-        #endif
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -93,7 +89,7 @@ namespace
     }
 
     #if BTN_CFG_ASSERT_ENABLED
-        void etl_error_callback_function(const etl::exception& exception)
+        [[noreturn]] void etl_error_callback_function(const etl::exception& exception)
         {
             string<BTN_CFG_ASSERT_BUFFER_SIZE> message;
             message.append(exception.what());
@@ -324,12 +320,6 @@ fixed cpu_usage()
         void show(const char* condition, const char* file_name, const char* function, int line,
                   const btn::istring& message)
         {
-            if(btn::core::data.showing_error)
-            {
-                return;
-            }
-
-            btn::core::data.showing_error = true;
             btn::core::stop();
             btn::hw::show::error(condition, file_name, function, line, message);
 

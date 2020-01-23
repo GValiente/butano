@@ -51,6 +51,11 @@ public:
         }
     }
 
+    void stop()
+    {
+        _actions.clear();
+    }
+
 private:
     hash_set<action*, BTN_CFG_ACTIONS_MAX_RUNNING> _actions;
 };
@@ -83,6 +88,11 @@ void stop(action_type& action)
 void update()
 {
     data.impl.update();
+}
+
+void stop()
+{
+    data.impl.stop();
 }
 
 }

@@ -17,6 +17,8 @@ namespace actions_manager
     void stop(action_type& action);
 
     void update();
+
+    void stop();
 }
 
 }

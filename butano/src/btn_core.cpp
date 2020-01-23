@@ -84,6 +84,7 @@ namespace
 
     void stop()
     {
+        actions_manager::stop();
         hw::core::wait_for_vblank();
         hw::audio::stop();
     }

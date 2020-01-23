@@ -165,11 +165,6 @@ namespace
 
 void init()
 {
-    // WTF hack (if it isn't present, sometimes everything crash):
-    string<32> hack_string;
-    input_string_stream hack_input_string_stream(hack_string);
-    hack_input_string_stream.append(2);
-
     #if BTN_CFG_ASSERT_ENABLED
         // Init ETL's error handler:
         data.etl_error_callback = etl::error_handler::free_function(etl_error_callback_function);

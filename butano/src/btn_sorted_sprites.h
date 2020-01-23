@@ -13,8 +13,6 @@ namespace btn::sorted_sprites
     {
 
     public:
-        iterator() = default;
-
         iterator& operator++()
         {
             _node = _node->next;
@@ -74,8 +72,6 @@ namespace btn::sorted_sprites
     {
 
     public:
-        const_iterator() = default;
-
         const_iterator(iterator it) :
             _node(it._node)
         {

@@ -34,13 +34,13 @@ list::~list()
     BTN_ASSERT(empty(), "Clear not supported");
 }
 
-list::list(const list& other) :
+list::list([[maybe_unused]] const list& other) :
     list()
 {
     BTN_ASSERT(other.empty(), "Copy not supported");
 }
 
-list& list::operator=(const list& other)
+list& list::operator=([[maybe_unused]] const list& other)
 {
     BTN_ASSERT(other.empty(), "Copy not supported");
     return *this;

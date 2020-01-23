@@ -1,6 +1,7 @@
 #ifndef BTN_BG_PALETTE_PTR_H
 #define BTN_BG_PALETTE_PTR_H
 
+#include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
@@ -29,13 +30,24 @@ public:
 
     bg_palette_ptr& operator=(const bg_palette_ptr& other);
 
-    bg_palette_ptr(bg_palette_ptr&& other);
+    bg_palette_ptr(bg_palette_ptr&& other) :
+        _id(other._id)
+    {
+        other._id = -1;
+    }
 
-    bg_palette_ptr& operator=(bg_palette_ptr&& other);
+    bg_palette_ptr& operator=(bg_palette_ptr&& other)
+    {
+        swap(_id, other._id);
+        return *this;
+    }
 
     ~bg_palette_ptr()
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const

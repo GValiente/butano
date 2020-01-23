@@ -1,6 +1,7 @@
 #ifndef BTN_SPRITE_PTR_H
 #define BTN_SPRITE_PTR_H
 
+#include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_create_mode.h"
@@ -47,13 +48,24 @@ public:
 
     sprite_ptr& operator=(const sprite_ptr& other);
 
-    sprite_ptr(sprite_ptr&& other);
+    sprite_ptr(sprite_ptr&& other) :
+        sprite_ptr(other._handle)
+    {
+        other._handle = nullptr;
+    }
 
-    sprite_ptr& operator=(sprite_ptr&& other);
+    sprite_ptr& operator=(sprite_ptr&& other)
+    {
+        swap(_handle, other._handle);
+        return *this;
+    }
 
     ~sprite_ptr()
     {
-        _destroy();
+        if(_handle)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] size dimensions() const;

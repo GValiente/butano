@@ -1,6 +1,7 @@
 #ifndef BTN_SPRITE_PALETTE_PTR_H
 #define BTN_SPRITE_PALETTE_PTR_H
 
+#include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
@@ -29,13 +30,24 @@ public:
 
     sprite_palette_ptr& operator=(const sprite_palette_ptr& other);
 
-    sprite_palette_ptr(sprite_palette_ptr&& other);
+    sprite_palette_ptr(sprite_palette_ptr&& other) :
+        _id(other._id)
+    {
+        other._id = -1;
+    }
 
-    sprite_palette_ptr& operator=(sprite_palette_ptr&& other);
+    sprite_palette_ptr& operator=(sprite_palette_ptr&& other)
+    {
+        swap(_id, other._id);
+        return *this;
+    }
 
     ~sprite_palette_ptr()
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const

@@ -1,15 +1,30 @@
 #ifndef BTN_HW_MATH_H
 #define BTN_HW_MATH_H
 
+#include "tonc.h"
 #include "btn_common.h"
+
+extern "C"
+{
+    unsigned isqrt32(unsigned x) BTN_CODE_IWRAM;
+}
 
 namespace btn::hw
 {
-    [[nodiscard]] int sqrt(int value);
+    [[nodiscard]] inline int sqrt(int value)
+    {
+        return int(isqrt32(unsigned(value)));
+    }
 
-    [[nodiscard]] int lut_sin(int s16_angle);
+    [[nodiscard]] inline int lut_sin(int s16_angle)
+    {
+        return lu_sin(unsigned(s16_angle));
+    }
 
-    [[nodiscard]] int lut_cos(int s16_angle);
+    [[nodiscard]] inline int lut_cos(int s16_angle)
+    {
+        return lu_cos(unsigned(s16_angle));
+    }
 }
 
 #endif

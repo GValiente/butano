@@ -156,23 +156,15 @@ bg_tiles_ptr& bg_tiles_ptr::operator=(const bg_tiles_ptr& other)
 {
     if(_handle != other._handle)
     {
-        _destroy();
+        if(_handle >= 0)
+        {
+            bg_blocks_manager::decrease_usages(_handle);
+        }
+
         _handle = other._handle;
         bg_blocks_manager::increase_usages(_handle);
     }
 
-    return *this;
-}
-
-bg_tiles_ptr::bg_tiles_ptr(bg_tiles_ptr&& other) :
-    bg_tiles_ptr(other._handle)
-{
-    other._handle = -1;
-}
-
-bg_tiles_ptr& bg_tiles_ptr::operator=(bg_tiles_ptr&& other)
-{
-    swap(_handle, other._handle);
     return *this;
 }
 
@@ -236,11 +228,7 @@ optional<span<tile>> bg_tiles_ptr::vram()
 
 void bg_tiles_ptr::_destroy()
 {
-    if(_handle >= 0)
-    {
-        bg_blocks_manager::decrease_usages(_handle);
-        _handle = -1;
-    }
+    bg_blocks_manager::decrease_usages(_handle);
 }
 
 }

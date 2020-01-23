@@ -1,6 +1,7 @@
 #ifndef BTN_SPRITES_MANAGER_ITEM_H
 #define BTN_SPRITES_MANAGER_ITEM_H
 
+#include "btn_size.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
 #include "btn_sprites_manager.h"
@@ -33,6 +34,8 @@ public:
 
     hw::sprites::handle handle;
     fixed_point position;
+    point hw_position;
+    size half_dimensions;
     unsigned usages = 1;
     unsigned sort_key;
     sprite_tiles_ptr tiles_ptr;
@@ -62,12 +65,14 @@ public:
         return sort_key % z_orders();
     }
 
+    void update_half_dimensions();
+
+    void update_hw_position();
+
     void update_sort_key(int bg_priority, int z_order)
     {
         sort_key = (unsigned(bg_priority) * z_orders()) + unsigned(z_order);
     }
-
-    void mark_as_removed();
 };
 
 }

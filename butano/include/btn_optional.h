@@ -82,7 +82,7 @@ public:
 
     ~optional()
     {
-        reset();
+        _clean();
     }
 
     constexpr optional& operator=(nullopt_t)
@@ -126,7 +126,7 @@ public:
     template<typename OtherType>
     constexpr optional& operator=(OtherType&& value)
     {
-        reset();
+        _clean();
         ::new(_storage) Type(forward<OtherType>(value));
         _valid = true;
         return *this;
@@ -243,7 +243,7 @@ public:
     template<typename... Args>
     constexpr void emplace(Args&&... args)
     {
-        reset();
+        _clean();
         ::new(_storage) Type(forward<Args>(args)...);
         _valid = true;
     }
@@ -386,6 +386,14 @@ private:
     [[nodiscard]] constexpr Type& _value_impl()
     {
         return *(reinterpret_cast<Type*>(_storage));
+    }
+
+    constexpr void _clean()
+    {
+        if(_valid)
+        {
+            _value_impl().~Type();
+        }
     }
 };
 

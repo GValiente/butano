@@ -81,23 +81,15 @@ bg_ptr& bg_ptr::operator=(const bg_ptr& other)
 {
     if(_id != other._id)
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            bgs_manager::decrease_usages(_id);
+        }
+
         _id = other._id;
         bgs_manager::increase_usages(_id);
     }
 
-    return *this;
-}
-
-bg_ptr::bg_ptr(bg_ptr&& other) :
-    bg_ptr(other._id)
-{
-    other._id = -1;
-}
-
-bg_ptr& bg_ptr::operator=(bg_ptr&& other)
-{
-    swap(_id, other._id);
     return *this;
 }
 
@@ -259,11 +251,7 @@ void bg_ptr::set_ignore_camera(bool ignore_camera)
 
 void bg_ptr::_destroy()
 {
-    if(_id >= 0)
-    {
-        bgs_manager::decrease_usages(_id);
-        _id = -1;
-    }
+    bgs_manager::decrease_usages(_id);
 }
 
 }

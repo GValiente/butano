@@ -1,6 +1,7 @@
 #ifndef BTN_BG_TILES_PTR_H
 #define BTN_BG_TILES_PTR_H
 
+#include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_functional.h"
 #include "btn_optional_fwd.h"
@@ -32,13 +33,24 @@ public:
 
     bg_tiles_ptr& operator=(const bg_tiles_ptr& other);
 
-    bg_tiles_ptr(bg_tiles_ptr&& other);
+    bg_tiles_ptr(bg_tiles_ptr&& other) :
+        bg_tiles_ptr(other._handle)
+    {
+        other._handle = -1;
+    }
 
-    bg_tiles_ptr& operator=(bg_tiles_ptr&& other);
+    bg_tiles_ptr& operator=(bg_tiles_ptr&& other)
+    {
+        swap(_handle, other._handle);
+        return *this;
+    }
 
     ~bg_tiles_ptr()
     {
-        _destroy();
+        if(_handle >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const;

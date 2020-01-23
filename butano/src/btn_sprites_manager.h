@@ -92,6 +92,8 @@ namespace sprites_manager
     void update();
 
     void commit();
+
+    [[nodiscard]] BTN_CODE_IWRAM bool check_items_on_screen_impl();
 }
 
 }

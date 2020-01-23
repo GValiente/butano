@@ -83,23 +83,15 @@ sprite_ptr& sprite_ptr::operator=(const sprite_ptr& other)
 {
     if(_handle != other._handle)
     {
-        _destroy();
+        if(_handle)
+        {
+            sprites_manager::decrease_usages(_handle);
+        }
+
         _handle = other._handle;
         sprites_manager::increase_usages(_handle);
     }
 
-    return *this;
-}
-
-sprite_ptr::sprite_ptr(sprite_ptr&& other) :
-    sprite_ptr(other._handle)
-{
-    other._handle = nullptr;
-}
-
-sprite_ptr& sprite_ptr::operator=(sprite_ptr&& other)
-{
-    swap(_handle, other._handle);
     return *this;
 }
 
@@ -218,7 +210,7 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
         affine_mat_builder.set_horizontal_flip(horizontal_flip());
         affine_mat_builder.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(affine_mat_builder.build());
+        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
     }
 }
 
@@ -245,7 +237,7 @@ void sprite_ptr::set_scale_x(fixed scale_x)
         affine_mat_builder.set_horizontal_flip(horizontal_flip());
         affine_mat_builder.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(affine_mat_builder.build());
+        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
     }
 }
 
@@ -272,7 +264,7 @@ void sprite_ptr::set_scale_y(fixed scale_y)
         affine_mat_builder.set_horizontal_flip(horizontal_flip());
         affine_mat_builder.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(affine_mat_builder.build());
+        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
     }
 }
 
@@ -383,11 +375,7 @@ void sprite_ptr::set_remove_affine_mat_when_not_needed(bool remove_when_not_need
 
 void sprite_ptr::_destroy()
 {
-    if(_handle)
-    {
-        sprites_manager::decrease_usages(_handle);
-        _handle = nullptr;
-    }
+    sprites_manager::decrease_usages(_handle);
 }
 
 }

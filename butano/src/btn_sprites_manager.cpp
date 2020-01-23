@@ -5,7 +5,6 @@
 #include "btn_color.h"
 #include "btn_vector.h"
 #include "btn_camera.h"
-#include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_sorted_sprites.h"
 #include "btn_sprite_builder.h"
@@ -51,6 +50,17 @@ namespace
         }
     }
 
+    void _update_item_dimensions(item_type& item)
+    {
+        item.update_half_dimensions();
+
+        if(item.visible)
+        {
+            item.check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
+    }
+
     void _assign_affine_mat(sprite_affine_mat_ptr affine_mat_ptr, item_type& item)
     {
         item.affine_mat_ptr = move(affine_mat_ptr);
@@ -60,7 +70,7 @@ namespace
 
         if(double_size)
         {
-            set_position(&item, item.position);
+            _update_item_dimensions(item);
         }
         else
         {
@@ -79,7 +89,7 @@ namespace
 
         if(double_size)
         {
-            set_position(&item, item.position);
+            _update_item_dimensions(item);
         }
         else
         {
@@ -114,7 +124,7 @@ namespace
                                 if(old_double_size != new_double_size)
                                 {
                                     hw::sprites::set_affine_mat(affine_mat_ptr_id, new_double_size, item.handle);
-                                    set_position(&item, item.position);
+                                    _update_item_dimensions(item);
                                 }
                             }
                         }
@@ -130,50 +140,8 @@ namespace
     {
         if(data.check_items_on_screen)
         {
-            fixed_point camera_position = camera::position();
-            int display_width = display::width();
-            int display_height = display::height();
-            bool rebuild_handles = data.rebuild_handles;
             data.check_items_on_screen = false;
-
-            for(auto& layer : sorted_sprites::layers())
-            {
-                for(item_type& item : layer.second)
-                {
-                    if(item.check_on_screen)
-                    {
-                        fixed_point position = item.position;
-
-                        if(! item.ignore_camera)
-                        {
-                            position -= camera_position;
-                        }
-
-                        size dimensions = hw::sprites::dimensions(item.handle);
-                        int x = position.x().integer() - (dimensions.width() / 2);
-                        bool on_screen = false;
-                        item.check_on_screen = false;
-
-                        if(x + dimensions.width() > 0 && x < display_width)
-                        {
-                            int y = position.y().integer() - (dimensions.height() / 2);
-
-                            if(y + dimensions.height() > 0 && y < display_height)
-                            {
-                                on_screen = true;
-                            }
-                        }
-
-                        if(on_screen != item.on_screen)
-                        {
-                            item.on_screen = on_screen;
-                            rebuild_handles = true;
-                        }
-                    }
-                }
-            }
-
-            data.rebuild_handles = rebuild_handles;
+            data.rebuild_handles = check_items_on_screen_impl();
         }
     }
 
@@ -262,7 +230,7 @@ optional<id_type> create(sprite_builder&& builder)
     item_type* new_item = data.items_pool.create<item_type>(move(builder), move(*tiles), move(*palette));
     sorted_sprites::insert(*new_item);
 
-    if(builder.visible())
+    if(new_item->visible)
     {
         data.check_items_on_screen = true;
     }
@@ -296,7 +264,7 @@ void decrease_usages(id_type id)
 size dimensions(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return hw::sprites::dimensions(item->handle);
+    return item->half_dimensions * 2;
 }
 
 const sprite_tiles_ptr& tiles_ptr(id_type id)
@@ -351,15 +319,8 @@ const fixed_point& position(id_type id)
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point real_position = position;
-
-    if(! item->ignore_camera)
-    {
-        real_position -= camera::position();
-    }
-
-    hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), item->handle);
     item->position = position;
+    item->update_hw_position();
     _update_handles(*item);
 
     if(item->visible)
@@ -513,7 +474,7 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
         if(old_double_size != new_double_size)
         {
             hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), new_double_size, item->handle);
-            set_position(id, item->position);
+            _update_item_dimensions(*item);
         }
     }
 }

@@ -1,6 +1,7 @@
 #include "btn_sprite_tiles_manager.h"
 
 #include "btn_span.h"
+#include "btn_tile.h"
 #include "btn_optional.h"
 #include "btn_sprite_tiles_bank.h"
 
@@ -10,6 +11,8 @@
 
     static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
 #endif
+
+#include "btn_profiler.h"
 
 namespace btn::sprite_tiles_manager
 {
@@ -24,6 +27,7 @@ namespace
     public:
         sprite_tiles_bank high_bank;
         sprite_tiles_bank low_bank;
+        hash_map<const tile*, uint16_t, high_bank_delta * 2 * 2> items_map;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -59,46 +63,63 @@ void init()
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 
-    data.high_bank.init(sprite_tiles_bank::type::HIGH);
-    data.low_bank.init(sprite_tiles_bank::type::LOW);
+    data.high_bank.init(sprite_tiles_bank::type::HIGH, data.items_map);
+    data.low_bank.init(sprite_tiles_bank::type::LOW, data.items_map);
 
     BTN_SPRITE_TILES_LOG_BANKS();
 }
 
 optional<int> find(const span<const tile>& tiles_ref)
 {
+    BTN_PROFILER_START("find tiles");
+
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND: ", tiles_ref.data(), " - ", tiles_ref.size());
 
-    optional<int> result = data.high_bank.find(tiles_ref);
+    const tile* tiles_ptr = tiles_ref.data();
+    BTN_ASSERT(tiles_ptr, "Tiles ref is null");
 
-    if(result)
+    auto items_map_iterator = data.items_map.find(tiles_ptr);
+    optional<int> result;
+
+    if(items_map_iterator != data.items_map.end())
     {
-        BTN_SPRITE_TILES_LOG("FOUND in high bank. start_tile: ", data.high_bank.start_tile(*result));
+        int id = items_map_iterator->second;
 
-        *result += high_bank_delta;
-    }
-    else
-    {
-        result = data.low_bank.find(tiles_ref);
-
-        if(result)
+        if(id >= high_bank_delta)
         {
-            BTN_SPRITE_TILES_LOG("FOUND in low bank. start_tile: ", data.low_bank.start_tile(*result));
+            data.high_bank.find(id - high_bank_delta, tiles_ref);
+
+            BTN_SPRITE_TILES_LOG("FOUND in high bank. start_tile: ", data.high_bank.start_tile(id - high_bank_delta));
         }
         else
         {
-            BTN_SPRITE_TILES_LOG("NOT FOUND");
+            data.low_bank.find(id, tiles_ref);
+
+            BTN_SPRITE_TILES_LOG("FOUND in low bank. start_tile: ", data.low_bank.start_tile(*result));
         }
+
+        result = id;
+    }
+    else
+    {
+        BTN_SPRITE_TILES_LOG("NOT FOUND");
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
+
+    BTN_PROFILER_STOP();
 
     return result;
 }
 
 optional<int> create(const span<const tile>& tiles_ref)
 {
+    BTN_PROFILER_START("create tiles");
+
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_ref.data(), " - ", tiles_ref.size());
+
+    BTN_ASSERT(data.items_map.find(tiles_ref.data()) == data.items_map.end(),
+               "Multiple copies of the same tiles data not supported");
 
     optional<int> result = data.high_bank.create(tiles_ref);
 
@@ -107,6 +128,7 @@ optional<int> create(const span<const tile>& tiles_ref)
         BTN_SPRITE_TILES_LOG("CREATED in high bank. start_tile: ", data.high_bank.start_tile(*result));
 
         *result += high_bank_delta;
+        data.items_map.insert(tiles_ref.data(), *result);
     }
     else
     {
@@ -115,6 +137,8 @@ optional<int> create(const span<const tile>& tiles_ref)
         if(result)
         {
             BTN_SPRITE_TILES_LOG("CREATED in low bank. start_tile: ", data.low_bank.start_tile(*result));
+
+            data.items_map.insert(tiles_ref.data(), *result);
         }
         else
         {
@@ -123,6 +147,8 @@ optional<int> create(const span<const tile>& tiles_ref)
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();
+
+    BTN_PROFILER_STOP();
 
     return result;
 }
@@ -232,19 +258,52 @@ optional<span<const tile>> tiles_ref(int id)
 
 void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
+    BTN_ASSERT(data.items_map.find(tiles_ref.data()) == data.items_map.end(),
+               "Multiple copies of the same tiles data not supported");
+
     if(id >= high_bank_delta)
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", data.high_bank.start_tile(id - high_bank_delta),
                              " - ", tiles_ref.data(), " - ", tiles_ref.size());
 
-        data.high_bank.set_tiles_ref(id - high_bank_delta, tiles_ref);
+        optional<span<const tile>> old_tiles_ref_opt = data.high_bank.tiles_ref(id - high_bank_delta);
+        BTN_ASSERT(old_tiles_ref_opt, "Item has no data");
+
+        const span<const tile>& old_tiles_ref = *old_tiles_ref_opt;
+        BTN_ASSERT(tiles_ref.size() == old_tiles_ref.size(), "Tiles count does not match item tiles count: ",
+                   tiles_ref.size(), " - ", old_tiles_ref.size());
+
+        const tile* old_tiles_data = old_tiles_ref.data();
+        const tile* tiles_data = tiles_ref.data();
+
+        if(old_tiles_data != tiles_data)
+        {
+            data.items_map.erase(old_tiles_data);
+            data.high_bank.set_tiles_ref(id - high_bank_delta, *tiles_data);
+            data.items_map.insert(tiles_data, id);
+        }
     }
     else
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", data.low_bank.start_tile(id),
                              " - ", tiles_ref.data(), " - ", tiles_ref.size());
 
-        data.low_bank.set_tiles_ref(id, tiles_ref);
+        optional<span<const tile>> old_tiles_ref_opt = data.low_bank.tiles_ref(id);
+        BTN_ASSERT(old_tiles_ref_opt, "Item has no data");
+
+        const span<const tile>& old_tiles_ref = *old_tiles_ref_opt;
+        BTN_ASSERT(tiles_ref.size() == old_tiles_ref.size(), "Tiles count does not match item tiles count: ",
+                   tiles_ref.size(), " - ", old_tiles_ref.size());
+
+        const tile* old_tiles_data = old_tiles_ref.data();
+        const tile* tiles_data = tiles_ref.data();
+
+        if(old_tiles_data != tiles_data)
+        {
+            data.items_map.erase(old_tiles_data);
+            data.low_bank.set_tiles_ref(id, *tiles_data);
+            data.items_map.insert(tiles_data, id);
+        }
     }
 
     BTN_SPRITE_TILES_LOG_BANKS();

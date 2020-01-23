@@ -51,14 +51,14 @@ private:
         bool _detailed;
         int16_t _counter = 0;
         const btn::sprite_text_generator& _text_generator;
-        btn::vector<btn::sprite_ptr, 2> _text_sprites;
+        btn::vector<btn::sprite_ptr, 2 * 4> _text_sprites;
         btn::fixed_point _text_position;
         btn::fixed _max_cpu_usage;
     };
 
     const btn::sprite_text_generator& _text_generator;
     btn::optional<action> _action;
-    btn::vector<btn::sprite_ptr, 8> _static_text_sprites;
+    btn::vector<btn::sprite_ptr, 8 * 4> _static_text_sprites;
     mode_type _mode = mode_type::DETAILED;
 };
 

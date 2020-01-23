@@ -45,7 +45,7 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
         affine_mat_builder.set_rotation_angle(rotation_angle);
         affine_mat_builder.set_horizontal_flip(_horizontal_flip);
         affine_mat_builder.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = affine_mat_builder.build();
+        _affine_mat_ptr = sprite_affine_mat_ptr::create(move(affine_mat_builder));
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -66,7 +66,7 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
         affine_mat_builder.set_scale_x(scale_x);
         affine_mat_builder.set_horizontal_flip(_horizontal_flip);
         affine_mat_builder.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = affine_mat_builder.build();
+        _affine_mat_ptr = sprite_affine_mat_ptr::create(move(affine_mat_builder));
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -87,7 +87,7 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
         affine_mat_builder.set_scale_y(scale_y);
         affine_mat_builder.set_horizontal_flip(_horizontal_flip);
         affine_mat_builder.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = affine_mat_builder.build();
+        _affine_mat_ptr = sprite_affine_mat_ptr::create(move(affine_mat_builder));
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -165,8 +165,6 @@ optional<sprite_tiles_ptr> sprite_builder::tiles() const
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
     }
 
@@ -183,8 +181,6 @@ optional<sprite_palette_ptr> sprite_builder::palette() const
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
     }
 
@@ -198,12 +194,9 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles()
     if(_tiles_ptr)
     {
         result = move(_tiles_ptr);
-        _tiles_ptr.reset();
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
     }
 
@@ -217,12 +210,9 @@ optional<sprite_palette_ptr> sprite_builder::release_palette()
     if(_palette_ptr)
     {
         result = move(_palette_ptr);
-        _palette_ptr.reset();
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
     }
 

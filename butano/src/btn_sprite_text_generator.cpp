@@ -5,6 +5,8 @@
 #include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
+#include "btn_profiler.h"
+
 namespace btn
 {
 
@@ -42,7 +44,7 @@ namespace
         builder.set_z_order(generator.z_order());
         builder.set_ignore_camera(generator.ignore_camera());
 
-        optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+        optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
 
         if(! sprite_ptr)
         {
@@ -187,7 +189,7 @@ namespace
             builder.set_z_order(_generator.z_order());
             builder.set_ignore_camera(_generator.ignore_camera());
 
-            optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+            optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
 
             if(! sprite_ptr)
             {
@@ -247,14 +249,20 @@ namespace
                     return false;
                 }
 
+                // BTN_PROFILER_START("sprite_tiles_ptr");
+
                 const sprite_item& item = font.item();
                 span<const tile> source_tiles_ref = item.tiles().tiles_ref(graphics_index);
                 optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+
+                // BTN_PROFILER_STOP();
 
                 if(! source_tiles_ptr)
                 {
                     return false;
                 }
+
+                // BTN_PROFILER_START("sprite_builder");
 
                 sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
                 builder.set_position(_current_position);
@@ -262,15 +270,25 @@ namespace
                 builder.set_z_order(_generator.z_order());
                 builder.set_ignore_camera(_generator.ignore_camera());
 
-                optional<sprite_ptr> sprite_ptr = builder.optional_build_and_release();
+                // BTN_PROFILER_STOP();
+
+                // BTN_PROFILER_START("create sprite_ptr");
+
+                optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
+
+                // BTN_PROFILER_STOP();
 
                 if(! sprite_ptr)
                 {
                     return false;
                 }
 
+                // BTN_PROFILER_START("move sprite_ptr");
+
                 _output_sprites.push_back(move(*sprite_ptr));
                 _current_position.set_x(_current_position.x() + character_width);
+
+                // BTN_PROFILER_STOP();
             }
 
             return true;
@@ -764,7 +782,11 @@ bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_vie
 bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
+    BTN_PROFILER_START("create_sprite_palette_ptr");
+
     optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette_ptr(create_mode::FIND_OR_CREATE);
+
+    BTN_PROFILER_STOP();
 
     if(! palette_ptr)
     {

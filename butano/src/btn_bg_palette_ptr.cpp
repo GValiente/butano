@@ -79,23 +79,15 @@ bg_palette_ptr& bg_palette_ptr::operator=(const bg_palette_ptr& other)
 {
     if(_id != other._id)
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            palettes_manager::bg_palettes_bank().decrease_usages(_id);
+        }
+
         _id = other._id;
         palettes_manager::bg_palettes_bank().increase_usages(_id);
     }
 
-    return *this;
-}
-
-bg_palette_ptr::bg_palette_ptr(bg_palette_ptr&& other) :
-    _id(other._id)
-{
-    other._id = -1;
-}
-
-bg_palette_ptr& bg_palette_ptr::operator=(bg_palette_ptr&& other)
-{
-    swap(_id, other._id);
     return *this;
 }
 
@@ -171,11 +163,7 @@ void bg_palette_ptr::set_rotate_count(int count)
 
 void bg_palette_ptr::_destroy()
 {
-    if(_id >= 0)
-    {
-        palettes_manager::bg_palettes_bank().decrease_usages(_id);
-        _id = -1;
-    }
+    palettes_manager::bg_palettes_bank().decrease_usages(_id);
 }
 
 }

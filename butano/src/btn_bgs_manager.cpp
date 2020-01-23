@@ -33,7 +33,8 @@ namespace
             map_ptr(move(map)),
             palette_ptr(move(palette))
         {
-            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.id(), dimensions, palette_ptr.eight_bits_per_pixel(), handle);
+            hw::bgs::setup(builder, tiles_ptr.id(), palette_ptr.eight_bits_per_pixel(), handle);
+            hw::bgs::set_map(map_ptr.id(), dimensions, handle);
 
             fixed_point real_position = -position;
             ignore_camera = builder.ignore_camera();

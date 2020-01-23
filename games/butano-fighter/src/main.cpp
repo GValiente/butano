@@ -78,6 +78,8 @@ int main()
     }
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
+    text_generator.set_one_sprite_per_character(true);
+
     bf::stats stats(text_generator);
     int counter = 0;
     // btn::music::play(btn::music_items::battle_clean);

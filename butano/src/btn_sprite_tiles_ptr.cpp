@@ -98,23 +98,15 @@ sprite_tiles_ptr& sprite_tiles_ptr::operator=(const sprite_tiles_ptr& other)
 {
     if(_handle != other._handle)
     {
-        _destroy();
+        if(_handle >= 0)
+        {
+            sprite_tiles_manager::decrease_usages(_handle);
+        }
+
         _handle = other._handle;
         sprite_tiles_manager::increase_usages(_handle);
     }
 
-    return *this;
-}
-
-sprite_tiles_ptr::sprite_tiles_ptr(sprite_tiles_ptr&& other) :
-    sprite_tiles_ptr(other._handle)
-{
-    other._handle = -1;
-}
-
-sprite_tiles_ptr& sprite_tiles_ptr::operator=(sprite_tiles_ptr&& other)
-{
-    swap(_handle, other._handle);
     return *this;
 }
 
@@ -150,11 +142,7 @@ optional<span<tile>> sprite_tiles_ptr::vram()
 
 void sprite_tiles_ptr::_destroy()
 {
-    if(_handle >= 0)
-    {
-        sprite_tiles_manager::decrease_usages(_handle);
-        _handle = -1;
-    }
+    sprite_tiles_manager::decrease_usages(_handle);
 }
 
 }

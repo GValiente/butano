@@ -1,6 +1,7 @@
 #ifndef BTN_BG_MAP_PTR_H
 #define BTN_BG_MAP_PTR_H
 
+#include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_functional.h"
 #include "btn_bg_map_cell.h"
@@ -34,13 +35,24 @@ public:
 
     bg_map_ptr& operator=(const bg_map_ptr& other);
 
-    bg_map_ptr(bg_map_ptr&& other);
+    bg_map_ptr(bg_map_ptr&& other) :
+        bg_map_ptr(other._handle)
+    {
+        other._handle = -1;
+    }
 
-    bg_map_ptr& operator=(bg_map_ptr&& other);
+    bg_map_ptr& operator=(bg_map_ptr&& other)
+    {
+        swap(_handle, other._handle);
+        return *this;
+    }
 
     ~bg_map_ptr()
     {
-        _destroy();
+        if(_handle >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const;

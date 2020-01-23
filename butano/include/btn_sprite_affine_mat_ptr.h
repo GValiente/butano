@@ -1,6 +1,7 @@
 #ifndef BTN_SPRITE_AFFINE_MAT_PTR_H
 #define BTN_SPRITE_AFFINE_MAT_PTR_H
 
+#include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_optional_fwd.h"
@@ -26,13 +27,24 @@ public:
 
     sprite_affine_mat_ptr& operator=(const sprite_affine_mat_ptr& other);
 
-    sprite_affine_mat_ptr(sprite_affine_mat_ptr&& other);
+    sprite_affine_mat_ptr(sprite_affine_mat_ptr&& other) :
+        sprite_affine_mat_ptr(other._id)
+    {
+        other._id = -1;
+    }
 
-    sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other);
+    sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other)
+    {
+        swap(_id, other._id);
+        return *this;
+    }
 
     ~sprite_affine_mat_ptr()
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const

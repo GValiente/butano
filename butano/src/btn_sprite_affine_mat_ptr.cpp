@@ -57,23 +57,15 @@ sprite_affine_mat_ptr& sprite_affine_mat_ptr::operator=(const sprite_affine_mat_
 {
     if(_id != other._id)
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            sprite_affine_mats_manager::decrease_usages(_id);
+        }
+
         _id = other._id;
         sprite_affine_mats_manager::increase_usages(_id);
     }
 
-    return *this;
-}
-
-sprite_affine_mat_ptr::sprite_affine_mat_ptr(sprite_affine_mat_ptr&& other) :
-    sprite_affine_mat_ptr(other._id)
-{
-    other._id = -1;
-}
-
-sprite_affine_mat_ptr& sprite_affine_mat_ptr::operator=(sprite_affine_mat_ptr&& other)
-{
-    swap(_id, other._id);
     return *this;
 }
 
@@ -134,11 +126,7 @@ bool sprite_affine_mat_ptr::is_identity() const
 
 void sprite_affine_mat_ptr::_destroy()
 {
-    if(_id >= 0)
-    {
-        sprite_affine_mats_manager::decrease_usages(_id);
-        _id = -1;
-    }
+    sprite_affine_mats_manager::decrease_usages(_id);
 }
 
 }

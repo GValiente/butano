@@ -3,8 +3,8 @@
 
 #include "btn_vector.h"
 #include "btn_span_fwd.h"
-#include "btn_optional_fwd.h"
 #include "btn_hash_map.h"
+#include "btn_optional_fwd.h"
 #include "btn_config_sprite_tiles.h"
 
 namespace btn
@@ -24,9 +24,9 @@ public:
         LOW
     };
 
-    void init(type bank_type);
+    void init(type bank_type, ihash_map<const tile*, uint16_t>& items_map);
 
-    [[nodiscard]] optional<int> find(const span<const tile>& tiles_ref);
+    void find(int id, const span<const tile>& tiles_ref);
 
     [[nodiscard]] optional<int> create(const span<const tile>& tiles_ref);
 
@@ -35,6 +35,11 @@ public:
     void increase_usages(int id);
 
     void decrease_usages(int id);
+
+    [[nodiscard]] const tile* tiles_data(int id) const
+    {
+        return _items.item(id).data;
+    }
 
     [[nodiscard]] int start_tile(int id) const
     {
@@ -48,7 +53,7 @@ public:
 
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id) const;
 
-    void set_tiles_ref(int id, const span<const tile>& tiles_ref);
+    void set_tiles_ref(int id, const tile& tiles_data);
 
     void reload_tiles_ref(int id);
 
@@ -253,8 +258,8 @@ private:
     };
 
     items_list _items;
-    hash_map<const tile*, uint16_t, max_items * 2> _items_map;
     items_list::iterator _biggest_free_iterator;
+    ihash_map<const tile*, uint16_t>* _items_map;
     int _free_tiles_count = 0;
     int _to_remove_tiles_count = 0;
     bool _check_commit = false;

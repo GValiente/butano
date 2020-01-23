@@ -12,11 +12,12 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     position(builder.position()),
     tiles_ptr(move(tiles)),
     affine_mat_ptr(builder.release_affine_mat()),
-    palette_ptr(move(palette))
+    palette_ptr(move(palette)),
+    double_size_mode(unsigned(builder.double_size_mode())),
+    ignore_camera(builder.ignore_camera()),
+    remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
 {
     bool eight_bits_per_pixel = palette_ptr.eight_bits_per_pixel();
-    remove_affine_mat_when_not_needed = builder.remove_affine_mat_when_not_needed();
-    double_size_mode = unsigned(builder.double_size_mode());
 
     if(affine_mat_ptr)
     {
@@ -36,15 +37,7 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
         hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
     }
 
-    fixed_point real_position = position;
-    ignore_camera = builder.ignore_camera();
-
-    if(! ignore_camera)
-    {
-        real_position -= camera::position();
-    }
-
-    hw::sprites::set_position(real_position.x().integer(), real_position.y().integer(), handle);
+    update_half_dimensions();
     update_sort_key(builder.bg_priority(), builder.z_order());
     on_screen = false;
 
@@ -76,6 +69,26 @@ bool sprites_manager_item::double_size() const
     }
 
     return false;
+}
+
+void sprites_manager_item::update_half_dimensions()
+{
+    half_dimensions = hw::sprites::dimensions(handle) / 2;
+    update_hw_position();
+}
+
+void sprites_manager_item::update_hw_position()
+{
+    fixed_point real_position = position;
+
+    if(! ignore_camera)
+    {
+        real_position -= camera::position();
+    }
+
+    hw_position.set_x(real_position.x().integer() - half_dimensions.width());
+    hw_position.set_y(real_position.y().integer() - half_dimensions.height());
+    hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
 }
 
 }

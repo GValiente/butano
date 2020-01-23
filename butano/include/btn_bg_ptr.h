@@ -1,6 +1,7 @@
 #ifndef BTN_BG_PTR_H
 #define BTN_BG_PTR_H
 
+#include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_create_mode.h"
@@ -44,13 +45,24 @@ public:
 
     bg_ptr& operator=(const bg_ptr& other);
 
-    bg_ptr(bg_ptr&& other);
+    bg_ptr(bg_ptr&& other) :
+        bg_ptr(other._id)
+    {
+        other._id = -1;
+    }
 
-    bg_ptr& operator=(bg_ptr&& other);
+    bg_ptr& operator=(bg_ptr&& other)
+    {
+        swap(_id, other._id);
+        return *this;
+    }
 
     ~bg_ptr()
     {
-        _destroy();
+        if(_id >= 0)
+        {
+            _destroy();
+        }
     }
 
     [[nodiscard]] int id() const

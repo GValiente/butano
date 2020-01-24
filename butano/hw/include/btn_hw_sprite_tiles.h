@@ -7,9 +7,9 @@
 
 namespace btn::hw::sprite_tiles
 {
-    [[nodiscard]] constexpr int count_per_bank()
+    [[nodiscard]] constexpr int count()
     {
-        return 512;
+        return 1024;
     }
 
     namespace

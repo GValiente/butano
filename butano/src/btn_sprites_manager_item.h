@@ -49,8 +49,6 @@ public:
     unsigned on_screen: 1;
     unsigned check_on_screen: 1;
 
-    BTN_CODE_IWRAM static void sort(sprites_manager_item** begin, sprites_manager_item** end);
-
     sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette);
 
     [[nodiscard]] bool double_size() const;

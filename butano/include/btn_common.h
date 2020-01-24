@@ -21,6 +21,11 @@
 #define BTN_UNREACHABLE __builtin_unreachable
 
 /*!
+ * @brief Inlines the function even if no optimization level was specified.
+ */
+#define BTN_FORCE_INLINE __attribute__((always_inline))
+
+/*!
  * @brief Const function (return value depends only on the parameters).
  */
 #define BTN_CODE_CONST __attribute__((const))

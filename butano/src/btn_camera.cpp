@@ -41,9 +41,12 @@ void set_position(fixed x, fixed y)
 
 void set_position(const fixed_point& position)
 {
-    data.position = position;
-    sprites_manager::update_camera();
-    bgs_manager::update_camera();
+    if(data.position != position)
+    {
+        data.position = position;
+        sprites_manager::update_camera();
+        bgs_manager::update_camera();
+    }
 }
 
 }

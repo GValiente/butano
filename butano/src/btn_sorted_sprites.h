@@ -167,6 +167,11 @@ namespace btn::sorted_sprites
             return iterator(&_last_node);
         }
 
+        iterator push_front(sprites_manager_item& item)
+        {
+            return insert(iterator(_first_node.next), item);
+        }
+
         iterator push_back(sprites_manager_item& item)
         {
             return insert(iterator(&_last_node), item);

@@ -27,8 +27,6 @@
 #include "bf_stats.h"
 #include "bf_sprite_fonts.h"
 
-#include "btn_profiler.h"
-
 int main()
 {
     btn::core::init();
@@ -46,8 +44,8 @@ int main()
     sprite_builder.set_mosaic_enabled(true);
 
     btn::sprite_ptr sprite = sprite_builder.build_and_release();
-    /*auto sprite_animate_action = btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
-    sprite_animate_action.run();*/
+    auto sprite_animate_action = btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
+    sprite_animate_action.run();
 
     btn::random random;
     btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
@@ -55,7 +53,7 @@ int main()
     struct bench_sprite
     {
         btn::sprite_move_loop_action move_loop_action;
-        btn::sprite_animate_action<2> animate_action;
+        btn::sprite_cached_animate_action<2> animate_action;
     };
 
     constexpr int num_sprites = 64;
@@ -70,16 +68,14 @@ int main()
         y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
         bench_sprites.push_back(bench_sprite{
                                     btn::sprite_move_loop_action(sprite, 64, x, y),
-                                    btn::create_sprite_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2) });
+                                    btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2) });
 
-        /*bench_sprite& bench_spr = bench_sprites.back();
+        bench_sprite& bench_spr = bench_sprites.back();
         bench_spr.move_loop_action.run();
-        bench_spr.animate_action.run();*/
+        bench_spr.animate_action.run();
     }
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
-    text_generator.set_one_sprite_per_character(true);
-
     bf::stats stats(text_generator);
     int counter = 0;
     // btn::music::play(btn::music_items::battle_clean);
@@ -131,7 +127,7 @@ int main()
             camera_position.set_y(camera_position.y() + 1);
         }
 
-        // btn::camera::set_position(camera_position);
+        btn::camera::set_position(camera_position);
 
         if(counter % 64 == 0)
         {
@@ -140,11 +136,6 @@ int main()
             sprite_move_to_action = btn::sprite_move_to_action(sprite, 64, x, y);
             sprite_move_to_action.run();
         }
-
-        /*if(counter == 200)
-        {
-            btn::profiler::show();
-        }*/
 
         btn::core::update();
         ++counter;

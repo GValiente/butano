@@ -9,14 +9,24 @@ namespace btn
 
 bg_ptr bg_ptr::create(fixed x, fixed y, const bg_item& item)
 {
-    return create(fixed_point(x, y), item);
+    bg_builder builder(item);
+    builder.set_position(fixed_point(x, y));
+
+    optional<int> id = bgs_manager::create(move(builder));
+    BTN_ASSERT(id, "BG create failed");
+
+    return bg_ptr(*id);
 }
 
 bg_ptr bg_ptr::create(const fixed_point& position, const bg_item& item)
 {
     bg_builder builder(item);
     builder.set_position(position);
-    return create(move(builder));
+
+    optional<int> id = bgs_manager::create(move(builder));
+    BTN_ASSERT(id, "BG create failed");
+
+    return bg_ptr(*id);
 }
 
 bg_ptr bg_ptr::create(const bg_builder& builder)
@@ -37,14 +47,30 @@ bg_ptr bg_ptr::create(bg_builder&& builder)
 
 optional<bg_ptr> bg_ptr::optional_create(fixed x, fixed y, const bg_item& item)
 {
-    return optional_create(fixed_point(x, y), item);
+    optional<bg_ptr> result;
+    bg_builder builder(item);
+    builder.set_position(fixed_point(x, y));
+
+    if(optional<int> id = bgs_manager::create(move(builder)))
+    {
+        result = bg_ptr(*id);
+    }
+
+    return result;
 }
 
 optional<bg_ptr> bg_ptr::optional_create(const fixed_point& position, const bg_item& item)
 {
+    optional<bg_ptr> result;
     bg_builder builder(item);
     builder.set_position(position);
-    return optional_create(move(builder));
+
+    if(optional<int> id = bgs_manager::create(move(builder)))
+    {
+        result = bg_ptr(*id);
+    }
+
+    return result;
 }
 
 optional<bg_ptr> bg_ptr::optional_create(const bg_builder& builder)

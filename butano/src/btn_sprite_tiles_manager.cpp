@@ -15,8 +15,6 @@
     static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
 #endif
 
-#include "btn_profiler.h"
-
 namespace btn::sprite_tiles_manager
 {
 
@@ -232,8 +230,8 @@ namespace
 
     [[maybe_unused]] bool _valid_tiles(int tiles)
     {
-        return tiles == 1 || tiles == 2 || tiles == 4 || tiles == 8 || tiles == 16 || tiles == 32 ||
-                tiles == 64 || tiles == 128;
+        return tiles == 1 || tiles == 2 || tiles == 4 || tiles == 8 || tiles == 16 || tiles == 32 || tiles == 64 ||
+                tiles == 128;
     }
 
     void _commit_item(int id, const tile& tiles_data, bool delay_commit)
@@ -444,8 +442,6 @@ void init()
 
 optional<int> find(const span<const tile>& tiles_ref)
 {
-    BTN_PROFILER_START("find tiles");
-
     const tile* tiles_data = tiles_ref.data();
     [[maybe_unused]] auto tiles_size = int(tiles_ref.size());
 
@@ -491,15 +487,11 @@ optional<int> find(const span<const tile>& tiles_ref)
         BTN_SPRITE_TILES_LOG("NOT FOUND");
     }
 
-    BTN_PROFILER_STOP();
-
     return result;
 }
 
 optional<int> create(const span<const tile>& tiles_ref)
 {
-    BTN_PROFILER_START("create tiles");
-
     const tile* tiles_data = tiles_ref.data();
     auto tiles_size = int(tiles_ref.size());
 
@@ -522,8 +514,6 @@ optional<int> create(const span<const tile>& tiles_ref)
     {
         BTN_SPRITE_TILES_LOG("NOT CREATED");
     }
-
-    BTN_PROFILER_STOP();
 
     return result;
 }

@@ -1,16 +1,15 @@
 #include "btn_sprites_manager.h"
 
-#include "btn_display.h"
 #include "btn_sorted_sprites.h"
 #include "btn_sprites_manager_item.h"
 
 namespace btn::sprites_manager
 {
 
-bool check_items_on_screen_impl()
+bool _check_items_on_screen_impl(size display_dimensions)
 {
-    int display_width = display::width();
-    int display_height = display::height();
+    int display_width = display_dimensions.width();
+    int display_height = display_dimensions.height();
     bool rebuild_handles = false;
 
     for(auto& layer : sorted_sprites::layers())
@@ -43,6 +42,31 @@ bool check_items_on_screen_impl()
     }
 
     return rebuild_handles;
+}
+
+update_camera_impl_result _update_camera_impl(fixed_point camera_position)
+{
+    update_camera_impl_result result;
+
+    for(auto& layer : sorted_sprites::layers())
+    {
+        for(sprites_manager_item& item : layer.second)
+        {
+            if(! item.ignore_camera)
+            {
+                item.update_hw_position(camera_position);
+                result.rebuild_handles = true;
+
+                if(item.visible)
+                {
+                    item.check_on_screen = true;
+                    result.check_items_on_screen = true;
+                }
+            }
+        }
+    }
+
+    return result;
 }
 
 }

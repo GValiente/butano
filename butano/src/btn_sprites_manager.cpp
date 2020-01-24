@@ -5,6 +5,7 @@
 #include "btn_color.h"
 #include "btn_vector.h"
 #include "btn_camera.h"
+#include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_sorted_sprites.h"
 #include "btn_sprite_builder.h"
@@ -40,13 +41,16 @@ namespace
 
     void _update_handles(item_type& item)
     {
-        int handles_index = item.handles_index;
-
-        if(handles_index >= 0)
+        if(! data.rebuild_handles)
         {
-            item.handle.copy_to(data.handles[handles_index]);
-            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
-            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+            int handles_index = item.handles_index;
+
+            if(handles_index >= 0)
+            {
+                item.handle.copy_to(data.handles[handles_index]);
+                data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
+                data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+            }
         }
     }
 
@@ -141,7 +145,7 @@ namespace
         if(data.check_items_on_screen)
         {
             data.check_items_on_screen = false;
-            data.rebuild_handles = check_items_on_screen_impl();
+            data.rebuild_handles |= _check_items_on_screen_impl(display::dimensions());
         }
     }
 
@@ -158,7 +162,8 @@ namespace
                 {
                     if(item.on_screen)
                     {
-                        BTN_ASSERT(visible_items_count < hw::sprites::count(), "Too much sprites on screen");
+                        BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
+                                   visible_items_count <= hw::sprites::count(), "Too much sprites on screen");
 
                         item.handle.copy_to(data.handles[visible_items_count]);
                         item.handles_index = int8_t(visible_items_count);
@@ -229,12 +234,7 @@ optional<id_type> create(sprite_builder&& builder)
 
     item_type* new_item = data.items_pool.create<item_type>(move(builder), move(*tiles), move(*palette));
     sorted_sprites::insert(*new_item);
-
-    if(new_item->visible)
-    {
-        data.check_items_on_screen = true;
-    }
-
+    data.check_items_on_screen |= new_item->visible;
     return new_item;
 }
 
@@ -251,11 +251,7 @@ void decrease_usages(id_type id)
 
     if(! item->usages)
     {
-        if(item->on_screen)
-        {
-            data.rebuild_handles = true;
-        }
-
+        data.rebuild_handles |= item->on_screen;
         sorted_sprites::erase(*item);
         data.items_pool.destroy<item_type>(item);
     }
@@ -348,11 +344,7 @@ void set_bg_priority(id_type id, int bg_priority)
         sorted_sprites::erase(*item);
         item->update_sort_key(bg_priority, item->z_order());
         sorted_sprites::insert(*item);
-
-        if(item->on_screen)
-        {
-            data.rebuild_handles = true;
-        }
+        data.rebuild_handles |= item->on_screen;
     }
 }
 
@@ -373,11 +365,7 @@ void set_z_order(id_type id, int z_order)
         sorted_sprites::erase(*item);
         item->update_sort_key(item->bg_priority(), z_order);
         sorted_sprites::insert(*item);
-
-        if(item->on_screen)
-        {
-            data.rebuild_handles = true;
-        }
+        data.rebuild_handles |= item->on_screen;
     }
 }
 
@@ -498,11 +486,7 @@ void set_visible(id_type id, bool visible)
     }
     else
     {
-        if(item->on_screen)
-        {
-            data.rebuild_handles = true;
-        }
-
+        data.rebuild_handles |= item->on_screen;
         item->on_screen = false;
         item->check_on_screen = false;
     }
@@ -518,7 +502,14 @@ void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
     item->ignore_camera = ignore_camera;
-    set_position(id, item->position);
+    item->update_hw_position();
+    _update_handles(*item);
+
+    if(item->visible)
+    {
+        item->check_on_screen = true;
+        data.check_items_on_screen = true;
+    }
 }
 
 optional<sprite_affine_mat_ptr>& affine_mat_ptr(id_type id)
@@ -583,16 +574,9 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
 
 void update_camera()
 {
-    for(auto& layer : sorted_sprites::layers())
-    {
-        for(item_type& item : layer.second)
-        {
-            if(! item.ignore_camera)
-            {
-                set_position(&item, item.position);
-            }
-        }
-    }
+    update_camera_impl_result result = _update_camera_impl(camera::position());
+    data.check_items_on_screen |= result.check_items_on_screen;
+    data.rebuild_handles |= result.rebuild_handles;
 }
 
 void update()

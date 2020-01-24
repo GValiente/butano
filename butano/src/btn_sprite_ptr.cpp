@@ -10,14 +10,24 @@ namespace btn
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    return create(fixed_point(x, y), item, graphics_index);
+    sprite_builder builder(item, graphics_index);
+    builder.set_position(fixed_point(x, y));
+
+    optional<handle_type> handle = sprites_manager::create(move(builder));
+    BTN_ASSERT(handle, "Sprite create failed");
+
+    return sprite_ptr(*handle);
 }
 
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_index)
 {
     sprite_builder builder(item, graphics_index);
     builder.set_position(position);
-    return create(move(builder));
+
+    optional<handle_type> handle = sprites_manager::create(move(builder));
+    BTN_ASSERT(handle, "Sprite create failed");
+
+    return sprite_ptr(*handle);
 }
 
 sprite_ptr sprite_ptr::create(const sprite_builder& builder)
@@ -38,15 +48,31 @@ sprite_ptr sprite_ptr::create(sprite_builder&& builder)
 
 optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    return optional_create(fixed_point(x, y), item, graphics_index);
+    optional<sprite_ptr> result;
+    sprite_builder builder(item, graphics_index);
+    builder.set_position(fixed_point(x, y));
+
+    if(optional<handle_type> handle = sprites_manager::create(move(builder)))
+    {
+        result = sprite_ptr(*handle);
+    }
+
+    return result;
 }
 
 optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
                                                  int graphics_index)
 {
+    optional<sprite_ptr> result;
     sprite_builder builder(item, graphics_index);
     builder.set_position(position);
-    return optional_create(move(builder));
+
+    if(optional<handle_type> handle = sprites_manager::create(move(builder)))
+    {
+        result = sprite_ptr(*handle);
+    }
+
+    return result;
 }
 
 optional<sprite_ptr> sprite_ptr::optional_create(const sprite_builder& builder)

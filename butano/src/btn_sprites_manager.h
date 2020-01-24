@@ -93,7 +93,15 @@ namespace sprites_manager
 
     void commit();
 
-    [[nodiscard]] BTN_CODE_IWRAM bool check_items_on_screen_impl();
+    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(size display_dimensions);
+
+    struct update_camera_impl_result
+    {
+        bool check_items_on_screen = false;
+        bool rebuild_handles = false;
+    };
+
+    [[nodiscard]] BTN_CODE_IWRAM update_camera_impl_result _update_camera_impl(fixed_point camera_position);
 }
 
 }

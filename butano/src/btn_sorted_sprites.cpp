@@ -8,11 +8,11 @@
 namespace btn::sorted_sprites
 {
 
-static_assert(BTN_CFG_SPRITES_MAX_SORT_LAYERS >= hw::bgs::count() &&
-              BTN_CFG_SPRITES_MAX_SORT_LAYERS <= BTN_CFG_SPRITES_MAX_ITEMS);
-
 namespace
 {
+    static_assert(BTN_CFG_SPRITES_MAX_SORT_LAYERS >= hw::bgs::count() &&
+                  BTN_CFG_SPRITES_MAX_SORT_LAYERS <= BTN_CFG_SPRITES_MAX_ITEMS);
+
     class static_data
     {
 
@@ -111,7 +111,7 @@ void insert(sprites_manager_item& item)
     }
 
     list& layer = layer_it->second;
-    layer.push_back(item);
+    layer.push_front(item);
 }
 
 void erase(sprites_manager_item& item)

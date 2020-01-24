@@ -1,6 +1,5 @@
 #include "btn_sprites_manager_item.h"
 
-#include "btn_camera.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_affine_mats_manager.h"
 
@@ -69,26 +68,6 @@ bool sprites_manager_item::double_size() const
     }
 
     return false;
-}
-
-void sprites_manager_item::update_half_dimensions()
-{
-    half_dimensions = hw::sprites::dimensions(handle) / 2;
-    update_hw_position();
-}
-
-void sprites_manager_item::update_hw_position()
-{
-    fixed_point real_position = position;
-
-    if(! ignore_camera)
-    {
-        real_position -= camera::position();
-    }
-
-    hw_position.set_x(real_position.x().integer() - half_dimensions.width());
-    hw_position.set_y(real_position.y().integer() - half_dimensions.height());
-    hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
 }
 
 }

@@ -83,8 +83,7 @@ void stats::action::update()
 
         if(_detailed)
         {
-            // text_stream.append(max_cpu_pct);
-            text_stream.append("12.3456");
+            text_stream.append(max_cpu_pct);
         }
         else
         {

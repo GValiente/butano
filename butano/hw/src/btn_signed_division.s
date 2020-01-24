@@ -19,9 +19,6 @@ __aeabi_idivmod:
     .global __aeabi_idiv
     .type __aeabi_idiv STT_FUNC
 __aeabi_idiv:
-    @ Test division by zero
-    cmp     r1, #0
-    bxeq    lr
 
     @ Move the lr to r12 and make the numbers positive
     mov     r12, lr

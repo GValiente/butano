@@ -17,10 +17,6 @@ __aeabi_uidivmod:
     .type __aeabi_uidiv STT_FUNC
 __aeabi_uidiv:
 
-    @ Check for division by zero
-    cmp     r1, #0
-    bxeq    lr
-
     .global udiv32pastzero
 udiv32pastzero:
     @ If n < d, just bail out as well

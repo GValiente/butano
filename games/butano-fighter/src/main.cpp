@@ -37,19 +37,6 @@ int main()
     int display_width = btn::display::width();
     int display_height = btn::display::height();
 
-    btn::sprite_builder sprite_builder(btn::sprite_items::hero);
-    sprite_builder.set_position(display_width / 2, display_height / 2);
-    sprite_builder.set_scale_x(2);
-    sprite_builder.set_scale_y(2);
-    sprite_builder.set_mosaic_enabled(true);
-
-    btn::sprite_ptr sprite = sprite_builder.build_and_release();
-    auto sprite_animate_action = btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
-    sprite_animate_action.run();
-
-    btn::random random;
-    btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
-
     struct bench_sprite
     {
         btn::sprite_move_loop_action move_loop_action;
@@ -57,6 +44,7 @@ int main()
     };
 
     constexpr int num_sprites = 64;
+    btn::random random;
     btn::vector<bench_sprite, num_sprites> bench_sprites;
 
     for(int index = 0; index < num_sprites; ++index)
@@ -74,6 +62,18 @@ int main()
         bench_spr.move_loop_action.run();
         bench_spr.animate_action.run();
     }
+
+    btn::sprite_builder sprite_builder(btn::sprite_items::hero);
+    sprite_builder.set_position(display_width / 2, display_height / 2);
+    sprite_builder.set_scale_x(2);
+    sprite_builder.set_scale_y(2);
+    sprite_builder.set_mosaic_enabled(true);
+
+    btn::sprite_ptr sprite = sprite_builder.build_and_release();
+    auto sprite_animate_action = btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
+    sprite_animate_action.run();
+
+    btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     bf::stats stats(text_generator);

@@ -195,10 +195,10 @@ namespace btn::hw::sprites
         }
     }
 
-    inline void hide(int count, handle& sprites_ref)
+    inline void hide(handle& sprite)
     {
-        auto sprites_ptr = reinterpret_cast<OBJ_ATTR*>(&sprites_ref);
-        obj_hide_multi(sprites_ptr, unsigned(count));
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+        obj_hide(sprite_ptr);
     }
 
     inline void commit(const handle& sprites_ref, int offset, int count)

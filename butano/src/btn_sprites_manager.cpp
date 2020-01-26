@@ -39,7 +39,7 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void _update_handles(item_type& item)
+    void _update_handle(item_type& item)
     {
         if(! data.rebuild_handles)
         {
@@ -51,6 +51,19 @@ namespace
                 data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
                 data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
             }
+        }
+    }
+
+    void _hide_handle(item_type& item)
+    {
+        if(! data.rebuild_handles && item.on_screen)
+        {
+            int handles_index = item.handles_index;
+            BTN_ASSERT(handles_index >= 0, "Invalid handles index");
+
+            hw::sprites::hide(data.handles[handles_index]);
+            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
+            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
         }
     }
 
@@ -78,7 +91,7 @@ namespace
         }
         else
         {
-            _update_handles(item);
+            _update_handle(item);
         }
     }
 
@@ -97,7 +110,7 @@ namespace
         }
         else
         {
-            _update_handles(item);
+            _update_handle(item);
         }
     }
 
@@ -177,13 +190,12 @@ namespace
             }
 
             int last_visible_items_count = data.last_visible_items_count;
-            int items_to_hide = last_visible_items_count - visible_items_count;
             data.last_visible_items_count = visible_items_count;
 
-            if(items_to_hide > 0)
+            while(visible_items_count < last_visible_items_count)
             {
-                hw::sprites::hide(items_to_hide, data.handles[visible_items_count]);
-                visible_items_count = last_visible_items_count;
+                hw::sprites::hide(data.handles[visible_items_count]);
+                ++visible_items_count;
             }
 
             if(visible_items_count)
@@ -251,7 +263,7 @@ void decrease_usages(id_type id)
 
     if(! item->usages)
     {
-        data.rebuild_handles |= item->on_screen;
+        _hide_handle(*item);
         sorted_sprites::erase(*item);
         data.items_pool.destroy<item_type>(item);
     }
@@ -280,7 +292,7 @@ void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
 
         hw::sprites::set_tiles(tiles_ptr.id(), item->handle);
         item->tiles_ptr = move(tiles_ptr);
-        _update_handles(*item);
+        _update_handle(*item);
     }
 }
 
@@ -302,7 +314,7 @@ void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
 
         hw::sprites::set_palette(palette_ptr.id(), item->handle);
         item->palette_ptr = move(palette_ptr);
-        _update_handles(*item);
+        _update_handle(*item);
     }
 }
 
@@ -317,7 +329,7 @@ void set_position(id_type id, const fixed_point& position)
     auto item = static_cast<item_type*>(id);
     item->position = position;
     item->update_hw_position();
-    _update_handles(*item);
+    _update_handle(*item);
 
     if(item->visible)
     {
@@ -392,7 +404,7 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
     else
     {
         hw::sprites::set_horizontal_flip(horizontal_flip, item->handle);
-        _update_handles(*item);
+        _update_handle(*item);
     }
 }
 
@@ -419,7 +431,7 @@ void set_vertical_flip(id_type id, bool vertical_flip)
     else
     {
         hw::sprites::set_vertical_flip(vertical_flip, item->handle);
-        _update_handles(*item);
+        _update_handle(*item);
     }
 }
 
@@ -433,7 +445,7 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::set_mosaic_enabled(mosaic_enabled, item->handle);
-    _update_handles(*item);
+    _update_handle(*item);
 }
 
 bool double_size(id_type id)
@@ -486,7 +498,7 @@ void set_visible(id_type id, bool visible)
     }
     else
     {
-        data.rebuild_handles |= item->on_screen;
+        _hide_handle(*item);
         item->on_screen = false;
         item->check_on_screen = false;
     }
@@ -503,7 +515,7 @@ void set_ignore_camera(id_type id, bool ignore_camera)
     auto item = static_cast<item_type*>(id);
     item->ignore_camera = ignore_camera;
     item->update_hw_position();
-    _update_handles(*item);
+    _update_handle(*item);
 
     if(item->visible)
     {

@@ -257,7 +257,7 @@ private:
     sprite_shape _shape;
     sprite_size _size;
     int _graphics_index;
-    int _bg_priority = 2;
+    int _bg_priority = 3;
     int _z_order = 0;
     bool _horizontal_flip = false;
     bool _vertical_flip = false;

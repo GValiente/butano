@@ -43,7 +43,7 @@ int main()
         btn::sprite_cached_animate_action<2> animate_action;
     };
 
-    constexpr int num_sprites = 64;
+    constexpr int num_sprites = 48;
     btn::random random;
     btn::vector<bench_sprite, num_sprites> bench_sprites;
 

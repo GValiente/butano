@@ -171,7 +171,7 @@ private:
     create_mode _map_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     fixed_point _position;
-    int _priority = 2;
+    int _priority = 3;
     bool _mosaic_enabled = false;
     bool _visible = true;
     bool _ignore_camera = false;

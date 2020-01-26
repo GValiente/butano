@@ -116,7 +116,7 @@ private:
     palette_item _palette_item;
     utf8_characters_map_type _utf8_characters_map;
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
-    int _bg_priority = 0;
+    int _bg_priority = 3;
     int _z_order = 0;
     bool _ignore_camera = true;
     bool _one_sprite_per_character = false;

@@ -28,6 +28,16 @@ class sprites_manager_item : public sprites_manager_node
 {
 
 public:
+    [[nodiscard]] static constexpr int min_z_order()
+    {
+        return -max_z_order();
+    }
+
+    [[nodiscard]] static constexpr int max_z_order()
+    {
+        return btn::numeric_limits<int16_t>::max() - 1;
+    }
+
     [[nodiscard]] static constexpr unsigned z_orders()
     {
         return btn::numeric_limits<uint16_t>::max();
@@ -61,7 +71,7 @@ public:
 
     [[nodiscard]] int z_order() const
     {
-        return sort_key % z_orders();
+        return int(sort_key % z_orders()) - max_z_order();
     }
 
     void update_half_dimensions()
@@ -98,10 +108,9 @@ public:
         hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
     }
 
-
     void update_sort_key(int bg_priority, int z_order)
     {
-        sort_key = (unsigned(bg_priority) * z_orders()) + unsigned(z_order);
+        sort_key = (unsigned(bg_priority) * z_orders()) + unsigned(z_order + max_z_order());
     }
 };
 

@@ -212,9 +212,14 @@ int max_bg_priority()
     return hw::sprites::max_bg_priority();
 }
 
-int z_orders()
+int min_z_order()
 {
-    return int(item_type::z_orders());
+    return item_type::min_z_order();
+}
+
+int max_z_order()
+{
+    return item_type::max_z_order();
 }
 
 void init()
@@ -368,7 +373,8 @@ int z_order(id_type id)
 
 void set_z_order(id_type id, int z_order)
 {
-    BTN_ASSERT(z_order >= 0 && z_order < sprites_manager::z_orders(), "Invalid z order: ", z_order);
+    BTN_ASSERT(z_order >= item_type::min_z_order() && z_order <= item_type::max_z_order(),
+               "Invalid z order: ", z_order);
 
     auto item = static_cast<item_type*>(id);
 

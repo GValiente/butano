@@ -21,7 +21,9 @@ namespace sprites_manager
 
     [[nodiscard]] BTN_CODE_CONST int max_bg_priority();
 
-    [[nodiscard]] BTN_CODE_CONST int z_orders();
+    [[nodiscard]] BTN_CODE_CONST int min_z_order();
+
+    [[nodiscard]] BTN_CODE_CONST int max_z_order();
 
     void init();
 

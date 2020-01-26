@@ -5,19 +5,21 @@ import argparse
 import subprocess
 
 
-class Info:
+class GraphicsFolderInfo:
 
-    def __init__(self, file_path):
-        with open(file_path) as file:
-            data = json.load(file)
-            self.__sprites = data['sprites']
-            self.__bgs = data['bgs']
+    def __init__(self, sprites, bgs, file_paths):
+        self.__sprites = sprites
+        self.__bgs = bgs
+        self.__file_paths = file_paths
 
     def get_sprite(self, file_name_no_ext):
         return self.__sprites[file_name_no_ext]
 
     def get_bg(self, file_name_no_ext):
         return self.__bgs[file_name_no_ext]
+
+    def file_paths(self):
+        return self.__file_paths
 
 
 class BMP:
@@ -305,12 +307,23 @@ class BgItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
-def list_graphics_file_paths(graphics_folder_paths):
+def list_graphics_folder_infos(graphics_folder_paths):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
-    graphics_file_paths = []
+    graphics_folder_infos = []
 
     for graphics_folder_path in graphics_folder_path_list:
+        graphics_json_file_path = graphics_folder_path + '/graphics.json'
+
+        try:
+            with open(graphics_json_file_path) as file:
+                data = json.load(file)
+                sprites = data['sprites']
+                bgs = data['bgs']
+        except Exception as ex:
+            raise ValueError(graphics_json_file_path + ' parse failed: ' + str(ex))
+
         graphics_file_names = sorted(os.listdir(graphics_folder_path))
+        graphics_file_paths = []
 
         for graphics_file_name in graphics_file_names:
             graphics_file_name_ext = os.path.splitext(graphics_file_name)[-1]
@@ -321,7 +334,9 @@ def list_graphics_file_paths(graphics_folder_paths):
                 if os.path.isfile(graphics_file_path):
                     graphics_file_paths.append(graphics_file_path)
 
-    return graphics_file_paths
+        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths))
+
+    return graphics_folder_infos
 
 
 def read_graphics_desc(graphics_desc_path):
@@ -343,42 +358,38 @@ def write_graphics_desc(graphics_desc, graphics_desc_path):
         graphics_desc_file.write(graphics_desc)
 
 
-def process(info_file_path, graphics_folder_paths, build_folder_path):
-    info = None
-    graphics_file_paths = list_graphics_file_paths(graphics_folder_paths)
+def process(graphics_folder_paths, build_folder_path):
+    graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths)
 
-    for graphics_file_path in graphics_file_paths:
-        graphics_file_name = os.path.basename(graphics_file_path)
-        graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
-        graphics_desc_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_graphics_desc.txt'
-        old_graphics_desc = read_graphics_desc(graphics_desc_path)
-        new_graphics_desc = build_graphics_desc(graphics_file_path)
+    for graphics_folder_info in graphics_folder_infos:
+        for graphics_file_path in graphics_folder_info.file_paths():
+            graphics_file_name = os.path.basename(graphics_file_path)
+            graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
+            graphics_desc_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_graphics_desc.txt'
+            old_graphics_desc = read_graphics_desc(graphics_desc_path)
+            new_graphics_desc = build_graphics_desc(graphics_file_path)
 
-        if old_graphics_desc is None or old_graphics_desc != new_graphics_desc:
-            print('Processing graphics file: ' + graphics_file_path)
+            if old_graphics_desc is None or old_graphics_desc != new_graphics_desc:
+                print('Processing graphics file: ' + graphics_file_path)
 
-            if info is None:
-                info = Info(info_file_path)
-
-            try:
-                item_info = info.get_sprite(graphics_file_name_no_ext)
-                item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, item_info)
-            except KeyError:
                 try:
-                    item_info = info.get_bg(graphics_file_name_no_ext)
-                    item = BgItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+                    item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
+                    item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, item_info)
                 except KeyError:
-                    raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
+                    try:
+                        item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
+                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+                    except KeyError:
+                        raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
 
-            item.process(build_folder_path)
-            item.write_header(build_folder_path)
-            write_graphics_desc(new_graphics_desc, graphics_desc_path)
+                item.process(build_folder_path)
+                item.write_header(build_folder_path)
+                write_graphics_desc(new_graphics_desc, graphics_desc_path)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='butano graphics tool.')
-    parser.add_argument('--info', required=True, help='graphics info file path')
     parser.add_argument('--graphics', required=True, help='graphics folder paths')
     parser.add_argument('--build', required=True, help='build folder path')
     args = parser.parse_args()
-    process(args.info, args.graphics, args.build)
+    process(args.graphics, args.build)

@@ -98,8 +98,7 @@ export LIBPATHS         :=  $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(PYTHON) $(LIBBUTANOABS)/tools/butano-audio-tool.py --audio="$(AUDIO)" --build=$(BUILD)
-	@$(PYTHON) $(LIBBUTANOABS)/tools/butano-graphics-tool.py --info=$(CURDIR)/graphics.json \
-		--graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(PYTHON) $(LIBBUTANOABS)/tools/butano-graphics-tool.py --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

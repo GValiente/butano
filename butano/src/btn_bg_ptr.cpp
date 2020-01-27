@@ -3,6 +3,7 @@
 #include "btn_size.h"
 #include "btn_bg_builder.h"
 #include "btn_bgs_manager.h"
+#include "btn_bg_palette_ptr.h"
 
 namespace btn
 {
@@ -174,7 +175,7 @@ void bg_ptr::set_map(const bg_item& item, create_mode create_mode)
 
 void bg_ptr::set_map(const bg_map_item& map_item, create_mode create_mode)
 {
-    optional<bg_map_ptr> map_ptr = map_item.create_map(create_mode);
+    optional<bg_map_ptr> map_ptr = map_item.create_map(bg_palette_ptr(palette()), create_mode);
     BTN_ASSERT(map_ptr, "Map create failed");
 
     set_map(move(*map_ptr));
@@ -182,17 +183,21 @@ void bg_ptr::set_map(const bg_map_item& map_item, create_mode create_mode)
 
 const bg_palette_ptr& bg_ptr::palette() const
 {
-    return bgs_manager::palette(_id);
+    return bgs_manager::map(_id).palette();
 }
 
 void bg_ptr::set_palette(const bg_palette_ptr& palette_ptr)
 {
-    bgs_manager::set_palette(_id, move(palette_ptr));
+    bg_map_ptr map_ptr = bgs_manager::map(_id);
+    map_ptr.set_palette(palette_ptr);
+    bgs_manager::set_map(_id, move(map_ptr));
 }
 
 void bg_ptr::set_palette(bg_palette_ptr&& palette_ptr)
 {
-    bgs_manager::set_palette(_id, move(palette_ptr));
+    bg_map_ptr map_ptr = bgs_manager::map(_id);
+    map_ptr.set_palette(move(palette_ptr));
+    bgs_manager::set_map(_id, move(map_ptr));
 }
 
 void bg_ptr::set_palette(const bg_item& item, create_mode create_mode)

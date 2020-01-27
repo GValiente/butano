@@ -12,7 +12,6 @@ class bg_builder;
 class bg_map_ptr;
 class fixed_point;
 class bg_tiles_ptr;
-class bg_palette_ptr;
 
 namespace bgs_manager
 {
@@ -37,12 +36,6 @@ namespace bgs_manager
     void set_map(int id, const bg_map_ptr& map);
 
     void set_map(int id, bg_map_ptr&& map);
-
-    [[nodiscard]] const bg_palette_ptr& palette(int id);
-
-    void set_palette(int id, const bg_palette_ptr& palette);
-
-    void set_palette(int id, bg_palette_ptr&& palette);
 
     [[nodiscard]] const fixed_point& position(int id);
 

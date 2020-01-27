@@ -9,6 +9,7 @@ namespace btn
 {
 
 class bg_map_ptr;
+class bg_palette_ptr;
 enum class create_mode;
 
 class bg_map_item
@@ -33,7 +34,9 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] optional<bg_map_ptr> create_map(create_mode create_mode) const;
+    [[nodiscard]] optional<bg_map_ptr> create_map(const bg_palette_ptr& palette_ptr, create_mode create_mode) const;
+
+    [[nodiscard]] optional<bg_map_ptr> create_map(bg_palette_ptr&& palette_ptr, create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_map_item& a, const bg_map_item& b)
     {

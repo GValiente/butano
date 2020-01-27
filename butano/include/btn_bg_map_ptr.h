@@ -11,25 +11,47 @@ namespace btn
 {
 
 class size;
+class bg_palette_ptr;
 
 class bg_map_ptr
 {
 
 public:
-    [[nodiscard]] static optional<bg_map_ptr> find(const bg_map_cell& cells_ref, const size& dimensions);
+    [[nodiscard]] static optional<bg_map_ptr> find(const bg_map_cell& cells_ref, const size& dimensions,
+                                                   const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] static bg_map_ptr create(const bg_map_cell& cells_ref, const size& dimensions);
+    [[nodiscard]] static bg_map_ptr create(const bg_map_cell& cells_ref, const size& dimensions,
+                                           const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] static bg_map_ptr find_or_create(const bg_map_cell& cells_ref, const size& dimensions);
+    [[nodiscard]] static bg_map_ptr create(const bg_map_cell& cells_ref, const size& dimensions,
+                                           bg_palette_ptr&& palette_ptr);
 
-    [[nodiscard]] static bg_map_ptr allocate(const size& dimensions);
+    [[nodiscard]] static bg_map_ptr find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
+                                                   const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_create(const bg_map_cell& cells_ref, const size& dimensions);
+    [[nodiscard]] static bg_map_ptr find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
+                                                   bg_palette_ptr&& palette_ptr);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_find_or_create(const bg_map_cell& cells_ref,
-                                                                      const size& dimensions);
+    [[nodiscard]] static bg_map_ptr allocate(const size& dimensions, const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] static optional<bg_map_ptr> optional_allocate(const size& dimensions);
+    [[nodiscard]] static bg_map_ptr allocate(const size& dimensions, bg_palette_ptr&& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_create(const bg_map_cell& cells_ref, const size& dimensions,
+                                                              const bg_palette_ptr& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_create(const bg_map_cell& cells_ref, const size& dimensions,
+                                                              bg_palette_ptr&& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_find_or_create(
+            const bg_map_cell& cells_ref, const size& dimensions, const bg_palette_ptr& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_find_or_create(
+            const bg_map_cell& cells_ref, const size& dimensions, bg_palette_ptr&& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_allocate(const size& dimensions,
+                                                                const bg_palette_ptr& palette_ptr);
+
+    [[nodiscard]] static optional<bg_map_ptr> optional_allocate(const size& dimensions, bg_palette_ptr&& palette_ptr);
 
     bg_map_ptr(const bg_map_ptr& other);
 
@@ -59,11 +81,19 @@ public:
 
     [[nodiscard]] size dimensions() const;
 
+    [[nodiscard]] bool eight_bits_per_pixel() const;
+
     [[nodiscard]] const bg_map_cell* cells_ref() const;
 
     void set_cells_ref(const bg_map_cell& cells_ref, const size& dimensions);
 
     void reload_cells_ref();
+
+    [[nodiscard]] const bg_palette_ptr& palette() const;
+
+    void set_palette(const bg_palette_ptr& palette_ptr);
+
+    void set_palette(bg_palette_ptr&& palette_ptr);
 
     [[nodiscard]] optional<span<bg_map_cell>> vram();
 

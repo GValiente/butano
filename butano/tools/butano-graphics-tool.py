@@ -288,7 +288,7 @@ class BgItem:
     def process(self, build_folder_path):
         command = ['grit', self.__file_path]
 
-        if self.__bpp4:
+        if self.__colors == 16 or self.__bpp4:
             command.append('-gB4 -mR4')
         else:
             command.append('-gB8 -mR8')

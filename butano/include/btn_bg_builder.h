@@ -7,7 +7,6 @@
 #include "btn_fixed_point.h"
 #include "btn_create_mode.h"
 #include "btn_bg_tiles_ptr.h"
-#include "btn_bg_palette_ptr.h"
 
 namespace btn
 {
@@ -23,13 +22,12 @@ public:
     {
     }
 
-    template<class BgTilesPtr, class BgMapPtr, class BgPalettePtr>
-    bg_builder(BgTilesPtr&& tiles_ptr, BgMapPtr&& map_ptr, BgPalettePtr&& palette_ptr) :
+    template<class BgTilesPtr, class BgMapPtr>
+    bg_builder(BgTilesPtr&& tiles_ptr, BgMapPtr&& map_ptr) :
         _tiles_ptr(forward<BgTilesPtr>(tiles_ptr)),
-        _map_ptr(forward<BgMapPtr>(map_ptr)),
-        _palette_ptr(forward<BgPalettePtr>(palette_ptr))
+        _map_ptr(forward<BgMapPtr>(map_ptr))
     {
-        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_palette_ptr->eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_map_ptr->eight_bits_per_pixel()), "Invalid tiles count: ",
                    _tiles_ptr->tiles_count());
     }
 
@@ -162,19 +160,14 @@ public:
 
     [[nodiscard]] optional<bg_map_ptr> map() const;
 
-    [[nodiscard]] optional<bg_palette_ptr> palette() const;
-
     [[nodiscard]] optional<bg_tiles_ptr> release_tiles();
 
     [[nodiscard]] optional<bg_map_ptr> release_map();
-
-    [[nodiscard]] optional<bg_palette_ptr> release_palette();
 
 private:
     optional<bg_item> _item;
     optional<bg_tiles_ptr> _tiles_ptr;
     optional<bg_map_ptr> _map_ptr;
-    optional<bg_palette_ptr> _palette_ptr;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _map_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;

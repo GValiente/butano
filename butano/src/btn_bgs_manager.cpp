@@ -22,18 +22,15 @@ namespace
         unsigned usages = 1;
         bg_tiles_ptr tiles_ptr;
         bg_map_ptr map_ptr;
-        bg_palette_ptr palette_ptr;
         unsigned ignore_camera: 1;
 
-        item_type(bg_builder&& builder, bg_tiles_ptr&& tiles, bg_map_ptr&& map, bg_palette_ptr&& palette,
-                  hw::bgs::handle& handle) :
+        item_type(bg_builder&& builder, bg_tiles_ptr&& tiles, bg_map_ptr&& map, hw::bgs::handle& handle) :
             position(builder.position()),
             dimensions(map.dimensions()),
             tiles_ptr(move(tiles)),
-            map_ptr(move(map)),
-            palette_ptr(move(palette))
+            map_ptr(move(map))
         {
-            hw::bgs::setup(builder, tiles_ptr.id(), palette_ptr.eight_bits_per_pixel(), handle);
+            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.eight_bits_per_pixel(), handle);
             hw::bgs::set_map(map_ptr.id(), dimensions, handle);
 
             fixed_point real_position = -position;
@@ -100,15 +97,8 @@ optional<int> create(bg_builder&& builder)
         return nullopt;
     }
 
-    optional<bg_palette_ptr> palette = builder.release_palette();
-
-    if(! palette)
-    {
-        return nullopt;
-    }
-
     bool visible = builder.visible();
-    data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), move(*palette), data.handles[new_index]);
+    data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
 
     if(visible)
     {
@@ -160,7 +150,7 @@ void set_tiles(int id, const bg_tiles_ptr& tiles_ptr)
 
     if(tiles_ptr != item.tiles_ptr)
     {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.palette_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
                    tiles_ptr.tiles_count());
 
         hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
@@ -179,7 +169,7 @@ void set_tiles(int id, bg_tiles_ptr&& tiles_ptr)
 
     if(tiles_ptr != item.tiles_ptr)
     {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.palette_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
                    tiles_ptr.tiles_count());
 
         hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
@@ -231,40 +221,6 @@ void set_map(int id, bg_map_ptr&& map_ptr)
         {
             data.commit = true;
         }
-    }
-}
-
-const bg_palette_ptr& palette(int id)
-{
-    item_type& item = *data.items[id];
-    return item.palette_ptr;
-}
-
-void set_palette(int id, const bg_palette_ptr& palette_ptr)
-{
-    item_type& item = *data.items[id];
-
-    if(palette_ptr != item.palette_ptr)
-    {
-        BTN_ASSERT(item.palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-                   "Palette colors bpp mode mismatch: ",
-                   item.palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
-
-        item.palette_ptr = palette_ptr;
-    }
-}
-
-void set_palette(int id, bg_palette_ptr&& palette_ptr)
-{
-    item_type& item = *data.items[id];
-
-    if(palette_ptr != item.palette_ptr)
-    {
-        BTN_ASSERT(item.palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-                   "Palette colors bpp mode mismatch: ",
-                   item.palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
-
-        item.palette_ptr = move(palette_ptr);
     }
 }
 

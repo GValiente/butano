@@ -34,9 +34,24 @@ namespace btn::hw::bg_blocks
         return bg_block_vram(block_index);
     }
 
-    inline void commit(const uint16_t& source_data_ref, int block_index, int half_words)
+    inline void commit(const uint16_t& source_data_ref, int block_index, int half_words, int palette_offset)
     {
-        memory::copy(source_data_ref, half_words, bg_block_vram(block_index));
+        if(palette_offset)
+        {
+            const uint16_t* source_data_ptr = &source_data_ref;
+            uint16_t* destination_vram_ptr = &bg_block_vram(block_index);
+
+            for(int index = 0; index < half_words; ++index)
+            {
+                uint16_t se = source_data_ptr[index];
+                BFN_SET(se, palette_offset, SE_PALBANK);
+                destination_vram_ptr[index] = se;
+            }
+        }
+        else
+        {
+            memory::copy(source_data_ref, half_words, bg_block_vram(block_index));
+        }
     }
 }
 

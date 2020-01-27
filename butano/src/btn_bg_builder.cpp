@@ -2,6 +2,7 @@
 
 #include "btn_bg_ptr.h"
 #include "btn_bgs_manager.h"
+#include "btn_bg_palette_ptr.h"
 
 namespace btn
 {
@@ -44,8 +45,6 @@ optional<bg_tiles_ptr> bg_builder::tiles() const
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->tiles_item().create_tiles(_tiles_create_mode);
     }
 
@@ -62,27 +61,10 @@ optional<bg_map_ptr> bg_builder::map() const
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
-        result = _item->map_item().create_map(_map_create_mode);
-    }
-
-    return result;
-}
-
-optional<bg_palette_ptr> bg_builder::palette() const
-{
-    optional<bg_palette_ptr> result;
-
-    if(_palette_ptr)
-    {
-        result = _palette_ptr;
-    }
-    else
-    {
-        BTN_ASSERT(_item, "Item is null");
-
-        result = _item->palette_item().create_bg_palette(_palette_create_mode);
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_bg_palette(_palette_create_mode))
+        {
+            result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
+        }
     }
 
     return result;
@@ -95,12 +77,9 @@ optional<bg_tiles_ptr> bg_builder::release_tiles()
     if(_tiles_ptr)
     {
         result = move(_tiles_ptr);
-        _tiles_ptr.reset();
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
         result = _item->tiles_item().create_tiles(_tiles_create_mode);
     }
 
@@ -114,32 +93,13 @@ optional<bg_map_ptr> bg_builder::release_map()
     if(_map_ptr)
     {
         result = move(_map_ptr);
-        _map_ptr.reset();
     }
     else
     {
-        BTN_ASSERT(_item, "Item is null");
-
-        result = _item->map_item().create_map(_map_create_mode);
-    }
-
-    return result;
-}
-
-optional<bg_palette_ptr> bg_builder::release_palette()
-{
-    optional<bg_palette_ptr> result;
-
-    if(_palette_ptr)
-    {
-        result = move(_palette_ptr);
-        _palette_ptr.reset();
-    }
-    else
-    {
-        BTN_ASSERT(_item, "Item is null");
-
-        result = _item->palette_item().create_bg_palette(_palette_create_mode);
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_bg_palette(_palette_create_mode))
+        {
+            result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
+        }
     }
 
     return result;

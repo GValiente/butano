@@ -38,17 +38,26 @@ namespace
 
         const uint16_t* data = nullptr;
         unsigned usages = 0;
+        optional<bg_palette_ptr> palette_ptr;
         uint16_t width = 0;
         uint8_t height = 0;
         uint8_t start_block = 0;
-        uint8_t blocks_count = 0;
-        uint8_t next_index = max_list_items;
-        bool commit = false;
+        unsigned blocks_count: 6;
+        unsigned next_index: 6;
+        unsigned commit: 1;
 
     private:
-        uint8_t _status = uint8_t(status_type::FREE);
+        unsigned _status: 2;
 
     public:
+        item_type()
+        {
+            blocks_count = 0;
+            next_index = max_list_items;
+            commit = false;
+            set_status(status_type::FREE);
+        }
+
         [[nodiscard]] status_type status() const
         {
             return static_cast<status_type>(_status);
@@ -57,6 +66,11 @@ namespace
         void set_status(status_type status)
         {
             _status = uint8_t(status);
+        }
+
+        [[nodiscard]] int palette_offset() const
+        {
+            return palette_ptr ? palette_ptr->id() : 0;
         }
     };
 
@@ -239,6 +253,7 @@ namespace
                         " - blocks_count: ", item.blocks_count,
                         " - width: ", item.width,
                         " - height: ", item.height,
+                        " - palette: ", item.palette_ptr ? item.palette_ptr->id() : -1,
                         " - usages: ", item.usages,
                         " - next_index: ", item.next_index,
                         (item.commit ? " - commit" : " - no_commit"));
@@ -305,12 +320,13 @@ namespace
         }
         else
         {
-            hw::bg_blocks::commit(data_ref, item.start_block, item.width * item.height);
+            hw::bg_blocks::commit(data_ref, item.start_block, item.width * item.height, item.palette_offset());
         }
     }
 
     template<bool aligned>
-    [[nodiscard]] int _create_item(int id, const uint16_t* data_ptr, int blocks_count, const size& dimensions)
+    [[nodiscard]] int _create_item(int id, const uint16_t* data_ptr, int blocks_count, const size& dimensions,
+                                   optional<bg_palette_ptr>&& palette_ptr)
     {
         if(aligned)
         {
@@ -337,6 +353,7 @@ namespace
         int new_item_blocks_count = item.blocks_count - blocks_count;
         item.data = data_ptr;
         item.blocks_count = uint8_t(blocks_count);
+        item.palette_ptr = move(palette_ptr);
         item.width = uint16_t(dimensions.width());
         item.height = uint8_t(dimensions.height());
         item.usages = 1;
@@ -387,7 +404,8 @@ namespace
     }
 
     template<bool aligned>
-    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions)
+    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions,
+                               optional<bg_palette_ptr>&& palette_ptr)
     {
         if(! data_ptr && data.delay_commit)
         {
@@ -428,7 +446,8 @@ namespace
 
             if(smallest_iterator != data.items.end())
             {
-                return _create_item<aligned>(smallest_iterator.id(), data_ptr, blocks_count, dimensions);
+                return _create_item<aligned>(smallest_iterator.id(), data_ptr, blocks_count, dimensions,
+                                             move(palette_ptr));
             }
         }
 
@@ -436,7 +455,7 @@ namespace
         {
             update();
             data.delay_commit = true;
-            return _create_impl<aligned>(data_ptr, blocks_count, dimensions);
+            return _create_impl<aligned>(data_ptr, blocks_count, dimensions, move(palette_ptr));
         }
 
         return nullopt;
@@ -456,9 +475,11 @@ void init()
     BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimensions)
+optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimensions,
+                   [[maybe_unused]] const bg_palette_ptr* palette_ptr)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND: ", &data_ref, " - ", dimensions.width(), " - ", dimensions.height());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND: ", &data_ref, " - ", dimensions.width(), " - ", dimensions.height(),
+                      " - ", palette_ptr ? palette_ptr->id() : -1);
 
     auto items_map_iterator = data.items_map.find(&data_ref);
     optional<int> result;
@@ -472,6 +493,8 @@ optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimens
                    dimensions.width(), " - ", item.width);
         BTN_ASSERT(dimensions.height() == item.height, "Height does not match item height: ",
                    dimensions.height(), " - ", item.height);
+        BTN_ASSERT(! palette_ptr == ! item.palette_ptr || palette_ptr->id() == item.palette_ptr->id(),
+                   "Palette does not match item palette");
 
         switch(item.status())
         {
@@ -506,10 +529,11 @@ optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimens
     return result;
 }
 
-optional<int> create(const uint16_t& data_ref, const size& dimensions, bool aligned)
+optional<int> create(const uint16_t& data_ref, const size& dimensions, optional<bg_palette_ptr>&& palette_ptr,
+                     bool aligned)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE: ", &data_ref, " - ",
-                      dimensions.width(), " - ", dimensions.height(), " - ", aligned);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE: ", &data_ref, " - ", dimensions.width(), " - ",
+                      dimensions.height(), " - ", palette_ptr ? palette_ptr->id() : -1, " - ", aligned);
 
     BTN_ASSERT(dimensions.width() > 0, "Invalid width: ", dimensions.width());
     BTN_ASSERT(dimensions.height() > 0, "Invalid height: ", dimensions.height());
@@ -522,11 +546,11 @@ optional<int> create(const uint16_t& data_ref, const size& dimensions, bool alig
 
     if(aligned)
     {
-        result = _create_impl<true>(&data_ref, _blocks(half_words), dimensions);
+        result = _create_impl<true>(&data_ref, _blocks(half_words), dimensions, move(palette_ptr));
     }
     else
     {
-        result = _create_impl<false>(&data_ref, _blocks(half_words), dimensions);
+        result = _create_impl<false>(&data_ref, _blocks(half_words), dimensions, move(palette_ptr));
     }
 
     if(result)
@@ -543,9 +567,10 @@ optional<int> create(const uint16_t& data_ref, const size& dimensions, bool alig
     return result;
 }
 
-optional<int> allocate(const size& dimensions, bool aligned)
+optional<int> allocate(const size& dimensions, optional<bg_palette_ptr>&& palette_ptr, bool aligned)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE: ", dimensions.width(), " - ", dimensions.height(), " - ", aligned);
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE: ", dimensions.width(), " - ", dimensions.height(), " - ",
+                      palette_ptr ? palette_ptr->id() : -1, " - ", aligned);
 
     BTN_ASSERT(dimensions.width() > 0, "Invalid width: ", dimensions.width());
     BTN_ASSERT(dimensions.height() > 0, "Invalid height: ", dimensions.height());
@@ -557,11 +582,11 @@ optional<int> allocate(const size& dimensions, bool aligned)
 
     if(aligned)
     {
-        result = _create_impl<true>(nullptr, _blocks(half_words), dimensions);
+        result = _create_impl<true>(nullptr, _blocks(half_words), dimensions, move(palette_ptr));
     }
     else
     {
-        result = _create_impl<false>(nullptr, _blocks(half_words), dimensions);
+        result = _create_impl<false>(nullptr, _blocks(half_words), dimensions, move(palette_ptr));
     }
 
     if(result)
@@ -666,6 +691,40 @@ void reload_data_ref(int id)
     BTN_BG_BLOCKS_LOG_STATUS();
 }
 
+const bg_palette_ptr* palette(int id)
+{
+    const item_type& item = data.items.item(id);
+    return item.palette_ptr ? &item.palette_ptr.value() : nullptr;
+}
+
+void set_palette(int id, const optional<bg_palette_ptr>& palette_ptr)
+{
+    item_type& item = data.items.item(id);
+
+    if(palette_ptr != item.palette_ptr)
+    {
+        BTN_ASSERT(! palette_ptr || palette_ptr->eight_bits_per_pixel() == item.palette_ptr->eight_bits_per_pixel(),
+                   "Palette colors bpp mode mismatch: ", palette_ptr->eight_bits_per_pixel(), " - ",
+                   item.palette_ptr->eight_bits_per_pixel());
+
+        item.palette_ptr = palette_ptr;
+        item.commit = true;
+        data.check_commit = true;
+    }
+}
+
+void set_palette(int id, optional<bg_palette_ptr>&& palette_ptr)
+{
+    item_type& item = data.items.item(id);
+
+    if(palette_ptr != item.palette_ptr)
+    {
+        item.palette_ptr = move(palette_ptr);
+        item.commit = true;
+        data.check_commit = true;
+    }
+}
+
 optional<span<uint16_t>> vram(int id)
 {
     item_type& item = data.items.item(id);
@@ -763,7 +822,8 @@ void commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::bg_blocks::commit(*item.data, item.start_block, item.width * item.height);
+                    hw::bg_blocks::commit(*item.data, item.start_block, item.width * item.height,
+                                          item.palette_offset());
                 }
             }
         }

@@ -16,6 +16,10 @@ namespace btn::camera
 
     [[nodiscard]] const fixed_point& position();
 
+    void set_x(fixed x);
+
+    void set_y(fixed y);
+
     void set_position(fixed x, fixed y);
 
     void set_position(const fixed_point& position);

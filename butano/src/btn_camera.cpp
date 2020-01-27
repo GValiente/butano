@@ -34,6 +34,16 @@ const fixed_point& position()
     return data.position;
 }
 
+void set_x(fixed x)
+{
+    set_position(fixed_point(x, data.position.y()));
+}
+
+void set_y(fixed y)
+{
+    set_position(fixed_point(data.position.x(), y));
+}
+
 void set_position(fixed x, fixed y)
 {
     set_position(fixed_point(x, y));

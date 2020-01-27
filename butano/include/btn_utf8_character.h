@@ -10,18 +10,18 @@ class utf8_character
 {
 
 public:
-    constexpr explicit utf8_character(const char* text)
+    constexpr explicit utf8_character(const char* text_ptr)
     {
-        BTN_CONSTEXPR_ASSERT(text, "Text is null");
+        BTN_CONSTEXPR_ASSERT(text_ptr, "Text is null");
 
-        *this = utf8_character(*text);
+        *this = utf8_character(*text_ptr);
     }
 
-    constexpr explicit utf8_character(const char& text)
+    constexpr explicit utf8_character(const char& text_ref)
     {
         // https://www.coranac.com/tonc/text/tte.htm
 
-        const char* src = &text;
+        const char* src = &text_ref;
         auto ch8 = unsigned(*src);
 
         if(ch8 < 0x80)
@@ -67,7 +67,7 @@ public:
             BTN_CONSTEXPR_ASSERT(true, "Invalid utf8 character");
         }
 
-        _size = src - &text;
+        _size = src - &text_ref;
     }
 
     [[nodiscard]] constexpr int value() const

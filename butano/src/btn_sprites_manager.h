@@ -35,13 +35,17 @@ namespace sprites_manager
 
     [[nodiscard]] size dimensions(id_type id);
 
-    [[nodiscard]] const sprite_tiles_ptr& tiles_ptr(id_type id);
+    [[nodiscard]] const sprite_tiles_ptr& tiles(id_type id);
 
-    void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr);
+    void set_tiles(id_type id, const sprite_tiles_ptr& tiles);
 
-    [[nodiscard]] const sprite_palette_ptr& palette_ptr(id_type id);
+    void set_tiles(id_type id, sprite_tiles_ptr&& tiles);
 
-    void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr);
+    [[nodiscard]] const sprite_palette_ptr& palette(id_type id);
+
+    void set_palette(id_type id, const sprite_palette_ptr& palette);
+
+    void set_palette(id_type id, sprite_palette_ptr&& palette);
 
     [[nodiscard]] const fixed_point& position(id_type id);
 
@@ -81,9 +85,11 @@ namespace sprites_manager
 
     void set_ignore_camera(id_type id, bool ignore_camera);
 
-    [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat_ptr(id_type id);
+    [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 
-    void set_affine_mat_ptr(id_type id, optional<sprite_affine_mat_ptr> affine_mat_ptr);
+    void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat);
+
+    void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat);
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed(id_type id);
 

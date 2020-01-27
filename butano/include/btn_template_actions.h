@@ -29,8 +29,9 @@ public:
     }
 
 protected:
-    by_template_action(Value value, const Property& delta_property) :
-        _value(move(value)),
+    template<class ValueType>
+    by_template_action(ValueType&& value, const Property& delta_property) :
+        _value(forward<ValueType>(value)),
         _delta_property(delta_property),
         _initial_property(PropertyManager::get(_value))
     {
@@ -91,8 +92,9 @@ public:
     }
 
 protected:
-    to_template_action(Value value, int duration_frames, const Property& final_property) :
-        _value(move(value)),
+    template<class ValueType>
+    to_template_action(ValueType&& value, int duration_frames, const Property& final_property) :
+        _value(forward<ValueType>(value)),
         _final_property(final_property),
         _initial_property(PropertyManager::get(_value)),
         _delta_property(_calculate_delta_property(duration_frames)),
@@ -184,8 +186,9 @@ public:
     }
 
 protected:
-    loop_template_action(Value value, int duration_frames, const Property& final_property) :
-        _value(move(value)),
+    template<class ValueType>
+    loop_template_action(ValueType&& value, int duration_frames, const Property& final_property) :
+        _value(forward<ValueType>(value)),
         _final_property(final_property),
         _initial_property(PropertyManager::get(_value)),
         _delta_property(_calculate_delta_property(duration_frames)),

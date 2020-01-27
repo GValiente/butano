@@ -74,7 +74,9 @@ public:
 
     [[nodiscard]] const sprite_tiles_ptr& tiles() const;
 
-    void set_tiles(sprite_tiles_ptr tiles_ptr);
+    void set_tiles(const sprite_tiles_ptr& tiles_ptr);
+
+    void set_tiles(sprite_tiles_ptr&& tiles_ptr);
 
     void set_tiles(const sprite_item& item, int graphics_index = 0,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
@@ -84,7 +86,9 @@ public:
 
     [[nodiscard]] const sprite_palette_ptr& palette() const;
 
-    void set_palette(sprite_palette_ptr palette_ptr);
+    void set_palette(const sprite_palette_ptr& palette_ptr);
+
+    void set_palette(sprite_palette_ptr&& palette_ptr);
 
     void set_palette(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
@@ -155,7 +159,9 @@ public:
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
 
-    void set_affine_mat(optional<sprite_affine_mat_ptr> affine_mat_ptr);
+    void set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat_ptr);
+
+    void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat_ptr);
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 

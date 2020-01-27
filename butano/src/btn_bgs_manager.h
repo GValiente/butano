@@ -26,17 +26,23 @@ namespace bgs_manager
 
     [[nodiscard]] size dimensions(int id);
 
-    [[nodiscard]] const bg_tiles_ptr& tiles_ptr(int id);
+    [[nodiscard]] const bg_tiles_ptr& tiles(int id);
 
-    void set_tiles_ptr(int id, bg_tiles_ptr tiles_ptr);
+    void set_tiles(int id, const bg_tiles_ptr& tiles);
 
-    [[nodiscard]] const bg_map_ptr& map_ptr(int id);
+    void set_tiles(int id, bg_tiles_ptr&& tiles);
 
-    void set_map_ptr(int id, bg_map_ptr map_ptr);
+    [[nodiscard]] const bg_map_ptr& map(int id);
 
-    [[nodiscard]] const bg_palette_ptr& palette_ptr(int id);
+    void set_map(int id, const bg_map_ptr& map);
 
-    void set_palette_ptr(int id, bg_palette_ptr palette_ptr);
+    void set_map(int id, bg_map_ptr&& map);
+
+    [[nodiscard]] const bg_palette_ptr& palette(int id);
+
+    void set_palette(int id, const bg_palette_ptr& palette);
+
+    void set_palette(int id, bg_palette_ptr&& palette);
 
     [[nodiscard]] const fixed_point& position(int id);
 

@@ -148,13 +148,32 @@ size dimensions(int id)
     return item.dimensions * 8;
 }
 
-const bg_tiles_ptr& tiles_ptr(int id)
+const bg_tiles_ptr& tiles(int id)
 {
     item_type& item = *data.items[id];
     return item.tiles_ptr;
 }
 
-void set_tiles_ptr(int id, bg_tiles_ptr tiles_ptr)
+void set_tiles(int id, const bg_tiles_ptr& tiles_ptr)
+{
+    item_type& item = *data.items[id];
+
+    if(tiles_ptr != item.tiles_ptr)
+    {
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.palette_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+                   tiles_ptr.tiles_count());
+
+        hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
+        item.tiles_ptr = tiles_ptr;
+
+        if(display_manager::bg_enabled(id))
+        {
+            data.commit = true;
+        }
+    }
+}
+
+void set_tiles(int id, bg_tiles_ptr&& tiles_ptr)
 {
     item_type& item = *data.items[id];
 
@@ -173,13 +192,31 @@ void set_tiles_ptr(int id, bg_tiles_ptr tiles_ptr)
     }
 }
 
-const bg_map_ptr& map_ptr(int id)
+const bg_map_ptr& map(int id)
 {
     item_type& item = *data.items[id];
     return item.map_ptr;
 }
 
-void set_map_ptr(int id, bg_map_ptr map_ptr)
+void set_map(int id, const bg_map_ptr& map_ptr)
+{
+    item_type& item = *data.items[id];
+
+    if(map_ptr != item.map_ptr)
+    {
+        size dimensions = map_ptr.dimensions();
+        hw::bgs::set_map(map_ptr.id(), dimensions, data.handles[id]);
+        item.map_ptr = map_ptr;
+        item.dimensions = dimensions;
+
+        if(display_manager::bg_enabled(id))
+        {
+            data.commit = true;
+        }
+    }
+}
+
+void set_map(int id, bg_map_ptr&& map_ptr)
 {
     item_type& item = *data.items[id];
 
@@ -197,13 +234,27 @@ void set_map_ptr(int id, bg_map_ptr map_ptr)
     }
 }
 
-const bg_palette_ptr& palette_ptr(int id)
+const bg_palette_ptr& palette(int id)
 {
     item_type& item = *data.items[id];
     return item.palette_ptr;
 }
 
-void set_palette_ptr(int id, bg_palette_ptr palette_ptr)
+void set_palette(int id, const bg_palette_ptr& palette_ptr)
+{
+    item_type& item = *data.items[id];
+
+    if(palette_ptr != item.palette_ptr)
+    {
+        BTN_ASSERT(item.palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
+                   "Palette colors bpp mode mismatch: ",
+                   item.palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
+
+        item.palette_ptr = palette_ptr;
+    }
+}
+
+void set_palette(int id, bg_palette_ptr&& palette_ptr)
 {
     item_type& item = *data.items[id];
 

@@ -36,13 +36,15 @@ class sprite_move_by_action :
 {
 
 public:
-    sprite_move_by_action(sprite_ptr sprite, fixed delta_x, fixed delta_y) :
-        by_template_action(move(sprite), fixed_point(delta_x, delta_y))
+    template<class SpritePtr>
+    sprite_move_by_action(SpritePtr&& sprite, fixed delta_x, fixed delta_y) :
+        by_template_action(forward<SpritePtr>(sprite), fixed_point(delta_x, delta_y))
     {
     }
 
-    sprite_move_by_action(sprite_ptr sprite, const fixed_point& delta_position) :
-        by_template_action(move(sprite), delta_position)
+    template<class SpritePtr>
+    sprite_move_by_action(SpritePtr&& sprite, const fixed_point& delta_position) :
+        by_template_action(forward<SpritePtr>(sprite), delta_position)
     {
     }
 
@@ -63,13 +65,15 @@ class sprite_move_to_action :
 {
 
 public:
-    sprite_move_to_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y) :
-        to_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    template<class SpritePtr>
+    sprite_move_to_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        to_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_to_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position) :
-        to_template_action(move(sprite), duration_frames, final_position)
+    template<class SpritePtr>
+    sprite_move_to_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
+        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
     {
     }
 
@@ -90,13 +94,15 @@ class sprite_move_loop_action :
 {
 
 public:
-    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, fixed final_x, fixed final_y) :
-        loop_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    template<class SpritePtr>
+    sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        loop_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_loop_action(sprite_ptr sprite, int duration_frames, const fixed_point& final_position) :
-        loop_template_action(move(sprite), duration_frames, final_position)
+    template<class SpritePtr>
+    sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
+        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
     {
     }
 
@@ -120,30 +126,38 @@ class sprite_animate_action : public action
     static_assert(Size);
 
 public:
+    template<class SpritePtr>
     [[nodiscard]] static sprite_animate_action once(
-            sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, tiles_item, false, graphics_indexes);
+        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, false, graphics_indexes);
     }
 
+    template<class SpritePtr>
     [[nodiscard]] static sprite_animate_action once(
-            sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
-    {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_animate_action forever(
-            sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            SpritePtr&& sprite, int wait_frames, const sprite_item& item,
             const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
+        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), false,
+                                     graphics_indexes);
     }
 
+    template<class SpritePtr>
     [[nodiscard]] static sprite_animate_action forever(
-            sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
+            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
+        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, true, graphics_indexes);
+    }
+
+    template<class SpritePtr>
+    [[nodiscard]] static sprite_animate_action forever(
+            SpritePtr&& sprite, int wait_frames, const sprite_item& item,
+            const array<uint16_t, Size>& graphics_indexes)
+    {
+        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), true,
+                                     graphics_indexes);
     }
 
     void reset()
@@ -212,11 +226,12 @@ private:
     uint16_t _current_graphics_index_index = 0;
     uint16_t _current_wait_frames = 0;
 
-    sprite_animate_action(sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
+    template<class SpritePtr>
+    sprite_animate_action(SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
                           const array<uint16_t, Size>& graphics_indexes) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
-        _sprite(move(sprite)),
+        _sprite(forward<SpritePtr>(sprite)),
         _tiles_item(tiles_item),
         _graphics_indexes(graphics_indexes)
     {
@@ -225,38 +240,40 @@ private:
     }
 };
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
-        sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, tiles_item,
+                forward<SpritePtr>(sprite), wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
-        sprite_ptr sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, item, array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
-        sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
-{
-    return sprite_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, tiles_item,
+                forward<SpritePtr>(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_forever(
-        sprite_ptr sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, item, array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<class SpritePtr, typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_forever(
+        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_animate_action<sizeof...(Args)>::forever(
+                forward<SpritePtr>(sprite), wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
 
@@ -268,30 +285,38 @@ class sprite_cached_animate_action : public action
     static_assert(Size);
 
 public:
+    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action once(
-            sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, tiles_item, false, graphics_indexes);
+        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, false,
+                                            graphics_indexes);
     }
 
+    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action once(
-            sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
+            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
+        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), false,
+                                            graphics_indexes);
     }
 
+    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action forever(
-            sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
+        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, true,
+                                            graphics_indexes);
     }
 
+    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action forever(
-            sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
+            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
+        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), true,
+                                            graphics_indexes);
     }
 
     void reset()
@@ -360,11 +385,12 @@ private:
     uint16_t _current_tiles_ptr_index = 0;
     uint16_t _current_wait_frames = 0;
 
-    sprite_cached_animate_action(sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
-                                 const array<uint16_t, Size>& graphics_indexes) :
+    template<class SpritePtr>
+    sprite_cached_animate_action(SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+                                 bool forever, const array<uint16_t, Size>& graphics_indexes) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
-        _sprite(move(sprite)),
+        _sprite(forward<SpritePtr>(sprite)),
         _tiles_item(tiles_item)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
@@ -381,38 +407,40 @@ private:
     }
 };
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, tiles_item,
+                forward<SpritePtr>(sprite), wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        sprite_ptr sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, item, array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        sprite_ptr sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
-{
-    return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, tiles_item,
+                forward<SpritePtr>(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<typename ...Args>
+template<class SpritePtr, typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        sprite_ptr sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, item, array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<class SpritePtr, typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_cached_animate_action<sizeof...(Args)>::forever(
+                forward<SpritePtr>(sprite), wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
 }

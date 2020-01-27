@@ -76,7 +76,9 @@ public:
 
     [[nodiscard]] const bg_tiles_ptr& tiles() const;
 
-    void set_tiles(bg_tiles_ptr tiles_ptr);
+    void set_tiles(const bg_tiles_ptr& tiles_ptr);
+
+    void set_tiles(bg_tiles_ptr&& tiles_ptr);
 
     void set_tiles(const bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
@@ -84,7 +86,9 @@ public:
 
     [[nodiscard]] const bg_map_ptr& map() const;
 
-    void set_map(bg_map_ptr map_ptr);
+    void set_map(const bg_map_ptr& map_ptr);
+
+    void set_map(bg_map_ptr&& map_ptr);
 
     void set_map(const bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
@@ -92,7 +96,9 @@ public:
 
     [[nodiscard]] const bg_palette_ptr& palette() const;
 
-    void set_palette(bg_palette_ptr palette_ptr);
+    void set_palette(const bg_palette_ptr& palette_ptr);
+
+    void set_palette(bg_palette_ptr&& palette_ptr);
 
     void set_palette(const bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 

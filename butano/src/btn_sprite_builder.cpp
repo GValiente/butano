@@ -18,19 +18,6 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
                item.tiles_item().graphics());
 }
 
-sprite_builder::sprite_builder(sprite_shape shape, sprite_size size, sprite_tiles_ptr tiles_ptr,
-                               sprite_palette_ptr palette_ptr) :
-    _tiles_ptr(move(tiles_ptr)),
-    _palette_ptr(move(palette_ptr)),
-    _shape(shape),
-    _size(size),
-    _graphics_index(0)
-{
-    BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles(_palette_ptr->eight_bits_per_pixel()),
-               "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-               shape_size().tiles(_palette_ptr->eight_bits_per_pixel()));
-}
-
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 {
     BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);

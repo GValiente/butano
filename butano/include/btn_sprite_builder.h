@@ -22,7 +22,18 @@ class sprite_builder
 public:
     sprite_builder(const sprite_item& item, int graphics_index = 0);
 
-    sprite_builder(sprite_shape shape, sprite_size size, sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr);
+    template<class SpriteTilesPtr, class SpritePalettePtr>
+    sprite_builder(sprite_shape shape, sprite_size size, SpriteTilesPtr&& tiles_ptr, SpritePalettePtr&& palette_ptr) :
+        _tiles_ptr(forward<SpriteTilesPtr>(tiles_ptr)),
+        _palette_ptr(forward<SpritePalettePtr>(palette_ptr)),
+        _shape(shape),
+        _size(size),
+        _graphics_index(0)
+    {
+        BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles(_palette_ptr->eight_bits_per_pixel()),
+                   "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
+                   shape_size().tiles(_palette_ptr->eight_bits_per_pixel()));
+    }
 
     [[nodiscard]] const optional<sprite_item>& item() const
     {
@@ -224,9 +235,10 @@ public:
         return _affine_mat_ptr;
     }
 
-    sprite_builder& set_affine_mat(sprite_affine_mat_ptr affine_mat)
+    template<class SpriteAffineMatPtr>
+    sprite_builder& set_affine_mat(SpriteAffineMatPtr&& affine_mat)
     {
-        _affine_mat_ptr = move(affine_mat);
+        _affine_mat_ptr = forward<SpriteAffineMatPtr>(affine_mat);
         return *this;
     }
 

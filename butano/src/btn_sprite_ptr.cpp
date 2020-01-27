@@ -128,12 +128,17 @@ size sprite_ptr::dimensions() const
 
 const sprite_tiles_ptr& sprite_ptr::tiles() const
 {
-    return sprites_manager::tiles_ptr(_handle);
+    return sprites_manager::tiles(_handle);
 }
 
-void sprite_ptr::set_tiles(sprite_tiles_ptr tiles_ptr)
+void sprite_ptr::set_tiles(const sprite_tiles_ptr& tiles_ptr)
 {
-    sprites_manager::set_tiles_ptr(_handle, move(tiles_ptr));
+    sprites_manager::set_tiles(_handle, tiles_ptr);
+}
+
+void sprite_ptr::set_tiles(sprite_tiles_ptr&& tiles_ptr)
+{
+    sprites_manager::set_tiles(_handle, move(tiles_ptr));
 }
 
 void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode)
@@ -151,12 +156,17 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
 
 const sprite_palette_ptr& sprite_ptr::palette() const
 {
-    return sprites_manager::palette_ptr(_handle);
+    return sprites_manager::palette(_handle);
 }
 
-void sprite_ptr::set_palette(sprite_palette_ptr palette_ptr)
+void sprite_ptr::set_palette(const sprite_palette_ptr& palette_ptr)
 {
-    sprites_manager::set_palette_ptr(_handle, move(palette_ptr));
+    sprites_manager::set_palette(_handle, palette_ptr);
+}
+
+void sprite_ptr::set_palette(sprite_palette_ptr&& palette_ptr)
+{
+    sprites_manager::set_palette(_handle, move(palette_ptr));
 }
 
 void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
@@ -215,7 +225,7 @@ void sprite_ptr::set_position(const fixed_point& position)
 
 fixed sprite_ptr::rotation_angle() const
 {
-    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         return affine_mat->rotation_angle();
     }
@@ -225,7 +235,7 @@ fixed sprite_ptr::rotation_angle() const
 
 void sprite_ptr::set_rotation_angle(fixed rotation_angle)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_rotation_angle(rotation_angle);
     }
@@ -242,7 +252,7 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
 
 fixed sprite_ptr::scale_x() const
 {
-    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         return affine_mat->scale_x();
     }
@@ -252,7 +262,7 @@ fixed sprite_ptr::scale_x() const
 
 void sprite_ptr::set_scale_x(fixed scale_x)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale_x(scale_x);
     }
@@ -269,7 +279,7 @@ void sprite_ptr::set_scale_x(fixed scale_x)
 
 fixed sprite_ptr::scale_y() const
 {
-    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         return affine_mat->scale_y();
     }
@@ -279,7 +289,7 @@ fixed sprite_ptr::scale_y() const
 
 void sprite_ptr::set_scale_y(fixed scale_y)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat_ptr(_handle))
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale_y(scale_y);
     }
@@ -381,12 +391,17 @@ void sprite_ptr::set_ignore_camera(bool ignore_camera)
 
 const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
 {
-    return sprites_manager::affine_mat_ptr(_handle);
+    return sprites_manager::affine_mat(_handle);
 }
 
-void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr> affine_mat_ptr)
+void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat_ptr)
 {
-    sprites_manager::set_affine_mat_ptr(_handle, move(affine_mat_ptr));
+    sprites_manager::set_affine_mat(_handle, affine_mat_ptr);
+}
+
+void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat_ptr)
+{
+    sprites_manager::set_affine_mat(_handle, move(affine_mat_ptr));
 }
 
 bool sprite_ptr::remove_affine_mat_when_not_needed() const

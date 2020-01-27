@@ -23,7 +23,15 @@ public:
     {
     }
 
-    bg_builder(bg_tiles_ptr tiles_ptr, bg_map_ptr map_ptr, bg_palette_ptr palette_ptr);
+    template<class BgTilesPtr, class BgMapPtr, class BgPalettePtr>
+    bg_builder(BgTilesPtr&& tiles_ptr, BgMapPtr&& map_ptr, BgPalettePtr&& palette_ptr) :
+        _tiles_ptr(forward<BgTilesPtr>(tiles_ptr)),
+        _map_ptr(forward<BgMapPtr>(map_ptr)),
+        _palette_ptr(forward<BgPalettePtr>(palette_ptr))
+    {
+        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_palette_ptr->eight_bits_per_pixel()), "Invalid tiles count: ",
+                   _tiles_ptr->tiles_count());
+    }
 
     [[nodiscard]] const optional<bg_item>& item() const
     {

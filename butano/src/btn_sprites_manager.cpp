@@ -280,13 +280,28 @@ size dimensions(id_type id)
     return item->half_dimensions * 2;
 }
 
-const sprite_tiles_ptr& tiles_ptr(id_type id)
+const sprite_tiles_ptr& tiles(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->tiles_ptr;
 }
 
-void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
+void set_tiles(id_type id, const sprite_tiles_ptr& tiles_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(tiles_ptr != item->tiles_ptr)
+    {
+        BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid tiles count: ",
+                   item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
+
+        hw::sprites::set_tiles(tiles_ptr.id(), item->handle);
+        item->tiles_ptr = tiles_ptr;
+        _update_handle(*item);
+    }
+}
+
+void set_tiles(id_type id, sprite_tiles_ptr&& tiles_ptr)
 {
     auto item = static_cast<item_type*>(id);
 
@@ -301,13 +316,29 @@ void set_tiles_ptr(id_type id, sprite_tiles_ptr tiles_ptr)
     }
 }
 
-const sprite_palette_ptr& palette_ptr(id_type id)
+const sprite_palette_ptr& palette(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->palette_ptr;
 }
 
-void set_palette_ptr(id_type id, sprite_palette_ptr palette_ptr)
+void set_palette(id_type id, const sprite_palette_ptr& palette_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(palette_ptr != item->palette_ptr)
+    {
+        BTN_ASSERT(item->palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
+                   "Palette colors bpp mode mismatch: ",
+                   item->palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
+
+        hw::sprites::set_palette(palette_ptr.id(), item->handle);
+        item->palette_ptr = palette_ptr;
+        _update_handle(*item);
+    }
+}
+
+void set_palette(id_type id, sprite_palette_ptr&& palette_ptr)
 {
     auto item = static_cast<item_type*>(id);
 
@@ -530,13 +561,50 @@ void set_ignore_camera(id_type id, bool ignore_camera)
     }
 }
 
-optional<sprite_affine_mat_ptr>& affine_mat_ptr(id_type id)
+optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->affine_mat_ptr;
 }
 
-void set_affine_mat_ptr(id_type id, optional<sprite_affine_mat_ptr> affine_mat_ptr)
+void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(affine_mat_ptr)
+    {
+        const sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
+
+        if(item->affine_mat_ptr)
+        {
+            if(item->affine_mat_ptr == affine_mat)
+            {
+                return;
+            }
+        }
+
+        if(item->remove_affine_mat_when_not_needed && affine_mat.is_identity())
+        {
+            if(item->affine_mat_ptr)
+            {
+                _remove_affine_mat(*item);
+            }
+        }
+        else
+        {
+            _assign_affine_mat(affine_mat, *item);
+        }
+    }
+    else
+    {
+        if(item->affine_mat_ptr)
+        {
+            _remove_affine_mat(*item);
+        }
+    }
+}
+
+void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat_ptr)
 {
     auto item = static_cast<item_type*>(id);
 

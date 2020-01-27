@@ -6,15 +6,6 @@
 namespace btn
 {
 
-bg_builder::bg_builder(bg_tiles_ptr tiles_ptr, bg_map_ptr map_ptr, bg_palette_ptr palette_ptr) :
-    _tiles_ptr(move(tiles_ptr)),
-    _map_ptr(move(map_ptr)),
-    _palette_ptr(move(palette_ptr))
-{
-    BTN_ASSERT(_tiles_ptr->valid_tiles_count(_palette_ptr->eight_bits_per_pixel()), "Invalid tiles count: ",
-               _tiles_ptr->tiles_count());
-}
-
 bg_builder& bg_builder::set_priority(int priority)
 {
     BTN_ASSERT(priority >= 0 && priority <= bgs_manager::max_priority(), "Invalid priority: ", priority);

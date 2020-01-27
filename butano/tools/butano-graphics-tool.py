@@ -228,13 +228,6 @@ class BgItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__colors = bmp.colors
-        self.__bpp4 = False
-
-        if self.__colors > 16:
-            try:
-                self.__bpp4 = bool(info['bpp4'])
-            except KeyError:
-                pass
 
         width = bmp.width
         height = bmp.height
@@ -288,7 +281,7 @@ class BgItem:
     def process(self, build_folder_path):
         command = ['grit', self.__file_path]
 
-        if self.__colors == 16 or self.__bpp4:
+        if self.__colors == 16:
             command.append('-gB4 -mR4')
         else:
             command.append('-gB8 -mR8')

@@ -244,10 +244,19 @@ inline input_string_stream& operator<<(input_string_stream& stream, long double 
 }
 
 template<size_t Precision>
-inline input_string_stream& operator<<(input_string_stream& stream, fixed_t<Precision> value)
+input_string_stream& operator<<(input_string_stream& stream, fixed_t<Precision> value)
 {
     stream.append(value);
     return stream;
+}
+
+template<size_t MaxSize, typename Type>
+string<MaxSize> to_string(const Type& value)
+{
+    string<MaxSize> result;
+    input_string_stream stream(result);
+    stream << value;
+    return result;
 }
 
 }

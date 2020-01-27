@@ -228,10 +228,10 @@ namespace
     BTN_DATA_EWRAM static_data data;
 
 
-    [[maybe_unused]] bool _valid_tiles(int tiles)
+    [[maybe_unused]] bool _valid_tiles_count(int tiles_count)
     {
-        return tiles == 1 || tiles == 2 || tiles == 4 || tiles == 8 || tiles == 16 || tiles == 32 || tiles == 64 ||
-                tiles == 128;
+        return tiles_count == 1 || tiles_count == 2 || tiles_count == 4 || tiles_count == 8 || tiles_count == 16 ||
+                tiles_count == 32 || tiles_count == 64 || tiles_count == 128;
     }
 
     void _commit_item(int id, const tile& tiles_data, bool delay_commit)
@@ -497,7 +497,7 @@ optional<int> create(const span<const tile>& tiles_ref)
 
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_data, " - ", tiles_size);
 
-    BTN_ASSERT(_valid_tiles(tiles_size), "Invalid tiles ref size: ", tiles_size);
+    BTN_ASSERT(_valid_tiles_count(tiles_size), "Invalid tiles ref size: ", tiles_size);
     BTN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
                "Multiple copies of the same tiles data not supported");
 
@@ -518,13 +518,13 @@ optional<int> create(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<int> allocate(int tiles)
+optional<int> allocate(int tiles_count)
 {
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles);
+    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count);
 
-    BTN_ASSERT(_valid_tiles(tiles), "Invalid tiles: ", tiles);
+    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
-    optional<int> result = _create_impl(nullptr, tiles);
+    optional<int> result = _create_impl(nullptr, tiles_count);
 
     if(result)
     {

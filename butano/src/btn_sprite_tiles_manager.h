@@ -17,7 +17,7 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] optional<int> create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> allocate(int tiles);
+    [[nodiscard]] optional<int> allocate(int tiles_count);
 
     void increase_usages(int id);
 

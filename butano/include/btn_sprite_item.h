@@ -13,8 +13,8 @@ class sprite_item
 
 public:
     constexpr sprite_item(sprite_shape shape, sprite_size size, const span<const tile>& tiles,
-                          const span<const color>& palette, int graphics) :
-        sprite_item(shape, size, sprite_tiles_item(tiles, graphics), sprite_palette_item(palette))
+                          const span<const color>& palette, int graphics_count) :
+        sprite_item(shape, size, sprite_tiles_item(tiles, graphics_count), sprite_palette_item(palette))
     {
     }
 
@@ -26,7 +26,7 @@ public:
         _palette_item(palette_item)
     {
         BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles_ref().size()) ==
-                             shape_size().tiles(palette_item.eight_bits_per_pixel()) * tiles_item.graphics(),
+                             shape_size().tiles_count(palette_item.eight_bits_per_pixel()) * tiles_item.graphics_count(),
                              "Invalid shape or size");
     }
 

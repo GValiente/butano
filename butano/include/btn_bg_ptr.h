@@ -14,6 +14,7 @@ class size;
 class bg_item;
 class bg_builder;
 class bg_map_ptr;
+class sprite_ptr;
 class bg_map_item;
 class fixed_point;
 class palette_item;
@@ -123,6 +124,10 @@ public:
     [[nodiscard]] int priority() const;
 
     void set_priority(int priority);
+
+    void put_above(const bg_ptr& other);
+
+    void put_above(const sprite_ptr& sprite_ptr);
 
     [[nodiscard]] bool mosaic_enabled() const;
 

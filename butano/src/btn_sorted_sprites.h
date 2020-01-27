@@ -188,15 +188,7 @@ namespace btn::sorted_sprites
     };
 
 
-    struct layers_comparer
-    {
-        bool operator()(unsigned a, unsigned b) const
-        {
-            return a > b;
-        }
-    };
-
-    using layers_type = etl::imap<unsigned, list, layers_comparer>;
+    using layers_type = etl::imap<unsigned, list>;
 
 
     void insert(sprites_manager_item& item);

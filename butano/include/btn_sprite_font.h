@@ -28,8 +28,8 @@ public:
     {
         BTN_CONSTEXPR_ASSERT((item.shape() == sprite_shape::SQUARE || item.shape() == sprite_shape::TALL) &&
                              item.size() == sprite_size::SMALL, "Invalid shape or size");
-        BTN_CONSTEXPR_ASSERT(item.tiles_item().graphics() >= minimum_graphics + int(utf8_characters.size()),
-                             "Invalid graphics or utf8 characters count");
+        BTN_CONSTEXPR_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + int(utf8_characters.size()),
+                             "Invalid graphics count or utf8 characters count");
         BTN_CONSTEXPR_ASSERT(! item.palette_item().eight_bits_per_pixel(), "8bpp fonts not supported");
         BTN_CONSTEXPR_ASSERT(utf8_characters.size() <= BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
                              "Invalid utf8 characters count");

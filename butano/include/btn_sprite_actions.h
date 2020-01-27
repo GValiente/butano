@@ -31,8 +31,7 @@ public:
 };
 
 
-class sprite_move_by_action :
-        public by_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_by_action : public by_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
@@ -60,8 +59,7 @@ public:
 };
 
 
-class sprite_move_to_action :
-        public to_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_to_action : public to_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
@@ -89,8 +87,7 @@ public:
 };
 
 
-class sprite_move_loop_action :
-        public loop_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_loop_action : public loop_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:

@@ -21,9 +21,8 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 
-#include "btn_bg_ptr.h"
-#include "btn_bg_256x256_4_bg_item.h"
-#include "btn_bg_512x512_8_bg_item.h"
+#include "btn_bg_actions.h"
+#include "btn_stage_1_bg_item.h"
 
 #include "bf_stats.h"
 #include "bf_sprite_fonts.h"
@@ -32,54 +31,23 @@ int main()
 {
     btn::core::init();
 
-    btn::bg_ptr bg4 = btn::bg_ptr::create(0, 0, btn::bg_items::bg_256x256_4);
-    btn::bg_ptr bg8 = btn::bg_ptr::create(0, 0, btn::bg_items::bg_512x512_8);
-    btn::bg_palettes::set_transparent_color(btn::colors::gray);
+    btn::bg_ptr bg = btn::bg_ptr::create(0, 0, btn::bg_items::stage_1);
+    btn::bg_move_by_action bg_move_action(btn::move(bg), 0, 0.5);
+    bg_move_action.run();
 
-    int display_width = btn::display::width();
-    int display_height = btn::display::height();
-
-    struct bench_sprite
-    {
-        btn::sprite_move_loop_action move_loop_action;
-        btn::sprite_cached_animate_action<2> animate_action;
-    };
-
-    constexpr int num_sprites = 48;
-    btn::random random;
-    btn::vector<bench_sprite, num_sprites> bench_sprites;
-
-    for(int index = 0; index < num_sprites; ++index)
-    {
-        int x = (display_width / 4) + int(random.get() % (unsigned(display_width) / 2));
-        int y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
-        btn::sprite_ptr sprite = btn::sprite_ptr::create(x, y, btn::sprite_items::hero);
-        x = (display_width / 4) + int(random.get() % (unsigned(display_width) / 2));
-        y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
-        bench_sprites.push_back(bench_sprite{
-                                    btn::sprite_move_loop_action(sprite, 64, x, y),
-                                    btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2) });
-
-        bench_sprite& bench_spr = bench_sprites.back();
-        bench_spr.move_loop_action.run();
-        bench_spr.animate_action.run();
-    }
+    int center_x = btn::display::width() / 2;
+    int center_y = btn::display::height() / 2;
 
     btn::sprite_builder sprite_builder(btn::sprite_items::hero);
-    sprite_builder.set_position(display_width / 2, display_height / 2);
-    sprite_builder.set_scale_x(2);
-    sprite_builder.set_scale_y(2);
+    sprite_builder.set_position(center_x, center_y);
     sprite_builder.set_mosaic_enabled(true);
 
     btn::sprite_ptr sprite = sprite_builder.build_and_release();
     auto sprite_animate_action = btn::create_sprite_cached_animate_action_forever(sprite, 16, btn::sprite_items::hero, 0, 2);
     sprite_animate_action.run();
 
-    btn::sprite_move_to_action sprite_move_to_action(sprite, 64, 0, 0);
-
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     bf::stats stats(text_generator);
-    int counter = 0;
     // btn::music::play(btn::music_items::battle_clean);
     btn::core::update();
 
@@ -109,37 +77,37 @@ int main()
             btn::core::sleep(btn::keypad::button_type::SELECT);
         }
 
-        btn::fixed_point camera_position = btn::camera::position();
-
         if(btn::keypad::held(btn::keypad::button_type::LEFT))
         {
-            camera_position.set_x(camera_position.x() - 1);
+            btn::fixed sprite_x = btn::max(sprite.x() - 1, btn::fixed(center_x - 72));
+            sprite.set_x(sprite_x);
+
+            if(sprite_x < center_x + 32)
+            {
+                btn::camera::set_x(btn::max(btn::camera::x() - 1, btn::fixed(-32)));
+            }
         }
         else if(btn::keypad::held(btn::keypad::button_type::RIGHT))
         {
-            camera_position.set_x(camera_position.x() + 1);
+            btn::fixed sprite_x = btn::min(sprite.x() + 1, btn::fixed(center_x + 72));
+            sprite.set_x(sprite_x);
+
+            if(sprite_x > center_x - 32)
+            {
+                btn::camera::set_x(btn::min(btn::camera::x() + 1, btn::fixed(32)));
+            }
         }
 
         if(btn::keypad::held(btn::keypad::button_type::UP))
         {
-            camera_position.set_y(camera_position.y() - 1);
+            sprite.set_y(btn::max(sprite.y() - 1, btn::fixed(32)));
         }
         else if(btn::keypad::held(btn::keypad::button_type::DOWN))
         {
-            camera_position.set_y(camera_position.y() + 1);
+            sprite.set_y(btn::min(sprite.y() + 1, btn::fixed(128)));
         }
 
-        btn::camera::set_position(camera_position);
-
-        if(counter % 64 == 0)
-        {
-            int x = (display_width / 4) + int(random.get() % (unsigned(display_width) / 2));
-            int y = (display_height / 4) + int(random.get() % (unsigned(display_height) / 2));
-            sprite_move_to_action = btn::sprite_move_to_action(sprite, 64, x, y);
-            sprite_move_to_action.run();
-        }
-
+        // btn::camera::set_position(camera_position);
         btn::core::update();
-        ++counter;
     }
 }

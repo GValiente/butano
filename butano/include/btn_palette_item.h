@@ -19,7 +19,8 @@ public:
     constexpr explicit palette_item(const span<const color>& palette_ref) :
         _palette_ref(palette_ref)
     {
-        BTN_CONSTEXPR_ASSERT(colors() >= 16 && colors() <= 256 && colors() % 16 == 0, "Invalid colors count");
+        BTN_CONSTEXPR_ASSERT(colors_count() >= 16 && colors_count() <= 256 && colors_count() % 16 == 0,
+                             "Invalid colors count");
     }
 
     [[nodiscard]] constexpr const span<const color>& palette_ref() const
@@ -27,7 +28,7 @@ public:
         return _palette_ref;
     }
 
-    [[nodiscard]] constexpr int colors() const
+    [[nodiscard]] constexpr int colors_count() const
     {
         return int(_palette_ref.size());
     }

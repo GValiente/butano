@@ -178,14 +178,14 @@ public:
         return 0;
     }
 
-    [[nodiscard]] constexpr int pixels() const
+    [[nodiscard]] constexpr int pixels_count() const
     {
         return width() * height();
     }
 
-    [[nodiscard]] constexpr int tiles(bool eight_bits_per_pixel) const
+    [[nodiscard]] constexpr int tiles_count(bool eight_bits_per_pixel) const
     {
-        return eight_bits_per_pixel ? pixels() / 32 : pixels() / 64;
+        return eight_bits_per_pixel ? pixels_count() / 32 : pixels_count() / 64;
     }
 
 private:

@@ -24,9 +24,9 @@ namespace
         return *data_ptr;
     }
 
-    [[nodiscard]] size data_size(int tiles)
+    [[nodiscard]] size data_size(int tiles_count)
     {
-        return size(tiles * half_words_per_tile(), 1);
+        return size(tiles_count * half_words_per_tile(), 1);
     }
 
     [[nodiscard]] size data_size(const span<const tile>& tiles_ref)
@@ -88,11 +88,11 @@ bg_tiles_ptr bg_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
     return bg_tiles_ptr(*handle);
 }
 
-bg_tiles_ptr bg_tiles_ptr::allocate(int tiles)
+bg_tiles_ptr bg_tiles_ptr::allocate(int tiles_count)
 {
-    BTN_ASSERT(tiles >= 0, "Invalid tiles: ", tiles);
+    BTN_ASSERT(tiles_count > 0, "Invalid tiles count: ", tiles_count);
 
-    optional<int> handle = bg_blocks_manager::allocate(data_size(tiles), nullopt, aligned);
+    optional<int> handle = bg_blocks_manager::allocate(data_size(tiles_count), nullopt, aligned);
     BTN_ASSERT(handle, "Tiles allocate failed");
 
     return bg_tiles_ptr(*handle);
@@ -132,13 +132,13 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_find_or_create(const span<const ti
     return result;
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::optional_allocate(int tiles)
+optional<bg_tiles_ptr> bg_tiles_ptr::optional_allocate(int tiles_count)
 {
-    BTN_ASSERT(tiles >= 0, "Invalid tiles: ", tiles);
+    BTN_ASSERT(tiles_count > 0, "Invalid tiles count: ", tiles_count);
 
     optional<bg_tiles_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::allocate(data_size(tiles), nullopt, aligned))
+    if(optional<int> handle = bg_blocks_manager::allocate(data_size(tiles_count), nullopt, aligned))
     {
         result = bg_tiles_ptr(*handle);
     }

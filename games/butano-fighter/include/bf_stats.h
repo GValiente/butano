@@ -59,7 +59,7 @@ private:
     const btn::sprite_text_generator& _text_generator;
     btn::optional<action> _action;
     btn::vector<btn::sprite_ptr, 8 * 4> _static_text_sprites;
-    mode_type _mode = mode_type::DETAILED;
+    mode_type _mode = mode_type::SIMPLE;
 };
 
 }

@@ -418,6 +418,14 @@ void set_z_order(id_type id, int z_order)
     }
 }
 
+void put_in_front_of_sort_layer(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    sorted_sprites::erase(*item);
+    sorted_sprites::insert(*item);
+    data.rebuild_handles |= item->on_screen;
+}
+
 bool horizontal_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);

@@ -14,8 +14,8 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _graphics_index(graphics_index)
 {
     BTN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-    BTN_ASSERT(graphics_index < item.tiles_item().graphics(), "Invalid graphics index: ", graphics_index, " - ",
-               item.tiles_item().graphics());
+    BTN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
+               item.tiles_item().graphics_count());
 }
 
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)

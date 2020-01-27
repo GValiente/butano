@@ -1,6 +1,7 @@
 #include "btn_sprite_ptr.h"
 
 #include "btn_size.h"
+#include "btn_bg_ptr.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprites_manager.h"
 #include "btn_sprite_affine_mat_builder.h"
@@ -322,6 +323,55 @@ int sprite_ptr::z_order() const
 void sprite_ptr::set_z_order(int z_order)
 {
     sprites_manager::set_z_order(_handle, z_order);
+}
+
+void sprite_ptr::put_above(const sprite_ptr& other)
+{
+    if(*this != other)
+    {
+        return;
+    }
+
+    int this_priority = bg_priority();
+    int other_priority = other.bg_priority();
+
+    if(this_priority < other_priority)
+    {
+        return;
+    }
+
+    if(this_priority > other_priority)
+    {
+        set_bg_priority(other_priority);
+    }
+
+    int this_z_order = z_order();
+    int other_z_order = other.z_order();
+
+    if(this_z_order < other_z_order)
+    {
+        return;
+    }
+
+    if(this_z_order > other_z_order)
+    {
+        set_z_order(other_z_order);
+    }
+    else
+    {
+        sprites_manager::put_in_front_of_sort_layer(_handle);
+    }
+}
+
+void sprite_ptr::put_above(const bg_ptr& bg_ptr)
+{
+    int this_priority = bg_priority();
+    int bg_priority = bg_ptr.priority();
+
+    if(this_priority > bg_priority)
+    {
+        set_bg_priority(bg_priority);
+    }
 }
 
 bool sprite_ptr::horizontal_flip() const

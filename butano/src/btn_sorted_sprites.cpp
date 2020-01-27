@@ -17,7 +17,7 @@ namespace
     {
 
     public:
-        etl::map<unsigned, list, BTN_CFG_SPRITES_MAX_SORT_LAYERS, layers_comparer> layers;
+        etl::map<unsigned, list, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layers;
     };
 
     BTN_DATA_EWRAM static_data data;

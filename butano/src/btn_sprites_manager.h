@@ -59,6 +59,8 @@ namespace sprites_manager
 
     void set_z_order(id_type id, int z_order);
 
+    void put_in_front_of_sort_layer(id_type id);
+
     [[nodiscard]] bool horizontal_flip(id_type id);
 
     void set_horizontal_flip(id_type id, bool horizontal_flip);

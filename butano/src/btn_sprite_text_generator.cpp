@@ -425,7 +425,7 @@ namespace
 
                 const sprite_tiles_item& tiles_item = font.item().tiles_item();
                 const tile& source_tiles_ref = tiles_item.tiles_ref().front();
-                int source_height = tiles_item.graphics() * _character_height;
+                int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height, source_y, _sprite_column,
                                              *_tiles_vram);
@@ -600,7 +600,7 @@ namespace
 
                 const sprite_tiles_item& tiles_item = font.item().tiles_item();
                 const tile& source_tiles_ref = tiles_item.tiles_ref().front();
-                int source_height = tiles_item.graphics() * _character_height;
+                int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height,
                                              source_y,
@@ -662,7 +662,7 @@ namespace
                 }
                 else
                 {
-                    utf8_character utf8_char(text_data + text_index);
+                    utf8_character utf8_char(text_data[text_index]);
                     auto it = utf8_characters_map.find(utf8_char.value());
                     BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
 

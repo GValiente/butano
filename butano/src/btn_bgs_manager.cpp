@@ -18,7 +18,7 @@ namespace
 
     public:
         fixed_point position;
-        size dimensions;
+        size quarter_dimensions;
         unsigned usages = 1;
         bg_tiles_ptr tiles_ptr;
         bg_map_ptr map_ptr;
@@ -26,24 +26,51 @@ namespace
 
         item_type(bg_builder&& builder, bg_tiles_ptr&& tiles, bg_map_ptr&& map, hw::bgs::handle& handle) :
             position(builder.position()),
-            dimensions(map.dimensions()),
+            quarter_dimensions(map.dimensions()),
             tiles_ptr(move(tiles)),
-            map_ptr(move(map))
+            map_ptr(move(map)),
+            ignore_camera(builder.ignore_camera())
         {
             hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.eight_bits_per_pixel(), handle);
-            hw::bgs::set_map(map_ptr.id(), dimensions, handle);
+            hw::bgs::set_map(map_ptr.id(), quarter_dimensions, handle);
+            update_quarter_dimensions(quarter_dimensions, handle);
+        }
 
+        void update_quarter_dimensions(const size& map_dimensions, hw::bgs::handle& handle)
+        {
+            quarter_dimensions = map_dimensions * 2;
+            update_hw_position(handle);
+        }
+
+        void update_hw_position(hw::bgs::handle& handle)
+        {
             fixed_point real_position = -position;
-            ignore_camera = builder.ignore_camera();
 
             if(! ignore_camera)
             {
                 real_position += camera::position();
             }
 
-            hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
+            int x = real_position.x().integer() + quarter_dimensions.width() + 8;
+            int y = real_position.y().integer() + quarter_dimensions.height() + 8;
+            hw::bgs::set_position(x, y, handle);
+        }
+
+        void update_hw_position(const fixed_point& camera_position, hw::bgs::handle& handle)
+        {
+            fixed_point real_position = -position;
+
+            if(! ignore_camera)
+            {
+                real_position += camera_position;
+            }
+
+            int x = real_position.x().integer() + quarter_dimensions.width() + 8;
+            int y = real_position.y().integer() + quarter_dimensions.height() + 8;
+            hw::bgs::set_position(x, y, handle);
         }
     };
+
 
     class static_data
     {
@@ -64,13 +91,13 @@ int max_priority()
 
 optional<int> create(bg_builder&& builder)
 {
-    int new_index = 0;
+    int new_index = hw::bgs::count() - 1;
 
-    while(new_index < hw::bgs::count())
+    while(new_index >= 0)
     {
         if(data.items[new_index])
         {
-            ++new_index;
+            --new_index;
         }
         else
         {
@@ -78,7 +105,7 @@ optional<int> create(bg_builder&& builder)
         }
     }
 
-    if(new_index == hw::bgs::count())
+    if(new_index < 0)
     {
         return nullopt;
     }
@@ -135,7 +162,7 @@ void decrease_usages(int id)
 size dimensions(int id)
 {
     item_type& item = *data.items[id];
-    return item.dimensions * 8;
+    return item.quarter_dimensions * 4;
 }
 
 const bg_tiles_ptr& tiles(int id)
@@ -194,10 +221,11 @@ void set_map(int id, const bg_map_ptr& map_ptr)
 
     if(map_ptr != item.map_ptr)
     {
-        size dimensions = map_ptr.dimensions();
-        hw::bgs::set_map(map_ptr.id(), dimensions, data.handles[id]);
+        hw::bgs::handle& handle = data.handles[id];
+        size map_dimensions = map_ptr.dimensions();
+        hw::bgs::set_map(map_ptr.id(), map_dimensions, handle);
         item.map_ptr = map_ptr;
-        item.dimensions = dimensions;
+        item.update_quarter_dimensions(map_dimensions, handle);
 
         if(display_manager::bg_enabled(id))
         {
@@ -212,10 +240,11 @@ void set_map(int id, bg_map_ptr&& map_ptr)
 
     if(map_ptr != item.map_ptr)
     {
-        size dimensions = map_ptr.dimensions();
-        hw::bgs::set_map(map_ptr.id(), dimensions, data.handles[id]);
+        hw::bgs::handle& handle = data.handles[id];
+        size map_dimensions = map_ptr.dimensions();
+        hw::bgs::set_map(map_ptr.id(), map_dimensions, handle);
         item.map_ptr = move(map_ptr);
-        item.dimensions = dimensions;
+        item.update_quarter_dimensions(map_dimensions, handle);
 
         if(display_manager::bg_enabled(id))
         {
@@ -233,15 +262,8 @@ const fixed_point& position(int id)
 void set_position(int id, const fixed_point& position)
 {
     item_type& item = *data.items[id];
-    fixed_point real_position = -position;
-
-    if(! item.ignore_camera)
-    {
-        real_position += camera::position();
-    }
-
-    hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), data.handles[id]);
     item.position = position;
+    item.update_hw_position(data.handles[id]);
 
     if(display_manager::bg_enabled(id))
     {
@@ -306,20 +328,32 @@ void set_ignore_camera(int id, bool ignore_camera)
 {
     item_type& item = *data.items[id];
     item.ignore_camera = ignore_camera;
-    set_position(id, item.position);
+    item.update_hw_position(data.handles[id]);
+
+    if(display_manager::bg_enabled(id))
+    {
+        data.commit = true;
+    }
 }
 
 void update_camera()
 {
-    for(int index = 0; index < hw::bgs::count(); ++index)
+    fixed_point camera_position = camera::position();
+
+    for(int id = 0; id < hw::bgs::count(); ++id)
     {
-        if(optional<item_type>& item_cnt = data.items[index])
+        if(optional<item_type>& item_cnt = data.items[id])
         {
             item_type& item = *item_cnt;
 
             if(! item.ignore_camera)
             {
-                set_position(index, item.position);
+                item.update_hw_position(camera_position, data.handles[id]);
+
+                if(display_manager::bg_enabled(id))
+                {
+                    data.commit = true;
+                }
             }
         }
     }

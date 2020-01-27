@@ -11,6 +11,7 @@ namespace btn
 {
 
 class size;
+class bg_ptr;
 class fixed_point;
 class sprite_item;
 class palette_item;
@@ -130,6 +131,10 @@ public:
     [[nodiscard]] int z_order() const;
 
     void set_z_order(int z_order);
+
+    void put_above(const sprite_ptr& other);
+
+    void put_above(const bg_ptr& bg_ptr);
 
     [[nodiscard]] bool horizontal_flip() const;
 

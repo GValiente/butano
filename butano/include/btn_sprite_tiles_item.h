@@ -15,24 +15,24 @@ class sprite_tiles_item
 {
 
 public:
-    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, int graphics) :
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, int graphics_count) :
         _tiles_ref(tiles_ref),
-        _graphics(graphics)
+        _graphics_count(graphics_count)
     {
         BTN_CONSTEXPR_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
-        BTN_CONSTEXPR_ASSERT(graphics > 0, "Invalid graphics");
-        BTN_CONSTEXPR_ASSERT(graphics <= int(tiles_ref.size()), "Invalid tiles or graphics");
-        BTN_CONSTEXPR_ASSERT(tiles_ref.size() % size_t(graphics) == 0, "Invalid tiles or graphics");
+        BTN_CONSTEXPR_ASSERT(graphics_count > 0, "Invalid graphics count");
+        BTN_CONSTEXPR_ASSERT(graphics_count <= int(tiles_ref.size()), "Invalid tiles or graphics count");
+        BTN_CONSTEXPR_ASSERT(tiles_ref.size() % size_t(graphics_count) == 0, "Invalid tiles or graphics count");
     }
 
-    [[nodiscard]] constexpr int graphics() const
+    [[nodiscard]] constexpr int graphics_count() const
     {
-        return _graphics;
+        return _graphics_count;
     }
 
-    [[nodiscard]] constexpr int tiles_per_graphic() const
+    [[nodiscard]] constexpr int tiles_count_per_graphic() const
     {
-        return int(_tiles_ref.size()) / _graphics;
+        return int(_tiles_ref.size()) / _graphics_count;
     }
 
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
@@ -43,9 +43,9 @@ public:
     [[nodiscard]] constexpr span<const tile> tiles_ref(int graphics_index) const
     {
         BTN_CONSTEXPR_ASSERT(graphics_index >= 0, "Invalid graphics index");
-        BTN_CONSTEXPR_ASSERT(graphics_index < _graphics, "Invalid graphics index");
+        BTN_CONSTEXPR_ASSERT(graphics_index < _graphics_count, "Invalid graphics index");
 
-        auto tiles_size = size_t(tiles_per_graphic());
+        auto tiles_size = size_t(tiles_count_per_graphic());
         return span<const tile>(_tiles_ref.data() + (size_t(graphics_index) * tiles_size), tiles_size);
     }
 
@@ -54,7 +54,7 @@ public:
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {
         return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size() &&
-                a._graphics == b._graphics;
+                a._graphics_count == b._graphics_count;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const sprite_tiles_item& a, const sprite_tiles_item& b)
@@ -64,7 +64,7 @@ public:
 
 private:
     span<const tile> _tiles_ref;
-    int _graphics;
+    int _graphics_count;
 };
 
 }

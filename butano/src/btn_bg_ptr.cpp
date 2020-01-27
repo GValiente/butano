@@ -2,6 +2,7 @@
 
 #include "btn_size.h"
 #include "btn_bg_builder.h"
+#include "btn_sprite_ptr.h"
 #include "btn_bgs_manager.h"
 #include "btn_bg_palette_ptr.h"
 
@@ -263,6 +264,47 @@ int bg_ptr::priority() const
 void bg_ptr::set_priority(int priority)
 {
     bgs_manager::set_priority(_id, priority);
+}
+
+void bg_ptr::put_above(const bg_ptr& other)
+{
+    int this_id = id();
+    int other_id = other.id();
+
+    if(this_id != other_id)
+    {
+        int this_priority = priority();
+        int other_priority = other.priority();
+
+        if(this_priority >= other_priority)
+        {
+            if(this_id > other_id)
+            {
+                if(other_priority > 0)
+                {
+                    set_priority(other_priority - 1);
+                }
+            }
+            else
+            {
+                set_priority(other_priority);
+            }
+        }
+    }
+}
+
+void bg_ptr::put_above(const sprite_ptr& sprite_ptr)
+{
+    int this_priority = priority();
+    int sprite_priority = sprite_ptr.bg_priority();
+
+    if(this_priority >= sprite_priority)
+    {
+        if(sprite_priority > 0)
+        {
+            set_priority(sprite_priority - 1);
+        }
+    }
 }
 
 bool bg_ptr::mosaic_enabled() const

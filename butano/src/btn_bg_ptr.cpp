@@ -136,12 +136,12 @@ void bg_ptr::set_tiles(bg_tiles_ptr tiles_ptr)
 
 void bg_ptr::set_tiles(const bg_item& item, create_mode create_mode)
 {
-    set_tiles(item.tiles(), create_mode);
+    set_tiles(item.tiles_item(), create_mode);
 }
 
 void bg_ptr::set_tiles(const bg_tiles_item& tiles_item, create_mode create_mode)
 {
-    optional<bg_tiles_ptr> tiles_ptr = tiles_item.create_tiles_ptr(create_mode);
+    optional<bg_tiles_ptr> tiles_ptr = tiles_item.create_tiles(create_mode);
     BTN_ASSERT(tiles_ptr, "Tiles create failed");
 
     set_tiles(move(*tiles_ptr));
@@ -159,12 +159,12 @@ void bg_ptr::set_map(bg_map_ptr map_ptr)
 
 void bg_ptr::set_map(const bg_item& item, create_mode create_mode)
 {
-    set_map(item.map(), create_mode);
+    set_map(item.map_item(), create_mode);
 }
 
 void bg_ptr::set_map(const bg_map_item& map_item, create_mode create_mode)
 {
-    optional<bg_map_ptr> map_ptr = map_item.create_map_ptr(create_mode);
+    optional<bg_map_ptr> map_ptr = map_item.create_map(create_mode);
     BTN_ASSERT(map_ptr, "Map create failed");
 
     set_map(move(*map_ptr));
@@ -182,12 +182,12 @@ void bg_ptr::set_palette(bg_palette_ptr palette_ptr)
 
 void bg_ptr::set_palette(const bg_item& item, create_mode create_mode)
 {
-    set_palette(item.palette(), create_mode);
+    set_palette(item.palette_item(), create_mode);
 }
 
-void bg_ptr::set_palette(const palette_item& palette_item, create_mode create_mode)
+void bg_ptr::set_palette(const bg_palette_item& palette_item, create_mode create_mode)
 {
-    optional<bg_palette_ptr> palette_ptr = palette_item.create_bg_palette_ptr(create_mode);
+    optional<bg_palette_ptr> palette_ptr = palette_item.create_bg_palette(create_mode);
     BTN_ASSERT(palette_ptr, "Palette create failed");
 
     set_palette(move(*palette_ptr));

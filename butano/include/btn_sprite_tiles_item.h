@@ -15,19 +15,14 @@ class sprite_tiles_item
 {
 
 public:
-    constexpr sprite_tiles_item(const span<const tile>& tiles, int graphics) :
-        _tiles(tiles),
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, int graphics) :
+        _tiles_ref(tiles_ref),
         _graphics(graphics)
     {
-        BTN_CONSTEXPR_ASSERT(! tiles.empty(), "Tiles is empty");
+        BTN_CONSTEXPR_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
         BTN_CONSTEXPR_ASSERT(graphics > 0, "Invalid graphics");
-        BTN_CONSTEXPR_ASSERT(graphics <= int(tiles.size()), "Invalid tiles or graphics");
-        BTN_CONSTEXPR_ASSERT(int(tiles.size()) % graphics == 0, "Invalid tiles or graphics");
-    }
-
-    [[nodiscard]] constexpr const span<const tile>& tiles() const
-    {
-        return _tiles;
+        BTN_CONSTEXPR_ASSERT(graphics <= int(tiles_ref.size()), "Invalid tiles or graphics");
+        BTN_CONSTEXPR_ASSERT(tiles_ref.size() % size_t(graphics) == 0, "Invalid tiles or graphics");
     }
 
     [[nodiscard]] constexpr int graphics() const
@@ -37,7 +32,12 @@ public:
 
     [[nodiscard]] constexpr int tiles_per_graphic() const
     {
-        return int(_tiles.size()) / _graphics;
+        return int(_tiles_ref.size()) / _graphics;
+    }
+
+    [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
+    {
+        return _tiles_ref;
     }
 
     [[nodiscard]] constexpr span<const tile> tiles_ref(int graphics_index) const
@@ -46,14 +46,14 @@ public:
         BTN_CONSTEXPR_ASSERT(graphics_index < _graphics, "Invalid graphics index");
 
         auto tiles_size = size_t(tiles_per_graphic());
-        return span<const tile>(_tiles.data() + (size_t(graphics_index) * tiles_size), tiles_size);
+        return span<const tile>(_tiles_ref.data() + (size_t(graphics_index) * tiles_size), tiles_size);
     }
 
-    [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_ptr(int graphics_index, create_mode create_mode) const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_tiles(int graphics_index, create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {
-        return a._tiles.data() == b._tiles.data() && a._tiles.size() == b._tiles.size() &&
+        return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size() &&
                 a._graphics == b._graphics;
     }
 
@@ -63,7 +63,7 @@ public:
     }
 
 private:
-    span<const tile> _tiles;
+    span<const tile> _tiles_ref;
     int _graphics;
 };
 

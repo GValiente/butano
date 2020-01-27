@@ -21,6 +21,8 @@ class bg_tiles_ptr;
 class bg_tiles_item;
 class bg_palette_ptr;
 
+using bg_palette_item = palette_item;
+
 class bg_ptr
 {
 
@@ -94,7 +96,7 @@ public:
 
     void set_palette(const bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_palette(const palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const bg_palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     void set_item(const bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 

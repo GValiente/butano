@@ -7,7 +7,7 @@
 namespace btn
 {
 
-optional<bg_map_ptr> bg_map_item::create_map_ptr(create_mode create_mode) const
+optional<bg_map_ptr> bg_map_item::create_map(create_mode create_mode) const
 {
     optional<bg_map_ptr> result;
 

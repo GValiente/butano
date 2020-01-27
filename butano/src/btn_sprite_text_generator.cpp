@@ -173,7 +173,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles().tiles_ref(graphics_index);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
 
             if(! source_tiles_ptr)
@@ -248,7 +248,7 @@ namespace
                 }
 
                 const sprite_item& item = font.item();
-                span<const tile> source_tiles_ref = item.tiles().tiles_ref(graphics_index);
+                span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
                 optional<sprite_tiles_ptr> source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
 
                 if(! source_tiles_ptr)
@@ -340,7 +340,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles().tiles_ref(graphics_index);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             hw::sprite_tiles::copy_tiles(source_tiles_ref[0], 1, _tiles_vram[_sprite_character_index]);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
@@ -423,8 +423,8 @@ namespace
                     _sprite_column = 0;
                 }
 
-                const sprite_tiles_item& tiles_item = font.item().tiles();
-                const tile& source_tiles_ref = tiles_item.tiles().front();
+                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const tile& source_tiles_ref = tiles_item.tiles_ref().front();
                 int source_height = tiles_item.graphics() * _character_height;
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height, source_y, _sprite_column,
@@ -505,7 +505,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles().tiles_ref(graphics_index);
+            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
             auto source_tiles_data = source_tiles_ref.data();
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
             hw::sprite_tiles::copy_tiles(source_tiles_data[0], 1, *up_tiles_vram_ptr);
@@ -598,8 +598,8 @@ namespace
                     _sprite_column = 0;
                 }
 
-                const sprite_tiles_item& tiles_item = font.item().tiles();
-                const tile& source_tiles_ref = tiles_item.tiles().front();
+                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const tile& source_tiles_ref = tiles_item.tiles_ref().front();
                 int source_height = tiles_item.graphics() * _character_height;
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_ref, source_height,
@@ -687,7 +687,7 @@ namespace
 
 sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     _font(font),
-    _palette_item(font.item().palette())
+    _palette_item(font.item().palette_item())
 {
     int utf8_character_index = sprite_font::minimum_graphics;
 
@@ -699,7 +699,7 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     }
 }
 
-void sprite_text_generator::set_palette(const palette_item& palette_item)
+void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
 {
     BTN_ASSERT(! palette_item.eight_bits_per_pixel(), "8bpp fonts not supported");
 
@@ -765,7 +765,7 @@ bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_vie
 bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
-    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette_ptr(create_mode::FIND_OR_CREATE);
+    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette(create_mode::FIND_OR_CREATE);
 
     if(! palette_ptr)
     {

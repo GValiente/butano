@@ -14,8 +14,8 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _graphics_index(graphics_index)
 {
     BTN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-    BTN_ASSERT(graphics_index < item.tiles().graphics(), "Invalid graphics index: ", graphics_index, " - ",
-               item.tiles().graphics());
+    BTN_ASSERT(graphics_index < item.tiles_item().graphics(), "Invalid graphics index: ", graphics_index, " - ",
+               item.tiles_item().graphics());
 }
 
 sprite_builder::sprite_builder(sprite_shape shape, sprite_size size, sprite_tiles_ptr tiles_ptr,
@@ -166,7 +166,7 @@ optional<sprite_tiles_ptr> sprite_builder::tiles() const
     }
     else
     {
-        result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -182,7 +182,7 @@ optional<sprite_palette_ptr> sprite_builder::palette() const
     }
     else
     {
-        result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
+        result = _item->palette_item().create_sprite_palette(_palette_create_mode);
     }
 
     return result;
@@ -198,7 +198,7 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles()
     }
     else
     {
-        result = _item->tiles().create_tiles_ptr(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -214,7 +214,7 @@ optional<sprite_palette_ptr> sprite_builder::release_palette()
     }
     else
     {
-        result = _item->palette().create_sprite_palette_ptr(_palette_create_mode);
+        result = _item->palette_item().create_sprite_palette(_palette_create_mode);
     }
 
     return result;

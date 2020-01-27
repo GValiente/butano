@@ -33,7 +33,7 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] optional<bg_map_ptr> create_map_ptr(create_mode create_mode) const;
+    [[nodiscard]] optional<bg_map_ptr> create_map(create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_map_item& a, const bg_map_item& b)
     {

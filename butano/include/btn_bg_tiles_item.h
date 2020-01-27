@@ -15,20 +15,20 @@ class bg_tiles_item
 {
 
 public:
-    constexpr explicit bg_tiles_item(const span<const tile>& tiles) :
-        _tiles(tiles)
+    constexpr explicit bg_tiles_item(const span<const tile>& tiles_ref) :
+        _tiles_ref(tiles_ref)
     {
         BTN_CONSTEXPR_ASSERT(valid_tiles_count(false) || valid_tiles_count(true), "Invalid tiles count");
     }
 
-    [[nodiscard]] constexpr const span<const tile>& tiles() const
+    [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
     {
-        return _tiles;
+        return _tiles_ref;
     }
 
     [[nodiscard]] constexpr bool valid_tiles_count(bool eight_bits_per_pixel) const
     {
-        size_t count = _tiles.size();
+        size_t count = _tiles_ref.size();
 
         if(eight_bits_per_pixel)
         {
@@ -38,11 +38,11 @@ public:
         return count && count < 1024;
     }
 
-    [[nodiscard]] optional<bg_tiles_ptr> create_tiles_ptr(create_mode create_mode) const;
+    [[nodiscard]] optional<bg_tiles_ptr> create_tiles(create_mode create_mode) const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_tiles_item& a, const bg_tiles_item& b)
     {
-        return a._tiles.data() == b._tiles.data() && a._tiles.size() == b._tiles.size();
+        return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size();
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const bg_tiles_item& a, const bg_tiles_item& b)
@@ -51,7 +51,7 @@ public:
     }
 
 private:
-    span<const tile> _tiles;
+    span<const tile> _tiles_ref;
 };
 
 }

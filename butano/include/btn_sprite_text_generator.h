@@ -27,12 +27,12 @@ public:
         return _font;
     }
 
-    [[nodiscard]] const palette_item& palette() const
+    [[nodiscard]] const sprite_palette_item& palette_item() const
     {
         return _palette_item;
     }
 
-    void set_palette(const palette_item& palette_item);
+    void set_palette_item(const sprite_palette_item& palette_item);
 
     [[nodiscard]] horizontal_alignment_type alignment() const
     {
@@ -113,7 +113,7 @@ public:
 
 private:
     sprite_font _font;
-    palette_item _palette_item;
+    sprite_palette_item _palette_item;
     utf8_characters_map_type _utf8_characters_map;
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 3;

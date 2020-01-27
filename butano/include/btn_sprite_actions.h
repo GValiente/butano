@@ -130,7 +130,7 @@ public:
     [[nodiscard]] static sprite_animate_action once(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles(), false, graphics_indexes);
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
     }
 
     [[nodiscard]] static sprite_animate_action forever(
@@ -143,7 +143,7 @@ public:
     [[nodiscard]] static sprite_animate_action forever(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles(), true, graphics_indexes);
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
     }
 
     void reset()
@@ -278,7 +278,7 @@ public:
     [[nodiscard]] static sprite_cached_animate_action once(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles(), false, graphics_indexes);
+        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
     }
 
     [[nodiscard]] static sprite_cached_animate_action forever(
@@ -291,7 +291,7 @@ public:
     [[nodiscard]] static sprite_cached_animate_action forever(
             sprite_ptr sprite, int wait_frames, const sprite_item& item, const array<uint16_t, Size>& graphics_indexes)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles(), true, graphics_indexes);
+        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
     }
 
     void reset()
@@ -372,7 +372,7 @@ private:
 
         for(int graphics_index : graphics_indexes)
         {
-            optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles_ptr(
+            optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles(
                         graphics_index, create_mode::FIND_OR_CREATE);
             BTN_ASSERT(tiles_ptr, "Tiles create failed");
 

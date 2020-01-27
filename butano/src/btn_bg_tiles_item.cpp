@@ -7,7 +7,7 @@
 namespace btn
 {
 
-optional<bg_tiles_ptr> bg_tiles_item::create_tiles_ptr(create_mode create_mode) const
+optional<bg_tiles_ptr> bg_tiles_item::create_tiles(create_mode create_mode) const
 {
     optional<bg_tiles_ptr> result;
 
@@ -15,11 +15,11 @@ optional<bg_tiles_ptr> bg_tiles_item::create_tiles_ptr(create_mode create_mode) 
     {
 
     case create_mode::FIND_OR_CREATE:
-        result = bg_tiles_ptr::optional_find_or_create(_tiles);
+        result = bg_tiles_ptr::optional_find_or_create(_tiles_ref);
         break;
 
     case create_mode::FORCE_CREATE:
-        result = bg_tiles_ptr::optional_create(_tiles);
+        result = bg_tiles_ptr::optional_create(_tiles_ref);
         break;
     }
 

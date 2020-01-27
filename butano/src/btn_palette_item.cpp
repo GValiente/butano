@@ -8,7 +8,7 @@
 namespace btn
 {
 
-optional<sprite_palette_ptr> palette_item::create_sprite_palette_ptr(create_mode create_mode) const
+optional<sprite_palette_ptr> palette_item::create_sprite_palette(create_mode create_mode) const
 {
     optional<sprite_palette_ptr> result;
 
@@ -16,18 +16,18 @@ optional<sprite_palette_ptr> palette_item::create_sprite_palette_ptr(create_mode
     {
 
     case create_mode::FIND_OR_CREATE:
-        result = sprite_palette_ptr::optional_find_or_create(_palette);
+        result = sprite_palette_ptr::optional_find_or_create(_palette_ref);
         break;
 
     case create_mode::FORCE_CREATE:
-        result = sprite_palette_ptr::optional_create(_palette);
+        result = sprite_palette_ptr::optional_create(_palette_ref);
         break;
     }
 
     return result;
 }
 
-optional<bg_palette_ptr> palette_item::create_bg_palette_ptr(create_mode create_mode) const
+optional<bg_palette_ptr> palette_item::create_bg_palette(create_mode create_mode) const
 {
     optional<bg_palette_ptr> result;
 
@@ -35,11 +35,11 @@ optional<bg_palette_ptr> palette_item::create_bg_palette_ptr(create_mode create_
     {
 
     case create_mode::FIND_OR_CREATE:
-        result = bg_palette_ptr::optional_find_or_create(_palette);
+        result = bg_palette_ptr::optional_find_or_create(_palette_ref);
         break;
 
     case create_mode::FORCE_CREATE:
-        result = bg_palette_ptr::optional_create(_palette);
+        result = bg_palette_ptr::optional_create(_palette_ref);
         break;
     }
 

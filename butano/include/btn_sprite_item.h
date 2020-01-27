@@ -14,18 +14,18 @@ class sprite_item
 public:
     constexpr sprite_item(sprite_shape shape, sprite_size size, const span<const tile>& tiles,
                           const span<const color>& palette, int graphics) :
-        sprite_item(shape, size, sprite_tiles_item(tiles, graphics), palette_item(palette))
+        sprite_item(shape, size, sprite_tiles_item(tiles, graphics), sprite_palette_item(palette))
     {
     }
 
     constexpr sprite_item(sprite_shape shape, sprite_size size, const sprite_tiles_item& tiles_item,
-                          const palette_item& palette_item) :
+                          const sprite_palette_item& palette_item) :
         _shape(shape),
         _size(size),
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
-        BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles().size()) ==
+        BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles_ref().size()) ==
                              shape_size().tiles(palette_item.eight_bits_per_pixel()) * tiles_item.graphics(),
                              "Invalid shape or size");
     }
@@ -45,12 +45,12 @@ public:
         return sprite_shape_size(_shape, _size);
     }
 
-    [[nodiscard]] constexpr const sprite_tiles_item& tiles() const
+    [[nodiscard]] constexpr const sprite_tiles_item& tiles_item() const
     {
         return _tiles_item;
     }
 
-    [[nodiscard]] constexpr const palette_item& palette() const
+    [[nodiscard]] constexpr const sprite_palette_item& palette_item() const
     {
         return _palette_item;
     }
@@ -70,7 +70,7 @@ private:
     sprite_shape _shape;
     sprite_size _size;
     sprite_tiles_item _tiles_item;
-    palette_item _palette_item;
+    sprite_palette_item _palette_item;
 };
 
 }

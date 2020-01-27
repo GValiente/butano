@@ -55,7 +55,7 @@ optional<bg_tiles_ptr> bg_builder::tiles() const
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->tiles().create_tiles_ptr(_tiles_create_mode);
+        result = _item->tiles_item().create_tiles(_tiles_create_mode);
     }
 
     return result;
@@ -73,7 +73,7 @@ optional<bg_map_ptr> bg_builder::map() const
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->map().create_map_ptr(_map_create_mode);
+        result = _item->map_item().create_map(_map_create_mode);
     }
 
     return result;
@@ -91,7 +91,7 @@ optional<bg_palette_ptr> bg_builder::palette() const
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->palette().create_bg_palette_ptr(_palette_create_mode);
+        result = _item->palette_item().create_bg_palette(_palette_create_mode);
     }
 
     return result;
@@ -110,7 +110,7 @@ optional<bg_tiles_ptr> bg_builder::release_tiles()
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->tiles().create_tiles_ptr(_tiles_create_mode);
+        result = _item->tiles_item().create_tiles(_tiles_create_mode);
     }
 
     return result;
@@ -129,7 +129,7 @@ optional<bg_map_ptr> bg_builder::release_map()
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->map().create_map_ptr(_map_create_mode);
+        result = _item->map_item().create_map(_map_create_mode);
     }
 
     return result;
@@ -148,7 +148,7 @@ optional<bg_palette_ptr> bg_builder::release_palette()
     {
         BTN_ASSERT(_item, "Item is null");
 
-        result = _item->palette().create_bg_palette_ptr(_palette_create_mode);
+        result = _item->palette_item().create_bg_palette(_palette_create_mode);
     }
 
     return result;

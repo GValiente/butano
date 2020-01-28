@@ -73,11 +73,7 @@ class BMP:
                 file.seek(offset)
                 pixels_count = self.width * self.height  # no padding, multiple of 8.
                 pixels = struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))
-                colors = 16
-
-                for pixel in pixels:
-                    colors = max(ord(pixel), colors)
-
+                colors = ord(max(pixels))
                 extra_colors = colors % 16
 
                 if extra_colors > 0:

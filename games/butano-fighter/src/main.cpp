@@ -27,9 +27,49 @@
 #include "bf_stats.h"
 #include "bf_sprite_fonts.h"
 
+#include "btn_timer.h"
+#include "btn_input_string_stream.h"
+
 int main()
 {
     btn::core::init();
+
+    btn::bg_palettes::set_transparent_color(btn::colors::gray);
+
+    btn::sprite_text_generator tg(bf::variable_8x16_sprite_font);
+    btn::timer timer;
+    int y = 12;
+    auto txt1 = tg.generate<8>(8, y, "This is a test of what we can");
+    y += 16;
+
+    auto txt2 = tg.generate<8>(8, y, "do using this engine. We're");
+    y += 16;
+
+    auto txt3 = tg.generate<8>(8, y, "going to stress it out by");
+    y += 16;
+
+    auto txt4 = tg.generate<8>(8, y, "writing an extensive amount of");
+    y += 16;
+
+    auto txt5 = tg.generate<8>(8, y, "text, so we can hopefully");
+    y += 16;
+
+    auto txt6 = tg.generate<8>(8, y, "measure its performance.");
+    y += 16;
+
+    auto ticks = timer.elapsed_ticks();
+    btn::string<32> text;
+    btn::input_string_stream text_stream(text);
+    text_stream.append("Time: ");
+    text_stream.append(ticks);
+    text_stream.append(" cycles");
+
+    auto txtf = tg.generate<8>(8, 160 - 16, text);
+
+    while(true)
+    {
+        btn::core::update();
+    }
 
     btn::bg_ptr bg = btn::bg_ptr::create(0, 0, btn::bg_items::stage_1);
     btn::bg_move_by_action bg_move_action(btn::move(bg), 0, 0.5);

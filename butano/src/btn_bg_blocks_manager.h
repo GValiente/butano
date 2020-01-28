@@ -12,6 +12,22 @@ namespace btn::bg_blocks_manager
 {
     void init();
 
+    [[nodiscard]] int used_tiles_count();
+
+    [[nodiscard]] int available_tiles_count();
+
+    [[nodiscard]] int used_tile_blocks_count();
+
+    [[nodiscard]] int available_tile_blocks_count();
+
+    [[nodiscard]] int used_map_cells_count();
+
+    [[nodiscard]] int available_map_cells_count();
+
+    [[nodiscard]] int used_map_blocks_count();
+
+    [[nodiscard]] int available_map_blocks_count();
+
     [[nodiscard]] optional<int> find(const uint16_t& data_ref, const size& dimensions,
                                      const bg_palette_ptr* palette_ptr);
 

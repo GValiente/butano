@@ -11,7 +11,7 @@ namespace btn::hw::bg_blocks
         return 32;
     }
 
-    [[nodiscard]] constexpr int alignment()
+    [[nodiscard]] constexpr int alignment_blocks_count()
     {
         return 8;
     }

@@ -2,6 +2,7 @@
 
 #include "btn_size.h"
 #include "btn_span.h"
+#include "btn_tile.h"
 #include "btn_vector.h"
 #include "btn_limits.h"
 #include "btn_optional.h"
@@ -148,6 +149,11 @@ namespace
         [[nodiscard]] size_t size() const
         {
             return _free_indices.available();
+        }
+
+        [[nodiscard]] size_t available() const
+        {
+            return _free_indices.size();
         }
 
         [[nodiscard]] bool full() const
@@ -332,11 +338,11 @@ namespace
         {
             item_type& item = data.items.item(id);
 
-            if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment())
+            if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment_blocks_count())
             {
                 BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-                int padding_blocks_count = hw::bg_blocks::alignment() - extra_blocks_count;
+                int padding_blocks_count = hw::bg_blocks::alignment_blocks_count() - extra_blocks_count;
                 int new_item_blocks_count = item.blocks_count - padding_blocks_count;
                 item.blocks_count = uint8_t(padding_blocks_count);
 
@@ -404,8 +410,8 @@ namespace
     }
 
     template<bool aligned>
-    optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions,
-                               optional<bg_palette_ptr>&& palette_ptr)
+    [[nodiscard]] optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions,
+                                             optional<bg_palette_ptr>&& palette_ptr)
     {
         if(! data_ptr && data.delay_commit)
         {
@@ -427,9 +433,9 @@ namespace
 
                     if(aligned)
                     {
-                        if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment())
+                        if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment_blocks_count())
                         {
-                            required_blocks_count += hw::bg_blocks::alignment() - extra_blocks_count;
+                            required_blocks_count += hw::bg_blocks::alignment_blocks_count() - extra_blocks_count;
                         }
                     }
 
@@ -460,6 +466,12 @@ namespace
 
         return nullopt;
     }
+
+    [[nodiscard]] constexpr int _tiles(int blocks)
+    {
+        auto half_words = unsigned(blocks * hw::bg_blocks::half_words_per_block());
+        return half_words / (sizeof(tile) / 2);
+    }
 }
 
 void init()
@@ -473,6 +485,124 @@ void init()
     data.free_blocks_count = new_item.blocks_count;
 
     BTN_BG_BLOCKS_LOG_STATUS();
+}
+
+int used_tiles_count()
+{
+    int result = 0;
+
+    for(const item_type& item : data.items)
+    {
+        if(item.status() != item_type::status_type::FREE && item.height == 1)
+        {
+            result += _tiles(item.blocks_count);
+        }
+    }
+
+    return result;
+}
+
+int available_tiles_count()
+{
+    int result = 0;
+
+    for(const item_type& item : data.items)
+    {
+        if(item.status() == item_type::status_type::FREE)
+        {
+            if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment_blocks_count())
+            {
+                int required_blocks_count = 1 + (hw::bg_blocks::alignment_blocks_count() - extra_blocks_count);
+
+                if(item.blocks_count >= required_blocks_count)
+                {
+                    int padding_blocks_count = hw::bg_blocks::alignment_blocks_count() - extra_blocks_count;
+                    int item_blocks_count = item.blocks_count - padding_blocks_count;
+                    result += _tiles(item_blocks_count);
+                }
+            }
+            else
+            {
+                result += _tiles(item.blocks_count);
+            }
+        }
+    }
+
+    return result;
+}
+
+int used_tile_blocks_count()
+{
+    int result = 0;
+
+    for(const item_type& item : data.items)
+    {
+        if(item.status() != item_type::status_type::FREE && item.height == 1)
+        {
+            result += item.blocks_count / hw::bg_blocks::alignment_blocks_count();
+        }
+    }
+
+    return result;
+}
+
+int available_tile_blocks_count()
+{
+    int result = 0;
+
+    for(const item_type& item : data.items)
+    {
+        if(item.status() == item_type::status_type::FREE)
+        {
+            if(int extra_blocks_count = item.start_block % hw::bg_blocks::alignment_blocks_count())
+            {
+                int required_blocks_count = 1 + (hw::bg_blocks::alignment_blocks_count() - extra_blocks_count);
+
+                if(item.blocks_count >= required_blocks_count)
+                {
+                    int padding_blocks_count = hw::bg_blocks::alignment_blocks_count() - extra_blocks_count;
+                    int item_blocks_count = item.blocks_count - padding_blocks_count;
+                    result += item_blocks_count / hw::bg_blocks::alignment_blocks_count();
+                }
+            }
+            else
+            {
+                result += item.blocks_count / hw::bg_blocks::alignment_blocks_count();
+            }
+        }
+    }
+
+    return result;
+}
+
+int used_map_cells_count()
+{
+    return used_map_blocks_count() * hw::bg_blocks::half_words_per_block();
+}
+
+int available_map_cells_count()
+{
+    return available_map_blocks_count() * hw::bg_blocks::half_words_per_block();
+}
+
+int used_map_blocks_count()
+{
+    int result = 0;
+
+    for(const item_type& item : data.items)
+    {
+        if(item.status() != item_type::status_type::FREE && item.height > 1)
+        {
+            result += item.blocks_count;
+        }
+    }
+
+    return result;
+}
+
+int available_map_blocks_count()
+{
+    return data.free_blocks_count;
 }
 
 optional<int> find(const uint16_t& data_ref, [[maybe_unused]] const size& dimensions,
@@ -636,7 +766,7 @@ int hw_id(int id, bool aligned)
 
     if(aligned)
     {
-        result /= hw::bg_blocks::alignment();
+        result /= hw::bg_blocks::alignment_blocks_count();
     }
 
     return result;

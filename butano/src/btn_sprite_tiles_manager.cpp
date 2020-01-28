@@ -135,9 +135,14 @@ namespace
             }
         }
 
-        [[nodiscard]] int size() const
+        [[nodiscard]] size_t size() const
         {
-            return int(_free_indices.size());
+            return _free_indices.available();
+        }
+
+        [[nodiscard]] size_t available() const
+        {
+            return _free_indices.size();
         }
 
         [[nodiscard]] bool full() const
@@ -438,6 +443,26 @@ void init()
     data.free_tiles_count = new_item.tiles_count;
 
     BTN_SPRITE_TILES_LOG_STATUS();
+}
+
+int used_tiles_count()
+{
+    return hw::sprite_tiles::count() - data.free_tiles_count;
+}
+
+int available_tiles_count()
+{
+    return data.free_tiles_count;
+}
+
+int used_items_count()
+{
+    return int(data.items.size());
+}
+
+int available_items_count()
+{
+    return int(data.items.available());
 }
 
 optional<int> find(const span<const tile>& tiles_ref)

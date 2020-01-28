@@ -13,6 +13,14 @@ namespace btn::sprite_tiles_manager
 {
     void init();
 
+    [[nodiscard]] int used_tiles_count();
+
+    [[nodiscard]] int available_tiles_count();
+
+    [[nodiscard]] int used_items_count();
+
+    [[nodiscard]] int available_items_count();
+
     [[nodiscard]] optional<int> find(const span<const tile>& tiles_ref);
 
     [[nodiscard]] optional<int> create(const span<const tile>& tiles_ref);

@@ -6,6 +6,16 @@
 namespace btn::bg_palettes
 {
 
+int used_count()
+{
+    return palettes_manager::bg_palettes_bank().used_count();
+}
+
+int available_count()
+{
+    return palettes_manager::bg_palettes_bank().available_count();
+}
+
 const optional<color>& transparent_color()
 {
     return palettes_manager::bg_palettes_bank().transparent_color();

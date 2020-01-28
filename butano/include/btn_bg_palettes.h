@@ -11,6 +11,10 @@ class color;
 
 namespace bg_palettes
 {
+    [[nodiscard]] int used_count();
+
+    [[nodiscard]] int available_count();
+
     [[nodiscard]] const optional<color>& transparent_color();
 
     void set_transparent_color(const optional<color>& transparent_color);

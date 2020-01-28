@@ -6,6 +6,16 @@
 namespace btn::sprite_palettes
 {
 
+int used_count()
+{
+    return palettes_manager::sprite_palettes_bank().used_count();
+}
+
+int available_count()
+{
+    return palettes_manager::sprite_palettes_bank().available_count();
+}
+
 fixed brightness()
 {
     return palettes_manager::sprite_palettes_bank().brightness();

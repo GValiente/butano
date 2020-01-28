@@ -24,6 +24,10 @@ public:
         int count;
     };
 
+    [[nodiscard]] int used_count() const;
+
+    [[nodiscard]] int available_count() const;
+
     [[nodiscard]] optional<int> find(const span<const color>& colors_ref);
 
     [[nodiscard]] optional<int> create(const span<const color>& colors_ref);

@@ -20,6 +20,57 @@ namespace
     }
 }
 
+int palettes_bank::used_count() const
+{
+    int result = 0;
+    int index = 1;
+
+    if(_eight_bits_per_pixel_palettes)
+    {
+        index = _eight_bits_per_pixel_palettes;
+        ++result;
+    }
+
+    const palette* palettes_data = _palettes.data();
+
+    while(index < hw::palettes::count())
+    {
+        if(palettes_data[index].usages)
+        {
+            ++result;
+        }
+
+        ++index;
+    }
+
+    return result;
+}
+
+int palettes_bank::available_count() const
+{
+    int result = 0;
+    int index = 0;
+
+    if(_eight_bits_per_pixel_palettes)
+    {
+        index = _eight_bits_per_pixel_palettes;
+    }
+
+    const palette* palettes_data = _palettes.data();
+
+    while(index < hw::palettes::count())
+    {
+        if(! palettes_data[index].usages)
+        {
+            ++result;
+        }
+
+        ++index;
+    }
+
+    return result;
+}
+
 optional<int> palettes_bank::find(const span<const color>& colors_ref)
 {
     BTN_ASSERT(valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());

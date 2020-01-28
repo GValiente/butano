@@ -10,6 +10,10 @@ class color;
 
 namespace sprite_palettes
 {
+    [[nodiscard]] int used_count();
+
+    [[nodiscard]] int available_count();
+
     [[nodiscard]] fixed brightness();
 
     void set_brightness(fixed brightness);

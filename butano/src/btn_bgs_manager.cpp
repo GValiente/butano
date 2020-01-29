@@ -89,6 +89,26 @@ int max_priority()
     return hw::bgs::max_priority();
 }
 
+int used_count()
+{
+    int result = 0;
+
+    for(const optional<item_type>& item : data.items)
+    {
+        if(item)
+        {
+            ++result;
+        }
+    }
+
+    return result;
+}
+
+int available_count()
+{
+    return hw::bgs::count() - used_count();
+}
+
 optional<int> create(bg_builder&& builder)
 {
     int new_index = hw::bgs::count() - 1;

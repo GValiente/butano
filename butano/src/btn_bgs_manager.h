@@ -17,6 +17,10 @@ namespace bgs_manager
 {
     [[nodiscard]] BTN_CODE_CONST int max_priority();
 
+    [[nodiscard]] int used_count();
+
+    [[nodiscard]] int available_count();
+
     [[nodiscard]] optional<int> create(bg_builder&& builder);
 
     void increase_usages(int id);

@@ -30,20 +30,42 @@ namespace btn::hw::sprite_affine_mats
 
         void set_rotation_angle(fixed rotation_angle)
         {
-            sin = int16_t(degrees_sin(rotation_angle).value());
-            cos = int16_t(degrees_cos(rotation_angle).value());
+            if(rotation_angle == 0)
+            {
+                sin = 0;
+                cos = int16_t(fixed(1).value());
+            }
+            else
+            {
+                sin = int16_t(degrees_sin(rotation_angle).value());
+                cos = int16_t(degrees_cos(rotation_angle).value());
+            }
         }
 
         void set_scale_x(fixed scale_x)
         {
-            fixed_t inv_scale_x = 1 / scale_x;
-            sx = uint16_t(fixed_t<8>(inv_scale_x).value());
+            if(scale_x == 1)
+            {
+                sx = uint16_t(fixed_t<8>(1).value());
+            }
+            else
+            {
+                fixed inv_scale_x = 1 / scale_x;
+                sx = uint16_t(fixed_t<8>(inv_scale_x).value());
+            }
         }
 
         void set_scale_y(fixed scale_y)
         {
-            fixed_t inv_scale_y = 1 / scale_y;
-            sy = uint16_t(fixed_t<8>(inv_scale_y).value());
+            if(scale_y == 1)
+            {
+                sy = uint16_t(fixed_t<8>(1).value());
+            }
+            else
+            {
+                fixed inv_scale_y = 1 / scale_y;
+                sy = uint16_t(fixed_t<8>(inv_scale_y).value());
+            }
         }
 
         void set_horizontal_flip(bool horizontal_flip)
@@ -57,6 +79,7 @@ namespace btn::hw::sprite_affine_mats
         }
     };
 
+
     class handle
     {
 
@@ -64,11 +87,13 @@ namespace btn::hw::sprite_affine_mats
         int data[8];
     };
 
+
     namespace
     {
         static_assert(sizeof(OBJ_AFFINE) == sizeof(handle));
         static_assert(alignof(OBJ_AFFINE) == alignof(handle));
     }
+
 
     [[nodiscard]] constexpr int count()
     {

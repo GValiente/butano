@@ -8,31 +8,12 @@
 namespace btn
 {
 
-namespace
-{
-    constexpr const bool aligned = false;
-
-    [[nodiscard]] const uint16_t& to_data_ref(const bg_map_cell& cells_ref)
-    {
-        return reinterpret_cast<const uint16_t&>(cells_ref);
-    }
-
-    [[nodiscard]] span<bg_map_cell> to_cells_ref(span<uint16_t>& data_ref)
-    {
-        auto cells_ptr = reinterpret_cast<bg_map_cell*>(data_ref.data());
-        return span<bg_map_cell>(cells_ptr, data_ref.size());
-    }
-}
-
 optional<bg_map_ptr> bg_map_ptr::find(const bg_map_cell& cells_ref, const size& dimensions,
                                       const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::find(to_data_ref(cells_ref), dimensions, &palette_ptr))
+    if(optional<int> handle = bg_blocks_manager::find_map(cells_ref, dimensions, palette_ptr))
     {
         result = bg_map_ptr(*handle);
     }
@@ -42,10 +23,7 @@ optional<bg_map_ptr> bg_map_ptr::find(const bg_map_cell& cells_ref, const size& 
 
 bg_map_ptr bg_map_ptr::create(const bg_map_cell& cells_ref, const size& dimensions, const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    optional<int> handle = bg_blocks_manager::create(to_data_ref(cells_ref), dimensions, palette_ptr, aligned);
+    optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, bg_palette_ptr(palette_ptr));
     BTN_ASSERT(handle, "Map create failed");
 
     return bg_map_ptr(*handle);
@@ -53,10 +31,7 @@ bg_map_ptr bg_map_ptr::create(const bg_map_cell& cells_ref, const size& dimensio
 
 bg_map_ptr bg_map_ptr::create(const bg_map_cell& cells_ref, const size& dimensions, bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    optional<int> handle = bg_blocks_manager::create(to_data_ref(cells_ref), dimensions, move(palette_ptr), aligned);
+    optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, move(palette_ptr));
     BTN_ASSERT(handle, "Map create failed");
 
     return bg_map_ptr(*handle);
@@ -65,15 +40,11 @@ bg_map_ptr bg_map_ptr::create(const bg_map_cell& cells_ref, const size& dimensio
 bg_map_ptr bg_map_ptr::find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
                                       const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    const uint16_t& data_ref = to_data_ref(cells_ref);
-    optional<int> handle = bg_blocks_manager::find(data_ref, dimensions, &palette_ptr);
+    optional<int> handle = bg_blocks_manager::find_map(cells_ref, dimensions, palette_ptr);
 
     if(! handle)
     {
-        handle = bg_blocks_manager::create(data_ref, dimensions, palette_ptr, aligned);
+        handle = bg_blocks_manager::create_map(cells_ref, dimensions, bg_palette_ptr(palette_ptr));
         BTN_ASSERT(handle, "Map find or create failed");
     }
 
@@ -83,15 +54,11 @@ bg_map_ptr bg_map_ptr::find_or_create(const bg_map_cell& cells_ref, const size& 
 bg_map_ptr bg_map_ptr::find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
                                       bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    const uint16_t& data_ref = to_data_ref(cells_ref);
-    optional<int> handle = bg_blocks_manager::find(data_ref, dimensions, &palette_ptr);
+    optional<int> handle = bg_blocks_manager::find_map(cells_ref, dimensions, palette_ptr);
 
     if(! handle)
     {
-        handle = bg_blocks_manager::create(data_ref, dimensions, move(palette_ptr), aligned);
+        handle = bg_blocks_manager::create_map(cells_ref, dimensions, move(palette_ptr));
         BTN_ASSERT(handle, "Map find or create failed");
     }
 
@@ -100,10 +67,7 @@ bg_map_ptr bg_map_ptr::find_or_create(const bg_map_cell& cells_ref, const size& 
 
 bg_map_ptr bg_map_ptr::allocate(const size& dimensions, const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    optional<int> handle = bg_blocks_manager::allocate(dimensions, palette_ptr, aligned);
+    optional<int> handle = bg_blocks_manager::allocate_map(dimensions, bg_palette_ptr(palette_ptr));
     BTN_ASSERT(handle, "Map allocate failed");
 
     return bg_map_ptr(*handle);
@@ -111,10 +75,7 @@ bg_map_ptr bg_map_ptr::allocate(const size& dimensions, const bg_palette_ptr& pa
 
 bg_map_ptr bg_map_ptr::allocate(const size& dimensions, bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    optional<int> handle = bg_blocks_manager::allocate(dimensions, move(palette_ptr), aligned);
+    optional<int> handle = bg_blocks_manager::allocate_map(dimensions, move(palette_ptr));
     BTN_ASSERT(handle, "Map allocate failed");
 
     return bg_map_ptr(*handle);
@@ -123,12 +84,9 @@ bg_map_ptr bg_map_ptr::allocate(const size& dimensions, bg_palette_ptr&& palette
 optional<bg_map_ptr> bg_map_ptr::optional_create(const bg_map_cell& cells_ref, const size& dimensions,
                                                  const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::create(to_data_ref(cells_ref), dimensions, palette_ptr, aligned))
+    if(optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, bg_palette_ptr(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -139,12 +97,9 @@ optional<bg_map_ptr> bg_map_ptr::optional_create(const bg_map_cell& cells_ref, c
 optional<bg_map_ptr> bg_map_ptr::optional_create(const bg_map_cell& cells_ref, const size& dimensions,
                                                  bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::create(to_data_ref(cells_ref), dimensions, move(palette_ptr), aligned))
+    if(optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, move(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -155,17 +110,13 @@ optional<bg_map_ptr> bg_map_ptr::optional_create(const bg_map_cell& cells_ref, c
 optional<bg_map_ptr> bg_map_ptr::optional_find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
                                                          const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    const uint16_t& data_ref = to_data_ref(cells_ref);
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::find(data_ref, dimensions, &palette_ptr))
+    if(optional<int> handle = bg_blocks_manager::find_map(cells_ref, dimensions, palette_ptr))
     {
         result = bg_map_ptr(*handle);
     }
-    else if(optional<int> handle = bg_blocks_manager::create(data_ref, dimensions, palette_ptr, aligned))
+    else if(optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, bg_palette_ptr(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -176,17 +127,13 @@ optional<bg_map_ptr> bg_map_ptr::optional_find_or_create(const bg_map_cell& cell
 optional<bg_map_ptr> bg_map_ptr::optional_find_or_create(const bg_map_cell& cells_ref, const size& dimensions,
                                                          bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
-    const uint16_t& data_ref = to_data_ref(cells_ref);
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::find(data_ref, dimensions, &palette_ptr))
+    if(optional<int> handle = bg_blocks_manager::find_map(cells_ref, dimensions, palette_ptr))
     {
         result = bg_map_ptr(*handle);
     }
-    else if(optional<int> handle = bg_blocks_manager::create(data_ref, dimensions, move(palette_ptr), aligned))
+    else if(optional<int> handle = bg_blocks_manager::create_map(cells_ref, dimensions, move(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -196,12 +143,9 @@ optional<bg_map_ptr> bg_map_ptr::optional_find_or_create(const bg_map_cell& cell
 
 optional<bg_map_ptr> bg_map_ptr::optional_allocate(const size& dimensions, const bg_palette_ptr& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::allocate(dimensions, palette_ptr, aligned))
+    if(optional<int> handle = bg_blocks_manager::allocate_map(dimensions, bg_palette_ptr(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -211,12 +155,9 @@ optional<bg_map_ptr> bg_map_ptr::optional_allocate(const size& dimensions, const
 
 optional<bg_map_ptr> bg_map_ptr::optional_allocate(const size& dimensions, bg_palette_ptr&& palette_ptr)
 {
-    BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-    BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
-
     optional<bg_map_ptr> result;
 
-    if(optional<int> handle = bg_blocks_manager::allocate(dimensions, move(palette_ptr), aligned))
+    if(optional<int> handle = bg_blocks_manager::allocate_map(dimensions, move(palette_ptr)))
     {
         result = bg_map_ptr(*handle);
     }
@@ -248,12 +189,12 @@ bg_map_ptr& bg_map_ptr::operator=(const bg_map_ptr& other)
 
 int bg_map_ptr::id() const
 {
-    return bg_blocks_manager::hw_id(_handle, aligned);
+    return bg_blocks_manager::hw_map_id(_handle);
 }
 
 size bg_map_ptr::dimensions() const
 {
-    return bg_blocks_manager::dimensions(_handle);
+    return bg_blocks_manager::map_dimensions(_handle);
 }
 
 bool bg_map_ptr::eight_bits_per_pixel() const
@@ -263,49 +204,37 @@ bool bg_map_ptr::eight_bits_per_pixel() const
 
 const bg_map_cell* bg_map_ptr::cells_ref() const
 {
-    if(const uint16_t* data_ref = bg_blocks_manager::data_ref(_handle))
-    {
-        return reinterpret_cast<const uint16_t*>(data_ref);
-    }
-
-    return nullptr;
+    return bg_blocks_manager::map_cells_ref(_handle);
 }
 
 void bg_map_ptr::set_cells_ref(const bg_map_cell& cells_ref, const size& dimensions)
 {
-    bg_blocks_manager::set_data_ref(_handle, to_data_ref(cells_ref), dimensions);
+    bg_blocks_manager::set_map_cells_ref(_handle, cells_ref, dimensions);
 }
 
 void bg_map_ptr::reload_cells_ref()
 {
-    bg_blocks_manager::reload_data_ref(_handle);
+    bg_blocks_manager::reload(_handle);
 }
 
 const bg_palette_ptr& bg_map_ptr::palette() const
 {
-    return *bg_blocks_manager::palette(_handle);
+    return bg_blocks_manager::map_palette(_handle);
 }
 
 void bg_map_ptr::set_palette(const bg_palette_ptr& palette_ptr)
 {
-    bg_blocks_manager::set_palette(_handle, palette_ptr);
+    bg_blocks_manager::set_map_palette(_handle, bg_palette_ptr(palette_ptr));
 }
 
 void bg_map_ptr::set_palette(bg_palette_ptr&& palette_ptr)
 {
-    bg_blocks_manager::set_palette(_handle, move(palette_ptr));
+    bg_blocks_manager::set_map_palette(_handle, move(palette_ptr));
 }
 
 optional<span<bg_map_cell>> bg_map_ptr::vram()
 {
-    optional<span<bg_map_cell>> result;
-
-    if(optional<span<uint16_t>> vram = bg_blocks_manager::vram(_handle))
-    {
-        result = to_cells_ref(*vram);
-    }
-
-    return result;
+    return bg_blocks_manager::map_vram(_handle);
 }
 
 void bg_map_ptr::_destroy()

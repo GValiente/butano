@@ -75,6 +75,16 @@ void init([[maybe_unused]] int handles_size, void* handles)
     }
 }
 
+int used_count()
+{
+    return int(data.free_item_indexes.available());
+}
+
+int available_count()
+{
+    return int(data.free_item_indexes.size());
+}
+
 optional<int> create(const sprite_affine_mat_builder& builder)
 {
     if(data.free_item_indexes.empty())

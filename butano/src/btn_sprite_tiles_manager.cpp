@@ -638,9 +638,9 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
         data.items_map.erase(old_tiles_data);
         _commit_item(id, *new_tiles_data, true);
         data.items_map.insert(new_tiles_data, id);
-    }
 
-    BTN_SPRITE_TILES_LOG_STATUS();
+        BTN_SPRITE_TILES_LOG_STATUS();
+    }
 }
 
 void reload_tiles_ref(int id)

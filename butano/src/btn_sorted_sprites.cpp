@@ -18,6 +18,7 @@ namespace
 
     public:
         etl::map<unsigned, list, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layers;
+        int items_count = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -99,6 +100,16 @@ iterator list::erase(sprites_manager_item& item)
     return iterator(next_node);
 }
 
+int items_count()
+{
+    return data.items_count;
+}
+
+layers_type& layers()
+{
+    return data.layers;
+}
+
 void insert(sprites_manager_item& item)
 {
     auto layer_it = data.layers.find(item.sort_key);
@@ -112,6 +123,7 @@ void insert(sprites_manager_item& item)
 
     list& layer = layer_it->second;
     layer.push_front(item);
+    ++data.items_count;
 }
 
 void erase(sprites_manager_item& item)
@@ -121,16 +133,12 @@ void erase(sprites_manager_item& item)
 
     list& layer = layer_it->second;
     layer.erase(item);
+    --data.items_count;
 
     if(layer.empty())
     {
         data.layers.erase(layer_it);
     }
-}
-
-layers_type& layers()
-{
-    return data.layers;
 }
 
 }

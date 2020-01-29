@@ -191,11 +191,13 @@ namespace btn::sorted_sprites
     using layers_type = etl::imap<unsigned, list>;
 
 
+    [[nodiscard]] int items_count();
+
+    [[nodiscard]] layers_type& layers();
+
     void insert(sprites_manager_item& item);
 
     void erase(sprites_manager_item& item);
-
-    layers_type& layers();
 }
 
 #endif

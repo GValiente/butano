@@ -27,6 +27,14 @@ namespace sprites_manager
 
     void init();
 
+    [[nodiscard]] int used_sprites_count();
+
+    [[nodiscard]] int available_sprites_count();
+
+    [[nodiscard]] int used_items_count();
+
+    [[nodiscard]] int available_items_count();
+
     [[nodiscard]] optional<id_type> create(sprite_builder&& builder);
 
     void increase_usages(id_type id);

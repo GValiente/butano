@@ -228,6 +228,26 @@ void init()
     sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
 }
 
+int used_sprites_count()
+{
+    return data.last_visible_items_count;
+}
+
+int available_sprites_count()
+{
+    return hw::sprites::count() - used_sprites_count();
+}
+
+int used_items_count()
+{
+    return sorted_sprites::items_count();
+}
+
+int available_items_count()
+{
+    return BTN_CFG_SPRITES_MAX_ITEMS - used_items_count();
+}
+
 optional<id_type> create(sprite_builder&& builder)
 {
     if(data.items_pool.full())

@@ -1,10 +1,28 @@
+#---------------------------------------------------------------------------------------------------------------------
+# Butano custom base rules without flto
+#---------------------------------------------------------------------------------------------------------------------
+%.btn_noflto.o: %.btn_noflto.cpp
+	@echo $(notdir $<)
+	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+
+%.btn_noflto.o: %.btn_noflto.c
+	@echo $(notdir $<)
+	$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+
+%.btn_noflto.iwram.o: %.btn_noflto.iwram.cpp
+	@echo $(notdir $<)
+	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CXXFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
+
+%.btn_noflto.iwram.o: %.btn_noflto.iwram.c
+	@echo $(notdir $<)
+	$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork
 
-CFLAGS      :=	-Wall -Wextra -g -O2 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -DNDEBUG $(ARCH)
+CFLAGS      :=	-Wall -Wextra -g -O2 -mcpu=arm7tdmi -mtune=arm7tdmi -flto -ffast-math -DNDEBUG $(ARCH)
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 

@@ -363,13 +363,6 @@ void palettes_bank::update()
         int fade_intensity = fixed_t<5>(_fade_intensity).value();
         bool update_all = brightness || contrast || intensity || inverse_intensity || grayscale_intensity ||
                 fade_intensity;
-        int pal_colors_count = hw::palettes::colors_per_palette();
-        int bpp8_slots_count = _bpp8_slots_count();
-
-        if(bpp8_slots_count)
-        {
-            pal_colors_count *= bpp8_slots_count;
-        }
 
         for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
         {
@@ -377,6 +370,7 @@ void palettes_bank::update()
 
             if(pal.update || (update_all && pal.usages))
             {
+                int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
                 pal.update = false;
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
@@ -404,8 +398,6 @@ void palettes_bank::update()
                     hw::palettes::rotate(pal.rotate_count, pal_colors_count, pal_colors_ref);
                 }
             }
-
-            pal_colors_count = hw::palettes::colors_per_palette();
         }
 
         if(_transparent_color)
@@ -421,14 +413,14 @@ void palettes_bank::update()
 
             if(last_index == 0)
             {
-                if(bpp8_slots_count)
+                if(int bpp8_slots_count = _bpp8_slots_count())
                 {
                     all_colors_count *= bpp8_slots_count;
                 }
             }
             else
             {
-                all_colors_count *= last_index - first_index + 1;
+                all_colors_count *= last_index - first_index + _palettes[last_index].slots_count;
             }
 
             if(brightness)
@@ -483,8 +475,10 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
     {
         int colors_offset = *_first_index_to_commit * hw::palettes::colors_per_palette();
         int colors_count = hw::palettes::colors_per_palette();
+        int first_index = *_first_index_to_commit;
+        int last_index = *_last_index_to_commit;
 
-        if(*_last_index_to_commit == 0)
+        if(last_index == 0)
         {
             if(int bpp8_slots_count = _bpp8_slots_count())
             {
@@ -493,7 +487,7 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
         }
         else
         {
-            colors_count *= *_last_index_to_commit - *_first_index_to_commit + 1;
+            colors_count *= last_index - first_index + _palettes[last_index].slots_count;
         }
 
         result = commit_data{ _colors, colors_offset, colors_count };

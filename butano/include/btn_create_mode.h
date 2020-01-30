@@ -1,5 +1,5 @@
-#ifndef BTN_create_mode_H
-#define BTN_create_mode_H
+#ifndef BTN_CREATE_MODE_H
+#define BTN_CREATE_MODE_H
 
 #include "btn_common.h"
 

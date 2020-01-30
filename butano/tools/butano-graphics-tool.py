@@ -1,8 +1,10 @@
 import os
 import json
-import struct
 import argparse
 import subprocess
+
+from bmp import BMP
+from file_info import FileInfo
 
 
 class GraphicsFolderInfo:
@@ -22,76 +24,14 @@ class GraphicsFolderInfo:
         return self.__file_paths
 
 
-class BMP:
-
-    def __init__(self, file_path):
-        self.width = None
-        self.height = None
-        self.colors = None
-
-        with open(file_path, 'rb') as file:
-            file_type = file.read(2).decode()
-
-            if file_type != 'BM':
-                raise ValueError('Invalid file type: ' + file_type)
-
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('H', file.read(2))
-            _ = struct.unpack('H', file.read(2))
-            offset = struct.unpack('I', file.read(4))[0]
-
-            header_size = struct.unpack('I', file.read(4))[0]
-
-            if header_size != 40:
-                raise ValueError('Invalid header size: ' + str(header_size))
-
-            self.width = struct.unpack('I', file.read(4))[0]
-            self.height = struct.unpack('I', file.read(4))[0]
-            _ = struct.unpack('H', file.read(2))
-            bits_per_pixel = struct.unpack('H', file.read(2))[0]
-
-            if bits_per_pixel != 4 and bits_per_pixel != 8:
-                raise ValueError('Invalid bits per pixel: ' + str(bits_per_pixel))
-
-            compression_method = struct.unpack('I', file.read(4))[0]
-
-            if compression_method != 0:
-                raise ValueError('Compression method not supported: ' + str(compression_method))
-
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('I', file.read(4))
-            colors = struct.unpack('I', file.read(4))[0]
-            _ = struct.unpack('I', file.read(4))
-
-            if colors > 256:
-                raise ValueError('Invalid colors count: ' + str(colors))
-
-            if colors <= 16:
-                colors = 16
-            else:
-                file.seek(offset)
-                pixels_count = self.width * self.height  # no padding, multiple of 8.
-                pixels = struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))
-                colors = ord(max(pixels))
-                extra_colors = colors % 16
-
-                if extra_colors > 0:
-                    colors += 16 - extra_colors
-
-                if colors > 256:
-                    raise ValueError('Invalid calculated colors count: ' + str(colors))
-
-            self.colors = colors
-
-
 class SpriteItem:
 
-    def __init__(self, file_path, file_name_no_ext, info):
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
-        self.__colors = bmp.colors
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = bmp.colors_count
 
         try:
             height = int(info['height'])
@@ -164,10 +104,10 @@ class SpriteItem:
         else:
             raise ValueError('Invalid sprite width: ' + str(width))
 
-    def write_header(self, build_folder_path):
+    def write_header(self):
         name = self.__file_name_no_ext
-        grit_file_path = build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = build_folder_path + '/btn_' + name + '_sprite_item.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
+        header_file_path = self.__build_folder_path + '/btn_' + name + '_sprite_item.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
@@ -191,7 +131,7 @@ class SpriteItem:
                               'sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + ', ' + '\n            ' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors) + '), ' +
+                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
                               str(self.__graphics) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
@@ -200,15 +140,15 @@ class SpriteItem:
 
         print('sprite_item file written in ' + header_file_path)
 
-    def process(self, build_folder_path):
+    def process(self):
         command = ['grit', self.__file_path, '-gt']
 
-        if self.__colors == 16:
+        if self.__colors_count == 16:
             command.append('-gB4')
         else:
             command.append('-gB8')
 
-        command.append('-o' + build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
         command = ' '.join(command)
 
         try:
@@ -219,11 +159,12 @@ class SpriteItem:
 
 class BgItem:
 
-    def __init__(self, file_path, file_name_no_ext, info):
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
-        self.__colors = bmp.colors
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = bmp.colors_count
 
         width = bmp.width
         height = bmp.height
@@ -235,13 +176,26 @@ class BgItem:
         else:
             raise ValueError('Invalid BG size: (' + str(width) + ' - ' + str(height) + ')')
 
-        self.__width = width / 8
-        self.__height = height / 8
+        self.__width = int(width / 8)
+        self.__height = int(height / 8)
+        self.__bpp4 = False
 
-    def write_header(self, build_folder_path):
+        if self.__colors_count > 16:
+            try:
+                self.__bpp4 = bool(info['bpp4'])
+            except KeyError:
+                pass
+
+            if self.__bpp4:
+                self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
+                print('Generating 4bpp image in ' + self.__file_path + '...')
+                bmp.quantize(self.__file_path)
+                print('4bpp image generated successfully')
+
+    def write_header(self):
         name = self.__file_name_no_ext
-        grit_file_path = build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = build_folder_path + '/btn_' + name + '_bg_item.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
+        header_file_path = self.__build_folder_path + '/btn_' + name + '_bg_item.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
@@ -266,7 +220,8 @@ class BgItem:
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
                               name + '_btn_graphicsMap[0], size(' + str(self.__width) + ', ' + str(self.__height) + '),'
                               '\n            ' +
-                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors) + '));' + '\n')
+                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '));' +
+                              '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -274,10 +229,10 @@ class BgItem:
 
         print('bg_item file written in ' + header_file_path)
 
-    def process(self, build_folder_path):
+    def process(self):
         command = ['grit', self.__file_path]
 
-        if self.__colors == 16:
+        if self.__colors_count == 16 or self.__bpp4:
             command.append('-gB4 -mR4')
         else:
             command.append('-gB8 -mR8')
@@ -287,7 +242,7 @@ class BgItem:
         else:
             command.append('-mLf')
 
-        command.append('-o' + build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
         command = ' '.join(command)
 
         try:
@@ -328,25 +283,6 @@ def list_graphics_folder_infos(graphics_folder_paths):
     return graphics_folder_infos
 
 
-def read_graphics_desc(graphics_desc_path):
-    if not os.path.isfile(graphics_desc_path):
-        return None
-
-    with open(graphics_desc_path, 'r') as graphics_desc_file:
-        return graphics_desc_file.read()
-
-
-def build_graphics_desc(graphics_file_path):
-    graphics_desc = [graphics_file_path, str(os.path.getsize(graphics_file_path)),
-                     str(os.path.getmtime(graphics_file_path))]
-    return '\n'.join(graphics_desc)
-
-
-def write_graphics_desc(graphics_desc, graphics_desc_path):
-    with open(graphics_desc_path, 'w') as graphics_desc_file:
-        graphics_desc_file.write(graphics_desc)
-
-
 def process(graphics_folder_paths, build_folder_path):
     graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths)
 
@@ -354,26 +290,26 @@ def process(graphics_folder_paths, build_folder_path):
         for graphics_file_path in graphics_folder_info.file_paths():
             graphics_file_name = os.path.basename(graphics_file_path)
             graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
-            graphics_desc_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_graphics_desc.txt'
-            old_graphics_desc = read_graphics_desc(graphics_desc_path)
-            new_graphics_desc = build_graphics_desc(graphics_file_path)
+            file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
+            old_file_info = FileInfo.read(file_info_path)
+            new_file_info = FileInfo.build_from_file(graphics_file_path)
 
-            if old_graphics_desc is None or old_graphics_desc != new_graphics_desc:
+            if old_file_info != new_file_info:
                 print('Processing graphics file: ' + graphics_file_path)
 
                 try:
                     item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
-                    item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+                    item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
                 except KeyError:
                     try:
                         item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
-                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, item_info)
+                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
                     except KeyError:
                         raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
 
-                item.process(build_folder_path)
-                item.write_header(build_folder_path)
-                write_graphics_desc(new_graphics_desc, graphics_desc_path)
+                item.process()
+                item.write_header()
+                new_file_info.write(file_info_path)
 
 
 if __name__ == "__main__":

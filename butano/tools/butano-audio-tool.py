@@ -2,6 +2,8 @@ import os
 import argparse
 import subprocess
 
+from file_info import FileInfo
+
 
 def list_audio_file_paths(audio_folder_paths):
     audio_folder_path_list = audio_folder_paths.split(' ')
@@ -17,30 +19,6 @@ def list_audio_file_paths(audio_folder_paths):
                 audio_file_paths.append(audio_file_path)
 
     return audio_file_paths
-
-
-def read_audio_desc(audio_desc_path):
-    if not os.path.isfile(audio_desc_path):
-        return None
-
-    with open(audio_desc_path, 'r') as audio_desc_file:
-        return audio_desc_file.read()
-
-
-def build_audio_desc(audio_file_paths):
-    audio_desc = []
-
-    for audio_file_path in audio_file_paths:
-        audio_desc.append(audio_file_path)
-        audio_desc.append(str(os.path.getsize(audio_file_path)))
-        audio_desc.append(str(os.path.getmtime(audio_file_path)))
-
-    return '\n'.join(audio_desc)
-
-
-def write_audio_desc(audio_desc, audio_desc_path):
-    with open(audio_desc_path, 'w') as audio_desc_file:
-        audio_desc_file.write(audio_desc)
 
 
 def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path):
@@ -111,11 +89,11 @@ def write_output_files(soundbank_header_path, build_folder_path):
 
 def process(audio_folder_paths, build_folder_path):
     audio_file_paths = list_audio_file_paths(audio_folder_paths)
-    audio_desc_path = build_folder_path + '/_btn_audio_desc.txt'
-    old_audio_desc = read_audio_desc(audio_desc_path)
-    new_audio_desc = build_audio_desc(audio_file_paths)
+    file_info_path = build_folder_path + '/_btn_file_info.txt'
+    old_file_info = FileInfo.read(file_info_path)
+    new_file_info = FileInfo.build_from_files(audio_file_paths)
 
-    if old_audio_desc is not None and old_audio_desc == new_audio_desc:
+    if old_file_info == new_file_info:
         return
 
     print('Processing audio files: ' + str(audio_file_paths))
@@ -124,7 +102,7 @@ def process(audio_folder_paths, build_folder_path):
     process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)
     write_output_files(soundbank_header_path, build_folder_path)
     os.remove(soundbank_header_path)
-    write_audio_desc(new_audio_desc, audio_desc_path)
+    new_file_info.write(file_info_path)
 
 
 if __name__ == "__main__":

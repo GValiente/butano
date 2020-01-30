@@ -2,10 +2,10 @@
 #define BTN_PALETTES_BANK_H
 
 #include "btn_span.h"
-#include "btn_array.h"
 #include "btn_fixed.h"
 #include "btn_color.h"
 #include "btn_optional.h"
+#include "btn_palette_bpp_mode.h"
 #include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
@@ -26,44 +26,68 @@ public:
 
     [[nodiscard]] int used_count() const;
 
-    [[nodiscard]] int available_count() const;
+    [[nodiscard]] int available_count() const
+    {
+        return hw::palettes::count() - used_count();
+    }
 
-    [[nodiscard]] optional<int> find(const span<const color>& colors_ref);
+    [[nodiscard]] optional<int> find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] optional<int> create(const span<const color>& colors_ref);
+    [[nodiscard]] optional<int> create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
 
     void increase_usages(int id);
 
     void decrease_usages(int id);
 
-    [[nodiscard]] int colors_count(int id) const;
+    [[nodiscard]] int colors_count(int id) const
+    {
+        return _palettes[id].slots_count * hw::palettes::colors_per_palette();
+    }
 
     [[nodiscard]] bool eight_bits_per_pixel(int id) const
     {
-        return id == 0 && _eight_bits_per_pixel_palettes;
+        return palette_bpp_mode(_palettes[id].bpp_mode) == palette_bpp_mode::BPP_8;
     }
 
-    [[nodiscard]] span<const color> colors_ref(int id) const;
+    [[nodiscard]] span<const color> colors_ref(int id) const
+    {
+        return _palettes[id].colors_span();
+    }
 
-    void set_colors_ref(int id, const span<const color>& colors_ref);
+    void set_colors_ref(int id, const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
 
     void reload_colors_ref(int id);
 
-    [[nodiscard]] fixed inverse_intensity(int id) const;
+    [[nodiscard]] fixed inverse_intensity(int id) const
+    {
+        return _palettes[id].inverse_intensity;
+    }
 
     void set_inverse_intensity(int id, fixed intensity);
 
-    [[nodiscard]] fixed grayscale_intensity(int id) const;
+    [[nodiscard]] fixed grayscale_intensity(int id) const
+    {
+        return _palettes[id].grayscale_intensity;
+    }
 
     void set_grayscale_intensity(int id, fixed intensity);
 
-    [[nodiscard]] color fade_color(int id) const;
+    [[nodiscard]] color fade_color(int id) const
+    {
+        return _palettes[id].fade_color;
+    }
 
-    [[nodiscard]] fixed fade_intensity(int id) const;
+    [[nodiscard]] fixed fade_intensity(int id) const
+    {
+        return _palettes[id].fade_intensity;
+    }
 
     void set_fade(int id, color color, fixed intensity);
 
-    [[nodiscard]] int rotate_count(int id) const;
+    [[nodiscard]] int rotate_count(int id) const
+    {
+        return _palettes[id].rotate_count;
+    }
 
     void set_rotate_count(int id, int count);
 
@@ -136,18 +160,24 @@ private:
         fixed fade_intensity;
         unsigned usages = 0;
         color fade_color;
-        signed rotate_count: 15;
-        unsigned update: 1;
+        int16_t rotate_count = 0;
+        uint8_t bpp_mode = 0;
+        int8_t slots_count = 0;
+        bool update = false;
 
-        palette()
+        span<const color> colors_span() const
         {
-            rotate_count = 0;
-            update = false;
+            return span<const color>(colors_ref, size_t(hw::palettes::colors_per_palette() * slots_count));
+        }
+
+        span<const color> visible_colors_span() const
+        {
+            return span<const color>(colors_ref + 1, size_t(hw::palettes::colors_per_palette() * slots_count) - 1);
         }
     };
 
-    array<palette, hw::palettes::count()> _palettes = {};
-    array<color, hw::palettes::colors()> _colors = {};
+    palette _palettes[hw::palettes::count()] = {};
+    color _colors[hw::palettes::colors()] = {};
     optional<color> _transparent_color;
     fixed _brightness;
     fixed _contrast;
@@ -159,12 +189,9 @@ private:
     optional<int> _last_used_4bpp_index;
     optional<int> _first_index_to_commit;
     optional<int> _last_index_to_commit;
-    int _eight_bits_per_pixel_palettes = 0;
     bool _perform_update = false;
 
-    [[nodiscard]] span<const color> _color_ptr_span(int index) const;
-
-    span<const color> _4bpp_color_ptr_span(int index) const;
+    [[nodiscard]] int _bpp8_slots_count() const;
 
     [[nodiscard]] int _first_4bpp_palette_index() const;
 };

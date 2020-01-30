@@ -167,6 +167,9 @@ class BMP:
 
         tile_pixel_sets_count = len(tile_pixel_sets)
 
+        if tile_pixel_sets_count == 0:
+            raise ValueError('There\'s no 16 4bpp palettes')
+
         if tile_pixel_sets_count > 16:
             raise ValueError('There\'s more than 16 4bpp palettes: ' + str(tile_pixel_sets_count))
 
@@ -268,3 +271,5 @@ class BMP:
 
             with open(output_file_path, 'wb') as output_file:
                 output_file.write(input_file_content)
+
+        return tile_pixel_sets_count * 16

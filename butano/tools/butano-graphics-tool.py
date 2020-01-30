@@ -42,7 +42,7 @@ class SpriteItem:
         except KeyError:
             height = bmp.height
 
-        self.__graphics = bmp.height / height
+        self.__graphics = int(bmp.height / height)
         width = bmp.width
 
         if width == 8:
@@ -189,7 +189,7 @@ class BgItem:
             if self.__bpp4:
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
                 print('Generating 4bpp image in ' + self.__file_path + '...')
-                bmp.quantize(self.__file_path)
+                self.__colors_count = bmp.quantize(self.__file_path)
                 print('4bpp image generated successfully')
 
     def write_header(self):

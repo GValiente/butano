@@ -44,17 +44,7 @@ optional<int> palettes_bank::find(const span<const color>& colors_ref, palette_b
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        int inferior_index;
-
-        if(BTN_LIKELY(_last_used_4bpp_index))
-        {
-            inferior_index = *_last_used_4bpp_index;
-        }
-        else
-        {
-            inferior_index = (hw::palettes::count() + bpp8_slots_count) / 2;
-        }
-
+        int inferior_index = _last_used_4bpp_index;
         int superior_index = inferior_index + 1;
         bool valid_inferior_index = inferior_index >= bpp8_slots_count;
         bool valid_superior_index = superior_index < hw::palettes::count();

@@ -178,6 +178,8 @@ private:
 
     palette _palettes[hw::palettes::count()] = {};
     color _colors[hw::palettes::colors()] = {};
+    optional<int> _first_index_to_commit;
+    optional<int> _last_index_to_commit;
     optional<color> _transparent_color;
     fixed _brightness;
     fixed _contrast;
@@ -185,10 +187,8 @@ private:
     fixed _inverse_intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
+    int _last_used_4bpp_index = hw::palettes::count() - 1;
     color _fade_color;
-    optional<int> _last_used_4bpp_index;
-    optional<int> _first_index_to_commit;
-    optional<int> _last_index_to_commit;
     bool _perform_update = false;
 
     [[nodiscard]] int _bpp8_slots_count() const;

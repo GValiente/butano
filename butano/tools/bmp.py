@@ -85,11 +85,11 @@ class BMP:
         pixels = self.__pixels
 
         # Store used pixels for all tiles:
-        tile_pixel_sets = set()
+        tile_pixel_sets = []
 
         for ty in range(0, height, 8):
             for tx in range(0, width, 8):
-                tile_pixel_set = set()
+                new_tile_pixel_set = set()
 
                 for y in range(ty, ty + 8):
                     row = width * y
@@ -98,20 +98,26 @@ class BMP:
                         pixel = pixels[row + x]
 
                         if pixel > 0:
-                            tile_pixel_set.add(pixel)
+                            new_tile_pixel_set.add(pixel)
 
-                tile_pixel_set_len = len(tile_pixel_set)
+                tile_pixel_set_len = len(new_tile_pixel_set)
 
                 if tile_pixel_set_len > 15:
                     raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' + str(ty) +
                                      ' - ' + str(tile_pixel_set_len))
 
                 if tile_pixel_set_len > 0:
-                    tile_pixel_sets.add(frozenset(tile_pixel_set))
+                    append = True
+
+                    for tile_pixel_set in tile_pixel_sets:
+                        if new_tile_pixel_set.issubset(tile_pixel_set):
+                            append = False
+                            break
+
+                    if append:
+                        tile_pixel_sets.append(new_tile_pixel_set)
 
         # Merge pixel sets:
-        tile_pixel_sets = list(tile_pixel_sets)
-
         while True:
             tile_pixel_sets_count = len(tile_pixel_sets)
             minimum_i = None
@@ -192,10 +198,10 @@ class BMP:
         new_colors = [transparent_color] * 256
 
         for tpi in range(tile_pixel_sets_count):
-            tile_pixel_set = tile_pixel_sets[tpi]
+            new_tile_pixel_set = tile_pixel_sets[tpi]
             ci = (tpi * 16) + 1
 
-            for tile_pixel in tile_pixel_set:
+            for tile_pixel in new_tile_pixel_set:
                 new_colors[ci] = colors[tile_pixel]
                 ci += 1
 
@@ -203,15 +209,15 @@ class BMP:
         new_pixels = list(pixels)
         tile_pixel_lists = []
 
-        for tile_pixel_set in tile_pixel_sets:
-            tile_pixel_lists.append(list(tile_pixel_set))
+        for new_tile_pixel_set in tile_pixel_sets:
+            tile_pixel_lists.append(list(new_tile_pixel_set))
 
         for ty in range(0, height, 8):
             for tx in range(0, width, 8):
                 valid_tile_pixel_set = False
 
                 for tpi in range(tile_pixel_sets_count):
-                    tile_pixel_set = tile_pixel_sets[tpi]
+                    new_tile_pixel_set = tile_pixel_sets[tpi]
                     valid_tile_pixel_set = True
 
                     for y in range(ty, ty + 8):
@@ -221,7 +227,7 @@ class BMP:
                             pixel = pixels[row + x]
     
                             if pixel > 0:
-                                if pixel not in tile_pixel_set:
+                                if pixel not in new_tile_pixel_set:
                                     valid_tile_pixel_set = False
                                     break
 

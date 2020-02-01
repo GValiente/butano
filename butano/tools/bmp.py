@@ -106,12 +106,12 @@ class BMP:
                         if pixel > 0:
                             new_tile_pixel_set.add(pixel)
 
-                tile_pixel_set_len = len(new_tile_pixel_set)
+                new_tile_pixel_set_len = len(new_tile_pixel_set)
 
-                if tile_pixel_set_len > 0:
-                    if tile_pixel_set_len > 15:
+                if new_tile_pixel_set_len > 0:
+                    if new_tile_pixel_set_len > 15:
                         raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' + str(ty) +
-                                         ' - ' + str(tile_pixel_set_len))
+                                         ' - ' + str(new_tile_pixel_set_len))
 
                     append = True
 

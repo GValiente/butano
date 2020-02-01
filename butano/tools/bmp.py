@@ -1,3 +1,8 @@
+"""
+Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+MIT License, see LICENSE file.
+"""
+import shutil
 import struct
 
 
@@ -77,7 +82,8 @@ class BMP:
 
     def quantize(self, output_file_path):
         if self.colors_count == 16:
-            raise ValueError('Unsupported colors count: ' + str(self.colors_count))
+            shutil.copyfile(self.__file_path, output_file_path)
+            return 16
 
         width = self.width
         height = self.height
@@ -102,11 +108,11 @@ class BMP:
 
                 tile_pixel_set_len = len(new_tile_pixel_set)
 
-                if tile_pixel_set_len > 15:
-                    raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' + str(ty) +
-                                     ' - ' + str(tile_pixel_set_len))
-
                 if tile_pixel_set_len > 0:
+                    if tile_pixel_set_len > 15:
+                        raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' + str(ty) +
+                                         ' - ' + str(tile_pixel_set_len))
+
                     append = True
 
                     for tile_pixel_set in tile_pixel_sets:
@@ -117,9 +123,14 @@ class BMP:
                     if append:
                         tile_pixel_sets.append(new_tile_pixel_set)
 
+        tile_pixel_sets_count = len(tile_pixel_sets)
+
+        if tile_pixel_sets_count == 0:
+            shutil.copyfile(self.__file_path, output_file_path)
+            return 16
+
         # Merge pixel sets:
         while True:
-            tile_pixel_sets_count = len(tile_pixel_sets)
             minimum_i = None
             minimum_j = None
             minimum_u_set = None
@@ -168,13 +179,9 @@ class BMP:
 
                 tile_pixel_sets[minimum_i] = minimum_u_set
                 tile_pixel_sets.pop(minimum_j)
+                tile_pixel_sets_count -= 1
             elif not merged:
                 break
-
-        tile_pixel_sets_count = len(tile_pixel_sets)
-
-        if tile_pixel_sets_count == 0:
-            raise ValueError('There\'s no 16 4bpp palettes')
 
         if tile_pixel_sets_count > 16:
             raise ValueError('There\'s more than 16 4bpp palettes: ' + str(tile_pixel_sets_count))

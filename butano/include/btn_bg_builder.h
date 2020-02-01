@@ -27,7 +27,7 @@ public:
         _tiles_ptr(forward<BgTilesPtr>(tiles_ptr)),
         _map_ptr(forward<BgMapPtr>(map_ptr))
     {
-        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_map_ptr->eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_map_ptr->bpp_mode()), "Invalid tiles count: ",
                    _tiles_ptr->tiles_count());
     }
 

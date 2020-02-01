@@ -14,15 +14,13 @@ class size;
 class bg_ptr;
 class fixed_point;
 class sprite_item;
-class palette_item;
 class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_tiles_item;
 class sprite_palette_ptr;
+class sprite_palette_item;
 class sprite_affine_mat_ptr;
 enum class sprite_double_size_mode;
-
-using sprite_palette_item = palette_item;
 
 class sprite_ptr
 {

@@ -52,24 +52,24 @@ namespace btn::hw::sprites
         oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(count()));
     }
 
-    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
+    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                               handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
         int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), 0, 0);
-        a0 |= eight_bits_per_pixel * ATTR0_8BPP;
+        a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
         int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
 
-    inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, bool eight_bits_per_pixel,
+    inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                              handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
         int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), 0, 0);
-        a0 |= eight_bits_per_pixel * ATTR0_8BPP;
+        a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDA(0, int(builder.size()), 0);
         int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());

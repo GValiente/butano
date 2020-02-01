@@ -2,6 +2,7 @@
 #define BTN_SPRITE_SHAPE_SIZE_H
 
 #include "btn_assert.h"
+#include "btn_palette_bpp_mode.h"
 
 namespace btn
 {
@@ -183,9 +184,9 @@ public:
         return width() * height();
     }
 
-    [[nodiscard]] constexpr int tiles_count(bool eight_bits_per_pixel) const
+    [[nodiscard]] constexpr int tiles_count(palette_bpp_mode bpp_mode) const
     {
-        return eight_bits_per_pixel ? pixels_count() / 32 : pixels_count() / 64;
+        return bpp_mode == palette_bpp_mode::BPP_8 ? pixels_count() / 32 : pixels_count() / 64;
     }
 
 private:

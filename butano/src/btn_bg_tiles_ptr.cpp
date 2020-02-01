@@ -3,6 +3,7 @@
 #include "btn_span.h"
 #include "btn_tile.h"
 #include "btn_optional.h"
+#include "btn_palette_bpp_mode.h"
 #include "btn_bg_blocks_manager.h"
 
 namespace btn
@@ -121,11 +122,11 @@ int bg_tiles_ptr::tiles_count() const
     return bg_blocks_manager::tiles_count(_handle);
 }
 
-bool bg_tiles_ptr::valid_tiles_count(bool eight_bits_per_pixel) const
+bool bg_tiles_ptr::valid_tiles_count(palette_bpp_mode bpp_mode) const
 {
     int count = tiles_count();
 
-    if(eight_bits_per_pixel)
+    if(bpp_mode == palette_bpp_mode::BPP_8)
     {
         return count > 0 && count < 2048 && (count % 2) == 0;
     }

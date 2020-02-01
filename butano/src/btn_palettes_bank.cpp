@@ -131,7 +131,7 @@ optional<int> palettes_bank::create(const span<const color>& colors_ref, palette
                     pal.usages = 1;
                     pal.bpp_mode = uint8_t(bpp_mode);
                     pal.slots_count = int8_t(required_slots_count);
-                    set_colors_ref(index, colors_ref, bpp_mode);
+                    set_colors_ref(index, colors_ref);
                     return index;
                 }
             }
@@ -163,7 +163,7 @@ optional<int> palettes_bank::create(const span<const color>& colors_ref, palette
                 }
 
                 first_pal.slots_count = int8_t(required_slots_count);
-                set_colors_ref(0, colors_ref, bpp_mode);
+                set_colors_ref(0, colors_ref);
                 return 0;
             }
         }
@@ -189,15 +189,12 @@ void palettes_bank::decrease_usages(int id)
     }
 }
 
-void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
+void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 {
-    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
     BTN_ASSERT(int(colors_ref.size()) == colors_count(id), "Colors count mismatch: ",
                colors_ref.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[id];
-    BTN_ASSERT(bpp_mode == palette_bpp_mode(pal.bpp_mode), "BPP mode mismatch: ", int(bpp_mode), " - ", pal.bpp_mode);
-
     pal.colors_ref = colors_ref.data();
     pal.update = true;
     _perform_update = true;
@@ -365,7 +362,7 @@ void palettes_bank::update()
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
 
-                color& pal_colors_ref = _colors[index * pal_colors_count];
+                color& pal_colors_ref = _colors[index * hw::palettes::colors_per_palette()];
                 memory::copy(*pal.colors_ref, pal_colors_count, pal_colors_ref);
 
                 if(int pal_inverse_intensity = fixed_t<5>(pal.inverse_intensity).value())
@@ -457,7 +454,6 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
         int colors_offset = first_index * hw::palettes::colors_per_palette();
         int colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
                 hw::palettes::colors_per_palette();
-
         result = commit_data{ _colors, colors_offset, colors_count };
         _first_index_to_commit.reset();
         _last_index_to_commit.reset();

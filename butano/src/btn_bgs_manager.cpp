@@ -31,7 +31,7 @@ namespace
             map_ptr(move(map)),
             ignore_camera(builder.ignore_camera())
         {
-            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.eight_bits_per_pixel(), handle);
+            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.bpp_mode(), handle);
             hw::bgs::set_map(map_ptr.id(), quarter_dimensions, handle);
             update_quarter_dimensions(quarter_dimensions, handle);
         }
@@ -197,7 +197,7 @@ void set_tiles(int id, const bg_tiles_ptr& tiles_ptr)
 
     if(tiles_ptr != item.tiles_ptr)
     {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.bpp_mode()), "Invalid tiles count: ",
                    tiles_ptr.tiles_count());
 
         hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
@@ -216,7 +216,7 @@ void set_tiles(int id, bg_tiles_ptr&& tiles_ptr)
 
     if(tiles_ptr != item.tiles_ptr)
     {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.eight_bits_per_pixel()), "Invalid tiles count: ",
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.bpp_mode()), "Invalid tiles count: ",
                    tiles_ptr.tiles_count());
 
         hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);

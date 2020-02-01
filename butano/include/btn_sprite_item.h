@@ -1,9 +1,9 @@
 #ifndef BTN_SPRITE_ITEM_H
 #define BTN_SPRITE_ITEM_H
 
-#include "btn_palette_item.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_tiles_item.h"
+#include "btn_sprite_palette_item.h"
 
 namespace btn
 {
@@ -13,8 +13,8 @@ class sprite_item
 
 public:
     constexpr sprite_item(sprite_shape shape, sprite_size size, const span<const tile>& tiles,
-                          const span<const color>& palette, int graphics_count) :
-        sprite_item(shape, size, sprite_tiles_item(tiles, graphics_count), sprite_palette_item(palette))
+                          const span<const color>& palette, palette_bpp_mode bpp_mode, int graphics_count) :
+        sprite_item(shape, size, sprite_tiles_item(tiles, graphics_count), sprite_palette_item(palette, bpp_mode))
     {
     }
 
@@ -26,7 +26,7 @@ public:
         _palette_item(palette_item)
     {
         BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles_ref().size()) ==
-                             shape_size().tiles_count(palette_item.eight_bits_per_pixel()) * tiles_item.graphics_count(),
+                             shape_size().tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
                              "Invalid shape or size");
     }
 

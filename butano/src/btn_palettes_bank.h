@@ -44,9 +44,9 @@ public:
         return _palettes[id].slots_count * hw::palettes::colors_per_palette();
     }
 
-    [[nodiscard]] bool eight_bits_per_pixel(int id) const
+    [[nodiscard]] palette_bpp_mode bpp_mode(int id) const
     {
-        return palette_bpp_mode(_palettes[id].bpp_mode) == palette_bpp_mode::BPP_8;
+        return palette_bpp_mode(_palettes[id].bpp_mode);
     }
 
     [[nodiscard]] span<const color> colors_ref(int id) const
@@ -54,7 +54,7 @@ public:
         return _palettes[id].colors_span();
     }
 
-    void set_colors_ref(int id, const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
+    void set_colors_ref(int id, const span<const color>& colors_ref);
 
     void reload_colors_ref(int id);
 

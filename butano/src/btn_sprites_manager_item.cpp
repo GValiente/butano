@@ -16,24 +16,22 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     ignore_camera(builder.ignore_camera()),
     remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
 {
-    bool eight_bits_per_pixel = palette_ptr.eight_bits_per_pixel();
-
     if(affine_mat_ptr)
     {
         if(remove_affine_mat_when_not_needed && affine_mat_ptr->is_identity())
         {
             affine_mat_ptr.reset();
-            hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+            hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
         }
         else
         {
-            hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+            hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
             hw::sprites::set_affine_mat(affine_mat_ptr->id(), double_size(), handle);
         }
     }
     else
     {
-        hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), eight_bits_per_pixel, handle);
+        hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
     }
 
     update_half_dimensions();

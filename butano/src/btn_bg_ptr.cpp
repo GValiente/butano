@@ -208,7 +208,7 @@ void bg_ptr::set_palette(const bg_item& item, create_mode create_mode)
 
 void bg_ptr::set_palette(const bg_palette_item& palette_item, create_mode create_mode)
 {
-    optional<bg_palette_ptr> palette_ptr = palette_item.create_bg_palette(create_mode);
+    optional<bg_palette_ptr> palette_ptr = palette_item.create_palette(create_mode);
     BTN_ASSERT(palette_ptr, "Palette create failed");
 
     set_palette(move(*palette_ptr));

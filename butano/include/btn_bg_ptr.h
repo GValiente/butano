@@ -17,12 +17,10 @@ class bg_map_ptr;
 class sprite_ptr;
 class bg_map_item;
 class fixed_point;
-class palette_item;
 class bg_tiles_ptr;
 class bg_tiles_item;
 class bg_palette_ptr;
-
-using bg_palette_item = palette_item;
+class bg_palette_item;
 
 class bg_ptr
 {

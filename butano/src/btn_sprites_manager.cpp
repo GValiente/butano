@@ -348,9 +348,8 @@ void set_palette(id_type id, const sprite_palette_ptr& palette_ptr)
 
     if(palette_ptr != item->palette_ptr)
     {
-        BTN_ASSERT(item->palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-                   "Palette colors bpp mode mismatch: ",
-                   item->palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
+        BTN_ASSERT(item->palette_ptr.bpp_mode() == palette_ptr.bpp_mode(), "Palette BPP mode mismatch: ",
+                   int(item->palette_ptr.bpp_mode()), " - ", int(palette_ptr.bpp_mode()));
 
         hw::sprites::set_palette(palette_ptr.id(), item->handle);
         item->palette_ptr = palette_ptr;
@@ -364,9 +363,8 @@ void set_palette(id_type id, sprite_palette_ptr&& palette_ptr)
 
     if(palette_ptr != item->palette_ptr)
     {
-        BTN_ASSERT(item->palette_ptr.eight_bits_per_pixel() == palette_ptr.eight_bits_per_pixel(),
-                   "Palette colors bpp mode mismatch: ",
-                   item->palette_ptr.eight_bits_per_pixel(), " - ", palette_ptr.eight_bits_per_pixel());
+        BTN_ASSERT(item->palette_ptr.bpp_mode() == palette_ptr.bpp_mode(), "Palette BPP mode mismatch: ",
+                   int(item->palette_ptr.bpp_mode()), " - ", int(palette_ptr.bpp_mode()));
 
         hw::sprites::set_palette(palette_ptr.id(), item->handle);
         item->palette_ptr = move(palette_ptr);

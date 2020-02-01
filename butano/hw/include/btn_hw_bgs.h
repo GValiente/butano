@@ -27,11 +27,11 @@ namespace btn::hw::bgs
         return count() - 1;
     }
 
-    inline void setup(const bg_builder& builder, int tiles_id, bool eight_bits_per_pixel, handle& bg)
+    inline void setup(const bg_builder& builder, int tiles_id, palette_bpp_mode bpp_mode, handle& bg)
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id));
 
-        if(eight_bits_per_pixel)
+        if(bpp_mode == palette_bpp_mode::BPP_8)
         {
             bg.cnt |= BG_8BPP;
         }

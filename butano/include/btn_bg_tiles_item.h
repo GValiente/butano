@@ -4,6 +4,7 @@
 #include "btn_span.h"
 #include "btn_tile.h"
 #include "btn_optional_fwd.h"
+#include "btn_palette_bpp_mode.h"
 
 namespace btn
 {
@@ -18,7 +19,8 @@ public:
     constexpr explicit bg_tiles_item(const span<const tile>& tiles_ref) :
         _tiles_ref(tiles_ref)
     {
-        BTN_CONSTEXPR_ASSERT(valid_tiles_count(false) || valid_tiles_count(true), "Invalid tiles count");
+        BTN_CONSTEXPR_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
+                             "Invalid tiles count");
     }
 
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
@@ -26,11 +28,11 @@ public:
         return _tiles_ref;
     }
 
-    [[nodiscard]] constexpr bool valid_tiles_count(bool eight_bits_per_pixel) const
+    [[nodiscard]] constexpr bool valid_tiles_count(palette_bpp_mode bpp_mode) const
     {
         size_t count = _tiles_ref.size();
 
-        if(eight_bits_per_pixel)
+        if(bpp_mode == palette_bpp_mode::BPP_8)
         {
             return count && count < 2048 && (count % 2) == 0;
         }

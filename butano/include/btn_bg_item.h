@@ -2,8 +2,8 @@
 #define BTN_BG_ITEM_H
 
 #include "btn_bg_map_item.h"
-#include "btn_palette_item.h"
 #include "btn_bg_tiles_item.h"
+#include "btn_bg_palette_item.h"
 
 namespace btn
 {
@@ -13,8 +13,8 @@ class bg_item
 
 public:
     constexpr bg_item(const span<const tile>& tiles, const bg_map_cell& map_cells_ref, const size& map_dimensions,
-                      const span<const color>& palette) :
-        bg_item(bg_tiles_item(tiles), bg_map_item(map_cells_ref, map_dimensions), bg_palette_item(palette))
+                      const span<const color>& palette, palette_bpp_mode bpp_mode) :
+        bg_item(bg_tiles_item(tiles), bg_map_item(map_cells_ref, map_dimensions), bg_palette_item(palette, bpp_mode))
     {
     }
 
@@ -24,7 +24,7 @@ public:
         _map_item(map_item),
         _palette_item(palette_item)
     {
-        BTN_CONSTEXPR_ASSERT(tiles_item.valid_tiles_count(palette_item.eight_bits_per_pixel()), "Invalid tiles count");
+        BTN_CONSTEXPR_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()), "Invalid tiles count");
     }
 
     [[nodiscard]] constexpr const bg_tiles_item& tiles_item() const

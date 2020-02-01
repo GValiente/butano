@@ -12,6 +12,7 @@ namespace btn
 
 class size;
 class bg_palette_ptr;
+enum class palette_bpp_mode;
 
 class bg_map_ptr
 {
@@ -81,7 +82,7 @@ public:
 
     [[nodiscard]] size dimensions() const;
 
-    [[nodiscard]] bool eight_bits_per_pixel() const;
+    [[nodiscard]] palette_bpp_mode bpp_mode() const;
 
     [[nodiscard]] const bg_map_cell* cells_ref() const;
 

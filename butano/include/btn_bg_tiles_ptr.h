@@ -10,6 +10,7 @@ namespace btn
 {
 
 class tile;
+enum class palette_bpp_mode;
 
 class bg_tiles_ptr
 {
@@ -57,7 +58,7 @@ public:
 
     [[nodiscard]] int tiles_count() const;
 
-    [[nodiscard]] bool valid_tiles_count(bool eight_bits_per_pixel) const;
+    [[nodiscard]] bool valid_tiles_count(palette_bpp_mode bpp_mode) const;
 
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 

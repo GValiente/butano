@@ -177,7 +177,7 @@ void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
 
 void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mode create_mode)
 {
-    optional<sprite_palette_ptr> palette_ptr = palette_item.create_sprite_palette(create_mode);
+    optional<sprite_palette_ptr> palette_ptr = palette_item.create_palette(create_mode);
     BTN_ASSERT(palette_ptr, "Palette create failed");
 
     set_palette(move(*palette_ptr));

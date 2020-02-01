@@ -2,6 +2,7 @@ import os
 import json
 import argparse
 import subprocess
+import time
 
 from bmp import BMP
 from file_info import FileInfo
@@ -32,6 +33,7 @@ class SpriteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
+        self.__bpp8 = self.__colors_count > 16
 
         try:
             height = int(info['height'])
@@ -117,6 +119,11 @@ class SpriteItem:
 
         os.remove(grit_file_path)
 
+        if self.__bpp8:
+            bpp_mode_label = 'palette_bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'palette_bpp_mode::BPP_4'
+
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BTN_' + name.upper() + '_SPRITE_ITEM_H'
             header_file.write('#ifndef ' + include_guard + '\n')
@@ -132,7 +139,7 @@ class SpriteItem:
                               'sprite_size::' + self.__size + ', ' + '\n            ' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
                               'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
-                              str(self.__graphics) + ');' + '\n')
+                              bpp_mode_label + ', ' + str(self.__graphics) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -178,19 +185,25 @@ class BgItem:
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
-        self.__bpp4 = False
+        self.__bpp8 = False
 
         if self.__colors_count > 16:
             try:
-                self.__bpp4 = bool(info['bpp4'])
+                bpp_mode = str(info['bpp_mode'])
             except KeyError:
-                pass
+                bpp_mode = 'bpp8'
 
-            if self.__bpp4:
+            if bpp_mode == 'bpp8':
+                self.__bpp8 = True
+            elif bpp_mode == 'bpp4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
                 print('Generating 4bpp image in ' + self.__file_path + '...')
+                start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
-                print('4bpp image generated successfully')
+                end = time.time()
+                print('4bpp image generated successfully in ' + str(int((end - start) * 1000)) + ' milliseconds')
+            elif bpp_mode != 'bpp4_manual':
+                raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
     def write_header(self):
         name = self.__file_name_no_ext
@@ -206,6 +219,11 @@ class BgItem:
 
         os.remove(grit_file_path)
 
+        if self.__bpp8:
+            bpp_mode_label = 'palette_bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'palette_bpp_mode::BPP_4'
+
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BTN_' + name.upper() + '_BG_ITEM_H'
             header_file.write('#ifndef ' + include_guard + '\n')
@@ -220,8 +238,8 @@ class BgItem:
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
                               name + '_btn_graphicsMap[0], size(' + str(self.__width) + ', ' + str(self.__height) + '),'
                               '\n            ' +
-                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '));' +
-                              '\n')
+                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
+                              bpp_mode_label + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -232,10 +250,10 @@ class BgItem:
     def process(self):
         command = ['grit', self.__file_path]
 
-        if self.__colors_count == 16 or self.__bpp4:
-            command.append('-gB4 -mR4')
-        else:
+        if self.__bpp8:
             command.append('-gB8 -mR8')
+        else:
+            command.append('-gB4 -mR4')
 
         if self.__sbb:
             command.append('-mLs')

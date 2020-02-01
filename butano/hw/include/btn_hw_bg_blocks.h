@@ -43,9 +43,10 @@ namespace btn::hw::bg_blocks
 
             for(int index = 0; index < half_words; ++index)
             {
-                uint16_t se = source_data_ptr[index];
-                BFN_SET(se, palette_offset, SE_PALBANK);
-                destination_vram_ptr[index] = se;
+                int se = source_data_ptr[index];
+                int palette_bank = BFN_GET(se, SE_PALBANK);
+                BFN_SET(se, palette_bank + palette_offset, SE_PALBANK);
+                destination_vram_ptr[index] = uint16_t(se);
             }
         }
         else

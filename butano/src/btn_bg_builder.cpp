@@ -61,7 +61,7 @@ optional<bg_map_ptr> bg_builder::map() const
     }
     else
     {
-        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_bg_palette(_palette_create_mode))
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_palette(_palette_create_mode))
         {
             result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
         }
@@ -96,7 +96,7 @@ optional<bg_map_ptr> bg_builder::release_map()
     }
     else
     {
-        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_bg_palette(_palette_create_mode))
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_palette(_palette_create_mode))
         {
             result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
         }

@@ -30,9 +30,9 @@ public:
         _size(size),
         _graphics_index(0)
     {
-        BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles_count(_palette_ptr->eight_bits_per_pixel()),
+        BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles_count(_palette_ptr->bpp_mode()),
                    "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-                   shape_size().tiles_count(_palette_ptr->eight_bits_per_pixel()));
+                   shape_size().tiles_count(_palette_ptr->bpp_mode()));
     }
 
     [[nodiscard]] const optional<sprite_item>& item() const

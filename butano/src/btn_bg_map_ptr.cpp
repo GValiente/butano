@@ -197,9 +197,9 @@ size bg_map_ptr::dimensions() const
     return bg_blocks_manager::map_dimensions(_handle);
 }
 
-bool bg_map_ptr::eight_bits_per_pixel() const
+palette_bpp_mode bg_map_ptr::bpp_mode() const
 {
-    return palette().eight_bits_per_pixel();
+    return palette().bpp_mode();
 }
 
 const bg_map_cell* bg_map_ptr::cells_ref() const

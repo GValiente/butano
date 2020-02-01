@@ -701,7 +701,7 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
 
 void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
 {
-    BTN_ASSERT(! palette_item.eight_bits_per_pixel(), "8bpp fonts not supported");
+    BTN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
 
     _palette_item = palette_item;
 }
@@ -765,7 +765,7 @@ bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_vie
 bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
-    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_sprite_palette(create_mode::FIND_OR_CREATE);
+    optional<sprite_palette_ptr> palette_ptr = _palette_item.create_palette(create_mode::FIND_OR_CREATE);
 
     if(! palette_ptr)
     {

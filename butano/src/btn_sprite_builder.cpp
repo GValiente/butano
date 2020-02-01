@@ -169,7 +169,7 @@ optional<sprite_palette_ptr> sprite_builder::palette() const
     }
     else
     {
-        result = _item->palette_item().create_sprite_palette(_palette_create_mode);
+        result = _item->palette_item().create_palette(_palette_create_mode);
     }
 
     return result;
@@ -201,7 +201,7 @@ optional<sprite_palette_ptr> sprite_builder::release_palette()
     }
     else
     {
-        result = _item->palette_item().create_sprite_palette(_palette_create_mode);
+        result = _item->palette_item().create_palette(_palette_create_mode);
     }
 
     return result;

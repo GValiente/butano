@@ -35,38 +35,41 @@ namespace
     public:
         bool music_playing = false;
         bool music_paused = false;
-        bool audio_enabled = true;
-        bool update_audio = false;
+        volatile bool locked = false;
     };
+
+    BTN_DATA_EWRAM static_data data;
 
     alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[BTN_CFG_AUDIO_MAX_CHANNELS *
             (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + mix_length()];
 
     alignas(sizeof(int)) uint8_t maxmod_mixing_buffer[mix_length()];
 
-    BTN_DATA_EWRAM static_data data;
 
-    void commit_handler()
+    class lock
     {
-        if(data.audio_enabled)
-        {
-            mmFrame();
-        }
-        else
-        {
-            data.update_audio = true;
-        }
-    }
 
-    void enable_audio()
+    public:
+        lock()
+        {
+            while(data.locked)
+            {
+            }
+
+            data.locked = true;
+        }
+
+        ~lock()
+        {
+            data.locked = false;
+        }
+    };
+
+    void _commit_handler()
     {
-        if(data.update_audio)
-        {
-            mmFrame();
-            data.update_audio = false;
-        }
+        lock lock;
 
-        data.audio_enabled = true;
+        mmFrame();
     }
 }
 
@@ -99,27 +102,38 @@ void stop()
 
 void add_irq()
 {
+    lock lock;
+
     irq::add(irq::id::VBLANK, mmVBlank);
 }
 
 void remove_irq()
 {
+    lock lock;
+
     irq::remove(irq::id::VBLANK);
 }
 
 void pause_commits()
 {
+    lock lock;
+
     mmSetVBlankHandler(nullptr);
 }
 
 void resume_commits()
 {
-    commit_handler();
-    mmSetVBlankHandler(reinterpret_cast<void*>(commit_handler));
+    _commit_handler();
+
+    lock lock;
+
+    mmSetVBlankHandler(reinterpret_cast<void*>(_commit_handler));
 }
 
 bool music_playing()
 {
+    lock lock;
+
     return data.music_playing && mmActive();
 }
 
@@ -127,28 +141,27 @@ void play_music(music_item item, bool loop, int volume)
 {
     BTN_ASSERT(volume >= 0 && volume <= 1024, "Volume range is [0, 1024]: ", volume);
 
+    lock lock;
+
     if(data.music_playing)
     {
-        stop_music();
+        mmStop();
     }
 
-    data.audio_enabled = false;
     mmSetModuleVolume(0);
     mmStart(unsigned(item.id()), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
-    enable_audio();
-
+    mmSetModuleVolume(mm_word(volume));
     data.music_playing = true;
-    set_music_volume(volume);
+    data.music_paused = false;
 }
 
 void stop_music()
 {
     BTN_ASSERT(data.music_playing, "There's no music playing");
 
-    data.audio_enabled = false;
-    mmStop();
-    enable_audio();
+    lock lock;
 
+    mmStop();
     data.music_playing = data.music_paused = false;
 }
 
@@ -157,10 +170,9 @@ void pause_music()
     BTN_ASSERT(data.music_playing, "There's no music playing");
     BTN_ASSERT(! data.music_paused, "Music was already paused");
 
-    data.audio_enabled = false;
-    mmPause();
-    enable_audio();
+    lock lock;
 
+    mmPause();
     data.music_paused = true;
 }
 
@@ -168,10 +180,9 @@ void resume_music()
 {
     BTN_ASSERT(data.music_paused, "Music was not paused");
 
-    data.audio_enabled = false;
-    mmResume();
-    enable_audio();
+    lock lock;
 
+    mmResume();
     data.music_paused = false;
 }
 
@@ -180,13 +191,15 @@ void set_music_volume(int volume)
     BTN_ASSERT(volume >= 0 && volume <= 1024, "Volume range is [0, 1024]: ", volume);
     BTN_ASSERT(data.music_playing, "There's no music playing");
 
-    data.audio_enabled = false;
+    lock lock;
+
     mmSetModuleVolume(mm_word(volume));
-    enable_audio();
 }
 
 void play_sound(sound_item item)
 {
+    lock lock;
+
     mm_sfxhand sfx_handle = mmEffect(unsigned(item.id()));
     mmEffectRelease(sfx_handle);
 }
@@ -196,6 +209,8 @@ void play_sound(sound_item item, int volume, int speed, int panning)
     BTN_ASSERT(volume >= 0 && volume <= 255, "Volume range is [0, 255]: ", volume);
     BTN_ASSERT(speed >= 0 && speed <= 65535, "Speed range is [0, 65535]: ", speed);
     BTN_ASSERT(panning >= 0 && panning <= 255, "Panning range is [0, 255]: ", panning);
+
+    lock lock;
 
     mm_sound_effect sound_effect;
     sound_effect.id = unsigned(item.id());
@@ -210,9 +225,9 @@ void play_sound(sound_item item, int volume, int speed, int panning)
 
 void stop_all_sounds()
 {
-    data.audio_enabled = false;
+    lock lock;
+
     mmEffectCancelAll();
-    enable_audio();
 }
 
 int direct_sound_control_value()
@@ -222,6 +237,8 @@ int direct_sound_control_value()
 
 void set_direct_sound_control_value(int value)
 {
+    lock lock;
+
     REG_SNDDSCNT = uint16_t(value);
 }
 

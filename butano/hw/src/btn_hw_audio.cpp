@@ -75,6 +75,8 @@ namespace
 
 void init()
 {
+    lock lock;
+
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);
     maxmod_info.mod_channel_count = BTN_CFG_AUDIO_MAX_CHANNELS;
@@ -162,7 +164,8 @@ void stop_music()
     lock lock;
 
     mmStop();
-    data.music_playing = data.music_paused = false;
+    data.music_playing = false;
+    data.music_paused = false;
 }
 
 void pause_music()

@@ -15,10 +15,11 @@ from file_info import FileInfo
 
 class GraphicsFolderInfo:
 
-    def __init__(self, sprites, bgs, file_paths):
+    def __init__(self, sprites, bgs, file_paths, new_graphics_json):
         self.__sprites = sprites
         self.__bgs = bgs
         self.__file_paths = file_paths
+        self.__new_graphics_json = new_graphics_json
 
     def get_sprite(self, file_name_no_ext):
         return self.__sprites[file_name_no_ext]
@@ -28,6 +29,9 @@ class GraphicsFolderInfo:
 
     def file_paths(self):
         return self.__file_paths
+
+    def new_graphics_json(self):
+        return self.__new_graphics_json
 
 
 class SpriteItem:
@@ -274,7 +278,7 @@ class BgItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
-def list_graphics_folder_infos(graphics_folder_paths):
+def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
     graphics_folder_infos = []
 
@@ -301,13 +305,22 @@ def list_graphics_folder_infos(graphics_folder_paths):
                 if os.path.isfile(graphics_file_path):
                     graphics_file_paths.append(graphics_file_path)
 
-        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths))
+        graphics_folder_name = os.path.basename(graphics_folder_path)
+        file_info_path = build_folder_path + '/_btn_' + graphics_folder_name + '_graphics_json_file_info.txt'
+        old_file_info = FileInfo.read(file_info_path)
+        new_file_info = FileInfo.build_from_file(graphics_json_file_path)
+        new_graphics_json = old_file_info != new_file_info
+
+        if new_graphics_json:
+            new_file_info.write(file_info_path)
+
+        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths, new_graphics_json))
 
     return graphics_folder_infos
 
 
 def process(graphics_folder_paths, build_folder_path):
-    graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths)
+    graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths, build_folder_path)
 
     for graphics_folder_info in graphics_folder_infos:
         for graphics_file_path in graphics_folder_info.file_paths():
@@ -316,8 +329,9 @@ def process(graphics_folder_paths, build_folder_path):
             file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
             old_file_info = FileInfo.read(file_info_path)
             new_file_info = FileInfo.build_from_file(graphics_file_path)
+            new_graphics_json = old_file_info != new_file_info
 
-            if old_file_info != new_file_info:
+            if new_graphics_json or graphics_folder_info.new_graphics_json():
                 print('Processing graphics file: ' + graphics_file_path)
 
                 try:
@@ -332,7 +346,9 @@ def process(graphics_folder_paths, build_folder_path):
 
                 item.process()
                 item.write_header()
-                new_file_info.write(file_info_path)
+
+                if new_graphics_json:
+                    new_file_info.write(file_info_path)
 
 
 if __name__ == "__main__":

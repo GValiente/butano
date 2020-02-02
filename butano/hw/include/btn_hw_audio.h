@@ -13,15 +13,9 @@ namespace hw::audio
 {
     void init();
 
-    void stop();
-
     void add_irq();
 
     void remove_irq();
-
-    void pause_commits();
-
-    void resume_commits();
 
     [[nodiscard]] bool music_playing();
 
@@ -44,6 +38,12 @@ namespace hw::audio
     [[nodiscard]] int direct_sound_control_value();
 
     void set_direct_sound_control_value(int value);
+
+    void update();
+
+    void commit();
+
+    void stop();
 }
 
 }

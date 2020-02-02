@@ -116,8 +116,8 @@ namespace
         bg_blocks_manager::update();
         BTN_PROFILER_ENGINE_STOP();
 
-        BTN_PROFILER_ENGINE_START("eng_audio");
-        hw::audio::pause_commits();
+        BTN_PROFILER_ENGINE_START("eng_audio_update");
+        hw::audio::update();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_cpu_usage");
@@ -154,8 +154,8 @@ namespace
         bgs_manager::commit();
         BTN_PROFILER_ENGINE_STOP();
 
-        BTN_PROFILER_ENGINE_START("eng_audio");
-        hw::audio::resume_commits();
+        BTN_PROFILER_ENGINE_START("eng_audio_commit");
+        hw::audio::commit();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_keypad");

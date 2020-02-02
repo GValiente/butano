@@ -55,6 +55,7 @@ int main()
     {
         if(btn::keypad::pressed(btn::keypad::button_type::A))
         {
+            btn::sound::play(btn::sound_items::cure);
         }
 
         if(btn::keypad::pressed(btn::keypad::button_type::B))
@@ -107,7 +108,6 @@ int main()
             sprite.set_y(btn::min(sprite.y() + 1, btn::fixed(128)));
         }
 
-        // btn::camera::set_position(camera_position);
         btn::core::update();
     }
 }

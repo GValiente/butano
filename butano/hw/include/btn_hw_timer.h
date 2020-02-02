@@ -8,7 +8,7 @@ namespace btn::hw::timer
 {
     [[nodiscard]] constexpr int ticks_per_frame()
     {
-        return 280896;
+        return 280896 / 64;
     }
 
     [[nodiscard]] constexpr int ticks_per_second()
@@ -25,7 +25,7 @@ namespace btn::hw::timer
         REG_TM2D = 0;
 
         REG_TM3CNT = TM_ENABLE | TM_CASCADE;
-        REG_TM2CNT = TM_ENABLE;
+        REG_TM2CNT = TM_ENABLE | TM_FREQ_64;
     }
 
     [[nodiscard]] inline unsigned ticks()

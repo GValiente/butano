@@ -146,6 +146,10 @@ public:
 
     void set_mosaic_enabled(bool mosaic_enabled);
 
+    [[nodiscard]] bool blending_enabled() const;
+
+    void set_blending_enabled(bool mosaic_enabled);
+
     [[nodiscard]] bool double_size() const;
 
     [[nodiscard]] sprite_double_size_mode double_size_mode() const;

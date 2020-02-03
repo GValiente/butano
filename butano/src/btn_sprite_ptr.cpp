@@ -404,6 +404,16 @@ void sprite_ptr::set_mosaic_enabled(bool mosaic_enabled)
     sprites_manager::set_mosaic_enabled(_handle, mosaic_enabled);
 }
 
+bool sprite_ptr::blending_enabled() const
+{
+    return sprites_manager::blending_enabled(_handle);
+}
+
+void sprite_ptr::set_blending_enabled(bool blending_enabled)
+{
+    sprites_manager::set_blending_enabled(_handle, blending_enabled);
+}
+
 bool sprite_ptr::double_size() const
 {
     return sprites_manager::double_size(_handle);

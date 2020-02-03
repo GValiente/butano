@@ -511,6 +511,19 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
     _update_handle(*item);
 }
 
+bool blending_enabled(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::blending_enabled(item->handle);
+}
+
+void set_blending_enabled(id_type id, bool blending_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::set_blending_enabled(blending_enabled, item->handle);
+    _update_handle(*item);
+}
+
 bool double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);

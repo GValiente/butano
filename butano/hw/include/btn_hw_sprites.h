@@ -56,7 +56,7 @@ namespace btn::hw::sprites
                               handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), 0, 0);
+        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
@@ -68,7 +68,7 @@ namespace btn::hw::sprites
                              handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), 0, 0);
+        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDA(0, int(builder.size()), 0);
@@ -192,6 +192,26 @@ namespace btn::hw::sprites
         else
         {
             sprite_ptr->attr0 &= ~ATTR0_MOSAIC;
+        }
+    }
+
+    [[nodiscard]] inline bool blending_enabled(const handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+        return sprite_ptr->attr0 & ATTR0_BLEND;
+    }
+
+    inline void set_blending_enabled(bool blending_enabled, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+        if(blending_enabled)
+        {
+            sprite_ptr->attr0 |= ATTR0_BLEND;
+        }
+        else
+        {
+            sprite_ptr->attr0 &= ~ATTR0_BLEND;
         }
     }
 

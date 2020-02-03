@@ -81,6 +81,10 @@ namespace sprites_manager
 
     void set_mosaic_enabled(id_type id, bool mosaic_enabled);
 
+    [[nodiscard]] bool blending_enabled(id_type id);
+
+    void set_blending_enabled(id_type id, bool blending_enabled);
+
     [[nodiscard]] bool double_size(id_type id);
 
     [[nodiscard]] sprite_double_size_mode double_size_mode(id_type id);

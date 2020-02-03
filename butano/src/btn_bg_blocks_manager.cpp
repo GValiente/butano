@@ -672,13 +672,13 @@ optional<int> find_tiles(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<int> find_map(const bg_map_cell& cells_ref, [[maybe_unused]] const size& map_dimensions,
-                       [[maybe_unused]] const bg_palette_ptr& palette_ptr)
+optional<int> find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
+                               [[maybe_unused]] const bg_palette_ptr& palette_ptr)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND MAP: ", &cells_ref, " - ", map_dimensions.width(), " - ",
-                      map_dimensions.height(), " - ", palette_ptr.id());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
+                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&cells_ref);
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
     auto items_map_iterator = data.items_map.find(data_ptr);
     optional<int> result;
 
@@ -752,15 +752,16 @@ optional<int> create_tiles(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<int> create_map(const bg_map_cell& cells_ref, const size& map_dimensions, bg_palette_ptr&& palette_ptr)
+optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+                                 bg_palette_ptr&& palette_ptr)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE MAP: ", &cells_ref, " - ", map_dimensions.width(), " - ",
-                      map_dimensions.height(), " - ", palette_ptr.id());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", &map_cells_ref, " - ",
+                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
 
     BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&cells_ref);
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
 
     int blocks_count = _half_words_to_blocks(map_dimensions.width() * map_dimensions.height());
@@ -802,10 +803,10 @@ optional<int> allocate_tiles(int tiles_count)
     return result;
 }
 
-optional<int> allocate_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr)
+optional<int> allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE MAP: ", map_dimensions.width(), " - ", map_dimensions.height(),
-                      " - ", palette_ptr.id());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
+                      map_dimensions.height(), " - ", palette_ptr.id());
 
     BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
@@ -890,10 +891,10 @@ size map_dimensions(int id)
     return result;
 }
 
-const bg_map_cell* map_cells_ref(int id)
+const regular_bg_map_cell* regular_map_cells_ref(int id)
 {
     const item_type& item = data.items.item(id);
-    return reinterpret_cast<const bg_map_cell*>(item.data);
+    return reinterpret_cast<const regular_bg_map_cell*>(item.data);
 }
 
 void set_tiles_ref(int id, const span<const tile>& tiles_ref)
@@ -921,10 +922,11 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
     }
 }
 
-void set_map_cells_ref(int id, const bg_map_cell& cells_ref, [[maybe_unused]] const size& map_dimensions)
+void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref,
+                               [[maybe_unused]] const size& map_dimensions)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET MAP CELLS REF: ", id, " - ", data.items.item(id).start_block, " - ",
-                      &cells_ref, " - ", map_dimensions.width(), " - ", map_dimensions.height());
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", data.items.item(id).start_block,
+                      " - ", &map_cells_ref, " - ", map_dimensions.width(), " - ", map_dimensions.height());
 
     item_type& item = data.items.item(id);
     BTN_ASSERT(item.data, "Item has no data");
@@ -933,7 +935,7 @@ void set_map_cells_ref(int id, const bg_map_cell& cells_ref, [[maybe_unused]] co
     BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                map_dimensions.height(), " - ", item.height);
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&cells_ref);
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
 
     if(item.data != data_ptr)
     {
@@ -992,14 +994,14 @@ optional<span<tile>> tiles_vram(int id)
     return result;
 }
 
-optional<span<bg_map_cell>> map_vram(int id)
+optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 {
     item_type& item = data.items.item(id);
-    optional<span<bg_map_cell>> result;
+    optional<span<regular_bg_map_cell>> result;
 
     if(! item.data)
     {
-        auto vram_ptr = reinterpret_cast<bg_map_cell*>(&hw::bg_blocks::vram(item.start_block));
+        auto vram_ptr = reinterpret_cast<regular_bg_map_cell*>(&hw::bg_blocks::vram(item.start_block));
         result.emplace(vram_ptr, item.width * item.height);
     }
 

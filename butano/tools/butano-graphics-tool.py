@@ -223,7 +223,7 @@ class BgItem:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'btn::tile', 1)
             grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
-            grit_data = grit_data.replace('unsigned short', 'btn::bg_map_cell', 1)
+            grit_data = grit_data.replace('unsigned short', 'btn::regular_bg_map_cell', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::color', 1)
 
         os.remove(grit_file_path)
@@ -238,12 +238,12 @@ class BgItem:
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
-            header_file.write('#include "btn_bg_item.h"' + '\n')
+            header_file.write('#include "btn_regular_bg_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
             header_file.write('namespace btn::bg_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const bg_item ' + name + '(' +
+            header_file.write('    constexpr const regular_bg_item ' + name + '(' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
                               name + '_btn_graphicsMap[0], size(' + str(self.__width) + ', ' + str(self.__height) + '),'
                               '\n            ' +

@@ -1,8 +1,8 @@
 #include "btn_sprite_ptr.h"
 
 #include "btn_size.h"
-#include "btn_bg_ptr.h"
 #include "btn_sprite_builder.h"
+#include "btn_regular_bg_ptr.h"
 #include "btn_sprites_manager.h"
 #include "btn_sprite_affine_mat_builder.h"
 
@@ -363,7 +363,7 @@ void sprite_ptr::put_above(const sprite_ptr& other)
     }
 }
 
-void sprite_ptr::put_above(const bg_ptr& bg_ptr)
+void sprite_ptr::put_above(const regular_bg_ptr& bg_ptr)
 {
     int this_priority = bg_priority();
     int bg_priority = bg_ptr.priority();

@@ -1,10 +1,8 @@
 #include "btn_bgs_manager.h"
 
-#include "btn_size.h"
 #include "btn_color.h"
 #include "btn_camera.h"
 #include "btn_algorithm.h"
-#include "btn_bg_builder.h"
 #include "btn_display_manager.h"
 #include "../hw/include/btn_hw_bgs.h"
 
@@ -21,17 +19,18 @@ namespace
         size quarter_dimensions;
         unsigned usages = 1;
         bg_tiles_ptr tiles_ptr;
-        bg_map_ptr map_ptr;
+        regular_bg_map_ptr map_ptr;
         unsigned ignore_camera: 1;
 
-        item_type(bg_builder&& builder, bg_tiles_ptr&& tiles, bg_map_ptr&& map, hw::bgs::handle& handle) :
+        item_type(regular_bg_builder&& builder, bg_tiles_ptr&& tiles, regular_bg_map_ptr&& map,
+                  hw::bgs::handle& handle) :
             position(builder.position()),
             quarter_dimensions(map.dimensions()),
             tiles_ptr(move(tiles)),
             map_ptr(move(map)),
             ignore_camera(builder.ignore_camera())
         {
-            hw::bgs::setup(builder, tiles_ptr.id(), map_ptr.bpp_mode(), handle);
+            hw::bgs::setup_regular(builder, tiles_ptr.id(), map_ptr.bpp_mode(), handle);
             hw::bgs::set_map(map_ptr.id(), quarter_dimensions, handle);
             update_quarter_dimensions(quarter_dimensions, handle);
         }
@@ -109,7 +108,7 @@ int available_count()
     return hw::bgs::count() - used_count();
 }
 
-optional<int> create(bg_builder&& builder)
+optional<int> create(regular_bg_builder&& builder)
 {
     int new_index = hw::bgs::count() - 1;
 
@@ -137,7 +136,7 @@ optional<int> create(bg_builder&& builder)
         return nullopt;
     }
 
-    optional<bg_map_ptr> map = builder.release_map();
+    optional<regular_bg_map_ptr> map = builder.release_map();
 
     if(! map)
     {
@@ -229,13 +228,13 @@ void set_tiles(int id, bg_tiles_ptr&& tiles_ptr)
     }
 }
 
-const bg_map_ptr& map(int id)
+const regular_bg_map_ptr& map(int id)
 {
     item_type& item = *data.items[id];
     return item.map_ptr;
 }
 
-void set_map(int id, const bg_map_ptr& map_ptr)
+void set_map(int id, const regular_bg_map_ptr& map_ptr)
 {
     item_type& item = *data.items[id];
 
@@ -254,7 +253,7 @@ void set_map(int id, const bg_map_ptr& map_ptr)
     }
 }
 
-void set_map(int id, bg_map_ptr&& map_ptr)
+void set_map(int id, regular_bg_map_ptr&& map_ptr)
 {
     item_type& item = *data.items[id];
 

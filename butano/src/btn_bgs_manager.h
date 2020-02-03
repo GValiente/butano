@@ -8,10 +8,10 @@ namespace btn
 {
 
 class size;
-class bg_builder;
-class bg_map_ptr;
 class fixed_point;
 class bg_tiles_ptr;
+class regular_bg_builder;
+class regular_bg_map_ptr;
 
 namespace bgs_manager
 {
@@ -21,7 +21,7 @@ namespace bgs_manager
 
     [[nodiscard]] int available_count();
 
-    [[nodiscard]] optional<int> create(bg_builder&& builder);
+    [[nodiscard]] optional<int> create(regular_bg_builder&& builder);
 
     void increase_usages(int id);
 
@@ -35,11 +35,11 @@ namespace bgs_manager
 
     void set_tiles(int id, bg_tiles_ptr&& tiles);
 
-    [[nodiscard]] const bg_map_ptr& map(int id);
+    [[nodiscard]] const regular_bg_map_ptr& map(int id);
 
-    void set_map(int id, const bg_map_ptr& map);
+    void set_map(int id, const regular_bg_map_ptr& map);
 
-    void set_map(int id, bg_map_ptr&& map);
+    void set_map(int id, regular_bg_map_ptr&& map);
 
     [[nodiscard]] const fixed_point& position(int id);
 

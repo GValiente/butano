@@ -21,7 +21,7 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 
-#include "btn_bg_actions.h"
+#include "btn_regular_bg_actions.h"
 #include "btn_stage_1_bg_item.h"
 
 #include "bf_stats.h"
@@ -31,8 +31,8 @@ int main()
 {
     btn::core::init();
 
-    btn::bg_ptr bg = btn::bg_ptr::create(0, 0, btn::bg_items::stage_1);
-    btn::bg_move_by_action bg_move_action(btn::move(bg), 0, 0.5);
+    btn::regular_bg_ptr bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::stage_1);
+    btn::regular_bg_move_by_action bg_move_action(btn::move(bg), 0, 0.5);
     bg_move_action.run();
 
     int center_x = btn::display::width() / 2;

@@ -4,7 +4,7 @@
 #include "tonc.h"
 #include "btn_size.h"
 #include "btn_memory.h"
-#include "btn_bg_builder.h"
+#include "btn_regular_bg_builder.h"
 
 namespace btn::hw::bgs
 {
@@ -27,7 +27,7 @@ namespace btn::hw::bgs
         return count() - 1;
     }
 
-    inline void setup(const bg_builder& builder, int tiles_id, palette_bpp_mode bpp_mode, handle& bg)
+    inline void setup_regular(const regular_bg_builder& builder, int tiles_id, palette_bpp_mode bpp_mode, handle& bg)
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id));
 

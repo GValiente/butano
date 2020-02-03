@@ -1,13 +1,13 @@
-#include "btn_bg_builder.h"
+#include "btn_regular_bg_builder.h"
 
-#include "btn_bg_ptr.h"
 #include "btn_bgs_manager.h"
 #include "btn_bg_palette_ptr.h"
+#include "btn_regular_bg_ptr.h"
 
 namespace btn
 {
 
-bg_builder& bg_builder::set_priority(int priority)
+regular_bg_builder& regular_bg_builder::set_priority(int priority)
 {
     BTN_ASSERT(priority >= 0 && priority <= bgs_manager::max_priority(), "Invalid priority: ", priority);
 
@@ -15,27 +15,27 @@ bg_builder& bg_builder::set_priority(int priority)
     return *this;
 }
 
-bg_ptr bg_builder::build() const
+regular_bg_ptr regular_bg_builder::build() const
 {
-    return bg_ptr::create(*this);
+    return regular_bg_ptr::create(*this);
 }
 
-bg_ptr bg_builder::build_and_release()
+regular_bg_ptr regular_bg_builder::build_and_release()
 {
-    return bg_ptr::create(move(*this));
+    return regular_bg_ptr::create(move(*this));
 }
 
-optional<bg_ptr> bg_builder::optional_build() const
+optional<regular_bg_ptr> regular_bg_builder::optional_build() const
 {
-    return bg_ptr::optional_create(*this);
+    return regular_bg_ptr::optional_create(*this);
 }
 
-optional<bg_ptr> bg_builder::optional_build_and_release()
+optional<regular_bg_ptr> regular_bg_builder::optional_build_and_release()
 {
-    return bg_ptr::optional_create(move(*this));
+    return regular_bg_ptr::optional_create(move(*this));
 }
 
-optional<bg_tiles_ptr> bg_builder::tiles() const
+optional<bg_tiles_ptr> regular_bg_builder::tiles() const
 {
     optional<bg_tiles_ptr> result;
 
@@ -51,9 +51,9 @@ optional<bg_tiles_ptr> bg_builder::tiles() const
     return result;
 }
 
-optional<bg_map_ptr> bg_builder::map() const
+optional<regular_bg_map_ptr> regular_bg_builder::map() const
 {
-    optional<bg_map_ptr> result;
+    optional<regular_bg_map_ptr> result;
 
     if(_map_ptr)
     {
@@ -70,7 +70,7 @@ optional<bg_map_ptr> bg_builder::map() const
     return result;
 }
 
-optional<bg_tiles_ptr> bg_builder::release_tiles()
+optional<bg_tiles_ptr> regular_bg_builder::release_tiles()
 {
     optional<bg_tiles_ptr> result;
 
@@ -86,9 +86,9 @@ optional<bg_tiles_ptr> bg_builder::release_tiles()
     return result;
 }
 
-optional<bg_map_ptr> bg_builder::release_map()
+optional<regular_bg_map_ptr> regular_bg_builder::release_map()
 {
-    optional<bg_map_ptr> result;
+    optional<regular_bg_map_ptr> result;
 
     if(_map_ptr)
     {

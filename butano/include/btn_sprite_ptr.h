@@ -11,10 +11,10 @@ namespace btn
 {
 
 class size;
-class bg_ptr;
 class fixed_point;
 class sprite_item;
 class sprite_builder;
+class regular_bg_ptr;
 class sprite_tiles_ptr;
 class sprite_tiles_item;
 class sprite_palette_ptr;
@@ -132,7 +132,7 @@ public:
 
     void put_above(const sprite_ptr& other);
 
-    void put_above(const bg_ptr& bg_ptr);
+    void put_above(const regular_bg_ptr& bg_ptr);
 
     [[nodiscard]] bool horizontal_flip() const;
 

@@ -1,8 +1,8 @@
 #ifndef BTN_BG_BLOCKS_MANAGER_H
 #define BTN_BG_BLOCKS_MANAGER_H
 
-#include "btn_bg_map_cell.h"
 #include "btn_bg_palette_ptr.h"
+#include "btn_regular_bg_map_cell.h"
 
 namespace btn
 {
@@ -32,17 +32,17 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] optional<int> find_tiles(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> find_map(const bg_map_cell& cells_ref, const size& map_dimensions,
-                                         const bg_palette_ptr& palette_ptr);
+    [[nodiscard]] optional<int> find_regular_map(const regular_bg_map_cell& map_cells_ref,
+                                                 const size& map_dimensions, const bg_palette_ptr& palette_ptr);
 
     [[nodiscard]] optional<int> create_tiles(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> create_map(const bg_map_cell& cells_ref, const size& map_dimensions,
-                                           bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref,
+                                                   const size& map_dimensions, bg_palette_ptr&& palette_ptr);
 
     [[nodiscard]] optional<int> allocate_tiles(int tiles_count);
 
-    [[nodiscard]] optional<int> allocate_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] optional<int> allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr);
 
     void increase_usages(int id);
 
@@ -58,11 +58,11 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
 
-    [[nodiscard]] const bg_map_cell* map_cells_ref(int id);
+    [[nodiscard]] const regular_bg_map_cell* regular_map_cells_ref(int id);
 
     void set_tiles_ref(int id, const span<const tile>& tiles_ref);
 
-    void set_map_cells_ref(int id, const bg_map_cell& cells_ref, const size& map_dimensions);
+    void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref, const size& map_dimensions);
 
     void reload(int id);
 
@@ -72,7 +72,7 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] optional<span<tile>> tiles_vram(int id);
 
-    [[nodiscard]] optional<span<bg_map_cell>> map_vram(int id);
+    [[nodiscard]] optional<span<regular_bg_map_cell>> regular_map_vram(int id);
 
     void update();
 

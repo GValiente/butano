@@ -317,6 +317,16 @@ void regular_bg_ptr::set_mosaic_enabled(bool mosaic_enabled)
     bgs_manager::set_mosaic_enabled(_id, mosaic_enabled);
 }
 
+bool regular_bg_ptr::blending_enabled() const
+{
+    return bgs_manager::blending_enabled(_id);
+}
+
+void regular_bg_ptr::set_blending_enabled(bool blending_enabled)
+{
+    bgs_manager::set_blending_enabled(_id, blending_enabled);
+}
+
 bool regular_bg_ptr::visible() const
 {
     return bgs_manager::visible(_id);

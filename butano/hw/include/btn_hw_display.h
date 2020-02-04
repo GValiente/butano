@@ -45,6 +45,26 @@ namespace btn::hw::display
                                unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
     }
 
+    inline void set_blending_bgs(const bool& bgs_ref, int count)
+    {
+        unsigned top = 0;
+
+        for(int index = 0; index < count; ++index)
+        {
+            if((&bgs_ref)[index])
+            {
+                top |= unsigned(1 << index);
+            }
+        }
+
+        REG_BLDCNT = uint16_t(BLD_BUILD(top, BLD_ALL | BLD_BACKDROP, 1));
+    }
+
+    inline void set_blending_alphas(int transparency_alpha, int intensity_alpha)
+    {
+        REG_BLDALPHA = uint16_t(BLDA_BUILD(transparency_alpha, max(16 - transparency_alpha, intensity_alpha)));
+    }
+
     inline void set_green_swap_enabled(bool enabled)
     {
         if(enabled)

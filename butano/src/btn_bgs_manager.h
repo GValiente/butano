@@ -53,6 +53,10 @@ namespace bgs_manager
 
     void set_mosaic_enabled(int id, bool mosaic_enabled);
 
+    [[nodiscard]] bool blending_enabled(int id);
+
+    void set_blending_enabled(int id, bool blending_enabled);
+
     [[nodiscard]] bool visible(int id);
 
     void set_visible(int id, bool visible);

@@ -132,6 +132,10 @@ public:
 
     void set_mosaic_enabled(bool mosaic_enabled);
 
+    [[nodiscard]] bool blending_enabled() const;
+
+    void set_blending_enabled(bool blending_enabled);
+
     [[nodiscard]] bool visible() const;
 
     void set_visible(bool visible);

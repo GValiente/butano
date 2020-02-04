@@ -126,6 +126,17 @@ public:
         return *this;
     }
 
+    [[nodiscard]] bool blending_enabled() const
+    {
+        return _blending_enabled;
+    }
+
+    regular_bg_builder& set_blending_enabled(bool blending_enabled)
+    {
+        _blending_enabled = blending_enabled;
+        return *this;
+    }
+
     [[nodiscard]] bool visible() const
     {
         return _visible;
@@ -174,6 +185,7 @@ private:
     fixed_point _position;
     int _priority = 3;
     bool _mosaic_enabled = false;
+    bool _blending_enabled = false;
     bool _visible = true;
     bool _ignore_camera = false;
 };

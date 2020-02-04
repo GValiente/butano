@@ -143,6 +143,7 @@ optional<int> create(regular_bg_builder&& builder)
         return nullopt;
     }
 
+    bool blending_enabled = builder.blending_enabled();
     bool visible = builder.visible();
     data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
 
@@ -150,6 +151,11 @@ optional<int> create(regular_bg_builder&& builder)
     {
         display_manager::set_bg_enabled(new_index, true);
         data.commit = true;
+    }
+
+    if(blending_enabled)
+    {
+        display_manager::set_blending_bg_enabled(new_index, true);
     }
 
     return new_index;
@@ -169,6 +175,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         data.items[id].reset();
+        display_manager::set_blending_bg_enabled(id, false);
 
         if(display_manager::bg_enabled(id))
         {
@@ -320,6 +327,16 @@ void set_mosaic_enabled(int id, bool mosaic_enabled)
     {
         data.commit = true;
     }
+}
+
+bool blending_enabled(int id)
+{
+    return display_manager::blending_bg_enabled(id);
+}
+
+void set_blending_enabled(int id, bool blending_enabled)
+{
+    display_manager::set_blending_bg_enabled(id, blending_enabled);
 }
 
 bool visible(int id)

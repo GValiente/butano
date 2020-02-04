@@ -1,3 +1,6 @@
+#ifndef BF_STATS_H
+#define BF_STATS_H
+
 #include "btn_action.h"
 #include "btn_vector.h"
 #include "btn_optional.h"
@@ -63,3 +66,5 @@ private:
 };
 
 }
+
+#endif

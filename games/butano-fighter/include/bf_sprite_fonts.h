@@ -1,3 +1,6 @@
+#ifndef BF_SPRITE_FONTS_H
+#define BF_SPRITE_FONTS_H
+
 #include "btn_sprite_font.h"
 #include "btn_fixed_8x8_font_sprite_item.h"
 #include "btn_fixed_8x16_font_sprite_item.h"
@@ -252,3 +255,5 @@ namespace bf
             btn::sprite_items::variable_8x16_font, sprite_font_utf8_characters,
             variable_8x16_sprite_font_character_widths);
 }
+
+#endif

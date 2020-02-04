@@ -1,6 +1,12 @@
 {
     "sprites": {
-        "hero": {
+        "hero_body": {
+            "height": 32
+        },
+        "hero_weapons": {
+            "height": 16
+        },
+        "hero_bullets": {
             "height": 32
         },
         "fixed_8x8_font": {
@@ -17,6 +23,8 @@
         }
     },
     "bgs": {
+        "clouds": {
+        },
         "stage_1": {
         },
         "stage_x": {

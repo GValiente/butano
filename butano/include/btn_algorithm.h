@@ -5,6 +5,8 @@
 
 namespace btn
 {
+    using std::find;
+
     template<typename Type>
     [[nodiscard]] constexpr const Type& min(const Type& a, const Type& b)
     {

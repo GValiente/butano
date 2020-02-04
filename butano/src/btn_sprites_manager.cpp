@@ -1,18 +1,10 @@
 #include "btn_sprites_manager.h"
 
 #include "btn_pool.h"
-#include "btn_size.h"
-#include "btn_color.h"
 #include "btn_vector.h"
-#include "btn_camera.h"
-#include "btn_display.h"
-#include "btn_algorithm.h"
 #include "btn_sorted_sprites.h"
-#include "btn_sprite_builder.h"
 #include "btn_config_sprites.h"
-#include "btn_sprites_manager_item.h"
 #include "btn_sprite_affine_mats_manager.h"
-#include "../hw/include/btn_hw_sprite_affine_mats.h"
 
 namespace btn::sprites_manager
 {
@@ -718,7 +710,7 @@ void commit()
 
     if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+        int multiplier = hw::sprites::count() / sprite_affine_mats_manager::count();
         int first_mat_index_to_commit = commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);

@@ -75,6 +75,11 @@ void init([[maybe_unused]] int handles_size, void* handles)
     }
 }
 
+int count()
+{
+    return hw::sprite_affine_mats::count();
+}
+
 int used_count()
 {
     return int(data.free_item_indexes.available());

@@ -2,7 +2,9 @@
 #define BTN_SPRITES_MANAGER_ITEM_H
 
 #include "btn_size.h"
+#include "btn_point.h"
 #include "btn_camera.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
 #include "btn_sprites_manager.h"
@@ -89,8 +91,9 @@ public:
             real_position -= camera::position();
         }
 
-        hw_position.set_x(real_position.x().integer() - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() - half_dimensions.height());
+        point center = display::center();
+        hw_position.set_x(real_position.x().integer() + center.x() - half_dimensions.width());
+        hw_position.set_y(real_position.y().integer() + center.y() - half_dimensions.height());
         hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
     }
 
@@ -103,8 +106,9 @@ public:
             real_position -= camera_position;
         }
 
-        hw_position.set_x(real_position.x().integer() - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() - half_dimensions.height());
+        point center = display::center();
+        hw_position.set_x(real_position.x().integer() + center.x() - half_dimensions.width());
+        hw_position.set_y(real_position.y().integer() + center.y() - half_dimensions.height());
         hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
     }
 

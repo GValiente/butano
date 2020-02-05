@@ -32,12 +32,12 @@ public:
     constexpr fixed_t() = default;
 
     constexpr fixed_t(int integer) :
-        _value(integer << Precision)
+        _value(integer * scale())
     {
     }
 
     constexpr fixed_t(int integer, int fraction) :
-        _value((integer << Precision) + fraction)
+        _value((integer * scale()) + fraction)
     {
         BTN_CONSTEXPR_ASSERT(fraction >= 0, "Fraction is negative");
     }
@@ -56,7 +56,7 @@ public:
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _value(Precision < OtherPrecision ?
                    other.value() / (other.scale() / scale()) :
-                   other.value() << (Precision - OtherPrecision))
+                   other.value() * (scale() - other.scale()))
     {
     }
 
@@ -122,7 +122,7 @@ public:
     {
         BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
 
-        return fixed_t::create(int((int64_t(_value) << Precision) / other._value));
+        return fixed_t::create(int((int64_t(_value) * scale()) / other._value));
     }
 
     [[nodiscard]] constexpr fixed_t division(int integer) const

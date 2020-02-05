@@ -45,7 +45,7 @@ namespace btn
     {
         BTN_CONSTEXPR_ASSERT(value >= 0, "Value is negative");
 
-        return _btn::newton_raphson_sqrt_impl(value, value, 0);
+        return _btn::newton_raphson_sqrt_impl(value, value, Type(0));
     }
 
     /**

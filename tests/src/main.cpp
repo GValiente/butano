@@ -11,28 +11,25 @@
 
 #include "fixed_tests.h"
 #include "math_tests.h"
+#include "sqrt_tests.h"
+
+#if ! BTN_CFG_ASSERT_ENABLED
+    static_assert(false, "Enable asserts in btn_config_assert.h to run tests");
+#endif
 
 int main()
 {
     btn::core::init();
 
-    btn::bg_palettes::set_transparent_color(btn::colors::gray);
+    fixed_tests();
+    math_tests();
+    sqrt_tests();
 
-    int text_x = btn::display::width() / 2;
-    int text_y = btn::display::height() / 2;
     btn::sprite_text_generator text_generator(sprite_font);
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
 
-    #if BTN_CFG_ASSERT_ENABLED
-        fixed_tests();
-        math_tests();
-
-        auto text = text_generator.generate<8>(text_x, text_y, "All tests passed :D");
-    #else
-        auto text1 = text_generator.generate<8>(text_x, text_y - 16, "Enable asserts in");
-        auto text2 = text_generator.generate<8>(text_x, text_y, "btn_config_assert.h");
-        auto text3 = text_generator.generate<8>(text_x, text_y + 16, "to run tests");
-    #endif
+    auto text = text_generator.generate<8>(0, 0, "All tests passed :D");
+    btn::bg_palettes::set_transparent_color(btn::colors::gray);
 
     while(true)
     {

@@ -396,7 +396,7 @@ void palettes_bank::update()
         if(update_all && first_index != numeric_limits<int>::max())
         {
             color& all_colors_ref = _colors[first_index * hw::palettes::colors_per_palette()];
-            int all_colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
+            int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
 
             if(brightness)
@@ -452,7 +452,7 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
         int first_index = *_first_index_to_commit;
         int last_index = *_last_index_to_commit;
         int colors_offset = first_index * hw::palettes::colors_per_palette();
-        int colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
+        int colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                 hw::palettes::colors_per_palette();
         result = commit_data{ _colors, colors_offset, colors_count };
         _first_index_to_commit.reset();

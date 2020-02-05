@@ -6,7 +6,6 @@
 #include "btn_hero_body_sprite_item.h"
 #include "btn_hero_weapons_sprite_item.h"
 #include "bf_constants.h"
-#include "bf_hero_bullets.h"
 
 namespace bf
 {
@@ -37,12 +36,7 @@ hero::hero() :
 {
 }
 
-const btn::fixed_point& hero::position()
-{
-    return _body_sprite_animate_action.sprite().position();
-}
-
-void hero::update(hero_bullets& bullets)
+void hero::update()
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     _body_sprite_animate_action.update();
@@ -81,18 +75,6 @@ void hero::update(hero_bullets& bullets)
         btn::fixed sprite_y = btn::min(body_sprite.y() + 1, btn::fixed(constants::play_height));
         body_sprite.set_y(sprite_y);
         _weapon_sprite.set_y(sprite_y + weapon_delta_y);
-    }
-
-    ++_counter;
-
-    if(_counter == 20)
-    {
-        if(btn::keypad::held(btn::keypad::button_type::B))
-        {
-            bullets.add(_level, _weapon_sprite.position());
-        }
-
-        _counter = 0;
     }
 }
 

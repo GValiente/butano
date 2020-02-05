@@ -42,8 +42,8 @@ int main()
 
     while(true)
     {
-        hero.update(hero_bullets);
-        hero_bullets.update();
+        hero.update();
+        hero_bullets.update(hero);
         btn::core::update();
     }
 }

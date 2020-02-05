@@ -6,21 +6,26 @@
 namespace bf
 {
 
-class hero_bullets;
-
 class hero
 {
 
 public:
     hero();
 
-    const btn::fixed_point& position();
+    [[nodiscard]] int level() const
+    {
+        return _level;
+    }
 
-    void update(hero_bullets& bullets);
+    [[nodiscard]] const btn::fixed_point& weapon_position() const
+    {
+        return _weapon_sprite.position();
+    }
+
+    void update();
 
 private:
-    int _level = 0;
-    int _counter = 0;
+    int _level = 2;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::sprite_ptr _weapon_sprite;
 };

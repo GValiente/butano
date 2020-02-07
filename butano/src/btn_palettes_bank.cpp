@@ -13,7 +13,7 @@ namespace
 {
     [[maybe_unused]] bool _valid_colors_count(const span<const color>& colors_ref)
     {
-        size_t colors_count = colors_ref.size();
+        auto colors_count = int(colors_ref.size());
         return colors_count >= hw::palettes::colors_per_palette() &&
                 colors_count <= hw::palettes::colors() &&
                 colors_count % hw::palettes::colors_per_palette() == 0;

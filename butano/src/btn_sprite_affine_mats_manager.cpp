@@ -63,7 +63,7 @@ namespace
 
 void init([[maybe_unused]] int handles_size, void* handles)
 {
-    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count(),
+    BTN_ASSERT(handles_size == int(sizeof(hw::sprite_affine_mats::handle)) * hw::sprite_affine_mats::count(),
                "Invalid handles size: ", handles_size,
                sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count());
 

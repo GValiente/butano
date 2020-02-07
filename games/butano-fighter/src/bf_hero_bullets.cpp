@@ -24,24 +24,80 @@ namespace
     {
         return _unit_vector(x, y) * speed * btn::fixed(2.5);
     }
+
+    struct shoot_event
+    {
+        btn::fixed_point direction;
+        int8_t counter;
+        int8_t level;
+        bool play_sound;
+    };
+
+    struct level_data
+    {
+        btn::span<const shoot_event> shoot_events;
+        btn::sound_item sound_item;
+        btn::color color;
+        int8_t max_counter;
+    };
+
+    constexpr const shoot_event _level0_shoot_events[] = {
+        { _direction_vector(0, -1), 1,  0,  true },
+    };
+
+    constexpr const shoot_event _level1_shoot_events[] = {
+        { _direction_vector(0, -1),         1,  1,  true },
+        { _direction_vector(-0.075, -1),    11, 0,  true },
+        { _direction_vector(0.075, -1),     31, 0,  true },
+    };
+
+    constexpr const shoot_event _level2_shoot_events[] = {
+        { _direction_vector(0, -1, 0.7),    1,  2,  true },
+        { _direction_vector(-0.085, -1),    11, 0,  false },
+        { _direction_vector(0.05, -1),      21, 1,  false },
+        { _direction_vector(0.085, -1),     31, 0,  false },
+
+        { _direction_vector(0, -1, 0.7),    41, 2,  true },
+        { _direction_vector(-0.085, -1),    51, 0,  false },
+        { _direction_vector(-0.05, -1),     61, 1,  false },
+        { _direction_vector(0.085, -1),     71, 0,  false },
+    };
+
+    constexpr const level_data _levels_data[] = {
+        { _level0_shoot_events, btn::sound_items::gun_5,  btn::color(31, 28, 5),  20 },
+        { _level1_shoot_events, btn::sound_items::gun_5,  btn::color(31, 28, 5),  40 },
+        { _level2_shoot_events, btn::sound_items::gun_1,  btn::color(13, 2, 2),   80 },
+    };
 }
 
-void hero_bullets::update(const hero& hero)
+void hero_bullets::update(hero& hero)
 {
-    bool b_held = btn::keypad::held(btn::keypad::button_type::B);
-    _remove_bullets();
-
-    if(_counter || b_held)
+    if(btn::keypad::held(btn::keypad::button_type::B))
     {
-        ++_counter;
+        _b_held_counter = 10;
+    }
+    else if(_b_held_counter)
+    {
+        --_b_held_counter;
     }
 
-    if(b_held)
+    _remove_bullets();
+    hero.set_is_shooting(_b_held_counter);
+
+    if(_shoot_event_counter || _b_held_counter)
+    {
+        ++_shoot_event_counter;
+    }
+
+    if(_b_held_counter)
     {
         _add_bullets(hero);
     }
 
-    _reset_counter(hero);
+    if(_shoot_event_counter == _levels_data[hero.level()].max_counter)
+    {
+        _shoot_event_counter = 0;
+    }
 }
 
 void hero_bullets::_remove_bullets()
@@ -78,90 +134,32 @@ void hero_bullets::_remove_bullets()
     }
 }
 
-void hero_bullets::_add_bullets(const hero& hero)
+void hero_bullets::_add_bullets(hero& hero)
 {
-    switch(hero.level())
+    int counter = _shoot_event_counter;
+
+    for(const shoot_event& shoot_event : _levels_data[hero.level()].shoot_events)
     {
+        if(counter == shoot_event.counter)
+        {
+            BTN_ASSERT(! _sprite_move_actions.full(), "No more space for sprite bullets");
 
-    case 0:
-        if(_counter == 1)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0, -1);
-            _add_bullet(0, hero.weapon_position(), direction, btn::sound_items::gun_5);
-        }
-        break;
+            int shoot_event_level = shoot_event.level;
+            const level_data& shoot_level_data = _levels_data[shoot_event_level];
+            btn::sprite_builder builder(btn::sprite_items::hero_bullets, shoot_event.level);
+            builder.set_position(hero.weapon_position());
+            builder.set_z_order(constants::hero_bullets_z_order);
+            _sprite_move_actions.push_back(btn::sprite_move_by_action(builder.build_and_release(),
+                                                                      shoot_event.direction));
+            hero.show_shoot(shoot_level_data.color);
 
-    case 1:
-        if(_counter == 1)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0, -1);
-            _add_bullet(1, hero.weapon_position(), direction, btn::sound_items::gun_5);
-        }
-        else if(_counter == 11)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(-0.075, -1);
-            _add_bullet(0, hero.weapon_position(), direction, btn::sound_items::gun_5);
-        }
-        else if(_counter == 31)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0.075, -1);
-            _add_bullet(0, hero.weapon_position(), direction, btn::sound_items::gun_5);
-        }
-        break;
+            if(shoot_event.play_sound)
+            {
+                btn::sound::play(shoot_level_data.sound_item, 0.5);
+            }
 
-    case 2:
-        if(_counter == 1)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0.05, -1);
-            _add_bullet(1, hero.weapon_position(), direction, btn::sound_items::gun_5);
+            break;
         }
-        else if(_counter == 11 || _counter == 51)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(-0.085, -1);
-            _add_bullet(0, hero.weapon_position(), direction);
-        }
-        else if(_counter == 21 || _counter == 61)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0, -1, 0.7);
-            _add_bullet(2, hero.weapon_position(), direction, btn::sound_items::gun_1);
-        }
-        else if(_counter == 31 || _counter == 71)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(0.085, -1);
-            _add_bullet(0, hero.weapon_position(), direction);
-        }
-        else if(_counter == 41)
-        {
-            constexpr btn::fixed_point direction = _direction_vector(-0.05, -1);
-            _add_bullet(1, hero.weapon_position(), direction, btn::sound_items::gun_5);
-        }
-        break;
-    }
-}
-
-void hero_bullets::_add_bullet(int level, const btn::fixed_point& position, const btn::fixed_point& direction,
-                               btn::optional<btn::sound_item> sound_item)
-{
-    BTN_ASSERT(! _sprite_move_actions.full(), "No more space for sprite bullets");
-
-    btn::sprite_builder builder(btn::sprite_items::hero_bullets, level);
-    builder.set_position(position);
-    builder.set_z_order(constants::hero_bullets_z_order);
-    _sprite_move_actions.push_back(btn::sprite_move_by_action(builder.build_and_release(), direction));
-
-    if(sound_item)
-    {
-        btn::sound::play(*sound_item, 0.5);
-    }
-}
-
-void hero_bullets::_reset_counter(const hero& hero)
-{
-    int level = hero.level();
-
-    if((level == 0 && _counter == 20) || (level == 1 && _counter == 40) || (level == 2 && _counter == 80))
-    {
-        _counter = 0;
     }
 }
 

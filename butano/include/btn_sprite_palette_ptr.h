@@ -82,6 +82,10 @@ public:
 
     [[nodiscard]] fixed fade_intensity() const;
 
+    void set_fade_color(color color);
+
+    void set_fade_intensity(fixed intensity);
+
     void set_fade(color color, fixed intensity);
 
     [[nodiscard]] int rotate_count() const;

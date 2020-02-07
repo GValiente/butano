@@ -14,7 +14,7 @@ namespace music
 
     void play(music_item item);
 
-    void play(music_item item, bool loop, fixed volume);
+    void play(music_item item, fixed volume, bool loop = true);
 
     void stop();
 

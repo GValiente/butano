@@ -19,7 +19,7 @@ namespace hw::audio
 
     [[nodiscard]] bool music_playing();
 
-    void play_music(music_item item, bool loop, int volume);
+    void play_music(music_item item, int volume, bool loop);
 
     void stop_music();
 

@@ -23,14 +23,14 @@ bool playing()
 
 void play(music_item item)
 {
-    hw::audio::play_music(item, true, hw_volume(1));
+    hw::audio::play_music(item, hw_volume(1), true);
 }
 
-void play(music_item item, bool loop, fixed volume)
+void play(music_item item, fixed volume, bool loop)
 {
     BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
 
-    hw::audio::play_music(item, loop, hw_volume(volume));
+    hw::audio::play_music(item, hw_volume(volume), loop);
 }
 
 void stop()

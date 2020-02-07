@@ -18,6 +18,8 @@ namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_CHANNELS > 0, "Invalid max audio channels");
 
+    constexpr int _max_channels = BTN_CFG_AUDIO_MAX_CHANNELS;
+
     constexpr int _mix_length()
     {
         return BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_8 ? MM_MIXLEN_8KHZ :
@@ -167,8 +169,8 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[BTN_CFG_AUDIO_MAX_CHANNELS *
-            (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
+    alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[
+            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
 
     alignas(sizeof(int)) uint8_t maxmod_mixing_buffer[_mix_length()];
 
@@ -207,15 +209,15 @@ void init()
 
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);
-    maxmod_info.mod_channel_count = BTN_CFG_AUDIO_MAX_CHANNELS;
-    maxmod_info.mix_channel_count = BTN_CFG_AUDIO_MAX_CHANNELS;
+    maxmod_info.mod_channel_count = _max_channels;
+    maxmod_info.mix_channel_count = _max_channels;
     maxmod_info.module_channels = mm_addr(maxmod_engine_buffer);
-    maxmod_info.active_channels = mm_addr(maxmod_engine_buffer + (BTN_CFG_AUDIO_MAX_CHANNELS * MM_SIZEOF_MODCH));
+    maxmod_info.active_channels = mm_addr(maxmod_engine_buffer + (_max_channels * MM_SIZEOF_MODCH));
     maxmod_info.mixing_channels = mm_addr(maxmod_engine_buffer +
-            (BTN_CFG_AUDIO_MAX_CHANNELS * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH)));
+            (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH)));
     maxmod_info.mixing_memory = mm_addr(maxmod_mixing_buffer);
     maxmod_info.wave_memory = mm_addr(maxmod_engine_buffer +
-            (BTN_CFG_AUDIO_MAX_CHANNELS * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
+            (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
     maxmod_info.soundbank = mm_addr(_btn_audio_soundbank_bin);
     mmInit(&maxmod_info);
 }
@@ -239,7 +241,7 @@ bool music_playing()
     return data.music_playing;
 }
 
-void play_music(music_item item, bool loop, int volume)
+void play_music(music_item item, int volume, bool loop)
 {
     BTN_ASSERT(volume >= 0 && volume <= 1024, "Volume range is [0, 1024]: ", volume);
 

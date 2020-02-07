@@ -8,7 +8,7 @@
 #endif
 
 #ifndef BTN_CFG_AUDIO_MAX_CHANNELS
-    #define BTN_CFG_AUDIO_MAX_CHANNELS 18
+    #define BTN_CFG_AUDIO_MAX_CHANNELS 16 + 4
 #endif
 
 #ifndef BTN_CFG_AUDIO_MAX_COMMANDS

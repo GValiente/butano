@@ -21,15 +21,18 @@ int main()
 {
     btn::core::init();
 
+    btn::sprite_text_generator text_generator(sprite_font);
+    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+
+    auto text = text_generator.generate<8>(0, 0, "Running tests...");
+    btn::bg_palettes::set_transparent_color(btn::colors::gray);
+    btn::core::update();
+
     fixed_tests();
     math_tests();
     sqrt_tests();
 
-    btn::sprite_text_generator text_generator(sprite_font);
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-
-    auto text = text_generator.generate<8>(0, 0, "All tests passed :D");
-    btn::bg_palettes::set_transparent_color(btn::colors::gray);
+    text = text_generator.generate<8>(0, 0, "All tests passed :D");
 
     while(true)
     {

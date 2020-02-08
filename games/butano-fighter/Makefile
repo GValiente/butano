@@ -1,14 +1,4 @@
 #---------------------------------------------------------------------------------------------------------------------
-.SUFFIXES:
-#---------------------------------------------------------------------------------------------------------------------
-
-ifeq ($(strip $(DEVKITARM)),)
-    $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
-endif
-
-include $(DEVKITARM)/gba_rules
-
-#---------------------------------------------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
 # LIBBUTANO is the main directory of butano library (https://github.com/GValiente/butano)

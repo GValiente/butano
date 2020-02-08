@@ -1,4 +1,14 @@
 #---------------------------------------------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------------------------------------------
+
+ifeq ($(strip $(DEVKITARM)),)
+    $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
+endif
+
+include $(DEVKITARM)/gba_rules
+
+#---------------------------------------------------------------------------------------------------------------------
 # Butano custom base rules without flto
 #---------------------------------------------------------------------------------------------------------------------
 %.btn_noflto.o: %.btn_noflto.cpp
@@ -45,10 +55,6 @@ LIBDIRS     :=	$(LIBGBA) $(DEVKITPRO)/libtonc $(LIBBUTANOABS)
 # List of directories containing all butano source files
 #---------------------------------------------------------------------------------------------------------------------
 BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src $(LIBBUTANOABS)/hw/3rd_party/posprintf/src
-
-#---------------------------------------------------------------------------------------------------------------------
-# No real need to edit anything past this point unless you need to add additional rules for different file extensions
-#---------------------------------------------------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once)

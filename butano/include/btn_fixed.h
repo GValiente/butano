@@ -146,58 +146,6 @@ public:
         return division(integer);
     }
 
-    /**
-     * @brief Taylor series square root approximation. It gives usable results for values between 0.5 and 2.
-     *
-     * Thanks to ax6.
-     * Source: https://pastebin.com/raw/PsDBJXDV
-     *
-     * @param iterations Approximation iterations [1, ...)
-     * @return Approximated square root.
-     */
-    [[nodiscard]] constexpr fixed_t ts_sqrt(int iterations) const
-    {
-        BTN_CONSTEXPR_ASSERT(_value > 0, "Internal value is not greater than zero");
-        BTN_CONSTEXPR_ASSERT(iterations >= 1, "Invalid iterations");
-
-        int coefficient = scale();
-        int result = (_value + coefficient) >> 1;
-        int factor = (coefficient - _value) >> 1;
-        int power = factor;
-
-        auto multiply = [](int first, int second)
-        {
-            int64_t result = (int64_t(first) * int64_t(second) + (int64_t(1) << (Precision - 1))) >> Precision;
-
-            if(result > numeric_limits<int>::max())
-            {
-                return numeric_limits<int>::max();
-            }
-
-            if(result < numeric_limits<int>::min())
-            {
-                return numeric_limits<int>::min();
-            }
-
-            return int(result);
-        };
-
-        auto integer_inverse = [](unsigned value)
-        {
-            return ((2 << Precision) / value + 1) >> 1;
-        };
-
-        for(unsigned iteration = 2; iteration <= unsigned(iterations); ++iteration)
-        {
-            coefficient = multiply(coefficient, (2 * iteration - 3) << Precision);
-            coefficient = multiply(coefficient, integer_inverse(iteration));
-            power = multiply(power, factor);
-            result -= multiply(power, coefficient);
-        }
-
-        return create(result);
-    }
-
     [[nodiscard]] constexpr fixed_t operator-() const
     {
         return fixed_t::create(-_value);

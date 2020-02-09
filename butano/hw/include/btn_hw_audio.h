@@ -3,13 +3,7 @@
 
 #include "btn_common.h"
 
-namespace btn
-{
-
-class music_item;
-class sound_item;
-
-namespace hw::audio
+namespace btn::hw::audio
 {
     void init();
 
@@ -19,7 +13,7 @@ namespace hw::audio
 
     [[nodiscard]] bool music_playing();
 
-    void play_music(music_item item, int volume, bool loop);
+    void play_music(int id, int volume, bool loop);
 
     void stop_music();
 
@@ -29,9 +23,9 @@ namespace hw::audio
 
     void set_music_volume(int volume);
 
-    void play_sound(sound_item item);
+    void play_sound(int id);
 
-    void play_sound(sound_item item, int volume, int speed, int panning);
+    void play_sound(int id, int volume, int speed, int panning);
 
     void stop_all_sounds();
 
@@ -39,13 +33,9 @@ namespace hw::audio
 
     void set_direct_sound_control_value(int value);
 
-    void update();
+    void disable_vblank_handler();
 
-    void commit();
-
-    void stop();
-}
-
+    void enable_vblank_handler();
 }
 
 #endif

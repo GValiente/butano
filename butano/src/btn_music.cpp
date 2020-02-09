@@ -1,58 +1,45 @@
 #include "btn_music.h"
 
 #include "btn_fixed.h"
-#include "btn_assert.h"
 #include "btn_music_item.h"
-#include "../hw/include/btn_hw_audio.h"
+#include "btn_audio_manager.h"
 
 namespace btn::music
 {
 
-namespace
-{
-    int hw_volume(fixed volume)
-    {
-        return fixed_t<10>(volume).value();
-    }
-}
-
 bool playing()
 {
-    return hw::audio::music_playing();
+    return audio_manager::music_playing();
 }
 
 void play(music_item item)
 {
-    hw::audio::play_music(item, hw_volume(1), true);
+    audio_manager::play_music(item, 1, true);
 }
 
 void play(music_item item, fixed volume, bool loop)
 {
-    BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
-
-    hw::audio::play_music(item, hw_volume(volume), loop);
+    audio_manager::play_music(item, volume, loop);
 }
 
 void stop()
 {
-    hw::audio::stop_music();
+    audio_manager::stop_music();
 }
 
 void pause()
 {
-    hw::audio::pause_music();
+    audio_manager::pause_music();
 }
 
 void resume()
 {
-    hw::audio::resume_music();
+    audio_manager::resume_music();
 }
 
 void set_volume(fixed volume)
 {
-    BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
-
-    hw::audio::set_music_volume(hw_volume(volume));
+    audio_manager::set_music_volume(volume);
 }
 
 }

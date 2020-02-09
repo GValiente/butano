@@ -13,6 +13,7 @@
 #include "btn_optional.h"
 #include "btn_profiler.h"
 #include "btn_bgs_manager.h"
+#include "btn_audio_manager.h"
 #include "btn_display_manager.h"
 #include "btn_actions_manager.h"
 #include "btn_sprites_manager.h"
@@ -24,7 +25,6 @@
 #include "../hw/include/btn_hw_core.h"
 #include "../hw/include/btn_hw_sram.h"
 #include "../hw/include/btn_hw_timer.h"
-#include "../hw/include/btn_hw_audio.h"
 #include "../hw/include/btn_hw_keypad.h"
 #include "../hw/include/btn_hw_game_pak.h"
 
@@ -74,19 +74,19 @@ namespace
 
     void add_irqs()
     {
-        hw::audio::add_irq();
+        audio_manager::add_irq();
     }
 
     void remove_irqs()
     {
-        hw::audio::remove_irq();
+        audio_manager::remove_irq();
     }
 
     void stop()
     {
         actions_manager::stop();
         hw::core::wait_for_vblank();
-        hw::audio::stop();
+        audio_manager::stop();
     }
 
     #if BTN_CFG_ASSERT_ENABLED
@@ -117,7 +117,7 @@ namespace
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_audio_update");
-        hw::audio::update();
+        audio_manager::update();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_cpu_usage");
@@ -155,7 +155,7 @@ namespace
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_audio_commit");
-        hw::audio::commit();
+        audio_manager::commit();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_keypad");
@@ -184,7 +184,7 @@ void init()
     add_irqs();
 
     // Init audio system:
-    hw::audio::init();
+    audio_manager::init();
 
     // Init high level systems:
     sprite_tiles_manager::init();
@@ -256,8 +256,7 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     }
 
     // Sleep audio:
-    int direct_sound_control_value = hw::audio::direct_sound_control_value();
-    hw::audio::set_direct_sound_control_value(0);
+    audio_manager::sleep();
 
     // Sleep display:
     display_manager::sleep();
@@ -290,7 +289,7 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     BTN_PROFILER_ENGINE_STOP();
 
     // Wake up audio:
-    hw::audio::set_direct_sound_control_value(direct_sound_control_value);
+    audio_manager::wake_up();
 
     // Wake up display:
     display_manager::wake_up();

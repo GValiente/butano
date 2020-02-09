@@ -37,7 +37,7 @@ int main()
     bf::hero hero;
     bf::hero_bullets hero_bullets;
     bf::stats stats(text_generator);
-    // btn::music::play(btn::music_items::battle_clean);
+    btn::music::play(btn::music_items::battle_clean, 0.5);
     btn::core::update();
 
     while(true)

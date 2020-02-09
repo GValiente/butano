@@ -29,9 +29,9 @@ namespace btn::hw::audio
 
     void stop_all_sounds();
 
-    [[nodiscard]] int direct_sound_control_value();
+    void sleep();
 
-    void set_direct_sound_control_value(int value);
+    void wake_up();
 
     void disable_vblank_handler();
 

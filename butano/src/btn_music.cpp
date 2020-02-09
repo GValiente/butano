@@ -37,6 +37,11 @@ void resume()
     audio_manager::resume_music();
 }
 
+fixed volume()
+{
+    return audio_manager::music_volume();
+}
+
 void set_volume(fixed volume)
 {
     audio_manager::set_music_volume(volume);

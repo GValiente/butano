@@ -13,7 +13,7 @@ namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_CHANNELS > 0, "Invalid max audio channels");
 
-    constexpr int _max_channels = BTN_CFG_AUDIO_MAX_CHANNELS;
+    constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_CHANNELS;
 
     constexpr int _mix_length()
     {
@@ -28,12 +28,20 @@ namespace
     }
 
 
+    class static_data
+    {
+
+    public:
+        uint16_t direct_sound_control_value = 0;
+        volatile bool locked = false;
+    };
+
+    BTN_DATA_EWRAM static_data data;
+
     alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[
             _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
 
     alignas(sizeof(int)) uint8_t maxmod_mixing_buffer[_mix_length()];
-
-    volatile bool locked = false;
 
 
     class lock
@@ -42,16 +50,16 @@ namespace
     public:
         lock()
         {
-            while(locked)
+            while(data.locked)
             {
             }
 
-            locked = true;
+            data.locked = true;
         }
 
         ~lock()
         {
-            locked = false;
+            data.locked = false;
         }
     };
 
@@ -104,6 +112,11 @@ bool music_playing()
 
 void play_music(int id, int volume, bool loop)
 {
+    if(mmActive())
+    {
+        mmStop();
+    }
+
     mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
     mmSetModuleVolume(mm_word(volume));
 }
@@ -149,18 +162,19 @@ void stop_all_sounds()
     mmEffectCancelAll();
 }
 
-int direct_sound_control_value()
+void sleep()
 {
     lock lock;
 
-    return REG_SNDDSCNT;
+    data.direct_sound_control_value = REG_SNDDSCNT;
+    REG_SNDDSCNT = 0;
 }
 
-void set_direct_sound_control_value(int value)
+void wake_up()
 {
     lock lock;
 
-    REG_SNDDSCNT = uint16_t(value);
+    REG_SNDDSCNT = uint16_t(data.direct_sound_control_value);
 }
 
 void disable_vblank_handler()

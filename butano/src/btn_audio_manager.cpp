@@ -136,7 +136,7 @@ namespace
 
     public:
         vector<command, BTN_CFG_AUDIO_MAX_COMMANDS> commands;
-        int direct_sound_control_value = 0;
+        fixed music_volume;
         bool music_playing = false;
         bool music_paused = false;
     };
@@ -188,16 +188,12 @@ bool music_playing()
 void play_music(music_item item, fixed volume, bool loop)
 {
     BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
-
-    if(data.music_playing)
-    {
-        stop_music();
-    }
-
     BTN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_play(item, loop, _hw_music_volume(volume)));
+    data.music_volume = volume;
     data.music_playing = true;
+    data.music_paused = false;
 }
 
 void stop_music()
@@ -229,6 +225,13 @@ void resume_music()
     data.music_paused = false;
 }
 
+fixed music_volume()
+{
+    BTN_ASSERT(data.music_playing, "There's no music playing");
+
+    return data.music_volume;
+}
+
 void set_music_volume(fixed volume)
 {
     BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
@@ -236,6 +239,7 @@ void set_music_volume(fixed volume)
     BTN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_set_volume(_hw_music_volume(volume)));
+    data.music_volume = volume;
 }
 
 void play_sound(sound_item item)
@@ -252,7 +256,8 @@ void play_sound(sound_item item, fixed volume, fixed speed, fixed panning)
     BTN_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1, 1]: ", panning);
     BTN_ASSERT(! data.commands.full(), "No more audio commands available");
 
-    data.commands.push_back(command::sound_play(item, _hw_sound_volume(volume), _hw_sound_speed(speed), _hw_sound_panning(panning)));
+    data.commands.push_back(command::sound_play(item, _hw_sound_volume(volume), _hw_sound_speed(speed),
+                                                _hw_sound_panning(panning)));
 }
 
 void stop_all_sounds()
@@ -264,13 +269,12 @@ void stop_all_sounds()
 
 void sleep()
 {
-    data.direct_sound_control_value = hw::audio::direct_sound_control_value();
-    hw::audio::set_direct_sound_control_value(0);
+    hw::audio::sleep();
 }
 
 void wake_up()
 {
-    hw::audio::set_direct_sound_control_value(data.direct_sound_control_value);
+    hw::audio::wake_up();
 }
 
 void update()

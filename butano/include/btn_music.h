@@ -5,10 +5,10 @@
 
 namespace btn
 {
+    class music_item;
+}
 
-class music_item;
-
-namespace music
+namespace btn::music
 {
     [[nodiscard]] bool playing();
 
@@ -22,8 +22,9 @@ namespace music
 
     void resume();
 
+    [[nodiscard]] fixed volume();
+
     void set_volume(fixed volume);
-}
 }
 
 #endif

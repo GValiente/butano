@@ -17,6 +17,7 @@ stats::stats(const btn::sprite_text_generator& text_generator) :
 void stats::set_mode(mode_type mode)
 {
     btn::point display_center = btn::display::center();
+    int text_x = 8 - display_center.x();
     int text_height = _text_generator.font().item().shape_size().height() + 4;
     _static_text_sprites.clear();
     _action.reset();
@@ -29,7 +30,7 @@ void stats::set_mode(mode_type mode)
 
     case mode_type::SIMPLE:
         {
-            btn::fixed_point cpu_text_position(8 - display_center.x(), text_height - display_center.y());
+            btn::fixed_point cpu_text_position(text_x, text_height - display_center.y());
             _action.emplace(_text_generator, cpu_text_position, false);
             _action->run();
         }
@@ -41,21 +42,21 @@ void stats::set_mode(mode_type mode)
             btn::input_string_stream text_stream(text);
             btn::string_view cpu_label = "CPU: ";
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
-            btn::fixed_point cpu_text_position(cpu_label_width + 8 - display_center.x(), text_height - display_center.y());
+            btn::fixed_point cpu_text_position(text_x + cpu_label_width, text_height - display_center.y());
             text_stream.append(cpu_label);
-            _text_generator.generate(cpu_text_position.x() - cpu_label_width, text_height, text, _static_text_sprites);
+            _text_generator.generate(text_x, cpu_text_position.y(), text, _static_text_sprites);
 
             text_stream.clear();
             text_stream.append("IWR: ");
             text_stream.append(btn::memory::used_static_iwram());
             text_stream.append("B");
-            _text_generator.generate(8, text_height * 2, text, _static_text_sprites);
+            _text_generator.generate(text_x, cpu_text_position.y() + text_height, text, _static_text_sprites);
 
             text_stream.clear();
             text_stream.append("EWR: ");
             text_stream.append(btn::memory::used_static_ewram());
             text_stream.append("B");
-            _text_generator.generate(8, text_height * 3, text, _static_text_sprites);
+            _text_generator.generate(text_x, cpu_text_position.y() + (text_height * 2), text, _static_text_sprites);
 
             _action.emplace(_text_generator, cpu_text_position, true);
             _action->run();

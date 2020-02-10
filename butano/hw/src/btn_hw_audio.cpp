@@ -1,6 +1,7 @@
 #include "../include/btn_hw_audio.h"
 
 #include "maxmod.h"
+#include "btn_deque.h"
 #include "btn_config_audio.h"
 #include "../include/btn_hw_irq.h"
 
@@ -11,9 +12,10 @@ namespace btn::hw::audio
 
 namespace
 {
-    static_assert(BTN_CFG_AUDIO_MAX_CHANNELS > 0, "Invalid max audio channels");
+    static_assert(BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
+    static_assert(BTN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
 
-    constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_CHANNELS;
+    constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
     constexpr int _mix_length()
     {
@@ -32,6 +34,7 @@ namespace
     {
 
     public:
+        deque<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
     };
@@ -143,18 +146,30 @@ void set_music_volume(int volume)
 
 void play_sound(int id)
 {
-    mmEffectRelease(mmEffect(mm_word(id)));
+    if(data.sounds_queue.full())
+    {
+        mmEffectRelease(data.sounds_queue.front());
+        data.sounds_queue.pop_front();
+    }
+
+    data.sounds_queue.push_back(mmEffect(mm_word(id)));
 }
 
 void play_sound(int id, int volume, int speed, int panning)
 {
+    if(data.sounds_queue.full())
+    {
+        mmEffectRelease(data.sounds_queue.front());
+        data.sounds_queue.pop_front();
+    }
+
     mm_sound_effect sound_effect;
     sound_effect.id = mm_word(id);
     sound_effect.rate = mm_hword(speed);
     sound_effect.handle = 0;
     sound_effect.volume = mm_byte(volume);
     sound_effect.panning = mm_byte(panning);
-    mmEffectRelease(mmEffectEx(&sound_effect));
+    data.sounds_queue.push_back(mmEffectEx(&sound_effect));
 }
 
 void stop_all_sounds()

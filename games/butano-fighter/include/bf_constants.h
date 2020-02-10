@@ -6,7 +6,7 @@
 namespace bf::constants
 {
     constexpr const int play_width = 72;
-    constexpr const int play_height = (160 - 64) / 2;
+    constexpr const int play_height = (160 - 72) / 2;
     constexpr const int view_width = play_width * 2;
     constexpr const int view_height = (160 + 32) / 2;
     constexpr const int camera_width = 32;

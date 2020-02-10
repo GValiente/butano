@@ -1,17 +1,17 @@
 #include "btn_core.h"
 #include "btn_music.h"
-#include "btn_sound.h"
+#include "btn_keypad.h"
 #include "btn_blending.h"
 #include "btn_regular_bg_actions.h"
 #include "btn_sprite_text_generator.h"
 
 #include "btn_music_items.h"
-#include "btn_sound_items.h"
 #include "btn_clouds_bg_item.h"
 #include "btn_stage_1_bg_item.h"
 
 #include "bf_hero.h"
 #include "bf_stats.h"
+#include "bf_scoreboard.h"
 #include "bf_hero_bullets.h"
 #include "bf_sprite_fonts.h"
 
@@ -36,14 +36,21 @@ int main()
 
     bf::hero hero;
     bf::hero_bullets hero_bullets;
+    bf::scoreboard scoreboard(text_generator);
     bf::stats stats(text_generator);
-    btn::music::play(btn::music_items::battle_clean, 0.5);
+    // btn::music::play(btn::music_items::battle_clean, 0.5);
     btn::core::update();
 
     while(true)
     {
         hero.update();
         hero_bullets.update(hero);
+        scoreboard.update(hero);
         btn::core::update();
+
+        if(btn::keypad::pressed(btn::keypad::button_type::SELECT))
+        {
+            btn::core::sleep(btn::keypad::button_type::SELECT);
+        }
     }
 }

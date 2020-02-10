@@ -54,12 +54,12 @@ namespace
     constexpr const shoot_event _level2_shoot_events[] = {
         { _direction_vector(0, -1, 0.7),    1,  2,  true },
         { _direction_vector(-0.085, -1),    11, 0,  false },
-        { _direction_vector(0.05, -1),      21, 1,  false },
+        { _direction_vector(0.05, -1),      21, 1,  true },
         { _direction_vector(0.085, -1),     31, 0,  false },
 
         { _direction_vector(0, -1, 0.7),    41, 2,  true },
         { _direction_vector(-0.085, -1),    51, 0,  false },
-        { _direction_vector(-0.05, -1),     61, 1,  false },
+        { _direction_vector(-0.05, -1),     61, 1,  true },
         { _direction_vector(0.085, -1),     71, 0,  false },
     };
 

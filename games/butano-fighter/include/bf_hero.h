@@ -18,6 +18,16 @@ public:
         return _level;
     }
 
+    [[nodiscard]] int experience() const
+    {
+        return _experience;
+    }
+
+    [[nodiscard]] int bombs_count() const
+    {
+        return _bombs_count;
+    }
+
     [[nodiscard]] const btn::fixed_point& weapon_position() const
     {
         return _weapon_position;
@@ -38,7 +48,9 @@ public:
     void update();
 
 private:
-    int _level = 1;
+    int _level = 2;
+    int _experience = 82345;
+    int _bombs_count = 2;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;

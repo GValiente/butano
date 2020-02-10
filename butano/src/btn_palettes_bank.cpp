@@ -265,7 +265,7 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
 
 void palettes_bank::set_rotate_count(int id, int count)
 {
-    BTN_ASSERT(abs(count) < colors_count(id), "Invalid count: ", count, " - ", colors_count(id));
+    BTN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
 
     palette& pal = _palettes[size_t(id)];
     pal.rotate_count = int16_t(count);
@@ -382,7 +382,7 @@ void palettes_bank::update()
 
                 if(pal.rotate_count)
                 {
-                    hw::palettes::rotate(pal.rotate_count, pal_colors_count, pal_colors_ref);
+                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, (&pal_colors_ref)[1]);
                 }
             }
         }

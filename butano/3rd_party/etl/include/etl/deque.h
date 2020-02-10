@@ -269,14 +269,6 @@ namespace etl
       }
 
       //***************************************************
-      iterator(const iterator& other)
-        : index(other.index),
-        p_deque(other.p_deque),
-        p_buffer(other.p_buffer)
-      {
-      }
-
-      //***************************************************
       iterator& operator ++()
       {
         index = (static_cast<size_t>(index) == p_deque->BUFFER_SIZE - 1) ? 0 : index + 1;
@@ -451,14 +443,6 @@ namespace etl
         : index(0),
         p_deque(0),
         p_buffer(0)
-      {
-      }
-
-      //***************************************************
-      const_iterator(const const_iterator& other)
-        : index(other.index),
-        p_deque(other.p_deque),
-        p_buffer(other.p_buffer)
       {
       }
 

@@ -35,6 +35,11 @@
  */
 #define BTN_CODE_PURE __attribute__((pure))
 
+/*!
+ * @brief Indicates if the function call occurs within a constant-evaluated context.
+ */
+#define BTN_CONSTANT_EVALUATED __builtin_is_constant_evaluated
+
 namespace btn
 {
     using nullptr_t = decltype(nullptr);

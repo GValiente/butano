@@ -93,11 +93,11 @@ private:
 
     [[nodiscard]] static constexpr bool _duplicated_utf8_characters(const span<const string_view>& utf8_characters)
     {
-        for(size_t i = 0, size = utf8_characters.size(); i < size; ++i)
+        for(int i = 0, size = utf8_characters.size(); i < size; ++i)
         {
             const string_view& a = utf8_characters[i];
 
-            for(size_t j = i + 1; j < size; ++j)
+            for(int j = i + 1; j < size; ++j)
             {
                 const string_view& b = utf8_characters[j];
 

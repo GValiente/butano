@@ -39,7 +39,7 @@ public:
         return _string.size();
     }
 
-    [[nodiscard]] size_t capacity() const
+    [[nodiscard]] size_t max_size() const
     {
         return _string.capacity();
     }
@@ -65,10 +65,10 @@ public:
 
     void append(const char* char_array, size_t size);
 
-    template<size_t Capacity>
-    void append(char(&char_array)[Capacity])
+    template<size_t MaxSize>
+    void append(char(&char_array)[MaxSize])
     {
-        append(char_array, Capacity);
+        append(char_array, MaxSize);
     }
 
     void append(bool value)
@@ -96,7 +96,7 @@ public:
 
     void append(const void* ptr);
 
-    template<size_t Precision>
+    template<int Precision>
     void append(fixed_t<Precision> value)
     {
         // https://stackoverflow.com/questions/57452174/how-to-correctly-print-a-2-30-fixed-point-variable
@@ -176,10 +176,10 @@ inline input_string_stream& operator<<(input_string_stream& stream, const char* 
     return stream;
 }
 
-template<size_t Capacity>
-inline input_string_stream& operator<<(input_string_stream& stream, char(&char_array)[Capacity])
+template<size_t MaxSize>
+inline input_string_stream& operator<<(input_string_stream& stream, char(&char_array)[MaxSize])
 {
-    stream.append<Capacity>(char_array);
+    stream.append<MaxSize>(char_array);
     return stream;
 }
 
@@ -243,7 +243,7 @@ inline input_string_stream& operator<<(input_string_stream& stream, long double 
     return stream;
 }
 
-template<size_t Precision>
+template<int Precision>
 input_string_stream& operator<<(input_string_stream& stream, fixed_t<Precision> value)
 {
     stream.append(value);

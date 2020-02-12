@@ -21,8 +21,8 @@ namespace btn::bg_blocks_manager
 
 namespace
 {
-    constexpr const size_t max_items = hw::bg_blocks::count();
-    constexpr const size_t max_list_items = max_items + 1;
+    constexpr const int max_items = hw::bg_blocks::count();
+    constexpr const int max_list_items = max_items + 1;
     constexpr const int max_half_words = max_items * hw::bg_blocks::half_words_per_block();
 
 
@@ -133,20 +133,15 @@ namespace
         {
             _free_indices.resize(max_items);
 
-            for(size_t index = 0; index < max_items; ++index)
+            for(int index = 0; index < max_items; ++index)
             {
                 _free_indices[index] = int8_t(index + 1);
             }
         }
 
-        [[nodiscard]] size_t size() const
+        [[nodiscard]] int size() const
         {
             return _free_indices.available();
-        }
-
-        [[nodiscard]] size_t available() const
-        {
-            return _free_indices.size();
         }
 
         [[nodiscard]] bool full() const
@@ -885,7 +880,7 @@ size map_dimensions(int id)
     if(const uint16_t* data_ptr = item.data)
     {
         auto tiles_ptr = reinterpret_cast<const tile*>(data_ptr);
-        result.emplace(tiles_ptr, size_t(item.width / half_words_per_tile()));
+        result.emplace(tiles_ptr, item.width / half_words_per_tile());
     }
 
     return result;

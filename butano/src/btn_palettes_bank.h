@@ -167,12 +167,12 @@ private:
 
         span<const color> colors_span() const
         {
-            return span<const color>(colors_ref, size_t(hw::palettes::colors_per_palette() * slots_count));
+            return span<const color>(colors_ref, hw::palettes::colors_per_palette() * slots_count);
         }
 
         span<const color> visible_colors_span() const
         {
-            return span<const color>(colors_ref + 1, size_t(hw::palettes::colors_per_palette() * slots_count) - 1);
+            return span<const color>(colors_ref + 1, (hw::palettes::colors_per_palette() * slots_count) - 1);
         }
     };
 

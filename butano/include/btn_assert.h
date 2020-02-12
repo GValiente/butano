@@ -36,8 +36,8 @@
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const btn::istring& message);
 
-        template<size_t Size>
-        [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], size_t index) noexcept
+        template<int Size>
+        [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], int index)
         {
             return index >= Size ?
                         char_array :
@@ -46,8 +46,8 @@
                             base_name_impl(char_array, index + 1);
         }
 
-        template<size_t Size>
-        [[nodiscard]] constexpr const char* base_name(const char (&char_array)[Size]) noexcept
+        template<int Size>
+        [[nodiscard]] constexpr const char* base_name(const char (&char_array)[Size])
         {
             return base_name_impl(char_array, 2);
         }

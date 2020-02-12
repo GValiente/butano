@@ -126,7 +126,7 @@ namespace
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            _width += _generator.font().character_widths()[size_t(graphics_index + 1)];
+            _width += _generator.font().character_widths()[graphics_index + 1];
             return true;
         }
 
@@ -240,7 +240,7 @@ namespace
         {
             const sprite_font& font = _generator.font();
 
-            if(int character_width = font.character_widths()[size_t(graphics_index + 1)])
+            if(int character_width = font.character_widths()[graphics_index + 1])
             {
                 if(_output_sprites.full())
                 {
@@ -407,7 +407,7 @@ namespace
         {
             const sprite_font& font = _generator.font();
 
-            if(int width = font.character_widths()[size_t(graphics_index + 1)])
+            if(int width = font.character_widths()[graphics_index + 1])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -582,7 +582,7 @@ namespace
         {
             const sprite_font& font = _generator.font();
 
-            if(int width = font.character_widths()[size_t(graphics_index + 1)])
+            if(int width = font.character_widths()[graphics_index + 1])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -634,8 +634,8 @@ namespace
         const sprite_text_generator& generator = painter.generator();
         const auto& utf8_characters_map = generator.utf8_characters_map();
         const char* text_data = text.data();
-        size_t text_index = 0;
-        size_t text_size = text.size();
+        int text_index = 0;
+        int text_size = text.size();
 
         while(text_index < text_size)
         {
@@ -667,7 +667,7 @@ namespace
                     BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
 
                     graphics_index = it->second;
-                    text_index += size_t(utf8_char.size());
+                    text_index += utf8_char.size();
                 }
 
                 if(! painter.paint_character(graphics_index))
@@ -789,7 +789,7 @@ bool sprite_text_generator::optional_generate(const fixed_point& position, const
         break;
     }
 
-    size_t output_sprites_count = output_sprites.size();
+    int output_sprites_count = output_sprites.size();
     bool success;
 
     if(_one_sprite_per_character)

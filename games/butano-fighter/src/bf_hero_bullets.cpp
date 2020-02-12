@@ -104,7 +104,7 @@ void hero_bullets::_remove_bullets()
 {
     int remove_count = 0;
 
-    for(size_t index = 0, size = _sprite_move_actions.size(); index < size; ++index)
+    for(int index = 0, size = _sprite_move_actions.size(); index < size; ++index)
     {
         btn::sprite_move_by_action& sprite_move_action = _sprite_move_actions[index];
         const btn::fixed_point& position = sprite_move_action.sprite().position();

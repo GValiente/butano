@@ -121,19 +121,19 @@ namespace
                 entries.push_back({ ticks_per_entry_pair.first, ticks_per_entry_pair.second });
             }
 
-            sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
+            stable_sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
                 return a.ticks > b.ticks;
             });
 
             // Retrieve max width for indexes,  labels and ticks:
             string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
             input_string_stream buffer_stream(buffer);
-            size_t num_entries = entries.size();
+            int num_entries = entries.size();
             int max_index_width = 0;
             int max_id_width = 0;
             int max_ticks_width = 0;
 
-            for(size_t index = 0; index < num_entries; ++index)
+            for(int index = 0; index < num_entries; ++index)
             {
                 const entry& entry = entries[index];
                 buffer_stream.clear();
@@ -154,7 +154,7 @@ namespace
             constexpr const int index_margin = 4;
             constexpr const int max_visible_entries = 9;
             int64_t total_ticks = _btn::profiler::total_ticks();
-            size_t current_index = 0;
+            int current_index = 0;
             int init_x, init_y;
             tte_get_pos(&init_x, &init_y);
 
@@ -170,7 +170,7 @@ namespace
 
                 tte_write("\n\n");
 
-                for(size_t index = current_index, limit = min(current_index + max_visible_entries, num_entries);
+                for(int index = current_index, limit = min(current_index + max_visible_entries, num_entries);
                     index < limit; ++index)
                 {
                     int x, y;

@@ -13,29 +13,29 @@ class nullopt_t
 {
 
 public:
-    explicit constexpr nullopt_t(int)
+    explicit nullopt_t(int)
     {
     }
 };
 
-inline constexpr nullopt_t nullopt{0};
+inline nullopt_t nullopt{0};
 
 template<typename Type>
 class optional
 {
 
 public:
-    constexpr optional() :
+    optional() :
         _valid(false)
     {
     }
 
-    constexpr optional(nullopt_t) :
+    optional(nullopt_t) :
         _valid(false)
     {
     }
 
-    constexpr optional(const optional& other) :
+    optional(const optional& other) :
         _valid(other)
     {
         if(_valid)
@@ -44,7 +44,7 @@ public:
         }
     }
 
-    constexpr optional(optional&& other) :
+    optional(optional&& other) :
         _valid(other)
     {
         if(_valid)
@@ -54,7 +54,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional(const optional<OtherType>& other) :
+    optional(const optional<OtherType>& other) :
         _valid(other)
     {
         if(_valid)
@@ -64,7 +64,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional(optional<OtherType>&& other) :
+    optional(optional<OtherType>&& other) :
         _valid(other)
     {
         if(_valid)
@@ -74,7 +74,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional(OtherType&& value) :
+    optional(OtherType&& value) :
         _valid(true)
     {
         ::new(_storage) Type(forward<OtherType>(value));
@@ -85,13 +85,13 @@ public:
         _clean();
     }
 
-    constexpr optional& operator=(nullopt_t)
+    optional& operator=(nullopt_t)
     {
         reset();
         return *this;
     }
 
-    constexpr optional& operator=(const optional& other)
+    optional& operator=(const optional& other)
     {
         if(this != &other)
         {
@@ -107,7 +107,7 @@ public:
         return *this;
     }
 
-    constexpr optional& operator=(optional&& other)
+    optional& operator=(optional&& other)
     {
         if(this != &other)
         {
@@ -124,7 +124,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional& operator=(OtherType&& value)
+    optional& operator=(OtherType&& value)
     {
         _clean();
         ::new(_storage) Type(forward<OtherType>(value));
@@ -133,7 +133,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional& operator=(const optional<OtherType>& other)
+    optional& operator=(const optional<OtherType>& other)
     {
         if(this != &other)
         {
@@ -150,7 +150,7 @@ public:
     }
 
     template<typename OtherType>
-    constexpr optional& operator=(optional<OtherType>&& other)
+    optional& operator=(optional<OtherType>&& other)
     {
         if(this != &other)
         {
@@ -166,72 +166,65 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr const Type* operator->() const
+    [[nodiscard]] const Type* operator->() const
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return &_value_impl();
     }
 
-    [[nodiscard]] constexpr Type* operator->()
+    [[nodiscard]] Type* operator->()
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return &_value_impl();
     }
 
-    [[nodiscard]] constexpr const Type& operator*() const
+    [[nodiscard]] const Type& operator*() const
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
 
-    [[nodiscard]] constexpr Type& operator*()
+    [[nodiscard]] Type& operator*()
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
 
-    [[nodiscard]] constexpr explicit operator bool() const
+    [[nodiscard]] explicit operator bool() const
     {
         return _valid;
     }
 
-    [[nodiscard]] constexpr bool has_value() const
+    [[nodiscard]] bool has_value() const
     {
         return _valid;
     }
 
-    [[nodiscard]] constexpr const Type& value() const
+    [[nodiscard]] const Type& value() const
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
 
-    [[nodiscard]] constexpr Type& value()
+    [[nodiscard]] Type& value()
     {
-        BTN_CONSTEXPR_ASSERT(_valid, "Optional is not valid");
+        BTN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr Type value_or(OtherType&& default_value) const
+    [[nodiscard]] Type value_or(OtherType&& default_value) const
     {
         return _valid ? _value_impl() : forward<OtherType>(default_value);
     }
 
-    constexpr void swap(optional& other)
-    {
-        optional temp(move(*this));
-        *this = move(other);
-        other = move(temp);
-    }
-
-    constexpr void reset()
+    void reset()
     {
         if(_valid)
         {
@@ -241,14 +234,47 @@ public:
     }
 
     template<typename... Args>
-    constexpr void emplace(Args&&... args)
+    void emplace(Args&&... args)
     {
         _clean();
         ::new(_storage) Type(forward<Args>(args)...);
         _valid = true;
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const optional& a, const optional& b)
+    void swap(optional& other)
+    {
+        if(_valid)
+        {
+            if(other._valid)
+            {
+                btn::swap(_value_impl(), other._value_impl());
+            }
+            else
+            {
+                ::new(other._storage) Type(move(_value_impl()));
+                _value_impl().~Type();
+                other._valid = true;
+                _valid = false;
+            }
+        }
+        else
+        {
+            if(other._valid)
+            {
+                ::new(_storage) Type(move(other._value_impl()));
+                other.value_impl().~Type();
+                _valid = true;
+                other._valid = false;
+            }
+        }
+    }
+
+    friend void swap(optional& a, optional& b)
+    {
+        a.swap(b);
+    }
+
+    [[nodiscard]] friend bool operator==(const optional& a, const optional& b)
     {
         if(a._valid != b._valid)
         {
@@ -263,12 +289,12 @@ public:
         return a._value_impl() == b._value_impl();
     }
 
-    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const optional& b)
+    [[nodiscard]] friend bool operator!=(const optional& a, const optional& b)
     {
         return ! (a == b);
     }
 
-    [[nodiscard]] constexpr friend bool operator<(const optional& a, const optional& b)
+    [[nodiscard]] friend bool operator<(const optional& a, const optional& b)
     {
         if(! b._valid)
         {
@@ -283,7 +309,7 @@ public:
         return a._value_impl() < b._value_impl();
     }
 
-    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const optional& b)
+    [[nodiscard]] friend bool operator<=(const optional& a, const optional& b)
     {
         if(! a._valid)
         {
@@ -298,97 +324,106 @@ public:
         return a._value_impl() <= b._value_impl();
     }
 
-    [[nodiscard]] constexpr friend bool operator>(const optional& a, const optional& b)
+    [[nodiscard]] friend bool operator>(const optional& a, const optional& b)
     {
         return ! (a <= b);
     }
 
-    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const optional& b)
+    [[nodiscard]] friend bool operator>=(const optional& a, const optional& b)
     {
         return ! (a < b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const optional& a, nullopt_t)
+    [[nodiscard]] friend bool operator==(const optional& a, nullopt_t)
     {
         return ! a._valid;
     }
 
-    [[nodiscard]] constexpr friend bool operator!=(const optional& a, nullopt_t)
+    [[nodiscard]] friend bool operator!=(const optional& a, nullopt_t)
     {
         return a._valid;
     }
 
-    [[nodiscard]] constexpr friend bool operator<(const optional&, nullopt_t)
+    [[nodiscard]] friend bool operator<(const optional&, nullopt_t)
     {
         return false;
     }
 
-    [[nodiscard]] constexpr friend bool operator<=(const optional& a, nullopt_t)
+    [[nodiscard]] friend bool operator<=(const optional& a, nullopt_t)
     {
         return ! a._valid;
     }
 
-    [[nodiscard]] constexpr friend bool operator>(const optional& a, nullopt_t)
+    [[nodiscard]] friend bool operator>(const optional& a, nullopt_t)
     {
         return a._valid;
     }
 
-    [[nodiscard]] constexpr friend bool operator>=(const optional&, nullopt_t)
+    [[nodiscard]] friend bool operator>=(const optional&, nullopt_t)
     {
         return true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator==(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator==(const optional& a, const OtherType& b)
     {
         return a._valid ? a._value_impl() == b : false;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator!=(const optional& a, const OtherType& b)
     {
         return ! (a == b);
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator<(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator<(const optional& a, const OtherType& b)
     {
         return a._valid ? a._value_impl() < b : true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator<=(const optional& a, const OtherType& b)
     {
         return a._valid ? a._value_impl() <= b : true;
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator>(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator>(const optional& a, const OtherType& b)
     {
         return ! (a <= b);
     }
 
     template<typename OtherType>
-    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator>=(const optional& a, const OtherType& b)
     {
         return ! (a < b);
+    }
+
+    template<typename... Args>
+    [[nodiscard]] friend optional make_optional(Args&&... args)
+    {
+        optional result;
+        ::new(result._storage) Type(forward<Args>(args)...);
+        result._valid = true;
+        return result;
     }
 
 private:
     alignas(alignof(Type)) char _storage[sizeof(Type)];
     bool _valid;
 
-    [[nodiscard]] constexpr const Type& _value_impl() const
+    [[nodiscard]] const Type& _value_impl() const
     {
         return *(reinterpret_cast<const Type*>(_storage));
     }
 
-    [[nodiscard]] constexpr Type& _value_impl()
+    [[nodiscard]] Type& _value_impl()
     {
         return *(reinterpret_cast<Type*>(_storage));
     }
 
-    constexpr void _clean()
+    void _clean()
     {
         if(_valid)
         {
@@ -401,7 +436,7 @@ private:
 template<typename Type>
 struct hash<optional<Type>>
 {
-    [[nodiscard]] constexpr size_t operator()(const optional<Type>& optional) const
+    [[nodiscard]] size_t operator()(const optional<Type>& optional) const
     {
         return bool(optional) ? make_hash(optional.value()) : make_hash(0);
     }

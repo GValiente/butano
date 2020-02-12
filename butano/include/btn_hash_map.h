@@ -18,7 +18,8 @@ public:
     using key_type = Key;
     using mapped_type = Value;
     using value_type = pair<const key_type, mapped_type>;
-    using size_type = size_t;
+    using size_type = int;
+    using hash_type = size_t;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;
@@ -34,6 +35,7 @@ public:
         using mapped_type = ihash_map::mapped_type;
         using value_type = ihash_map::value_type;
         using size_type = ihash_map::size_type;
+        using hash_type = ihash_map::hash_type;
         using hasher = ihash_map::hasher;
         using key_equal = ihash_map::key_equal;
         using reference = ihash_map::reference;
@@ -165,6 +167,7 @@ public:
         using mapped_type = ihash_map::mapped_type;
         using value_type = ihash_map::value_type;
         using size_type = ihash_map::size_type;
+        using hash_type = ihash_map::hash_type;
         using hasher = ihash_map::hasher;
         using key_equal = ihash_map::key_equal;
         using reference = ihash_map::reference;
@@ -277,6 +280,10 @@ public:
     friend class iterator;
     friend class const_iterator;
 
+    constexpr ihash_map(const ihash_map& other) = delete;
+
+    constexpr ihash_map& operator=(const ihash_map& other) = delete;
+
     [[nodiscard]] iterator begin()
     {
         return iterator(_first_valid_index, *this);
@@ -342,7 +349,7 @@ public:
         return contains_hash(hasher()(key), key);
     }
 
-    [[nodiscard]] bool contains_hash(size_type key_hash, const key_type& key) const
+    [[nodiscard]] bool contains_hash(hash_type key_hash, const key_type& key) const
     {
         return find_hash(key_hash, key) != end();
     }
@@ -352,7 +359,7 @@ public:
         return count_hash(hasher()(key), key);
     }
 
-    [[nodiscard]] size_type count_hash(size_type key_hash, const key_type& key) const
+    [[nodiscard]] size_type count_hash(hash_type key_hash, const key_type& key) const
     {
         return contains_hash(key_hash, key) ? 1 : 0;
     }
@@ -372,12 +379,12 @@ public:
         return find_hash(hasher()(key), key);
     }
 
-    [[nodiscard]] const_iterator find_hash(size_type key_hash, const key_type& key) const
+    [[nodiscard]] const_iterator find_hash(hash_type key_hash, const key_type& key) const
     {
         return const_cast<ihash_map&>(*this).find_hash(key_hash, key);
     }
 
-    [[nodiscard]] iterator find_hash(size_type key_hash, const key_type& key)
+    [[nodiscard]] iterator find_hash(hash_type key_hash, const key_type& key)
     {
         if(empty())
         {
@@ -415,12 +422,12 @@ public:
         return at_hash(hasher()(key), key);
     }
 
-    [[nodiscard]] const mapped_type& at_hash(size_type key_hash, const key_type& key) const
+    [[nodiscard]] const mapped_type& at_hash(hash_type key_hash, const key_type& key) const
     {
         return const_cast<ihash_map&>(*this).at_hash(key_hash, key);
     }
 
-    [[nodiscard]] mapped_type& at_hash(size_type key_hash, const key_type& key)
+    [[nodiscard]] mapped_type& at_hash(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
         BTN_ASSERT(it != end(), "Key not found");
@@ -444,12 +451,12 @@ public:
         return insert_hash(hasher()(key), value_type(forward<KeyType>(key), forward<ValueType>(value)));
     }
 
-    iterator insert_hash(size_type key_hash, const value_type& value)
+    iterator insert_hash(hash_type key_hash, const value_type& value)
     {
         return insert_hash(key_hash, value_type(value));
     }
 
-    iterator insert_hash(size_type key_hash, value_type&& value)
+    iterator insert_hash(hash_type key_hash, value_type&& value)
     {
         BTN_ASSERT(! full(), "Hash map is full");
 
@@ -479,7 +486,7 @@ public:
     }
 
     template<typename KeyType, typename ValueType>
-    iterator insert_hash(size_type key_hash, KeyType&& key, ValueType&& value)
+    iterator insert_hash(hash_type key_hash, KeyType&& key, ValueType&& value)
     {
         return insert_hash(key_hash, value_type(forward<KeyType>(key), forward<ValueType>(value)));
     }
@@ -500,12 +507,12 @@ public:
         return insert_or_assign_hash(hasher()(key), value_type(forward<KeyType>(key), forward<ValueType>(value)));
     }
 
-    iterator insert_or_assign_hash(size_type key_hash, const value_type& value)
+    iterator insert_or_assign_hash(hash_type key_hash, const value_type& value)
     {
         return insert_or_assign_hash(key_hash, value_type(value));
     }
 
-    iterator insert_or_assign_hash(size_type key_hash, value_type&& value)
+    iterator insert_or_assign_hash(hash_type key_hash, value_type&& value)
     {
         iterator it = find_hash(key_hash, value.first);
 
@@ -526,17 +533,17 @@ public:
     }
 
     template<typename KeyType, typename ValueType>
-    iterator insert_or_assign_hash(size_type key_hash, KeyType&& key, ValueType&& value)
+    iterator insert_or_assign_hash(hash_type key_hash, KeyType&& key, ValueType&& value)
     {
         return insert_or_assign_hash(key_hash, value_type(forward<KeyType>(key), forward<ValueType>(value)));
     }
 
-    iterator erase(const_iterator pos)
+    iterator erase(const_iterator position)
     {
         BTN_ASSERT(! empty(), "Hash map is empty");
 
         bool* allocated = _allocated;
-        size_type index = pos._index;
+        size_type index = position._index;
         BTN_ASSERT(allocated[index], "Index is not allocated: ", index);
 
         pointer storage = _storage;
@@ -612,7 +619,7 @@ public:
         return erase_hash(hasher()(key), key);
     }
 
-    bool erase_hash(size_type key_hash, const key_type& key)
+    bool erase_hash(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
 
@@ -623,6 +630,76 @@ public:
         }
 
         return false;
+    }
+
+    template<class Pred>
+    friend void erase_if(ihash_map& hash_map, const Pred& pred)
+    {
+        pointer storage = hash_map._storage;
+        bool* allocated = hash_map._allocated;
+        size_type size = hash_map._size;
+        size_type first_valid_index = hash_map._max_size;
+        size_type last_valid_index = 0;
+
+        for(size_type index = hash_map._first_valid_index, last = hash_map._last_valid_index; index <= last; ++index)
+        {
+            if(allocated[index])
+            {
+                if(allocated[index] && pred(storage[index]))
+                {
+                    storage[index].~value_type();
+                    allocated[index] = false;
+                    --size;
+                }
+                else
+                {
+                    first_valid_index = min(index, first_valid_index);
+                    last_valid_index = max(index, last_valid_index);
+                }
+            }
+        }
+
+        hash_map._size = size;
+        hash_map._first_valid_index = first_valid_index;
+        hash_map._last_valid_index = last_valid_index;
+    }
+
+    void merge(ihash_map&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(_max_size == other._max_size, "Invalid max size: ", _max_size, " - ", other._max_size);
+
+            pointer storage = _storage;
+            pointer other_storage = other._storage;
+            bool* allocated = _allocated;
+            bool* other_allocated = other._allocated;
+            size_type size = _size;
+            size_type first_valid_index = min(_first_valid_index, other._first_valid_index);
+            size_type last_valid_index = max(_last_valid_index, other._last_valid_index);
+
+            for(size_type index = first_valid_index; index <= last_valid_index; ++index)
+            {
+                if(other_allocated[index])
+                {
+                    if(allocated[index])
+                    {
+                        storage[index] = move(other_storage[index]);
+                    }
+                    else
+                    {
+                        ::new(storage + index) value_type(move(other_storage[index]));
+                        ++size;
+                    }
+                }
+            }
+
+            _size = size;
+            _first_valid_index = first_valid_index;
+            _last_valid_index = last_valid_index;
+
+            other.clear();
+        }
     }
 
     void clear()
@@ -660,7 +737,7 @@ public:
         return operator()(hasher()(key), key);
     }
 
-    [[nodiscard]] mapped_type& operator()(size_type key_hash, const key_type& key)
+    [[nodiscard]] mapped_type& operator()(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
 
@@ -671,6 +748,58 @@ public:
         }
 
         return it->second;
+    }
+
+    void swap(ihash_map& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(_max_size == other._max_size, "Invalid max size: ", _max_size, " - ", other._max_size);
+
+            pointer storage = _storage;
+            pointer other_storage = other._storage;
+            bool* allocated = _allocated;
+            bool* other_allocated = other._allocated;
+            size_type first_valid_index = min(_first_valid_index, other._first_valid_index);
+            size_type last_valid_index = max(_last_valid_index, other._last_valid_index);
+
+            for(size_type index = first_valid_index; index <= last_valid_index; ++index)
+            {
+                if(other_allocated[index])
+                {
+                    if(allocated[index])
+                    {
+                        btn::swap(storage[index], other_storage[index]);
+                    }
+                    else
+                    {
+                        ::new(storage + index) value_type(move(other_storage[index]));
+                        other_storage[index].~value_type();
+                        other_allocated[index] = false;
+                        allocated[index] = true;
+                    }
+                }
+                else
+                {
+                    if(allocated[index])
+                    {
+                        ::new(other_storage + index) value_type(move(storage[index]));
+                        storage[index].~value_type();
+                        allocated[index] = false;
+                        other_allocated[index] = true;
+                    }
+                }
+            }
+
+            btn::swap(_size, other._size);
+            btn::swap(_first_valid_index, other._first_valid_index);
+            btn::swap(_last_valid_index, other._last_valid_index);
+        }
+    }
+
+    friend void swap(ihash_map& a, ihash_map& b)
+    {
+        a.swap(b);
     }
 
     [[nodiscard]] friend bool operator==(const ihash_map& a, const ihash_map& b)
@@ -709,6 +838,26 @@ public:
         return ! (a == b);
     }
 
+    [[nodiscard]] friend bool operator<(const ihash_map& a, const ihash_map& b)
+    {
+        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+    }
+
+    [[nodiscard]] friend bool operator>(const ihash_map& a, const ihash_map& b)
+    {
+        return b < a;
+    }
+
+    [[nodiscard]] friend bool operator<=(const ihash_map& a, const ihash_map& b)
+    {
+        return ! (a > b);
+    }
+
+    [[nodiscard]] friend bool operator>=(const ihash_map& a, const ihash_map& b)
+    {
+        return ! (a < b);
+    }
+
 protected:
     ihash_map(reference storage, bool& allocated, size_type max_size) :
         _storage(&storage),
@@ -729,7 +878,7 @@ private:
 
     void _assign(const ihash_map& other)
     {
-        const_pointer other_storage = other._typed_storage();
+        const_pointer other_storage = other._storage;
         pointer storage = _storage;
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
@@ -751,7 +900,7 @@ private:
 
     void _assign(ihash_map&& other)
     {
-        pointer other_storage = other._typed_storage();
+        pointer other_storage = other._storage;
         pointer storage = _storage;
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
@@ -773,14 +922,14 @@ private:
         other.clear();
     }
 
-    size_type _index(size_type key_hash) const
+    size_type _index(hash_type key_hash) const
     {
         return key_hash & (_max_size - 1);
     }
 };
 
 
-template<typename Key, typename Value, size_t MaxSize, typename KeyHash, typename KeyEqual>
+template<typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual>
 class hash_map : public ihash_map<Key, Value, KeyHash, KeyEqual>
 {
     static_assert(power_of_two(MaxSize));
@@ -789,7 +938,8 @@ public:
     using key_type = Key;
     using mapped_type = Value;
     using value_type = pair<const key_type, mapped_type>;
-    using size_type = size_t;
+    using size_type = int;
+    using hash_type = size_t;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;
@@ -798,14 +948,15 @@ public:
     using const_pointer = const value_type*;
 
     hash_map() :
-        ihash_map<Key, Value, KeyHash, KeyEqual>(*reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer,
-                                                 MaxSize)
+        ihash_map<Key, Value, KeyHash, KeyEqual>(
+            *reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer, MaxSize)
     {
     }
 
-    hash_map(const hash_map& other)
+    hash_map(const hash_map& other) :
+        hash_map()
     {
-        _assign(other);
+        this->_assign(other);
     }
 
     hash_map& operator=(const hash_map& other)
@@ -813,15 +964,16 @@ public:
         if(this != &other)
         {
             this->clear();
-            _assign(other);
+            this->_assign(other);
         }
 
         return *this;
     }
 
-    hash_map(hash_map&& other)
+    hash_map(hash_map&& other) :
+        hash_map()
     {
-        _assign(move(other));
+        this->_assign(move(other));
     }
 
     hash_map& operator=(hash_map&& other)
@@ -829,7 +981,7 @@ public:
         if(this != &other)
         {
             this->clear();
-            _assign(move(other));
+            this->_assign(move(other));
         }
 
         return *this;

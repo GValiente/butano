@@ -8,7 +8,7 @@
 namespace btn
 {
 
-template<size_t Precision>
+template<int Precision>
 class fixed_t
 {
     static_assert(Precision > 0 && Precision < 31, "Invalid precision");
@@ -52,7 +52,7 @@ public:
     {
     }
 
-    template<size_t OtherPrecision>
+    template<int OtherPrecision>
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _value(Precision < OtherPrecision ?
                    other.value() / (other.scale() / scale()) :
@@ -258,7 +258,7 @@ private:
 
 using fixed = fixed_t<12>;
 
-template<size_t Precision>
+template<int Precision>
 struct hash<fixed_t<Precision>>
 {
     [[nodiscard]] constexpr size_t operator()(fixed_t<Precision> fixed) const

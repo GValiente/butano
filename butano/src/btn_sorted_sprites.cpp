@@ -76,15 +76,15 @@ list& list::operator=(list&& other)
     return *this;
 }
 
-iterator list::insert(iterator pos, sprites_manager_item& item)
+iterator list::insert(iterator position, sprites_manager_item& item)
 {
     node_type* new_node = &item;
-    node_type* pos_node = pos._node;
-    node_type* prev_node = pos_node->prev;
+    node_type* position_node = position._node;
+    node_type* prev_node = position_node->prev;
     prev_node->next = new_node;
     new_node->prev = prev_node;
-    new_node->next = pos_node;
-    pos_node->prev = new_node;
+    new_node->next = position_node;
+    position_node->prev = new_node;
     ++_size;
     return iterator(new_node);
 }

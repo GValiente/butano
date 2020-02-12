@@ -8,7 +8,7 @@ namespace btn
     template<typename Key, typename KeyHash = hash<Key>, typename KeyEqual = equal_to<Key>>
     class ihash_set;
 
-    template<typename Key, size_t MaxSize, typename KeyHash = hash<Key>, typename KeyEqual = equal_to<Key>>
+    template<typename Key, int MaxSize, typename KeyHash = hash<Key>, typename KeyEqual = equal_to<Key>>
     class hash_set;
 }
 

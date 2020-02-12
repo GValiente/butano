@@ -117,10 +117,10 @@ public:
 
 // animation
 
-template<size_t Size>
+template<int Size>
 class sprite_animate_action : public action
 {
-    static_assert(Size);
+    static_assert(Size > 0);
 
 public:
     template<class SpritePtr>
@@ -275,10 +275,10 @@ template<class SpritePtr, typename ...Args>
 
 // cached animation
 
-template<size_t Size>
+template<int Size>
 class sprite_cached_animate_action : public action
 {
-    static_assert(Size);
+    static_assert(Size > 0);
 
 public:
     template<class SpritePtr>

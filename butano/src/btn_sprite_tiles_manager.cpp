@@ -25,7 +25,7 @@ namespace
     static_assert(power_of_two(BTN_CFG_SPRITE_TILES_MAX_ITEMS));
 
 
-    static constexpr const size_t max_items = BTN_CFG_SPRITE_TILES_MAX_ITEMS;
+    static constexpr const int max_items = BTN_CFG_SPRITE_TILES_MAX_ITEMS;
     static constexpr const int max_list_items = max_items + 1;
 
 
@@ -129,18 +129,18 @@ namespace
         {
             _free_indices.resize(max_items);
 
-            for(size_t index = 0; index < max_items; ++index)
+            for(int index = 0; index < max_items; ++index)
             {
                 _free_indices[index] = int16_t(index + 1);
             }
         }
 
-        [[nodiscard]] size_t size() const
+        [[nodiscard]] int size() const
         {
             return _free_indices.available();
         }
 
-        [[nodiscard]] size_t available() const
+        [[nodiscard]] int available() const
         {
             return _free_indices.size();
         }

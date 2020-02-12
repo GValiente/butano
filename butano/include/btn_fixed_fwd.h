@@ -6,7 +6,7 @@
 namespace btn
 {
 
-template<size_t Precision>
+template<int Precision>
 class fixed_t;
 
 using fixed = fixed_t<12>;

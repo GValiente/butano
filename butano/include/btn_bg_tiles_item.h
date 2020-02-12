@@ -30,7 +30,7 @@ public:
 
     [[nodiscard]] constexpr bool valid_tiles_count(palette_bpp_mode bpp_mode) const
     {
-        size_t count = _tiles_ref.size();
+        int count = _tiles_ref.size();
 
         if(bpp_mode == palette_bpp_mode::BPP_8)
         {

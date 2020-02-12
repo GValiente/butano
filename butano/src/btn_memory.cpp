@@ -69,7 +69,7 @@ void set16(uint16_t value, int half_words, void* destination)
 {
     BTN_ASSERT(half_words >= 0, "Invalid half words: ", half_words);
     BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 2), "Destination is not aligned");
+    BTN_ASSERT(aligned<2>(destination), "Destination is not aligned");
 
     hw::memory::set16(value, half_words, destination);
 }
@@ -78,7 +78,7 @@ void set32(unsigned value, int words, void* destination)
 {
     BTN_ASSERT(words >= 0, "Invalid words: ", words);
     BTN_ASSERT(destination, "Destination is null");
-    BTN_ASSERT(aligned(destination, 4), "Destination is not aligned");
+    BTN_ASSERT(aligned<4>(destination), "Destination is not aligned");
 
     hw::memory::set32(value, words, destination);
 }

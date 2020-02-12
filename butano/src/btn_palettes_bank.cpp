@@ -207,7 +207,7 @@ void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 
 void palettes_bank::reload_colors_ref(int id)
 {
-    palette& pal = _palettes[size_t(id)];
+    palette& pal = _palettes[id];
     pal.update = true;
     _perform_update = true;
 
@@ -221,7 +221,7 @@ void palettes_bank::set_inverse_intensity(int id, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    palette& pal = _palettes[size_t(id)];
+    palette& pal = _palettes[id];
     pal.inverse_intensity = intensity;
     pal.update = true;
     _perform_update = true;
@@ -236,7 +236,7 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    palette& pal = _palettes[size_t(id)];
+    palette& pal = _palettes[id];
     pal.grayscale_intensity = intensity;
     pal.update = true;
     _perform_update = true;
@@ -251,7 +251,7 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    palette& pal = _palettes[size_t(id)];
+    palette& pal = _palettes[id];
     pal.fade_color = color;
     pal.fade_intensity = intensity;
     pal.update = true;
@@ -267,7 +267,7 @@ void palettes_bank::set_rotate_count(int id, int count)
 {
     BTN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
 
-    palette& pal = _palettes[size_t(id)];
+    palette& pal = _palettes[id];
     pal.rotate_count = int16_t(count);
     pal.update = true;
     _perform_update = true;

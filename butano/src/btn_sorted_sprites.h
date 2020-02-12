@@ -177,7 +177,7 @@ namespace btn::sorted_sprites
             return insert(iterator(&_last_node), item);
         }
 
-        iterator insert(iterator pos, sprites_manager_item& item);
+        iterator insert(iterator position, sprites_manager_item& item);
 
         iterator erase(sprites_manager_item& item);
 

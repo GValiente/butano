@@ -2,7 +2,9 @@
 #define BTN_SPAN_H
 
 #include "btn_assert.h"
+#include "btn_utility.h"
 #include "btn_iterator.h"
+#include "btn_algorithm.h"
 
 namespace btn
 {
@@ -13,7 +15,7 @@ class span
 
 public:
     using value_type = Type;
-    using size_type = size_t;
+    using size_type = int;
     using reference = Type&;
     using const_reference = const Type&;
     using pointer = Type*;
@@ -150,14 +152,14 @@ public:
 
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_CONSTEXPR_ASSERT(index < size(), "Invalid index");
+        BTN_CONSTEXPR_ASSERT(index >= 0 && index < size(), "Invalid index");
 
         return _begin[index];
     }
 
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_CONSTEXPR_ASSERT(index < size(), "Invalid index");
+        BTN_CONSTEXPR_ASSERT(index >= 0 && index < size(), "Invalid index");
 
         return _begin[index];
     }
@@ -182,19 +184,51 @@ public:
         return _end - _begin;
     }
 
+    [[nodiscard]] constexpr size_type size_bytes() const
+    {
+        return (_end - _begin) * sizeof(value_type);
+    }
+
+    [[nodiscard]] constexpr span first(size_type count) const
+    {
+        BTN_CONSTEXPR_ASSERT(count >= 0 && count <= size(), "Invalid count");
+
+        return span(_begin, _begin + count);
+    }
+
+    [[nodiscard]] constexpr span last(size_type count) const
+    {
+        BTN_CONSTEXPR_ASSERT(count >= 0 && count <= size(), "Invalid count");
+
+        return span(_end - count, _end);
+    }
+
     [[nodiscard]] constexpr span subspan(size_type offset) const
     {
-        BTN_CONSTEXPR_ASSERT(offset <= size(), "Invalid offset");
+        BTN_CONSTEXPR_ASSERT(offset >= 0 && offset <= size(), "Invalid offset");
 
         return span(_begin + offset, _end);
     }
 
     [[nodiscard]] constexpr span subspan(size_type offset, size_type count) const
     {
+        BTN_CONSTEXPR_ASSERT(offset >= 0, "Invalid offset");
+        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
         BTN_CONSTEXPR_ASSERT(offset + count <= size(), "Invalid offset or count");
 
         pointer new_begin = _begin + offset;
         return span(new_begin, new_begin + count);
+    }
+
+    constexpr void swap(span& other)
+    {
+        btn::swap(_begin, other._begin);
+        btn::swap(_end, other._end);
+    }
+
+    friend void swap(span& a, span& b)
+    {
+        a.swap(b);
     }
 
     [[nodiscard]] constexpr friend bool operator==(const span& a, const span& b)
@@ -204,31 +238,32 @@ public:
             return false;
         }
 
-        auto a_it = a._begin;
-        auto b_it = b._begin;
-
-        if(a_it != b_it)
-        {
-            auto a_end = a._end;
-
-            while(a_it != a_end)
-            {
-                if(*a_it != *b_it)
-                {
-                    return false;
-                }
-
-                ++a_it;
-                ++b_it;
-            }
-        }
-
-        return true;
+        return equal(a.begin(), a.end(), b.begin());
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const span& a, const span& b)
     {
         return ! (a == b);
+    }
+
+    [[nodiscard]] constexpr friend bool operator<(const span& a, const span& b)
+    {
+        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+    }
+
+    [[nodiscard]] constexpr friend bool operator>(const span& a, const span& b)
+    {
+        return b < a;
+    }
+
+    [[nodiscard]] constexpr friend bool operator<=(const span& a, const span& b)
+    {
+        return ! (a > b);
+    }
+
+    [[nodiscard]] constexpr friend bool operator>=(const span& a, const span& b)
+    {
+        return ! (a < b);
     }
 
 private:
@@ -237,6 +272,7 @@ private:
 
     [[nodiscard]] static constexpr pointer _build_end(pointer ptr, size_type size)
     {
+        BTN_CONSTEXPR_ASSERT(size >= 0, "Invalid size");
         BTN_CONSTEXPR_ASSERT(ptr || ! size, "Pointer is null and size is not zero");
 
         return ptr + size;

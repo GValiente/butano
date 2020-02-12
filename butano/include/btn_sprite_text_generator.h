@@ -85,7 +85,7 @@ public:
 
     [[nodiscard]] fixed width(const string_view& text) const;
 
-    template<size_t MaxSprites>
+    template<int MaxSprites>
     [[nodiscard]] vector<sprite_ptr, MaxSprites> generate(fixed x, fixed y, const string_view& text) const
     {
         vector<sprite_ptr, MaxSprites> output_sprites;
@@ -93,7 +93,7 @@ public:
         return output_sprites;
     }
 
-    template<size_t MaxSprites>
+    template<int MaxSprites>
     [[nodiscard]] vector<sprite_ptr, MaxSprites> generate(const fixed_point& position, const string_view& text) const
     {
         vector<sprite_ptr, MaxSprites> output_sprites;

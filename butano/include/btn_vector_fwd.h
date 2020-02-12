@@ -3,22 +3,13 @@
 
 #include "btn_common.h"
 
-namespace etl
+namespace btn
 {
     template<typename Type>
     class ivector;
 
-    template<typename Type, const size_t MaxSize>
+    template<typename Type, int MaxSize>
     class vector;
-}
-
-namespace btn
-{
-    template<typename Type>
-    using ivector = etl::ivector<Type>;
-
-    template<typename Type, size_t MaxSize>
-    using vector = etl::vector<Type, MaxSize>;
 }
 
 #endif

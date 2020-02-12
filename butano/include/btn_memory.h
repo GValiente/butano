@@ -105,12 +105,6 @@ namespace btn
             }
         }
 
-        void swap(unique_ptr& other)
-        {
-            swap(_ptr, other._ptr);
-            swap(_deleter, other._deleter);
-        }
-
         [[nodiscard]] operator bool() const
         {
             return _ptr != nullptr;
@@ -128,6 +122,17 @@ namespace btn
             BTN_ASSERT(_ptr, "Managed pointer is null");
 
             return _ptr;
+        }
+
+        void swap(unique_ptr& other)
+        {
+            btn::swap(_ptr, other._ptr);
+            btn::swap(_deleter, other._deleter);
+        }
+
+        friend void swap(unique_ptr& a, unique_ptr& b)
+        {
+            a.swap(b);
         }
 
         [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)

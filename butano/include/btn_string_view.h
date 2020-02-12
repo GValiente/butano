@@ -15,14 +15,14 @@ class string_view
 
 public:
     using value_type = char;
-    using size_type = size_t;
+    using size_type = int;
     using const_reference = const char&;
     using const_pointer = const char*;
     using pointer = char*;
     using const_iterator = const char*;
     using const_reverse_iterator = reverse_iterator<const_iterator>;
 
-    constexpr static size_type npos = size_type(-1);
+    constexpr static size_type npos = numeric_limits<size_type>::max();
 
     constexpr string_view() = default;
 
@@ -49,6 +49,7 @@ public:
         _begin(str),
         _end(str + size)
     {
+        BTN_CONSTEXPR_ASSERT(size >= 0, "Invalid size");
     }
 
     [[nodiscard]] constexpr const_reference front() const
@@ -125,52 +126,50 @@ public:
         return size();
     }
 
-    [[nodiscard]] constexpr const_reference operator[](size_t pos) const
+    [[nodiscard]] constexpr const_reference operator[](size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(pos < size(), "Invalid pos");
+        BTN_CONSTEXPR_ASSERT(position >= 0 && position < size(), "Invalid position");
 
-        return _begin[pos];
+        return _begin[position];
     }
 
-    [[nodiscard]] constexpr const_reference at(size_t pos) const
+    [[nodiscard]] constexpr const_reference at(size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(pos < size(), "Invalid pos");
+        BTN_CONSTEXPR_ASSERT(position >= 0 && position < size(), "Invalid position");
 
-        return _begin[pos];
+        return _begin[position];
     }
 
-    constexpr void swap(string_view& other)
-    {
-        string_view temp = *this;
-        *this = other;
-        other = temp;
-    }
-
-    size_type copy(pointer destination, size_type count, size_type pos = 0) const
+    size_type copy(pointer destination, size_type count, size_type position = 0) const
     {
         BTN_ASSERT(destination, "Destination is null");
+        BTN_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(position >= 0, "Invalid position");
 
         size_type sz = size();
         size_type n = 0;
 
-        if(pos < sz)
+        if(position < sz)
         {
-            n = min(count, sz - pos);
-            memory::copy(_begin[pos], int(n), *destination);
+            n = min(count, sz - position);
+            memory::copy(_begin[position], int(n), *destination);
         }
 
         return n;
     }
 
-    [[nodiscard]] constexpr string_view substr(size_type pos = 0, size_type count = npos) const
+    [[nodiscard]] constexpr string_view substr(size_type position = 0, size_type count = npos) const
     {
+        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+
         size_type sz = size();
         string_view view;
 
-        if(pos < sz)
+        if(position < sz)
         {
-            size_t n = min(count, sz - pos);
-            view = string_view(_begin + pos, n);
+            size_type n = min(count, sz - position);
+            view = string_view(_begin + position, n);
         }
 
         return view;
@@ -204,15 +203,15 @@ public:
                         1 : -1;
     }
 
-    [[nodiscard]] constexpr int compare(size_type pos, size_type count, const string_view& other) const
+    [[nodiscard]] constexpr int compare(size_type position, size_type count, const string_view& other) const
     {
-        return substr(pos, count).compare(other);
+        return substr(position, count).compare(other);
     }
 
-    [[nodiscard]] constexpr int compare(size_type pos1, size_type count1, const string_view& other, size_type pos2,
-                                        size_type count2) const
+    [[nodiscard]] constexpr int compare(size_type position1, size_type count1, const string_view& other,
+                                        size_type position2, size_type count2) const
     {
-        return substr(pos1, count1).compare(other.substr(pos2, count2));
+        return substr(position1, count1).compare(other.substr(position2, count2));
     }
 
     [[nodiscard]] constexpr bool starts_with(const string_view& other) const
@@ -235,9 +234,25 @@ public:
         return ! empty() && back() == c;
     }
 
+    constexpr void swap(string_view& other)
+    {
+        btn::swap(_begin, other._begin);
+        btn::swap(_end, other._end);
+    }
+
+    friend void swap(string_view& a, string_view& b)
+    {
+        a.swap(b);
+    }
+
     [[nodiscard]] constexpr friend bool operator==(const string_view& a, const string_view& b)
     {
-        return a.size() == b.size() && _equal_characters(a._begin, b._begin);
+        if(a.size() != b.size())
+        {
+            return false;
+        }
+
+        return equal(a.begin(), a.end(), b.begin());
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const string_view& a, const string_view& b)
@@ -247,7 +262,7 @@ public:
 
     [[nodiscard]] constexpr friend bool operator<(const string_view& a, const string_view& b)
     {
-        return _lexicographical_compare(a._begin, a._end, b._begin, b._end);
+        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
     [[nodiscard]] constexpr friend bool operator>(const string_view& a, const string_view& b)
@@ -268,30 +283,6 @@ public:
 private:
     const_pointer _begin = nullptr;
     const_pointer _end = nullptr;
-
-    [[nodiscard]] static constexpr bool _equal_characters(const_pointer a, const_pointer b)
-    {
-        return *a == *b && (*a == '\0' || _equal_characters(a + 1, b + 1));
-    }
-
-    [[nodiscard]] static constexpr bool _lexicographical_compare(const_pointer first1, const_pointer last1,
-                                                                 const_pointer first2, const_pointer last2)
-    {
-        for(; first1 != last1 && first2 != last2; ++first1, ++first2)
-        {
-            if(*first1 < *first2)
-            {
-                return true;
-            }
-
-            if(*first2 < *first1)
-            {
-                return false;
-            }
-        }
-
-        return first1 == last1 && first2 != last2;
-    }
 };
 
 template<>
@@ -299,7 +290,7 @@ struct hash<string_view>
 {
     [[nodiscard]] constexpr size_t operator()(const string_view& value) const
     {
-        return array_hash(value.data(), value.size());
+        return array_hash(value.data(), size_t(value.size()));
     }
 };
 

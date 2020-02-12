@@ -37,13 +37,13 @@ public:
         return (value * int(_multiplicator)) / int(_divisor);
     }
 
-    template<size_t Precision>
+    template<int Precision>
     [[nodiscard]] constexpr fixed_t<Precision> calculate(fixed_t<Precision> fixed) const
     {
         return fixed_t<Precision>::create(calculate(fixed.value()));
     }
 
-    template<size_t Precision>
+    template<int Precision>
     [[nodiscard]] constexpr fixed_t<Precision> unsafe_calculate(fixed_t<Precision> fixed) const
     {
         return fixed_t<Precision>::create(unsafe_calculate(fixed.value()));

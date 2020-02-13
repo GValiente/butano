@@ -212,65 +212,80 @@ public:
         _data[_size].~value_type();
     }
 
-    void insert(const_iterator position, const_reference value)
+    iterator insert(const_iterator position, const_reference value)
     {
         BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
         BTN_ASSERT(! full(), "Vector is full");
 
-        iterator end = end();
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
         ::new(_data + _size) value_type(value);
         ++_size;
 
-        for(iterator it = position; it != end; ++it)
+        for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *end);
+            btn::swap(*it, *last);
         }
+
+        return non_const_position;
     }
 
-    void insert(const_iterator position, rvalue_reference value)
+    iterator insert(const_iterator position, rvalue_reference value)
     {
         BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
         BTN_ASSERT(! full(), "Vector is full");
 
-        iterator end = end();
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
         ::new(_data + _size) value_type(move(value));
         ++_size;
 
-        for(iterator it = position; it != end; ++it)
+        for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *end);
+            btn::swap(*it, *last);
         }
+
+        return non_const_position;
     }
 
     template<typename... Args>
-    void emplace(const_iterator position, Args&&... args)
+    iterator emplace(const_iterator position, Args&&... args)
     {
         BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
         BTN_ASSERT(! full(), "Vector is full");
 
-        iterator end = end();
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
         ::new(_data + _size) value_type(forward<Args>(args)...);
         ++_size;
 
-        for(iterator it = position; it != end; ++it)
+        for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *end);
+            btn::swap(*it, *last);
         }
+
+        return non_const_position;
     }
 
-    void erase(const_iterator position)
+    iterator erase(const_iterator position)
     {
         BTN_ASSERT(_size, "Vector is empty");
         BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
 
-        for(iterator it = position, end = end() - 1; it != end; ++it)
+        auto non_const_position = const_cast<iterator>(position);
+        iterator it = non_const_position;
+        iterator last = end() - 1;
+
+        while(it != last)
         {
             iterator next = it + 1;
             *it = move(*next);
+            it = next;
         }
 
         --_size;
         _data[_size].~value_type();
+        return non_const_position;
     }
 
     friend void erase(ivector& vector, const_reference value)

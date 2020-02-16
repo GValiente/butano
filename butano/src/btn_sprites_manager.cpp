@@ -261,10 +261,10 @@ optional<id_type> create(sprite_builder&& builder)
         return nullopt;
     }
 
-    item_type* new_item = data.items_pool.create<item_type>(move(builder), move(*tiles), move(*palette));
-    sorted_sprites::insert(*new_item);
-    data.check_items_on_screen |= new_item->visible;
-    return new_item;
+    item_type& new_item = data.items_pool.create(move(builder), move(*tiles), move(*palette));
+    sorted_sprites::insert(new_item);
+    data.check_items_on_screen |= new_item.visible;
+    return &new_item;
 }
 
 void increase_usages(id_type id)
@@ -282,7 +282,7 @@ void decrease_usages(id_type id)
     {
         _hide_handle(*item);
         sorted_sprites::erase(*item);
-        data.items_pool.destroy<item_type>(item);
+        data.items_pool.destroy(*item);
     }
 }
 

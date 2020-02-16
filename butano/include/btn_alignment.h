@@ -6,7 +6,7 @@
 namespace btn
 {
     template<int Bytes>
-    [[nodiscard]] inline bool aligned(const void* pointer)
+    [[nodiscard]] bool aligned(const void* pointer)
     {
         static_assert(Bytes > 0);
 

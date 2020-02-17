@@ -8,64 +8,92 @@
 namespace btn
 {
 
+input_string_stream::input_string_stream(istring_base& string) :
+    _string(string)
+{
+    BTN_ASSERT(string.data(), "Data is null");
+    BTN_ASSERT(string.size() >= 0, "Invalid size: ", string.size());
+    BTN_ASSERT(string.max_size() >= 2, "Invalid max size: ", string.max_size());
+    BTN_ASSERT(string.size() < string.max_size(), "Invalid size or max size: ", string.size(), " - ", string.max_size());
+
+    string.data()[string.size()] = 0;
+}
+
+const istring& input_string_stream::string() const
+{
+    return static_cast<const istring&>(_string);
+}
+
+istring& input_string_stream::string()
+{
+    return static_cast<istring&>(_string);
+}
+
+void input_string_stream::append(char character)
+{
+    string().push_back(character);
+}
+
 void input_string_stream::append(const string_view& str_view)
 {
-    _string.append(str_view.data(), str_view.size());
+    string().append(str_view.data(), str_view.size());
+}
+
+void input_string_stream::append(const istring& _string)
+{
+    string().append(_string);
 }
 
 void input_string_stream::append(const char* char_array)
 {
-    if(char_array)
-    {
-        _string.append(char_array);
-    }
+    string().append(char_array);
 }
 
-void input_string_stream::append(const char* char_array, size_t size)
+void input_string_stream::append(const char* char_array, int size)
 {
-    _string.append(char_array, size);
+    string().append(char_array, size);
 }
 
 void input_string_stream::append(int value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(long value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(int64_t value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(unsigned value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(unsigned long value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(uint64_t value)
 {
     array<char, 32> buffer;
     int size = btn::hw::text::parse(value, buffer);
-    _string.append(buffer.data(), size_t(size));
+    string().append(buffer.data(), size);
 }
 
 void input_string_stream::append(float value)
@@ -74,7 +102,7 @@ void input_string_stream::append(float value)
     int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%g", double(value));
     BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
 
-    _string.append(buffer.data(), size_t(buffer_size));
+    string().append(buffer.data(), buffer_size);
 }
 
 void input_string_stream::append(double value)
@@ -83,7 +111,7 @@ void input_string_stream::append(double value)
     int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%lg", value);
     BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
 
-    _string.append(buffer.data(), size_t(buffer_size));
+    string().append(buffer.data(), buffer_size);
 }
 
 void input_string_stream::append(long double value)
@@ -92,7 +120,7 @@ void input_string_stream::append(long double value)
     int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%Lg", value);
     BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
 
-    _string.append(buffer.data(), size_t(buffer_size));
+    string().append(buffer.data(), buffer_size);
 }
 
 void input_string_stream::append(const void* ptr)
@@ -101,12 +129,17 @@ void input_string_stream::append(const void* ptr)
     {
         array<char, 32> buffer;
         int size = btn::hw::text::parse(ptr, buffer);
-        _string.append(buffer.data(), size_t(size));
+        string().append(buffer.data(), size);
     }
     else
     {
-        _string.append("nullptr");
+        string().append("nullptr");
     }
+}
+
+void input_string_stream::clear()
+{
+    string().clear();
 }
 
 }

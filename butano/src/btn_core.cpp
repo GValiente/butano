@@ -65,7 +65,10 @@ namespace
     {
 
     public:
-        optional<etl::error_handler::free_function> etl_error_callback;
+        #if BTN_CFG_ASSERT_ENABLED
+            optional<etl::error_handler::free_function> etl_error_callback;
+        #endif
+
         optional<timer> cpu_usage_timer;
         fixed cpu_usage;
     };
@@ -94,7 +97,7 @@ namespace
         {
             string<BTN_CFG_ASSERT_BUFFER_SIZE> message;
             message.append(exception.what());
-            _btn::assert::show("ETL error", exception.file_name(), "", exception.line_number(), message);
+            _btn::assert::show("ETL error", exception.file_name(), "", exception.line_number(), message.c_str());
         }
     #endif
 
@@ -313,7 +316,7 @@ fixed cpu_usage()
     namespace _btn::assert
     {
         void show(const char* condition, const char* file_name, const char* function, int line,
-                  const btn::istring& message)
+                  const char* message)
         {
             btn::core::stop();
             btn::hw::show::error(condition, file_name, function, line, message);

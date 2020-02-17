@@ -12,8 +12,9 @@
         { \
             if(! BTN_UNLIKELY(condition)) \
             { \
-                btn::string<BTN_CFG_ASSERT_BUFFER_SIZE> _btn_string; \
-                btn::input_string_stream _btn_input_string_stream(_btn_string); \
+                char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
+                btn::istring_base _btn_istring(_btn_string, 0, BTN_CFG_ASSERT_BUFFER_SIZE - 1); \
+                btn::input_string_stream _btn_input_string_stream(_btn_istring); \
                 _btn_input_string_stream.append_args(__VA_ARGS__); \
                 _btn::assert::show(#condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_string); \
             } \
@@ -25,8 +26,9 @@
     #define BTN_ERROR(...) \
         do \
         { \
-            btn::string<BTN_CFG_ASSERT_BUFFER_SIZE> _btn_string; \
-            btn::input_string_stream _btn_input_string_stream(_btn_string); \
+            char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
+            btn::istring_base _btn_istring(_btn_string, 0, BTN_CFG_ASSERT_BUFFER_SIZE - 1); \
+            btn::input_string_stream _btn_input_string_stream(_btn_istring); \
             _btn_input_string_stream.append_args(__VA_ARGS__); \
             _btn::assert::show("", _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_string); \
         } while(false)
@@ -34,7 +36,7 @@
     namespace _btn::assert
     {
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
-                               const btn::istring& message);
+                               const char* message);
 
         template<int Size>
         [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], int index)
@@ -54,9 +56,7 @@
 
         [[noreturn]] inline void constexpr_error(const char* file, const char* function, int line, const char* message)
         {
-            btn::string<BTN_CFG_ASSERT_BUFFER_SIZE> message_string;
-            message_string.append(message);
-            show("", file, function, line, message_string);
+            show("", file, function, line, message);
         }
 
         constexpr bool constexpr_check(bool condition, const char* file, const char* function, int line,

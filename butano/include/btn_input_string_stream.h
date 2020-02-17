@@ -2,8 +2,9 @@
 #define BTN_INPUT_STRING_STREAM_H
 
 #include "btn_limits.h"
-#include "btn_string.h"
 #include "btn_fixed_fwd.h"
+#include "btn_string_fwd.h"
+#include "btn_istring_base.h"
 
 namespace btn
 {
@@ -14,19 +15,35 @@ class input_string_stream
 {
 
 public:
-    explicit input_string_stream(istring& string) :
-        _string(string)
+    explicit input_string_stream(istring_base& string);
+
+    [[nodiscard]] const istring& string() const;
+
+    [[nodiscard]] istring& string();
+
+    [[nodiscard]] int size() const
     {
+        return _string.size();
     }
 
-    [[nodiscard]] const istring& string() const
+    [[nodiscard]] int length() const
     {
-        return _string;
+        return _string.length();
     }
 
-    [[nodiscard]] istring& string()
+    [[nodiscard]] int capacity() const
     {
-        return _string;
+        return _string.capacity();
+    }
+
+    [[nodiscard]] int max_size() const
+    {
+        return _string.max_size();
+    }
+
+    [[nodiscard]] int available() const
+    {
+        return _string.available();
     }
 
     [[nodiscard]] bool empty() const
@@ -34,38 +51,22 @@ public:
         return _string.empty();
     }
 
-    [[nodiscard]] size_t size() const
+    [[nodiscard]] bool full() const
     {
-        return _string.size();
+        return _string.full();
     }
 
-    [[nodiscard]] size_t max_size() const
-    {
-        return _string.capacity();
-    }
-
-    [[nodiscard]] size_t available() const
-    {
-        return _string.available();
-    }
-
-    void append(char character)
-    {
-        _string += character;
-    }
+    void append(char character);
 
     void append(const string_view& str_view);
 
-    void append(const istring& string)
-    {
-        _string.append(string);
-    }
+    void append(const istring& string);
 
     void append(const char* char_array);
 
-    void append(const char* char_array, size_t size);
+    void append(const char* char_array, int size);
 
-    template<size_t MaxSize>
+    template<int MaxSize>
     void append(char(&char_array)[MaxSize])
     {
         append(char_array, MaxSize);
@@ -137,18 +138,10 @@ public:
     {
     }
 
-    void clear()
-    {
-        _string.clear();
-    }
-
-    void resize(size_t new_size, char character)
-    {
-        _string.resize(new_size, character);
-    }
+    void clear();
 
 private:
-    istring& _string;
+    istring_base& _string;
 };
 
 
@@ -176,7 +169,7 @@ inline input_string_stream& operator<<(input_string_stream& stream, const char* 
     return stream;
 }
 
-template<size_t MaxSize>
+template<int MaxSize>
 inline input_string_stream& operator<<(input_string_stream& stream, char(&char_array)[MaxSize])
 {
     stream.append<MaxSize>(char_array);
@@ -248,15 +241,6 @@ input_string_stream& operator<<(input_string_stream& stream, fixed_t<Precision> 
 {
     stream.append(value);
     return stream;
-}
-
-template<size_t MaxSize, typename Type>
-string<MaxSize> to_string(const Type& value)
-{
-    string<MaxSize> result;
-    input_string_stream stream(result);
-    stream << value;
-    return result;
 }
 
 }

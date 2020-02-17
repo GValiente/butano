@@ -18,7 +18,7 @@ namespace btn::hw::show
 {
     #if BTN_CFG_ASSERT_ENABLED
         void error(const string_view& condition, const string_view& file_name, const string_view& function, int line,
-                   const istring& message);
+                   const string_view& message);
     #endif
 
     #if BTN_CFG_PROFILER_ENABLED

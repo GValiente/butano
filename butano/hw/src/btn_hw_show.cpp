@@ -37,7 +37,7 @@ namespace
 
 #if BTN_CFG_ASSERT_ENABLED
     void error(const string_view& condition, const string_view& file_name, const string_view& function, int line,
-               const istring& message)
+               const string_view& message)
     {
         string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
         init_tte();
@@ -86,7 +86,9 @@ namespace
         }
 
         // Show message:
-        tte_write(message.c_str());
+        buffer.clear();
+        buffer.append(message.begin(), message.end());
+        tte_write(buffer.c_str());
     }
 #endif
 

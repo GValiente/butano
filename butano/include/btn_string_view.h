@@ -3,7 +3,6 @@
 
 #include "btn_string.h"
 #include "btn_limits.h"
-#include "btn_memory.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 
@@ -26,7 +25,7 @@ public:
 
     constexpr string_view() = default;
 
-    string_view(const istring& str) :
+    constexpr string_view(const istring& str) :
         _begin(str.begin()),
         _end(str.end())
     {
@@ -140,11 +139,11 @@ public:
         return _begin[position];
     }
 
-    size_type copy(pointer destination, size_type count, size_type position = 0) const
+    constexpr size_type copy(pointer destination, size_type count, size_type position = 0) const
     {
-        BTN_ASSERT(destination, "Destination is null");
-        BTN_ASSERT(count >= 0, "Invalid count");
-        BTN_ASSERT(position >= 0, "Invalid position");
+        BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
+        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
 
         size_type sz = size();
         size_type n = 0;
@@ -152,7 +151,7 @@ public:
         if(position < sz)
         {
             n = min(count, sz - position);
-            memory::copy(_begin[position], int(n), *destination);
+            btn::copy(_begin + position, _begin + position + n, destination);
         }
 
         return n;
@@ -195,7 +194,7 @@ public:
         }
     }
 
-    [[nodiscard]] constexpr int compare(const string_view& other) const
+    [[nodiscard]] constexpr size_type compare(const string_view& other) const
     {
         return *this == other ?
                     0 :
@@ -203,12 +202,12 @@ public:
                         1 : -1;
     }
 
-    [[nodiscard]] constexpr int compare(size_type position, size_type count, const string_view& other) const
+    [[nodiscard]] constexpr size_type compare(size_type position, size_type count, const string_view& other) const
     {
         return substr(position, count).compare(other);
     }
 
-    [[nodiscard]] constexpr int compare(size_type position1, size_type count1, const string_view& other,
+    [[nodiscard]] constexpr size_type compare(size_type position1, size_type count1, const string_view& other,
                                         size_type position2, size_type count2) const
     {
         return substr(position1, count1).compare(other.substr(position2, count2));
@@ -219,9 +218,9 @@ public:
         return size() >= other.size() && compare(0, other.size(), other) == 0;
     }
 
-    [[nodiscard]] constexpr bool starts_with(char c) const
+    [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
-        return ! empty() && front() == c;
+        return ! empty() && front() == value;
     }
 
     [[nodiscard]] constexpr bool ends_with(const string_view& other) const
@@ -229,9 +228,9 @@ public:
         return size() >= other.size() && compare(size() - other.size(), npos, other) == 0;
     }
 
-    [[nodiscard]] constexpr bool ends_with(char c) const
+    [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
-        return ! empty() && back() == c;
+        return ! empty() && back() == value;
     }
 
     constexpr void swap(string_view& other)
@@ -240,7 +239,7 @@ public:
         btn::swap(_end, other._end);
     }
 
-    friend void swap(string_view& a, string_view& b)
+    constexpr friend void swap(string_view& a, string_view& b)
     {
         a.swap(b);
     }

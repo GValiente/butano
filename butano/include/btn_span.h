@@ -2,7 +2,6 @@
 #define BTN_SPAN_H
 
 #include "btn_assert.h"
-#include "btn_utility.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 
@@ -226,7 +225,7 @@ public:
         btn::swap(_end, other._end);
     }
 
-    friend void swap(span& a, span& b)
+    constexpr friend void swap(span& a, span& b)
     {
         a.swap(b);
     }

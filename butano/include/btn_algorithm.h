@@ -2,7 +2,7 @@
 #define BTN_ALGORITHM_H
 
 #include <algorithm>
-#include "btn_common.h"
+#include "btn_utility.h"
 
 namespace btn
 {
@@ -95,6 +95,154 @@ namespace btn
         else
         {
             std::fill(begin, end, value);
+        }
+    }
+
+    template<class Iterator, typename Type>
+    constexpr void fill_n(Iterator first, int count, const Type& value)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            for(int index = 0; index < count; index++)
+            {
+                *first++ = value;
+            }
+
+            return first;
+        }
+        else
+        {
+            std::fill_n(first, count, value);
+        }
+    }
+
+    template<typename InputIt, typename OutputIt>
+    constexpr OutputIt copy(InputIt inputFirst, InputIt inputLast, OutputIt outputFirst)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            while(inputFirst != inputLast)
+            {
+                *outputFirst++ = *inputFirst++;
+            }
+
+            return outputFirst;
+        }
+        else
+        {
+            return std::copy(inputFirst, inputLast, outputFirst);
+        }
+    }
+
+    template<typename InputIt, typename OutputIt>
+    constexpr OutputIt copy_backward(InputIt inputFirst, InputIt inputLast, OutputIt outputLast)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            while(inputFirst != inputLast)
+            {
+                *(--outputLast) = *(--inputLast);
+            }
+
+            return outputLast;
+        }
+        else
+        {
+            return std::copy_backward(inputFirst, inputLast, outputLast);
+        }
+    }
+
+    template<typename Iterator, typename Type>
+    [[nodiscard]] constexpr Iterator find(Iterator first, Iterator last, const Type& value)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            for(; first != last; ++first)
+            {
+                if(*first == value)
+                {
+                    return first;
+                }
+            }
+
+            return last;
+        }
+        else
+        {
+            return std::find(first, last, value);
+        }
+    }
+
+    template<typename Iterator, class Pred>
+    [[nodiscard]] constexpr Iterator find_if(Iterator first, Iterator last, Pred pred)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            for(; first != last; ++first)
+            {
+                if(p(*first))
+                {
+                    return first;
+                }
+            }
+
+            return last;
+        }
+        else
+        {
+            return std::find_if(first, last, pred);
+        }
+    }
+
+    template<typename Iterator, typename Type>
+    constexpr Iterator remove(Iterator first, Iterator last, const Type& value)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            first = find(first, last, value);
+
+            if(first != last)
+            {
+                for(Iterator it = first; ++it != last; )
+                {
+                    if(! (*it == value))
+                    {
+                        *first++ = move(*it);
+                    }
+                }
+            }
+
+            return first;
+        }
+        else
+        {
+            return std::remove(first, last, value);
+        }
+    }
+
+    template<typename Iterator, class Pred>
+    Iterator remove_if(Iterator first, Iterator last, Pred pred)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            first = find_if(first, last, pred);
+
+            if(first != last)
+            {
+                for(Iterator it = first; ++it != last; )
+                {
+                    if(! pred(*it))
+                    {
+                        *first++ = move(*it);
+                    }
+                }
+            }
+
+            return first;
+        }
+        else
+        {
+            return std::remove_if(first, last, pred);
         }
     }
 

@@ -3,7 +3,6 @@
 
 #include <new>
 #include "btn_assert.h"
-#include "btn_utility.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_vector_fwd.h"
@@ -288,43 +287,45 @@ public:
         return non_const_position;
     }
 
+    iterator erase(const_iterator first, const_iterator last)
+    {
+        BTN_ASSERT(first >= begin(), "Invalid first");
+        BTN_ASSERT(last <= end(), "Invalid last");
+
+        size_type delete_count = last - first;
+        BTN_ASSERT(_size >= delete_count, "Invalid delete count: ", delete_count, " - ", _size);
+
+        auto erase_first = const_cast<iterator>(first);
+        iterator erase_it = erase_first;
+        iterator erase_last = end() - delete_count;
+
+        while(erase_it != last)
+        {
+            iterator next = erase_it + 1;
+            *erase_it = move(*next);
+            erase_it = next;
+        }
+
+        size_type new_size = _size - delete_count;
+
+        while(_size > new_size)
+        {
+            --_size;
+            _data[_size].~value_type();
+        }
+
+        return erase_first;
+    }
+
     friend void erase(ivector& vector, const_reference value)
     {
-        iterator it = vector.begin();
-        iterator end = vector.end();
-
-        while(it != end)
-        {
-            if(*it == value)
-            {
-                vector.erase(it);
-                --end;
-            }
-            else
-            {
-                ++it;
-            }
-        }
+        vector.erase(remove(vector.begin(), vector.end(), value), vector.end());
     }
 
     template<class Pred>
     friend void erase_if(ivector& vector, const Pred& pred)
     {
-        iterator it = vector.begin();
-        iterator end = vector.end();
-
-        while(it != end)
-        {
-            if(pred(*it))
-            {
-                vector.erase(it);
-                --end;
-            }
-            else
-            {
-                ++it;
-            }
-        }
+        vector.erase(remove_if(vector.begin(), vector.end(), pred), vector.end());
     }
 
     void resize(size_type count)

@@ -49,7 +49,7 @@ list& list::operator=([[maybe_unused]] const list& other)
 
 list::list(list&& other)
 {
-    *this = std::move(other);
+    *this = move(other);
 }
 
 list& list::operator=(list&& other)

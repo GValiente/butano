@@ -10,15 +10,16 @@
     #define BTN_LOG(...) \
         do \
         { \
-            btn::string<0x100> _btn_string; \
-            btn::input_string_stream _btn_input_string_stream(_btn_string); \
+            char _btn_string[0x100]; \
+            btn::istring_base _btn_istring(_btn_string, 0, BTN_CFG_ASSERT_BUFFER_SIZE - 1); \
+            btn::input_string_stream _btn_input_string_stream(_btn_istring); \
             _btn_input_string_stream.append_args(__VA_ARGS__); \
             btn::log(_btn_string); \
         } while(false)
 
     namespace btn
     {
-        void log(const istring& message);
+        void log(const char* message);
     }
 #else
     #define BTN_LOG(...) \

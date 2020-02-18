@@ -23,13 +23,13 @@
                 int64_t total_ticks = 0;
                 btn::optional<btn::timer> current_timer;
                 const char* current_id = nullptr;
-                size_t current_id_hash;
+                unsigned current_id_hash;
             };
 
             BTN_DATA_EWRAM static_data data;
         }
 
-        void start(const char* id, size_t id_hash)
+        void start(const char* id, unsigned id_hash)
         {
             BTN_ASSERT(id, "Id is null");
             BTN_ASSERT(! data.current_id, "There's already an active id: ", data.current_id);

@@ -1045,9 +1045,9 @@ private:
 template<>
 struct hash<istring>
 {
-    [[nodiscard]] constexpr size_t operator()(const istring& value) const
+    [[nodiscard]] constexpr unsigned operator()(const istring& value) const
     {
-        return array_hash(value.data(), size_t(value.size()));
+        return array_hash(value.data(), value.size());
     }
 };
 

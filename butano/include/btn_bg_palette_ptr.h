@@ -117,7 +117,7 @@ private:
 template<>
 struct hash<bg_palette_ptr>
 {
-    [[nodiscard]] size_t operator()(const bg_palette_ptr& value) const
+    [[nodiscard]] unsigned operator()(const bg_palette_ptr& value) const
     {
         return make_hash(value.id());
     }

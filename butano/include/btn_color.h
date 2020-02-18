@@ -50,7 +50,7 @@ private:
 template<>
 struct hash<color>
 {
-    [[nodiscard]] constexpr size_t operator()(color value) const
+    [[nodiscard]] constexpr unsigned operator()(color value) const
     {
         return make_hash(value.value());
     }

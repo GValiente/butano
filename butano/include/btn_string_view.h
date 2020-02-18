@@ -284,12 +284,13 @@ private:
     const_pointer _end = nullptr;
 };
 
+
 template<>
 struct hash<string_view>
 {
-    [[nodiscard]] constexpr size_t operator()(const string_view& value) const
+    [[nodiscard]] constexpr unsigned operator()(const string_view& value) const
     {
-        return array_hash(value.data(), size_t(value.size()));
+        return array_hash(value.data(), value.size());
     }
 };
 

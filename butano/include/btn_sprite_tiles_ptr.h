@@ -65,7 +65,7 @@ public:
 
     [[nodiscard]] optional<span<tile>> vram();
 
-    [[nodiscard]] size_t hash() const
+    [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
     }
@@ -95,7 +95,7 @@ private:
 template<>
 struct hash<sprite_tiles_ptr>
 {
-    [[nodiscard]] size_t operator()(const sprite_tiles_ptr& value) const
+    [[nodiscard]] unsigned operator()(const sprite_tiles_ptr& value) const
     {
         return make_hash(value.id());
     }

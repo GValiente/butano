@@ -436,7 +436,7 @@ private:
 template<typename Type>
 struct hash<optional<Type>>
 {
-    [[nodiscard]] size_t operator()(const optional<Type>& optional) const
+    [[nodiscard]] unsigned operator()(const optional<Type>& optional) const
     {
         return bool(optional) ? make_hash(optional.value()) : make_hash(0);
     }

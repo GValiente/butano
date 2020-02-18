@@ -348,7 +348,7 @@ namespace btn
     template<typename Type, typename Deleter>
     struct hash<unique_ptr<Type, Deleter>>
     {
-        [[nodiscard]] size_t operator()(const unique_ptr<Type, Deleter>& value) const
+        [[nodiscard]] unsigned operator()(const unique_ptr<Type, Deleter>& value) const
         {
             return make_hash(value.get());
         }

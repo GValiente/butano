@@ -23,11 +23,11 @@ struct hash;
 template<>
 struct hash<unsigned>
 {
-    [[nodiscard]] constexpr size_t operator()(unsigned value) const
+    [[nodiscard]] constexpr unsigned operator()(unsigned value) const
     {
         // FNV-1a:
-        size_t basis = 0x811C9DC5;
-        size_t prime = 0x01000193;
+        unsigned basis = 0x811C9DC5;
+        unsigned prime = 0x01000193;
         return (value ^ basis) * prime;
     }
 };
@@ -35,95 +35,95 @@ struct hash<unsigned>
 template<>
 struct hash<bool>
 {
-    [[nodiscard]] constexpr size_t operator()(bool value) const
+    [[nodiscard]] constexpr unsigned operator()(bool value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<char>
 {
-    [[nodiscard]] constexpr size_t operator()(char value) const
+    [[nodiscard]] constexpr unsigned operator()(char value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<int8_t>
 {
-    [[nodiscard]] constexpr size_t operator()(int8_t value) const
+    [[nodiscard]] constexpr unsigned operator()(int8_t value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<uint8_t>
 {
-    [[nodiscard]] constexpr size_t operator()(uint8_t value) const
+    [[nodiscard]] constexpr unsigned operator()(uint8_t value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<int16_t>
 {
-    [[nodiscard]] constexpr size_t operator()(int16_t value) const
+    [[nodiscard]] constexpr unsigned operator()(int16_t value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<uint16_t>
 {
-    [[nodiscard]] constexpr size_t operator()(uint16_t value) const
+    [[nodiscard]] constexpr unsigned operator()(uint16_t value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<>
 struct hash<int>
 {
-    [[nodiscard]] constexpr size_t operator()(int value) const
+    [[nodiscard]] constexpr unsigned operator()(int value) const
     {
-        return hash<size_t>()(size_t(value));
+        return hash<unsigned>()(unsigned(value));
     }
 };
 
 template<typename Type>
 struct hash<Type*>
 {
-    [[nodiscard]] constexpr size_t operator()(const Type* ptr) const
+    [[nodiscard]] constexpr unsigned operator()(const Type* ptr) const
     {
-        return hash<size_t>()(size_t(ptr));
+        return hash<unsigned>()(unsigned(ptr));
     }
 };
 
 template<typename Type>
-constexpr void hash_combine(const Type& value, size_t& result)
+constexpr void hash_combine(const Type& value, unsigned& result)
 {
     // FNV-1a:
-    size_t prime = 0x01000193;
+    unsigned prime = 0x01000193;
     result = (hash<Type>()(value) ^ result) * prime;
 }
 
-[[nodiscard]] constexpr size_t array_hash(const void* ptr, size_t size)
+[[nodiscard]] constexpr unsigned array_hash(const void* ptr, int size)
 {
     // FNV-1a:
-    size_t basis = 0x811C9DC5;
-    size_t result = basis;
+    unsigned basis = 0x811C9DC5;
+    unsigned result = basis;
 
-    if(ptr)
+    if(ptr && size > 0)
     {
         auto u8_ptr = static_cast<const uint8_t*>(ptr);
-        size_t index = 0;
+        int index = 0;
 
-        for(size_t limit = size / 4; index < limit; index += 4)
+        for(int limit = size / 4; index < limit; index += 4)
         {
             int value = u8_ptr[index] |
                     u8_ptr[index + 1] << 8 |
@@ -144,7 +144,7 @@ constexpr void hash_combine(const Type& value, size_t& result)
 template<>
 struct hash<int64_t>
 {
-    [[nodiscard]] constexpr size_t operator()(int64_t value) const
+    [[nodiscard]] constexpr unsigned operator()(int64_t value) const
     {
         return array_hash(&value, sizeof(value));
     }
@@ -153,7 +153,7 @@ struct hash<int64_t>
 template<>
 struct hash<uint64_t>
 {
-    [[nodiscard]] constexpr size_t operator()(uint64_t value) const
+    [[nodiscard]] constexpr unsigned operator()(uint64_t value) const
     {
         return array_hash(&value, sizeof(value));
     }
@@ -162,7 +162,7 @@ struct hash<uint64_t>
 template<>
 struct hash<float>
 {
-    [[nodiscard]] constexpr size_t operator()(float value) const
+    [[nodiscard]] constexpr unsigned operator()(float value) const
     {
         return array_hash(&value, sizeof(value));
     }
@@ -171,7 +171,7 @@ struct hash<float>
 template<>
 struct hash<double>
 {
-    [[nodiscard]] constexpr size_t operator()(double value) const
+    [[nodiscard]] constexpr unsigned operator()(double value) const
     {
         return array_hash(&value, sizeof(value));
     }
@@ -180,14 +180,14 @@ struct hash<double>
 template<>
 struct hash<long double>
 {
-    [[nodiscard]] constexpr size_t operator()(long double value) const
+    [[nodiscard]] constexpr unsigned operator()(long double value) const
     {
         return array_hash(&value, sizeof(value));
     }
 };
 
 template<typename Type>
-[[nodiscard]] constexpr size_t make_hash(const Type& value)
+[[nodiscard]] constexpr unsigned make_hash(const Type& value)
 {
     return hash<Type>()(value);
 }

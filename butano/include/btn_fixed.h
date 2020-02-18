@@ -261,7 +261,7 @@ using fixed = fixed_t<12>;
 template<int Precision>
 struct hash<fixed_t<Precision>>
 {
-    [[nodiscard]] constexpr size_t operator()(fixed_t<Precision> fixed) const
+    [[nodiscard]] constexpr unsigned operator()(fixed_t<Precision> fixed) const
     {
         return make_hash(fixed.value());
     }

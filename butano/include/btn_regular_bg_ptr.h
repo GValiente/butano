@@ -169,7 +169,7 @@ private:
 template<>
 struct hash<regular_bg_ptr>
 {
-    [[nodiscard]] size_t operator()(const regular_bg_ptr& value) const
+    [[nodiscard]] unsigned operator()(const regular_bg_ptr& value) const
     {
         return make_hash(value.id());
     }

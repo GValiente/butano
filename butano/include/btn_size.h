@@ -124,9 +124,9 @@ private:
 template<>
 struct hash<size>
 {
-    [[nodiscard]] constexpr size_t operator()(const size& value) const
+    [[nodiscard]] constexpr unsigned operator()(const size& value) const
     {
-        size_t result = make_hash(value.width());
+        unsigned result = make_hash(value.width());
         hash_combine(value.height(), result);
         return result;
     }

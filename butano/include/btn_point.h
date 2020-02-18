@@ -115,9 +115,9 @@ private:
 template<>
 struct hash<point>
 {
-    [[nodiscard]] constexpr size_t operator()(const point& value) const
+    [[nodiscard]] constexpr unsigned operator()(const point& value) const
     {
-        size_t result = make_hash(value.x());
+        unsigned result = make_hash(value.x());
         hash_combine(value.y(), result);
         return result;
     }

@@ -16,7 +16,7 @@
     {
         using ticks_map = btn::hash_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES>;
 
-        void start(const char* id, size_t id_hash);
+        void start(const char* id, unsigned id_hash);
 
         void stop();
 

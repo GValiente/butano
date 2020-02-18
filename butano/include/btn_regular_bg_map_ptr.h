@@ -99,7 +99,7 @@ public:
 
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 
-    [[nodiscard]] size_t hash() const
+    [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
     }
@@ -129,7 +129,7 @@ private:
 template<>
 struct hash<regular_bg_map_ptr>
 {
-    [[nodiscard]] size_t operator()(const regular_bg_map_ptr& value) const
+    [[nodiscard]] unsigned operator()(const regular_bg_map_ptr& value) const
     {
         return make_hash(value.id());
     }

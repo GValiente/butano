@@ -117,7 +117,7 @@ private:
 template<>
 struct hash<sprite_palette_ptr>
 {
-    [[nodiscard]] size_t operator()(const sprite_palette_ptr& value) const
+    [[nodiscard]] unsigned operator()(const sprite_palette_ptr& value) const
     {
         return make_hash(value.id());
     }

@@ -99,7 +99,7 @@ private:
 template<>
 struct hash<sprite_affine_mat_ptr>
 {
-    [[nodiscard]] size_t operator()(const sprite_affine_mat_ptr& value) const
+    [[nodiscard]] unsigned operator()(const sprite_affine_mat_ptr& value) const
     {
         return make_hash(value.id());
     }

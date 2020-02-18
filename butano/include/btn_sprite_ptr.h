@@ -174,7 +174,7 @@ public:
 
     void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
 
-    [[nodiscard]] size_t hash() const
+    [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
     }
@@ -206,7 +206,7 @@ private:
 template<>
 struct hash<sprite_ptr>
 {
-    [[nodiscard]] size_t operator()(const sprite_ptr& value) const
+    [[nodiscard]] unsigned operator()(const sprite_ptr& value) const
     {
         return value.hash();
     }

@@ -38,7 +38,7 @@ private:
 template<>
 struct hash<sound_item>
 {
-    [[nodiscard]] constexpr size_t operator()(sound_item value) const
+    [[nodiscard]] constexpr unsigned operator()(sound_item value) const
     {
         return make_hash(value.id());
     }

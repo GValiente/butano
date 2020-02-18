@@ -2,10 +2,6 @@
 
 #include "btn_config_assert.h"
 
-#if BTN_CFG_ASSERT_ENABLED
-    #include "../3rd_party/etl/include/etl/error_handler.h"
-#endif
-
 #include "btn_span.h"
 #include "btn_fixed.h"
 #include "btn_timer.h"
@@ -65,10 +61,6 @@ namespace
     {
 
     public:
-        #if BTN_CFG_ASSERT_ENABLED
-            optional<etl::error_handler::free_function> etl_error_callback;
-        #endif
-
         optional<timer> cpu_usage_timer;
         fixed cpu_usage;
     };
@@ -91,15 +83,6 @@ namespace
         hw::core::wait_for_vblank();
         audio_manager::stop();
     }
-
-    #if BTN_CFG_ASSERT_ENABLED
-        [[noreturn]] void etl_error_callback_function(const etl::exception& exception)
-        {
-            string<BTN_CFG_ASSERT_BUFFER_SIZE> message;
-            message.append(exception.what());
-            _btn::assert::show("ETL error", exception.file_name(), "", exception.line_number(), message.c_str());
-        }
-    #endif
 
     void _update_without_actions()
     {
@@ -169,12 +152,6 @@ namespace
 
 void init()
 {
-    #if BTN_CFG_ASSERT_ENABLED
-        // Init ETL's error handler:
-        data.etl_error_callback = etl::error_handler::free_function(etl_error_callback_function);
-        etl::error_handler::set_callback(*data.etl_error_callback);
-    #endif
-
     // Init storage systems:
     hw::game_pak::init();
     hw::sram::init();

@@ -108,6 +108,10 @@ namespace etl
       if (other.truncated())
       {
         this->is_truncated = true;
+
+#if defined(ETL_STRING_TRUNCATION_IS_ERROR)
+        ETL_ALWAYS_ASSERT(ETL_ERROR(string_truncation));
+#endif
       }
     }
 
@@ -191,13 +195,27 @@ namespace etl
       {
         ETL_ASSERT(position < this->size(), ETL_ERROR(string_out_of_bounds));
 
-        length_ = ETL_STD::min(length_, this->size() - position);
+        length_ = etl::min(length_, this->size() - position);
 
         new_string.assign(buffer + position, buffer + position + length_);
       }
 
       return new_string;
     }
+
+    //*************************************************************************
+    /// Assignment operator.
+    //*************************************************************************
+    string& operator = (const string& rhs)
+    {
+      if (&rhs != this)
+      {
+       this->assign(rhs);
+      }
+
+      return *this;
+    }
+
 
     //*************************************************************************
     /// Assignment operator.

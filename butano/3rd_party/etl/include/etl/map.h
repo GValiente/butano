@@ -37,9 +37,9 @@ SOFTWARE.
 
 #include "platform.h"
 
-#include "stl/algorithm.h"
-#include "stl/iterator.h"
-#include "stl/functional.h"
+#include "algorithm.h"
+#include "iterator.h"
+#include "functional.h"
 
 #include "container.h"
 #include "pool.h"
@@ -50,6 +50,7 @@ SOFTWARE.
 #include "type_traits.h"
 #include "parameter_type.h"
 #include "iterator.h"
+#include "utility.h"
 
 #if ETL_CPP11_SUPPORTED && !defined(ETL_STLPORT) && !defined(ETL_NO_STL)
   #include <initializer_list>
@@ -462,17 +463,20 @@ namespace etl
   /// A templated base for all etl::map types.
   ///\ingroup map
   //***************************************************************************
-  template <typename TKey, typename TMapped, typename TKeyCompare = ETL_STD::less<TKey> >
+  template <typename TKey, typename TMapped, typename TKeyCompare = etl::less<TKey> >
   class imap : public etl::map_base
   {
   public:
 
     typedef TKey                           key_type;
-    typedef ETL_PAIR<const TKey, TMapped> value_type;
+    typedef ETL_OR_STD::pair<const TKey, TMapped> value_type;
     typedef TMapped                        mapped_type;
     typedef TKeyCompare                    key_compare;
     typedef value_type&                    reference;
     typedef const value_type&              const_reference;
+#if ETL_CPP11_SUPPORTED
+    typedef value_type&&                   rvalue_reference;
+#endif
     typedef value_type*                    pointer;
     typedef const value_type*              const_pointer;
     typedef size_t                         size_type;
@@ -481,7 +485,7 @@ namespace etl
     {
     public:
 
-      bool operator()(const value_type& lhs, const value_type& rhs) const
+      bool operator()(const_reference lhs, const_reference rhs) const
       {
         return (kcompare(lhs.first, rhs.first));
       }
@@ -575,7 +579,7 @@ namespace etl
     //*************************************************************************
     /// iterator.
     //*************************************************************************
-    class iterator : public etl::iterator<ETL_BIDIRECTIONAL_ITERATOR_TAG, value_type>
+    class iterator : public etl::iterator<ETL_OR_STD::bidirectional_iterator_tag, value_type>
     {
     public:
 
@@ -696,7 +700,7 @@ namespace etl
     //*************************************************************************
     /// const_iterator
     //*************************************************************************
-    class const_iterator : public etl::iterator<ETL_BIDIRECTIONAL_ITERATOR_TAG, const value_type>
+    class const_iterator : public etl::iterator<ETL_OR_STD::bidirectional_iterator_tag, const value_type>
     {
     public:
 
@@ -804,10 +808,10 @@ namespace etl
 
     friend class const_iterator;
 
-    typedef typename ETL_STD::iterator_traits<iterator>::difference_type difference_type;
+    typedef typename etl::iterator_traits<iterator>::difference_type difference_type;
 
-    typedef ETL_STD::reverse_iterator<iterator>       reverse_iterator;
-    typedef ETL_STD::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef ETL_OR_STD::reverse_iterator<iterator>       reverse_iterator;
+    typedef ETL_OR_STD::reverse_iterator<const_iterator> const_reverse_iterator;
 
     //*************************************************************************
     /// Gets the beginning of the map.
@@ -917,7 +921,7 @@ namespace etl
       if (!i_element.p_node)
       {
         // Doesn't exist, so create a new one.
-        i_element = insert(ETL_MAKE_PAIR(key, mapped_type())).first;
+        i_element = insert(ETL_OR_STD::make_pair(key, mapped_type())).first;
       }
 
       return i_element->second;
@@ -989,9 +993,9 @@ namespace etl
     /// Returns two iterators with bounding (lower bound, upper bound) the key
     /// provided
     //*************************************************************************
-    ETL_PAIR<iterator, iterator> equal_range(key_parameter_t key)
+    ETL_OR_STD::pair<iterator, iterator> equal_range(key_parameter_t key)
     {
-      return ETL_MAKE_PAIR<iterator, iterator>(
+      return ETL_OR_STD::make_pair<iterator, iterator>(
         iterator(*this, find_lower_node(root_node, key)),
         iterator(*this, find_upper_node(root_node, key)));
     }
@@ -1000,9 +1004,9 @@ namespace etl
     /// Returns two const iterators with bounding (lower bound, upper bound)
     /// the key provided.
     //*************************************************************************
-    ETL_PAIR<const_iterator, const_iterator> equal_range(key_parameter_t key) const
+    ETL_OR_STD::pair<const_iterator, const_iterator> equal_range(key_parameter_t key) const
     {
-      return ETL_MAKE_PAIR<const_iterator, const_iterator>(
+      return ETL_OR_STD::make_pair<const_iterator, const_iterator>(
         const_iterator(*this, find_lower_node(root_node, key)),
         const_iterator(*this, find_upper_node(root_node, key)));
     }
@@ -1093,7 +1097,7 @@ namespace etl
     /// If asserts or exceptions are enabled, emits map_full if the map is already full.
     ///\param value    The value to insert.
     //*********************************************************************
-    ETL_PAIR<iterator, bool> insert(const value_type& value)
+    ETL_OR_STD::pair<iterator, bool> insert(const_reference value)
     {
       // Default to no inserted node
       Node* inserted_node = nullptr;
@@ -1109,8 +1113,34 @@ namespace etl
       inserted = inserted_node == &node;
 
       // Insert node into tree and return iterator to new node location in tree
-      return ETL_MAKE_PAIR(iterator(*this, inserted_node), inserted);
+      return ETL_OR_STD::make_pair(iterator(*this, inserted_node), inserted);
     }
+
+#if ETL_CPP11_SUPPORTED
+    //*********************************************************************
+    /// Inserts a value to the map.
+    /// If asserts or exceptions are enabled, emits map_full if the map is already full.
+    ///\param value    The value to insert.
+    //*********************************************************************
+    ETL_OR_STD::pair<iterator, bool> insert(rvalue_reference value)
+    {
+      // Default to no inserted node
+      Node* inserted_node = nullptr;
+      bool inserted = false;
+
+      ETL_ASSERT(!full(), ETL_ERROR(map_full));
+
+      // Get next available free node
+      Data_Node& node = allocate_data_node(etl::move(value));
+
+      // Obtain the inserted node (might be nullptr if node was a duplicate)
+      inserted_node = insert_node(root_node, node);
+      inserted = inserted_node == &node;
+
+      // Insert node into tree and return iterator to new node location in tree
+      return ETL_OR_STD::make_pair(iterator(*this, inserted_node), inserted);
+    }
+#endif
 
     //*********************************************************************
     /// Inserts a value to the map starting at the position recommended.
@@ -1118,7 +1148,7 @@ namespace etl
     ///\param position The position that would precede the value to insert.
     ///\param value    The value to insert.
     //*********************************************************************
-    iterator insert(iterator, const value_type& value)
+    iterator insert(iterator, const_reference value)
     {
       // Default to no inserted node
       Node* inserted_node = nullptr;
@@ -1135,13 +1165,38 @@ namespace etl
       return iterator(*this, inserted_node);
     }
 
+#if ETL_CPP11_SUPPORTED
     //*********************************************************************
     /// Inserts a value to the map starting at the position recommended.
     /// If asserts or exceptions are enabled, emits map_full if the map is already full.
     ///\param position The position that would precede the value to insert.
     ///\param value    The value to insert.
     //*********************************************************************
-    iterator insert(const_iterator, const value_type& value)
+    iterator insert(iterator, rvalue_reference value)
+    {
+      // Default to no inserted node
+      Node* inserted_node = nullptr;
+
+      ETL_ASSERT(!full(), ETL_ERROR(map_full));
+
+      // Get next available free node
+      Data_Node& node = allocate_data_node(etl::move(value));
+
+      // Obtain the inserted node (might be nullptr if node was a duplicate)
+      inserted_node = insert_node(root_node, node);
+
+      // Insert node into tree and return iterator to new node location in tree
+      return iterator(*this, inserted_node);
+    }
+#endif
+
+    //*********************************************************************
+    /// Inserts a value to the map starting at the position recommended.
+    /// If asserts or exceptions are enabled, emits map_full if the map is already full.
+    ///\param position The position that would precede the value to insert.
+    ///\param value    The value to insert.
+    //*********************************************************************
+    iterator insert(const_iterator, const_reference value)
     {
       // Default to no inserted node
       Node* inserted_node = nullptr;
@@ -1157,6 +1212,31 @@ namespace etl
       // Insert node into tree and return iterator to new node location in tree
       return iterator(*this, inserted_node);
     }
+
+#if ETL_CPP11_SUPPORTED
+    //*********************************************************************
+    /// Inserts a value to the map starting at the position recommended.
+    /// If asserts or exceptions are enabled, emits map_full if the map is already full.
+    ///\param position The position that would precede the value to insert.
+    ///\param value    The value to insert.
+    //*********************************************************************
+    iterator insert(const_iterator, rvalue_reference value)
+    {
+      // Default to no inserted node
+      Node* inserted_node = nullptr;
+
+      ETL_ASSERT(!full(), ETL_ERROR(map_full));
+
+      // Get next available free node
+      Data_Node& node = allocate_data_node(etl::move(value));
+
+      // Obtain the inserted node (might be nullptr if node was a duplicate)
+      inserted_node = insert_node(root_node, node);
+
+      // Insert node into tree and return iterator to new node location in tree
+      return iterator(*this, inserted_node);
+    }
+#endif
 
     //*********************************************************************
     /// Inserts a range of values to the map.
@@ -1232,6 +1312,29 @@ namespace etl
       return *this;
     }
 
+#if ETL_CPP11_SUPPORTED
+    //*************************************************************************
+    /// Move assignment operator.
+    //*************************************************************************
+    imap& operator = (imap&& rhs)
+    {
+      // Skip if doing self assignment
+      if (this != &rhs)
+      {
+        this->clear();
+
+        typename etl::imap<TKey, TMapped, TKeyCompare>::iterator from = rhs.begin();
+
+        while (from != rhs.end())
+        {
+          this->insert(etl::move(*from++));
+        }
+      }
+
+      return *this;
+    }
+#endif
+
     //*************************************************************************
     /// How to compare two key elements.
     //*************************************************************************
@@ -1264,7 +1367,12 @@ namespace etl
     //*************************************************************************
     void initialise()
     {
-      erase(begin(), end());
+      const_iterator item = begin();
+
+      while (item != end())
+      {
+        item = erase(item);
+      }
     }
 
   private:
@@ -1272,13 +1380,26 @@ namespace etl
     //*************************************************************************
     /// Allocate a Data_Node.
     //*************************************************************************
-    Data_Node& allocate_data_node(value_type value)
+    Data_Node& allocate_data_node(const_reference value)
     {
       Data_Node& node = *p_node_pool->allocate<Data_Node>();
-      ::new (&node.value) const value_type(value);
+      ::new (&node.value) value_type(value);
       ETL_INCREMENT_DEBUG_COUNT
       return node;
     }
+
+#if ETL_CPP11_SUPPORTED
+    //*************************************************************************
+    /// Allocate a Data_Node.
+    //*************************************************************************
+    Data_Node& allocate_data_node(rvalue_reference value)
+    {
+      Data_Node& node = *p_node_pool->allocate<Data_Node>();
+      ::new (&node.value) value_type(etl::move(value));
+      ETL_INCREMENT_DEBUG_COUNT
+      return node;
+    }
+#endif
 
     //*************************************************************************
     /// Destroy a Data_Node.
@@ -2042,7 +2163,7 @@ namespace etl
   //*************************************************************************
   /// A templated map implementation that uses a fixed size buffer.
   //*************************************************************************
-  template <typename TKey, typename TValue, const size_t MAX_SIZE_, typename TCompare = ETL_STD::less<TKey> >
+  template <typename TKey, typename TValue, const size_t MAX_SIZE_, typename TCompare = etl::less<TKey> >
   class map : public etl::imap<TKey, TValue, TCompare>
   {
   public:
@@ -2064,8 +2185,30 @@ namespace etl
     map(const map& other)
       : etl::imap<TKey, TValue, TCompare>(node_pool, MAX_SIZE)
     {
-      this->assign(other.cbegin(), other.cend());
+      if (this != &other)
+      {
+        this->assign(other.cbegin(), other.cend());
+      }
     }
+
+#if ETL_CPP11_SUPPORTED
+    //*************************************************************************
+    /// Move constructor.
+    //*************************************************************************
+    map(map&& other)
+      : etl::imap<TKey, TValue, TCompare>(node_pool, MAX_SIZE)
+    {
+      if (this != &other)
+      {
+        typename etl::imap<TKey, TValue, TCompare>::iterator from = other.begin();
+
+        while (from != other.end())
+        {
+          this->insert(etl::move(*from++));
+        }
+      }
+    }
+#endif
 
     //*************************************************************************
     /// Constructor, from an iterator range.
@@ -2113,6 +2256,29 @@ namespace etl
       return *this;
     }
 
+#if ETL_CPP11_SUPPORTED
+    //*************************************************************************
+    /// Move assignment operator.
+    //*************************************************************************
+    map& operator = (map&& rhs)
+    {
+      // Skip if doing self assignment
+      if (this != &rhs)
+      {
+        this->clear();
+
+        typename etl::imap<TKey, TValue, TCompare>::iterator from = rhs.begin();
+
+        while (from != rhs.end())
+        {
+          this->insert(etl::move(*from++));
+        }
+      }
+
+      return *this;
+    }
+#endif
+
   private:
 
     /// The pool of data nodes used for the map.
@@ -2129,7 +2295,7 @@ namespace etl
   template <typename TKey, typename TMapped, typename TKeyCompare>
   bool operator ==(const etl::imap<TKey, TMapped, TKeyCompare>& lhs, const etl::imap<TKey, TMapped, TKeyCompare>& rhs)
   {
-    return (lhs.size() == rhs.size()) && ETL_STD::equal(lhs.begin(), lhs.end(), rhs.begin());
+    return (lhs.size() == rhs.size()) && etl::equal(lhs.begin(), lhs.end(), rhs.begin());
   }
 
   //***************************************************************************
@@ -2155,10 +2321,7 @@ namespace etl
   template <typename TKey, typename TMapped, typename TKeyCompare>
   bool operator <(const etl::imap<TKey, TMapped, TKeyCompare>& lhs, const etl::imap<TKey, TMapped, TKeyCompare>& rhs)
   {
-    return ETL_STD::lexicographical_compare(lhs.begin(),
-      lhs.end(),
-      rhs.begin(),
-      rhs.end());
+    return etl::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
   }
 
   //*************************************************************************

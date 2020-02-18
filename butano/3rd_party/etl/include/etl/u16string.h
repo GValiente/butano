@@ -108,6 +108,10 @@ namespace etl
       if (other.truncated())
       {
         this->is_truncated = true;
+
+#if defined(ETL_STRING_TRUNCATION_IS_ERROR)
+        ETL_ALWAYS_ASSERT(ETL_ERROR(string_truncation));
+#endif
       }
     }
 
@@ -191,7 +195,7 @@ namespace etl
       {
         ETL_ASSERT(position < size(), ETL_ERROR(string_out_of_bounds));
 
-        length_ = ETL_STD::min(length_, size() - position);
+        length_ = etl::min(length_, size() - position);
 
         new_string.assign(buffer + position, buffer + position + length_);
       }

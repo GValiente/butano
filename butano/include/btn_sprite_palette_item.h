@@ -34,7 +34,7 @@ public:
 
     [[nodiscard]] constexpr int colors_count() const
     {
-        return int(_palette_ref.size());
+        return _palette_ref.size();
     }
 
     [[nodiscard]] constexpr palette_bpp_mode bpp_mode() const

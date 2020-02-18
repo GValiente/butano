@@ -25,7 +25,7 @@ public:
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
-        BTN_CONSTEXPR_ASSERT(int(tiles_item.tiles_ref().size()) ==
+        BTN_CONSTEXPR_ASSERT(tiles_item.tiles_ref().size() ==
                              shape_size().tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
                              "Invalid shape or size");
     }

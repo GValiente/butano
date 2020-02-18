@@ -457,18 +457,18 @@ int available_tiles_count()
 
 int used_items_count()
 {
-    return int(data.items.size());
+    return data.items.size();
 }
 
 int available_items_count()
 {
-    return int(data.items.available());
+    return data.items.available();
 }
 
 optional<int> find(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
-    [[maybe_unused]] auto tiles_size = int(tiles_ref.size());
+    [[maybe_unused]] int tiles_size = tiles_ref.size();
 
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND: ", tiles_data, " - ", tiles_size);
 
@@ -518,7 +518,7 @@ optional<int> find(const span<const tile>& tiles_ref)
 optional<int> create(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
-    auto tiles_size = int(tiles_ref.size());
+    int tiles_size = tiles_ref.size();
 
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_data, " - ", tiles_size);
 
@@ -619,9 +619,9 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
     item_type& item = data.items.item(id);
     const tile* old_tiles_data = item.data;
-    [[maybe_unused]] auto old_tiles_count = item.tiles_count;
+    [[maybe_unused]] int old_tiles_count = item.tiles_count;
     const tile* new_tiles_data = tiles_ref.data();
-    [[maybe_unused]] auto new_tiles_count = int(tiles_ref.size());
+    [[maybe_unused]] int new_tiles_count = tiles_ref.size();
 
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
                          " - ", new_tiles_count);

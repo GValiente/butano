@@ -63,7 +63,7 @@ namespace
 
 void init([[maybe_unused]] int handles_size, void* handles)
 {
-    BTN_ASSERT(handles_size == int(sizeof(hw::sprite_affine_mats::handle)) * hw::sprite_affine_mats::count(),
+    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count(),
                "Invalid handles size: ", handles_size,
                sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count());
 
@@ -82,12 +82,12 @@ int count()
 
 int used_count()
 {
-    return int(data.free_item_indexes.available());
+    return data.free_item_indexes.available();
 }
 
 int available_count()
 {
-    return int(data.free_item_indexes.size());
+    return data.free_item_indexes.size();
 }
 
 optional<int> create(const sprite_affine_mat_builder& builder)

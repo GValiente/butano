@@ -22,18 +22,18 @@ int parse(int value, array<char, 32>& output)
     if(abs_value < 65536)
     {
         posprintf(output_data, "%d", value);
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%d", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%d", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -49,18 +49,18 @@ int parse(long value, array<char, 32>& output)
     if(abs_value < 65536)
     {
         posprintf(output_data, "%d", int(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", value);
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%ld", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%ld", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -76,18 +76,18 @@ int parse(int64_t value, array<char, 32>& output)
     if(abs_value < 65536)
     {
         posprintf(output_data, "%d", int(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%lld", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%lld", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -102,18 +102,18 @@ int parse(unsigned value, array<char, 32>& output)
     if(value < 65536)
     {
         posprintf(output_data, "%d", int(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%u", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%u", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -128,18 +128,18 @@ int parse(unsigned long value, array<char, 32>& output)
     if(value < 65536)
     {
         posprintf(output_data, "%d", int(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%lu", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%lu", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -154,18 +154,18 @@ int parse(uint64_t value, array<char, 32>& output)
     if(value < 65536)
     {
         posprintf(output_data, "%d", int(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
-        size = int(string_view(output_data).size());
+        size = string_view(output_data).size();
         BTN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
-        size = ::snprintf(output_data, output.size(), "%llu", value);
+        size = ::snprintf(output_data, size_t(output.size()), "%llu", value);
         BTN_ASSERT(size > 0, "snprintf call failed: ", size);
     }
 
@@ -177,7 +177,7 @@ int parse(const void* ptr, array<char, 32>& output)
     char* output_data = output.data();
     posprintf(output_data, "0x%x", ptr);
 
-    int size = int(string_view(output_data).size());
+    int size = string_view(output_data).size();
     BTN_ASSERT(size > 0, "posprintf call failed");
 
     return size;

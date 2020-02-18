@@ -13,7 +13,7 @@ namespace
 {
     [[maybe_unused]] bool _valid_colors_count(const span<const color>& colors_ref)
     {
-        auto colors_count = int(colors_ref.size());
+        int colors_count = colors_ref.size();
         return colors_count >= hw::palettes::colors_per_palette() &&
                 colors_count <= hw::palettes::colors() &&
                 colors_count % hw::palettes::colors_per_palette() == 0;
@@ -39,7 +39,7 @@ optional<int> palettes_bank::find(const span<const color>& colors_ref, palette_b
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
-    int slots_count = int(colors_ref.size() / hw::palettes::colors_per_palette());
+    int slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
     int bpp8_slots_count = _bpp8_slots_count();
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
@@ -106,7 +106,7 @@ optional<int> palettes_bank::create(const span<const color>& colors_ref, palette
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
-    int required_slots_count = int(colors_ref.size() / hw::palettes::colors_per_palette());
+    int required_slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
     int bpp8_slots_count = _bpp8_slots_count();
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
@@ -191,7 +191,7 @@ void palettes_bank::decrease_usages(int id)
 
 void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 {
-    BTN_ASSERT(int(colors_ref.size()) == colors_count(id), "Colors count mismatch: ",
+    BTN_ASSERT(colors_ref.size() == colors_count(id), "Colors count mismatch: ",
                colors_ref.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[id];

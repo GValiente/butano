@@ -21,8 +21,8 @@ public:
     {
         BTN_CONSTEXPR_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
         BTN_CONSTEXPR_ASSERT(graphics_count > 0, "Invalid graphics count");
-        BTN_CONSTEXPR_ASSERT(graphics_count <= int(tiles_ref.size()), "Invalid tiles or graphics count");
-        BTN_CONSTEXPR_ASSERT(tiles_ref.size() % size_t(graphics_count) == 0, "Invalid tiles or graphics count");
+        BTN_CONSTEXPR_ASSERT(graphics_count <= tiles_ref.size(), "Invalid tiles or graphics count");
+        BTN_CONSTEXPR_ASSERT(tiles_ref.size() % graphics_count == 0, "Invalid tiles or graphics count");
     }
 
     [[nodiscard]] constexpr int graphics_count() const
@@ -32,7 +32,7 @@ public:
 
     [[nodiscard]] constexpr int tiles_count_per_graphic() const
     {
-        return int(_tiles_ref.size()) / _graphics_count;
+        return _tiles_ref.size() / _graphics_count;
     }
 
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
@@ -45,8 +45,8 @@ public:
         BTN_CONSTEXPR_ASSERT(graphics_index >= 0, "Invalid graphics index");
         BTN_CONSTEXPR_ASSERT(graphics_index < _graphics_count, "Invalid graphics index");
 
-        auto tiles_size = size_t(tiles_count_per_graphic());
-        return span<const tile>(_tiles_ref.data() + (size_t(graphics_index) * tiles_size), tiles_size);
+        auto tiles_size = tiles_count_per_graphic();
+        return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_size), tiles_size);
     }
 
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles(int graphics_index, create_mode create_mode) const;

@@ -296,7 +296,7 @@ namespace
 
     [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
     {
-        return int(tiles * half_words_per_tile());
+        return tiles * half_words_per_tile();
     }
 
     [[nodiscard]] constexpr int _blocks_to_tiles(int blocks)
@@ -631,9 +631,9 @@ optional<int> find_tiles(const span<const tile>& tiles_ref)
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
         result.emplace(id);
-        BTN_ASSERT(_tiles_to_half_words(int(tiles_ref.size())) == item.width,
+        BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.width,
                    "Tiles count does not match item tiles count: ",
-                   _tiles_to_half_words(int(tiles_ref.size())), " - ", item.width);
+                   _tiles_to_half_words(tiles_ref.size()), " - ", item.width);
 
         switch(item.status())
         {
@@ -725,7 +725,7 @@ optional<int> create_tiles(const span<const tile>& tiles_ref)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_ref.data(), " - ", tiles_ref.size());
 
-    int half_words = _tiles_to_half_words(int(tiles_ref.size()));
+    int half_words = _tiles_to_half_words(tiles_ref.size());
     BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid tiles count: ", tiles_ref.size(), " - ",
                half_words);
 
@@ -899,9 +899,9 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 
     item_type& item = data.items.item(id);
     BTN_ASSERT(item.data, "Item has no data");
-    BTN_ASSERT(_tiles_to_half_words(int(tiles_ref.size())) == item.width,
+    BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.width,
                "Tiles count does not match item tiles count: ",
-               _tiles_to_half_words(int(tiles_ref.size())), " - ", item.width);
+               _tiles_to_half_words(tiles_ref.size()), " - ", item.width);
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
 

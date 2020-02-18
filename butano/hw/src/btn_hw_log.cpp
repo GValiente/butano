@@ -43,7 +43,7 @@
             {
                 // https://forum.gbadev.org/viewtopic.php?f=14&p=179241&sid=aec6b23d11c25ec75966b3bbc89c91c0
 
-                if(auto size = int(message.size()))
+                if(int size = message.size())
                 {
                     volatile uint16_t& reg_debug_enable = *reinterpret_cast<uint16_t*>(0x4FFF780);
                     reg_debug_enable = 0xC0DE;

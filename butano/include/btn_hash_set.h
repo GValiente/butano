@@ -279,7 +279,31 @@ public:
 
     constexpr ihash_set(const ihash_set& other) = delete;
 
-    constexpr ihash_set& operator=(const ihash_set& other) = delete;
+    ihash_set& operator=(const ihash_set& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in hash set");
+
+            clear();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    ihash_set& operator=(ihash_set&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in hash set");
+
+            clear();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
 
     [[nodiscard]] iterator begin()
     {
@@ -656,15 +680,19 @@ public:
             {
                 if(other_allocated[index])
                 {
+                    value_type&& other_value = other_storage[index];
+
                     if(allocated[index])
                     {
-                        storage[index] = move(other_storage[index]);
+                        storage[index] = move(other_value);
                     }
                     else
                     {
-                        ::new(storage + index) value_type(move(other_storage[index]));
+                        ::new(storage + index) value_type(move(other_value));
                         ++size;
                     }
+
+                    other_value.~value_type();
                 }
             }
 
@@ -672,7 +700,10 @@ public:
             _first_valid_index = first_valid_index;
             _last_valid_index = last_valid_index;
 
-            other.clear();
+            memory::clear(other._max_size, *other.allocated);
+            other._first_valid_index = other._max_size;
+            other._last_valid_index = 0;
+            other._size = 0;
         }
     }
 
@@ -694,7 +725,7 @@ public:
             }
 
             size_type max_size = _max_size;
-            memory::clear(int(max_size), *allocated);
+            memory::clear(max_size, *allocated);
             _first_valid_index = max_size;
             _last_valid_index = 0;
             _size = 0;
@@ -834,7 +865,7 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memory::copy(*other._allocated, _max_size, *allocated);
+        memory::copy(*other._allocated, other._max_size, *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
@@ -856,13 +887,15 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memory::copy(*other._allocated, _max_size, *allocated);
+        memory::copy(*other._allocated, other._max_size, *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
             if(allocated[index])
             {
-                ::new(storage + index) value_type(move(other_storage[index]));
+                value_type&& other_value = other_storage[index];
+                ::new(storage + index) value_type(move(other_value));
+                other_value.~value_type();
             }
         }
 
@@ -870,7 +903,10 @@ private:
         _last_valid_index = other._last_valid_index;
         _size = other._size;
 
-        other.clear();
+        memory::clear(other._max_size, *other.allocated);
+        other._first_valid_index = other._max_size;
+        other._last_valid_index = 0;
+        other._size = 0;
     }
 
     size_type _index(hash_type key_hash) const

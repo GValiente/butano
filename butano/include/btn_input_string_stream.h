@@ -17,6 +17,8 @@ class input_string_stream
 public:
     explicit input_string_stream(istring_base& string);
 
+    explicit input_string_stream(istring& string);
+
     [[nodiscard]] const istring& string() const;
 
     [[nodiscard]] istring& string();

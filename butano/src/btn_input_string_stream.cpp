@@ -19,6 +19,11 @@ input_string_stream::input_string_stream(istring_base& string) :
     string.data()[string.size()] = 0;
 }
 
+input_string_stream::input_string_stream(istring& string) :
+    _string(string)
+{
+}
+
 const istring& input_string_stream::string() const
 {
     return static_cast<const istring&>(_string);

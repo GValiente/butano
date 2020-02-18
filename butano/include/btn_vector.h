@@ -19,7 +19,6 @@ public:
     using size_type = int;
     using reference = Type&;
     using const_reference = const Type&;
-    using rvalue_reference = Type&&;
     using pointer = Type*;
     using const_pointer = const Type*;
     using iterator = Type*;
@@ -30,7 +29,31 @@ public:
 public:
     ivector(const ivector& other) = delete;
 
-    ivector& operator=(const ivector& other) = delete;
+    ivector& operator=(const ivector& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector");
+
+            clear();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    ivector& operator=(ivector&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector");
+
+            clear();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
 
     [[nodiscard]] const_pointer data() const
     {
@@ -186,7 +209,7 @@ public:
         ++_size;
     }
 
-    void push_back(rvalue_reference value)
+    void push_back(value_type&& value)
     {
         BTN_ASSERT(! full(), "Vector is full");
 
@@ -229,7 +252,7 @@ public:
         return non_const_position;
     }
 
-    iterator insert(const_iterator position, rvalue_reference value)
+    iterator insert(const_iterator position, value_type&& value)
     {
         BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
         BTN_ASSERT(! full(), "Vector is full");
@@ -520,10 +543,12 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            ::new(data + index) value_type(move(other_data[index]));
+            value_type&& other_value = other_data[index];
+            ::new(data + index) value_type(move(other_value));
+            other_value.~value_type();
         }
 
-        other.clear();
+        other._size = 0;
     }
 };
 
@@ -537,7 +562,6 @@ public:
     using value_type = Type;
     using reference = Type&;
     using const_reference = const Type&;
-    using rvalue_reference = Type&&;
     using pointer = Type*;
     using const_pointer = const Type*;
     using iterator = Type*;

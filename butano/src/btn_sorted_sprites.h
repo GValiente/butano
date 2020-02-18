@@ -1,7 +1,7 @@
 #ifndef BTN_SORTED_SPRITES_H
 #define BTN_SORTED_SPRITES_H
 
-#include "../3rd_party/etl/include/etl/map.h"
+#include "btn_vector_fwd.h"
 #include "btn_sprites_manager_item.h"
 
 namespace btn::sorted_sprites
@@ -125,7 +125,7 @@ namespace btn::sorted_sprites
     {
 
     public:
-        list();
+        explicit list(unsigned sort_key);
 
         ~list();
 
@@ -136,6 +136,11 @@ namespace btn::sorted_sprites
         list(list&& other);
 
         list& operator=(list&& other);
+
+        [[nodiscard]] unsigned sort_key() const
+        {
+            return _sort_key;
+        }
 
         [[nodiscard]] bool empty() const
         {
@@ -181,14 +186,20 @@ namespace btn::sorted_sprites
 
         iterator erase(sprites_manager_item& item);
 
+        [[nodiscard]] friend bool operator<(const list& a, const list& b)
+        {
+            return a._sort_key < b._sort_key;
+        }
+
     private:
+        unsigned _sort_key;
         node_type _first_node;
         node_type _last_node;
         int _size = 0;
     };
 
 
-    using layers_type = etl::imap<unsigned, list>;
+    using layers_type = ivector<list>;
 
 
     [[nodiscard]] int items_count();

@@ -1,6 +1,6 @@
 #include "btn_sorted_sprites.h"
 
-#include "btn_assert.h"
+#include "btn_vector.h"
 #include "btn_config_sprites.h"
 #include "btn_sprites_manager_item.h"
 #include "../hw/include/btn_hw_bgs.h"
@@ -17,14 +17,15 @@ namespace
     {
 
     public:
-        etl::map<unsigned, list, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layers;
+        vector<list, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layers;
         int items_count = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
 }
 
-list::list()
+list::list(unsigned sort_key) :
+    _sort_key(sort_key)
 {
     _first_node.next = &_last_node;
     _last_node.prev = &_first_node;
@@ -36,7 +37,7 @@ list::~list()
 }
 
 list::list([[maybe_unused]] const list& other) :
-    list()
+    list(other._sort_key)
 {
     BTN_ASSERT(other.empty(), "Copy not supported");
 }
@@ -44,10 +45,13 @@ list::list([[maybe_unused]] const list& other) :
 list& list::operator=([[maybe_unused]] const list& other)
 {
     BTN_ASSERT(other.empty(), "Copy not supported");
+
+    _sort_key = other._sort_key;
     return *this;
 }
 
-list::list(list&& other)
+list::list(list&& other) :
+    list(other._sort_key)
 {
     *this = move(other);
 }
@@ -56,10 +60,14 @@ list& list::operator=(list&& other)
 {
     if(this != &other)
     {
+        _sort_key = other._sort_key;
+
         if(other._size)
         {
             _first_node.next = other._first_node.next;
+            _first_node.next->prev = &_first_node;
             _last_node.prev = other._last_node.prev;
+            _last_node.prev->next = &_last_node;
             _size = other._size;
 
             other._first_node.next = &other._last_node;
@@ -112,32 +120,48 @@ layers_type& layers()
 
 void insert(sprites_manager_item& item)
 {
-    auto layer_it = data.layers.find(item.sort_key);
+    layers_type& layers = data.layers;
+    unsigned sort_key = item.sort_key;
+    list new_list(sort_key);
+    auto layers_end = layers.end();
+    auto layer_it = lower_bound(layers.begin(), layers_end, new_list);
 
-    if(layer_it == data.layers.end())
+    if(layer_it == layers_end)
     {
-        BTN_ASSERT(! data.layers.full(), "No more sprite sort layers available");
+        BTN_ASSERT(! layers.full(), "No more sprite sort layers available");
 
-        layer_it = data.layers.insert(layer_it, make_pair(item.sort_key, list()));
+        layers.emplace_back(sort_key);
+        layer_it = layers_end;
+    }
+    else if(sort_key != layer_it->sort_key())
+    {
+        BTN_ASSERT(! layers.full(), "No more sprite sort layers available");
+
+        layer_it = layers.emplace(layer_it, sort_key);
     }
 
-    list& layer = layer_it->second;
+    list& layer = *layer_it;
     layer.push_front(item);
     ++data.items_count;
 }
 
 void erase(sprites_manager_item& item)
 {
-    auto layer_it = data.layers.find(item.sort_key);
-    BTN_ASSERT(layer_it != data.layers.end(), "Sprite sort key not found: ", item.sort_key);
+    layers_type& layers = data.layers;
+    unsigned sort_key = item.sort_key;
+    list new_list(sort_key);
+    auto layers_end = layers.end();
+    auto layer_it = lower_bound(layers.begin(), layers_end, new_list);
+    BTN_ASSERT(layer_it != layers_end, "Sprite sort key not found: ", item.sort_key);
+    BTN_ASSERT(sort_key == layer_it->sort_key(), "Sprite sort key not found: ", item.sort_key);
 
-    list& layer = layer_it->second;
+    list& layer = *layer_it;
     layer.erase(item);
     --data.items_count;
 
     if(layer.empty())
     {
-        data.layers.erase(layer_it);
+        layers.erase(layer_it);
     }
 }
 

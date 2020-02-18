@@ -969,7 +969,7 @@ public:
     constexpr string(const istring& other) :
         string()
     {
-        *this = other;
+        append(other);
     }
 
     constexpr string(const istring& other, size_type position, size_type length) :
@@ -981,7 +981,7 @@ public:
     constexpr string(const_pointer str) :
         string()
     {
-        *this = str;
+        append(str);
     }
 
     constexpr string(const_pointer str, size_type str_size) :

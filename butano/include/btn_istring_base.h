@@ -17,11 +17,15 @@ public:
     using const_pointer = const char*;
 
 public:
-    constexpr istring_base(pointer data, size_type size, size_type max_size) :
-        _data(data),
-        _size(size),
-        _max_size(max_size)
+    template<int MaxSize>
+    constexpr istring_base(char (&text)[MaxSize]) :
+        _data(text),
+        _size(0),
+        _max_size(MaxSize - 1)
     {
+        static_assert(MaxSize > 1);
+
+        _data[0] = 0;
     }
 
     [[nodiscard]] constexpr size_type size() const
@@ -73,6 +77,13 @@ protected:
     pointer _data;
     size_type _size;
     size_type _max_size;
+
+    constexpr istring_base(pointer data, size_type size, size_type max_size) :
+        _data(data),
+        _size(size),
+        _max_size(max_size)
+    {
+    }
 };
 
 }

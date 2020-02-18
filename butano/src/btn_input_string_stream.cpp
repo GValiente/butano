@@ -8,22 +8,6 @@
 namespace btn
 {
 
-input_string_stream::input_string_stream(istring_base& string) :
-    _string(string)
-{
-    BTN_ASSERT(string.data(), "Data is null");
-    BTN_ASSERT(string.size() >= 0, "Invalid size: ", string.size());
-    BTN_ASSERT(string.max_size() >= 2, "Invalid max size: ", string.max_size());
-    BTN_ASSERT(string.size() < string.max_size(), "Invalid size or max size: ", string.size(), " - ", string.max_size());
-
-    string.data()[string.size()] = 0;
-}
-
-input_string_stream::input_string_stream(istring& string) :
-    _string(string)
-{
-}
-
 const istring& input_string_stream::string() const
 {
     return static_cast<const istring&>(_string);

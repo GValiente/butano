@@ -902,10 +902,6 @@ protected:
     constexpr istring(pointer data, size_type size, size_type max_size) :
         istring_base(data, size, max_size)
     {
-        BTN_CONSTEXPR_ASSERT(data, "Data is null");
-        BTN_CONSTEXPR_ASSERT(size >= 0, "Invalid size");
-        BTN_CONSTEXPR_ASSERT(max_size >= 1, "Invalid max size");
-        BTN_CONSTEXPR_ASSERT(size <= max_size, "Invalid size or max size");
     }
 
 private:

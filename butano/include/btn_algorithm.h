@@ -10,6 +10,8 @@ namespace btn
     using std::max;
     using std::clamp;
 
+    using std::advance;
+
     template<typename Iterator>
     [[nodiscard]] constexpr bool equal(Iterator first1, Iterator last1, Iterator first2)
     {
@@ -191,6 +193,71 @@ namespace btn
         else
         {
             return std::find_if(first, last, pred);
+        }
+    }
+
+    template<typename Iterator, typename Type>
+    [[nodiscard]] constexpr Iterator lower_bound(Iterator first, Iterator last, const Type& value)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            auto count = last - first;
+
+            while(count > 0)
+            {
+                auto step = count / 2;
+                Iterator it = first + step;
+                advance(it, step);
+
+                if(*it < value)
+                {
+                    first = ++it;
+                    count -= step + 1;
+                }
+                else
+                {
+                    count = step;
+                }
+            }
+
+            return first;
+        }
+        else
+        {
+            return std::lower_bound(first, last, value);
+        }
+    }
+
+    template<typename Iterator, typename Type, class Comparator>
+    [[nodiscard]] constexpr Iterator lower_bound(Iterator first, Iterator last, const Type& value,
+                                                 const Comparator& comparator)
+    {
+        if(BTN_CONSTANT_EVALUATED())
+        {
+            auto count = last - first;
+
+            while(count > 0)
+            {
+                auto step = count / 2;
+                Iterator it = first + step;
+                advance(it, step);
+
+                if(comparator(*it, value))
+                {
+                    first = ++it;
+                    count -= step + 1;
+                }
+                else
+                {
+                    count = step;
+                }
+            }
+
+            return first;
+        }
+        else
+        {
+            return std::lower_bound(first, last, value, comparator);
         }
     }
 

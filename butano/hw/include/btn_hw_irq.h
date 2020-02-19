@@ -38,6 +38,16 @@ namespace btn::hw::irq
     {
         irq_delete(eIrqIndex(irq_id));
     }
+
+    inline void enable(id irq_id)
+    {
+        irq_enable(eIrqIndex(irq_id));
+    }
+
+    inline void disable(id irq_id)
+    {
+        irq_disable(eIrqIndex(irq_id));
+    }
 }
 
 #endif

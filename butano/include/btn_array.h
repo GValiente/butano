@@ -205,22 +205,6 @@ public:
         return ! (a < b);
     }
 
-    template<size_type Index>
-    [[nodiscard]] constexpr const_reference get(const array& array)
-    {
-        static_assert(Index >= 0 && Index < Size);
-
-        return array._data[Index];
-    }
-
-    template<size_type Index>
-    [[nodiscard]] constexpr reference get(array& array)
-    {
-        static_assert(Index >= 0 && Index < Size);
-
-        return array._data[Index];
-    }
-
     Type _data[Size];
 };
 

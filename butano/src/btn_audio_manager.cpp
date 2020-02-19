@@ -170,14 +170,14 @@ void init()
     hw::audio::init();
 }
 
-void add_irq()
+void enable()
 {
-    hw::audio::add_irq();
+    hw::audio::enable();
 }
 
-void remove_irq()
+void disable()
 {
-    hw::audio::remove_irq();
+    hw::audio::disable();
 }
 
 bool music_playing()
@@ -301,13 +301,7 @@ void commit()
 
 void stop()
 {
-    if(data.music_playing)
-    {
-        hw::audio::stop_music();
-    }
-
-    hw::audio::stop_all_sounds();
-    hw::audio::disable_vblank_handler();
+    hw::audio::stop();
 }
 
 }

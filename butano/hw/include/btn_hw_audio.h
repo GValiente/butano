@@ -7,9 +7,9 @@ namespace btn::hw::audio
 {
     void init();
 
-    void add_irq();
+    void enable();
 
-    void remove_irq();
+    void disable();
 
     [[nodiscard]] bool music_playing();
 
@@ -36,6 +36,8 @@ namespace btn::hw::audio
     void disable_vblank_handler();
 
     void enable_vblank_handler();
+
+    void stop();
 }
 
 #endif

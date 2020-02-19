@@ -79,6 +79,8 @@ void init()
 {
     lock lock;
 
+    irq::add(irq::id::VBLANK, mmVBlank);
+
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);
     maxmod_info.mod_channel_count = _max_channels;
@@ -94,18 +96,18 @@ void init()
     mmInit(&maxmod_info);
 }
 
-void add_irq()
+void enable()
 {
     lock lock;
 
-    irq::add(irq::id::VBLANK, mmVBlank);
+    irq::enable(irq::id::VBLANK);
 }
 
-void remove_irq()
+void disable()
 {
     lock lock;
 
-    irq::remove(irq::id::VBLANK);
+    irq::disable(irq::id::VBLANK);
 }
 
 bool music_playing()
@@ -205,6 +207,14 @@ void enable_vblank_handler()
 
     mmFrame();
     mmSetVBlankHandler(reinterpret_cast<void*>(_commit_handler));
+}
+
+void stop()
+{
+    lock lock;
+
+    stop_music();
+    stop_all_sounds();
 }
 
 }

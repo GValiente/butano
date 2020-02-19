@@ -38,7 +38,6 @@ int main()
     bf::hero_bullets hero_bullets;
     bf::scoreboard scoreboard(text_generator);
     bf::stats stats(text_generator);
-    // btn::music::play(btn::music_items::battle_clean, 0.5);
     btn::core::update();
 
     while(true)
@@ -47,6 +46,18 @@ int main()
         hero_bullets.update(hero);
         scoreboard.update(hero);
         btn::core::update();
+
+        if(btn::keypad::pressed(btn::keypad::button_type::START))
+        {
+            if(btn::music::playing())
+            {
+                btn::music::stop();
+            }
+            else
+            {
+                btn::music::play(btn::music_items::battle_clean, 0.5);
+            }
+        }
 
         if(btn::keypad::pressed(btn::keypad::button_type::SELECT))
         {

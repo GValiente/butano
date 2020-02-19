@@ -13,9 +13,9 @@ namespace btn::audio_manager
 {
     void init();
 
-    void add_irq();
+    void enable();
 
-    void remove_irq();
+    void disable();
 
     [[nodiscard]] bool music_playing();
 

@@ -6,6 +6,7 @@
 
 namespace btn
 {
+
 namespace keypad
 {
     enum class button_type;

@@ -17,6 +17,7 @@
 #include "btn_bg_blocks_manager.h"
 #include "btn_input_string_stream.h"
 #include "btn_sprite_tiles_manager.h"
+#include "btn_hblank_effects_manager.h"
 #include "../hw/include/btn_hw_irq.h"
 #include "../hw/include/btn_hw_core.h"
 #include "../hw/include/btn_hw_sram.h"
@@ -67,14 +68,16 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void add_irqs()
+    void enable()
     {
-        audio_manager::add_irq();
+        hblank_effects_manager::enable();
+        audio_manager::enable();
     }
 
-    void remove_irqs()
+    void disable()
     {
-        audio_manager::remove_irq();
+        audio_manager::disable();
+        hblank_effects_manager::disable();
     }
 
     void stop()
@@ -82,6 +85,7 @@ namespace
         actions_manager::stop();
         hw::core::wait_for_vblank();
         audio_manager::stop();
+        hblank_effects_manager::stop();
     }
 
     void _update_without_actions()
@@ -106,6 +110,10 @@ namespace
         audio_manager::update();
         BTN_PROFILER_ENGINE_STOP();
 
+        BTN_PROFILER_ENGINE_START("eng_hblank_effects_update");
+        hblank_effects_manager::update();
+        BTN_PROFILER_ENGINE_STOP();
+
         BTN_PROFILER_ENGINE_START("eng_cpu_usage");
         data.cpu_usage = data.cpu_usage_timer->elapsed_frames();
         BTN_PROFILER_ENGINE_STOP();
@@ -118,6 +126,10 @@ namespace
 
         BTN_PROFILER_ENGINE_START("eng_display_commit");
         display_manager::commit();
+        BTN_PROFILER_ENGINE_STOP();
+
+        BTN_PROFILER_ENGINE_START("eng_hblank_effects_commit");
+        hblank_effects_manager::commit();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_palettes_commit");
@@ -161,7 +173,9 @@ void init()
 
     // Init irq system:
     hw::irq::init();
-    add_irqs();
+
+    // Init hblank effects system:
+    hblank_effects_manager::init();
 
     // Init audio system:
     audio_manager::init();
@@ -241,8 +255,8 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     // Sleep display:
     display_manager::sleep();
 
-    // Remove core irqs:
-    remove_irqs();
+    // Disable irqs:
+    disable();
 
     // Enable keypad interrupt with the specified wake up buttons:
     hw::keypad::set_interrupt(wake_up_buttons);
@@ -254,8 +268,8 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     // Remove keypad interrupt:
     hw::irq::remove(hw::irq::id::KEYPAD);
 
-    // Restore core irqs:
-    add_irqs();
+    // Enable irqs:
+    enable();
 
     // Update keypad:
     hw::keypad::update();
@@ -278,7 +292,7 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
 void reset()
 {
     stop();
-    remove_irqs();
+    disable();
     hw::core::reset();
 }
 

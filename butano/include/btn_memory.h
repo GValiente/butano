@@ -4,7 +4,6 @@
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_functional.h"
-#include "btn_type_traits.h"
 
 namespace btn
 {

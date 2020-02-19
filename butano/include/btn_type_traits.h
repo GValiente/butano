@@ -11,6 +11,8 @@ namespace btn
     using std::is_trivial;
 
     using std::is_trivially_copyable;
+
+    using std::decay;
 }
 
 #endif

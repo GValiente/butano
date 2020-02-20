@@ -6,7 +6,7 @@
 
     namespace btn
     {
-        void log(const char* message)
+        void log(const btn::istring_base& message)
         {
             hw::log(message);
         }

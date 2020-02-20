@@ -1,7 +1,7 @@
 #include "btn_input_string_stream.h"
 
 #include "btn_array.h"
-#include "btn_assert.h"
+#include "btn_string.h"
 #include "btn_string_view.h"
 #include "../hw/include/btn_hw_text.h"
 

@@ -1,5 +1,6 @@
 #include "bf_scoreboard.h"
 
+#include "btn_string.h"
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
 #include "btn_input_string_stream.h"

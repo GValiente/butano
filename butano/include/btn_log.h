@@ -14,12 +14,12 @@
             btn::istring_base _btn_istring(_btn_string); \
             btn::input_string_stream _btn_input_string_stream(_btn_istring); \
             _btn_input_string_stream.append_args(__VA_ARGS__); \
-            btn::log(_btn_string); \
+            btn::log(_btn_istring); \
         } while(false)
 
     namespace btn
     {
-        void log(const char* message);
+        void log(const btn::istring_base& message);
     }
 #else
     #define BTN_LOG(...) \

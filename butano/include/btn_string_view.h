@@ -1,10 +1,12 @@
 #ifndef BTN_STRING_VIEW_H
 #define BTN_STRING_VIEW_H
 
-#include "btn_string.h"
+#include "btn_assert.h"
 #include "btn_limits.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
+#include "btn_functional.h"
+#include "btn_istring_base.h"
 
 namespace btn
 {
@@ -25,9 +27,9 @@ public:
 
     constexpr string_view() = default;
 
-    constexpr string_view(const istring& str) :
-        _begin(str.begin()),
-        _end(str.end())
+    constexpr string_view(const istring_base& str) :
+        _begin(str.data()),
+        _end(str.data() + str.size())
     {
     }
 

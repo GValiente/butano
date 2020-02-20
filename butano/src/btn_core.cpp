@@ -317,6 +317,18 @@ fixed cpu_usage()
                 btn::hw::core::wait_for_vblank();
             }
         }
+
+        void show(const char* condition, const char* file_name, const char* function, int line,
+                  const btn::istring_base& message)
+        {
+            btn::core::stop();
+            btn::hw::show::error(condition, file_name, function, line, message);
+
+            while(true)
+            {
+                btn::hw::core::wait_for_vblank();
+            }
+        }
     }
 #endif
 

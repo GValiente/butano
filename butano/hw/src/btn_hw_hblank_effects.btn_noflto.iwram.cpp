@@ -18,6 +18,12 @@ namespace
     BTN_DATA_EWRAM static_data data;
 }
 
+void commit(entry* entries, int entries_count)
+{
+    data.entries = entries;
+    data.entries_count = entries_count;
+}
+
 void _intr()
 {
     unsigned vcount = REG_VCOUNT;
@@ -41,14 +47,8 @@ void _intr()
     for(int index = 0; index < entries_count; ++index)
     {
         entry& entry = entries[index];
-        *entry.dest = entry.src[vcount];
+        *entry.dest = uint16_t(entry.src[vcount]);
     }
-}
-
-void _commit_impl(entry* entries, int entries_count)
-{
-    data.entries = entries;
-    data.entries_count = entries_count;
 }
 
 }

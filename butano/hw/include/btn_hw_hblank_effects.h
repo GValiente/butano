@@ -10,13 +10,11 @@ namespace btn::hw::hblank_effects
     {
 
     public:
-        uint16_t src[display::height()];
+        int16_t src[display::height()];
         volatile uint16_t* dest;
     };
 
     BTN_CODE_IWRAM void _intr();
-
-    BTN_CODE_IWRAM void _commit_impl(entry* entries, int entries_count);
 
     inline void init()
     {
@@ -34,16 +32,7 @@ namespace btn::hw::hblank_effects
         irq::disable(irq::id::HBLANK);
     }
 
-    inline void commit(entry* entries, int entries_count)
-    {
-        disable();
-
-        if(entries_count)
-        {
-            _commit_impl(entries, entries_count);
-            enable();
-        }
-    }
+    BTN_CODE_IWRAM void commit(entry* entries, int entries_count);
 }
 
 #endif

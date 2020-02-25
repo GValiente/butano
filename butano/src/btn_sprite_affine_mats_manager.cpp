@@ -12,7 +12,7 @@ namespace btn::sprite_affine_mats_manager
 
 namespace
 {
-    static_assert(hw::sprite_affine_mats::count() <= numeric_limits<int8_t>::max(), "");
+    static_assert(hw::sprite_affine_mats::count() <= numeric_limits<int8_t>::max());
 
     class item_type
     {

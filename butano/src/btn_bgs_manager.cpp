@@ -41,6 +41,30 @@ namespace
             update_hw_position(handle);
         }
 
+        [[nodiscard]] int hw_position_x() const
+        {
+            fixed_point real_position = -position;
+
+            if(! ignore_camera)
+            {
+                real_position += camera::position();
+            }
+
+            return real_position.x().integer() + quarter_dimensions.width() + 8;
+        }
+
+        [[nodiscard]] int hw_position_y() const
+        {
+            fixed_point real_position = -position;
+
+            if(! ignore_camera)
+            {
+                real_position += camera::position();
+            }
+
+            return real_position.y().integer() + quarter_dimensions.height() + 8;
+        }
+
         void update_hw_position(hw::bgs::handle& handle)
         {
             fixed_point real_position = -position;
@@ -295,6 +319,18 @@ void set_position(int id, const fixed_point& position)
     {
         data.commit = true;
     }
+}
+
+int hw_position_x(int id)
+{
+    item_type& item = *data.items[id];
+    return item.hw_position_x();
+}
+
+int hw_position_y(int id)
+{
+    item_type& item = *data.items[id];
+    return item.hw_position_y();
 }
 
 int priority(int id)

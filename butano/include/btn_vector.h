@@ -33,10 +33,10 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector");
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
 
             clear();
-            _assign(other);
+            assign(other.begin(), other.end());
         }
 
         return *this;
@@ -46,7 +46,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector");
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -70,6 +70,11 @@ public:
         return _size;
     }
 
+    [[nodiscard]] size_type max_size() const
+    {
+        return _max_size;
+    }
+
     [[nodiscard]] bool empty() const
     {
         return _size == 0;
@@ -85,22 +90,22 @@ public:
         return _max_size - _size;
     }
 
-    [[nodiscard]] iterator begin()
-    {
-        return _data;
-    }
-
     [[nodiscard]] const_iterator begin() const
     {
         return _data;
     }
 
-    [[nodiscard]] iterator end()
+    [[nodiscard]] iterator begin()
+    {
+        return _data;
+    }
+
+    [[nodiscard]] const_iterator end() const
     {
         return _data + _size;
     }
 
-    [[nodiscard]] const_iterator end() const
+    [[nodiscard]] iterator end()
     {
         return _data + _size;
     }
@@ -115,24 +120,24 @@ public:
         return _data + _size;
     }
 
-    [[nodiscard]] reverse_iterator rbegin()
-    {
-        return reverse_iterator(end());
-    }
-
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
         return const_reverse_iterator(end());
     }
 
-    [[nodiscard]] reverse_iterator rend()
+    [[nodiscard]] reverse_iterator rbegin()
     {
-        return reverse_iterator(begin());
+        return reverse_iterator(end());
     }
 
     [[nodiscard]] const_reverse_iterator rend() const
     {
         return const_reverse_iterator(begin());
+    }
+
+    [[nodiscard]] reverse_iterator rend()
+    {
+        return reverse_iterator(begin());
     }
 
     [[nodiscard]] const_reverse_iterator crbegin() const
@@ -319,10 +324,10 @@ public:
         BTN_ASSERT(_size >= delete_count, "Invalid delete count: ", delete_count, " - ", _size);
 
         auto erase_first = const_cast<iterator>(first);
+        auto erase_last = const_cast<iterator>(last);
         iterator erase_it = erase_first;
-        iterator erase_last = end() - delete_count;
 
-        while(erase_it != last)
+        while(erase_it != erase_last)
         {
             iterator next = erase_it + 1;
             *erase_it = move(*next);
@@ -412,6 +417,23 @@ public:
         for(size_type index = 0; index < count; ++index)
         {
             ::new(data + index) value_type(value);
+        }
+    }
+
+    template<typename Iterator>
+    void assign(Iterator first, Iterator last)
+    {
+        size_type count = last - first;
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        clear();
+        _size = count;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            ::new(data + index) value_type(*first);
+            ++first;
         }
     }
 
@@ -521,19 +543,6 @@ protected:
     {
     }
 
-    void _assign(const ivector& other)
-    {
-        pointer data = _data;
-        const_pointer other_data = other._data;
-        size_type other_size = other._size;
-        _size = other_size;
-
-        for(size_type index = 0; index < other_size; ++index)
-        {
-            ::new(data + index) value_type(other_data[index]);
-        }
-    }
-
     void _assign(ivector&& other)
     {
         pointer data = _data;
@@ -578,7 +587,7 @@ public:
     vector(const vector& other) :
         vector()
     {
-        this->_assign(other);
+        this->assign(other.begin(), other.end());
     }
 
     vector& operator=(const vector& other)
@@ -586,7 +595,7 @@ public:
         if(this != &other)
         {
             this->clear();
-            this->_assign(other);
+            this->assign(other.begin(), other.end());
         }
 
         return *this;

@@ -1,7 +1,7 @@
 #include "../include/btn_hw_audio.h"
 
 #include "maxmod.h"
-#include "btn_vector.h"
+#include "btn_list.h"
 #include "btn_config_audio.h"
 #include "../include/btn_hw_irq.h"
 
@@ -34,7 +34,7 @@ namespace
     {
 
     public:
-        vector<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        list<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
     };
@@ -151,7 +151,7 @@ void play_sound(int id)
     if(data.sounds_queue.full())
     {
         mmEffectRelease(data.sounds_queue.front());
-        data.sounds_queue.erase(data.sounds_queue.begin());
+        data.sounds_queue.pop_front();
     }
 
     data.sounds_queue.push_back(mmEffect(mm_word(id)));
@@ -162,7 +162,7 @@ void play_sound(int id, int volume, int speed, int panning)
     if(data.sounds_queue.full())
     {
         mmEffectRelease(data.sounds_queue.front());
-        data.sounds_queue.erase(data.sounds_queue.begin());
+        data.sounds_queue.pop_front();
     }
 
     mm_sound_effect sound_effect;

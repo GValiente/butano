@@ -308,36 +308,6 @@ public:
         return *this;
     }
 
-    [[nodiscard]] iterator begin()
-    {
-        return iterator(_first_valid_index, *this);
-    }
-
-    [[nodiscard]] const_iterator begin() const
-    {
-        return const_iterator(_first_valid_index, *this);
-    }
-
-    [[nodiscard]] const_iterator cbegin() const
-    {
-        return const_iterator(_first_valid_index, *this);
-    }
-
-    [[nodiscard]] iterator end()
-    {
-        return iterator(_max_size, *this);
-    }
-
-    [[nodiscard]] const_iterator end() const
-    {
-        return const_iterator(_max_size, *this);
-    }
-
-    [[nodiscard]] const_iterator cend() const
-    {
-        return const_iterator(_max_size, *this);
-    }
-
     [[nodiscard]] size_type size() const
     {
         return _size;
@@ -361,6 +331,36 @@ public:
     [[nodiscard]] bool full() const
     {
         return _size == _max_size;
+    }
+
+    [[nodiscard]] const_iterator begin() const
+    {
+        return const_iterator(_first_valid_index, *this);
+    }
+
+    [[nodiscard]] iterator begin()
+    {
+        return iterator(_first_valid_index, *this);
+    }
+
+    [[nodiscard]] const_iterator end() const
+    {
+        return const_iterator(_max_size, *this);
+    }
+
+    [[nodiscard]] iterator end()
+    {
+        return iterator(_max_size, *this);
+    }
+
+    [[nodiscard]] const_iterator cbegin() const
+    {
+        return const_iterator(_first_valid_index, *this);
+    }
+
+    [[nodiscard]] const_iterator cend() const
+    {
+        return const_iterator(_max_size, *this);
     }
 
     [[nodiscard]] bool contains(const key_type& key) const

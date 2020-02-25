@@ -240,25 +240,25 @@ int available_items_count()
     return BTN_CFG_SPRITES_MAX_ITEMS - used_items_count();
 }
 
-optional<id_type> create(sprite_builder&& builder)
+id_type create(sprite_builder&& builder)
 {
     if(data.items_pool.full())
     {
-        return nullopt;
+        return nullptr;
     }
 
     optional<sprite_tiles_ptr> tiles = builder.release_tiles();
 
     if(! tiles)
     {
-        return nullopt;
+        return nullptr;
     }
 
     optional<sprite_palette_ptr> palette = builder.release_palette();
 
     if(! palette)
     {
-        return nullopt;
+        return nullptr;
     }
 
     item_type& new_item = data.items_pool.create(move(builder), move(*tiles), move(*palette));

@@ -25,22 +25,22 @@ namespace btn::sorted_sprites
             return *this;
         }
 
-        [[nodiscard]] sprites_manager_item& operator*()
-        {
-            return static_cast<sprites_manager_item&>(*_node);
-        }
-
         [[nodiscard]] const sprites_manager_item& operator*() const
         {
             return static_cast<sprites_manager_item&>(*_node);
         }
 
-        sprites_manager_item* operator->()
+        [[nodiscard]] sprites_manager_item& operator*()
+        {
+            return static_cast<sprites_manager_item&>(*_node);
+        }
+
+        const sprites_manager_item* operator->() const
         {
             return static_cast<sprites_manager_item*>(_node);
         }
 
-        const sprites_manager_item* operator->() const
+        sprites_manager_item* operator->()
         {
             return static_cast<sprites_manager_item*>(_node);
         }
@@ -172,14 +172,14 @@ namespace btn::sorted_sprites
             return iterator(&_last_node);
         }
 
-        iterator push_front(sprites_manager_item& item)
+        void push_front(sprites_manager_item& item)
         {
-            return insert(iterator(_first_node.next), item);
+            insert(begin(), item);
         }
 
-        iterator push_back(sprites_manager_item& item)
+        void push_back(sprites_manager_item& item)
         {
-            return insert(iterator(&_last_node), item);
+            insert(end(), item);
         }
 
         iterator insert(iterator position, sprites_manager_item& item);

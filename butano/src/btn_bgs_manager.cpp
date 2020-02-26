@@ -41,7 +41,7 @@ namespace
             update_hw_position(handle);
         }
 
-        [[nodiscard]] int hw_position_x() const
+        [[nodiscard]] int hw_horizontal_position() const
         {
             fixed_point real_position = -position;
 
@@ -53,7 +53,7 @@ namespace
             return real_position.x().integer() + quarter_dimensions.width() + 8;
         }
 
-        [[nodiscard]] int hw_position_y() const
+        [[nodiscard]] int hw_vertical_position() const
         {
             fixed_point real_position = -position;
 
@@ -321,16 +321,16 @@ void set_position(int id, const fixed_point& position)
     }
 }
 
-int hw_position_x(int id)
+int hw_horizontal_position(int id)
 {
     item_type& item = *data.items[id];
-    return item.hw_position_x();
+    return item.hw_horizontal_position();
 }
 
-int hw_position_y(int id)
+int hw_vertical_position(int id)
 {
     item_type& item = *data.items[id];
-    return item.hw_position_y();
+    return item.hw_vertical_position();
 }
 
 int priority(int id)

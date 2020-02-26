@@ -124,12 +124,12 @@ namespace
         data.cpu_usage_timer->restart();
         BTN_PROFILER_ENGINE_STOP();
 
-        BTN_PROFILER_ENGINE_START("eng_display_commit");
-        display_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
         BTN_PROFILER_ENGINE_START("eng_hblank_effects_commit");
         hblank_effects_manager::commit();
+        BTN_PROFILER_ENGINE_STOP();
+
+        BTN_PROFILER_ENGINE_START("eng_display_commit");
+        display_manager::commit();
         BTN_PROFILER_ENGINE_STOP();
 
         BTN_PROFILER_ENGINE_START("eng_palettes_commit");

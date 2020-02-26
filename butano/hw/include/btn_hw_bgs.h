@@ -110,6 +110,16 @@ namespace btn::hw::bgs
         REG_BG3HOFS = bg3.hofs;
         REG_BG3VOFS = bg3.vofs;
     }
+
+    [[nodiscard]] inline uint16_t* regular_bg_horizontal_position_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(REG_BASE + 0x0010 + (0x0004 * id));
+    }
+
+    [[nodiscard]] inline uint16_t* regular_bg_vertical_position_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(REG_BASE + 0x0012 + (0x0004 * id));
+    }
 }
 
 #endif

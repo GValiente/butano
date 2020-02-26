@@ -45,9 +45,9 @@ namespace bgs_manager
 
     void set_position(int id, const fixed_point& position);
 
-    [[nodiscard]] int hw_position_x(int id);
+    [[nodiscard]] int hw_horizontal_position(int id);
 
-    [[nodiscard]] int hw_position_y(int id);
+    [[nodiscard]] int hw_vertical_position(int id);
 
     [[nodiscard]] int priority(int id);
 

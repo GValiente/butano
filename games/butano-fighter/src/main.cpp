@@ -15,11 +15,29 @@
 #include "bf_hero_bullets.h"
 #include "bf_sprite_fonts.h"
 
+#include "btn_math.h"
+#include "btn_regular_bg_hblank_effects.h"
+
 int main()
 {
     btn::core::init();
 
     btn::regular_bg_ptr ground_bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::stage_1);
+
+    int16_t hblank_effect_values[160];
+    int speed = 1024;
+    int amplitude = 4;
+
+    for(int index = 0; index < 160; ++index)
+    {
+        int sin = btn::lut_sin((index * speed) % 65536).value();
+        hblank_effect_values[index] = int16_t((sin / (4096 / (1 << amplitude))) - (1 << (amplitude - 1)));
+    }
+
+    btn::regular_bg_hblank_effect_ptr ground_bg_hblank_effect = btn::regular_bg_hblank_effect_ptr::create(
+                ground_bg, btn::regular_bg_hblank_effect_type::HORIZONTAL_POSITION_RELATIVE,
+                btn::span<const int16_t>(hblank_effect_values, 160));
+
     btn::regular_bg_move_by_action ground_bg_move_action(btn::move(ground_bg), 0, 0.5);
     ground_bg_move_action.run();
 

@@ -131,7 +131,7 @@ struct hash<regular_bg_map_ptr>
 {
     [[nodiscard]] unsigned operator()(const regular_bg_map_ptr& value) const
     {
-        return make_hash(value.id());
+        return value.hash();
     }
 };
 

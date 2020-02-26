@@ -100,7 +100,7 @@ struct hash<bg_tiles_ptr>
 {
     [[nodiscard]] unsigned operator()(const bg_tiles_ptr& value) const
     {
-        return make_hash(value.id());
+        return value.hash();
     }
 };
 

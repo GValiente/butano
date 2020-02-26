@@ -97,7 +97,7 @@ struct hash<sprite_tiles_ptr>
 {
     [[nodiscard]] unsigned operator()(const sprite_tiles_ptr& value) const
     {
-        return make_hash(value.id());
+        return value.hash();
     }
 };
 

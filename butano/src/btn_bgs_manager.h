@@ -2,6 +2,7 @@
 #define BTN_BGS_MANAGER_H
 
 #include "btn_limits.h"
+#include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
@@ -12,6 +13,7 @@ class fixed_point;
 class bg_tiles_ptr;
 class regular_bg_builder;
 class regular_bg_map_ptr;
+class regular_bg_attributes;
 
 namespace bgs_manager
 {
@@ -43,11 +45,9 @@ namespace bgs_manager
 
     [[nodiscard]] const fixed_point& position(int id);
 
+    [[nodiscard]] fixed_point hw_position(int id);
+
     void set_position(int id, const fixed_point& position);
-
-    [[nodiscard]] int hw_horizontal_position(int id);
-
-    [[nodiscard]] int hw_vertical_position(int id);
 
     [[nodiscard]] int priority(int id);
 
@@ -56,6 +56,10 @@ namespace bgs_manager
     [[nodiscard]] bool mosaic_enabled(int id);
 
     void set_mosaic_enabled(int id, bool mosaic_enabled);
+
+    [[nodiscard]] regular_bg_attributes attributes(int id);
+
+    void set_attributes(int id, const regular_bg_attributes& attributes);
 
     [[nodiscard]] bool blending_enabled(int id);
 
@@ -70,6 +74,15 @@ namespace bgs_manager
     void set_ignore_camera(int id, bool ignore_camera);
 
     void update_camera();
+
+    void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+                                      uint16_t& dest_ref);
+
+    void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+                                    uint16_t& dest_ref);
+
+    void fill_hw_attributes(int id,  const regular_bg_attributes& attributes_ref, int attributes_count,
+                            uint16_t& dest_ref);
 
     void commit();
 }

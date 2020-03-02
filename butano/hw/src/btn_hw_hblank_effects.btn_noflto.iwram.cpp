@@ -47,7 +47,7 @@ void _intr()
     for(int index = 0; index < entries_count; ++index)
     {
         entry& entry = entries[index];
-        *entry.dest = uint16_t(entry.src[vcount]);
+        *entry.dest = entry.src[vcount];
     }
 }
 

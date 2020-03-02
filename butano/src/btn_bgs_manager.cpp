@@ -4,6 +4,7 @@
 #include "btn_camera.h"
 #include "btn_algorithm.h"
 #include "btn_display_manager.h"
+#include "btn_regular_bg_attributes.h"
 #include "../hw/include/btn_hw_bgs.h"
 
 namespace btn::bgs_manager
@@ -41,56 +42,44 @@ namespace
             update_hw_position(handle);
         }
 
-        [[nodiscard]] int hw_horizontal_position() const
+        fixed_point hw_position() const
         {
-            fixed_point real_position = -position;
+            fixed_point result = -position;
 
             if(! ignore_camera)
             {
-                real_position += camera::position();
+                result += camera::position();
             }
 
-            return real_position.x().integer() + quarter_dimensions.width() + 8;
+            result.set_x(result.x() + quarter_dimensions.width() + 8);
+            result.set_y(result.y() + quarter_dimensions.height() + 8);
+            return result;
         }
 
-        [[nodiscard]] int hw_vertical_position() const
+        fixed_point hw_position(const fixed_point& camera_position) const
         {
-            fixed_point real_position = -position;
+            fixed_point result = -position;
 
             if(! ignore_camera)
             {
-                real_position += camera::position();
+                result += camera_position;
             }
 
-            return real_position.y().integer() + quarter_dimensions.height() + 8;
+            result.set_x(result.x() + quarter_dimensions.width() + 8);
+            result.set_y(result.y() + quarter_dimensions.height() + 8);
+            return result;
         }
 
         void update_hw_position(hw::bgs::handle& handle)
         {
-            fixed_point real_position = -position;
-
-            if(! ignore_camera)
-            {
-                real_position += camera::position();
-            }
-
-            int x = real_position.x().integer() + quarter_dimensions.width() + 8;
-            int y = real_position.y().integer() + quarter_dimensions.height() + 8;
-            hw::bgs::set_position(x, y, handle);
+            fixed_point real_position = hw_position();
+            hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
         }
 
         void update_hw_position(const fixed_point& camera_position, hw::bgs::handle& handle)
         {
-            fixed_point real_position = -position;
-
-            if(! ignore_camera)
-            {
-                real_position += camera_position;
-            }
-
-            int x = real_position.x().integer() + quarter_dimensions.width() + 8;
-            int y = real_position.y().integer() + quarter_dimensions.height() + 8;
-            hw::bgs::set_position(x, y, handle);
+            fixed_point real_position = hw_position(camera_position);
+            hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
         }
     };
 
@@ -309,6 +298,12 @@ const fixed_point& position(int id)
     return item.position;
 }
 
+fixed_point hw_position(int id)
+{
+    item_type& item = *data.items[id];
+    return item.hw_position();
+}
+
 void set_position(int id, const fixed_point& position)
 {
     item_type& item = *data.items[id];
@@ -319,18 +314,6 @@ void set_position(int id, const fixed_point& position)
     {
         data.commit = true;
     }
-}
-
-int hw_horizontal_position(int id)
-{
-    item_type& item = *data.items[id];
-    return item.hw_horizontal_position();
-}
-
-int hw_vertical_position(int id)
-{
-    item_type& item = *data.items[id];
-    return item.hw_vertical_position();
 }
 
 int priority(int id)
@@ -362,6 +345,24 @@ void set_mosaic_enabled(int id, bool mosaic_enabled)
     if(display_manager::bg_enabled(id))
     {
         data.commit = true;
+    }
+}
+
+regular_bg_attributes attributes(int id)
+{
+    return regular_bg_attributes(priority(id), mosaic_enabled(id));
+}
+
+void set_attributes(int id, const regular_bg_attributes& attributes)
+{
+    if(const optional<int>& priority = attributes.priority())
+    {
+        set_priority(id, *priority);
+    }
+
+    if(const optional<bool>& mosaic_enabled = attributes.mosaic_enabled())
+    {
+        set_mosaic_enabled(id, *mosaic_enabled);
     }
 }
 
@@ -428,6 +429,45 @@ void update_camera()
                 }
             }
         }
+    }
+}
+
+void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+                                  uint16_t& dest_ref)
+{
+    const fixed* positions_ptr = &positions_ref;
+    uint16_t* dest_ptr = &dest_ref;
+
+    for(int index = 0; index < positions_count; ++index)
+    {
+        dest_ptr[index] = (item_position + positions_ptr[index]).integer();
+    }
+}
+
+void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+                                uint16_t& dest_ref)
+{
+    const fixed* positions_ptr = &positions_ref;
+    uint16_t* dest_ptr = &dest_ref;
+
+    for(int index = 0; index < positions_count; ++index)
+    {
+        dest_ptr[index] = (item_position + positions_ptr[index]).integer();
+    }
+}
+
+void fill_hw_attributes(int id, const regular_bg_attributes& attributes_ref, int attributes_count, uint16_t& dest_ref)
+{
+    int item_priority = priority(id);
+    int item_tiles_id = tiles(id).id();
+    bool item_bpp_8 = palette_bpp_mode(id) == palette_bpp_mode::BPP_8;
+    bool item_mosaic_enabled = mosaic_enabled(id);
+    const regular_bg_attributes* attributes_ptr = &attributes_ref;
+    uint16_t* dest_ptr = &dest_ref;
+
+    for(int index = 0; index < attributes_count; ++index)
+    {
+        dest_ptr[index] = hw::bgs::regular_control(item_priority, item_tiles_id, item_bpp_8, item_mosaic_enabled);
     }
 }
 

@@ -28,19 +28,14 @@ hblank_effect_ptr& hblank_effect_ptr::operator=(const hblank_effect_ptr& other)
     return *this;
 }
 
-const span<const int16_t>& hblank_effect_ptr::values_ref() const
+[[nodiscard]] bool hblank_effect_ptr::visible() const
 {
-    return hblank_effects_manager::values_ref(_id);
+    return hblank_effects_manager::visible(_id);
 }
 
-void hblank_effect_ptr::set_values_ref(const span<const int16_t>& values_ref)
+void hblank_effect_ptr::set_visible(bool visible)
 {
-    hblank_effects_manager::set_values_ref(_id, values_ref);
-}
-
-void hblank_effect_ptr::reload_values_ref()
-{
-    hblank_effects_manager::reload_values_ref(_id);
+    hblank_effects_manager::set_visible(_id, visible);
 }
 
 void hblank_effect_ptr::_destroy()

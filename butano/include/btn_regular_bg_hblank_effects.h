@@ -7,26 +7,32 @@
 namespace btn
 {
 
-enum class regular_bg_hblank_effect_type
-{
-    HORIZONTAL_POSITION_ABSOLUTE,
-    HORIZONTAL_POSITION_RELATIVE,
-};
-
-class regular_bg_hblank_effect_ptr : public hblank_effect_ptr
+class regular_bg_position_hblank_effect_ptr : public hblank_effect_ptr
 {
 
 public:
-    [[nodiscard]] static regular_bg_hblank_effect_ptr create(
-            regular_bg_ptr bg_ptr, regular_bg_hblank_effect_type type, const span<const int16_t>& values_ref);
+    [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_horizontal(
+            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
 
-    [[nodiscard]] static optional<regular_bg_hblank_effect_ptr> optional_create(
-            regular_bg_ptr bg_ptr, regular_bg_hblank_effect_type type, const span<const int16_t>& values_ref);
+    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_horizontal(
+            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+
+    [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_vertical(
+            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+
+    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_vertical(
+            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+
+    [[nodiscard]] span<const fixed> deltas_ref() const;
+
+    void set_deltas_ref(const span<const fixed>& deltas_ref);
+
+    void reload_deltas_ref();
 
 private:
     regular_bg_ptr _bg_ptr;
 
-    regular_bg_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr);
+    regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr);
 };
 
 }

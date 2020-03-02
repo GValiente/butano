@@ -27,19 +27,15 @@ namespace btn::hw::bgs
         return count() - 1;
     }
 
+    [[nodiscard]] inline unsigned regular_control(int priority, int tiles_id, bool bpp_8, bool mosaic_enabled)
+    {
+        return unsigned(BG_PRIO(priority) | BG_CBB(tiles_id) | (bpp_8 << 7) | (mosaic_enabled << 6));
+    }
+
     inline void setup_regular(const regular_bg_builder& builder, int tiles_id, palette_bpp_mode bpp_mode, handle& bg)
     {
-        bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id));
-
-        if(bpp_mode == palette_bpp_mode::BPP_8)
-        {
-            bg.cnt |= BG_8BPP;
-        }
-
-        if(builder.mosaic_enabled())
-        {
-            bg.cnt |= BG_MOSAIC;
-        }
+        int bpp_8 = bpp_mode == palette_bpp_mode::BPP_8;
+        bg.cnt = regular_control(builder.priority(), tiles_id, bpp_8, builder.mosaic_enabled());
     }
 
     inline void set_tiles(int tiles_id, handle& bg)
@@ -111,14 +107,19 @@ namespace btn::hw::bgs
         REG_BG3VOFS = bg3.vofs;
     }
 
-    [[nodiscard]] inline uint16_t* regular_bg_horizontal_position_register(int id)
+    [[nodiscard]] inline uint16_t* regular_horizontal_position_register(int id)
     {
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0010 + (0x0004 * id));
     }
 
-    [[nodiscard]] inline uint16_t* regular_bg_vertical_position_register(int id)
+    [[nodiscard]] inline uint16_t* regular_vertical_position_register(int id)
     {
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0012 + (0x0004 * id));
+    }
+
+    [[nodiscard]] inline uint16_t* attributes_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(REG_BASE + 0x0008 + (0x0002 * id));
     }
 }
 

@@ -41,11 +41,9 @@ public:
         return _id;
     }
 
-    [[nodiscard]] const span<const int16_t>& values_ref() const;
+    [[nodiscard]] bool visible() const;
 
-    void set_values_ref(const span<const int16_t>& values_ref);
-
-    void reload_values_ref();
+    void set_visible(bool visible);
 
     [[nodiscard]] friend bool operator==(const hblank_effect_ptr& a, const hblank_effect_ptr& b)
     {

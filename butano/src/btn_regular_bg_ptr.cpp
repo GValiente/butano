@@ -5,6 +5,7 @@
 #include "btn_bgs_manager.h"
 #include "btn_bg_palette_ptr.h"
 #include "btn_regular_bg_builder.h"
+#include "btn_regular_bg_attributes.h"
 
 namespace btn
 {
@@ -315,6 +316,16 @@ bool regular_bg_ptr::mosaic_enabled() const
 void regular_bg_ptr::set_mosaic_enabled(bool mosaic_enabled)
 {
     bgs_manager::set_mosaic_enabled(_id, mosaic_enabled);
+}
+
+regular_bg_attributes regular_bg_ptr::attributes() const
+{
+    return bgs_manager::attributes(_id);
+}
+
+void regular_bg_ptr::set_attributes(const regular_bg_attributes& attributes)
+{
+    bgs_manager::set_attributes(_id, attributes);
 }
 
 bool regular_bg_ptr::blending_enabled() const

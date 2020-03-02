@@ -10,7 +10,7 @@ namespace btn::hw::hblank_effects
     {
 
     public:
-        int16_t src[display::height()];
+        uint16_t src[display::height()];
         volatile uint16_t* dest;
     };
 

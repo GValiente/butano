@@ -21,6 +21,7 @@ class regular_bg_item;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class regular_bg_map_item;
+class regular_bg_attributes;
 
 class regular_bg_ptr
 {
@@ -131,6 +132,10 @@ public:
     [[nodiscard]] bool mosaic_enabled() const;
 
     void set_mosaic_enabled(bool mosaic_enabled);
+
+    [[nodiscard]] regular_bg_attributes attributes() const;
+
+    void set_attributes(const regular_bg_attributes& attributes);
 
     [[nodiscard]] bool blending_enabled() const;
 

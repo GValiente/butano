@@ -2,13 +2,20 @@
 #define BTN_HBLANK_EFFECTS_MANAGER_H
 
 #include "btn_span_fwd.h"
+#include "btn_fixed_fwd.h"
+
+namespace btn
+{
+    class regular_bg_attributes;
+}
 
 namespace btn::hblank_effects_manager
 {
     enum class target_type
     {
-        REGULAR_BG_HORIZONTAL_POSITION_ABSOLUTE,
-        REGULAR_BG_HORIZONTAL_POSITION_RELATIVE
+        REGULAR_BG_HORIZONTAL_POSITION,
+        REGULAR_BG_VERTICAL_POSITION,
+        REGULAR_BG_ATTRIBUTES
     };
 
     void init();
@@ -23,17 +30,23 @@ namespace btn::hblank_effects_manager
 
     void disable();
 
-    [[nodiscard]] int create(const span<const int16_t>& values_ref, target_type target, int target_id);
+    [[nodiscard]] int create(const span<const fixed>& fixed_values_ref, target_type target, int target_id);
+
+    [[nodiscard]] int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id);
 
     void increase_usages(int id);
 
     void decrease_usages(int id);
 
-    [[nodiscard]] const span<const int16_t>& values_ref(int id);
+    [[nodiscard]] span<const fixed> fixed_values_ref(int id);
 
-    void set_values_ref(int id, const span<const int16_t>& values_ref);
+    void set_values_ref(int id, const void* values_ptr, int values_count);
 
     void reload_values_ref(int id);
+
+    [[nodiscard]] bool visible(int id);
+
+    void set_visible(int id, bool visible);
 
     void update();
 

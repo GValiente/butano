@@ -44,7 +44,7 @@ def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_p
     command = ' '.join(command)
 
     try:
-        subprocess.check_output([command], shell=True, stderr=subprocess.STDOUT)
+        subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         raise ValueError('mmutil call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 

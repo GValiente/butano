@@ -168,7 +168,7 @@ class SpriteItem:
         command = ' '.join(command)
 
         try:
-            subprocess.check_output([command], shell=True, stderr=subprocess.STDOUT)
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
@@ -273,7 +273,7 @@ class BgItem:
         command = ' '.join(command)
 
         try:
-            subprocess.check_output([command], shell=True, stderr=subprocess.STDOUT)
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 

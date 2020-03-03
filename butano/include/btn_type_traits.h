@@ -8,6 +8,10 @@ namespace btn
 {
     using std::remove_reference;
 
+    using std::is_same;
+
+    using std::is_same_v;
+
     using std::is_trivial;
 
     using std::is_trivially_copyable;

@@ -440,7 +440,7 @@ void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_re
 
     for(int index = 0; index < positions_count; ++index)
     {
-        dest_ptr[index] = (item_position + positions_ptr[index]).integer();
+        dest_ptr[index] = uint16_t((item_position + positions_ptr[index]).integer());
     }
 }
 
@@ -452,22 +452,31 @@ void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref,
 
     for(int index = 0; index < positions_count; ++index)
     {
-        dest_ptr[index] = (item_position + positions_ptr[index]).integer();
+        dest_ptr[index] = uint16_t((item_position + positions_ptr[index]).integer());
     }
 }
 
 void fill_hw_attributes(int id, const regular_bg_attributes& attributes_ref, int attributes_count, uint16_t& dest_ref)
 {
-    int item_priority = priority(id);
-    int item_tiles_id = tiles(id).id();
-    bool item_bpp_8 = palette_bpp_mode(id) == palette_bpp_mode::BPP_8;
-    bool item_mosaic_enabled = mosaic_enabled(id);
+    uint16_t bg_cnt = data.handles[id].cnt;
     const regular_bg_attributes* attributes_ptr = &attributes_ref;
     uint16_t* dest_ptr = &dest_ref;
 
     for(int index = 0; index < attributes_count; ++index)
     {
-        dest_ptr[index] = hw::bgs::regular_control(item_priority, item_tiles_id, item_bpp_8, item_mosaic_enabled);
+        const regular_bg_attributes& attributes = attributes_ptr[index];
+        uint16_t& dest_cnt = dest_ptr[index];
+        dest_cnt = bg_cnt;
+
+        if(const optional<int>& priority = attributes.priority())
+        {
+            hw::bgs::set_priority(*priority, dest_cnt);
+        }
+
+        if(const optional<bool>& mosaic_enabled = attributes.mosaic_enabled())
+        {
+            hw::bgs::set_mosaic_enabled(*mosaic_enabled, dest_cnt);
+        }
     }
 }
 

@@ -20,8 +20,6 @@ namespace btn::hblank_effects_manager
 
     void init();
 
-    [[nodiscard]] BTN_CODE_CONST int count();
-
     [[nodiscard]] int used_count();
 
     [[nodiscard]] int available_count();
@@ -39,6 +37,8 @@ namespace btn::hblank_effects_manager
     void decrease_usages(int id);
 
     [[nodiscard]] span<const fixed> fixed_values_ref(int id);
+
+    [[nodiscard]] span<const regular_bg_attributes> regular_bg_attributes_ref(int id);
 
     void set_values_ref(int id, const void* values_ptr, int values_count);
 

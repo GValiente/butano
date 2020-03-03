@@ -2,7 +2,7 @@
 
 #include "btn_span.h"
 #include "btn_fixed.h"
-#include "btn_optional.h"
+#include "btn_regular_bg_attributes.h"
 #include "btn_hblank_effects_manager.h"
 
 namespace btn
@@ -74,6 +74,51 @@ void regular_bg_position_hblank_effect_ptr::reload_deltas_ref()
 }
 
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :
+    hblank_effect_ptr(id),
+    _bg_ptr(move(bg_ptr))
+{
+}
+
+regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr::create(
+        regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
+{
+    int id = hblank_effects_manager::create(attributes_ref, bg_ptr.id());
+    BTN_ASSERT(id >= 0, "HBlank effect create failed");
+
+    return regular_bg_attributes_hblank_effect_ptr(id, move(bg_ptr));
+}
+
+optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::optional_create(
+        regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
+{
+    int id = hblank_effects_manager::create(attributes_ref, bg_ptr.id());
+    optional<regular_bg_attributes_hblank_effect_ptr> result;
+
+    if(id >= 0)
+    {
+        result = regular_bg_attributes_hblank_effect_ptr(id, move(bg_ptr));
+    }
+
+    return result;
+}
+
+span<const regular_bg_attributes> regular_bg_attributes_hblank_effect_ptr::attributes_ref() const
+{
+    return hblank_effects_manager::regular_bg_attributes_ref(id());
+}
+
+void regular_bg_attributes_hblank_effect_ptr::set_attributes_ref(
+        const span<const regular_bg_attributes>& attributes_ref)
+{
+    hblank_effects_manager::set_values_ref(id(), attributes_ref.data(), attributes_ref.size());
+}
+
+void regular_bg_attributes_hblank_effect_ptr::reload_attributes_ref()
+{
+    hblank_effects_manager::reload_values_ref(id());
+}
+
+regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :
     hblank_effect_ptr(id),
     _bg_ptr(move(bg_ptr))
 {

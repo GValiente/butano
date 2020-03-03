@@ -3,6 +3,7 @@
 #include "btn_span.h"
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_variant.h"
 #include "btn_bgs_manager.h"
 #include "btn_regular_bg_attributes.h"
 #include "btn_config_hblank_effects.h"
@@ -24,47 +25,38 @@ namespace
     {
 
     public:
+        using last_value_type = variant<fixed, regular_bg_attributes>;
+
         const void* values_ptr;
         int values_count;
         int target_id;
         unsigned usages;
-        fixed last_fixed_value;
-        regular_bg_attributes last_regular_bg_attributes;
+        last_value_type last_value;
         uint8_t target;
         bool visible;
 
         [[nodiscard]] bool last_value_updated()
         {
-            bool updated = false;
+            last_value_type new_value;
 
             switch(target_type(target))
             {
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
-                {
-                    fixed new_value = bgs_manager::hw_position(target_id).x();
-                    updated = last_fixed_value != new_value;
-                    last_fixed_value = new_value;
-                }
+                new_value = bgs_manager::hw_position(target_id).x();
                 break;
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
-                {
-                    fixed new_value = bgs_manager::hw_position(target_id).y();
-                    updated = last_fixed_value != new_value;
-                    last_fixed_value = new_value;
-                }
+                new_value = bgs_manager::hw_position(target_id).y();
                 break;
 
             case target_type::REGULAR_BG_ATTRIBUTES:
-                {
-                    regular_bg_attributes new_regular_bg_attributes = bgs_manager::attributes(target_id);
-                    updated = last_regular_bg_attributes != new_regular_bg_attributes;
-                    last_regular_bg_attributes = new_regular_bg_attributes;
-                }
+                new_value = bgs_manager::attributes(target_id);
                 break;
             }
 
+            bool updated = last_value != new_value;
+            last_value = move(new_value);
             return updated;
         }
 
@@ -76,7 +68,7 @@ namespace
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_horizontal_hw_positions(last_fixed_value, fixed_values_ptr[0],
+                    bgs_manager::fill_horizontal_hw_positions(last_value.get<fixed>(), fixed_values_ptr[0],
                             display::height(), entry.src[0]);
                     entry.dest = hw::bgs::regular_horizontal_position_register(target_id);
                 }
@@ -85,7 +77,7 @@ namespace
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_vertical_hw_positions(last_fixed_value, fixed_values_ptr[0],
+                    bgs_manager::fill_vertical_hw_positions(last_value.get<fixed>(), fixed_values_ptr[0],
                             display::height(), entry.src[0]);
                     entry.dest = hw::bgs::regular_vertical_position_register(target_id);
                 }
@@ -150,11 +142,6 @@ void init()
     {
         data.free_item_indexes.push_back(int8_t(index));
     }
-}
-
-int count()
-{
-    return max_items;
 }
 
 int used_count()
@@ -228,6 +215,13 @@ span<const fixed> fixed_values_ref(int id)
     const item_type& item = data.items[id];
     auto fixed_values_ptr = reinterpret_cast<const fixed*>(item.values_ptr);
     return span<const fixed>(fixed_values_ptr, item.values_count);
+}
+
+span<const regular_bg_attributes> regular_bg_attributes_ref(int id)
+{
+    const item_type& item = data.items[id];
+    auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(item.values_ptr);
+    return span<const regular_bg_attributes>(regular_bg_attributes_ptr, item.values_count);
 }
 
 void set_values_ref(int id, const void* values_ptr, int values_count)

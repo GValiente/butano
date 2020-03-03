@@ -8,6 +8,7 @@
 #include "btn_music_items.h"
 #include "btn_clouds_bg_item.h"
 #include "btn_stage_1_bg_item.h"
+#include "btn_bomb_bg_item.h"
 
 #include "bf_hero.h"
 #include "bf_stats.h"
@@ -17,6 +18,7 @@
 
 #include "btn_math.h"
 #include "btn_bgs_mosaic.h"
+#include "btn_regular_bg_attributes.h"
 #include "btn_regular_bg_hblank_effects.h"
 
 int main()
@@ -35,22 +37,47 @@ int main()
         hblank_deltas[index] = (sin / (4096 / (1 << amplitude))) - (1 << (amplitude - 1));
     }
 
-    btn::regular_bg_position_hblank_effect_ptr ground_bg_hblank_effect =
+    btn::regular_bg_position_hblank_effect_ptr ground_bg_position_hblank_effect =
             btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
                 ground_bg, btn::span<const btn::fixed>(hblank_deltas, 160));
+    // ground_bg_position_hblank_effect.set_visible(false);
 
-    btn::bgs_mosaic::set_horizontal_stretch(0.1);
+    btn::bgs_mosaic::set_horizontal_stretch(0.5);
+
+    btn::regular_bg_attributes hblank_attributes[160];
+
+    for(int index = 80; index < 120; ++index)
+    {
+        hblank_attributes[index].set_mosaic_enabled(true);
+    }
+
+    btn::regular_bg_attributes_hblank_effect_ptr ground_bg_attributes_hblank_effect =
+            btn::regular_bg_attributes_hblank_effect_ptr::create(
+                ground_bg, btn::span<const btn::regular_bg_attributes>(hblank_attributes, 160));
+    // ground_bg_attributes_hblank_effect.set_visible(false);
 
     btn::regular_bg_move_by_action ground_bg_move_action(btn::move(ground_bg), 0, 0.5);
     ground_bg_move_action.run();
 
     btn::regular_bg_ptr clouds_bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::clouds);
     clouds_bg.set_priority(2);
-    clouds_bg.set_blending_enabled(true);
-    btn::blending::set_transparency_alpha(0.4);
+    // clouds_bg.set_blending_enabled(true);
+    // btn::blending::set_transparency_alpha(0.4);
 
     btn::regular_bg_move_by_action clouds_bg_move_action(btn::move(clouds_bg), -1.0 / 16, 0.5);
     clouds_bg_move_action.run();
+
+    btn::regular_bg_ptr bomb_bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::bomb);
+    bomb_bg.set_priority(1);
+    bomb_bg.set_blending_enabled(true);
+    btn::blending::set_transparency_alpha(0.9);
+
+    btn::regular_bg_position_hblank_effect_ptr bomb_bg_position_hblank_effect =
+            btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
+                bomb_bg, btn::span<const btn::fixed>(hblank_deltas, 160));
+
+    btn::regular_bg_move_by_action bomb_bg_move_action(btn::move(bomb_bg), -1.0 / 2, 4);
+    bomb_bg_move_action.run();
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     text_generator.set_bg_priority(1);

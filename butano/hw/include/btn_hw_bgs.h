@@ -27,15 +27,11 @@ namespace btn::hw::bgs
         return count() - 1;
     }
 
-    [[nodiscard]] inline unsigned regular_control(int priority, int tiles_id, bool bpp_8, bool mosaic_enabled)
-    {
-        return unsigned(BG_PRIO(priority) | BG_CBB(tiles_id) | (bpp_8 << 7) | (mosaic_enabled << 6));
-    }
-
     inline void setup_regular(const regular_bg_builder& builder, int tiles_id, palette_bpp_mode bpp_mode, handle& bg)
     {
         int bpp_8 = bpp_mode == palette_bpp_mode::BPP_8;
-        bg.cnt = regular_control(builder.priority(), tiles_id, bpp_8, builder.mosaic_enabled());
+        bg.cnt = uint16_t(BG_PRIO(builder.priority()) | BG_CBB(tiles_id) | (bpp_8 << 7) |
+                          (builder.mosaic_enabled() << 6));
     }
 
     inline void set_tiles(int tiles_id, handle& bg)
@@ -62,9 +58,14 @@ namespace btn::hw::bgs
         return BFN_GET(bg.cnt, BG_PRIO);
     }
 
+    inline void set_priority(int priority, uint16_t& bg_cnt)
+    {
+        BFN_SET(bg_cnt, priority, BG_PRIO);
+    }
+
     inline void set_priority(int priority, handle& bg)
     {
-        BFN_SET(bg.cnt, priority, BG_PRIO);
+        set_priority(priority, bg.cnt);
     }
 
     [[nodiscard]] inline bool mosaic_enabled(const handle& bg)
@@ -72,16 +73,21 @@ namespace btn::hw::bgs
         return bg.cnt & BG_MOSAIC;
     }
 
-    inline void set_mosaic_enabled(bool mosaic_enabled, handle& bg)
+    inline void set_mosaic_enabled(bool mosaic_enabled, uint16_t& bg_cnt)
     {
         if(mosaic_enabled)
         {
-            bg.cnt |= BG_MOSAIC;
+            bg_cnt |= BG_MOSAIC;
         }
         else
         {
-            bg.cnt &= ~BG_MOSAIC;
+            bg_cnt &= ~BG_MOSAIC;
         }
+    }
+
+    inline void set_mosaic_enabled(bool mosaic_enabled, handle& bg)
+    {
+        set_mosaic_enabled(mosaic_enabled, bg.cnt);
     }
 
     inline void commit(const handle& bgs_ref)

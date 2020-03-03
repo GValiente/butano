@@ -309,24 +309,14 @@ public:
         return a._value_impl() < b._value_impl();
     }
 
-    [[nodiscard]] friend bool operator<=(const optional& a, const optional& b)
-    {
-        if(! a._valid)
-        {
-            return true;
-        }
-
-        if(! b._valid)
-        {
-            return false;
-        }
-
-        return a._value_impl() <= b._value_impl();
-    }
-
     [[nodiscard]] friend bool operator>(const optional& a, const optional& b)
     {
-        return ! (a <= b);
+        return b < a;
+    }
+
+    [[nodiscard]] friend bool operator<=(const optional& a, const optional& b)
+    {
+        return ! (a > b);
     }
 
     [[nodiscard]] friend bool operator>=(const optional& a, const optional& b)
@@ -349,14 +339,14 @@ public:
         return false;
     }
 
-    [[nodiscard]] friend bool operator<=(const optional& a, nullopt_t)
-    {
-        return ! a._valid;
-    }
-
     [[nodiscard]] friend bool operator>(const optional& a, nullopt_t)
     {
         return a._valid;
+    }
+
+    [[nodiscard]] friend bool operator<=(const optional& a, nullopt_t)
+    {
+        return ! a._valid;
     }
 
     [[nodiscard]] friend bool operator>=(const optional&, nullopt_t)
@@ -383,15 +373,15 @@ public:
     }
 
     template<typename OtherType>
-    [[nodiscard]] friend bool operator<=(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator>(const optional& a, const OtherType& b)
     {
-        return a._valid ? a._value_impl() <= b : true;
+        return b < a;
     }
 
     template<typename OtherType>
-    [[nodiscard]] friend bool operator>(const optional& a, const OtherType& b)
+    [[nodiscard]] friend bool operator<=(const optional& a, const OtherType& b)
     {
-        return ! (a <= b);
+        return ! (a > b);
     }
 
     template<typename OtherType>

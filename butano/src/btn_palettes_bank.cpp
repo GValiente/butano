@@ -35,7 +35,7 @@ int palettes_bank::used_count() const
     return result;
 }
 
-optional<int> palettes_bank::find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
+int palettes_bank::find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
@@ -99,10 +99,10 @@ optional<int> palettes_bank::find(const span<const color>& colors_ref, palette_b
         }
     }
 
-    return nullopt;
+    return -1;
 }
 
-optional<int> palettes_bank::create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
+int palettes_bank::create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
@@ -169,7 +169,7 @@ optional<int> palettes_bank::create(const span<const color>& colors_ref, palette
         }
     }
 
-    return nullopt;
+    return -1;
 }
 
 void palettes_bank::increase_usages(int id)

@@ -427,12 +427,12 @@ namespace
     }
 
     template<bool tiles>
-    [[nodiscard]] optional<int> _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions,
-                                             optional<bg_palette_ptr>&& palette_ptr)
+    [[nodiscard]] int _create_impl(const uint16_t* data_ptr, int blocks_count, const size& dimensions,
+                                   optional<bg_palette_ptr>&& palette_ptr)
     {
         if(! data_ptr && data.delay_commit)
         {
-            return nullopt;
+            return -1;
         }
 
         if(blocks_count <= data.free_blocks_count)
@@ -481,7 +481,7 @@ namespace
             return _create_impl<tiles>(data_ptr, blocks_count, dimensions, move(palette_ptr));
         }
 
-        return nullopt;
+        return -1;
     }
 }
 
@@ -616,7 +616,7 @@ int available_map_blocks_count()
     return data.free_blocks_count;
 }
 
-optional<int> find_tiles(const span<const tile>& tiles_ref)
+int find_tiles(const span<const tile>& tiles_ref)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND TILES: ", tiles_ref.data(), " - ", tiles_ref.size());
 
@@ -624,13 +624,11 @@ optional<int> find_tiles(const span<const tile>& tiles_ref)
     BTN_ASSERT(data_ptr, "Tiles ref is null");
 
     auto items_map_iterator = data.items_map.find(data_ptr);
-    optional<int> result;
 
     if(items_map_iterator != data.items_map.end())
     {
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
-        result.emplace(id);
         BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.width,
                    "Tiles count does not match item tiles count: ",
                    _tiles_to_half_words(tiles_ref.size()), " - ", item.width);
@@ -652,36 +650,30 @@ optional<int> find_tiles(const span<const tile>& tiles_ref)
             data.to_remove_blocks_count -= item.blocks_count;
             break;
         }
-    }
 
-    if(result)
-    {
-        BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BTN_BG_BLOCKS_LOG("NOT FOUND");
+
+        return id;
     }
 
-    return result;
+    BTN_BG_BLOCKS_LOG("NOT FOUND");
+    return -1;
 }
 
-optional<int> find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
-                               [[maybe_unused]] const bg_palette_ptr& palette_ptr)
+int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
+                     [[maybe_unused]] const bg_palette_ptr& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
     auto items_map_iterator = data.items_map.find(data_ptr);
-    optional<int> result;
 
     if(items_map_iterator != data.items_map.end())
     {
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
-        result.emplace(id);
         BTN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
                    map_dimensions.width(), " - ", item.width);
         BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
@@ -706,22 +698,18 @@ optional<int> find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe
             data.to_remove_blocks_count -= item.blocks_count;
             break;
         }
-    }
 
-    if(result)
-    {
-        BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BTN_BG_BLOCKS_LOG("NOT FOUND");
+
+        return id;
     }
 
-    return result;
+    BTN_BG_BLOCKS_LOG("NOT FOUND");
+    return -1;
 }
 
-optional<int> create_tiles(const span<const tile>& tiles_ref)
+int create_tiles(const span<const tile>& tiles_ref)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_ref.data(), " - ", tiles_ref.size());
 
@@ -732,11 +720,11 @@ optional<int> create_tiles(const span<const tile>& tiles_ref)
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
 
-    optional<int> result = _create_impl<true>(data_ptr, _half_words_to_blocks(half_words), size(half_words, 1), nullopt);
+    int result = _create_impl<true>(data_ptr, _half_words_to_blocks(half_words), size(half_words, 1), nullopt);
 
-    if(result)
+    if(result >= 0)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -747,8 +735,8 @@ optional<int> create_tiles(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                 bg_palette_ptr&& palette_ptr)
+int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+                       bg_palette_ptr&& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
@@ -760,11 +748,11 @@ optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref, const
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
 
     int blocks_count = _half_words_to_blocks(map_dimensions.width() * map_dimensions.height());
-    optional<int> result = _create_impl<false>(data_ptr, blocks_count, map_dimensions, move(palette_ptr));
+    int result = _create_impl<false>(data_ptr, blocks_count, map_dimensions, move(palette_ptr));
 
-    if(result)
+    if(result >= 0)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -775,7 +763,7 @@ optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref, const
     return result;
 }
 
-optional<int> allocate_tiles(int tiles_count)
+int allocate_tiles(int tiles_count)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count);
 
@@ -783,11 +771,11 @@ optional<int> allocate_tiles(int tiles_count)
     BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     int blocks_count = _half_words_to_blocks(half_words);
-    optional<int> result = _create_impl<true>(nullptr, blocks_count, size(half_words, 1), nullopt);
+    int result = _create_impl<true>(nullptr, blocks_count, size(half_words, 1), nullopt);
 
-    if(result)
+    if(result >= 0)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -798,7 +786,7 @@ optional<int> allocate_tiles(int tiles_count)
     return result;
 }
 
-optional<int> allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr)
+int allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
                       map_dimensions.height(), " - ", palette_ptr.id());
@@ -807,11 +795,11 @@ optional<int> allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& 
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
 
     int blocks_count = _half_words_to_blocks(map_dimensions.width() * map_dimensions.height());
-    optional<int> result = _create_impl<false>(nullptr, blocks_count, map_dimensions, move(palette_ptr));
+    int result = _create_impl<false>(nullptr, blocks_count, map_dimensions, move(palette_ptr));
 
-    if(result)
+    if(result >= 0)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(*result).start_block);
+        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BTN_BG_BLOCKS_LOG_STATUS();
     }
     else

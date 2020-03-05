@@ -9,11 +9,12 @@ namespace btn
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_ref)
 {
+    int handle = sprite_tiles_manager::find(tiles_ref);
     optional<sprite_tiles_ptr> result;
 
-    if(optional<int> handle = sprite_tiles_manager::find(tiles_ref))
+    if(handle >= 0)
     {
-        result = sprite_tiles_ptr(*handle);
+        result = sprite_tiles_ptr(handle);
     }
 
     return result;
@@ -21,40 +22,41 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_
 
 sprite_tiles_ptr sprite_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
-    optional<int> handle = sprite_tiles_manager::create(tiles_ref);
-    BTN_ASSERT(handle, "Tiles create failed");
+    int handle = sprite_tiles_manager::create(tiles_ref);
+    BTN_ASSERT(handle >= 0, "Tiles create failed");
 
-    return sprite_tiles_ptr(*handle);
+    return sprite_tiles_ptr(handle);
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
 {
-    optional<int> handle = sprite_tiles_manager::find(tiles_ref);
+    int handle = sprite_tiles_manager::find(tiles_ref);
 
-    if(! handle)
+    if(handle < 0)
     {
         handle = sprite_tiles_manager::create(tiles_ref);
-        BTN_ASSERT(handle, "Tiles find or create failed");
+        BTN_ASSERT(handle >= 0, "Tiles find or create failed");
     }
 
-    return sprite_tiles_ptr(*handle);
+    return sprite_tiles_ptr(handle);
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count)
 {
-    optional<int> handle = sprite_tiles_manager::allocate(tiles_count);
-    BTN_ASSERT(handle, "Tiles allocate failed");
+    int handle = sprite_tiles_manager::allocate(tiles_count);
+    BTN_ASSERT(handle >= 0, "Tiles allocate failed");
 
-    return sprite_tiles_ptr(*handle);
+    return sprite_tiles_ptr(handle);
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_create(const span<const tile>& tiles_ref)
 {
+    int handle = sprite_tiles_manager::create(tiles_ref);
     optional<sprite_tiles_ptr> result;
 
-    if(optional<int> handle = sprite_tiles_manager::create(tiles_ref))
+    if(handle >= 0)
     {
-        result = sprite_tiles_ptr(*handle);
+        result = sprite_tiles_ptr(handle);
     }
 
     return result;
@@ -62,15 +64,21 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_create(const span<const ti
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_find_or_create(const span<const tile>& tiles_ref)
 {
+    int handle = sprite_tiles_manager::find(tiles_ref);
     optional<sprite_tiles_ptr> result;
 
-    if(optional<int> handle = sprite_tiles_manager::find(tiles_ref))
+    if(handle >= 0)
     {
-        result = sprite_tiles_ptr(*handle);
+        result = sprite_tiles_ptr(handle);
     }
-    else if(optional<int> handle = sprite_tiles_manager::create(tiles_ref))
+    else
     {
-        result = sprite_tiles_ptr(*handle);
+        handle = sprite_tiles_manager::create(tiles_ref);
+
+        if(handle >= 0)
+        {
+            result = sprite_tiles_ptr(handle);
+        }
     }
 
     return result;
@@ -78,11 +86,12 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_find_or_create(const span<
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_allocate(int tiles_count)
 {
+    int handle = sprite_tiles_manager::allocate(tiles_count);
     optional<sprite_tiles_ptr> result;
 
-    if(optional<int> handle = sprite_tiles_manager::allocate(tiles_count))
+    if(handle >= 0)
     {
-        result = sprite_tiles_ptr(*handle);
+        result = sprite_tiles_ptr(handle);
     }
 
     return result;

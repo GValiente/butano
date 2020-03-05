@@ -121,7 +121,7 @@ int available_count()
     return hw::bgs::count() - used_count();
 }
 
-optional<int> create(regular_bg_builder&& builder)
+int create(regular_bg_builder&& builder)
 {
     int new_index = hw::bgs::count() - 1;
 
@@ -139,21 +139,21 @@ optional<int> create(regular_bg_builder&& builder)
 
     if(new_index < 0)
     {
-        return nullopt;
+        return -1;
     }
 
     optional<bg_tiles_ptr> tiles = builder.release_tiles();
 
     if(! tiles)
     {
-        return nullopt;
+        return -1;
     }
 
     optional<regular_bg_map_ptr> map = builder.release_map();
 
     if(! map)
     {
-        return nullopt;
+        return -1;
     }
 
     bool blending_enabled = builder.blending_enabled();

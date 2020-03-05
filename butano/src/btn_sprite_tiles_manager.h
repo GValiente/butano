@@ -21,11 +21,11 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] int available_items_count();
 
-    [[nodiscard]] optional<int> find(const span<const tile>& tiles_ref);
+    [[nodiscard]] int find(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> create(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> allocate(int tiles_count);
+    [[nodiscard]] int allocate(int tiles_count);
 
     void increase_usages(int id);
 

@@ -90,11 +90,11 @@ int available_count()
     return data.free_item_indexes.size();
 }
 
-optional<int> create(const sprite_affine_mat_builder& builder)
+int create(const sprite_affine_mat_builder& builder)
 {
     if(data.free_item_indexes.empty())
     {
-        return nullopt;
+        return -1;
     }
 
     int item_index = data.free_item_indexes.back();

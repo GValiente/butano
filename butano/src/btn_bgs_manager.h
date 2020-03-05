@@ -3,7 +3,6 @@
 
 #include "btn_limits.h"
 #include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -23,7 +22,7 @@ namespace bgs_manager
 
     [[nodiscard]] int available_count();
 
-    [[nodiscard]] optional<int> create(regular_bg_builder&& builder);
+    [[nodiscard]] int create(regular_bg_builder&& builder);
 
     void increase_usages(int id);
 

@@ -30,19 +30,19 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] int available_map_blocks_count();
 
-    [[nodiscard]] optional<int> find_tiles(const span<const tile>& tiles_ref);
+    [[nodiscard]] int find_tiles(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> find_regular_map(const regular_bg_map_cell& map_cells_ref,
-                                                 const size& map_dimensions, const bg_palette_ptr& palette_ptr);
+    [[nodiscard]] int find_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+                                       const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] optional<int> create_tiles(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_tiles(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] optional<int> create_regular_map(const regular_bg_map_cell& map_cells_ref,
-                                                   const size& map_dimensions, bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+                                         bg_palette_ptr&& palette_ptr);
 
-    [[nodiscard]] optional<int> allocate_tiles(int tiles_count);
+    [[nodiscard]] int allocate_tiles(int tiles_count);
 
-    [[nodiscard]] optional<int> allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr);
 
     void increase_usages(int id);
 

@@ -8,11 +8,12 @@ namespace btn
 
 optional<bg_palette_ptr> bg_palette_ptr::find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
+    int id = palettes_manager::bg_palettes_bank().find(colors_ref, bpp_mode);
     optional<bg_palette_ptr> result;
 
-    if(optional<int> id = palettes_manager::bg_palettes_bank().find(colors_ref, bpp_mode))
+    if(id >= 0)
     {
-        result = bg_palette_ptr(*id);
+        result = bg_palette_ptr(id);
     }
 
     return result;
@@ -20,34 +21,35 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const span<const color>& colors_re
 
 bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
-    optional<int> id = palettes_manager::bg_palettes_bank().create(colors_ref, bpp_mode);
-    BTN_ASSERT(id, "Palette create failed");
+    int id = palettes_manager::bg_palettes_bank().create(colors_ref, bpp_mode);
+    BTN_ASSERT(id >= 0, "Palette create failed");
 
-    return bg_palette_ptr(*id);
+    return bg_palette_ptr(id);
 }
 
 bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
-    optional<int> id = bg_palettes_bank.find(colors_ref, bpp_mode);
+    int id = bg_palettes_bank.find(colors_ref, bpp_mode);
 
-    if(! id)
+    if(id < 0)
     {
         id = bg_palettes_bank.create(colors_ref, bpp_mode);
-        BTN_ASSERT(id, "Palette find or create failed");
+        BTN_ASSERT(id >= 0, "Palette find or create failed");
     }
 
-    return bg_palette_ptr(*id);
+    return bg_palette_ptr(id);
 }
 
 optional<bg_palette_ptr> bg_palette_ptr::optional_create(const span<const color>& colors_ref,
                                                          palette_bpp_mode bpp_mode)
 {
+    int id = palettes_manager::bg_palettes_bank().create(colors_ref, bpp_mode);
     optional<bg_palette_ptr> result;
 
-    if(optional<int> id = palettes_manager::bg_palettes_bank().create(colors_ref, bpp_mode))
+    if(id >= 0)
     {
-        result = bg_palette_ptr(*id);
+        result = bg_palette_ptr(id);
     }
 
     return result;
@@ -57,15 +59,21 @@ optional<bg_palette_ptr> bg_palette_ptr::optional_find_or_create(const span<cons
                                                                  palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+    int id = bg_palettes_bank.find(colors_ref, bpp_mode);
     optional<bg_palette_ptr> result;
 
-    if(optional<int> id = bg_palettes_bank.find(colors_ref, bpp_mode))
+    if(id >= 0)
     {
-        result = bg_palette_ptr(*id);
+        result = bg_palette_ptr(id);
     }
-    else if(optional<int> id = bg_palettes_bank.create(colors_ref, bpp_mode))
+    else
     {
-        result = bg_palette_ptr(*id);
+        id = bg_palettes_bank.create(colors_ref, bpp_mode);
+
+        if(id >= 0)
+        {
+            result = bg_palette_ptr(id);
+        }
     }
 
     return result;

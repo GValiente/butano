@@ -302,11 +302,11 @@ namespace
         }
     }
 
-    optional<int> _create_impl(const tile* tiles_data, int tiles_count)
+    int _create_impl(const tile* tiles_data, int tiles_count)
     {
         if(! tiles_data && data.delay_commit)
         {
-            return nullopt;
+            return -1;
         }
 
         if(tiles_count <= data.free_tiles_count)
@@ -343,7 +343,7 @@ namespace
             return _create_impl(tiles_data, tiles_count);
         }
 
-        return nullopt;
+        return -1;
     }
 
     bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
@@ -465,7 +465,7 @@ int available_items_count()
     return data.items.available();
 }
 
-optional<int> find(const span<const tile>& tiles_ref)
+int find(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
     [[maybe_unused]] int tiles_size = tiles_ref.size();
@@ -475,13 +475,11 @@ optional<int> find(const span<const tile>& tiles_ref)
     BTN_ASSERT(tiles_data, "Tiles ref is null");
 
     auto items_map_iterator = data.items_map.find(tiles_data);
-    optional<int> result;
 
     if(items_map_iterator != data.items_map.end())
     {
         int id = items_map_iterator->second;
         item_type& item = data.items.item(id);
-        result = id;
 
         BTN_ASSERT(tiles_size == item.tiles_count, "Tiles count does not match item tiles count: ",
                    tiles_size, " - ", item.tiles_count);
@@ -504,18 +502,18 @@ optional<int> find(const span<const tile>& tiles_ref)
             break;
         }
 
-        BTN_SPRITE_TILES_LOG("FOUND. start_tile: ", data.items.item(*result).start_tile);
+        BTN_SPRITE_TILES_LOG("FOUND. start_tile: ", data.items.item(id).start_tile);
         BTN_SPRITE_TILES_LOG_STATUS();
-    }
-    else
-    {
-        BTN_SPRITE_TILES_LOG("NOT FOUND");
+
+        return id;
     }
 
-    return result;
+    BTN_SPRITE_TILES_LOG("NOT FOUND");
+
+    return -1;
 }
 
-optional<int> create(const span<const tile>& tiles_ref)
+int create(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_size = tiles_ref.size();
@@ -526,13 +524,13 @@ optional<int> create(const span<const tile>& tiles_ref)
     BTN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
                "Multiple copies of the same tiles data not supported");
 
-    optional<int> result = _create_impl(tiles_data, tiles_size);
+    int result = _create_impl(tiles_data, tiles_size);
 
-    if(result)
+    if(result >= 0)
     {
-        data.items_map.insert(tiles_data, *result);
+        data.items_map.insert(tiles_data, result);
 
-        BTN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(*result).start_tile);
+        BTN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
         BTN_SPRITE_TILES_LOG_STATUS();
     }
     else
@@ -543,17 +541,17 @@ optional<int> create(const span<const tile>& tiles_ref)
     return result;
 }
 
-optional<int> allocate(int tiles_count)
+int allocate(int tiles_count)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count);
 
     BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
-    optional<int> result = _create_impl(nullptr, tiles_count);
+    int result = _create_impl(nullptr, tiles_count);
 
-    if(result)
+    if(result >= 0)
     {
-        BTN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data.items.item(*result).start_tile);
+        BTN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data.items.item(result).start_tile);
         BTN_SPRITE_TILES_LOG_STATUS();
     }
     else

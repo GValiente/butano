@@ -2,6 +2,7 @@
 
 #include "btn_span.h"
 #include "btn_fixed.h"
+#include "btn_optional.h"
 #include "btn_regular_bg_attributes.h"
 #include "btn_hblank_effects_manager.h"
 

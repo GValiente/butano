@@ -44,7 +44,7 @@ int main()
 
     btn::bgs_mosaic::set_horizontal_stretch(0.5);
 
-    btn::regular_bg_attributes hblank_attributes[160];
+    btn::regular_bg_attributes hblank_attributes[160] = { ground_bg.attributes() };
 
     for(int index = 80; index < 120; ++index)
     {

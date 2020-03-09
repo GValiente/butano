@@ -355,14 +355,13 @@ regular_bg_attributes attributes(int id)
 
 void set_attributes(int id, const regular_bg_attributes& attributes)
 {
-    if(const optional<int>& priority = attributes.priority())
-    {
-        set_priority(id, *priority);
-    }
+    hw::bgs::handle& handle = data.handles[id];
+    hw::bgs::set_priority(attributes.priority(), handle);
+    hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), handle);
 
-    if(const optional<bool>& mosaic_enabled = attributes.mosaic_enabled())
+    if(display_manager::bg_enabled(id))
     {
-        set_mosaic_enabled(id, *mosaic_enabled);
+        data.commit = true;
     }
 }
 
@@ -467,16 +466,8 @@ void fill_hw_attributes(int id, const regular_bg_attributes& attributes_ref, int
         const regular_bg_attributes& attributes = attributes_ptr[index];
         uint16_t& dest_cnt = dest_ptr[index];
         dest_cnt = bg_cnt;
-
-        if(const optional<int>& priority = attributes.priority())
-        {
-            hw::bgs::set_priority(*priority, dest_cnt);
-        }
-
-        if(const optional<bool>& mosaic_enabled = attributes.mosaic_enabled())
-        {
-            hw::bgs::set_mosaic_enabled(*mosaic_enabled, dest_cnt);
-        }
+        hw::bgs::set_priority(attributes.priority(), dest_cnt);
+        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
     }
 }
 

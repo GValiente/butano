@@ -1,7 +1,7 @@
 #ifndef BTN_REGULAR_BG_ATTRIBUTES_H
 #define BTN_REGULAR_BG_ATTRIBUTES_H
 
-#include "btn_optional.h"
+#include "btn_common.h"
 
 namespace btn
 {
@@ -12,23 +12,23 @@ class regular_bg_attributes
 public:
     regular_bg_attributes() = default;
 
-    regular_bg_attributes(optional<int> priority, optional<bool> mosaic_enabled);
+    regular_bg_attributes(int priority, bool mosaic_enabled);
 
-    [[nodiscard]] const optional<int>& priority() const
+    [[nodiscard]] int priority() const
     {
         return _priority;
     }
 
-    void set_priority(optional<int> priority);
+    void set_priority(int priority);
 
-    [[nodiscard]] const optional<bool>& mosaic_enabled() const
+    [[nodiscard]] bool mosaic_enabled() const
     {
         return _mosaic_enabled;
     }
 
-    void set_mosaic_enabled(optional<bool> mosaic_enabled)
+    void set_mosaic_enabled(bool mosaic_enabled)
     {
-        _mosaic_enabled = move(mosaic_enabled);
+        _mosaic_enabled = mosaic_enabled;
     }
 
     [[nodiscard]] friend bool operator==(const regular_bg_attributes& a, const regular_bg_attributes& b)
@@ -42,8 +42,8 @@ public:
     }
 
 private:
-    optional<int> _priority;
-    optional<bool> _mosaic_enabled;
+    int8_t _priority = 3;
+    bool _mosaic_enabled = false;
 };
 
 }

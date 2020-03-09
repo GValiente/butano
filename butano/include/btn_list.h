@@ -165,7 +165,7 @@ public:
             BTN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
 
             clear();
-            assign(other.begin(), other.end());
+            _assign(other);
         }
 
         return *this;
@@ -422,33 +422,65 @@ public:
 
     friend void erase(ilist& list, const_reference value)
     {
-        list.erase(remove(list.begin(), list.end(), value), list.end());
+        iterator it = list.begin();
+        iterator last = list.end();
+
+        while(it != last)
+        {
+            if(*it == value)
+            {
+                iterator next = it;
+                ++next;
+                list._erase(it);
+                it = next;
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 
     template<class Pred>
     friend void erase_if(ilist& list, const Pred& pred)
     {
-        list.erase(remove_if(list.begin(), list.end(), pred), list.end());
+        iterator it = list.begin();
+        iterator last = list.end();
+
+        while(it != last)
+        {
+            if(pred(*it))
+            {
+                iterator next = it;
+                ++next;
+                list._erase(it);
+                it = next;
+            }
+            else
+            {
+                ++it;
+            }
+        }
     }
 
     void assign(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
+        iterator last = end();
         clear();
 
         for(size_type index = 0; index < count; ++index)
         {
-            BTN_ASSERT(! full(), "List is full");
-
             node_type& new_node = _ipool->create(value);
-            _insert(end(), new_node);
+            _insert(last, new_node);
         }
     }
 
     template<typename Iterator>
     void assign(Iterator first, Iterator last)
     {
+        iterator input_last = end();
         clear();
 
         for(Iterator it = first; it != last; ++it)
@@ -456,7 +488,7 @@ public:
             BTN_ASSERT(! full(), "List is full");
 
             node_type& new_node = _ipool->create(*it);
-            _insert(end(), new_node);
+            _insert(input_last, new_node);
         }
     }
 
@@ -495,8 +527,13 @@ public:
 
             while(max_iterator != max_end)
             {
-                min_list->push_back(move(*max_iterator));
-                max_iterator = max_list->erase(max_iterator);
+                node_type& min_new_node = min_list->_ipool->create(move(*max_iterator));
+                min_list->_insert(min_end, min_new_node);
+
+                iterator max_next = max_iterator;
+                ++max_next;
+                max_list->_erase(max_iterator);
+                max_iterator = max_next;
             }
         }
     }
@@ -569,12 +606,25 @@ protected:
         _last_node.prev = &_first_node;
     }
 
-    void _assign(ilist&& other)
+    void _assign(const ilist& other)
     {
-        for(value_type& value : other)
+        iterator last = end();
+
+        for(const_reference value : other)
         {
             node_type& new_node = _ipool->create(move(value));
-            _insert(end(), new_node);
+            _insert(last, new_node);
+        }
+    }
+
+    void _assign(ilist&& other)
+    {
+        iterator last = end();
+
+        for(reference value : other)
+        {
+            node_type& new_node = _ipool->create(move(value));
+            _insert(last, new_node);
         }
 
         other.clear();
@@ -592,12 +642,12 @@ protected:
 
     void _erase(iterator position)
     {
-        node_type* pos_node = position._node;
-        node_type* prev_node = pos_node->prev;
-        node_type* next_node = pos_node->next;
+        node_type* position_node = position._node;
+        node_type* prev_node = position_node->prev;
+        node_type* next_node = position_node->next;
         prev_node->next = next_node;
         next_node->prev = prev_node;
-        _ipool->destroy(static_cast<value_node_type&>(*pos_node));
+        _ipool->destroy(static_cast<value_node_type&>(*position_node));
     }
 };
 
@@ -627,7 +677,7 @@ public:
     list(const list& other) :
         list()
     {
-        this->assign(other.begin(), other.end());
+        this->_assign(other);
     }
 
     list& operator=(const list& other)
@@ -635,7 +685,7 @@ public:
         if(this != &other)
         {
             this->clear();
-            this->assign(other.begin(), other.end());
+            this->_assign(other);
         }
 
         return *this;

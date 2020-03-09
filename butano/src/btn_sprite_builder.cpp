@@ -9,8 +9,7 @@ namespace btn
 
 sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _item(item),
-    _shape(item.shape()),
-    _size(item.size()),
+    _shape_size(item.shape_size()),
     _graphics_index(graphics_index)
 {
     BTN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);

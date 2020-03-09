@@ -189,6 +189,16 @@ public:
         return bpp_mode == palette_bpp_mode::BPP_8 ? pixels_count() / 32 : pixels_count() / 64;
     }
 
+    [[nodiscard]] constexpr friend bool operator==(const sprite_shape_size& a, const sprite_shape_size& b)
+    {
+        return a._shape == b._shape && a._size == b._size;
+    }
+
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_shape_size& a, const sprite_shape_size& b)
+    {
+        return ! (a == b);
+    }
+
 private:
     sprite_shape _shape;
     sprite_size _size;

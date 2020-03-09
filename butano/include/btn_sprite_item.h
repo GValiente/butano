@@ -12,37 +12,26 @@ class sprite_item
 {
 
 public:
-    constexpr sprite_item(sprite_shape shape, sprite_size size, const span<const tile>& tiles,
+    constexpr sprite_item(const sprite_shape_size& shape_size, const span<const tile>& tiles,
                           const span<const color>& palette, palette_bpp_mode bpp_mode, int graphics_count) :
-        sprite_item(shape, size, sprite_tiles_item(tiles, graphics_count), sprite_palette_item(palette, bpp_mode))
+        sprite_item(shape_size, sprite_tiles_item(tiles, graphics_count), sprite_palette_item(palette, bpp_mode))
     {
     }
 
-    constexpr sprite_item(sprite_shape shape, sprite_size size, const sprite_tiles_item& tiles_item,
+    constexpr sprite_item(const sprite_shape_size& shape_size, const sprite_tiles_item& tiles_item,
                           const sprite_palette_item& palette_item) :
-        _shape(shape),
-        _size(size),
+        _shape_size(shape_size),
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
         BTN_CONSTEXPR_ASSERT(tiles_item.tiles_ref().size() ==
-                             shape_size().tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
+                             _shape_size.tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
                              "Invalid shape or size");
     }
 
-    [[nodiscard]] constexpr sprite_shape shape() const
+    [[nodiscard]] constexpr const sprite_shape_size& shape_size() const
     {
-        return _shape;
-    }
-
-    [[nodiscard]] constexpr sprite_size size() const
-    {
-        return _size;
-    }
-
-    [[nodiscard]] constexpr sprite_shape_size shape_size() const
-    {
-        return sprite_shape_size(_shape, _size);
+        return _shape_size;
     }
 
     [[nodiscard]] constexpr const sprite_tiles_item& tiles_item() const
@@ -57,8 +46,7 @@ public:
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b)
     {
-        return a._shape == b._shape && a._size == b._size && a._tiles_item == b._tiles_item &&
-                a._palette_item == b._palette_item;
+        return a._shape_size == b._shape_size && a._tiles_item == b._tiles_item && a._palette_item == b._palette_item;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const sprite_item& a, const sprite_item& b)
@@ -67,8 +55,7 @@ public:
     }
 
 private:
-    sprite_shape _shape;
-    sprite_size _size;
+    sprite_shape_size _shape_size;
     sprite_tiles_item _tiles_item;
     sprite_palette_item _palette_item;
 };

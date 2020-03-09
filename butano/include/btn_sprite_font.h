@@ -26,8 +26,9 @@ public:
         _utf8_characters(utf8_characters),
         _character_widths(character_widths)
     {
-        BTN_CONSTEXPR_ASSERT((item.shape() == sprite_shape::SQUARE || item.shape() == sprite_shape::TALL) &&
-                             item.size() == sprite_size::SMALL, "Invalid shape or size");
+        BTN_CONSTEXPR_ASSERT(item.shape_size() == sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL) ||
+                             item.shape_size() == sprite_shape_size(sprite_shape::TALL, sprite_size::SMALL),
+                             "Invalid shape size");
         BTN_CONSTEXPR_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters.size(),
                              "Invalid graphics count or utf8 characters count");
         BTN_CONSTEXPR_ASSERT(item.palette_item().bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");

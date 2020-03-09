@@ -11,6 +11,7 @@ class size;
 class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
+class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
 enum class sprite_double_size_mode;
@@ -41,19 +42,28 @@ namespace sprites_manager
 
     void decrease_usages(id_type id);
 
+    [[nodiscard]] sprite_shape_size shape_size(id_type id);
+
     [[nodiscard]] size dimensions(id_type id);
 
     [[nodiscard]] const sprite_tiles_ptr& tiles(id_type id);
 
-    void set_tiles(id_type id, const sprite_tiles_ptr& tiles);
+    void set_tiles(id_type id, const sprite_tiles_ptr& tiles_ptr);
 
-    void set_tiles(id_type id, sprite_tiles_ptr&& tiles);
+    void set_tiles(id_type id, sprite_tiles_ptr&& tiles_ptr);
+
+    void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr);
+
+    void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
 
     [[nodiscard]] const sprite_palette_ptr& palette(id_type id);
 
-    void set_palette(id_type id, const sprite_palette_ptr& palette);
+    void set_palette(id_type id, const sprite_palette_ptr& palette_ptr);
 
-    void set_palette(id_type id, sprite_palette_ptr&& palette);
+    void set_palette(id_type id, sprite_palette_ptr&& palette_ptr);
+
+    void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr,
+                               sprite_palette_ptr&& palette_ptr);
 
     [[nodiscard]] const fixed_point& position(id_type id);
 

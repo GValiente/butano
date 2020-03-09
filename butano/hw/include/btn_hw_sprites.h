@@ -25,16 +25,6 @@ namespace btn::hw::sprites
         }
     };
 
-    [[nodiscard]] constexpr int count()
-    {
-        return 128;
-    }
-
-    [[nodiscard]] constexpr int max_bg_priority()
-    {
-        return 3;
-    }
-
     namespace
     {
         static_assert(sizeof(OBJ_ATTR) == sizeof(handle));
@@ -46,6 +36,15 @@ namespace btn::hw::sprites
         }
     }
 
+    [[nodiscard]] constexpr int count()
+    {
+        return 128;
+    }
+
+    [[nodiscard]] constexpr int max_bg_priority()
+    {
+        return 3;
+    }
 
     inline void init()
     {
@@ -55,11 +54,12 @@ namespace btn::hw::sprites
     inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                               handle& sprite)
     {
+        const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
+        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
-        int a1 = ATTR1_BUILDR(0, int(builder.size()), builder.horizontal_flip(), builder.vertical_flip());
+        int a1 = ATTR1_BUILDR(0, int(shape_size.size()), builder.horizontal_flip(), builder.vertical_flip());
         int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
@@ -67,11 +67,12 @@ namespace btn::hw::sprites
     inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                              handle& sprite)
     {
+        const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(builder.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
+        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
-        int a1 = ATTR1_BUILDA(0, int(builder.size()), 0);
+        int a1 = ATTR1_BUILDA(0, int(shape_size.size()), 0);
         int a2 = ATTR2_BUILD(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
@@ -80,6 +81,14 @@ namespace btn::hw::sprites
     {
         auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
         return sprite_ptr->attr0 & ATTR0_AFF_DBL_BIT;
+    }
+
+    [[nodiscard]] inline sprite_shape_size shape_size(const handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+        auto shape = sprite_shape(sprite_ptr->attr0 >> 14);
+        auto size = sprite_size(sprite_ptr->attr1 >> 14);
+        return sprite_shape_size(shape, size);
     }
 
     [[nodiscard]] inline size dimensions(const handle& sprite)
@@ -96,6 +105,13 @@ namespace btn::hw::sprites
         return result;
     }
 
+    inline void set_shape_size(const sprite_shape_size& shape_size, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+        BFN_SET(sprite_ptr->attr0, int(shape_size.shape()), ATTR0_SHAPE);
+        BFN_SET(sprite_ptr->attr1, int(shape_size.size()), ATTR1_SIZE);
+    }
+
     inline void set_tiles(int tiles_id, handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
@@ -106,6 +122,20 @@ namespace btn::hw::sprites
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
         BFN_SET(sprite_ptr->attr2, palette_id, ATTR2_PALBANK);
+    }
+
+    inline void set_bpp_mode(palette_bpp_mode bpp_mode, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+        if(bpp_mode == palette_bpp_mode::BPP_8)
+        {
+            sprite_ptr->attr0 |= ATTR0_8BPP;
+        }
+        else
+        {
+            sprite_ptr->attr0 &= ~ATTR0_8BPP;
+        }
     }
 
     inline void remove_affine_mat(handle& sprite)

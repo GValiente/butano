@@ -23,16 +23,15 @@ public:
     sprite_builder(const sprite_item& item, int graphics_index = 0);
 
     template<class SpriteTilesPtr, class SpritePalettePtr>
-    sprite_builder(sprite_shape shape, sprite_size size, SpriteTilesPtr&& tiles_ptr, SpritePalettePtr&& palette_ptr) :
+    sprite_builder(const sprite_shape_size& shape_size, SpriteTilesPtr&& tiles_ptr, SpritePalettePtr&& palette_ptr) :
         _tiles_ptr(forward<SpriteTilesPtr>(tiles_ptr)),
         _palette_ptr(forward<SpritePalettePtr>(palette_ptr)),
-        _shape(shape),
-        _size(size),
+        _shape_size(shape_size),
         _graphics_index(0)
     {
-        BTN_ASSERT(_tiles_ptr->tiles_count() == shape_size().tiles_count(_palette_ptr->bpp_mode()),
+        BTN_ASSERT(_tiles_ptr->tiles_count() == _shape_size.tiles_count(_palette_ptr->bpp_mode()),
                    "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-                   shape_size().tiles_count(_palette_ptr->bpp_mode()));
+                   _shape_size.tiles_count(_palette_ptr->bpp_mode()));
     }
 
     [[nodiscard]] const optional<sprite_item>& item() const
@@ -45,19 +44,9 @@ public:
         return _graphics_index;
     }
 
-    [[nodiscard]] sprite_shape shape() const
+    [[nodiscard]] const sprite_shape_size& shape_size() const
     {
-        return _shape;
-    }
-
-    [[nodiscard]] sprite_size size() const
-    {
-        return _size;
-    }
-
-    [[nodiscard]] sprite_shape_size shape_size() const
-    {
-        return sprite_shape_size(_shape, _size);
+        return _shape_size;
     }
 
     [[nodiscard]] create_mode tiles_create_mode() const
@@ -273,12 +262,11 @@ private:
     optional<sprite_tiles_ptr> _tiles_ptr;
     optional<sprite_palette_ptr> _palette_ptr;
     optional<sprite_affine_mat_ptr> _affine_mat_ptr;
+    sprite_shape_size _shape_size;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;
-    sprite_shape _shape;
-    sprite_size _size;
     int _graphics_index;
     int _bg_priority = 3;
     int _z_order = 0;

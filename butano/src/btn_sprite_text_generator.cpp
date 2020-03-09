@@ -36,7 +36,7 @@ namespace
         optional<span<tile>> tiles_vram = tiles_ptr->vram();
         BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
-        sprite_builder builder(sprite_shape::WIDE, size, move(*tiles_ptr), palette_ptr);
+        sprite_builder builder(sprite_shape_size(sprite_shape::WIDE, size), move(*tiles_ptr), palette_ptr);
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
@@ -181,7 +181,8 @@ namespace
                 return false;
             }
 
-            sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
+            sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);
+            sprite_builder builder(shape_size, move(*source_tiles_ptr), _palette_ptr);
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
@@ -256,7 +257,8 @@ namespace
                     return false;
                 }
 
-                sprite_builder builder(item.shape(), sprite_size::SMALL, move(*source_tiles_ptr), _palette_ptr);
+                sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);
+                sprite_builder builder(shape_size, move(*source_tiles_ptr), _palette_ptr);
                 builder.set_position(_current_position);
                 builder.set_bg_priority(_generator.bg_priority());
                 builder.set_z_order(_generator.z_order());

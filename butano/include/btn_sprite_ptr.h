@@ -16,6 +16,7 @@ class sprite_item;
 class sprite_builder;
 class regular_bg_ptr;
 class sprite_tiles_ptr;
+class sprite_shape_size;
 class sprite_tiles_item;
 class sprite_palette_ptr;
 class sprite_palette_item;
@@ -69,6 +70,8 @@ public:
         }
     }
 
+    [[nodiscard]] sprite_shape_size shape_size() const;
+
     [[nodiscard]] size dimensions() const;
 
     [[nodiscard]] const sprite_tiles_ptr& tiles() const;
@@ -77,10 +80,17 @@ public:
 
     void set_tiles(sprite_tiles_ptr&& tiles_ptr);
 
+    void set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr);
+
+    void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
+
     void set_tiles(const sprite_item& item, int graphics_index = 0,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index = 0,
+                   create_mode create_mode = create_mode::FIND_OR_CREATE);
+
+    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index = 0,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     [[nodiscard]] const sprite_palette_ptr& palette() const;

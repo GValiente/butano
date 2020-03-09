@@ -122,6 +122,11 @@ sprite_ptr& sprite_ptr::operator=(const sprite_ptr& other)
     return *this;
 }
 
+sprite_shape_size sprite_ptr::shape_size() const
+{
+    return sprites_manager::shape_size(_handle);
+}
+
 size sprite_ptr::dimensions() const
 {
     return sprites_manager::dimensions(_handle);
@@ -142,9 +147,19 @@ void sprite_ptr::set_tiles(sprite_tiles_ptr&& tiles_ptr)
     sprites_manager::set_tiles(_handle, move(tiles_ptr));
 }
 
+void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr)
+{
+    sprites_manager::set_tiles(_handle, shape_size, tiles_ptr);
+}
+
+void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr)
+{
+    sprites_manager::set_tiles(_handle, shape_size, move(tiles_ptr));
+}
+
 void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(item.tiles_item(), graphics_index, create_mode);
+    set_tiles(item.tiles_item(), item.shape_size(), graphics_index, create_mode);
 }
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
@@ -153,6 +168,15 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
     BTN_ASSERT(tiles_ptr, "Tiles create failed");
 
     set_tiles(move(*tiles_ptr));
+}
+
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
+                           int graphics_index, create_mode create_mode)
+{
+    optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles(graphics_index, create_mode);
+    BTN_ASSERT(tiles_ptr, "Tiles create failed");
+
+    set_tiles(shape_size, move(*tiles_ptr));
 }
 
 const sprite_palette_ptr& sprite_ptr::palette() const
@@ -185,8 +209,13 @@ void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mod
 
 void sprite_ptr::set_item(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
-    set_tiles(item, graphics_index, create_mode);
-    set_palette(item, create_mode);
+    optional<sprite_tiles_ptr> tiles_ptr = item.tiles_item().create_tiles(graphics_index, create_mode);
+    BTN_ASSERT(tiles_ptr, "Tiles create failed");
+
+    optional<sprite_palette_ptr> palette_ptr = item.palette_item().create_palette(create_mode);
+    BTN_ASSERT(palette_ptr, "Palette create failed");
+
+    sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), move(*tiles_ptr), move(*palette_ptr));
 }
 
 fixed sprite_ptr::x() const

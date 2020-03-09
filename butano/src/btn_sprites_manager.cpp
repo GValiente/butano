@@ -286,6 +286,12 @@ void decrease_usages(id_type id)
     }
 }
 
+sprite_shape_size shape_size(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::shape_size(item->handle);
+}
+
 size dimensions(id_type id)
 {
     auto item = static_cast<item_type*>(id);
@@ -328,6 +334,64 @@ void set_tiles(id_type id, sprite_tiles_ptr&& tiles_ptr)
     }
 }
 
+void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(tiles_ptr != item->tiles_ptr)
+    {
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(item->palette_ptr.bpp_mode()),
+                   "Invalid tiles or shape size: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size.tiles_count(item->palette_ptr.bpp_mode()));
+
+        hw::sprites::handle& handle = item->handle;
+        hw::sprites::set_tiles(tiles_ptr.id(), handle);
+        item->tiles_ptr = tiles_ptr;
+        _update_handle(*item);
+
+        if(shape_size != hw::sprites::shape_size(handle))
+        {
+            hw::sprites::set_shape_size(shape_size, handle);
+            item->update_half_dimensions();
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
+        }
+    }
+}
+
+void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(tiles_ptr != item->tiles_ptr)
+    {
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(item->palette_ptr.bpp_mode()),
+                   "Invalid tiles or shape size: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size.tiles_count(item->palette_ptr.bpp_mode()));
+
+        hw::sprites::handle& handle = item->handle;
+        hw::sprites::set_tiles(tiles_ptr.id(), handle);
+        item->tiles_ptr = move(tiles_ptr);
+        _update_handle(*item);
+
+        if(shape_size != hw::sprites::shape_size(handle))
+        {
+            hw::sprites::set_shape_size(shape_size, handle);
+            item->update_half_dimensions();
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
+        }
+    }
+}
+
 const sprite_palette_ptr& palette(id_type id)
 {
     auto item = static_cast<item_type*>(id);
@@ -360,6 +424,51 @@ void set_palette(id_type id, sprite_palette_ptr&& palette_ptr)
 
         hw::sprites::set_palette(palette_ptr.id(), item->handle);
         item->palette_ptr = move(palette_ptr);
+        _update_handle(*item);
+    }
+}
+
+void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr,
+                           sprite_palette_ptr&& palette_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::handle& handle = item->handle;
+    bool different_shape_size = shape_size != hw::sprites::shape_size(handle);
+    bool different_tiles = tiles_ptr != item->tiles_ptr;
+    bool different_palette = palette_ptr != item->palette_ptr;
+
+    if(different_shape_size || different_tiles || different_palette)
+    {
+        palette_bpp_mode bpp_mode = palette_ptr.bpp_mode();
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(bpp_mode),
+                   "Invalid tiles, palette or shape size: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size.tiles_count(bpp_mode));
+
+        if(different_shape_size)
+        {
+            hw::sprites::set_shape_size(shape_size, handle);
+            item->update_half_dimensions();
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
+        }
+
+        if(different_tiles)
+        {
+            hw::sprites::set_tiles(tiles_ptr.id(), handle);
+            item->tiles_ptr = move(tiles_ptr);
+        }
+
+        if(different_palette)
+        {
+            hw::sprites::set_palette(palette_ptr.id(), handle);
+            hw::sprites::set_bpp_mode(bpp_mode, handle);
+            item->palette_ptr = move(palette_ptr);
+        }
+
         _update_handle(*item);
     }
 }

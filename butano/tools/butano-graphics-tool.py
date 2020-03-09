@@ -144,8 +144,8 @@ class SpriteItem:
             header_file.write('namespace btn::sprite_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr const sprite_item ' + name + '(' +
-                              'sprite_shape::' + self.__shape + ', ' +
-                              'sprite_size::' + self.__size + ', ' + '\n            ' +
+                              'sprite_shape_size(sprite_shape::' + self.__shape + ', ' +
+                              'sprite_size::' + self.__size + '), ' + '\n            ' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
                               'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
                               bpp_mode_label + ', ' + str(self.__graphics) + ');' + '\n')

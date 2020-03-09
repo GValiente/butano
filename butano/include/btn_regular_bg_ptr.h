@@ -95,6 +95,9 @@ public:
 
     void set_map(const regular_bg_map_item& map_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
+    void set_map(const regular_bg_map_item& map_item, const bg_palette_item& palette_item,
+                 create_mode create_mode = create_mode::FIND_OR_CREATE);
+
     [[nodiscard]] const bg_palette_ptr& palette() const;
 
     void set_palette(const bg_palette_ptr& palette_ptr);

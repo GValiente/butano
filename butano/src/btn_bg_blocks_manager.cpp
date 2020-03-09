@@ -7,6 +7,7 @@
 #include "btn_limits.h"
 #include "btn_optional.h"
 #include "btn_hash_map.h"
+#include "btn_bgs_manager.h"
 #include "btn_config_bg_blocks.h"
 #include "../hw/include/btn_hw_bg_blocks.h"
 
@@ -957,6 +958,13 @@ void set_map_palette(int id, bg_palette_ptr&& palette_ptr)
 
     if(palette_ptr != item.palette_ptr)
     {
+        palette_bpp_mode new_bpp_mode = palette_ptr.bpp_mode();
+
+        if(new_bpp_mode != item.palette_ptr->bpp_mode())
+        {
+            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_bpp_mode);
+        }
+
         item.palette_ptr = move(palette_ptr);
         item.commit = true;
         data.check_commit = true;

@@ -13,6 +13,7 @@ class bg_tiles_ptr;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class regular_bg_attributes;
+enum class palette_bpp_mode;
 
 namespace bgs_manager
 {
@@ -32,15 +33,17 @@ namespace bgs_manager
 
     [[nodiscard]] const bg_tiles_ptr& tiles(int id);
 
-    void set_tiles(int id, const bg_tiles_ptr& tiles);
+    void set_tiles(int id, const bg_tiles_ptr& tiles_ptr);
 
-    void set_tiles(int id, bg_tiles_ptr&& tiles);
+    void set_tiles(int id, bg_tiles_ptr&& tiles_ptr);
 
     [[nodiscard]] const regular_bg_map_ptr& map(int id);
 
-    void set_map(int id, const regular_bg_map_ptr& map);
+    void set_map(int id, const regular_bg_map_ptr& map_ptr);
 
-    void set_map(int id, regular_bg_map_ptr&& map);
+    void set_map(int id, regular_bg_map_ptr&& map_ptr);
+
+    void set_tiles_and_map(int id, bg_tiles_ptr&& tiles_ptr, regular_bg_map_ptr&& map_ptr);
 
     [[nodiscard]] const fixed_point& position(int id);
 
@@ -72,6 +75,8 @@ namespace bgs_manager
 
     void set_ignore_camera(int id, bool ignore_camera);
 
+    void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode);
+
     void update_camera();
 
     void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
@@ -82,6 +87,8 @@ namespace bgs_manager
 
     void fill_hw_attributes(int id,  const regular_bg_attributes& attributes_ref, int attributes_count,
                             uint16_t& dest_ref);
+
+    void update();
 
     void commit();
 }

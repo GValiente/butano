@@ -56,7 +56,8 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
+        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(),
+                             builder.window_enabled());
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDR(0, int(shape_size.size()), builder.horizontal_flip(), builder.vertical_flip());
@@ -69,7 +70,8 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(), 0);
+        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(),
+                             builder.window_enabled());
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
         int a1 = ATTR1_BUILDA(0, int(shape_size.size()), 0);
@@ -242,6 +244,26 @@ namespace btn::hw::sprites
         else
         {
             sprite_ptr->attr0 &= ~ATTR0_BLEND;
+        }
+    }
+
+    [[nodiscard]] inline bool window_enabled(const handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+        return sprite_ptr->attr0 & ATTR0_WINDOW;
+    }
+
+    inline void set_window_enabled(bool window_enabled, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+
+        if(window_enabled)
+        {
+            sprite_ptr->attr0 |= ATTR0_WINDOW;
+        }
+        else
+        {
+            sprite_ptr->attr0 &= ~ATTR0_WINDOW;
         }
     }
 

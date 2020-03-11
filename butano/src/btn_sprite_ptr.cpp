@@ -443,6 +443,16 @@ void sprite_ptr::set_blending_enabled(bool blending_enabled)
     sprites_manager::set_blending_enabled(_handle, blending_enabled);
 }
 
+bool sprite_ptr::window_enabled() const
+{
+    return sprites_manager::window_enabled(_handle);
+}
+
+void sprite_ptr::set_window_enabled(bool window_enabled)
+{
+    sprites_manager::set_window_enabled(_handle, window_enabled);
+}
+
 bool sprite_ptr::double_size() const
 {
     return sprites_manager::double_size(_handle);

@@ -175,11 +175,14 @@ public:
         return _blending_enabled;
     }
 
-    sprite_builder& set_blending_enabled(bool blending_enabled)
+    sprite_builder& set_blending_enabled(bool blending_enabled);
+
+    [[nodiscard]] bool window_enabled() const
     {
-        _blending_enabled = blending_enabled;
-        return *this;
+        return _window_enabled;
     }
+
+    sprite_builder& set_window_enabled(bool window_enabled);
 
     [[nodiscard]] sprite_double_size_mode double_size_mode() const
     {
@@ -274,6 +277,7 @@ private:
     bool _vertical_flip = false;
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
+    bool _window_enabled = false;
     bool _visible = true;
     bool _ignore_camera = false;
     bool _remove_affine_mat_when_not_needed = true;

@@ -11,7 +11,6 @@
 #include "btn_bgs_manager.h"
 #include "btn_audio_manager.h"
 #include "btn_display_manager.h"
-#include "btn_actions_manager.h"
 #include "btn_sprites_manager.h"
 #include "btn_palettes_manager.h"
 #include "btn_bg_blocks_manager.h"
@@ -82,83 +81,9 @@ namespace
 
     void stop()
     {
-        actions_manager::stop();
         hw::core::wait_for_vblank();
         audio_manager::stop();
         hblank_effects_manager::stop();
-    }
-
-    void _update_without_actions()
-    {
-        BTN_PROFILER_ENGINE_START("eng_palettes_update");
-        palettes_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_sprite_tiles_update");
-        sprite_tiles_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_sprites_update");
-        sprites_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
-        bg_blocks_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_audio_update");
-        audio_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_hblank_effects_update");
-        hblank_effects_manager::update();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_cpu_usage");
-        data.cpu_usage = data.cpu_usage_timer->elapsed_frames();
-        BTN_PROFILER_ENGINE_STOP();
-
-        hw::core::wait_for_vblank();
-
-        BTN_PROFILER_ENGINE_START("eng_cpu_usage");
-        data.cpu_usage_timer->restart();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_hblank_effects_commit");
-        hblank_effects_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_display_commit");
-        display_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_palettes_commit");
-        palettes_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_sprite_tiles_commit");
-        sprite_tiles_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_sprites_commit");
-        sprites_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
-        bg_blocks_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_bgs_commit");
-        bgs_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_audio_commit");
-        audio_manager::commit();
-        BTN_PROFILER_ENGINE_STOP();
-
-        BTN_PROFILER_ENGINE_START("eng_keypad");
-        hw::keypad::update();
-        BTN_PROFILER_ENGINE_STOP();
     }
 }
 
@@ -198,11 +123,75 @@ void init()
 
 void update()
 {
-    BTN_PROFILER_ENGINE_START("eng_actions_update");
-    actions_manager::update();
+    BTN_PROFILER_ENGINE_START("eng_palettes_update");
+    palettes_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    _update_without_actions();
+    BTN_PROFILER_ENGINE_START("eng_sprite_tiles_update");
+    sprite_tiles_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_sprites_update");
+    sprites_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
+    bg_blocks_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_audio_update");
+    audio_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_hblank_effects_update");
+    hblank_effects_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    data.cpu_usage = data.cpu_usage_timer->elapsed_frames();
+    BTN_PROFILER_ENGINE_STOP();
+
+    hw::core::wait_for_vblank();
+
+    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    data.cpu_usage_timer->restart();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_hblank_effects_commit");
+    hblank_effects_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_display_commit");
+    display_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_palettes_commit");
+    palettes_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_sprite_tiles_commit");
+    sprite_tiles_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_sprites_commit");
+    sprites_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
+    bg_blocks_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_bgs_commit");
+    bgs_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_audio_commit");
+    audio_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_keypad");
+    hw::keypad::update();
+    BTN_PROFILER_ENGINE_STOP();
 }
 
 void update(int frames)
@@ -241,7 +230,7 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
 
         if(wait)
         {
-            _update_without_actions();
+            update();
         }
         else
         {

@@ -57,7 +57,6 @@ int main()
     // ground_bg_attributes_hblank_effect.set_visible(false);
 
     btn::regular_bg_move_by_action ground_bg_move_action(btn::move(ground_bg), 0, 0.5);
-    ground_bg_move_action.run();
 
     btn::regular_bg_ptr clouds_bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::clouds);
     clouds_bg.set_priority(2);
@@ -65,7 +64,6 @@ int main()
     // btn::blending::set_transparency_alpha(0.4);
 
     btn::regular_bg_move_by_action clouds_bg_move_action(btn::move(clouds_bg), -1.0 / 16, 0.5);
-    clouds_bg_move_action.run();
 
     btn::regular_bg_ptr bomb_bg = btn::regular_bg_ptr::create(0, 0, btn::bg_items::bomb);
     bomb_bg.set_priority(1);
@@ -77,7 +75,6 @@ int main()
                 bomb_bg, btn::span<const btn::fixed>(hblank_deltas, 160));
 
     btn::regular_bg_move_by_action bomb_bg_move_action(btn::move(bomb_bg), -1.0 / 2, 4);
-    bomb_bg_move_action.run();
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     text_generator.set_bg_priority(1);
@@ -90,9 +87,15 @@ int main()
 
     while(true)
     {
+        ground_bg_move_action.update();
+        clouds_bg_move_action.update();
+        bomb_bg_move_action.update();
+
         hero.update();
         hero_bullets.update(hero);
         scoreboard.update(hero);
+
+        stats.update();
         btn::core::update();
 
         if(btn::keypad::pressed(btn::keypad::button_type::START))

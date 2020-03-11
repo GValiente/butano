@@ -1,7 +1,6 @@
 #ifndef BTN_TEMPLATE_ACTIONS_H
 #define BTN_TEMPLATE_ACTIONS_H
 
-#include "btn_action.h"
 #include "btn_assert.h"
 #include "btn_utility.h"
 
@@ -9,7 +8,7 @@ namespace btn
 {
 
 template<typename Value, typename Property, class PropertyManager>
-class by_template_action : public action
+class by_template_action
 {
 
 public:
@@ -18,14 +17,9 @@ public:
         PropertyManager::set(_initial_property, _value);
     }
 
-    void update() override
+    void update()
     {
         PropertyManager::set(PropertyManager::get(_value) + _delta_property, _value);
-    }
-
-    [[nodiscard]] bool done() const override
-    {
-        return false;
     }
 
 protected:
@@ -55,7 +49,7 @@ private:
 
 
 template<typename Value, typename Property, class PropertyManager>
-class cyclic_by_template_action : public action
+class cyclic_by_template_action
 {
 
 public:
@@ -64,7 +58,7 @@ public:
         PropertyManager::set(_initial_property, _value);
     }
 
-    void update() override
+    void update()
     {
         Property new_property = PropertyManager::get(_value) + _delta_property;
 
@@ -78,11 +72,6 @@ public:
         }
 
         PropertyManager::set(new_property, _value);
-    }
-
-    [[nodiscard]] bool done() const override
-    {
-        return false;
     }
 
 protected:
@@ -127,7 +116,7 @@ private:
 
 
 template<typename Value, typename Property, class PropertyManager>
-class duration_by_template_action : public action
+class duration_by_template_action
 {
 
 public:
@@ -137,7 +126,7 @@ public:
         _current_frame = 0;
     }
 
-    void update() override
+    void update()
     {
         if(_current_frame == _duration_frames - 1)
         {
@@ -148,11 +137,6 @@ public:
         {
             ++_current_frame;
         }
-    }
-
-    [[nodiscard]] bool done() const override
-    {
-        return false;
     }
 
     [[nodiscard]] int duration_frames() const
@@ -191,7 +175,7 @@ private:
 
 
 template<typename Value, typename Property, class PropertyManager>
-class cyclic_duration_by_template_action : public action
+class cyclic_duration_by_template_action
 {
 
 public:
@@ -200,7 +184,7 @@ public:
         PropertyManager::set(_initial_property, _value);
     }
 
-    void update() override
+    void update()
     {
         if(_current_frame == _duration_frames - 1)
         {
@@ -222,11 +206,6 @@ public:
         {
             ++_current_frame;
         }
-    }
-
-    [[nodiscard]] bool done() const override
-    {
-        return false;
     }
 
     [[nodiscard]] int duration_frames() const
@@ -280,7 +259,7 @@ private:
 
 
 template<typename Value, typename Property, class PropertyManager>
-class to_template_action : public action
+class to_template_action
 {
 
 public:
@@ -290,7 +269,7 @@ public:
         _current_frame = 0;
     }
 
-    void update() override
+    void update()
     {
         BTN_ASSERT(! done(), "Action is done");
 
@@ -306,7 +285,7 @@ public:
         }
     }
 
-    [[nodiscard]] bool done() const override
+    [[nodiscard]] bool done() const
     {
         return _current_frame == _duration_frames;
     }
@@ -357,7 +336,7 @@ private:
 
 
 template<typename Value, typename Property, class PropertyManager>
-class loop_template_action : public action
+class loop_template_action
 {
 
 public:
@@ -368,7 +347,7 @@ public:
         _reverse = false;
     }
 
-    void update() override
+    void update()
     {
         ++_current_frame;
 
@@ -398,11 +377,6 @@ public:
                 PropertyManager::set(PropertyManager::get(_value) + _delta_property, _value);
             }
         }
-    }
-
-    [[nodiscard]] bool done() const override
-    {
-        return false;
     }
 
     [[nodiscard]] int duration_frames() const

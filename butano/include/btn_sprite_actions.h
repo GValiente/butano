@@ -118,7 +118,7 @@ public:
 // animation
 
 template<int Size>
-class sprite_animate_action : public action
+class sprite_animate_action
 {
     static_assert(Size > 0);
 
@@ -161,7 +161,7 @@ public:
         _current_wait_frames = 0;
     }
 
-    void update() override
+    void update()
     {
         BTN_ASSERT(! done(), "Action is done");
 
@@ -182,7 +182,7 @@ public:
         }
     }
 
-    [[nodiscard]] bool done() const override
+    [[nodiscard]] bool done() const
     {
         return _current_graphics_index_index == _graphics_indexes.size();
     }
@@ -276,7 +276,7 @@ template<class SpritePtr, typename ...Args>
 // cached animation
 
 template<int Size>
-class sprite_cached_animate_action : public action
+class sprite_cached_animate_action
 {
     static_assert(Size > 0);
 
@@ -335,7 +335,7 @@ public:
         _current_wait_frames = 0;
     }
 
-    void update() override
+    void update()
     {
         BTN_ASSERT(! done(), "Action is done");
 
@@ -356,7 +356,7 @@ public:
         }
     }
 
-    [[nodiscard]] bool done() const override
+    [[nodiscard]] bool done() const
     {
         return _current_tiles_ptr_index == _tiles_ptrs.size();
     }

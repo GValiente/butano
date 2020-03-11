@@ -20,8 +20,11 @@ void stats::set_mode(mode_type mode)
     btn::point display_center = btn::display::center();
     int text_x = 8 - display_center.x();
     int text_height = _text_generator.font().item().shape_size().height() + 4;
+    _mode = mode;
     _static_text_sprites.clear();
-    _action.reset();
+    _text_sprites.clear();
+    _max_cpu_usage = 0;
+    _counter = 0;
 
     switch(mode)
     {
@@ -30,52 +33,51 @@ void stats::set_mode(mode_type mode)
         break;
 
     case mode_type::SIMPLE:
-        {
-            btn::fixed_point cpu_text_position(text_x, text_height - display_center.y());
-            _action.emplace(_text_generator, cpu_text_position, false);
-            _action->run();
-        }
+        _text_position = btn::fixed_point(text_x, text_height - display_center.y());
         break;
 
     case mode_type::DETAILED:
         {
-            btn::string<32> text;
-            btn::input_string_stream text_stream(text);
             btn::string_view cpu_label = "CPU: ";
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
-            btn::fixed_point cpu_text_position(text_x + cpu_label_width, text_height - display_center.y());
+            _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - display_center.y());
+
+            btn::string<32> text;
+            btn::input_string_stream text_stream(text);
             text_stream.append(cpu_label);
-            _text_generator.generate(text_x, cpu_text_position.y(), text, _static_text_sprites);
+            _text_generator.generate(text_x, _text_position.y(), text, _static_text_sprites);
 
             text_stream.clear();
             text_stream.append("IWR: ");
             text_stream.append(btn::memory::used_static_iwram());
             text_stream.append("B");
-            _text_generator.generate(text_x, cpu_text_position.y() + text_height, text, _static_text_sprites);
+            _text_generator.generate(text_x, _text_position.y() + text_height, text, _static_text_sprites);
 
             text_stream.clear();
             text_stream.append("EWR: ");
             text_stream.append(btn::memory::used_static_ewram());
             text_stream.append("B");
-            _text_generator.generate(text_x, cpu_text_position.y() + (text_height * 2), text, _static_text_sprites);
-
-            _action.emplace(_text_generator, cpu_text_position, true);
-            _action->run();
+            _text_generator.generate(text_x, _text_position.y() + (text_height * 2), text, _static_text_sprites);
         }
         break;
     }
 }
 
-stats::action::action(const btn::sprite_text_generator& text_generator, const btn::fixed_point& text_position,
-                      bool detailed) :
-    _detailed(detailed),
-    _text_generator(text_generator),
-    _text_position(text_position)
+void stats::update()
 {
-}
+    switch(_mode)
+    {
 
-void stats::action::update()
-{
+    case mode_type::DISABLED:
+        return;
+
+    case mode_type::SIMPLE:
+        break;
+
+    case mode_type::DETAILED:
+        break;
+    }
+
     _max_cpu_usage = btn::max(_max_cpu_usage, btn::core::cpu_usage());
 
     if(! _counter)
@@ -84,13 +86,19 @@ void stats::action::update()
         btn::string<32> text;
         btn::input_string_stream text_stream(text);
 
-        if(_detailed)
+        switch(_mode)
         {
-            text_stream.append(max_cpu_pct);
-        }
-        else
-        {
+
+        case mode_type::DISABLED:
+            break;
+
+        case mode_type::SIMPLE:
             text_stream.append(max_cpu_pct.integer());
+            break;
+
+        case mode_type::DETAILED:
+            text_stream.append(max_cpu_pct);
+            break;
         }
 
         text_stream.append("%");

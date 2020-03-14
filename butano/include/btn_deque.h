@@ -1,0 +1,846 @@
+#ifndef BTN_DEQUE_H
+#define BTN_DEQUE_H
+
+#include <new>
+#include "btn_assert.h"
+#include "btn_iterator.h"
+#include "btn_algorithm.h"
+#include "btn_power_of_two.h"
+#include "btn_deque_fwd.h"
+
+namespace btn
+{
+
+template<typename Type>
+class ideque
+{
+
+public:
+    using value_type = Type;
+    using size_type = int;
+    using reference = Type&;
+    using const_reference = const Type&;
+    using pointer = Type*;
+    using const_pointer = const Type*;
+
+    class iterator
+    {
+
+    public:
+        iterator& operator++()
+        {
+            ++_index;
+            return *this;
+        }
+
+        iterator& operator--()
+        {
+            --_index;
+            return *this;
+        }
+
+        [[nodiscard]] const_reference operator*() const
+        {
+            return _deque->_value(_index);
+        }
+
+        [[nodiscard]] reference operator*()
+        {
+            return _deque->_value(_index);
+        }
+
+        const_pointer operator->() const
+        {
+            return &_deque->_value(_index);
+        }
+
+        pointer operator->()
+        {
+            return &_deque->_value(_index);
+        }
+
+        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
+        {
+            return a._index == b._index;
+        }
+
+        [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
+        {
+            return ! (a == b);
+        }
+
+        [[nodiscard]] friend bool operator<(const iterator& a, const iterator& b)
+        {
+            return a._index < b._index;
+        }
+
+        [[nodiscard]] friend bool operator>(const iterator& a, const iterator& b)
+        {
+            return b < a;
+        }
+
+        [[nodiscard]] friend bool operator<=(const iterator& a, const iterator& b)
+        {
+            return ! (a > b);
+        }
+
+        [[nodiscard]] friend bool operator>=(const iterator& a, const iterator& b)
+        {
+            return ! (a < b);
+        }
+
+    private:
+        friend class ideque;
+        friend class const_iterator;
+
+        ideque* _deque;
+        size_type _index;
+
+        iterator(ideque& deque, size_type index) :
+            _deque(&deque),
+            _index(index)
+        {
+        }
+    };
+
+    class const_iterator
+    {
+
+    public:
+        const_iterator(iterator it) :
+            _deque(it._deque),
+            _index(it._index)
+        {
+        }
+
+        const_iterator& operator++()
+        {
+            ++_index;
+            return *this;
+        }
+
+        const_iterator& operator--()
+        {
+            --_index;
+            return *this;
+        }
+
+        [[nodiscard]] const_reference operator*() const
+        {
+            return _deque->_value(_index);
+        }
+
+        const_pointer operator->() const
+        {
+            return &_deque->_value(_index);
+        }
+
+        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
+        {
+            return a._index == b._index;
+        }
+
+        [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
+        {
+            return ! (a == b);
+        }
+
+        [[nodiscard]] friend bool operator<(const const_iterator& a, const const_iterator& b)
+        {
+            return a._index < b._index;
+        }
+
+        [[nodiscard]] friend bool operator>(const const_iterator& a, const const_iterator& b)
+        {
+            return b < a;
+        }
+
+        [[nodiscard]] friend bool operator<=(const const_iterator& a, const const_iterator& b)
+        {
+            return ! (a > b);
+        }
+
+        [[nodiscard]] friend bool operator>=(const const_iterator& a, const const_iterator& b)
+        {
+            return ! (a < b);
+        }
+
+    private:
+        friend class ideque;
+
+        const ideque* _deque;
+        size_type _index;
+
+        const_iterator(const ideque& deque, size_type index) :
+            _deque(&deque),
+            _index(index)
+        {
+        }
+    };
+
+    using reverse_iterator = btn::reverse_iterator<iterator>;
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+
+    ideque(const ideque& other) = delete;
+
+    ideque& operator=(const ideque& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in deque: ", _max_size, " - ", other._size);
+
+            clear();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    ideque& operator=(ideque&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other._size <= _max_size, "Not enough space in deque: ", _max_size, " - ", other._size);
+
+            clear();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
+
+    [[nodiscard]] size_type size() const
+    {
+        return _size;
+    }
+
+    [[nodiscard]] size_type max_size() const
+    {
+        return _max_size;
+    }
+
+    [[nodiscard]] bool empty() const
+    {
+        return _size == 0;
+    }
+
+    [[nodiscard]] bool full() const
+    {
+        return _size == _max_size;
+    }
+
+    [[nodiscard]] size_type available() const
+    {
+        return _max_size - _size;
+    }
+
+    [[nodiscard]] const_iterator begin() const
+    {
+        return const_iterator(*this, 0);
+    }
+
+    [[nodiscard]] iterator begin()
+    {
+        return iterator(*this, 0);
+    }
+
+    [[nodiscard]] const_iterator end() const
+    {
+        return const_iterator(*this, _size);
+    }
+
+    [[nodiscard]] iterator end()
+    {
+        return iterator(*this, _size);
+    }
+
+    [[nodiscard]] const_iterator cbegin() const
+    {
+        return const_iterator(*this, 0);
+    }
+
+    [[nodiscard]] const_iterator cend() const
+    {
+        return const_iterator(*this, _size);
+    }
+
+    [[nodiscard]] const_reverse_iterator rbegin() const
+    {
+        return const_reverse_iterator(end());
+    }
+
+    [[nodiscard]] reverse_iterator rbegin()
+    {
+        return reverse_iterator(end());
+    }
+
+    [[nodiscard]] const_reverse_iterator rend() const
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    [[nodiscard]] reverse_iterator rend()
+    {
+        return reverse_iterator(begin());
+    }
+
+    [[nodiscard]] const_reverse_iterator crbegin() const
+    {
+        return const_reverse_iterator(cend());
+    }
+
+    [[nodiscard]] const_reverse_iterator crend() const
+    {
+        return const_reverse_iterator(cbegin());
+    }
+
+    [[nodiscard]] const_reference operator[](size_type index) const
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _value(index);
+    }
+
+    [[nodiscard]] reference operator[](size_type index)
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _value(index);
+    }
+
+    [[nodiscard]] const_reference at(size_type index) const
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _value(index);
+    }
+
+    [[nodiscard]] reference at(size_type index)
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _value(index);
+    }
+
+    [[nodiscard]] const_reference front() const
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        return _data[_begin];
+    }
+
+    [[nodiscard]] reference front()
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        return _data[_begin];
+    }
+
+    [[nodiscard]] const_reference back() const
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        return _value(_size - 1);
+    }
+
+    [[nodiscard]] reference back()
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        return _value(_size - 1);
+    }
+
+    void push_back(const_reference value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        ::new(_data + _real_index(_size)) value_type(value);
+        ++_size;
+    }
+
+    void push_back(value_type&& value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        ::new(_data + _real_index(_size)) value_type(move(value));
+        ++_size;
+    }
+
+    template<typename... Args>
+    void emplace_back(Args&&... args)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        ::new(_data + _real_index(_size)) value_type(forward<Args>(args)...);
+        ++_size;
+    }
+
+    void pop_back()
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        --_size;
+        _value(_size).~value_type();
+    }
+
+    void push_front(const_reference value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        _begin = (_begin - 1) & (_max_size - 1);
+        ::new(_data + _begin) value_type(value);
+        ++_size;
+    }
+
+    void push_front(value_type&& value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        _begin = (_begin - 1) & (_max_size - 1);
+        ::new(_data + _begin) value_type(move(value));
+        ++_size;
+    }
+
+    template<typename... Args>
+    void emplace_front(Args&&... args)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        _begin = (_begin - 1) & (_max_size - 1);
+        ::new(_data + _begin) value_type(forward<Args>(args)...);
+        ++_size;
+    }
+
+    void pop_front()
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        _data[_size].~value_type();
+        --_size;
+        _begin = (_begin + 1) & (_max_size - 1);
+    }
+
+    iterator insert(const_iterator position, const_reference value)
+    {
+        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BTN_ASSERT(! full(), "Deque is full");
+
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
+        ::new(_data + _real_index(_size)) value_type(value);
+        ++_size;
+
+        for(iterator it = non_const_position; it != last; ++it)
+        {
+            btn::swap(*it, *last);
+        }
+
+        return non_const_position;
+    }
+
+    iterator insert(const_iterator position, value_type&& value)
+    {
+        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BTN_ASSERT(! full(), "Deque is full");
+
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
+        ::new(_data + _real_index(_size)) value_type(move(value));
+        ++_size;
+
+        for(iterator it = non_const_position; it != last; ++it)
+        {
+            btn::swap(*it, *last);
+        }
+
+        return non_const_position;
+    }
+
+    template<typename... Args>
+    iterator emplace(const_iterator position, Args&&... args)
+    {
+        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BTN_ASSERT(! full(), "Deque is full");
+
+        auto non_const_position = const_cast<iterator>(position);
+        iterator last = end();
+        ::new(_data + _real_index(_size)) value_type(forward<Args>(args)...);
+        ++_size;
+
+        for(iterator it = non_const_position; it != last; ++it)
+        {
+            btn::swap(*it, *last);
+        }
+
+        return non_const_position;
+    }
+
+    iterator erase(const_iterator position)
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+        BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
+
+        auto non_const_position = const_cast<iterator>(position);
+        iterator it = non_const_position;
+        iterator last = end() - 1;
+
+        while(it != last)
+        {
+            iterator next = it + 1;
+            *it = move(*next);
+            it = next;
+        }
+
+        --_size;
+        _value(_size).~value_type();
+        return non_const_position;
+    }
+
+    iterator erase(const_iterator first, const_iterator last)
+    {
+        BTN_ASSERT(first >= begin(), "Invalid first");
+        BTN_ASSERT(last <= end(), "Invalid last");
+
+        size_type delete_count = last - first;
+        BTN_ASSERT(_size >= delete_count, "Invalid delete count: ", delete_count, " - ", _size);
+
+        auto erase_first = const_cast<iterator>(first);
+        auto erase_last = const_cast<iterator>(last);
+        iterator erase_it = erase_first;
+
+        while(erase_it != erase_last)
+        {
+            iterator next = erase_it + 1;
+            *erase_it = move(*next);
+            erase_it = next;
+        }
+
+        pointer data = _data;
+        size_type new_size = _size - delete_count;
+
+        while(_size > new_size)
+        {
+            --_size;
+            data[_real_index(_size)].~value_type();
+        }
+
+        return erase_first;
+    }
+
+    friend void erase(ideque& deque, const_reference value)
+    {
+        deque.erase(remove(deque.begin(), deque.end(), value), deque.end());
+    }
+
+    template<class Pred>
+    friend void erase_if(ideque& deque, const Pred& pred)
+    {
+        deque.erase(remove_if(deque.begin(), deque.end(), pred), deque.end());
+    }
+
+    void resize(size_type count)
+    {
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        size_type size = _size;
+
+        if(count < size)
+        {
+            for(size_type index = count; index < size; ++index)
+            {
+                data[_real_index(index)].~value_type();
+            }
+        }
+        else
+        {
+            for(size_type index = size; index < count; ++index)
+            {
+                ::new(data + _real_index(index)) value_type();
+            }
+        }
+
+        _size = count;
+    }
+
+    void resize(size_type count, const_reference value)
+    {
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        size_type size = _size;
+
+        if(count < size)
+        {
+            for(size_type index = count; index < size; ++index)
+            {
+                data[_real_index(index)].~value_type();
+            }
+        }
+        else
+        {
+            for(size_type index = size; index < count; ++index)
+            {
+                ::new(data + _real_index(index)) value_type(value);
+            }
+        }
+
+        _size = count;
+    }
+
+    void assign(size_type count, const_reference value)
+    {
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        clear();
+        _size = count;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            ::new(data + index) value_type(value);
+        }
+    }
+
+    template<typename Iterator>
+    void assign(Iterator first, Iterator last)
+    {
+        size_type count = last - first;
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        clear();
+        _size = count;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            ::new(data + index) value_type(*first);
+            ++first;
+        }
+    }
+
+    void swap(ideque& other)
+    {
+        if(_data != other._data)
+        {
+            BTN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
+            BTN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
+
+            ideque* min_deque;
+            ideque* max_deque;
+
+            if(_size < other._size)
+            {
+                min_deque = this;
+                max_deque = &other;
+            }
+            else
+            {
+                min_deque = &other;
+                max_deque = this;
+            }
+
+            pointer min_data = min_deque->_data;
+            pointer max_data = max_deque->_data;
+            size_type min_size = min_deque->_size;
+            size_type max_size = max_deque->_size;
+
+            for(size_type index = 0; index < min_size; ++index)
+            {
+                btn::swap(min_data[min_deque->_real_index(index)], max_data[max_deque->_real_index(index)]);
+            }
+
+            for(size_type index = min_size; index < max_size; ++index)
+            {
+                size_type max_real_index = max_deque->_real_index(index);
+                min_data[min_deque->_real_index(index)] = move(max_data[max_real_index]);
+                max_data[max_real_index].~value_type();
+            }
+
+            btn::swap(_size, other._size);
+        }
+    }
+
+    friend void swap(ideque& a, ideque& b)
+    {
+        a.swap(b);
+    }
+
+    void clear()
+    {
+        pointer data = _data;
+
+        for(size_type index = 0, size = _size; index < size; ++index)
+        {
+            data[_real_index(index)].~value_type();
+        }
+
+        _size = 0;
+        _begin = 0;
+    }
+
+    [[nodiscard]] friend bool operator==(const ideque& a, const ideque& b)
+    {
+        if(a.size() != b.size())
+        {
+            return false;
+        }
+
+        return equal(a.begin(), a.end(), b.begin());
+    }
+
+    [[nodiscard]] friend bool operator!=(const ideque& a, const ideque& b)
+    {
+        return ! (a == b);
+    }
+
+    [[nodiscard]] friend bool operator<(const ideque& a, const ideque& b)
+    {
+        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+    }
+
+    [[nodiscard]] friend bool operator>(const ideque& a, const ideque& b)
+    {
+        return b < a;
+    }
+
+    [[nodiscard]] friend bool operator<=(const ideque& a, const ideque& b)
+    {
+        return ! (a > b);
+    }
+
+    [[nodiscard]] friend bool operator>=(const ideque& a, const ideque& b)
+    {
+        return ! (a < b);
+    }
+
+protected:
+    pointer _data;
+    size_type _size;
+    size_type _max_size;
+    size_type _begin;
+
+    ideque(reference data, size_type max_size) :
+        _data(&data),
+        _size(0),
+        _max_size(max_size),
+        _begin(0)
+    {
+    }
+
+    [[nodiscard]] size_type _real_index(size_type index) const
+    {
+        return (_begin + index) & (_max_size - 1);
+    }
+
+    [[nodiscard]] const_reference _value(size_type index) const
+    {
+        return _data[_real_index(index)];
+    }
+
+    [[nodiscard]] reference _value(size_type index)
+    {
+        return _data[_real_index(index)];
+    }
+
+    void _assign(const ideque& other)
+    {
+        pointer data = _data;
+        const_pointer other_data = other._data;
+        size_type other_size = other._size;
+        _size = other_size;
+
+        for(size_type index = 0; index < other_size; ++index)
+        {
+            ::new(data + index) value_type(other_data[other._real_index(index)]);
+        }
+    }
+
+    void _assign(ideque&& other)
+    {
+        pointer data = _data;
+        pointer other_data = other._data;
+        size_type other_size = other._size;
+        _size = other_size;
+
+        for(size_type index = 0; index < other_size; ++index)
+        {
+            value_type&& other_value = other_data[other._real_index(index)];
+            ::new(data + index) value_type(move(other_value));
+            other_value.~value_type();
+        }
+
+        other._size = 0;
+        other._begin = 0;
+    }
+};
+
+
+template<typename Type, int MaxSize>
+class deque : public ideque<Type>
+{
+    static_assert(power_of_two(MaxSize));
+
+public:
+    using value_type = Type;
+    using size_type = int;
+    using reference = Type&;
+    using const_reference = const Type&;
+    using pointer = Type*;
+    using const_pointer = const Type*;
+    using iterator = typename ideque<Type>::iterator;
+    using const_iterator = typename ideque<Type>::const_iterator;
+    using reverse_iterator = typename ideque<Type>::reverse_iterator;
+    using const_reverse_iterator = typename ideque<Type>::const_reverse_iterator;
+
+    deque() :
+        ideque<Type>(*reinterpret_cast<pointer>(_storage_buffer), MaxSize)
+    {
+    }
+
+    deque(const deque& other) :
+        deque()
+    {
+        this->_assign(other);
+    }
+
+    deque& operator=(const deque& other)
+    {
+        if(this != &other)
+        {
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    deque(deque&& other) :
+        deque()
+    {
+        this->_assign(move(other));
+    }
+
+    deque& operator=(deque&& other)
+    {
+        if(this != &other)
+        {
+            this->clear();
+            this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    ~deque()
+    {
+        this->clear();
+    }
+
+private:
+    alignas(alignof(value_type)) char _storage_buffer[sizeof(value_type) * MaxSize];
+};
+
+}
+
+#endif

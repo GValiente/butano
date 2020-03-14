@@ -431,6 +431,8 @@ public:
 
         while(erase_it != erase_last)
         {
+            BTN_ASSERT(! empty(), "List is empty");
+
             iterator next = erase_it;
             ++next;
             _erase(erase_it);

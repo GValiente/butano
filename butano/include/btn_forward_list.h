@@ -350,6 +350,8 @@ public:
 
         while(erase_it != erase_last)
         {
+            BTN_ASSERT(! empty(), "List is empty");
+
             _erase_after(erase_it);
             ++erase_it;
         }

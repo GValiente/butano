@@ -49,33 +49,45 @@ public:
     public:
         iterator& operator++()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             _node = _node->next;
             return *this;
         }
 
         iterator& operator--()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             _node = _node->prev;
             return *this;
         }
 
         [[nodiscard]] const_reference operator*() const
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return static_cast<const value_node_type*>(_node)->value;
         }
 
         [[nodiscard]] reference operator*()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return static_cast<value_node_type*>(_node)->value;
         }
 
         const_pointer operator->() const
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
         pointer operator->()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return &static_cast<value_node_type*>(_node)->value;
         }
 
@@ -112,23 +124,31 @@ public:
 
         const_iterator& operator++()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             _node = _node->next;
             return *this;
         }
 
         const_iterator& operator--()
         {
+            BTN_ASSERT(_node, "Node is null");
+
             _node = _node->prev;
             return *this;
         }
 
         [[nodiscard]] const_reference operator*() const
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return static_cast<const value_node_type*>(_node)->value;
         }
 
         const_pointer operator->() const
         {
+            BTN_ASSERT(_node, "Node is null");
+
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
@@ -478,7 +498,7 @@ public:
     }
 
     template<typename Iterator>
-    void assign(Iterator first, Iterator last)
+    void assign(const Iterator& first, const Iterator& last)
     {
         iterator input_last = end();
         clear();

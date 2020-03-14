@@ -659,6 +659,7 @@ class list : public ilist<Type>
 
 public:
     using value_type = Type;
+    using size_type = int;
     using reference = Type&;
     using const_reference = const Type&;
     using pointer = Type*;
@@ -667,7 +668,6 @@ public:
     using const_iterator = typename ilist<Type>::const_iterator;
     using reverse_iterator = typename ilist<Type>::reverse_iterator;
     using const_reverse_iterator = typename ilist<Type>::const_reverse_iterator;
-    using size_type = int;
 
     list() :
         ilist<Type>(_pool)

@@ -582,13 +582,13 @@ class forward_list : public iforward_list<Type>
 
 public:
     using value_type = Type;
+    using size_type = int;
     using reference = Type&;
     using const_reference = const Type&;
     using pointer = Type*;
     using const_pointer = const Type*;
     using iterator = typename iforward_list<Type>::iterator;
     using const_iterator = typename iforward_list<Type>::const_iterator;
-    using size_type = int;
 
     forward_list() :
         iforward_list<Type>(_pool)

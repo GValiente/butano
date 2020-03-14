@@ -30,19 +30,6 @@ public:
     {
 
     public:
-        using key_type = ihash_set::key_type;
-        using value_type = ihash_set::value_type;
-        using size_type = ihash_set::size_type;
-        using hash_type = ihash_set::hash_type;
-        using hasher = ihash_set::hasher;
-        using key_equal = ihash_set::key_equal;
-        using reference = ihash_set::reference;
-        using const_reference = ihash_set::const_reference;
-        using pointer = ihash_set::pointer;
-        using const_pointer = ihash_set::const_pointer;
-
-        friend class ihash_set;
-
         iterator& operator++()
         {
             size_type index = _index;
@@ -147,6 +134,8 @@ public:
         }
 
     private:
+        friend class ihash_set;
+
         size_type _index;
         ihash_set* _set;
 
@@ -161,20 +150,6 @@ public:
     {
 
     public:
-        using key_type = ihash_set::key_type;
-        using value_type = ihash_set::value_type;
-        using size_type = ihash_set::size_type;
-        using hash_type = ihash_set::hash_type;
-        using hasher = ihash_set::hasher;
-        using key_equal = ihash_set::key_equal;
-        using reference = ihash_set::reference;
-        using const_reference = ihash_set::const_reference;
-        using pointer = ihash_set::pointer;
-        using const_pointer = ihash_set::const_pointer;
-
-        friend class ihash_set;
-        friend class iterator;
-
         const_iterator(const iterator& other):
             _index(other._index),
             _set(other._set)
@@ -264,6 +239,9 @@ public:
         }
 
     private:
+        friend class ihash_set;
+        friend class iterator;
+
         size_type _index;
         const ihash_set* _set;
 
@@ -273,9 +251,6 @@ public:
         {
         }
     };
-
-    friend class iterator;
-    friend class const_iterator;
 
     constexpr ihash_set(const ihash_set& other) = delete;
 
@@ -909,7 +884,7 @@ private:
         other._size = 0;
     }
 
-    size_type _index(hash_type key_hash) const
+    [[nodiscard]] size_type _index(hash_type key_hash) const
     {
         return key_hash & (_max_size - 1);
     }

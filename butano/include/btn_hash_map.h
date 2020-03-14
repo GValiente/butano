@@ -31,20 +31,6 @@ public:
     {
 
     public:
-        using key_type = ihash_map::key_type;
-        using mapped_type = ihash_map::mapped_type;
-        using value_type = ihash_map::value_type;
-        using size_type = ihash_map::size_type;
-        using hash_type = ihash_map::hash_type;
-        using hasher = ihash_map::hasher;
-        using key_equal = ihash_map::key_equal;
-        using reference = ihash_map::reference;
-        using const_reference = ihash_map::const_reference;
-        using pointer = ihash_map::pointer;
-        using const_pointer = ihash_map::const_pointer;
-
-        friend class ihash_map;
-
         iterator& operator++()
         {
             size_type index = _index;
@@ -149,6 +135,8 @@ public:
         }
 
     private:
+        friend class ihash_map;
+
         size_type _index;
         ihash_map* _map;
 
@@ -163,21 +151,6 @@ public:
     {
 
     public:
-        using key_type = ihash_map::key_type;
-        using mapped_type = ihash_map::mapped_type;
-        using value_type = ihash_map::value_type;
-        using size_type = ihash_map::size_type;
-        using hash_type = ihash_map::hash_type;
-        using hasher = ihash_map::hasher;
-        using key_equal = ihash_map::key_equal;
-        using reference = ihash_map::reference;
-        using const_reference = ihash_map::const_reference;
-        using pointer = ihash_map::pointer;
-        using const_pointer = ihash_map::const_pointer;
-
-        friend class ihash_map;
-        friend class iterator;
-
         const_iterator(const iterator& other):
             _index(other._index),
             _map(other._map)
@@ -267,6 +240,9 @@ public:
         }
 
     private:
+        friend class ihash_map;
+        friend class iterator;
+
         size_type _index;
         const ihash_map* _map;
 
@@ -276,9 +252,6 @@ public:
         {
         }
     };
-
-    friend class iterator;
-    friend class const_iterator;
 
     constexpr ihash_map(const ihash_map& other) = delete;
 
@@ -958,7 +931,7 @@ private:
         other._size = 0;
     }
 
-    size_type _index(hash_type key_hash) const
+    [[nodiscard]] size_type _index(hash_type key_hash) const
     {
         return key_hash & (_max_size - 1);
     }

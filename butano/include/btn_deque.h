@@ -33,30 +33,74 @@ public:
             return *this;
         }
 
+        iterator& operator+=(size_type value)
+        {
+            _index += value;
+            return *this;
+        }
+
+        iterator& operator+=(iterator other)
+        {
+            _index += other._index;
+            return *this;
+        }
+
         iterator& operator--()
         {
             --_index;
             return *this;
         }
 
+        iterator& operator-=(size_type value)
+        {
+            _index -= value;
+            return *this;
+        }
+
+        iterator& operator-=(iterator other)
+        {
+            _index -= other._index;
+            return *this;
+        }
+
         [[nodiscard]] const_reference operator*() const
         {
-            return _deque->_value(_index);
+            return _deque->at(_index);
         }
 
         [[nodiscard]] reference operator*()
         {
-            return _deque->_value(_index);
+            return _deque->at(_index);
         }
 
         const_pointer operator->() const
         {
-            return &_deque->_value(_index);
+            return &_deque->at(_index);
         }
 
         pointer operator->()
         {
-            return &_deque->_value(_index);
+            return &_deque->at(_index);
+        }
+
+        [[nodiscard]] friend iterator operator+(const iterator& a, size_type b)
+        {
+            return iterator(&a._deque, a._index + b);
+        }
+
+        [[nodiscard]] friend iterator operator+(const iterator& a, const iterator& b)
+        {
+            return iterator(&a._deque, a._index + b._index);
+        }
+
+        [[nodiscard]] friend iterator operator-(const iterator& a, size_type b)
+        {
+            return iterator(&a._deque, a._index - b);
+        }
+
+        [[nodiscard]] friend iterator operator-(const iterator& a, const iterator& b)
+        {
+            return iterator(&a._deque, a._index - b._index);
         }
 
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
@@ -119,20 +163,64 @@ public:
             return *this;
         }
 
+        const_iterator& operator+=(size_type value)
+        {
+            _index += value;
+            return *this;
+        }
+
+        const_iterator& operator+=(const const_iterator& other)
+        {
+            _index += other._index;
+            return *this;
+        }
+
         const_iterator& operator--()
         {
             --_index;
             return *this;
         }
 
+        const_iterator& operator-=(size_type value)
+        {
+            _index -= value;
+            return *this;
+        }
+
+        const_iterator& operator-=(const const_iterator& other)
+        {
+            _index -= other._index;
+            return *this;
+        }
+
         [[nodiscard]] const_reference operator*() const
         {
-            return _deque->_value(_index);
+            return _deque->at(_index);
         }
 
         const_pointer operator->() const
         {
-            return &_deque->_value(_index);
+            return &_deque->at(_index);
+        }
+
+        [[nodiscard]] friend const_iterator operator+(const const_iterator& a, size_type b)
+        {
+            return const_iterator(&a._deque, a._index + b);
+        }
+
+        [[nodiscard]] friend const_iterator operator+(const const_iterator& a, const const_iterator& b)
+        {
+            return const_iterator(&a._deque, a._index + b._index);
+        }
+
+        [[nodiscard]] friend const_iterator operator-(const const_iterator& a, size_type b)
+        {
+            return const_iterator(&a._deque, a._index - b);
+        }
+
+        [[nodiscard]] friend const_iterator operator-(const const_iterator& a, const const_iterator& b)
+        {
+            return const_iterator(&a._deque, a._index - b._index);
         }
 
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
@@ -420,111 +508,96 @@ public:
         _begin = (_begin + 1) & (_max_size - 1);
     }
 
-    iterator insert(const_iterator position, const_reference value)
+    iterator insert(const const_iterator& position, const_reference value)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        size_type index = position._index;
+        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
         BTN_ASSERT(! full(), "Deque is full");
 
-        auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(_data + _real_index(_size)) value_type(value);
-        ++_size;
+        pointer data = _data;
+        size_type last = _size;
+        size_type last_real_index = _real_index(last);
+        ::new(data + last_real_index) value_type(value);
+        reference last_value = data[last_real_index];
 
-        for(iterator it = non_const_position; it != last; ++it)
+        for(; index != last; ++index)
         {
-            btn::swap(*it, *last);
+            btn::swap(data[_real_index(index)], last_value);
         }
 
-        return non_const_position;
+        ++_size;
+        return const_cast<iterator>(position);
     }
 
-    iterator insert(const_iterator position, value_type&& value)
+    iterator insert(const const_iterator& position, value_type&& value)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        size_type index = position._index;
+        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
         BTN_ASSERT(! full(), "Deque is full");
 
-        auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(_data + _real_index(_size)) value_type(move(value));
-        ++_size;
+        pointer data = _data;
+        size_type last = _size;
+        size_type last_real_index = _real_index(last);
+        ::new(data + last_real_index) value_type(move(value));
+        reference last_value = data[last_real_index];
 
-        for(iterator it = non_const_position; it != last; ++it)
+        for(; index != last; ++index)
         {
-            btn::swap(*it, *last);
+            btn::swap(data[_real_index(index)], last_value);
         }
 
-        return non_const_position;
+        ++_size;
+        return const_cast<iterator>(position);
     }
 
     template<typename... Args>
-    iterator emplace(const_iterator position, Args&&... args)
+    iterator emplace(const const_iterator& position, Args&&... args)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        size_type index = position._index;
+        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
         BTN_ASSERT(! full(), "Deque is full");
 
-        auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(_data + _real_index(_size)) value_type(forward<Args>(args)...);
-        ++_size;
-
-        for(iterator it = non_const_position; it != last; ++it)
-        {
-            btn::swap(*it, *last);
-        }
-
-        return non_const_position;
-    }
-
-    iterator erase(const_iterator position)
-    {
-        BTN_ASSERT(_size, "Deque is empty");
-        BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
-
-        auto non_const_position = const_cast<iterator>(position);
-        iterator it = non_const_position;
-        iterator last = end() - 1;
-
-        while(it != last)
-        {
-            iterator next = it + 1;
-            *it = move(*next);
-            it = next;
-        }
-
-        --_size;
-        _value(_size).~value_type();
-        return non_const_position;
-    }
-
-    iterator erase(const_iterator first, const_iterator last)
-    {
-        BTN_ASSERT(first >= begin(), "Invalid first");
-        BTN_ASSERT(last <= end(), "Invalid last");
-
-        size_type delete_count = last - first;
-        BTN_ASSERT(_size >= delete_count, "Invalid delete count: ", delete_count, " - ", _size);
-
-        auto erase_first = const_cast<iterator>(first);
-        auto erase_last = const_cast<iterator>(last);
-        iterator erase_it = erase_first;
-
-        while(erase_it != erase_last)
-        {
-            iterator next = erase_it + 1;
-            *erase_it = move(*next);
-            erase_it = next;
-        }
-
         pointer data = _data;
-        size_type new_size = _size - delete_count;
+        size_type last = _size;
+        size_type last_real_index = _real_index(last);
+        ::new(_data + last_real_index) value_type(forward<Args>(args)...);
+        reference last_value = data[last_real_index];
 
-        while(_size > new_size)
+        for(; index != last; ++index)
         {
-            --_size;
-            data[_real_index(_size)].~value_type();
+            btn::swap(data[_real_index(index)], last_value);
         }
 
-        return erase_first;
+        ++_size;
+        return const_cast<iterator>(position);
+    }
+
+    iterator erase(const const_iterator& position)
+    {
+        size_type index = position._index;
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid position: ", index, " - ", _size);
+
+        _erase(index);
+        return const_cast<iterator>(position);
+    }
+
+    iterator erase(const const_iterator& first, const const_iterator& last)
+    {
+        size_type first_index = first._index;
+        BTN_ASSERT(first_index >= 0 && first_index < _size, "Invalid first: ", first_index, " - ", _size);
+
+        size_type last_index = last._index;
+        BTN_ASSERT(last_index >= 0 && last_index < _size, "Invalid last: ", last_index, " - ", _size);
+
+        size_type delete_count = last_index - first_index;
+        BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
+
+        for(size_type delete_index = 0; delete_index < delete_count; ++delete_index)
+        {
+            _erase(first_index);
+        }
+
+        return const_cast<iterator>(first);
     }
 
     friend void erase(ideque& deque, const_reference value)
@@ -603,7 +676,7 @@ public:
     }
 
     template<typename Iterator>
-    void assign(Iterator first, Iterator last)
+    void assign(const Iterator& first, const Iterator& last)
     {
         size_type count = last - first;
         BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
@@ -772,6 +845,24 @@ protected:
 
         other._size = 0;
         other._begin = 0;
+    }
+
+    void _erase(size_type index)
+    {
+        --_size;
+
+        pointer data = _data;
+        size_type last = _size;
+        size_type real_index = _real_index(index);
+
+        for(; index != last; ++index)
+        {
+            size_type real_next_index = _real_index(index + 1);
+            data[real_index] = move(data[real_next_index]);
+            real_index = real_next_index;
+        }
+
+        data[real_index].~value_type();
     }
 };
 

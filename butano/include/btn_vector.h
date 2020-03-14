@@ -26,7 +26,6 @@ public:
     using reverse_iterator = btn::reverse_iterator<iterator>;
     using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
 
-public:
     ivector(const ivector& other) = delete;
 
     ivector& operator=(const ivector& other)
@@ -36,7 +35,7 @@ public:
             BTN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
 
             clear();
-            assign(other.begin(), other.end());
+            _assign(other);
         }
 
         return *this;
@@ -334,12 +333,13 @@ public:
             erase_it = next;
         }
 
+        pointer data = _data;
         size_type new_size = _size - delete_count;
 
         while(_size > new_size)
         {
             --_size;
-            _data[_size].~value_type();
+            data[_size].~value_type();
         }
 
         return erase_first;
@@ -543,10 +543,23 @@ protected:
     {
     }
 
-    void _assign(ivector&& other)
+    void _assign(const ivector& other)
     {
         pointer data = _data;
         const_pointer other_data = other._data;
+        size_type other_size = other._size;
+        _size = other_size;
+
+        for(size_type index = 0; index < other_size; ++index)
+        {
+            ::new(data + index) value_type(other_data[index]);
+        }
+    }
+
+    void _assign(ivector&& other)
+    {
+        pointer data = _data;
+        pointer other_data = other._data;
         size_type other_size = other._size;
         _size = other_size;
 
@@ -569,6 +582,7 @@ class vector : public ivector<Type>
 
 public:
     using value_type = Type;
+    using size_type = int;
     using reference = Type&;
     using const_reference = const Type&;
     using pointer = Type*;
@@ -577,7 +591,6 @@ public:
     using const_iterator = const Type*;
     using reverse_iterator = btn::reverse_iterator<iterator>;
     using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
-    using size_type = int;
 
     vector() :
         ivector<Type>(*reinterpret_cast<pointer>(_storage_buffer), MaxSize)
@@ -587,7 +600,7 @@ public:
     vector(const vector& other) :
         vector()
     {
-        this->assign(other.begin(), other.end());
+        this->_assign(other);
     }
 
     vector& operator=(const vector& other)
@@ -595,7 +608,7 @@ public:
         if(this != &other)
         {
             this->clear();
-            this->assign(other.begin(), other.end());
+            this->_assign(other);
         }
 
         return *this;

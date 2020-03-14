@@ -577,7 +577,20 @@ public:
         size_type index = position._index;
         BTN_ASSERT(index >= 0 && index < _size, "Invalid position: ", index, " - ", _size);
 
-        _erase(index);
+        --_size;
+
+        pointer data = _data;
+        size_type last = _size;
+        size_type real_index = _real_index(index);
+
+        for(; index != last; ++index)
+        {
+            size_type real_next_index = _real_index(index + 1);
+            data[real_index] = move(data[real_next_index]);
+            real_index = real_next_index;
+        }
+
+        data[real_index].~value_type();
         return const_cast<iterator>(position);
     }
 
@@ -592,9 +605,33 @@ public:
         size_type delete_count = last_index - first_index;
         BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
 
-        for(size_type delete_index = 0; delete_index < delete_count; ++delete_index)
+        if(delete_count)
         {
-            _erase(first_index);
+            if(delete_count == _size)
+            {
+                clear();
+            }
+            else
+            {
+                pointer data = _data;
+                size_type index = first_index;
+                size_type next_index = first_index + delete_count;
+                size_type last_index = _size;
+                _size -= delete_count;
+
+                while(next_index != last_index)
+                {
+                    data[_real_index(index)] = move(data[_real_index(next_index)]);
+                    ++index;
+                    ++next_index;
+                }
+
+                while(index != last_index)
+                {
+                    data[_real_index(index)].~value_type();
+                    ++index;
+                }
+            }
         }
 
         return const_cast<iterator>(first);
@@ -845,24 +882,6 @@ protected:
 
         other._size = 0;
         other._begin = 0;
-    }
-
-    void _erase(size_type index)
-    {
-        --_size;
-
-        pointer data = _data;
-        size_type last = _size;
-        size_type real_index = _real_index(index);
-
-        for(; index != last; ++index)
-        {
-            size_type real_next_index = _real_index(index + 1);
-            data[real_index] = move(data[real_next_index]);
-            real_index = real_next_index;
-        }
-
-        data[real_index].~value_type();
     }
 };
 

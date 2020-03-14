@@ -299,7 +299,19 @@ public:
         BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
 
         auto non_const_position = const_cast<iterator>(position);
-        _erase(non_const_position);
+        iterator it = non_const_position;
+        --_size;
+
+        iterator last = end();
+
+        while(it != last)
+        {
+            iterator next = it + 1;
+            *it = move(*next);
+            it = next;
+        }
+
+        _data[_size].~value_type();
         return non_const_position;
     }
 
@@ -311,14 +323,35 @@ public:
         size_type delete_count = last - first;
         BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
 
-        auto erase_first = const_cast<iterator>(first);
-
-        for(size_type delete_index = 0; delete_index < delete_count; ++delete_index)
+        if(delete_count)
         {
-            _erase(erase_first);
+            if(delete_count == _size)
+            {
+                clear();
+            }
+            else
+            {
+                iterator erase_it =  const_cast<iterator>(first);
+                iterator erase_next = erase_it + delete_count;
+                iterator erase_last = end();
+                _size -= delete_count;
+
+                while(erase_next != erase_last)
+                {
+                    *erase_it = move(*erase_next);
+                    ++erase_it;
+                    ++erase_next;
+                }
+
+                while(erase_it != erase_last)
+                {
+                    erase_it->~value_type();
+                    ++erase_it;
+                }
+            }
         }
 
-        return erase_first;
+        return const_cast<iterator>(first);
     }
 
     friend void erase(ivector& vector, const_reference value)
@@ -547,22 +580,6 @@ protected:
         }
 
         other._size = 0;
-    }
-
-    void _erase(iterator it)
-    {
-        --_size;
-
-        iterator last = end();
-
-        while(it != last)
-        {
-            iterator next = it + 1;
-            *it = move(*next);
-            it = next;
-        }
-
-        _data[_size].~value_type();
     }
 };
 

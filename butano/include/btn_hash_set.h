@@ -51,13 +51,6 @@ public:
             return *this;
         }
 
-        [[nodiscard]] iterator operator++(int)
-        {
-            iterator result(*this);
-            ++result;
-            return result;
-        }
-
         iterator& operator--()
         {
             int index = _index;
@@ -175,13 +168,6 @@ public:
 
             _index = index;
             return *this;
-        }
-
-        [[nodiscard]] const_iterator operator++(int)
-        {
-            const_iterator result(*this);
-            ++result;
-            return result;
         }
 
         const_iterator& operator--()
@@ -511,7 +497,7 @@ public:
         return insert_or_assign_hash(key_hash, value_type(forward<KeyType>(key), forward<ValueType>(value)));
     }
 
-    iterator erase(const_iterator position)
+    iterator erase(const const_iterator& position)
     {
         BTN_ASSERT(! empty(), "Hash set is empty");
 

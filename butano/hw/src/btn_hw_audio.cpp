@@ -1,7 +1,7 @@
 #include "../include/btn_hw_audio.h"
 
 #include "maxmod.h"
-#include "btn_list.h"
+#include "btn_deque.h"
 #include "btn_config_audio.h"
 #include "../include/btn_hw_irq.h"
 
@@ -13,7 +13,7 @@ namespace btn::hw::audio
 namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
-    static_assert(BTN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
+    static_assert(power_of_two(BTN_CFG_AUDIO_MAX_SOUND_CHANNELS), "Invalid max sound channels");
 
     constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
@@ -34,7 +34,7 @@ namespace
     {
 
     public:
-        list<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        deque<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
     };

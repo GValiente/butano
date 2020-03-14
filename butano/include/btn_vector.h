@@ -299,18 +299,7 @@ public:
         BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
 
         auto non_const_position = const_cast<iterator>(position);
-        iterator it = non_const_position;
-        iterator last = end() - 1;
-
-        while(it != last)
-        {
-            iterator next = it + 1;
-            *it = move(*next);
-            it = next;
-        }
-
-        --_size;
-        _data[_size].~value_type();
+        _erase(non_const_position);
         return non_const_position;
     }
 
@@ -320,26 +309,13 @@ public:
         BTN_ASSERT(last <= end(), "Invalid last");
 
         size_type delete_count = last - first;
-        BTN_ASSERT(_size >= delete_count, "Invalid delete count: ", delete_count, " - ", _size);
+        BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
 
         auto erase_first = const_cast<iterator>(first);
-        auto erase_last = const_cast<iterator>(last);
-        iterator erase_it = erase_first;
 
-        while(erase_it != erase_last)
+        for(size_type delete_index = 0; delete_index < delete_count; ++delete_index)
         {
-            iterator next = erase_it + 1;
-            *erase_it = move(*next);
-            erase_it = next;
-        }
-
-        pointer data = _data;
-        size_type new_size = _size - delete_count;
-
-        while(_size > new_size)
-        {
-            --_size;
-            data[_size].~value_type();
+            _erase(erase_first);
         }
 
         return erase_first;
@@ -421,7 +397,7 @@ public:
     }
 
     template<typename Iterator>
-    void assign(Iterator first, Iterator last)
+    void assign(const Iterator& first, const Iterator& last)
     {
         size_type count = last - first;
         BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
@@ -571,6 +547,22 @@ protected:
         }
 
         other._size = 0;
+    }
+
+    void _erase(iterator it)
+    {
+        --_size;
+
+        iterator last = end();
+
+        while(it != last)
+        {
+            iterator next = it + 1;
+            *it = move(*next);
+            it = next;
+        }
+
+        _data[_size].~value_type();
     }
 };
 

@@ -11,6 +11,7 @@ namespace btn
 {
 
 class size;
+class window;
 class sprite_ptr;
 class fixed_point;
 class bg_tiles_ptr;
@@ -147,6 +148,10 @@ public:
     [[nodiscard]] bool visible() const;
 
     void set_visible(bool visible);
+
+    [[nodiscard]] bool visible_in_window(const window& window) const;
+
+    void set_visible_in_window(bool visible, window& window);
 
     [[nodiscard]] bool ignore_camera() const;
 

@@ -3,6 +3,11 @@
 
 #include "btn_fixed_fwd.h"
 
+namespace btn
+{
+    class fixed_point;
+}
+
 namespace btn::display_manager
 {
     void init();
@@ -27,9 +32,9 @@ namespace btn::display_manager
 
     void set_bgs_mosaic_vertical_stretch(fixed stretch);
 
-    [[nodiscard]] bool blending_bg_enabled(int bg_id);
+    [[nodiscard]] bool blending_bg_enabled(int bg);
 
-    void set_blending_bg_enabled(int bg_id, bool enabled);
+    void set_blending_bg_enabled(int bg, bool enabled);
 
     [[nodiscard]] fixed blending_transparency_alpha();
 
@@ -38,6 +43,30 @@ namespace btn::display_manager
     [[nodiscard]] fixed blending_intensity_alpha();
 
     void set_blending_intensity_alpha(fixed intensity_alpha);
+
+    [[nodiscard]] bool show_bg_in_window(int window, int bg);
+
+    void set_show_bg_in_window(int window, int bg, bool show);
+
+    void set_show_bg_in_all_windows(int bg, bool show);
+
+    [[nodiscard]] bool show_sprites_in_window(int window);
+
+    void set_show_sprites_in_window(int window, bool show);
+
+    [[nodiscard]] bool show_blending_in_window(int window);
+
+    void set_show_blending_in_window(int window, bool show);
+
+    [[nodiscard]] const fixed_point& rect_window_top_left(int window);
+
+    [[nodiscard]] const fixed_point& rect_window_bottom_right(int window);
+
+    void set_rect_window_boundaries(int window, const fixed_point& top_left, const fixed_point& bottom_right);
+
+    [[nodiscard]] bool inside_window_enabled(int window);
+
+    void set_inside_window_enabled(int window, bool enabled);
 
     [[nodiscard]] bool green_swap_enabled();
 

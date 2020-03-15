@@ -1,6 +1,7 @@
 #include "btn_regular_bg_ptr.h"
 
 #include "btn_size.h"
+#include "btn_window.h"
 #include "btn_sprite_ptr.h"
 #include "btn_bgs_manager.h"
 #include "btn_bg_palette_ptr.h"
@@ -373,6 +374,16 @@ bool regular_bg_ptr::visible() const
 void regular_bg_ptr::set_visible(bool visible)
 {
     bgs_manager::set_visible(_id, visible);
+}
+
+bool regular_bg_ptr::visible_in_window(const window& window) const
+{
+    return window.show_bg(*this);
+}
+
+void regular_bg_ptr::set_visible_in_window(bool visible, window& window)
+{
+    window.set_show_bg(*this, visible);
 }
 
 bool regular_bg_ptr::ignore_camera() const

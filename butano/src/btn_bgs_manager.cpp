@@ -172,6 +172,7 @@ int create(regular_bg_builder&& builder)
         display_manager::set_blending_bg_enabled(new_index, true);
     }
 
+    display_manager::set_show_bg_in_all_windows(new_index, true);
     return new_index;
 }
 

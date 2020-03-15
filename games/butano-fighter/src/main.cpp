@@ -21,6 +21,8 @@
 #include "btn_regular_bg_attributes.h"
 #include "btn_regular_bg_hblank_effects.h"
 
+#include "btn_rect_window.h"
+
 int main()
 {
     btn::core::init();
@@ -73,6 +75,12 @@ int main()
     btn::regular_bg_position_hblank_effect_ptr bomb_bg_position_hblank_effect =
             btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
                 bomb_bg, btn::span<const btn::fixed>(hblank_deltas, 160));
+
+    btn::rect_window internal_window = btn::window::internal();
+    internal_window.set_boundaries(60, 0, 100, 240);
+
+    btn::window outside_window = btn::window::outside();
+    outside_window.set_show_bg(bomb_bg, false);
 
     btn::regular_bg_move_by_action bomb_bg_move_action(btn::move(bomb_bg), -1.0 / 2, 4);
 

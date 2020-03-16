@@ -354,9 +354,50 @@ void sprite_ptr::set_z_order(int z_order)
     sprites_manager::set_z_order(_handle, z_order);
 }
 
+optional<bool> sprite_ptr::is_above(const sprite_ptr& other) const
+{
+    if(*this == other)
+    {
+        return false;
+    }
+
+    int this_priority = bg_priority();
+    int other_priority = other.bg_priority();
+
+    if(this_priority < other_priority)
+    {
+        return true;
+    }
+
+    if(this_priority > other_priority)
+    {
+        return false;
+    }
+
+    int this_z_order = z_order();
+    int other_z_order = other.z_order();
+
+    if(this_z_order < other_z_order)
+    {
+        return true;
+    }
+
+    if(this_z_order > other_z_order)
+    {
+        return false;
+    }
+
+    return nullopt;
+}
+
+bool sprite_ptr::is_above(const regular_bg_ptr& bg_ptr) const
+{
+    return bg_priority() <= bg_ptr.priority();
+}
+
 void sprite_ptr::put_above(const sprite_ptr& other)
 {
-    if(*this != other)
+    if(*this == other)
     {
         return;
     }
@@ -386,10 +427,8 @@ void sprite_ptr::put_above(const sprite_ptr& other)
     {
         set_z_order(other_z_order);
     }
-    else
-    {
-        sprites_manager::put_in_front_of_sort_layer(_handle);
-    }
+
+    sprites_manager::put_in_front_of_sort_layer(_handle);
 }
 
 void sprite_ptr::put_above(const regular_bg_ptr& bg_ptr)

@@ -219,11 +219,11 @@ public:
 
     [[nodiscard]] sprite_ptr build() const;
 
-    [[nodiscard]] sprite_ptr build_and_release();
+    [[nodiscard]] sprite_ptr release_build();
 
     [[nodiscard]] optional<sprite_ptr> optional_build() const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_build_and_release();
+    [[nodiscard]] optional<sprite_ptr> optional_release_build();
 
     [[nodiscard]] optional<sprite_tiles_ptr> tiles() const;
 

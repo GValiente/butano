@@ -20,7 +20,7 @@ regular_bg_ptr regular_bg_builder::build() const
     return regular_bg_ptr::create(*this);
 }
 
-regular_bg_ptr regular_bg_builder::build_and_release()
+regular_bg_ptr regular_bg_builder::release_build()
 {
     return regular_bg_ptr::create(move(*this));
 }
@@ -30,7 +30,7 @@ optional<regular_bg_ptr> regular_bg_builder::optional_build() const
     return regular_bg_ptr::optional_create(*this);
 }
 
-optional<regular_bg_ptr> regular_bg_builder::optional_build_and_release()
+optional<regular_bg_ptr> regular_bg_builder::optional_release_build()
 {
     return regular_bg_ptr::optional_create(move(*this));
 }

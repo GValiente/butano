@@ -161,11 +161,11 @@ public:
 
     [[nodiscard]] regular_bg_ptr build() const;
 
-    [[nodiscard]] regular_bg_ptr build_and_release();
+    [[nodiscard]] regular_bg_ptr release_build();
 
     [[nodiscard]] optional<regular_bg_ptr> optional_build() const;
 
-    [[nodiscard]] optional<regular_bg_ptr> optional_build_and_release();
+    [[nodiscard]] optional<regular_bg_ptr> optional_release_build();
 
     [[nodiscard]] optional<bg_tiles_ptr> tiles() const;
 

@@ -49,6 +49,28 @@ void hero::show_shoot(btn::color fade_color)
     _weapon_palette_fade_action.emplace(btn::move(weapon_palette), _show_shoot_counter, 0);
 }
 
+bool hero::add_bomb()
+{
+    if(_bombs_count < constants::max_hero_bombs)
+    {
+        return false;
+    }
+
+    ++_bombs_count;
+    return true;
+}
+
+bool hero::throw_bomb()
+{
+    if(! _bombs_count)
+    {
+        return false;
+    }
+
+    --_bombs_count;
+    return true;
+}
+
 void hero::update()
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();

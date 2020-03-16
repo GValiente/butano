@@ -29,7 +29,7 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
 
         builder.set_position(btn::fixed_point(experience_bar_x - 16, display_center.y() - 16));
         builder.set_horizontal_flip(false);
-        _experience_bar_sprites.push_back(builder.build_and_release());
+        _experience_bar_sprites.push_back(builder.release_build());
 
         _experience_bar_palette_action.emplace(_experience_bar_sprites[0].palette(), 2, 1);
     }
@@ -45,7 +45,7 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
 
         builder.set_position(btn::fixed_point(experience_bar_x - 16, display_center.y() - 16));
         builder.set_horizontal_flip(false);
-        _experience_bar_sprites.push_back(builder.build_and_release());
+        _experience_bar_sprites.push_back(builder.release_build());
     }
 }
 
@@ -57,6 +57,16 @@ void scoreboard::update(const hero& hero)
     int experience = hero.experience();
     int bombs_count = hero.bombs_count();
     _experience_bar_palette_action->update();
+
+    if(_bomb_palette_action)
+    {
+        _bomb_palette_action->update();
+
+        if(_bomb_palette_action->done())
+        {
+            _bomb_palette_action.reset();
+        }
+    }
 
     if(level != _last_level)
     {
@@ -86,8 +96,8 @@ void scoreboard::update(const hero& hero)
 
     if(bombs_count != _last_bombs_count)
     {
+        bool palette_effect = bombs_count && _last_bombs_count != -1;
         _last_bombs_count = bombs_count;
-
         _bomb_sprites.clear();
 
         for(int index = 0; index < bombs_count; ++index)
@@ -97,7 +107,14 @@ void scoreboard::update(const hero& hero)
             builder.set_bg_priority(_text_generator.bg_priority());
             builder.set_z_order(_text_generator.z_order());
             builder.set_ignore_camera(true);
-            _bomb_sprites.push_back(builder.build_and_release());
+            _bomb_sprites.push_back(builder.release_build());
+        }
+
+        if(palette_effect)
+        {
+            btn::sprite_palette_ptr palette = _bomb_sprites[0].palette();
+            palette.set_inverse_intensity(1);
+            _bomb_palette_action.emplace(btn::move(palette), 60, 0);
         }
     }
 }

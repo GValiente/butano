@@ -149,7 +149,7 @@ void hero_bullets::_add_bullets(hero& hero)
             btn::sprite_builder builder(btn::sprite_items::hero_bullets, shoot_event.level);
             builder.set_position(hero.weapon_position());
             builder.set_z_order(constants::hero_bullets_z_order);
-            _sprite_move_actions.push_back(btn::sprite_move_by_action(builder.build_and_release(),
+            _sprite_move_actions.push_back(btn::sprite_move_by_action(builder.release_build(),
                                                                       shoot_event.direction));
             hero.show_shoot(shoot_level_data.color);
 

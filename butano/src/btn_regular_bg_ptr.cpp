@@ -295,30 +295,68 @@ void regular_bg_ptr::set_priority(int priority)
     bgs_manager::set_priority(_id, priority);
 }
 
+bool regular_bg_ptr::is_above(const regular_bg_ptr& other) const
+{
+    int this_id = id();
+    int other_id = other.id();
+
+    if(this_id == other_id)
+    {
+        return false;
+    }
+
+    int this_priority = priority();
+    int other_priority = other.priority();
+
+    if(this_priority < other_priority)
+    {
+        return true;
+    }
+
+    if(this_priority > other_priority)
+    {
+        return false;
+    }
+
+    return this_id < other_id;
+}
+
+bool regular_bg_ptr::is_above(const sprite_ptr& sprite_ptr) const
+{
+    return priority() < sprite_ptr.bg_priority();
+}
+
 void regular_bg_ptr::put_above(const regular_bg_ptr& other)
 {
     int this_id = id();
     int other_id = other.id();
 
-    if(this_id != other_id)
+    if(this_id == other_id)
     {
-        int this_priority = priority();
-        int other_priority = other.priority();
+        return;
+    }
 
-        if(this_priority >= other_priority)
-        {
-            if(this_id > other_id)
-            {
-                if(other_priority > 0)
-                {
-                    set_priority(other_priority - 1);
-                }
-            }
-            else
-            {
-                set_priority(other_priority);
-            }
-        }
+    int this_priority = priority();
+    int other_priority = other.priority();
+
+    if(this_priority < other_priority)
+    {
+        return;
+    }
+
+    if(this_priority > other_priority)
+    {
+        set_priority(other_priority);
+    }
+
+    if(this_id < other_id)
+    {
+        return;
+    }
+
+    if(other_priority > 0)
+    {
+        set_priority(other_priority - 1);
     }
 }
 

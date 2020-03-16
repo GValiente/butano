@@ -45,6 +45,10 @@ public:
 
     void show_shoot(btn::color fade_color);
 
+    [[nodiscard]] bool add_bomb();
+
+    [[nodiscard]] bool throw_bomb();
+
     void update();
 
 private:

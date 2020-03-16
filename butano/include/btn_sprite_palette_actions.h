@@ -8,6 +8,134 @@
 namespace btn
 {
 
+// inverse
+
+class sprite_palette_inverse_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_palette_ptr& palette)
+    {
+        return palette.inverse_intensity();
+    }
+
+    static void set(fixed intensity, sprite_palette_ptr& palette)
+    {
+        palette.set_inverse_intensity(intensity);
+    }
+};
+
+
+class sprite_palette_inverse_to_action :
+        public to_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
+{
+
+public:
+    template<class SpritePalettePtr>
+    sprite_palette_inverse_to_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
+        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+    {
+    }
+
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_palette_inverse_loop_action :
+        public loop_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
+{
+
+public:
+    template<class SpritePalettePtr>
+    sprite_palette_inverse_loop_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
+        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+    {
+    }
+
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+// grayscale
+
+class sprite_palette_grayscale_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_palette_ptr& palette)
+    {
+        return palette.grayscale_intensity();
+    }
+
+    static void set(fixed intensity, sprite_palette_ptr& palette)
+    {
+        palette.set_grayscale_intensity(intensity);
+    }
+};
+
+
+class sprite_palette_grayscale_to_action :
+        public to_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
+{
+
+public:
+    template<class SpritePalettePtr>
+    sprite_palette_grayscale_to_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
+        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+    {
+    }
+
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_palette_grayscale_loop_action :
+        public loop_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
+{
+
+public:
+    template<class SpritePalettePtr>
+    sprite_palette_grayscale_loop_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
+        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+    {
+    }
+
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
 // fade
 
 class sprite_palette_fade_manager

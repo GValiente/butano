@@ -143,7 +143,7 @@ sprite_ptr sprite_builder::build() const
     return sprite_ptr::create(*this);
 }
 
-sprite_ptr sprite_builder::build_and_release()
+sprite_ptr sprite_builder::release_build()
 {
     return sprite_ptr::create(move(*this));
 }
@@ -153,7 +153,7 @@ optional<sprite_ptr> sprite_builder::optional_build() const
     return sprite_ptr::optional_create(*this);
 }
 
-optional<sprite_ptr> sprite_builder::optional_build_and_release()
+optional<sprite_ptr> sprite_builder::optional_release_build()
 {
     return sprite_ptr::optional_create(move(*this));
 }

@@ -10,17 +10,25 @@ namespace bf
 
 namespace
 {
+    btn::regular_bg_ptr _create_ground_bg()
+    {
+        btn::regular_bg_builder builder(btn::bg_items::stage_1);
+        builder.set_mosaic_enabled(true);
+        return builder.release_build();
+    }
+
     btn::regular_bg_ptr _create_clouds_bg()
     {
         btn::regular_bg_builder builder(btn::bg_items::clouds);
         builder.set_priority(2);
         builder.set_blending_enabled(true);
+        builder.set_mosaic_enabled(true);
         return builder.release_build();
     }
 }
 
 background::background() :
-    _ground_bg_move_action(btn::regular_bg_ptr::create(0, 0, btn::bg_items::stage_1), 0, 0.5),
+    _ground_bg_move_action(_create_ground_bg(), 0, 0.5),
     _clouds_bg_move_action(_create_clouds_bg(), -1.0 / 16, 0.5)
 {
     btn::blending::set_transparency_alpha(0.4);

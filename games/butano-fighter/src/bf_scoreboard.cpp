@@ -58,13 +58,13 @@ void scoreboard::update(const hero& hero)
     int bombs_count = hero.bombs_count();
     _experience_bar_palette_action->update();
 
-    if(_bomb_palette_action)
+    if(_bomb_scale_action)
     {
-        _bomb_palette_action->update();
+        _bomb_scale_action->update();
 
-        if(_bomb_palette_action->done())
+        if(_bomb_scale_action->done())
         {
-            _bomb_palette_action.reset();
+            _bomb_scale_action.reset();
         }
     }
 
@@ -96,25 +96,28 @@ void scoreboard::update(const hero& hero)
 
     if(bombs_count != _last_bombs_count)
     {
-        bool palette_effect = bombs_count && _last_bombs_count != -1;
+        bool scale_effect = _last_bombs_count == bombs_count + 1;
         _last_bombs_count = bombs_count;
-        _bomb_sprites.clear();
 
-        for(int index = 0; index < bombs_count; ++index)
+        if(scale_effect)
         {
-            btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
-            builder.set_position(btn::fixed_point(display_center.x() - ((index + 1) * 16), 16 - display_center.y()));
-            builder.set_bg_priority(_text_generator.bg_priority());
-            builder.set_z_order(_text_generator.z_order());
-            builder.set_ignore_camera(true);
-            _bomb_sprites.push_back(builder.release_build());
+            _bomb_scale_action.emplace(btn::move(_bomb_sprites.back()), 16, 0.01);
+            _bomb_sprites.pop_back();
         }
-
-        if(palette_effect)
+        else
         {
-            btn::sprite_palette_ptr palette = _bomb_sprites[0].palette();
-            palette.set_inverse_intensity(1);
-            _bomb_palette_action.emplace(btn::move(palette), 60, 0);
+            _bomb_sprites.clear();
+            _bomb_scale_action.reset();
+
+            for(int index = 0; index < bombs_count; ++index)
+            {
+                btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
+                builder.set_position(btn::fixed_point(display_center.x() - ((index + 1) * 16), 16 - display_center.y()));
+                builder.set_bg_priority(_text_generator.bg_priority());
+                builder.set_z_order(_text_generator.z_order());
+                builder.set_ignore_camera(true);
+                _bomb_sprites.push_back(builder.release_build());
+            }
         }
     }
 }

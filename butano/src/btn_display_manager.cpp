@@ -101,6 +101,20 @@ void set_sprites_mosaic_vertical_stretch(fixed stretch)
     data.commit_mosaic = true;
 }
 
+void set_sprites_mosaic_stretch(fixed stretch)
+{
+    data.sprites_mosaic_horizontal_stretch = stretch;
+    data.sprites_mosaic_vertical_stretch = stretch;
+    data.commit_mosaic = true;
+}
+
+void set_sprites_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
+{
+    data.sprites_mosaic_horizontal_stretch = horizontal_stretch;
+    data.sprites_mosaic_vertical_stretch = vertical_stretch;
+    data.commit_mosaic = true;
+}
+
 fixed bgs_mosaic_horizontal_stretch()
 {
     return data.bgs_mosaic_horizontal_stretch;
@@ -120,6 +134,20 @@ fixed bgs_mosaic_vertical_stretch()
 void set_bgs_mosaic_vertical_stretch(fixed stretch)
 {
     data.bgs_mosaic_vertical_stretch = stretch;
+    data.commit_mosaic = true;
+}
+
+void set_bgs_mosaic_stretch(fixed stretch)
+{
+    data.bgs_mosaic_horizontal_stretch = stretch;
+    data.bgs_mosaic_vertical_stretch = stretch;
+    data.commit_mosaic = true;
+}
+
+void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
+{
+    data.bgs_mosaic_horizontal_stretch = horizontal_stretch;
+    data.bgs_mosaic_vertical_stretch = vertical_stretch;
     data.commit_mosaic = true;
 }
 

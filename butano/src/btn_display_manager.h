@@ -24,6 +24,10 @@ namespace btn::display_manager
 
     void set_sprites_mosaic_vertical_stretch(fixed stretch);
 
+    void set_sprites_mosaic_stretch(fixed stretch);
+
+    void set_sprites_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch);
+
     [[nodiscard]] fixed bgs_mosaic_horizontal_stretch();
 
     void set_bgs_mosaic_horizontal_stretch(fixed stretch);
@@ -31,6 +35,10 @@ namespace btn::display_manager
     [[nodiscard]] fixed bgs_mosaic_vertical_stretch();
 
     void set_bgs_mosaic_vertical_stretch(fixed stretch);
+
+    void set_bgs_mosaic_stretch(fixed stretch);
+
+    void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch);
 
     [[nodiscard]] bool blending_bg_enabled(int bg);
 

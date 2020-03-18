@@ -131,6 +131,8 @@ fixed rotation_angle(int id)
 
 void set_rotation_angle(int id, fixed rotation_angle)
 {
+    BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
+
     item_type& item = data.items[id];
     item.rotation_angle = rotation_angle;
     item.hw_item.set_rotation_angle(rotation_angle);
@@ -145,6 +147,8 @@ fixed scale_x(int id)
 
 void set_scale_x(int id, fixed scale_x)
 {
+    BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
+
     item_type& item = data.items[id];
     item.scale_x = scale_x;
     item.hw_item.set_scale_x(scale_x);
@@ -159,8 +163,37 @@ fixed scale_y(int id)
 
 void set_scale_y(int id, fixed scale_y)
 {
+    BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+
     item_type& item = data.items[id];
     item.scale_y = scale_y;
+    item.hw_item.set_scale_y(scale_y);
+    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    _update(id);
+}
+
+void set_scale(int id, fixed scale)
+{
+    BTN_ASSERT(scale > 0, "Invalid scale: ", scale);
+
+    item_type& item = data.items[id];
+    item.scale_x = scale;
+    item.scale_y = scale;
+    item.hw_item.set_scale_x(scale);
+    item.hw_item.set_scale_y(scale);
+    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    _update(id);
+}
+
+void set_scale(int id, fixed scale_x, fixed scale_y)
+{
+    BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
+    BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+
+    item_type& item = data.items[id];
+    item.scale_x = scale_x;
+    item.scale_y = scale_y;
+    item.hw_item.set_scale_x(scale_x);
     item.hw_item.set_scale_y(scale_y);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);

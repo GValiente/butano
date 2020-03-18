@@ -101,6 +101,16 @@ void sprite_affine_mat_ptr::set_scale_y(fixed scale_y)
     sprite_affine_mats_manager::set_scale_y(_id, scale_y);
 }
 
+void sprite_affine_mat_ptr::set_scale(fixed scale)
+{
+    sprite_affine_mats_manager::set_scale(_id, scale);
+}
+
+void sprite_affine_mat_ptr::set_scale(fixed scale_x, fixed scale_y)
+{
+    sprite_affine_mats_manager::set_scale(_id, scale_x, scale_y);
+}
+
 bool sprite_affine_mat_ptr::horizontal_flip() const
 {
     return sprite_affine_mats_manager::horizontal_flip(_id);

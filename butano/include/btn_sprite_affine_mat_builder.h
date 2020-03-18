@@ -34,6 +34,10 @@ public:
 
     sprite_affine_mat_builder& set_scale_y(fixed scale_y);
 
+    sprite_affine_mat_builder& set_scale(fixed scale);
+
+    sprite_affine_mat_builder& set_scale(fixed scale_x, fixed scale_y);
+
     [[nodiscard]] bool horizontal_flip() const
     {
         return _horizontal_flip;

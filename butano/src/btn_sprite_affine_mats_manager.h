@@ -45,6 +45,10 @@ namespace btn::sprite_affine_mats_manager
 
     void set_scale_y(int id, fixed scale_y);
 
+    void set_scale(int id, fixed scale);
+
+    void set_scale(int id, fixed scale_x, fixed scale_y);
+
     [[nodiscard]] bool horizontal_flip(int id);
 
     void set_horizontal_flip(int id, bool horizontal_flip);

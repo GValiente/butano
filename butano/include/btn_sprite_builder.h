@@ -131,6 +131,10 @@ public:
 
     sprite_builder& set_scale_y(fixed scale_y);
 
+    sprite_builder& set_scale(fixed scale);
+
+    sprite_builder& set_scale(fixed scale_x, fixed scale_y);
+
     [[nodiscard]] int bg_priority() const
     {
         return _bg_priority;

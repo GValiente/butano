@@ -132,6 +132,10 @@ public:
 
     void set_scale_y(fixed scale_y);
 
+    void set_scale(fixed scale);
+
+    void set_scale(fixed scale_x, fixed scale_y);
+
     [[nodiscard]] int bg_priority() const;
 
     void set_bg_priority(int bg_priority);

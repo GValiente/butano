@@ -115,6 +115,198 @@ public:
 };
 
 
+// scale_x
+
+class sprite_scale_x_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_ptr& sprite)
+    {
+        return sprite.scale_x();
+    }
+
+    static void set(fixed scale_x, sprite_ptr& sprite)
+    {
+        sprite.set_scale_x(scale_x);
+    }
+};
+
+
+class sprite_scale_x_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_x_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
+        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+    {
+        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale_x() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_scale_x_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_x_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
+        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+    {
+        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale_x() const
+    {
+        return final_property();
+    }
+};
+
+
+// scale_y
+
+class sprite_scale_y_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_ptr& sprite)
+    {
+        return sprite.scale_y();
+    }
+
+    static void set(fixed scale_y, sprite_ptr& sprite)
+    {
+        sprite.set_scale_y(scale_y);
+    }
+};
+
+
+class sprite_scale_y_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_y_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
+        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+    {
+        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale_y() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_scale_y_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_y_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
+        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+    {
+        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale_y() const
+    {
+        return final_property();
+    }
+};
+
+
+// scale
+
+class sprite_scale_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_ptr& sprite)
+    {
+        return sprite.scale_x();
+    }
+
+    static void set(fixed scale, sprite_ptr& sprite)
+    {
+        sprite.set_scale(scale, scale);
+    }
+};
+
+
+class sprite_scale_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
+        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+    {
+        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_scale_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
+        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+    {
+        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_scale() const
+    {
+        return final_property();
+    }
+};
+
+
 // animation
 
 template<int Size>

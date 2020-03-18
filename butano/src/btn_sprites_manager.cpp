@@ -81,10 +81,8 @@ namespace
         {
             _update_item_dimensions(item);
         }
-        else
-        {
-            _update_handle(item);
-        }
+
+        _update_handle(item);
     }
 
     void _remove_affine_mat(item_type& item)
@@ -100,10 +98,8 @@ namespace
         {
             _update_item_dimensions(item);
         }
-        else
-        {
-            _update_handle(item);
-        }
+
+        _update_handle(item);
     }
 
     void _check_affine_mats()
@@ -134,6 +130,7 @@ namespace
                                 {
                                     hw::sprites::set_affine_mat(affine_mat_ptr_id, new_double_size, item.handle);
                                     _update_item_dimensions(item);
+                                    _update_handle(item);
                                 }
                             }
                         }
@@ -673,6 +670,7 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
         {
             hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), new_double_size, item->handle);
             _update_item_dimensions(*item);
+            _update_handle(*item);
         }
     }
 }

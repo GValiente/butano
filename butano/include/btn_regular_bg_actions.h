@@ -3,7 +3,7 @@
 
 #include "btn_fixed_point.h"
 #include "btn_regular_bg_ptr.h"
-#include "btn_template_actions.h"
+#include "btn_value_template_actions.h"
 
 namespace btn
 {
@@ -27,19 +27,19 @@ public:
 
 
 class regular_bg_move_by_action :
-        public by_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+        public by_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
 {
 
 public:
     template<class RegularBgPtr>
     regular_bg_move_by_action(RegularBgPtr&& bg, fixed delta_x, fixed delta_y) :
-        by_template_action(forward<RegularBgPtr>(bg), fixed_point(delta_x, delta_y))
+        by_value_template_action(forward<RegularBgPtr>(bg), fixed_point(delta_x, delta_y))
     {
     }
 
     template<class RegularBgPtr>
     regular_bg_move_by_action(RegularBgPtr&& bg, const fixed_point& delta_position) :
-        by_template_action(forward<RegularBgPtr>(bg), delta_position)
+        by_value_template_action(forward<RegularBgPtr>(bg), delta_position)
     {
     }
 
@@ -55,19 +55,19 @@ public:
 };
 
 
-class regular_bg_move_to_action : public to_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+class regular_bg_move_to_action : public to_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
 {
 
 public:
     template<class RegularBgPtr>
     regular_bg_move_to_action(RegularBgPtr&& bg, int duration_frames, fixed final_x, fixed final_y) :
-        to_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
+        to_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
     template<class RegularBgPtr>
     regular_bg_move_to_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& final_position) :
-        to_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
+        to_value_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
     {
     }
 
@@ -83,19 +83,19 @@ public:
 };
 
 
-class regular_bg_move_loop_action : public loop_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+class regular_bg_move_loop_action : public loop_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
 {
 
 public:
     template<class RegularBgPtr>
     regular_bg_move_loop_action(RegularBgPtr&& bg, int duration_frames, fixed final_x, fixed final_y) :
-        loop_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
+        loop_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
     template<class RegularBgPtr>
     regular_bg_move_loop_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& final_position) :
-        loop_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
+        loop_value_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
     {
     }
 

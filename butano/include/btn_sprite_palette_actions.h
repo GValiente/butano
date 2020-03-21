@@ -27,13 +27,13 @@ public:
 
 
 class sprite_palette_inverse_to_action :
-        public to_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
+        public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_inverse_to_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        to_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -50,13 +50,13 @@ public:
 
 
 class sprite_palette_inverse_loop_action :
-        public loop_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
+        public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_inverse_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_inverse_loop_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        loop_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -91,13 +91,13 @@ public:
 
 
 class sprite_palette_grayscale_to_action :
-        public to_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
+        public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_grayscale_to_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        to_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -114,13 +114,13 @@ public:
 
 
 class sprite_palette_grayscale_loop_action :
-        public loop_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
+        public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_grayscale_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_grayscale_loop_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        loop_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -154,13 +154,13 @@ public:
 };
 
 
-class sprite_palette_fade_to_action : public to_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
+class sprite_palette_fade_to_action : public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_fade_to_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        to_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -177,13 +177,13 @@ public:
 
 
 class sprite_palette_fade_loop_action :
-        public loop_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
+        public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_fade_loop_action(SpritePalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
+        loop_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_intensity)
     {
     }
 
@@ -218,13 +218,13 @@ public:
 
 
 class sprite_palette_rotate_by_action :
-        public cyclic_duration_by_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
+        public cyclic_duration_by_value_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_rotate_by_action(SpritePalettePtr&& palette, int duration_frames, int delta_count) :
-        cyclic_duration_by_template_action(forward<SpritePalettePtr>(palette), duration_frames, delta_count, 0, 0)
+        cyclic_duration_by_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
@@ -242,13 +242,13 @@ public:
 
 
 class sprite_palette_rotate_to_action :
-        public to_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
+        public to_value_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_rotate_to_action(SpritePalettePtr&& palette, int duration_frames, int final_count) :
-        to_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_count)
+        to_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_count)
     {
     }
 
@@ -265,13 +265,13 @@ public:
 
 
 class sprite_palette_rotate_loop_action :
-        public loop_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
+        public loop_value_template_action<sprite_palette_ptr, int, sprite_palette_rotate_manager>
 {
 
 public:
     template<class SpritePalettePtr>
     sprite_palette_rotate_loop_action(SpritePalettePtr&& palette, int duration_frames, int final_count) :
-        loop_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_count)
+        loop_value_template_action(forward<SpritePalettePtr>(palette), duration_frames, final_count)
     {
     }
 

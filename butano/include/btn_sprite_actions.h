@@ -8,7 +8,7 @@
 #include "btn_fixed_point.h"
 #include "btn_sprite_item.h"
 #include "btn_sprite_tiles_ptr.h"
-#include "btn_template_actions.h"
+#include "btn_value_template_actions.h"
 
 namespace btn
 {
@@ -31,19 +31,19 @@ public:
 };
 
 
-class sprite_move_by_action : public by_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_by_action : public by_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_move_by_action(SpritePtr&& sprite, fixed delta_x, fixed delta_y) :
-        by_template_action(forward<SpritePtr>(sprite), fixed_point(delta_x, delta_y))
+        by_value_template_action(forward<SpritePtr>(sprite), fixed_point(delta_x, delta_y))
     {
     }
 
     template<class SpritePtr>
     sprite_move_by_action(SpritePtr&& sprite, const fixed_point& delta_position) :
-        by_template_action(forward<SpritePtr>(sprite), delta_position)
+        by_value_template_action(forward<SpritePtr>(sprite), delta_position)
     {
     }
 
@@ -59,19 +59,19 @@ public:
 };
 
 
-class sprite_move_to_action : public to_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_to_action : public to_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_move_to_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        to_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
     template<class SpritePtr>
     sprite_move_to_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
-        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
     {
     }
 
@@ -87,19 +87,19 @@ public:
 };
 
 
-class sprite_move_loop_action : public loop_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_loop_action : public loop_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        loop_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
     {
     }
 
     template<class SpritePtr>
     sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
-        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
     {
     }
 
@@ -133,13 +133,13 @@ public:
 };
 
 
-class sprite_scale_x_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+class sprite_scale_x_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_x_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
-        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
     {
         BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
     }
@@ -156,13 +156,13 @@ public:
 };
 
 
-class sprite_scale_x_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+class sprite_scale_x_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_x_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
-        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
     {
         BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
     }
@@ -197,13 +197,13 @@ public:
 };
 
 
-class sprite_scale_y_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+class sprite_scale_y_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_y_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
-        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
     {
         BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
     }
@@ -220,13 +220,13 @@ public:
 };
 
 
-class sprite_scale_y_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+class sprite_scale_y_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_y_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
-        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
     {
         BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
     }
@@ -261,13 +261,13 @@ public:
 };
 
 
-class sprite_scale_to_action : public to_template_action<sprite_ptr, fixed, sprite_scale_manager>
+class sprite_scale_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_scale_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
-        to_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
@@ -284,13 +284,13 @@ public:
 };
 
 
-class sprite_scale_loop_action : public loop_template_action<sprite_ptr, fixed, sprite_scale_manager>
+class sprite_scale_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_scale_manager>
 {
 
 public:
     template<class SpritePtr>
     sprite_scale_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
-        loop_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }

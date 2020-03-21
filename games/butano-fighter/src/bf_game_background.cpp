@@ -1,4 +1,4 @@
-#include "bf_background.h"
+#include "bf_game_background.h"
 
 #include "btn_blending.h"
 #include "btn_regular_bg_builder.h"
@@ -27,14 +27,14 @@ namespace
     }
 }
 
-background::background() :
+game_background::game_background() :
     _ground_bg_move_action(_create_ground_bg(), 0, 0.5),
     _clouds_bg_move_action(_create_clouds_bg(), -1.0 / 16, 0.5)
 {
     btn::blending::set_transparency_alpha(0.4);
 }
 
-void background::update()
+void game_background::update()
 {
     _ground_bg_move_action.update();
     _clouds_bg_move_action.update();

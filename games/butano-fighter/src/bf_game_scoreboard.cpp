@@ -1,4 +1,4 @@
-#include "bf_scoreboard.h"
+#include "bf_game_scoreboard.h"
 
 #include "btn_string.h"
 #include "btn_display.h"
@@ -8,12 +8,12 @@
 #include "btn_experience_bar_sprite_item.h"
 #include "btn_experience_frame_sprite_item.h"
 #include "btn_hero_bomb_icon_sprite_item.h"
-#include "bf_hero.h"
+#include "bf_game_hero.h"
 
 namespace bf
 {
 
-scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
+game_scoreboard::game_scoreboard(btn::sprite_text_generator& text_generator) :
     _text_generator(text_generator)
 {
     btn::point display_center = btn::display::center();
@@ -49,7 +49,7 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
     }
 }
 
-void scoreboard::update(const hero& hero)
+void game_scoreboard::update(const game_hero& hero)
 {
     btn::point display_center = btn::display::center();
     int text_y = display_center.y() - 16;

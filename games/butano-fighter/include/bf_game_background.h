@@ -1,16 +1,16 @@
-#ifndef BF_BACKGROUND_H
-#define BF_BACKGROUND_H
+#ifndef BF_GAME_BACKGROUND_H
+#define BF_GAME_BACKGROUND_H
 
 #include "btn_regular_bg_actions.h"
 
 namespace bf
 {
 
-class background
+class game_background
 {
 
 public:
-    background();
+    game_background();
 
     void update();
 

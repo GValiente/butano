@@ -1,5 +1,5 @@
-#ifndef BF_SCOREBOARD_H
-#define BF_SCOREBOARD_H
+#ifndef BF_GAME_SCOREBOARD_H
+#define BF_GAME_SCOREBOARD_H
 
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
@@ -10,19 +10,18 @@ namespace btn
     class sprite_text_generator;
 }
 
-
 namespace bf
 {
 
-class hero;
+class game_hero;
 
-class scoreboard
+class game_scoreboard
 {
 
 public:
-    explicit scoreboard(btn::sprite_text_generator& text_generator);
+    explicit game_scoreboard(btn::sprite_text_generator& text_generator);
 
-    void update(const hero& hero);
+    void update(const game_hero& hero);
 
 private:
     btn::sprite_text_generator& _text_generator;

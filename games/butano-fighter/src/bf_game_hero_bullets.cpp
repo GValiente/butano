@@ -1,4 +1,4 @@
-#include "bf_hero_bullets.h"
+#include "bf_game_hero_bullets.h"
 
 #include "btn_math.h"
 #include "btn_sound.h"
@@ -6,8 +6,8 @@
 #include "btn_sound_items.h"
 #include "btn_sprite_builder.h"
 #include "btn_hero_bullets_sprite_item.h"
-#include "bf_hero.h"
 #include "bf_constants.h"
+#include "bf_game_hero.h"
 
 namespace bf
 {
@@ -70,7 +70,7 @@ namespace
     };
 }
 
-void hero_bullets::update(hero& hero)
+void game_hero_bullets::update(game_hero& hero)
 {
     if(btn::keypad::held(btn::keypad::button_type::B))
     {
@@ -100,7 +100,7 @@ void hero_bullets::update(hero& hero)
     }
 }
 
-void hero_bullets::_remove_bullets()
+void game_hero_bullets::_remove_bullets()
 {
     int remove_count = 0;
 
@@ -134,7 +134,7 @@ void hero_bullets::_remove_bullets()
     }
 }
 
-void hero_bullets::_add_bullets(hero& hero)
+void game_hero_bullets::_add_bullets(game_hero& hero)
 {
     int counter = _shoot_event_counter;
 

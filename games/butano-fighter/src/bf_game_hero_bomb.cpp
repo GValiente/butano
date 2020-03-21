@@ -1,4 +1,4 @@
-#include "bf_hero_bomb.h"
+#include "bf_game_hero_bomb.h"
 
 #include "btn_sound.h"
 #include "btn_keypad.h"
@@ -6,7 +6,7 @@
 #include "btn_regular_bg_builder.h"
 #include "btn_hero_bomb_bg_item.h"
 #include "btn_sound_items.h"
-#include "bf_hero.h"
+#include "bf_game_hero.h"
 
 namespace bf
 {
@@ -23,14 +23,14 @@ namespace
     }
 }
 
-hero_bomb::hero_bomb() :
+game_hero_bomb::game_hero_bomb() :
     _bg(_create_bg()),
     _bg_move_action(_bg, -0.5, 4),
     _bgs_mosaic_action(4, 0.5)
 {
 }
 
-void hero_bomb::update(hero& hero)
+void game_hero_bomb::update(game_hero& hero)
 {
     switch(_status)
     {

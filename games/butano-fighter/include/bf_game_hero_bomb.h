@@ -1,5 +1,5 @@
-#ifndef BF_HERO_BOMB_H
-#define BF_HERO_BOMB_H
+#ifndef BF_GAME_HERO_BOMB_H
+#define BF_GAME_HERO_BOMB_H
 
 #include "btn_bgs_mosaic_actions.h"
 #include "btn_regular_bg_actions.h"
@@ -8,9 +8,9 @@
 namespace bf
 {
 
-class hero;
+class game_hero;
 
-class hero_bomb
+class game_hero_bomb
 {
 
 public:
@@ -20,18 +20,18 @@ public:
         ACTIVE,
     };
 
-    hero_bomb();
+    game_hero_bomb();
 
-    hero_bomb(const hero_bomb& other) = delete;
+    game_hero_bomb(const game_hero_bomb& other) = delete;
 
-    hero_bomb& operator=(const hero_bomb& other) = delete;
+    game_hero_bomb& operator=(const game_hero_bomb& other) = delete;
 
     [[nodiscard]] status_type status() const
     {
         return _status;
     }
 
-    void update(hero& hero);
+    void update(game_hero& hero);
 
 private:
     btn::regular_bg_ptr _bg;

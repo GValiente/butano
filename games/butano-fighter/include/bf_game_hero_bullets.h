@@ -1,5 +1,5 @@
-#ifndef BF_HERO_BULLETS_H
-#define BF_HERO_BULLETS_H
+#ifndef BF_GAME_HERO_BULLETS_H
+#define BF_GAME_HERO_BULLETS_H
 
 #include "btn_sprite_actions.h"
 #include "bf_constants.h"
@@ -12,13 +12,13 @@ namespace btn
 namespace bf
 {
 
-class hero;
+class game_hero;
 
-class hero_bullets
+class game_hero_bullets
 {
 
 public:
-    void update(hero& hero);
+    void update(game_hero& hero);
 
 private:
     btn::vector<btn::sprite_move_by_action, constants::max_hero_bullets> _sprite_move_actions;
@@ -27,7 +27,7 @@ private:
 
     void _remove_bullets();
 
-    void _add_bullets(hero& hero);
+    void _add_bullets(game_hero& hero);
 };
 
 }

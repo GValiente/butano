@@ -1,5 +1,5 @@
-#ifndef BF_HERO_H
-#define BF_HERO_H
+#ifndef BF_GAME_HERO_H
+#define BF_GAME_HERO_H
 
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
@@ -7,11 +7,11 @@
 namespace bf
 {
 
-class hero
+class game_hero
 {
 
 public:
-    hero();
+    game_hero();
 
     [[nodiscard]] int level() const
     {

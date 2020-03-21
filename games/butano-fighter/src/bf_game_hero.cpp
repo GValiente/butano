@@ -1,4 +1,4 @@
-#include "bf_hero.h"
+#include "bf_game_hero.h"
 
 #include "btn_camera.h"
 #include "btn_keypad.h"
@@ -29,14 +29,14 @@ namespace
     }
 }
 
-hero::hero() :
+game_hero::game_hero() :
     _body_sprite_animate_action(_build_body_sprite_animate_action()),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
     _weapon_sprite(_build_weapon_sprite(_level, _weapon_position))
 {
 }
 
-void hero::show_shoot(btn::color fade_color)
+void game_hero::show_shoot(btn::color fade_color)
 {
     _show_shoot_counter = 5;
 
@@ -49,7 +49,7 @@ void hero::show_shoot(btn::color fade_color)
     _weapon_palette_fade_action.emplace(btn::move(weapon_palette), _show_shoot_counter, 0);
 }
 
-bool hero::add_bomb()
+bool game_hero::add_bomb()
 {
     if(_bombs_count < constants::max_hero_bombs)
     {
@@ -60,7 +60,7 @@ bool hero::add_bomb()
     return true;
 }
 
-bool hero::throw_bomb()
+bool game_hero::throw_bomb()
 {
     if(! _bombs_count)
     {
@@ -71,7 +71,7 @@ bool hero::throw_bomb()
     return true;
 }
 
-void hero::update()
+void game_hero::update()
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     btn::fixed_point body_position = body_sprite.position();

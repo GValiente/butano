@@ -1,5 +1,9 @@
 #include "bf_game.h"
 
+#include "btn_music.h"
+#include "btn_keypad.h"
+#include "btn_music_items.h"
+
 namespace bf
 {
 
@@ -15,6 +19,18 @@ void game::update()
     _hero_bullets.update(_hero);
     _background.update();
     _scoreboard.update(_hero);
+
+    if(btn::keypad::pressed(btn::keypad::button_type::START))
+    {
+        if(btn::music::playing())
+        {
+            btn::music::stop();
+        }
+        else
+        {
+            btn::music::play(btn::music_items::battle_clean, 0.5);
+        }
+    }
 }
 
 }

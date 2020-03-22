@@ -8,12 +8,16 @@
 #include "btn_hero_bomb_bg_item.h"
 #include "btn_sound_items.h"
 #include "bf_game_hero.h"
+#include "bf_game_background.h"
 
 namespace bf
 {
 
 namespace
 {
+    constexpr const int open_frames = 35;
+    constexpr const int close_frames = 150;
+
     btn::regular_bg_ptr _create_bg()
     {
         btn::regular_bg_builder builder(btn::bg_items::hero_bomb);
@@ -21,22 +25,16 @@ namespace
         builder.set_blending_enabled(true);
         return builder.release_build();
     }
-
-    btn::bgs_mosaic_stretch_loop_action _create_bgs_mosaic_action()
-    {
-        return btn::bgs_mosaic_stretch_loop_action(4, 0.5);
-    }
 }
 
 game_hero_bomb::game_hero_bomb() :
     _bg(_create_bg()),
-    _bg_move_action(_bg, -0.5, 4),
-    _bgs_mosaic_action(_create_bgs_mosaic_action())
+    _bg_move_action(_bg, -0.5, 4)
 {
     btn::window::outside().set_show_bg(_bg, false);
 }
 
-void game_hero_bomb::update(game_hero& hero)
+void game_hero_bomb::update(game_hero& hero, game_background& background)
 {
     switch(_status)
     {
@@ -53,18 +51,18 @@ void game_hero_bomb::update(game_hero& hero)
             _move_bottom_right_window_action.emplace(window, (display_height - window_y) / 4,
                                                      display_height, display_width);
 
-            _old_blending_transparency_alpha = btn::blending::transparency_alpha();
             btn::blending::set_transparency_alpha(0.9);
+            _blending_action.emplace(open_frames, 1);
 
+            background.show_mosaic();
             btn::sound::play(btn::sound_items::explosion_2);
             _status = status_type::OPEN;
-            _counter = 35;
+            _counter = open_frames;
         }
         break;
 
     case status_type::OPEN:
         _bg_move_action.update();
-        _bgs_mosaic_action.update();
 
         if(_move_top_left_window_action)
         {
@@ -83,6 +81,16 @@ void game_hero_bomb::update(game_hero& hero)
             if(_move_bottom_right_window_action->done())
             {
                 _move_bottom_right_window_action.reset();
+            }
+        }
+
+        if(_blending_action)
+        {
+            _blending_action->update();
+
+            if(_blending_action->done())
+            {
+                _blending_action.reset();
             }
         }
 
@@ -105,21 +113,36 @@ void game_hero_bomb::update(game_hero& hero)
             btn::rect_window window = btn::window::internal();
             window.set_top_left(0, 0);
             window.set_bottom_right(btn::display::height(), btn::display::width());
-            btn::sound::play(btn::sound_items::flame_thrower);
+
+            background.hide_mosaic();
             _status = status_type::CLOSE;
-            _counter = 175;
+            _counter = close_frames;
         }
         break;
 
     case status_type::CLOSE:
         _bg_move_action.update();
-        _bgs_mosaic_action.update();
+
+        if(_blending_action)
+        {
+            _blending_action->update();
+
+            if(_blending_action->done())
+            {
+                _blending_action.reset();
+            }
+        }
 
         if(_counter)
         {
             --_counter;
 
-            if(_counter && _counter % 16 == 0)
+            if(_counter == close_frames - 30)
+            {
+                _blending_action.emplace(close_frames - 30, 0);
+            }
+
+            if(_counter > 20 && _counter % 16 == (close_frames - 1) % 16)
             {
                 btn::sound::play(btn::sound_items::flame_thrower);
             }
@@ -127,9 +150,7 @@ void game_hero_bomb::update(game_hero& hero)
         else
         {
             btn::window::internal().set_bottom_right(0, 0);
-            btn::blending::set_transparency_alpha(_old_blending_transparency_alpha);
-            btn::bgs_mosaic::set_stretch(0);
-            _bgs_mosaic_action = _create_bgs_mosaic_action();
+            background.reset_blending();
             _status = status_type::INACTIVE;
         }
         break;

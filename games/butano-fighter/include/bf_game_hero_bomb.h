@@ -2,7 +2,7 @@
 #define BF_GAME_HERO_BOMB_H
 
 #include "btn_optional.h"
-#include "btn_bgs_mosaic_actions.h"
+#include "btn_blending_actions.h"
 #include "btn_regular_bg_actions.h"
 #include "btn_rect_window_actions.h"
 
@@ -10,6 +10,7 @@ namespace bf
 {
 
 class game_hero;
+class game_background;
 
 class game_hero_bomb
 {
@@ -21,7 +22,7 @@ public:
 
     game_hero_bomb& operator=(const game_hero_bomb& other) = delete;
 
-    void update(game_hero& hero);
+    void update(game_hero& hero, game_background& background);
 
 private:
     enum class status_type
@@ -35,8 +36,7 @@ private:
     btn::regular_bg_move_by_action _bg_move_action;
     btn::optional<btn::rect_window_move_top_left_to_action> _move_top_left_window_action;
     btn::optional<btn::rect_window_move_bottom_right_to_action> _move_bottom_right_window_action;
-    btn::bgs_mosaic_stretch_loop_action _bgs_mosaic_action;
-    btn::fixed _old_blending_transparency_alpha;
+    btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
     status_type _status = status_type::INACTIVE;
     int _counter = 0;
 };

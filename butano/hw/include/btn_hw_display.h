@@ -144,6 +144,7 @@ namespace btn::hw::display
     inline void set_show_mode()
     {
         REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
+        REG_BLDCNT = 0;
     }
 }
 

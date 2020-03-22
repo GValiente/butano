@@ -105,21 +105,29 @@ public:
     {
         // https://stackoverflow.com/questions/57452174/how-to-correctly-print-a-2-30-fixed-point-variable
 
-        append(value.integer());
-
-        if(int fraction = value.fraction())
+        if(value < 0)
         {
-            auto scale = unsigned(value.scale());
-            unsigned digits = 10000;
-            append('.');
+            append('-');
+            append(0 - value);
+        }
+        else
+        {
+            append(value.integer());
 
-            if(uint64_t(scale) * digits < numeric_limits<unsigned>::max())
+            if(int fraction = value.fraction())
             {
-                append((unsigned(fraction) * digits) / scale);
-            }
-            else
-            {
-                append((uint64_t(fraction) * digits) / scale);
+                auto scale = unsigned(value.scale());
+                unsigned digits = 10000;
+                append('.');
+
+                if(uint64_t(scale) * digits < numeric_limits<unsigned>::max())
+                {
+                    append((unsigned(fraction) * digits) / scale);
+                }
+                else
+                {
+                    append((uint64_t(fraction) * digits) / scale);
+                }
             }
         }
     }

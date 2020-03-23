@@ -145,6 +145,7 @@ namespace btn::hw::display
     {
         REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
         REG_BLDCNT = 0;
+        REG_MOSAIC = 0;
     }
 }
 

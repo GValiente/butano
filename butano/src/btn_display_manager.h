@@ -1,6 +1,7 @@
 #ifndef BTN_DISPLAY_MANAGER_H
 #define BTN_DISPLAY_MANAGER_H
 
+#include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 
 namespace btn
@@ -70,7 +71,13 @@ namespace btn::display_manager
 
     [[nodiscard]] const fixed_point& rect_window_bottom_right(int window);
 
-    void set_rect_window_boundaries(int window, const fixed_point& top_left, const fixed_point& bottom_right);
+    [[nodiscard]] pair<int, int> rect_window_hw_horizontal_boundaries(int window);
+
+    [[nodiscard]] pair<int, int> rect_window_hw_vertical_boundaries(int window);
+
+    void set_rect_window_top_left(int window, const fixed_point& top_left);
+
+    void set_rect_window_bottom_right(int window, const fixed_point& bottom_right);
 
     [[nodiscard]] bool rect_window_ignore_camera(int window);
 

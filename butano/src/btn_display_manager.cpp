@@ -25,7 +25,8 @@ namespace
         fixed blending_intensity_alpha = 0;
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
-        bool rect_windows_ignore_camera[hw::display::rect_windows_count() * 2] = {};
+        point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
+        bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
         bool commit_bg[hw::bgs::count()] = {};
         bool green_swap_enabled = false;
@@ -39,6 +40,23 @@ namespace
     };
 
     BTN_DATA_EWRAM static_data data;
+
+    void _update_rect_windows_hw_boundaries(int boundaries_index)
+    {
+        fixed_point window_boundaries = data.rect_windows_boundaries[boundaries_index];
+
+        if(! data.rect_windows_ignore_camera[boundaries_index / 2])
+        {
+            window_boundaries -= camera::position();
+        }
+
+        point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
+        int display_width = hw::display::width();
+        int display_height = hw::display::height();
+        hw_window_boundaries.set_x(clamp(window_boundaries.x().integer() + (display_width / 2), 0, display_width));
+        hw_window_boundaries.set_y(clamp(window_boundaries.y().integer() + (display_height / 2), 0, display_height));
+        data.commit_windows_boundaries = true;
+    }
 }
 
 void init()
@@ -66,6 +84,11 @@ void init()
     for(bool& commit_inside_window : data.commit_inside_window)
     {
         commit_inside_window = true;
+    }
+
+    for(int index = 0, limit = hw::display::rect_windows_count() * 2; index < limit; ++index)
+    {
+        _update_rect_windows_hw_boundaries(index);
     }
 }
 
@@ -274,12 +297,32 @@ const fixed_point& rect_window_bottom_right(int window)
     return data.rect_windows_boundaries[(window * 2) + 1];
 }
 
-void set_rect_window_boundaries(int window, const fixed_point& top_left, const fixed_point& bottom_right)
+pair<int, int> rect_window_hw_horizontal_boundaries(int window)
+{
+    const point* hw_boundaries = data.rect_windows_hw_boundaries;
+    int index = window * 2;
+    return make_pair(hw_boundaries[index].x(), hw_boundaries[index + 1].x());
+}
+
+pair<int, int> rect_window_hw_vertical_boundaries(int window)
+{
+    const point* hw_boundaries = data.rect_windows_hw_boundaries;
+    int index = window * 2;
+    return make_pair(hw_boundaries[index].y(), hw_boundaries[index + 1].y());
+}
+
+void set_rect_window_top_left(int window, const fixed_point& top_left)
 {
     int index = window * 2;
     data.rect_windows_boundaries[index] = top_left;
+    _update_rect_windows_hw_boundaries(index);
+}
+
+void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
+{
+    int index = window * 2;
     data.rect_windows_boundaries[index + 1] = bottom_right;
-    data.commit_windows_boundaries = true;
+    _update_rect_windows_hw_boundaries(index + 1);
 }
 
 bool rect_window_ignore_camera(int window)
@@ -289,8 +332,14 @@ bool rect_window_ignore_camera(int window)
 
 void set_rect_window_ignore_camera(int window, bool ignore_camera)
 {
-    data.rect_windows_ignore_camera[window] = ignore_camera;
-    data.commit_windows_boundaries = true;
+    if(data.rect_windows_ignore_camera[window] != ignore_camera)
+    {
+        data.rect_windows_ignore_camera[window] = ignore_camera;
+
+        int index = window * 2;
+        _update_rect_windows_hw_boundaries(index);
+        _update_rect_windows_hw_boundaries(index + 1);
+    }
 }
 
 bool inside_window_enabled(int window)
@@ -317,12 +366,13 @@ void set_green_swap_enabled(bool enabled)
 
 void update_camera()
 {
-    for(bool rect_window_ignore_camera : data.rect_windows_ignore_camera)
+    for(int index = 0, limit = hw::display::rect_windows_count(); index < limit; ++index)
     {
-        if(rect_window_ignore_camera)
+        if(! data.rect_windows_ignore_camera[index])
         {
-            data.commit_windows_boundaries = true;
-            return;
+            int boundaries_index = index * 2;
+            _update_rect_windows_hw_boundaries(boundaries_index);
+            _update_rect_windows_hw_boundaries(boundaries_index + 1);
         }
     }
 }
@@ -381,31 +431,7 @@ void commit()
 
     if(data.commit_windows_boundaries)
     {
-        fixed_point camera_position = camera::position();
-        const fixed_point* windows_boundaries = data.rect_windows_boundaries;
-        const bool* windows_ignore_camera = data.rect_windows_ignore_camera;
-        constexpr int boundaries_count = hw::display::rect_windows_count() * 2;
-        point hw_windows_boundaries[boundaries_count];
-        int display_width = hw::display::width();
-        int display_height = hw::display::height();
-        int half_display_width = hw::display::width() / 2;
-        int half_display_height = hw::display::height() / 2;
-
-        for(int index = 0; index < boundaries_count; ++index)
-        {
-            fixed_point window_boundaries = windows_boundaries[index];
-
-            if(! windows_ignore_camera[index])
-            {
-                window_boundaries -= camera_position;
-            }
-
-            point& hw_window_boundaries = hw_windows_boundaries[index];
-            hw_window_boundaries.set_x(clamp(window_boundaries.x().integer() + half_display_width, 0, display_width));
-            hw_window_boundaries.set_y(clamp(window_boundaries.y().integer() + half_display_height, 0, display_height));
-        }
-
-        hw::display::set_windows_boundaries(hw_windows_boundaries[0]);
+        hw::display::set_windows_boundaries(data.rect_windows_hw_boundaries[0]);
         data.commit_windows_boundaries = false;
     }
 

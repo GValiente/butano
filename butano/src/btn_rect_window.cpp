@@ -38,22 +38,20 @@ const fixed_point& rect_window::bottom_right() const
 
 void rect_window::set_top(fixed top)
 {
-    const fixed_point& br = bottom_right();
-    BTN_ASSERT(top <= br.y(), "Invalid top: ", top, " - ", br.y());
+    BTN_ASSERT(top <= bottom_right().y(), "Invalid top: ", top, " - ", bottom_right().y());
 
     fixed_point tl = top_left();
     tl.set_y(top);
-    display_manager::set_rect_window_boundaries(id(), tl, br);
+    display_manager::set_rect_window_top_left(id(), tl);
 }
 
 void rect_window::set_left(fixed left)
 {
-    const fixed_point& br = bottom_right();
-    BTN_ASSERT(left <= br.x(), "Invalid left: ", left, " - ", br.x());
+    BTN_ASSERT(left <= bottom_right().x(), "Invalid left: ", left, " - ", bottom_right().x());
 
     fixed_point tl = top_left();
     tl.set_x(left);
-    display_manager::set_rect_window_boundaries(id(), tl, br);
+    display_manager::set_rect_window_top_left(id(), tl);
 }
 
 void rect_window::set_top_left(fixed top, fixed left)
@@ -63,31 +61,28 @@ void rect_window::set_top_left(fixed top, fixed left)
 
 void rect_window::set_top_left(const fixed_point& top_left)
 {
-    const fixed_point& br = bottom_right();
-    BTN_ASSERT(top_left.y() <= br.y(), "Invalid top: ", top_left.y(), " - ", br.y());
-    BTN_ASSERT(top_left.x() <= br.x(), "Invalid left: ", top_left.x(), " - ", br.x());
+    BTN_ASSERT(top_left.y() <= bottom_right().y(), "Invalid top: ", top_left.y(), " - ", bottom_right().y());
+    BTN_ASSERT(top_left.x() <= bottom_right().x(), "Invalid left: ", top_left.x(), " - ", bottom_right().x());
 
-    display_manager::set_rect_window_boundaries(id(), top_left, br);
+    display_manager::set_rect_window_top_left(id(), top_left);
 }
 
 void rect_window::set_bottom(fixed bottom)
 {
-    const fixed_point& tl = top_left();
-    BTN_ASSERT(bottom >= tl.y(), "Invalid bottom: ", bottom, " - ", tl.y());
+    BTN_ASSERT(bottom >= top_left().y(), "Invalid bottom: ", bottom, " - ", top_left().y());
 
     fixed_point br = bottom_right();
     br.set_y(bottom);
-    display_manager::set_rect_window_boundaries(id(), tl, br);
+    display_manager::set_rect_window_bottom_right(id(), br);
 }
 
 void rect_window::set_right(fixed right)
 {
-    const fixed_point& tl = top_left();
-    BTN_ASSERT(right >= tl.x(), "Invalid right: ", right, " - ", tl.x());
+    BTN_ASSERT(right >= top_left().x(), "Invalid right: ", right, " - ", top_left().x());
 
     fixed_point br = bottom_right();
     br.set_x(right);
-    display_manager::set_rect_window_boundaries(id(), tl, br);
+    display_manager::set_rect_window_bottom_right(id(), br);
 }
 
 void rect_window::set_bottom_right(fixed bottom, fixed right)
@@ -97,11 +92,10 @@ void rect_window::set_bottom_right(fixed bottom, fixed right)
 
 void rect_window::set_bottom_right(const fixed_point& bottom_right)
 {
-    const fixed_point& tl = top_left();
-    BTN_ASSERT(bottom_right.y() >= tl.y(), "Invalid bottom: ", bottom_right.y(), " - ", tl.y());
-    BTN_ASSERT(bottom_right.x() >= tl.x(), "Invalid right: ", bottom_right.x(), " - ", tl.x());
+    BTN_ASSERT(bottom_right.y() >= top_left().y(), "Invalid bottom: ", bottom_right.y(), " - ", top_left().y());
+    BTN_ASSERT(bottom_right.x() >= top_left().x(), "Invalid right: ", bottom_right.x(), " - ", top_left().x());
 
-    display_manager::set_rect_window_boundaries(id(), tl, bottom_right);
+    display_manager::set_rect_window_bottom_right(id(), bottom_right);
 }
 
 void rect_window::set_boundaries(fixed top, fixed left, fixed bottom, fixed right)
@@ -114,7 +108,8 @@ void rect_window::set_boundaries(const fixed_point& top_left, const fixed_point&
     BTN_ASSERT(top_left.y() <= bottom_right.y(), "Invalid top or bottom: ", top_left.y(), " - ", bottom_right.y());
     BTN_ASSERT(top_left.x() <= bottom_right.x(), "Invalid left or right: ", top_left.x(), " - ", bottom_right.x());
 
-    display_manager::set_rect_window_boundaries(id(), top_left, bottom_right);
+    display_manager::set_rect_window_top_left(id(), top_left);
+    display_manager::set_rect_window_bottom_right(id(), bottom_right);
 }
 
 bool rect_window::ignore_camera() const

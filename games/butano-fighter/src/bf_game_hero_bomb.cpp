@@ -7,7 +7,9 @@
 #include "btn_regular_bg_builder.h"
 #include "btn_hero_bomb_bg_item.h"
 #include "btn_sound_items.h"
+#include "bf_constants.h"
 #include "bf_game_hero.h"
+#include "bf_wave_generator.h"
 #include "bf_game_background.h"
 
 namespace bf
@@ -15,7 +17,7 @@ namespace bf
 
 namespace
 {
-    constexpr const int open_frames = 35;
+    constexpr const int open_frames = 30;
     constexpr const int close_frames = 150;
 
     btn::regular_bg_ptr _create_bg()
@@ -29,9 +31,14 @@ namespace
 
 game_hero_bomb::game_hero_bomb() :
     _bg(_create_bg()),
-    _bg_move_action(_bg, -0.5, 4)
+    _bg_move_action(_bg, -0.5, 4),
+    _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(_bg, _hblank_effect_deltas))
 {
     btn::window::outside().set_show_bg(_bg, false);
+
+    wave_generator().generate(_hblank_effect_deltas);
+    _hblank_effect.reload_deltas_ref();
+    _hblank_effect.set_visible(false);
 }
 
 void game_hero_bomb::update(game_hero& hero, game_background& background)
@@ -43,18 +50,17 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
         if(btn::keypad::pressed(btn::keypad::button_type::A) && hero.throw_bomb())
         {
             btn::rect_window window = btn::window::internal();
-            int display_width = btn::display::width();
-            int display_height = btn::display::height();
-            int window_y = (display_height / 2) + hero.weapon_position().y().integer();
-            window.set_boundaries(window_y, 0, window_y, display_width);
-            _move_top_left_window_action.emplace(window, window_y / 4, 0, 0);
-            _move_bottom_right_window_action.emplace(window, (display_height - window_y) / 4,
-                                                     display_height, display_width);
+            btn::fixed window_y = hero.weapon_position().y();
+            window.set_boundaries(window_y, -constants::view_width, window_y, constants::view_width);
+            _move_window_top_action.emplace(window, -4);
+            _move_window_bottom_action.emplace(window, 4);
 
+            background.hide_blending();
             btn::blending::set_transparency_alpha(0.9);
             _blending_action.emplace(open_frames, 1);
 
             background.show_mosaic();
+            _hblank_effect.set_visible(true);
             btn::sound::play(btn::sound_items::explosion_2);
             _status = status_type::OPEN;
             _counter = open_frames;
@@ -63,26 +69,8 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
 
     case status_type::OPEN:
         _bg_move_action.update();
-
-        if(_move_top_left_window_action)
-        {
-            _move_top_left_window_action->update();
-
-            if(_move_top_left_window_action->done())
-            {
-                _move_top_left_window_action.reset();
-            }
-        }
-
-        if(_move_bottom_right_window_action)
-        {
-            _move_bottom_right_window_action->update();
-
-            if(_move_bottom_right_window_action->done())
-            {
-                _move_bottom_right_window_action.reset();
-            }
-        }
+        _move_window_top_action->update();
+        _move_window_bottom_action->update();
 
         if(_blending_action)
         {
@@ -100,19 +88,8 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
         }
         else
         {
-            if(_move_top_left_window_action)
-            {
-                _move_top_left_window_action.reset();
-            }
-
-            if(_move_bottom_right_window_action)
-            {
-                _move_bottom_right_window_action.reset();
-            }
-
-            btn::rect_window window = btn::window::internal();
-            window.set_top_left(0, 0);
-            window.set_bottom_right(btn::display::height(), btn::display::width());
+            _move_window_top_action.reset();
+            _move_window_bottom_action.reset();
 
             background.hide_mosaic();
             _status = status_type::CLOSE;
@@ -140,17 +117,23 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
             if(_counter == close_frames - 30)
             {
                 _blending_action.emplace(close_frames - 30, 0);
+                background.show_hblank_effect(close_frames - 50);
+            }
+            else if(_counter == 20)
+            {
+                btn::window::internal().set_boundaries(0, 0, 0, 0);
+                _blending_action.reset();
+                background.show_blending();
+                _hblank_effect.set_visible(false);
             }
 
-            if(_counter > 20 && _counter % 16 == (close_frames - 1) % 16)
+            if(_counter > 40 && _counter % 16 == (close_frames - 1) % 16)
             {
                 btn::sound::play(btn::sound_items::flame_thrower);
             }
         }
         else
         {
-            btn::window::internal().set_bottom_right(0, 0);
-            background.reset_blending();
             _status = status_type::INACTIVE;
         }
         break;

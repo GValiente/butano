@@ -72,6 +72,10 @@ namespace btn::display_manager
 
     void set_rect_window_boundaries(int window, const fixed_point& top_left, const fixed_point& bottom_right);
 
+    [[nodiscard]] bool rect_window_ignore_camera(int window);
+
+    void set_rect_window_ignore_camera(int window, bool ignore_camera);
+
     [[nodiscard]] bool inside_window_enabled(int window);
 
     void set_inside_window_enabled(int window, bool enabled);
@@ -79,6 +83,8 @@ namespace btn::display_manager
     [[nodiscard]] bool green_swap_enabled();
 
     void set_green_swap_enabled(bool enabled);
+
+    void update_camera();
 
     void commit();
 

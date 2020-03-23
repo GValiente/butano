@@ -45,6 +45,10 @@ public:
 
     void set_boundaries(const fixed_point& top_left, const fixed_point& bottom_right);
 
+    [[nodiscard]] bool ignore_camera() const;
+
+    void set_ignore_camera(bool ignore_camera);
+
 private:
     friend class window;
 

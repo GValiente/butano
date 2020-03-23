@@ -3,6 +3,7 @@
 #include "btn_fixed_point.h"
 #include "btn_bgs_manager.h"
 #include "btn_sprites_manager.h"
+#include "btn_display_manager.h"
 
 namespace btn::camera
 {
@@ -56,6 +57,7 @@ void set_position(const fixed_point& position)
         data.position = position;
         sprites_manager::update_camera();
         bgs_manager::update_camera();
+        display_manager::update_camera();
     }
 }
 

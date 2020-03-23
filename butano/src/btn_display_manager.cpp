@@ -1,6 +1,7 @@
 #include "btn_display_manager.h"
 
 #include "btn_vector.h"
+#include "btn_camera.h"
 #include "btn_fixed_point.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
@@ -10,7 +11,6 @@ namespace btn::display_manager
 
 namespace
 {
-
     class static_data
     {
 
@@ -24,7 +24,8 @@ namespace
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
         unsigned windows_flags[hw::display::windows_count()];
-        fixed_point windows_boundaries[hw::display::rect_windows_count() * 2];
+        fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
+        bool rect_windows_ignore_camera[hw::display::rect_windows_count() * 2] = {};
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
         bool commit_bg[hw::bgs::count()] = {};
         bool green_swap_enabled = false;
@@ -265,19 +266,30 @@ void set_show_blending_in_window(int window, bool show)
 
 const fixed_point& rect_window_top_left(int window)
 {
-    return data.windows_boundaries[window * 2];
+    return data.rect_windows_boundaries[window * 2];
 }
 
 const fixed_point& rect_window_bottom_right(int window)
 {
-    return data.windows_boundaries[(window * 2) + 1];
+    return data.rect_windows_boundaries[(window * 2) + 1];
 }
 
 void set_rect_window_boundaries(int window, const fixed_point& top_left, const fixed_point& bottom_right)
 {
     int index = window * 2;
-    data.windows_boundaries[index] = top_left;
-    data.windows_boundaries[index + 1] = bottom_right;
+    data.rect_windows_boundaries[index] = top_left;
+    data.rect_windows_boundaries[index + 1] = bottom_right;
+    data.commit_windows_boundaries = true;
+}
+
+bool rect_window_ignore_camera(int window)
+{
+    return data.rect_windows_ignore_camera[window];
+}
+
+void set_rect_window_ignore_camera(int window, bool ignore_camera)
+{
+    data.rect_windows_ignore_camera[window] = ignore_camera;
     data.commit_windows_boundaries = true;
 }
 
@@ -301,6 +313,18 @@ void set_green_swap_enabled(bool enabled)
 {
     data.green_swap_enabled = enabled;
     data.commit_green_swap = true;
+}
+
+void update_camera()
+{
+    for(bool rect_window_ignore_camera : data.rect_windows_ignore_camera)
+    {
+        if(rect_window_ignore_camera)
+        {
+            data.commit_windows_boundaries = true;
+            return;
+        }
+    }
 }
 
 void commit()
@@ -357,16 +381,28 @@ void commit()
 
     if(data.commit_windows_boundaries)
     {
-        const fixed_point* windows_boundaries = data.windows_boundaries;
+        fixed_point camera_position = camera::position();
+        const fixed_point* windows_boundaries = data.rect_windows_boundaries;
+        const bool* windows_ignore_camera = data.rect_windows_ignore_camera;
         constexpr int boundaries_count = hw::display::rect_windows_count() * 2;
         point hw_windows_boundaries[boundaries_count];
+        int display_width = hw::display::width();
+        int display_height = hw::display::height();
+        int half_display_width = hw::display::width() / 2;
+        int half_display_height = hw::display::height() / 2;
 
         for(int index = 0; index < boundaries_count; ++index)
         {
-            const fixed_point& window_boundaries = windows_boundaries[index];
+            fixed_point window_boundaries = windows_boundaries[index];
+
+            if(! windows_ignore_camera[index])
+            {
+                window_boundaries -= camera_position;
+            }
+
             point& hw_window_boundaries = hw_windows_boundaries[index];
-            hw_window_boundaries.set_x(window_boundaries.x().integer());
-            hw_window_boundaries.set_y(window_boundaries.y().integer());
+            hw_window_boundaries.set_x(clamp(window_boundaries.x().integer() + half_display_width, 0, display_width));
+            hw_window_boundaries.set_y(clamp(window_boundaries.y().integer() + half_display_height, 0, display_height));
         }
 
         hw::display::set_windows_boundaries(hw_windows_boundaries[0]);

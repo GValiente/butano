@@ -639,7 +639,7 @@ void set_window_enabled(id_type id, bool window_enabled)
     BTN_ASSERT(window_enabled && hw::sprites::blending_enabled(handle),
                "Blending and window can't be enabled at the same time");
 
-    hw::sprites::set_window_enabled(window_enabled, item->handle);
+    hw::sprites::set_window_enabled(window_enabled, handle);
     _update_handle(*item);
 }
 

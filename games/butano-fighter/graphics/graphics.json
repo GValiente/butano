@@ -18,6 +18,21 @@
         "experience_frame": {
             "height": 16
         },
+        "stage_1_characters_1": {
+            "height": 16
+        },
+        "stage_1_characters_2": {
+            "height": 16
+        },
+        "stage_1_animals": {
+            "height": 16
+        },
+        "stage_1_monsters_1": {
+            "height": 16
+        },
+        "stage_1_monsters_2": {
+            "height": 16
+        },
         "fixed_8x8_font": {
             "height": 8
         },
@@ -37,8 +52,6 @@
         "hero_bomb": {
         },
         "stage_1": {
-        },
-        "stage_x": {
         }
     }
 }

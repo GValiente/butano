@@ -1,9 +1,8 @@
 #ifndef BTN_SPAN_H
 #define BTN_SPAN_H
 
-#include "btn_assert.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
+#include "btn_array.h"
+#include "btn_span_fwd.h"
 
 namespace btn
 {
@@ -47,17 +46,24 @@ public:
     {
     }
 
-    template<class Container>
-    constexpr span(const Container& container) :
-        _begin(container.data()),
-        _end(_build_end(container.data(), container.size()))
+    template<class OtherType, size_type ArraySize>
+    constexpr span(const array<OtherType, ArraySize>& array) :
+        _begin(array.begin()),
+        _end(array.end())
     {
     }
 
-    template<class Container>
-    constexpr span(Container& container) :
-        _begin(container.data()),
-        _end(_build_end(container.data(), container.size()))
+    template<class OtherType, size_type ArraySize>
+    constexpr span(array<OtherType, ArraySize>& array) :
+        _begin(array.begin()),
+        _end(array.end())
+    {
+    }
+
+    template<class OtherType>
+    constexpr span(const span<OtherType>& other) :
+        _begin(other.begin()),
+        _end(other.end())
     {
     }
 

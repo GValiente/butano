@@ -54,7 +54,7 @@ public:
 private:
     int _level = 2;
     int _experience = 82345;
-    int _bombs_count = 2;
+    int _bombs_count = 1;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;

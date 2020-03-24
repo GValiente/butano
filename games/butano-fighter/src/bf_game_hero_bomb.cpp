@@ -57,7 +57,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
 
             background.hide_blending();
             btn::blending::set_transparency_alpha(0.9);
-            _blending_action.emplace(open_frames, 1);
+            _blending_action.emplace(open_frames + 2, 1);
 
             background.show_mosaic();
             _hblank_effect.set_visible(true);
@@ -71,16 +71,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
         _bg_move_action.update();
         _move_window_top_action->update();
         _move_window_bottom_action->update();
-
-        if(_blending_action)
-        {
-            _blending_action->update();
-
-            if(_blending_action->done())
-            {
-                _blending_action.reset();
-            }
-        }
+        _blending_action->update();
 
         if(_counter)
         {
@@ -126,8 +117,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
                 background.show_blending();
                 _hblank_effect.set_visible(false);
             }
-
-            if(_counter > 40 && _counter % 16 == (close_frames - 1) % 16)
+            else if(_counter > 40 && _counter % 16 == (close_frames - 1) % 16)
             {
                 btn::sound::play(btn::sound_items::flame_thrower);
             }

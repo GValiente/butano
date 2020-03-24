@@ -110,6 +110,11 @@ namespace btn::hw::display
         REG_WINOUT = uint16_t(WIN_BUILD(flags_ptr[3], flags_ptr[2]));
     }
 
+    inline void set_window_boundaries(int first, int second, uint16_t& window_cnt)
+    {
+        window_cnt = uint16_t((first << 8) + second);
+    }
+
     inline void set_windows_boundaries(const point& boundaries_ref)
     {
         const point* boundaries_ptr = &boundaries_ref;
@@ -117,6 +122,16 @@ namespace btn::hw::display
         REG_WIN0V = uint16_t((boundaries_ptr[0].y() << 8) + boundaries_ptr[1].y());
         REG_WIN1H = uint16_t((boundaries_ptr[2].x() << 8) + boundaries_ptr[3].x());
         REG_WIN1V = uint16_t((boundaries_ptr[2].y() << 8) + boundaries_ptr[3].y());
+    }
+
+    [[nodiscard]] inline uint16_t* window_horizontal_boundaries_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(REG_BASE + 0x0040 + (0x0002 * id));
+    }
+
+    [[nodiscard]] inline uint16_t* window_vertical_boundaries_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(REG_BASE + 0x0044 + (0x0002 * id));
     }
 
     inline void set_green_swap_enabled(bool enabled)

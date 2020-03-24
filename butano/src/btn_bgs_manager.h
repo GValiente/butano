@@ -79,10 +79,10 @@ namespace bgs_manager
 
     void update_camera();
 
-    void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+    void fill_horizontal_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
                                       uint16_t& dest_ref);
 
-    void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+    void fill_vertical_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
                                     uint16_t& dest_ref);
 
     void fill_hw_attributes(int id,  const regular_bg_attributes& attributes_ref, int attributes_count,

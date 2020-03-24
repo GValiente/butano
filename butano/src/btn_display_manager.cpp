@@ -25,7 +25,7 @@ namespace
         fixed blending_intensity_alpha = 0;
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
-        point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
+        fixed_point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
         bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
         bool commit_bg[hw::bgs::count()] = {};
@@ -50,11 +50,11 @@ namespace
             window_boundaries -= camera::position();
         }
 
-        point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
-        int display_width = hw::display::width();
-        int display_height = hw::display::height();
-        hw_window_boundaries.set_x(clamp(window_boundaries.x().integer() + (display_width / 2), 0, display_width));
-        hw_window_boundaries.set_y(clamp(window_boundaries.y().integer() + (display_height / 2), 0, display_height));
+        fixed_point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
+        fixed display_width = hw::display::width();
+        fixed display_height = hw::display::height();
+        hw_window_boundaries.set_x(clamp(window_boundaries.x() + (display_width / 2), fixed(0), display_width));
+        hw_window_boundaries.set_y(clamp(window_boundaries.y() + (display_height / 2), fixed(0), display_height));
         data.commit_windows_boundaries = true;
     }
 }
@@ -297,16 +297,16 @@ const fixed_point& rect_window_bottom_right(int window)
     return data.rect_windows_boundaries[(window * 2) + 1];
 }
 
-pair<int, int> rect_window_hw_horizontal_boundaries(int window)
+pair<fixed, fixed> rect_window_hw_horizontal_boundaries(int window)
 {
-    const point* hw_boundaries = data.rect_windows_hw_boundaries;
+    const fixed_point* hw_boundaries = data.rect_windows_hw_boundaries;
     int index = window * 2;
     return make_pair(hw_boundaries[index].x(), hw_boundaries[index + 1].x());
 }
 
-pair<int, int> rect_window_hw_vertical_boundaries(int window)
+pair<fixed, fixed> rect_window_hw_vertical_boundaries(int window)
 {
-    const point* hw_boundaries = data.rect_windows_hw_boundaries;
+    const fixed_point* hw_boundaries = data.rect_windows_hw_boundaries;
     int index = window * 2;
     return make_pair(hw_boundaries[index].y(), hw_boundaries[index + 1].y());
 }
@@ -339,6 +339,42 @@ void set_rect_window_ignore_camera(int window, bool ignore_camera)
         int index = window * 2;
         _update_rect_windows_hw_boundaries(index);
         _update_rect_windows_hw_boundaries(index + 1);
+    }
+}
+
+void fill_rect_window_hw_horizontal_boundaries(
+        const pair<fixed, fixed>& base_horizontal_boundaries, const pair<fixed, fixed>& horizontal_boundaries_ref,
+        int horizontal_boundaries_count, uint16_t& dest_ref)
+{
+    fixed display_width = hw::display::width();
+    const pair<fixed, fixed>* horizontal_boundaries_ptr = &horizontal_boundaries_ref;
+    uint16_t* dest_ptr = &dest_ref;
+
+    for(int index = 0; index < horizontal_boundaries_count; ++index)
+    {
+        fixed first_fixed = base_horizontal_boundaries.first + horizontal_boundaries_ptr[index].first;
+        fixed second_fixed = base_horizontal_boundaries.second + horizontal_boundaries_ptr[index].second;
+        int first_integer = clamp(first_fixed, fixed(0), display_width).integer();
+        int second_integer = clamp(second_fixed, fixed(0), display_width).integer();
+        hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
+    }
+}
+
+void fill_rect_window_hw_vertical_boundaries(
+        const pair<fixed, fixed>& base_vertical_boundaries, const pair<fixed, fixed>& vertical_boundaries_ref,
+        int vertical_boundaries_count, uint16_t& dest_ref)
+{
+    fixed display_height = hw::display::height();
+    const pair<fixed, fixed>* vertical_boundaries_ptr = &vertical_boundaries_ref;
+    uint16_t* dest_ptr = &dest_ref;
+
+    for(int index = 0; index < vertical_boundaries_count; ++index)
+    {
+        fixed first_fixed = base_vertical_boundaries.first + vertical_boundaries_ptr[index].first;
+        fixed second_fixed = base_vertical_boundaries.second + vertical_boundaries_ptr[index].second;
+        int first_integer = clamp(first_fixed, fixed(0), display_height).integer();
+        int second_integer = clamp(second_fixed, fixed(0), display_height).integer();
+        hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
     }
 }
 
@@ -431,7 +467,16 @@ void commit()
 
     if(data.commit_windows_boundaries)
     {
-        hw::display::set_windows_boundaries(data.rect_windows_hw_boundaries[0]);
+        const fixed_point* fixed_boundaries = data.rect_windows_hw_boundaries;
+        point integer_boundaries[hw::display::rect_windows_count() * 2];
+
+        for(int index = 0; index < hw::display::rect_windows_count() * 2; ++index)
+        {
+            const fixed_point& fb = fixed_boundaries[index];
+            integer_boundaries[index] = point(fb.x().integer(), fb.y().integer());
+        }
+
+        hw::display::set_windows_boundaries(integer_boundaries[0]);
         data.commit_windows_boundaries = false;
     }
 

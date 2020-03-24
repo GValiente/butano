@@ -5,9 +5,11 @@
 #include "btn_display.h"
 #include "btn_variant.h"
 #include "btn_bgs_manager.h"
+#include "btn_display_manager.h"
 #include "btn_regular_bg_attributes.h"
 #include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_bgs.h"
+#include "../hw/include/btn_hw_display.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
 
 namespace btn::hblank_effects_manager
@@ -25,38 +27,69 @@ namespace
     {
 
     public:
-        using last_value_type = variant<fixed, regular_bg_attributes>;
+        using last_value_type = variant<fixed, regular_bg_attributes, pair<fixed, fixed>>;
 
-        const void* values_ptr;
-        int values_count;
-        int target_id;
-        unsigned usages;
-        last_value_type last_value;
-        uint8_t target;
-        bool visible;
+        const void* values_ptr = nullptr;
+        int values_count = 0;
+        int target_id = 0;
+        unsigned usages = 0;
+        last_value_type last_value_variant;
+        uint8_t target = 0;
+        bool visible = false;
 
         [[nodiscard]] bool last_value_updated()
         {
-            last_value_type new_value;
+            bool updated = false;
 
             switch(target_type(target))
             {
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
-                new_value = bgs_manager::hw_position(target_id).x();
+                {
+                    fixed& last_value = last_value_variant.get<fixed>();
+                    fixed new_value = bgs_manager::hw_position(target_id).x();
+                    updated = last_value != new_value;
+                    last_value = new_value;
+                }
                 break;
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
-                new_value = bgs_manager::hw_position(target_id).y();
+                {
+                    fixed& last_value = last_value_variant.get<fixed>();
+                    fixed new_value = bgs_manager::hw_position(target_id).y();
+                    updated = last_value != new_value;
+                    last_value = new_value;
+                }
                 break;
 
             case target_type::REGULAR_BG_ATTRIBUTES:
-                new_value = bgs_manager::attributes(target_id);
+                {
+                    regular_bg_attributes& last_value = last_value_variant.get<regular_bg_attributes>();
+                    regular_bg_attributes new_value = bgs_manager::attributes(target_id);
+                    updated = last_value != new_value;
+                    last_value = new_value;
+                }
+                break;
+
+            case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                {
+                    pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
+                    pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
+                    updated = last_value != new_value;
+                    last_value = new_value;
+                }
+                break;
+
+            case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                {
+                    pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
+                    pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
+                    updated = last_value != new_value;
+                    last_value = new_value;
+                }
                 break;
             }
 
-            bool updated = last_value != new_value;
-            last_value = move(new_value);
             return updated;
         }
 
@@ -68,7 +101,7 @@ namespace
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_horizontal_hw_positions(last_value.get<fixed>(), fixed_values_ptr[0],
+                    bgs_manager::fill_horizontal_hw_positions(last_value_variant.get<fixed>(), fixed_values_ptr[0],
                             display::height(), entry.src[0]);
                     entry.dest = hw::bgs::regular_horizontal_position_register(target_id);
                 }
@@ -77,7 +110,7 @@ namespace
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_vertical_hw_positions(last_value.get<fixed>(), fixed_values_ptr[0],
+                    bgs_manager::fill_vertical_hw_positions(last_value_variant.get<fixed>(), fixed_values_ptr[0],
                             display::height(), entry.src[0]);
                     entry.dest = hw::bgs::regular_vertical_position_register(target_id);
                 }
@@ -89,6 +122,26 @@ namespace
                     bgs_manager::fill_hw_attributes(target_id, regular_bg_attributes_ptr[0], display::height(),
                             entry.src[0]);
                     entry.dest = hw::bgs::attributes_register(target_id);
+                }
+                break;
+
+            case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                {
+                    auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
+                    display_manager::fill_rect_window_hw_horizontal_boundaries(
+                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr[0],
+                                display::height(), entry.src[0]);
+                    entry.dest = hw::display::window_horizontal_boundaries_register(target_id);
+                }
+                break;
+
+            case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                {
+                    auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
+                    display_manager::fill_rect_window_hw_vertical_boundaries(
+                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr[0],
+                                display::height(), entry.src[0]);
+                    entry.dest = hw::display::window_vertical_boundaries_register(target_id);
                 }
                 break;
             }
@@ -130,6 +183,25 @@ namespace
         new_item.target = uint8_t(target);
         new_item.visible = true;
         data.update = true;
+
+        switch(target)
+        {
+
+        case target_type::REGULAR_BG_HORIZONTAL_POSITION:
+        case target_type::REGULAR_BG_VERTICAL_POSITION:
+            new_item.last_value_variant = fixed();
+            break;
+
+        case target_type::REGULAR_BG_ATTRIBUTES:
+            new_item.last_value_variant = regular_bg_attributes();
+            break;
+
+        case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+        case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+            new_item.last_value_variant = pair<fixed, fixed>();
+            break;
+        }
+
         return item_index;
     }
 }
@@ -187,6 +259,14 @@ int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, i
                    target_type::REGULAR_BG_ATTRIBUTES, target_id);
 }
 
+int create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id)
+{
+    BTN_ASSERT(fixed_pairs_ref.size() >= display::height(),
+               "Invalid fixed pairs ref size: ", fixed_pairs_ref.size(), " - ", display::height());
+
+    return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+}
+
 void increase_usages(int id)
 {
     item_type& item = data.items[id];
@@ -222,6 +302,13 @@ span<const regular_bg_attributes> regular_bg_attributes_ref(int id)
     const item_type& item = data.items[id];
     auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(item.values_ptr);
     return span<const regular_bg_attributes>(regular_bg_attributes_ptr, item.values_count);
+}
+
+span<const pair<fixed, fixed>> fixed_pairs_ref(int id)
+{
+    const item_type& item = data.items[id];
+    auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(item.values_ptr);
+    return span<const pair<fixed, fixed>>(fixed_pairs_ptr, item.values_count);
 }
 
 void set_values_ref(int id, const void* values_ptr, int values_count)

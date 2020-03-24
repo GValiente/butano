@@ -497,7 +497,7 @@ void update_camera()
     }
 }
 
-void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+void fill_horizontal_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
                                   uint16_t& dest_ref)
 {
     const fixed* positions_ptr = &positions_ref;
@@ -505,11 +505,11 @@ void fill_horizontal_hw_positions(fixed item_position, const fixed& positions_re
 
     for(int index = 0; index < positions_count; ++index)
     {
-        dest_ptr[index] = uint16_t((item_position + positions_ptr[index]).integer());
+        dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
     }
 }
 
-void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref, int positions_count,
+void fill_vertical_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
                                 uint16_t& dest_ref)
 {
     const fixed* positions_ptr = &positions_ref;
@@ -517,7 +517,7 @@ void fill_vertical_hw_positions(fixed item_position, const fixed& positions_ref,
 
     for(int index = 0; index < positions_count; ++index)
     {
-        dest_ptr[index] = uint16_t((item_position + positions_ptr[index]).integer());
+        dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
     }
 }
 

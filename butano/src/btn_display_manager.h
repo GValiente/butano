@@ -71,9 +71,9 @@ namespace btn::display_manager
 
     [[nodiscard]] const fixed_point& rect_window_bottom_right(int window);
 
-    [[nodiscard]] pair<int, int> rect_window_hw_horizontal_boundaries(int window);
+    [[nodiscard]] pair<fixed, fixed> rect_window_hw_horizontal_boundaries(int window);
 
-    [[nodiscard]] pair<int, int> rect_window_hw_vertical_boundaries(int window);
+    [[nodiscard]] pair<fixed, fixed> rect_window_hw_vertical_boundaries(int window);
 
     void set_rect_window_top_left(int window, const fixed_point& top_left);
 
@@ -82,6 +82,14 @@ namespace btn::display_manager
     [[nodiscard]] bool rect_window_ignore_camera(int window);
 
     void set_rect_window_ignore_camera(int window, bool ignore_camera);
+
+    void fill_rect_window_hw_horizontal_boundaries(
+            const pair<fixed, fixed>& base_horizontal_boundaries, const pair<fixed, fixed>& horizontal_boundaries_ref,
+            int horizontal_boundaries_count, uint16_t& dest_ref);
+
+    void fill_rect_window_hw_vertical_boundaries(
+            const pair<fixed, fixed>& base_vertical_boundaries, const pair<fixed, fixed>& vertical_boundaries_ref,
+            int vertical_boundaries_count, uint16_t& dest_ref);
 
     [[nodiscard]] bool inside_window_enabled(int window);
 

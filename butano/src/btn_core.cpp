@@ -83,7 +83,7 @@ namespace
     {
         hw::core::wait_for_vblank();
         audio_manager::stop();
-        hblank_effects_manager::stop();
+        display_manager::stop();
     }
 }
 

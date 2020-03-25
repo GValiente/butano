@@ -434,9 +434,4 @@ void commit()
     }
 }
 
-void stop()
-{
-    disable();
-}
-
 }

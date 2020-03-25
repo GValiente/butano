@@ -156,11 +156,16 @@ namespace btn::hw::display
         REG_DISPCNT &= unsigned(~DCNT_BLANK);
     }
 
-    inline void set_show_mode()
+    inline void stop()
     {
-        REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
         REG_BLDCNT = 0;
         REG_MOSAIC = 0;
+    }
+
+    inline void set_show_mode()
+    {
+        stop();
+        REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
     }
 }
 

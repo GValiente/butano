@@ -4,6 +4,11 @@
 #include "tonc.h"
 #include "btn_common.h"
 
+extern "C"
+{
+    void btn_hw_soft_reset(unsigned reset_flags);
+}
+
 namespace btn::hw::core
 {
     inline void wait_for_vblank()
@@ -18,8 +23,7 @@ namespace btn::hw::core
 
     [[noreturn]] inline void reset()
     {
-        RegisterRamReset(RESET_GFX | RESET_REG_SOUND);
-        SoftReset();
+        btn_hw_soft_reset(0xFF);
 
         while(true)
         {

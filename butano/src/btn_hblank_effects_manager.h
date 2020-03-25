@@ -58,8 +58,6 @@ namespace btn::hblank_effects_manager
     void update();
 
     void commit();
-
-    void stop();
 }
 
 #endif

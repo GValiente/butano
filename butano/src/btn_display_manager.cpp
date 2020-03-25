@@ -497,6 +497,11 @@ void wake_up()
     hw::display::wake_up();
 }
 
+void stop()
+{
+    hw::display::stop();
+}
+
 void set_show_mode()
 {
     hw::display::set_show_mode();

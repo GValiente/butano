@@ -107,6 +107,8 @@ namespace btn::display_manager
 
     void wake_up();
 
+    void stop();
+
     void set_show_mode();
 }
 

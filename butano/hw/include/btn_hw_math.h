@@ -6,14 +6,14 @@
 
 extern "C"
 {
-    unsigned isqrt32(unsigned x) BTN_CODE_IWRAM;
+    unsigned btn_hw_sqrt(unsigned x) BTN_CODE_IWRAM;
 }
 
 namespace btn::hw
 {
     [[nodiscard]] inline int sqrt(int value)
     {
-        return int(isqrt32(unsigned(value)));
+        return int(btn_hw_sqrt(unsigned(value)));
     }
 
     [[nodiscard]] inline int lut_sin(int s16_angle)

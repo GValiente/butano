@@ -2,16 +2,15 @@
 @ Thanks to https://github.com/JoaoBaptMG/gba-modern
 
 @ The actual function
-@ u32 isqrt32(u32 x) // so x is in r0
+@ u32 btn_hw_sqrt(u32 x) // so x is in r0
     .section .iwram, "ax", %progbits
     .align 2
     .arm
-    .global isqrt32
-    .type isqrt32 STT_FUNC
-isqrt32:
+    .global btn_hw_sqrt
+    .type btn_hw_sqrt STT_FUNC
+btn_hw_sqrt:
     @ Registers: r0 = root, r2 = x, r3 = offset
     mov     r2, r0             @ move x to r2 first
-isqrt32direct:                 @ shortcut used by isqrt64
     mov     r3, #3 << 30       @ initialize offset
     mov     r0, #1 << 30       @ initialize the first root
 

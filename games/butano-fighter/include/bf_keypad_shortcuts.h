@@ -11,7 +11,8 @@ public:
     void update();
 
 private:
-    bool _select_released = false;
+    bool _sleep_ready = false;
+    bool _reset_ready = false;
 };
 
 }

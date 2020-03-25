@@ -9,27 +9,46 @@ namespace bf
 
 void keypad_shortcuts::update()
 {
-    if(! btn::keypad::held(btn::keypad::button_type::SELECT))
-    {
-        _select_released = true;
-    }
+    bool b_held = btn::keypad::held(btn::keypad::button_type::B);
+    bool select_held = btn::keypad::held(btn::keypad::button_type::SELECT);
 
-    if(_select_released && btn::keypad::held(btn::keypad::button_type::SELECT))
+    if(_sleep_ready)
     {
-        if(btn::keypad::held(btn::keypad::button_type::B))
+        if(b_held && select_held)
         {
             const btn::keypad::button_type wake_up_buttons[] = {
                 btn::keypad::button_type::SELECT,
                 btn::keypad::button_type::B
             };
 
+            _sleep_ready = false;
             btn::core::sleep(wake_up_buttons);
         }
-        else if(btn::keypad::held(btn::keypad::button_type::START) &&
-                btn::keypad::held(btn::keypad::button_type::L) &&
-                btn::keypad::held(btn::keypad::button_type::R))
+    }
+    else
+    {
+        if(! b_held || ! select_held)
+        {
+            _sleep_ready = true;
+        }
+    }
+
+    bool l_held = btn::keypad::held(btn::keypad::button_type::L);
+    bool r_held = btn::keypad::held(btn::keypad::button_type::R);
+    bool start_held = btn::keypad::held(btn::keypad::button_type::START);
+
+    if(_reset_ready)
+    {
+        if(l_held && r_held && start_held)
         {
             btn::core::reset();
+        }
+    }
+    else
+    {
+        if(! l_held || ! r_held || ! start_held)
+        {
+            _reset_ready = true;
         }
     }
 }

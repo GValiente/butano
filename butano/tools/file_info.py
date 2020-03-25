@@ -11,12 +11,14 @@ class FileInfo:
     @staticmethod
     def read(file_path):
         info = ''
+        read_failed = True
 
         if os.path.isfile(file_path):
             with open(file_path, 'r') as file:
                 info = file.read()
+                read_failed = False
 
-        return FileInfo(info)
+        return FileInfo(info, read_failed)
 
     @staticmethod
     def build_from_file(file_path):
@@ -31,17 +33,18 @@ class FileInfo:
             info.append(str(os.path.getsize(file_path)))
             info.append(str(os.path.getmtime(file_path)))
 
-        return FileInfo('\n'.join(info))
+        return FileInfo('\n'.join(info), False)
 
-    def __init__(self, info):
+    def __init__(self, info, read_failed):
         self.__info = info
+        self.__read_failed = read_failed
 
     def write(self, file_path):
         with open(file_path, 'w') as file:
             file.write(self.__info)
 
     def __eq__(self, other):
-        return self.__info == other.__info
+        return self.__info == other.__info and self.__read_failed == other.__read_failed
 
     def __ne__(self, other):
-        return self.__info != other.__info
+        return self.__info != other.__info or self.__read_failed != other.__read_failed

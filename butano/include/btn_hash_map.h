@@ -901,7 +901,7 @@ private:
         {
             if(allocated[index])
             {
-                value_type&& other_value = other_storage[index];
+                value_type& other_value = other_storage[index];
                 ::new(storage + index) value_type(move(other_value));
                 other_value.~value_type();
             }

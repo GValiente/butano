@@ -574,7 +574,7 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            value_type&& other_value = other_data[index];
+            value_type& other_value = other_data[index];
             ::new(data + index) value_type(move(other_value));
             other_value.~value_type();
         }

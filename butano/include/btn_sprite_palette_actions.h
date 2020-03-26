@@ -3,7 +3,7 @@
 
 #include "btn_fixed.h"
 #include "btn_sprite_palette_ptr.h"
-#include "btn_template_actions.h"
+#include "btn_value_template_actions.h"
 
 namespace btn
 {

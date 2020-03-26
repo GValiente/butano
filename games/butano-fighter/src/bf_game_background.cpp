@@ -32,53 +32,52 @@ namespace
 }
 
 game_background::game_background() :
-    _ground_bg_move_action(_create_ground_bg(), 0, 0.5),
-    _clouds_bg_move_action(_create_clouds_bg(), -1.0 / 16, 0.5),
+    _ground_move_action(_create_ground_bg(), 0, 0.5),
+    _clouds_move_action(_create_clouds_bg(), -1.0 / 16, 0.5),
     _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
-                       _ground_bg_move_action.bg(), _hblank_effect_deltas))
+                       _ground_move_action.bg(), _hblank_effect_deltas))
 {
     btn::blending::set_transparency_alpha(blending_transparency);
-    btn::window::internal().set_show_bg(_clouds_bg_move_action.bg(), false);
+    btn::window::internal().set_show_bg(_clouds_move_action.bg(), false);
     _wave_generator.set_amplitude(3);
     _hblank_effect.set_visible(false);
 }
 
-void game_background::show_mosaic()
+void game_background::show_bomb_open(int frames)
 {
-    btn::bgs_mosaic::set_stretch(0.25);
-    _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.5);
+    btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
+    ground_palette.set_grayscale_intensity(0);
+    _ground_palette_action.emplace(btn::move(ground_palette), frames / 2, 1);
+
+    btn::bgs_mosaic::set_stretch(0.1);
+    _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.2);
 }
 
-void game_background::hide_mosaic()
-{
-    btn::bgs_mosaic::set_stretch(0);
-    _mosaic_action.reset();
-}
-
-void game_background::show_blending()
-{
-    hide_blending();
-    _blending_action.emplace(20, blending_transparency);
-}
-
-void game_background::hide_blending()
-{
-    btn::blending::set_transparency_alpha(0);
-    _blending_action.reset();
-}
-
-void game_background::show_hblank_effect(int frames)
+void game_background::show_bomb_fade(int frames)
 {
     BTN_ASSERT(frames > 0, "Invalid frames: ", frames);
 
+    btn::bgs_mosaic::set_stretch(0);
+    _mosaic_action.reset();
+
+    btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
+    ground_palette.set_grayscale_intensity(1);
+    _ground_palette_action.emplace(btn::move(ground_palette), frames, 0);
+
     _hblank_effect.set_visible(true);
-    _hblank_effect_frames = frames;
+    _bomb_fade_frames = frames;
+}
+
+void game_background::show_clouds()
+{
+    btn::blending::set_transparency_alpha(0);
+    _blending_action.emplace(20, blending_transparency);
 }
 
 void game_background::update()
 {
-    _ground_bg_move_action.update();
-    _clouds_bg_move_action.update();
+    _ground_move_action.update();
+    _clouds_move_action.update();
 
     if(_mosaic_action)
     {
@@ -95,13 +94,23 @@ void game_background::update()
         }
     }
 
-    if(_hblank_effect_frames)
+    if(_ground_palette_action)
     {
-        --_hblank_effect_frames;
+        _ground_palette_action->update();
 
-        if(_hblank_effect_frames)
+        if(_ground_palette_action->done())
         {
-            _wave_generator.set_speed(_hblank_effect_frames * hblank_effect_multiplier);
+            _ground_palette_action.reset();
+        }
+    }
+
+    if(_bomb_fade_frames)
+    {
+        --_bomb_fade_frames;
+
+        if(_bomb_fade_frames)
+        {
+            _wave_generator.set_speed(_bomb_fade_frames * hblank_effect_multiplier);
             _wave_generator.generate(_hblank_effect_deltas);
             _hblank_effect.reload_deltas_ref();
         }

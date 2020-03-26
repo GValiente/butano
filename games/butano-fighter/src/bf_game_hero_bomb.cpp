@@ -64,7 +64,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
             _circle_hblank_effect.reload_deltas_ref();
             _circle_hblank_effect.set_visible(true);
 
-            background.show_mosaic();
+            background.show_bomb_open(open_frames);
             _wave_hblank_effect.set_visible(true);
             btn::sound::play(btn::sound_items::explosion_2);
             _status = status_type::OPEN;
@@ -95,8 +95,6 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
             _move_window_bottom_action.reset();
             _circle_hblank_effect.set_visible(false);
             btn::window::internal().set_boundaries(-1000, -1000, 1000, 1000);
-            background.hide_mosaic();
-            background.hide_blending();
             _blending_action.reset();
             _status = status_type::CLOSE;
             _counter = close_frames;
@@ -125,13 +123,13 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
                 btn::window::internal().set_show_blending(true);
                 btn::blending::set_transparency_alpha(1);
                 _blending_action.emplace(close_frames - 30, 0);
-                background.show_hblank_effect(close_frames - 50);
+                background.show_bomb_fade(close_frames - 50);
             }
             else if(_counter == 20)
             {
                 btn::window::internal().set_boundaries(0, 0, 0, 0);
                 _blending_action.reset();
-                background.show_blending();
+                background.show_clouds();
                 _wave_hblank_effect.set_visible(false);
             }
 

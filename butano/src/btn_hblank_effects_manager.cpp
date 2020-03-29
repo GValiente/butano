@@ -101,8 +101,8 @@ namespace
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_horizontal_hw_positions(last_value_variant.get<fixed>(), fixed_values_ptr[0],
-                            display::height(), entry.src[0]);
+                    bgs_manager::fill_hblank_effect_horizontal_positions(
+                                last_value_variant.get<fixed>(), fixed_values_ptr, entry.src);
                     entry.dest = hw::bgs::regular_horizontal_position_register(target_id);
                 }
                 break;
@@ -110,8 +110,8 @@ namespace
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
                     auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_vertical_hw_positions(last_value_variant.get<fixed>(), fixed_values_ptr[0],
-                            display::height(), entry.src[0]);
+                    bgs_manager::fill_hblank_effect_vertical_positions(
+                                last_value_variant.get<fixed>(), fixed_values_ptr, entry.src);
                     entry.dest = hw::bgs::regular_vertical_position_register(target_id);
                 }
                 break;
@@ -119,8 +119,7 @@ namespace
             case target_type::REGULAR_BG_ATTRIBUTES:
                 {
                     auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(values_ptr);
-                    bgs_manager::fill_hw_attributes(target_id, regular_bg_attributes_ptr[0], display::height(),
-                            entry.src[0]);
+                    bgs_manager::fill_hblank_effect_attributes(target_id, regular_bg_attributes_ptr, entry.src);
                     entry.dest = hw::bgs::attributes_register(target_id);
                 }
                 break;
@@ -128,9 +127,8 @@ namespace
             case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
                 {
                     auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
-                    display_manager::fill_rect_window_hw_horizontal_boundaries(
-                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr[0],
-                                display::height(), entry.src[0]);
+                    display_manager::fill_rect_window_hblank_effect_horizontal_boundaries(
+                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr, entry.src);
                     entry.dest = hw::display::window_horizontal_boundaries_register(target_id);
                 }
                 break;
@@ -138,9 +136,8 @@ namespace
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
                 {
                     auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
-                    display_manager::fill_rect_window_hw_vertical_boundaries(
-                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr[0],
-                                display::height(), entry.src[0]);
+                    display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
+                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr, entry.src);
                     entry.dest = hw::display::window_vertical_boundaries_register(target_id);
                 }
                 break;

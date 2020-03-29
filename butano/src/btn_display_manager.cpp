@@ -342,38 +342,36 @@ void set_rect_window_ignore_camera(int window, bool ignore_camera)
     }
 }
 
-void fill_rect_window_hw_horizontal_boundaries(
-        const pair<fixed, fixed>& base_horizontal_boundaries, const pair<fixed, fixed>& horizontal_boundaries_ref,
-        int horizontal_boundaries_count, uint16_t& dest_ref)
+void fill_rect_window_hblank_effect_horizontal_boundaries(
+        const pair<fixed, fixed>& base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
+        uint16_t* dest_ptr)
 {
-    fixed display_width = hw::display::width();
-    const pair<fixed, fixed>* horizontal_boundaries_ptr = &horizontal_boundaries_ref;
-    uint16_t* dest_ptr = &dest_ref;
+    fixed min = 0;
+    fixed max = hw::display::width();
 
-    for(int index = 0; index < horizontal_boundaries_count; ++index)
+    for(int index = 0; index < hw::display::height(); ++index)
     {
         fixed first_fixed = base_horizontal_boundaries.first + horizontal_boundaries_ptr[index].first;
         fixed second_fixed = base_horizontal_boundaries.second + horizontal_boundaries_ptr[index].second;
-        auto first_integer = int(clamp(first_fixed, fixed(0), display_width).unsigned_integer());
-        auto second_integer = int(clamp(second_fixed, fixed(0), display_width).unsigned_integer());
+        auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
+        auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
         hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
     }
 }
 
-void fill_rect_window_hw_vertical_boundaries(
-        const pair<fixed, fixed>& base_vertical_boundaries, const pair<fixed, fixed>& vertical_boundaries_ref,
-        int vertical_boundaries_count, uint16_t& dest_ref)
+void fill_rect_window_hblank_effect_vertical_boundaries(
+        const pair<fixed, fixed>& base_vertical_boundaries, const pair<fixed, fixed>* vertical_boundaries_ptr,
+        uint16_t* dest_ptr)
 {
-    fixed display_height = hw::display::height();
-    const pair<fixed, fixed>* vertical_boundaries_ptr = &vertical_boundaries_ref;
-    uint16_t* dest_ptr = &dest_ref;
+    fixed min = 0;
+    fixed max = hw::display::height();
 
-    for(int index = 0; index < vertical_boundaries_count; ++index)
+    for(int index = 0; index < hw::display::height(); ++index)
     {
         fixed first_fixed = base_vertical_boundaries.first + vertical_boundaries_ptr[index].first;
         fixed second_fixed = base_vertical_boundaries.second + vertical_boundaries_ptr[index].second;
-        auto first_integer = int(clamp(first_fixed, fixed(0), display_height).unsigned_integer());
-        auto second_integer = int(clamp(second_fixed, fixed(0), display_height).unsigned_integer());
+        auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
+        auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
         hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
     }
 }

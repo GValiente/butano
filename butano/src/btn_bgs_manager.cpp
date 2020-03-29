@@ -2,6 +2,7 @@
 
 #include "btn_color.h"
 #include "btn_camera.h"
+#include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_display_manager.h"
 #include "btn_regular_bg_attributes.h"
@@ -497,37 +498,27 @@ void update_camera()
     }
 }
 
-void fill_horizontal_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
-                                  uint16_t& dest_ref)
+void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
-    const fixed* positions_ptr = &positions_ref;
-    uint16_t* dest_ptr = &dest_ref;
-
-    for(int index = 0; index < positions_count; ++index)
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
     }
 }
 
-void fill_vertical_hw_positions(fixed base_position, const fixed& positions_ref, int positions_count,
-                                uint16_t& dest_ref)
+void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
-    const fixed* positions_ptr = &positions_ref;
-    uint16_t* dest_ptr = &dest_ref;
-
-    for(int index = 0; index < positions_count; ++index)
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
     }
 }
 
-void fill_hw_attributes(int id, const regular_bg_attributes& attributes_ref, int attributes_count, uint16_t& dest_ref)
+void fill_hblank_effect_attributes(int id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
 {
     uint16_t bg_cnt = data.handles[id].cnt;
-    const regular_bg_attributes* attributes_ptr = &attributes_ref;
-    uint16_t* dest_ptr = &dest_ref;
 
-    for(int index = 0; index < attributes_count; ++index)
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         const regular_bg_attributes& attributes = attributes_ptr[index];
         uint16_t& dest_cnt = dest_ptr[index];

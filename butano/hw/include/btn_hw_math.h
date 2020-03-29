@@ -16,14 +16,14 @@ namespace btn::hw
         return int(btn_hw_sqrt(unsigned(value)));
     }
 
-    [[nodiscard]] inline int lut_sin(int s16_angle)
+    [[nodiscard]] inline int lut_sin(int lut_angle)
     {
-        return lu_sin(unsigned(s16_angle));
+        return sin_lut[lut_angle];
     }
 
-    [[nodiscard]] inline int lut_cos(int s16_angle)
+    [[nodiscard]] inline int lut_cos(int lut_angle)
     {
-        return lu_cos(unsigned(s16_angle));
+        return sin_lut[(lut_angle + 128) & 0x1FF];
     }
 }
 

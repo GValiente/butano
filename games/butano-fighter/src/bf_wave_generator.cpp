@@ -12,10 +12,13 @@ namespace
     template<int Amplitude>
     void _generate_impl(int speed, btn::span<btn::fixed>& values)
     {
+        btn::fixed* values_data = values.data();
+
         for(int index = 0, limit = values.size(); index < limit; ++index)
         {
-            int sin = btn::lut_sin((index * speed) % 65536).value();
-            values[index] = (sin / (4096 / (1 << Amplitude))) - (1 << (Amplitude - 1));
+            auto lut_angle = int(uint16_t(index * speed)) >> 7;
+            auto sin = unsigned(btn::lut_sin(lut_angle).value());
+            values_data[index] = int(sin / (4096 / (1 << Amplitude))) - (1 << (Amplitude - 1));
         }
     }
 }

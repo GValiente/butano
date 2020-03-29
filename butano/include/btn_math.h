@@ -58,10 +58,10 @@ namespace btn
 
     /**
      * @brief Sine value of a s16 angle.
-     * @param angle Angle in the range [0, 65536].
+     * @param lut_angle Angle in the range [0, 512].
      * @return Sine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed lut_sin(int s16_angle);
+    [[nodiscard]] fixed lut_sin(int lut_angle);
 
     /**
      * @brief Cosine value of an angle in degrees.
@@ -72,10 +72,10 @@ namespace btn
 
     /**
      * @brief Cosine value of a s16 angle.
-     * @param angle Angle in the range [0, 65536].
+     * @param lut_angle Angle in the range [0, 512].
      * @return Cosine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed lut_cos(int s16_angle);
+    [[nodiscard]] fixed lut_cos(int lut_angle);
 }
 
 #endif

@@ -541,7 +541,7 @@ void commit()
 {
     if(data.commit)
     {
-        hw::bgs::commit(data.handles[0]);
+        hw::bgs::commit(data.handles);
         data.commit = false;
     }
 }

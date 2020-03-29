@@ -437,7 +437,7 @@ void commit()
 
     if(data.commit_blending_bgs)
     {
-        hw::display::set_blending_bgs(data.blending_bgs[0], hw::bgs::count());
+        hw::display::set_blending_bgs(data.blending_bgs, hw::bgs::count());
         data.commit_blending_bgs = false;
     }
 
@@ -450,7 +450,7 @@ void commit()
 
     if(data.commit_windows_flags)
     {
-        hw::display::set_windows_flags(data.windows_flags[0]);
+        hw::display::set_windows_flags(data.windows_flags);
         data.commit_windows_flags = false;
     }
 
@@ -476,7 +476,7 @@ void commit()
             integer_boundaries[index] = point(fb.x().integer(), fb.y().integer());
         }
 
-        hw::display::set_windows_boundaries(integer_boundaries[0]);
+        hw::display::set_windows_boundaries(integer_boundaries);
         data.commit_windows_boundaries = false;
     }
 

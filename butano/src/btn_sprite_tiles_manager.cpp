@@ -239,10 +239,10 @@ namespace
                 tiles_count == 32 || tiles_count == 64 || tiles_count == 128;
     }
 
-    void _commit_item(int id, const tile& tiles_data, bool delay_commit)
+    void _commit_item(int id, const tile* tiles_data, bool delay_commit)
     {
         item_type& item = data.items.item(id);
-        item.data = &tiles_data;
+        item.data = tiles_data;
 
         if(delay_commit)
         {
@@ -273,7 +273,7 @@ namespace
 
         if(tiles_data)
         {
-            _commit_item(id, *tiles_data, data.delay_commit);
+            _commit_item(id, tiles_data, data.delay_commit);
         }
 
         if(new_item_tiles_count)
@@ -634,7 +634,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
                    old_tiles_count, " - ", new_tiles_count);
 
         data.items_map.erase(old_tiles_data);
-        _commit_item(id, *new_tiles_data, true);
+        _commit_item(id, new_tiles_data, true);
         data.items_map.insert(new_tiles_data, id);
 
         BTN_SPRITE_TILES_LOG_STATUS();
@@ -662,7 +662,7 @@ optional<span<tile>> vram(int id)
 
     if(! item.data)
     {
-        result.emplace(&hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
+        result.emplace(hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
     }
 
     return result;
@@ -760,7 +760,7 @@ void commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::sprite_tiles::commit(*item.data, item.start_tile, item.tiles_count);
+                    hw::sprite_tiles::commit(item.data, item.start_tile, item.tiles_count);
                 }
             }
         }

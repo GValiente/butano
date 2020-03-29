@@ -318,11 +318,11 @@ namespace
         return result;
     }
 
-    void _commit_item(int id, const uint16_t& data_ref, bool delay_commit)
+    void _commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
     {
         item_type& item = data.items.item(id);
-        item.data = &data_ref;
-        data.items_map.insert(&data_ref, id);
+        item.data = data_ptr;
+        data.items_map.insert(data_ptr, id);
 
         if(delay_commit)
         {
@@ -331,7 +331,7 @@ namespace
         }
         else
         {
-            hw::bg_blocks::commit(data_ref, item.start_block, item.width * item.height, item.palette_offset());
+            hw::bg_blocks::commit(data_ptr, item.start_block, item.width * item.height, item.palette_offset());
         }
     }
 
@@ -397,7 +397,7 @@ namespace
 
         if(data_ptr)
         {
-            _commit_item(id, *data_ptr, data.delay_commit);
+            _commit_item(id, data_ptr, data.delay_commit);
         }
 
         return id;
@@ -900,7 +900,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
-        _commit_item(id, *data_ptr, true);
+        _commit_item(id, data_ptr, true);
 
         BTN_BG_BLOCKS_LOG_STATUS();
     }
@@ -927,7 +927,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref,
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
-        _commit_item(id, *data_ptr, true);
+        _commit_item(id, data_ptr, true);
 
         BTN_BG_BLOCKS_LOG_STATUS();
     }
@@ -978,7 +978,7 @@ optional<span<tile>> tiles_vram(int id)
 
     if(! item.data)
     {
-        auto vram_ptr = reinterpret_cast<tile*>(&hw::bg_blocks::vram(item.start_block));
+        auto vram_ptr = reinterpret_cast<tile*>(hw::bg_blocks::vram(item.start_block));
         result.emplace(vram_ptr, item.width / half_words_per_tile());
     }
 
@@ -992,7 +992,7 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 
     if(! item.data)
     {
-        auto vram_ptr = reinterpret_cast<regular_bg_map_cell*>(&hw::bg_blocks::vram(item.start_block));
+        auto vram_ptr = reinterpret_cast<regular_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
         result.emplace(vram_ptr, item.width * item.height);
     }
 
@@ -1083,8 +1083,7 @@ void commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::bg_blocks::commit(*item.data, item.start_block, item.width * item.height,
-                                          item.palette_offset());
+                    hw::bg_blocks::commit(item.data, item.start_block, item.width * item.height, item.palette_offset());
                 }
             }
         }

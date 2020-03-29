@@ -32,7 +32,7 @@ namespace btn::hw::hblank_effects
         irq::disable(irq::id::HBLANK);
     }
 
-    BTN_CODE_IWRAM void commit(entry* entries, int entries_count);
+    BTN_CODE_IWRAM void commit(entry* entries_ptr, int entries_count);
 }
 
 #endif

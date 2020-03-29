@@ -38,12 +38,12 @@ void commit()
 {
     if(optional<palettes_bank::commit_data> commit_data = data.sprite_palettes_bank.retrieve_commit_data())
     {
-        hw::palettes::commit_sprites(*(commit_data->colors_ptr), commit_data->offset, commit_data->count);
+        hw::palettes::commit_sprites(commit_data->colors_ptr, commit_data->offset, commit_data->count);
     }
 
     if(optional<palettes_bank::commit_data> commit_data = data.bg_palettes_bank.retrieve_commit_data())
     {
-        hw::palettes::commit_bgs(*(commit_data->colors_ptr), commit_data->offset, commit_data->count);
+        hw::palettes::commit_bgs(commit_data->colors_ptr, commit_data->offset, commit_data->count);
     }
 }
 

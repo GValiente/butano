@@ -23,13 +23,13 @@ namespace btn::hw::bg_blocks
 
     namespace
     {
-        uint16_t& bg_block_vram(int block_index)
+        [[nodiscard]] inline uint16_t* bg_block_vram(int block_index)
         {
-            return reinterpret_cast<uint16_t*>(MEM_VRAM)[block_index * half_words_per_block()];
+            return reinterpret_cast<uint16_t*>(MEM_VRAM) + (block_index * half_words_per_block());
         }
     }
 
-    [[nodiscard]] inline uint16_t& vram(int block_index)
+    [[nodiscard]] inline uint16_t* vram(int block_index)
     {
         return bg_block_vram(block_index);
     }
@@ -37,17 +37,17 @@ namespace btn::hw::bg_blocks
     BTN_CODE_IWRAM void _commit_palette_offset_impl(const uint16_t* source_data_ptr, int half_words,
                                                     int palette_offset, uint16_t* destination_vram_ptr);
 
-    inline void commit(const uint16_t& source_data_ref, int block_index, int half_words, int palette_offset)
+    inline void commit(const uint16_t* source_data_ptr, int block_index, int half_words, int palette_offset)
     {
+        uint16_t* destination_vram_ptr = bg_block_vram(block_index);
+
         if(palette_offset)
         {
-            const uint16_t* source_data_ptr = &source_data_ref;
-            uint16_t* destination_vram_ptr = &bg_block_vram(block_index);
             _commit_palette_offset_impl(source_data_ptr, half_words, palette_offset, destination_vram_ptr);
         }
         else
         {
-            memory::copy(source_data_ref, half_words, bg_block_vram(block_index));
+            memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
         }
     }
 }

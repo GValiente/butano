@@ -107,24 +107,24 @@ namespace btn::hw::bgs
         set_mosaic_enabled(mosaic_enabled, bg.cnt);
     }
 
-    inline void commit(const handle& bgs_ref)
+    inline void commit(const handle* bgs_ptr)
     {
-        const handle& bg0 = (&bgs_ref)[0];
+        const handle& bg0 = bgs_ptr[0];
         REG_BG0CNT = bg0.cnt;
         REG_BG0HOFS = bg0.hofs;
         REG_BG0VOFS = bg0.vofs;
 
-        const handle& bg1 = (&bgs_ref)[1];
+        const handle& bg1 = bgs_ptr[1];
         REG_BG1CNT = bg1.cnt;
         REG_BG1HOFS = bg1.hofs;
         REG_BG1VOFS = bg1.vofs;
 
-        const handle& bg2 = (&bgs_ref)[2];
+        const handle& bg2 = bgs_ptr[2];
         REG_BG2CNT = bg2.cnt;
         REG_BG2HOFS = bg2.hofs;
         REG_BG2VOFS = bg2.vofs;
 
-        const handle& bg3 = (&bgs_ref)[3];
+        const handle& bg3 = bgs_ptr[3];
         REG_BG3CNT = bg3.cnt;
         REG_BG3HOFS = bg3.hofs;
         REG_BG3VOFS = bg3.vofs;

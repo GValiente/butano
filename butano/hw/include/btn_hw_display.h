@@ -71,13 +71,13 @@ namespace btn::hw::display
                                unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
     }
 
-    inline void set_blending_bgs(const bool& bgs_ref, int count)
+    inline void set_blending_bgs(const bool* bgs_ptr, int count)
     {
         unsigned top = 0;
 
         for(int index = 0; index < count; ++index)
         {
-            if((&bgs_ref)[index])
+            if(bgs_ptr[index])
             {
                 top |= unsigned(1 << index);
             }
@@ -103,9 +103,8 @@ namespace btn::hw::display
         }
     }
 
-    inline void set_windows_flags(const unsigned& flags_ref)
+    inline void set_windows_flags(const unsigned* flags_ptr)
     {
-        const unsigned* flags_ptr = &flags_ref;
         REG_WININ = uint16_t(WIN_BUILD(flags_ptr[0], flags_ptr[1]));
         REG_WINOUT = uint16_t(WIN_BUILD(flags_ptr[3], flags_ptr[2]));
     }
@@ -115,9 +114,8 @@ namespace btn::hw::display
         window_cnt = uint16_t((first << 8) + second);
     }
 
-    inline void set_windows_boundaries(const point& boundaries_ref)
+    inline void set_windows_boundaries(const point* boundaries_ptr)
     {
-        const point* boundaries_ptr = &boundaries_ref;
         REG_WIN0H = uint16_t((boundaries_ptr[0].x() << 8) + boundaries_ptr[1].x());
         REG_WIN0V = uint16_t((boundaries_ptr[0].y() << 8) + boundaries_ptr[1].y());
         REG_WIN1H = uint16_t((boundaries_ptr[2].x() << 8) + boundaries_ptr[3].x());

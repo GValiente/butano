@@ -11,16 +11,16 @@ namespace
     {
 
     public:
-        entry* entries = nullptr;
+        entry* entries_ptr = nullptr;
         int entries_count = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
 }
 
-void commit(entry* entries, int entries_count)
+void commit(entry* entries_ptr, int entries_count)
 {
-    data.entries = entries;
+    data.entries_ptr = entries_ptr;
     data.entries_count = entries_count;
 }
 
@@ -41,12 +41,12 @@ void _intr()
         return;
     }
 
-    entry* entries = data.entries;
+    entry* entries_ptr = data.entries_ptr;
     int entries_count = data.entries_count;
 
     for(int index = 0; index < entries_count; ++index)
     {
-        entry& entry = entries[index];
+        entry& entry = entries_ptr[index];
         *entry.dest = entry.src[vcount];
     }
 }

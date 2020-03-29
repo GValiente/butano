@@ -6,13 +6,13 @@
 namespace btn::hw::sprite_tiles
 {
 
-void plot_tiles(int width, const tile& source_tiles_ref, int source_height, int source_y, int destination_y,
-                tile& destination_tiles_ref)
+void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y, int destination_y,
+                tile* destination_tiles_ptr)
 {
     // From TONC:
 
-    auto srcD = reinterpret_cast<const unsigned*>(&source_tiles_ref + source_y / 8);
-    auto dstD = reinterpret_cast<unsigned*>(&destination_tiles_ref + destination_y / 8);
+    auto srcD = reinterpret_cast<const unsigned*>(source_tiles_ptr + source_y / 8);
+    auto dstD = reinterpret_cast<unsigned*>(destination_tiles_ptr + destination_y / 8);
     int dstX0 = destination_y & 7;
 
     if(! dstX0)

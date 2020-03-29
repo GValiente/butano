@@ -362,27 +362,27 @@ void palettes_bank::update()
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
 
-                color& pal_colors_ref = _colors[index * hw::palettes::colors_per_palette()];
-                memory::copy(*pal.colors_ref, pal_colors_count, pal_colors_ref);
+                color* pal_colors_ptr = _colors + (index * hw::palettes::colors_per_palette());
+                memory::copy(*pal.colors_ref, pal_colors_count, *pal_colors_ptr);
 
                 if(int pal_inverse_intensity = fixed_t<5>(pal.inverse_intensity).value())
                 {
-                    hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ref);
+                    hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ptr);
                 }
 
                 if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).value())
                 {
-                    hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ref);
+                    hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ptr);
                 }
 
                 if(int pal_fade_intensity = fixed_t<5>(pal.fade_intensity).value())
                 {
-                    hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ref);
+                    hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ptr);
                 }
 
                 if(pal.rotate_count)
                 {
-                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, (&pal_colors_ref)[1]);
+                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, pal_colors_ptr + 1);
                 }
             }
         }
@@ -395,38 +395,38 @@ void palettes_bank::update()
 
         if(update_all && first_index != numeric_limits<int>::max())
         {
-            color& all_colors_ref = _colors[first_index * hw::palettes::colors_per_palette()];
+            color* all_colors_ptr = _colors + (first_index * hw::palettes::colors_per_palette());
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
 
             if(brightness)
             {
-                hw::palettes::brightness(brightness, all_colors_count, all_colors_ref);
+                hw::palettes::brightness(brightness, all_colors_count, all_colors_ptr);
             }
 
             if(contrast)
             {
-                hw::palettes::contrast(contrast, all_colors_count, all_colors_ref);
+                hw::palettes::contrast(contrast, all_colors_count, all_colors_ptr);
             }
 
             if(intensity)
             {
-                hw::palettes::intensity(intensity, all_colors_count, all_colors_ref);
+                hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
             }
 
             if(inverse_intensity)
             {
-                hw::palettes::inverse(inverse_intensity, all_colors_count, all_colors_ref);
+                hw::palettes::inverse(inverse_intensity, all_colors_count, all_colors_ptr);
             }
 
             if(grayscale_intensity)
             {
-                hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ref);
+                hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ptr);
             }
 
             if(fade_intensity)
             {
-                hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ref);
+                hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ptr);
             }
         }
     }

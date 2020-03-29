@@ -2,7 +2,6 @@
 #define BTN_HW_HBLANK_EFFECTS_H
 
 #include "btn_hw_irq.h"
-#include "btn_hw_display.h"
 
 namespace btn::hw::hblank_effects
 {
@@ -10,7 +9,7 @@ namespace btn::hw::hblank_effects
     {
 
     public:
-        uint16_t src[display::height()];
+        const uint16_t* src;
         volatile uint16_t* dest;
     };
 

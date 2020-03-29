@@ -36,10 +36,15 @@ namespace
         last_value_type last_value_variant;
         uint8_t target = 0;
         bool visible = false;
+        bool update = false;
+        bool dest_values_a_active = false;
+        uint16_t dest_values_a[hw::display::height()];
+        uint16_t dest_values_b[hw::display::height()];
 
-        [[nodiscard]] bool last_value_updated()
+        [[nodiscard]] bool check_update()
         {
-            bool updated = false;
+            bool updated = update;
+            update = false;
 
             switch(target_type(target))
             {
@@ -48,8 +53,15 @@ namespace
                 {
                     fixed& last_value = last_value_variant.get<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).x();
-                    updated = last_value != new_value;
+                    updated |= last_value != new_value;
                     last_value = new_value;
+
+                    if(updated)
+                    {
+                        auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
+                        bgs_manager::fill_hblank_effect_horizontal_positions(
+                                    last_value, fixed_values_ptr, _switch_dest_values());
+                    }
                 }
                 break;
 
@@ -57,8 +69,15 @@ namespace
                 {
                     fixed& last_value = last_value_variant.get<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).y();
-                    updated = last_value != new_value;
+                    updated |= last_value != new_value;
                     last_value = new_value;
+
+                    if(updated)
+                    {
+                        auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
+                        bgs_manager::fill_hblank_effect_vertical_positions(
+                                    last_value, fixed_values_ptr, _switch_dest_values());
+                    }
                 }
                 break;
 
@@ -66,8 +85,15 @@ namespace
                 {
                     regular_bg_attributes& last_value = last_value_variant.get<regular_bg_attributes>();
                     regular_bg_attributes new_value = bgs_manager::attributes(target_id);
-                    updated = last_value != new_value;
+                    updated |= last_value != new_value;
                     last_value = new_value;
+
+                    if(updated)
+                    {
+                        auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(values_ptr);
+                        bgs_manager::fill_hblank_effect_attributes(
+                                    target_id, regular_bg_attributes_ptr, _switch_dest_values());
+                    }
                 }
                 break;
 
@@ -75,8 +101,15 @@ namespace
                 {
                     pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
-                    updated = last_value != new_value;
+                    updated |= last_value != new_value;
                     last_value = new_value;
+
+                    if(updated)
+                    {
+                        auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
+                        display_manager::fill_rect_window_hblank_effect_horizontal_boundaries(
+                                    last_value, fixed_pairs_ptr, _switch_dest_values());
+                    }
                 }
                 break;
 
@@ -84,8 +117,15 @@ namespace
                 {
                     pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
-                    updated = last_value != new_value;
+                    updated |= last_value != new_value;
                     last_value = new_value;
+
+                    if(updated)
+                    {
+                        auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
+                        display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
+                                    last_value, fixed_pairs_ptr, _switch_dest_values());
+                    }
                 }
                 break;
             }
@@ -95,53 +135,50 @@ namespace
 
         void setup_entry(hw_entry& entry) const
         {
+            entry.src = dest_values_a_active ? dest_values_a : dest_values_b;
+
             switch(target_type(target))
             {
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
-                {
-                    auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_hblank_effect_horizontal_positions(
-                                last_value_variant.get<fixed>(), fixed_values_ptr, entry.src);
-                    entry.dest = hw::bgs::regular_horizontal_position_register(target_id);
-                }
+                entry.dest = hw::bgs::regular_horizontal_position_register(target_id);
                 break;
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
-                {
-                    auto fixed_values_ptr = reinterpret_cast<const fixed*>(values_ptr);
-                    bgs_manager::fill_hblank_effect_vertical_positions(
-                                last_value_variant.get<fixed>(), fixed_values_ptr, entry.src);
-                    entry.dest = hw::bgs::regular_vertical_position_register(target_id);
-                }
+                entry.dest = hw::bgs::regular_vertical_position_register(target_id);
                 break;
 
             case target_type::REGULAR_BG_ATTRIBUTES:
-                {
-                    auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(values_ptr);
-                    bgs_manager::fill_hblank_effect_attributes(target_id, regular_bg_attributes_ptr, entry.src);
-                    entry.dest = hw::bgs::attributes_register(target_id);
-                }
+                entry.dest = hw::bgs::attributes_register(target_id);
                 break;
 
             case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
-                {
-                    auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
-                    display_manager::fill_rect_window_hblank_effect_horizontal_boundaries(
-                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr, entry.src);
-                    entry.dest = hw::display::window_horizontal_boundaries_register(target_id);
-                }
+                entry.dest = hw::display::window_horizontal_boundaries_register(target_id);
                 break;
 
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
-                {
-                    auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(values_ptr);
-                    display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
-                                last_value_variant.get<pair<fixed, fixed>>(), fixed_pairs_ptr, entry.src);
-                    entry.dest = hw::display::window_vertical_boundaries_register(target_id);
-                }
+                entry.dest = hw::display::window_vertical_boundaries_register(target_id);
                 break;
             }
+        }
+
+    private:
+        [[nodiscard]] uint16_t* _switch_dest_values()
+        {
+            uint16_t* dest_values_ptr;
+
+            if(dest_values_a_active)
+            {
+                dest_values_ptr = dest_values_b;
+                dest_values_a_active = false;
+            }
+            else
+            {
+                dest_values_ptr = dest_values_a;
+                dest_values_a_active = true;
+            }
+
+            return dest_values_ptr;
         }
     };
 
@@ -179,6 +216,7 @@ namespace
         new_item.usages = 1;
         new_item.target = uint8_t(target);
         new_item.visible = true;
+        new_item.update = true;
         data.update = true;
 
         switch(target)
@@ -278,6 +316,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         data.free_item_indexes.push_back(int8_t(id));
+        item.update = false;
 
         if(item.visible)
         {
@@ -316,6 +355,7 @@ void set_values_ref(int id, const void* values_ptr, int values_count)
     item_type& item = data.items[id];
     item.values_ptr = values_ptr;
     item.values_count = values_count;
+    item.update = true;
 
     if(item.visible)
     {
@@ -326,6 +366,7 @@ void set_values_ref(int id, const void* values_ptr, int values_count)
 void reload_values_ref(int id)
 {
     item_type& item = data.items[id];
+    item.update = true;
 
     if(item.visible)
     {
@@ -342,10 +383,10 @@ void reload_values_ref(int id)
 void set_visible(int id, bool visible)
 {
     item_type& item = data.items[id];
-    item.visible = visible;
 
-    if(item.visible)
+    if(visible != item.visible)
     {
+        item.visible = visible;
         data.update = true;
     }
 }
@@ -359,10 +400,7 @@ void update()
     {
         if(item.visible)
         {
-            if(item.last_value_updated())
-            {
-                update = true;
-            }
+            update |= item.check_update();
         }
     }
 

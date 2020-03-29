@@ -419,19 +419,14 @@ public:
     {
         BTN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
 
-        size_type size = _size;
+        pointer data = _data;
 
-        if(count < size)
+        for(size_type index = count, limit = _size; index < limit; ++index)
         {
-            pointer data = _data;
-
-            for(size_type index = count; index < size; ++index)
-            {
-                data[index].~value_type();
-            }
-
-            _size = count;
+            data[index].~value_type();
         }
+
+        _size = count;
     }
 
     void assign(size_type count, const_reference value)

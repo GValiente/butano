@@ -70,9 +70,9 @@ public:
 
     [[nodiscard]] palette_bpp_mode bpp_mode() const;
 
-    [[nodiscard]] fixed inverse_intensity() const;
+    [[nodiscard]] bool inverted() const;
 
-    void set_inverse_intensity(fixed intensity);
+    void set_inverted(bool inverted);
 
     [[nodiscard]] fixed grayscale_intensity() const;
 

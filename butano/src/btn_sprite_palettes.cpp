@@ -46,14 +46,14 @@ void set_intensity(fixed intensity)
     palettes_manager::sprite_palettes_bank().set_intensity(intensity);
 }
 
-fixed inverse_intensity()
+bool inverted()
 {
-    return palettes_manager::sprite_palettes_bank().inverse_intensity();
+    return palettes_manager::sprite_palettes_bank().inverted();
 }
 
-void set_inverse_intensity(fixed intensity)
+void set_inverted(bool inverted)
 {
-    palettes_manager::sprite_palettes_bank().set_inverse_intensity(intensity);
+    palettes_manager::sprite_palettes_bank().set_inverted(inverted);
 }
 
 fixed grayscale_intensity()

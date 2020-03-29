@@ -8,69 +8,6 @@
 namespace btn
 {
 
-// inverse
-
-class bg_palette_inverse_manager
-{
-
-public:
-    [[nodiscard]] static fixed get(const bg_palette_ptr& palette)
-    {
-        return palette.inverse_intensity();
-    }
-
-    static void set(fixed intensity, bg_palette_ptr& palette)
-    {
-        palette.set_inverse_intensity(intensity);
-    }
-};
-
-
-class bg_palette_inverse_to_action : public to_value_template_action<bg_palette_ptr, fixed, bg_palette_inverse_manager>
-{
-
-public:
-    template<class BgPalettePtr>
-    bg_palette_inverse_to_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
-    {
-    }
-
-    [[nodiscard]] const bg_palette_ptr& palette() const
-    {
-        return value();
-    }
-
-    [[nodiscard]] fixed final_intensity() const
-    {
-        return final_property();
-    }
-};
-
-
-class bg_palette_inverse_loop_action :
-        public loop_value_template_action<bg_palette_ptr, fixed, bg_palette_inverse_manager>
-{
-
-public:
-    template<class BgPalettePtr>
-    bg_palette_inverse_loop_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
-    {
-    }
-
-    [[nodiscard]] const bg_palette_ptr& palette() const
-    {
-        return value();
-    }
-
-    [[nodiscard]] fixed final_intensity() const
-    {
-        return final_property();
-    }
-};
-
-
 // grayscale
 
 class bg_palette_grayscale_manager

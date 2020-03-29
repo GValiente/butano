@@ -31,9 +31,9 @@ namespace bg_palettes
 
     void set_intensity(fixed intensity);
 
-    [[nodiscard]] fixed inverse_intensity();
+    [[nodiscard]] bool inverted();
 
-    void set_inverse_intensity(fixed intensity);
+    void set_inverted(bool inverted);
 
     [[nodiscard]] fixed grayscale_intensity();
 

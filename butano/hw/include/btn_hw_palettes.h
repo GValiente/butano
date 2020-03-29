@@ -51,17 +51,14 @@ namespace btn::hw::palettes
         clr_adj_intensity(tonc_colors_ptr, tonc_colors_ptr, unsigned(count), value);
     }
 
-    inline void inverse(int intensity, int count, color* colors_ptr)
+    inline void invert(int count, color* colors_ptr)
     {
         auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        COLOR temp_colors[colors()];
 
         for(int index = 0; index < count; ++index)
         {
-            temp_colors[index] = 32767 ^ tonc_colors_ptr[index];
+            tonc_colors_ptr[index] = 32767 ^ tonc_colors_ptr[index];
         }
-
-        clr_blend_fast(tonc_colors_ptr, temp_colors, tonc_colors_ptr, unsigned(count), unsigned(intensity));
     }
 
     inline void grayscale(int intensity, int count, color* colors_ptr)

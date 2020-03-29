@@ -126,14 +126,14 @@ palette_bpp_mode sprite_palette_ptr::bpp_mode() const
     return palettes_manager::sprite_palettes_bank().bpp_mode(_id);
 }
 
-fixed sprite_palette_ptr::inverse_intensity() const
+bool sprite_palette_ptr::inverted() const
 {
-    return palettes_manager::sprite_palettes_bank().inverse_intensity(_id);
+    return palettes_manager::sprite_palettes_bank().inverted(_id);
 }
 
-void sprite_palette_ptr::set_inverse_intensity(fixed intensity)
+void sprite_palette_ptr::set_inverted(bool inverted)
 {
-    palettes_manager::sprite_palettes_bank().set_inverse_intensity(_id, intensity);
+    palettes_manager::sprite_palettes_bank().set_inverted(_id, inverted);
 }
 
 fixed sprite_palette_ptr::grayscale_intensity() const

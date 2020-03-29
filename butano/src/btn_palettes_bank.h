@@ -58,12 +58,12 @@ public:
 
     void reload_colors_ref(int id);
 
-    [[nodiscard]] fixed inverse_intensity(int id) const
+    [[nodiscard]] bool inverted(int id) const
     {
-        return _palettes[id].inverse_intensity;
+        return _palettes[id].inverted;
     }
 
-    void set_inverse_intensity(int id, fixed intensity);
+    void set_inverted(int id, bool inverted);
 
     [[nodiscard]] fixed grayscale_intensity(int id) const
     {
@@ -119,12 +119,12 @@ public:
 
     void set_intensity(fixed intensity);
 
-    [[nodiscard]] fixed inverse_intensity() const
+    [[nodiscard]] bool inverted() const
     {
-        return _inverse_intensity;
+        return _inverted;
     }
 
-    void set_inverse_intensity(fixed intensity);
+    void set_inverted(bool inverted);
 
     [[nodiscard]] fixed grayscale_intensity() const
     {
@@ -155,7 +155,6 @@ private:
 
     public:
         const color* colors_ref = nullptr;
-        fixed inverse_intensity;
         fixed grayscale_intensity;
         fixed fade_intensity;
         unsigned usages = 0;
@@ -163,6 +162,7 @@ private:
         int16_t rotate_count = 0;
         uint8_t bpp_mode = 0;
         int8_t slots_count = 0;
+        bool inverted = false;
         bool update = false;
 
         span<const color> colors_span() const
@@ -184,11 +184,11 @@ private:
     fixed _brightness;
     fixed _contrast;
     fixed _intensity;
-    fixed _inverse_intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
     int _last_used_4bpp_index = hw::palettes::count() - 1;
     color _fade_color;
+    bool _inverted = false;
     bool _perform_update = false;
 
     [[nodiscard]] int _bpp8_slots_count() const;

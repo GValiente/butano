@@ -217,12 +217,10 @@ void palettes_bank::reload_colors_ref(int id)
     }
 }
 
-void palettes_bank::set_inverse_intensity(int id, fixed intensity)
+void palettes_bank::set_inverted(int id, bool inverted)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
-
     palette& pal = _palettes[id];
-    pal.inverse_intensity = intensity;
+    pal.inverted = inverted;
     pal.update = true;
     _perform_update = true;
 
@@ -308,11 +306,9 @@ void palettes_bank::set_intensity(fixed intensity)
     _perform_update = true;
 }
 
-void palettes_bank::set_inverse_intensity(fixed intensity)
+void palettes_bank::set_inverted(bool inverted)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
-
-    _inverse_intensity = intensity;
+    _inverted = inverted;
     _perform_update = true;
 }
 
@@ -345,11 +341,10 @@ void palettes_bank::update()
         int brightness = fixed_t<8>(_brightness).value();
         int contrast = fixed_t<8>(_contrast).value();
         int intensity = fixed_t<8>(_intensity).value();
-        int inverse_intensity = fixed_t<5>(_inverse_intensity).value();
+        bool inverted = _inverted;
         int grayscale_intensity = fixed_t<5>(_grayscale_intensity).value();
         int fade_intensity = fixed_t<5>(_fade_intensity).value();
-        bool update_all = brightness || contrast || intensity || inverse_intensity || grayscale_intensity ||
-                fade_intensity;
+        bool update_all = brightness || contrast || intensity || inverted || grayscale_intensity || fade_intensity;
 
         for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
         {
@@ -365,9 +360,9 @@ void palettes_bank::update()
                 color* pal_colors_ptr = _colors + (index * hw::palettes::colors_per_palette());
                 memory::copy(*pal.colors_ref, pal_colors_count, *pal_colors_ptr);
 
-                if(int pal_inverse_intensity = fixed_t<5>(pal.inverse_intensity).value())
+                if(pal.inverted)
                 {
-                    hw::palettes::inverse(pal_inverse_intensity, pal_colors_count, pal_colors_ptr);
+                    hw::palettes::invert(pal_colors_count, pal_colors_ptr);
                 }
 
                 if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).value())
@@ -414,9 +409,9 @@ void palettes_bank::update()
                 hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
             }
 
-            if(inverse_intensity)
+            if(inverted)
             {
-                hw::palettes::inverse(inverse_intensity, all_colors_count, all_colors_ptr);
+                hw::palettes::invert(all_colors_count, all_colors_ptr);
             }
 
             if(grayscale_intensity)

@@ -354,8 +354,8 @@ void fill_rect_window_hw_horizontal_boundaries(
     {
         fixed first_fixed = base_horizontal_boundaries.first + horizontal_boundaries_ptr[index].first;
         fixed second_fixed = base_horizontal_boundaries.second + horizontal_boundaries_ptr[index].second;
-        int first_integer = clamp(first_fixed, fixed(0), display_width).integer();
-        int second_integer = clamp(second_fixed, fixed(0), display_width).integer();
+        auto first_integer = int(clamp(first_fixed, fixed(0), display_width).unsigned_integer());
+        auto second_integer = int(clamp(second_fixed, fixed(0), display_width).unsigned_integer());
         hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
     }
 }
@@ -372,8 +372,8 @@ void fill_rect_window_hw_vertical_boundaries(
     {
         fixed first_fixed = base_vertical_boundaries.first + vertical_boundaries_ptr[index].first;
         fixed second_fixed = base_vertical_boundaries.second + vertical_boundaries_ptr[index].second;
-        int first_integer = clamp(first_fixed, fixed(0), display_height).integer();
-        int second_integer = clamp(second_fixed, fixed(0), display_height).integer();
+        auto first_integer = int(clamp(first_fixed, fixed(0), display_height).unsigned_integer());
+        auto second_integer = int(clamp(second_fixed, fixed(0), display_height).unsigned_integer());
         hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
     }
 }
@@ -473,7 +473,7 @@ void commit()
         for(int index = 0; index < hw::display::rect_windows_count() * 2; ++index)
         {
             const fixed_point& fb = fixed_boundaries[index];
-            integer_boundaries[index] = point(fb.x().integer(), fb.y().integer());
+            integer_boundaries[index] = point(int(fb.x().unsigned_integer()), int(fb.y().unsigned_integer()));
         }
 
         hw::display::set_windows_boundaries(integer_boundaries);

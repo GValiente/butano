@@ -93,7 +93,7 @@ void stats::update()
             break;
 
         case mode_type::SIMPLE:
-            text_stream.append(max_cpu_pct.integer());
+            text_stream.append(max_cpu_pct.unsigned_integer());
             break;
 
         case mode_type::DETAILED:

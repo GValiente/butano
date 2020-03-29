@@ -698,6 +698,25 @@ public:
         _size = count;
     }
 
+    void shrink(size_type count)
+    {
+        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        size_type size = _size;
+
+        if(count < size)
+        {
+            pointer data = _data;
+
+            for(size_type index = count; index < size; ++index)
+            {
+                data[_real_index(index)].~value_type();
+            }
+
+            _size = count;
+        }
+    }
+
     void assign(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);

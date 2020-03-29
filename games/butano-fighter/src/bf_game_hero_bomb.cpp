@@ -49,7 +49,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
     {
 
     case status_type::INACTIVE:
-        if(/*btn::keypad::pressed(btn::keypad::button_type::A) && */hero.throw_bomb())
+        if(btn::keypad::pressed(btn::keypad::button_type::A) && hero.throw_bomb())
         {
             const btn::fixed_point& hero_position = hero.weapon_position();
             btn::rect_window window = btn::window::internal();

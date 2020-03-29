@@ -102,9 +102,9 @@ void game_hero_bullets::update(game_hero& hero)
 
 void game_hero_bullets::_remove_bullets()
 {
-    int remove_count = 0;
+    int bullets_count = _sprite_move_actions.size();
 
-    for(int index = 0, size = _sprite_move_actions.size(); index < size; ++index)
+    for(int index = 0; index < bullets_count; ++index)
     {
         btn::sprite_move_by_action& sprite_move_action = _sprite_move_actions[index];
         const btn::fixed_point& position = sprite_move_action.sprite().position();
@@ -112,14 +112,12 @@ void game_hero_bullets::_remove_bullets()
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height)
         {
-            if(index < size - 1)
+            if(index < bullets_count - 1)
             {
-                swap(sprite_move_action, _sprite_move_actions[size - 1]);
+                swap(sprite_move_action, _sprite_move_actions[bullets_count - 1]);
                 --index;
-                --size;
+                --bullets_count;
             }
-
-            ++remove_count;
         }
         else
         {
@@ -127,11 +125,7 @@ void game_hero_bullets::_remove_bullets()
         }
     }
 
-    while(remove_count)
-    {
-        _sprite_move_actions.pop_back();
-        --remove_count;
-    }
+    _sprite_move_actions.shrink(bullets_count);
 }
 
 void game_hero_bullets::_add_bullets(game_hero& hero)

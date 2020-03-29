@@ -840,10 +840,7 @@ bool sprite_text_generator::optional_generate(const fixed_point& position, const
 
     if(! success)
     {
-        while(output_sprites.size() > output_sprites_count)
-        {
-            output_sprites.pop_back();
-        }
+        output_sprites.shrink(output_sprites_count);
     }
 
     return success;

@@ -6,7 +6,7 @@
 #include "btn_clouds_bg_item.h"
 #include "btn_stage_1_bg_item.h"
 
-namespace bf
+namespace bf::game
 {
 
 namespace
@@ -31,7 +31,7 @@ namespace
     }
 }
 
-game_background::game_background() :
+background::background() :
     _ground_move_action(_create_ground_bg(), 0, 0.5),
     _clouds_move_action(_create_clouds_bg(), -1.0 / 16, 0.5),
     _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
@@ -43,7 +43,7 @@ game_background::game_background() :
     _hblank_effect.set_visible(false);
 }
 
-void game_background::show_bomb_open(int frames)
+void background::show_bomb_open(int frames)
 {
     btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
     ground_palette.set_grayscale_intensity(0);
@@ -53,7 +53,7 @@ void game_background::show_bomb_open(int frames)
     _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.2);
 }
 
-void game_background::show_bomb_fade(int frames)
+void background::show_bomb_fade(int frames)
 {
     BTN_ASSERT(frames > 0, "Invalid frames: ", frames);
 
@@ -68,13 +68,13 @@ void game_background::show_bomb_fade(int frames)
     _bomb_fade_frames = frames;
 }
 
-void game_background::show_clouds()
+void background::show_clouds()
 {
     btn::blending::set_transparency_alpha(0);
     _blending_action.emplace(20, blending_transparency);
 }
 
-void game_background::update()
+void background::update()
 {
     _ground_move_action.update();
     _clouds_move_action.update();

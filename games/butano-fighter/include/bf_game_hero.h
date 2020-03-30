@@ -4,14 +4,14 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 
-namespace bf
+namespace bf::game
 {
 
-class game_hero
+class hero
 {
 
 public:
-    game_hero();
+    hero();
 
     [[nodiscard]] int level() const
     {

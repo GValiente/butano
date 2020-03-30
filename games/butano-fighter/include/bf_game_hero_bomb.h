@@ -9,23 +9,23 @@
 #include "btn_rect_window_hblank_effects.h"
 #include "bf_circle_generator.h"
 
-namespace bf
+namespace bf::game
 {
 
-class game_hero;
-class game_background;
+class hero;
+class background;
 
-class game_hero_bomb
+class hero_bomb
 {
 
 public:
-    game_hero_bomb();
+    hero_bomb();
 
-    game_hero_bomb(const game_hero_bomb& other) = delete;
+    hero_bomb(const hero_bomb& other) = delete;
 
-    game_hero_bomb& operator=(const game_hero_bomb& other) = delete;
+    hero_bomb& operator=(const hero_bomb& other) = delete;
 
-    void update(game_hero& hero, game_background& background);
+    void update(hero& hero, background& background);
 
 private:
     enum class status_type

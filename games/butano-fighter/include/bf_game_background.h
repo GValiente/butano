@@ -9,18 +9,18 @@
 #include "btn_regular_bg_hblank_effects.h"
 #include "bf_wave_generator.h"
 
-namespace bf
+namespace bf::game
 {
 
-class game_background
+class background
 {
 
 public:
-    game_background();
+    background();
 
-    game_background(const game_background& other) = delete;
+    background(const background& other) = delete;
 
-    game_background& operator=(const game_background& other) = delete;
+    background& operator=(const background& other) = delete;
 
     void show_bomb_open(int frames);
 

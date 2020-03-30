@@ -10,18 +10,18 @@ namespace btn
     class sprite_text_generator;
 }
 
-namespace bf
+namespace bf::game
 {
 
-class game_hero;
+class hero;
 
-class game_scoreboard
+class scoreboard
 {
 
 public:
-    explicit game_scoreboard(btn::sprite_text_generator& text_generator);
+    explicit scoreboard(btn::sprite_text_generator& text_generator);
 
-    void update(const game_hero& hero);
+    void update(const hero& hero);
 
 private:
     btn::sprite_text_generator& _text_generator;

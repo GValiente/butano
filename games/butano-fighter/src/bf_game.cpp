@@ -4,7 +4,7 @@
 #include "btn_keypad.h"
 #include "btn_music_items.h"
 
-namespace bf
+namespace bf::game
 {
 
 game::game(btn::sprite_text_generator& text_generator) :
@@ -18,6 +18,7 @@ void game::update()
     _hero_bomb.update(_hero, _background);
     _hero_bullets.update(_hero);
     _background.update();
+    _enemies.update();
     _scoreboard.update(_hero);
 
     if(btn::keypad::pressed(btn::keypad::button_type::START))

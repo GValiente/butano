@@ -5,9 +5,10 @@
 #include "bf_game_hero.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_hero_bullets.h"
+#include "bf_game_enemies.h"
 #include "bf_game_scoreboard.h"
 
-namespace bf
+namespace bf::game
 {
 
 class game
@@ -19,11 +20,12 @@ public:
     void update();
 
 private:
-    game_background _background;
-    game_hero _hero;
-    game_hero_bomb _hero_bomb;
-    game_hero_bullets _hero_bullets;
-    game_scoreboard _scoreboard;
+    background _background;
+    hero _hero;
+    hero_bomb _hero_bomb;
+    hero_bullets _hero_bullets;
+    enemies _enemies;
+    scoreboard _scoreboard;
 };
 
 }

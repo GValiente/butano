@@ -10,10 +10,10 @@
 #include "btn_hero_bomb_icon_sprite_item.h"
 #include "bf_game_hero.h"
 
-namespace bf
+namespace bf::game
 {
 
-game_scoreboard::game_scoreboard(btn::sprite_text_generator& text_generator) :
+scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
     _text_generator(text_generator)
 {
     btn::point display_center = btn::display::center();
@@ -49,7 +49,7 @@ game_scoreboard::game_scoreboard(btn::sprite_text_generator& text_generator) :
     }
 }
 
-void game_scoreboard::update(const game_hero& hero)
+void scoreboard::update(const hero& hero)
 {
     btn::point display_center = btn::display::center();
     int text_y = display_center.y() - 16;

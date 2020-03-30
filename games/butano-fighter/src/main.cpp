@@ -14,7 +14,7 @@ int main()
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     text_generator.set_bg_priority(1);
 
-    auto game = btn::make_unique<bf::game>(text_generator);
+    auto game = btn::make_unique<bf::game::game>(text_generator);
     bf::stats stats(text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::core::update();

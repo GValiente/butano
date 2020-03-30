@@ -12,7 +12,7 @@
 #include "bf_wave_generator.h"
 #include "bf_game_background.h"
 
-namespace bf
+namespace bf::game
 {
 
 namespace
@@ -29,7 +29,7 @@ namespace
     }
 }
 
-game_hero_bomb::game_hero_bomb() :
+hero_bomb::hero_bomb() :
     _bg(_create_bg()),
     _bg_move_action(_bg, -0.5, 4),
     _circle_hblank_effect(btn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
@@ -43,7 +43,7 @@ game_hero_bomb::game_hero_bomb() :
     _wave_hblank_effect.set_visible(false);
 }
 
-void game_hero_bomb::update(game_hero& hero, game_background& background)
+void hero_bomb::update(hero& hero, background& background)
 {
     switch(_status)
     {
@@ -146,7 +146,7 @@ void game_hero_bomb::update(game_hero& hero, game_background& background)
     }
 }
 
-void game_hero_bomb::_play_flame_sound()
+void hero_bomb::_play_flame_sound()
 {
     ++_flame_sound_counter;
 

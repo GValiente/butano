@@ -36,7 +36,7 @@ CFLAGS      :=	-Wall -Wextra -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -flto -ffast-
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 
-CXXFLAGS    :=	$(CFLAGS) -std=c++17 -fno-rtti -fno-exceptions -fno-threadsafe-statics
+CXXFLAGS    :=	$(CFLAGS) -std=c++17 -fno-rtti -fno-exceptions
 
 ASFLAGS     :=	-g $(ARCH)
 LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)

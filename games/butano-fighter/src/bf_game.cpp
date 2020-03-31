@@ -16,7 +16,7 @@ void game::update()
 {
     _hero.update();
     _hero_bomb.update(_hero, _background);
-    _hero_bullets.update(_hero);
+    _hero_bullets.update(_hero, _enemies);
     _background.update();
     _enemies.update();
     _scoreboard.update(_hero);

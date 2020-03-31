@@ -5,6 +5,11 @@
 namespace bf::game
 {
 
+bool enemies::check_hero_bullet(const btn::fixed_rect& rect, int damage)
+{
+    return _grid.check_hero_bullet(rect, damage, _enemies);
+}
+
 void enemies::update()
 {
     _remove_enemies();
@@ -64,8 +69,8 @@ void enemies::_add_enemies()
         }
 
         const enemy_event& event = events[_event_index];
-        _grid.add_enemy(_enemies.size(), event.enemy.start_position);
-        _enemies.emplace_back(event.enemy);
+        _grid.add_enemy(_enemies.size(), event.start_position);
+        _enemies.emplace_back(event);
         _event_counter = event.wait_frames;
     }
 }

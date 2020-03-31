@@ -1,30 +1,36 @@
 #include "bf_game_enemy.h"
 
 #include "btn_sprite_builder.h"
-#include "bf_constants.h"
-#include "bf_game_enemy_data.h"
+#include "bf_game_enemy_event.h"
 
 namespace bf::game
 {
 
 namespace
 {
-    btn::sprite_ptr _create_sprite(const enemy_data& data)
+    btn::sprite_ptr _create_sprite(const enemy_event& event)
     {
-        btn::sprite_builder builder(data.sprite_item, data.graphics_index_1);
-        builder.set_position(data.start_position);
+        const enemy_data& enemy_data = event.enemy;
+        btn::sprite_builder builder(enemy_data.sprite_item, enemy_data.graphics_index_1);
+        builder.set_position(event.start_position);
         builder.set_z_order(constants::enemies_z_order);
-        builder.set_horizontal_flip(data.move_events[0].horizontal_flip);
+        builder.set_horizontal_flip(event.move_events[0].horizontal_flip);
         return builder.release_build();
+    }
+
+    btn::sprite_cached_animate_action<2> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_event& event)
+    {
+        const enemy_data& enemy_data = event.enemy;
+        return btn::create_sprite_cached_animate_action_forever(
+                    sprite, 16, enemy_data.sprite_item, enemy_data.graphics_index_1, enemy_data.graphics_index_2);
     }
 }
 
-enemy::enemy(const enemy_data& data) :
-    _move_events(data.move_events),
-    _sprite(_create_sprite(data)),
+enemy::enemy(const enemy_event& event) :
+    _move_events(event.move_events),
+    _sprite(_create_sprite(event)),
     _move_action(_sprite, _move_events[0].delta_position),
-    _animate_action(btn::create_sprite_cached_animate_action_forever(
-                        _sprite, 16, data.sprite_item, data.graphics_index_1, data.graphics_index_2)),
+    _animate_action(_create_animate_action(_sprite, event)),
     _move_event_index(0),
     _move_event_counter(_move_events[0].duration_frames)
 {

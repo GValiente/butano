@@ -13,6 +13,8 @@ class enemies
 {
 
 public:
+    bool check_hero_bullet(const btn::fixed_rect& rect, int damage);
+
     void update();
 
 private:

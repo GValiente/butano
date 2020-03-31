@@ -7,13 +7,13 @@
 namespace bf::game
 {
 
-class enemy_data;
+class enemy_event;
 
 class enemy
 {
 
 public:
-    explicit enemy(const enemy_data& data);
+    explicit enemy(const enemy_event& event);
 
     [[nodiscard]] const btn::fixed_point& position() const
     {

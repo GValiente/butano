@@ -5,8 +5,15 @@
 #include "bf_constants.h"
 #include "btn_fixed_point.h"
 
+namespace btn
+{
+    class fixed_rect;
+}
+
 namespace bf::game
 {
+
+class enemy;
 
 class enemies_grid
 {
@@ -17,6 +24,8 @@ public:
     void remove_enemy(int enemy_index, const btn::fixed_point& position);
 
     void update_enemy(int enemy_index, const btn::fixed_point& old_position, const btn::fixed_point& new_position);
+
+    bool check_hero_bullet(const btn::fixed_rect& rect, int damage, btn::ivector<enemy>& enemies);
 
 private:
     static constexpr int cols = ((constants::view_width * 2) / constants::grid_size) + 3;

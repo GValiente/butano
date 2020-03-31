@@ -13,19 +13,27 @@ namespace bf::game
 {
 
 class hero;
+class enemies;
+class hero_bullet_level;
 
 class hero_bullets
 {
 
 public:
-    void update(hero& hero);
+    void update(hero& hero, enemies& enemies);
 
 private:
-    btn::vector<btn::sprite_move_by_action, constants::max_hero_bullets> _sprite_move_actions;
+    struct bullet
+    {
+        btn::sprite_move_by_action sprite_move_action;
+        const hero_bullet_level* level_data;
+    };
+
+    btn::vector<bullet, constants::max_hero_bullets> _bullets;
     int _b_held_counter = 0;
     int _event_counter = 0;
 
-    void _remove_bullets();
+    void _remove_bullets(enemies& enemies);
 
     void _add_bullets(hero& hero);
 };

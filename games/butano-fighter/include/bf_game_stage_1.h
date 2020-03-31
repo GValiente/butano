@@ -5,9 +5,7 @@
 
 namespace bf::game::stage_1
 {
-
-const stage& get();
-
+    [[nodiscard]] const stage& get();
 };
 
 #endif

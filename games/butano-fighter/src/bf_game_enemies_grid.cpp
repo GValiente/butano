@@ -52,6 +52,11 @@ void enemies_grid::update_enemy(int enemy_index, const btn::fixed_point& old_pos
     }
 }
 
+bool enemies_grid::check_hero_bullet(const btn::fixed_rect& rect, int damage, btn::ivector<enemy>& enemies)
+{
+    return false;
+}
+
 void enemies_grid::_add_enemy_row(int enemy_index, int row, int column)
 {
     cell* cells_row = _cells_row(row);

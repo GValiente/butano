@@ -92,7 +92,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
-        return fixed_t::create(int((int64_t(_value) * other._value) >> Precision));
+        return fixed_t::create(int((int64_t(_value) * other._value) / scale()));
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(int integer) const
@@ -102,7 +102,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(fixed_t other) const
     {
-        return fixed_t::create((_value * other._value) >> Precision);
+        return fixed_t::create((_value * other._value) / scale());
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(int integer) const

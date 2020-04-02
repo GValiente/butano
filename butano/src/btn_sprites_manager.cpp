@@ -108,7 +108,7 @@ namespace
         {
             for(auto& layer : sorted_sprites::layers())
             {
-                for(item_type& item : layer)
+                for(item_type& item : *layer)
                 {
                     if(item.affine_mat_ptr)
                     {
@@ -160,7 +160,7 @@ namespace
 
             for(auto& layer : sorted_sprites::layers())
             {
-                for(item_type& item : layer)
+                for(item_type& item : *layer)
                 {
                     if(item.on_screen)
                     {

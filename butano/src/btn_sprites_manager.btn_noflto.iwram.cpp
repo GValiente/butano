@@ -15,7 +15,7 @@ bool _check_items_on_screen_impl(size display_dimensions)
 
     for(auto& layer : sorted_sprites::layers())
     {
-        for(sprites_manager_item& item : layer)
+        for(sprites_manager_item& item : *layer)
         {
             if(item.check_on_screen)
             {
@@ -51,7 +51,7 @@ update_camera_impl_result _update_camera_impl(fixed_point camera_position)
 
     for(auto& layer : sorted_sprites::layers())
     {
-        for(sprites_manager_item& item : layer)
+        for(sprites_manager_item& item : *layer)
         {
             if(! item.ignore_camera)
             {

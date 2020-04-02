@@ -127,16 +127,6 @@ namespace btn::sorted_sprites
     public:
         explicit list(unsigned sort_key);
 
-        ~list();
-
-        list(const list& other);
-
-        list& operator=(const list& other);
-
-        list(list&& other);
-
-        list& operator=(list&& other);
-
         [[nodiscard]] unsigned sort_key() const
         {
             return _sort_key;
@@ -186,11 +176,6 @@ namespace btn::sorted_sprites
 
         iterator erase(sprites_manager_item& item);
 
-        [[nodiscard]] friend bool operator<(const list& a, const list& b)
-        {
-            return a._sort_key < b._sort_key;
-        }
-
     private:
         unsigned _sort_key;
         node_type _first_node;
@@ -199,7 +184,7 @@ namespace btn::sorted_sprites
     };
 
 
-    using layers_type = ivector<list>;
+    using layers_type = ivector<list*>;
 
 
     [[nodiscard]] int items_count();

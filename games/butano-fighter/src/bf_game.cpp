@@ -15,10 +15,10 @@ game::game(btn::sprite_text_generator& text_generator) :
 void game::update()
 {
     _hero.update();
-    _hero_bomb.update(_hero, _background);
     _hero_bullets.update(_hero, _enemies);
+    _hero_bomb.update(_hero, _enemies, _background);
     _background.update();
-    _enemies.update();
+    _enemies.update(_hero_bomb);
     _scoreboard.update(_hero);
 
     if(btn::keypad::pressed(btn::keypad::button_type::START))

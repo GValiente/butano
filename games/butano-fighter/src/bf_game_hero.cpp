@@ -5,7 +5,7 @@
 #include "btn_algorithm.h"
 #include "btn_hero_body_sprite_item.h"
 #include "btn_hero_weapons_sprite_item.h"
-#include "bf_constants.h"
+#include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
 {
@@ -34,6 +34,21 @@ hero::hero() :
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
     _weapon_sprite(_build_weapon_sprite(_level, _weapon_position))
 {
+}
+
+btn::fixed hero::next_level_experience_ratio() const
+{
+    btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
+
+    if(_level == levels_data.size() - 1)
+    {
+        return 1;
+    }
+
+    int experience_to_this_level = _level == 0 ? 0 : levels_data[_level - 1].experience_to_next_level;
+    int next_level_experience = levels_data[_level].experience_to_next_level - experience_to_this_level;
+    btn::fixed experience = _experience - experience_to_this_level;
+    return btn::min(experience / next_level_experience, btn::fixed(1));
 }
 
 void hero::show_shoot(btn::color fade_color)

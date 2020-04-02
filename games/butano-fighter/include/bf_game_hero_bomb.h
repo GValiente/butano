@@ -13,6 +13,7 @@ namespace bf::game
 {
 
 class hero;
+class enemies;
 class background;
 
 class hero_bomb
@@ -25,7 +26,12 @@ public:
 
     hero_bomb& operator=(const hero_bomb& other) = delete;
 
-    void update(hero& hero, background& background);
+    [[nodiscard]] bool active() const
+    {
+        return _status != status_type::INACTIVE;
+    }
+
+    void update(hero& hero, enemies& enemies, background& background);
 
 private:
     enum class status_type
@@ -37,6 +43,7 @@ private:
 
     btn::regular_bg_ptr _bg;
     btn::regular_bg_move_by_action _bg_move_action;
+    btn::point _center;
     btn::optional<btn::rect_window_move_top_by_action> _move_window_top_action;
     btn::optional<btn::rect_window_move_bottom_by_action> _move_window_bottom_action;
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;

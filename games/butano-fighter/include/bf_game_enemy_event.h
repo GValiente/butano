@@ -22,7 +22,8 @@ public:
         move_events(_move_events),
         wait_frames(_wait_frames)
     {
-        BTN_CONSTEXPR_ASSERT(! move_events.empty(), "Move events is empty");
+        BTN_CONSTEXPR_ASSERT(move_events.size() > 0 && move_events.size() < btn::numeric_limits<int8_t>::max(),
+                             "Invalid move events count");
         BTN_CONSTEXPR_ASSERT(_wait_frames >= 1, "Invalid wait frames");
     }
 };

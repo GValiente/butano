@@ -13,60 +13,75 @@ namespace btn
 namespace bf::game
 {
 
+class hero;
 class enemy;
 
 class enemies_grid
 {
 
 public:
-    void add_enemy(int enemy_index, const btn::fixed_point& position);
+    void add_enemy(enemy& enemy);
 
-    void remove_enemy(int enemy_index, const btn::fixed_point& position);
+    void remove_enemy(enemy& enemy);
 
-    void update_enemy(int enemy_index, const btn::fixed_point& old_position, const btn::fixed_point& new_position);
+    [[nodiscard]] bool update_enemy(enemy& enemy);
 
-    bool check_hero_bullet(const btn::fixed_rect& rect, int damage, btn::ivector<enemy>& enemies);
+    [[nodiscard]] bool check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero);
+
+    #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
+        void log() const;
+    #endif
 
 private:
-    static constexpr int cols = ((constants::view_width * 2) / constants::grid_size) + 3;
-    static constexpr int rows = ((constants::view_height * 2) / constants::grid_size) + 3;
+    static constexpr int cell_increment = constants::max_rect_size / constants::enemies_grid_size;
+    static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (cell_increment * 2);
+    static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (cell_increment * 2);
 
     class cell
     {
 
     public:
-        void add_enemy(int enemy_index);
+        [[nodiscard]] const btn::ivector<enemy*>& enemies() const
+        {
+            return _enemies;
+        }
 
-        void remove_enemy(int enemy_index);
+        [[nodiscard]] btn::ivector<enemy*>& enemies()
+        {
+            return _enemies;
+        }
+
+        void add_enemy(enemy& enemy);
+
+        void remove_enemy(enemy& enemy);
 
     private:
-        btn::vector<int8_t, constants::max_enemies_per_grid_cell> _indexes;
+        btn::vector<enemy*, constants::max_enemies_per_grid_cell> _enemies;
     };
 
-    cell _cells[cols * rows];
+    cell _cells[columns * rows];
 
-    [[nodiscard]] static int _column(const btn::fixed_point& position)
-    {
-        return (position.x().integer() / constants::grid_size) + (cols / 2);
-    }
+    [[nodiscard]] static int _column(const btn::fixed_point& position);
 
-    [[nodiscard]] static int _row(const btn::fixed_point& position)
+    [[nodiscard]] static int _row(const btn::fixed_point& position);
+
+    [[nodiscard]] const cell* _cells_row(int row) const
     {
-        return (position.y().integer() / constants::grid_size) + (rows / 2);
+        return &(_cells[0]) + (columns * row);
     }
 
     [[nodiscard]] cell* _cells_row(int row)
     {
-        return &(_cells[0]) + (cols * row);
+        return &(_cells[0]) + (columns * row);
     }
 
-    void _add_enemy_row(int enemy_index, int row, int column);
+    void _add_enemy_row(int row, int column, enemy& enemy);
 
-    void _remove_enemy_row(int enemy_index, int row, int column);
+    void _remove_enemy_row(int row, int column, enemy& enemy);
 
-    void _add_enemy_column(int enemy_index, int row, int column);
+    void _add_enemy_column(int row, int column, enemy& enemy);
 
-    void _remove_enemy_column(int enemy_index, int row, int column);
+    void _remove_enemy_column(int row, int column, enemy& enemy);
 };
 
 }

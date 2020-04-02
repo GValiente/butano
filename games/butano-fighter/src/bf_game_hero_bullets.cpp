@@ -23,7 +23,7 @@ void hero_bullets::update(hero& hero, enemies& enemies)
         --_b_held_counter;
     }
 
-    _remove_bullets(enemies);
+    _remove_bullets(hero, enemies);
     hero.set_is_shooting(_b_held_counter);
 
     if(_event_counter || _b_held_counter)
@@ -44,7 +44,7 @@ void hero_bullets::update(hero& hero, enemies& enemies)
     }
 }
 
-void hero_bullets::_remove_bullets(enemies& enemies)
+void hero_bullets::_remove_bullets(hero& hero, enemies& enemies)
 {
     int bullets_count = _bullets.size();
 
@@ -57,7 +57,7 @@ void hero_bullets::_remove_bullets(enemies& enemies)
 
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height ||
-                enemies.check_hero_bullet(btn::fixed_rect(position, level_data.dimensions), level_data.damage))
+                enemies.check_hero_bullet(btn::fixed_rect(position, level_data.dimensions), level_data.damage, hero))
         {
             if(index < bullets_count - 1)
             {

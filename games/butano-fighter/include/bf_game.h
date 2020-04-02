@@ -22,8 +22,8 @@ public:
 private:
     background _background;
     hero _hero;
-    hero_bomb _hero_bomb;
     hero_bullets _hero_bullets;
+    hero_bomb _hero_bomb;
     enemies _enemies;
     scoreboard _scoreboard;
 };

@@ -10,6 +10,7 @@
 #include "bf_constants.h"
 #include "bf_game_hero.h"
 #include "bf_wave_generator.h"
+#include "bf_game_enemies.h"
 #include "bf_game_background.h"
 
 namespace bf::game
@@ -43,33 +44,42 @@ hero_bomb::hero_bomb() :
     _wave_hblank_effect.set_visible(false);
 }
 
-void hero_bomb::update(hero& hero, background& background)
+void hero_bomb::update(hero& hero, enemies& enemies, background& background)
 {
     switch(_status)
     {
 
     case status_type::INACTIVE:
-        if(btn::keypad::pressed(btn::keypad::button_type::A) && hero.throw_bomb())
+        if(btn::keypad::pressed(btn::keypad::button_type::A))
         {
-            const btn::fixed_point& hero_position = hero.weapon_position();
-            btn::rect_window window = btn::window::internal();
-            window.set_boundaries(hero_position, hero_position);
-            window.set_show_blending(false);
-            _move_window_top_action.emplace(window, -4);
-            _move_window_bottom_action.emplace(window, 4);
+            if(hero.throw_bomb())
+            {
+                const btn::fixed_point& hero_position = hero.weapon_position();
+                _center = btn::point(hero_position.x().integer(), hero_position.y().integer());
 
-            _circle_generator.set_origin_y(hero_position.y());
-            _circle_generator.set_radius(0);
-            _circle_generator.generate(_circle_hblank_effect_deltas);
-            _circle_hblank_effect.reload_deltas_ref();
-            _circle_hblank_effect.set_visible(true);
+                btn::rect_window window = btn::window::internal();
+                window.set_boundaries(hero_position, hero_position);
+                window.set_show_blending(false);
+                _move_window_top_action.emplace(window, -4);
+                _move_window_bottom_action.emplace(window, 4);
 
-            background.show_bomb_open(open_frames);
-            _wave_hblank_effect.set_visible(true);
-            btn::sound::play(btn::sound_items::explosion_2);
-            _status = status_type::OPEN;
-            _counter = open_frames;
-            _flame_sound_counter = 0;
+                _circle_generator.set_origin_y(hero_position.y());
+                _circle_generator.set_radius(0);
+                _circle_generator.generate(_circle_hblank_effect_deltas);
+                _circle_hblank_effect.reload_deltas_ref();
+                _circle_hblank_effect.set_visible(true);
+
+                background.show_bomb_open(open_frames);
+                _wave_hblank_effect.set_visible(true);
+                btn::sound::play(btn::sound_items::explosion_2);
+                _status = status_type::OPEN;
+                _counter = open_frames;
+                _flame_sound_counter = 0;
+            }
+            else
+            {
+                btn::sound::play(btn::sound_items::no_ammo);
+            }
         }
         break;
 
@@ -83,7 +93,9 @@ void hero_bomb::update(hero& hero, background& background)
             _move_window_top_action->update();
             _move_window_bottom_action->update();
 
-            _circle_generator.set_radius(_circle_generator.radius() + 4);
+            btn::fixed radius = _circle_generator.radius() + 4;
+            enemies.check_hero_bomb(_center, radius.integer() * radius.integer());
+            _circle_generator.set_radius(radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);
             _circle_hblank_effect.reload_deltas_ref();
 

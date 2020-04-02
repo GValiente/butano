@@ -42,9 +42,12 @@ namespace
     };
 
     constexpr const hero_bullet_level _levels[] = {
-        hero_bullet_level(_level0_events, btn::fixed_size(7, 7),    btn::sound_items::gun_5,  btn::color(31, 28, 5),  20,   1),
-        hero_bullet_level(_level1_events, btn::fixed_size(14, 14),  btn::sound_items::gun_5,  btn::color(31, 28, 5),  40,   2),
-        hero_bullet_level(_level2_events, btn::fixed_size(11, 22),  btn::sound_items::gun_1,  btn::color(13, 2, 2),   80,   4),
+        hero_bullet_level(_level0_events, btn::fixed_size(7, 7),    btn::sound_items::gun_5,  5,
+                btn::color(31, 28, 5),  20,   1),
+        hero_bullet_level(_level1_events, btn::fixed_size(14, 14),  btn::sound_items::gun_5,  25,
+                btn::color(31, 28, 5),  40,   2),
+        hero_bullet_level(_level2_events, btn::fixed_size(11, 16),  btn::sound_items::gun_1,  50,
+                btn::color(13, 2, 2),   80,   4),
     };
 }
 

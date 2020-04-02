@@ -15,7 +15,19 @@
         "experience_bar": {
             "height": 8
         },
-        "experience_frame": {
+        "experience_frame_back": {
+            "height": 8
+        },
+        "experience_frame_front": {
+            "height": 16
+        },
+        "enemy_bullets": {
+            "height": 16
+        },
+        "enemy_damage_palette": {
+            "height": 16
+        },
+        "gem": {
             "height": 16
         },
         "stage_1_characters_1": {

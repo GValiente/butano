@@ -33,7 +33,7 @@ private:
     int _b_held_counter = 0;
     int _event_counter = 0;
 
-    void _remove_bullets(enemies& enemies);
+    void _remove_bullets(hero& hero, enemies& enemies);
 
     void _add_bullets(hero& hero);
 };

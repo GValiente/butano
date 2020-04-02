@@ -115,6 +115,94 @@ public:
 };
 
 
+// rotation
+
+class sprite_rotation_manager
+{
+
+public:
+    [[nodiscard]] static fixed get(const sprite_ptr& sprite)
+    {
+        return sprite.rotation_angle();
+    }
+
+    static void set(fixed rotation_angle, sprite_ptr& sprite)
+    {
+        sprite.set_rotation_angle(rotation_angle);
+    }
+};
+
+
+class sprite_rotate_by_action : public cyclic_by_value_template_action<sprite_ptr, fixed, sprite_rotation_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_rotate_by_action(SpritePtr&& sprite, fixed delta_rotation_angle) :
+        cyclic_by_value_template_action(forward<SpritePtr>(sprite), delta_rotation_angle, 0, 360)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed delta_rotation_angle() const
+    {
+        return delta_property();
+    }
+};
+
+
+class sprite_rotate_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_rotation_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_rotate_to_action(SpritePtr&& sprite, int duration_frames, fixed final_rotation_angle) :
+        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_rotation_angle)
+    {
+        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+                   "Invalid final rotation angle: ", final_rotation_angle);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_rotation_angle() const
+    {
+        return final_property();
+    }
+};
+
+
+class sprite_rotate_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_rotation_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_rotate_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_rotation_angle) :
+        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_rotation_angle)
+    {
+        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+                   "Invalid final rotation angle: ", final_rotation_angle);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed final_rotation_angle() const
+    {
+        return final_property();
+    }
+};
+
+
 // scale_x
 
 class sprite_scale_x_manager

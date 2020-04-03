@@ -1,34 +1,21 @@
 #include "bf_game_enemies.h"
 
-#include "btn_enemy_damage_palette_sprite_item.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_stage_1.h"
 
 namespace bf::game
 {
 
-namespace
-{
-    btn::sprite_palette_ptr _create_damage_palette()
-    {
-        btn::optional<btn::sprite_palette_ptr> damage_palette =
-                btn::sprite_items::enemy_damage_palette.palette_item().create_palette(btn::create_mode::FORCE_CREATE);
-        BTN_ASSERT(damage_palette, "Damage palette create failed");
-
-        return btn::move(*damage_palette);
-    }
-}
-
-enemies::enemies() :
-    _damage_palette(_create_damage_palette())
+enemies::enemies(const btn::sprite_palette_ptr& damage_palette) :
+    _damage_palette(damage_palette)
 {
 }
 
-void enemies::check_hero_bomb(const btn::point& center, int squared_radius)
+void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
 {
     for(enemy* enemy : _list)
     {
-        enemy->check_hero_bomb(center, squared_radius);
+        enemy->check_hero_bomb(bomb_center, bomb_squared_radius);
     }
 }
 

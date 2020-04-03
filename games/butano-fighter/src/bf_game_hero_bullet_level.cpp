@@ -42,7 +42,7 @@ namespace
     };
 
     constexpr const hero_bullet_level _levels[] = {
-        hero_bullet_level(_level0_events, btn::fixed_size(7, 7),    btn::sound_items::gun_5,  5,
+        hero_bullet_level(_level0_events, btn::fixed_size(7, 7),    btn::sound_items::gun_5,  1,
                 btn::color(31, 28, 5),  20,   1),
         hero_bullet_level(_level1_events, btn::fixed_size(14, 14),  btn::sound_items::gun_5,  25,
                 btn::color(31, 28, 5),  40,   2),

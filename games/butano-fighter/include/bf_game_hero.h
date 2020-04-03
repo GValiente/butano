@@ -7,6 +7,8 @@
 namespace bf::game
 {
 
+class objects;
+
 class hero
 {
 
@@ -25,10 +27,7 @@ public:
 
     [[nodiscard]] btn::fixed next_level_experience_ratio() const;
 
-    void add_experience(int experience)
-    {
-        _experience += experience;
-    }
+    [[nodiscard]] bool add_experience(int experience);
 
     [[nodiscard]] int bombs_count() const
     {
@@ -56,7 +55,7 @@ public:
 
     [[nodiscard]] bool throw_bomb();
 
-    void update();
+    void update(objects& objects);
 
 private:
     int _level = 0;
@@ -66,9 +65,13 @@ private:
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
     btn::optional<btn::sprite_palette_fade_to_action> _body_palette_fade_action;
-    btn::optional<btn::sprite_palette_fade_to_action> _weapon_palette_fade_action;
     int _show_shoot_counter = 0;
+    int _scale_weapon_counter = 0;
     bool _is_shooting = false;
+
+    [[nodiscard]] btn::fixed_point _move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite);
+
+    void _animate(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
 };
 
 }

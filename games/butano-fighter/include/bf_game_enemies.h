@@ -17,14 +17,14 @@ class enemies
 {
 
 public:
-    enemies();
+    explicit enemies(const btn::sprite_palette_ptr& damage_palette);
 
-    [[nodiscard]] bool check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero)
+    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data)
     {
-        return _grid.check_hero_bullet(rect, damage, hero);
+        return _grid.check_hero_bullet(data);
     }
 
-    void check_hero_bomb(const btn::point& center, int squared_radius);
+    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
     void update(const hero_bomb& hero_bomb);
 

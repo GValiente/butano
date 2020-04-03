@@ -5,16 +5,11 @@
 #include "bf_constants.h"
 #include "btn_fixed_point.h"
 
-namespace btn
-{
-    class fixed_rect;
-}
-
 namespace bf::game
 {
 
-class hero;
 class enemy;
+class check_hero_bullet_data;
 
 class enemies_grid
 {
@@ -26,14 +21,14 @@ public:
 
     [[nodiscard]] bool update_enemy(enemy& enemy);
 
-    [[nodiscard]] bool check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero);
+    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
     #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
         void log() const;
     #endif
 
 private:
-    static constexpr int cell_increment = constants::max_rect_size / constants::enemies_grid_size;
+    static constexpr int cell_increment = constants::max_enemy_size / constants::enemies_grid_size;
     static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (cell_increment * 2);
     static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (cell_increment * 2);
 

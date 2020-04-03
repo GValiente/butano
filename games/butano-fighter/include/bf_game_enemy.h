@@ -5,17 +5,12 @@
 #include "btn_sprite_palette_ptr.h"
 #include "bf_game_enemy_move_event.h"
 
-namespace btn
-{
-    class fixed_rect;
-}
-
 namespace bf::game
 {
 
-class hero;
 class enemy_data;
 class enemy_event;
+class check_hero_bullet_data;
 
 class enemy
 {
@@ -63,9 +58,9 @@ public:
         return _tag;
     }
 
-    [[nodiscard]] bool check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero);
+    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
-    void check_hero_bomb(const btn::point& center, int squared_radius);
+    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
     [[nodiscard]] bool done() const
     {

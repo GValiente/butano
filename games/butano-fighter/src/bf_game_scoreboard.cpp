@@ -80,6 +80,7 @@ void scoreboard::update(const hero& hero)
     if(level != _last_level)
     {
         _last_level = level;
+        _last_experience = -1;
 
         btn::string<8> text;
         btn::input_string_stream text_stream(text);

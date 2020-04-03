@@ -1,7 +1,7 @@
 #include "bf_game_enemies_grid.h"
 
-#include "btn_fixed_rect.h"
 #include "bf_game_enemy.h"
+#include "bf_game_check_hero_bullet_data.h"
 
 #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
     #include "btn_log.h"
@@ -79,15 +79,15 @@ bool enemies_grid::update_enemy(enemy& enemy)
     return updated;
 }
 
-bool enemies_grid::check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero)
+bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 {
-    const btn::fixed_point& position = rect.position();
-    int row = _row(position);
-    int column = _column(position);
+    const btn::fixed_point& bullet_position = data.bullet_rect.position();
+    int row = _row(bullet_position);
+    int column = _column(bullet_position);
 
     for(enemy* enemy : _cells_row(row)[column].enemies())
     {
-        if(enemy->check_hero_bullet(rect, damage, hero))
+        if(enemy->check_hero_bullet(data))
         {
             return true;
         }

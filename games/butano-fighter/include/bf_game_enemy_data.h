@@ -34,9 +34,9 @@ public:
         life(int16_t(_life)),
         experience(int8_t(_experience))
     {
-        BTN_CONSTEXPR_ASSERT(dimensions.width() >= 1 && dimensions.width() <= constants::max_rect_size,
+        BTN_CONSTEXPR_ASSERT(dimensions.width() >= 1 && dimensions.width() <= constants::max_enemy_size,
                              "Invalid width");
-        BTN_CONSTEXPR_ASSERT(dimensions.height() >= 1 && dimensions.height() <= constants::max_rect_size,
+        BTN_CONSTEXPR_ASSERT(dimensions.height() >= 1 && dimensions.height() <= constants::max_enemy_size,
                              "Invalid height");
         BTN_CONSTEXPR_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
                              "Invalid graphics index 1");

@@ -2,17 +2,17 @@
 
 #include "btn_sound.h"
 #include "btn_keypad.h"
-#include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
 #include "btn_hero_bullets_sprite_item.h"
 #include "bf_game_hero.h"
 #include "bf_game_enemies.h"
 #include "bf_game_hero_bullet_level.h"
+#include "bf_game_check_hero_bullet_data.h"
 
 namespace bf::game
 {
 
-void hero_bullets::update(hero& hero, enemies& enemies)
+void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
     if(btn::keypad::held(btn::keypad::button_type::B))
     {
@@ -23,7 +23,7 @@ void hero_bullets::update(hero& hero, enemies& enemies)
         --_b_held_counter;
     }
 
-    _remove_bullets(hero, enemies);
+    _remove_bullets(hero, enemies, objects);
     hero.set_is_shooting(_b_held_counter);
 
     if(_event_counter || _b_held_counter)
@@ -38,13 +38,13 @@ void hero_bullets::update(hero& hero, enemies& enemies)
 
     btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
 
-    if(_event_counter == levels_data[hero.level()].loop_frames)
+    if(_event_counter >= levels_data[hero.level()].loop_frames)
     {
         _event_counter = 0;
     }
 }
 
-void hero_bullets::_remove_bullets(hero& hero, enemies& enemies)
+void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
 {
     int bullets_count = _bullets.size();
 
@@ -57,7 +57,8 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies)
 
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height ||
-                enemies.check_hero_bullet(btn::fixed_rect(position, level_data.dimensions), level_data.damage, hero))
+                enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
+                                          level_data.damage, hero, objects }))
         {
             if(index < bullets_count - 1)
             {

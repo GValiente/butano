@@ -1,11 +1,12 @@
 #include "bf_game_enemy.h"
 
 #include "btn_sound.h"
-#include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_affine_mats.h"
 #include "bf_game_hero.h"
+#include "bf_game_objects.h"
 #include "bf_game_enemy_event.h"
+#include "bf_game_check_hero_bullet_data.h"
 
 namespace bf::game
 {
@@ -51,20 +52,24 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
 {
 }
 
-bool enemy::check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& hero)
+bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
 {
     if(_life)
     {
         btn::fixed_rect enemy_rect(position(), _data->dimensions);
+        const btn::fixed_rect& bullet_rect = data.bullet_rect;
 
-        if(enemy_rect.intersects(rect))
+        if(enemy_rect.intersects(bullet_rect))
         {
             bool show_rotation = btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats;
-            _add_damage(enemy_rect.x(), rect.x(), damage, show_rotation);
+            _add_damage(enemy_rect.x(), bullet_rect.x(), data.bullet_damage, show_rotation);
 
             if(! _life)
             {
-                hero.add_experience(_data->experience);
+                if(data.hero_ref.add_experience(_data->experience))
+                {
+                    data.objects_ref.spawn_hero_weapon(enemy_rect.position(), data.hero_ref.level());
+                }
             }
 
             return true;
@@ -74,18 +79,18 @@ bool enemy::check_hero_bullet(const btn::fixed_rect& rect, int damage, hero& her
     return false;
 }
 
-void enemy::check_hero_bomb(const btn::point& center, int squared_radius)
+void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
 {
     if(_life)
     {
         btn::fixed_point enemy_position = position();
-        int distance_x = enemy_position.x().integer() - center.x();
-        int distance_y = enemy_position.y().integer() - center.y();
+        int distance_x = enemy_position.x().integer() - bomb_center.x();
+        int distance_y = enemy_position.y().integer() - bomb_center.y();
         int squared_distance = (distance_x * distance_x) + (distance_y * distance_y);
 
-        if(squared_distance < squared_radius)
+        if(squared_distance < bomb_squared_radius)
         {
-            _add_damage(enemy_position.x(), center.x(), _life, false);
+            _add_damage(enemy_position.x(), bomb_center.x(), _life, false);
         }
     }
 }

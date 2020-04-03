@@ -24,11 +24,14 @@
         "enemy_bullets": {
             "height": 16
         },
-        "enemy_damage_palette": {
+        "flash_palette": {
             "height": 16
         },
         "gem": {
             "height": 16
+        },
+        "object_messages": {
+            "height": 8
         },
         "stage_1_characters_1": {
             "height": 16

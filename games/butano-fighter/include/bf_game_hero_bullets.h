@@ -14,13 +14,14 @@ namespace bf::game
 
 class hero;
 class enemies;
+class objects;
 class hero_bullet_level;
 
 class hero_bullets
 {
 
 public:
-    void update(hero& hero, enemies& enemies);
+    void update(hero& hero, enemies& enemies, objects& objects);
 
 private:
     struct bullet
@@ -33,7 +34,7 @@ private:
     int _b_held_counter = 0;
     int _event_counter = 0;
 
-    void _remove_bullets(hero& hero, enemies& enemies);
+    void _remove_bullets(hero& hero, enemies& enemies, objects& objects);
 
     void _add_bullets(hero& hero);
 };

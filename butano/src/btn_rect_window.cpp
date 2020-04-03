@@ -1,6 +1,6 @@
 #include "btn_rect_window.h"
 
-#include "btn_fixed_point.h"
+#include "btn_fixed_rect.h"
 #include "btn_display_manager.h"
 
 namespace btn
@@ -34,6 +34,14 @@ fixed rect_window::right() const
 const fixed_point& rect_window::bottom_right() const
 {
     return display_manager::rect_window_bottom_right(id());
+}
+
+fixed_rect rect_window::boundaries() const
+{
+    const fixed_point& tl = top_left();
+    const fixed_point& br = bottom_right();
+    fixed_size dimensions(br.x() - tl.x(), br.y() - tl.y());
+    return fixed_rect(tl + fixed_point(dimensions.width() / 2, dimensions.height() / 2), dimensions);
 }
 
 void rect_window::set_top(fixed top)
@@ -110,6 +118,13 @@ void rect_window::set_boundaries(const fixed_point& top_left, const fixed_point&
 
     display_manager::set_rect_window_top_left(id(), top_left);
     display_manager::set_rect_window_bottom_right(id(), bottom_right);
+}
+
+void rect_window::set_boundaries(const fixed_rect& boundaries)
+{
+    fixed_point half_dimensions(boundaries.width() / 2, boundaries.height() / 2);
+    display_manager::set_rect_window_top_left(id(), boundaries.position() - half_dimensions);
+    display_manager::set_rect_window_bottom_right(id(), boundaries.position() + half_dimensions);
 }
 
 bool rect_window::ignore_camera() const

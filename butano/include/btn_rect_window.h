@@ -7,6 +7,7 @@
 namespace btn
 {
 
+class fixed_rect;
 class fixed_point;
 
 class rect_window : public inside_window
@@ -24,6 +25,8 @@ public:
     [[nodiscard]] fixed right() const;
 
     [[nodiscard]] const fixed_point& bottom_right() const;
+
+    [[nodiscard]] fixed_rect boundaries() const;
 
     void set_top(fixed top);
 
@@ -44,6 +47,8 @@ public:
     void set_boundaries(fixed top, fixed left, fixed bottom, fixed right);
 
     void set_boundaries(const fixed_point& top_left, const fixed_point& bottom_right);
+
+    void set_boundaries(const fixed_rect& boundaries);
 
     [[nodiscard]] bool ignore_camera() const;
 

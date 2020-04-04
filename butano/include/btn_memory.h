@@ -385,7 +385,7 @@ namespace btn::memory
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        int bytes = elements * sizeof(Type);
+        int bytes = elements * int(sizeof(Type));
 
         if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
         {
@@ -407,7 +407,7 @@ namespace btn::memory
         static_assert(is_trivial<Type>(), "Type is not trivial");
         BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        int bytes = elements * sizeof(Type);
+        int bytes = elements * int(sizeof(Type));
 
         if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
         {

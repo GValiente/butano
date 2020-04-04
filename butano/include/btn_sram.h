@@ -19,9 +19,9 @@ namespace btn::sram
     void write(const Type& source)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        BTN_ASSERT(sizeof(Type) <= max_size(), "Size is too high: ", sizeof(Type));
+        BTN_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high: ", sizeof(Type));
 
-        _btn::sram::unsafe_write(&source, sizeof(Type), 0);
+        _btn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
     }
 
     template<typename Type>
@@ -29,18 +29,18 @@ namespace btn::sram
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(sizeof(Type) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
+        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
-        _btn::sram::unsafe_write(&source, sizeof(Type), offset);
+        _btn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
     }
 
     template<typename Type>
     void read(Type& destination)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        BTN_ASSERT(sizeof(Type) <= max_size(), "Size is too high: ", sizeof(Type));
+        BTN_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high: ", sizeof(Type));
 
-        _btn::sram::unsafe_read(&destination, sizeof(Type), 0);
+        _btn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }
 
     template<typename Type>
@@ -48,9 +48,9 @@ namespace btn::sram
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(sizeof(Type) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
+        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
-        _btn::sram::unsafe_read(&destination, sizeof(Type), offset);
+        _btn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);
     }
 }
 

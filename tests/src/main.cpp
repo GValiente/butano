@@ -12,6 +12,7 @@
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
+#include "sram_tests.h"
 
 #if ! BTN_CFG_ASSERT_ENABLED
     static_assert(false, "Enable asserts in btn_config_assert.h to run tests");
@@ -31,8 +32,16 @@ int main()
     fixed_tests();
     math_tests();
     sqrt_tests();
+    sram_tests sram_tests;
 
-    text = text_generator.generate<8>(0, 0, "All tests passed :D");
+    if(sram_tests.again())
+    {
+        text = text_generator.generate<8>(0, 0, "Run tests again to check SRAM");
+    }
+    else
+    {
+        text = text_generator.generate<8>(0, 0, "All tests passed :D");
+    }
 
     while(true)
     {

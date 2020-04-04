@@ -34,7 +34,7 @@ public:
 
         if(loaded->begin == expected->begin)
         {
-            BTN_ASSERT(loaded->end == expected->end, "SRAM end string read failed");
+            BTN_ASSERT(loaded->end == expected->end, "SRAM end array read failed");
         }
         else
         {

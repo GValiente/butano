@@ -17,8 +17,6 @@ enum class palette_bpp_mode;
 
 namespace bgs_manager
 {
-    [[nodiscard]] BTN_CODE_CONST int max_priority();
-
     [[nodiscard]] int used_count();
 
     [[nodiscard]] int available_count();

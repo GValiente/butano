@@ -295,8 +295,7 @@ fixed cpu_usage()
 #if BTN_CFG_ASSERT_ENABLED
     namespace _btn::assert
     {
-        void show(const char* condition, const char* file_name, const char* function, int line,
-                  const char* message)
+        void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
             btn::core::stop();
             btn::hw::show::error(condition, file_name, function, line, message);

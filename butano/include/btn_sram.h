@@ -3,6 +3,7 @@
 
 #include "btn_assert.h"
 #include "btn_type_traits.h"
+#include "../hw/include/btn_hw_sram_constants.h"
 
 namespace _btn::sram
 {
@@ -13,8 +14,6 @@ namespace _btn::sram
 
 namespace btn::sram
 {
-    [[nodiscard]] BTN_CODE_CONST int max_size();
-
     template<typename Type>
     void write(const Type& source)
     {

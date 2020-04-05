@@ -2,7 +2,6 @@
 #define BTN_HW_DISPLAY_H
 
 #include "tonc.h"
-#include "btn_size.h"
 #include "btn_point.h"
 
 namespace btn::hw::display
@@ -16,21 +15,6 @@ namespace btn::hw::display
         SPRITES = 0x0010,
         BLENDING = 0x0020
     };
-
-    [[nodiscard]] constexpr int width()
-    {
-        return 240;
-    }
-
-    [[nodiscard]] constexpr int height()
-    {
-        return 160;
-    }
-
-    [[nodiscard]] constexpr size dimensions()
-    {
-        return size(width(), height());
-    }
 
     [[nodiscard]] constexpr int windows_count()
     {

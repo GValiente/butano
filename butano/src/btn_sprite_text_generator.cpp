@@ -1,8 +1,8 @@
 #include "btn_sprite_text_generator.h"
 
+#include "btn_sprites.h"
 #include "btn_sprite_ptr.h"
 #include "btn_sprite_builder.h"
-#include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 namespace btn
@@ -709,16 +709,14 @@ void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg priority: ",
-               bg_priority);
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     _bg_priority = bg_priority;
 }
 
 void sprite_text_generator::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= sprites_manager::min_z_order() && z_order <= sprites_manager::max_z_order(),
-               "Invalid z order: ", z_order);
+    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
 }

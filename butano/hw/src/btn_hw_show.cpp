@@ -3,6 +3,7 @@
 #if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
     #include "tonc.h"
     #include "btn_string.h"
+    #include "btn_display.h"
     #include "btn_string_view.h"
     #include "btn_input_string_stream.h"
     #include "../include/btn_hw_display.h"
@@ -30,7 +31,7 @@ namespace
             // Init TTE in mode 3:
             auto margin = 12;
             tte_init_bmp(3, nullptr, nullptr);
-            tte_set_margins(margin, margin, display::width() - margin, display::height() - margin);
+            tte_set_margins(margin, margin, btn::display::width() - margin, btn::display::height() - margin);
             tte_write("\n");
         }
     #endif

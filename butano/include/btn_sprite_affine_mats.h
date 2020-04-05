@@ -1,7 +1,7 @@
 #ifndef BTN_SPRITE_AFFINE_MATS_H
 #define BTN_SPRITE_AFFINE_MATS_H
 
-#include "btn_common.h"
+#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
 
 namespace btn::sprite_affine_mats
 {

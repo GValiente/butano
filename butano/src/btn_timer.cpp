@@ -7,16 +7,6 @@
 namespace btn
 {
 
-int timer::ticks_per_frame()
-{
-    return hw::timer::ticks_per_frame();
-}
-
-int timer::ticks_per_second()
-{
-    return hw::timer::ticks_per_second();
-}
-
 timer::timer() :
     _last_ticks(hw::timer::ticks())
 {

@@ -4,6 +4,7 @@
 #include "btn_vector.h"
 #include "btn_optional.h"
 #include "btn_algorithm.h"
+#include "btn_sprite_affine_mats.h"
 #include "btn_sprite_affine_mat_builder.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
 
@@ -12,7 +13,7 @@ namespace btn::sprite_affine_mats_manager
 
 namespace
 {
-    static_assert(hw::sprite_affine_mats::count() <= numeric_limits<int8_t>::max());
+    static_assert(sprite_affine_mats::count() <= numeric_limits<int8_t>::max());
 
     class item_type
     {
@@ -44,10 +45,10 @@ namespace
     {
 
     public:
-        item_type items[hw::sprite_affine_mats::count()];
-        vector<int8_t, hw::sprite_affine_mats::count()> free_item_indexes;
+        item_type items[sprite_affine_mats::count()];
+        vector<int8_t, sprite_affine_mats::count()> free_item_indexes;
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
-        int first_index_to_commit = hw::sprite_affine_mats::count();
+        int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
     };
 
@@ -63,21 +64,16 @@ namespace
 
 void init([[maybe_unused]] int handles_size, void* handles)
 {
-    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count(),
+    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * sprite_affine_mats::count(),
                "Invalid handles size: ", handles_size,
-               sizeof(hw::sprite_affine_mats::handle) * hw::sprite_affine_mats::count());
+               sizeof(hw::sprite_affine_mats::handle) * sprite_affine_mats::count());
 
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 
-    for(int index = hw::sprite_affine_mats::count() - 1; index >= 0; --index)
+    for(int index = sprite_affine_mats::count() - 1; index >= 0; --index)
     {
         data.free_item_indexes.push_back(int8_t(index));
     }
-}
-
-int count()
-{
-    return hw::sprite_affine_mats::count();
 }
 
 int used_count()
@@ -247,7 +243,7 @@ bool updated(int id)
 
 bool updated()
 {
-    return data.first_index_to_commit < hw::sprite_affine_mats::count();
+    return data.first_index_to_commit < sprite_affine_mats::count();
 }
 
 void update()
@@ -267,7 +263,7 @@ optional<commit_data> retrieve_commit_data()
         int offset = data.first_index_to_commit;
         int count = data.last_index_to_commit - data.first_index_to_commit + 1;
         result = commit_data{ offset, count };
-        data.first_index_to_commit = hw::sprite_affine_mats::count();
+        data.first_index_to_commit = sprite_affine_mats::count();
         data.last_index_to_commit = 0;
     }
 

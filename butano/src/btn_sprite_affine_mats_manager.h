@@ -21,8 +21,6 @@ namespace btn::sprite_affine_mats_manager
 
     void init(int handles_size, void* handles);
 
-    [[nodiscard]] BTN_CODE_CONST int count();
-
     [[nodiscard]] int used_count();
 
     [[nodiscard]] int available_count();

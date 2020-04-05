@@ -4,6 +4,7 @@
 #include "btn_vector.h"
 #include "btn_sorted_sprites.h"
 #include "btn_config_sprites.h"
+#include "btn_sprite_affine_mats.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn::sprites_manager
@@ -21,8 +22,8 @@ namespace
 
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
-        hw::sprites::handle handles[hw::sprites::count()];
-        int first_index_to_commit = hw::sprites::count();
+        hw::sprites::handle handles[sprites::sprites_count()];
+        int first_index_to_commit = sprites::sprites_count();
         int last_index_to_commit = 0;
         int last_visible_items_count = 0;
         bool check_items_on_screen = false;
@@ -147,7 +148,7 @@ namespace
         if(data.check_items_on_screen)
         {
             data.check_items_on_screen = false;
-            data.rebuild_handles |= _check_items_on_screen_impl(display::dimensions());
+            data.rebuild_handles |= _check_items_on_screen_impl();
         }
     }
 
@@ -164,8 +165,8 @@ namespace
                 {
                     if(item.on_screen)
                     {
-                        BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
-                                   visible_items_count <= hw::sprites::count(), "Too much sprites on screen");
+                        BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
+                                   visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
 
                         item.handle.copy_to(data.handles[visible_items_count]);
                         item.handles_index = int8_t(visible_items_count);
@@ -196,21 +197,6 @@ namespace
     }
 }
 
-int max_bg_priority()
-{
-    return hw::sprites::max_bg_priority();
-}
-
-int min_z_order()
-{
-    return item_type::min_z_order();
-}
-
-int max_z_order()
-{
-    return item_type::max_z_order();
-}
-
 void init()
 {
     hw::sprites::init();
@@ -224,7 +210,7 @@ int used_sprites_count()
 
 int available_sprites_count()
 {
-    return hw::sprites::count() - used_sprites_count();
+    return sprites::sprites_count() - used_sprites_count();
 }
 
 int used_items_count()
@@ -498,7 +484,7 @@ int bg_priority(id_type id)
 
 void set_bg_priority(id_type id, int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= hw::sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     auto item = static_cast<item_type*>(id);
 
@@ -520,8 +506,7 @@ int z_order(id_type id)
 
 void set_z_order(id_type id, int z_order)
 {
-    BTN_ASSERT(z_order >= item_type::min_z_order() && z_order <= item_type::max_z_order(),
-               "Invalid z order: ", z_order);
+    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     auto item = static_cast<item_type*>(id);
 
@@ -838,18 +823,18 @@ void commit()
 
     if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = hw::sprites::count() / sprite_affine_mats_manager::count();
+        int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
         int first_mat_index_to_commit = commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);
         last_index_to_commit = max(last_index_to_commit, last_mat_index_to_commit);
     }
 
-    if(first_index_to_commit < hw::sprites::count())
+    if(first_index_to_commit < sprites::sprites_count())
     {
         int commit_items_count = last_index_to_commit - first_index_to_commit + 1;
         hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count);
-        data.first_index_to_commit = hw::sprites::count();
+        data.first_index_to_commit = sprites::sprites_count();
         data.last_index_to_commit = 0;
     }
 }

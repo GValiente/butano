@@ -1,7 +1,7 @@
 #ifndef BTN_SPRITES_H
 #define BTN_SPRITES_H
 
-#include "btn_common.h"
+#include "../hw/include/btn_hw_sprites_constants.h"
 
 namespace btn::sprites
 {

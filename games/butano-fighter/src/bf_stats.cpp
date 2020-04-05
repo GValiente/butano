@@ -17,8 +17,7 @@ stats::stats(const btn::sprite_text_generator& text_generator) :
 
 void stats::set_mode(mode_type mode)
 {
-    btn::point display_center = btn::display::center();
-    int text_x = 8 - display_center.x();
+    int text_x = 8 - (btn::display::width() / 2);
     int text_height = _text_generator.font().item().shape_size().height() + 4;
     _mode = mode;
     _static_text_sprites.clear();
@@ -33,14 +32,14 @@ void stats::set_mode(mode_type mode)
         break;
 
     case mode_type::SIMPLE:
-        _text_position = btn::fixed_point(text_x, text_height - display_center.y());
+        _text_position = btn::fixed_point(text_x, text_height - (btn::display::height() / 2));
         break;
 
     case mode_type::DETAILED:
         {
             btn::string_view cpu_label = "CPU: ";
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
-            _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - display_center.y());
+            _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - (btn::display::height() / 2));
 
             btn::string<32> text;
             btn::input_string_stream text_stream(text);

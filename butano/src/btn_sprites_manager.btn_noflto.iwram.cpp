@@ -1,16 +1,15 @@
 #include "btn_sprites_manager.h"
 
 #include "btn_vector.h"
+#include "btn_display.h"
 #include "btn_sorted_sprites.h"
 #include "btn_sprites_manager_item.h"
 
 namespace btn::sprites_manager
 {
 
-bool _check_items_on_screen_impl(size display_dimensions)
+bool _check_items_on_screen_impl()
 {
-    int display_width = display_dimensions.width();
-    int display_height = display_dimensions.height();
     bool rebuild_handles = false;
 
     for(auto& layer : sorted_sprites::layers())
@@ -23,11 +22,11 @@ bool _check_items_on_screen_impl(size display_dimensions)
                 bool on_screen = false;
                 item.check_on_screen = false;
 
-                if(x < display_width && x + (item.half_dimensions.width() * 2) > 0)
+                if(x < display::width() && x + (item.half_dimensions.width() * 2) > 0)
                 {
                     int y = item.hw_position.y();
 
-                    if(y < display_height && y + (item.half_dimensions.height() * 2) > 0)
+                    if(y < display::height() && y + (item.half_dimensions.height() * 2) > 0)
                     {
                         on_screen = true;
                     }

@@ -5,6 +5,7 @@
 #include "btn_point.h"
 #include "btn_camera.h"
 #include "btn_display.h"
+#include "btn_sprites.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
 #include "btn_sprites_manager.h"
@@ -30,21 +31,6 @@ class sprites_manager_item : public sprites_manager_node
 {
 
 public:
-    [[nodiscard]] static constexpr int min_z_order()
-    {
-        return -max_z_order();
-    }
-
-    [[nodiscard]] static constexpr int max_z_order()
-    {
-        return btn::numeric_limits<int16_t>::max() - 1;
-    }
-
-    [[nodiscard]] static constexpr unsigned z_orders()
-    {
-        return btn::numeric_limits<uint16_t>::max();
-    }
-
     hw::sprites::handle handle;
     fixed_point position;
     point hw_position;
@@ -68,12 +54,12 @@ public:
 
     [[nodiscard]] int bg_priority() const
     {
-        return sort_key / z_orders();
+        return sort_key / unsigned(sprites::z_orders());
     }
 
     [[nodiscard]] int z_order() const
     {
-        return int(sort_key % z_orders()) - max_z_order();
+        return int(sort_key % unsigned(sprites::z_orders())) - sprites::max_z_order();
     }
 
     void update_half_dimensions()
@@ -91,9 +77,8 @@ public:
             real_position -= camera::position();
         }
 
-        point center = display::center();
-        hw_position.set_x(real_position.x().integer() + center.x() - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() + center.y() - half_dimensions.height());
+        hw_position.set_x(real_position.x().integer() + (display::width() / 2) - half_dimensions.width());
+        hw_position.set_y(real_position.y().integer() + (display::height() / 2) - half_dimensions.height());
         hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
     }
 
@@ -106,15 +91,14 @@ public:
             real_position -= camera_position;
         }
 
-        point center = display::center();
-        hw_position.set_x(real_position.x().integer() + center.x() - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() + center.y() - half_dimensions.height());
+        hw_position.set_x(real_position.x().integer() + (display::width() / 2) - half_dimensions.width());
+        hw_position.set_y(real_position.y().integer() + (display::height() / 2) - half_dimensions.height());
         hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
     }
 
     void update_sort_key(int bg_priority, int z_order)
     {
-        sort_key = (unsigned(bg_priority) * z_orders()) + unsigned(z_order + max_z_order());
+        sort_key = unsigned(bg_priority * sprites::z_orders()) + unsigned(z_order + sprites::max_z_order());
     }
 };
 

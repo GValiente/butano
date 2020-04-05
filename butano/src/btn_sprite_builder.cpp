@@ -1,7 +1,7 @@
 #include "btn_sprite_builder.h"
 
+#include "btn_sprites.h"
 #include "btn_sprite_ptr.h"
-#include "btn_sprites_manager.h"
 #include "btn_sprite_affine_mat_builder.h"
 
 namespace btn
@@ -114,8 +114,7 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
 
 sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites_manager::max_bg_priority(), "Invalid bg priority: ",
-               bg_priority);
+    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     _bg_priority = bg_priority;
     return *this;
@@ -123,8 +122,7 @@ sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 
 sprite_builder& sprite_builder::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= sprites_manager::min_z_order() && z_order <= sprites_manager::max_z_order(),
-               "Invalid z order: ", z_order);
+    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
     return *this;

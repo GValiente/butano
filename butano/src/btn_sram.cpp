@@ -16,13 +16,3 @@ void unsafe_read(void* destination, int size, int offset)
 }
 
 }
-
-namespace btn::sram
-{
-
-int max_size()
-{
-    return hw::sram::max_size();
-}
-
-}

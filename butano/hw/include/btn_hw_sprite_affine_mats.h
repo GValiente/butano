@@ -95,11 +95,6 @@ namespace btn::hw::sprite_affine_mats
     }
 
 
-    [[nodiscard]] constexpr int count()
-    {
-        return 32;
-    }
-
     [[nodiscard]] inline bool double_size(const item_type& item, fixed scale)
     {
         int cos = abs(int(item.cos));

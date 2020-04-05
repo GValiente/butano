@@ -1,5 +1,6 @@
 #include "btn_bgs_manager.h"
 
+#include "btn_bgs.h"
 #include "btn_color.h"
 #include "btn_camera.h"
 #include "btn_display.h"
@@ -96,11 +97,6 @@ namespace
     };
 
     BTN_DATA_EWRAM static_data data;
-}
-
-int max_priority()
-{
-    return hw::bgs::max_priority();
 }
 
 int used_count()
@@ -366,7 +362,7 @@ int priority(int id)
 
 void set_priority(int id, int priority)
 {
-    BTN_ASSERT(priority >= 0 && priority <= hw::bgs::max_priority(), "Invalid priority: ", priority);
+    BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
     hw::bgs::set_priority(priority, data.handles[id]);
 

@@ -38,8 +38,8 @@ namespace
         bool visible = false;
         bool update = false;
         bool dest_values_a_active = false;
-        uint16_t dest_values_a[hw::display::height()];
-        uint16_t dest_values_b[hw::display::height()];
+        uint16_t dest_values_a[display::height()];
+        uint16_t dest_values_b[display::height()];
 
         [[nodiscard]] bool check_update()
         {

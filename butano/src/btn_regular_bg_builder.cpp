@@ -1,6 +1,6 @@
 #include "btn_regular_bg_builder.h"
 
-#include "btn_bgs_manager.h"
+#include "btn_bgs.h"
 #include "btn_bg_palette_ptr.h"
 #include "btn_regular_bg_ptr.h"
 
@@ -9,7 +9,7 @@ namespace btn
 
 regular_bg_builder& regular_bg_builder::set_priority(int priority)
 {
-    BTN_ASSERT(priority >= 0 && priority <= bgs_manager::max_priority(), "Invalid priority: ", priority);
+    BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
     _priority = priority;
     return *this;

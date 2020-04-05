@@ -2,6 +2,7 @@
 
 #include "btn_vector.h"
 #include "btn_camera.h"
+#include "btn_display.h"
 #include "btn_fixed_point.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
@@ -51,8 +52,8 @@ namespace
         }
 
         fixed_point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
-        fixed display_width = hw::display::width();
-        fixed display_height = hw::display::height();
+        fixed display_width = display::width();
+        fixed display_height = display::height();
         hw_window_boundaries.set_x(clamp(window_boundaries.x() + (display_width / 2), fixed(0), display_width));
         hw_window_boundaries.set_y(clamp(window_boundaries.y() + (display_height / 2), fixed(0), display_height));
         data.commit_windows_boundaries = true;
@@ -347,9 +348,9 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
         uint16_t* dest_ptr)
 {
     fixed min = 0;
-    fixed max = hw::display::width();
+    fixed max = display::width();
 
-    for(int index = 0; index < hw::display::height(); ++index)
+    for(int index = 0; index < display::height(); ++index)
     {
         fixed first_fixed = base_horizontal_boundaries.first + horizontal_boundaries_ptr[index].first;
         fixed second_fixed = base_horizontal_boundaries.second + horizontal_boundaries_ptr[index].second;
@@ -364,9 +365,9 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
         uint16_t* dest_ptr)
 {
     fixed min = 0;
-    fixed max = hw::display::height();
+    fixed max = display::height();
 
-    for(int index = 0; index < hw::display::height(); ++index)
+    for(int index = 0; index < display::height(); ++index)
     {
         fixed first_fixed = base_vertical_boundaries.first + vertical_boundaries_ptr[index].first;
         fixed second_fixed = base_vertical_boundaries.second + vertical_boundaries_ptr[index].second;

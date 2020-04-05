@@ -20,12 +20,6 @@ namespace sprites_manager
 {
     using id_type = void*;
 
-    [[nodiscard]] BTN_CODE_CONST int max_bg_priority();
-
-    [[nodiscard]] BTN_CODE_CONST int min_z_order();
-
-    [[nodiscard]] BTN_CODE_CONST int max_z_order();
-
     void init();
 
     [[nodiscard]] int used_sprites_count();
@@ -129,7 +123,7 @@ namespace sprites_manager
 
     void commit();
 
-    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(size display_dimensions);
+    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl();
 
     struct update_camera_impl_result
     {

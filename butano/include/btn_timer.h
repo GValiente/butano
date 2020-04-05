@@ -2,6 +2,7 @@
 #define BTN_TIMER_H
 
 #include "btn_fixed_fwd.h"
+#include "../hw/include/btn_hw_timer_constants.h"
 
 namespace btn
 {
@@ -10,9 +11,15 @@ class timer
 {
 
 public:
-    [[nodiscard]] BTN_CODE_CONST static int ticks_per_frame();
+    [[nodiscard]] constexpr static int ticks_per_frame()
+    {
+        return timers::ticks_per_frame();
+    }
 
-    [[nodiscard]] BTN_CODE_CONST static int ticks_per_second();
+    [[nodiscard]] constexpr static int ticks_per_second()
+    {
+        return timers::ticks_per_second();
+    }
 
     timer();
 

@@ -1,7 +1,7 @@
 #ifndef BTN_BGS_H
 #define BTN_BGS_H
 
-#include "btn_common.h"
+#include "../hw/include/btn_hw_bgs_constants.h"
 
 namespace btn::bgs
 {

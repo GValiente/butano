@@ -4,6 +4,7 @@
 #include "tonc.h"
 #include "btn_size.h"
 #include "btn_memory.h"
+#include "btn_sprites.h"
 #include "btn_sprite_builder.h"
 
 namespace btn::hw::sprites
@@ -36,19 +37,9 @@ namespace btn::hw::sprites
         }
     }
 
-    [[nodiscard]] constexpr int count()
-    {
-        return 128;
-    }
-
-    [[nodiscard]] constexpr int max_bg_priority()
-    {
-        return 3;
-    }
-
     inline void init()
     {
-        oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(count()));
+        oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(btn::sprites::sprites_count()));
     }
 
     inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,

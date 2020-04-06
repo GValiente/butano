@@ -12,7 +12,8 @@ namespace bf::constants
     constexpr const int max_hero_bullets = 32;
     constexpr const int max_hero_bombs = 3;
     constexpr const int max_enemies = 48;
-    constexpr const int max_object_messages = 4;
+    constexpr const int max_gems = 8;
+    constexpr const int max_object_messages = max_gems;
     constexpr const int max_enemy_size = 48;
     constexpr const int play_width = 72;
     constexpr const int play_height = (160 - 72) / 2;

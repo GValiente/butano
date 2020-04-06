@@ -34,14 +34,14 @@ namespace
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
                 60,     enemy_event::drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
-                180,    enemy_event::drop_type::BOMB),
+                180,    enemy_event::drop_type::GEM),
 
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
                 60,     enemy_event::drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
                 60,     enemy_event::drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
-                60,     enemy_event::drop_type::NONE),
+                60,     enemy_event::drop_type::HERO_BOMB),
     };
 
 

@@ -135,6 +135,14 @@ void hero::update(objects& objects)
             ++_bombs_count;
         }
     }
+
+    if(int experience = objects.check_gem(new_body_rect, _level))
+    {
+        if(add_experience(experience))
+        {
+            objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), _level + 1);
+        }
+    }
 }
 
 btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite)

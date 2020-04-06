@@ -13,7 +13,8 @@ public:
     enum class drop_type : int8_t
     {
         NONE,
-        BOMB
+        GEM,
+        HERO_BOMB
     };
 
     const enemy_data& enemy;

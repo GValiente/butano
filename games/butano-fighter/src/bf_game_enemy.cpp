@@ -77,7 +77,11 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                 case enemy_event::drop_type::NONE:
                     break;
 
-                case enemy_event::drop_type::BOMB:
+                case enemy_event::drop_type::GEM:
+                    data.objects_ref.spawn_gem(enemy_rect.position());
+                    break;
+
+                case enemy_event::drop_type::HERO_BOMB:
                     data.objects_ref.spawn_hero_bomb(enemy_rect.position());
                     break;
                 }

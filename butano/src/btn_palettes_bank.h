@@ -24,6 +24,8 @@ public:
         int count;
     };
 
+    [[nodiscard]] static unsigned colors_ref_hash(const span<const color>& colors_ref);
+
     [[nodiscard]] int used_count() const;
 
     [[nodiscard]] int available_count() const
@@ -31,9 +33,13 @@ public:
         return hw::palettes::count() - used_count();
     }
 
-    [[nodiscard]] int find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
+    [[nodiscard]] int find_bpp_4(const span<const color>& colors_ref, unsigned hash);
 
-    [[nodiscard]] int create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
+    [[nodiscard]] int find_bpp_8(const span<const color>& colors_ref);
+
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors_ref, unsigned hash);
+
+    [[nodiscard]] int create_bpp_8(const span<const color>& colors_ref);
 
     void increase_usages(int id);
 
@@ -55,6 +61,8 @@ public:
     }
 
     void set_colors_ref(int id, const span<const color>& colors_ref);
+
+    void set_colors_ref(int id, const span<const color>& colors_ref, unsigned hash);
 
     void reload_colors_ref(int id);
 
@@ -155,9 +163,10 @@ private:
 
     public:
         const color* colors_ref = nullptr;
+        unsigned hash = 0;
+        unsigned usages = 0;
         fixed grayscale_intensity;
         fixed fade_intensity;
-        unsigned usages = 0;
         color fade_color;
         int16_t rotate_count = 0;
         uint8_t bpp_mode = 0;

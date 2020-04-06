@@ -20,6 +20,20 @@ namespace
     }
 }
 
+unsigned palettes_bank::colors_ref_hash(const span<const color>& colors_ref)
+{
+    const color* colors_data = colors_ref.data();
+    int colors_count = colors_ref.size();
+    auto result = unsigned(colors_count);
+
+    for(int index = 1; index < colors_count; ++index)
+    {
+        result += unsigned(colors_data[index].value());
+    }
+
+    return result;
+}
+
 int palettes_bank::used_count() const
 {
     int result = 0;
@@ -35,137 +49,142 @@ int palettes_bank::used_count() const
     return result;
 }
 
-int palettes_bank::find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
+int palettes_bank::find_bpp_4(const span<const color>& colors_ref, unsigned hash)
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
-    int slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+    span<const color> visible_colors = colors_ref.subspan(1);
+    int inferior_index = _last_used_4bpp_index;
+    int superior_index = inferior_index + 1;
     int bpp8_slots_count = _bpp8_slots_count();
+    bool valid_inferior_index = inferior_index >= bpp8_slots_count;
+    bool valid_superior_index = superior_index < hw::palettes::count();
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    while(valid_inferior_index || valid_superior_index)
     {
-        int inferior_index = _last_used_4bpp_index;
-        int superior_index = inferior_index + 1;
-        bool valid_inferior_index = inferior_index >= bpp8_slots_count;
-        bool valid_superior_index = superior_index < hw::palettes::count();
-
-        span<const color> visible_colors = colors_ref.subspan(1);
-
-        while(valid_inferior_index || valid_superior_index)
+        if(valid_inferior_index)
         {
-            if(valid_inferior_index)
+            palette& pal = _palettes[inferior_index];
+
+            if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
             {
-                palette& pal = _palettes[inferior_index];
-
-                if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+                if(hash == pal.hash && visible_colors == pal.visible_colors_span())
                 {
-                    if(visible_colors == pal.visible_colors_span())
-                    {
-                        ++pal.usages;
-                        _last_used_4bpp_index = inferior_index;
-                        return inferior_index;
-                    }
+                    ++pal.usages;
+                    _last_used_4bpp_index = inferior_index;
+                    return inferior_index;
                 }
-
-                --inferior_index;
-                valid_inferior_index = inferior_index >= bpp8_slots_count;
             }
 
-            if(valid_superior_index)
-            {
-                palette& pal = _palettes[superior_index];
-
-                if(pal.usages)
-                {
-                    if(visible_colors == pal.visible_colors_span())
-                    {
-                        ++pal.usages;
-                        _last_used_4bpp_index = superior_index;
-                        return superior_index;
-                    }
-                }
-
-                ++superior_index;
-                valid_superior_index = superior_index < hw::palettes::count();
-            }
+            --inferior_index;
+            valid_inferior_index = inferior_index >= bpp8_slots_count;
         }
-    }
-    else
-    {
-        if(bpp8_slots_count >= slots_count)
+
+        if(valid_superior_index)
         {
-            ++_palettes[0].usages;
-            return 0;
+            palette& pal = _palettes[superior_index];
+
+            if(pal.usages)
+            {
+                if(hash == pal.hash && visible_colors == pal.visible_colors_span())
+                {
+                    ++pal.usages;
+                    _last_used_4bpp_index = superior_index;
+                    return superior_index;
+                }
+            }
+
+            ++superior_index;
+            valid_superior_index = superior_index < hw::palettes::count();
         }
     }
 
     return -1;
 }
 
-int palettes_bank::create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
+int palettes_bank::find_bpp_8(const span<const color>& colors_ref)
+{
+    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+
+    int bpp8_slots_count = _bpp8_slots_count();
+    int slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+
+    if(bpp8_slots_count >= slots_count)
+    {
+        ++_palettes[0].usages;
+        return 0;
+    }
+
+    return -1;
+}
+
+int palettes_bank::create_bpp_4(const span<const color>& colors_ref, unsigned hash)
 {
     BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
 
     int required_slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
     int bpp8_slots_count = _bpp8_slots_count();
+    int free_slots_count = 0;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    for(int index = hw::palettes::count() - 1; index >= bpp8_slots_count; --index)
     {
-        int free_slots_count = 0;
+        palette& pal = _palettes[index];
 
-        for(int index = hw::palettes::count() - 1; index >= bpp8_slots_count; --index)
+        if(pal.usages)
         {
-            palette& pal = _palettes[index];
+            free_slots_count = 0;
+        }
+        else
+        {
+            ++free_slots_count;
 
-            if(pal.usages)
+            if(free_slots_count == required_slots_count)
             {
-                free_slots_count = 0;
-            }
-            else
-            {
-                ++free_slots_count;
-
-                if(free_slots_count == required_slots_count)
-                {
-                    pal = palette();
-                    pal.usages = 1;
-                    pal.bpp_mode = uint8_t(bpp_mode);
-                    pal.slots_count = int8_t(required_slots_count);
-                    set_colors_ref(index, colors_ref);
-                    return index;
-                }
+                pal = palette();
+                pal.usages = 1;
+                pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_4);
+                pal.slots_count = int8_t(required_slots_count);
+                set_colors_ref(index, colors_ref, hash);
+                return index;
             }
         }
     }
-    else
-    {
-        palette& first_pal = _palettes[0];
 
-        if(! first_pal.usages || palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
+    return -1;
+}
+
+int palettes_bank::create_bpp_8(const span<const color>& colors_ref)
+{
+    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+
+    palette& first_pal = _palettes[0];
+    int required_slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+    int bpp8_slots_count = _bpp8_slots_count();
+
+    if(! first_pal.usages || palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
+    {
+        if(bpp8_slots_count >= required_slots_count)
         {
-            if(bpp8_slots_count >= required_slots_count)
+            ++first_pal.usages;
+            return 0;
+        }
+
+        if(required_slots_count <= _first_4bpp_palette_index())
+        {
+            if(first_pal.usages)
             {
                 ++first_pal.usages;
-                return 0;
             }
-
-            if(required_slots_count <= _first_4bpp_palette_index())
+            else
             {
-                if(first_pal.usages)
-                {
-                    ++first_pal.usages;
-                }
-                else
-                {
-                    first_pal = palette();
-                    first_pal.usages = 1;
-                    first_pal.bpp_mode = uint8_t(bpp_mode);
-                }
-
-                first_pal.slots_count = int8_t(required_slots_count);
-                set_colors_ref(0, colors_ref);
-                return 0;
+                first_pal = palette();
+                first_pal.usages = 1;
+                first_pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_8);
             }
+
+            first_pal.slots_count = int8_t(required_slots_count);
+            set_colors_ref(0, colors_ref, 0);
+            return 0;
         }
     }
 
@@ -191,11 +210,29 @@ void palettes_bank::decrease_usages(int id)
 
 void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
 {
+    palette& pal = _palettes[id];
+    unsigned hash;
+
+    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    {
+        hash = colors_ref_hash(colors_ref);
+    }
+    else
+    {
+        hash = 0;
+    }
+
+    set_colors_ref(id, colors_ref, hash);
+}
+
+void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref, unsigned hash)
+{
     BTN_ASSERT(colors_ref.size() == colors_count(id), "Colors count mismatch: ",
                colors_ref.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[id];
     pal.colors_ref = colors_ref.data();
+    pal.hash = hash;
     pal.update = true;
     _perform_update = true;
 
@@ -213,6 +250,8 @@ void palettes_bank::reload_colors_ref(int id)
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
+        int colors_count = pal.slots_count * hw::palettes::colors_per_palette();
+        pal.hash = colors_ref_hash(span<const color>(pal.colors_ref, colors_count));
         _last_used_4bpp_index = id;
     }
 }

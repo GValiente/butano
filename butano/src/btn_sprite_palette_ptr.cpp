@@ -8,7 +8,19 @@ namespace btn
 
 optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
-    int id = palettes_manager::sprite_palettes_bank().find(colors_ref, bpp_mode);
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+    int id;
+
+    if(bpp_mode == palette_bpp_mode::BPP_4)
+    {
+        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
+        id = sprite_palettes_bank.find_bpp_4(colors_ref, hash);
+    }
+    else
+    {
+        id = sprite_palettes_bank.find_bpp_8(colors_ref);
+    }
+
     optional<sprite_palette_ptr> result;
 
     if(id >= 0)
@@ -21,7 +33,19 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
 
 sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
-    int id = palettes_manager::sprite_palettes_bank().create(colors_ref, bpp_mode);
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+    int id;
+
+    if(bpp_mode == palette_bpp_mode::BPP_4)
+    {
+        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
+        id = sprite_palettes_bank.create_bpp_4(colors_ref, hash);
+    }
+    else
+    {
+        id = sprite_palettes_bank.create_bpp_8(colors_ref);
+    }
+
     BTN_ASSERT(id >= 0, "Palette create failed");
 
     return sprite_palette_ptr(id);
@@ -30,12 +54,28 @@ sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors_re
 sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode)
 {
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
-    int id = sprite_palettes_bank.find(colors_ref, bpp_mode);
+    int id;
 
-    if(id < 0)
+    if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.create(colors_ref, bpp_mode);
-        BTN_ASSERT(id >= 0, "Palette find or create failed");
+        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
+        id = sprite_palettes_bank.find_bpp_4(colors_ref, hash);
+
+        if(id < 0)
+        {
+            id = sprite_palettes_bank.create_bpp_4(colors_ref, hash);
+            BTN_ASSERT(id >= 0, "Palette find or create failed");
+        }
+    }
+    else
+    {
+        id = sprite_palettes_bank.find_bpp_8(colors_ref);
+
+        if(id < 0)
+        {
+            id = sprite_palettes_bank.create_bpp_8(colors_ref);
+            BTN_ASSERT(id >= 0, "Palette find or create failed");
+        }
     }
 
     return sprite_palette_ptr(id);
@@ -44,7 +84,19 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
 optional<sprite_palette_ptr> sprite_palette_ptr::optional_create(const span<const color>& colors_ref,
                                                                  palette_bpp_mode bpp_mode)
 {
-    int id = palettes_manager::sprite_palettes_bank().create(colors_ref, bpp_mode);
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+    int id;
+
+    if(bpp_mode == palette_bpp_mode::BPP_4)
+    {
+        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
+        id = sprite_palettes_bank.create_bpp_4(colors_ref, hash);
+    }
+    else
+    {
+        id = sprite_palettes_bank.create_bpp_8(colors_ref);
+    }
+
     optional<sprite_palette_ptr> result;
 
     if(id >= 0)
@@ -59,21 +111,33 @@ optional<sprite_palette_ptr> sprite_palette_ptr::optional_find_or_create(const s
                                                                          palette_bpp_mode bpp_mode)
 {
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
-    int id = sprite_palettes_bank.find(colors_ref, bpp_mode);
+    int id;
+
+    if(bpp_mode == palette_bpp_mode::BPP_4)
+    {
+        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
+        id = sprite_palettes_bank.find_bpp_4(colors_ref, hash);
+
+        if(id < 0)
+        {
+            id = sprite_palettes_bank.create_bpp_4(colors_ref, hash);
+        }
+    }
+    else
+    {
+        id = sprite_palettes_bank.find_bpp_8(colors_ref);
+
+        if(id < 0)
+        {
+            id = sprite_palettes_bank.create_bpp_8(colors_ref);
+        }
+    }
+
     optional<sprite_palette_ptr> result;
 
     if(id >= 0)
     {
         result = sprite_palette_ptr(id);
-    }
-    else
-    {
-        id = sprite_palettes_bank.create(colors_ref, bpp_mode);
-
-        if(id >= 0)
-        {
-            result = sprite_palette_ptr(id);
-        }
     }
 
     return result;

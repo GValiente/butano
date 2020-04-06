@@ -503,50 +503,66 @@ public:
     {
         BTN_ASSERT(_size, "Deque is empty");
 
-        _data[_size].~value_type();
-        --_size;
-        _begin = (_begin + 1) & (_max_size - 1);
+        _pop_front();
     }
 
     iterator insert(const const_iterator& position, const_reference value)
     {
         size_type index = position._index;
-        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-        BTN_ASSERT(! full(), "Deque is full");
 
-        pointer data = _data;
-        size_type last = _size;
-        size_type last_real_index = _real_index(last);
-        ::new(data + last_real_index) value_type(value);
-        reference last_value = data[last_real_index];
-
-        for(; index != last; ++index)
+        if(index == 0)
         {
-            btn::swap(data[_real_index(index)], last_value);
+            push_front(value);
+        }
+        else
+        {
+            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(! full(), "Deque is full");
+
+            pointer data = _data;
+            size_type last = _size;
+            size_type last_real_index = _real_index(last);
+            ::new(data + last_real_index) value_type(value);
+            reference last_value = data[last_real_index];
+
+            for(; index != last; ++index)
+            {
+                btn::swap(data[_real_index(index)], last_value);
+            }
+
+            ++_size;
         }
 
-        ++_size;
         return const_cast<iterator>(position);
     }
 
     iterator insert(const const_iterator& position, value_type&& value)
     {
         size_type index = position._index;
-        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-        BTN_ASSERT(! full(), "Deque is full");
 
-        pointer data = _data;
-        size_type last = _size;
-        size_type last_real_index = _real_index(last);
-        ::new(data + last_real_index) value_type(move(value));
-        reference last_value = data[last_real_index];
-
-        for(; index != last; ++index)
+        if(index == 0)
         {
-            btn::swap(data[_real_index(index)], last_value);
+            push_front(move(value));
+        }
+        else
+        {
+            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(! full(), "Deque is full");
+
+            pointer data = _data;
+            size_type last = _size;
+            size_type last_real_index = _real_index(last);
+            ::new(data + last_real_index) value_type(move(value));
+            reference last_value = data[last_real_index];
+
+            for(; index != last; ++index)
+            {
+                btn::swap(data[_real_index(index)], last_value);
+            }
+
+            ++_size;
         }
 
-        ++_size;
         return const_cast<iterator>(position);
     }
 
@@ -554,43 +570,61 @@ public:
     iterator emplace(const const_iterator& position, Args&&... args)
     {
         size_type index = position._index;
-        BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-        BTN_ASSERT(! full(), "Deque is full");
 
-        pointer data = _data;
-        size_type last = _size;
-        size_type last_real_index = _real_index(last);
-        ::new(_data + last_real_index) value_type(forward<Args>(args)...);
-        reference last_value = data[last_real_index];
-
-        for(; index != last; ++index)
+        if(index == 0)
         {
-            btn::swap(data[_real_index(index)], last_value);
+            emplace_front(forward<Args>(args)...);
+        }
+        else
+        {
+            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(! full(), "Deque is full");
+
+            pointer data = _data;
+            size_type last = _size;
+            size_type last_real_index = _real_index(last);
+            ::new(_data + last_real_index) value_type(forward<Args>(args)...);
+            reference last_value = data[last_real_index];
+
+            for(; index != last; ++index)
+            {
+                btn::swap(data[_real_index(index)], last_value);
+            }
+
+            ++_size;
         }
 
-        ++_size;
         return const_cast<iterator>(position);
     }
 
     iterator erase(const const_iterator& position)
     {
         size_type index = position._index;
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid position: ", index, " - ", _size);
 
-        --_size;
-
-        pointer data = _data;
-        size_type last = _size;
-        size_type real_index = _real_index(index);
-
-        for(; index != last; ++index)
+        if(index == 0)
         {
-            size_type real_next_index = _real_index(index + 1);
-            data[real_index] = move(data[real_next_index]);
-            real_index = real_next_index;
+            pop_front();
+        }
+        else
+        {
+            BTN_ASSERT(index >= 0 && index < _size, "Invalid position: ", index, " - ", _size);
+
+            --_size;
+
+            pointer data = _data;
+            size_type last = _size;
+            size_type real_index = _real_index(index);
+
+            for(; index != last; ++index)
+            {
+                size_type real_next_index = _real_index(index + 1);
+                data[real_index] = move(data[real_next_index]);
+                real_index = real_next_index;
+            }
+
+            data[real_index].~value_type();
         }
 
-        data[real_index].~value_type();
         return const_cast<iterator>(position);
     }
 
@@ -610,6 +644,14 @@ public:
             if(delete_count == _size)
             {
                 clear();
+            }
+            else if(first_index == 0)
+            {
+                while(delete_count)
+                {
+                    _pop_front();
+                    --delete_count;
+                }
             }
             else
             {
@@ -896,6 +938,13 @@ protected:
 
         other._size = 0;
         other._begin = 0;
+    }
+
+    void _pop_front()
+    {
+        _data[_size].~value_type();
+        --_size;
+        _begin = (_begin + 1) & (_max_size - 1);
     }
 };
 

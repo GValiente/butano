@@ -6,6 +6,7 @@
 #include "bf_game_hero.h"
 #include "bf_game_objects.h"
 #include "bf_game_enemy_event.h"
+#include "bf_game_enemy_bullets.h"
 #include "bf_game_check_hero_bullet_data.h"
 
 namespace bf::game
@@ -40,8 +41,10 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     _sprite_palette(_sprite.palette()),
     _damage_palette(damage_palette),
     _life(event.enemy.life),
-    _counter(event.move_events[0].duration_frames),
+    _move_event_counter(event.move_events[0].duration_frames),
+    _bullet_event_counter(0),
     _move_event_index(0),
+    _bullet_event_index(0),
     _grid_columns(int8_t(btn::max(event.enemy.dimensions.width().integer() / constants::enemies_grid_size, 1))),
     _grid_rows(int8_t(btn::max(event.enemy.dimensions.height().integer() / constants::enemies_grid_size, + 1))),
     _last_grid_column(0),
@@ -49,6 +52,20 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     _damage_palette_counter(0),
     _tag(tag)
 {
+    if(! event.bullet_events.empty())
+    {
+        _bullet_event_counter = event.bullet_events[0].wait_frames;
+    }
+}
+
+bool enemy::check_hero(const btn::fixed_rect& hero_rect)
+{
+    if(_life)
+    {
+        return btn::fixed_rect(position(), _event->enemy.dimensions).intersects(hero_rect);
+    }
+
+    return false;
 }
 
 bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
@@ -74,14 +91,14 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                 switch(_event->drop)
                 {
 
-                case enemy_event::drop_type::NONE:
+                case enemy_drop_type::NONE:
                     break;
 
-                case enemy_event::drop_type::GEM:
+                case enemy_drop_type::GEM:
                     data.objects_ref.spawn_gem(enemy_rect.position());
                     break;
 
-                case enemy_event::drop_type::HERO_BOMB:
+                case enemy_drop_type::HERO_BOMB:
                     data.objects_ref.spawn_hero_bomb(enemy_rect.position());
                     break;
                 }
@@ -115,15 +132,13 @@ bool enemy::done() const
     return _move_event_index == _event->move_events.size();
 }
 
-void enemy::update()
+void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
-    BTN_ASSERT(! done(), "Enemy is done");
-
-    --_counter;
+    --_move_event_counter;
 
     if(_life)
     {
-        if(! _counter)
+        if(! _move_event_counter)
         {
             ++_move_event_index;
 
@@ -134,7 +149,7 @@ void enemy::update()
 
             const enemy_move_event& move_event = _event->move_events[_move_event_index];
             _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
-            _counter = move_event.duration_frames;
+            _move_event_counter = move_event.duration_frames;
 
             if(move_event.horizontal_flip)
             {
@@ -144,10 +159,27 @@ void enemy::update()
 
         _move_action.update();
         _animate_action.update();
+
+        if(_bullet_event_counter)
+        {
+            --_bullet_event_counter;
+
+            if(! _bullet_event_counter)
+            {
+                const btn::span<const enemy_bullet_event>& bullet_events = _event->bullet_events;
+                enemy_bullets.add_bullet(hero_position, _sprite.position(), bullet_events[_bullet_event_index]);
+                ++_bullet_event_index;
+
+                if(_bullet_event_index < bullet_events.size())
+                {
+                    _bullet_event_counter = bullet_events[_bullet_event_index].wait_frames;
+                }
+            }
+        }
     }
     else
     {
-        if(_counter)
+        if(_move_event_counter)
         {
             _rotate_action->update();
             _scale_action->update();
@@ -187,15 +219,15 @@ void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, boo
         if(show_rotation)
         {
             btn::fixed rotation_angle = attack_x < enemy_x ? -1 : 1;
-            _counter = 30;
+            _move_event_counter = 30;
             _rotate_action.emplace(_sprite, rotation_angle);
             _rotate_action->update();
-            _scale_action.emplace(_sprite, _counter + 1, 0.1);
+            _scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
             _scale_action->update();
         }
         else
         {
-            _counter = 1;
+            _move_event_counter = 1;
         }
     }
 }

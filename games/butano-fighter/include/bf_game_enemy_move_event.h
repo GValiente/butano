@@ -14,12 +14,13 @@ public:
     int16_t duration_frames;
     bool horizontal_flip;
 
-    constexpr enemy_move_event(const btn::fixed_point& _position_delta, int _duration, bool _flip) :
-        delta_position(_position_delta),
-        duration_frames(int16_t(_duration)),
-        horizontal_flip(_flip)
+    constexpr enemy_move_event(const btn::fixed_point& _delta_position, int _duration_frames, bool _horizontal_flip) :
+        delta_position(_delta_position),
+        duration_frames(int16_t(_duration_frames)),
+        horizontal_flip(_horizontal_flip)
     {
-        BTN_CONSTEXPR_ASSERT(_duration >= 1 && _duration < btn::numeric_limits<int16_t>::max(), "Invalid duration");
+        BTN_CONSTEXPR_ASSERT(_duration_frames >= 1 && _duration_frames < btn::numeric_limits<int16_t>::max(),
+                             "Invalid duration frames");
     }
 };
 

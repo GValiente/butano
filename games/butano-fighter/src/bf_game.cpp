@@ -21,7 +21,8 @@ void game::update()
     _hero_bullets.update(_hero, _enemies, _objects);
     _hero_bomb.update(_hero, _enemies, _background);
     _background.update();
-    _enemies.update(_hero_bomb);
+    _enemies.update(_hero, _hero_bomb, _enemy_bullets);
+    _enemy_bullets.update();
     _objects.update();
     _scoreboard.update(_hero);
 
@@ -33,7 +34,7 @@ void game::update()
         }
         else
         {
-            btn::music::play(btn::music_items::battle_clean, 0.5);
+            btn::music::play(btn::music_items::hideout_clean, 0.5);
         }
     }
 }

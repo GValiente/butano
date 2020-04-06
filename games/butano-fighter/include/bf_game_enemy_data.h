@@ -6,7 +6,6 @@
 #include "btn_sound_item.h"
 #include "btn_sprite_item.h"
 #include "bf_constants.h"
-#include "bf_game_enemy_move_event.h"
 
 namespace bf::game
 {

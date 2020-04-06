@@ -11,6 +11,8 @@ namespace
 {
     constexpr const int start_y = -(160 + 16) / 2;
 
+    constexpr const btn::span<const enemy_bullet_event> no_bullet_events;
+
 
     // bat:
 
@@ -25,23 +27,28 @@ namespace
         enemy_move_event(btn::fixed_point(0, 0.75), int((-start_y * 2) / 0.75), false),
     };
 
+    constexpr const enemy_bullet_event bat_bullet_events[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,     30),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                          60),
+    };
+
 
     // enemy events:
 
     constexpr const enemy_event enemy_events[] = {
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
-                60,     enemy_event::drop_type::NONE),
+                bat_bullet_events,  60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
-                60,     enemy_event::drop_type::NONE),
+                no_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
-                180,    enemy_event::drop_type::GEM),
+                no_bullet_events,   180,    enemy_drop_type::GEM),
 
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
-                60,     enemy_event::drop_type::NONE),
+                no_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
-                60,     enemy_event::drop_type::NONE),
+                no_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
-                60,     enemy_event::drop_type::HERO_BOMB),
+                no_bullet_events,   60,     enemy_drop_type::HERO_BOMB),
     };
 
 

@@ -5,6 +5,11 @@
 #include "bf_constants.h"
 #include "btn_fixed_point.h"
 
+namespace btn
+{
+    class fixed_rect;
+}
+
 namespace bf::game
 {
 
@@ -20,6 +25,8 @@ public:
     void remove_enemy(enemy& enemy);
 
     [[nodiscard]] bool update_enemy(enemy& enemy);
+
+    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect);
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 

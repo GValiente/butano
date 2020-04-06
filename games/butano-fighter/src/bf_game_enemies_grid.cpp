@@ -79,6 +79,23 @@ bool enemies_grid::update_enemy(enemy& enemy)
     return updated;
 }
 
+bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect)
+{
+    const btn::fixed_point& hero_position = hero_rect.position();
+    int row = _row(hero_position);
+    int column = _column(hero_position);
+
+    for(enemy* enemy : _cells_row(row)[column].enemies())
+    {
+        if(enemy->check_hero(hero_rect))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 {
     const btn::fixed_point& bullet_position = data.bullet_rect.position();

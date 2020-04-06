@@ -12,6 +12,20 @@
 namespace bf::game
 {
 
+hero_bullets::hero_bullets() :
+    _palette(btn::sprite_items::hero_bullets.palette_item().create_palette()),
+    _tiles({ btn::sprite_items::hero_bullets.tiles_item().create_tiles(0),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(1),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(2),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(3),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(4),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(5),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(6),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(7),
+           btn::sprite_items::hero_bullets.tiles_item().create_tiles(8) })
+{
+}
+
 void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
     if(btn::keypad::held(btn::keypad::button_type::B))
@@ -90,7 +104,7 @@ void hero_bullets::_add_bullets(hero& hero)
 
             int event_level = event.level;
             const hero_bullet_level& level_data = levels_data[event_level];
-            btn::sprite_builder builder(btn::sprite_items::hero_bullets, event_level);
+            btn::sprite_builder builder(btn::sprite_items::hero_bullets.shape_size(), _tiles[event_level], _palette);
             builder.set_position(hero.weapon_position());
             builder.set_z_order(constants::hero_bullets_z_order);
             _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.direction), &level_data });

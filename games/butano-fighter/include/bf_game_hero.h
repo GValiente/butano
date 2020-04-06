@@ -34,6 +34,11 @@ public:
         return _bombs_count;
     }
 
+    [[nodiscard]] const btn::fixed_point& body_position() const
+    {
+        return _body_sprite_animate_action.sprite().position();
+    }
+
     [[nodiscard]] const btn::fixed_point& weapon_position() const
     {
         return _weapon_position;
@@ -58,7 +63,7 @@ public:
     void update(objects& objects);
 
 private:
-    int _level = 0;
+    int _level = 2;
     int _experience = 0;
     int _bombs_count = 2;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;

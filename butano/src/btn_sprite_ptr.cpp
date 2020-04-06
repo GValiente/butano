@@ -164,19 +164,13 @@ void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_m
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
 {
-    optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles(graphics_index, create_mode);
-    BTN_ASSERT(tiles_ptr, "Tiles create failed");
-
-    set_tiles(move(*tiles_ptr));
+    set_tiles(tiles_item.create_tiles(graphics_index, create_mode));
 }
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
                            int graphics_index, create_mode create_mode)
 {
-    optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles(graphics_index, create_mode);
-    BTN_ASSERT(tiles_ptr, "Tiles create failed");
-
-    set_tiles(shape_size, move(*tiles_ptr));
+    set_tiles(shape_size, tiles_item.create_tiles(graphics_index, create_mode));
 }
 
 const sprite_palette_ptr& sprite_ptr::palette() const
@@ -201,21 +195,16 @@ void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
 
 void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mode create_mode)
 {
-    optional<sprite_palette_ptr> palette_ptr = palette_item.create_palette(create_mode);
-    BTN_ASSERT(palette_ptr, "Palette create failed");
-
-    set_palette(move(*palette_ptr));
+    set_palette(palette_item.create_palette(create_mode));
 }
 
 void sprite_ptr::set_item(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
-    optional<sprite_tiles_ptr> tiles_ptr = item.tiles_item().create_tiles(graphics_index, create_mode);
-    BTN_ASSERT(tiles_ptr, "Tiles create failed");
-
-    optional<sprite_palette_ptr> palette_ptr = item.palette_item().create_palette(create_mode);
-    BTN_ASSERT(palette_ptr, "Palette create failed");
-
-    sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), move(*tiles_ptr), move(*palette_ptr));
+    sprites_manager::set_tiles_and_palette(
+                _handle,
+                item.shape_size(),
+                item.tiles_item().create_tiles(graphics_index, create_mode),
+                item.palette_item().create_palette(create_mode));
 }
 
 fixed sprite_ptr::x() const

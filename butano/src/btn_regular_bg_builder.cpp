@@ -45,7 +45,7 @@ optional<bg_tiles_ptr> regular_bg_builder::tiles() const
     }
     else
     {
-        result = _item->tiles_item().create_tiles(_tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_tiles_create_mode);
     }
 
     return result;
@@ -61,9 +61,9 @@ optional<regular_bg_map_ptr> regular_bg_builder::map() const
     }
     else
     {
-        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_palette(_palette_create_mode))
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette(_palette_create_mode))
         {
-            result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
+            result = _item->map_item().optional_create_map(move(*palette_ptr), _map_create_mode);
         }
     }
 
@@ -80,7 +80,7 @@ optional<bg_tiles_ptr> regular_bg_builder::release_tiles()
     }
     else
     {
-        result = _item->tiles_item().create_tiles(_tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_tiles_create_mode);
     }
 
     return result;
@@ -96,9 +96,9 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map()
     }
     else
     {
-        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_palette(_palette_create_mode))
+        if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette(_palette_create_mode))
         {
-            result = _item->map_item().create_map(move(*palette_ptr), _map_create_mode);
+            result = _item->map_item().optional_create_map(move(*palette_ptr), _map_create_mode);
         }
     }
 

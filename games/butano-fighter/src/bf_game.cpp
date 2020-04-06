@@ -8,21 +8,9 @@
 namespace bf::game
 {
 
-namespace
-{
-    btn::sprite_palette_ptr _create_flash_palette()
-    {
-        btn::optional<btn::sprite_palette_ptr> flash_palette =
-                btn::sprite_items::flash_palette.palette_item().create_palette(btn::create_mode::FIND_OR_CREATE);
-        BTN_ASSERT(flash_palette, "Flash palette find or create failed");
-
-        return btn::move(*flash_palette);
-    }
-}
-
 game::game(btn::sprite_text_generator& text_generator) :
-    _enemies(_create_flash_palette()),
-    _objects(_create_flash_palette()),
+    _enemies(btn::sprite_items::flash_palette.palette_item().create_palette()),
+    _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),
     _scoreboard(text_generator)
 {
 }

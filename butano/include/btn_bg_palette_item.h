@@ -3,6 +3,7 @@
 
 #include "btn_span.h"
 #include "btn_color.h"
+#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 #include "btn_palette_bpp_mode.h"
 
@@ -10,7 +11,6 @@ namespace btn
 {
 
 class bg_palette_ptr;
-enum class create_mode;
 
 class bg_palette_item
 {
@@ -39,7 +39,10 @@ public:
         return _bpp_mode;
     }
 
-    [[nodiscard]] optional<bg_palette_ptr> create_palette(create_mode create_mode) const;
+    [[nodiscard]] bg_palette_ptr create_palette(create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+
+    [[nodiscard]] optional<bg_palette_ptr> optional_create_palette(
+            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_palette_item& a, const bg_palette_item& b)
     {

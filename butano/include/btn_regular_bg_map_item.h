@@ -2,6 +2,7 @@
 #define BTN_REGULAR_BG_MAP_ITEM_H
 
 #include "btn_size.h"
+#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 #include "btn_regular_bg_map_cell.h"
 
@@ -10,7 +11,6 @@ namespace btn
 
 class bg_palette_ptr;
 class regular_bg_map_ptr;
-enum class create_mode;
 
 class regular_bg_map_item
 {
@@ -34,11 +34,15 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] optional<regular_bg_map_ptr> create_map(const bg_palette_ptr& palette_ptr,
-                                                          create_mode create_mode) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(const bg_palette_ptr& palette_ptr, create_mode create_mode) const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> create_map(bg_palette_ptr&& palette_ptr,
-                                                          create_mode create_mode) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(bg_palette_ptr&& palette_ptr, create_mode create_mode) const;
+
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
+            const bg_palette_ptr& palette_ptr, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
+            bg_palette_ptr&& palette_ptr, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b)
     {

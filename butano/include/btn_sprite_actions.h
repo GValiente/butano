@@ -683,7 +683,7 @@ private:
 
         for(int graphics_index : graphics_indexes)
         {
-            optional<sprite_tiles_ptr> tiles_ptr = tiles_item.create_tiles(
+            optional<sprite_tiles_ptr> tiles_ptr = tiles_item.optional_create_tiles(
                         graphics_index, create_mode::FIND_OR_CREATE);
             BTN_ASSERT(tiles_ptr, "Tiles create failed");
 

@@ -198,7 +198,7 @@ optional<sprite_tiles_ptr> sprite_builder::tiles() const
     }
     else
     {
-        result = _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -214,7 +214,7 @@ optional<sprite_palette_ptr> sprite_builder::palette() const
     }
     else
     {
-        result = _item->palette_item().create_palette(_palette_create_mode);
+        result = _item->palette_item().optional_create_palette(_palette_create_mode);
     }
 
     return result;
@@ -230,7 +230,7 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles()
     }
     else
     {
-        result = _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
     }
 
     return result;
@@ -246,7 +246,7 @@ optional<sprite_palette_ptr> sprite_builder::release_palette()
     }
     else
     {
-        result = _item->palette_item().create_palette(_palette_create_mode);
+        result = _item->palette_item().optional_create_palette(_palette_create_mode);
     }
 
     return result;

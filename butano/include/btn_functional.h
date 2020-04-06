@@ -28,7 +28,10 @@ struct hash<unsigned>
         // FNV-1a:
         unsigned basis = 0x811C9DC5;
         unsigned prime = 0x01000193;
-        return (value ^ basis) * prime;
+        unsigned result = basis;
+        result *= prime;
+        result ^= value;
+        return result;
     }
 };
 
@@ -109,13 +112,15 @@ constexpr void hash_combine(const Type& value, unsigned& result)
 {
     // FNV-1a:
     unsigned prime = 0x01000193;
-    result = (hash<Type>()(value) ^ result) * prime;
+    result *= prime;
+    result ^= hash<Type>()(value);
 }
 
 [[nodiscard]] constexpr unsigned array_hash(const void* ptr, int size)
 {
     // FNV-1a:
     unsigned basis = 0x811C9DC5;
+    unsigned prime = 0x01000193;
     unsigned result = basis;
 
     if(ptr && size > 0)
@@ -125,16 +130,18 @@ constexpr void hash_combine(const Type& value, unsigned& result)
 
         for(int limit = size / 4; index < limit; index += 4)
         {
-            int value = u8_ptr[index] |
-                    u8_ptr[index + 1] << 8 |
-                    u8_ptr[index + 2] << 16 |
-                    u8_ptr[index + 3] << 24;
-            hash_combine(value, result);
+            unsigned value = unsigned(u8_ptr[index]) |
+                    unsigned(u8_ptr[index + 1]) << 8 |
+                    unsigned(u8_ptr[index + 2]) << 16 |
+                    unsigned(u8_ptr[index + 3]) << 24;
+            result *= prime;
+            result ^= value;
         }
 
         for(; index < size; ++index)
         {
-            hash_combine(u8_ptr[index], result);
+            result *= prime;
+            result ^= u8_ptr[index];
         }
     }
 

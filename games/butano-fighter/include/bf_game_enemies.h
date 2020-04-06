@@ -19,10 +19,7 @@ class enemies
 public:
     explicit enemies(const btn::sprite_palette_ptr& damage_palette);
 
-    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data)
-    {
-        return _grid.check_hero_bullet(data);
-    }
+    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 

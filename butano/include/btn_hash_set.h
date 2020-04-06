@@ -244,7 +244,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in hash set");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set");
 
             clear();
             _assign(other);
@@ -257,7 +257,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in hash set");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set");
 
             clear();
             _assign(move(other));
@@ -273,12 +273,12 @@ public:
 
     [[nodiscard]] size_type max_size() const
     {
-        return _max_size;
+        return _max_size_minus_one + 1;
     }
 
     [[nodiscard]] size_type available() const
     {
-        return _max_size - _size;
+        return max_size() - _size;
     }
 
     [[nodiscard]] bool empty() const
@@ -288,7 +288,7 @@ public:
 
     [[nodiscard]] bool full() const
     {
-        return _size == _max_size;
+        return _size == max_size();
     }
 
     [[nodiscard]] const_iterator begin() const
@@ -303,12 +303,12 @@ public:
 
     [[nodiscard]] const_iterator end() const
     {
-        return const_iterator(_max_size, *this);
+        return const_iterator(max_size(), *this);
     }
 
     [[nodiscard]] iterator end()
     {
-        return iterator(_max_size, *this);
+        return iterator(max_size(), *this);
     }
 
     [[nodiscard]] const_iterator cbegin() const
@@ -318,7 +318,7 @@ public:
 
     [[nodiscard]] const_iterator cend() const
     {
-        return const_iterator(_max_size, *this);
+        return const_iterator(max_size(), *this);
     }
 
     [[nodiscard]] bool contains(const key_type& key) const
@@ -377,7 +377,7 @@ public:
         const bool* allocated = _allocated;
         key_equal key_equal_functor;
         size_type index = _index(key_hash);
-        size_type max_size = _max_size;
+        size_type max_size = _max_size_minus_one + 1;
         size_type its = 0;
 
         while(its < max_size && allocated[index])
@@ -512,7 +512,7 @@ public:
 
         if(_size == 0)
         {
-            _first_valid_index = _max_size;
+            _first_valid_index = max_size();
             _last_valid_index = 0;
             return end();
         }
@@ -597,7 +597,7 @@ public:
         pointer storage = hash_set._storage;
         bool* allocated = hash_set._allocated;
         size_type size = hash_set._size;
-        size_type first_valid_index = hash_set._max_size;
+        size_type first_valid_index = hash_set.max_size();
         size_type last_valid_index = 0;
 
         for(size_type index = hash_set._first_valid_index, last = hash_set._last_valid_index; index <= last; ++index)
@@ -627,7 +627,8 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size == other._max_size, "Invalid max size: ", _max_size, " - ", other._max_size);
+            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+                       "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;
@@ -661,8 +662,9 @@ public:
             _first_valid_index = first_valid_index;
             _last_valid_index = last_valid_index;
 
-            memory::clear(other._max_size, *other.allocated);
-            other._first_valid_index = other._max_size;
+            int other_max_size = other.max_size();
+            memory::clear(other_max_size, *other.allocated);
+            other._first_valid_index = other_max_size;
             other._last_valid_index = 0;
             other._size = 0;
         }
@@ -685,7 +687,7 @@ public:
                 }
             }
 
-            size_type max_size = _max_size;
+            size_type max_size = _max_size_minus_one + 1;
             memory::clear(max_size, *allocated);
             _first_valid_index = max_size;
             _last_valid_index = 0;
@@ -697,7 +699,8 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size == other._max_size, "Invalid max size: ", _max_size, " - ", other._max_size);
+            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+                       "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;
@@ -805,7 +808,7 @@ protected:
     ihash_set(reference storage, bool& allocated, size_type max_size) :
         _storage(&storage),
         _allocated(&allocated),
-        _max_size(max_size),
+        _max_size_minus_one(max_size - 1),
         _first_valid_index(max_size)
     {
         BTN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
@@ -814,7 +817,7 @@ protected:
 private:
     pointer _storage;
     bool* _allocated;
-    size_type _max_size;
+    size_type _max_size_minus_one;
     size_type _first_valid_index;
     size_type _last_valid_index = 0;
     size_type _size = 0;
@@ -826,7 +829,7 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memory::copy(*other._allocated, other._max_size, *allocated);
+        memory::copy(*other._allocated, other.max_size(), *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
@@ -848,7 +851,8 @@ private:
         bool* allocated = _allocated;
         size_type first_valid_index = other._first_valid_index;
         size_type last_valid_index = other._last_valid_index;
-        memory::copy(*other._allocated, other._max_size, *allocated);
+        int other_max_size = other.max_size();
+        memory::copy(*other._allocated, other_max_size, *allocated);
 
         for(size_type index = first_valid_index; index <= last_valid_index; ++index)
         {
@@ -864,15 +868,15 @@ private:
         _last_valid_index = other._last_valid_index;
         _size = other._size;
 
-        memory::clear(other._max_size, *other.allocated);
-        other._first_valid_index = other._max_size;
+        memory::clear(other_max_size, *other.allocated);
+        other._first_valid_index = other_max_size;
         other._last_valid_index = 0;
         other._size = 0;
     }
 
     [[nodiscard]] size_type _index(hash_type key_hash) const
     {
-        return key_hash & (_max_size - 1);
+        return key_hash & _max_size_minus_one;
     }
 };
 

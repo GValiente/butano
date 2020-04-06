@@ -275,7 +275,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in deque: ", _max_size, " - ", other._size);
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -288,7 +288,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in deque: ", _max_size, " - ", other._size);
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -304,7 +304,7 @@ public:
 
     [[nodiscard]] size_type max_size() const
     {
-        return _max_size;
+        return _max_size_minus_one + 1;
     }
 
     [[nodiscard]] bool empty() const
@@ -314,12 +314,12 @@ public:
 
     [[nodiscard]] bool full() const
     {
-        return _size == _max_size;
+        return _size == max_size();
     }
 
     [[nodiscard]] size_type available() const
     {
-        return _max_size - _size;
+        return max_size() - _size;
     }
 
     [[nodiscard]] const_iterator begin() const
@@ -475,7 +475,7 @@ public:
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & (_max_size - 1);
+        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(value);
         ++_size;
     }
@@ -484,7 +484,7 @@ public:
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & (_max_size - 1);
+        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(move(value));
         ++_size;
     }
@@ -494,7 +494,7 @@ public:
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & (_max_size - 1);
+        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(forward<Args>(args)...);
         ++_size;
     }
@@ -692,7 +692,7 @@ public:
 
     void resize(size_type count)
     {
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         size_type size = _size;
@@ -717,7 +717,7 @@ public:
 
     void resize(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         size_type size = _size;
@@ -756,7 +756,7 @@ public:
 
     void assign(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         clear();
@@ -772,7 +772,7 @@ public:
     void assign(const Iterator& first, const Iterator& last)
     {
         size_type count = last - first;
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         clear();
@@ -789,8 +789,8 @@ public:
     {
         if(_data != other._data)
         {
-            BTN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
-            BTN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
+            BTN_ASSERT(_size <= other.max_size(), "Invalid size: ", _size, " - ", other.max_size());
+            BTN_ASSERT(max_size() <= other._size, "Invalid max size: ", max_size(), " - ", other._size);
 
             ideque* min_deque;
             ideque* max_deque;
@@ -883,20 +883,20 @@ public:
 protected:
     pointer _data;
     size_type _size;
-    size_type _max_size;
+    size_type _max_size_minus_one;
     size_type _begin;
 
     ideque(reference data, size_type max_size) :
         _data(&data),
         _size(0),
-        _max_size(max_size),
+        _max_size_minus_one(max_size - 1),
         _begin(0)
     {
     }
 
     [[nodiscard]] size_type _real_index(size_type index) const
     {
-        return (_begin + index) & (_max_size - 1);
+        return (_begin + index) & _max_size_minus_one;
     }
 
     [[nodiscard]] const_reference _value(size_type index) const
@@ -944,7 +944,7 @@ protected:
     {
         _data[_size].~value_type();
         --_size;
-        _begin = (_begin + 1) & (_max_size - 1);
+        _begin = (_begin + 1) & _max_size_minus_one;
     }
 };
 

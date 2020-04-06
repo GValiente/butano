@@ -130,13 +130,16 @@ void scoreboard::update(const hero& hero)
 
     if(bombs_count != _last_bombs_count)
     {
-        bool scale_effect = _last_bombs_count == bombs_count + 1;
+        bool scale_down_effect = _last_bombs_count == bombs_count + 1;
+        bool scale_up_effect = _last_bombs_count == bombs_count - 1;
         _last_bombs_count = bombs_count;
 
-        if(scale_effect)
+        if(scale_down_effect)
         {
-            _bomb_scale_action.emplace(btn::move(_bomb_sprites.back()), 16, 0.01);
+            btn::sprite_ptr bomb_sprite = btn::move(_bomb_sprites.back());
             _bomb_sprites.pop_back();
+            bomb_sprite.set_scale(1);
+            _bomb_scale_action.emplace(btn::move(bomb_sprite), 16, 0.01);
         }
         else
         {
@@ -152,6 +155,17 @@ void scoreboard::update(const hero& hero)
                 builder.set_z_order(_text_generator.z_order());
                 builder.set_ignore_camera(true);
                 _bomb_sprites.push_back(builder.release_build());
+            }
+
+            if(scale_up_effect)
+            {
+                btn::sprite_ptr& bomb_sprite = _bomb_sprites.back();
+                bomb_sprite.set_scale(0.01);
+                _bomb_scale_action.emplace(bomb_sprite, 16, 1);
+            }
+            else
+            {
+                _bomb_scale_action.reset();
             }
         }
     }

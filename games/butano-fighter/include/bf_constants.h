@@ -20,10 +20,11 @@ namespace bf::constants
     constexpr const int view_height = (160 + max_enemy_size) / 2;
     constexpr const int camera_width = 32;
     constexpr const int hero_bullet_levels = 9;
-    constexpr const int hero_bullets_z_order = 1;
-    constexpr const int object_messages_z_order = 2;
-    constexpr const int objects_z_order = 3;
+    constexpr const int enemy_bullets_z_order = 1;
+    constexpr const int objects_z_order = 2;
+    constexpr const int hero_bullets_z_order = 3;
     constexpr const int enemies_z_order = 4;
+    constexpr const int object_messages_z_order = 5;
     constexpr const int enemies_grid_size = 16;
     constexpr const int max_enemies_per_grid_cell = 4;
     constexpr const int reserved_sprite_affine_mats = 4;

@@ -10,7 +10,7 @@
 namespace bf::constants
 {
     constexpr const int max_hero_bullets = 32;
-    constexpr const int max_hero_bombs = 2;
+    constexpr const int max_hero_bombs = 3;
     constexpr const int max_enemies = 48;
     constexpr const int max_object_messages = 4;
     constexpr const int max_enemy_size = 48;

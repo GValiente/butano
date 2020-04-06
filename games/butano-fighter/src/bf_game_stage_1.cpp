@@ -29,13 +29,19 @@ namespace
     // enemy events:
 
     constexpr const enemy_event enemy_events[] = {
-        enemy_event(bat, btn::fixed_point(-constants::play_width + 20, start_y), bat_move_events, 60),
-        enemy_event(bat, btn::fixed_point(-constants::play_width + 20, start_y), bat_move_events, 60),
-        enemy_event(bat, btn::fixed_point(-constants::play_width + 20, start_y), bat_move_events, 180),
+        enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
+                60,     enemy_event::drop_type::NONE),
+        enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
+                60,     enemy_event::drop_type::NONE),
+        enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
+                180,    enemy_event::drop_type::BOMB),
 
-        enemy_event(bat, btn::fixed_point(constants::play_width - 20, start_y), bat_flipped_move_events, 60),
-        enemy_event(bat, btn::fixed_point(constants::play_width - 20, start_y), bat_flipped_move_events, 60),
-        enemy_event(bat, btn::fixed_point(constants::play_width - 20, start_y), bat_flipped_move_events, 60),
+        enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
+                60,     enemy_event::drop_type::NONE),
+        enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
+                60,     enemy_event::drop_type::NONE),
+        enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
+                60,     enemy_event::drop_type::NONE),
     };
 
 

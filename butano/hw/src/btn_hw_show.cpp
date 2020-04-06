@@ -5,7 +5,6 @@
     #include "btn_string.h"
     #include "btn_display.h"
     #include "btn_string_view.h"
-    #include "btn_input_string_stream.h"
     #include "../include/btn_hw_display.h"
 #endif
 

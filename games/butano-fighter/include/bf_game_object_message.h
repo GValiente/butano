@@ -10,7 +10,15 @@ class object_message
 {
 
 public:
-    object_message(const btn::fixed_point& position, int graphics_index);
+    [[nodiscard]] static object_message create_level_up(const btn::fixed_point& position)
+    {
+        return object_message(position, 0);
+    }
+
+    [[nodiscard]] static object_message create_bomb(const btn::fixed_point& position)
+    {
+        return object_message(position, 2);
+    }
 
     [[nodiscard]] bool done() const
     {
@@ -22,6 +30,8 @@ public:
 private:
     btn::sprite_move_to_action _move_action;
     btn::sprite_cached_animate_action<2> _animate_action;
+
+    object_message(const btn::fixed_point& position, int graphics_index);
 };
 
 }

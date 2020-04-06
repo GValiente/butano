@@ -14,7 +14,7 @@ namespace bf::game
 
 void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
-    if(/*btn::keypad::held(btn::keypad::button_type::B)*/true)
+    if(btn::keypad::held(btn::keypad::button_type::B))
     {
         _b_held_counter = 10;
     }

@@ -19,10 +19,40 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
         if(_hero_weapon->intersects_hero(hero_rect))
         {
             _hero_weapon.reset();
+            btn::sound::play(btn::sound_items::reload);
 
             if(! _messages.full())
             {
-                _messages.emplace_back(hero_rect.position(), 0);
+                _messages.push_back(object_message::create_level_up(hero_rect.position()));
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs)
+{
+    if(_hero_bomb)
+    {
+        if(_hero_bomb->intersects_hero(hero_rect))
+        {
+            _hero_bomb.reset();
+
+            if(max_hero_bombs)
+            {
+                //
+            }
+            else
+            {
+                btn::sound::play(btn::sound_items::reload);
+
+                if(! _messages.full())
+                {
+                    _messages.push_back(object_message::create_bomb(hero_rect.position()));
+                }
             }
 
             return true;
@@ -36,8 +66,17 @@ void objects::spawn_hero_weapon(const btn::fixed_point& position, int hero_level
 {
     if(! _hero_weapon)
     {
-        _hero_weapon.emplace(position, hero_level, _flash_palette);
+        _hero_weapon = object::create_hero_weapon(position, hero_level, _flash_palette);
         btn::sound::play(btn::sound_items::power_up_1);
+    }
+}
+
+void objects::spawn_hero_bomb(const btn::fixed_point& position)
+{
+    if(! _hero_bomb)
+    {
+        _hero_bomb = object::create_hero_bomb(position, _flash_palette);
+        btn::sound::play(btn::sound_items::cure);
     }
 }
 
@@ -46,6 +85,11 @@ void objects::update()
     if(_hero_weapon)
     {
         _hero_weapon->update();
+    }
+
+    if(_hero_bomb)
+    {
+        _hero_bomb->update();
     }
 
     int messages_count = _messages.size();

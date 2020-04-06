@@ -3,7 +3,6 @@
 #include "btn_core.h"
 #include "btn_string.h"
 #include "btn_display.h"
-#include "btn_input_string_stream.h"
 #include "btn_sprite_text_generator.h"
 
 namespace bf

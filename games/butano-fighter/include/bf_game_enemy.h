@@ -3,12 +3,10 @@
 
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
-#include "bf_game_enemy_move_event.h"
 
 namespace bf::game
 {
 
-class enemy_data;
 class enemy_event;
 class check_hero_bullet_data;
 
@@ -62,16 +60,12 @@ public:
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
-    [[nodiscard]] bool done() const
-    {
-        return _move_event_index == _move_events.size();
-    }
+    [[nodiscard]] bool done() const;
 
     void update();
 
 private:
-    const enemy_data* _data;
-    btn::span<const enemy_move_event> _move_events;
+    const enemy_event* _event;
     btn::sprite_ptr _sprite;
     btn::sprite_move_by_action _move_action;
     btn::sprite_cached_animate_action<2> _animate_action;

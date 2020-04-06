@@ -108,18 +108,32 @@ void hero::update(objects& objects)
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     btn::fixed_point old_body_position = body_sprite.position();
     btn::fixed_point new_body_position = _move(old_body_position, body_sprite);
+    btn::fixed_rect new_body_rect(new_body_position, dimensions);
     _animate(old_body_position, new_body_position);
 
-    if(objects.check_hero_weapon(btn::fixed_rect(new_body_position, dimensions)))
+    if(objects.check_hero_weapon(new_body_rect))
     {
         ++_level;
         _scale_weapon_counter = scale_weapon_frames;
         _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _level);
         _weapon_sprite.set_scale(2);
-        btn::sound::play(btn::sound_items::reload);
 
         btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
         weapon_palette.set_fade(btn::colors::yellow, 0.5);
+    }
+
+    bool max_bombs_count = _bombs_count == constants::max_hero_bombs;
+
+    if(objects.check_hero_bomb(new_body_rect, max_bombs_count))
+    {
+        if(max_bombs_count)
+        {
+            //
+        }
+        else
+        {
+            ++_bombs_count;
+        }
     }
 }
 

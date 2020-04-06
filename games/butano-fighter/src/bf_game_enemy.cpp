@@ -33,18 +33,17 @@ namespace
 }
 
 enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag) :
-    _data(&event.enemy),
-    _move_events(event.move_events),
+    _event(&event),
     _sprite(_create_sprite(event)),
-    _move_action(_sprite, _move_events[0].delta_position),
-    _animate_action(_create_animate_action(_sprite, *_data)),
+    _move_action(_sprite, event.move_events[0].delta_position),
+    _animate_action(_create_animate_action(_sprite, event.enemy)),
     _sprite_palette(_sprite.palette()),
     _damage_palette(damage_palette),
-    _life(_data->life),
-    _counter(_move_events[0].duration_frames),
+    _life(event.enemy.life),
+    _counter(event.move_events[0].duration_frames),
     _move_event_index(0),
-    _grid_columns(int8_t(btn::max(_data->dimensions.width().integer() / constants::enemies_grid_size, 1))),
-    _grid_rows(int8_t(btn::max(_data->dimensions.height().integer() / constants::enemies_grid_size, + 1))),
+    _grid_columns(int8_t(btn::max(event.enemy.dimensions.width().integer() / constants::enemies_grid_size, 1))),
+    _grid_rows(int8_t(btn::max(event.enemy.dimensions.height().integer() / constants::enemies_grid_size, + 1))),
     _last_grid_column(0),
     _last_grid_row(0),
     _damage_palette_counter(0),
@@ -56,7 +55,8 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
 {
     if(_life)
     {
-        btn::fixed_rect enemy_rect(position(), _data->dimensions);
+        const enemy_data& enemy_data = _event->enemy;
+        btn::fixed_rect enemy_rect(position(), enemy_data.dimensions);
         const btn::fixed_rect& bullet_rect = data.bullet_rect;
 
         if(enemy_rect.intersects(bullet_rect))
@@ -66,9 +66,20 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
 
             if(! _life)
             {
-                if(data.hero_ref.add_experience(_data->experience))
+                if(data.hero_ref.add_experience(enemy_data.experience))
                 {
-                    data.objects_ref.spawn_hero_weapon(enemy_rect.position(), data.hero_ref.level());
+                    data.objects_ref.spawn_hero_weapon(enemy_rect.position(), data.hero_ref.level() + 1);
+                }
+
+                switch(_event->drop)
+                {
+
+                case enemy_event::drop_type::NONE:
+                    break;
+
+                case enemy_event::drop_type::BOMB:
+                    data.objects_ref.spawn_hero_bomb(enemy_rect.position());
+                    break;
                 }
             }
 
@@ -95,6 +106,11 @@ void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radi
     }
 }
 
+bool enemy::done() const
+{
+    return _move_event_index == _event->move_events.size();
+}
+
 void enemy::update()
 {
     BTN_ASSERT(! done(), "Enemy is done");
@@ -112,7 +128,7 @@ void enemy::update()
                 return;
             }
 
-            const enemy_move_event& move_event = _move_events[_move_event_index];
+            const enemy_move_event& move_event = _event->move_events[_move_event_index];
             _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
             _counter = move_event.duration_frames;
 
@@ -134,7 +150,7 @@ void enemy::update()
         }
         else
         {
-            _move_event_index = int8_t(_move_events.size());
+            _move_event_index = int8_t(_event->move_events.size());
         }
     }
 
@@ -162,7 +178,7 @@ void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, boo
 
     if(! life)
     {
-        btn::sound::play(_data->death_sound_item);
+        btn::sound::play(_event->enemy.death_sound_item);
 
         if(show_rotation)
         {

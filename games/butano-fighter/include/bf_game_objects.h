@@ -2,8 +2,8 @@
 #define BF_GAME_OBJECTS_H
 
 #include "bf_constants.h"
+#include "bf_game_object.h"
 #include "bf_game_object_message.h"
-#include "bf_game_hero_weapon_object.h"
 
 namespace bf::game
 {
@@ -16,13 +16,18 @@ public:
 
     [[nodiscard]] bool check_hero_weapon(const btn::fixed_rect& hero_rect);
 
+    [[nodiscard]] bool check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs);
+
     void spawn_hero_weapon(const btn::fixed_point& position, int hero_level);
+
+    void spawn_hero_bomb(const btn::fixed_point& position);
 
     void update();
 
 private:
     btn::sprite_palette_ptr _flash_palette;
-    btn::optional<hero_weapon_object> _hero_weapon;
+    btn::optional<object> _hero_weapon;
+    btn::optional<object> _hero_bomb;
     btn::vector<object_message, constants::max_object_messages> _messages;
 };
 

@@ -1,0 +1,10 @@
+The assets in this repository are created at Sparklin Labs by Pixel-boy: https://twitter.com/2pblog1
+Their creation is funded by your support on Patreon (http://patreon.com/SparklinLabs) and through donations (http://sparklinlabs.itch.io/superpowers) Thanks!
+
+Originally downloaded from https://github.com/sparklinlabs/superpowers-asset-packs
+
+Attribution/Licensing:
+	Creative Commons Zero: http://creativecommons.org/publicdomain/zero/1.0/
+	Attribution is not required but appreciated. Placing a link to http://superpowers-html5.com/ somewhere would be awesome :)
+
+Also available at http://opengameart.org/content/superpowers-assets-sound-effects

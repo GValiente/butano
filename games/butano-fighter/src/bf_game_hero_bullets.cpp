@@ -112,7 +112,7 @@ void hero_bullets::_add_bullets(hero& hero)
 
             if(event.play_sound)
             {
-                btn::sound::play(level_data.sound_item, 0.5);
+                btn::sound::play(level_data.sound_item, 0.35);
             }
 
             break;

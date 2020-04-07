@@ -2,3 +2,8 @@ battle_clean.it
 By Spring in collaboration with VinsCool
 Licensed under the CC0 license
 https://opengameart.org/content/haydenwoffle-it-soundtrack
+
+cyberrid.mod
+By jester/sanity
+Licensed under the Attribution Non-commercial Share Alike license
+https://modarchive.org/index.php?request=view_by_moduleid&query=40293

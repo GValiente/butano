@@ -1,7 +1,6 @@
 #include "bf_game.h"
 
 #include "btn_music.h"
-#include "btn_keypad.h"
 #include "btn_music_items.h"
 #include "btn_flash_palette_sprite_item.h"
 
@@ -13,6 +12,7 @@ game::game(btn::sprite_text_generator& text_generator) :
     _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),
     _scoreboard(text_generator)
 {
+    btn::music::play(btn::music_items::cyberrid, 0.4);
 }
 
 void game::update()
@@ -25,18 +25,6 @@ void game::update()
     _enemy_bullets.update();
     _objects.update();
     _scoreboard.update(_hero);
-
-    if(btn::keypad::pressed(btn::keypad::button_type::START))
-    {
-        if(btn::music::playing())
-        {
-            btn::music::stop();
-        }
-        else
-        {
-            btn::music::play(btn::music_items::battle_clean, 0.5);
-        }
-    }
 }
 
 }

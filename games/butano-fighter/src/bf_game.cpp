@@ -34,7 +34,7 @@ void game::update()
         }
         else
         {
-            btn::music::play(btn::music_items::minor_boss_r, 0.5);
+            btn::music::play(btn::music_items::battle_clean, 0.5);
         }
     }
 }

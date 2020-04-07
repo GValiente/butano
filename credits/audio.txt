@@ -1,5 +1,4 @@
-battle_clean.it and hideout_clean.it
-by Spring in collaboration with VinsCool licensed CC0: https://opengameart.org/content/haydenwoffle-it-soundtrack
-
-minor_boss-r.it
-by Spring/Spring Enterprises licensed CC-BY 4.0: https://opengameart.org/content/minor-boss-r
+battle_clean.it
+By Spring in collaboration with VinsCool
+Licensed under the CC0 license
+https://opengameart.org/content/haydenwoffle-it-soundtrack

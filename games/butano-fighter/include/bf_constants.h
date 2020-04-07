@@ -22,7 +22,7 @@ namespace bf::constants
     constexpr const int view_height = (160 + max_enemy_size) / 2;
     constexpr const int camera_width = 32;
     constexpr const int hero_bullet_levels = 9;
-    constexpr const int enemy_bullets_z_order = 1;
+    constexpr const int enemy_bullets_z_order = -1;
     constexpr const int objects_z_order = 2;
     constexpr const int hero_bullets_z_order = 3;
     constexpr const int enemies_z_order = 4;

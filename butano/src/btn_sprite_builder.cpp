@@ -22,8 +22,13 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     if(_affine_mat_ptr)
     {
         _affine_mat_ptr->set_rotation_angle(rotation_angle);
+
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        {
+            _affine_mat_ptr.reset();
+        }
     }
-    else
+    else if(rotation_angle != 0)
     {
         sprite_affine_mat_builder affine_mat_builder;
         affine_mat_builder.set_rotation_angle(rotation_angle);
@@ -41,8 +46,13 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
     if(_affine_mat_ptr)
     {
         _affine_mat_ptr->set_scale_x(scale_x);
+
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        {
+            _affine_mat_ptr.reset();
+        }
     }
-    else
+    else if(scale_x != 1)
     {
         sprite_affine_mat_builder affine_mat_builder;
         affine_mat_builder.set_scale_x(scale_x);
@@ -60,8 +70,13 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
     if(_affine_mat_ptr)
     {
         _affine_mat_ptr->set_scale_y(scale_y);
+
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        {
+            _affine_mat_ptr.reset();
+        }
     }
-    else
+    else if(scale_y != 1)
     {
         sprite_affine_mat_builder affine_mat_builder;
         affine_mat_builder.set_scale_y(scale_y);
@@ -79,8 +94,13 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
     if(_affine_mat_ptr)
     {
         _affine_mat_ptr->set_scale(scale);
+
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        {
+            _affine_mat_ptr.reset();
+        }
     }
-    else
+    else if(scale != 1)
     {
         sprite_affine_mat_builder affine_mat_builder;
         affine_mat_builder.set_scale(scale);
@@ -98,8 +118,13 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
     if(_affine_mat_ptr)
     {
         _affine_mat_ptr->set_scale(scale_x, scale_y);
+
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        {
+            _affine_mat_ptr.reset();
+        }
     }
-    else
+    else if(scale_x != 1 || scale_y != 1)
     {
         sprite_affine_mat_builder affine_mat_builder;
         affine_mat_builder.set_scale(scale_x, scale_y);

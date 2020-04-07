@@ -297,6 +297,7 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
         graphics_file_paths = []
 
         for graphics_file_name in graphics_file_names:
+            FileInfo.validate(graphics_file_name)
             graphics_file_name_ext = os.path.splitext(graphics_file_name)[-1]
 
             if graphics_file_name_ext.lower() == '.bmp':

@@ -18,6 +18,7 @@ def list_audio_file_paths(audio_folder_paths):
         audio_file_names = sorted(os.listdir(audio_folder_path))
 
         for audio_file_name in audio_file_names:
+            FileInfo.validate(audio_file_name)
             audio_file_path = audio_folder_path + '/' + audio_file_name
 
             if os.path.isfile(audio_file_path):

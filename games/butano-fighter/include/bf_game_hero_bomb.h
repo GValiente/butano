@@ -16,6 +16,7 @@ namespace bf::game
 class hero;
 class enemies;
 class background;
+class enemy_bullets;
 
 class hero_bomb
 {
@@ -32,7 +33,7 @@ public:
         return _status != status_type::INACTIVE;
     }
 
-    void update(hero& hero, enemies& enemies, background& background);
+    void update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullets, background& background);
 
 private:
     enum class status_type

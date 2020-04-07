@@ -13,6 +13,7 @@
 #include "bf_wave_generator.h"
 #include "bf_game_enemies.h"
 #include "bf_game_background.h"
+#include "bf_game_enemy_bullets.h"
 
 namespace bf::game
 {
@@ -49,7 +50,7 @@ hero_bomb::hero_bomb() :
     bg_palette.set_fade_color(btn::colors::orange);
 }
 
-void hero_bomb::update(hero& hero, enemies& enemies, background& background)
+void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullets, background& background)
 {
     switch(_status)
     {
@@ -99,9 +100,12 @@ void hero_bomb::update(hero& hero, enemies& enemies, background& background)
             _move_window_top_action->update();
             _move_window_bottom_action->update();
 
-            btn::fixed radius = _circle_generator.radius() + 4;
-            enemies.check_hero_bomb(_center, radius.integer() * radius.integer());
-            _circle_generator.set_radius(radius);
+            btn::fixed fixed_radius = _circle_generator.radius() + 4;
+            int squared_integer_radius = fixed_radius.integer();
+            squared_integer_radius *= squared_integer_radius;
+            enemies.check_hero_bomb(_center, squared_integer_radius);
+            enemy_bullets.check_hero_bomb(_center, squared_integer_radius);
+            _circle_generator.set_radius(fixed_radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);
             _circle_hblank_effect.reload_deltas_ref();
 

@@ -3,6 +3,7 @@
 #include "btn_sound.h"
 #include "btn_keypad.h"
 #include "btn_window.h"
+#include "btn_colors.h"
 #include "btn_blending.h"
 #include "btn_regular_bg_builder.h"
 #include "btn_hero_bomb_bg_item.h"
@@ -39,9 +40,13 @@ hero_bomb::hero_bomb() :
 {
     btn::window::outside().set_show_bg(_bg, false);
     _circle_hblank_effect.set_visible(false);
+
     wave_generator().generate(_wave_hblank_effect_deltas);
     _wave_hblank_effect.reload_deltas_ref();
     _wave_hblank_effect.set_visible(false);
+
+    btn::bg_palette_ptr bg_palette = _bg.palette();
+    bg_palette.set_fade_color(btn::colors::orange);
 }
 
 void hero_bomb::update(hero& hero, enemies& enemies, background& background)
@@ -71,6 +76,7 @@ void hero_bomb::update(hero& hero, enemies& enemies, background& background)
 
                 background.show_bomb_open(open_frames);
                 _wave_hblank_effect.set_visible(true);
+                _palette_action.emplace(_bg.palette(), open_frames, 0.3);
                 btn::sound::play(btn::sound_items::explosion_2);
                 _status = status_type::OPEN;
                 _counter = open_frames;
@@ -99,15 +105,19 @@ void hero_bomb::update(hero& hero, enemies& enemies, background& background)
             _circle_generator.generate(_circle_hblank_effect_deltas);
             _circle_hblank_effect.reload_deltas_ref();
 
+            _palette_action->update();
             _play_flame_sound();
         }
         else
         {
             _move_window_top_action.reset();
             _move_window_bottom_action.reset();
+
             _circle_hblank_effect.set_visible(false);
             btn::window::internal().set_boundaries(-1000, -1000, 1000, 1000);
+
             _blending_action.reset();
+            _palette_action.emplace(_bg.palette(), open_frames, 0);
             _status = status_type::CLOSE;
             _counter = close_frames;
         }
@@ -123,6 +133,16 @@ void hero_bomb::update(hero& hero, enemies& enemies, background& background)
             if(_blending_action->done())
             {
                 _blending_action.reset();
+            }
+        }
+
+        if(_palette_action)
+        {
+            _palette_action->update();
+
+            if(_palette_action->done())
+            {
+                _palette_action.reset();
             }
         }
 

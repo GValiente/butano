@@ -12,7 +12,11 @@ namespace bf::game
 
 namespace
 {
-    constexpr const btn::fixed_size dimensions[2] = { btn::fixed_size(8, 8), btn::fixed_size(14, 14) };
+    constexpr const btn::fixed_size dimensions[3] = {
+        btn::fixed_size(8, 8),
+        btn::fixed_size(14, 14),
+        btn::fixed_size(28, 28)
+    };
 
     [[nodiscard]] btn::sprite_palette_fade_loop_action _create_palette_fade_action()
     {
@@ -69,20 +73,42 @@ void enemy_bullets::check_hero_bomb(const btn::point& bomb_center, int bomb_squa
 void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
                                const enemy_bullet_event& event)
 {
-    btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles[int(event.type)],
-            _palette_fade_action.palette());
+    btn::fixed scale = 1;
+    int tile_index;
+
+    if(event.type == enemy_bullet_type::HUGE)
+    {
+        scale = 2;
+        tile_index = 1;
+    }
+    else
+    {
+        tile_index = int(event.type);
+    }
+
+    btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles[tile_index],
+                                _palette_fade_action.palette());
     builder.set_position(enemy_position);
+    builder.set_scale(scale);
     builder.set_z_order(constants::enemy_bullets_z_order);
 
     if(event.delta_speed > 0)
     {
         btn::fixed_point distance = hero_position - enemy_position;
         btn::fixed_point delta_position = aprox_unit_vector(distance.x(), distance.y());
-        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), delta_position), event.type });
+        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), delta_position),
+                             btn::nullopt, event.type });
     }
     else
     {
-        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.delta_position), event.type });
+        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
+                             btn::nullopt, event.type });
+    }
+
+    if(event.type == enemy_bullet_type::HUGE)
+    {
+        bullet& bullet = _bullets.back();
+        bullet.sprite_rotate_action.emplace(bullet.sprite_move_action.sprite(), 4);
     }
 }
 
@@ -110,6 +136,12 @@ void enemy_bullets::update()
         else
         {
             sprite_move_action.update();
+
+            if(bullet.sprite_rotate_action)
+            {
+                bullet.sprite_rotate_action->update();
+            }
+
             ++index;
         }
     }

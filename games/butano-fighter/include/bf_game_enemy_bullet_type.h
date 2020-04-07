@@ -9,7 +9,8 @@ namespace bf::game
 enum class enemy_bullet_type : int8_t
 {
     SMALL,
-    BIG
+    BIG,
+    HUGE
 };
 
 }

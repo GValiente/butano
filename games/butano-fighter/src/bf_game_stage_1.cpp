@@ -29,7 +29,7 @@ namespace
 
     constexpr const enemy_bullet_event bat_bullet_events[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,     30),
-        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                          60),
+        enemy_bullet_event(enemy_bullet_type::HUGE,     1,     60),
     };
 
 

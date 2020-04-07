@@ -35,6 +35,7 @@ private:
     struct bullet
     {
         btn::sprite_move_by_action sprite_move_action;
+        btn::optional<btn::sprite_rotate_by_action> sprite_rotate_action;
         enemy_bullet_type type;
     };
 

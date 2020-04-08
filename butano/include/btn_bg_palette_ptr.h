@@ -43,7 +43,7 @@ public:
 
     bg_palette_ptr& operator=(bg_palette_ptr&& other)
     {
-        swap(_id, other._id);
+        btn::swap(_id, other._id);
         return *this;
     }
 
@@ -91,6 +91,16 @@ public:
     [[nodiscard]] int rotate_count() const;
 
     void set_rotate_count(int count);
+
+    void swap(bg_palette_ptr& other)
+    {
+        btn::swap(_id, other._id);
+    }
+
+    friend void swap(bg_palette_ptr& a, bg_palette_ptr& b)
+    {
+        btn::swap(a._id, b._id);
+    }
 
     [[nodiscard]] friend bool operator==(const bg_palette_ptr& a, const bg_palette_ptr& b)
     {

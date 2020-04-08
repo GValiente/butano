@@ -35,7 +35,7 @@ public:
 
     sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other)
     {
-        swap(_id, other._id);
+        btn::swap(_id, other._id);
         return *this;
     }
 
@@ -77,6 +77,16 @@ public:
     void set_vertical_flip(bool vertical_flip);
 
     [[nodiscard]] bool is_identity() const;
+
+    void swap(sprite_affine_mat_ptr& other)
+    {
+        btn::swap(_id, other._id);
+    }
+
+    friend void swap(sprite_affine_mat_ptr& a, sprite_affine_mat_ptr& b)
+    {
+        btn::swap(a._id, b._id);
+    }
 
     [[nodiscard]] friend bool operator==(const sprite_affine_mat_ptr& a, const sprite_affine_mat_ptr& b)
     {

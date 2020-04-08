@@ -41,7 +41,7 @@ public:
 
     sprite_tiles_ptr& operator=(sprite_tiles_ptr&& other)
     {
-        swap(_handle, other._handle);
+        btn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -68,6 +68,16 @@ public:
     [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
+    }
+
+    void swap(sprite_tiles_ptr& other)
+    {
+        btn::swap(_handle, other._handle);
+    }
+
+    friend void swap(sprite_tiles_ptr& a, sprite_tiles_ptr& b)
+    {
+        btn::swap(a._handle, b._handle);
     }
 
     [[nodiscard]] friend bool operator==(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)

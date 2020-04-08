@@ -67,7 +67,7 @@ public:
 
     regular_bg_map_ptr& operator=(regular_bg_map_ptr&& other)
     {
-        swap(_handle, other._handle);
+        btn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -102,6 +102,16 @@ public:
     [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
+    }
+
+    void swap(regular_bg_map_ptr& other)
+    {
+        btn::swap(_handle, other._handle);
+    }
+
+    friend void swap(regular_bg_map_ptr& a, regular_bg_map_ptr& b)
+    {
+        btn::swap(a._handle, b._handle);
     }
 
     [[nodiscard]] friend bool operator==(const regular_bg_map_ptr& a, const regular_bg_map_ptr& b)

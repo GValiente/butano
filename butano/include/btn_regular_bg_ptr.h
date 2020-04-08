@@ -57,7 +57,7 @@ public:
 
     regular_bg_ptr& operator=(regular_bg_ptr&& other)
     {
-        swap(_id, other._id);
+        btn::swap(_id, other._id);
         return *this;
     }
 
@@ -160,6 +160,16 @@ public:
     [[nodiscard]] bool ignore_camera() const;
 
     void set_ignore_camera(bool ignore_camera);
+
+    void swap(regular_bg_ptr& other)
+    {
+        btn::swap(_id, other._id);
+    }
+
+    friend void swap(regular_bg_ptr& a, regular_bg_ptr& b)
+    {
+        btn::swap(a._id, b._id);
+    }
 
     [[nodiscard]] friend bool operator==(const regular_bg_ptr& a, const regular_bg_ptr& b)
     {

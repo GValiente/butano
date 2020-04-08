@@ -58,7 +58,7 @@ public:
 
     sprite_ptr& operator=(sprite_ptr&& other)
     {
-        swap(_handle, other._handle);
+        btn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -199,6 +199,16 @@ public:
     [[nodiscard]] unsigned hash() const
     {
         return make_hash(_handle);
+    }
+
+    void swap(sprite_ptr& other)
+    {
+        btn::swap(_handle, other._handle);
+    }
+
+    friend void swap(sprite_ptr& a, sprite_ptr& b)
+    {
+        btn::swap(a._handle, b._handle);
     }
 
     [[nodiscard]] friend bool operator==(const sprite_ptr& a, const sprite_ptr& b)

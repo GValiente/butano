@@ -5,6 +5,7 @@
 #include "btn_limits.h"
 #include "btn_memory.h"
 #include "btn_algorithm.h"
+#include "btn_config_palettes.h"
 
 namespace btn
 {
@@ -23,7 +24,7 @@ namespace
 unsigned palettes_bank::colors_ref_hash(const span<const color>& colors_ref)
 {
     const color* colors_data = colors_ref.data();
-    int colors_count = colors_ref.size();
+    int colors_count = min(colors_ref.size(), BTN_CFG_PALETTES_MAX_HASH_COLORS);
     auto result = unsigned(colors_count);
 
     for(int index = 1; index < colors_count; ++index)

@@ -1,6 +1,7 @@
 #ifndef BF_GAME_HERO_H
 #define BF_GAME_HERO_H
 
+#include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 
@@ -8,12 +9,20 @@ namespace bf::game
 {
 
 class objects;
+class enemies;
+class hero_bomb;
+class enemy_bullets;
 
 class hero
 {
 
 public:
     hero();
+
+    [[nodiscard]] bool is_alive() const
+    {
+        return ! _death_counter;
+    }
 
     [[nodiscard]] int level() const
     {
@@ -60,7 +69,8 @@ public:
 
     [[nodiscard]] bool throw_bomb();
 
-    void update(objects& objects);
+    void update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
+                objects& objects);
 
 private:
     int _level = 2;
@@ -70,13 +80,17 @@ private:
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
     btn::optional<btn::sprite_palette_fade_to_action> _body_palette_fade_action;
+    btn::optional<btn::music_volume_to_action> _music_volume_action;
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
+    int _death_counter = 0;
     bool _is_shooting = false;
 
     [[nodiscard]] btn::fixed_point _move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite);
 
-    void _animate(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
+    void _animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
+
+    void _animate_dead();
 };
 
 }

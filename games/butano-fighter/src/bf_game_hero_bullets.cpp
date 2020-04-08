@@ -28,13 +28,20 @@ hero_bullets::hero_bullets() :
 
 void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
-    if(btn::keypad::held(btn::keypad::button_type::B))
+    if(hero.is_alive())
     {
-        _b_held_counter = 10;
+        if(btn::keypad::held(btn::keypad::button_type::B))
+        {
+            _b_held_counter = 10;
+        }
+        else if(_b_held_counter)
+        {
+            --_b_held_counter;
+        }
     }
-    else if(_b_held_counter)
+    else
     {
-        --_b_held_counter;
+        _b_held_counter = 0;
     }
 
     _remove_bullets(hero, enemies, objects);

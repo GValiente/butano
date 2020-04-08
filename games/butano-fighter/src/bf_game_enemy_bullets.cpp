@@ -33,7 +33,7 @@ enemy_bullets::enemy_bullets() :
 {
 }
 
-bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
+bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect) const
 {
     for(const bullet& bullet : _bullets)
     {

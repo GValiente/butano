@@ -58,7 +58,7 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     }
 }
 
-bool enemy::check_hero(const btn::fixed_rect& hero_rect)
+bool enemy::check_hero(const btn::fixed_rect& hero_rect) const
 {
     if(_life)
     {

@@ -26,7 +26,7 @@ public:
 
     [[nodiscard]] bool update_enemy(enemy& enemy);
 
-    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect);
+    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 

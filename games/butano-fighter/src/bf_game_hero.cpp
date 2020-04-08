@@ -8,7 +8,10 @@
 #include "btn_sound_items.h"
 #include "btn_hero_body_sprite_item.h"
 #include "btn_hero_weapons_sprite_item.h"
+#include "bf_game_enemies.h"
 #include "bf_game_objects.h"
+#include "bf_game_hero_bomb.h"
+#include "bf_game_enemy_bullets.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
@@ -103,45 +106,61 @@ bool hero::throw_bomb()
     return true;
 }
 
-void hero::update(objects& objects)
+void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
+                  objects& objects)
 {
-    btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
-    btn::fixed_point old_body_position = body_sprite.position();
-    btn::fixed_point new_body_position = _move(old_body_position, body_sprite);
-    btn::fixed_rect new_body_rect(new_body_position, dimensions);
-    _animate(old_body_position, new_body_position);
-
-    if(objects.check_hero_weapon(new_body_rect))
+    if(is_alive())
     {
-        ++_level;
-        _scale_weapon_counter = scale_weapon_frames;
-        _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _level);
-        _weapon_sprite.set_scale(2);
+        btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
+        btn::fixed_point old_body_position = body_sprite.position();
+        btn::fixed_point new_body_position = _move(old_body_position, body_sprite);
+        btn::fixed_rect new_body_rect(new_body_position, dimensions);
+        _animate_alive(old_body_position, new_body_position);
 
-        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
-        weapon_palette.set_fade(btn::colors::yellow, 0.5);
+        if(objects.check_hero_weapon(new_body_rect))
+        {
+            ++_level;
+            _scale_weapon_counter = scale_weapon_frames;
+            _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _level);
+            _weapon_sprite.set_scale(2);
+
+            btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+            weapon_palette.set_fade(btn::colors::yellow, 0.5);
+        }
+
+        bool max_bombs_count = _bombs_count == constants::max_hero_bombs;
+
+        if(objects.check_hero_bomb(new_body_rect, max_bombs_count))
+        {
+            if(max_bombs_count)
+            {
+                //
+            }
+            else
+            {
+                ++_bombs_count;
+            }
+        }
+
+        if(int experience = objects.check_gem(new_body_rect, _level))
+        {
+            if(add_experience(experience))
+            {
+                objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), _level + 1);
+            }
+        }
+
+        if(! hero_bomb.active())
+        {
+            if(enemies.check_hero(new_body_rect) || enemy_bullets.check_hero(new_body_rect))
+            {
+                ++_death_counter;
+            }
+        }
     }
-
-    bool max_bombs_count = _bombs_count == constants::max_hero_bombs;
-
-    if(objects.check_hero_bomb(new_body_rect, max_bombs_count))
+    else
     {
-        if(max_bombs_count)
-        {
-            //
-        }
-        else
-        {
-            ++_bombs_count;
-        }
-    }
-
-    if(int experience = objects.check_gem(new_body_rect, _level))
-    {
-        if(add_experience(experience))
-        {
-            objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), _level + 1);
-        }
+        _animate_dead();
     }
 }
 
@@ -189,7 +208,7 @@ btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_
     return new_body_position;
 }
 
-void hero::_animate(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position)
+void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position)
 {
     int shoot_shift_y;
 
@@ -236,6 +255,39 @@ void hero::_animate(const btn::fixed_point& old_body_position, const btn::fixed_
             _weapon_sprite.set_scale(1);
         }
     }
+}
+
+void hero::_animate_dead()
+{
+    if(_music_volume_action)
+    {
+        _music_volume_action->update();
+
+        if(_music_volume_action->done())
+        {
+            _music_volume_action.reset();
+        }
+    }
+
+    if(_death_counter == 1)
+    {
+        btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
+        body_palette.set_fade_intensity(0);
+
+        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+        weapon_palette.set_fade_intensity(0);
+
+        _weapon_sprite.set_scale(1);
+
+        _music_volume_action.emplace(50, 0);
+        btn::sound::play(btn::sound_items::boss_shoot);
+    }
+    else if(_death_counter == 60)
+    {
+        btn::sound::play(btn::sound_items::death);
+    }
+
+    ++_death_counter;
 }
 
 }

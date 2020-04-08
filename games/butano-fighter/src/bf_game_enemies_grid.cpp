@@ -79,7 +79,7 @@ bool enemies_grid::update_enemy(enemy& enemy)
     return updated;
 }
 
-bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect)
+bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
 {
     const btn::fixed_point& hero_position = hero_rect.position();
     int row = _row(hero_position);

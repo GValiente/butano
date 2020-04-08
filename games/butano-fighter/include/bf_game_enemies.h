@@ -19,7 +19,7 @@ class enemies
 public:
     explicit enemies(const btn::sprite_palette_ptr& damage_palette);
 
-    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect)
+    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const
     {
         return _grid.check_hero(hero_rect);
     }

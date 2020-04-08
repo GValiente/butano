@@ -22,7 +22,7 @@ class enemy_bullets
 public:
     enemy_bullets();
 
-    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect);
+    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 

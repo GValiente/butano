@@ -3,6 +3,7 @@
 #include "btn_colors.h"
 #include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
+#include "btn_sprite_affine_mats.h"
 #include "btn_enemy_bullets_sprite_item.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullet_event.h"
@@ -73,17 +74,25 @@ void enemy_bullets::check_hero_bomb(const btn::point& bomb_center, int bomb_squa
 void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
                                const enemy_bullet_event& event)
 {
+    enemy_bullet_type type = event.type;
+
+    if(type == enemy_bullet_type::HUGE &&
+            btn::sprite_affine_mats::available_count() <= constants::reserved_sprite_affine_mats)
+    {
+        type = enemy_bullet_type::BIG;
+    }
+
     btn::fixed scale = 1;
     int tile_index;
 
-    if(event.type == enemy_bullet_type::HUGE)
+    if(type == enemy_bullet_type::HUGE)
     {
         scale = 2;
         tile_index = 1;
     }
     else
     {
-        tile_index = int(event.type);
+        tile_index = int(type);
     }
 
     btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles[tile_index],
@@ -97,15 +106,15 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         btn::fixed_point distance = hero_position - enemy_position;
         btn::fixed_point delta_position = aprox_unit_vector(distance.x(), distance.y());
         _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), delta_position),
-                             btn::nullopt, event.type });
+                             btn::nullopt, type });
     }
     else
     {
         _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
-                             btn::nullopt, event.type });
+                             btn::nullopt, type });
     }
 
-    if(event.type == enemy_bullet_type::HUGE)
+    if(type == enemy_bullet_type::HUGE)
     {
         bullet& bullet = _bullets.back();
         bullet.sprite_rotate_action.emplace(bullet.sprite_move_action.sprite(), 4);

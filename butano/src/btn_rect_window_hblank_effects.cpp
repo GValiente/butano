@@ -58,6 +58,36 @@ optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank
     return result;
 }
 
+rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(
+        const rect_window_boundaries_hblank_effect_ptr& other) :
+    hblank_effect_ptr(other),
+    _window(other._window)
+{
+}
+
+rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_ptr::operator=(
+        const rect_window_boundaries_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::operator=(other);
+    _window = other._window;
+    return *this;
+}
+
+rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(
+        rect_window_boundaries_hblank_effect_ptr&& other) :
+    hblank_effect_ptr(move(other)),
+    _window(move(other._window))
+{
+}
+
+rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_ptr::operator=(
+        rect_window_boundaries_hblank_effect_ptr&& other)
+{
+    hblank_effect_ptr::operator=(move(other));
+    _window = move(other._window);
+    return *this;
+}
+
 span<const pair<fixed, fixed>> rect_window_boundaries_hblank_effect_ptr::deltas_ref() const
 {
     return hblank_effects_manager::fixed_pairs_ref(id());

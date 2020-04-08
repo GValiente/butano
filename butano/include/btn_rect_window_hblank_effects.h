@@ -24,6 +24,14 @@ public:
     [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> optional_create_vertical(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
 
+    rect_window_boundaries_hblank_effect_ptr(const rect_window_boundaries_hblank_effect_ptr& other);
+
+    rect_window_boundaries_hblank_effect_ptr& operator=(const rect_window_boundaries_hblank_effect_ptr& other);
+
+    rect_window_boundaries_hblank_effect_ptr(rect_window_boundaries_hblank_effect_ptr&& other);
+
+    rect_window_boundaries_hblank_effect_ptr& operator=(rect_window_boundaries_hblank_effect_ptr&& other);
+
     [[nodiscard]] const rect_window& window() const
     {
         return _window;

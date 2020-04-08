@@ -12,22 +12,6 @@ class hblank_effect_ptr
 {
 
 public:
-    hblank_effect_ptr(const hblank_effect_ptr& other);
-
-    hblank_effect_ptr& operator=(const hblank_effect_ptr& other);
-
-    hblank_effect_ptr(hblank_effect_ptr&& other) :
-        hblank_effect_ptr(other._id)
-    {
-        other._id = -1;
-    }
-
-    hblank_effect_ptr& operator=(hblank_effect_ptr&& other)
-    {
-        swap(_id, other._id);
-        return *this;
-    }
-
     ~hblank_effect_ptr()
     {
         if(_id >= 0)
@@ -59,6 +43,22 @@ protected:
     explicit hblank_effect_ptr(int id) :
         _id(int8_t(id))
     {
+    }
+
+    hblank_effect_ptr(const hblank_effect_ptr& other);
+
+    hblank_effect_ptr& operator=(const hblank_effect_ptr& other);
+
+    hblank_effect_ptr(hblank_effect_ptr&& other) :
+        hblank_effect_ptr(other._id)
+    {
+        other._id = -1;
+    }
+
+    hblank_effect_ptr& operator=(hblank_effect_ptr&& other)
+    {
+        btn::swap(_id, other._id);
+        return *this;
     }
 
 private:

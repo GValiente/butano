@@ -59,6 +59,36 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
     return result;
 }
 
+regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
+        const regular_bg_position_hblank_effect_ptr& other) :
+    hblank_effect_ptr(other),
+    _bg_ptr(other._bg_ptr)
+{
+}
+
+regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::operator=(
+        const regular_bg_position_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::operator=(other);
+    _bg_ptr = other._bg_ptr;
+    return *this;
+}
+
+regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
+        regular_bg_position_hblank_effect_ptr&& other) :
+    hblank_effect_ptr(move(other)),
+    _bg_ptr(move(other._bg_ptr))
+{
+}
+
+regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::operator=(
+        regular_bg_position_hblank_effect_ptr&& other)
+{
+    hblank_effect_ptr::operator=(move(other));
+    _bg_ptr = move(other._bg_ptr);
+    return *this;
+}
+
 span<const fixed> regular_bg_position_hblank_effect_ptr::deltas_ref() const
 {
     return hblank_effects_manager::fixed_values_ref(id());
@@ -101,6 +131,36 @@ optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_e
     }
 
     return result;
+}
+
+regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
+        const regular_bg_attributes_hblank_effect_ptr& other) :
+    hblank_effect_ptr(other),
+    _bg_ptr(other._bg_ptr)
+{
+}
+
+regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
+        const regular_bg_attributes_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::operator=(other);
+    _bg_ptr = other._bg_ptr;
+    return *this;
+}
+
+regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
+        regular_bg_attributes_hblank_effect_ptr&& other) :
+    hblank_effect_ptr(move(other)),
+    _bg_ptr(move(other._bg_ptr))
+{
+}
+
+regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
+        regular_bg_attributes_hblank_effect_ptr&& other)
+{
+    hblank_effect_ptr::operator=(move(other));
+    _bg_ptr = move(other._bg_ptr);
+    return *this;
 }
 
 span<const regular_bg_attributes> regular_bg_attributes_hblank_effect_ptr::attributes_ref() const

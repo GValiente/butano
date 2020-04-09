@@ -44,6 +44,13 @@ public:
 
     void reload_deltas_ref();
 
+    void swap(regular_bg_position_hblank_effect_ptr& other);
+
+    friend void swap(regular_bg_position_hblank_effect_ptr& a, regular_bg_position_hblank_effect_ptr& b)
+    {
+        a.swap(b);
+    }
+
 private:
     regular_bg_ptr _bg_ptr;
 
@@ -79,6 +86,13 @@ public:
     void set_attributes_ref(const span<const regular_bg_attributes>& attributes_ref);
 
     void reload_attributes_ref();
+
+    void swap(regular_bg_attributes_hblank_effect_ptr& other);
+
+    friend void swap(regular_bg_attributes_hblank_effect_ptr& a, regular_bg_attributes_hblank_effect_ptr& b)
+    {
+        a.swap(b);
+    }
 
 private:
     regular_bg_ptr _bg_ptr;

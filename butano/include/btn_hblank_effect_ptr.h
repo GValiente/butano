@@ -61,6 +61,16 @@ protected:
         return *this;
     }
 
+    void swap(hblank_effect_ptr& other)
+    {
+        btn::swap(_id, other._id);
+    }
+
+    friend void swap(hblank_effect_ptr& a, hblank_effect_ptr& b)
+    {
+        btn::swap(a._id, b._id);
+    }
+
 private:
     int8_t _id;
 

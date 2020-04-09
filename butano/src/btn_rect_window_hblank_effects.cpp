@@ -103,6 +103,12 @@ void rect_window_boundaries_hblank_effect_ptr::reload_deltas_ref()
     hblank_effects_manager::reload_values_ref(id());
 }
 
+void rect_window_boundaries_hblank_effect_ptr::swap(rect_window_boundaries_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::swap(other);
+    btn::swap(_window, other._window);
+}
+
 rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(int id, rect_window window) :
     hblank_effect_ptr(id),
     _window(window)

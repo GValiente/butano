@@ -104,6 +104,12 @@ void regular_bg_position_hblank_effect_ptr::reload_deltas_ref()
     hblank_effects_manager::reload_values_ref(id());
 }
 
+void regular_bg_position_hblank_effect_ptr::swap(regular_bg_position_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::swap(other);
+    btn::swap(_bg_ptr, other._bg_ptr);
+}
+
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :
     hblank_effect_ptr(id),
     _bg_ptr(move(bg_ptr))
@@ -177,6 +183,12 @@ void regular_bg_attributes_hblank_effect_ptr::set_attributes_ref(
 void regular_bg_attributes_hblank_effect_ptr::reload_attributes_ref()
 {
     hblank_effects_manager::reload_values_ref(id());
+}
+
+void regular_bg_attributes_hblank_effect_ptr::swap(regular_bg_attributes_hblank_effect_ptr& other)
+{
+    hblank_effect_ptr::swap(other);
+    btn::swap(_bg_ptr, other._bg_ptr);
 }
 
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :

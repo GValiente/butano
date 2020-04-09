@@ -43,6 +43,13 @@ public:
 
     void reload_deltas_ref();
 
+    void swap(rect_window_boundaries_hblank_effect_ptr& other);
+
+    friend void swap(rect_window_boundaries_hblank_effect_ptr& a, rect_window_boundaries_hblank_effect_ptr& b)
+    {
+        a.swap(b);
+    }
+
 private:
     rect_window _window;
 

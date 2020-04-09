@@ -18,6 +18,17 @@ public:
 };
 
 template<typename Type>
+class less
+{
+
+public:
+    [[nodiscard]] constexpr bool operator()(const Type& a, const Type& b) const
+    {
+        return a < b;
+    }
+};
+
+template<typename Type>
 struct hash;
 
 template<>

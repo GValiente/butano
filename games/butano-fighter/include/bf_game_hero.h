@@ -11,6 +11,7 @@ namespace bf::game
 class objects;
 class enemies;
 class hero_bomb;
+class background;
 class enemy_bullets;
 
 class hero
@@ -70,7 +71,7 @@ public:
     [[nodiscard]] bool throw_bomb();
 
     void update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
-                objects& objects);
+                objects& objects, background& background);
 
 private:
     int _level = 2;
@@ -90,7 +91,7 @@ private:
 
     void _animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
 
-    void _animate_dead();
+    void _animate_dead(background& background);
 };
 
 }

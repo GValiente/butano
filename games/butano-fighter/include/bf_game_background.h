@@ -6,6 +6,7 @@
 #include "btn_regular_bg_actions.h"
 #include "btn_bg_palette_actions.h"
 #include "btn_bgs_mosaic_actions.h"
+#include "btn_green_swap_actions.h"
 #include "btn_regular_bg_hblank_effects.h"
 #include "bf_wave_generator.h"
 
@@ -28,6 +29,10 @@ public:
 
     void show_clouds();
 
+    void show_hero_dying();
+
+    void show_hero_dead();
+
     void update();
 
 private:
@@ -38,7 +43,10 @@ private:
     btn::fixed _hblank_effect_deltas[160];
     btn::regular_bg_position_hblank_effect_ptr _hblank_effect;
     wave_generator _wave_generator;
-    btn::optional<btn::bg_palette_grayscale_to_action> _ground_palette_action;
+    btn::optional<btn::bg_palette_grayscale_to_action> _ground_palette_grayscale_action;
+    btn::optional<btn::bg_palette_inverted_toggle_action> _ground_palette_inverted_action;
+    btn::optional<btn::bg_palette_inverted_toggle_action> _clouds_palette_inverted_action;
+    btn::optional<btn::green_swap_toggle_action> _green_swap_action;
     int _bomb_fade_frames = 0;
 };
 

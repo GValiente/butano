@@ -17,7 +17,7 @@ game::game(btn::sprite_text_generator& text_generator) :
 
 void game::update()
 {
-    _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects);
+    _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background);
     _hero_bullets.update(_hero, _enemies, _objects);
     _hero_bomb.update(_hero, _enemies, _enemy_bullets, _background);
     _background.update();

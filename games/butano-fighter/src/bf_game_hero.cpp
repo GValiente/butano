@@ -11,6 +11,7 @@
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
 #include "bf_game_hero_bomb.h"
+#include "bf_game_background.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_hero_bullet_level.h"
 
@@ -107,7 +108,7 @@ bool hero::throw_bomb()
 }
 
 void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
-                  objects& objects)
+                  objects& objects, background& background)
 {
     if(is_alive())
     {
@@ -160,7 +161,7 @@ void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enem
     }
     else
     {
-        _animate_dead();
+        _animate_dead(background);
     }
 }
 
@@ -257,7 +258,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
     }
 }
 
-void hero::_animate_dead()
+void hero::_animate_dead(background& background)
 {
     if(_music_volume_action)
     {
@@ -280,10 +281,12 @@ void hero::_animate_dead()
         _weapon_sprite.set_scale(1);
 
         _music_volume_action.emplace(50, 0);
+        background.show_hero_dying();
         btn::sound::play(btn::sound_items::boss_shoot);
     }
     else if(_death_counter == 60)
     {
+        background.show_hero_dead();
         btn::sound::play(btn::sound_items::death);
     }
 

@@ -47,7 +47,7 @@ void background::show_bomb_open(int frames)
 {
     btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
     ground_palette.set_grayscale_intensity(0);
-    _ground_palette_action.emplace(btn::move(ground_palette), frames / 2, 1);
+    _ground_palette_grayscale_action.emplace(btn::move(ground_palette), frames / 2, 1);
 
     btn::bgs_mosaic::set_stretch(0.1);
     _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.2);
@@ -62,7 +62,7 @@ void background::show_bomb_fade(int frames)
 
     btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
     ground_palette.set_grayscale_intensity(1);
-    _ground_palette_action.emplace(btn::move(ground_palette), frames, 0);
+    _ground_palette_grayscale_action.emplace(btn::move(ground_palette), frames, 0);
 
     _hblank_effect.set_visible(true);
     _bomb_fade_frames = frames;
@@ -72,6 +72,21 @@ void background::show_clouds()
 {
     btn::blending::set_transparency_alpha(0);
     _blending_action.emplace(20, blending_transparency);
+}
+
+void background::show_hero_dying()
+{
+    _ground_palette_inverted_action.emplace(_ground_move_action.bg().palette(), 5);
+    _clouds_palette_inverted_action.emplace(_clouds_move_action.bg().palette(), 5);
+    btn::green_swap::set_enabled(true);
+    _green_swap_action.emplace(5);
+}
+
+void background::show_hero_dead()
+{
+    _ground_palette_inverted_action.reset();
+    _clouds_palette_inverted_action.reset();
+    _green_swap_action.reset();
 }
 
 void background::update()
@@ -94,14 +109,21 @@ void background::update()
         }
     }
 
-    if(_ground_palette_action)
+    if(_ground_palette_grayscale_action)
     {
-        _ground_palette_action->update();
+        _ground_palette_grayscale_action->update();
 
-        if(_ground_palette_action->done())
+        if(_ground_palette_grayscale_action->done())
         {
-            _ground_palette_action.reset();
+            _ground_palette_grayscale_action.reset();
         }
+    }
+
+    if(_ground_palette_inverted_action)
+    {
+        _ground_palette_inverted_action->update();
+        _clouds_palette_inverted_action->update();
+        _green_swap_action->update();
     }
 
     if(_bomb_fade_frames)

@@ -63,6 +63,25 @@ public:
 };
 
 
+class blending_transparency_alpha_toggle_action :
+        public toggle_template_action<fixed, blending_transparency_alpha_manager>
+{
+
+public:
+    blending_transparency_alpha_toggle_action(int duration_frames, fixed new_transparency_alpha) :
+        toggle_template_action(duration_frames, new_transparency_alpha)
+    {
+        BTN_ASSERT(new_transparency_alpha >= 0 && new_transparency_alpha <= 1,
+                   "Invalid new transparency alpha: ", new_transparency_alpha);
+    }
+
+    [[nodiscard]] fixed new_transparency_alpha() const
+    {
+        return new_property();
+    }
+};
+
+
 // intensity_alpha
 
 class blending_intensity_alpha_manager
@@ -114,6 +133,25 @@ public:
     [[nodiscard]] fixed final_intensity_alpha() const
     {
         return final_property();
+    }
+};
+
+
+class blending_intensity_alpha_toggle_action :
+        public toggle_template_action<fixed, blending_intensity_alpha_manager>
+{
+
+public:
+    blending_intensity_alpha_toggle_action(int duration_frames, fixed new_intensity_alpha) :
+        toggle_template_action(duration_frames, new_intensity_alpha)
+    {
+        BTN_ASSERT(new_intensity_alpha >= 0 && new_intensity_alpha <= 1,
+                   "Invalid new intensity alpha: ", new_intensity_alpha);
+    }
+
+    [[nodiscard]] fixed new_intensity_alpha() const
+    {
+        return new_property();
     }
 };
 

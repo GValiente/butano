@@ -375,6 +375,121 @@ private:
     }
 };
 
+
+template<typename Property, class PropertyManager>
+class toggle_template_action
+{
+
+public:
+    void reset()
+    {
+        PropertyManager::set(_initial_property);
+        _current_frame = 0;
+        _reverse = false;
+    }
+
+    void update()
+    {
+        ++_current_frame;
+
+        if(_current_frame == _duration_frames)
+        {
+            _current_frame = 0;
+
+            if(_reverse)
+            {
+                PropertyManager::set(_initial_property);
+                _reverse = false;
+            }
+            else
+            {
+                PropertyManager::set(_new_property);
+                _reverse = true;
+            }
+        }
+    }
+
+    [[nodiscard]] int duration_frames() const
+    {
+        return _duration_frames;
+    }
+
+protected:
+    toggle_template_action(int duration_frames, const Property& new_property) :
+        _initial_property(PropertyManager::get()),
+        _new_property(new_property),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    [[nodiscard]] const Property& new_property() const
+    {
+        return _new_property;
+    }
+
+private:
+    bool _reverse = false;
+    uint16_t _current_frame = 0;
+    Property _initial_property;
+    Property _new_property;
+    int _duration_frames;
+};
+
+
+template<class PropertyManager>
+class bool_toggle_template_action
+{
+
+public:
+    void reset()
+    {
+        PropertyManager::set(_initial_property);
+        _current_frame = 0;
+        _reverse = false;
+    }
+
+    void update()
+    {
+        ++_current_frame;
+
+        if(_current_frame == _duration_frames)
+        {
+            _current_frame = 0;
+
+            if(_reverse)
+            {
+                PropertyManager::set(_initial_property);
+                _reverse = false;
+            }
+            else
+            {
+                PropertyManager::set(! _initial_property);
+                _reverse = true;
+            }
+        }
+    }
+
+    [[nodiscard]] int duration_frames() const
+    {
+        return _duration_frames;
+    }
+
+protected:
+    explicit bool_toggle_template_action(int duration_frames) :
+        _initial_property(PropertyManager::get()),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+private:
+    bool _reverse = false;
+    bool _initial_property;
+    uint16_t _current_frame = 0;
+    int _duration_frames;
+};
+
 }
 
 #endif

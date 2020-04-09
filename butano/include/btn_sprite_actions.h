@@ -115,6 +115,34 @@ public:
 };
 
 
+class sprite_move_toggle_action : public toggle_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_move_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(new_x, new_y))
+    {
+    }
+
+    template<class SpritePtr>
+    sprite_move_toggle_action(SpritePtr&& sprite, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_position)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] const fixed_point& new_position() const
+    {
+        return new_property();
+    }
+};
+
+
 // rotation
 
 class sprite_rotation_manager
@@ -203,6 +231,30 @@ public:
 };
 
 
+class sprite_rotate_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_rotation_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_rotate_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_rotation_angle) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_rotation_angle)
+    {
+        BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
+                   "Invalid new rotation angle: ", new_rotation_angle);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_rotation_angle() const
+    {
+        return new_property();
+    }
+};
+
+
 // scale_x
 
 class sprite_scale_x_manager
@@ -263,6 +315,29 @@ public:
     [[nodiscard]] fixed final_scale_x() const
     {
         return final_property();
+    }
+};
+
+
+class sprite_scale_x_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_x_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale_x) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale_x)
+    {
+        BTN_ASSERT(new_scale_x > 0, "Invalid new scale x: ", new_scale_x);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_scale_x() const
+    {
+        return new_property();
     }
 };
 
@@ -331,6 +406,29 @@ public:
 };
 
 
+class sprite_scale_y_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_y_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale_y) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale_y)
+    {
+        BTN_ASSERT(new_scale_y > 0, "Invalid new scale y: ", new_scale_y);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_scale_y() const
+    {
+        return new_property();
+    }
+};
+
+
 // scale
 
 class sprite_scale_manager
@@ -391,6 +489,29 @@ public:
     [[nodiscard]] fixed final_scale() const
     {
         return final_property();
+    }
+};
+
+
+class sprite_scale_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_scale_manager>
+{
+
+public:
+    template<class SpritePtr>
+    sprite_scale_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale) :
+        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale)
+    {
+        BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_scale() const
+    {
+        return new_property();
     }
 };
 

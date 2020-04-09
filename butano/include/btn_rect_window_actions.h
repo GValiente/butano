@@ -89,6 +89,28 @@ public:
 };
 
 
+class rect_window_move_top_toggle_action :
+        public toggle_value_template_action<rect_window, fixed, rect_window_top_manager>
+{
+
+public:
+    rect_window_move_top_toggle_action(rect_window rect_window, int duration_frames, fixed new_top) :
+        toggle_value_template_action(rect_window, duration_frames, new_top)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_top() const
+    {
+        return new_property();
+    }
+};
+
+
 // left
 
 class rect_window_left_manager
@@ -167,6 +189,28 @@ public:
     [[nodiscard]] fixed final_left() const
     {
         return final_property();
+    }
+};
+
+
+class rect_window_move_left_toggle_action :
+        public toggle_value_template_action<rect_window, fixed, rect_window_left_manager>
+{
+
+public:
+    rect_window_move_left_toggle_action(rect_window rect_window, int duration_frames, fixed new_left) :
+        toggle_value_template_action(rect_window, duration_frames, new_left)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_left() const
+    {
+        return new_property();
     }
 };
 
@@ -255,6 +299,28 @@ public:
 };
 
 
+class rect_window_move_bottom_toggle_action :
+        public toggle_value_template_action<rect_window, fixed, rect_window_bottom_manager>
+{
+
+public:
+    rect_window_move_bottom_toggle_action(rect_window rect_window, int duration_frames, fixed new_bottom) :
+        toggle_value_template_action(rect_window, duration_frames, new_bottom)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_bottom() const
+    {
+        return new_property();
+    }
+};
+
+
 // right
 
 class rect_window_right_manager
@@ -335,6 +401,28 @@ public:
     [[nodiscard]] fixed final_right() const
     {
         return final_property();
+    }
+};
+
+
+class rect_window_move_right_toggle_action :
+        public toggle_value_template_action<rect_window, fixed, rect_window_right_manager>
+{
+
+public:
+    rect_window_move_right_toggle_action(rect_window rect_window, int duration_frames, fixed new_right) :
+        toggle_value_template_action(rect_window, duration_frames, new_right)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_right() const
+    {
+        return new_property();
     }
 };
 
@@ -472,6 +560,45 @@ public:
 };
 
 
+class rect_window_move_top_left_toggle_action :
+        public toggle_value_template_action<rect_window, fixed_point, rect_window_top_left_manager>
+{
+
+public:
+    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_frames, fixed new_top,
+                                            fixed new_left) :
+        toggle_value_template_action(rect_window, duration_frames, fixed_point(new_left, new_top))
+    {
+    }
+
+    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_frames,
+                                            const fixed_point& new_top_left) :
+        toggle_value_template_action(rect_window, duration_frames, new_top_left)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_top() const
+    {
+        return new_property().y();
+    }
+
+    [[nodiscard]] fixed new_left() const
+    {
+        return new_property().x();
+    }
+
+    [[nodiscard]] const fixed_point& new_top_left() const
+    {
+        return new_property();
+    }
+};
+
+
 // bottom_right
 
 class rect_window_bottom_right_manager
@@ -601,6 +728,45 @@ public:
     [[nodiscard]] const fixed_point& final_bottom_right() const
     {
         return final_property();
+    }
+};
+
+
+class rect_window_move_bottom_right_toggle_action :
+        public toggle_value_template_action<rect_window, fixed_point, rect_window_bottom_right_manager>
+{
+
+public:
+    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_frames, fixed new_bottom,
+                                                fixed new_right) :
+        toggle_value_template_action(rect_window, duration_frames, fixed_point(new_right, new_bottom))
+    {
+    }
+
+    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_frames,
+                                                const fixed_point& new_bottom_right) :
+        toggle_value_template_action(rect_window, duration_frames, new_bottom_right)
+    {
+    }
+
+    [[nodiscard]] rect_window window() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] fixed new_bottom() const
+    {
+        return new_property().y();
+    }
+
+    [[nodiscard]] fixed new_right() const
+    {
+        return new_property().x();
+    }
+
+    [[nodiscard]] const fixed_point& new_bottom_right() const
+    {
+        return new_property();
     }
 };
 

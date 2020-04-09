@@ -424,6 +424,137 @@ private:
     }
 };
 
+
+template<typename Value, typename Property, class PropertyManager>
+class toggle_value_template_action
+{
+
+public:
+    void reset()
+    {
+        PropertyManager::set(_initial_property, _value);
+        _current_frame = 0;
+        _reverse = false;
+    }
+
+    void update()
+    {
+        ++_current_frame;
+
+        if(_current_frame == _duration_frames)
+        {
+            _current_frame = 0;
+
+            if(_reverse)
+            {
+                PropertyManager::set(_initial_property, _value);
+                _reverse = false;
+            }
+            else
+            {
+                PropertyManager::set(_new_property, _value);
+                _reverse = true;
+            }
+        }
+    }
+
+    [[nodiscard]] int duration_frames() const
+    {
+        return _duration_frames;
+    }
+
+protected:
+    template<class ValueType>
+    toggle_value_template_action(ValueType&& value, int duration_frames, const Property& new_property) :
+        _value(forward<ValueType>(value)),
+        _initial_property(PropertyManager::get(_value)),
+        _new_property(new_property),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    [[nodiscard]] const Value& value() const
+    {
+        return _value;
+    }
+
+    [[nodiscard]] const Property& new_property() const
+    {
+        return _new_property;
+    }
+
+private:
+    bool _reverse = false;
+    uint16_t _current_frame = 0;
+    Value _value;
+    Property _initial_property;
+    Property _new_property;
+    int _duration_frames;
+};
+
+
+template<typename Value, class PropertyManager>
+class bool_toggle_value_template_action
+{
+
+public:
+    void reset()
+    {
+        PropertyManager::set(_initial_property, _value);
+        _current_frame = 0;
+        _reverse = false;
+    }
+
+    void update()
+    {
+        ++_current_frame;
+
+        if(_current_frame == _duration_frames)
+        {
+            _current_frame = 0;
+
+            if(_reverse)
+            {
+                PropertyManager::set(_initial_property, _value);
+                _reverse = false;
+            }
+            else
+            {
+                PropertyManager::set(! _initial_property, _value);
+                _reverse = true;
+            }
+        }
+    }
+
+    [[nodiscard]] int duration_frames() const
+    {
+        return _duration_frames;
+    }
+
+protected:
+    template<class ValueType>
+    bool_toggle_value_template_action(ValueType&& value, int duration_frames) :
+        _initial_property(PropertyManager::get(value)),
+        _value(forward<ValueType>(value)),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    [[nodiscard]] const Value& value() const
+    {
+        return _value;
+    }
+
+private:
+    bool _reverse = false;
+    bool _initial_property;
+    uint16_t _current_frame = 0;
+    Value _value;
+    int _duration_frames;
+};
+
 }
 
 #endif

@@ -43,8 +43,7 @@ public:
 };
 
 
-class music_volume_loop_action :
-        public loop_template_action<fixed, music_volume_manager>
+class music_volume_loop_action : public loop_template_action<fixed, music_volume_manager>
 {
 
 public:
@@ -57,6 +56,23 @@ public:
     [[nodiscard]] fixed final_volume() const
     {
         return final_property();
+    }
+};
+
+
+class music_volume_toggle_action : public toggle_template_action<fixed, music_volume_manager>
+{
+
+public:
+    music_volume_toggle_action(int duration_frames, fixed new_volume) :
+        toggle_template_action(duration_frames, new_volume)
+    {
+        BTN_ASSERT(new_volume >= 0 && new_volume <= 1, "Invalid new volume: ", new_volume);
+    }
+
+    [[nodiscard]] fixed new_volume() const
+    {
+        return new_property();
     }
 };
 

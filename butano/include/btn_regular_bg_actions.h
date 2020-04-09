@@ -110,6 +110,35 @@ public:
     }
 };
 
+
+class regular_bg_move_toggle_action :
+        public toggle_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+{
+
+public:
+    template<class RegularBgPtr>
+    regular_bg_move_toggle_action(RegularBgPtr&& bg, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(new_x, new_y))
+    {
+    }
+
+    template<class RegularBgPtr>
+    regular_bg_move_toggle_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(forward<RegularBgPtr>(bg), duration_frames, new_position)
+    {
+    }
+
+    [[nodiscard]] const regular_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    [[nodiscard]] const fixed_point& new_position() const
+    {
+        return new_property();
+    }
+};
+
 }
 
 #endif

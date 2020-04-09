@@ -68,13 +68,6 @@ public:
             return *this;
         }
 
-        [[nodiscard]] iterator operator--(int)
-        {
-            iterator result(*this);
-            --result;
-            return result;
-        }
-
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
@@ -87,20 +80,6 @@ public:
             BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage[_index];
-        }
-
-        [[nodiscard]] const_pointer operator&() const
-        {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _map->_storage + _index;
-        }
-
-        [[nodiscard]] pointer operator&()
-        {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _map->_storage + _index;
         }
 
         const_pointer operator->() const
@@ -144,7 +123,7 @@ public:
     {
 
     public:
-        const_iterator(const iterator& other):
+        const_iterator(const iterator& other) :
             _index(other._index),
             _map(other._map)
         {
@@ -187,25 +166,11 @@ public:
             return *this;
         }
 
-        [[nodiscard]] const_iterator operator--(int)
-        {
-            const_iterator result(*this);
-            --result;
-            return result;
-        }
-
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage[_index];
-        }
-
-        [[nodiscard]] const_pointer operator&() const
-        {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _map->_storage + _index;
         }
 
         const_pointer operator->() const
@@ -239,7 +204,7 @@ public:
         }
     };
 
-    constexpr ihash_map(const ihash_map& other) = delete;
+    ihash_map(const ihash_map& other) = delete;
 
     ihash_map& operator=(const ihash_map& other)
     {

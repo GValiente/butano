@@ -67,13 +67,6 @@ public:
             return *this;
         }
 
-        [[nodiscard]] iterator operator--(int)
-        {
-            iterator result(*this);
-            --result;
-            return result;
-        }
-
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -86,20 +79,6 @@ public:
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage[_index];
-        }
-
-        [[nodiscard]] const_pointer operator&() const
-        {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _set->_storage + _index;
-        }
-
-        [[nodiscard]] pointer operator&()
-        {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _set->_storage + _index;
         }
 
         const_pointer operator->() const
@@ -143,7 +122,7 @@ public:
     {
 
     public:
-        const_iterator(const iterator& other):
+        const_iterator(const iterator& other) :
             _index(other._index),
             _set(other._set)
         {
@@ -186,25 +165,11 @@ public:
             return *this;
         }
 
-        [[nodiscard]] const_iterator operator--(int)
-        {
-            const_iterator result(*this);
-            --result;
-            return result;
-        }
-
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage[_index];
-        }
-
-        [[nodiscard]] const_pointer operator&() const
-        {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
-
-            return _set->_storage + _index;
         }
 
         const_pointer operator->() const
@@ -238,7 +203,7 @@ public:
         }
     };
 
-    constexpr ihash_set(const ihash_set& other) = delete;
+    ihash_set(const ihash_set& other) = delete;
 
     ihash_set& operator=(const ihash_set& other)
     {

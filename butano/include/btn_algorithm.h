@@ -10,6 +10,7 @@ namespace btn
     using std::max;
     using std::clamp;
 
+    using std::distance;
     using std::advance;
 
     template<typename Iterator>
@@ -109,8 +110,6 @@ namespace btn
             {
                 *first++ = value;
             }
-
-            return first;
         }
         else
         {
@@ -182,7 +181,7 @@ namespace btn
         {
             for(; first != last; ++first)
             {
-                if(p(*first))
+                if(pred(*first))
                 {
                     return first;
                 }
@@ -201,12 +200,12 @@ namespace btn
     {
         if(BTN_CONSTANT_EVALUATED())
         {
-            auto count = last - first;
+            auto count = distance(first, last);
 
             while(count > 0)
             {
                 auto step = count / 2;
-                Iterator it = first + step;
+                Iterator it = first;
                 advance(it, step);
 
                 if(*it < value)
@@ -234,12 +233,12 @@ namespace btn
     {
         if(BTN_CONSTANT_EVALUATED())
         {
-            auto count = last - first;
+            auto count = distance(first, last);
 
             while(count > 0)
             {
                 auto step = count / 2;
-                Iterator it = first + step;
+                Iterator it = first;
                 advance(it, step);
 
                 if(comparator(*it, value))

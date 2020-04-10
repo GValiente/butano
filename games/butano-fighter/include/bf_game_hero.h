@@ -80,8 +80,13 @@ private:
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
+    btn::optional<btn::sprite_rotate_by_action> _body_rotate_action;
     btn::optional<btn::sprite_palette_fade_to_action> _body_palette_fade_action;
+    btn::optional<btn::sprite_move_to_action> _weapon_move_action;
+    btn::optional<btn::sprite_rotate_by_action> _weapon_rotate_action;
+    btn::optional<btn::sprite_palette_fade_to_action> _weapon_palette_fade_action;
     btn::optional<btn::music_volume_to_action> _music_volume_action;
+    btn::vector<btn::sprite_ptr, 4> _death_sprites;
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
     int _death_counter = 0;

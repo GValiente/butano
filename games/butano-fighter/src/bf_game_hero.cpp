@@ -7,6 +7,7 @@
 #include "btn_fixed_rect.h"
 #include "btn_sound_items.h"
 #include "btn_hero_body_sprite_item.h"
+#include "btn_hero_death_sprite_item.h"
 #include "btn_hero_weapons_sprite_item.h"
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
@@ -260,6 +261,114 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
 
 void hero::_animate_dead(background& background)
 {
+    btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
+
+    if(_death_counter == 1)
+    {
+        btn::sprite_palette_ptr body_palette = body_sprite.palette();
+        body_palette.set_fade(btn::colors::yellow, 0.75);
+        _body_palette_fade_action.emplace(btn::move(body_palette), 30, 0);
+        _body_rotate_action.emplace(body_sprite, 0.5);
+
+        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+        weapon_palette.set_fade(btn::colors::yellow, 0.75);
+        _weapon_palette_fade_action.emplace(btn::move(weapon_palette), 30, 0);
+        _weapon_sprite.set_scale(1);
+        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(10, -10));
+        _weapon_rotate_action.emplace(_weapon_sprite, -10);
+
+        _music_volume_action.emplace(50, 0);
+        background.show_hero_dying();
+        btn::sound::play(btn::sound_items::boss_shoot);
+    }
+    else if(_death_counter == 70)
+    {
+        const btn::fixed_point& body_position = body_sprite.position();
+        btn::fixed body_x = body_position.x();
+        btn::fixed body_y = body_position.y();
+        _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y - 32, btn::sprite_items::hero_death, 0));
+        _death_sprites.push_back(btn::sprite_ptr::create(body_x + 32, body_y - 32, btn::sprite_items::hero_death, 1));
+        _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y + 32, btn::sprite_items::hero_death, 2));
+        _death_sprites.push_back(btn::sprite_ptr::create(body_x + 32, body_y + 32, btn::sprite_items::hero_death, 3));
+
+        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
+        _weapon_rotate_action.emplace(_weapon_sprite, -5);
+
+        background.show_hero_dead();
+        btn::sound::play(btn::sound_items::death);
+    }
+    else if(_death_counter > 70 && (_death_counter - 70) % 4 == 0)
+    {
+        int animation_index = (_death_counter - 70) / 4;
+
+        if(animation_index < 6)
+        {
+            if(animation_index == 3)
+            {
+                body_sprite.set_visible(false);
+            }
+
+            for(int index = 0; index < 4; ++index)
+            {
+                _death_sprites[index].set_tiles(btn::sprite_items::hero_death, (animation_index * 4) + index);
+            }
+        }
+        else
+        {
+            _death_sprites.clear();
+        }
+    }
+
+    ++_death_counter;
+
+    if(body_sprite.visible())
+    {
+        _body_rotate_action->update();
+        body_sprite.set_y(body_sprite.y() + 0.5);
+
+        if(_death_counter % 8 == 0)
+        {
+            body_sprite.set_x(body_sprite.x() + 2);
+        }
+        else if(_death_counter % 4 == 0)
+        {
+            body_sprite.set_x(body_sprite.x() - 2);
+        }
+    }
+
+    if(_weapon_move_action)
+    {
+        _weapon_move_action->update();
+        _weapon_rotate_action->update();
+
+        if(_weapon_move_action->done())
+        {
+            _weapon_move_action.reset();
+            _weapon_rotate_action.reset();
+        }
+    }
+    else
+    {
+        btn::fixed weapon_y = _weapon_sprite.y();
+
+        if(weapon_y < constants::view_height)
+        {
+            _weapon_sprite.set_y(weapon_y + 0.5);
+        }
+    }
+
+    if(_body_palette_fade_action)
+    {
+        _body_palette_fade_action->update();
+        _weapon_palette_fade_action->update();
+
+        if(_body_palette_fade_action->done())
+        {
+            _body_palette_fade_action.reset();
+            _weapon_palette_fade_action.reset();
+        }
+    }
+
     if(_music_volume_action)
     {
         _music_volume_action->update();
@@ -270,27 +379,6 @@ void hero::_animate_dead(background& background)
         }
     }
 
-    if(_death_counter == 1)
-    {
-        btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
-        body_palette.set_fade_intensity(0);
-
-        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
-        weapon_palette.set_fade_intensity(0);
-
-        _weapon_sprite.set_scale(1);
-
-        _music_volume_action.emplace(50, 0);
-        background.show_hero_dying();
-        btn::sound::play(btn::sound_items::boss_shoot);
-    }
-    else if(_death_counter == 60)
-    {
-        background.show_hero_dead();
-        btn::sound::play(btn::sound_items::death);
-    }
-
-    ++_death_counter;
 }
 
 }

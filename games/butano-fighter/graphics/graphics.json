@@ -3,6 +3,9 @@
         "hero_body": {
             "height": 32
         },
+        "hero_death": {
+            "height": 64
+        },
         "hero_weapons": {
             "height": 16
         },

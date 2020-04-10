@@ -23,7 +23,7 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     {
         _affine_mat_ptr->set_rotation_angle(rotation_angle);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
         {
             _affine_mat_ptr.reset();
         }
@@ -47,7 +47,7 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
     {
         _affine_mat_ptr->set_scale_x(scale_x);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
         {
             _affine_mat_ptr.reset();
         }
@@ -71,7 +71,7 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
     {
         _affine_mat_ptr->set_scale_y(scale_y);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
         {
             _affine_mat_ptr.reset();
         }
@@ -95,7 +95,7 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
     {
         _affine_mat_ptr->set_scale(scale);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
         {
             _affine_mat_ptr.reset();
         }
@@ -119,7 +119,7 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
     {
         _affine_mat_ptr->set_scale(scale_x, scale_y);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->is_identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
         {
             _affine_mat_ptr.reset();
         }

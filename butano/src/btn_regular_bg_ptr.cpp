@@ -274,7 +274,7 @@ void regular_bg_ptr::set_priority(int priority)
     bgs_manager::set_priority(_id, priority);
 }
 
-bool regular_bg_ptr::is_above(const regular_bg_ptr& other) const
+bool regular_bg_ptr::above(const regular_bg_ptr& other) const
 {
     int this_id = id();
     int other_id = other.id();
@@ -300,7 +300,7 @@ bool regular_bg_ptr::is_above(const regular_bg_ptr& other) const
     return this_id < other_id;
 }
 
-bool regular_bg_ptr::is_above(const sprite_ptr& sprite_ptr) const
+bool regular_bg_ptr::above(const sprite_ptr& sprite_ptr) const
 {
     return priority() < sprite_ptr.bg_priority();
 }

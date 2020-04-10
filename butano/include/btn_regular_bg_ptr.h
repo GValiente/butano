@@ -129,9 +129,9 @@ public:
 
     void set_priority(int priority);
 
-    [[nodiscard]] bool is_above(const regular_bg_ptr& other) const;
+    [[nodiscard]] bool above(const regular_bg_ptr& other) const;
 
-    [[nodiscard]] bool is_above(const sprite_ptr& sprite_ptr) const;
+    [[nodiscard]] bool above(const sprite_ptr& sprite_ptr) const;
 
     void put_above(const regular_bg_ptr& other);
 

@@ -35,7 +35,7 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, enemy_bullets
 {
     bool grid_updated = _remove_enemies(hero, enemy_bullets);
 
-    if(hero.is_alive() && ! hero_bomb.active())
+    if(hero.alive() && ! hero_bomb.active())
     {
         grid_updated |= _add_enemies();
     }

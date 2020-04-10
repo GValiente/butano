@@ -55,7 +55,7 @@ namespace btn::sprite_affine_mats_manager
 
     void set_vertical_flip(int id, bool vertical_flip);
 
-    [[nodiscard]] bool is_identity(int id);
+    [[nodiscard]] bool identity(int id);
 
     [[nodiscard]] bool double_size(int id);
 

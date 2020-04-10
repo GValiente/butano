@@ -57,9 +57,9 @@ btn::fixed hero::next_level_experience_ratio() const
         return 1;
     }
 
-    int experience_to_this_level = _level == 0 ? 0 : levels_data[_level - 1].experience_to_next_level;
-    int next_level_experience = levels_data[_level].experience_to_next_level - experience_to_this_level;
-    btn::fixed experience = _experience - experience_to_this_level;
+    int experience_to_current_level = _level == 0 ? 0 : levels_data[_level - 1].experience_to_next_level;
+    int next_level_experience = levels_data[_level].experience_to_next_level - experience_to_current_level;
+    btn::fixed experience = _experience - experience_to_current_level;
     return btn::min(experience / next_level_experience, btn::fixed(1));
 }
 
@@ -111,7 +111,7 @@ bool hero::throw_bomb()
 void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
                   objects& objects, background& background)
 {
-    if(is_alive())
+    if(alive())
     {
         btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
         btn::fixed_point old_body_position = body_sprite.position();
@@ -169,7 +169,7 @@ void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enem
 btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite)
 {
     btn::fixed_point new_body_position = body_position;
-    btn::fixed speed = _is_shooting ? 1 : 2;
+    btn::fixed speed = _shooting ? 1 : 2;
 
     if(btn::keypad::held(btn::keypad::button_type::LEFT))
     {
@@ -228,7 +228,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
     _weapon_position = new_body_position + btn::fixed_point(weapon_delta_x, weapon_delta_y);
     _weapon_sprite.set_position(_weapon_position + btn::fixed_point(0, shoot_shift_y));
 
-    if(! _is_shooting && old_body_position != new_body_position)
+    if(! _shooting && old_body_position != new_body_position)
     {
         _body_sprite_animate_action.update();
     }

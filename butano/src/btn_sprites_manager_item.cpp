@@ -18,7 +18,7 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
 {
     if(affine_mat_ptr)
     {
-        if(remove_affine_mat_when_not_needed && affine_mat_ptr->is_identity())
+        if(remove_affine_mat_when_not_needed && affine_mat_ptr->identity())
         {
             affine_mat_ptr.reset();
             hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);

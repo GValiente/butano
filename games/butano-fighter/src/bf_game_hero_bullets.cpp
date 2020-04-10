@@ -28,7 +28,7 @@ hero_bullets::hero_bullets() :
 
 void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
-    if(hero.is_alive())
+    if(hero.alive())
     {
         if(btn::keypad::held(btn::keypad::button_type::B))
         {
@@ -45,7 +45,7 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
     }
 
     _remove_bullets(hero, enemies, objects);
-    hero.set_is_shooting(_b_held_counter);
+    hero.set_shooting(_b_held_counter);
 
     if(_event_counter || _b_held_counter)
     {

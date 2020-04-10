@@ -258,7 +258,7 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
     {
         affine_mat->set_rotation_angle(rotation_angle);
 
-        if(remove_affine_mat_when_not_needed() && affine_mat->is_identity())
+        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
         {
             set_affine_mat(nullopt);
         }
@@ -290,7 +290,7 @@ void sprite_ptr::set_scale_x(fixed scale_x)
     {
         affine_mat->set_scale_x(scale_x);
 
-        if(remove_affine_mat_when_not_needed() && affine_mat->is_identity())
+        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
         {
             set_affine_mat(nullopt);
         }
@@ -322,7 +322,7 @@ void sprite_ptr::set_scale_y(fixed scale_y)
     {
         affine_mat->set_scale_y(scale_y);
 
-        if(remove_affine_mat_when_not_needed() && affine_mat->is_identity())
+        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
         {
             set_affine_mat(nullopt);
         }
@@ -344,7 +344,7 @@ void sprite_ptr::set_scale(fixed scale)
     {
         affine_mat->set_scale(scale);
 
-        if(remove_affine_mat_when_not_needed() && affine_mat->is_identity())
+        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
         {
             set_affine_mat(nullopt);
         }
@@ -366,7 +366,7 @@ void sprite_ptr::set_scale(fixed scale_x, fixed scale_y)
     {
         affine_mat->set_scale(scale_x, scale_y);
 
-        if(remove_affine_mat_when_not_needed() && affine_mat->is_identity())
+        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
         {
             set_affine_mat(nullopt);
         }
@@ -402,7 +402,7 @@ void sprite_ptr::set_z_order(int z_order)
     sprites_manager::set_z_order(_handle, z_order);
 }
 
-optional<bool> sprite_ptr::is_above(const sprite_ptr& other) const
+optional<bool> sprite_ptr::above(const sprite_ptr& other) const
 {
     if(*this == other)
     {
@@ -438,7 +438,7 @@ optional<bool> sprite_ptr::is_above(const sprite_ptr& other) const
     return nullopt;
 }
 
-bool sprite_ptr::is_above(const regular_bg_ptr& bg_ptr) const
+bool sprite_ptr::above(const regular_bg_ptr& bg_ptr) const
 {
     return bg_priority() <= bg_ptr.priority();
 }

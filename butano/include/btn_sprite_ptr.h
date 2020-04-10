@@ -144,9 +144,9 @@ public:
 
     void set_z_order(int z_order);
 
-    [[nodiscard]] optional<bool> is_above(const sprite_ptr& other) const;
+    [[nodiscard]] optional<bool> above(const sprite_ptr& other) const;
 
-    [[nodiscard]] bool is_above(const regular_bg_ptr& bg_ptr) const;
+    [[nodiscard]] bool above(const regular_bg_ptr& bg_ptr) const;
 
     void put_above(const sprite_ptr& other);
 

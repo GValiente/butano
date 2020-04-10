@@ -76,7 +76,7 @@ public:
 
     void set_vertical_flip(bool vertical_flip);
 
-    [[nodiscard]] bool is_identity() const;
+    [[nodiscard]] bool identity() const;
 
     void swap(sprite_affine_mat_ptr& other)
     {

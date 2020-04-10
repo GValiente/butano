@@ -118,7 +118,7 @@ namespace
 
                         if(sprite_affine_mats_manager::updated(affine_mat_ptr_id))
                         {
-                            if(item.remove_affine_mat_when_not_needed && affine_mat_ptr.is_identity())
+                            if(item.remove_affine_mat_when_not_needed && affine_mat_ptr.identity())
                             {
                                 _remove_affine_mat(item);
                             }
@@ -727,7 +727,7 @@ void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_ma
             }
         }
 
-        if(item->remove_affine_mat_when_not_needed && affine_mat.is_identity())
+        if(item->remove_affine_mat_when_not_needed && affine_mat.identity())
         {
             if(item->affine_mat_ptr)
             {
@@ -764,7 +764,7 @@ void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat_ptr
             }
         }
 
-        if(item->remove_affine_mat_when_not_needed && affine_mat.is_identity())
+        if(item->remove_affine_mat_when_not_needed && affine_mat.identity())
         {
             if(item->affine_mat_ptr)
             {
@@ -796,7 +796,7 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     auto item = static_cast<item_type*>(id);
     item->remove_affine_mat_when_not_needed = remove_when_not_needed;
 
-    if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->is_identity())
+    if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->identity())
     {
         _remove_affine_mat(*item);
     }

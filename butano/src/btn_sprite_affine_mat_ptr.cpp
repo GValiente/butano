@@ -131,9 +131,9 @@ void sprite_affine_mat_ptr::set_vertical_flip(bool vertical_flip)
     sprite_affine_mats_manager::set_vertical_flip(_id, vertical_flip);
 }
 
-bool sprite_affine_mat_ptr::is_identity() const
+bool sprite_affine_mat_ptr::identity() const
 {
-    return sprite_affine_mats_manager::is_identity(_id);
+    return sprite_affine_mats_manager::identity(_id);
 }
 
 void sprite_affine_mat_ptr::_destroy()

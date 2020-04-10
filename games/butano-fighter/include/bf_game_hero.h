@@ -20,7 +20,7 @@ class hero
 public:
     hero();
 
-    [[nodiscard]] bool is_alive() const
+    [[nodiscard]] bool alive() const
     {
         return ! _death_counter;
     }
@@ -54,14 +54,14 @@ public:
         return _weapon_position;
     }
 
-    [[nodiscard]] bool is_shooting() const
+    [[nodiscard]] bool shooting() const
     {
-        return _is_shooting;
+        return _shooting;
     }
 
-    void set_is_shooting(bool is_shooting)
+    void set_shooting(bool shooting)
     {
-        _is_shooting = is_shooting;
+        _shooting = shooting;
     }
 
     void show_shoot(btn::color fade_color);
@@ -90,7 +90,7 @@ private:
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
     int _death_counter = 0;
-    bool _is_shooting = false;
+    bool _shooting = false;
 
     [[nodiscard]] btn::fixed_point _move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite);
 

@@ -223,7 +223,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     _update(id);
 }
 
-bool is_identity(int id)
+bool identity(int id)
 {
     item_type& item = data.items[id];
     return item.rotation_angle == 0 && item.scale_x == 1 && item.scale_y == 1;

@@ -24,10 +24,13 @@ public:
 
     [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
 
-    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
-
     void add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
                     const enemy_bullet_event& event);
+
+    void clear()
+    {
+        _bullets.clear();
+    }
 
     void update();
 

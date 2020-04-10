@@ -50,27 +50,6 @@ bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect) const
     return false;
 }
 
-void enemy_bullets::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
-{
-    for(auto bullets_it = _bullets.begin(), bullets_end = _bullets.end(); bullets_it != bullets_end; )
-    {
-        const btn::fixed_point& bullet_position = bullets_it->sprite_move_action.sprite().position();
-        int distance_x = bullet_position.x().integer() - bomb_center.x();
-        int distance_y = bullet_position.y().integer() - bomb_center.y();
-        int squared_distance = (distance_x * distance_x) + (distance_y * distance_y);
-
-        if(squared_distance < bomb_squared_radius)
-        {
-            _bullets.erase(bullets_it);
-            bullets_end = _bullets.end();
-        }
-        else
-        {
-            ++bullets_it;
-        }
-    }
-}
-
 void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
                                const enemy_bullet_event& event)
 {

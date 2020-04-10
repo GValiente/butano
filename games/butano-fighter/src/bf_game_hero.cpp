@@ -284,8 +284,8 @@ void hero::_animate_dead(background& background)
     else if(_death_counter == 70)
     {
         const btn::fixed_point& body_position = body_sprite.position();
-        btn::fixed body_x = body_position.x();
-        btn::fixed body_y = body_position.y();
+        btn::fixed body_x = body_position.x() + 2;
+        btn::fixed body_y = body_position.y() + 4;
         _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y - 32, btn::sprite_items::hero_death, 0));
         _death_sprites.push_back(btn::sprite_ptr::create(body_x + 32, body_y - 32, btn::sprite_items::hero_death, 1));
         _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y + 32, btn::sprite_items::hero_death, 2));

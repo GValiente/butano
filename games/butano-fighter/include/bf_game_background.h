@@ -25,7 +25,7 @@ public:
 
     void show_bomb_open(int frames);
 
-    void show_bomb_fade(int frames);
+    void show_bomb_close(int frames);
 
     void show_clouds();
 

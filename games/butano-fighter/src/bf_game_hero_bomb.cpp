@@ -101,10 +101,8 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
             _move_window_bottom_action->update();
 
             btn::fixed fixed_radius = _circle_generator.radius() + 4;
-            int squared_integer_radius = fixed_radius.integer();
-            squared_integer_radius *= squared_integer_radius;
-            enemies.check_hero_bomb(_center, squared_integer_radius);
-            enemy_bullets.check_hero_bomb(_center, squared_integer_radius);
+            int integer_radius = fixed_radius.integer();
+            enemies.check_hero_bomb(_center, integer_radius * integer_radius);
             _circle_generator.set_radius(fixed_radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);
             _circle_hblank_effect.reload_deltas_ref();
@@ -119,6 +117,7 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
 
             _circle_hblank_effect.set_visible(false);
             btn::window::internal().set_boundaries(-1000, -1000, 1000, 1000);
+            enemy_bullets.clear();
 
             _blending_action.reset();
             _palette_action.emplace(_bg.palette(), open_frames, 0);
@@ -159,7 +158,7 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
                 btn::window::internal().set_show_blending(true);
                 btn::blending::set_transparency_alpha(1);
                 _blending_action.emplace(close_frames - 30, 0);
-                background.show_bomb_fade(close_frames - 50);
+                background.show_bomb_close(close_frames - 50);
             }
             else if(_counter == 20)
             {

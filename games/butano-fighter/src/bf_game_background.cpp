@@ -53,7 +53,7 @@ void background::show_bomb_open(int frames)
     _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.2);
 }
 
-void background::show_bomb_fade(int frames)
+void background::show_bomb_close(int frames)
 {
     BTN_ASSERT(frames > 0, "Invalid frames: ", frames);
 

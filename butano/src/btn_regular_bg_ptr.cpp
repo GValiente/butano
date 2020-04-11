@@ -15,38 +15,24 @@ regular_bg_ptr regular_bg_ptr::create(fixed x, fixed y, const regular_bg_item& i
 {
     regular_bg_builder builder(item);
     builder.set_position(fixed_point(x, y));
-
-    int id = bgs_manager::create(move(builder));
-    BTN_ASSERT(id >= 0, "BG create failed");
-
-    return regular_bg_ptr(id);
+    return regular_bg_ptr(bgs_manager::create(move(builder)));
 }
 
 regular_bg_ptr regular_bg_ptr::create(const fixed_point& position, const regular_bg_item& item)
 {
     regular_bg_builder builder(item);
     builder.set_position(position);
-
-    int id = bgs_manager::create(move(builder));
-    BTN_ASSERT(id >= 0, "BG create failed");
-
-    return regular_bg_ptr(id);
+    return regular_bg_ptr(bgs_manager::create(move(builder)));
 }
 
 regular_bg_ptr regular_bg_ptr::create(const regular_bg_builder& builder)
 {
-    int id = bgs_manager::create(regular_bg_builder(builder));
-    BTN_ASSERT(id >= 0, "BG create failed");
-
-    return regular_bg_ptr(id);
+    return regular_bg_ptr(bgs_manager::create(regular_bg_builder(builder)));
 }
 
 regular_bg_ptr regular_bg_ptr::create(regular_bg_builder&& builder)
 {
-    int id = bgs_manager::create(move(builder));
-    BTN_ASSERT(id >= 0, "BG create failed");
-
-    return regular_bg_ptr(id);
+    return regular_bg_ptr(bgs_manager::create(move(builder)));
 }
 
 optional<regular_bg_ptr> regular_bg_ptr::optional_create(fixed x, fixed y, const regular_bg_item& item)
@@ -55,7 +41,7 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(fixed x, fixed y, const
     regular_bg_builder builder(item);
     builder.set_position(fixed_point(x, y));
 
-    int id = bgs_manager::create(move(builder));
+    int id = bgs_manager::optional_create(move(builder));
 
     if(id >= 0)
     {
@@ -71,7 +57,7 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(const fixed_point& posi
     regular_bg_builder builder(item);
     builder.set_position(position);
 
-    int id = bgs_manager::create(move(builder));
+    int id = bgs_manager::optional_create(move(builder));
 
     if(id >= 0)
     {
@@ -83,7 +69,7 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(const fixed_point& posi
 
 optional<regular_bg_ptr> regular_bg_ptr::optional_create(const regular_bg_builder& builder)
 {
-    int id = bgs_manager::create(regular_bg_builder(builder));
+    int id = bgs_manager::optional_create(regular_bg_builder(builder));
     optional<regular_bg_ptr> result;
 
     if(id >= 0)
@@ -96,7 +82,7 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(const regular_bg_builde
 
 optional<regular_bg_ptr> regular_bg_ptr::optional_create(regular_bg_builder&& builder)
 {
-    int id = bgs_manager::create(move(builder));
+    int id = bgs_manager::optional_create(move(builder));
     optional<regular_bg_ptr> result;
 
     if(id >= 0)

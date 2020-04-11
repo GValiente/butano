@@ -33,9 +33,15 @@ namespace btn::hblank_effects_manager
 
     [[nodiscard]] int create(const span<const fixed>& fixed_values_ref, target_type target, int target_id);
 
+    [[nodiscard]] int optional_create(const span<const fixed>& fixed_values_ref, target_type target, int target_id);
+
     [[nodiscard]] int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id);
 
+    [[nodiscard]] int optional_create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id);
+
     [[nodiscard]] int create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id);
+
+    [[nodiscard]] int optional_create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id);
 
     void increase_usages(int id);
 

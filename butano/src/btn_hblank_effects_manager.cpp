@@ -201,11 +201,6 @@ namespace
 
     int _create(const void* values_ptr, int values_count, target_type target, int target_id)
     {
-        if(data.free_item_indexes.empty())
-        {
-            return -1;
-        }
-
         int item_index = data.free_item_indexes.back();
         data.free_item_indexes.pop_back();
 
@@ -281,6 +276,20 @@ int create(const span<const fixed>& fixed_values_ref, target_type target, int ta
 {
     BTN_ASSERT(fixed_values_ref.size() >= display::height(),
                "Invalid fixed values ref size: ", fixed_values_ref.size(), " - ", display::height());
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
+
+    return _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
+}
+
+int optional_create(const span<const fixed>& fixed_values_ref, target_type target, int target_id)
+{
+    BTN_ASSERT(fixed_values_ref.size() >= display::height(),
+               "Invalid fixed values ref size: ", fixed_values_ref.size(), " - ", display::height());
+
+    if(data.free_item_indexes.empty())
+    {
+        return -1;
+    }
 
     return _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
 }
@@ -289,6 +298,21 @@ int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, i
 {
     BTN_ASSERT(regular_bg_attributes_ref.size() >= display::height(),
                "Invalid regular bg attributes ref size: ", regular_bg_attributes_ref.size(), " - ", display::height());
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
+
+    return _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
+                   target_type::REGULAR_BG_ATTRIBUTES, target_id);
+}
+
+int optional_create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id)
+{
+    BTN_ASSERT(regular_bg_attributes_ref.size() >= display::height(),
+               "Invalid regular bg attributes ref size: ", regular_bg_attributes_ref.size(), " - ", display::height());
+
+    if(data.free_item_indexes.empty())
+    {
+        return -1;
+    }
 
     return _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
                    target_type::REGULAR_BG_ATTRIBUTES, target_id);
@@ -298,6 +322,20 @@ int create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type ta
 {
     BTN_ASSERT(fixed_pairs_ref.size() >= display::height(),
                "Invalid fixed pairs ref size: ", fixed_pairs_ref.size(), " - ", display::height());
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
+
+    return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+}
+
+int optional_create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id)
+{
+    BTN_ASSERT(fixed_pairs_ref.size() >= display::height(),
+               "Invalid fixed pairs ref size: ", fixed_pairs_ref.size(), " - ", display::height());
+
+    if(data.free_item_indexes.empty())
+    {
+        return -1;
+    }
 
     return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
 }

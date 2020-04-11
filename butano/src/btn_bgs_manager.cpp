@@ -97,6 +97,22 @@ namespace
     };
 
     BTN_DATA_EWRAM static_data data;
+
+    void _create_finish(int new_index, bool visible, bool blending_enabled)
+    {
+        if(visible)
+        {
+            display_manager::set_bg_enabled(new_index, true);
+            data.commit = true;
+        }
+
+        if(blending_enabled)
+        {
+            display_manager::set_blending_bg_enabled(new_index, true);
+        }
+
+        display_manager::set_show_bg_in_all_windows(new_index, true);
+    }
 }
 
 int used_count()
@@ -135,6 +151,37 @@ int create(regular_bg_builder&& builder)
         }
     }
 
+    BTN_ASSERT(new_index >= 0, "No more available bgs");
+
+    optional<bg_tiles_ptr> tiles = builder.release_tiles();
+    BTN_ASSERT(tiles, "Tiles create failed");
+
+    optional<regular_bg_map_ptr> map = builder.release_map();
+    BTN_ASSERT(map, "Map create failed");
+
+    bool visible = builder.visible();
+    bool blending_enabled = builder.blending_enabled();
+    data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
+    _create_finish(new_index, visible, blending_enabled);
+    return new_index;
+}
+
+int optional_create(regular_bg_builder&& builder)
+{
+    int new_index = hw::bgs::count() - 1;
+
+    while(new_index >= 0)
+    {
+        if(data.items[new_index])
+        {
+            --new_index;
+        }
+        else
+        {
+            break;
+        }
+    }
+
     if(new_index < 0)
     {
         return -1;
@@ -154,22 +201,10 @@ int create(regular_bg_builder&& builder)
         return -1;
     }
 
-    bool blending_enabled = builder.blending_enabled();
     bool visible = builder.visible();
+    bool blending_enabled = builder.blending_enabled();
     data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
-
-    if(visible)
-    {
-        display_manager::set_bg_enabled(new_index, true);
-        data.commit = true;
-    }
-
-    if(blending_enabled)
-    {
-        display_manager::set_blending_bg_enabled(new_index, true);
-    }
-
-    display_manager::set_show_bg_in_all_windows(new_index, true);
+    _create_finish(new_index, visible, blending_enabled);
     return new_index;
 }
 

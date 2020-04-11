@@ -225,6 +225,22 @@ int available_items_count()
 
 id_type create(sprite_builder&& builder)
 {
+    BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+
+    optional<sprite_tiles_ptr> tiles = builder.release_tiles();
+    BTN_ASSERT(tiles, "Tiles create failed");
+
+    optional<sprite_palette_ptr> palette = builder.release_palette();
+    BTN_ASSERT(palette, "Palette create failed");
+
+    item_type& new_item = data.items_pool.create(move(builder), move(*tiles), move(*palette));
+    sorted_sprites::insert(new_item);
+    data.check_items_on_screen |= new_item.visible;
+    return &new_item;
+}
+
+id_type optional_create(sprite_builder&& builder)
+{
     if(data.items_pool.full())
     {
         return nullptr;

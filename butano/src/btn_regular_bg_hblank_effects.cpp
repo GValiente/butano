@@ -14,8 +14,6 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
 {
     auto target_type = hblank_effects_manager::target_type::REGULAR_BG_HORIZONTAL_POSITION;
     int id = hblank_effects_manager::create(deltas_ref, target_type, bg_ptr.id());
-    BTN_ASSERT(id >= 0, "HBlank effect create failed");
-
     return regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
 }
 
@@ -23,7 +21,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
         regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
 {
     auto target_type = hblank_effects_manager::target_type::REGULAR_BG_HORIZONTAL_POSITION;
-    int id = hblank_effects_manager::create(deltas_ref, target_type, bg_ptr.id());
+    int id = hblank_effects_manager::optional_create(deltas_ref, target_type, bg_ptr.id());
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)
@@ -39,8 +37,6 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
 {
     auto target_type = hblank_effects_manager::target_type::REGULAR_BG_VERTICAL_POSITION;
     int id = hblank_effects_manager::create(deltas_ref, target_type, bg_ptr.id());
-    BTN_ASSERT(id >= 0, "HBlank effect create failed");
-
     return regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
 }
 
@@ -48,7 +44,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
         regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
 {
     auto target_type = hblank_effects_manager::target_type::REGULAR_BG_VERTICAL_POSITION;
-    int id = hblank_effects_manager::create(deltas_ref, target_type, bg_ptr.id());
+    int id = hblank_effects_manager::optional_create(deltas_ref, target_type, bg_ptr.id());
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)
@@ -120,15 +116,13 @@ regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr:
         regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create(attributes_ref, bg_ptr.id());
-    BTN_ASSERT(id >= 0, "HBlank effect create failed");
-
     return regular_bg_attributes_hblank_effect_ptr(id, move(bg_ptr));
 }
 
 optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::optional_create(
         regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref, bg_ptr.id());
+    int id = hblank_effects_manager::optional_create(attributes_ref, bg_ptr.id());
     optional<regular_bg_attributes_hblank_effect_ptr> result;
 
     if(id >= 0)

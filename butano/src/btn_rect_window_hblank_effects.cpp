@@ -13,8 +13,6 @@ rect_window_boundaries_hblank_effect_ptr rect_window_boundaries_hblank_effect_pt
 {
     auto target_type = hblank_effects_manager::target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES;
     int id = hblank_effects_manager::create(deltas_ref, target_type, window.id());
-    BTN_ASSERT(id >= 0, "HBlank effect create failed");
-
     return rect_window_boundaries_hblank_effect_ptr(id, window);
 }
 
@@ -22,7 +20,7 @@ optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank
         rect_window window, const span<const pair<fixed, fixed>>& deltas_ref)
 {
     auto target_type = hblank_effects_manager::target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES;
-    int id = hblank_effects_manager::create(deltas_ref, target_type, window.id());
+    int id = hblank_effects_manager::optional_create(deltas_ref, target_type, window.id());
     optional<rect_window_boundaries_hblank_effect_ptr> result;
 
     if(id >= 0)
@@ -38,8 +36,6 @@ rect_window_boundaries_hblank_effect_ptr rect_window_boundaries_hblank_effect_pt
 {
     auto target_type = hblank_effects_manager::target_type::RECT_WINDOW_VERTICAL_BOUNDARIES;
     int id = hblank_effects_manager::create(deltas_ref, target_type, window.id());
-    BTN_ASSERT(id >= 0, "HBlank effect create failed");
-
     return rect_window_boundaries_hblank_effect_ptr(id, window);
 }
 
@@ -47,7 +43,7 @@ optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank
         rect_window window, const span<const pair<fixed, fixed>>& deltas_ref)
 {
     auto target_type = hblank_effects_manager::target_type::RECT_WINDOW_VERTICAL_BOUNDARIES;
-    int id = hblank_effects_manager::create(deltas_ref, target_type, window.id());
+    int id = hblank_effects_manager::optional_create(deltas_ref, target_type, window.id());
     optional<rect_window_boundaries_hblank_effect_ptr> result;
 
     if(id >= 0)

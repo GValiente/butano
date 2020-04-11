@@ -9,23 +9,17 @@ namespace btn
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create()
 {
-    int id = sprite_affine_mats_manager::create(sprite_affine_mat_builder());
-    BTN_ASSERT(id >= 0, "Sprite affine mat create failed");
-
-    return sprite_affine_mat_ptr(id);
+    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(sprite_affine_mat_builder()));
 }
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_builder& builder)
 {
-    int id = sprite_affine_mats_manager::create(builder);
-    BTN_ASSERT(id >= 0, "Sprite affine mat create failed");
-
-    return sprite_affine_mat_ptr(id);
+    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(builder));
 }
 
 optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
 {
-    int id = sprite_affine_mats_manager::create(sprite_affine_mat_builder());
+    int id = sprite_affine_mats_manager::optional_create(sprite_affine_mat_builder());
     optional<sprite_affine_mat_ptr> result;
 
     if(id >= 0)
@@ -38,7 +32,7 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
 
 optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_builder& builder)
 {
-    int id = sprite_affine_mats_manager::create(builder);
+    int id = sprite_affine_mats_manager::optional_create(builder);
     optional<sprite_affine_mat_ptr> result;
 
     if(id >= 0)

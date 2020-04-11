@@ -60,6 +60,18 @@ namespace
         data.last_index_to_commit = max(data.last_index_to_commit, index);
         data.items[index].updated = true;
     }
+
+    [[nodiscard]] int _create(const sprite_affine_mat_builder& builder)
+    {
+        int item_index = data.free_item_indexes.back();
+        data.free_item_indexes.pop_back();
+
+        item_type& new_item = data.items[item_index];
+        new_item.init(builder);
+        hw::sprite_affine_mats::setup(new_item.hw_item, data.handles_ptr[item_index]);
+        _update(item_index);
+        return item_index;
+    }
 }
 
 void init([[maybe_unused]] int handles_size, void* handles)
@@ -88,19 +100,19 @@ int available_count()
 
 int create(const sprite_affine_mat_builder& builder)
 {
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
+
+    return _create(builder);
+}
+
+int optional_create(const sprite_affine_mat_builder& builder)
+{
     if(data.free_item_indexes.empty())
     {
         return -1;
     }
 
-    int item_index = data.free_item_indexes.back();
-    data.free_item_indexes.pop_back();
-
-    item_type& new_item = data.items[item_index];
-    new_item.init(builder);
-    hw::sprite_affine_mats::setup(new_item.hw_item, data.handles_ptr[item_index]);
-    _update(item_index);
-    return item_index;
+    return _create(builder);
 }
 
 void increase_usages(int id)

@@ -23,6 +23,8 @@ namespace bgs_manager
 
     [[nodiscard]] int create(regular_bg_builder&& builder);
 
+    [[nodiscard]] int optional_create(regular_bg_builder&& builder);
+
     void increase_usages(int id);
 
     void decrease_usages(int id);

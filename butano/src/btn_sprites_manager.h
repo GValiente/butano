@@ -32,6 +32,8 @@ namespace sprites_manager
 
     [[nodiscard]] id_type create(sprite_builder&& builder);
 
+    [[nodiscard]] id_type optional_create(sprite_builder&& builder);
+
     void increase_usages(id_type id);
 
     void decrease_usages(id_type id);

@@ -13,38 +13,24 @@ sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int gra
 {
     sprite_builder builder(item, graphics_index);
     builder.set_position(fixed_point(x, y));
-
-    handle_type handle = sprites_manager::create(move(builder));
-    BTN_ASSERT(handle, "Sprite create failed");
-
-    return sprite_ptr(handle);
+    return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_index)
 {
     sprite_builder builder(item, graphics_index);
     builder.set_position(position);
-
-    handle_type handle = sprites_manager::create(move(builder));
-    BTN_ASSERT(handle, "Sprite create failed");
-
-    return sprite_ptr(handle);
+    return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_builder& builder)
 {
-    handle_type handle = sprites_manager::create(sprite_builder(builder));
-    BTN_ASSERT(handle, "Sprite create failed");
-
-    return sprite_ptr(handle);
+    return sprite_ptr(sprites_manager::create(sprite_builder(builder)));
 }
 
 sprite_ptr sprite_ptr::create(sprite_builder&& builder)
 {
-    handle_type handle = sprites_manager::create(move(builder));
-    BTN_ASSERT(handle, "Sprite create failed");
-
-    return sprite_ptr(handle);
+    return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
 optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
@@ -53,7 +39,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_
     sprite_builder builder(item, graphics_index);
     builder.set_position(fixed_point(x, y));
 
-    if(handle_type handle = sprites_manager::create(move(builder)))
+    if(handle_type handle = sprites_manager::optional_create(move(builder)))
     {
         result = sprite_ptr(handle);
     }
@@ -68,7 +54,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     sprite_builder builder(item, graphics_index);
     builder.set_position(position);
 
-    if(handle_type handle = sprites_manager::create(move(builder)))
+    if(handle_type handle = sprites_manager::optional_create(move(builder)))
     {
         result = sprite_ptr(handle);
     }
@@ -80,7 +66,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const sprite_builder& builder)
 {
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::create(sprite_builder(builder)))
+    if(handle_type handle = sprites_manager::optional_create(sprite_builder(builder)))
     {
         result = sprite_ptr(handle);
     }
@@ -92,7 +78,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(sprite_builder&& builder)
 {
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::create(move(builder)))
+    if(handle_type handle = sprites_manager::optional_create(move(builder)))
     {
         result = sprite_ptr(handle);
     }

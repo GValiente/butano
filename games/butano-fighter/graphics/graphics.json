@@ -65,6 +65,9 @@
         }
     },
     "bgs": {
+        "butano_background": {
+            "bpp_mode": "bpp4_auto"
+        },
         "clouds": {
         },
         "hero_bomb": {

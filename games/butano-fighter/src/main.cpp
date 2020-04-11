@@ -6,10 +6,13 @@
 #include "bf_stats.h"
 #include "bf_sprite_fonts.h"
 #include "bf_keypad_shortcuts.h"
+#include "bf_butano_background.h"
 
 int main()
 {
     btn::core::init();
+
+    // bf::butano_background butano_background;
 
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     text_generator.set_bg_priority(1);
@@ -22,6 +25,7 @@ int main()
     while(true)
     {
         game->update();
+        // butano_background.update();
         stats.update();
         keypad_shortcuts.update();
         btn::core::update();

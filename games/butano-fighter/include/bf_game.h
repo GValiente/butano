@@ -10,6 +10,11 @@
 #include "bf_game_objects.h"
 #include "bf_game_scoreboard.h"
 
+namespace bf
+{
+    class background;
+}
+
 namespace bf::game
 {
 

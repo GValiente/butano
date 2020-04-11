@@ -110,8 +110,9 @@ class BMP:
 
                 if new_tile_pixel_set_len > 0:
                     if new_tile_pixel_set_len > 15:
-                        raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' + str(ty) +
-                                         ' - ' + str(new_tile_pixel_set_len))
+                        raise ValueError('There\'s a tile with more than 15 colors: ' + str(tx) + ' - ' +
+                                         str(height - ty - 8) + ' - ' + str(new_tile_pixel_set_len) + ': ' +
+                                         str(new_tile_pixel_set))
 
                     append = True
 
@@ -259,7 +260,7 @@ class BMP:
                         break
 
                 if not valid_tile_pixel_set:
-                    raise ValueError('No valid palette found for tile: ' + str(tx) + ' - ' + str(ty))
+                    raise ValueError('No valid palette found for tile: ' + str(tx) + ' - ' + str(height - ty - 8))
 
         # Write output file:
         with open(self.__file_path, 'rb') as input_file:

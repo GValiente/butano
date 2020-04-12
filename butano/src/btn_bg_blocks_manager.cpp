@@ -290,8 +290,7 @@ namespace
                     BTN_LOG("    ",
                             "free",
                             " - start_block: ", item.start_block,
-                            " - blocks_count: ", item.blocks_count,
-                            " - next_index: ", item.next_index);
+                            " - blocks_count: ", item.blocks_count);
                 }
                 else if(item.height == 1)
                 {
@@ -300,7 +299,6 @@ namespace
                             "_tiles",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
-                            " - next_index: ", item.next_index,
                             " - data: ", item.data,
                             " - usages: ", item.usages,
                             " - tiles: ", item.tiles(),
@@ -313,7 +311,6 @@ namespace
                             "_map",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
-                            " - next_index: ", item.next_index,
                             " - data: ", item.data,
                             " - usages: ", item.usages,
                             " - width: ", item.width,
@@ -391,15 +388,25 @@ namespace
     [[nodiscard]] int _create_item(int id, create_data&& create_data)
     {
         item_type* item = &data.items.item(id);
+        int blocks_count = create_data.blocks_count;
 
         if(tiles)
         {
-            if(int extra_blocks_count = item->start_block % hw::bg_blocks::tiles_alignment_blocks_count())
+            int free_blocks_count = item->blocks_count;
+            int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
+            int extra_blocks_count = item->start_block % alignment_blocks_count;
+            int padding_blocks_count = extra_blocks_count ? alignment_blocks_count - extra_blocks_count : 0;
+
+            while(blocks_count + padding_blocks_count + alignment_blocks_count <= free_blocks_count)
+            {
+                padding_blocks_count += alignment_blocks_count;
+            }
+
+            if(padding_blocks_count)
             {
                 BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-                int padding_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count;
-                int new_item_blocks_count = item->blocks_count - padding_blocks_count;
+                int new_item_blocks_count = free_blocks_count - padding_blocks_count;
                 item->blocks_count = unsigned(padding_blocks_count);
 
                 item_type new_item;
@@ -411,8 +418,6 @@ namespace
                 item = &data.items.item(id);
             }
         }
-
-        int blocks_count = create_data.blocks_count;
 
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {

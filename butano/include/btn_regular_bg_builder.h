@@ -167,13 +167,21 @@ public:
 
     [[nodiscard]] optional<regular_bg_ptr> optional_release_build();
 
-    [[nodiscard]] optional<bg_tiles_ptr> tiles() const;
+    [[nodiscard]] bg_tiles_ptr tiles() const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> map() const;
+    [[nodiscard]] regular_bg_map_ptr map() const;
 
-    [[nodiscard]] optional<bg_tiles_ptr> release_tiles();
+    [[nodiscard]] optional<bg_tiles_ptr> optional_tiles() const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> release_map();
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_map() const;
+
+    [[nodiscard]] bg_tiles_ptr release_tiles();
+
+    [[nodiscard]] regular_bg_map_ptr release_map();
+
+    [[nodiscard]] optional<bg_tiles_ptr> optional_release_tiles();
+
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_release_map();
 
 private:
     optional<regular_bg_item> _item;

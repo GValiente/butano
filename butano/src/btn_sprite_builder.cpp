@@ -213,65 +213,117 @@ optional<sprite_ptr> sprite_builder::optional_release_build()
     return sprite_ptr::optional_create(move(*this));
 }
 
-optional<sprite_tiles_ptr> sprite_builder::tiles() const
+sprite_tiles_ptr sprite_builder::tiles() const
+{
+    if(_item)
+    {
+        return _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+    }
+
+    BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
+
+    return *_tiles_ptr;
+}
+
+sprite_palette_ptr sprite_builder::palette() const
+{
+    if(_item)
+    {
+        return _item->palette_item().create_palette(_palette_create_mode);
+    }
+
+    BTN_ASSERT(_palette_ptr, "Palette has been already released");
+
+    return *_palette_ptr;
+}
+
+optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
 {
     optional<sprite_tiles_ptr> result;
 
-    if(_tiles_ptr)
+    if(_item)
+    {
+        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
+    }
+    else
     {
         result = _tiles_ptr;
     }
-    else
-    {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
-    }
 
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_builder::palette() const
+optional<sprite_palette_ptr> sprite_builder::optional_palette() const
 {
     optional<sprite_palette_ptr> result;
 
-    if(_palette_ptr)
+    if(_item)
+    {
+        result = _item->palette_item().optional_create_palette(_palette_create_mode);
+    }
+    else
     {
         result = _palette_ptr;
     }
-    else
-    {
-        result = _item->palette_item().optional_create_palette(_palette_create_mode);
-    }
 
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_builder::release_tiles()
+sprite_tiles_ptr sprite_builder::release_tiles()
+{
+    if(_item)
+    {
+        return _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+    }
+
+    BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
+
+    sprite_tiles_ptr result = move(*_tiles_ptr);
+    _tiles_ptr.reset();
+    return result;
+}
+
+sprite_palette_ptr sprite_builder::release_palette()
+{
+    if(_item)
+    {
+        return _item->palette_item().create_palette(_palette_create_mode);
+    }
+
+    BTN_ASSERT(_palette_ptr, "Palette has been already released");
+
+    sprite_palette_ptr result = move(*_palette_ptr);
+    _palette_ptr.reset();
+    return result;
+}
+
+optional<sprite_tiles_ptr> sprite_builder::optional_release_tiles()
 {
     optional<sprite_tiles_ptr> result;
 
-    if(_tiles_ptr)
+    if(_item)
     {
-        result = move(_tiles_ptr);
+        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
     }
     else
     {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
+        result = move(_tiles_ptr);
     }
 
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_builder::release_palette()
+optional<sprite_palette_ptr> sprite_builder::optional_release_palette()
 {
     optional<sprite_palette_ptr> result;
 
-    if(_palette_ptr)
+    if(_item)
     {
-        result = move(_palette_ptr);
+        result = _item->palette_item().optional_create_palette(_palette_create_mode);
     }
     else
     {
-        result = _item->palette_item().optional_create_palette(_palette_create_mode);
+        result = move(_palette_ptr);
     }
 
     return result;

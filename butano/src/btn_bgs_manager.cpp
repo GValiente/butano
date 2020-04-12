@@ -153,15 +153,10 @@ int create(regular_bg_builder&& builder)
 
     BTN_ASSERT(new_index >= 0, "No more available bgs");
 
-    optional<bg_tiles_ptr> tiles = builder.release_tiles();
-    BTN_ASSERT(tiles, "Tiles create failed");
-
-    optional<regular_bg_map_ptr> map = builder.release_map();
-    BTN_ASSERT(map, "Map create failed");
-
     bool visible = builder.visible();
     bool blending_enabled = builder.blending_enabled();
-    data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
+    data.items[new_index] = item_type(move(builder), builder.release_tiles(), builder.release_map(),
+                                      data.handles[new_index]);
     _create_finish(new_index, visible, blending_enabled);
     return new_index;
 }
@@ -187,14 +182,14 @@ int optional_create(regular_bg_builder&& builder)
         return -1;
     }
 
-    optional<bg_tiles_ptr> tiles = builder.release_tiles();
+    optional<bg_tiles_ptr> tiles = builder.optional_release_tiles();
 
     if(! tiles)
     {
         return -1;
     }
 
-    optional<regular_bg_map_ptr> map = builder.release_map();
+    optional<regular_bg_map_ptr> map = builder.optional_release_map();
 
     if(! map)
     {

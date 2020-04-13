@@ -1,10 +1,9 @@
 #include "btn_core.h"
 
-#include "btn_config_assert.h"
-
 #include "btn_span.h"
 #include "btn_fixed.h"
 #include "btn_timer.h"
+#include "btn_string.h"
 #include "btn_keypad.h"
 #include "btn_optional.h"
 #include "btn_profiler.h"
@@ -55,8 +54,6 @@ namespace btn::core
 
 namespace
 {
-    static_assert(BTN_CFG_ASSERT_BUFFER_SIZE >= 64);
-
     class static_data
     {
 
@@ -110,6 +107,11 @@ void init()
     sprites_manager::init();
     bg_blocks_manager::init();
 
+    // WTF hack (if it isn't present and flto is enabled, sometimes everything crash):
+    string<32> hack_string;
+    input_string_stream hack_input_string_stream(hack_string);
+    hack_input_string_stream.append(2);
+
     // Init timer system:
     hw::timer::init();
     data.cpu_usage_timer = timer();
@@ -119,24 +121,25 @@ void init()
 
     // Reset profiler:
     BTN_PROFILER_RESET();
+
 }
 
 void update()
 {
-    BTN_PROFILER_ENGINE_START("eng_palettes_update");
-    palettes_manager::update();
+    BTN_PROFILER_ENGINE_START("eng_sprites_update");
+    sprites_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_sprite_tiles_update");
     sprite_tiles_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprites_update");
-    sprites_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
-
     BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
     bg_blocks_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_palettes_update");
+    palettes_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_audio_update");
@@ -165,6 +168,14 @@ void update()
     display_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 
+    BTN_PROFILER_ENGINE_START("eng_sprites_commit");
+    sprites_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_bgs_commit");
+    bgs_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
     BTN_PROFILER_ENGINE_START("eng_palettes_commit");
     palettes_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
@@ -173,16 +184,8 @@ void update()
     sprite_tiles_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprites_commit");
-    sprites_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
-
     BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
     bg_blocks_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
-
-    BTN_PROFILER_ENGINE_START("eng_bgs_commit");
-    bgs_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_audio_commit");

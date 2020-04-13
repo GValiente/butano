@@ -35,6 +35,8 @@
 
     namespace _btn::assert
     {
+        static_assert(BTN_CFG_ASSERT_BUFFER_SIZE >= 64);
+
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const char* message);
 

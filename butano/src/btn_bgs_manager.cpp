@@ -19,19 +19,32 @@ namespace
 
     public:
         fixed_point position;
-        size quarter_dimensions;
         unsigned usages = 1;
         bg_tiles_ptr tiles_ptr;
         regular_bg_map_ptr map_ptr;
-        unsigned ignore_camera: 1;
+        uint16_t ignore_camera;
+        size quarter_dimensions;
+
+        item_type(regular_bg_builder&& builder, hw::bgs::handle& handle) :
+            position(builder.position()),
+            tiles_ptr(builder.release_tiles()),
+            map_ptr(builder.release_map()),
+            ignore_camera(builder.ignore_camera()),
+            quarter_dimensions(map_ptr.dimensions())
+        {
+            hw::bgs::setup_regular(builder, handle);
+            hw::bgs::set_tiles(tiles_ptr.id(), handle);
+            hw::bgs::set_map(map_ptr.id(), quarter_dimensions, map_ptr.bpp_mode(), handle);
+            update_quarter_dimensions(quarter_dimensions, handle);
+        }
 
         item_type(regular_bg_builder&& builder, bg_tiles_ptr&& tiles, regular_bg_map_ptr&& map,
                   hw::bgs::handle& handle) :
             position(builder.position()),
-            quarter_dimensions(map.dimensions()),
             tiles_ptr(move(tiles)),
             map_ptr(move(map)),
-            ignore_camera(builder.ignore_camera())
+            ignore_camera(builder.ignore_camera()),
+            quarter_dimensions(map_ptr.dimensions())
         {
             hw::bgs::setup_regular(builder, handle);
             hw::bgs::set_tiles(tiles_ptr.id(), handle);
@@ -155,8 +168,7 @@ int create(regular_bg_builder&& builder)
 
     bool visible = builder.visible();
     bool blending_enabled = builder.blending_enabled();
-    data.items[new_index] = item_type(move(builder), builder.release_tiles(), builder.release_map(),
-                                      data.handles[new_index]);
+    data.items[new_index] = item_type(move(builder), data.handles[new_index]);
     _create_finish(new_index, visible, blending_enabled);
     return new_index;
 }

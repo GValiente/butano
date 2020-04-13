@@ -131,7 +131,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors_ref, unsigned ha
     {
         palette& pal = _palettes[index];
 
-        if(pal.usages)
+        if(pal.usages || pal.locked)
         {
             free_slots_count = 0;
         }
@@ -145,6 +145,12 @@ int palettes_bank::create_bpp_4(const span<const color>& colors_ref, unsigned ha
                 pal.usages = 1;
                 pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_4);
                 pal.slots_count = int8_t(required_slots_count);
+
+                for(int slot = 0; slot < required_slots_count; ++slot)
+                {
+                    _palettes[index + slot].locked = true;
+                }
+
                 set_colors_ref(index, colors_ref, hash);
                 return index;
             }
@@ -184,6 +190,12 @@ int palettes_bank::create_bpp_8(const span<const color>& colors_ref)
             }
 
             first_pal.slots_count = int8_t(required_slots_count);
+
+            for(int slot = 0; slot < required_slots_count; ++slot)
+            {
+                _palettes[slot].locked = true;
+            }
+
             set_colors_ref(0, colors_ref, 0);
             return 0;
         }
@@ -205,6 +217,11 @@ void palettes_bank::decrease_usages(int id)
 
     if(! pal.usages)
     {
+        for(int slot = 0, slots_count = pal.slots_count; slot < slots_count; ++slot)
+        {
+            _palettes[id + slot].locked = false;
+        }
+
         pal = palette();
     }
 }

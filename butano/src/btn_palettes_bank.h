@@ -171,15 +171,23 @@ private:
         int16_t rotate_count = 0;
         uint8_t bpp_mode = 0;
         int8_t slots_count = 0;
-        bool inverted = false;
-        bool update = false;
+        unsigned inverted: 1;
+        unsigned update: 1;
+        unsigned locked: 1;
 
-        span<const color> colors_span() const
+        palette() :
+            inverted(false),
+            update(false),
+            locked(false)
+        {
+        }
+
+        [[nodiscard]] span<const color> colors_span() const
         {
             return span<const color>(colors_ref, hw::palettes::colors_per_palette() * slots_count);
         }
 
-        span<const color> visible_colors_span() const
+        [[nodiscard]] span<const color> visible_colors_span() const
         {
             return span<const color>(colors_ref + 1, (hw::palettes::colors_per_palette() * slots_count) - 1);
         }

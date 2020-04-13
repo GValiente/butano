@@ -95,7 +95,7 @@ def write_output_files(soundbank_header_path, build_folder_path):
 
 def process(audio_folder_paths, build_folder_path):
     audio_file_paths = list_audio_file_paths(audio_folder_paths)
-    file_info_path = build_folder_path + '/_btn_file_info.txt'
+    file_info_path = build_folder_path + '/_btn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
     new_file_info = FileInfo.build_from_files(audio_file_paths)
 

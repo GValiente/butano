@@ -6,7 +6,7 @@
 #include "btn_colors.h"
 #include "btn_blending.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_hero_bomb_bg_item.h"
+#include "btn_bg_items_hero_bomb.h"
 #include "btn_sound_items.h"
 #include "bf_constants.h"
 #include "bf_game_hero.h"

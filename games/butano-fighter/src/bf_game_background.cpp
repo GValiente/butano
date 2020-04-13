@@ -3,8 +3,8 @@
 #include "btn_blending.h"
 #include "btn_rect_window.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_clouds_bg_item.h"
-#include "btn_stage_1_bg_item.h"
+#include "btn_bg_items_clouds.h"
+#include "btn_bg_items_stage_1.h"
 
 namespace bf::game
 {

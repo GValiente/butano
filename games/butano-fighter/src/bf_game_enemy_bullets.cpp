@@ -4,7 +4,7 @@
 #include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_affine_mats.h"
-#include "btn_enemy_bullets_sprite_item.h"
+#include "btn_sprite_items_enemy_bullets.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullet_event.h"
 

@@ -3,7 +3,7 @@
 #include "btn_sound.h"
 #include "btn_fixed_rect.h"
 #include "btn_sound_items.h"
-#include "btn_gem_sprite_item.h"
+#include "btn_sprite_items_gem.h"
 
 namespace bf::game
 {

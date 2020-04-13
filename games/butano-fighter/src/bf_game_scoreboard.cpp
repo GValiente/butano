@@ -4,10 +4,10 @@
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
-#include "btn_experience_bar_sprite_item.h"
-#include "btn_experience_frame_back_sprite_item.h"
-#include "btn_experience_frame_front_sprite_item.h"
-#include "btn_hero_bomb_icon_sprite_item.h"
+#include "btn_sprite_items_experience_bar.h"
+#include "btn_sprite_items_experience_frame_back.h"
+#include "btn_sprite_items_experience_frame_front.h"
+#include "btn_sprite_items_hero_bomb_icon.h"
 #include "bf_game_hero.h"
 
 namespace bf::game

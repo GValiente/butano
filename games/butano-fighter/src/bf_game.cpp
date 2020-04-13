@@ -2,7 +2,7 @@
 
 #include "btn_music.h"
 #include "btn_music_items.h"
-#include "btn_flash_palette_sprite_item.h"
+#include "btn_sprite_items_flash_palette.h"
 
 namespace bf::game
 {

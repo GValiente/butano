@@ -1,7 +1,7 @@
 #include "bf_game_object_message.h"
 
 #include "btn_sprite_builder.h"
-#include "btn_object_messages_sprite_item.h"
+#include "btn_sprite_items_object_messages.h"
 #include "bf_constants.h"
 
 namespace bf::game

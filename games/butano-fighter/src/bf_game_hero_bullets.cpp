@@ -3,7 +3,7 @@
 #include "btn_sound.h"
 #include "btn_keypad.h"
 #include "btn_sprite_builder.h"
-#include "btn_hero_bullets_sprite_item.h"
+#include "btn_sprite_items_hero_bullets.h"
 #include "bf_game_hero.h"
 #include "bf_game_enemies.h"
 #include "bf_game_hero_bullet_level.h"

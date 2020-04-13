@@ -118,7 +118,7 @@ class SpriteItem:
     def write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = self.__build_folder_path + '/btn_' + name + '_sprite_item.h'
+        header_file_path = self.__build_folder_path + '/btn_sprite_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
@@ -134,7 +134,7 @@ class SpriteItem:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
-            include_guard = 'BTN_' + name.upper() + '_SPRITE_ITEM_H'
+            include_guard = 'BTN_SPRITE_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
@@ -217,7 +217,7 @@ class BgItem:
     def write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = self.__build_folder_path + '/btn_' + name + '_bg_item.h'
+        header_file_path = self.__build_folder_path + '/btn_bg_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
@@ -234,7 +234,7 @@ class BgItem:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
-            include_guard = 'BTN_' + name.upper() + '_BG_ITEM_H'
+            include_guard = 'BTN_BG_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')

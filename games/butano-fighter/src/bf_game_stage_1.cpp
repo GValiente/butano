@@ -1,7 +1,7 @@
 #include "bf_game_stage_1.h"
 
 #include "btn_sound_items.h"
-#include "btn_stage_1_monsters_1_sprite_item.h"
+#include "btn_sprite_items_stage_1_monsters_1.h"
 #include "bf_constants.h"
 
 namespace bf::game::stage_1

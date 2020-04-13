@@ -2,7 +2,7 @@
 
 #include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
-#include "btn_gem_sprite_item.h"
+#include "btn_sprite_items_gem.h"
 #include "bf_constants.h"
 
 namespace bf::game

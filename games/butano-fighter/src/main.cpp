@@ -12,11 +12,10 @@ int main()
 {
     btn::core::init();
 
-    // bf::butano_background butano_background;
-
     btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
     text_generator.set_bg_priority(1);
 
+    bf::butano_background butano_background;
     auto game = btn::make_unique<bf::game::game>(text_generator);
     bf::stats stats(text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
@@ -25,7 +24,7 @@ int main()
     while(true)
     {
         game->update();
-        // butano_background.update();
+        butano_background.update();
         stats.update();
         keypad_shortcuts.update();
         btn::core::update();

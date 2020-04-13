@@ -2,7 +2,7 @@
 #define SPRITE_FONT_H
 
 #include "btn_sprite_font.h"
-#include "btn_variable_8x16_font_sprite_item.h"
+#include "btn_sprite_items_variable_8x16_font.h"
 
 constexpr const btn::string_view sprite_font_utf8_characters[] = {
     "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"

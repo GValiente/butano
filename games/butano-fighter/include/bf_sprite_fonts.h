@@ -2,10 +2,10 @@
 #define BF_SPRITE_FONTS_H
 
 #include "btn_sprite_font.h"
-#include "btn_fixed_8x8_font_sprite_item.h"
-#include "btn_fixed_8x16_font_sprite_item.h"
-#include "btn_variable_8x8_font_sprite_item.h"
-#include "btn_variable_8x16_font_sprite_item.h"
+#include "btn_sprite_items_fixed_8x8_font.h"
+#include "btn_sprite_items_fixed_8x16_font.h"
+#include "btn_sprite_items_variable_8x8_font.h"
+#include "btn_sprite_items_variable_8x16_font.h"
 
 namespace bf
 {

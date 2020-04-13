@@ -4,7 +4,6 @@
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
 #include "btn_create_mode.h"
-#include "btn_bg_tiles_ptr.h"
 #include "btn_regular_bg_item.h"
 #include "btn_regular_bg_map_ptr.h"
 
@@ -22,13 +21,10 @@ public:
     {
     }
 
-    template<class BgTilesPtr, class RegularBgMapPtr>
-    regular_bg_builder(BgTilesPtr&& tiles_ptr, RegularBgMapPtr&& map_ptr) :
-        _tiles_ptr(forward<BgTilesPtr>(tiles_ptr)),
+    template<class RegularBgMapPtr>
+    explicit regular_bg_builder(RegularBgMapPtr&& map_ptr) :
         _map_ptr(forward<RegularBgMapPtr>(map_ptr))
     {
-        BTN_ASSERT(_tiles_ptr->valid_tiles_count(_map_ptr->bpp_mode()), "Invalid tiles count: ",
-                   _tiles_ptr->tiles_count());
     }
 
     [[nodiscard]] const optional<regular_bg_item>& item() const
@@ -167,25 +163,16 @@ public:
 
     [[nodiscard]] optional<regular_bg_ptr> optional_release_build();
 
-    [[nodiscard]] bg_tiles_ptr tiles() const;
-
     [[nodiscard]] regular_bg_map_ptr map() const;
-
-    [[nodiscard]] optional<bg_tiles_ptr> optional_tiles() const;
 
     [[nodiscard]] optional<regular_bg_map_ptr> optional_map() const;
 
-    [[nodiscard]] bg_tiles_ptr release_tiles();
-
     [[nodiscard]] regular_bg_map_ptr release_map();
-
-    [[nodiscard]] optional<bg_tiles_ptr> optional_release_tiles();
 
     [[nodiscard]] optional<regular_bg_map_ptr> optional_release_map();
 
 private:
     optional<regular_bg_item> _item;
-    optional<bg_tiles_ptr> _tiles_ptr;
     optional<regular_bg_map_ptr> _map_ptr;
     create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
     create_mode _map_create_mode = create_mode::FIND_OR_CREATE;

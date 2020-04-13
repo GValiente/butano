@@ -1,13 +1,16 @@
 #ifndef BTN_BG_BLOCKS_MANAGER_H
 #define BTN_BG_BLOCKS_MANAGER_H
 
-#include "btn_bg_palette_ptr.h"
+#include "btn_span_fwd.h"
+#include "btn_optional_fwd.h"
 #include "btn_regular_bg_map_cell.h"
 
 namespace btn
 {
     class size;
     class tile;
+    class bg_tiles_ptr;
+    class bg_palette_ptr;
 }
 
 namespace btn::bg_blocks_manager
@@ -33,24 +36,25 @@ namespace btn::bg_blocks_manager
     [[nodiscard]] int find_tiles(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int find_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                       const bg_palette_ptr& palette_ptr);
+                                       const bg_tiles_ptr& tiles_ptr, const bg_palette_ptr& palette_ptr);
 
     [[nodiscard]] int create_tiles(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                         bg_palette_ptr&& palette_ptr);
+                                         bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr);
 
     [[nodiscard]] int allocate_tiles(int tiles_count);
 
-    [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles_ptr,
+                                           bg_palette_ptr&& palette_ptr);
 
     void increase_usages(int id);
 
     void decrease_usages(int id);
 
-    [[nodiscard]] int hw_tiles_id(int id);
+    [[nodiscard]] int hw_id(int id);
 
-    [[nodiscard]] int hw_map_id(int id);
+    [[nodiscard]] int hw_tiles_cbb(int id);
 
     [[nodiscard]] int tiles_count(int id);
 
@@ -66,9 +70,15 @@ namespace btn::bg_blocks_manager
 
     void reload(int id);
 
+    [[nodiscard]] const bg_tiles_ptr& map_tiles(int id);
+
+    void set_map_tiles(int id, bg_tiles_ptr&& tiles_ptr);
+
     [[nodiscard]] const bg_palette_ptr& map_palette(int id);
 
     void set_map_palette(int id, bg_palette_ptr&& palette_ptr);
+
+    void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr);
 
     [[nodiscard]] optional<span<tile>> tiles_vram(int id);
 

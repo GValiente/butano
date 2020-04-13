@@ -11,6 +11,7 @@ namespace btn
 {
 
 class size;
+class bg_tiles_ptr;
 class bg_palette_ptr;
 enum class palette_bpp_mode;
 
@@ -18,42 +19,31 @@ class regular_bg_map_ptr
 {
 
 public:
-    [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_map_cell& cells_ref,
-                                                           const size& dimensions, const bg_palette_ptr& palette_ptr);
+    [[nodiscard]] static optional<regular_bg_map_ptr> find(
+            const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_tiles_ptr& tiles_ptr,
+            const bg_palette_ptr& palette_ptr);
 
-    [[nodiscard]] static regular_bg_map_ptr create(const regular_bg_map_cell& cells_ref, const size& dimensions,
-                                                   const bg_palette_ptr& palette_ptr);
-
-    [[nodiscard]] static regular_bg_map_ptr create(const regular_bg_map_cell& cells_ref, const size& dimensions,
-                                                   bg_palette_ptr&& palette_ptr);
-
-    [[nodiscard]] static regular_bg_map_ptr find_or_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_palette_ptr& palette_ptr);
+    [[nodiscard]] static regular_bg_map_ptr create(
+            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles_ptr,
+            bg_palette_ptr palette_ptr);
 
     [[nodiscard]] static regular_bg_map_ptr find_or_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_palette_ptr&& palette_ptr);
+            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles_ptr,
+            bg_palette_ptr palette_ptr);
 
-    [[nodiscard]] static regular_bg_map_ptr allocate(const size& dimensions, const bg_palette_ptr& palette_ptr);
-
-    [[nodiscard]] static regular_bg_map_ptr allocate(const size& dimensions, bg_palette_ptr&& palette_ptr);
-
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_palette_ptr& palette_ptr);
+    [[nodiscard]] static regular_bg_map_ptr allocate(
+            const size& dimensions, bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr);
 
     [[nodiscard]] static optional<regular_bg_map_ptr> optional_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_palette_ptr&& palette_ptr);
+            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles_ptr,
+            bg_palette_ptr palette_ptr);
 
     [[nodiscard]] static optional<regular_bg_map_ptr> optional_find_or_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_palette_ptr& palette_ptr);
+            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles_ptr,
+            bg_palette_ptr palette_ptr);
 
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_find_or_create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_palette_ptr&& palette_ptr);
-
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_allocate(const size& dimensions,
-                                                                        const bg_palette_ptr& palette_ptr);
-
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_allocate(const size& dimensions,
-                                                                        bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] static optional<regular_bg_map_ptr> optional_allocate(
+            const size& dimensions, bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr);
 
     regular_bg_map_ptr(const regular_bg_map_ptr& other);
 
@@ -91,11 +81,19 @@ public:
 
     void reload_cells_ref();
 
+    [[nodiscard]] const bg_tiles_ptr& tiles() const;
+
+    void set_tiles(const bg_tiles_ptr& tiles_ptr);
+
+    void set_tiles(bg_tiles_ptr&& tiles_ptr);
+
     [[nodiscard]] const bg_palette_ptr& palette() const;
 
     void set_palette(const bg_palette_ptr& palette_ptr);
 
     void set_palette(bg_palette_ptr&& palette_ptr);
+
+    void set_tiles_and_palette(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr);
 
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 

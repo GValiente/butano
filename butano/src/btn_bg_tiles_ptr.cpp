@@ -123,7 +123,12 @@ bg_tiles_ptr& bg_tiles_ptr::operator=(const bg_tiles_ptr& other)
 
 int bg_tiles_ptr::id() const
 {
-    return bg_blocks_manager::hw_tiles_id(_handle);
+    return bg_blocks_manager::hw_id(_handle);
+}
+
+int bg_tiles_ptr::cbb() const
+{
+    return bg_blocks_manager::hw_tiles_cbb(_handle);
 }
 
 int bg_tiles_ptr::tiles_count() const

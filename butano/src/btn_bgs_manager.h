@@ -9,7 +9,6 @@ namespace btn
 
 class size;
 class fixed_point;
-class bg_tiles_ptr;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class regular_bg_attributes;
@@ -31,19 +30,11 @@ namespace bgs_manager
 
     [[nodiscard]] size dimensions(int id);
 
-    [[nodiscard]] const bg_tiles_ptr& tiles(int id);
-
-    void set_tiles(int id, const bg_tiles_ptr& tiles_ptr);
-
-    void set_tiles(int id, bg_tiles_ptr&& tiles_ptr);
-
     [[nodiscard]] const regular_bg_map_ptr& map(int id);
 
     void set_map(int id, const regular_bg_map_ptr& map_ptr);
 
     void set_map(int id, regular_bg_map_ptr&& map_ptr);
-
-    void set_tiles_and_map(int id, bg_tiles_ptr&& tiles_ptr, regular_bg_map_ptr&& map_ptr);
 
     [[nodiscard]] const fixed_point& position(int id);
 
@@ -74,6 +65,8 @@ namespace bgs_manager
     [[nodiscard]] bool ignore_camera(int id);
 
     void set_ignore_camera(int id, bool ignore_camera);
+
+    void update_map_tiles_cbb(int map_id, int tiles_cbb);
 
     void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode);
 

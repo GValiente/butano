@@ -1,7 +1,7 @@
 #ifndef BTN_SPRITE_TILES_H
 #define BTN_SPRITE_TILES_H
 
-#include "btn_common.h"
+#include "../hw/include/btn_hw_sprite_tiles_constants.h"
 
 namespace btn::sprite_tiles
 {

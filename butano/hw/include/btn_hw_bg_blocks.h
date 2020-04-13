@@ -3,12 +3,13 @@
 
 #include "tonc.h"
 #include "btn_memory.h"
+#include "btn_hw_bg_blocks_constants.h"
 
 namespace btn::hw::bg_blocks
 {
-    [[nodiscard]] constexpr int count()
+    [[nodiscard]] constexpr int max_blocks_per_tiles()
     {
-        return 32;
+        return 16;
     }
 
     [[nodiscard]] constexpr int tiles_alignment_blocks_count()
@@ -18,7 +19,7 @@ namespace btn::hw::bg_blocks
 
     [[nodiscard]] constexpr int half_words_per_block()
     {
-        return 1024;
+        return bg_maps::cells_count() / bg_maps::blocks_count();
     }
 
     namespace
@@ -34,16 +35,23 @@ namespace btn::hw::bg_blocks
         return bg_block_vram(block_index);
     }
 
-    BTN_CODE_IWRAM void _commit_palette_offset_impl(const uint16_t* source_data_ptr, int half_words,
-                                                    int palette_offset, uint16_t* destination_vram_ptr);
+    inline void commit_tiles(const uint16_t* source_data_ptr, int block_index, int half_words)
+    {
+        uint16_t* destination_vram_ptr = bg_block_vram(block_index);
+        memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+    }
 
-    inline void commit(const uint16_t* source_data_ptr, int block_index, int half_words, int palette_offset)
+    BTN_CODE_IWRAM void _commit_map_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
+                                           int palette_offset, uint16_t* destination_vram_ptr);
+
+    inline void commit_map(const uint16_t* source_data_ptr, int block_index, int half_words, int tiles_offset,
+                           int palette_offset)
     {
         uint16_t* destination_vram_ptr = bg_block_vram(block_index);
 
-        if(palette_offset)
+        if(tiles_offset || palette_offset)
         {
-            _commit_palette_offset_impl(source_data_ptr, half_words, palette_offset, destination_vram_ptr);
+            _commit_map_offset(source_data_ptr, half_words, tiles_offset, palette_offset, destination_vram_ptr);
         }
         else
         {

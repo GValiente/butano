@@ -227,7 +227,9 @@ id_type create(sprite_builder&& builder)
 {
     BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
-    item_type& new_item = data.items_pool.create(move(builder), builder.release_tiles(), builder.release_palette());
+    sprite_tiles_ptr tiles = builder.release_tiles();
+    sprite_palette_ptr palette = builder.release_palette();
+    item_type& new_item = data.items_pool.create(move(builder), move(tiles), move(palette));
     sorted_sprites::insert(new_item);
     data.check_items_on_screen |= new_item.visible;
     return &new_item;

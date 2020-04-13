@@ -7,11 +7,6 @@
 
 namespace btn::hw::sprite_tiles
 {
-    [[nodiscard]] constexpr int count()
-    {
-        return 1024;
-    }
-
     namespace
     {
         static_assert(sizeof(TILE) == sizeof(tile));

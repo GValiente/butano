@@ -56,6 +56,8 @@ public:
 
     [[nodiscard]] int id() const;
 
+    [[nodiscard]] int cbb() const;
+
     [[nodiscard]] int tiles_count() const;
 
     [[nodiscard]] bool valid_tiles_count(palette_bpp_mode bpp_mode) const;

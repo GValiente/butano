@@ -5,6 +5,7 @@
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
+#include "btn_bg_tiles_ptr.h"
 #include "btn_display_manager.h"
 #include "btn_regular_bg_attributes.h"
 #include "../hw/include/btn_hw_bgs.h"
@@ -19,35 +20,19 @@ namespace
 
     public:
         fixed_point position;
-        unsigned usages = 1;
-        bg_tiles_ptr tiles_ptr;
-        regular_bg_map_ptr map_ptr;
-        uint16_t ignore_camera;
         size quarter_dimensions;
+        unsigned usages = 1;
+        regular_bg_map_ptr map_ptr;
+        bool ignore_camera;
 
-        item_type(regular_bg_builder&& builder, hw::bgs::handle& handle) :
+        item_type(const regular_bg_builder& builder, regular_bg_map_ptr&& map, hw::bgs::handle& handle) :
             position(builder.position()),
-            tiles_ptr(builder.release_tiles()),
-            map_ptr(builder.release_map()),
-            ignore_camera(builder.ignore_camera()),
-            quarter_dimensions(map_ptr.dimensions())
-        {
-            hw::bgs::setup_regular(builder, handle);
-            hw::bgs::set_tiles(tiles_ptr.id(), handle);
-            hw::bgs::set_map(map_ptr.id(), quarter_dimensions, map_ptr.bpp_mode(), handle);
-            update_quarter_dimensions(quarter_dimensions, handle);
-        }
-
-        item_type(regular_bg_builder&& builder, bg_tiles_ptr&& tiles, regular_bg_map_ptr&& map,
-                  hw::bgs::handle& handle) :
-            position(builder.position()),
-            tiles_ptr(move(tiles)),
+            quarter_dimensions(map.dimensions()),
             map_ptr(move(map)),
-            ignore_camera(builder.ignore_camera()),
-            quarter_dimensions(map_ptr.dimensions())
+            ignore_camera(builder.ignore_camera())
         {
             hw::bgs::setup_regular(builder, handle);
-            hw::bgs::set_tiles(tiles_ptr.id(), handle);
+            hw::bgs::set_tiles_cbb(map_ptr.tiles().cbb(), handle);
             hw::bgs::set_map(map_ptr.id(), quarter_dimensions, map_ptr.bpp_mode(), handle);
             update_quarter_dimensions(quarter_dimensions, handle);
         }
@@ -111,6 +96,7 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
+
     void _create_finish(int new_index, bool visible, bool blending_enabled)
     {
         if(visible)
@@ -166,10 +152,8 @@ int create(regular_bg_builder&& builder)
 
     BTN_ASSERT(new_index >= 0, "No more available bgs");
 
-    bool visible = builder.visible();
-    bool blending_enabled = builder.blending_enabled();
-    data.items[new_index] = item_type(move(builder), data.handles[new_index]);
-    _create_finish(new_index, visible, blending_enabled);
+    data.items[new_index] = item_type(builder, builder.release_map(), data.handles[new_index]);
+    _create_finish(new_index, builder.visible(), builder.blending_enabled());
     return new_index;
 }
 
@@ -194,13 +178,6 @@ int optional_create(regular_bg_builder&& builder)
         return -1;
     }
 
-    optional<bg_tiles_ptr> tiles = builder.optional_release_tiles();
-
-    if(! tiles)
-    {
-        return -1;
-    }
-
     optional<regular_bg_map_ptr> map = builder.optional_release_map();
 
     if(! map)
@@ -208,10 +185,8 @@ int optional_create(regular_bg_builder&& builder)
         return -1;
     }
 
-    bool visible = builder.visible();
-    bool blending_enabled = builder.blending_enabled();
-    data.items[new_index] = item_type(move(builder), move(*tiles), move(*map), data.handles[new_index]);
-    _create_finish(new_index, visible, blending_enabled);
+    data.items[new_index] = item_type(builder, move(*map), data.handles[new_index]);
+    _create_finish(new_index, builder.visible(), builder.blending_enabled());
     return new_index;
 }
 
@@ -245,50 +220,6 @@ size dimensions(int id)
     return item.quarter_dimensions * 4;
 }
 
-const bg_tiles_ptr& tiles(int id)
-{
-    item_type& item = *data.items[id];
-    return item.tiles_ptr;
-}
-
-void set_tiles(int id, const bg_tiles_ptr& tiles_ptr)
-{
-    item_type& item = *data.items[id];
-
-    if(tiles_ptr != item.tiles_ptr)
-    {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.bpp_mode()), "Invalid tiles count: ",
-                   tiles_ptr.tiles_count());
-
-        hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
-        item.tiles_ptr = tiles_ptr;
-
-        if(display_manager::bg_enabled(id))
-        {
-            data.commit = true;
-        }
-    }
-}
-
-void set_tiles(int id, bg_tiles_ptr&& tiles_ptr)
-{
-    item_type& item = *data.items[id];
-
-    if(tiles_ptr != item.tiles_ptr)
-    {
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.map_ptr.bpp_mode()), "Invalid tiles count: ",
-                   tiles_ptr.tiles_count());
-
-        hw::bgs::set_tiles(tiles_ptr.id(), data.handles[id]);
-        item.tiles_ptr = move(tiles_ptr);
-
-        if(display_manager::bg_enabled(id))
-        {
-            data.commit = true;
-        }
-    }
-}
-
 const regular_bg_map_ptr& map(int id)
 {
     item_type& item = *data.items[id];
@@ -301,12 +232,10 @@ void set_map(int id, const regular_bg_map_ptr& map_ptr)
 
     if(map_ptr != item.map_ptr)
     {
-        palette_bpp_mode bpp_mode = map_ptr.bpp_mode();
-        BTN_ASSERT(item.tiles_ptr.valid_tiles_count(bpp_mode), "Invalid tiles count: ", item.tiles_ptr.tiles_count());
-
         hw::bgs::handle& handle = data.handles[id];
         size map_dimensions = map_ptr.dimensions();
-        hw::bgs::set_map(map_ptr.id(), map_dimensions, bpp_mode, handle);
+        hw::bgs::set_tiles_cbb(map_ptr.tiles().cbb(), handle);
+        hw::bgs::set_map(map_ptr.id(), map_dimensions, map_ptr.bpp_mode(), handle);
         item.map_ptr = map_ptr;
         item.update_quarter_dimensions(map_dimensions, handle);
 
@@ -323,48 +252,12 @@ void set_map(int id, regular_bg_map_ptr&& map_ptr)
 
     if(map_ptr != item.map_ptr)
     {
-        palette_bpp_mode bpp_mode = map_ptr.bpp_mode();
-        BTN_ASSERT(item.tiles_ptr.valid_tiles_count(bpp_mode), "Invalid tiles count: ", item.tiles_ptr.tiles_count());
-
         hw::bgs::handle& handle = data.handles[id];
         size map_dimensions = map_ptr.dimensions();
-        hw::bgs::set_map(map_ptr.id(), map_dimensions, bpp_mode, handle);
+        hw::bgs::set_tiles_cbb(map_ptr.tiles().cbb(), handle);
+        hw::bgs::set_map(map_ptr.id(), map_dimensions, map_ptr.bpp_mode(), handle);
         item.map_ptr = move(map_ptr);
         item.update_quarter_dimensions(map_dimensions, handle);
-
-        if(display_manager::bg_enabled(id))
-        {
-            data.commit = true;
-        }
-    }
-}
-
-void set_tiles_and_map(int id, bg_tiles_ptr&& tiles_ptr, regular_bg_map_ptr&& map_ptr)
-{
-    item_type& item = *data.items[id];
-    bool different_tiles = tiles_ptr != item.tiles_ptr;
-    bool different_map = map_ptr != item.map_ptr;
-
-    if(different_tiles || different_map)
-    {
-        palette_bpp_mode bpp_mode = map_ptr.bpp_mode();
-        BTN_ASSERT(tiles_ptr.valid_tiles_count(bpp_mode), "Invalid tiles count: ", tiles_ptr.tiles_count());
-
-        hw::bgs::handle& handle = data.handles[id];
-
-        if(different_tiles)
-        {
-            hw::bgs::set_tiles(tiles_ptr.id(), handle);
-            item.tiles_ptr = move(tiles_ptr);
-        }
-
-        if(different_map)
-        {
-            size map_dimensions = map_ptr.dimensions();
-            hw::bgs::set_map(map_ptr.id(), map_dimensions, bpp_mode, handle);
-            item.map_ptr = move(map_ptr);
-            item.update_quarter_dimensions(map_dimensions, handle);
-        }
 
         if(display_manager::bg_enabled(id))
         {
@@ -489,6 +382,27 @@ void set_ignore_camera(int id, bool ignore_camera)
     }
 }
 
+void update_map_tiles_cbb(int map_id, int tiles_cbb)
+{
+    for(int id = 0; id < hw::bgs::count(); ++id)
+    {
+        if(optional<item_type>& item_cnt = data.items[id])
+        {
+            item_type& item = *item_cnt;
+
+            if(item.map_ptr.id() == map_id)
+            {
+                hw::bgs::set_tiles_cbb(tiles_cbb, data.handles[id]);
+
+                if(display_manager::bg_enabled(id))
+                {
+                    data.commit = true;
+                }
+            }
+        }
+    }
+}
+
 void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
 {
     for(int id = 0; id < hw::bgs::count(); ++id)
@@ -499,9 +413,6 @@ void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
 
             if(item.map_ptr.id() == map_id)
             {
-                BTN_ASSERT(item.tiles_ptr.valid_tiles_count(new_bpp_mode), "Invalid tiles count: ",
-                           item.tiles_ptr.tiles_count());
-
                 hw::bgs::set_bpp_mode(new_bpp_mode, data.handles[id]);
 
                 if(display_manager::bg_enabled(id))

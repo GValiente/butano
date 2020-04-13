@@ -5,7 +5,7 @@
 #include "btn_vector.h"
 #include "btn_optional.h"
 #include "btn_hash_map.h"
-#include "btn_config_sprite_tiles.h"
+#include "btn_sprite_tiles.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
@@ -21,7 +21,7 @@ namespace btn::sprite_tiles_manager
 namespace
 {
     static_assert(BTN_CFG_SPRITE_TILES_MAX_ITEMS > 0 &&
-                  BTN_CFG_SPRITE_TILES_MAX_ITEMS <= hw::sprite_tiles::count());
+                  BTN_CFG_SPRITE_TILES_MAX_ITEMS <= sprite_tiles::tiles_count());
     static_assert(power_of_two(BTN_CFG_SPRITE_TILES_MAX_ITEMS));
 
 
@@ -436,7 +436,7 @@ void init()
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 
     item_type new_item;
-    new_item.tiles_count = hw::sprite_tiles::count();
+    new_item.tiles_count = sprite_tiles::tiles_count();
     data.items.init();
     data.items.push_front(new_item);
     data.biggest_free_iterator = data.items.begin();
@@ -447,7 +447,7 @@ void init()
 
 int used_tiles_count()
 {
-    return hw::sprite_tiles::count() - data.free_tiles_count;
+    return sprite_tiles::tiles_count() - data.free_tiles_count;
 }
 
 int available_tiles_count()

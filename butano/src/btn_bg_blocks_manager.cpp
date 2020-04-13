@@ -8,6 +8,9 @@
 #include "btn_optional.h"
 #include "btn_hash_map.h"
 #include "btn_bgs_manager.h"
+#include "btn_bg_tiles_ptr.h"
+#include "btn_bg_palette_ptr.h"
+#include "btn_palette_bpp_mode.h"
 #include "btn_config_bg_blocks.h"
 #include "../hw/include/btn_hw_bg_blocks.h"
 
@@ -22,15 +25,42 @@ namespace btn::bg_blocks_manager
 
 namespace
 {
-    constexpr const int max_items = hw::bg_blocks::count();
-    constexpr const int max_list_items = max_items + 1;
-    constexpr const int max_half_words = max_items * hw::bg_blocks::half_words_per_block();
-
-
-    [[nodiscard]] constexpr int _half_words_per_tile()
+    [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
     {
-        return sizeof(tile) / 2;
+        return tiles * int(sizeof(tile) / 2);
     }
+
+    [[nodiscard]] constexpr int _half_words_to_tiles(int half_words)
+    {
+        return half_words / int(sizeof(tile) / 2);
+    }
+
+    [[nodiscard]] constexpr int _blocks_to_half_words(int blocks)
+    {
+        return blocks * hw::bg_blocks::half_words_per_block();
+    }
+
+    [[nodiscard]] constexpr int _half_words_to_blocks(int half_words)
+    {
+        return half_words / hw::bg_blocks::half_words_per_block();
+    }
+
+    [[nodiscard]] constexpr int _blocks_to_tiles(int blocks)
+    {
+        int half_words = _blocks_to_half_words(blocks);
+        return _half_words_to_tiles(half_words);
+    }
+
+    [[nodiscard]] constexpr int _tiles_to_blocks(int tiles)
+    {
+        int half_words = _tiles_to_half_words(tiles);
+        return _half_words_to_blocks(half_words);
+    }
+
+
+    constexpr const int max_items = bg_tiles::blocks_count();
+    constexpr const int max_list_items = max_items + 1;
+    constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks_per_tiles());
 
 
     class item_type
@@ -46,24 +76,22 @@ namespace
 
         const uint16_t* data = nullptr;
         unsigned usages = 0;
+        optional<bg_tiles_ptr> tiles_ptr;
         optional<bg_palette_ptr> palette_ptr;
         uint16_t width = 0;
         uint8_t height = 0;
         uint8_t start_block = 0;
-        unsigned blocks_count: 6;
-        unsigned next_index: 6;
-        unsigned commit: 1;
+        uint8_t blocks_count = 0;
+        uint8_t next_index = max_list_items;
+        bool commit = false;
 
     private:
-        unsigned _status: 2;
+        uint8_t _status = uint8_t(status_type::FREE);
 
     public:
-        item_type()
+        [[nodiscard]] bool is_tiles() const
         {
-            blocks_count = 0;
-            next_index = max_list_items;
-            commit = false;
-            set_status(status_type::FREE);
+            return ! palette_ptr;
         }
 
         [[nodiscard]] status_type status() const
@@ -76,9 +104,28 @@ namespace
             _status = uint8_t(status);
         }
 
+        [[nodiscard]] int half_words() const
+        {
+            return width * height;
+        }
+
         [[nodiscard]] int tiles() const
         {
-            return width / _half_words_per_tile();
+            return _half_words_to_tiles(half_words());
+        }
+
+        [[nodiscard]] int tiles_offset() const
+        {
+            int tiles_start_block = tiles_ptr->id();
+            int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
+            int result = _blocks_to_tiles(offset_blocks_count);
+
+            if(palette_ptr->bpp_mode() == palette_bpp_mode::BPP_8)
+            {
+                result /= 2;
+            }
+
+            return result;
         }
 
         [[nodiscard]] int palette_offset() const
@@ -207,7 +254,7 @@ namespace
 
         void _join(int index, int new_index)
         {
-            _items[index].next_index = unsigned(new_index);
+            _items[index].next_index = uint8_t(new_index);
         }
 
         void _insert_node_after(int index, int new_index)
@@ -234,21 +281,23 @@ namespace
         int blocks_count;
         int width;
         int height;
+        optional<bg_tiles_ptr> tiles_ptr;
         optional<bg_palette_ptr> palette_ptr;
 
         static create_data tiles(const uint16_t* data_ptr, int half_words)
         {
-            return create_data{ data_ptr, _half_words_to_blocks(half_words), half_words, 1, nullopt };
+            return create_data{ data_ptr, _ceil_half_words_to_blocks(half_words), half_words, 1, nullopt, nullopt };
         }
 
-        static create_data map(const uint16_t* data_ptr, const size& dimensions, bg_palette_ptr&& palette_ptr)
+        static create_data map(const uint16_t* data_ptr, const size& dimensions, bg_tiles_ptr&& tiles_ptr,
+                               bg_palette_ptr&& palette_ptr)
         {
-            return create_data{ data_ptr, _half_words_to_blocks(dimensions.width() * dimensions.height()),
-                        dimensions.width(), dimensions.height(), move(palette_ptr) };
+            return create_data{ data_ptr, _ceil_half_words_to_blocks(dimensions.width() * dimensions.height()),
+                        dimensions.width(), dimensions.height(), move(tiles_ptr), move(palette_ptr) };
         }
 
     private:
-        [[nodiscard]] static int _half_words_to_blocks(int half_words)
+        [[nodiscard]] static int _ceil_half_words_to_blocks(int half_words)
         {
             int result = half_words / hw::bg_blocks::half_words_per_block();
 
@@ -292,7 +341,7 @@ namespace
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count);
                 }
-                else if(item.height == 1)
+                else if(item.is_tiles())
                 {
                     BTN_LOG("    ",
                             (item.status() == item_type::status_type::USED ? "used" : "to_remove"),
@@ -315,7 +364,9 @@ namespace
                             " - usages: ", item.usages,
                             " - width: ", item.width,
                             " - height: ", item.height,
-                            " - palette: ", item.palette_ptr ? item.palette_ptr->id() : -1,
+                            " - tiles: ", item.tiles_ptr->id(),
+                            " - palette: ", item.palette_ptr->id(),
+                            " - tiles_offset: ", item.tiles_offset(),
                             (item.commit ? " - commit" : " - no_commit"));
                 }
             }
@@ -356,18 +407,20 @@ namespace
     #endif
 
 
-    [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
+    void _commit_item(item_type& item)
     {
-        return tiles * _half_words_per_tile();
+        if(item.is_tiles())
+        {
+            hw::bg_blocks::commit_tiles(item.data, item.start_block, item.half_words());
+        }
+        else
+        {
+            hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
+                                      item.palette_offset());
+        }
     }
 
-    [[nodiscard]] constexpr int _blocks_to_tiles(int blocks)
-    {
-        auto half_words = unsigned(blocks * hw::bg_blocks::half_words_per_block());
-        return half_words / _half_words_per_tile();
-    }
-
-    void _commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
+    void _check_commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
     {
         item_type& item = data.items.item(id);
         item.data = data_ptr;
@@ -380,57 +433,36 @@ namespace
         }
         else
         {
-            hw::bg_blocks::commit(data_ptr, item.start_block, item.width * item.height, item.palette_offset());
+            _commit_item(item);
         }
     }
 
-    template<bool tiles>
-    [[nodiscard]] int _create_item(int id, create_data&& create_data)
+    [[nodiscard]] int _create_item(int id, int padding_blocks_count, create_data&& create_data)
     {
         item_type* item = &data.items.item(id);
         int blocks_count = create_data.blocks_count;
 
-        if(tiles)
+        if(padding_blocks_count)
         {
-            int free_blocks_count = item->blocks_count;
-            int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
-            int extra_blocks_count = item->start_block % alignment_blocks_count;
-            int padding_blocks_count = extra_blocks_count ? alignment_blocks_count - extra_blocks_count : 0;
+            BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-            while(blocks_count + padding_blocks_count + alignment_blocks_count <= free_blocks_count)
-            {
-                padding_blocks_count += alignment_blocks_count;
-            }
+            int new_item_blocks_count = item->blocks_count - padding_blocks_count;
+            item->blocks_count = uint8_t(padding_blocks_count);
 
-            if(padding_blocks_count)
-            {
-                BTN_ASSERT(! data.items.full(), "No more items allowed");
+            item_type new_item;
+            new_item.start_block = item->start_block + item->blocks_count;
+            new_item.blocks_count = uint8_t(new_item_blocks_count);
 
-                int new_item_blocks_count = free_blocks_count - padding_blocks_count;
-                item->blocks_count = unsigned(padding_blocks_count);
-
-                item_type new_item;
-                new_item.start_block = item->start_block + item->blocks_count;
-                new_item.blocks_count = unsigned(new_item_blocks_count);
-
-                auto new_item_iterator = data.items.insert_after(id, new_item);
-                id = new_item_iterator.id();
-                item = &data.items.item(id);
-            }
+            auto new_item_iterator = data.items.insert_after(id, new_item);
+            id = new_item_iterator.id();
+            item = &data.items.item(id);
         }
 
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {
             BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-            if(tiles)
-            {
-                item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + blocks_count);
-                new_item.blocks_count = unsigned(new_item_blocks_count);
-                data.items.insert_after(id, new_item);
-            }
-            else
+            if(create_data.palette_ptr)
             {
                 item->blocks_count -= blocks_count;
 
@@ -441,11 +473,19 @@ namespace
                 id = new_item_iterator.id();
                 item = &data.items.item(id);
             }
+            else
+            {
+                item_type new_item;
+                new_item.start_block = uint8_t(item->start_block + blocks_count);
+                new_item.blocks_count = uint8_t(new_item_blocks_count);
+                data.items.insert_after(id, new_item);
+            }
         }
 
         const uint16_t* data_ptr = create_data.data_ptr;
         item->data = create_data.data_ptr;
-        item->blocks_count = unsigned(blocks_count);
+        item->blocks_count = uint8_t(blocks_count);
+        item->tiles_ptr = move(create_data.tiles_ptr);
         item->palette_ptr = move(create_data.palette_ptr);
         item->width = uint16_t(create_data.width);
         item->height = uint8_t(create_data.height);
@@ -456,7 +496,7 @@ namespace
 
         if(data_ptr)
         {
-            _commit_item(id, data_ptr, data.delay_commit);
+            _check_commit_item(id, data_ptr, data.delay_commit);
         }
 
         return id;
@@ -502,6 +542,7 @@ namespace
         {
             auto smallest_iterator = data.items.end();
             int smallest_blocks_count = numeric_limits<int>::max();
+            int smallest_padding_blocks_count = 0;
 
             for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
             {
@@ -509,22 +550,26 @@ namespace
 
                 if(item.status() == item_type::status_type::FREE)
                 {
-                    int required_blocks_count = blocks_count;
+                    int padding_blocks_count = 0;
 
                     if(tiles)
                     {
-                        if(int extra_blocks_count = item.start_block % hw::bg_blocks::tiles_alignment_blocks_count())
+                        int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
+                        int extra_blocks_count = item.start_block % alignment_blocks_count;
+
+                        if(blocks_count + extra_blocks_count > hw::bg_blocks::max_blocks_per_tiles())
                         {
-                            required_blocks_count += hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count;
+                            padding_blocks_count = alignment_blocks_count - extra_blocks_count;
                         }
                     }
 
-                    if(item.blocks_count >= required_blocks_count)
+                    if(item.blocks_count >= blocks_count + padding_blocks_count)
                     {
                         if(item.blocks_count < smallest_blocks_count)
                         {
                             smallest_iterator = iterator;
                             smallest_blocks_count = item.blocks_count;
+                            smallest_padding_blocks_count = padding_blocks_count;
                         }
                     }
                 }
@@ -532,7 +577,7 @@ namespace
 
             if(smallest_iterator != data.items.end())
             {
-                return _create_item<tiles>(smallest_iterator.id(), move(create_data));
+                return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, move(create_data));
             }
         }
 
@@ -552,7 +597,7 @@ void init()
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
-    new_item.blocks_count = hw::bg_blocks::count();
+    new_item.blocks_count = max_items;
     data.items.init();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
@@ -562,46 +607,12 @@ void init()
 
 int used_tiles_count()
 {
-    int result = 0;
-
-    for(const item_type& item : data.items)
-    {
-        if(item.status() != item_type::status_type::FREE && item.height == 1)
-        {
-            result += _blocks_to_tiles(item.blocks_count);
-        }
-    }
-
-    return result;
+    return _blocks_to_tiles(used_tile_blocks_count());
 }
 
 int available_tiles_count()
 {
-    int result = 0;
-
-    for(const item_type& item : data.items)
-    {
-        if(item.status() == item_type::status_type::FREE)
-        {
-            if(int extra_blocks_count = item.start_block % hw::bg_blocks::tiles_alignment_blocks_count())
-            {
-                int required_blocks_count = 1 + (hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count);
-
-                if(item.blocks_count >= required_blocks_count)
-                {
-                    int padding_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count;
-                    int item_blocks_count = item.blocks_count - padding_blocks_count;
-                    result += _blocks_to_tiles(item_blocks_count);
-                }
-            }
-            else
-            {
-                result += _blocks_to_tiles(item.blocks_count);
-            }
-        }
-    }
-
-    return result;
+    return _blocks_to_tiles(available_tile_blocks_count());
 }
 
 int used_tile_blocks_count()
@@ -610,9 +621,9 @@ int used_tile_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && item.height == 1)
+        if(item.status() != item_type::status_type::FREE && item.is_tiles())
         {
-            result += item.blocks_count / hw::bg_blocks::tiles_alignment_blocks_count();
+            result += item.blocks_count;
         }
     }
 
@@ -621,41 +632,17 @@ int used_tile_blocks_count()
 
 int available_tile_blocks_count()
 {
-    int result = 0;
-
-    for(const item_type& item : data.items)
-    {
-        if(item.status() == item_type::status_type::FREE)
-        {
-            if(int extra_blocks_count = item.start_block % hw::bg_blocks::tiles_alignment_blocks_count())
-            {
-                int required_blocks_count = 1 + (hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count);
-
-                if(item.blocks_count >= required_blocks_count)
-                {
-                    int padding_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count() - extra_blocks_count;
-                    int item_blocks_count = item.blocks_count - padding_blocks_count;
-                    result += item_blocks_count / hw::bg_blocks::tiles_alignment_blocks_count();
-                }
-            }
-            else
-            {
-                result += item.blocks_count / hw::bg_blocks::tiles_alignment_blocks_count();
-            }
-        }
-    }
-
-    return result;
+    return data.free_blocks_count;
 }
 
 int used_map_cells_count()
 {
-    return used_map_blocks_count() * hw::bg_blocks::half_words_per_block();
+    return _blocks_to_half_words(used_map_blocks_count());
 }
 
 int available_map_cells_count()
 {
-    return available_map_blocks_count() * hw::bg_blocks::half_words_per_block();
+    return _blocks_to_half_words(available_map_blocks_count());
 }
 
 int used_map_blocks_count()
@@ -664,7 +651,7 @@ int used_map_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && item.height > 1)
+        if(item.status() != item_type::status_type::FREE && ! item.is_tiles())
         {
             result += item.blocks_count;
         }
@@ -691,9 +678,9 @@ int find_tiles(const span<const tile>& tiles_ref)
     {
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
-        BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.width,
+        BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
                    "Tiles count does not match item tiles count: ",
-                   _tiles_to_half_words(tiles_ref.size()), " - ", item.width);
+                   _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
 
         switch(item.status())
         {
@@ -724,6 +711,7 @@ int find_tiles(const span<const tile>& tiles_ref)
 }
 
 int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
+                     [[maybe_unused]] const bg_tiles_ptr& tiles_ptr,
                      [[maybe_unused]] const bg_palette_ptr& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
@@ -740,6 +728,8 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
                    map_dimensions.width(), " - ", item.width);
         BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                    map_dimensions.height(), " - ", item.height);
+        BTN_ASSERT(tiles_ptr.id() == item.tiles_ptr->id(), "Tiles does not match item tiles: ",
+                   tiles_ptr.id(), " - ", item.tiles_ptr->id());
         BTN_ASSERT(palette_ptr.id() == item.palette_ptr->id(), "Palette does not match item palette: ",
                    palette_ptr.id(), " - ", item.palette_ptr->id());
 
@@ -776,8 +766,8 @@ int create_tiles(const span<const tile>& tiles_ref)
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_ref.data(), " - ", tiles_ref.size());
 
     int half_words = _tiles_to_half_words(tiles_ref.size());
-    BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid tiles count: ", tiles_ref.size(), " - ",
-               half_words);
+    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+               "Invalid tiles count: ", tiles_ref.size(), " - ", half_words);
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
@@ -797,19 +787,21 @@ int create_tiles(const span<const tile>& tiles_ref)
     return result;
 }
 
-int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions, bg_tiles_ptr&& tiles_ptr,
                        bg_palette_ptr&& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", &map_cells_ref, " - ",
-                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
+                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles_ptr.id(), " - ",
+                      palette_ptr.id());
 
     BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
+    BTN_ASSERT(tiles_ptr.valid_tiles_count(palette_ptr.bpp_mode()), "Invalid tiles count: ", tiles_ptr.tiles_count());
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
 
-    int result = _create_impl<false>(create_data::map(data_ptr, map_dimensions, move(palette_ptr)));
+    int result = _create_impl<false>(create_data::map(data_ptr, map_dimensions, move(tiles_ptr), move(palette_ptr)));
 
     if(result >= 0)
     {
@@ -829,7 +821,8 @@ int allocate_tiles(int tiles_count)
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count);
 
     int half_words = _tiles_to_half_words(tiles_count);
-    BTN_ASSERT(half_words > 0 && half_words < max_half_words, "Invalid tiles count: ", tiles_count, " - ", half_words);
+    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+               "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     int result = _create_impl<true>(create_data::tiles(nullptr, half_words));
 
@@ -846,15 +839,16 @@ int allocate_tiles(int tiles_count)
     return result;
 }
 
-int allocate_regular_map(const size& map_dimensions, bg_palette_ptr&& palette_ptr)
+int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
-                      map_dimensions.height(), " - ", palette_ptr.id());
+                      map_dimensions.height(), " - ", tiles_ptr.id(), " - ", palette_ptr.id());
 
     BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
+    BTN_ASSERT(tiles_ptr.valid_tiles_count(palette_ptr.bpp_mode()), "Invalid tiles count: ", tiles_ptr.tiles_count());
 
-    int result = _create_impl<false>(create_data::map(nullptr, map_dimensions, move(palette_ptr)));
+    int result = _create_impl<false>(create_data::map(nullptr, map_dimensions, move(tiles_ptr), move(palette_ptr)));
 
     if(result >= 0)
     {
@@ -895,16 +889,15 @@ void decrease_usages(int id)
     BTN_BG_BLOCKS_LOG_STATUS();
 }
 
-int hw_tiles_id(int id)
-{
-    const item_type& item = data.items.item(id);
-    return item.start_block / hw::bg_blocks::tiles_alignment_blocks_count();
-}
-
-int hw_map_id(int id)
+int hw_id(int id)
 {
     const item_type& item = data.items.item(id);
     return item.start_block;
+}
+
+int hw_tiles_cbb(int id)
+{
+    return hw_id(id) / hw::bg_blocks::tiles_alignment_blocks_count();
 }
 
 int tiles_count(int id)
@@ -946,9 +939,9 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 
     item_type& item = data.items.item(id);
     BTN_ASSERT(item.data, "Item has no data");
-    BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.width,
+    BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
                "Tiles count does not match item tiles count: ",
-               _tiles_to_half_words(tiles_ref.size()), " - ", item.width);
+               _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
 
@@ -958,7 +951,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
-        _commit_item(id, data_ptr, true);
+        _check_commit_item(id, data_ptr, true);
 
         BTN_BG_BLOCKS_LOG_STATUS();
     }
@@ -985,7 +978,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref,
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
-        _commit_item(id, data_ptr, true);
+        _check_commit_item(id, data_ptr, true);
 
         BTN_BG_BLOCKS_LOG_STATUS();
     }
@@ -1004,6 +997,39 @@ void reload(int id)
     BTN_BG_BLOCKS_LOG_STATUS();
 }
 
+const bg_tiles_ptr& map_tiles(int id)
+{
+    const item_type& item = data.items.item(id);
+    return *item.tiles_ptr;
+}
+
+void set_map_tiles(int id, bg_tiles_ptr&& tiles_ptr)
+{
+    item_type& item = data.items.item(id);
+
+    if(tiles_ptr != item.tiles_ptr)
+    {
+        BTN_ASSERT(tiles_ptr.valid_tiles_count(item.palette_ptr->bpp_mode()),
+                   "Invalid tiles count: ", tiles_ptr.tiles_count());
+
+        int cbb = tiles_ptr.cbb();
+
+        if(cbb != item.tiles_ptr->cbb())
+        {
+            bgs_manager::update_map_tiles_cbb(item.start_block, cbb);
+        }
+
+        int old_tiles_offset = item.tiles_offset();
+        item.tiles_ptr = move(tiles_ptr);
+
+        if(item.tiles_offset() != old_tiles_offset)
+        {
+            item.commit = true;
+            data.check_commit = true;
+        }
+    }
+}
+
 const bg_palette_ptr& map_palette(int id)
 {
     const item_type& item = data.items.item(id);
@@ -1017,13 +1043,59 @@ void set_map_palette(int id, bg_palette_ptr&& palette_ptr)
     if(palette_ptr != item.palette_ptr)
     {
         palette_bpp_mode new_bpp_mode = palette_ptr.bpp_mode();
+        BTN_ASSERT(item.tiles_ptr->valid_tiles_count(new_bpp_mode),
+                   "Invalid tiles count: ", item.tiles_ptr->tiles_count());
 
         if(new_bpp_mode != item.palette_ptr->bpp_mode())
         {
             bgs_manager::update_map_palette_bpp_mode(item.start_block, new_bpp_mode);
         }
 
+        int old_tiles_offset = item.tiles_offset();
+        int old_palette_offset = item.palette_offset();
         item.palette_ptr = move(palette_ptr);
+
+        if(item.tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
+        {
+            item.commit = true;
+            data.check_commit = true;
+        }
+    }
+}
+
+void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr)
+{
+    item_type& item = data.items.item(id);
+    palette_bpp_mode new_bpp_mode = palette_ptr.bpp_mode();
+    BTN_ASSERT(tiles_ptr.valid_tiles_count(new_bpp_mode), "Invalid tiles count: ", tiles_ptr.tiles_count());
+
+    int old_tiles_offset = item.tiles_offset();
+    int old_palette_offset = item.palette_offset();
+
+    if(tiles_ptr != item.tiles_ptr)
+    {
+        int cbb = tiles_ptr.cbb();
+
+        if(cbb != item.tiles_ptr->cbb())
+        {
+            bgs_manager::update_map_tiles_cbb(item.start_block, cbb);
+        }
+
+        item.tiles_ptr = move(tiles_ptr);
+    }
+
+    if(palette_ptr != item.palette_ptr)
+    {
+        if(new_bpp_mode != item.palette_ptr->bpp_mode())
+        {
+            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_bpp_mode);
+        }
+
+        item.palette_ptr = move(palette_ptr);
+    }
+
+    if(item.tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
+    {
         item.commit = true;
         data.check_commit = true;
     }
@@ -1051,7 +1123,7 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
     if(! item.data)
     {
         auto vram_ptr = reinterpret_cast<regular_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
-        result.emplace(vram_ptr, item.width * item.height);
+        result.emplace(vram_ptr, item.half_words());
     }
 
     return result;
@@ -1062,6 +1134,15 @@ void update()
     if(data.to_remove_blocks_count)
     {
         BTN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
+
+        for(item_type& item : data.items)
+        {
+            if(item.status() == item_type::status_type::TO_REMOVE)
+            {
+                item.tiles_ptr.reset();
+                item.palette_ptr.reset();
+            }
+        }
 
         auto end = data.items.end();
         auto before_previous_iterator = end;
@@ -1141,7 +1222,7 @@ void commit()
 
                 if(item.status() == item_type::status_type::USED)
                 {
-                    hw::bg_blocks::commit(item.data, item.start_block, item.width * item.height, item.palette_offset());
+                    _commit_item(item);
                 }
             }
         }

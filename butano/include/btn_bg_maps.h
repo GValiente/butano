@@ -1,7 +1,7 @@
 #ifndef BTN_BG_MAPS_H
 #define BTN_BG_MAPS_H
 
-#include "btn_common.h"
+#include "../hw/include/btn_hw_bg_blocks_constants.h"
 
 namespace btn::bg_maps
 {

@@ -9,6 +9,7 @@
 namespace btn
 {
 
+class bg_tiles_ptr;
 class bg_palette_ptr;
 class regular_bg_map_ptr;
 
@@ -34,15 +35,12 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] regular_bg_map_ptr create_map(const bg_palette_ptr& palette_ptr, create_mode create_mode) const;
-
-    [[nodiscard]] regular_bg_map_ptr create_map(bg_palette_ptr&& palette_ptr, create_mode create_mode) const;
-
-    [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
-            const bg_palette_ptr& palette_ptr, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr,
+                                                create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
-            bg_palette_ptr&& palette_ptr, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr,
+            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b)
     {

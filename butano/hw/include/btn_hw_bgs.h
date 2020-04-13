@@ -27,9 +27,9 @@ namespace btn::hw::bgs
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6));
     }
 
-    inline void set_tiles(int tiles_id, handle& bg)
+    inline void set_tiles_cbb(int tiles_cbb, handle& bg)
     {
-        BFN_SET(bg.cnt, tiles_id, BG_CBB);
+        BFN_SET(bg.cnt, tiles_cbb, BG_CBB);
     }
 
     [[nodiscard]] inline palette_bpp_mode bpp_mode(const handle& bg)

@@ -108,7 +108,7 @@ bool hero::throw_bomb()
     return true;
 }
 
-void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
+void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
                   objects& objects, background& background)
 {
     if(alive())

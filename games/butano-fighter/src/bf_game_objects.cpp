@@ -71,7 +71,16 @@ bool objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bo
 
 int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
 {
-    for(auto gems_it = _gems.begin(), gems_end = _gems.end(); gems_it != gems_end; ++gems_it)
+    auto gems_it = _gems.begin();
+    auto gems_end = _gems.end();
+    _gem_check_odds = ! _gem_check_odds;
+
+    if(_gem_check_odds)
+    {
+        ++gems_it;
+    }
+
+    while(gems_it < gems_end)
     {
         if(gems_it->intersects_hero(hero_rect))
         {
@@ -79,6 +88,8 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
             btn::sound::play(btn::sound_items::gold_3);
             return hero_level + 1;
         }
+
+        gems_it += 2;
     }
 
     return 0;

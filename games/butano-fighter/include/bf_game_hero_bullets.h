@@ -33,6 +33,7 @@ private:
     btn::vector<bullet, constants::max_hero_bullets> _bullets;
     int _b_held_counter = 0;
     int _event_counter = 0;
+    bool _check_even_bullets = false;
 
     void _remove_bullets(hero& hero, enemies& enemies, objects& objects);
 

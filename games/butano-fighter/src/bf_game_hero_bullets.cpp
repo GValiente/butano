@@ -68,6 +68,8 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
 {
     int bullets_count = _bullets.size();
+    bool check_bullet = _check_even_bullets;
+    _check_even_bullets = ! _check_even_bullets;
 
     for(int index = 0; index < bullets_count; )
     {
@@ -76,10 +78,10 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
         const btn::fixed_point& position = sprite_move_action.sprite().position();
         const hero_bullet_level& level_data = *bullet.level_data;
 
-        if(position.x() < -constants::view_width || position.x() > constants::view_width ||
+        if(check_bullet && (position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height ||
                 enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
-                                          level_data.damage, hero, objects }))
+                                          level_data.damage, hero, objects })))
         {
             if(index < bullets_count - 1)
             {
@@ -93,6 +95,8 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
             sprite_move_action.update();
             ++index;
         }
+
+        check_bullet = ! check_bullet;
     }
 
     _bullets.shrink(bullets_count);

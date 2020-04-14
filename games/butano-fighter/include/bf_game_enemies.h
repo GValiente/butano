@@ -38,6 +38,7 @@ private:
     int _event_index = -1;
     int _event_counter = 1;
     int _new_enemy_tag = 0;
+    bool _hero_bomb_check_odds = false;
 
     [[nodiscard]] bool _remove_enemies(const hero& hero, enemy_bullets& enemy_bullets);
 

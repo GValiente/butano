@@ -70,7 +70,7 @@ public:
 
     [[nodiscard]] bool throw_bomb();
 
-    void update(const hero_bomb& hero_bomb, const enemies& enemies, const enemy_bullets& enemy_bullets,
+    void update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
                 objects& objects, background& background);
 
 private:

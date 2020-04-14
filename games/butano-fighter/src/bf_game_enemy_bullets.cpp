@@ -34,10 +34,20 @@ enemy_bullets::enemy_bullets() :
 {
 }
 
-bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect) const
+bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
 {
-    for(const bullet& bullet : _bullets)
+    auto bullets_it = _bullets.begin();
+    auto bullets_end = _bullets.end();
+    _hero_check_odds = ! _hero_check_odds;
+
+    if(_hero_check_odds)
     {
+        ++bullets_it;
+    }
+
+    while(bullets_it < bullets_end)
+    {
+        const bullet& bullet = *bullets_it;
         const btn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
         btn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
 
@@ -45,6 +55,8 @@ bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect) const
         {
             return true;
         }
+
+        bullets_it += 2;
     }
 
     return false;

@@ -25,9 +25,20 @@ bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
 
 void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
 {
-    for(enemy* enemy : _list)
+    auto enemies_it = _list.begin();
+    auto enemies_end = _list.end();
+    _hero_bomb_check_odds = ! _hero_bomb_check_odds;
+
+    if(_hero_bomb_check_odds)
     {
+        ++enemies_it;
+    }
+
+    while(enemies_it < enemies_end)
+    {
+        enemy* enemy = *enemies_it;
         enemy->check_hero_bomb(bomb_center, bomb_squared_radius);
+        enemies_it += 2;
     }
 }
 

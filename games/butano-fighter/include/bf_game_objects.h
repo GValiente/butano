@@ -38,6 +38,7 @@ private:
     btn::array<btn::sprite_tiles_ptr, 4> _gem_tiles;
     btn::vector<gem, constants::max_gems> _gems;
     btn::deque<object_message, constants::max_object_messages> _messages;
+    bool _gem_check_odds = false;
 };
 
 }

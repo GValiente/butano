@@ -73,6 +73,7 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
 {
     auto gems_it = _gems.begin();
     auto gems_end = _gems.end();
+    int result = 0;
     _gem_check_odds = ! _gem_check_odds;
 
     if(_gem_check_odds)
@@ -84,15 +85,23 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
     {
         if(gems_it->intersects_hero(hero_rect))
         {
+            result += hero_level + 1;
             _gems.erase(gems_it);
-            btn::sound::play(btn::sound_items::gold_3);
-            return hero_level + 1;
+            ++gems_it;
+            gems_end = _gems.end();
         }
-
-        gems_it += 2;
+        else
+        {
+            gems_it += 2;
+        }
     }
 
-    return 0;
+    if(result)
+    {
+        btn::sound::play(btn::sound_items::gold_3);
+    }
+
+    return result;
 }
 
 void objects::spawn_hero_weapon(const btn::fixed_point& position, int hero_level)

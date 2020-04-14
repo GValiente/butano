@@ -53,7 +53,7 @@ namespace
                 {
                     fixed& last_value = last_value_variant.get<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).x();
-                    updated |= last_value != new_value;
+                    updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
 
                     if(updated)
@@ -69,7 +69,7 @@ namespace
                 {
                     fixed& last_value = last_value_variant.get<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).y();
-                    updated |= last_value != new_value;
+                    updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
 
                     if(updated)
@@ -101,7 +101,8 @@ namespace
                 {
                     pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
-                    updated |= last_value != new_value;
+                    updated |= last_value.first.integer() != new_value.first.integer() ||
+                            last_value.second.integer() != new_value.second.integer();
                     last_value = new_value;
 
                     if(updated)
@@ -117,7 +118,8 @@ namespace
                 {
                     pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
-                    updated |= last_value != new_value;
+                    updated |= last_value.first.integer() != new_value.first.integer() ||
+                            last_value.second.integer() != new_value.second.integer();
                     last_value = new_value;
 
                     if(updated)

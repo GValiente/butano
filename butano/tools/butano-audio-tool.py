@@ -72,8 +72,10 @@ def write_output_file(items, include_guard, include_file, namespace, item_class,
 
 
 def write_output_files(soundbank_header_path, build_folder_path):
-    music_items = []
-    sound_items = []
+    music_items_list = []
+    sound_items_list = []
+    music_final_names_set = set()
+    sound_final_names_set = set()
 
     with open(soundbank_header_path, 'r') as soundbank_file:
         for soundbank_line in soundbank_file:
@@ -82,14 +84,22 @@ def write_output_files(soundbank_header_path, build_folder_path):
             final_name = soundbank_name[4:].lower()
 
             if soundbank_name.startswith('MOD_'):
-                music_items.append([final_name, soundbank_words[2]])
-            elif soundbank_name.startswith('SFX_'):
-                sound_items.append([final_name, soundbank_words[2]])
+                if final_name in music_final_names_set:
+                    raise ValueError('There\'s two or more music items with the same name: ' + final_name)
 
-    write_output_file(music_items, 'BTN_MUSIC_ITEMS_H', 'btn_music_item.h', 'btn::music_items', 'music_item',
+                music_final_names_set.add(final_name)
+                music_items_list.append([final_name, soundbank_words[2]])
+            elif soundbank_name.startswith('SFX_'):
+                if final_name in sound_final_names_set:
+                    raise ValueError('There\'s two or more sound items with the same name: ' + final_name)
+
+                sound_final_names_set.add(final_name)
+                sound_items_list.append([final_name, soundbank_words[2]])
+
+    write_output_file(music_items_list, 'BTN_MUSIC_ITEMS_H', 'btn_music_item.h', 'btn::music_items', 'music_item',
                       build_folder_path + '/btn_music_items.h')
 
-    write_output_file(sound_items, 'BTN_SOUND_ITEMS_H', 'btn_sound_item.h', 'btn::sound_items', 'sound_item',
+    write_output_file(sound_items_list, 'BTN_SOUND_ITEMS_H', 'btn_sound_item.h', 'btn::sound_items', 'sound_item',
                       build_folder_path + '/btn_sound_items.h')
 
 

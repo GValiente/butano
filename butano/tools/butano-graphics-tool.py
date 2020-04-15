@@ -322,11 +322,17 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
 
 def process(graphics_folder_paths, build_folder_path):
     graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths, build_folder_path)
+    graphics_file_names_set = set()
 
     for graphics_folder_info in graphics_folder_infos:
         for graphics_file_path in graphics_folder_info.file_paths():
             graphics_file_name = os.path.basename(graphics_file_path)
             graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
+
+            if graphics_file_name_no_ext in graphics_file_names_set:
+                raise ValueError('There\'s two or more graphics items with the same name: ' + graphics_file_name_no_ext)
+
+            graphics_file_names_set.add(graphics_file_name_no_ext)
             file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
             old_file_info = FileInfo.read(file_info_path)
             new_file_info = FileInfo.build_from_file(graphics_file_path)

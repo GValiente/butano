@@ -388,7 +388,7 @@ public:
         BTN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
-        _insert(const_cast<iterator>(position), new_node);
+        _insert(_mutable_iterator(position), new_node);
         return iterator(&new_node);
     }
 
@@ -397,7 +397,7 @@ public:
         BTN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
-        _insert(const_cast<iterator>(position), new_node);
+        _insert(_mutable_iterator(position), new_node);
         return iterator(&new_node);
     }
 
@@ -407,7 +407,7 @@ public:
         BTN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
-        _insert(const_cast<iterator>(position), new_node);
+        _insert(_mutable_iterator(position), new_node);
         return iterator(&new_node);
     }
 
@@ -415,7 +415,7 @@ public:
     {
         BTN_ASSERT(! empty(), "List is empty");
 
-        iterator non_const_position = const_cast<iterator>(position);
+        iterator non_const_position = _mutable_iterator(position);
         iterator next = non_const_position;
         ++next;
         _erase(non_const_position);
@@ -424,8 +424,8 @@ public:
 
     iterator erase(const_iterator first, const_iterator last)
     {
-        auto erase_first = const_cast<iterator>(first);
-        auto erase_last = const_cast<iterator>(last);
+        iterator erase_first = _mutable_iterator(first);
+        iterator erase_last = _mutable_iterator(last);
         iterator erase_it = erase_first;
 
         while(erase_it != erase_last)
@@ -616,10 +616,6 @@ public:
     }
 
 protected:
-    ipool<value_node_type>* _ipool;
-    node_type _first_node;
-    node_type _last_node;
-
     explicit ilist(ipool<value_node_type>& ipool) :
         _ipool(&ipool)
     {
@@ -649,6 +645,16 @@ protected:
         }
 
         other.clear();
+    }
+
+private:
+    ipool<value_node_type>* _ipool;
+    node_type _first_node;
+    node_type _last_node;
+
+    [[nodiscard]] static iterator _mutable_iterator(const_iterator const_iterator)
+    {
+        return iterator(const_cast<node_type*>(const_iterator._node));
     }
 
     void _insert(iterator position, node_type& new_node)

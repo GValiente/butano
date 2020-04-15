@@ -24,6 +24,7 @@ class intrusive_list
 
 private:
     using node_type = intrusive_list_node_type;
+    static_assert(is_base_of<node_type, Type>::value);
 
 public:
     using value_type = Type;
@@ -325,7 +326,7 @@ public:
 
     iterator insert(const_iterator position, reference value)
     {
-        _insert(const_cast<iterator>(position), value);
+        _insert(_mutable_iterator(position), value);
         return iterator(&value);
     }
 
@@ -333,7 +334,7 @@ public:
     {
         BTN_ASSERT(! empty(), "List is empty");
 
-        iterator non_const_position = const_cast<iterator>(position);
+        iterator non_const_position = _mutable_iterator(position);
         iterator next = non_const_position;
         ++next;
         _erase(non_const_position);
@@ -353,8 +354,8 @@ public:
 
     iterator erase(const_iterator first, const_iterator last)
     {
-        auto erase_first = const_cast<iterator>(first);
-        auto erase_last = const_cast<iterator>(last);
+        iterator erase_first = _mutable_iterator(first);
+        iterator erase_last = _mutable_iterator(last);
         iterator erase_it = erase_first;
 
         while(erase_it != erase_last)
@@ -532,10 +533,6 @@ public:
     }
 
 protected:
-    node_type _first_node;
-    node_type _last_node;
-    size_type _size;
-
     void _assign(intrusive_list&& other)
     {
         iterator last = end();
@@ -552,6 +549,16 @@ protected:
         other._first_node.next = &other._last_node;
         other._last_node.prev = &other._first_node;
         other._size = 0;
+    }
+
+private:
+    node_type _first_node;
+    node_type _last_node;
+    size_type _size;
+
+    [[nodiscard]] static iterator _mutable_iterator(const_iterator const_iterator)
+    {
+        return iterator(const_cast<node_type*>(const_iterator._node));
     }
 
     void _insert(iterator position, node_type& new_node)

@@ -533,7 +533,7 @@ public:
             ++_size;
         }
 
-        return const_cast<iterator>(position);
+        return _mutable_iterator(position);
     }
 
     iterator insert(const const_iterator& position, value_type&& value)
@@ -563,7 +563,7 @@ public:
             ++_size;
         }
 
-        return const_cast<iterator>(position);
+        return _mutable_iterator(position);
     }
 
     template<typename... Args>
@@ -594,7 +594,7 @@ public:
             ++_size;
         }
 
-        return const_cast<iterator>(position);
+        return _mutable_iterator(position);
     }
 
     iterator erase(const const_iterator& position)
@@ -625,7 +625,7 @@ public:
             data[real_index].~value_type();
         }
 
-        return const_cast<iterator>(position);
+        return _mutable_iterator(position);
     }
 
     iterator erase(const const_iterator& first, const const_iterator& last)
@@ -676,7 +676,7 @@ public:
             }
         }
 
-        return const_cast<iterator>(first);
+        return _mutable_iterator(first);
     }
 
     friend void erase(ideque& deque, const_reference value)
@@ -881,32 +881,12 @@ public:
     }
 
 protected:
-    pointer _data;
-    size_type _size;
-    size_type _max_size_minus_one;
-    size_type _begin;
-
     ideque(reference data, size_type max_size) :
         _data(&data),
         _size(0),
         _max_size_minus_one(max_size - 1),
         _begin(0)
     {
-    }
-
-    [[nodiscard]] size_type _real_index(size_type index) const
-    {
-        return (_begin + index) & _max_size_minus_one;
-    }
-
-    [[nodiscard]] const_reference _value(size_type index) const
-    {
-        return _data[_real_index(index)];
-    }
-
-    [[nodiscard]] reference _value(size_type index)
-    {
-        return _data[_real_index(index)];
     }
 
     void _assign(const ideque& other)
@@ -938,6 +918,32 @@ protected:
 
         other._size = 0;
         other._begin = 0;
+    }
+
+private:
+    pointer _data;
+    size_type _size;
+    size_type _max_size_minus_one;
+    size_type _begin;
+
+    [[nodiscard]] static iterator _mutable_iterator(const const_iterator& const_iterator)
+    {
+        return iterator(const_cast<ideque&>(*const_iterator._deque), const_iterator._index);
+    }
+
+    [[nodiscard]] size_type _real_index(size_type index) const
+    {
+        return (_begin + index) & _max_size_minus_one;
+    }
+
+    [[nodiscard]] const_reference _value(size_type index) const
+    {
+        return _data[_real_index(index)];
+    }
+
+    [[nodiscard]] reference _value(size_type index)
+    {
+        return _data[_real_index(index)];
     }
 
     void _pop_front()

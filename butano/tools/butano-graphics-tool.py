@@ -322,17 +322,34 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
 
 def process(graphics_folder_paths, build_folder_path):
     graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths, build_folder_path)
-    graphics_file_names_set = set()
+    sprite_file_names_set = set()
+    bg_file_names_set = set()
 
     for graphics_folder_info in graphics_folder_infos:
         for graphics_file_path in graphics_folder_info.file_paths():
             graphics_file_name = os.path.basename(graphics_file_path)
             graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
 
-            if graphics_file_name_no_ext in graphics_file_names_set:
-                raise ValueError('There\'s two or more graphics items with the same name: ' + graphics_file_name_no_ext)
+            try:
+                item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
 
-            graphics_file_names_set.add(graphics_file_name_no_ext)
+                if graphics_file_name_no_ext in sprite_file_names_set:
+                    raise ValueError('There\'s two or more sprite items with the same name: ' + graphics_file_name_no_ext)
+
+                sprite_file_names_set.add(graphics_file_name_no_ext)
+                is_sprite = True
+            except KeyError:
+                try:
+                    item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
+
+                    if graphics_file_name_no_ext in bg_file_names_set:
+                        raise ValueError('There\'s two or more bg items with the same name: ' + graphics_file_name_no_ext)
+
+                    bg_file_names_set.add(graphics_file_name_no_ext)
+                    is_sprite = False
+                except KeyError:
+                    raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
+
             file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
             old_file_info = FileInfo.read(file_info_path)
             new_file_info = FileInfo.build_from_file(graphics_file_path)
@@ -341,15 +358,10 @@ def process(graphics_folder_paths, build_folder_path):
             if new_graphics_json or graphics_folder_info.new_graphics_json():
                 print('Processing graphics file: ' + graphics_file_path)
 
-                try:
-                    item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
+                if is_sprite:
                     item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
-                except KeyError:
-                    try:
-                        item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
-                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
-                    except KeyError:
-                        raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
+                else:
+                    item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
 
                 item.process()
                 item.write_header()

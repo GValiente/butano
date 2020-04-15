@@ -17,8 +17,6 @@ from file_info import FileInfo
 def remove_file(file_path):
     if os.path.exists(file_path):
         os.remove(file_path)
-    else:
-        print(file_path + ' does not exist')
 
 
 class GraphicsFolderInfo:
@@ -328,76 +326,39 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
     return graphics_folder_infos
 
 
-def remove_old_sprite_items(new_sprite_file_names_set, build_folder_path):
-    sprite_file_names_set_file_path = build_folder_path + '/_btn_sprite_file_names_set.pickle'
+def remove_old_graphics_items(new_graphics_file_names_set, build_folder_path):
+    graphics_file_names_set_file_path = build_folder_path + '/_btn_graphics_file_names_set.pickle'
 
-    if os.path.isfile(sprite_file_names_set_file_path):
-        with open(sprite_file_names_set_file_path, 'rb') as sprite_file_names_set_file:
-            old_sprite_file_names_set = pickle.load(sprite_file_names_set_file)
+    if os.path.isfile(graphics_file_names_set_file_path):
+        with open(graphics_file_names_set_file_path, 'rb') as graphics_file_names_set_file:
+            old_graphics_file_names_set = pickle.load(graphics_file_names_set_file)
 
-            for old_sprite_file_name in old_sprite_file_names_set:
-                if old_sprite_file_name not in new_sprite_file_names_set:
-                    print('Removing old sprite item build files: ' + old_sprite_file_name)
-                    remove_file(build_folder_path + '/' + old_sprite_file_name + '_btn_graphics.o')
-                    remove_file(build_folder_path + '/' + old_sprite_file_name + '_btn_graphics.d')
-                    remove_file(build_folder_path + '/' + old_sprite_file_name + '_btn_graphics.s')
-                    remove_file(build_folder_path + '/btn_sprite_items_' + old_sprite_file_name + '.h')
-                    remove_file(build_folder_path + '/_' + old_sprite_file_name + '_file_info.txt')
+            for old_graphics_file_name in old_graphics_file_names_set:
+                if old_graphics_file_name not in new_graphics_file_names_set:
+                    print('Removing old graphics item build files: ' + old_graphics_file_name)
+                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.o')
+                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.d')
+                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.s')
+                    remove_file(build_folder_path + '/btn_sprite_items_' + old_graphics_file_name + '.h')
+                    remove_file(build_folder_path + '/btn_bg_items_' + old_graphics_file_name + '.h')
+                    remove_file(build_folder_path + '/_' + old_graphics_file_name + '_file_info.txt')
 
-    with open(sprite_file_names_set_file_path, 'wb') as sprite_file_names_set_file:
-        pickle.dump(new_sprite_file_names_set, sprite_file_names_set_file)
-
-
-def remove_old_bg_items(new_bg_file_names_set, build_folder_path):
-    bg_file_names_set_file_path = build_folder_path + '/_btn_bg_file_names_set.pickle'
-
-    if os.path.isfile(bg_file_names_set_file_path):
-        with open(bg_file_names_set_file_path, 'rb') as bg_file_names_set_file:
-            old_bg_file_names_set = pickle.load(bg_file_names_set_file)
-
-            for old_bg_file_name in old_bg_file_names_set:
-                if old_bg_file_name not in new_bg_file_names_set:
-                    print('Removing old bg item build files: ' + old_bg_file_name)
-                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.o')
-                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.d')
-                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.s')
-                    remove_file(build_folder_path + '/btn_bg_items_' + old_bg_file_name + '.h')
-                    remove_file(build_folder_path + '/_' + old_bg_file_name + '_file_info.txt')
-
-    with open(bg_file_names_set_file_path, 'wb') as bg_file_names_set_file:
-        pickle.dump(new_bg_file_names_set, bg_file_names_set_file)
+    with open(graphics_file_names_set_file_path, 'wb') as graphics_file_names_set_file:
+        pickle.dump(new_graphics_file_names_set, graphics_file_names_set_file)
 
 
 def process(graphics_folder_paths, build_folder_path):
     graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths, build_folder_path)
-    sprite_file_names_set = set()
-    bg_file_names_set = set()
+    graphics_file_names_set = set()
 
     for graphics_folder_info in graphics_folder_infos:
         for graphics_file_path in graphics_folder_info.file_paths():
             graphics_file_name = os.path.basename(graphics_file_path)
             graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
+            if graphics_file_name_no_ext in graphics_file_names_set:
+                raise ValueError('There\'s two or more graphics items with the same name: ' + graphics_file_name_no_ext)
 
-            try:
-                item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
-
-                if graphics_file_name_no_ext in sprite_file_names_set:
-                    raise ValueError('There\'s two or more sprite items with the same name: ' + graphics_file_name_no_ext)
-
-                sprite_file_names_set.add(graphics_file_name_no_ext)
-                is_sprite = True
-            except KeyError:
-                try:
-                    item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
-
-                    if graphics_file_name_no_ext in bg_file_names_set:
-                        raise ValueError('There\'s two or more bg items with the same name: ' + graphics_file_name_no_ext)
-
-                    bg_file_names_set.add(graphics_file_name_no_ext)
-                    is_sprite = False
-                except KeyError:
-                    raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
-
+            graphics_file_names_set.add(graphics_file_name_no_ext)
             file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
             old_file_info = FileInfo.read(file_info_path)
             new_file_info = FileInfo.build_from_file(graphics_file_path)
@@ -406,10 +367,15 @@ def process(graphics_folder_paths, build_folder_path):
             if new_graphics_json or graphics_folder_info.new_graphics_json():
                 print('Processing graphics file: ' + graphics_file_path)
 
-                if is_sprite:
+                try:
+                    item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
                     item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
-                else:
-                    item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
+                except KeyError:
+                    try:
+                        item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
+                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
+                    except KeyError:
+                        raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
 
                 item.process()
                 item.write_header()
@@ -417,7 +383,7 @@ def process(graphics_folder_paths, build_folder_path):
                 if new_graphics_json:
                     new_file_info.write(file_info_path)
 
-    remove_old_sprite_items(sprite_file_names_set, build_folder_path)
+    remove_old_graphics_items(graphics_file_names_set, build_folder_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='butano graphics tool.')

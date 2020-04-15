@@ -11,4 +11,8 @@
     #define BTN_CFG_LOG_IMPLEMENTATION BTN_LOG_IMPLEMENTATION_MGBA
 #endif
 
+#ifndef BTN_CFG_LOG_MAX_SIZE
+    #define BTN_CFG_LOG_MAX_SIZE 0x100
+#endif
+
 #endif

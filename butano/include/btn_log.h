@@ -10,7 +10,7 @@
     #define BTN_LOG(...) \
         do \
         { \
-            char _btn_string[0x100]; \
+            char _btn_string[BTN_CFG_LOG_MAX_SIZE]; \
             btn::istring_base _btn_istring(_btn_string); \
             btn::input_string_stream _btn_input_string_stream(_btn_istring); \
             _btn_input_string_stream.append_args(__VA_ARGS__); \
@@ -19,7 +19,7 @@
 
     namespace btn
     {
-        void log(const btn::istring_base& message);
+        void log(const istring_base& message);
     }
 #else
     #define BTN_LOG(...) \

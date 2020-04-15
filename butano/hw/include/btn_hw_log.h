@@ -7,12 +7,12 @@
 #if BTN_CFG_LOG_ENABLED
     namespace btn
     {
-        class string_view;
+        class istring_base;
     }
 
     namespace btn::hw
     {
-        void log(const string_view& message);
+        void log(const istring_base& message);
     }
 #endif
 

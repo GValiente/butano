@@ -28,7 +28,7 @@ namespace bf::constants
     constexpr const int enemies_z_order = 4;
     constexpr const int object_messages_z_order = 5;
     constexpr const int enemies_grid_size = 16;
-    constexpr const int max_enemies_per_grid_cell = 4;
+    constexpr const int max_enemies_in_grid = 256;
     constexpr const int reserved_sprite_affine_mats = 4;
 }
 

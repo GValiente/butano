@@ -19,6 +19,8 @@ void enemies_grid::add_enemy(enemy& enemy)
     int row = _row(position);
     int column = _column(position);
     int enemy_rows = enemy.grid_rows();
+    enemy.set_last_grid_row(row);
+    enemy.set_last_grid_column(column);
 
     for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
     {
@@ -85,9 +87,9 @@ bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
     int row = _row(hero_position);
     int column = _column(hero_position);
 
-    for(enemy* enemy : _cells_row(row)[column].enemies())
+    for(const enemies_list_node_type& enemies_node : _cells_row(row)[column].enemies())
     {
-        if(enemy->check_hero(hero_rect))
+        if(enemies_node.enemy_ptr->check_hero(hero_rect))
         {
             return true;
         }
@@ -102,9 +104,9 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
     int row = _row(bullet_position);
     int column = _column(bullet_position);
 
-    for(enemy* enemy : _cells_row(row)[column].enemies())
+    for(const enemies_list_node_type& enemies_node : _cells_row(row)[column].enemies())
     {
-        if(enemy->check_hero_bullet(data))
+        if(enemies_node.enemy_ptr->check_hero_bullet(data))
         {
             return true;
         }
@@ -121,14 +123,14 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
         for(int r = 0; r < rows; ++r)
         {
             const cell* cells_row = _cells_row(r);
-            btn::string<(columns * constants::max_enemies_per_grid_cell * 4) + 6> string;
+            btn::string<BTN_CFG_LOG_MAX_SIZE> string;
             btn::input_string_stream stream(string);
             stream.append("\t[");
 
             for(int c = 0; c < columns; ++c)
             {
                 const cell& cell = cells_row[c];
-                const btn::ivector<enemy*>& enemies = cell.enemies();
+                const enemies_list& enemies = cell.enemies();
 
                 if(enemies.empty())
                 {
@@ -136,9 +138,9 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
                 }
                 else
                 {
-                    for(const enemy* enemy : enemies)
+                    for(const enemies_list_node_type& enemies_node : enemies)
                     {
-                        stream.append(enemy->tag());
+                        stream.append(enemies_node.enemy_ptr->tag());
                         stream.append(',');
                     }
                 }
@@ -166,7 +168,8 @@ int enemies_grid::_column(const btn::fixed_point& position)
 int enemies_grid::_row(const btn::fixed_point& position)
 {
     int row = (position.y().integer() / constants::enemies_grid_size) + (rows / 2);
-    BTN_ASSERT(row >= cell_increment && row < rows - cell_increment, "Invalid row: ", row, " - ", position.x().integer());
+    BTN_ASSERT(row >= cell_increment && row < rows - cell_increment,
+               "Invalid row: ", row, " - ", position.x().integer());
 
     return row;
 }
@@ -178,7 +181,7 @@ void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)
 
     for(int c = column - enemy_columns; c <= column + enemy_columns; ++c)
     {
-        cells_row[c].add_enemy(enemy);
+        cells_row[c].add_enemy(enemy, _pool);
     }
 }
 
@@ -189,7 +192,7 @@ void enemies_grid::_remove_enemy_row(int row, int column, enemy& enemy)
 
     for(int c = column - enemy_columns; c <= column + enemy_columns; ++c)
     {
-        cells_row[c].remove_enemy(enemy);
+        cells_row[c].remove_enemy(enemy, _pool);
     }
 }
 
@@ -199,7 +202,7 @@ void enemies_grid::_add_enemy_column(int row, int column, enemy& enemy)
 
     for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
     {
-        _cells_row(r)[column].add_enemy(enemy);
+        _cells_row(r)[column].add_enemy(enemy, _pool);
     }
 }
 
@@ -209,30 +212,45 @@ void enemies_grid::_remove_enemy_column(int row, int column, enemy& enemy)
 
     for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
     {
-        _cells_row(r)[column].remove_enemy(enemy);
+        _cells_row(r)[column].remove_enemy(enemy, _pool);
     }
 }
 
-void enemies_grid::cell::add_enemy(enemy& enemy)
+void enemies_grid::cell::add_enemy(enemy& enemy, enemies_pool& enemies_pool)
 {
-    auto end = _enemies.end();
-
-    if(btn::find(_enemies.begin(), end, &enemy) == end)
+    for(const enemies_list_node_type& enemies_node : _enemies)
     {
-        BTN_ASSERT(! _enemies.full(), "No more available enemy indexes");
-
-        _enemies.push_back(&enemy);
+        if(enemies_node.enemy_ptr == &enemy)
+        {
+            return;
+        }
     }
+
+    BTN_ASSERT(! enemies_pool.full(), "No more available enemies in grid");
+
+    enemies_list_node_type& enemies_node = enemies_pool.create(enemy);
+    _enemies.push_front(enemies_node);
 }
 
-void enemies_grid::cell::remove_enemy(enemy& enemy)
+void enemies_grid::cell::remove_enemy(enemy& enemy, enemies_pool& enemies_pool)
 {
+    auto before_it = _enemies.before_begin();
+    auto it = _enemies.begin();
     auto end = _enemies.end();
-    auto it = btn::find(_enemies.begin(), end, &enemy);
 
-    if(it != end)
+    while(it != end)
     {
-        _enemies.erase(it);
+        enemies_list_node_type& enemies_node = *it;
+
+        if(enemies_node.enemy_ptr == &enemy)
+        {
+            _enemies.erase_after(before_it);
+            enemies_pool.destroy(enemies_node);
+            return;
+        }
+
+        before_it = it;
+        ++it;
     }
 }
 

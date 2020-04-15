@@ -1,13 +1,14 @@
 #ifndef BF_GAME_ENEMIES_GRID_H
 #define BF_GAME_ENEMIES_GRID_H
 
-#include "btn_vector.h"
+#include "btn_pool.h"
+#include "btn_intrusive_forward_list.h"
 #include "bf_constants.h"
-#include "btn_fixed_point.h"
 
 namespace btn
 {
     class fixed_rect;
+    class fixed_point;
 }
 
 namespace bf::game
@@ -39,29 +40,45 @@ private:
     static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (cell_increment * 2);
     static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (cell_increment * 2);
 
+    class enemies_list_node_type : public btn::intrusive_forward_list_node_type
+    {
+
+    public:
+        enemy* enemy_ptr;
+
+        enemies_list_node_type(enemy& enemy_ref) :
+            enemy_ptr(&enemy_ref)
+        {
+        }
+    };
+
+    using enemies_list = btn::intrusive_forward_list<enemies_list_node_type>;
+    using enemies_pool = btn::pool<enemies_list_node_type, constants::max_enemies_in_grid>;
+
     class cell
     {
 
     public:
-        [[nodiscard]] const btn::ivector<enemy*>& enemies() const
+        [[nodiscard]] const enemies_list& enemies() const
         {
             return _enemies;
         }
 
-        [[nodiscard]] btn::ivector<enemy*>& enemies()
+        [[nodiscard]] enemies_list& enemies()
         {
             return _enemies;
         }
 
-        void add_enemy(enemy& enemy);
+        void add_enemy(enemy& enemy, enemies_pool& enemies_pool);
 
-        void remove_enemy(enemy& enemy);
+        void remove_enemy(enemy& enemy, enemies_pool& enemies_pool);
 
     private:
-        btn::vector<enemy*, constants::max_enemies_per_grid_cell> _enemies;
+        enemies_list _enemies;
     };
 
     cell _cells[columns * rows];
+    enemies_pool _pool;
 
     [[nodiscard]] static int _column(const btn::fixed_point& position);
 

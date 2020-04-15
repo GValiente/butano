@@ -342,10 +342,30 @@ def remove_old_sprite_items(new_sprite_file_names_set, build_folder_path):
                     remove_file(build_folder_path + '/' + old_sprite_file_name + '_btn_graphics.d')
                     remove_file(build_folder_path + '/' + old_sprite_file_name + '_btn_graphics.s')
                     remove_file(build_folder_path + '/btn_sprite_items_' + old_sprite_file_name + '.h')
-                    remove_file(build_folder_path + '/_btn_' + old_sprite_file_name + '_file_info.txt')
+                    remove_file(build_folder_path + '/_' + old_sprite_file_name + '_file_info.txt')
 
     with open(sprite_file_names_set_file_path, 'wb') as sprite_file_names_set_file:
         pickle.dump(new_sprite_file_names_set, sprite_file_names_set_file)
+
+
+def remove_old_bg_items(new_bg_file_names_set, build_folder_path):
+    bg_file_names_set_file_path = build_folder_path + '/_btn_bg_file_names_set.pickle'
+
+    if os.path.isfile(bg_file_names_set_file_path):
+        with open(bg_file_names_set_file_path, 'rb') as bg_file_names_set_file:
+            old_bg_file_names_set = pickle.load(bg_file_names_set_file)
+
+            for old_bg_file_name in old_bg_file_names_set:
+                if old_bg_file_name not in new_bg_file_names_set:
+                    print('Removing old bg item build files: ' + old_bg_file_name)
+                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.o')
+                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.d')
+                    remove_file(build_folder_path + '/' + old_bg_file_name + '_btn_graphics.s')
+                    remove_file(build_folder_path + '/btn_bg_items_' + old_bg_file_name + '.h')
+                    remove_file(build_folder_path + '/_' + old_bg_file_name + '_file_info.txt')
+
+    with open(bg_file_names_set_file_path, 'wb') as bg_file_names_set_file:
+        pickle.dump(new_bg_file_names_set, bg_file_names_set_file)
 
 
 def process(graphics_folder_paths, build_folder_path):

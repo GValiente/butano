@@ -8,6 +8,7 @@
 #include "btn_sprites.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
+#include "btn_intrusive_list.h"
 #include "btn_sprites_manager.h"
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_ptr.h"
@@ -19,15 +20,7 @@ namespace btn
 
 class sprite_builder;
 
-class sprites_manager_node
-{
-
-public:
-    sprites_manager_node* prev = nullptr;
-    sprites_manager_node* next = nullptr;
-};
-
-class sprites_manager_item : public sprites_manager_node
+class sprites_manager_item : public intrusive_list_node_type
 {
 
 public:

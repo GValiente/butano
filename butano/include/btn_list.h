@@ -404,7 +404,6 @@ public:
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
         BTN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);

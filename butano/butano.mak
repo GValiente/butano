@@ -66,21 +66,25 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
  
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
  
-export VPATH	:=  	$(foreach dir,	$(SOURCES),	$(CURDIR)/$(dir)) \
+export VPATH	:=  $(foreach dir,	$(SOURCES),	$(CURDIR)/$(dir)) \
                         $(foreach dir,	$(BTNSOURCES),	$(dir)) \
                         $(foreach dir,	$(DATA),	$(CURDIR)/$(dir)) \
                         $(foreach dir,	$(GRAPHICS),	$(CURDIR)/$(dir))
 
-export DEPSDIR	:=  	$(CURDIR)/$(BUILD)
+export DEPSDIR	:=  $(CURDIR)/$(BUILD)
 
-CFILES          :=  	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.c))) \
-			$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.c)))
+CFILES          :=  $(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.c))) \
+						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.c)))
+						
 CPPFILES        :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.cpp))) \
-			$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.cpp)))
+						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.cpp)))
+						
 SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) \
-			$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.s)))
+						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.s)))
+						
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
-			_btn_audio_soundbank.bin
+						_btn_audio_soundbank.bin
+						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
 #---------------------------------------------------------------------------------------------------------------------

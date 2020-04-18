@@ -41,7 +41,11 @@ namespace bg_palettes
 
     [[nodiscard]] color fade_color();
 
+    void set_fade_color(color color);
+
     [[nodiscard]] fixed fade_intensity();
+
+    void set_fade_intensity(fixed intensity);
 
     void set_fade(color color, fixed intensity);
 }

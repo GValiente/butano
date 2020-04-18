@@ -71,9 +71,21 @@ color fade_color()
     return palettes_manager::sprite_palettes_bank().fade_color();
 }
 
+void set_fade_color(color color)
+{
+    palettes_bank& bank = palettes_manager::sprite_palettes_bank();
+    bank.set_fade(color, bank.fade_intensity());
+}
+
 fixed fade_intensity()
 {
     return palettes_manager::sprite_palettes_bank().fade_intensity();
+}
+
+void set_fade_intensity(fixed intensity)
+{
+    palettes_bank& bank = palettes_manager::sprite_palettes_bank();
+    bank.set_fade(bank.fade_color(), intensity);
 }
 
 void set_fade(color color, fixed intensity)

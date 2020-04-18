@@ -179,7 +179,7 @@ sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
 
 sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 {
-    BTN_ASSERT(blending_enabled && _window_enabled, "Blending and window can't be enabled at the same time");
+    BTN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
 
     _blending_enabled = blending_enabled;
     return *this;
@@ -187,7 +187,7 @@ sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 
 sprite_builder& sprite_builder::set_window_enabled(bool window_enabled)
 {
-    BTN_ASSERT(window_enabled && _blending_enabled, "Blending and window can't be enabled at the same time");
+    BTN_ASSERT(! window_enabled || ! _blending_enabled, "Blending and window can't be enabled at the same time");
 
     _window_enabled = window_enabled;
     return *this;

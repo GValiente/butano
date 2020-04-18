@@ -51,16 +51,10 @@
         "stage_1_monsters_2": {
             "height": 16
         },
-        "fixed_8x8_font": {
+        "small_font": {
             "height": 8
         },
-        "variable_8x8_font": {
-            "height": 8
-        },
-        "fixed_8x16_font": {
-            "height": 16
-        },
-        "variable_8x16_font": {
+        "big_font": {
             "height": 16
         }
     },

@@ -17,10 +17,10 @@ BUILD       :=  build
 LIBBUTANO   :=  ../butano
 PYTHON      :=  python
 SOURCES     :=  src
-INCLUDES    :=  include
+INCLUDES    :=  include ../common/include
 DATA        :=
-GRAPHICS    :=  graphics
-AUDIO       :=  audio
+GRAPHICS    :=  graphics ../common/graphics
+AUDIO       :=  audio ../common/audio
 USERFLAGS   :=
 
 #---------------------------------------------------------------------------------------------------------------------

@@ -4,7 +4,7 @@
 
 #include "bf_game.h"
 #include "bf_stats.h"
-#include "bf_sprite_fonts.h"
+#include "bf_small_sprite_font.h"
 #include "bf_keypad_shortcuts.h"
 #include "bf_butano_background.h"
 
@@ -12,7 +12,7 @@ int main()
 {
     btn::core::init();
 
-    btn::sprite_text_generator text_generator(bf::variable_8x8_sprite_font);
+    btn::sprite_text_generator text_generator(bf::small_sprite_font);
     text_generator.set_bg_priority(1);
 
     bf::butano_background butano_background;

@@ -1,18 +1,16 @@
-#include "btn_size.h"
 #include "btn_core.h"
 #include "btn_colors.h"
-#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_sprite_ptr.h"
 #include "btn_bg_palettes.h"
 #include "btn_config_assert.h"
 #include "btn_sprite_text_generator.h"
-#include "sprite_font.h"
 
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
 #include "sram_tests.h"
+#include "variable_8x16_sprite_font.h"
 
 #if ! BTN_CFG_ASSERT_ENABLED
     static_assert(false, "Enable asserts in btn_config_assert.h to run tests");
@@ -22,7 +20,7 @@ int main()
 {
     btn::core::init();
 
-    btn::sprite_text_generator text_generator(sprite_font);
+    btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
 
     auto text = text_generator.generate<8>(0, 0, "Running tests...");

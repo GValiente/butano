@@ -10,14 +10,19 @@ class FileInfo:
 
     @staticmethod
     def validate(file_name):
-        valid_characters = '-_.%s%s' % (string.ascii_lowercase, string.digits)
+        if file_name[0] == '.':
+            return False
 
         if file_name[0] not in string.ascii_lowercase:
             raise ValueError('Invalid file name: ' + file_name)
 
+        valid_characters = '-_.%s%s' % (string.ascii_lowercase, string.digits)
+
         for file_name_character in file_name:
             if file_name_character not in valid_characters:
                 raise ValueError('Invalid file name: ' + file_name)
+
+        return True
 
     @staticmethod
     def read(file_path):

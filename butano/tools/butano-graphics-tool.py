@@ -303,14 +303,16 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
         graphics_file_paths = []
 
         for graphics_file_name in graphics_file_names:
-            FileInfo.validate(graphics_file_name)
-            graphics_file_name_ext = os.path.splitext(graphics_file_name)[-1]
+            if FileInfo.validate(graphics_file_name):
+                graphics_file_name_ext = os.path.splitext(graphics_file_name)[-1]
 
-            if graphics_file_name_ext.lower() == '.bmp':
-                graphics_file_path = graphics_folder_path + '/' + graphics_file_name
+                if graphics_file_name_ext.lower() == '.bmp':
+                    graphics_file_path = graphics_folder_path + '/' + graphics_file_name
 
-                if os.path.isfile(graphics_file_path):
-                    graphics_file_paths.append(graphics_file_path)
+                    if os.path.isfile(graphics_file_path):
+                        graphics_file_paths.append(graphics_file_path)
+            else:
+                print('Grahpics file skipped: ' + graphics_file_name)
 
         graphics_folder_name = os.path.basename(graphics_folder_path)
         file_info_path = build_folder_path + '/_btn_' + graphics_folder_name + '_graphics_json_file_info.txt'

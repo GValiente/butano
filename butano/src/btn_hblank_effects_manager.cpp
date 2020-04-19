@@ -10,6 +10,7 @@
 #include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
+#include "../hw/include/btn_hw_palettes.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
 
 namespace btn::hblank_effects_manager
@@ -130,6 +131,21 @@ namespace
                     }
                 }
                 break;
+
+            case target_type::BG_PALETTES_TRANSPARENT_COLOR:
+                {
+                    if(updated)
+                    {
+                        auto color_values_ptr = reinterpret_cast<const color*>(values_ptr);
+                        uint16_t* dest_ptr = _switch_dest_values();
+
+                        for(int index = 0; index < display::height(); ++index)
+                        {
+                            dest_ptr[index] = color_values_ptr[index].value();
+                        }
+                    }
+                }
+                break;
             }
 
             return updated;
@@ -160,6 +176,10 @@ namespace
 
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
                 entry.dest = hw::display::window_vertical_boundaries_register(target_id);
+                break;
+
+            case target_type::BG_PALETTES_TRANSPARENT_COLOR:
+                entry.dest = hw::palettes::bg_transparent_color_register();
                 break;
             }
         }
@@ -231,6 +251,10 @@ namespace
         case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
         case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
             new_item.last_value_variant = pair<fixed, fixed>();
+            break;
+
+        case target_type::BG_PALETTES_TRANSPARENT_COLOR:
+            new_item.last_value_variant.reset();
             break;
         }
 
@@ -342,6 +366,28 @@ int optional_create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, targe
     return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
 }
 
+int create(const span<const color>& color_values_ref, target_type target, int target_id)
+{
+    BTN_ASSERT(color_values_ref.size() >= display::height(),
+               "Invalid color values ref size: ", color_values_ref.size(), " - ", display::height());
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
+
+    return _create(color_values_ref.data(), color_values_ref.size(), target, target_id);
+}
+
+int optional_create(const span<const color>& color_values_ref, target_type target, int target_id)
+{
+    BTN_ASSERT(color_values_ref.size() >= display::height(),
+               "Invalid color values ref size: ", color_values_ref.size(), " - ", display::height());
+
+    if(data.free_item_indexes.empty())
+    {
+        return -1;
+    }
+
+    return _create(color_values_ref.data(), color_values_ref.size(), target, target_id);
+}
+
 void increase_usages(int id)
 {
     item_type& item = data.items[id];
@@ -385,6 +431,13 @@ span<const pair<fixed, fixed>> fixed_pairs_ref(int id)
     const item_type& item = data.items[id];
     auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(item.values_ptr);
     return span<const pair<fixed, fixed>>(fixed_pairs_ptr, item.values_count);
+}
+
+span<const color> color_values_ref(int id)
+{
+    const item_type& item = data.items[id];
+    auto color_values_ptr = reinterpret_cast<const color*>(item.values_ptr);
+    return span<const color>(color_values_ptr, item.values_count);
 }
 
 void set_values_ref(int id, const void* values_ptr, int values_count)

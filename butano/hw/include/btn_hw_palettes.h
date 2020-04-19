@@ -90,6 +90,11 @@ namespace btn::hw::palettes
     {
         commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_BG));
     }
+
+    [[nodiscard]] inline uint16_t* bg_transparent_color_register()
+    {
+        return reinterpret_cast<uint16_t*>(MEM_PAL_BG);
+    }
 }
 
 #endif

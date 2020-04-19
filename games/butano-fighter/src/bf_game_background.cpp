@@ -55,23 +55,24 @@ void background::show_bomb_open(int frames)
 
 void background::show_bomb_close(int frames)
 {
-    BTN_ASSERT(frames > 0, "Invalid frames: ", frames);
-
     btn::bgs_mosaic::set_stretch(0);
     _mosaic_action.reset();
-
-    btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
-    ground_palette.set_grayscale_intensity(1);
-    _ground_palette_grayscale_action.emplace(btn::move(ground_palette), frames, 0);
 
     _hblank_effect.set_visible(true);
     _bomb_fade_frames = frames;
 }
 
-void background::show_clouds()
+void background::hide_bomb_close(int frames)
+{
+    btn::bg_palette_ptr ground_palette = _ground_move_action.bg().palette();
+    ground_palette.set_grayscale_intensity(1);
+    _ground_palette_grayscale_action.emplace(btn::move(ground_palette), frames, 0);
+}
+
+void background::show_clouds(int frames)
 {
     btn::blending::set_transparency_alpha(0);
-    _blending_action.emplace(20, blending_transparency);
+    _blending_action.emplace(frames, blending_transparency);
 }
 
 void background::show_hero_dying()

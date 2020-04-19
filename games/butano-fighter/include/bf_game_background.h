@@ -27,7 +27,9 @@ public:
 
     void show_bomb_close(int frames);
 
-    void show_clouds();
+    void hide_bomb_close(int frames);
+
+    void show_clouds(int frames);
 
     void show_hero_dying();
 

@@ -4,7 +4,6 @@
 #include "btn_optional.h"
 #include "btn_blending_actions.h"
 #include "btn_regular_bg_actions.h"
-#include "btn_bg_palette_actions.h"
 #include "btn_rect_window_actions.h"
 #include "btn_regular_bg_hblank_effects.h"
 #include "btn_rect_window_hblank_effects.h"
@@ -48,8 +47,8 @@ private:
     btn::point _center;
     btn::optional<btn::rect_window_move_top_by_action> _move_window_top_action;
     btn::optional<btn::rect_window_move_bottom_by_action> _move_window_bottom_action;
-    btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
-    btn::optional<btn::bg_palette_fade_to_action> _palette_action;
+    btn::optional<btn::blending_transparency_alpha_to_action> _transparency_blending_action;
+    btn::optional<btn::blending_intensity_alpha_to_action> _intensity_blending_action;
     btn::pair<btn::fixed, btn::fixed> _circle_hblank_effect_deltas[160];
     circle_generator _circle_generator;
     btn::rect_window_boundaries_hblank_effect_ptr _circle_hblank_effect;

@@ -1,5 +1,8 @@
 {
     "sprites": {
+        "butano_big_sprite": {
+            "height": 64
+        },
         "hero_body": {
             "height": 32
         },

@@ -5,6 +5,8 @@
 #include "bf_game.h"
 #include "bf_stats.h"
 #include "bf_intro.h"
+#include "bf_title.h"
+#include "bf_scene_type.h"
 #include "bf_big_sprite_font.h"
 #include "bf_keypad_shortcuts.h"
 #include "bf_butano_background.h"
@@ -21,19 +23,36 @@ int main()
     big_text_generator.set_bg_priority(1);
 
     bf::butano_background butano_background;
-    auto intro = btn::make_unique<bf::intro>(big_text_generator);
-    // auto game = btn::make_unique<bf::game::game>(small_text_generator);
+    btn::unique_ptr<bf::scene> scene(new bf::title(small_text_generator));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::core::update();
 
     while(true)
     {
-        // game->update();
-        intro->update();
+        btn::optional<bf::scene_type> next_scene = scene->update();
         butano_background.update();
         stats.update();
         keypad_shortcuts.update();
         btn::core::update();
+
+        if(next_scene)
+        {
+            switch(*next_scene)
+            {
+
+            case bf::scene_type::INTRO:
+                scene.reset(new bf::intro(big_text_generator));
+                break;
+
+            case bf::scene_type::TITLE:
+                scene.reset(new bf::title(small_text_generator));
+                break;
+
+            case bf::scene_type::GAME:
+                scene.reset(new bf::game::game(small_text_generator));
+                break;
+            }
+        }
     }
 }

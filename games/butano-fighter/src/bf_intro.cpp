@@ -2,7 +2,9 @@
 
 #include "btn_keypad.h"
 #include "btn_colors.h"
+#include "btn_optional.h"
 #include "btn_sprite_text_generator.h"
+#include "bf_scene_type.h"
 
 namespace bf
 {
@@ -47,8 +49,10 @@ intro::intro(btn::sprite_text_generator& text_generator) :
     _enable_blending(_down_text_sprites);
 }
 
-void intro::update()
+btn::optional<scene_type> intro::update()
 {
+    btn::optional<scene_type> result;
+
     if(_bg_fade_action.done())
     {
         if(_counter)
@@ -64,7 +68,15 @@ void intro::update()
         }
         else
         {
-            if(! _blending_action.done())
+            if(_blending_action.done())
+            {
+                _up_text_sprites.clear();
+                _middle_text_sprites.clear();
+                _down_text_sprites.clear();
+                btn::blending::set_transparency_alpha(1);
+                result = scene_type::TITLE;
+            }
+            else
             {
                 _blending_action.update();
             }
@@ -75,6 +87,8 @@ void intro::update()
         _bg_fade_action.update();
         _sprite_fade_action.update();
     }
+
+    return result;
 }
 
 }

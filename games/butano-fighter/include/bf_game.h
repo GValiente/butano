@@ -1,6 +1,7 @@
 #ifndef BF_GAME_H
 #define BF_GAME_H
 
+#include "bf_scene.h"
 #include "bf_game_background.h"
 #include "bf_game_hero.h"
 #include "bf_game_hero_bomb.h"
@@ -18,13 +19,13 @@ namespace bf
 namespace bf::game
 {
 
-class game
+class game : public scene
 {
 
 public:
     explicit game(btn::sprite_text_generator& text_generator);
 
-    void update();
+    [[nodiscard]] btn::optional<scene_type> update() override;
 
 private:
     background _background;

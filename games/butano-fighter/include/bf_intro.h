@@ -6,6 +6,7 @@
 #include "btn_blending_actions.h"
 #include "btn_bg_palettes_actions.h"
 #include "btn_sprite_palettes_actions.h"
+#include "bf_scene.h"
 
 namespace btn
 {
@@ -15,13 +16,13 @@ namespace btn
 namespace bf
 {
 
-class intro
+class intro : public scene
 {
 
 public:
     explicit intro(btn::sprite_text_generator& text_generator);
 
-    void update();
+    [[nodiscard]] btn::optional<scene_type> update() override;
 
 private:
     btn::bg_palettes_fade_to_action _bg_fade_action;

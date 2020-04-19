@@ -15,8 +15,10 @@ game::game(btn::sprite_text_generator& text_generator) :
     btn::music::play(btn::music_items::cyberrid, 0.4);
 }
 
-void game::update()
+btn::optional<scene_type> game::update()
 {
+    btn::optional<scene_type> result;
+
     _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background);
     _hero_bullets.update(_hero, _enemies, _objects);
     _hero_bomb.update(_hero, _enemies, _enemy_bullets, _background);
@@ -25,6 +27,8 @@ void game::update()
     _enemy_bullets.update();
     _objects.update();
     _scoreboard.update(_hero);
+
+    return result;
 }
 
 }

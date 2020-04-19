@@ -13,7 +13,7 @@ butano_background::butano_background() :
 {
     btn::window::sprites().set_show_bg(_move_action->bg(), false);
     btn::color color(14, 0, 0);
-    int redInc = 32;
+    int redInc = 16;
     int greenInc = 16;
     int blueInc = 8;
 
@@ -26,19 +26,19 @@ butano_background::butano_background() :
 
         if(! redInc)
         {
-            color.set_red(color.red() + 1);
-            redInc = 32;
+            color.set_red(color.red() + (index <= 80 ? 1 : -1));
+            redInc = 16;
         }
 
         if(! greenInc)
         {
-            color.set_green(color.green() + 1);
+            color.set_green(btn::max(color.green() + (index <= 80 ? 1 : -1), 0));
             greenInc = 16;
         }
 
         if(! blueInc)
         {
-            color.set_blue(color.blue() + 1);
+            color.set_blue(btn::max(color.blue() + (index <= 80 ? 1 : -1), 0));
             blueInc = 16;
         }
     }

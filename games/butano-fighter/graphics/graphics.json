@@ -3,6 +3,15 @@
         "butano_big_sprite": {
             "height": 64
         },
+        "butano_font": {
+            "height": 32
+        },
+        "fighter_font": {
+            "height": 32
+        },
+        "hero_head": {
+            "height": 32
+        },
         "hero_body": {
             "height": 32
         },

@@ -36,7 +36,7 @@ title::title(btn::sprite_text_generator&) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite())
 {
-    // btn::music::play(btn::music_items::battle_clean);
+    btn::music::play(btn::music_items::battle_clean);
 }
 
 btn::optional<scene_type> title::update()

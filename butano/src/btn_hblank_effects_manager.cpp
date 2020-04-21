@@ -3,7 +3,6 @@
 #include "btn_span.h"
 #include "btn_vector.h"
 #include "btn_display.h"
-#include "btn_variant.h"
 #include "btn_bgs_manager.h"
 #include "btn_display_manager.h"
 #include "btn_regular_bg_attributes.h"
@@ -28,7 +27,7 @@ namespace
     {
 
     public:
-        using last_value_type = variant<fixed, regular_bg_attributes, pair<fixed, fixed>>;
+        using last_value_type = pair<fixed, fixed>;
 
         const void* values_ptr = nullptr;
         int values_count = 0;
@@ -52,7 +51,7 @@ namespace
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
-                    fixed& last_value = last_value_variant.get<fixed>();
+                    fixed& last_value = last_value_variant.first;
                     fixed new_value = bgs_manager::hw_position(target_id).x();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -68,7 +67,7 @@ namespace
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
-                    fixed& last_value = last_value_variant.get<fixed>();
+                    fixed& last_value = last_value_variant.first;
                     fixed new_value = bgs_manager::hw_position(target_id).y();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -84,11 +83,6 @@ namespace
 
             case target_type::REGULAR_BG_ATTRIBUTES:
                 {
-                    regular_bg_attributes& last_value = last_value_variant.get<regular_bg_attributes>();
-                    regular_bg_attributes new_value = bgs_manager::attributes(target_id);
-                    updated |= last_value != new_value;
-                    last_value = new_value;
-
                     if(updated)
                     {
                         auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(values_ptr);
@@ -100,7 +94,7 @@ namespace
 
             case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
                 {
-                    pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
+                    pair<fixed, fixed>& last_value = last_value_variant;
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -117,7 +111,7 @@ namespace
 
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
                 {
-                    pair<fixed, fixed>& last_value = last_value_variant.get<pair<fixed, fixed>>();
+                    pair<fixed, fixed>& last_value = last_value_variant;
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -141,7 +135,7 @@ namespace
 
                         for(int index = 0; index < display::height(); ++index)
                         {
-                            dest_ptr[index] = color_values_ptr[index].value();
+                            dest_ptr[index] = uint16_t(color_values_ptr[index].value());
                         }
                     }
                 }
@@ -231,33 +225,11 @@ namespace
         new_item.values_count = values_count;
         new_item.target_id = target_id;
         new_item.usages = 1;
+        new_item.last_value_variant = item_type::last_value_type();
         new_item.target = uint8_t(target);
         new_item.visible = true;
         new_item.update = true;
         data.update = true;
-
-        switch(target)
-        {
-
-        case target_type::REGULAR_BG_HORIZONTAL_POSITION:
-        case target_type::REGULAR_BG_VERTICAL_POSITION:
-            new_item.last_value_variant = fixed();
-            break;
-
-        case target_type::REGULAR_BG_ATTRIBUTES:
-            new_item.last_value_variant = regular_bg_attributes();
-            break;
-
-        case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
-        case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
-            new_item.last_value_variant = pair<fixed, fixed>();
-            break;
-
-        case target_type::BG_PALETTES_TRANSPARENT_COLOR:
-            new_item.last_value_variant.reset();
-            break;
-        }
-
         return item_index;
     }
 }

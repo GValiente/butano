@@ -49,7 +49,7 @@ LIBS        :=  -ltonc -lmm
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories
 #---------------------------------------------------------------------------------------------------------------------
-LIBDIRS     :=	$(LIBGBA) $(DEVKITPRO)/libtonc $(LIBBUTANOABS)
+LIBDIRS     :=	$(DEVKITPRO)/libtonc $(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/maxmod
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files
@@ -127,11 +127,13 @@ $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-audio-tool.py --audio="$(AUDIO)" --build=$(BUILD)
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-graphics-tool.py --graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod gba
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------
 clean:
 	@echo clean ...
+	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod clean
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba 
 
 #---------------------------------------------------------------------------------------------------------------------

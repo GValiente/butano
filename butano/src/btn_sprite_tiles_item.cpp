@@ -6,72 +6,44 @@
 namespace btn
 {
 
-sprite_tiles_ptr sprite_tiles_item::create_tiles(create_mode create_mode) const
+sprite_tiles_ptr sprite_tiles_item::create_tiles() const
 {
-    switch(create_mode)
-    {
-
-    case create_mode::FIND_OR_CREATE:
-        return sprite_tiles_ptr::find_or_create(graphics_tiles_ref());
-
-    case create_mode::FORCE_CREATE:
-        return sprite_tiles_ptr::create(graphics_tiles_ref());
-    }
-
-    BTN_ERROR("Invalid create mode: ", int(create_mode));
+    return sprite_tiles_ptr::find_or_create(graphics_tiles_ref());
 }
 
-sprite_tiles_ptr sprite_tiles_item::create_tiles(int graphics_index, create_mode create_mode) const
+sprite_tiles_ptr sprite_tiles_item::force_create_tiles() const
 {
-    switch(create_mode)
-    {
-
-    case create_mode::FIND_OR_CREATE:
-        return sprite_tiles_ptr::find_or_create(graphics_tiles_ref(graphics_index));
-
-    case create_mode::FORCE_CREATE:
-        return sprite_tiles_ptr::create(graphics_tiles_ref(graphics_index));
-    }
-
-    BTN_ERROR("Invalid create mode: ", int(create_mode));
+    return sprite_tiles_ptr::create(graphics_tiles_ref());
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles(create_mode create_mode) const
+sprite_tiles_ptr sprite_tiles_item::create_tiles(int graphics_index) const
 {
-    optional<sprite_tiles_ptr> result;
-
-    switch(create_mode)
-    {
-
-    case create_mode::FIND_OR_CREATE:
-        result = sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref());
-        break;
-
-    case create_mode::FORCE_CREATE:
-        result = sprite_tiles_ptr::optional_create(graphics_tiles_ref());
-        break;
-    }
-
-    return result;
+    return sprite_tiles_ptr::find_or_create(graphics_tiles_ref(graphics_index));
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles(int graphics_index, create_mode create_mode) const
+sprite_tiles_ptr sprite_tiles_item::force_create_tiles(int graphics_index) const
 {
-    optional<sprite_tiles_ptr> result;
+    return sprite_tiles_ptr::create(graphics_tiles_ref(graphics_index));
+}
 
-    switch(create_mode)
-    {
+optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles() const
+{
+    return sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref());
+}
 
-    case create_mode::FIND_OR_CREATE:
-        result = sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref(graphics_index));
-        break;
+optional<sprite_tiles_ptr> sprite_tiles_item::optional_force_create_tiles() const
+{
+    return sprite_tiles_ptr::optional_create(graphics_tiles_ref());
+}
 
-    case create_mode::FORCE_CREATE:
-        result = sprite_tiles_ptr::optional_create(graphics_tiles_ref(graphics_index));
-        break;
-    }
+optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles(int graphics_index) const
+{
+    return sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref(graphics_index));
+}
 
-    return result;
+optional<sprite_tiles_ptr> sprite_tiles_item::optional_force_create_tiles(int graphics_index) const
+{
+    return sprite_tiles_ptr::optional_create(graphics_tiles_ref(graphics_index));
 }
 
 }

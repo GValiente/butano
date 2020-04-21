@@ -138,14 +138,14 @@ void regular_bg_ptr::set_tiles(bg_tiles_ptr&& tiles_ptr)
     map_ptr.set_tiles(move(tiles_ptr));
 }
 
-void regular_bg_ptr::set_tiles(const regular_bg_item& item, create_mode create_mode)
+void regular_bg_ptr::set_tiles(const regular_bg_item& item)
 {
-    set_tiles(item.tiles_item(), create_mode);
+    set_tiles(item.tiles_item());
 }
 
-void regular_bg_ptr::set_tiles(const bg_tiles_item& tiles_item, create_mode create_mode)
+void regular_bg_ptr::set_tiles(const bg_tiles_item& tiles_item)
 {
-    set_tiles(tiles_item.create_tiles(create_mode));
+    set_tiles(tiles_item.create_tiles());
 }
 
 const bg_palette_ptr& regular_bg_ptr::palette() const
@@ -165,14 +165,14 @@ void regular_bg_ptr::set_palette(bg_palette_ptr&& palette_ptr)
     map_ptr.set_palette(move(palette_ptr));
 }
 
-void regular_bg_ptr::set_palette(const regular_bg_item& item, create_mode create_mode)
+void regular_bg_ptr::set_palette(const regular_bg_item& item)
 {
-    set_palette(item.palette_item(), create_mode);
+    set_palette(item.palette_item());
 }
 
-void regular_bg_ptr::set_palette(const bg_palette_item& palette_item, create_mode create_mode)
+void regular_bg_ptr::set_palette(const bg_palette_item& palette_item)
 {
-    set_palette(palette_item.create_palette(create_mode));
+    set_palette(palette_item.create_palette());
 }
 
 void regular_bg_ptr::set_tiles_and_palette(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr)
@@ -196,22 +196,21 @@ void regular_bg_ptr::set_map(regular_bg_map_ptr&& map_ptr)
     bgs_manager::set_map(_id, move(map_ptr));
 }
 
-void regular_bg_ptr::set_map(const regular_bg_item& item, create_mode create_mode)
+void regular_bg_ptr::set_map(const regular_bg_item& item)
 {
-    set_map(item.map_item(), create_mode);
+    set_map(item.map_item());
 }
 
-void regular_bg_ptr::set_map(const regular_bg_map_item& map_item, create_mode create_mode)
+void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
 {
-    set_map(map_item.create_map(bg_tiles_ptr(tiles()), bg_palette_ptr(palette()), create_mode));
+    set_map(map_item.create_map(bg_tiles_ptr(tiles()), bg_palette_ptr(palette())));
 }
 
-void regular_bg_ptr::set_item(const regular_bg_item& item, create_mode create_mode)
+void regular_bg_ptr::set_item(const regular_bg_item& item)
 {
     bgs_manager::set_map(_id,
-                         item.map_item().create_map(item.tiles_item().create_tiles(create_mode),
-                                                    item.palette_item().create_palette(create_mode),
-                                                    create_mode));
+                         item.map_item().create_map(item.tiles_item().create_tiles(),
+                                                    item.palette_item().create_palette()));
 }
 
 fixed regular_bg_ptr::x() const

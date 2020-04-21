@@ -4,7 +4,6 @@
 #include "btn_optional.h"
 #include "btn_sprite_item.h"
 #include "btn_fixed_point.h"
-#include "btn_create_mode.h"
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_palette_ptr.h"
@@ -49,28 +48,6 @@ public:
     [[nodiscard]] const sprite_shape_size& shape_size() const
     {
         return _shape_size;
-    }
-
-    [[nodiscard]] create_mode tiles_create_mode() const
-    {
-        return _tiles_create_mode;
-    }
-
-    sprite_builder& set_tiles_create_mode(create_mode create_mode)
-    {
-        _tiles_create_mode = create_mode;
-        return *this;
-    }
-
-    [[nodiscard]] create_mode palette_create_mode() const
-    {
-        return _palette_create_mode;
-    }
-
-    sprite_builder& set_palette_create_mode(create_mode create_mode)
-    {
-        _palette_create_mode = create_mode;
-        return *this;
     }
 
     [[nodiscard]] fixed x() const
@@ -280,8 +257,6 @@ private:
     optional<sprite_palette_ptr> _palette_ptr;
     optional<sprite_affine_mat_ptr> _affine_mat_ptr;
     sprite_shape_size _shape_size;
-    create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
-    create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;
     int _graphics_index;

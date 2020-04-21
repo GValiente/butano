@@ -3,7 +3,6 @@
 
 #include "btn_span.h"
 #include "btn_tile.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 #include "btn_palette_bpp_mode.h"
 
@@ -40,10 +39,13 @@ public:
         return count && count < 1024;
     }
 
-    [[nodiscard]] bg_tiles_ptr create_tiles(create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] bg_tiles_ptr create_tiles() const;
 
-    [[nodiscard]] optional<bg_tiles_ptr> optional_create_tiles(
-            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] bg_tiles_ptr force_create_tiles() const;
+
+    [[nodiscard]] optional<bg_tiles_ptr> optional_create_tiles() const;
+
+    [[nodiscard]] optional<bg_tiles_ptr> optional_force_create_tiles() const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_tiles_item& a, const bg_tiles_item& b)
     {

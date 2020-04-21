@@ -2,7 +2,6 @@
 #define BTN_REGULAR_BG_MAP_ITEM_H
 
 #include "btn_size.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 #include "btn_regular_bg_map_cell.h"
 
@@ -35,12 +34,15 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr,
-                                                create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+
+    [[nodiscard]] regular_bg_map_ptr force_create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
 
     [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
-            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr,
-            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_force_create_map(
+            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b)
     {

@@ -4,7 +4,6 @@
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
@@ -82,9 +81,9 @@ public:
 
     void set_tiles(bg_tiles_ptr&& tiles_ptr);
 
-    void set_tiles(const regular_bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const regular_bg_item& item);
 
-    void set_tiles(const bg_tiles_item& tiles_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] const bg_palette_ptr& palette() const;
 
@@ -92,9 +91,9 @@ public:
 
     void set_palette(bg_palette_ptr&& palette_ptr);
 
-    void set_palette(const regular_bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const regular_bg_item& item);
 
-    void set_palette(const bg_palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const bg_palette_item& palette_item);
 
     void set_tiles_and_palette(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr);
 
@@ -104,11 +103,11 @@ public:
 
     void set_map(regular_bg_map_ptr&& map_ptr);
 
-    void set_map(const regular_bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_map(const regular_bg_item& item);
 
-    void set_map(const regular_bg_map_item& map_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_map(const regular_bg_map_item& map_item);
 
-    void set_item(const regular_bg_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_item(const regular_bg_item& item);
 
     [[nodiscard]] fixed x() const;
 

@@ -3,7 +3,6 @@
 
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
-#include "btn_create_mode.h"
 #include "btn_regular_bg_item.h"
 #include "btn_regular_bg_map_ptr.h"
 
@@ -30,39 +29,6 @@ public:
     [[nodiscard]] const optional<regular_bg_item>& item() const
     {
         return _item;
-    }
-
-    [[nodiscard]] create_mode tiles_create_mode() const
-    {
-        return _tiles_create_mode;
-    }
-
-    regular_bg_builder& set_tiles_create_mode(create_mode create_mode)
-    {
-        _tiles_create_mode = create_mode;
-        return *this;
-    }
-
-    [[nodiscard]] create_mode map_create_mode() const
-    {
-        return _map_create_mode;
-    }
-
-    regular_bg_builder& set_map_create_mode(create_mode create_mode)
-    {
-        _map_create_mode = create_mode;
-        return *this;
-    }
-
-    [[nodiscard]] create_mode palette_create_mode() const
-    {
-        return _palette_create_mode;
-    }
-
-    regular_bg_builder& set_palette_create_mode(create_mode create_mode)
-    {
-        _palette_create_mode = create_mode;
-        return *this;
     }
 
     [[nodiscard]] fixed x() const
@@ -174,9 +140,6 @@ public:
 private:
     optional<regular_bg_item> _item;
     optional<regular_bg_map_ptr> _map_ptr;
-    create_mode _tiles_create_mode = create_mode::FIND_OR_CREATE;
-    create_mode _map_create_mode = create_mode::FIND_OR_CREATE;
-    create_mode _palette_create_mode = create_mode::FIND_OR_CREATE;
     fixed_point _position;
     int _priority = 3;
     bool _mosaic_enabled = false;

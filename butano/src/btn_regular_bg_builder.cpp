@@ -40,9 +40,8 @@ regular_bg_map_ptr regular_bg_builder::map() const
 {
     if(_item)
     {
-        return _item->map_item().create_map(_item->tiles_item().create_tiles(_tiles_create_mode),
-                                            _item->palette_item().create_palette(_palette_create_mode),
-                                            _map_create_mode);
+        return _item->map_item().create_map(_item->tiles_item().create_tiles(),
+                                            _item->palette_item().create_palette());
     }
 
     BTN_ASSERT(_map_ptr, "Map has been already released");
@@ -56,11 +55,11 @@ optional<regular_bg_map_ptr> regular_bg_builder::optional_map() const
 
     if(_item)
     {
-        if(optional<bg_tiles_ptr> tiles_ptr = _item->tiles_item().optional_create_tiles(_tiles_create_mode))
+        if(optional<bg_tiles_ptr> tiles_ptr = _item->tiles_item().optional_create_tiles())
         {
-            if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette(_palette_create_mode))
+            if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette())
             {
-                result = _item->map_item().optional_create_map(move(*tiles_ptr), move(*palette_ptr), _map_create_mode);
+                result = _item->map_item().optional_create_map(move(*tiles_ptr), move(*palette_ptr));
             }
         }
     }
@@ -76,9 +75,8 @@ regular_bg_map_ptr regular_bg_builder::release_map()
 {
     if(_item)
     {
-        return _item->map_item().create_map(_item->tiles_item().create_tiles(_tiles_create_mode),
-                                            _item->palette_item().create_palette(_palette_create_mode),
-                                            _map_create_mode);
+        return _item->map_item().create_map(_item->tiles_item().create_tiles(),
+                                            _item->palette_item().create_palette());
     }
 
     BTN_ASSERT(_map_ptr, "Map has been already released");
@@ -94,11 +92,11 @@ optional<regular_bg_map_ptr> regular_bg_builder::optional_release_map()
 
     if(_item)
     {
-        if(optional<bg_tiles_ptr> tiles_ptr = _item->tiles_item().optional_create_tiles(_tiles_create_mode))
+        if(optional<bg_tiles_ptr> tiles_ptr = _item->tiles_item().optional_create_tiles())
         {
-            if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette(_palette_create_mode))
+            if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().optional_create_palette())
             {
-                result = _item->map_item().optional_create_map(move(*tiles_ptr), move(*palette_ptr), _map_create_mode);
+                result = _item->map_item().optional_create_map(move(*tiles_ptr), move(*palette_ptr));
             }
         }
     }

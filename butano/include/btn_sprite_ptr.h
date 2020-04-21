@@ -4,7 +4,6 @@
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
@@ -104,20 +103,17 @@ public:
 
     void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
 
-    void set_tiles(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_item& item);
 
-    void set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_item& item, int graphics_index);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_tiles_item& tiles_item);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index,
-                   create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
-                   create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index,
-                   create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index);
 
     [[nodiscard]] const sprite_palette_ptr& palette() const;
 
@@ -125,13 +121,13 @@ public:
 
     void set_palette(sprite_palette_ptr&& palette_ptr);
 
-    void set_palette(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const sprite_item& item);
 
-    void set_palette(const sprite_palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_palette(const sprite_palette_item& palette_item);
 
-    void set_item(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_item(const sprite_item& item);
 
-    void set_item(const sprite_item& item, int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_item(const sprite_item& item, int graphics_index);
 
     [[nodiscard]] fixed x() const;
 

@@ -224,7 +224,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
 {
     if(_item)
     {
-        return _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+        return _item->tiles_item().create_tiles(_graphics_index);
     }
 
     BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
@@ -236,7 +236,7 @@ sprite_palette_ptr sprite_builder::palette() const
 {
     if(_item)
     {
-        return _item->palette_item().create_palette(_palette_create_mode);
+        return _item->palette_item().create_palette();
     }
 
     BTN_ASSERT(_palette_ptr, "Palette has been already released");
@@ -250,7 +250,7 @@ optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
 
     if(_item)
     {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_graphics_index);
     }
     else
     {
@@ -266,7 +266,7 @@ optional<sprite_palette_ptr> sprite_builder::optional_palette() const
 
     if(_item)
     {
-        result = _item->palette_item().optional_create_palette(_palette_create_mode);
+        result = _item->palette_item().optional_create_palette();
     }
     else
     {
@@ -280,7 +280,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
 {
     if(_item)
     {
-        return _item->tiles_item().create_tiles(_graphics_index, _tiles_create_mode);
+        return _item->tiles_item().create_tiles(_graphics_index);
     }
 
     BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
@@ -294,7 +294,7 @@ sprite_palette_ptr sprite_builder::release_palette()
 {
     if(_item)
     {
-        return _item->palette_item().create_palette(_palette_create_mode);
+        return _item->palette_item().create_palette();
     }
 
     BTN_ASSERT(_palette_ptr, "Palette has been already released");
@@ -310,7 +310,7 @@ optional<sprite_tiles_ptr> sprite_builder::optional_release_tiles()
 
     if(_item)
     {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index, _tiles_create_mode);
+        result = _item->tiles_item().optional_create_tiles(_graphics_index);
     }
     else
     {
@@ -326,7 +326,7 @@ optional<sprite_palette_ptr> sprite_builder::optional_release_palette()
 
     if(_item)
     {
-        result = _item->palette_item().optional_create_palette(_palette_create_mode);
+        result = _item->palette_item().optional_create_palette();
     }
     else
     {

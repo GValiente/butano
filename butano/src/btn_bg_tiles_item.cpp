@@ -6,38 +6,24 @@
 namespace btn
 {
 
-bg_tiles_ptr bg_tiles_item::create_tiles(create_mode create_mode) const
+bg_tiles_ptr bg_tiles_item::create_tiles() const
 {
-    switch(create_mode)
-    {
-
-    case create_mode::FIND_OR_CREATE:
-        return bg_tiles_ptr::find_or_create(_tiles_ref);
-
-    case create_mode::FORCE_CREATE:
-        return bg_tiles_ptr::create(_tiles_ref);
-    }
-
-    BTN_ERROR("Invalid create mode: ", int(create_mode));
+    return bg_tiles_ptr::find_or_create(_tiles_ref);
 }
 
-optional<bg_tiles_ptr> bg_tiles_item::optional_create_tiles(create_mode create_mode) const
+bg_tiles_ptr bg_tiles_item::force_create_tiles() const
 {
-    optional<bg_tiles_ptr> result;
+    return bg_tiles_ptr::create(_tiles_ref);
+}
 
-    switch(create_mode)
-    {
+optional<bg_tiles_ptr> bg_tiles_item::optional_create_tiles() const
+{
+    return bg_tiles_ptr::optional_find_or_create(_tiles_ref);
+}
 
-    case create_mode::FIND_OR_CREATE:
-        result = bg_tiles_ptr::optional_find_or_create(_tiles_ref);
-        break;
-
-    case create_mode::FORCE_CREATE:
-        result = bg_tiles_ptr::optional_create(_tiles_ref);
-        break;
-    }
-
-    return result;
+optional<bg_tiles_ptr> bg_tiles_item::optional_force_create_tiles() const
+{
+    return bg_tiles_ptr::optional_create(_tiles_ref);
 }
 
 }

@@ -3,7 +3,6 @@
 
 #include "btn_span.h"
 #include "btn_color.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 #include "btn_palette_bpp_mode.h"
 
@@ -39,10 +38,13 @@ public:
         return _bpp_mode;
     }
 
-    [[nodiscard]] bg_palette_ptr create_palette(create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] bg_palette_ptr create_palette() const;
 
-    [[nodiscard]] optional<bg_palette_ptr> optional_create_palette(
-            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] bg_palette_ptr force_create_palette() const;
+
+    [[nodiscard]] optional<bg_palette_ptr> optional_create_palette() const;
+
+    [[nodiscard]] optional<bg_palette_ptr> optional_force_create_palette() const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_palette_item& a, const bg_palette_item& b)
     {

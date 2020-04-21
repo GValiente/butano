@@ -231,36 +231,35 @@ void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr
     sprites_manager::set_tiles(_handle, shape_size, move(tiles_ptr));
 }
 
-void sprite_ptr::set_tiles(const sprite_item& item, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_item& item)
 {
-    set_tiles(item.tiles_item(), item.shape_size(), create_mode);
+    set_tiles(item.tiles_item(), item.shape_size());
 }
 
-void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index)
 {
-    set_tiles(item.tiles_item(), item.shape_size(), graphics_index, create_mode);
+    set_tiles(item.tiles_item(), item.shape_size(), graphics_index);
 }
 
-void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
 {
-    set_tiles(tiles_item.create_tiles(create_mode));
+    set_tiles(tiles_item.create_tiles());
 }
 
-void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    set_tiles(tiles_item.create_tiles(graphics_index, create_mode));
+    set_tiles(tiles_item.create_tiles(graphics_index));
+}
+
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size)
+{
+    set_tiles(shape_size, tiles_item.create_tiles());
 }
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
-                           create_mode create_mode)
+                           int graphics_index)
 {
-    set_tiles(shape_size, tiles_item.create_tiles(create_mode));
-}
-
-void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
-                           int graphics_index, create_mode create_mode)
-{
-    set_tiles(shape_size, tiles_item.create_tiles(graphics_index, create_mode));
+    set_tiles(shape_size, tiles_item.create_tiles(graphics_index));
 }
 
 const sprite_palette_ptr& sprite_ptr::palette() const
@@ -278,32 +277,26 @@ void sprite_ptr::set_palette(sprite_palette_ptr&& palette_ptr)
     sprites_manager::set_palette(_handle, move(palette_ptr));
 }
 
-void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
+void sprite_ptr::set_palette(const sprite_item& item)
 {
-    set_palette(item.palette_item(), create_mode);
+    set_palette(item.palette_item());
 }
 
-void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mode create_mode)
+void sprite_ptr::set_palette(const sprite_palette_item& palette_item)
 {
-    set_palette(palette_item.create_palette(create_mode));
+    set_palette(palette_item.create_palette());
 }
 
-void sprite_ptr::set_item(const sprite_item& item, create_mode create_mode)
+void sprite_ptr::set_item(const sprite_item& item)
 {
-    sprites_manager::set_tiles_and_palette(
-                _handle,
-                item.shape_size(),
-                item.tiles_item().create_tiles(create_mode),
-                item.palette_item().create_palette(create_mode));
+    sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), item.tiles_item().create_tiles(),
+                                           item.palette_item().create_palette());
 }
 
-void sprite_ptr::set_item(const sprite_item& item, int graphics_index, create_mode create_mode)
+void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
 {
-    sprites_manager::set_tiles_and_palette(
-                _handle,
-                item.shape_size(),
-                item.tiles_item().create_tiles(graphics_index, create_mode),
-                item.palette_item().create_palette(create_mode));
+    sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), item.tiles_item().create_tiles(graphics_index),
+                                           item.palette_item().create_palette());
 }
 
 fixed sprite_ptr::x() const

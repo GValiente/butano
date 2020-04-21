@@ -804,7 +804,7 @@ private:
 
         for(int graphics_index : graphics_indexes)
         {
-            _tiles_ptrs.push_back(tiles_item.create_tiles(graphics_index, create_mode::FIND_OR_CREATE));
+            _tiles_ptrs.push_back(tiles_item.create_tiles(graphics_index));
         }
     }
 

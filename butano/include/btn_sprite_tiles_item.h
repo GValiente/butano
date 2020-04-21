@@ -3,7 +3,6 @@
 
 #include "btn_span.h"
 #include "btn_tile.h"
-#include "btn_create_mode.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
@@ -54,16 +53,21 @@ public:
         return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
     }
 
-    [[nodiscard]] sprite_tiles_ptr create_tiles(create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] sprite_tiles_ptr create_tiles() const;
 
-    [[nodiscard]] sprite_tiles_ptr create_tiles(
-            int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] sprite_tiles_ptr force_create_tiles() const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(
-            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] sprite_tiles_ptr create_tiles(int graphics_index) const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(
-            int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+    [[nodiscard]] sprite_tiles_ptr force_create_tiles(int graphics_index) const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles() const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> optional_force_create_tiles() const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(int graphics_index) const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> optional_force_create_tiles(int graphics_index) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

@@ -7,6 +7,13 @@
 namespace btn
 {
 
+sprite_builder::sprite_builder(const sprite_item& item) :
+    _item(item),
+    _shape_size(item.shape_size()),
+    _graphics_index(0)
+{
+}
+
 sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _item(item),
     _shape_size(item.shape_size()),

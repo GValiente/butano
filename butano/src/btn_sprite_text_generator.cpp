@@ -205,7 +205,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
+            span<const tile> source_tiles_ref = item.tiles_item().graphics_tiles_ref(graphics_index);
             optional<sprite_tiles_ptr> source_tiles_ptr;
 
             if(allow_failure)
@@ -306,7 +306,7 @@ namespace
                 }
 
                 const sprite_item& item = font.item();
-                span<const tile> source_tiles_ref = item.tiles_item().tiles_ref(graphics_index);
+                span<const tile> source_tiles_ref = item.tiles_item().graphics_tiles_ref(graphics_index);
                 optional<sprite_tiles_ptr> source_tiles_ptr;
 
                 if(allow_failure)
@@ -417,7 +417,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            const tile* source_tiles_data = item.tiles_item().tiles_ref(graphics_index).data();
+            const tile* source_tiles_data = item.tiles_item().graphics_tiles_ref(graphics_index).data();
             hw::sprite_tiles::copy_tiles(source_tiles_data, 1, _tiles_vram + _sprite_character_index);
             _current_position.set_x(_current_position.x() + fixed_character_width);
             ++_sprite_character_index;
@@ -584,7 +584,7 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            const tile* source_tiles_data = item.tiles_item().tiles_ref(graphics_index).data();
+            const tile* source_tiles_data = item.tiles_item().graphics_tiles_ref(graphics_index).data();
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
             hw::sprite_tiles::copy_tiles(source_tiles_data, 1, up_tiles_vram_ptr);
 

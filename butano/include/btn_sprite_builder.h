@@ -20,7 +20,9 @@ class sprite_builder
 {
 
 public:
-    sprite_builder(const sprite_item& item, int graphics_index = 0);
+    explicit sprite_builder(const sprite_item& item);
+
+    sprite_builder(const sprite_item& item, int graphics_index);
 
     template<class SpriteTilesPtr, class SpritePalettePtr>
     sprite_builder(const sprite_shape_size& shape_size, SpriteTilesPtr&& tiles_ptr, SpritePalettePtr&& palette_ptr) :

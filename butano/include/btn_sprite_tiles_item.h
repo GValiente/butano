@@ -40,17 +40,27 @@ public:
         return _tiles_ref;
     }
 
-    [[nodiscard]] constexpr span<const tile> tiles_ref(int graphics_index) const
+    [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
+    {
+        return span<const tile>(_tiles_ref.data(), tiles_count_per_graphic());
+    }
+
+    [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
         BTN_CONSTEXPR_ASSERT(graphics_index >= 0, "Invalid graphics index");
         BTN_CONSTEXPR_ASSERT(graphics_index < _graphics_count, "Invalid graphics index");
 
-        auto tiles_size = tiles_count_per_graphic();
-        return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_size), tiles_size);
+        int tiles_count = tiles_count_per_graphic();
+        return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
     }
+
+    [[nodiscard]] sprite_tiles_ptr create_tiles(create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] sprite_tiles_ptr create_tiles(
             int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE) const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(
+            create_mode create_mode = create_mode::FIND_OR_CREATE) const;
 
     [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(
             int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE) const;

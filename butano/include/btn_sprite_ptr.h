@@ -27,10 +27,13 @@ class sprite_ptr
 {
 
 public:
-    [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_item& item, int graphics_index = 0);
+    [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_item& item);
 
-    [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_item& item,
-                                           int graphics_index = 0);
+    [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_item& item, int graphics_index);
+
+    [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_item& item);
+
+    [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_item& item, int graphics_index);
 
     [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_shape_size& shape_size,
                                            sprite_tiles_ptr tiles, sprite_palette_ptr palette);
@@ -42,11 +45,15 @@ public:
 
     [[nodiscard]] static sprite_ptr create(sprite_builder&& builder);
 
+    [[nodiscard]] static optional<sprite_ptr> optional_create(fixed x, fixed y, const sprite_item& item);
+
     [[nodiscard]] static optional<sprite_ptr> optional_create(fixed x, fixed y, const sprite_item& item,
-                                                              int graphics_index = 0);
+                                                              int graphics_index);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(const fixed_point& position, const sprite_item& item);
 
     [[nodiscard]] static optional<sprite_ptr> optional_create(const fixed_point& position, const sprite_item& item,
-                                                              int graphics_index = 0);
+                                                              int graphics_index);
 
     [[nodiscard]] static optional<sprite_ptr> optional_create(
             fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
@@ -97,13 +104,19 @@ public:
 
     void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
 
-    void set_tiles(const sprite_item& item, int graphics_index = 0,
+    void set_tiles(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+
+    void set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE);
+
+    void set_tiles(const sprite_tiles_item& tiles_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+
+    void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index = 0,
+    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index = 0,
+    void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index,
                    create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     [[nodiscard]] const sprite_palette_ptr& palette() const;
@@ -116,8 +129,9 @@ public:
 
     void set_palette(const sprite_palette_item& palette_item, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
-    void set_item(const sprite_item& item, int graphics_index = 0,
-                  create_mode create_mode = create_mode::FIND_OR_CREATE);
+    void set_item(const sprite_item& item, create_mode create_mode = create_mode::FIND_OR_CREATE);
+
+    void set_item(const sprite_item& item, int graphics_index, create_mode create_mode = create_mode::FIND_OR_CREATE);
 
     [[nodiscard]] fixed x() const;
 

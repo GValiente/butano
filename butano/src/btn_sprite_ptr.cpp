@@ -9,10 +9,24 @@
 namespace btn
 {
 
+sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item)
+{
+    return sprite_ptr(sprites_manager::create(fixed_point(x, y), item.shape_size(),
+                                              item.tiles_item().create_tiles(),
+                                              item.palette_item().create_palette()));
+}
+
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
     return sprite_ptr(sprites_manager::create(fixed_point(x, y), item.shape_size(),
                                               item.tiles_item().create_tiles(graphics_index),
+                                              item.palette_item().create_palette()));
+}
+
+sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item)
+{
+    return sprite_ptr(sprites_manager::create(position, item.shape_size(),
+                                              item.tiles_item().create_tiles(),
                                               item.palette_item().create_palette()));
 }
 
@@ -53,9 +67,33 @@ sprite_ptr sprite_ptr::create(sprite_builder&& builder)
     return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
+optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item)
+{
+    return optional_create(fixed_point(x, y), item);
+}
+
 optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
     return optional_create(fixed_point(x, y), item, graphics_index);
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item)
+{
+    optional<sprite_ptr> result;
+
+    if(optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles())
+    {
+        if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
+        {
+            if(handle_type handle = sprites_manager::optional_create(position, item.shape_size(), move(*tiles),
+                                                                     move(*palette)))
+            {
+                result = sprite_ptr(handle);
+            }
+        }
+    }
+
+    return result;
 }
 
 optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
@@ -193,14 +231,30 @@ void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr
     sprites_manager::set_tiles(_handle, shape_size, move(tiles_ptr));
 }
 
+void sprite_ptr::set_tiles(const sprite_item& item, create_mode create_mode)
+{
+    set_tiles(item.tiles_item(), item.shape_size(), create_mode);
+}
+
 void sprite_ptr::set_tiles(const sprite_item& item, int graphics_index, create_mode create_mode)
 {
     set_tiles(item.tiles_item(), item.shape_size(), graphics_index, create_mode);
 }
 
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, create_mode create_mode)
+{
+    set_tiles(tiles_item.create_tiles(create_mode));
+}
+
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index, create_mode create_mode)
 {
     set_tiles(tiles_item.create_tiles(graphics_index, create_mode));
+}
+
+void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
+                           create_mode create_mode)
+{
+    set_tiles(shape_size, tiles_item.create_tiles(create_mode));
 }
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
@@ -232,6 +286,15 @@ void sprite_ptr::set_palette(const sprite_item& item, create_mode create_mode)
 void sprite_ptr::set_palette(const sprite_palette_item& palette_item, create_mode create_mode)
 {
     set_palette(palette_item.create_palette(create_mode));
+}
+
+void sprite_ptr::set_item(const sprite_item& item, create_mode create_mode)
+{
+    sprites_manager::set_tiles_and_palette(
+                _handle,
+                item.shape_size(),
+                item.tiles_item().create_tiles(create_mode),
+                item.palette_item().create_palette(create_mode));
 }
 
 void sprite_ptr::set_item(const sprite_item& item, int graphics_index, create_mode create_mode)

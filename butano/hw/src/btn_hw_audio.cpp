@@ -1,7 +1,7 @@
 #include "../include/btn_hw_audio.h"
 
 #include "maxmod.h"
-#include "btn_deque.h"
+#include "btn_forward_list.h"
 #include "btn_config_audio.h"
 #include "../include/btn_hw_irq.h"
 
@@ -13,9 +13,28 @@ namespace btn::hw::audio
 namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
-    static_assert(power_of_two(BTN_CFG_AUDIO_MAX_SOUND_CHANNELS), "Invalid max sound channels");
 
-    constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
+
+    class sound_type
+    {
+
+    public:
+        mm_sfxhand handle;
+        int16_t priority;
+    };
+
+
+    class static_data
+    {
+
+    public:
+        forward_list<sound_type, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        uint16_t direct_sound_control_value = 0;
+        volatile bool locked = false;
+    };
+
+    BTN_DATA_EWRAM static_data data;
+
 
     constexpr int _mix_length()
     {
@@ -29,17 +48,7 @@ namespace
                 MM_MIXLEN_31KHZ;
     }
 
-
-    class static_data
-    {
-
-    public:
-        deque<mm_sfxhand, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
-        uint16_t direct_sound_control_value = 0;
-        volatile bool locked = false;
-    };
-
-    BTN_DATA_EWRAM static_data data;
+    constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
     alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[
             _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
@@ -66,6 +75,39 @@ namespace
         }
     };
 
+
+    void _check_sounds_queue()
+    {
+        if(data.sounds_queue.full())
+        {
+            mmEffectRelease(data.sounds_queue.front().handle);
+            data.sounds_queue.pop_front();
+        }
+    }
+
+    void _add_sound_to_queue(int priority, mm_sfxhand handle)
+    {
+        auto before_it = data.sounds_queue.before_begin();
+        auto it = data.sounds_queue.begin();
+        auto end = data.sounds_queue.end();
+
+        while(it != end)
+        {
+            sound_type& sound = *it;
+
+            if(sound.priority <= priority)
+            {
+                before_it = it;
+                ++it;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
+    }
 
     void _commit_handler()
     {
@@ -156,37 +198,57 @@ void set_music_volume(int volume)
     mmSetModuleVolume(mm_word(volume));
 }
 
-void play_sound(int id)
+void play_sound(int priority, int id)
 {
-    if(data.sounds_queue.full())
-    {
-        mmEffectRelease(data.sounds_queue.front());
-        data.sounds_queue.pop_front();
-    }
-
-    data.sounds_queue.push_back(mmEffect(mm_word(id)));
+    _check_sounds_queue();
+    _add_sound_to_queue(priority, mmEffect(mm_word(id)));
 }
 
-void play_sound(int id, int volume, int speed, int panning)
+void play_sound(int priority, int id, int volume, int speed, int panning)
 {
-    if(data.sounds_queue.full())
-    {
-        mmEffectRelease(data.sounds_queue.front());
-        data.sounds_queue.pop_front();
-    }
-
     mm_sound_effect sound_effect;
     sound_effect.id = mm_word(id);
     sound_effect.rate = mm_hword(speed);
     sound_effect.handle = 0;
     sound_effect.volume = mm_byte(volume);
     sound_effect.panning = mm_byte(panning);
-    data.sounds_queue.push_back(mmEffectEx(&sound_effect));
+    _check_sounds_queue();
+    _add_sound_to_queue(priority, mmEffectEx(&sound_effect));
 }
 
 void stop_all_sounds()
 {
     mmEffectCancelAll();
+
+    for(sound_type& sound : data.sounds_queue)
+    {
+        mmEffectRelease(sound.handle);
+    }
+
+    data.sounds_queue.clear();
+}
+
+void release_inactive_sounds()
+{
+    auto before_it = data.sounds_queue.before_begin();
+    auto it = data.sounds_queue.begin();
+    auto end = data.sounds_queue.end();
+
+    while(it != end)
+    {
+        mm_sfxhand handle = it->handle;
+
+        if(mmEffectActive(handle))
+        {
+            before_it = it;
+            ++it;
+        }
+        else
+        {
+            mmEffectRelease(handle);
+            it = data.sounds_queue.erase_after(before_it);
+        }
+    }
 }
 
 void sleep()

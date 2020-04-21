@@ -27,11 +27,13 @@ namespace btn::hw::audio
 
     void set_music_volume(int volume);
 
-    void play_sound(int id);
+    void play_sound(int priority, int id);
 
-    void play_sound(int id, int volume, int speed, int panning);
+    void play_sound(int priority, int id, int volume, int speed, int panning);
 
     void stop_all_sounds();
+
+    void release_inactive_sounds();
 
     void sleep();
 

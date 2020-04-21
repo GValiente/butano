@@ -22,7 +22,7 @@ namespace
     public:
         [[nodiscard]] static command music_play(music_item item, bool loop, int volume)
         {
-            return command(MUSIC_PLAY, item.id(), volume, loop);
+            return command(MUSIC_PLAY, item.id(), 0, volume, loop);
         }
 
         [[nodiscard]] static command music_stop()
@@ -47,17 +47,17 @@ namespace
 
         [[nodiscard]] static command music_set_volume(int volume)
         {
-            return command(MUSIC_SET_VOLUME, 0, volume);
+            return command(MUSIC_SET_VOLUME, 0, 0, volume);
         }
 
-        [[nodiscard]] static command sound_play(sound_item item)
+        [[nodiscard]] static command sound_play(int priority, sound_item item)
         {
-            return command(SOUND_PLAY, item.id());
+            return command(SOUND_PLAY, item.id(), int16_t(priority));
         }
 
-        [[nodiscard]] static command sound_play(sound_item item, int volume, int speed, int panning)
+        [[nodiscard]] static command sound_play(int priority, sound_item item, int volume, int speed, int panning)
         {
-            return command(SOUND_PLAY_EX, item.id(), volume, false, speed, panning);
+            return command(SOUND_PLAY_EX, item.id(), int16_t(priority), volume, false, speed, panning);
         }
 
         [[nodiscard]] static command sound_stop_all()
@@ -95,11 +95,11 @@ namespace
                 return;
 
             case SOUND_PLAY:
-                hw::audio::play_sound(_id);
+                hw::audio::play_sound(_priority, _id);
                 return;
 
             case SOUND_PLAY_EX:
-                hw::audio::play_sound(_id, _volume, _speed, _panning);
+                hw::audio::play_sound(_priority, _id, _volume, _speed, _panning);
                 return;
 
             case SOUND_STOP_ALL:
@@ -110,6 +110,7 @@ namespace
 
     private:
         int _id;
+        int16_t _priority;
         uint16_t _volume;
         uint16_t _speed;
         uint8_t _type;
@@ -129,8 +130,10 @@ namespace
             SOUND_STOP_ALL
         };
 
-        explicit command(type type, int id = 0, int volume = 0, bool loop = false, int speed = 0, int panning = 0) :
+        explicit command(type type, int id = 0, int16_t priority = 0, int volume = 0, bool loop = false,
+                         int speed = 0, int panning = 0) :
             _id(id),
+            _priority(priority),
             _volume(uint16_t(volume)),
             _speed(uint16_t(speed)),
             _type(type),
@@ -270,21 +273,25 @@ void set_music_volume(fixed volume)
     data.music_volume = volume;
 }
 
-void play_sound(sound_item item)
+void play_sound(int priority, sound_item item)
 {
+    BTN_ASSERT(priority >= numeric_limits<int16_t>::min() && priority <= numeric_limits<int16_t>::max(),
+               "Invalid priority: ", priority);
     BTN_ASSERT(! data.commands.full(), "No more audio commands available");
 
-    data.commands.push_back(command::sound_play(item));
+    data.commands.push_back(command::sound_play(priority, item));
 }
 
-void play_sound(sound_item item, fixed volume, fixed speed, fixed panning)
+void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning)
 {
+    BTN_ASSERT(priority >= numeric_limits<int16_t>::min() && priority <= numeric_limits<int16_t>::max(),
+               "Invalid priority: ", priority);
     BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0, 1]: ", volume);
     BTN_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0, 64]: ", speed);
     BTN_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1, 1]: ", panning);
     BTN_ASSERT(! data.commands.full(), "No more audio commands available");
 
-    data.commands.push_back(command::sound_play(item, _hw_sound_volume(volume), _hw_sound_speed(speed),
+    data.commands.push_back(command::sound_play(priority, item, _hw_sound_volume(volume), _hw_sound_speed(speed),
                                                 _hw_sound_panning(panning)));
 }
 
@@ -308,6 +315,7 @@ void wake_up()
 void update()
 {
     hw::audio::disable_vblank_handler();
+    hw::audio::release_inactive_sounds();
 
     for(const command& command : data.commands)
     {

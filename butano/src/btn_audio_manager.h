@@ -35,9 +35,9 @@ namespace btn::audio_manager
 
     void set_music_volume(fixed volume);
 
-    void play_sound(sound_item item);
+    void play_sound(int priority, sound_item item);
 
-    void play_sound(sound_item item, fixed volume, fixed speed, fixed panning);
+    void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
 
     void stop_all_sounds();
 

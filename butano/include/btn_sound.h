@@ -16,6 +16,12 @@ namespace sound
 
     void play(sound_item item, fixed volume, fixed speed, fixed panning);
 
+    void play_with_priority(int priority, sound_item item);
+
+    void play_with_priority(int priority, sound_item item, fixed volume);
+
+    void play_with_priority(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
+
     void stop_all();
 }
 }

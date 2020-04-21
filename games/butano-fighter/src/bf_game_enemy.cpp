@@ -214,7 +214,7 @@ void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, boo
 
     if(! life)
     {
-        btn::sound::play(_event->enemy.death_sound_item);
+        btn::sound::play_with_priority(constants::enemies_sound_priority, _event->enemy.death_sound_item);
 
         if(show_rotation)
         {

@@ -571,7 +571,20 @@ public:
         string.erase(remove_if(string.begin(), string.end(), pred), string.end());
     }
 
-    constexpr size_type copy(pointer str, size_type length, size_type position = 0)
+    constexpr size_type copy(pointer str, size_type length)
+    {
+        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size, "Invalid length");
+
+        for(size_type index = 0; index < length; ++index)
+        {
+            *str++ = _data[index];
+        }
+
+        return length;
+    }
+
+    constexpr size_type copy(pointer str, size_type length, size_type position)
     {
         BTN_CONSTEXPR_ASSERT(str, "Str is null");
         BTN_CONSTEXPR_ASSERT(length >= 0, "Invalid length");

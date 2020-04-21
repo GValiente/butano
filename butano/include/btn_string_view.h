@@ -141,7 +141,23 @@ public:
         return _begin[position];
     }
 
-    constexpr size_type copy(pointer destination, size_type count, size_type position = 0) const
+    constexpr size_type copy(pointer destination, size_type count) const
+    {
+        BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
+        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+
+        size_type n = 0;
+
+        if(size_type sz = size())
+        {
+            n = min(count, sz);
+            btn::copy(_begin, _begin + n, destination);
+        }
+
+        return n;
+    }
+
+    constexpr size_type copy(pointer destination, size_type count, size_type position) const
     {
         BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
         BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
@@ -159,7 +175,27 @@ public:
         return n;
     }
 
-    [[nodiscard]] constexpr string_view substr(size_type position = 0, size_type count = npos) const
+    [[nodiscard]] constexpr string_view substr() const
+    {
+        return *this;
+    }
+
+    [[nodiscard]] constexpr string_view substr(size_type position) const
+    {
+        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+
+        size_type sz = size();
+        string_view view;
+
+        if(position < sz)
+        {
+            view = string_view(_begin + position, sz - position);
+        }
+
+        return view;
+    }
+
+    [[nodiscard]] constexpr string_view substr(size_type position, size_type count) const
     {
         BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
         BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");

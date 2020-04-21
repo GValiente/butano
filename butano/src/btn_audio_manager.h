@@ -27,6 +27,10 @@ namespace btn::audio_manager
 
     void resume_music();
 
+    [[nodiscard]] int music_position();
+
+    void set_music_position(int position);
+
     [[nodiscard]] fixed music_volume();
 
     void set_music_volume(fixed volume);

@@ -22,6 +22,10 @@ namespace btn::music
 
     void resume();
 
+    [[nodiscard]] int position();
+
+    void set_position(int position);
+
     [[nodiscard]] fixed volume();
 
     void set_volume(fixed volume);

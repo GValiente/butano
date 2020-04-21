@@ -21,6 +21,10 @@ namespace btn::hw::audio
 
     void resume_music();
 
+    [[nodiscard]] int music_position();
+
+    void set_music_position(int position);
+
     void set_music_volume(int volume);
 
     void play_sound(int id);

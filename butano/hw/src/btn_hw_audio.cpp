@@ -141,6 +141,16 @@ void resume_music()
     mmResume();
 }
 
+int music_position()
+{
+    return int(mmGetPosition());
+}
+
+void set_music_position(int position)
+{
+    mmSetPosition(mm_word(position));
+}
+
 void set_music_volume(int volume)
 {
     mmSetModuleVolume(mm_word(volume));

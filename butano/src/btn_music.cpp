@@ -37,6 +37,16 @@ void resume()
     audio_manager::resume_music();
 }
 
+int position()
+{
+    return audio_manager::music_position();
+}
+
+void set_position(int position)
+{
+    audio_manager::set_music_position(position);
+}
+
 fixed volume()
 {
     return audio_manager::music_volume();

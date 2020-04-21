@@ -40,6 +40,11 @@ namespace
             return command(MUSIC_RESUME);
         }
 
+        [[nodiscard]] static command music_set_position(int position)
+        {
+            return command(MUSIC_SET_POSITION, position);
+        }
+
         [[nodiscard]] static command music_set_volume(int volume)
         {
             return command(MUSIC_SET_VOLUME, 0, volume);
@@ -81,6 +86,10 @@ namespace
                 hw::audio::resume_music();
                 return;
 
+            case MUSIC_SET_POSITION:
+                hw::audio::set_music_position(_id);
+                return;
+
             case MUSIC_SET_VOLUME:
                 hw::audio::set_music_volume(_volume);
                 return;
@@ -113,6 +122,7 @@ namespace
             MUSIC_STOP,
             MUSIC_PAUSE,
             MUSIC_RESUME,
+            MUSIC_SET_POSITION,
             MUSIC_SET_VOLUME,
             SOUND_PLAY,
             SOUND_PLAY_EX,
@@ -137,6 +147,7 @@ namespace
     public:
         vector<command, BTN_CFG_AUDIO_MAX_COMMANDS> commands;
         fixed music_volume;
+        int music_position = 0;
         bool music_playing = false;
         bool music_paused = false;
     };
@@ -225,6 +236,23 @@ void resume_music()
     data.music_paused = false;
 }
 
+int music_position()
+{
+    BTN_ASSERT(data.music_playing, "There's no music playing");
+
+    return data.music_position;
+}
+
+void set_music_position(int position)
+{
+    BTN_ASSERT(position >= 0, "Invalid position: ", position);
+    BTN_ASSERT(data.music_playing, "There's no music playing");
+    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::music_set_position(position));
+    data.music_position = position;
+}
+
 fixed music_volume()
 {
     BTN_ASSERT(data.music_playing, "There's no music playing");
@@ -291,6 +319,11 @@ void update()
     if(data.music_playing && ! hw::audio::music_playing())
     {
         data.music_playing = false;
+    }
+
+    if(data.music_playing)
+    {
+        data.music_position = hw::audio::music_position();
     }
 }
 

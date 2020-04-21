@@ -17,6 +17,11 @@ void play(music_item item)
     audio_manager::play_music(item, 1, true);
 }
 
+void play(music_item item, fixed volume)
+{
+    audio_manager::play_music(item, volume, true);
+}
+
 void play(music_item item, fixed volume, bool loop)
 {
     audio_manager::play_music(item, volume, loop);

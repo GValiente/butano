@@ -21,19 +21,28 @@ namespace
 
     static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
 
+    class alignas(int) last_value_type
+    {
+
+    public:
+        char data[4 * sizeof(int)] = {};
+    };
+
+    static_assert(alignof(fixed) == alignof(last_value_type));
+    static_assert(alignof(pair<fixed, fixed>) == alignof(last_value_type));
+    static_assert(alignof(regular_bg_attributes) == alignof(last_value_type));
+
     using hw_entry = hw::hblank_effects::entry;
 
     class item_type
     {
 
     public:
-        using last_value_type = pair<fixed, fixed>;
-
         const void* values_ptr = nullptr;
         int values_count = 0;
         int target_id = 0;
         unsigned usages = 0;
-        last_value_type last_value_variant;
+        last_value_type last_value_container;
         uint8_t target = 0;
         bool visible = false;
         bool update = false;
@@ -51,7 +60,7 @@ namespace
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
-                    fixed& last_value = last_value_variant.first;
+                    auto& last_value = reinterpret_cast<fixed&>(last_value_container);
                     fixed new_value = bgs_manager::hw_position(target_id).x();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -67,7 +76,7 @@ namespace
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
-                    fixed& last_value = last_value_variant.first;
+                    auto& last_value = reinterpret_cast<fixed&>(last_value_container);
                     fixed new_value = bgs_manager::hw_position(target_id).y();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -83,10 +92,15 @@ namespace
 
             case target_type::REGULAR_BG_ATTRIBUTES:
                 {
+                    auto& last_value = reinterpret_cast<regular_bg_attributes&>(last_value_container);
+                    regular_bg_attributes new_value = bgs_manager::regular_attributes(target_id);
+                    updated |= last_value != new_value;
+                    last_value = new_value;
+
                     if(updated)
                     {
                         auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(values_ptr);
-                        bgs_manager::fill_hblank_effect_attributes(
+                        bgs_manager::fill_hblank_effect_regular_attributes(
                                     target_id, regular_bg_attributes_ptr, _switch_dest_values());
                     }
                 }
@@ -94,7 +108,7 @@ namespace
 
             case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
                 {
-                    pair<fixed, fixed>& last_value = last_value_variant;
+                    auto& last_value = reinterpret_cast<pair<fixed, fixed>&>(last_value_container);
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -111,7 +125,7 @@ namespace
 
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
                 {
-                    pair<fixed, fixed>& last_value = last_value_variant;
+                    auto& last_value = reinterpret_cast<pair<fixed, fixed>&>(last_value_container);
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -225,7 +239,7 @@ namespace
         new_item.values_count = values_count;
         new_item.target_id = target_id;
         new_item.usages = 1;
-        new_item.last_value_variant = item_type::last_value_type();
+        new_item.last_value_container = last_value_type();
         new_item.target = uint8_t(target);
         new_item.visible = true;
         new_item.update = true;

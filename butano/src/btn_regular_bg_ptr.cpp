@@ -350,12 +350,12 @@ void regular_bg_ptr::set_mosaic_enabled(bool mosaic_enabled)
 
 regular_bg_attributes regular_bg_ptr::attributes() const
 {
-    return bgs_manager::attributes(_id);
+    return bgs_manager::regular_attributes(_id);
 }
 
 void regular_bg_ptr::set_attributes(const regular_bg_attributes& attributes)
 {
-    bgs_manager::set_attributes(_id, attributes);
+    bgs_manager::set_regular_attributes(_id, attributes);
 }
 
 bool regular_bg_ptr::blending_enabled() const

@@ -1,18 +1,27 @@
 #ifndef BTN_REGULAR_BG_ATTRIBUTES_H
 #define BTN_REGULAR_BG_ATTRIBUTES_H
 
-#include "btn_common.h"
+#include "btn_regular_bg_map_ptr.h"
 
 namespace btn
 {
 
-class regular_bg_attributes
+class alignas(alignof(int)) regular_bg_attributes
 {
 
 public:
-    regular_bg_attributes() = default;
+    regular_bg_attributes(const regular_bg_map_ptr& map_ptr, int priority, bool mosaic_enabled);
 
-    regular_bg_attributes(int priority, bool mosaic_enabled);
+    regular_bg_attributes(regular_bg_map_ptr&& map_ptr, int priority, bool mosaic_enabled);
+
+    [[nodiscard]] const regular_bg_map_ptr& map() const
+    {
+        return _map_ptr;
+    }
+
+    void set_map(const regular_bg_map_ptr& map_ptr);
+
+    void set_map(regular_bg_map_ptr&& map_ptr);
 
     [[nodiscard]] int priority() const
     {
@@ -33,7 +42,8 @@ public:
 
     [[nodiscard]] friend bool operator==(const regular_bg_attributes& a, const regular_bg_attributes& b)
     {
-        return a._priority == b._priority && a._mosaic_enabled == b._mosaic_enabled;
+        return a._map_ptr == b._map_ptr && a._priority == b._priority && a._mosaic_enabled == b._mosaic_enabled &&
+                a._tiles_cbb == b._tiles_cbb && a._bpp_mode == b._bpp_mode;
     }
 
     [[nodiscard]] friend bool operator!=(const regular_bg_attributes& a, const regular_bg_attributes& b)
@@ -42,8 +52,13 @@ public:
     }
 
 private:
-    int8_t _priority = 3;
-    bool _mosaic_enabled = false;
+    regular_bg_map_ptr _map_ptr;
+    int8_t _priority;
+    bool _mosaic_enabled;
+    int8_t _tiles_cbb;
+    int8_t _bpp_mode;
+
+    void _update_map_info();
 };
 
 }

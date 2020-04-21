@@ -50,9 +50,9 @@ namespace bgs_manager
 
     void set_mosaic_enabled(int id, bool mosaic_enabled);
 
-    [[nodiscard]] regular_bg_attributes attributes(int id);
+    [[nodiscard]] regular_bg_attributes regular_attributes(int id);
 
-    void set_attributes(int id, const regular_bg_attributes& attributes);
+    void set_regular_attributes(int id, const regular_bg_attributes& attributes);
 
     [[nodiscard]] bool blending_enabled(int id);
 
@@ -76,7 +76,7 @@ namespace bgs_manager
 
     void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_attributes(int id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_regular_attributes(int id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr);
 
     void update();
 

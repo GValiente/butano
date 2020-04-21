@@ -27,9 +27,30 @@ namespace btn::hw::bgs
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6));
     }
 
+    inline void set_tiles_cbb(int tiles_cbb, uint16_t& bg_cnt)
+    {
+        BFN_SET(bg_cnt, tiles_cbb, BG_CBB);
+    }
+
     inline void set_tiles_cbb(int tiles_cbb, handle& bg)
     {
-        BFN_SET(bg.cnt, tiles_cbb, BG_CBB);
+        set_tiles_cbb(tiles_cbb, bg.cnt);
+    }
+
+    inline void set_map_sbb(int map_sbb, uint16_t& bg_cnt)
+    {
+        BFN_SET(bg_cnt, map_sbb, BG_SBB);
+    }
+
+    inline void set_map_sbb(int map_sbb, handle& bg)
+    {
+        set_map_sbb(map_sbb, bg.cnt);
+    }
+
+    inline void set_map_dimensions(const size& map_dimensions, handle& bg)
+    {
+        int size = (map_dimensions.width() > 32) + ((map_dimensions.height() > 32) * 2);
+        BFN_SET(bg.cnt, size, BG_SIZE);
     }
 
     [[nodiscard]] inline palette_bpp_mode bpp_mode(const handle& bg)
@@ -37,26 +58,21 @@ namespace btn::hw::bgs
         return bg.cnt & BG_8BPP ? palette_bpp_mode::BPP_8 : palette_bpp_mode::BPP_4;
     }
 
-    inline void set_bpp_mode(palette_bpp_mode bpp_mode, handle& bg)
+    inline void set_bpp_mode(palette_bpp_mode bpp_mode, uint16_t& bg_cnt)
     {
         if(bpp_mode == palette_bpp_mode::BPP_8)
         {
-            bg.cnt |= BG_8BPP;
+            bg_cnt |= BG_8BPP;
         }
         else
         {
-            bg.cnt &= ~BG_8BPP;
+            bg_cnt &= ~BG_8BPP;
         }
     }
 
-    inline void set_map(int map_id, const size& map_dimensions, palette_bpp_mode map_bpp_mode, handle& bg)
+    inline void set_bpp_mode(palette_bpp_mode bpp_mode, handle& bg)
     {
-        BFN_SET(bg.cnt, map_id, BG_SBB);
-
-        int size = (map_dimensions.width() > 32) + ((map_dimensions.height() > 32) * 2);
-        BFN_SET(bg.cnt, size, BG_SIZE);
-
-        set_bpp_mode(map_bpp_mode, bg);
+        set_bpp_mode(bpp_mode, bg.cnt);
     }
 
     inline void set_position(int x, int y, handle& bg)

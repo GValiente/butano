@@ -223,6 +223,31 @@ int available_items_count()
     return BTN_CFG_SPRITES_MAX_ITEMS - used_items_count();
 }
 
+id_type create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
+               sprite_palette_ptr&& palette)
+{
+    BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+
+    item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
+    sorted_sprites::insert(new_item);
+    data.check_items_on_screen |= new_item.visible;
+    return &new_item;
+}
+
+id_type optional_create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
+                        sprite_palette_ptr&& palette)
+{
+    if(data.items_pool.full())
+    {
+        return nullptr;
+    }
+
+    item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
+    sorted_sprites::insert(new_item);
+    data.check_items_on_screen |= new_item.visible;
+    return &new_item;
+}
+
 id_type create(sprite_builder&& builder)
 {
     BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");

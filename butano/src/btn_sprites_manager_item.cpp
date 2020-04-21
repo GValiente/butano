@@ -6,6 +6,23 @@
 namespace btn
 {
 
+sprites_manager_item::sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
+                                           sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette) :
+    position(_position),
+    tiles_ptr(move(tiles)),
+    palette_ptr(move(palette)),
+    double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
+    ignore_camera(false),
+    remove_affine_mat_when_not_needed(true)
+{
+    hw::sprites::setup_regular(shape_size, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
+    update_half_dimensions();
+    update_sort_key(3, 0);
+    on_screen = false;
+    visible = true;
+    check_on_screen = true;
+}
+
 sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& tiles,
                                            sprite_palette_ptr&& palette) :
     position(builder.position()),

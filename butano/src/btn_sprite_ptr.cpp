@@ -11,16 +11,36 @@ namespace btn
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    sprite_builder builder(item, graphics_index);
-    builder.set_position(fixed_point(x, y));
-    return sprite_ptr(sprites_manager::create(move(builder)));
+    return sprite_ptr(sprites_manager::create(fixed_point(x, y), item.shape_size(),
+                                              item.tiles_item().create_tiles(graphics_index),
+                                              item.palette_item().create_palette()));
 }
 
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_index)
 {
-    sprite_builder builder(item, graphics_index);
-    builder.set_position(position);
-    return sprite_ptr(sprites_manager::create(move(builder)));
+    return sprite_ptr(sprites_manager::create(position, item.shape_size(),
+                                              item.tiles_item().create_tiles(graphics_index),
+                                              item.palette_item().create_palette()));
+}
+
+sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
+                              sprite_palette_ptr palette)
+{
+    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
+               shape_size.tiles_count(palette.bpp_mode()));
+
+    return sprite_ptr(sprites_manager::create(fixed_point(x, y), shape_size, move(tiles), move(palette)));
+}
+
+sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
+                              sprite_palette_ptr palette)
+{
+    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
+               shape_size.tiles_count(palette.bpp_mode()));
+
+    return sprite_ptr(sprites_manager::create(position, shape_size, move(tiles), move(palette)));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_builder& builder)
@@ -35,11 +55,39 @@ sprite_ptr sprite_ptr::create(sprite_builder&& builder)
 
 optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    optional<sprite_ptr> result;
-    sprite_builder builder(item, graphics_index);
-    builder.set_position(fixed_point(x, y));
+    return optional_create(fixed_point(x, y), item, graphics_index);
+}
 
-    if(handle_type handle = sprites_manager::optional_create(move(builder)))
+optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
+                                                 int graphics_index)
+{
+    optional<sprite_ptr> result;
+
+    if(optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles(graphics_index))
+    {
+        if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
+        {
+            if(handle_type handle = sprites_manager::optional_create(position, item.shape_size(), move(*tiles),
+                                                                     move(*palette)))
+            {
+                result = sprite_ptr(handle);
+            }
+        }
+    }
+
+    return result;
+}
+
+optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_shape_size& shape_size,
+                                                 sprite_tiles_ptr tiles, sprite_palette_ptr palette)
+{
+    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
+               shape_size.tiles_count(palette.bpp_mode()));
+
+    optional<sprite_ptr> result;
+
+    if(handle_type handle = sprites_manager::optional_create(fixed_point(x, y), shape_size, move(tiles), move(palette)))
     {
         result = sprite_ptr(handle);
     }
@@ -47,14 +95,16 @@ optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
-                                                 int graphics_index)
+optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_shape_size& shape_size,
+                                                 sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
-    optional<sprite_ptr> result;
-    sprite_builder builder(item, graphics_index);
-    builder.set_position(position);
+    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
+               shape_size.tiles_count(palette.bpp_mode()));
 
-    if(handle_type handle = sprites_manager::optional_create(move(builder)))
+    optional<sprite_ptr> result;
+
+    if(handle_type handle = sprites_manager::optional_create(position, shape_size, move(tiles), move(palette)))
     {
         result = sprite_ptr(handle);
     }

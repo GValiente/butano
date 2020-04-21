@@ -32,6 +32,12 @@ public:
     [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_item& item,
                                            int graphics_index = 0);
 
+    [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_shape_size& shape_size,
+                                           sprite_tiles_ptr tiles, sprite_palette_ptr palette);
+
+    [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_shape_size& shape_size,
+                                           sprite_tiles_ptr tiles, sprite_palette_ptr palette);
+
     [[nodiscard]] static sprite_ptr create(const sprite_builder& builder);
 
     [[nodiscard]] static sprite_ptr create(sprite_builder&& builder);
@@ -41,6 +47,13 @@ public:
 
     [[nodiscard]] static optional<sprite_ptr> optional_create(const fixed_point& position, const sprite_item& item,
                                                               int graphics_index = 0);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(
+            fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
+
+    [[nodiscard]] static optional<sprite_ptr> optional_create(
+            const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
+            sprite_palette_ptr palette);
 
     [[nodiscard]] static optional<sprite_ptr> optional_create(const sprite_builder& builder);
 

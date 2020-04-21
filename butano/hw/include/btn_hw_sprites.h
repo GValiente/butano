@@ -42,6 +42,18 @@ namespace btn::hw::sprites
         oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(btn::sprites::sprites_count()));
     }
 
+    inline void setup_regular(const sprite_shape_size& shape_size, int tiles_id, int palette_id,
+                              palette_bpp_mode bpp_mode, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, false, false, false);
+        a0 |= int(bpp_mode) * ATTR0_8BPP;
+
+        int a1 = ATTR1_BUILDR(0, int(shape_size.size()), false, false);
+        int a2 = ATTR2_BUILD(tiles_id, palette_id, 3);
+        obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+    }
+
     inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                               handle& sprite)
     {

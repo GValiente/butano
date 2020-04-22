@@ -45,8 +45,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(value);
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
         return *this;
     }
 
@@ -59,8 +58,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(move(value));
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
         return *this;
     }
 
@@ -133,8 +131,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
     }
 
     void reset()
@@ -279,8 +276,7 @@ protected:
             {
                 other_any.reset();
                 *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
-                ::new(other_any._manager_ptr()) type_manager<Type>();
-                other_any._manager_created = true;
+                other_any._create_manager<Type>();
             }
             else
             {
@@ -299,8 +295,7 @@ protected:
             {
                 other_any.reset();
                 *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
-                ::new(other_any._manager_ptr()) type_manager<Type>();
-                other_any._manager_created = true;
+                other_any._create_manager<Type>();
                 this_any.reset();
             }
             else
@@ -329,9 +324,6 @@ protected:
         }
     };
 
-    alignas(base_manager) char _base_manager_buffer[sizeof(base_manager)];
-    char* _storage;
-
     iany(char* storage, int max_size, int max_alignment) :
         _storage(storage),
         _max_size(max_size),
@@ -352,14 +344,14 @@ protected:
         return reinterpret_cast<Type*>(_storage);
     }
 
-    [[nodiscard]] const base_manager* _manager_ptr() const
+    template<typename Type>
+    void _create_manager()
     {
-        return reinterpret_cast<const base_manager*>(_base_manager_buffer);
-    }
+        static_assert(sizeof(type_manager<Type>) == sizeof(base_manager));
+        static_assert(alignof(type_manager<Type>) == alignof(base_manager));
 
-    [[nodiscard]] base_manager* _manager_ptr()
-    {
-        return reinterpret_cast<base_manager*>(_base_manager_buffer);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
     }
 
     void _assign(const iany& other)
@@ -379,11 +371,21 @@ protected:
     }
 
 private:
+    alignas(base_manager) char _base_manager_buffer[sizeof(base_manager)];
+    char* _storage;
     int _max_size;
     int16_t _max_alignment;
-
-protected:
     bool _manager_created;
+
+    [[nodiscard]] const base_manager* _manager_ptr() const
+    {
+        return reinterpret_cast<const base_manager*>(_base_manager_buffer);
+    }
+
+    [[nodiscard]] base_manager* _manager_ptr()
+    {
+        return reinterpret_cast<base_manager*>(_base_manager_buffer);
+    }
 };
 
 
@@ -431,8 +433,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         ::new(_value_ptr<Type>()) Type(value);
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
     }
 
     template<typename Type>
@@ -443,8 +444,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         ::new(_value_ptr<Type>()) Type(move(value));
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
     }
 
     any& operator=(const any& other)
@@ -499,8 +499,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(value);
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
         return *this;
     }
 
@@ -512,8 +511,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(move(value));
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
         return *this;
     }
 
@@ -525,8 +523,7 @@ public:
 
         reset();
         ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
-        ::new(_manager_ptr()) type_manager<Type>();
-        _manager_created = true;
+        _create_manager<Type>();
     }
 
 private:

@@ -2,8 +2,10 @@
 #define BTN_ANY_H
 
 #include <new>
+#include "btn_assert.h"
+#include "btn_type_id.h"
+#include "btn_utility.h"
 #include "btn_any_fwd.h"
-#include "btn_type_name.h"
 
 namespace btn
 {
@@ -77,9 +79,9 @@ public:
         return _manager_created;
     }
 
-    [[nodiscard]] string_view type_name() const
+    [[nodiscard]] type_id_t type() const
     {
-        return has_value() ? _manager_ptr()->type_name() : string_view();
+        return has_value() ? _manager_ptr()->type() : type_id_t();
     }
 
     [[nodiscard]] int max_size() const
@@ -95,8 +97,7 @@ public:
     template<typename Type>
     [[nodiscard]] const Type& value() const
     {
-        BTN_ASSERT(type_name() == btn::type_name<Type>(), "Invalid value type: ",
-                   type_name(), " - ", btn::type_name<Type>());
+        BTN_ASSERT(type() == type_id<Type>(), "Invalid value type");
 
         return *_value_ptr<Type>();
     }
@@ -104,8 +105,7 @@ public:
     template<typename Type>
     [[nodiscard]] Type& value()
     {
-        BTN_ASSERT(type_name() == btn::type_name<Type>(), "Invalid value type: ",
-                   type_name(), " - ", btn::type_name<Type>());
+        BTN_ASSERT(type() == type_id<Type>(), "Invalid value type");
 
         return *_value_ptr<Type>();
     }
@@ -139,7 +139,7 @@ public:
         if(_manager_created)
         {
             base_manager* manager = _manager_ptr();
-            manager->destroy(_storage);
+            manager->destroy(*this);
             manager->~base_manager();
             _manager_created = false;
         }
@@ -151,10 +151,10 @@ public:
         {
             if(other.has_value())
             {
-                BTN_ASSERT(type_name() == other.type_name(), "Value type mismatch: ",
-                           type_name(), " - ", other.type_name());
+                base_manager* manager = _manager_ptr();
+                BTN_ASSERT(manager->type() == other._manager_ptr()->type(), "Value type mismatch");
 
-                _manager_ptr()->swap(_storage, other._storage);
+                manager->swap(*this, other);
             }
             else
             {
@@ -172,71 +172,6 @@ public:
         a.swap(b);
     }
 
-    template<typename Type>
-    [[nodiscard]] friend bool operator==(const iany& a, const Type& b)
-    {
-        if(a.has_value())
-        {
-            if(a.type_name() == btn::type_name<Type>())
-            {
-                return *a._value_ptr<Type>() == b;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    template<typename Type>
-    [[nodiscard]] friend bool operator!=(const iany& a, const Type& b)
-    {
-        return ! (a == b);
-    }
-
-    template<typename Type>
-    [[nodiscard]] friend bool operator<(const iany& a, const Type& b)
-    {
-        if(! a.has_value())
-        {
-            return true;
-        }
-
-        string_view a_type_name = a.type_name();
-        string_view b_type_name = btn::type_name<Type>();
-
-        if(a_type_name == b_type_name)
-        {
-            return *a._value_ptr<Type>() < b;
-        }
-        else
-        {
-            return a_type_name < b_type_name;
-        }
-    }
-
-    template<typename Type>
-    [[nodiscard]] friend bool operator>(const iany& a, const Type& b)
-    {
-        return b < a;
-    }
-
-    template<typename Type>
-    [[nodiscard]] friend bool operator<=(const iany& a, const Type& b)
-    {
-        return ! (a > b);
-    }
-
-    template<typename Type>
-    [[nodiscard]] friend bool operator>=(const iany& a, const Type& b)
-    {
-        return ! (a < b);
-    }
-
 protected:
     class base_manager
     {
@@ -244,15 +179,15 @@ protected:
     public:
         virtual ~base_manager() = default;
 
-        [[nodiscard]] virtual string_view type_name() const = 0;
+        [[nodiscard]] virtual type_id_t type() const = 0;
 
         virtual void copy_to(const iany& this_any, iany& other_any) const = 0;
 
         virtual void move_to(iany& this_any, iany& other_any) const = 0;
 
-        virtual void swap(char* this_storage, char* other_storage) const = 0;
+        virtual void swap(iany& this_any, iany& other_any) const = 0;
 
-        virtual void destroy(char* storage) const = 0;
+        virtual void destroy(iany& any) const = 0;
     };
 
     template<typename Type>
@@ -260,9 +195,9 @@ protected:
     {
 
     public:
-        [[nodiscard]] string_view type_name() const override final
+        [[nodiscard]] type_id_t type() const override final
         {
-            return btn::type_name<Type>();
+            return type_id<Type>();
         }
 
         void copy_to(const iany& this_any, iany& other_any) const override final
@@ -280,7 +215,7 @@ protected:
             }
             else
             {
-                BTN_ERROR("This type can't be copied: ", type_name());
+                BTN_ERROR("This type can't be copied");
             }
         }
 
@@ -300,27 +235,25 @@ protected:
             }
             else
             {
-                BTN_ERROR("This type can't be moved: ", type_name());
+                BTN_ERROR("This type can't be moved");
             }
         }
 
-        void swap(char* this_storage, char* other_storage) const override final
+        void swap(iany& this_any, iany& other_any) const override final
         {
             if(is_swappable_v<Type>)
             {
-                auto& this_value = reinterpret_cast<Type&>(*this_storage);
-                auto& other_value = reinterpret_cast<Type&>(*other_storage);
-                btn::swap(this_value, other_value);
+                btn::swap(*this_any._value_ptr<Type>(), *other_any._value_ptr<Type>());
             }
             else
             {
-                BTN_ERROR("This type can't be swapped: ", type_name());
+                BTN_ERROR("This type can't be swapped");
             }
         }
 
-        void destroy(char* storage) const override final
+        void destroy(iany& any) const override final
         {
-            reinterpret_cast<Type*>(storage)->~Type();
+            any._value_ptr<Type>()->~Type();
         }
     };
 

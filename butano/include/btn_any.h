@@ -1,0 +1,569 @@
+#ifndef BTN_ANY_H
+#define BTN_ANY_H
+
+#include <new>
+#include "btn_any_fwd.h"
+#include "btn_type_name.h"
+
+namespace btn
+{
+
+class iany
+{
+
+public:
+    iany(const iany& other) = delete;
+
+    iany& operator=(const iany& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    iany& operator=(iany&& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
+
+    template<typename Type>
+    iany& operator=(const Type& value)
+    {
+        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+                   alignof(Type), " - ", _max_alignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(value);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+        return *this;
+    }
+
+    template<typename Type>
+    iany& operator=(Type&& value)
+    {
+        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+                   alignof(Type), " - ", _max_alignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+        return *this;
+    }
+
+    ~iany()
+    {
+        reset();
+    }
+
+    [[nodiscard]] explicit operator bool() const
+    {
+        return _manager_created;
+    }
+
+    [[nodiscard]] bool has_value() const
+    {
+        return _manager_created;
+    }
+
+    [[nodiscard]] string_view type_name() const
+    {
+        return has_value() ? _manager_ptr()->type_name() : string_view();
+    }
+
+    [[nodiscard]] int max_size() const
+    {
+        return _max_size;
+    }
+
+    [[nodiscard]] int max_alignment() const
+    {
+        return _max_alignment;
+    }
+
+    template<typename Type>
+    [[nodiscard]] const Type& value() const
+    {
+        BTN_ASSERT(type_name() == btn::type_name<Type>(), "Invalid value type: ",
+                   type_name(), " - ", btn::type_name<Type>());
+
+        return *_value_ptr<Type>();
+    }
+
+    template<typename Type>
+    [[nodiscard]] Type& value()
+    {
+        BTN_ASSERT(type_name() == btn::type_name<Type>(), "Invalid value type: ",
+                   type_name(), " - ", btn::type_name<Type>());
+
+        return *_value_ptr<Type>();
+    }
+
+    template<typename Type>
+    [[nodiscard]] Type value_or(const Type& default_value) const
+    {
+        return has_value() ? value<Type>() : default_value;
+    }
+
+    template<typename Type>
+    [[nodiscard]] Type value_or(Type&& default_value) const
+    {
+        return has_value() ? value<Type>() : move(default_value);
+    }
+
+    template<typename Type, typename... Args>
+    void emplace(Args&&... args)
+    {
+        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+                   alignof(Type), " - ", _max_alignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+    }
+
+    void reset()
+    {
+        if(_manager_created)
+        {
+            base_manager* manager = _manager_ptr();
+            manager->destroy(_storage);
+            manager->~base_manager();
+            _manager_created = false;
+        }
+    }
+
+    void swap(iany& other)
+    {
+        if(has_value())
+        {
+            if(other.has_value())
+            {
+                BTN_ASSERT(type_name() == other.type_name(), "Value type mismatch: ",
+                           type_name(), " - ", other.type_name());
+
+                _manager_ptr()->swap(_storage, other._storage);
+            }
+            else
+            {
+                other._assign(move(*this));
+            }
+        }
+        else
+        {
+            _assign(move(other));
+        }
+    }
+
+    friend void swap(iany& a, iany& b)
+    {
+        a.swap(b);
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator==(const iany& a, const Type& b)
+    {
+        if(a.has_value())
+        {
+            if(a.type_name() == btn::type_name<Type>())
+            {
+                return *a._value_ptr<Type>() == b;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator!=(const iany& a, const Type& b)
+    {
+        return ! (a == b);
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator<(const iany& a, const Type& b)
+    {
+        if(! a.has_value())
+        {
+            return true;
+        }
+
+        string_view a_type_name = a.type_name();
+        string_view b_type_name = btn::type_name<Type>();
+
+        if(a_type_name == b_type_name)
+        {
+            return *a._value_ptr<Type>() < b;
+        }
+        else
+        {
+            return a_type_name < b_type_name;
+        }
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator>(const iany& a, const Type& b)
+    {
+        return b < a;
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator<=(const iany& a, const Type& b)
+    {
+        return ! (a > b);
+    }
+
+    template<typename Type>
+    [[nodiscard]] friend bool operator>=(const iany& a, const Type& b)
+    {
+        return ! (a < b);
+    }
+
+protected:
+    class base_manager
+    {
+
+    public:
+        virtual ~base_manager() = default;
+
+        [[nodiscard]] virtual string_view type_name() const = 0;
+
+        virtual void copy_to(const iany& this_any, iany& other_any) const = 0;
+
+        virtual void move_to(iany& this_any, iany& other_any) const = 0;
+
+        virtual void swap(char* this_storage, char* other_storage) const = 0;
+
+        virtual void destroy(char* storage) const = 0;
+    };
+
+    template<typename Type>
+    class type_manager : public base_manager
+    {
+
+    public:
+        [[nodiscard]] string_view type_name() const override final
+        {
+            return btn::type_name<Type>();
+        }
+
+        void copy_to(const iany& this_any, iany& other_any) const override final
+        {
+            BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
+                       sizeof(Type), " - ", other_any.max_size());
+            BTN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
+                       alignof(Type), " - ", other_any.max_alignment());
+
+            if(is_copy_constructible_v<Type>)
+            {
+                other_any.reset();
+                *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
+                ::new(other_any._manager_ptr()) type_manager<Type>();
+                other_any._manager_created = true;
+            }
+            else
+            {
+                BTN_ERROR("This type can't be copied: ", type_name());
+            }
+        }
+
+        void move_to(iany& this_any, iany& other_any) const override final
+        {
+            BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
+                       sizeof(Type), " - ", other_any.max_size());
+            BTN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
+                       alignof(Type), " - ", other_any.max_alignment());
+
+            if(is_move_constructible_v<Type>)
+            {
+                other_any.reset();
+                *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
+                ::new(other_any._manager_ptr()) type_manager<Type>();
+                other_any._manager_created = true;
+                this_any.reset();
+            }
+            else
+            {
+                BTN_ERROR("This type can't be moved: ", type_name());
+            }
+        }
+
+        void swap(char* this_storage, char* other_storage) const override final
+        {
+            if(is_swappable_v<Type>)
+            {
+                auto& this_value = reinterpret_cast<Type&>(*this_storage);
+                auto& other_value = reinterpret_cast<Type&>(*other_storage);
+                btn::swap(this_value, other_value);
+            }
+            else
+            {
+                BTN_ERROR("This type can't be swapped: ", type_name());
+            }
+        }
+
+        void destroy(char* storage) const override final
+        {
+            reinterpret_cast<Type*>(storage)->~Type();
+        }
+    };
+
+    alignas(base_manager) char _base_manager_buffer[sizeof(base_manager)];
+    char* _storage;
+
+    iany(char* storage, int max_size, int max_alignment) :
+        _storage(storage),
+        _max_size(max_size),
+        _max_alignment(int16_t(max_alignment)),
+        _manager_created(false)
+    {
+    }
+
+    template<typename Type>
+    [[nodiscard]] const Type* _value_ptr() const
+    {
+        return reinterpret_cast<const Type*>(_storage);
+    }
+
+    template<typename Type>
+    [[nodiscard]] Type* _value_ptr()
+    {
+        return reinterpret_cast<Type*>(_storage);
+    }
+
+    [[nodiscard]] const base_manager* _manager_ptr() const
+    {
+        return reinterpret_cast<const base_manager*>(_base_manager_buffer);
+    }
+
+    [[nodiscard]] base_manager* _manager_ptr()
+    {
+        return reinterpret_cast<base_manager*>(_base_manager_buffer);
+    }
+
+    void _assign(const iany& other)
+    {
+        if(other.has_value())
+        {
+            other._manager_ptr()->copy_to(other, *this);
+        }
+    }
+
+    void _assign(iany&& other)
+    {
+        if(other.has_value())
+        {
+            other._manager_ptr()->move_to(other, *this);
+        }
+    }
+
+private:
+    int _max_size;
+    int16_t _max_alignment;
+
+protected:
+    bool _manager_created;
+};
+
+
+template<int MaxSize, int MaxAlignment>
+class any : public iany
+{
+    static_assert(MaxSize > 0);
+    static_assert(MaxAlignment > 0 && MaxAlignment <= numeric_limits<int16_t>::max());
+
+public:
+    any() :
+        iany(_storage_buffer, MaxSize, MaxAlignment)
+    {
+    }
+
+    any(const any& other) :
+        any()
+    {
+        _assign(other);
+    }
+
+    any(any&& other) :
+        any()
+    {
+        _assign(move(other));
+    }
+
+    any(const iany& other) :
+        any()
+    {
+        _assign(other);
+    }
+
+    any(iany&& other) :
+        any()
+    {
+        _assign(move(other));
+    }
+
+    template<typename Type>
+    explicit any(const Type& value) :
+        any()
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        ::new(_value_ptr<Type>()) Type(value);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+    }
+
+    template<typename Type>
+    explicit any(Type&& value) :
+        any()
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+    }
+
+    any& operator=(const any& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    any& operator=(any&& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
+
+    any& operator=(const iany& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(other);
+        }
+
+        return *this;
+    }
+
+    any& operator=(iany&& other)
+    {
+        if(this != &other)
+        {
+            reset();
+            _assign(move(other));
+        }
+
+        return *this;
+    }
+
+    template<typename Type>
+    any& operator=(const Type& value)
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(value);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+        return *this;
+    }
+
+    template<typename Type>
+    any& operator=(Type&& value)
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+        return *this;
+    }
+
+    template<typename Type, typename... Args>
+    void emplace(Args&&... args)
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
+        ::new(_manager_ptr()) type_manager<Type>();
+        _manager_created = true;
+    }
+
+private:
+    alignas(MaxAlignment) char _storage_buffer[MaxSize];
+};
+
+
+template<typename Type>
+[[nodiscard]] Type any_cast(const iany& any)
+{
+    return any.value<Type>();
+}
+
+template<typename Type>
+[[nodiscard]] Type any_cast(iany& any)
+{
+    return any.value<Type>();
+}
+
+template<typename Type>
+[[nodiscard]] Type any_cast(iany&& any)
+{
+    return move(any.value<Type>());
+}
+
+template<typename Type>
+[[nodiscard]] const Type* any_cast(const iany* any)
+{
+    return &(any->value<Type>());
+}
+
+template<typename Type>
+[[nodiscard]] Type* any_cast(iany* any)
+{
+    return &(any->value<Type>());
+}
+
+}
+
+#endif

@@ -10,6 +10,7 @@
 #include "math_tests.h"
 #include "sqrt_tests.h"
 #include "sram_tests.h"
+#include "any_tests.h"
 #include "variable_8x16_sprite_font.h"
 
 #if ! BTN_CFG_ASSERT_ENABLED
@@ -30,6 +31,7 @@ int main()
     fixed_tests();
     math_tests();
     sqrt_tests();
+    any_tests();
     sram_tests sram_tests;
 
     if(sram_tests.again())

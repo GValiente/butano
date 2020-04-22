@@ -18,6 +18,15 @@ namespace btn
     using std::is_trivially_copyable;
     using std::is_trivially_copyable_v;
 
+    using std::is_copy_constructible;
+    using std::is_copy_constructible_v;
+
+    using std::is_move_constructible;
+    using std::is_move_constructible_v;
+
+    using std::is_swappable;
+    using std::is_swappable_v;
+
     using std::is_base_of;
     using std::is_base_of_v;
 

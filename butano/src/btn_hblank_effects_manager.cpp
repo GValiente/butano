@@ -1,5 +1,6 @@
 #include "btn_hblank_effects_manager.h"
 
+#include "btn_any.h"
 #include "btn_span.h"
 #include "btn_vector.h"
 #include "btn_display.h"
@@ -21,17 +22,7 @@ namespace
 
     static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
 
-    class alignas(int) last_value_type
-    {
-
-    public:
-        char data[4 * sizeof(int)] = {};
-    };
-
-    static_assert(alignof(fixed) == alignof(last_value_type));
-    static_assert(alignof(pair<fixed, fixed>) == alignof(last_value_type));
-    static_assert(alignof(regular_bg_attributes) == alignof(last_value_type));
-
+    using last_value_type = any<4 * sizeof(int)>;
     using hw_entry = hw::hblank_effects::entry;
 
     class item_type
@@ -60,7 +51,7 @@ namespace
 
             case target_type::REGULAR_BG_HORIZONTAL_POSITION:
                 {
-                    auto& last_value = reinterpret_cast<fixed&>(last_value_container);
+                    fixed& last_value = last_value_container.value<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).x();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -76,7 +67,7 @@ namespace
 
             case target_type::REGULAR_BG_VERTICAL_POSITION:
                 {
-                    auto& last_value = reinterpret_cast<fixed&>(last_value_container);
+                    fixed& last_value = last_value_container.value<fixed>();
                     fixed new_value = bgs_manager::hw_position(target_id).y();
                     updated |= last_value.integer() != new_value.integer();
                     last_value = new_value;
@@ -92,7 +83,7 @@ namespace
 
             case target_type::REGULAR_BG_ATTRIBUTES:
                 {
-                    auto& last_value = reinterpret_cast<regular_bg_attributes&>(last_value_container);
+                    regular_bg_attributes& last_value = last_value_container.value<regular_bg_attributes>();
                     regular_bg_attributes new_value = bgs_manager::regular_attributes(target_id);
                     updated |= last_value != new_value;
                     last_value = new_value;
@@ -108,7 +99,7 @@ namespace
 
             case target_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
                 {
-                    auto& last_value = reinterpret_cast<pair<fixed, fixed>&>(last_value_container);
+                    pair<fixed, fixed>& last_value = last_value_container.value<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -125,7 +116,7 @@ namespace
 
             case target_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
                 {
-                    auto& last_value = reinterpret_cast<pair<fixed, fixed>&>(last_value_container);
+                    pair<fixed, fixed>& last_value = last_value_container.value<pair<fixed, fixed>>();
                     pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
                     updated |= last_value.first.integer() != new_value.first.integer() ||
                             last_value.second.integer() != new_value.second.integer();
@@ -239,7 +230,6 @@ namespace
         new_item.values_count = values_count;
         new_item.target_id = target_id;
         new_item.usages = 1;
-        new_item.last_value_container = last_value_type();
         new_item.target = uint8_t(target);
         new_item.visible = true;
         new_item.update = true;
@@ -290,7 +280,9 @@ int create(const span<const fixed>& fixed_values_ref, target_type target, int ta
                "Invalid fixed values ref size: ", fixed_values_ref.size(), " - ", display::height());
     BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
 
-    return _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
+    int id = _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
+    data.items[id].last_value_container = fixed();
+    return id;
 }
 
 int optional_create(const span<const fixed>& fixed_values_ref, target_type target, int target_id)
@@ -303,7 +295,9 @@ int optional_create(const span<const fixed>& fixed_values_ref, target_type targe
         return -1;
     }
 
-    return _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
+    int id = _create(fixed_values_ref.data(), fixed_values_ref.size(), target, target_id);
+    data.items[id].last_value_container = fixed();
+    return id;
 }
 
 int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id)
@@ -312,8 +306,10 @@ int create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, i
                "Invalid regular bg attributes ref size: ", regular_bg_attributes_ref.size(), " - ", display::height());
     BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
 
-    return _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
-                   target_type::REGULAR_BG_ATTRIBUTES, target_id);
+    int id = _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
+                     target_type::REGULAR_BG_ATTRIBUTES, target_id);
+    data.items[id].last_value_container = bgs_manager::regular_attributes(target_id);
+    return id;
 }
 
 int optional_create(const span<const regular_bg_attributes>& regular_bg_attributes_ref, int target_id)
@@ -326,8 +322,10 @@ int optional_create(const span<const regular_bg_attributes>& regular_bg_attribut
         return -1;
     }
 
-    return _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
-                   target_type::REGULAR_BG_ATTRIBUTES, target_id);
+    int id = _create(regular_bg_attributes_ref.data(), regular_bg_attributes_ref.size(),
+                     target_type::REGULAR_BG_ATTRIBUTES, target_id);
+    data.items[id].last_value_container = bgs_manager::regular_attributes(target_id);
+    return id;
 }
 
 int create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id)
@@ -336,7 +334,9 @@ int create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type ta
                "Invalid fixed pairs ref size: ", fixed_pairs_ref.size(), " - ", display::height());
     BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
 
-    return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+    int id = _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+    data.items[id].last_value_container = pair<fixed, fixed>();
+    return id;
 }
 
 int optional_create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, target_type target, int target_id)
@@ -349,7 +349,9 @@ int optional_create(const span<const pair<fixed, fixed>>& fixed_pairs_ref, targe
         return -1;
     }
 
-    return _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+    int id = _create(fixed_pairs_ref.data(), fixed_pairs_ref.size(), target, target_id);
+    data.items[id].last_value_container = pair<fixed, fixed>();
+    return id;
 }
 
 int create(const span<const color>& color_values_ref, target_type target, int target_id)
@@ -388,6 +390,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         data.free_item_indexes.push_back(int8_t(id));
+        item.last_value_container.reset();
         item.update = false;
 
         if(item.visible)

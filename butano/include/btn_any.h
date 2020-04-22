@@ -210,7 +210,7 @@ protected:
             if(is_copy_constructible_v<Type>)
             {
                 other_any.reset();
-                *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
+                ::new(other_any._value_ptr<Type>()) Type(*this_any._value_ptr<Type>());
                 other_any._create_manager<Type>();
             }
             else
@@ -229,7 +229,7 @@ protected:
             if(is_move_constructible_v<Type>)
             {
                 other_any.reset();
-                *other_any._value_ptr<Type>() = move(*this_any._value_ptr<Type>());
+                ::new(other_any._value_ptr<Type>()) Type(move(*this_any._value_ptr<Type>()));
                 other_any._create_manager<Type>();
                 this_any.reset();
             }

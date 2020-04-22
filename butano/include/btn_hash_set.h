@@ -209,7 +209,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -222,7 +222,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -874,6 +874,28 @@ public:
         this->_assign(other);
     }
 
+    hash_set(hash_set&& other) :
+        hash_set()
+    {
+        this->_assign(move(other));
+    }
+
+    hash_set(const ihash_set<Key, KeyHash, KeyEqual>& other) :
+        hash_set()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash set: ", MaxSize, " - ", other.size());
+
+        this->_assign(other);
+    }
+
+    hash_set(ihash_set<Key, KeyHash, KeyEqual>&& other) :
+        hash_set()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash set: ", MaxSize, " - ", other.size());
+
+        this->_assign(move(other));
+    }
+
     hash_set& operator=(const hash_set& other)
     {
         if(this != &other)
@@ -885,16 +907,36 @@ public:
         return *this;
     }
 
-    hash_set(hash_set&& other) :
-        hash_set()
-    {
-        this->_assign(move(other));
-    }
-
     hash_set& operator=(hash_set&& other)
     {
         if(this != &other)
         {
+            this->clear();
+            this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    hash_set& operator=(const ihash_set<Key, KeyHash, KeyEqual>& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash set: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    hash_set& operator=(ihash_set<Key, KeyHash, KeyEqual>&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash set: ", MaxSize, " - ", other.size());
+
             this->clear();
             this->_assign(move(other));
         }

@@ -983,6 +983,28 @@ public:
         this->_assign(other);
     }
 
+    deque(deque&& other) :
+        deque()
+    {
+        this->_assign(move(other));
+    }
+
+    deque(const ideque<Type>& other) :
+        deque()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+
+        this->_assign(other);
+    }
+
+    deque(ideque<Type>&& other) :
+        deque()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+
+        this->_assign(move(other));
+    }
+
     deque& operator=(const deque& other)
     {
         if(this != &other)
@@ -994,16 +1016,36 @@ public:
         return *this;
     }
 
-    deque(deque&& other) :
-        deque()
-    {
-        this->_assign(move(other));
-    }
-
     deque& operator=(deque&& other)
     {
         if(this != &other)
         {
+            this->clear();
+            this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    deque& operator=(const ideque<Type>& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    deque& operator=(ideque<Type>&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+
             this->clear();
             this->_assign(move(other));
         }

@@ -624,6 +624,28 @@ public:
         this->_assign(other);
     }
 
+    forward_list(forward_list&& other) :
+        forward_list()
+    {
+        this->_assign(move(other));
+    }
+
+    forward_list(const iforward_list<Type>& other) :
+        forward_list()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+
+        this->_assign(other);
+    }
+
+    forward_list(iforward_list<Type>&& other) :
+        forward_list()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+
+        this->_assign(move(other));
+    }
+
     forward_list& operator=(const forward_list& other)
     {
         if(this != &other)
@@ -635,16 +657,36 @@ public:
         return *this;
     }
 
-    forward_list(forward_list&& other) :
-        forward_list()
-    {
-        this->_assign(move(other));
-    }
-
     forward_list& operator=(forward_list&& other)
     {
         if(this != &other)
         {
+            this->clear();
+            this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    forward_list& operator=(const iforward_list<Type>& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    forward_list& operator=(iforward_list<Type>&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+
             this->clear();
             this->_assign(move(other));
         }

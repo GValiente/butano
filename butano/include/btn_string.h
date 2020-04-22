@@ -975,6 +975,12 @@ public:
         _data[0] = 0;
     }
 
+    constexpr string(const string& other) :
+        string()
+    {
+        append(other);
+    }
+
     constexpr string(const istring& other) :
         string()
     {
@@ -1009,6 +1015,26 @@ public:
         string()
     {
         append(first, last);
+    }
+
+    constexpr string& operator=(const string& other)
+    {
+        btn::copy(other.begin(), other.end(), begin());
+        _size = other.size();
+        _data[_size] = 0;
+        return *this;
+    }
+
+    constexpr string& operator=(const istring& other)
+    {
+        istring::operator=(other);
+        return *this;
+    }
+
+    constexpr string& operator=(const_pointer str)
+    {
+        istring::operator=(str);
+        return *this;
     }
 
     [[nodiscard]] constexpr string substr(size_type position) const

@@ -555,10 +555,6 @@ public:
     }
 
 protected:
-    pointer _data;
-    size_type _size;
-    size_type _max_size;
-
     ivector(reference data, size_type max_size) :
         _data(&data),
         _size(0),
@@ -595,6 +591,11 @@ protected:
 
         other._size = 0;
     }
+
+private:
+    pointer _data;
+    size_type _size;
+    size_type _max_size;
 };
 
 
@@ -626,6 +627,28 @@ public:
         this->_assign(other);
     }
 
+    vector(vector&& other) :
+        vector()
+    {
+        this->_assign(move(other));
+    }
+
+    vector(const ivector<Type>& other) :
+        vector()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+
+        this->_assign(other);
+    }
+
+    vector(ivector<Type>&& other) :
+        vector()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+
+        this->_assign(move(other));
+    }
+
     vector& operator=(const vector& other)
     {
         if(this != &other)
@@ -637,18 +660,38 @@ public:
         return *this;
     }
 
-    vector(vector&& other) :
-        vector()
-    {
-        this->_assign(move(other));
-    }
-
     vector& operator=(vector&& other)
     {
         if(this != &other)
         {
             this->clear();
             this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    vector& operator=(const ivector<Type>& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    vector& operator=(ivector<Type>&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
         }
 
         return *this;

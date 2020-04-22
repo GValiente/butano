@@ -210,7 +210,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -223,7 +223,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map");
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -923,6 +923,28 @@ public:
         this->_assign(other);
     }
 
+    hash_map(hash_map&& other) :
+        hash_map()
+    {
+        this->_assign(move(other));
+    }
+
+    hash_map(const ihash_map<Key, Value, KeyHash, KeyEqual>& other) :
+        hash_map()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+
+        this->_assign(other);
+    }
+
+    hash_map(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) :
+        hash_map()
+    {
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+
+        this->_assign(move(other));
+    }
+
     hash_map& operator=(const hash_map& other)
     {
         if(this != &other)
@@ -934,16 +956,36 @@ public:
         return *this;
     }
 
-    hash_map(hash_map&& other) :
-        hash_map()
-    {
-        this->_assign(move(other));
-    }
-
     hash_map& operator=(hash_map&& other)
     {
         if(this != &other)
         {
+            this->clear();
+            this->_assign(move(other));
+        }
+
+        return *this;
+    }
+
+    hash_map& operator=(const ihash_map<Key, Value, KeyHash, KeyEqual>& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+
+            this->clear();
+            this->_assign(other);
+        }
+
+        return *this;
+    }
+
+    hash_map& operator=(ihash_map<Key, Value, KeyHash, KeyEqual>&& other)
+    {
+        if(this != &other)
+        {
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+
             this->clear();
             this->_assign(move(other));
         }

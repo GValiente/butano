@@ -64,3 +64,9 @@ class FileInfo:
 
     def __ne__(self, other):
         return self.__info != other.__info or self.__read_failed != other.__read_failed
+
+    def __repr__(self):
+        if self.__read_failed:
+            return '[read failed]'
+
+        return self.__info

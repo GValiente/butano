@@ -21,11 +21,11 @@ def remove_file(file_path):
 
 class GraphicsFolderInfo:
 
-    def __init__(self, sprites, bgs, file_paths, new_graphics_json):
+    def __init__(self, sprites, bgs, file_paths):
         self.__sprites = sprites
         self.__bgs = bgs
         self.__file_paths = file_paths
-        self.__new_graphics_json = new_graphics_json
+        self.__new_graphics_json = False
 
     def get_sprite(self, file_name_no_ext):
         return self.__sprites[file_name_no_ext]
@@ -38,6 +38,9 @@ class GraphicsFolderInfo:
 
     def new_graphics_json(self):
         return self.__new_graphics_json
+
+    def set_new_graphics_json(self, new_graphics_json):
+        self.__new_graphics_json = new_graphics_json
 
 
 class SpriteItem:
@@ -287,9 +290,11 @@ class BgItem:
 def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
     graphics_folder_infos = []
+    graphics_json_file_paths = []
 
     for graphics_folder_path in graphics_folder_path_list:
         graphics_json_file_path = graphics_folder_path + '/graphics.json'
+        graphics_json_file_paths.append(graphics_json_file_path)
 
         try:
             with open(graphics_json_file_path) as file:
@@ -312,18 +317,19 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
                     if os.path.isfile(graphics_file_path):
                         graphics_file_paths.append(graphics_file_path)
             else:
-                print('Grahpics file skipped: ' + graphics_file_name)
+                print('Graphics file skipped: ' + graphics_file_name)
 
-        graphics_folder_name = os.path.basename(graphics_folder_path)
-        file_info_path = build_folder_path + '/_btn_' + graphics_folder_name + '_graphics_json_file_info.txt'
-        old_file_info = FileInfo.read(file_info_path)
-        new_file_info = FileInfo.build_from_file(graphics_json_file_path)
-        new_graphics_json = old_file_info != new_file_info
+        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths))
 
-        if new_graphics_json:
-            new_file_info.write(file_info_path)
+    file_info_path = build_folder_path + '/_btn_graphics_json_file_info.txt'
+    old_file_info = FileInfo.read(file_info_path)
+    new_file_info = FileInfo.build_from_files(graphics_json_file_paths)
 
-        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths, new_graphics_json))
+    if old_file_info != new_file_info:
+        new_file_info.write(file_info_path)
+
+        for graphics_folder_info in graphics_folder_infos:
+            graphics_folder_info.set_new_graphics_json(True)
 
     return graphics_folder_infos
 

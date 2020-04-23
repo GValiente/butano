@@ -69,7 +69,7 @@ class BMP:
                 self.__pixels = [ord(pixel) for pixel in
                                  struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))]
 
-                colors_count = max(self.__pixels)
+                colors_count = max(self.__pixels) + 1
                 extra_colors = colors_count % 16
 
                 if extra_colors > 0:

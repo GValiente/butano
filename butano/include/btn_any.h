@@ -195,12 +195,12 @@ protected:
     {
 
     public:
-        [[nodiscard]] type_id_t type() const override final
+        [[nodiscard]] type_id_t type() const final
         {
             return type_id<Type>();
         }
 
-        void copy_to(const iany& this_any, iany& other_any) const override final
+        void copy_to(const iany& this_any, iany& other_any) const final
         {
             BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
                        sizeof(Type), " - ", other_any.max_size());
@@ -219,7 +219,7 @@ protected:
             }
         }
 
-        void move_to(iany& this_any, iany& other_any) const override final
+        void move_to(iany& this_any, iany& other_any) const final
         {
             BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
                        sizeof(Type), " - ", other_any.max_size());
@@ -239,7 +239,7 @@ protected:
             }
         }
 
-        void swap(iany& this_any, iany& other_any) const override final
+        void swap(iany& this_any, iany& other_any) const final
         {
             if(is_swappable_v<Type>)
             {
@@ -251,7 +251,7 @@ protected:
             }
         }
 
-        void destroy(iany& any) const override final
+        void destroy(iany& any) const final
         {
             any._value_ptr<Type>()->~Type();
         }

@@ -25,7 +25,7 @@ class game : public scene
 public:
     explicit game(btn::sprite_text_generator& text_generator);
 
-    [[nodiscard]] btn::optional<scene_type> update() override;
+    [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
     background _background;

@@ -19,7 +19,7 @@ class title : public scene
 public:
     title(btn::sprite_text_generator& text_generator);
 
-    [[nodiscard]] btn::optional<scene_type> update() override;
+    [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
     btn::sprite_ptr _butano_up_sprite;

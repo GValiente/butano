@@ -29,36 +29,45 @@ namespace
         int target_id = 0;
         last_value_type target_last_value;
         unsigned usages = 0;
-        bool visible = false;
-        bool update = false;
         uint16_t dest_values_a[display::height()];
         uint16_t dest_values_b[display::height()];
+        bool visible = false;
+        bool update = false;
+        bool on_screen = false;
         bool dest_values_a_active = false;
 
         [[nodiscard]] bool check_update()
         {
             bool updated = update;
-            updated |= handler->target_updated(target_id, target_last_value);
             update = false;
 
-            if(updated)
+            bool old_on_screen = on_screen;
+            on_screen = handler->target_visible(target_id);
+
+            if(on_screen)
             {
-                uint16_t* dest_values_ptr;
+                updated |= handler->target_updated(target_id, target_last_value);
 
-                if(dest_values_a_active)
+                if(updated)
                 {
-                    dest_values_ptr = dest_values_b;
-                    dest_values_a_active = false;
-                }
-                else
-                {
-                    dest_values_ptr = dest_values_a;
-                    dest_values_a_active = true;
-                }
+                    uint16_t* dest_values_ptr;
 
-                handler->write_output_values(target_id, target_last_value, values_count, values_ptr, dest_values_ptr);
+                    if(dest_values_a_active)
+                    {
+                        dest_values_ptr = dest_values_b;
+                        dest_values_a_active = false;
+                    }
+                    else
+                    {
+                        dest_values_ptr = dest_values_a;
+                        dest_values_a_active = true;
+                    }
+
+                    handler->write_output_values(target_id, target_last_value, values_count, values_ptr, dest_values_ptr);
+                }
             }
 
+            updated |= old_on_screen != on_screen;
             return updated;
         }
 
@@ -99,6 +108,7 @@ namespace
         new_item.usages = 1;
         new_item.visible = true;
         new_item.update = true;
+        new_item.on_screen = false;
         handler.setup_target(target_id, new_item.target_last_value);
         data.update = true;
         return item_index;
@@ -275,7 +285,7 @@ void update()
 
         for(item_type& item : data.items)
         {
-            if(item.visible)
+            if(item.visible && item.on_screen)
             {
                 hw_entry& entry = entries[entries_count];
                 item.setup_entry(entry);

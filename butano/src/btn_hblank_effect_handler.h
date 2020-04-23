@@ -14,6 +14,8 @@ public:
 
     virtual void setup_target(int target_id, iany& target_last_value) = 0;
 
+    [[nodiscard]] virtual bool target_visible(int target_id) = 0;
+
     [[nodiscard]] virtual bool target_updated(int target_id, iany& target_last_value) = 0;
 
     [[nodiscard]] virtual uint16_t* output_register(int target_id) = 0;

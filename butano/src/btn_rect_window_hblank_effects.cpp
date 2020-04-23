@@ -3,6 +3,7 @@
 #include "btn_any.h"
 #include "btn_span.h"
 #include "btn_fixed.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_display_manager.h"
@@ -19,6 +20,11 @@ namespace
 
     public:
         horizontal_boundaries_hblank_effect_handler() = default;
+
+        [[nodiscard]] bool target_visible(int) final
+        {
+            return true;
+        }
 
         void setup_target(int, iany& target_last_value) final
         {
@@ -56,6 +62,11 @@ namespace
 
     public:
         vertical_boundaries_hblank_effect_handler() = default;
+
+        [[nodiscard]] bool target_visible(int) final
+        {
+            return true;
+        }
 
         void setup_target(int, iany& target_last_value) final
         {

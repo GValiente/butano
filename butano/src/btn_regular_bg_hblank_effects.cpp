@@ -27,6 +27,11 @@ namespace
             target_last_value = fixed();
         }
 
+        [[nodiscard]] bool target_visible(int target_id) final
+        {
+            return bgs_manager::visible(target_id);
+        }
+
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
             fixed& last_value = target_last_value.value<fixed>();
@@ -62,10 +67,15 @@ namespace
             target_last_value = fixed();
         }
 
+        [[nodiscard]] bool target_visible(int target_id) final
+        {
+            return bgs_manager::visible(target_id);
+        }
+
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
             fixed& last_value = target_last_value.value<fixed>();
-            fixed new_value = bgs_manager::hw_position(target_id).x();
+            fixed new_value = bgs_manager::hw_position(target_id).y();
             bool updated = last_value.integer() != new_value.integer();
             last_value = new_value;
             return updated;
@@ -95,6 +105,11 @@ namespace
         void setup_target(int target_id, iany& target_last_value) final
         {
             target_last_value = bgs_manager::regular_attributes(target_id);
+        }
+
+        [[nodiscard]] bool target_visible(int target_id) final
+        {
+            return bgs_manager::visible(target_id);
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final

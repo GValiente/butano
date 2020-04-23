@@ -22,6 +22,11 @@ namespace
         {
         }
 
+        [[nodiscard]] bool target_visible(int) final
+        {
+            return true;
+        }
+
         [[nodiscard]] bool target_updated(int, iany&) final
         {
             return false;

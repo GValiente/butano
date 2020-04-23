@@ -14,6 +14,7 @@ class sprite_tiles_ptr;
 class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
+class third_sprite_attributes;
 enum class sprite_double_size_mode;
 
 namespace sprites_manager
@@ -126,6 +127,14 @@ namespace sprites_manager
     [[nodiscard]] bool remove_affine_mat_when_not_needed(id_type id);
 
     void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
+
+    [[nodiscard]] third_sprite_attributes third_attributes(id_type id);
+
+    void set_third_attributes(id_type id, const third_sprite_attributes& third_attributes);
+
+    void fill_hblank_effect_third_attributes(
+            const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr,
+            uint16_t* dest_ptr);
 
     void update_camera();
 

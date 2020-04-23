@@ -139,10 +139,6 @@ public:
 
     void set_mosaic_enabled(bool mosaic_enabled);
 
-    [[nodiscard]] regular_bg_attributes attributes() const;
-
-    void set_attributes(const regular_bg_attributes& attributes);
-
     [[nodiscard]] bool blending_enabled() const;
 
     void set_blending_enabled(bool blending_enabled);
@@ -158,6 +154,10 @@ public:
     [[nodiscard]] bool ignore_camera() const;
 
     void set_ignore_camera(bool ignore_camera);
+
+    [[nodiscard]] regular_bg_attributes attributes() const;
+
+    void set_attributes(const regular_bg_attributes& attributes);
 
     void swap(regular_bg_ptr& other)
     {

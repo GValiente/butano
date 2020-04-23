@@ -20,6 +20,7 @@ class sprite_tiles_item;
 class sprite_palette_ptr;
 class sprite_palette_item;
 class sprite_affine_mat_ptr;
+class third_sprite_attributes;
 enum class sprite_double_size_mode;
 
 class sprite_ptr
@@ -88,8 +89,6 @@ public:
             _destroy();
         }
     }
-
-    [[nodiscard]] optional<int> id() const;
 
     [[nodiscard]] sprite_shape_size shape_size() const;
 
@@ -221,9 +220,18 @@ public:
 
     void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
 
-    [[nodiscard]] unsigned hash() const
+    [[nodiscard]] third_sprite_attributes third_attributes() const;
+
+    void set_third_attributes(const third_sprite_attributes& third_attributes);
+
+    [[nodiscard]] const void* handle() const
     {
-        return make_hash(_handle);
+        return _handle;
+    }
+
+    [[nodiscard]] void* handle()
+    {
+        return _handle;
     }
 
     void swap(sprite_ptr& other)
@@ -265,7 +273,7 @@ struct hash<sprite_ptr>
 {
     [[nodiscard]] unsigned operator()(const sprite_ptr& value) const
     {
-        return value.hash();
+        return make_hash(value.handle());
     }
 };
 

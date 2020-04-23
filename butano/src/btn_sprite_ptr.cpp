@@ -4,6 +4,7 @@
 #include "btn_sprite_builder.h"
 #include "btn_regular_bg_ptr.h"
 #include "btn_sprites_manager.h"
+#include "btn_third_sprite_attributes.h"
 #include "btn_sprite_affine_mat_builder.h"
 
 namespace btn
@@ -194,11 +195,6 @@ sprite_ptr& sprite_ptr::operator=(const sprite_ptr& other)
     }
 
     return *this;
-}
-
-optional<int> sprite_ptr::id() const
-{
-    return sprites_manager::hw_id(_handle);
 }
 
 sprite_shape_size sprite_ptr::shape_size() const
@@ -695,6 +691,16 @@ bool sprite_ptr::remove_affine_mat_when_not_needed() const
 void sprite_ptr::set_remove_affine_mat_when_not_needed(bool remove_when_not_needed)
 {
     sprites_manager::set_remove_affine_mat_when_not_needed(_handle, remove_when_not_needed);
+}
+
+third_sprite_attributes sprite_ptr::third_attributes() const
+{
+    return sprites_manager::third_attributes(_handle);
+}
+
+void sprite_ptr::set_third_attributes(const third_sprite_attributes& third_attributes)
+{
+    sprites_manager::set_third_attributes(_handle, third_attributes);
 }
 
 void sprite_ptr::_destroy()

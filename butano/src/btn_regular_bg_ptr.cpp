@@ -347,16 +347,6 @@ void regular_bg_ptr::set_mosaic_enabled(bool mosaic_enabled)
     bgs_manager::set_mosaic_enabled(_id, mosaic_enabled);
 }
 
-regular_bg_attributes regular_bg_ptr::attributes() const
-{
-    return bgs_manager::regular_attributes(_id);
-}
-
-void regular_bg_ptr::set_attributes(const regular_bg_attributes& attributes)
-{
-    bgs_manager::set_regular_attributes(_id, attributes);
-}
-
 bool regular_bg_ptr::blending_enabled() const
 {
     return bgs_manager::blending_enabled(_id);
@@ -395,6 +385,16 @@ bool regular_bg_ptr::ignore_camera() const
 void regular_bg_ptr::set_ignore_camera(bool ignore_camera)
 {
     bgs_manager::set_ignore_camera(_id, ignore_camera);
+}
+
+regular_bg_attributes regular_bg_ptr::attributes() const
+{
+    return bgs_manager::regular_attributes(_id);
+}
+
+void regular_bg_ptr::set_attributes(const regular_bg_attributes& attributes)
+{
+    bgs_manager::set_regular_attributes(_id, attributes);
 }
 
 void regular_bg_ptr::_destroy()

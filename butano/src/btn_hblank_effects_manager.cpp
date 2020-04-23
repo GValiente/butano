@@ -31,10 +31,20 @@ namespace
         unsigned usages = 0;
         uint16_t dest_values_a[display::height()];
         uint16_t dest_values_b[display::height()];
-        bool visible = false;
-        bool update = false;
-        bool on_screen = false;
-        bool dest_values_a_active = false;
+        unsigned visible: 1;
+        unsigned update: 1;
+        unsigned on_screen: 1;
+        unsigned dest_values_a_active: 1;
+        unsigned output_values_written: 1;
+
+        item_type() :
+            visible(false),
+            update(false),
+            on_screen(false),
+            dest_values_a_active(false),
+            output_values_written(false)
+        {
+        }
 
         [[nodiscard]] bool check_update()
         {
@@ -47,6 +57,12 @@ namespace
             if(on_screen)
             {
                 updated |= handler->target_updated(target_id, target_last_value);
+
+                if(! output_values_written)
+                {
+                    updated = true;
+                    output_values_written = true;
+                }
 
                 if(updated)
                 {
@@ -109,6 +125,7 @@ namespace
         new_item.visible = true;
         new_item.update = true;
         new_item.on_screen = false;
+        new_item.output_values_written = false;
         handler.setup_target(target_id, new_item.target_last_value);
         data.update = true;
         return item_index;

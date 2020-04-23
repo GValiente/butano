@@ -5,6 +5,7 @@
 #include "btn_sorted_sprites.h"
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
+#include "btn_third_sprite_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn::sprites_manager
@@ -309,12 +310,16 @@ void decrease_usages(id_type id)
 optional<int> hw_id(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    int handles_index = item->handles_index;
     optional<int> result;
 
-    if(handles_index >= 0)
+    if(! data.rebuild_handles)
     {
-        result = handles_index;
+        int handles_index = item->handles_index;
+
+        if(handles_index >= 0)
+        {
+            result = handles_index;
+        }
     }
 
     return result;
@@ -473,10 +478,9 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
     if(different_shape_size || different_tiles || different_palette)
     {
-        palette_bpp_mode bpp_mode = palette_ptr.bpp_mode();
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(bpp_mode),
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
                    "Invalid tiles, palette or shape size: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(bpp_mode));
+                   shape_size.tiles_count(palette_ptr.bpp_mode()));
 
         if(different_shape_size)
         {
@@ -499,7 +503,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
         if(different_palette)
         {
             hw::sprites::set_palette(palette_ptr.id(), handle);
-            hw::sprites::set_bpp_mode(bpp_mode, handle);
+            hw::sprites::set_bpp_mode(palette_ptr.bpp_mode(), handle);
             item->palette_ptr = move(palette_ptr);
         }
 
@@ -850,6 +854,63 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->identity())
     {
         _remove_affine_mat(*item);
+    }
+}
+
+third_sprite_attributes third_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return third_sprite_attributes(item->tiles_ptr, item->palette_ptr, item->bg_priority());
+}
+
+void set_third_attributes(id_type id, const third_sprite_attributes& third_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::handle& handle = item->handle;
+    const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
+    const sprite_palette_ptr& palette_ptr = third_attributes.palette();
+    bool different_tiles = tiles_ptr != item->tiles_ptr;
+    bool different_palette = palette_ptr != item->palette_ptr;
+
+    if(different_tiles || different_palette)
+    {
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size(id).tiles_count(palette_ptr.bpp_mode()),
+                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size(id).tiles_count(palette_ptr.bpp_mode()));
+
+        if(different_tiles)
+        {
+            hw::sprites::set_tiles(tiles_ptr.id(), handle);
+            item->tiles_ptr = tiles_ptr;
+        }
+
+        if(different_palette)
+        {
+            hw::sprites::set_palette(palette_ptr.id(), handle);
+            hw::sprites::set_bpp_mode(palette_ptr.bpp_mode(), handle);
+            item->palette_ptr = palette_ptr;
+        }
+
+        _update_handle(*item);
+    }
+
+    set_bg_priority(id, third_attributes.bg_priority());
+}
+
+void fill_hblank_effect_third_attributes(
+        const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr)
+{
+    for(int index = 0, limit = display::height(); index < limit; ++index)
+    {
+        const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
+        const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
+        const sprite_palette_ptr& palette_ptr = third_attributes.palette();
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
+                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size.tiles_count(palette_ptr.bpp_mode()));
+
+        int bg_priority = third_attributes.bg_priority();
+        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
     }
 }
 

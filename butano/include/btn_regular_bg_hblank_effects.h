@@ -7,8 +7,6 @@
 namespace btn
 {
 
-class regular_bg_attributes;
-
 class regular_bg_position_hblank_effect_ptr : public hblank_effect_ptr
 {
 

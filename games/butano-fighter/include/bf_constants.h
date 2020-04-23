@@ -1,7 +1,7 @@
 #ifndef BF_CONSTANTS_H
 #define BF_CONSTANTS_H
 
-#include "btn_common.h"
+#include "btn_display.h"
 
 #ifndef BF_CFG_ENEMIES_GRID_LOG_ENABLED
     #define BF_CFG_ENEMIES_GRID_LOG_ENABLED false
@@ -17,9 +17,9 @@ namespace bf::constants
     constexpr const int max_object_messages = max_gems;
     constexpr const int max_enemy_size = 48;
     constexpr const int play_width = 72;
-    constexpr const int play_height = (160 - 72) / 2;
+    constexpr const int play_height = (btn::display::height() - 72) / 2;
     constexpr const int view_width = play_width * 2;
-    constexpr const int view_height = (160 + max_enemy_size) / 2;
+    constexpr const int view_height = (btn::display::height() + max_enemy_size) / 2;
     constexpr const int camera_width = 32;
     constexpr const int hero_bullet_levels = 9;
     constexpr const int enemy_bullets_z_order = -1;

@@ -8,6 +8,7 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_sprite_items_butano_big_sprite.h"
+#include "btn_sprite_items_butano_big_sprite_alt.h"
 #include "bf_scene_type.h"
 
 namespace bf
@@ -30,12 +31,38 @@ namespace
         builder.set_blending_enabled(true);
         return builder.release_build();
     }
+
+    [[nodiscard]] btn::span<const btn::third_sprite_attributes> _create_attributes_span(
+            const btn::ivector<btn::third_sprite_attributes>& vector)
+    {
+        return btn::span<const btn::third_sprite_attributes>(vector.data(), vector.max_size());
+    }
+
+    void _build_hblank_effect_attributes(const btn::sprite_ptr& sprite, int graphics_index,
+                                         btn::ivector<btn::third_sprite_attributes>& attributes)
+    {
+        btn::third_sprite_attributes even_sprite_attributes = sprite.third_attributes();
+        btn::third_sprite_attributes odd_sprite_attributes = even_sprite_attributes;
+        odd_sprite_attributes.set_tiles(btn::sprite_items::butano_big_sprite_alt.tiles_item().create_tiles(graphics_index));
+
+        for(int index = 0, limit = attributes.max_size(); index < limit; index += 2)
+        {
+            attributes.push_back(even_sprite_attributes);
+            attributes.push_back(odd_sprite_attributes);
+        }
+    }
 }
 
 title::title(btn::sprite_text_generator&) :
     _butano_up_sprite(_create_butano_up_sprite()),
-    _butano_down_sprite(_create_butano_down_sprite())
+    _butano_down_sprite(_create_butano_down_sprite()),
+    _butano_up_hblank_effect(btn::third_sprite_attributes_hblank_effect_ptr::create(
+                                 _butano_up_sprite, _create_attributes_span(_butano_up_hblank_effect_attributes))),
+    _butano_down_hblank_effect(btn::third_sprite_attributes_hblank_effect_ptr::create(
+                                 _butano_down_sprite, _create_attributes_span(_butano_down_hblank_effect_attributes)))
 {
+    _build_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_hblank_effect_attributes);
+    _build_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_hblank_effect_attributes);
     btn::music::play(btn::music_items::battle_clean);
 }
 

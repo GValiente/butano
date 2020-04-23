@@ -17,7 +17,7 @@ butano_background::butano_background() :
     int greenInc = 16;
     int blueInc = 8;
 
-    for(int index = 0; index < 160; ++index)
+    for(int index = 0; index < btn::display::height(); ++index)
     {
         _palette_hblank_effect_colors[index] = color;
         --redInc;

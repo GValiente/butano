@@ -3,6 +3,9 @@
         "butano_big_sprite": {
             "height": 64
         },
+        "butano_big_sprite_alt": {
+            "height": 64
+        },
         "butano_font": {
             "height": 32
         },

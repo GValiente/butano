@@ -1,6 +1,7 @@
 #ifndef BF_GAME_HERO_BOMB_H
 #define BF_GAME_HERO_BOMB_H
 
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_blending_actions.h"
 #include "btn_regular_bg_actions.h"
@@ -49,10 +50,10 @@ private:
     btn::optional<btn::rect_window_move_bottom_by_action> _move_window_bottom_action;
     btn::optional<btn::blending_transparency_alpha_to_action> _transparency_blending_action;
     btn::optional<btn::blending_intensity_alpha_to_action> _intensity_blending_action;
-    btn::pair<btn::fixed, btn::fixed> _circle_hblank_effect_deltas[160];
+    btn::pair<btn::fixed, btn::fixed> _circle_hblank_effect_deltas[btn::display::height()];
     circle_generator _circle_generator;
     btn::rect_window_boundaries_hblank_effect_ptr _circle_hblank_effect;
-    btn::fixed _wave_hblank_effect_deltas[160];
+    btn::fixed _wave_hblank_effect_deltas[btn::display::height()];
     btn::regular_bg_position_hblank_effect_ptr _wave_hblank_effect;
     status_type _status = status_type::INACTIVE;
     int _counter = 0;

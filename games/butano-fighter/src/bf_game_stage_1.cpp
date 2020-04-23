@@ -1,5 +1,6 @@
 #include "bf_game_stage_1.h"
 
+#include "btn_display.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_items_stage_1_monsters_1.h"
 #include "bf_constants.h"
@@ -9,7 +10,7 @@ namespace bf::game::stage_1
 
 namespace
 {
-    constexpr const int start_y = -(160 + 16) / 2;
+    constexpr const int start_y = -(btn::display::height() + 16) / 2;
 
     constexpr const btn::span<const enemy_bullet_event> no_bullet_events;
 

@@ -1,6 +1,7 @@
 #ifndef BF_GAME_BACKGROUND_H
 #define BF_GAME_BACKGROUND_H
 
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_blending_actions.h"
 #include "btn_regular_bg_actions.h"
@@ -42,7 +43,7 @@ private:
     btn::regular_bg_move_by_action _clouds_move_action;
     btn::optional<btn::bgs_mosaic_stretch_loop_action> _mosaic_action;
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
-    btn::fixed _hblank_effect_deltas[160];
+    btn::fixed _hblank_effect_deltas[btn::display::height()];
     btn::regular_bg_position_hblank_effect_ptr _hblank_effect;
     wave_generator _wave_generator;
     btn::optional<btn::bg_palette_grayscale_to_action> _ground_palette_grayscale_action;

@@ -2,6 +2,7 @@
 #define BF_BUTANO_BACKGROUND_H
 
 #include "btn_color.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_regular_bg_actions.h"
 #include "btn_bg_palettes_hblank_effects.h"
@@ -23,7 +24,7 @@ public:
 
 private:
     btn::optional<btn::regular_bg_move_by_action> _move_action;
-    btn::color _palette_hblank_effect_colors[160];
+    btn::color _palette_hblank_effect_colors[btn::display::height()];
     btn::bg_palettes_transparent_color_hblank_effect_ptr _palette_hblank_effect;
 };
 

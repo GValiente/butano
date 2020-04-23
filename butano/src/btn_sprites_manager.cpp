@@ -306,6 +306,20 @@ void decrease_usages(id_type id)
     }
 }
 
+optional<int> hw_id(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    int handles_index = item->handles_index;
+    optional<int> result;
+
+    if(handles_index >= 0)
+    {
+        result = handles_index;
+    }
+
+    return result;
+}
+
 sprite_shape_size shape_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);

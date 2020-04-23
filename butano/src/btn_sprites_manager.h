@@ -44,6 +44,8 @@ namespace sprites_manager
 
     void decrease_usages(id_type id);
 
+    [[nodiscard]] optional<int> hw_id(id_type id);
+
     [[nodiscard]] sprite_shape_size shape_size(id_type id);
 
     [[nodiscard]] size dimensions(id_type id);

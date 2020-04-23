@@ -89,6 +89,8 @@ public:
         }
     }
 
+    [[nodiscard]] optional<int> id() const;
+
     [[nodiscard]] sprite_shape_size shape_size() const;
 
     [[nodiscard]] size dimensions() const;

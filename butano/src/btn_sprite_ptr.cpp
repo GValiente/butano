@@ -196,6 +196,11 @@ sprite_ptr& sprite_ptr::operator=(const sprite_ptr& other)
     return *this;
 }
 
+optional<int> sprite_ptr::id() const
+{
+    return sprites_manager::hw_id(_handle);
+}
+
 sprite_shape_size sprite_ptr::shape_size() const
 {
     return sprites_manager::shape_size(_handle);

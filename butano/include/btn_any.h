@@ -3,6 +3,7 @@
 
 #include <new>
 #include "btn_assert.h"
+#include "btn_limits.h"
 #include "btn_type_id.h"
 #include "btn_utility.h"
 #include "btn_any_fwd.h"

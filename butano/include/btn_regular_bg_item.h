@@ -1,6 +1,7 @@
 #ifndef BTN_REGULAR_BG_ITEM_H
 #define BTN_REGULAR_BG_ITEM_H
 
+#include "btn_fixed_fwd.h"
 #include "btn_bg_tiles_item.h"
 #include "btn_bg_palette_item.h"
 #include "btn_regular_bg_map_item.h"

@@ -197,8 +197,8 @@ namespace
         }
     }
 
-    [[nodiscard]] bool _validate_third_attributes(const sprite_shape_size& shape_size,
-                                                  const third_sprite_attributes* third_attributes_ptr)
+    [[nodiscard]] [[maybe_unused]] bool _validate_third_attributes(
+            const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
@@ -915,7 +915,7 @@ void set_third_attributes(id_type id, const third_sprite_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
-void fill_hblank_effect_third_attributes(const sprite_shape_size& shape_size, bool first_write,
+void fill_hblank_effect_third_attributes([[maybe_unused]] const sprite_shape_size& shape_size, bool first_write,
                                          const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr)
 {
     BTN_ASSERT(_validate_third_attributes(shape_size, third_attributes_ptr), "Third attributes validation failed");

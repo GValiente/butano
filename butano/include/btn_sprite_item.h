@@ -1,6 +1,7 @@
 #ifndef BTN_SPRITE_ITEM_H
 #define BTN_SPRITE_ITEM_H
 
+#include "btn_fixed_fwd.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_tiles_item.h"
 #include "btn_sprite_palette_item.h"

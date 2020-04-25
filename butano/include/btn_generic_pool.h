@@ -142,6 +142,8 @@ private:
 template<int TypeSize, int TypeAlignment>
 union alignas(TypeAlignment) generic_pool_element
 {
+    static_assert(TypeAlignment >= alignof(char*));
+
     char* next;
     char value[TypeSize];
 };

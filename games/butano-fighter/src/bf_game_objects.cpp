@@ -1,6 +1,5 @@
 #include "bf_game_objects.h"
 
-#include "btn_sound.h"
 #include "btn_fixed_rect.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_items_gem.h"
@@ -31,7 +30,7 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
 
             _messages.push_back(object_message::create_level_up(hero_rect.position()));
             _hero_weapon.reset();
-            btn::sound::play(btn::sound_items::reload);
+            btn::sound_items::reload.play();
             return true;
         }
     }
@@ -59,7 +58,7 @@ bool objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bo
                 }
 
                 _messages.push_back(object_message::create_bomb(hero_rect.position()));
-                btn::sound::play(btn::sound_items::reload);
+                btn::sound_items::reload.play();
             }
 
             return true;
@@ -98,7 +97,7 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
 
     if(result)
     {
-        btn::sound::play(btn::sound_items::gold_3);
+        btn::sound_items::gold_3.play();
     }
 
     return result;
@@ -109,7 +108,7 @@ void objects::spawn_hero_weapon(const btn::fixed_point& position, int hero_level
     if(! _hero_weapon)
     {
         _hero_weapon = object::create_hero_weapon(position, hero_level, _flash_palette);
-        btn::sound::play(btn::sound_items::power_up_1);
+        btn::sound_items::power_up_1.play();
     }
 }
 
@@ -118,7 +117,7 @@ void objects::spawn_hero_bomb(const btn::fixed_point& position)
     if(! _hero_bomb)
     {
         _hero_bomb = object::create_hero_bomb(position, _flash_palette);
-        btn::sound::play(btn::sound_items::cure);
+        btn::sound_items::cure.play();
     }
 }
 

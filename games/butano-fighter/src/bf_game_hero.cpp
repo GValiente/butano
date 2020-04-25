@@ -1,6 +1,5 @@
 #include "bf_game_hero.h"
 
-#include "btn_sound.h"
 #include "btn_camera.h"
 #include "btn_keypad.h"
 #include "btn_colors.h"
@@ -30,14 +29,14 @@ namespace
 
     btn::sprite_cached_animate_action<2> _build_body_sprite_animate_action()
     {
-        btn::sprite_ptr body_sprite = btn::sprite_ptr::create(0, body_delta_y, btn::sprite_items::hero_body);
+        btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(0, body_delta_y);
         return btn::create_sprite_cached_animate_action_forever(btn::move(body_sprite), 16,
                                                                 btn::sprite_items::hero_body, 0, 2);
     }
 
     btn::sprite_ptr _build_weapon_sprite(int level, const btn::fixed_point& position)
     {
-        return btn::sprite_ptr::create(position, btn::sprite_items::hero_weapons, level);
+        return btn::sprite_items::hero_weapons.create_sprite(position, level);
     }
 }
 
@@ -279,23 +278,23 @@ void hero::_animate_dead(background& background)
 
         _music_volume_action.emplace(50, 0);
         background.show_hero_dying();
-        btn::sound::play(btn::sound_items::boss_shoot);
+        btn::sound_items::boss_shoot.play();
     }
     else if(_death_counter == 70)
     {
         const btn::fixed_point& body_position = body_sprite.position();
         btn::fixed body_x = body_position.x() + 2;
         btn::fixed body_y = body_position.y() + 4;
-        _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y - 32, btn::sprite_items::hero_death, 0));
-        _death_sprites.push_back(btn::sprite_ptr::create(body_x + 32, body_y - 32, btn::sprite_items::hero_death, 1));
-        _death_sprites.push_back(btn::sprite_ptr::create(body_x - 32, body_y + 32, btn::sprite_items::hero_death, 2));
-        _death_sprites.push_back(btn::sprite_ptr::create(body_x + 32, body_y + 32, btn::sprite_items::hero_death, 3));
+        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x - 32, body_y - 32));
+        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x + 32, body_y - 32, 1));
+        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x - 32, body_y + 32, 2));
+        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x + 32, body_y + 32, 3));
 
         _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
 
         background.show_hero_dead();
-        btn::sound::play(btn::sound_items::death);
+        btn::sound_items::death.play();
     }
     else if(_death_counter > 70 && (_death_counter - 70) % 4 == 0)
     {

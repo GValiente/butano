@@ -7,8 +7,7 @@ namespace bf
 {
 
 butano_background::butano_background() :
-    _move_action(btn::regular_bg_move_by_action(
-                     btn::regular_bg_ptr::create(0, 0, btn::bg_items::butano_background), 1, -1)),
+    _move_action(btn::regular_bg_move_by_action(btn::bg_items::butano_background.create_bg(0, 0), 1, -1)),
     _palette_hblank_effect(btn::bg_palettes_transparent_color_hblank_effect_ptr::create(_palette_hblank_effect_colors))
 {
     btn::window::sprites().set_show_bg(_move_action->bg(), false);

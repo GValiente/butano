@@ -1,6 +1,5 @@
 #include "bf_game_enemy.h"
 
-#include "btn_sound.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_affine_mats.h"
 #include "bf_game_hero.h"
@@ -214,7 +213,7 @@ void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, boo
 
     if(! life)
     {
-        btn::sound::play_with_priority(constants::enemies_sound_priority, _event->enemy.death_sound_item);
+        _event->enemy.death_sound_item.play_with_priority(constants::enemies_sound_priority);
 
         if(show_rotation)
         {

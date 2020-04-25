@@ -1,6 +1,5 @@
 #include "bf_game_hero_bomb.h"
 
-#include "btn_sound.h"
 #include "btn_keypad.h"
 #include "btn_window.h"
 #include "btn_blending.h"
@@ -73,14 +72,14 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
 
                 background.show_bomb_open(open_frames);
                 _wave_hblank_effect.set_visible(true);
-                btn::sound::play(btn::sound_items::explosion_2);
+                btn::sound_items::explosion_2.play();
                 _status = status_type::OPEN;
                 _counter = open_frames;
                 _flame_sound_counter = 0;
             }
             else
             {
-                btn::sound::play(btn::sound_items::no_ammo);
+                btn::sound_items::no_ammo.play();
             }
         }
         break;
@@ -185,7 +184,7 @@ void hero_bomb::_play_flame_sound()
 
     if(_flame_sound_counter > 16 && _flame_sound_counter % 16 == 0)
     {
-        btn::sound::play(btn::sound_items::flame_thrower);
+        btn::sound_items::flame_thrower.play();
     }
 }
 

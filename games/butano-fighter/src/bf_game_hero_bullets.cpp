@@ -1,6 +1,5 @@
 #include "bf_game_hero_bullets.h"
 
-#include "btn_sound.h"
 #include "btn_keypad.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_hero_bullets.h"
@@ -123,7 +122,7 @@ void hero_bullets::_add_bullets(hero& hero)
 
             if(event.play_sound)
             {
-                btn::sound::play_with_priority(constants::hero_bullets_sound_priority, level_data.sound_item, 0.35);
+                level_data.sound_item.play_with_priority(constants::hero_bullets_sound_priority, 0.35);
             }
 
             break;

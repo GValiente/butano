@@ -1,6 +1,7 @@
 #ifndef BTN_MUSIC_ITEM_H
 #define BTN_MUSIC_ITEM_H
 
+#include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 
 namespace btn
@@ -19,6 +20,12 @@ public:
     {
         return _id;
     }
+
+    void play() const;
+
+    void play(fixed volume) const;
+
+    void play(fixed volume, bool loop) const;
 
     [[nodiscard]] constexpr friend bool operator==(music_item a, music_item b)
     {

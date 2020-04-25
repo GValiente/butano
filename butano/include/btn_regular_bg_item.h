@@ -8,6 +8,9 @@
 namespace btn
 {
 
+class fixed_point;
+class regular_bg_ptr;
+
 class regular_bg_item
 {
 
@@ -43,6 +46,14 @@ public:
     {
         return _palette_item;
     }
+
+    [[nodiscard]] regular_bg_ptr create_bg(fixed x, fixed y) const;
+
+    [[nodiscard]] regular_bg_ptr create_bg(const fixed_point& position) const;
+
+    [[nodiscard]] optional<regular_bg_ptr> optional_create_bg(fixed x, fixed y) const;
+
+    [[nodiscard]] optional<regular_bg_ptr> optional_create_bg(const fixed_point& position) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_item& a, const regular_bg_item& b)
     {

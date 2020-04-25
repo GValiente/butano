@@ -30,6 +30,8 @@ namespace btn::hw::timer
 
     [[nodiscard]] inline unsigned ticks()
     {
+        BTN_BARRIER;
+
         return (unsigned(REG_TM3D) << 16) | REG_TM2D;
     }
 }

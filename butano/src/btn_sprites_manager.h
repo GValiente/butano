@@ -132,9 +132,8 @@ namespace sprites_manager
 
     void set_third_attributes(id_type id, const third_sprite_attributes& third_attributes);
 
-    void fill_hblank_effect_third_attributes(
-            const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr,
-            uint16_t* dest_ptr);
+    void fill_hblank_effect_third_attributes(const sprite_shape_size& shape_size, bool first_write,
+                                             const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr);
 
     void update_camera();
 

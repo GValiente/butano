@@ -196,6 +196,24 @@ namespace
             }
         }
     }
+
+    [[nodiscard]] bool _validate_third_attributes(const sprite_shape_size& shape_size,
+                                                  const third_sprite_attributes* third_attributes_ptr)
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
+            const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
+            const sprite_palette_ptr& palette_ptr = third_attributes.palette();
+
+            if(tiles_ptr.tiles_count() != shape_size.tiles_count(palette_ptr.bpp_mode()))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 void init()
@@ -897,20 +915,21 @@ void set_third_attributes(id_type id, const third_sprite_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
-void fill_hblank_effect_third_attributes(
-        const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_third_attributes(const sprite_shape_size& shape_size, bool first_write,
+                                         const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr)
 {
-    for(int index = 0, limit = display::height(); index < limit; ++index)
-    {
-        const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
-        const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
-        const sprite_palette_ptr& palette_ptr = third_attributes.palette();
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
-                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(palette_ptr.bpp_mode()));
+    BTN_ASSERT(_validate_third_attributes(shape_size, third_attributes_ptr), "Third attributes validation failed");
 
-        int bg_priority = third_attributes.bg_priority();
-        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
+    if(first_write)
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
+            const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
+            const sprite_palette_ptr& palette_ptr = third_attributes.palette();
+            int bg_priority = third_attributes.bg_priority();
+            dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
+        }
     }
 }
 

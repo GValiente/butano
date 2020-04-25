@@ -46,7 +46,7 @@ namespace
             return hw::display::window_horizontal_boundaries_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
@@ -88,7 +88,7 @@ namespace
             return hw::display::window_vertical_boundaries_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();

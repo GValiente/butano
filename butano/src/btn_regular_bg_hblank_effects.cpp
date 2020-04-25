@@ -46,7 +46,7 @@ namespace
             return hw::bgs::regular_horizontal_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -86,7 +86,7 @@ namespace
             return hw::bgs::regular_vertical_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -126,7 +126,7 @@ namespace
             return hw::bgs::attributes_register(target_id);
         }
 
-        void write_output_values(int target_id, const iany&, int, const void* input_values_ptr,
+        void write_output_values(int target_id, const iany&, bool, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(input_values_ptr);

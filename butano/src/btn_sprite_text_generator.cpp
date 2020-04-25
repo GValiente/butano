@@ -92,7 +92,7 @@ namespace
             return _generator;
         }
 
-        [[nodiscard]] fixed width() const
+        [[nodiscard]] int width() const
         {
             return _width;
         }
@@ -115,7 +115,7 @@ namespace
 
     private:
         const sprite_text_generator& _generator;
-        fixed _width = 0;
+        int _width = 0;
     };
 
 
@@ -133,7 +133,7 @@ namespace
             return _generator;
         }
 
-        [[nodiscard]] fixed width() const
+        [[nodiscard]] int width() const
         {
             return _width;
         }
@@ -156,7 +156,7 @@ namespace
 
     private:
         const sprite_text_generator& _generator;
-        fixed _width = 0;
+        int _width = 0;
     };
 
 
@@ -899,7 +899,7 @@ void sprite_text_generator::set_z_order(int z_order)
     _z_order = z_order;
 }
 
-fixed sprite_text_generator::width(const string_view& text) const
+int sprite_text_generator::width(const string_view& text) const
 {
     if(_font.character_widths().empty())
     {

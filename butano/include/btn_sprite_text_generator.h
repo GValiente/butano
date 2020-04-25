@@ -83,7 +83,7 @@ public:
         return _utf8_characters_map;
     }
 
-    [[nodiscard]] fixed width(const string_view& text) const;
+    [[nodiscard]] int width(const string_view& text) const;
 
     template<int MaxSprites>
     [[nodiscard]] vector<sprite_ptr, MaxSprites> generate(fixed x, fixed y, const string_view& text) const

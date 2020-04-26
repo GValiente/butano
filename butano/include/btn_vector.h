@@ -371,6 +371,7 @@ public:
 
         pointer data = _data;
         size_type size = _size;
+        _size = count;
 
         if(count < size)
         {
@@ -386,8 +387,6 @@ public:
                 ::new(data + index) value_type();
             }
         }
-
-        _size = count;
     }
 
     void resize(size_type count, const_reference value)
@@ -396,6 +395,7 @@ public:
 
         pointer data = _data;
         size_type size = _size;
+        _size = count;
 
         if(count < size)
         {
@@ -411,8 +411,6 @@ public:
                 ::new(data + index) value_type(value);
             }
         }
-
-        _size = count;
     }
 
     void shrink(size_type count)
@@ -592,6 +590,28 @@ protected:
         other._size = 0;
     }
 
+    void _assign(size_type count)
+    {
+        pointer data = _data;
+        _size = count;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            ::new(data + index) value_type();
+        }
+    }
+
+    void _assign(size_type count, const_reference value)
+    {
+        pointer data = _data;
+        _size = count;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            ::new(data + index) value_type(value);
+        }
+    }
+
 private:
     pointer _data;
     size_type _size;
@@ -647,6 +667,22 @@ public:
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
+    }
+
+    vector(size_type count) :
+        vector()
+    {
+        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+
+        this->_assign(count);
+    }
+
+    vector(size_type count, const_reference value) :
+        vector()
+    {
+        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+
+        this->_assign(count, value);
     }
 
     vector& operator=(const vector& other)

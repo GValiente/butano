@@ -14,6 +14,7 @@
 #include "btn_sprite_items_butano_big_sprite.h"
 #include "btn_sprite_items_butano_big_sprite_alt.h"
 #include "bf_scene_type.h"
+#include "bf_wave_generator.h"
 
 namespace bf
 {
@@ -36,17 +37,23 @@ namespace
         return builder.release_build();
     }
 
-    [[nodiscard]] btn::span<const btn::third_sprite_attributes> _create_attributes_span(
-            const btn::ivector<btn::third_sprite_attributes>& vector)
+    [[nodiscard]] btn::span<const btn::sprite_second_attributes> _create_attributes_span(
+            const btn::ivector<btn::sprite_second_attributes>& vector)
     {
-        return btn::span<const btn::third_sprite_attributes>(vector.data(), vector.max_size());
+        return btn::span<const btn::sprite_second_attributes>(vector.data(), vector.max_size());
+    }
+
+    [[nodiscard]] btn::span<const btn::sprite_third_attributes> _create_attributes_span(
+            const btn::ivector<btn::sprite_third_attributes>& vector)
+    {
+        return btn::span<const btn::sprite_third_attributes>(vector.data(), vector.max_size());
     }
 
     void _build_hblank_effect_attributes(const btn::sprite_ptr& sprite, int graphics_index,
-                                         btn::ivector<btn::third_sprite_attributes>& attributes)
+                                         btn::ivector<btn::sprite_third_attributes>& attributes)
     {
-        btn::third_sprite_attributes even_sprite_attributes = sprite.third_attributes();
-        btn::third_sprite_attributes odd_sprite_attributes = even_sprite_attributes;
+        btn::sprite_third_attributes even_sprite_attributes = sprite.third_attributes();
+        btn::sprite_third_attributes odd_sprite_attributes = even_sprite_attributes;
         odd_sprite_attributes.set_tiles(btn::sprite_items::butano_big_sprite_alt.tiles_item().create_tiles(graphics_index));
 
         for(int index = 0, limit = attributes.max_size(); index < limit; index += 2)
@@ -61,13 +68,18 @@ title::title(btn::sprite_text_generator& text_generator) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _cursor_sprite(btn::sprite_items::hero_head.create_sprite(0, 0)),
-    _butano_up_hblank_effect(btn::third_sprite_attributes_hblank_effect_ptr::create(
-                                 _butano_up_sprite, _create_attributes_span(_butano_up_hblank_effect_attributes))),
-    _butano_down_hblank_effect(btn::third_sprite_attributes_hblank_effect_ptr::create(
-                                 _butano_down_sprite, _create_attributes_span(_butano_down_hblank_effect_attributes)))
+    _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.second_attributes()),
+    _butano_up_x_hblank_effect(btn::sprite_second_attributes_hblank_effect_ptr::create(
+                                 _butano_up_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
+    _butano_down_x_hblank_effect(btn::sprite_second_attributes_hblank_effect_ptr::create(
+                                 _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
+    _butano_up_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
+                                 _butano_up_sprite, _create_attributes_span(_butano_up_tiles_hblank_effect_attributes))),
+    _butano_down_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
+                                 _butano_down_sprite, _create_attributes_span(_butano_down_tiles_hblank_effect_attributes)))
 {
-    _build_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_hblank_effect_attributes);
-    _build_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_hblank_effect_attributes);
+    _build_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_tiles_hblank_effect_attributes);
+    _build_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_tiles_hblank_effect_attributes);
 
     for(int index = 0; index < 6; ++index)
     {
@@ -96,8 +108,8 @@ title::title(btn::sprite_text_generator& text_generator) :
 btn::optional<scene_type> title::update()
 {
     btn::optional<scene_type> result;
-
-    _animate_butano();
+    _animate_butano_x();
+    _animate_butano_y();
 
     if(_cursor_move_action)
     {
@@ -133,7 +145,45 @@ btn::optional<scene_type> title::update()
     return result;
 }
 
-void title::_animate_butano()
+void title::_animate_butano_x()
+{
+    if(_butano_x_hblank_effect_speed)
+    {
+        wave_generator generator;
+        generator.set_amplitude(1);
+        generator.set_speed(_butano_x_hblank_effect_speed);
+
+        if(_butano_x_hblank_effect_speed > 32)
+        {
+            _butano_x_hblank_effect_speed -= 32;
+        }
+        else
+        {
+            _butano_x_hblank_effect_speed /= 2;
+        }
+
+        btn::fixed values[btn::display::height()];
+        generator.generate(values);
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            _butano_x_hblank_effect_attributes[index].set_x(values[index]);
+        }
+
+        _butano_up_x_hblank_effect.reload_attributes_ref();
+        _butano_down_x_hblank_effect.reload_attributes_ref();
+    }
+    else
+    {
+        if(_butano_up_x_hblank_effect.visible())
+        {
+            _butano_up_x_hblank_effect.set_visible(false);
+            _butano_down_x_hblank_effect.set_visible(false);
+        }
+    }
+}
+
+void title::_animate_butano_y()
 {
     if(_butano_y_up)
     {

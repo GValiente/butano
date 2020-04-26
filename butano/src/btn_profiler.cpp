@@ -34,9 +34,9 @@
             BTN_ASSERT(id, "Id is null");
             BTN_ASSERT(! data.current_id, "There's already an active id: ", data.current_id);
 
-            data.current_timer = btn::timer();
             data.current_id = id;
             data.current_id_hash = id_hash;
+            data.current_timer = btn::timer();
         }
 
         void stop()

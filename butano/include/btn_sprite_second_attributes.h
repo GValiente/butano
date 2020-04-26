@@ -1,5 +1,5 @@
-#ifndef BTN_SECOND_SPRITE_ATTRIBUTES_H
-#define BTN_SECOND_SPRITE_ATTRIBUTES_H
+#ifndef BTN_SPRITE_SECOND_ATTRIBUTES_H
+#define BTN_SPRITE_SECOND_ATTRIBUTES_H
 
 #include "btn_fixed.h"
 #include "btn_optional.h"
@@ -10,14 +10,14 @@ namespace btn
 
 enum class sprite_size;
 
-class alignas(alignof(int)) second_sprite_attributes
+class sprite_second_attributes
 {
 
 public:
-    second_sprite_attributes(fixed x, sprite_size size, bool horizontal_flip, bool vertical_flip,
+    sprite_second_attributes(fixed x, sprite_size size, bool horizontal_flip, bool vertical_flip,
                              const optional<sprite_affine_mat_ptr>& affine_mat);
 
-    second_sprite_attributes(fixed x, sprite_size size, bool horizontal_flip, bool vertical_flip,
+    sprite_second_attributes(fixed x, sprite_size size, bool horizontal_flip, bool vertical_flip,
                              optional<sprite_affine_mat_ptr>&& affine_mat);
 
     [[nodiscard]] fixed x() const
@@ -57,13 +57,13 @@ public:
 
     void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat);
 
-    [[nodiscard]] friend bool operator==(const second_sprite_attributes& a, const second_sprite_attributes& b)
+    [[nodiscard]] friend bool operator==(const sprite_second_attributes& a, const sprite_second_attributes& b)
     {
         return a._x.integer() == b._x.integer() && a._size == b._size && a._horizontal_flip == b._horizontal_flip &&
                 a._vertical_flip == b._vertical_flip && a._affine_mat == b._affine_mat;
     }
 
-    [[nodiscard]] friend bool operator!=(const second_sprite_attributes& a, const second_sprite_attributes& b)
+    [[nodiscard]] friend bool operator!=(const sprite_second_attributes& a, const sprite_second_attributes& b)
     {
         return ! (a == b);
     }

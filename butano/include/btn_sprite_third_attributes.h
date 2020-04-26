@@ -1,5 +1,5 @@
-#ifndef BTN_THIRD_SPRITE_ATTRIBUTES_H
-#define BTN_THIRD_SPRITE_ATTRIBUTES_H
+#ifndef BTN_SPRITE_THIRD_ATTRIBUTES_H
+#define BTN_SPRITE_THIRD_ATTRIBUTES_H
 
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_ptr.h"
@@ -7,11 +7,11 @@
 namespace btn
 {
 
-class alignas(alignof(int)) third_sprite_attributes
+class sprite_third_attributes
 {
 
 public:
-    third_sprite_attributes(sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr, int bg_priority);
+    sprite_third_attributes(sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr, int bg_priority);
 
     [[nodiscard]] const sprite_tiles_ptr& tiles() const
     {
@@ -50,12 +50,12 @@ public:
 
     void set_bg_priority(int bg_priority);
 
-    [[nodiscard]] friend bool operator==(const third_sprite_attributes& a, const third_sprite_attributes& b)
+    [[nodiscard]] friend bool operator==(const sprite_third_attributes& a, const sprite_third_attributes& b)
     {
         return a._tiles_ptr == b._tiles_ptr && a._palette_ptr == b._palette_ptr && a._bg_priority == b._bg_priority;
     }
 
-    [[nodiscard]] friend bool operator!=(const third_sprite_attributes& a, const third_sprite_attributes& b)
+    [[nodiscard]] friend bool operator!=(const sprite_third_attributes& a, const sprite_third_attributes& b)
     {
         return ! (a == b);
     }

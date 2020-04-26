@@ -20,7 +20,7 @@ public:
 
     [[nodiscard]] virtual uint16_t* output_register(int target_id) = 0;
 
-    virtual void write_output_values(int target_id, const iany& target_last_value, bool first_write, int values_count,
+    virtual void write_output_values(int target_id, const iany& target_last_value, int values_count,
                                      const void* input_values_ptr, uint16_t* output_values_ptr) = 0;
 
 protected:

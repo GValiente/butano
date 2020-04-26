@@ -5,6 +5,7 @@
 #include "btn_fixed.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
+#include "btn_bg_tiles_ptr.h"
 #include "btn_regular_bg_attributes.h"
 #include "btn_bgs_manager.h"
 #include "btn_hblank_effect_handler.h"
@@ -46,7 +47,7 @@ namespace
             return hw::bgs::regular_horizontal_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -86,7 +87,7 @@ namespace
             return hw::bgs::regular_vertical_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, bool, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -104,7 +105,7 @@ namespace
 
         void setup_target(int target_id, iany& target_last_value) final
         {
-            target_last_value = bgs_manager::regular_attributes(target_id);
+            target_last_value = last_value_type(target_id);
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -114,8 +115,8 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            regular_bg_attributes& last_value = target_last_value.value<regular_bg_attributes>();
-            regular_bg_attributes new_value = bgs_manager::regular_attributes(target_id);
+            last_value_type& last_value = target_last_value.value<last_value_type>();
+            last_value_type new_value = last_value_type(target_id);
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -126,13 +127,47 @@ namespace
             return hw::bgs::attributes_register(target_id);
         }
 
-        void write_output_values(int target_id, const iany&, bool, int, const void* input_values_ptr,
+        void write_output_values(int target_id, const iany&, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_regular_attributes(
                         target_id, regular_bg_attributes_ptr, output_values_ptr);
         }
+
+    private:
+        class alignas(alignof(int)) last_value_type
+        {
+
+        public:
+            explicit last_value_type(const regular_bg_map_ptr& target_map_ptr) :
+                _map_dimensions(target_map_ptr.dimensions()),
+                _tiles_cbb(target_map_ptr.tiles().cbb()),
+                _bpp_mode(target_map_ptr.bpp_mode())
+            {
+            }
+
+            explicit last_value_type(int target_id) :
+                last_value_type(bgs_manager::map(target_id))
+            {
+            }
+
+            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b)
+            {
+                return a._map_dimensions == b._map_dimensions && a._tiles_cbb == b._tiles_cbb &&
+                        a._bpp_mode == b._bpp_mode;
+            }
+
+            [[nodiscard]] friend bool operator!=(const last_value_type& a, const last_value_type& b)
+            {
+                return ! (a == b);
+            }
+
+        private:
+            size _map_dimensions;
+            int _tiles_cbb;
+            palette_bpp_mode _bpp_mode;
+        };
     };
 
 

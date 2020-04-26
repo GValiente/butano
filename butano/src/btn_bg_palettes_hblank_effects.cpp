@@ -37,7 +37,7 @@ namespace
             return hw::palettes::bg_transparent_color_register();
         }
 
-        void write_output_values(int, const iany&, bool, int values_count, const void* input_values_ptr,
+        void write_output_values(int, const iany&, int values_count, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             auto color_values_ptr = reinterpret_cast<const color*>(input_values_ptr);

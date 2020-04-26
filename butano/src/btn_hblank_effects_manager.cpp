@@ -56,10 +56,9 @@ namespace
 
             if(on_screen)
             {
-                bool first_write = ! output_values_written;
                 updated |= handler->target_updated(target_id, target_last_value);
 
-                if(first_write)
+                if(! output_values_written)
                 {
                     updated = true;
                     output_values_written = true;
@@ -80,8 +79,7 @@ namespace
                         dest_values_a_active = true;
                     }
 
-                    handler->write_output_values(target_id, target_last_value, first_write,
-                                                 values_count, values_ptr, dest_values_ptr);
+                    handler->write_output_values(target_id, target_last_value, values_count, values_ptr, dest_values_ptr);
                 }
             }
 

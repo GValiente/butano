@@ -5,8 +5,8 @@
 #include "btn_sorted_sprites.h"
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
-#include "btn_third_sprite_attributes.h"
-#include "btn_second_sprite_attributes.h"
+#include "btn_sprite_third_attributes.h"
+#include "btn_sprite_second_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn::sprites_manager
@@ -197,24 +197,6 @@ namespace
             }
         }
     }
-
-    [[nodiscard]] [[maybe_unused]] bool _validate_third_attributes(
-            const sprite_shape_size& shape_size, const third_sprite_attributes* third_attributes_ptr)
-    {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
-        {
-            const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
-            const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
-            const sprite_palette_ptr& palette_ptr = third_attributes.palette();
-
-            if(tiles_ptr.tiles_count() != shape_size.tiles_count(palette_ptr.bpp_mode()))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
 
 void init()
@@ -344,13 +326,25 @@ optional<int> hw_id(id_type id)
     return result;
 }
 
+sprite_shape shape(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::shape(item->handle);
+}
+
+sprite_size size(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::size(item->handle);
+}
+
 sprite_shape_size shape_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return hw::sprites::shape_size(item->handle);
 }
 
-size dimensions(id_type id)
+btn::size dimensions(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->half_dimensions * 2;
@@ -534,6 +528,12 @@ const fixed_point& position(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->position;
+}
+
+const point& hw_position(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->hw_position;
 }
 
 void set_position(id_type id, const fixed_point& position)
@@ -876,7 +876,7 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     }
 }
 
-second_sprite_attributes second_attributes(id_type id)
+sprite_second_attributes second_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle& handle = item->handle;
@@ -896,10 +896,10 @@ second_sprite_attributes second_attributes(id_type id)
         vertical_flip = hw::sprites::vertical_flip(handle);
     }
 
-    return second_sprite_attributes(item->position.x(), size, horizontal_flip, vertical_flip, affine_mat);
+    return sprite_second_attributes(item->position.x(), size, horizontal_flip, vertical_flip, affine_mat);
 }
 
-void set_second_attributes(id_type id, const second_sprite_attributes& second_attributes)
+void set_second_attributes(id_type id, const sprite_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
     set_position(id, fixed_point(second_attributes.x(), item->position.y()));
@@ -924,13 +924,13 @@ void set_second_attributes(id_type id, const second_sprite_attributes& second_at
     }
 }
 
-third_sprite_attributes third_attributes(id_type id)
+sprite_third_attributes third_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return third_sprite_attributes(item->tiles_ptr, item->palette_ptr, item->bg_priority());
+    return sprite_third_attributes(item->tiles_ptr, item->palette_ptr, item->bg_priority());
 }
 
-void set_third_attributes(id_type id, const third_sprite_attributes& third_attributes)
+void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle& handle = item->handle;
@@ -964,21 +964,40 @@ void set_third_attributes(id_type id, const third_sprite_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
-void fill_hblank_effect_third_attributes([[maybe_unused]] const sprite_shape_size& shape_size, bool first_write,
-                                         const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_second_attributes(int hw_x, sprite_size size,
+                                          const sprite_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
-    BTN_ASSERT(_validate_third_attributes(shape_size, third_attributes_ptr), "Third attributes validation failed");
-
-    if(first_write)
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
+        const sprite_second_attributes& second_attributes = second_attributes_ptr[index];
+        int x = hw_x + second_attributes.x().integer();
+
+        if(const optional<sprite_affine_mat_ptr>& affine_mat = second_attributes.affine_mat())
         {
-            const third_sprite_attributes& third_attributes = third_attributes_ptr[index];
-            const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
-            const sprite_palette_ptr& palette_ptr = third_attributes.palette();
-            int bg_priority = third_attributes.bg_priority();
-            dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, affine_mat->id()));
         }
+        else
+        {
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
+                                                                      second_attributes.vertical_flip()));
+        }
+    }
+}
+
+void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shape_size,
+                                         const sprite_third_attributes* third_attributes_ptr, uint16_t* dest_ptr)
+{
+    for(int index = 0, limit = display::height(); index < limit; ++index)
+    {
+        const sprite_third_attributes& third_attributes = third_attributes_ptr[index];
+        const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
+        const sprite_palette_ptr& palette_ptr = third_attributes.palette();
+        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
+                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
+                   shape_size.tiles_count(palette_ptr.bpp_mode()));
+
+        int bg_priority = third_attributes.bg_priority();
+        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
     }
 }
 

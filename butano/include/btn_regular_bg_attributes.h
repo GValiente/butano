@@ -6,7 +6,7 @@
 namespace btn
 {
 
-class alignas(alignof(int)) regular_bg_attributes
+class regular_bg_attributes
 {
 
 public:
@@ -19,9 +19,15 @@ public:
         return _map_ptr;
     }
 
-    void set_map(const regular_bg_map_ptr& map_ptr);
+    void set_map(const regular_bg_map_ptr& map_ptr)
+    {
+        _map_ptr = map_ptr;
+    }
 
-    void set_map(regular_bg_map_ptr&& map_ptr);
+    void set_map(regular_bg_map_ptr&& map_ptr)
+    {
+        _map_ptr = move(map_ptr);
+    }
 
     [[nodiscard]] int priority() const
     {
@@ -42,8 +48,7 @@ public:
 
     [[nodiscard]] friend bool operator==(const regular_bg_attributes& a, const regular_bg_attributes& b)
     {
-        return a._map_ptr == b._map_ptr && a._priority == b._priority && a._mosaic_enabled == b._mosaic_enabled &&
-                a._tiles_cbb == b._tiles_cbb && a._bpp_mode == b._bpp_mode;
+        return a._map_ptr == b._map_ptr && a._priority == b._priority && a._mosaic_enabled == b._mosaic_enabled;
     }
 
     [[nodiscard]] friend bool operator!=(const regular_bg_attributes& a, const regular_bg_attributes& b)
@@ -55,10 +60,6 @@ private:
     regular_bg_map_ptr _map_ptr;
     int8_t _priority;
     bool _mosaic_enabled;
-    int8_t _tiles_cbb;
-    int8_t _bpp_mode;
-
-    void _update_map_info();
 };
 
 }

@@ -42,6 +42,16 @@ namespace btn::hw::sprites
         oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(btn::sprites::sprites_count()));
     }
 
+    [[nodiscard]] inline int second_attributes(int x, sprite_size size, bool horizontal_flip, bool vertical_flip)
+    {
+        return ATTR1_BUILDR(x, int(size), horizontal_flip, vertical_flip);
+    }
+
+    [[nodiscard]] inline int second_attributes(int x, sprite_size size, int affine_mat_id)
+    {
+        return ATTR1_BUILDA(x, int(size), affine_mat_id);
+    }
+
     [[nodiscard]] inline int third_attributes(int tiles_id, int palette_id, int bg_priority)
     {
         return ATTR2_BUILD(tiles_id, palette_id, bg_priority);
@@ -54,7 +64,7 @@ namespace btn::hw::sprites
         int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, false, false, false);
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
-        int a1 = ATTR1_BUILDR(0, int(shape_size.size()), false, false);
+        int a1 = second_attributes(0, shape_size.size(), false, false);
         int a2 = third_attributes(tiles_id, palette_id, 3);
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
@@ -68,7 +78,7 @@ namespace btn::hw::sprites
                              builder.window_enabled());
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
-        int a1 = ATTR1_BUILDR(0, int(shape_size.size()), builder.horizontal_flip(), builder.vertical_flip());
+        int a1 = second_attributes(0, shape_size.size(), builder.horizontal_flip(), builder.vertical_flip());
         int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
@@ -82,7 +92,7 @@ namespace btn::hw::sprites
                              builder.window_enabled());
         a0 |= int(bpp_mode) * ATTR0_8BPP;
 
-        int a1 = ATTR1_BUILDA(0, int(shape_size.size()), 0);
+        int a1 = second_attributes(0, shape_size.size(), 0);
         int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
     }
@@ -293,6 +303,18 @@ namespace btn::hw::sprites
     inline void commit(const handle& sprites_ref, int offset, int count)
     {
         memory::copy((&sprites_ref)[offset], count, vram()[offset]);
+    }
+
+    [[nodiscard]] inline uint16_t* first_attributes_register(int id)
+    {
+        handle& handle = vram()[id];
+        return &handle.attr0;
+    }
+
+    [[nodiscard]] inline uint16_t* second_attributes_register(int id)
+    {
+        handle& handle = vram()[id];
+        return &handle.attr1;
     }
 
     [[nodiscard]] inline uint16_t* third_attributes_register(int id)

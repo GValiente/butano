@@ -84,11 +84,11 @@ namespace btn::display_manager
     void set_rect_window_ignore_camera(int window, bool ignore_camera);
 
     void fill_rect_window_hblank_effect_horizontal_boundaries(
-            const pair<fixed, fixed>& base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
+            pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
             uint16_t* dest_ptr);
 
     void fill_rect_window_hblank_effect_vertical_boundaries(
-            const pair<fixed, fixed>& base_vertical_boundaries, const pair<fixed, fixed>* vertical_boundaries_ptr,
+            pair<fixed, fixed> base_vertical_boundaries, const pair<fixed, fixed>* vertical_boundaries_ptr,
             uint16_t* dest_ptr);
 
     [[nodiscard]] bool inside_window_enabled(int window);

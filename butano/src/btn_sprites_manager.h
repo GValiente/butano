@@ -8,14 +8,17 @@ namespace btn
 {
 
 class size;
+class point;
 class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
-class third_sprite_attributes;
-class second_sprite_attributes;
+class sprite_third_attributes;
+class sprite_second_attributes;
+enum class sprite_size;
+enum class sprite_shape;
 enum class sprite_double_size_mode;
 
 namespace sprites_manager
@@ -48,9 +51,13 @@ namespace sprites_manager
 
     [[nodiscard]] optional<int> hw_id(id_type id);
 
+    [[nodiscard]] sprite_shape shape(id_type id);
+
+    [[nodiscard]] sprite_size size(id_type id);
+
     [[nodiscard]] sprite_shape_size shape_size(id_type id);
 
-    [[nodiscard]] size dimensions(id_type id);
+    [[nodiscard]] btn::size dimensions(id_type id);
 
     [[nodiscard]] const sprite_tiles_ptr& tiles(id_type id);
 
@@ -72,6 +79,8 @@ namespace sprites_manager
                                sprite_palette_ptr&& palette_ptr);
 
     [[nodiscard]] const fixed_point& position(id_type id);
+
+    [[nodiscard]] const point& hw_position(id_type id);
 
     void set_position(id_type id, const fixed_point& position);
 
@@ -129,16 +138,19 @@ namespace sprites_manager
 
     void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
 
-    [[nodiscard]] second_sprite_attributes second_attributes(id_type id);
+    [[nodiscard]] sprite_second_attributes second_attributes(id_type id);
 
-    void set_second_attributes(id_type id, const second_sprite_attributes& second_attributes);
+    void set_second_attributes(id_type id, const sprite_second_attributes& second_attributes);
 
-    [[nodiscard]] third_sprite_attributes third_attributes(id_type id);
+    [[nodiscard]] sprite_third_attributes third_attributes(id_type id);
 
-    void set_third_attributes(id_type id, const third_sprite_attributes& third_attributes);
+    void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
-    void fill_hblank_effect_third_attributes(const sprite_shape_size& shape_size, bool first_write,
-                                             const third_sprite_attributes* third_attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_second_attributes(
+            int hw_x, sprite_size size, const sprite_second_attributes* second_attributes_ptr, uint16_t* dest_ptr);
+
+    void fill_hblank_effect_third_attributes(
+            sprite_shape_size shape_size, const sprite_third_attributes* third_attributes_ptr, uint16_t* dest_ptr);
 
     void update_camera();
 

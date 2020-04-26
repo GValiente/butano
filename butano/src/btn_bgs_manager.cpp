@@ -119,16 +119,11 @@ namespace
                                  uint16_t& bg_cnt)
     {
         const regular_bg_map_ptr& attributes_map_ptr = attributes.map();
+        BTN_ASSERT(current_map_ptr.dimensions() == attributes_map_ptr.dimensions(), "Map dimensions mismatch");
 
-        if(current_map_ptr != attributes_map_ptr)
-        {
-            BTN_ASSERT(current_map_ptr.dimensions() == attributes_map_ptr.dimensions(), "Map dimensions mismatch");
-
-            hw::bgs::set_tiles_cbb(attributes_map_ptr.tiles().cbb(), bg_cnt);
-            hw::bgs::set_map_sbb(attributes_map_ptr.id(), bg_cnt);
-            hw::bgs::set_bpp_mode(attributes_map_ptr.bpp_mode(), bg_cnt);
-        }
-
+        hw::bgs::set_tiles_cbb(attributes_map_ptr.tiles().cbb(), bg_cnt);
+        hw::bgs::set_map_sbb(attributes_map_ptr.id(), bg_cnt);
+        hw::bgs::set_bpp_mode(attributes_map_ptr.bpp_mode(), bg_cnt);
         hw::bgs::set_priority(attributes.priority(), bg_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), bg_cnt);
     }

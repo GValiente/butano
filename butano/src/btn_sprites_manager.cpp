@@ -6,8 +6,9 @@
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
 #include "btn_sprite_third_attributes.h"
-#include "btn_sprite_second_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
+#include "btn_sprite_affine_second_attributes.h"
+#include "btn_sprite_regular_second_attributes.h"
 
 namespace btn::sprites_manager
 {
@@ -876,52 +877,44 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     }
 }
 
-sprite_second_attributes second_attributes(id_type id)
+sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
+    BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
+
     hw::sprites::handle& handle = item->handle;
-    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat_ptr;
-    sprite_size size = hw::sprites::size(handle);
-    bool horizontal_flip;
-    bool vertical_flip;
-
-    if(affine_mat)
-    {
-        horizontal_flip = false;
-        vertical_flip = false;
-    }
-    else
-    {
-        horizontal_flip = hw::sprites::horizontal_flip(handle);
-        vertical_flip = hw::sprites::vertical_flip(handle);
-    }
-
-    return sprite_second_attributes(item->position.x(), size, horizontal_flip, vertical_flip, affine_mat);
+    return sprite_regular_second_attributes(item->position.x(), hw::sprites::size(handle),
+                                            hw::sprites::horizontal_flip(handle), hw::sprites::vertical_flip(handle));
 }
 
-void set_second_attributes(id_type id, const sprite_second_attributes& second_attributes)
+void set_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+    BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
 
-    if(const optional<sprite_affine_mat_ptr>& affine_mat = second_attributes.affine_mat())
-    {
-        set_affine_mat(id, affine_mat);
-    }
-    else
-    {
-        if(item->affine_mat_ptr)
-        {
-            item->affine_mat_ptr->set_horizontal_flip(second_attributes.horizontal_flip());
-            item->affine_mat_ptr->set_vertical_flip(second_attributes.vertical_flip());
-        }
-        else
-        {
-            hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
-            hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
-            _update_handle(*item);
-        }
-    }
+    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+    hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
+    hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
+    _update_handle(*item);
+}
+
+sprite_affine_second_attributes affine_second_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat_ptr;
+    BTN_ASSERT(affine_mat, "Item is not affine");
+
+    hw::sprites::handle& handle = item->handle;
+    return sprite_affine_second_attributes(item->position.x(), hw::sprites::size(handle), *affine_mat);
+}
+
+void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    BTN_ASSERT(item->affine_mat_ptr, "Item is not affine");
+
+    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+    set_affine_mat(id, second_attributes.affine_mat());
 }
 
 sprite_third_attributes third_attributes(id_type id)
@@ -964,23 +957,30 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
-void fill_hblank_effect_second_attributes(int hw_x, sprite_size size,
-                                          const sprite_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
+        const sprite_regular_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
+    BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat_ptr, "Item is not regular");
+
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
-        const sprite_second_attributes& second_attributes = second_attributes_ptr[index];
+        const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
         int x = hw_x + second_attributes.x().integer();
+        dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
+                                                                  second_attributes.vertical_flip()));
+    }
+}
 
-        if(const optional<sprite_affine_mat_ptr>& affine_mat = second_attributes.affine_mat())
-        {
-            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, affine_mat->id()));
-        }
-        else
-        {
-            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
-                                                                      second_attributes.vertical_flip()));
-        }
+void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
+        const sprite_affine_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
+{
+    BTN_ASSERT(static_cast<item_type*>(id)->affine_mat_ptr, "Item is not affine");
+
+    for(int index = 0, limit = display::height(); index < limit; ++index)
+    {
+        const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
+        int x = hw_x + second_attributes.x().integer();
+        dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
     }
 }
 

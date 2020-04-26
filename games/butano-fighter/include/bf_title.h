@@ -7,7 +7,7 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_hblank_effects.h"
 #include "btn_sprite_third_attributes.h"
-#include "btn_sprite_second_attributes.h"
+#include "btn_sprite_regular_second_attributes.h"
 #include "bf_scene.h"
 
 namespace btn
@@ -40,9 +40,9 @@ private:
     btn::vector<btn::sprite_ptr, 2> _credits_text_sprites;
     btn::sprite_ptr _cursor_sprite;
     btn::fixed _butano_y_inc = -4.05;
-    btn::vector<btn::sprite_second_attributes, btn::display::height()> _butano_x_hblank_effect_attributes;
-    btn::sprite_second_attributes_hblank_effect_ptr _butano_up_x_hblank_effect;
-    btn::sprite_second_attributes_hblank_effect_ptr _butano_down_x_hblank_effect;
+    btn::vector<btn::sprite_regular_second_attributes, btn::display::height()> _butano_x_hblank_effect_attributes;
+    btn::sprite_regular_second_attributes_hblank_effect_ptr _butano_up_x_hblank_effect;
+    btn::sprite_regular_second_attributes_hblank_effect_ptr _butano_down_x_hblank_effect;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _butano_up_tiles_hblank_effect_attributes;
     btn::sprite_third_attributes_hblank_effect_ptr _butano_up_tiles_hblank_effect;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _butano_down_tiles_hblank_effect_attributes;

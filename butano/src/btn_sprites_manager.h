@@ -16,7 +16,8 @@ class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
 class sprite_third_attributes;
-class sprite_second_attributes;
+class sprite_regular_second_attributes;
+class sprite_affine_second_attributes;
 enum class sprite_size;
 enum class sprite_shape;
 enum class sprite_double_size_mode;
@@ -138,16 +139,25 @@ namespace sprites_manager
 
     void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
 
-    [[nodiscard]] sprite_second_attributes second_attributes(id_type id);
+    [[nodiscard]] sprite_regular_second_attributes regular_second_attributes(id_type id);
 
-    void set_second_attributes(id_type id, const sprite_second_attributes& second_attributes);
+    void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes);
+
+    [[nodiscard]] sprite_affine_second_attributes affine_second_attributes(id_type id);
+
+    void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes);
 
     [[nodiscard]] sprite_third_attributes third_attributes(id_type id);
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
-    void fill_hblank_effect_second_attributes(
-            int hw_x, sprite_size size, const sprite_second_attributes* second_attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_regular_second_attributes(
+            id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
+            uint16_t* dest_ptr);
+
+    void fill_hblank_effect_affine_second_attributes(
+            id_type id, int hw_x, sprite_size size, const sprite_affine_second_attributes* second_attributes_ptr,
+            uint16_t* dest_ptr);
 
     void fill_hblank_effect_third_attributes(
             sprite_shape_size shape_size, const sprite_third_attributes* third_attributes_ptr, uint16_t* dest_ptr);

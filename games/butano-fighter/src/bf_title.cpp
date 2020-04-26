@@ -37,10 +37,10 @@ namespace
         return builder.release_build();
     }
 
-    [[nodiscard]] btn::span<const btn::sprite_second_attributes> _create_attributes_span(
-            const btn::ivector<btn::sprite_second_attributes>& vector)
+    [[nodiscard]] btn::span<const btn::sprite_regular_second_attributes> _create_attributes_span(
+            const btn::ivector<btn::sprite_regular_second_attributes>& vector)
     {
-        return btn::span<const btn::sprite_second_attributes>(vector.data(), vector.max_size());
+        return btn::span<const btn::sprite_regular_second_attributes>(vector.data(), vector.max_size());
     }
 
     [[nodiscard]] btn::span<const btn::sprite_third_attributes> _create_attributes_span(
@@ -68,15 +68,15 @@ title::title(btn::sprite_text_generator& text_generator) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _cursor_sprite(btn::sprite_items::hero_head.create_sprite(0, 0)),
-    _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.second_attributes()),
-    _butano_up_x_hblank_effect(btn::sprite_second_attributes_hblank_effect_ptr::create(
-                                 _butano_up_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
-    _butano_down_x_hblank_effect(btn::sprite_second_attributes_hblank_effect_ptr::create(
-                                 _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
+    _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.regular_second_attributes()),
+    _butano_up_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
+                                   _butano_up_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
+    _butano_down_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
+                                     _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
     _butano_up_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
-                                 _butano_up_sprite, _create_attributes_span(_butano_up_tiles_hblank_effect_attributes))),
+                                       _butano_up_sprite, _create_attributes_span(_butano_up_tiles_hblank_effect_attributes))),
     _butano_down_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
-                                 _butano_down_sprite, _create_attributes_span(_butano_down_tiles_hblank_effect_attributes)))
+                                         _butano_down_sprite, _create_attributes_span(_butano_down_tiles_hblank_effect_attributes)))
 {
     _build_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_tiles_hblank_effect_attributes);
     _build_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_tiles_hblank_effect_attributes);

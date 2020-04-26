@@ -15,6 +15,7 @@ class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
 class third_sprite_attributes;
+class second_sprite_attributes;
 enum class sprite_double_size_mode;
 
 namespace sprites_manager
@@ -127,6 +128,10 @@ namespace sprites_manager
     [[nodiscard]] bool remove_affine_mat_when_not_needed(id_type id);
 
     void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
+
+    [[nodiscard]] second_sprite_attributes second_attributes(id_type id);
+
+    void set_second_attributes(id_type id, const second_sprite_attributes& second_attributes);
 
     [[nodiscard]] third_sprite_attributes third_attributes(id_type id);
 

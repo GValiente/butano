@@ -93,19 +93,28 @@ namespace btn::hw::sprites
         return sprite_ptr->attr0 & ATTR0_AFF_DBL_BIT;
     }
 
-    [[nodiscard]] inline sprite_shape_size shape_size(const handle& sprite)
+    [[nodiscard]] inline sprite_shape shape(const handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
-        auto shape = sprite_shape(sprite_ptr->attr0 >> 14);
-        auto size = sprite_size(sprite_ptr->attr1 >> 14);
-        return sprite_shape_size(shape, size);
+        return sprite_shape(sprite_ptr->attr0 >> 14);
     }
 
-    [[nodiscard]] inline size dimensions(const handle& sprite)
+    [[nodiscard]] inline sprite_size size(const handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+        return sprite_size(sprite_ptr->attr1 >> 14);
+    }
+
+    [[nodiscard]] inline sprite_shape_size shape_size(const handle& sprite)
+    {
+        return sprite_shape_size(shape(sprite), size(sprite));
+    }
+
+    [[nodiscard]] inline btn::size dimensions(const handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
         const uint8_t* obj_size = obj_get_size(sprite_ptr);
-        size result(obj_size[0], obj_size[1]);
+        btn::size result(obj_size[0], obj_size[1]);
 
         if(double_size(sprite))
         {

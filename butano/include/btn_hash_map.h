@@ -393,10 +393,14 @@ public:
         return insert_hash(hasher()(value.first), move(value));
     }
 
-    template<typename KeyType, typename ValueType>
-    iterator insert(KeyType&& key, ValueType&& value)
+    iterator insert(const key_type& key, const mapped_type& mapped_value)
     {
-        return insert_hash(hasher()(key), value_type(forward<KeyType>(key), forward<ValueType>(value)));
+        return insert_hash(hasher()(key), value_type(key, mapped_value));
+    }
+
+    iterator insert(const key_type& key, mapped_type&& mapped_value)
+    {
+        return insert_hash(hasher()(key), value_type(key, move(mapped_value)));
     }
 
     iterator insert_hash(hash_type key_hash, const value_type& value)
@@ -433,10 +437,14 @@ public:
         return iterator(current_index, *this);
     }
 
-    template<typename KeyType, typename ValueType>
-    iterator insert_hash(hash_type key_hash, KeyType&& key, ValueType&& value)
+    iterator insert_hash(hash_type key_hash, const key_type& key, const mapped_type& mapped_value)
     {
-        return insert_hash(key_hash, value_type(forward<KeyType>(key), forward<ValueType>(value)));
+        return insert_hash(key_hash, value_type(key, mapped_value));
+    }
+
+    iterator insert_hash(hash_type key_hash, const key_type& key, mapped_type&& mapped_value)
+    {
+        return insert_hash(key_hash, value_type(key, move(mapped_value)));
     }
 
     iterator insert_or_assign(const value_type& value)
@@ -449,10 +457,14 @@ public:
         return insert_or_assign_hash(hasher()(value.first), move(value));
     }
 
-    template<typename KeyType, typename ValueType>
-    iterator insert_or_assign(KeyType&& key, ValueType&& value)
+    iterator insert_or_assign(const key_type& key, const mapped_type& mapped_value)
     {
-        return insert_or_assign_hash(hasher()(key), value_type(forward<KeyType>(key), forward<ValueType>(value)));
+        return insert_or_assign_hash(hasher()(key), value_type(key, mapped_value));
+    }
+
+    iterator insert_or_assign(const key_type& key, mapped_type&& mapped_value)
+    {
+        return insert_or_assign_hash(hasher()(key), value_type(key, move(mapped_value)));
     }
 
     iterator insert_or_assign_hash(hash_type key_hash, const value_type& value)
@@ -480,10 +492,14 @@ public:
         return it;
     }
 
-    template<typename KeyType, typename ValueType>
-    iterator insert_or_assign_hash(hash_type key_hash, KeyType&& key, ValueType&& value)
+    iterator insert_or_assign_hash(hash_type key_hash, const key_type& key, const mapped_type& mapped_value)
     {
-        return insert_or_assign_hash(key_hash, value_type(forward<KeyType>(key), forward<ValueType>(value)));
+        return insert_or_assign_hash(key_hash, value_type(key, mapped_value));
+    }
+
+    iterator insert_or_assign_hash(hash_type key_hash, const key_type& key, mapped_type&& mapped_value)
+    {
+        return insert_or_assign_hash(key_hash, value_type(key, move(mapped_value)));
     }
 
     iterator erase(const const_iterator& position)

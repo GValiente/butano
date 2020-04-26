@@ -39,10 +39,27 @@ namespace btn
 
         constexpr pair() = default;
 
-        template<typename OtherType1, typename OtherType2>
-        constexpr pair(OtherType1&& x, OtherType2&& y) :
-            first(forward<OtherType1>(x)),
-            second(forward<OtherType2>(y))
+        constexpr pair(const first_type& x, const second_type& y) :
+            first(x),
+            second(y)
+        {
+        }
+
+        constexpr pair(first_type&& x, const second_type& y) :
+            first(move(x)),
+            second(y)
+        {
+        }
+
+        constexpr pair(const first_type& x, second_type&& y) :
+            first(x),
+            second(move(y))
+        {
+        }
+
+        constexpr pair(first_type&& x, second_type&& y) :
+            first(move(x)),
+            second(move(y))
         {
         }
 

@@ -21,6 +21,7 @@ class sprite_palette_ptr;
 class sprite_palette_item;
 class sprite_affine_mat_ptr;
 class third_sprite_attributes;
+class second_sprite_attributes;
 enum class sprite_double_size_mode;
 
 class sprite_ptr
@@ -219,6 +220,10 @@ public:
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 
     void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
+
+    [[nodiscard]] second_sprite_attributes second_attributes() const;
+
+    void set_second_attributes(const second_sprite_attributes& second_attributes);
 
     [[nodiscard]] third_sprite_attributes third_attributes() const;
 

@@ -23,17 +23,7 @@ public:
 
     sprite_builder(const sprite_item& item, int graphics_index);
 
-    template<class SpriteTilesPtr, class SpritePalettePtr>
-    sprite_builder(const sprite_shape_size& shape_size, SpriteTilesPtr&& tiles_ptr, SpritePalettePtr&& palette_ptr) :
-        _tiles_ptr(forward<SpriteTilesPtr>(tiles_ptr)),
-        _palette_ptr(forward<SpritePalettePtr>(palette_ptr)),
-        _shape_size(shape_size),
-        _graphics_index(0)
-    {
-        BTN_ASSERT(_tiles_ptr->tiles_count() == _shape_size.tiles_count(_palette_ptr->bpp_mode()),
-                   "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-                   _shape_size.tiles_count(_palette_ptr->bpp_mode()));
-    }
+    sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr);
 
     [[nodiscard]] const optional<sprite_item>& item() const
     {
@@ -229,10 +219,15 @@ public:
         return _affine_mat_ptr;
     }
 
-    template<class SpriteAffineMatPtr>
-    sprite_builder& set_affine_mat(SpriteAffineMatPtr&& affine_mat)
+    sprite_builder& set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
     {
-        _affine_mat_ptr = forward<SpriteAffineMatPtr>(affine_mat);
+        _affine_mat_ptr = affine_mat;
+        return *this;
+    }
+
+    sprite_builder& set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
+    {
+        _affine_mat_ptr = move(affine_mat);
         return *this;
     }
 

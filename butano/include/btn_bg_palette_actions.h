@@ -32,9 +32,13 @@ class bg_palette_inverted_toggle_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_inverted_toggle_action(BgPalettePtr&& palette, int duration_frames) :
-        bool_toggle_value_template_action(forward<BgPalettePtr>(palette), duration_frames)
+    bg_palette_inverted_toggle_action(const bg_palette_ptr& palette, int duration_frames) :
+        bool_toggle_value_template_action(palette, duration_frames)
+    {
+    }
+
+    bg_palette_inverted_toggle_action(bg_palette_ptr&& palette, int duration_frames) :
+        bool_toggle_value_template_action(move(palette), duration_frames)
     {
     }
 
@@ -68,9 +72,14 @@ class bg_palette_grayscale_to_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_grayscale_to_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
+    bg_palette_grayscale_to_action(const bg_palette_ptr& palette, int duration_frames, fixed final_intensity) :
+        to_value_template_action(palette, duration_frames, final_intensity)
+    {
+        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    bg_palette_grayscale_to_action(bg_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
+        to_value_template_action(move(palette), duration_frames, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -92,9 +101,14 @@ class bg_palette_grayscale_loop_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_grayscale_loop_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
+    bg_palette_grayscale_loop_action(const bg_palette_ptr& palette, int duration_frames, fixed final_intensity) :
+        loop_value_template_action(palette, duration_frames, final_intensity)
+    {
+        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    bg_palette_grayscale_loop_action(bg_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
+        loop_value_template_action(move(palette), duration_frames, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -116,9 +130,14 @@ class bg_palette_grayscale_toggle_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_grayscale_toggle_action(BgPalettePtr&& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(forward<BgPalettePtr>(palette), duration_frames, new_intensity)
+    bg_palette_grayscale_toggle_action(const bg_palette_ptr& palette, int duration_frames, fixed new_intensity) :
+        toggle_value_template_action(palette, duration_frames, new_intensity)
+    {
+        BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+    }
+
+    bg_palette_grayscale_toggle_action(bg_palette_ptr&& palette, int duration_frames, fixed new_intensity) :
+        toggle_value_template_action(move(palette), duration_frames, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -157,9 +176,14 @@ class bg_palette_fade_to_action : public to_value_template_action<bg_palette_ptr
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_fade_to_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
+    bg_palette_fade_to_action(const bg_palette_ptr& palette, int duration_frames, fixed final_intensity) :
+        to_value_template_action(palette, duration_frames, final_intensity)
+    {
+        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    bg_palette_fade_to_action(bg_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
+        to_value_template_action(move(palette), duration_frames, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -180,9 +204,14 @@ class bg_palette_fade_loop_action : public loop_value_template_action<bg_palette
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_fade_loop_action(BgPalettePtr&& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_intensity)
+    bg_palette_fade_loop_action(const bg_palette_ptr& palette, int duration_frames, fixed final_intensity) :
+        loop_value_template_action(palette, duration_frames, final_intensity)
+    {
+        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    bg_palette_fade_loop_action(bg_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
+        loop_value_template_action(move(palette), duration_frames, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -204,9 +233,14 @@ class bg_palette_fade_toggle_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_fade_toggle_action(BgPalettePtr&& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(forward<BgPalettePtr>(palette), duration_frames, new_intensity)
+    bg_palette_fade_toggle_action(const bg_palette_ptr& palette, int duration_frames, fixed new_intensity) :
+        toggle_value_template_action(palette, duration_frames, new_intensity)
+    {
+        BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+    }
+
+    bg_palette_fade_toggle_action(bg_palette_ptr&& palette, int duration_frames, fixed new_intensity) :
+        toggle_value_template_action(move(palette), duration_frames, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -246,9 +280,14 @@ class bg_palette_rotate_by_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_rotate_by_action(BgPalettePtr&& palette, int duration_frames, int delta_count) :
-        cyclic_duration_by_value_template_action(forward<BgPalettePtr>(palette), duration_frames, delta_count, 0, 0)
+    bg_palette_rotate_by_action(const bg_palette_ptr& palette, int duration_frames, int delta_count) :
+        cyclic_duration_by_value_template_action(palette, duration_frames, delta_count, 0, 0)
+    {
+        set_after_max_property(this->palette().colors_count() - 1);
+    }
+
+    bg_palette_rotate_by_action(bg_palette_ptr&& palette, int duration_frames, int delta_count) :
+        cyclic_duration_by_value_template_action(move(palette), duration_frames, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
@@ -269,12 +308,18 @@ class bg_palette_rotate_to_action : public to_value_template_action<bg_palette_p
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_rotate_to_action(BgPalettePtr&& palette, int duration_frames, int final_count) :
-        to_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_count)
+    bg_palette_rotate_to_action(const bg_palette_ptr& palette, int duration_frames, int final_count) :
+        to_value_template_action(palette, duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", palette().colors_count());
+        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", value().colors_count());
+    }
+
+    bg_palette_rotate_to_action(bg_palette_ptr&& palette, int duration_frames, int final_count) :
+        to_value_template_action(move(palette), duration_frames, final_count)
+    {
+        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", value().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const
@@ -293,12 +338,18 @@ class bg_palette_rotate_loop_action : public loop_value_template_action<bg_palet
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_rotate_loop_action(BgPalettePtr&& palette, int duration_frames, int final_count) :
-        loop_value_template_action(forward<BgPalettePtr>(palette), duration_frames, final_count)
+    bg_palette_rotate_loop_action(const bg_palette_ptr& palette, int duration_frames, int final_count) :
+        loop_value_template_action(palette, duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", palette().colors_count());
+        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", value().colors_count());
+    }
+
+    bg_palette_rotate_loop_action(bg_palette_ptr&& palette, int duration_frames, int final_count) :
+        loop_value_template_action(move(palette), duration_frames, final_count)
+    {
+        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", value().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const
@@ -318,12 +369,18 @@ class bg_palette_rotate_toggle_action :
 {
 
 public:
-    template<class BgPalettePtr>
-    bg_palette_rotate_toggle_action(BgPalettePtr&& palette, int duration_frames, int new_count) :
-        toggle_value_template_action(forward<BgPalettePtr>(palette), duration_frames, new_count)
+    bg_palette_rotate_toggle_action(const bg_palette_ptr& palette, int duration_frames, int new_count) :
+        toggle_value_template_action(palette, duration_frames, new_count)
     {
-        BTN_ASSERT(abs(new_count) < palette().colors_count() - 1,
-                   "Invalid new count: ", new_count, " - ", palette().colors_count());
+        BTN_ASSERT(abs(new_count) < value().colors_count() - 1,
+                   "Invalid new count: ", new_count, " - ", value().colors_count());
+    }
+
+    bg_palette_rotate_toggle_action(bg_palette_ptr&& palette, int duration_frames, int new_count) :
+        toggle_value_template_action(move(palette), duration_frames, new_count)
+    {
+        BTN_ASSERT(abs(new_count) < value().colors_count() - 1,
+                   "Invalid new count: ", new_count, " - ", value().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const

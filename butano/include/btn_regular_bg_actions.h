@@ -31,15 +31,23 @@ class regular_bg_move_by_action :
 {
 
 public:
-    template<class RegularBgPtr>
-    regular_bg_move_by_action(RegularBgPtr&& bg, fixed delta_x, fixed delta_y) :
-        by_value_template_action(forward<RegularBgPtr>(bg), fixed_point(delta_x, delta_y))
+    regular_bg_move_by_action(const regular_bg_ptr& bg, fixed delta_x, fixed delta_y) :
+        by_value_template_action(bg, fixed_point(delta_x, delta_y))
     {
     }
 
-    template<class RegularBgPtr>
-    regular_bg_move_by_action(RegularBgPtr&& bg, const fixed_point& delta_position) :
-        by_value_template_action(forward<RegularBgPtr>(bg), delta_position)
+    regular_bg_move_by_action(regular_bg_ptr&& bg, fixed delta_x, fixed delta_y) :
+        by_value_template_action(move(bg), fixed_point(delta_x, delta_y))
+    {
+    }
+
+    regular_bg_move_by_action(const regular_bg_ptr& bg, const fixed_point& delta_position) :
+        by_value_template_action(bg, delta_position)
+    {
+    }
+
+    regular_bg_move_by_action(regular_bg_ptr&& bg, const fixed_point& delta_position) :
+        by_value_template_action(move(bg), delta_position)
     {
     }
 
@@ -59,15 +67,23 @@ class regular_bg_move_to_action : public to_value_template_action<regular_bg_ptr
 {
 
 public:
-    template<class RegularBgPtr>
-    regular_bg_move_to_action(RegularBgPtr&& bg, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
+    regular_bg_move_to_action(const regular_bg_ptr& bg, int duration_frames, fixed final_x, fixed final_y) :
+        to_value_template_action(bg, duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    template<class RegularBgPtr>
-    regular_bg_move_to_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
+    regular_bg_move_to_action(regular_bg_ptr&& bg, int duration_frames, fixed final_x, fixed final_y) :
+        to_value_template_action(move(bg), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    regular_bg_move_to_action(const regular_bg_ptr& bg, int duration_frames, const fixed_point& final_position) :
+        to_value_template_action(bg, duration_frames, final_position)
+    {
+    }
+
+    regular_bg_move_to_action(regular_bg_ptr&& bg, int duration_frames, const fixed_point& final_position) :
+        to_value_template_action(move(bg), duration_frames, final_position)
     {
     }
 
@@ -87,15 +103,23 @@ class regular_bg_move_loop_action : public loop_value_template_action<regular_bg
 {
 
 public:
-    template<class RegularBgPtr>
-    regular_bg_move_loop_action(RegularBgPtr&& bg, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(final_x, final_y))
+    regular_bg_move_loop_action(const regular_bg_ptr& bg, int duration_frames, fixed final_x, fixed final_y) :
+        loop_value_template_action(bg, duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    template<class RegularBgPtr>
-    regular_bg_move_loop_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(forward<RegularBgPtr>(bg), duration_frames, final_position)
+    regular_bg_move_loop_action(regular_bg_ptr&& bg, int duration_frames, fixed final_x, fixed final_y) :
+        loop_value_template_action(move(bg), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    regular_bg_move_loop_action(const regular_bg_ptr& bg, int duration_frames, const fixed_point& final_position) :
+        loop_value_template_action(bg, duration_frames, final_position)
+    {
+    }
+
+    regular_bg_move_loop_action(regular_bg_ptr&& bg, int duration_frames, const fixed_point& final_position) :
+        loop_value_template_action(move(bg), duration_frames, final_position)
     {
     }
 
@@ -116,15 +140,23 @@ class regular_bg_move_toggle_action :
 {
 
 public:
-    template<class RegularBgPtr>
-    regular_bg_move_toggle_action(RegularBgPtr&& bg, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(forward<RegularBgPtr>(bg), duration_frames, fixed_point(new_x, new_y))
+    regular_bg_move_toggle_action(const regular_bg_ptr& bg, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(bg, duration_frames, fixed_point(new_x, new_y))
     {
     }
 
-    template<class RegularBgPtr>
-    regular_bg_move_toggle_action(RegularBgPtr&& bg, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(forward<RegularBgPtr>(bg), duration_frames, new_position)
+    regular_bg_move_toggle_action(regular_bg_ptr&& bg, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(move(bg), duration_frames, fixed_point(new_x, new_y))
+    {
+    }
+
+    regular_bg_move_toggle_action(const regular_bg_ptr& bg, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(bg, duration_frames, new_position)
+    {
+    }
+
+    regular_bg_move_toggle_action(regular_bg_ptr&& bg, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(move(bg), duration_frames, new_position)
     {
     }
 

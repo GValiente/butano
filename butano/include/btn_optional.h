@@ -73,11 +73,16 @@ public:
         }
     }
 
-    template<typename OtherType>
-    optional(OtherType&& value) :
+    optional(const Type& value) :
         _valid(true)
     {
-        ::new(_storage) Type(forward<OtherType>(value));
+        ::new(_storage) Type(value);
+    }
+
+    optional(Type&& value) :
+        _valid(true)
+    {
+        ::new(_storage) Type(move(value));
     }
 
     ~optional()
@@ -123,11 +128,18 @@ public:
         return *this;
     }
 
-    template<typename OtherType>
-    optional& operator=(OtherType&& value)
+    optional& operator=(const Type& value)
     {
         _clean();
-        ::new(_storage) Type(forward<OtherType>(value));
+        ::new(_storage) Type(value);
+        _valid = true;
+        return *this;
+    }
+
+    optional& operator=(Type&& value)
+    {
+        _clean();
+        ::new(_storage) Type(move(value));
         _valid = true;
         return *this;
     }
@@ -218,10 +230,14 @@ public:
         return _value_impl();
     }
 
-    template<typename OtherType>
-    [[nodiscard]] Type value_or(OtherType&& default_value) const
+    [[nodiscard]] Type value_or(const Type& default_value) const
     {
-        return _valid ? _value_impl() : forward<OtherType>(default_value);
+        return _valid ? _value_impl() : default_value;
+    }
+
+    [[nodiscard]] Type value_or(Type&& default_value) const
+    {
+        return _valid ? _value_impl() : move(default_value);
     }
 
     void reset()

@@ -23,9 +23,15 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    by_value_template_action(ValueType&& value, const Property& delta_property) :
-        _value(forward<ValueType>(value)),
+    by_value_template_action(const Value& value, const Property& delta_property) :
+        _value(value),
+        _delta_property(delta_property),
+        _initial_property(PropertyManager::get(_value))
+    {
+    }
+
+    by_value_template_action(Value&& value, const Property& delta_property) :
+        _value(move(value)),
         _delta_property(delta_property),
         _initial_property(PropertyManager::get(_value))
     {
@@ -75,10 +81,19 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    cyclic_by_value_template_action(ValueType&& value, const Property& delta_property, const Property& min_property,
+    cyclic_by_value_template_action(const Value& value, const Property& delta_property, const Property& min_property,
                                     const Property& after_max_property) :
-        _value(forward<ValueType>(value)),
+        _value(value),
+        _delta_property(delta_property),
+        _min_property(min_property),
+        _after_max_property(after_max_property),
+        _initial_property(PropertyManager::get(_value))
+    {
+    }
+
+    cyclic_by_value_template_action(Value&& value, const Property& delta_property, const Property& min_property,
+                                    const Property& after_max_property) :
+        _value(move(value)),
         _delta_property(delta_property),
         _min_property(min_property),
         _after_max_property(after_max_property),
@@ -145,9 +160,17 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    duration_by_value_template_action(ValueType&& value, int duration_frames, const Property& delta_property) :
-        _value(forward<ValueType>(value)),
+    duration_by_value_template_action(const Value& value, int duration_frames, const Property& delta_property) :
+        _value(value),
+        _delta_property(delta_property),
+        _initial_property(PropertyManager::get(_value)),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    duration_by_value_template_action(Value&& value, int duration_frames, const Property& delta_property) :
+        _value(move(value)),
         _delta_property(delta_property),
         _initial_property(PropertyManager::get(_value)),
         _duration_frames(duration_frames)
@@ -214,10 +237,21 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    cyclic_duration_by_value_template_action(ValueType&& value, int duration_frames, const Property& delta_property,
+    cyclic_duration_by_value_template_action(const Value& value, int duration_frames, const Property& delta_property,
                                              const Property& min_property, const Property& after_max_property) :
-        _value(forward<ValueType>(value)),
+        _value(value),
+        _delta_property(delta_property),
+        _min_property(min_property),
+        _after_max_property(after_max_property),
+        _initial_property(PropertyManager::get(_value)),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    cyclic_duration_by_value_template_action(Value&& value, int duration_frames, const Property& delta_property,
+                                             const Property& min_property, const Property& after_max_property) :
+        _value(move(value)),
         _delta_property(delta_property),
         _min_property(min_property),
         _after_max_property(after_max_property),
@@ -296,9 +330,17 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    to_value_template_action(ValueType&& value, int duration_frames, const Property& final_property) :
-        _value(forward<ValueType>(value)),
+    to_value_template_action(const Value& value, int duration_frames, const Property& final_property) :
+        _value(value),
+        _final_property(final_property),
+        _initial_property(PropertyManager::get(_value)),
+        _delta_property(_calculate_delta_property(duration_frames)),
+        _duration_frames(duration_frames)
+    {
+    }
+
+    to_value_template_action(Value&& value, int duration_frames, const Property& final_property) :
+        _value(move(value)),
         _final_property(final_property),
         _initial_property(PropertyManager::get(_value)),
         _delta_property(_calculate_delta_property(duration_frames)),
@@ -385,9 +427,17 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    loop_value_template_action(ValueType&& value, int duration_frames, const Property& final_property) :
-        _value(forward<ValueType>(value)),
+    loop_value_template_action(const Value& value, int duration_frames, const Property& final_property) :
+        _value(value),
+        _final_property(final_property),
+        _initial_property(PropertyManager::get(_value)),
+        _delta_property(_calculate_delta_property(duration_frames)),
+        _duration_frames(duration_frames)
+    {
+    }
+
+    loop_value_template_action(Value&& value, int duration_frames, const Property& final_property) :
+        _value(move(value)),
         _final_property(final_property),
         _initial_property(PropertyManager::get(_value)),
         _delta_property(_calculate_delta_property(duration_frames)),
@@ -464,9 +514,17 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    toggle_value_template_action(ValueType&& value, int duration_frames, const Property& new_property) :
-        _value(forward<ValueType>(value)),
+    toggle_value_template_action(const Value& value, int duration_frames, const Property& new_property) :
+        _value(value),
+        _initial_property(PropertyManager::get(_value)),
+        _new_property(new_property),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    toggle_value_template_action(Value&& value, int duration_frames, const Property& new_property) :
+        _value(move(value)),
         _initial_property(PropertyManager::get(_value)),
         _new_property(new_property),
         _duration_frames(duration_frames)
@@ -533,10 +591,17 @@ public:
     }
 
 protected:
-    template<class ValueType>
-    bool_toggle_value_template_action(ValueType&& value, int duration_frames) :
+    bool_toggle_value_template_action(const Value& value, int duration_frames) :
         _initial_property(PropertyManager::get(value)),
-        _value(forward<ValueType>(value)),
+        _value(value),
+        _duration_frames(duration_frames)
+    {
+        BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);
+    }
+
+    bool_toggle_value_template_action(Value&& value, int duration_frames) :
+        _initial_property(PropertyManager::get(value)),
+        _value(move(value)),
         _duration_frames(duration_frames)
     {
         BTN_ASSERT(duration_frames > 0, "Invalid duration frames: ", duration_frames);

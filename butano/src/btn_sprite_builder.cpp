@@ -24,6 +24,18 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
                item.tiles_item().graphics_count());
 }
 
+sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles_ptr,
+                               sprite_palette_ptr palette_ptr) :
+    _tiles_ptr(move(tiles_ptr)),
+    _palette_ptr(move(palette_ptr)),
+    _shape_size(shape_size),
+    _graphics_index(0)
+{
+    BTN_ASSERT(_tiles_ptr->tiles_count() == _shape_size.tiles_count(_palette_ptr->bpp_mode()),
+               "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
+               _shape_size.tiles_count(_palette_ptr->bpp_mode()));
+}
+
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 {
     if(_affine_mat_ptr)

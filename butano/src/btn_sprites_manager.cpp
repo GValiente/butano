@@ -6,6 +6,7 @@
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
 #include "btn_third_sprite_attributes.h"
+#include "btn_second_sprite_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn::sprites_manager
@@ -872,6 +873,54 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->identity())
     {
         _remove_affine_mat(*item);
+    }
+}
+
+second_sprite_attributes second_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::handle& handle = item->handle;
+    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat_ptr;
+    sprite_size size = hw::sprites::size(handle);
+    bool horizontal_flip;
+    bool vertical_flip;
+
+    if(affine_mat)
+    {
+        horizontal_flip = false;
+        vertical_flip = false;
+    }
+    else
+    {
+        horizontal_flip = hw::sprites::horizontal_flip(handle);
+        vertical_flip = hw::sprites::vertical_flip(handle);
+    }
+
+    return second_sprite_attributes(item->position.x(), size, horizontal_flip, vertical_flip, affine_mat);
+}
+
+void set_second_attributes(id_type id, const second_sprite_attributes& second_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = second_attributes.affine_mat())
+    {
+        set_affine_mat(id, affine_mat);
+    }
+    else
+    {
+        if(item->affine_mat_ptr)
+        {
+            item->affine_mat_ptr->set_horizontal_flip(second_attributes.horizontal_flip());
+            item->affine_mat_ptr->set_vertical_flip(second_attributes.vertical_flip());
+        }
+        else
+        {
+            hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
+            hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
+            _update_handle(*item);
+        }
     }
 }
 

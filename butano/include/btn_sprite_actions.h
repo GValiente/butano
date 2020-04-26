@@ -35,15 +35,23 @@ class sprite_move_by_action : public by_value_template_action<sprite_ptr, fixed_
 {
 
 public:
-    template<class SpritePtr>
-    sprite_move_by_action(SpritePtr&& sprite, fixed delta_x, fixed delta_y) :
-        by_value_template_action(forward<SpritePtr>(sprite), fixed_point(delta_x, delta_y))
+    sprite_move_by_action(const sprite_ptr& sprite, fixed delta_x, fixed delta_y) :
+        by_value_template_action(sprite, fixed_point(delta_x, delta_y))
     {
     }
 
-    template<class SpritePtr>
-    sprite_move_by_action(SpritePtr&& sprite, const fixed_point& delta_position) :
-        by_value_template_action(forward<SpritePtr>(sprite), delta_position)
+    sprite_move_by_action(sprite_ptr&& sprite, fixed delta_x, fixed delta_y) :
+        by_value_template_action(move(sprite), fixed_point(delta_x, delta_y))
+    {
+    }
+
+    sprite_move_by_action(const sprite_ptr& sprite, const fixed_point& delta_position) :
+        by_value_template_action(sprite, delta_position)
+    {
+    }
+
+    sprite_move_by_action(sprite_ptr&& sprite, const fixed_point& delta_position) :
+        by_value_template_action(move(sprite), delta_position)
     {
     }
 
@@ -63,15 +71,23 @@ class sprite_move_to_action : public to_value_template_action<sprite_ptr, fixed_
 {
 
 public:
-    template<class SpritePtr>
-    sprite_move_to_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
+    sprite_move_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        to_value_template_action(sprite, duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    template<class SpritePtr>
-    sprite_move_to_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
+    sprite_move_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        to_value_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    sprite_move_to_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& final_position) :
+        to_value_template_action(sprite, duration_frames, final_position)
+    {
+    }
+
+    sprite_move_to_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& final_position) :
+        to_value_template_action(move(sprite), duration_frames, final_position)
     {
     }
 
@@ -91,15 +107,23 @@ class sprite_move_loop_action : public loop_value_template_action<sprite_ptr, fi
 {
 
 public:
-    template<class SpritePtr>
-    sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(final_x, final_y))
+    sprite_move_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        loop_value_template_action(sprite, duration_frames, fixed_point(final_x, final_y))
     {
     }
 
-    template<class SpritePtr>
-    sprite_move_loop_action(SpritePtr&& sprite, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_position)
+    sprite_move_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
+        loop_value_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    {
+    }
+
+    sprite_move_loop_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& final_position) :
+        loop_value_template_action(sprite, duration_frames, final_position)
+    {
+    }
+
+    sprite_move_loop_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& final_position) :
+        loop_value_template_action(move(sprite), duration_frames, final_position)
     {
     }
 
@@ -119,15 +143,23 @@ class sprite_move_toggle_action : public toggle_value_template_action<sprite_ptr
 {
 
 public:
-    template<class SpritePtr>
-    sprite_move_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, fixed_point(new_x, new_y))
+    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(sprite, duration_frames, fixed_point(new_x, new_y))
     {
     }
 
-    template<class SpritePtr>
-    sprite_move_toggle_action(SpritePtr&& sprite, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_position)
+    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_x, fixed new_y) :
+        toggle_value_template_action(move(sprite), duration_frames, fixed_point(new_x, new_y))
+    {
+    }
+
+    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(sprite, duration_frames, new_position)
+    {
+    }
+
+    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& new_position) :
+        toggle_value_template_action(move(sprite), duration_frames, new_position)
     {
     }
 
@@ -165,9 +197,13 @@ class sprite_rotate_by_action : public cyclic_by_value_template_action<sprite_pt
 {
 
 public:
-    template<class SpritePtr>
-    sprite_rotate_by_action(SpritePtr&& sprite, fixed delta_rotation_angle) :
-        cyclic_by_value_template_action(forward<SpritePtr>(sprite), delta_rotation_angle, 0, 360)
+    sprite_rotate_by_action(const sprite_ptr& sprite, fixed delta_rotation_angle) :
+        cyclic_by_value_template_action(sprite, delta_rotation_angle, 0, 360)
+    {
+    }
+
+    sprite_rotate_by_action(sprite_ptr&& sprite, fixed delta_rotation_angle) :
+        cyclic_by_value_template_action(move(sprite), delta_rotation_angle, 0, 360)
     {
     }
 
@@ -187,9 +223,15 @@ class sprite_rotate_to_action : public to_value_template_action<sprite_ptr, fixe
 {
 
 public:
-    template<class SpritePtr>
-    sprite_rotate_to_action(SpritePtr&& sprite, int duration_frames, fixed final_rotation_angle) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_rotation_angle)
+    sprite_rotate_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_rotation_angle) :
+        to_value_template_action(sprite, duration_frames, final_rotation_angle)
+    {
+        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+                   "Invalid final rotation angle: ", final_rotation_angle);
+    }
+
+    sprite_rotate_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_rotation_angle) :
+        to_value_template_action(move(sprite), duration_frames, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
@@ -211,9 +253,15 @@ class sprite_rotate_loop_action : public loop_value_template_action<sprite_ptr, 
 {
 
 public:
-    template<class SpritePtr>
-    sprite_rotate_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_rotation_angle) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_rotation_angle)
+    sprite_rotate_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_rotation_angle) :
+        loop_value_template_action(sprite, duration_frames, final_rotation_angle)
+    {
+        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+                   "Invalid final rotation angle: ", final_rotation_angle);
+    }
+
+    sprite_rotate_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_rotation_angle) :
+        loop_value_template_action(move(sprite), duration_frames, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
@@ -235,9 +283,15 @@ class sprite_rotate_toggle_action : public toggle_value_template_action<sprite_p
 {
 
 public:
-    template<class SpritePtr>
-    sprite_rotate_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_rotation_angle) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_rotation_angle)
+    sprite_rotate_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_rotation_angle) :
+        toggle_value_template_action(sprite, duration_frames, new_rotation_angle)
+    {
+        BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
+                   "Invalid new rotation angle: ", new_rotation_angle);
+    }
+
+    sprite_rotate_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_rotation_angle) :
+        toggle_value_template_action(move(sprite), duration_frames, new_rotation_angle)
     {
         BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
                    "Invalid new rotation angle: ", new_rotation_angle);
@@ -277,9 +331,14 @@ class sprite_scale_x_to_action : public to_value_template_action<sprite_ptr, fix
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_x_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+    sprite_scale_x_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_x) :
+        to_value_template_action(sprite, duration_frames, final_scale_x)
+    {
+        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+    }
+
+    sprite_scale_x_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_x) :
+        to_value_template_action(move(sprite), duration_frames, final_scale_x)
     {
         BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
     }
@@ -300,9 +359,14 @@ class sprite_scale_x_loop_action : public loop_value_template_action<sprite_ptr,
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_x_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_x) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_x)
+    sprite_scale_x_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_x) :
+        loop_value_template_action(sprite, duration_frames, final_scale_x)
+    {
+        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+    }
+
+    sprite_scale_x_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_x) :
+        loop_value_template_action(move(sprite), duration_frames, final_scale_x)
     {
         BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
     }
@@ -323,9 +387,14 @@ class sprite_scale_x_toggle_action : public toggle_value_template_action<sprite_
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_x_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale_x) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale_x)
+    sprite_scale_x_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale_x) :
+        toggle_value_template_action(sprite, duration_frames, new_scale_x)
+    {
+        BTN_ASSERT(new_scale_x > 0, "Invalid new scale x: ", new_scale_x);
+    }
+
+    sprite_scale_x_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale_x) :
+        toggle_value_template_action(move(sprite), duration_frames, new_scale_x)
     {
         BTN_ASSERT(new_scale_x > 0, "Invalid new scale x: ", new_scale_x);
     }
@@ -364,9 +433,14 @@ class sprite_scale_y_to_action : public to_value_template_action<sprite_ptr, fix
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_y_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+    sprite_scale_y_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_y) :
+        to_value_template_action(sprite, duration_frames, final_scale_y)
+    {
+        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+    }
+
+    sprite_scale_y_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_y) :
+        to_value_template_action(move(sprite), duration_frames, final_scale_y)
     {
         BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
     }
@@ -387,9 +461,14 @@ class sprite_scale_y_loop_action : public loop_value_template_action<sprite_ptr,
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_y_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale_y) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale_y)
+    sprite_scale_y_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_y) :
+        loop_value_template_action(sprite, duration_frames, final_scale_y)
+    {
+        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+    }
+
+    sprite_scale_y_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_y) :
+        loop_value_template_action(move(sprite), duration_frames, final_scale_y)
     {
         BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
     }
@@ -410,9 +489,14 @@ class sprite_scale_y_toggle_action : public toggle_value_template_action<sprite_
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_y_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale_y) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale_y)
+    sprite_scale_y_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale_y) :
+        toggle_value_template_action(sprite, duration_frames, new_scale_y)
+    {
+        BTN_ASSERT(new_scale_y > 0, "Invalid new scale y: ", new_scale_y);
+    }
+
+    sprite_scale_y_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale_y) :
+        toggle_value_template_action(move(sprite), duration_frames, new_scale_y)
     {
         BTN_ASSERT(new_scale_y > 0, "Invalid new scale y: ", new_scale_y);
     }
@@ -451,9 +535,14 @@ class sprite_scale_to_action : public to_value_template_action<sprite_ptr, fixed
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_to_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
-        to_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+    sprite_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale) :
+        to_value_template_action(sprite, duration_frames, final_scale)
+    {
+        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+    }
+
+    sprite_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale) :
+        to_value_template_action(move(sprite), duration_frames, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
@@ -474,9 +563,14 @@ class sprite_scale_loop_action : public loop_value_template_action<sprite_ptr, f
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_loop_action(SpritePtr&& sprite, int duration_frames, fixed final_scale) :
-        loop_value_template_action(forward<SpritePtr>(sprite), duration_frames, final_scale)
+    sprite_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale) :
+        loop_value_template_action(sprite, duration_frames, final_scale)
+    {
+        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+    }
+
+    sprite_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale) :
+        loop_value_template_action(move(sprite), duration_frames, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
@@ -497,9 +591,14 @@ class sprite_scale_toggle_action : public toggle_value_template_action<sprite_pt
 {
 
 public:
-    template<class SpritePtr>
-    sprite_scale_toggle_action(SpritePtr&& sprite, int duration_frames, fixed new_scale) :
-        toggle_value_template_action(forward<SpritePtr>(sprite), duration_frames, new_scale)
+    sprite_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale) :
+        toggle_value_template_action(sprite, duration_frames, new_scale)
+    {
+        BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
+    }
+
+    sprite_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale) :
+        toggle_value_template_action(move(sprite), duration_frames, new_scale)
     {
         BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
     }
@@ -524,36 +623,60 @@ class sprite_animate_action
     static_assert(Size > 0);
 
 public:
-    template<class SpritePtr>
     [[nodiscard]] static sprite_animate_action once(
-            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, false, graphics_indexes);
+        return sprite_animate_action(sprite, wait_frames, tiles_item, false, graphics_indexes);
     }
 
-    template<class SpritePtr>
     [[nodiscard]] static sprite_animate_action once(
-            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), false,
-                                     graphics_indexes);
-    }
-
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_animate_action forever(
-            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, true, graphics_indexes);
+        return sprite_animate_action(move(sprite), wait_frames, tiles_item, false, graphics_indexes);
     }
 
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_animate_action forever(
-            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const span<const uint16_t>& graphics_indexes)
+    [[nodiscard]] static sprite_animate_action once(
+            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), true,
-                                     graphics_indexes);
+        return sprite_animate_action(sprite, wait_frames, item.tiles_item(), false, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_animate_action once(
+            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_animate_action forever(
+            const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_animate_action(sprite, wait_frames, tiles_item, true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_animate_action forever(
+            sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_animate_action forever(
+            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_animate_action(sprite, wait_frames, item.tiles_item(), true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_animate_action forever(
+            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
     }
 
     void reset()
@@ -622,12 +745,24 @@ private:
     uint16_t _current_graphics_index_index = 0;
     uint16_t _current_wait_frames = 0;
 
-    template<class SpritePtr>
-    sprite_animate_action(SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
+    sprite_animate_action(const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
                           const span<const uint16_t>& graphics_indexes) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
-        _sprite(forward<SpritePtr>(sprite)),
+        _sprite(sprite),
+        _tiles_item(tiles_item)
+    {
+        BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
+        BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
+        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= Size, "Invalid graphics indexes: ",
+                   graphics_indexes.size());
+    }
+
+    sprite_animate_action(sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
+                          const span<const uint16_t>& graphics_indexes) :
+        _forever(forever),
+        _wait_frames(uint16_t(wait_frames)),
+        _sprite(move(sprite)),
         _tiles_item(tiles_item)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
@@ -637,39 +772,75 @@ private:
     }
 };
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
-        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+        const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
-                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+                sprite, wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
-        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
-                forward<SpritePtr>(sprite), wait_frames, item,
+                move(sprite), wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
-        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_once(
+        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
 {
-    return sprite_animate_action<sizeof...(Args)>::forever(
-                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+    return sprite_animate_action<sizeof...(Args)>::once(
+                sprite, wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_once(
+        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_animate_action<sizeof...(Args)>::once(
+                move(sprite), wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_forever(
-        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::forever(
-                forward<SpritePtr>(sprite), wait_frames, item,
+                sprite, wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_forever(
+        sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+{
+    return sprite_animate_action<sizeof...(Args)>::forever(
+                move(sprite), wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_forever(
+        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_animate_action<sizeof...(Args)>::forever(
+                sprite, wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_animate_action_forever(
+        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_animate_action<sizeof...(Args)>::forever(
+                move(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
@@ -682,52 +853,84 @@ class sprite_cached_animate_action
     static_assert(Size > 0);
 
 public:
-    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action once(
-            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, false,
-                                            graphics_indexes);
+        return sprite_cached_animate_action(sprite, wait_frames, tiles_item, false, graphics_indexes);
     }
 
-    template<class SpritePtr>
     [[nodiscard]] static sprite_cached_animate_action once(
-            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), false,
-                                            graphics_indexes);
-    }
-
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_cached_animate_action once(
-            SpritePtr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
-    {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, false, tiles_ptrs);
-    }
-
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_cached_animate_action forever(
-            SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, tiles_item, true,
-                                            graphics_indexes);
+        return sprite_cached_animate_action(move(sprite), wait_frames, tiles_item, false, graphics_indexes);
     }
 
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_cached_animate_action forever(
-            SpritePtr&& sprite, int wait_frames, const sprite_item& item, const span<const uint16_t>& graphics_indexes)
+    [[nodiscard]] static sprite_cached_animate_action once(
+            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, item.tiles_item(), true,
-                                            graphics_indexes);
+        return sprite_cached_animate_action(sprite, wait_frames, item.tiles_item(), false, graphics_indexes);
     }
 
-    template<class SpritePtr>
-    [[nodiscard]] static sprite_cached_animate_action forever(
-            SpritePtr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+    [[nodiscard]] static sprite_cached_animate_action once(
+            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
     {
-        return sprite_cached_animate_action(forward<SpritePtr>(sprite), wait_frames, true, tiles_ptrs);
+        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action once(
+            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+    {
+        return sprite_cached_animate_action(sprite, wait_frames, false, tiles_ptrs);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action once(
+            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+    {
+        return sprite_cached_animate_action(move(sprite), wait_frames, false, tiles_ptrs);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_cached_animate_action(sprite, wait_frames, tiles_item, true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_cached_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_cached_animate_action(sprite, wait_frames, item.tiles_item(), true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
+            const span<const uint16_t>& graphics_indexes)
+    {
+        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+    {
+        return sprite_cached_animate_action(sprite, wait_frames, true, tiles_ptrs);
+    }
+
+    [[nodiscard]] static sprite_cached_animate_action forever(
+            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+    {
+        return sprite_cached_animate_action(move(sprite), wait_frames, true, tiles_ptrs);
     }
 
     void reset()
@@ -790,12 +993,11 @@ private:
     uint16_t _current_tiles_ptr_index = 0;
     uint16_t _current_wait_frames = 0;
 
-    template<class SpritePtr>
-    sprite_cached_animate_action(SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+    sprite_cached_animate_action(const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
                                  bool forever, const span<const uint16_t>& graphics_indexes) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
-        _sprite(forward<SpritePtr>(sprite))
+        _sprite(sprite)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
@@ -808,11 +1010,44 @@ private:
         }
     }
 
-    template<class SpritePtr>
-    sprite_cached_animate_action(SpritePtr&& sprite, int wait_frames, bool forever, span<sprite_tiles_ptr> tiles_ptrs) :
+    sprite_cached_animate_action(sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
+                                 bool forever, const span<const uint16_t>& graphics_indexes) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
-        _sprite(forward<SpritePtr>(sprite))
+        _sprite(move(sprite))
+    {
+        BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
+        BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
+        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= Size, "Invalid graphics indexes: ",
+                   graphics_indexes.size());
+
+        for(int graphics_index : graphics_indexes)
+        {
+            _tiles_ptrs.push_back(tiles_item.create_tiles(graphics_index));
+        }
+    }
+
+    sprite_cached_animate_action(const sprite_ptr& sprite, int wait_frames, bool forever,
+                                 span<sprite_tiles_ptr> tiles_ptrs) :
+        _forever(forever),
+        _wait_frames(uint16_t(wait_frames)),
+        _sprite(sprite)
+    {
+        BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
+        BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
+        BTN_ASSERT(tiles_ptrs.size() > 1 && tiles_ptrs.size() <= Size, "Invalid tiles ptrs: ", tiles_ptrs.size());
+
+        for(sprite_tiles_ptr& tiles_ptr : tiles_ptrs)
+        {
+            _tiles_ptrs.push_back(move(tiles_ptr));
+        }
+    }
+
+    sprite_cached_animate_action(sprite_ptr&& sprite, int wait_frames, bool forever,
+                                 span<sprite_tiles_ptr> tiles_ptrs) :
+        _forever(forever),
+        _wait_frames(uint16_t(wait_frames)),
+        _sprite(move(sprite))
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
@@ -825,39 +1060,75 @@ private:
     }
 };
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+        const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
-                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+                sprite, wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
-                forward<SpritePtr>(sprite), wait_frames, item,
+                move(sprite), wait_frames, tiles_item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        SpritePtr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
+        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
 {
-    return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                forward<SpritePtr>(sprite), wait_frames, tiles_item,
+    return sprite_cached_animate_action<sizeof...(Args)>::once(
+                sprite, wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<class SpritePtr, typename ...Args>
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
+        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_cached_animate_action<sizeof...(Args)>::once(
+                move(sprite), wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template< typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        SpritePtr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+        const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                forward<SpritePtr>(sprite), wait_frames, item,
+                sprite, wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template< typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+        sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
+{
+    return sprite_cached_animate_action<sizeof...(Args)>::forever(
+                move(sprite), wait_frames, tiles_item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_cached_animate_action<sizeof...(Args)>::forever(
+                sprite, wait_frames, item,
+                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
+}
+
+template<typename ...Args>
+[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
+{
+    return sprite_cached_animate_action<sizeof...(Args)>::forever(
+                move(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 

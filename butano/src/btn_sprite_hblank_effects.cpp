@@ -51,8 +51,8 @@ namespace
             return hw::sprites::third_attributes_register(*hw_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, bool first_write, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany& target_last_value, bool first_write, int,
+                                 const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
             const sprite_shape_size& last_value = target_last_value.value<sprite_shape_size>();
             auto third_sprite_attributes_ptr = reinterpret_cast<const third_sprite_attributes*>(input_values_ptr);

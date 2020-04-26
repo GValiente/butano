@@ -20,9 +20,13 @@ public:
     {
     }
 
-    template<class RegularBgMapPtr>
-    explicit regular_bg_builder(RegularBgMapPtr&& map_ptr) :
-        _map_ptr(forward<RegularBgMapPtr>(map_ptr))
+    explicit regular_bg_builder(const regular_bg_map_ptr& map_ptr) :
+        _map_ptr(map_ptr)
+    {
+    }
+
+    explicit regular_bg_builder(regular_bg_map_ptr&& map_ptr) :
+        _map_ptr(move(map_ptr))
     {
     }
 

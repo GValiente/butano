@@ -18,10 +18,14 @@ public:
         return _tiles_ptr;
     }
 
-    template<class SpriteTilesPtr>
-    void set_tiles(SpriteTilesPtr&& tiles_ptr)
+    void set_tiles(const sprite_tiles_ptr& tiles_ptr)
     {
-        _tiles_ptr = forward<SpriteTilesPtr>(tiles_ptr);
+        _tiles_ptr = tiles_ptr;
+    }
+
+    void set_tiles(sprite_tiles_ptr&& tiles_ptr)
+    {
+        _tiles_ptr = move(tiles_ptr);
     }
 
     [[nodiscard]] const sprite_palette_ptr& palette() const
@@ -29,10 +33,14 @@ public:
         return _palette_ptr;
     }
 
-    template<class SpritePalettePtr>
-    void set_palette(SpritePalettePtr&& palette_ptr)
+    void set_palette(const sprite_palette_ptr& palette_ptr)
     {
-        _palette_ptr = forward<SpritePalettePtr>(palette_ptr);
+        _palette_ptr = palette_ptr;
+    }
+
+    void set_palette(sprite_palette_ptr&& palette_ptr)
+    {
+        _palette_ptr = move(palette_ptr);
     }
 
     [[nodiscard]] int bg_priority() const

@@ -311,15 +311,15 @@ public:
     bg_palette_rotate_to_action(const bg_palette_ptr& palette, int duration_frames, int final_count) :
         to_value_template_action(palette, duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
     bg_palette_rotate_to_action(bg_palette_ptr&& palette, int duration_frames, int final_count) :
         to_value_template_action(move(palette), duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const
@@ -341,15 +341,15 @@ public:
     bg_palette_rotate_loop_action(const bg_palette_ptr& palette, int duration_frames, int final_count) :
         loop_value_template_action(palette, duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
     bg_palette_rotate_loop_action(bg_palette_ptr&& palette, int duration_frames, int final_count) :
         loop_value_template_action(move(palette), duration_frames, final_count)
     {
-        BTN_ASSERT(abs(final_count) < value().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
+                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const
@@ -372,15 +372,15 @@ public:
     bg_palette_rotate_toggle_action(const bg_palette_ptr& palette, int duration_frames, int new_count) :
         toggle_value_template_action(palette, duration_frames, new_count)
     {
-        BTN_ASSERT(abs(new_count) < value().colors_count() - 1,
-                   "Invalid new count: ", new_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
+                   "Invalid new count: ", new_count, " - ", this->palette().colors_count());
     }
 
     bg_palette_rotate_toggle_action(bg_palette_ptr&& palette, int duration_frames, int new_count) :
         toggle_value_template_action(move(palette), duration_frames, new_count)
     {
-        BTN_ASSERT(abs(new_count) < value().colors_count() - 1,
-                   "Invalid new count: ", new_count, " - ", value().colors_count());
+        BTN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
+                   "Invalid new count: ", new_count, " - ", this->palette().colors_count());
     }
 
     [[nodiscard]] const bg_palette_ptr& palette() const

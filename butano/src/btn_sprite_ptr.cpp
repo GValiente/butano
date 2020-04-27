@@ -6,7 +6,7 @@
 #include "btn_sprites_manager.h"
 #include "btn_sprite_first_attributes.h"
 #include "btn_sprite_third_attributes.h"
-#include "btn_sprite_affine_mat_builder.h"
+#include "btn_sprite_affine_mat_attributes.h"
 #include "btn_sprite_affine_second_attributes.h"
 #include "btn_sprite_regular_second_attributes.h"
 
@@ -361,12 +361,12 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
     }
     else if(rotation_angle != 0)
     {
-        sprite_affine_mat_builder affine_mat_builder;
-        affine_mat_builder.set_rotation_angle(rotation_angle);
-        affine_mat_builder.set_horizontal_flip(horizontal_flip());
-        affine_mat_builder.set_vertical_flip(vertical_flip());
+        sprite_affine_mat_attributes affine_mat_attributes;
+        affine_mat_attributes.set_rotation_angle(rotation_angle);
+        affine_mat_attributes.set_horizontal_flip(horizontal_flip());
+        affine_mat_attributes.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
+        set_affine_mat(sprite_affine_mat_ptr::create(affine_mat_attributes));
     }
 }
 
@@ -393,12 +393,12 @@ void sprite_ptr::set_scale_x(fixed scale_x)
     }
     else if(scale_x != 1)
     {
-        sprite_affine_mat_builder affine_mat_builder;
-        affine_mat_builder.set_scale_x(scale_x);
-        affine_mat_builder.set_horizontal_flip(horizontal_flip());
-        affine_mat_builder.set_vertical_flip(vertical_flip());
+        sprite_affine_mat_attributes affine_mat_attributes;
+        affine_mat_attributes.set_scale_x(scale_x);
+        affine_mat_attributes.set_horizontal_flip(horizontal_flip());
+        affine_mat_attributes.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
+        set_affine_mat(sprite_affine_mat_ptr::create(affine_mat_attributes));
     }
 }
 
@@ -425,12 +425,12 @@ void sprite_ptr::set_scale_y(fixed scale_y)
     }
     else if(scale_y != 1)
     {
-        sprite_affine_mat_builder affine_mat_builder;
-        affine_mat_builder.set_scale_y(scale_y);
-        affine_mat_builder.set_horizontal_flip(horizontal_flip());
-        affine_mat_builder.set_vertical_flip(vertical_flip());
+        sprite_affine_mat_attributes affine_mat_attributes;
+        affine_mat_attributes.set_scale_y(scale_y);
+        affine_mat_attributes.set_horizontal_flip(horizontal_flip());
+        affine_mat_attributes.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
+        set_affine_mat(sprite_affine_mat_ptr::create(affine_mat_attributes));
     }
 }
 
@@ -447,12 +447,12 @@ void sprite_ptr::set_scale(fixed scale)
     }
     else if(scale != 1)
     {
-        sprite_affine_mat_builder affine_mat_builder;
-        affine_mat_builder.set_scale(scale);
-        affine_mat_builder.set_horizontal_flip(horizontal_flip());
-        affine_mat_builder.set_vertical_flip(vertical_flip());
+        sprite_affine_mat_attributes affine_mat_attributes;
+        affine_mat_attributes.set_scale(scale);
+        affine_mat_attributes.set_horizontal_flip(horizontal_flip());
+        affine_mat_attributes.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
+        set_affine_mat(sprite_affine_mat_ptr::create(affine_mat_attributes));
     }
 }
 
@@ -469,12 +469,12 @@ void sprite_ptr::set_scale(fixed scale_x, fixed scale_y)
     }
     else if(scale_x != 1 || scale_y != 1)
     {
-        sprite_affine_mat_builder affine_mat_builder;
-        affine_mat_builder.set_scale(scale_x, scale_y);
-        affine_mat_builder.set_horizontal_flip(horizontal_flip());
-        affine_mat_builder.set_vertical_flip(vertical_flip());
+        sprite_affine_mat_attributes affine_mat_attributes;
+        affine_mat_attributes.set_scale(scale_x, scale_y);
+        affine_mat_attributes.set_horizontal_flip(horizontal_flip());
+        affine_mat_attributes.set_vertical_flip(vertical_flip());
         set_remove_affine_mat_when_not_needed(true);
-        set_affine_mat(sprite_affine_mat_ptr::create(move(affine_mat_builder)));
+        set_affine_mat(sprite_affine_mat_ptr::create(affine_mat_attributes));
     }
 }
 

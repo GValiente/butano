@@ -10,6 +10,7 @@ namespace btn
 {
 
 class sprite_affine_mat_builder;
+class sprite_affine_mat_attributes;
 
 class sprite_affine_mat_ptr
 {
@@ -17,9 +18,13 @@ class sprite_affine_mat_ptr
 public:
     [[nodiscard]] static sprite_affine_mat_ptr create();
 
+    [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_attributes& attributes);
+
     [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_builder& builder);
 
     [[nodiscard]] static optional<sprite_affine_mat_ptr> optional_create();
+
+    [[nodiscard]] static optional<sprite_affine_mat_ptr> optional_create(const sprite_affine_mat_attributes& attributes);
 
     [[nodiscard]] static optional<sprite_affine_mat_ptr> optional_create(const sprite_affine_mat_builder& builder);
 
@@ -75,6 +80,10 @@ public:
     [[nodiscard]] bool vertical_flip() const;
 
     void set_vertical_flip(bool vertical_flip);
+
+    [[nodiscard]] const sprite_affine_mat_attributes& attributes() const;
+
+    void set_attributes(const sprite_affine_mat_attributes& attributes);
 
     [[nodiscard]] bool identity() const;
 

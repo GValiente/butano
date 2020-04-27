@@ -4,7 +4,7 @@
 #include "tonc.h"
 #include "btn_math.h"
 #include "btn_algorithm.h"
-#include "btn_sprite_affine_mat_builder.h"
+#include "btn_sprite_affine_mat_attributes.h"
 
 namespace btn::hw::sprite_affine_mats
 {
@@ -19,13 +19,23 @@ namespace btn::hw::sprite_affine_mats
         int8_t hflip;
         int8_t vflip;
 
-        void init(const sprite_affine_mat_builder& builder)
+        void init()
         {
-            set_rotation_angle(builder.rotation_angle());
-            set_scale_x(builder.scale_x());
-            set_scale_y(builder.scale_y());
-            set_horizontal_flip(builder.horizontal_flip());
-            set_vertical_flip(builder.vertical_flip());
+            sin = 0;
+            cos = int16_t(fixed(1).value());
+            sx = uint16_t(fixed_t<8>(1).value());
+            sy = uint16_t(fixed_t<8>(1).value());
+            hflip = 1;
+            vflip = 1;
+        }
+
+        void init(const sprite_affine_mat_attributes& attributes)
+        {
+            set_rotation_angle(attributes.rotation_angle());
+            set_scale_x(attributes.scale_x());
+            set_scale_y(attributes.scale_y());
+            set_horizontal_flip(attributes.horizontal_flip());
+            set_vertical_flip(attributes.vertical_flip());
         }
 
         void set_rotation_angle(fixed rotation_angle)
@@ -102,6 +112,15 @@ namespace btn::hw::sprite_affine_mats
         int size = (cos + sin) * scale.value();
         return size > 256 << 16;
     }
+
+    inline void setup(handle& affine_mat)
+    {
+        auto affine_mat_ptr = reinterpret_cast<OBJ_AFFINE*>(&affine_mat);
+        affine_mat_ptr->pa = 1 << 8;
+        affine_mat_ptr->pb = 0;
+        affine_mat_ptr->pc = 0;
+        affine_mat_ptr->pd = 1 << 8;
+    };
 
     inline void setup(const item_type& item, handle& affine_mat)
     {

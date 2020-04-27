@@ -5,7 +5,7 @@
 #include "btn_optional.h"
 #include "btn_algorithm.h"
 #include "btn_sprite_affine_mats.h"
-#include "btn_sprite_affine_mat_builder.h"
+#include "btn_sprite_affine_mat_attributes.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
 
 namespace btn::sprite_affine_mats_manager
@@ -19,25 +19,25 @@ namespace
     {
 
     public:
-        fixed rotation_angle;
-        fixed scale_x;
-        fixed scale_y;
+        sprite_affine_mat_attributes attributes;
         unsigned usages;
         hw::sprite_affine_mats::item_type hw_item;
-        unsigned horizontal_flip: 1;
-        unsigned vertical_flip: 1;
-        unsigned updated: 1;
+        bool updated;
 
-        void init(const sprite_affine_mat_builder& builder)
+        void init()
         {
-            rotation_angle = builder.rotation_angle();
-            scale_x = builder.scale_x();
-            scale_y = builder.scale_y();
+            attributes = sprite_affine_mat_attributes();
             usages = 1;
-            horizontal_flip = builder.horizontal_flip();
-            vertical_flip = builder.vertical_flip();
             updated = false;
-            hw_item.init(builder);
+            hw_item.init();
+        }
+
+        void init(const sprite_affine_mat_attributes& new_attributes)
+        {
+            attributes = new_attributes;
+            usages = 1;
+            updated = false;
+            hw_item.init(new_attributes);
         }
     };
 
@@ -61,13 +61,25 @@ namespace
         data.items[index].updated = true;
     }
 
-    [[nodiscard]] int _create(const sprite_affine_mat_builder& builder)
+    [[nodiscard]] int _create()
     {
         int item_index = data.free_item_indexes.back();
         data.free_item_indexes.pop_back();
 
         item_type& new_item = data.items[item_index];
-        new_item.init(builder);
+        new_item.init();
+        hw::sprite_affine_mats::setup(data.handles_ptr[item_index]);
+        _update(item_index);
+        return item_index;
+    }
+
+    [[nodiscard]] int _create(const sprite_affine_mat_attributes& attributes)
+    {
+        int item_index = data.free_item_indexes.back();
+        data.free_item_indexes.pop_back();
+
+        item_type& new_item = data.items[item_index];
+        new_item.init(attributes);
         hw::sprite_affine_mats::setup(new_item.hw_item, data.handles_ptr[item_index]);
         _update(item_index);
         return item_index;
@@ -98,21 +110,38 @@ int available_count()
     return data.free_item_indexes.size();
 }
 
-int create(const sprite_affine_mat_builder& builder)
+int create()
 {
     BTN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
 
-    return _create(builder);
+    return _create();
 }
 
-int optional_create(const sprite_affine_mat_builder& builder)
+int create(const sprite_affine_mat_attributes& attributes)
+{
+    BTN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
+
+    return _create(attributes);
+}
+
+int optional_create()
 {
     if(data.free_item_indexes.empty())
     {
         return -1;
     }
 
-    return _create(builder);
+    return _create();
+}
+
+int optional_create(const sprite_affine_mat_attributes& attributes)
+{
+    if(data.free_item_indexes.empty())
+    {
+        return -1;
+    }
+
+    return _create(attributes);
 }
 
 void increase_usages(int id)
@@ -134,15 +163,13 @@ void decrease_usages(int id)
 
 fixed rotation_angle(int id)
 {
-    return data.items[id].rotation_angle;
+    return data.items[id].attributes.rotation_angle();
 }
 
 void set_rotation_angle(int id, fixed rotation_angle)
 {
-    BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
-
     item_type& item = data.items[id];
-    item.rotation_angle = rotation_angle;
+    item.attributes.set_rotation_angle(rotation_angle);
     item.hw_item.set_rotation_angle(rotation_angle);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);
@@ -150,15 +177,13 @@ void set_rotation_angle(int id, fixed rotation_angle)
 
 fixed scale_x(int id)
 {
-    return data.items[id].scale_x;
+    return data.items[id].attributes.scale_x();
 }
 
 void set_scale_x(int id, fixed scale_x)
 {
-    BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
-
     item_type& item = data.items[id];
-    item.scale_x = scale_x;
+    item.attributes.set_scale_x(scale_x);
     item.hw_item.set_scale_x(scale_x);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);
@@ -166,15 +191,13 @@ void set_scale_x(int id, fixed scale_x)
 
 fixed scale_y(int id)
 {
-    return data.items[id].scale_y;
+    return data.items[id].attributes.scale_y();
 }
 
 void set_scale_y(int id, fixed scale_y)
 {
-    BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
-
     item_type& item = data.items[id];
-    item.scale_y = scale_y;
+    item.attributes.set_scale_y(scale_y);
     item.hw_item.set_scale_y(scale_y);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);
@@ -182,11 +205,8 @@ void set_scale_y(int id, fixed scale_y)
 
 void set_scale(int id, fixed scale)
 {
-    BTN_ASSERT(scale > 0, "Invalid scale: ", scale);
-
     item_type& item = data.items[id];
-    item.scale_x = scale;
-    item.scale_y = scale;
+    item.attributes.set_scale(scale);
     item.hw_item.set_scale_x(scale);
     item.hw_item.set_scale_y(scale);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
@@ -195,12 +215,8 @@ void set_scale(int id, fixed scale)
 
 void set_scale(int id, fixed scale_x, fixed scale_y)
 {
-    BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
-    BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
-
     item_type& item = data.items[id];
-    item.scale_x = scale_x;
-    item.scale_y = scale_y;
+    item.attributes.set_scale(scale_x, scale_y);
     item.hw_item.set_scale_x(scale_x);
     item.hw_item.set_scale_y(scale_y);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
@@ -209,13 +225,13 @@ void set_scale(int id, fixed scale_x, fixed scale_y)
 
 bool horizontal_flip(int id)
 {
-    return data.items[id].horizontal_flip;
+    return data.items[id].attributes.horizontal_flip();
 }
 
 void set_horizontal_flip(int id, bool horizontal_flip)
 {
     item_type& item = data.items[id];
-    item.horizontal_flip = horizontal_flip;
+    item.attributes.set_horizontal_flip(horizontal_flip);
     item.hw_item.set_horizontal_flip(horizontal_flip);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);
@@ -223,14 +239,28 @@ void set_horizontal_flip(int id, bool horizontal_flip)
 
 bool vertical_flip(int id)
 {
-    return data.items[id].vertical_flip;
+    return data.items[id].attributes.vertical_flip();
 }
 
 void set_vertical_flip(int id, bool vertical_flip)
 {
     item_type& item = data.items[id];
-    item.vertical_flip = vertical_flip;
+    item.attributes.set_vertical_flip(vertical_flip);
     item.hw_item.set_vertical_flip(vertical_flip);
+    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    _update(id);
+}
+
+const sprite_affine_mat_attributes& attributes(int id)
+{
+    return data.items[id].attributes;
+}
+
+void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
+{
+    item_type& item = data.items[id];
+    item.attributes = attributes;
+    item.hw_item.init(attributes);
     hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
     _update(id);
 }
@@ -238,13 +268,13 @@ void set_vertical_flip(int id, bool vertical_flip)
 bool identity(int id)
 {
     item_type& item = data.items[id];
-    return item.rotation_angle == 0 && item.scale_x == 1 && item.scale_y == 1;
+    return item.attributes.identity();
 }
 
 bool double_size(int id)
 {
     item_type& item = data.items[id];
-    return hw::sprite_affine_mats::double_size(item.hw_item, max(item.scale_x, item.scale_y));
+    return hw::sprite_affine_mats::double_size(item.hw_item, max(item.attributes.scale_x(), item.attributes.scale_y()));
 }
 
 bool updated(int id)

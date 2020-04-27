@@ -6,7 +6,7 @@
 
 namespace btn
 {
-    class sprite_affine_mat_builder;
+    class sprite_affine_mat_attributes;
 }
 
 namespace btn::sprite_affine_mats_manager
@@ -25,9 +25,13 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] int available_count();
 
-    [[nodiscard]] int create(const sprite_affine_mat_builder& builder);
+    [[nodiscard]] int create();
 
-    [[nodiscard]] int optional_create(const sprite_affine_mat_builder& builder);
+    [[nodiscard]] int create(const sprite_affine_mat_attributes& attributes);
+
+    [[nodiscard]] int optional_create();
+
+    [[nodiscard]] int optional_create(const sprite_affine_mat_attributes& attributes);
 
     void increase_usages(int id);
 
@@ -56,6 +60,10 @@ namespace btn::sprite_affine_mats_manager
     [[nodiscard]] bool vertical_flip(int id);
 
     void set_vertical_flip(int id, bool vertical_flip);
+
+    [[nodiscard]] const sprite_affine_mat_attributes& attributes(int id);
+
+    void set_attributes(int id, const sprite_affine_mat_attributes& attributes);
 
     [[nodiscard]] bool identity(int id);
 

@@ -9,17 +9,35 @@ namespace btn
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create()
 {
-    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(sprite_affine_mat_builder()));
+    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create());
+}
+
+sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_attributes& attributes)
+{
+    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(attributes));
 }
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_builder& builder)
 {
-    return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(builder));
+    return create(builder.attributes());
 }
 
 optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
 {
-    int id = sprite_affine_mats_manager::optional_create(sprite_affine_mat_builder());
+    int id = sprite_affine_mats_manager::optional_create();
+    optional<sprite_affine_mat_ptr> result;
+
+    if(id >= 0)
+    {
+        result = sprite_affine_mat_ptr(id);
+    }
+
+    return result;
+}
+
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_attributes& attributes)
+{
+    int id = sprite_affine_mats_manager::optional_create(attributes);
     optional<sprite_affine_mat_ptr> result;
 
     if(id >= 0)
@@ -32,15 +50,7 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
 
 optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_builder& builder)
 {
-    int id = sprite_affine_mats_manager::optional_create(builder);
-    optional<sprite_affine_mat_ptr> result;
-
-    if(id >= 0)
-    {
-        result = sprite_affine_mat_ptr(id);
-    }
-
-    return result;
+    return optional_create(builder.attributes());
 }
 
 sprite_affine_mat_ptr::sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other) :
@@ -123,6 +133,16 @@ bool sprite_affine_mat_ptr::vertical_flip() const
 void sprite_affine_mat_ptr::set_vertical_flip(bool vertical_flip)
 {
     sprite_affine_mats_manager::set_vertical_flip(_id, vertical_flip);
+}
+
+const sprite_affine_mat_attributes& sprite_affine_mat_ptr::attributes() const
+{
+    return sprite_affine_mats_manager::attributes(_id);
+}
+
+void sprite_affine_mat_ptr::set_attributes(const sprite_affine_mat_attributes& attributes)
+{
+    sprite_affine_mats_manager::set_attributes(_id, attributes);
 }
 
 bool sprite_affine_mat_ptr::identity() const

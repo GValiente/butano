@@ -1,8 +1,8 @@
 #ifndef BTN_SPRITE_AFFINE_MAT_BUILDER_H
 #define BTN_SPRITE_AFFINE_MAT_BUILDER_H
 
-#include "btn_fixed.h"
 #include "btn_optional_fwd.h"
+#include "btn_sprite_affine_mat_attributes.h"
 
 namespace btn
 {
@@ -13,50 +13,81 @@ class sprite_affine_mat_builder
 {
 
 public:
-    [[nodiscard]] fixed rotation_angle() const
+    [[nodiscard]] constexpr fixed rotation_angle() const
     {
-        return _rotation_angle;
+        return _attributes.rotation_angle();
     }
 
-    sprite_affine_mat_builder& set_rotation_angle(fixed rotation_angle);
-
-    [[nodiscard]] fixed scale_x() const
+    constexpr sprite_affine_mat_builder& set_rotation_angle(fixed rotation_angle)
     {
-        return _scale_x;
-    }
-
-    sprite_affine_mat_builder& set_scale_x(fixed scale_x);
-
-    [[nodiscard]] fixed scale_y() const
-    {
-        return _scale_y;
-    }
-
-    sprite_affine_mat_builder& set_scale_y(fixed scale_y);
-
-    sprite_affine_mat_builder& set_scale(fixed scale);
-
-    sprite_affine_mat_builder& set_scale(fixed scale_x, fixed scale_y);
-
-    [[nodiscard]] bool horizontal_flip() const
-    {
-        return _horizontal_flip;
-    }
-
-    sprite_affine_mat_builder& set_horizontal_flip(bool horizontal_flip)
-    {
-        _horizontal_flip = horizontal_flip;
+        _attributes.set_rotation_angle(rotation_angle);
         return *this;
     }
 
-    [[nodiscard]] bool vertical_flip() const
+    [[nodiscard]] constexpr fixed scale_x() const
     {
-        return _vertical_flip;
+        return _attributes.scale_x();
     }
 
-    sprite_affine_mat_builder& set_vertical_flip(bool vertical_flip)
+    constexpr sprite_affine_mat_builder& set_scale_x(fixed scale_x)
     {
-        _vertical_flip = vertical_flip;
+        _attributes.set_scale_x(scale_x);
+        return *this;
+    }
+
+    [[nodiscard]] constexpr fixed scale_y() const
+    {
+        return _attributes.scale_x();
+    }
+
+    constexpr sprite_affine_mat_builder& set_scale_y(fixed scale_y)
+    {
+        _attributes.set_scale_y(scale_y);
+        return *this;
+    }
+
+    constexpr sprite_affine_mat_builder& set_scale(fixed scale)
+    {
+        _attributes.set_scale(scale);
+        return *this;
+    }
+
+    constexpr sprite_affine_mat_builder& set_scale(fixed scale_x, fixed scale_y)
+    {
+        _attributes.set_scale(scale_x, scale_y);
+        return *this;
+    }
+
+    [[nodiscard]] constexpr bool horizontal_flip() const
+    {
+        return _attributes.horizontal_flip();
+    }
+
+    constexpr sprite_affine_mat_builder& set_horizontal_flip(bool horizontal_flip)
+    {
+        _attributes.set_horizontal_flip(horizontal_flip);
+        return *this;
+    }
+
+    [[nodiscard]] constexpr bool vertical_flip() const
+    {
+        return _attributes.vertical_flip();
+    }
+
+    constexpr sprite_affine_mat_builder& set_vertical_flip(bool vertical_flip)
+    {
+        _attributes.set_vertical_flip(vertical_flip);
+        return *this;
+    }
+
+    [[nodiscard]] constexpr const sprite_affine_mat_attributes& attributes() const
+    {
+        return _attributes;
+    }
+
+    constexpr sprite_affine_mat_builder& set_attributes(const sprite_affine_mat_attributes& attributes)
+    {
+        _attributes = attributes;
         return *this;
     }
 
@@ -65,11 +96,7 @@ public:
     [[nodiscard]] optional<sprite_affine_mat_ptr> optional_build() const;
 
 private:
-    fixed _rotation_angle = 0;
-    fixed _scale_x = 1;
-    fixed _scale_y = 1;
-    bool _horizontal_flip = false;
-    bool _vertical_flip = false;
+    sprite_affine_mat_attributes _attributes;
 };
 
 }

@@ -31,6 +31,15 @@ public:
     [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
+    enum class state
+    {
+        START,
+        BUTANO_CHARACTERS_SHOW,
+        FIGHTER_CHARACTERS_SHOW,
+        MENU,
+        END
+    };
+
     btn::sprite_ptr _butano_up_sprite;
     btn::sprite_ptr _butano_down_sprite;
     btn::vector<btn::sprite_ptr, 6> _butano_characters;
@@ -47,7 +56,11 @@ private:
     btn::sprite_third_attributes_hblank_effect_ptr _butano_up_tiles_hblank_effect;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _butano_down_tiles_hblank_effect_attributes;
     btn::sprite_third_attributes_hblank_effect_ptr _butano_down_tiles_hblank_effect;
+    btn::optional<btn::sprite_first_attributes_hblank_effect_ptr> _butano_character_hblank_effect;
+    btn::optional<btn::sprite_move_to_action> _butano_character_move_action;
+    btn::optional<btn::sprite_move_to_action> _fighter_character_move_action;
     btn::optional<btn::sprite_move_to_action> _cursor_move_action;
+    state _state = state::START;
     int _butano_x_hblank_effect_speed = 64 * 32;
     bool _start_selected = true;
     bool _butano_y_up = true;
@@ -55,6 +68,12 @@ private:
     void _animate_butano_x();
 
     void _animate_butano_y();
+
+    void _animate_butano_characters();
+
+    void _animate_fighter_characters();
+
+    void _menu();
 };
 
 }

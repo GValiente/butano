@@ -42,7 +42,7 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id) final
+        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
         {
             return hw::bgs::regular_horizontal_position_register(target_id);
         }
@@ -82,7 +82,7 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id) final
+        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
         {
             return hw::bgs::regular_vertical_position_register(target_id);
         }
@@ -122,7 +122,7 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id) final
+        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
         {
             return hw::bgs::attributes_register(target_id);
         }

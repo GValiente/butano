@@ -15,11 +15,13 @@ class sprite_tiles_ptr;
 class sprite_shape_size;
 class sprite_palette_ptr;
 class sprite_affine_mat_ptr;
+class sprite_first_attributes;
 class sprite_third_attributes;
 class sprite_regular_second_attributes;
 class sprite_affine_second_attributes;
 enum class sprite_size;
 enum class sprite_shape;
+enum class palette_bpp_mode;
 enum class sprite_double_size_mode;
 
 namespace sprites_manager
@@ -115,6 +117,8 @@ namespace sprites_manager
 
     void set_window_enabled(id_type id, bool blending_enabled);
 
+    [[nodiscard]] int affine_mode(id_type id);
+
     [[nodiscard]] bool double_size(id_type id);
 
     [[nodiscard]] sprite_double_size_mode double_size_mode(id_type id);
@@ -139,6 +143,10 @@ namespace sprites_manager
 
     void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_needed);
 
+    [[nodiscard]] sprite_first_attributes first_attributes(id_type id);
+
+    void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes);
+
     [[nodiscard]] sprite_regular_second_attributes regular_second_attributes(id_type id);
 
     void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes);
@@ -150,6 +158,9 @@ namespace sprites_manager
     [[nodiscard]] sprite_third_attributes third_attributes(id_type id);
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
+
+    void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+            const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_second_attributes(
             id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,

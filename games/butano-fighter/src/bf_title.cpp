@@ -9,6 +9,7 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_sprite_items_hero_head.h"
+#include "btn_sprite_first_attributes.h"
 #include "btn_sprite_items_butano_font.h"
 #include "btn_sprite_items_fighter_font.h"
 #include "btn_sprite_items_butano_big_sprite.h"
@@ -37,6 +38,34 @@ namespace
         return builder.release_build();
     }
 
+    [[nodiscard]] btn::vector<btn::sprite_ptr, 6> _create_butano_characters()
+    {
+        btn::vector<btn::sprite_ptr, 6> result;
+
+        for(int index = 0; index < 6; ++index)
+        {
+            result.push_back(btn::sprite_items::butano_font.create_sprite((index * 20) - 50, -28, index));
+            result.back().set_visible(false);
+        }
+
+        return result;
+    }
+
+    [[nodiscard]] btn::vector<btn::sprite_ptr, 7> _create_fighter_characters()
+    {
+        btn::vector<btn::sprite_ptr, 7> result;
+        btn::fixed fighter_x = 78;
+
+        for(int index = 6; index >= 0; --index)
+        {
+            result.push_back(btn::sprite_items::fighter_font.create_sprite(fighter_x, 4, index));
+            result.back().set_visible(false);
+            fighter_x -= index <= 2 ? 21 : 29;
+        }
+
+        return result;
+    }
+
     [[nodiscard]] btn::span<const btn::sprite_regular_second_attributes> _create_attributes_span(
             const btn::ivector<btn::sprite_regular_second_attributes>& vector)
     {
@@ -49,8 +78,8 @@ namespace
         return btn::span<const btn::sprite_third_attributes>(vector.data(), vector.max_size());
     }
 
-    void _build_hblank_effect_attributes(const btn::sprite_ptr& sprite, int graphics_index,
-                                         btn::ivector<btn::sprite_third_attributes>& attributes)
+    void _build_butano_tiles_hblank_effect_attributes(const btn::sprite_ptr& sprite, int graphics_index,
+                                                      btn::ivector<btn::sprite_third_attributes>& attributes)
     {
         btn::sprite_third_attributes even_sprite_attributes = sprite.third_attributes();
         btn::sprite_third_attributes odd_sprite_attributes = even_sprite_attributes;
@@ -62,11 +91,29 @@ namespace
             attributes.push_back(odd_sprite_attributes);
         }
     }
+
+    [[nodiscard]] constexpr btn::array<btn::sprite_first_attributes, btn::display::height()> _create_butano_character_hblank_effect_attributes()
+    {
+        btn::array<btn::sprite_first_attributes, btn::display::height()> result;
+        int start = 64;
+
+        for(int index = start; index < btn::display::height(); ++index)
+        {
+            result[index].set_y(index - start);
+        }
+
+        return result;
+    }
+
+    constexpr const btn::array<btn::sprite_first_attributes, btn::display::height()> butano_character_hblank_effect_attributes =
+            _create_butano_character_hblank_effect_attributes();
 }
 
 title::title(btn::sprite_text_generator& text_generator) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
+    _butano_characters(_create_butano_characters()),
+    _fighter_characters(_create_fighter_characters()),
     _cursor_sprite(btn::sprite_items::hero_head.create_sprite(0, 0)),
     _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.regular_second_attributes()),
     _butano_up_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
@@ -78,21 +125,8 @@ title::title(btn::sprite_text_generator& text_generator) :
     _butano_down_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
                                          _butano_down_sprite, _create_attributes_span(_butano_down_tiles_hblank_effect_attributes)))
 {
-    _build_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_tiles_hblank_effect_attributes);
-    _build_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_tiles_hblank_effect_attributes);
-
-    for(int index = 0; index < 6; ++index)
-    {
-        _butano_characters.push_back(btn::sprite_items::butano_font.create_sprite((index * 20) - 50, -28, index));
-    }
-
-    btn::fixed fighter_x = 78;
-
-    for(int index = 6; index >= 0; --index)
-    {
-        _fighter_characters.push_back(btn::sprite_items::fighter_font.create_sprite(fighter_x, 4, index));
-        fighter_x -= index <= 2 ? 21 : 29;
-    }
+    _build_butano_tiles_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_tiles_hblank_effect_attributes);
+    _build_butano_tiles_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_tiles_hblank_effect_attributes);
 
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
@@ -102,7 +136,24 @@ title::title(btn::sprite_text_generator& text_generator) :
     text_generator.set_alignment(old_alignment);
     _cursor_sprite.set_position(_credits_text_sprites[0].x() - 28, _start_text_sprites[0].y());
 
-    btn::music_items::battle_clean.play(0.6);
+    for(btn::sprite_ptr& sprite : _high_score_text_sprites)
+    {
+        sprite.set_visible(false);
+    }
+
+    for(btn::sprite_ptr& sprite : _start_text_sprites)
+    {
+        sprite.set_visible(false);
+    }
+
+    for(btn::sprite_ptr& sprite : _credits_text_sprites)
+    {
+        sprite.set_visible(false);
+    }
+
+    _cursor_sprite.set_visible(false);
+
+    // btn::music_items::battle_clean.play(0.6);
 }
 
 btn::optional<scene_type> title::update()
@@ -110,38 +161,9 @@ btn::optional<scene_type> title::update()
     btn::optional<scene_type> result;
     _animate_butano_x();
     _animate_butano_y();
-
-    if(_cursor_move_action)
-    {
-        _cursor_move_action->update();
-
-        if(_cursor_move_action->done())
-        {
-            _cursor_move_action.reset();
-        }
-    }
-    else
-    {
-        if(btn::keypad::pressed(btn::keypad::button_type::A))
-        {
-            btn::sound_items::cure.play();
-        }
-        else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))
-        {
-            if(_start_selected)
-            {
-                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
-            }
-            else
-            {
-                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
-            }
-
-            _start_selected = ! _start_selected;
-            btn::sound_items::alert.play();
-        }
-    }
-
+    _animate_butano_characters();
+    _animate_fighter_characters();
+    _menu();
     return result;
 }
 
@@ -194,6 +216,13 @@ void title::_animate_butano_y()
             _butano_y_inc = 1;
             _butano_y_up = false;
         }
+        else
+        {
+            if(_butano_y_inc >= 0 && _state == state::START)
+            {
+                _state = state::BUTANO_CHARACTERS_SHOW;
+            }
+        }
     }
     else
     {
@@ -218,6 +247,137 @@ void title::_animate_butano_y()
     else
     {
         btn::blending::set_intensity_alpha(0);
+    }
+}
+
+void title::_animate_butano_characters()
+{
+    if(_state != state::BUTANO_CHARACTERS_SHOW)
+    {
+        return;
+    }
+
+    if(_butano_character_move_action)
+    {
+        _butano_character_move_action->update();
+
+        if(_butano_character_move_action->done())
+        {
+            _butano_character_move_action.reset();
+            _butano_character_hblank_effect.reset();
+        }
+    }
+    else
+    {
+        for(btn::sprite_ptr& butano_character : _butano_characters)
+        {
+            if(! butano_character.visible())
+            {
+                btn::fixed_point position = butano_character.position();
+                butano_character.set_y(0);
+                butano_character.set_visible(true);
+                _butano_character_move_action.emplace(butano_character, 12, position);
+                _butano_character_hblank_effect = btn::sprite_first_attributes_hblank_effect_ptr::create(
+                            butano_character, butano_character_hblank_effect_attributes);
+                return;
+            }
+        }
+
+        _state = state::FIGHTER_CHARACTERS_SHOW;
+    }
+}
+
+void title::_animate_fighter_characters()
+{
+    if(_state != state::FIGHTER_CHARACTERS_SHOW)
+    {
+        return;
+    }
+
+    if(_fighter_character_move_action)
+    {
+        _fighter_character_move_action->update();
+
+        if(_fighter_character_move_action->done())
+        {
+            _fighter_character_move_action.reset();
+            // _fighter_character_hblank_effect.reset();
+        }
+    }
+    else
+    {
+        for(btn::sprite_ptr& fighter_character : _fighter_characters)
+        {
+            if(! fighter_character.visible())
+            {
+                btn::fixed_point position = fighter_character.position();
+                fighter_character.set_y((btn::display::height() + 32) / 2);
+                fighter_character.set_visible(true);
+                _fighter_character_move_action.emplace(fighter_character, 12, position);
+                /*_fighter_character_hblank_effect = btn::sprite_first_attributes_hblank_effect_ptr::create(
+                            fighter_character, butano_character_hblank_effect_attributes);*/
+                return;
+            }
+        }
+
+        _state = state::MENU;
+    }
+}
+
+void title::_menu()
+{
+    if(_cursor_move_action)
+    {
+        _cursor_move_action->update();
+
+        if(_cursor_move_action->done())
+        {
+            _cursor_move_action.reset();
+        }
+    }
+    else
+    {
+        if(_state == state::MENU)
+        {
+            if(! _cursor_sprite.visible())
+            {
+                _cursor_sprite.set_visible(true);
+
+                for(btn::sprite_ptr& sprite : _high_score_text_sprites)
+                {
+                    sprite.set_visible(true);
+                }
+
+                for(btn::sprite_ptr& sprite : _start_text_sprites)
+                {
+                    sprite.set_visible(true);
+                }
+
+                for(btn::sprite_ptr& sprite : _credits_text_sprites)
+                {
+                    sprite.set_visible(true);
+                }
+            }
+
+            if(btn::keypad::pressed(btn::keypad::button_type::A))
+            {
+                btn::sound_items::cure.play();
+            }
+            else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))
+            {
+                if(_start_selected)
+                {
+                    _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
+                }
+                else
+                {
+                    _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
+                }
+
+                _start_selected = ! _start_selected;
+                btn::sound_items::alert.play();
+            }
+        }
     }
 }
 

@@ -42,6 +42,14 @@ namespace btn::hw::sprites
         oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(btn::sprites::sprites_count()));
     }
 
+    [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+                                              bool mosaic_enabled, bool blending_enabled, bool window_enabled)
+    {
+        int result = ATTR0_BUILD(y, int(shape), 0, affine_mode, mosaic_enabled, blending_enabled, window_enabled);
+        result |= unsigned(bpp_mode) * ATTR0_8BPP;
+        return result;
+    }
+
     [[nodiscard]] inline int second_attributes(int x, sprite_size size, bool horizontal_flip, bool vertical_flip)
     {
         return ATTR1_BUILDR(x, int(size), horizontal_flip, vertical_flip);
@@ -61,9 +69,7 @@ namespace btn::hw::sprites
                               palette_bpp_mode bpp_mode, handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, false, false, false);
-        a0 |= int(bpp_mode) * ATTR0_8BPP;
-
+        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false);
         int a1 = second_attributes(0, shape_size.size(), false, false);
         int a2 = third_attributes(tiles_id, palette_id, 3);
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
@@ -74,10 +80,8 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(),
-                             builder.window_enabled());
-        a0 |= int(bpp_mode) * ATTR0_8BPP;
-
+        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+                                  builder.blending_enabled(), builder.window_enabled());
         int a1 = second_attributes(0, shape_size.size(), builder.horizontal_flip(), builder.vertical_flip());
         int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
@@ -88,13 +92,17 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = ATTR0_BUILD(0, int(shape_size.shape()), 0, 0, builder.mosaic_enabled(), builder.blending_enabled(),
-                             builder.window_enabled());
-        a0 |= int(bpp_mode) * ATTR0_8BPP;
-
+        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+                                  builder.blending_enabled(), builder.window_enabled());
         int a1 = second_attributes(0, shape_size.size(), 0);
         int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
         obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+    }
+
+    [[nodiscard]] inline int affine_mode(const handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<const OBJ_ATTR*>(&sprite);
+        return BFN_GET(sprite_ptr->attr0, ATTR0_MODE);
     }
 
     [[nodiscard]] inline bool double_size(const handle& sprite)

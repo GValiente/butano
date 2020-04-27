@@ -6,66 +6,65 @@
 namespace btn
 {
 
-enum class sprite_size;
-
 class sprite_regular_second_attributes
 {
 
 public:
-    sprite_regular_second_attributes(fixed x, sprite_size size, bool horizontal_flip, bool vertical_flip);
+    constexpr sprite_regular_second_attributes() = default;
 
-    [[nodiscard]] fixed x() const
+    constexpr sprite_regular_second_attributes(fixed x, bool horizontal_flip, bool vertical_flip) :
+        _x(x),
+        _horizontal_flip(horizontal_flip),
+        _vertical_flip(vertical_flip)
+    {
+    }
+
+    [[nodiscard]] constexpr fixed x() const
     {
         return _x;
     }
 
-    void set_x(fixed x)
+    constexpr void set_x(fixed x)
     {
         _x = x;
     }
 
-    [[nodiscard]] sprite_size size() const;
-
-    void set_size(sprite_size size);
-
-    [[nodiscard]] bool horizontal_flip() const
+    [[nodiscard]] constexpr bool horizontal_flip() const
     {
         return _horizontal_flip;
     }
 
-    void set_horizontal_flip(bool horizontal_flip)
+    constexpr void set_horizontal_flip(bool horizontal_flip)
     {
         _horizontal_flip = horizontal_flip;
     }
 
-    [[nodiscard]] bool vertical_flip() const
+    [[nodiscard]] constexpr bool vertical_flip() const
     {
         return _vertical_flip;
     }
 
-    void set_vertical_flip(bool vertical_flip)
+    constexpr void set_vertical_flip(bool vertical_flip)
     {
         _vertical_flip = vertical_flip;
     }
 
-    [[nodiscard]] friend bool operator==(const sprite_regular_second_attributes& a,
-                                         const sprite_regular_second_attributes& b)
+    [[nodiscard]] constexpr friend bool operator==(const sprite_regular_second_attributes& a,
+                                                   const sprite_regular_second_attributes& b)
     {
-        return a._x == b._x && a._size == b._size && a._horizontal_flip == b._horizontal_flip &&
-                a._vertical_flip == b._vertical_flip;
+        return a._x == b._x && a._horizontal_flip == b._horizontal_flip && a._vertical_flip == b._vertical_flip;
     }
 
-    [[nodiscard]] friend bool operator!=(const sprite_regular_second_attributes& a,
-                                         const sprite_regular_second_attributes& b)
+    [[nodiscard]] constexpr friend bool operator!=(const sprite_regular_second_attributes& a,
+                                                   const sprite_regular_second_attributes& b)
     {
         return ! (a == b);
     }
 
 private:
-    fixed _x;
-    uint8_t _size;
-    unsigned _horizontal_flip: 1;
-    unsigned _vertical_flip: 1;
+    fixed _x = 0;
+    bool _horizontal_flip = false;
+    bool _vertical_flip = false;
 };
 
 }

@@ -20,6 +20,7 @@ class sprite_tiles_item;
 class sprite_palette_ptr;
 class sprite_palette_item;
 class sprite_affine_mat_ptr;
+class sprite_first_attributes;
 class sprite_third_attributes;
 class sprite_affine_second_attributes;
 class sprite_regular_second_attributes;
@@ -221,6 +222,10 @@ public:
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 
     void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
+
+    [[nodiscard]] sprite_first_attributes first_attributes() const;
+
+    void set_first_attributes(const sprite_first_attributes& first_attributes);
 
     [[nodiscard]] sprite_regular_second_attributes regular_second_attributes() const;
 

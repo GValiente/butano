@@ -90,7 +90,7 @@ namespace
         void setup_entry(hw_entry& entry) const
         {
             entry.src = dest_values_a_active ? dest_values_a : dest_values_b;
-            entry.dest = handler->output_register(target_id);
+            entry.dest = handler->output_register(target_id, target_last_value);
         }
     };
 

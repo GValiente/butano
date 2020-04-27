@@ -5,6 +5,7 @@
 #include "btn_sorted_sprites.h"
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
+#include "btn_sprite_first_attributes.h"
 #include "btn_sprite_third_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
 #include "btn_sprite_affine_second_attributes.h"
@@ -703,6 +704,12 @@ void set_window_enabled(id_type id, bool window_enabled)
     _update_handle(*item);
 }
 
+int affine_mode(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::sprites::affine_mode(item->handle);
+}
+
 bool double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
@@ -877,14 +884,32 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     }
 }
 
+sprite_first_attributes first_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::handle& handle = item->handle;
+    return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle),
+                                   hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle));
+}
+
+void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::sprites::handle& handle = item->handle;
+    hw::sprites::set_mosaic_enabled(first_attributes.mosaic_enabled(), handle);
+    hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), handle);
+    hw::sprites::set_window_enabled(first_attributes.window_enabled(), handle);
+    set_position(id, fixed_point(item->position.x(), first_attributes.y()));
+}
+
 sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
 
     hw::sprites::handle& handle = item->handle;
-    return sprite_regular_second_attributes(item->position.x(), hw::sprites::size(handle),
-                                            hw::sprites::horizontal_flip(handle), hw::sprites::vertical_flip(handle));
+    return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
+                                            hw::sprites::vertical_flip(handle));
 }
 
 void set_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
@@ -892,10 +917,9 @@ void set_second_attributes(id_type id, const sprite_regular_second_attributes& s
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
 
-    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
     hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
     hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
-    _update_handle(*item);
+    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
 }
 
 sprite_affine_second_attributes affine_second_attributes(id_type id)
@@ -904,8 +928,7 @@ sprite_affine_second_attributes affine_second_attributes(id_type id)
     const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat_ptr;
     BTN_ASSERT(affine_mat, "Item is not affine");
 
-    hw::sprites::handle& handle = item->handle;
-    return sprite_affine_second_attributes(item->position.x(), hw::sprites::size(handle), *affine_mat);
+    return sprite_affine_second_attributes(item->position.x(), *affine_mat);
 }
 
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
@@ -955,6 +978,20 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     }
 
     set_bg_priority(id, third_attributes.bg_priority());
+}
+
+void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+        const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
+{
+    for(int index = 0, limit = display::height(); index < limit; ++index)
+    {
+        const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
+        int y = hw_y + first_attributes.y().integer();
+        dest_ptr[index] = uint16_t(hw::sprites::first_attributes(y, shape, bpp_mode, affine_mode,
+                                                                 first_attributes.mosaic_enabled(),
+                                                                 first_attributes.blending_enabled(),
+                                                                 first_attributes.window_enabled()));
+    }
 }
 
 void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,

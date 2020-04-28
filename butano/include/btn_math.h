@@ -1,8 +1,9 @@
 #ifndef BTN_MATH_H
 #define BTN_MATH_H
 
-#include "btn_assert.h"
-#include "btn_fixed_fwd.h"
+#include "btn_fixed.h"
+#include "btn_sin_lut.h"
+#include "btn_rule_of_three_approximation.h"
 
 namespace _btn
 {
@@ -54,28 +55,52 @@ namespace btn
      * @param degrees_angle Angle in the range [0, 360].
      * @return Sine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed degrees_sin(fixed degrees_angle);
+    [[nodiscard]] constexpr fixed degrees_sin(fixed degrees_angle)
+    {
+        BTN_CONSTEXPR_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]");
+
+        constexpr rule_of_three_approximation rule_of_three(360, 512);
+        fixed lut_angle = rule_of_three.calculate(degrees_angle);
+        return fixed::create(sin_lut[lut_angle.unsigned_integer()]);
+    }
 
     /**
      * @brief Sine value of a s16 angle.
      * @param lut_angle Angle in the range [0, 512].
      * @return Sine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed lut_sin(int lut_angle);
+    [[nodiscard]] constexpr fixed lut_sin(int lut_angle)
+    {
+        BTN_CONSTEXPR_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]");
+
+        return fixed::create(sin_lut[lut_angle]);
+    }
 
     /**
      * @brief Cosine value of an angle in degrees.
      * @param degrees_angle Angle in the range [0, 360].
      * @return Cosine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed degrees_cos(fixed degrees_angle);
+    [[nodiscard]] constexpr fixed degrees_cos(fixed degrees_angle)
+    {
+        BTN_CONSTEXPR_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]");
+
+        constexpr rule_of_three_approximation rule_of_three(360, 512);
+        fixed lut_angle = rule_of_three.calculate(degrees_angle);
+        return fixed::create(sin_lut[(lut_angle.unsigned_integer() + 128) & 0x1FF]);
+    }
 
     /**
      * @brief Cosine value of a s16 angle.
      * @param lut_angle Angle in the range [0, 512].
      * @return Cosine value in the range [-1, 1].
      */
-    [[nodiscard]] fixed lut_cos(int lut_angle);
+    [[nodiscard]] constexpr fixed lut_cos(int lut_angle)
+    {
+        BTN_CONSTEXPR_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]");
+
+        return fixed::create(sin_lut[(lut_angle + 128) & 0x1FF]);
+    }
 }
 
 #endif

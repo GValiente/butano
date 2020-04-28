@@ -35,8 +35,7 @@ namespace
         {
             pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
             pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
-            bool updated = last_value.first.integer() != new_value.first.integer() ||
-                    last_value.second.integer() != new_value.second.integer();
+            bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
         }
@@ -77,8 +76,7 @@ namespace
         {
             pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
             pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
-            bool updated = last_value.first.integer() != new_value.first.integer() ||
-                    last_value.second.integer() != new_value.second.integer();
+            bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
         }

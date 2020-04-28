@@ -2,7 +2,6 @@
 #define BTN_SPRITES_MANAGER_ITEM_H
 
 #include "btn_size.h"
-#include "btn_point.h"
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_sprites.h"
@@ -26,7 +25,7 @@ class sprites_manager_item : public intrusive_list_node_type
 public:
     hw::sprites::handle handle;
     fixed_point position;
-    point hw_position;
+    fixed_point hw_position;
     size half_dimensions;
     unsigned usages = 1;
     unsigned sort_key;
@@ -73,9 +72,9 @@ public:
             real_position -= camera::position();
         }
 
-        hw_position.set_x(real_position.x().integer() + (display::width() / 2) - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() + (display::height() / 2) - half_dimensions.height());
-        hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
+        hw_position.set_x(real_position.x() + (display::width() / 2) - half_dimensions.width());
+        hw_position.set_y(real_position.y() + (display::height() / 2) - half_dimensions.height());
+        hw::sprites::set_position(hw_position.x().integer(), hw_position.y().integer(), handle);
     }
 
     void update_hw_position(const fixed_point& camera_position)
@@ -87,9 +86,9 @@ public:
             real_position -= camera_position;
         }
 
-        hw_position.set_x(real_position.x().integer() + (display::width() / 2) - half_dimensions.width());
-        hw_position.set_y(real_position.y().integer() + (display::height() / 2) - half_dimensions.height());
-        hw::sprites::set_position(hw_position.x(), hw_position.y(), handle);
+        hw_position.set_x(real_position.x() + (display::width() / 2) - half_dimensions.width());
+        hw_position.set_y(real_position.y() + (display::height() / 2) - half_dimensions.height());
+        hw::sprites::set_position(hw_position.x().integer(), hw_position.y().integer(), handle);
     }
 
     void update_sort_key(int bg_priority, int z_order)

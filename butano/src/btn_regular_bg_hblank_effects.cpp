@@ -37,7 +37,7 @@ namespace
         {
             fixed& last_value = target_last_value.value<fixed>();
             fixed new_value = bgs_manager::hw_position(target_id).x();
-            bool updated = last_value.integer() != new_value.integer();
+            bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
         }
@@ -77,7 +77,7 @@ namespace
         {
             fixed& last_value = target_last_value.value<fixed>();
             fixed new_value = bgs_manager::hw_position(target_id).y();
-            bool updated = last_value.integer() != new_value.integer();
+            bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
         }

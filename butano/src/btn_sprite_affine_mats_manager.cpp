@@ -21,23 +21,13 @@ namespace
     public:
         sprite_affine_mat_attributes attributes;
         unsigned usages;
-        hw::sprite_affine_mats::item_type hw_item;
         bool updated;
-
-        void init()
-        {
-            attributes = sprite_affine_mat_attributes();
-            usages = 1;
-            updated = false;
-            hw_item.init();
-        }
 
         void init(const sprite_affine_mat_attributes& new_attributes)
         {
             attributes = new_attributes;
             usages = 1;
             updated = false;
-            hw_item.init(new_attributes);
         }
     };
 
@@ -67,7 +57,7 @@ namespace
         data.free_item_indexes.pop_back();
 
         item_type& new_item = data.items[item_index];
-        new_item.init();
+        new_item.init(sprite_affine_mat_attributes());
         hw::sprite_affine_mats::setup(data.handles_ptr[item_index]);
         _update(item_index);
         return item_index;
@@ -80,7 +70,7 @@ namespace
 
         item_type& new_item = data.items[item_index];
         new_item.init(attributes);
-        hw::sprite_affine_mats::setup(new_item.hw_item, data.handles_ptr[item_index]);
+        hw::sprite_affine_mats::setup(attributes, data.handles_ptr[item_index]);
         _update(item_index);
         return item_index;
     }
@@ -170,8 +160,7 @@ void set_rotation_angle(int id, fixed rotation_angle)
 {
     item_type& item = data.items[id];
     item.attributes.set_rotation_angle(rotation_angle);
-    item.hw_item.set_rotation_angle(rotation_angle);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -184,8 +173,7 @@ void set_scale_x(int id, fixed scale_x)
 {
     item_type& item = data.items[id];
     item.attributes.set_scale_x(scale_x);
-    item.hw_item.set_scale_x(scale_x);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -198,8 +186,7 @@ void set_scale_y(int id, fixed scale_y)
 {
     item_type& item = data.items[id];
     item.attributes.set_scale_y(scale_y);
-    item.hw_item.set_scale_y(scale_y);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -207,9 +194,7 @@ void set_scale(int id, fixed scale)
 {
     item_type& item = data.items[id];
     item.attributes.set_scale(scale);
-    item.hw_item.set_scale_x(scale);
-    item.hw_item.set_scale_y(scale);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -217,9 +202,7 @@ void set_scale(int id, fixed scale_x, fixed scale_y)
 {
     item_type& item = data.items[id];
     item.attributes.set_scale(scale_x, scale_y);
-    item.hw_item.set_scale_x(scale_x);
-    item.hw_item.set_scale_y(scale_y);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -232,8 +215,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
 {
     item_type& item = data.items[id];
     item.attributes.set_horizontal_flip(horizontal_flip);
-    item.hw_item.set_horizontal_flip(horizontal_flip);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -246,8 +228,7 @@ void set_vertical_flip(int id, bool vertical_flip)
 {
     item_type& item = data.items[id];
     item.attributes.set_vertical_flip(vertical_flip);
-    item.hw_item.set_vertical_flip(vertical_flip);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -260,8 +241,7 @@ void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
 {
     item_type& item = data.items[id];
     item.attributes = attributes;
-    item.hw_item.init(attributes);
-    hw::sprite_affine_mats::setup(item.hw_item, data.handles_ptr[id]);
+    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
     _update(id);
 }
 
@@ -274,7 +254,7 @@ bool identity(int id)
 bool double_size(int id)
 {
     item_type& item = data.items[id];
-    return hw::sprite_affine_mats::double_size(item.hw_item, max(item.attributes.scale_x(), item.attributes.scale_y()));
+    return item.attributes.double_size();
 }
 
 bool updated(int id)

@@ -77,12 +77,13 @@ namespace
 
     void _assign_affine_mat(sprite_affine_mat_ptr affine_mat_ptr, item_type& item)
     {
+        bool old_double_size = item.affine_mat_ptr && hw::sprites::double_size(item.handle);
         item.affine_mat_ptr = move(affine_mat_ptr);
 
-        bool double_size = item.double_size();
-        hw::sprites::set_affine_mat(item.affine_mat_ptr->id(), double_size, item.handle);
+        bool new_double_size = item.double_size();
+        hw::sprites::set_affine_mat(item.affine_mat_ptr->id(), new_double_size, item.handle);
 
-        if(double_size)
+        if(old_double_size != new_double_size)
         {
             _update_item_dimensions(item);
         }
@@ -532,7 +533,7 @@ const fixed_point& position(id_type id)
     return item->position;
 }
 
-const point& hw_position(id_type id)
+const fixed_point& hw_position(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     return item->hw_position;
@@ -800,26 +801,14 @@ void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_ma
     if(affine_mat_ptr)
     {
         const sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
+        item->remove_affine_mat_when_not_needed = false;
 
-        if(item->affine_mat_ptr)
+        if(item->affine_mat_ptr == affine_mat)
         {
-            if(item->affine_mat_ptr == affine_mat)
-            {
-                return;
-            }
+            return;
         }
 
-        if(item->remove_affine_mat_when_not_needed && affine_mat.identity())
-        {
-            if(item->affine_mat_ptr)
-            {
-                _remove_affine_mat(*item);
-            }
-        }
-        else
-        {
-            _assign_affine_mat(affine_mat, *item);
-        }
+        _assign_affine_mat(affine_mat, *item);
     }
     else
     {
@@ -837,26 +826,14 @@ void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat_ptr
     if(affine_mat_ptr)
     {
         sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
+        item->remove_affine_mat_when_not_needed = false;
 
-        if(item->affine_mat_ptr)
+        if(item->affine_mat_ptr == affine_mat)
         {
-            if(item->affine_mat_ptr == affine_mat)
-            {
-                return;
-            }
+            return;
         }
 
-        if(item->remove_affine_mat_when_not_needed && affine_mat.identity())
-        {
-            if(item->affine_mat_ptr)
-            {
-                _remove_affine_mat(*item);
-            }
-        }
-        else
-        {
-            _assign_affine_mat(move(affine_mat), *item);
-        }
+        _assign_affine_mat(move(affine_mat), *item);
     }
     else
     {
@@ -980,44 +957,84 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
-void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {
-    for(int index = 0, limit = display::height(); index < limit; ++index)
+    if(hw_y == 0)
     {
-        const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
-        int y = hw_y + first_attributes.y().integer();
-        dest_ptr[index] = uint16_t(hw::sprites::first_attributes(y, shape, bpp_mode, affine_mode,
-                                                                 first_attributes.mosaic_enabled(),
-                                                                 first_attributes.blending_enabled(),
-                                                                 first_attributes.window_enabled()));
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
+            int y = first_attributes.y().integer();
+            int dest_value = hw::sprites::first_attributes(
+                        y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
+                        first_attributes.blending_enabled(), first_attributes.window_enabled());
+            dest_ptr[index] = uint16_t(dest_value);
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
+            int y = (hw_y + first_attributes.y()).integer();
+            int dest_value = hw::sprites::first_attributes(
+                        y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
+                        first_attributes.blending_enabled(), first_attributes.window_enabled());
+            dest_ptr[index] = uint16_t(dest_value);
+        }
     }
 }
 
-void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
+void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
         const sprite_regular_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
     BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat_ptr, "Item is not regular");
 
-    for(int index = 0, limit = display::height(); index < limit; ++index)
+    if(hw_x == 0)
     {
-        const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
-        int x = hw_x + second_attributes.x().integer();
-        dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
-                                                                  second_attributes.vertical_flip()));
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
+            int x = second_attributes.x().integer();
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
+                                                                      second_attributes.vertical_flip()));
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
+            int x = (hw_x + second_attributes.x()).integer();
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
+                                                                      second_attributes.vertical_flip()));
+        }
     }
 }
 
-void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
+void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
         const sprite_affine_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
     BTN_ASSERT(static_cast<item_type*>(id)->affine_mat_ptr, "Item is not affine");
 
-    for(int index = 0, limit = display::height(); index < limit; ++index)
+    if(hw_x == 0)
     {
-        const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
-        int x = hw_x + second_attributes.x().integer();
-        dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
+            int x = second_attributes.x().integer();
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
+            int x = (hw_x + second_attributes.x()).integer();
+            dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
+        }
     }
 }
 

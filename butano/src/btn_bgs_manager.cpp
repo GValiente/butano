@@ -457,17 +457,37 @@ void update_camera()
 
 void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
-    for(int index = 0, limit = display::height(); index < limit; ++index)
+    if(base_position == 0)
     {
-        dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            dest_ptr[index] = uint16_t(positions_ptr[index].integer());
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+        }
     }
 }
 
 void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
-    for(int index = 0, limit = display::height(); index < limit; ++index)
+    if(base_position == 0)
     {
-        dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            dest_ptr[index] = uint16_t(positions_ptr[index].integer());
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+        }
     }
 }
 

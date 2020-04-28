@@ -65,7 +65,7 @@ namespace
 
         public:
             int hw_id;
-            int hw_y;
+            fixed hw_y;
             sprite_shape shape;
             palette_bpp_mode bpp_mode;
             int affine_mode;
@@ -112,7 +112,7 @@ namespace
 
     public:
         int hw_id;
-        int hw_x;
+        fixed hw_x;
         sprite_size size;
 
         second_attributes_last_value_type() :

@@ -1,14 +1,13 @@
 #ifndef BTN_SPRITES_MANAGER_H
 #define BTN_SPRITES_MANAGER_H
 
-#include "btn_limits.h"
+#include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
 {
 
 class size;
-class point;
 class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
@@ -83,7 +82,7 @@ namespace sprites_manager
 
     [[nodiscard]] const fixed_point& position(id_type id);
 
-    [[nodiscard]] const point& hw_position(id_type id);
+    [[nodiscard]] const fixed_point& hw_position(id_type id);
 
     void set_position(id_type id, const fixed_point& position);
 
@@ -159,15 +158,15 @@ namespace sprites_manager
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
-    void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
-            const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode,
+            int affine_mode, const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_second_attributes(
-            id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
+            id_type id, fixed hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
             uint16_t* dest_ptr);
 
     void fill_hblank_effect_affine_second_attributes(
-            id_type id, int hw_x, sprite_size size, const sprite_affine_second_attributes* second_attributes_ptr,
+            id_type id, fixed hw_x, sprite_size size, const sprite_affine_second_attributes* second_attributes_ptr,
             uint16_t* dest_ptr);
 
     void fill_hblank_effect_third_attributes(

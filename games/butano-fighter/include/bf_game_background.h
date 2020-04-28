@@ -9,7 +9,6 @@
 #include "btn_bgs_mosaic_actions.h"
 #include "btn_green_swap_actions.h"
 #include "btn_regular_bg_hblank_effects.h"
-#include "bf_wave_generator.h"
 
 namespace bf::game
 {
@@ -45,7 +44,6 @@ private:
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
     btn::fixed _hblank_effect_deltas[btn::display::height()];
     btn::regular_bg_position_hblank_effect_ptr _hblank_effect;
-    wave_generator _wave_generator;
     btn::optional<btn::bg_palette_grayscale_to_action> _ground_palette_grayscale_action;
     btn::optional<btn::bg_palette_inverted_toggle_action> _ground_palette_inverted_action;
     btn::optional<btn::bg_palette_inverted_toggle_action> _clouds_palette_inverted_action;

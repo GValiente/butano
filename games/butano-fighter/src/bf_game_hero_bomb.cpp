@@ -28,6 +28,16 @@ namespace
         builder.set_blending_enabled(true);
         return builder.release_build();
     }
+
+    [[nodiscard]] constexpr btn::array<btn::fixed, btn::display::height()> _create_wave_hblank_effect_deltas()
+    {
+        btn::array<btn::fixed, btn::display::height()> result;
+        wave_generator().generate(result);
+        return result;
+    }
+
+    constexpr const btn::array<btn::fixed, btn::display::height()> wave_hblank_effect_deltas =
+            _create_wave_hblank_effect_deltas();
 }
 
 hero_bomb::hero_bomb() :
@@ -35,13 +45,11 @@ hero_bomb::hero_bomb() :
     _bg_move_action(_bg, -0.5, 4),
     _circle_hblank_effect(btn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
                               btn::window::internal(), _circle_hblank_effect_deltas)),
-    _wave_hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(_bg, _wave_hblank_effect_deltas))
+    _wave_hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(_bg, wave_hblank_effect_deltas))
 {
     btn::window::outside().set_show_bg(_bg, false);
     _circle_hblank_effect.set_visible(false);
 
-    wave_generator().generate(_wave_hblank_effect_deltas);
-    _wave_hblank_effect.reload_deltas_ref();
     _wave_hblank_effect.set_visible(false);
 }
 

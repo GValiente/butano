@@ -53,7 +53,6 @@ private:
     btn::pair<btn::fixed, btn::fixed> _circle_hblank_effect_deltas[btn::display::height()];
     circle_generator _circle_generator;
     btn::rect_window_boundaries_hblank_effect_ptr _circle_hblank_effect;
-    btn::fixed _wave_hblank_effect_deltas[btn::display::height()];
     btn::regular_bg_position_hblank_effect_ptr _wave_hblank_effect;
     status_type _status = status_type::INACTIVE;
     int _counter = 0;

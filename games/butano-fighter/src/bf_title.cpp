@@ -12,8 +12,8 @@
 #include "btn_sprite_first_attributes.h"
 #include "btn_sprite_items_butano_font.h"
 #include "btn_sprite_items_fighter_font.h"
+#include "btn_sprite_affine_mat_attributes.h"
 #include "btn_sprite_items_butano_big_sprite.h"
-#include "btn_sprite_items_butano_big_sprite_alt.h"
 #include "bf_scene_type.h"
 #include "bf_wave_generator.h"
 
@@ -72,26 +72,6 @@ namespace
         return btn::span<const btn::sprite_regular_second_attributes>(vector.data(), vector.max_size());
     }
 
-    [[nodiscard]] btn::span<const btn::sprite_third_attributes> _create_attributes_span(
-            const btn::ivector<btn::sprite_third_attributes>& vector)
-    {
-        return btn::span<const btn::sprite_third_attributes>(vector.data(), vector.max_size());
-    }
-
-    void _build_butano_tiles_hblank_effect_attributes(const btn::sprite_ptr& sprite, int graphics_index,
-                                                      btn::ivector<btn::sprite_third_attributes>& attributes)
-    {
-        btn::sprite_third_attributes even_sprite_attributes = sprite.third_attributes();
-        btn::sprite_third_attributes odd_sprite_attributes = even_sprite_attributes;
-        odd_sprite_attributes.set_tiles(btn::sprite_items::butano_big_sprite_alt.tiles_item().create_tiles(graphics_index));
-
-        for(int index = 0, limit = attributes.max_size(); index < limit; index += 2)
-        {
-            attributes.push_back(even_sprite_attributes);
-            attributes.push_back(odd_sprite_attributes);
-        }
-    }
-
     [[nodiscard]] constexpr btn::array<btn::sprite_first_attributes, btn::display::height()> _create_butano_character_hblank_effect_attributes()
     {
         btn::array<btn::sprite_first_attributes, btn::display::height()> result;
@@ -107,6 +87,81 @@ namespace
 
     constexpr const btn::array<btn::sprite_first_attributes, btn::display::height()> butano_character_hblank_effect_attributes =
             _create_butano_character_hblank_effect_attributes();
+
+    [[nodiscard]] constexpr btn::array<btn::sprite_affine_mat_attributes, btn::display::height()> _create_fighter_character_hblank_effect_attributes()
+    {
+        btn::array<btn::sprite_affine_mat_attributes, btn::display::height()> result;
+        int start = 90;
+
+        for(int index = start; index < btn::display::height(); ++index)
+        {
+            result[index].set_scale(1 + (btn::fixed(index - start) / 112));
+            result[index].set_rotation_angle(index - start);
+        }
+
+        return result;
+    }
+
+    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_first_register_values()
+    {
+        auto attributes = _create_fighter_character_hblank_effect_attributes();
+        btn::array<int16_t, btn::display::height()> result = {};
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            result[index] = int16_t(attributes[index].first_register_value());
+        }
+
+        return result;
+    }
+
+    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_second_register_values()
+    {
+        auto attributes = _create_fighter_character_hblank_effect_attributes();
+        btn::array<int16_t, btn::display::height()> result = {};
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            result[index] = int16_t(attributes[index].second_register_value());
+        }
+
+        return result;
+    }
+
+    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_third_register_values()
+    {
+        auto attributes = _create_fighter_character_hblank_effect_attributes();
+        btn::array<int16_t, btn::display::height()> result = {};
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            result[index] = int16_t(attributes[index].third_register_value());
+        }
+
+        return result;
+    }
+
+    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_fourth_register_values()
+    {
+        auto attributes = _create_fighter_character_hblank_effect_attributes();
+        btn::array<int16_t, btn::display::height()> result = {};
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            result[index] = int16_t(attributes[index].fourth_register_value());
+        }
+
+        return result;
+    }
+
+    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_first_register_values =
+            _create_fighter_character_hblank_effect_first_register_values();
+    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_second_register_values =
+            _create_fighter_character_hblank_effect_second_register_values();
+    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_third_register_values =
+            _create_fighter_character_hblank_effect_third_register_values();
+    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_fourth_register_values =
+            _create_fighter_character_hblank_effect_fourth_register_values();
 }
 
 title::title(btn::sprite_text_generator& text_generator) :
@@ -119,15 +174,8 @@ title::title(btn::sprite_text_generator& text_generator) :
     _butano_up_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
                                    _butano_up_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
     _butano_down_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
-                                     _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
-    _butano_up_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
-                                       _butano_up_sprite, _create_attributes_span(_butano_up_tiles_hblank_effect_attributes))),
-    _butano_down_tiles_hblank_effect(btn::sprite_third_attributes_hblank_effect_ptr::create(
-                                         _butano_down_sprite, _create_attributes_span(_butano_down_tiles_hblank_effect_attributes)))
+                                     _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes)))
 {
-    _build_butano_tiles_hblank_effect_attributes(_butano_up_sprite, 0, _butano_up_tiles_hblank_effect_attributes);
-    _build_butano_tiles_hblank_effect_attributes(_butano_down_sprite, 1, _butano_down_tiles_hblank_effect_attributes);
-
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
     text_generator.generate(0, 12 - (btn::display::height() / 2), "HIGH SCORE: 123456", _high_score_text_sprites);
@@ -135,6 +183,7 @@ title::title(btn::sprite_text_generator& text_generator) :
     text_generator.generate(0, 44 + 12, "CREDITS", _credits_text_sprites);
     text_generator.set_alignment(old_alignment);
     _cursor_sprite.set_position(_credits_text_sprites[0].x() - 28, _start_text_sprites[0].y());
+    _cursor_sprite.set_visible(false);
 
     for(btn::sprite_ptr& sprite : _high_score_text_sprites)
     {
@@ -151,9 +200,7 @@ title::title(btn::sprite_text_generator& text_generator) :
         sprite.set_visible(false);
     }
 
-    _cursor_sprite.set_visible(false);
-
-    // btn::music_items::battle_clean.play(0.6);
+    btn::music_items::battle_clean.play(0.6);
 }
 
 btn::optional<scene_type> title::update()
@@ -172,15 +219,16 @@ void title::_animate_butano_x()
     if(_butano_x_hblank_effect_speed)
     {
         wave_generator generator;
-        generator.set_amplitude(1);
         generator.set_speed(_butano_x_hblank_effect_speed);
 
         if(_butano_x_hblank_effect_speed > 32)
         {
+            generator.set_amplitude(2);
             _butano_x_hblank_effect_speed -= 32;
         }
         else
         {
+            generator.set_amplitude(1);
             _butano_x_hblank_effect_speed /= 2;
         }
 
@@ -192,15 +240,15 @@ void title::_animate_butano_x()
             _butano_x_hblank_effect_attributes[index].set_x(values[index]);
         }
 
-        _butano_up_x_hblank_effect.reload_attributes_ref();
-        _butano_down_x_hblank_effect.reload_attributes_ref();
+        _butano_up_x_hblank_effect->reload_attributes_ref();
+        _butano_down_x_hblank_effect->reload_attributes_ref();
     }
     else
     {
-        if(_butano_up_x_hblank_effect.visible())
+        if(_butano_up_x_hblank_effect)
         {
-            _butano_up_x_hblank_effect.set_visible(false);
-            _butano_down_x_hblank_effect.set_visible(false);
+            _butano_up_x_hblank_effect.reset();
+            _butano_down_x_hblank_effect.reset();
         }
     }
 }
@@ -301,7 +349,18 @@ void title::_animate_fighter_characters()
         if(_fighter_character_move_action->done())
         {
             _fighter_character_move_action.reset();
-            // _fighter_character_hblank_effect.reset();
+            _fighter_character_first_hblank_effect.reset();
+            _fighter_character_second_hblank_effect.reset();
+            _fighter_character_third_hblank_effect.reset();
+            _fighter_character_fourth_hblank_effect.reset();
+
+            for(btn::sprite_ptr& fighter_character : _fighter_characters)
+            {
+                if(fighter_character.affine_mat())
+                {
+                    fighter_character.set_affine_mat(btn::nullopt);
+                }
+            }
         }
     }
     else
@@ -313,9 +372,19 @@ void title::_animate_fighter_characters()
                 btn::fixed_point position = fighter_character.position();
                 fighter_character.set_y((btn::display::height() + 32) / 2);
                 fighter_character.set_visible(true);
-                _fighter_character_move_action.emplace(fighter_character, 12, position);
-                /*_fighter_character_hblank_effect = btn::sprite_first_attributes_hblank_effect_ptr::create(
-                            fighter_character, butano_character_hblank_effect_attributes);*/
+                _fighter_character_move_action.emplace(fighter_character, 16, position);
+
+                btn::sprite_affine_mat_ptr affine_mat = btn::sprite_affine_mat_ptr::create();
+                fighter_character.set_affine_mat(affine_mat);
+                fighter_character.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
+                _fighter_character_first_hblank_effect = btn::sprite_affine_mat_first_register_hblank_effect_ptr::create(
+                            affine_mat, fighter_character_hblank_effect_first_register_values);
+                _fighter_character_second_hblank_effect = btn::sprite_affine_mat_second_register_hblank_effect_ptr::create(
+                            affine_mat, fighter_character_hblank_effect_second_register_values);
+                _fighter_character_third_hblank_effect = btn::sprite_affine_mat_third_register_hblank_effect_ptr::create(
+                            affine_mat, fighter_character_hblank_effect_third_register_values);
+                _fighter_character_fourth_hblank_effect = btn::sprite_affine_mat_fourth_register_hblank_effect_ptr::create(
+                            affine_mat, fighter_character_hblank_effect_fourth_register_values);
                 return;
             }
         }

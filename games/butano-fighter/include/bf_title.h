@@ -1,13 +1,13 @@
 #ifndef BF_TITLE_H
 #define BF_TITLE_H
 
-#include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_display.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_hblank_effects.h"
 #include "btn_sprite_third_attributes.h"
 #include "btn_sprite_regular_second_attributes.h"
+#include "btn_sprite_affine_mat_hblank_effects.h"
 #include "bf_scene.h"
 
 namespace btn
@@ -50,15 +50,15 @@ private:
     btn::sprite_ptr _cursor_sprite;
     btn::fixed _butano_y_inc = -4.05;
     btn::vector<btn::sprite_regular_second_attributes, btn::display::height()> _butano_x_hblank_effect_attributes;
-    btn::sprite_regular_second_attributes_hblank_effect_ptr _butano_up_x_hblank_effect;
-    btn::sprite_regular_second_attributes_hblank_effect_ptr _butano_down_x_hblank_effect;
-    btn::vector<btn::sprite_third_attributes, btn::display::height()> _butano_up_tiles_hblank_effect_attributes;
-    btn::sprite_third_attributes_hblank_effect_ptr _butano_up_tiles_hblank_effect;
-    btn::vector<btn::sprite_third_attributes, btn::display::height()> _butano_down_tiles_hblank_effect_attributes;
-    btn::sprite_third_attributes_hblank_effect_ptr _butano_down_tiles_hblank_effect;
-    btn::optional<btn::sprite_first_attributes_hblank_effect_ptr> _butano_character_hblank_effect;
+    btn::optional<btn::sprite_regular_second_attributes_hblank_effect_ptr> _butano_up_x_hblank_effect;
+    btn::optional<btn::sprite_regular_second_attributes_hblank_effect_ptr> _butano_down_x_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _butano_character_move_action;
+    btn::optional<btn::sprite_first_attributes_hblank_effect_ptr> _butano_character_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _fighter_character_move_action;
+    btn::optional<btn::sprite_affine_mat_first_register_hblank_effect_ptr> _fighter_character_first_hblank_effect;
+    btn::optional<btn::sprite_affine_mat_second_register_hblank_effect_ptr> _fighter_character_second_hblank_effect;
+    btn::optional<btn::sprite_affine_mat_third_register_hblank_effect_ptr> _fighter_character_third_hblank_effect;
+    btn::optional<btn::sprite_affine_mat_fourth_register_hblank_effect_ptr> _fighter_character_fourth_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _cursor_move_action;
     state _state = state::START;
     int _butano_x_hblank_effect_speed = 64 * 32;

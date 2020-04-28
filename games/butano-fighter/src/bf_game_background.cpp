@@ -5,6 +5,7 @@
 #include "btn_regular_bg_builder.h"
 #include "btn_bg_items_clouds.h"
 #include "btn_bg_items_stage_1.h"
+#include "bf_wave_generator.h"
 
 namespace bf::game
 {
@@ -12,7 +13,6 @@ namespace bf::game
 namespace
 {
     constexpr const btn::fixed blending_transparency = 0.4;
-    constexpr const int hblank_effect_multiplier = 32;
 
     btn::regular_bg_ptr _create_ground_bg()
     {
@@ -39,7 +39,6 @@ background::background() :
 {
     btn::blending::set_transparency_alpha(blending_transparency);
     btn::window::internal().set_show_bg(_clouds_move_action.bg(), false);
-    _wave_generator.set_amplitude(3);
     _hblank_effect.set_visible(false);
 }
 
@@ -133,8 +132,47 @@ void background::update()
 
         if(_bomb_fade_frames)
         {
-            _wave_generator.set_speed(_bomb_fade_frames * hblank_effect_multiplier);
-            _wave_generator.generate(_hblank_effect_deltas);
+            wave_generator wave_generator;
+            int hblank_effect_speed_multiplier;
+            int hblank_effect_amplitude;
+
+            switch(_bomb_fade_frames)
+            {
+
+            case 1:
+                hblank_effect_speed_multiplier = 1;
+                hblank_effect_amplitude = 1;
+                break;
+
+            case 2:
+                hblank_effect_speed_multiplier = 2;
+                hblank_effect_amplitude = 1;
+                break;
+
+            case 3:
+                hblank_effect_speed_multiplier = 4;
+                hblank_effect_amplitude = 2;
+                break;
+
+            case 4:
+                hblank_effect_speed_multiplier = 8;
+                hblank_effect_amplitude = 2;
+                break;
+
+            case 5:
+                hblank_effect_speed_multiplier = 16;
+                hblank_effect_amplitude = 3;
+                break;
+
+            default:
+                hblank_effect_speed_multiplier = 32;
+                hblank_effect_amplitude = 3;
+                break;
+            }
+
+            wave_generator.set_speed(_bomb_fade_frames * hblank_effect_speed_multiplier);
+            wave_generator.set_amplitude(hblank_effect_amplitude);
+            wave_generator.generate(_hblank_effect_deltas);
             _hblank_effect.reload_deltas_ref();
         }
         else

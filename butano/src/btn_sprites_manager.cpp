@@ -889,7 +889,7 @@ sprite_regular_second_attributes regular_second_attributes(id_type id)
                                             hw::sprites::vertical_flip(handle));
 }
 
-void set_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
+void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");

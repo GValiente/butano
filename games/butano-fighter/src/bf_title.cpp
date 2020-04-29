@@ -66,13 +66,15 @@ namespace
         return result;
     }
 
-    [[nodiscard]] btn::span<const btn::sprite_regular_second_attributes> _create_attributes_span(
-            const btn::ivector<btn::sprite_regular_second_attributes>& vector)
+    [[nodiscard]] btn::sprite_regular_second_attributes_hblank_effect_ptr _create_x_hblank_effect(
+        const btn::sprite_ptr& sprite, const btn::ivector<btn::sprite_regular_second_attributes>& attributes)
     {
-        return btn::span<const btn::sprite_regular_second_attributes>(vector.data(), vector.max_size());
+        btn::span<const btn::sprite_regular_second_attributes> span(attributes.data(), attributes.size());
+        return btn::sprite_regular_second_attributes_hblank_effect_ptr::create(sprite, span);
     }
 
-    [[nodiscard]] constexpr btn::array<btn::sprite_first_attributes, btn::display::height()> _create_butano_character_hblank_effect_attributes()
+    [[nodiscard]] constexpr btn::array<btn::sprite_first_attributes, btn::display::height()>
+    _create_butano_character_hblank_effect_attributes()
     {
         btn::array<btn::sprite_first_attributes, btn::display::height()> result;
         int start = 64;
@@ -88,7 +90,8 @@ namespace
     constexpr const btn::array<btn::sprite_first_attributes, btn::display::height()> butano_character_hblank_effect_attributes =
             _create_butano_character_hblank_effect_attributes();
 
-    [[nodiscard]] constexpr btn::array<btn::sprite_affine_mat_attributes, btn::display::height()> _create_fighter_character_hblank_effect_attributes()
+    [[nodiscard]] constexpr btn::array<btn::sprite_affine_mat_attributes, btn::display::height()>
+    _create_fighter_character_hblank_effect_attributes()
     {
         btn::array<btn::sprite_affine_mat_attributes, btn::display::height()> result;
         int start = 90;
@@ -102,66 +105,8 @@ namespace
         return result;
     }
 
-    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_first_register_values()
-    {
-        auto attributes = _create_fighter_character_hblank_effect_attributes();
-        btn::array<int16_t, btn::display::height()> result = {};
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            result[index] = int16_t(attributes[index].first_register_value());
-        }
-
-        return result;
-    }
-
-    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_second_register_values()
-    {
-        auto attributes = _create_fighter_character_hblank_effect_attributes();
-        btn::array<int16_t, btn::display::height()> result = {};
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            result[index] = int16_t(attributes[index].second_register_value());
-        }
-
-        return result;
-    }
-
-    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_third_register_values()
-    {
-        auto attributes = _create_fighter_character_hblank_effect_attributes();
-        btn::array<int16_t, btn::display::height()> result = {};
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            result[index] = int16_t(attributes[index].third_register_value());
-        }
-
-        return result;
-    }
-
-    [[nodiscard]] constexpr btn::array<int16_t, btn::display::height()> _create_fighter_character_hblank_effect_fourth_register_values()
-    {
-        auto attributes = _create_fighter_character_hblank_effect_attributes();
-        btn::array<int16_t, btn::display::height()> result = {};
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            result[index] = int16_t(attributes[index].fourth_register_value());
-        }
-
-        return result;
-    }
-
-    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_first_register_values =
-            _create_fighter_character_hblank_effect_first_register_values();
-    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_second_register_values =
-            _create_fighter_character_hblank_effect_second_register_values();
-    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_third_register_values =
-            _create_fighter_character_hblank_effect_third_register_values();
-    constexpr const btn::array<int16_t, btn::display::height()> fighter_character_hblank_effect_fourth_register_values =
-            _create_fighter_character_hblank_effect_fourth_register_values();
+    constexpr const btn::array<btn::sprite_affine_mat_attributes, btn::display::height()> fighter_character_hblank_effect_attributes =
+            _create_fighter_character_hblank_effect_attributes();
 }
 
 title::title(btn::sprite_text_generator& text_generator) :
@@ -171,10 +116,8 @@ title::title(btn::sprite_text_generator& text_generator) :
     _fighter_characters(_create_fighter_characters()),
     _cursor_sprite(btn::sprite_items::hero_head.create_sprite(0, 0)),
     _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.regular_second_attributes()),
-    _butano_up_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
-                                   _butano_up_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes))),
-    _butano_down_x_hblank_effect(btn::sprite_regular_second_attributes_hblank_effect_ptr::create(
-                                     _butano_down_sprite, _create_attributes_span(_butano_x_hblank_effect_attributes)))
+    _butano_up_x_hblank_effect(_create_x_hblank_effect(_butano_up_sprite, _butano_x_hblank_effect_attributes)),
+    _butano_down_x_hblank_effect(_create_x_hblank_effect(_butano_down_sprite, _butano_x_hblank_effect_attributes))
 {
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
@@ -205,13 +148,11 @@ title::title(btn::sprite_text_generator& text_generator) :
 
 btn::optional<scene_type> title::update()
 {
-    btn::optional<scene_type> result;
     _animate_butano_x();
     _animate_butano_y();
     _animate_butano_characters();
     _animate_fighter_characters();
-    _menu();
-    return result;
+    return _menu();
 }
 
 void title::_animate_butano_x()
@@ -287,14 +228,17 @@ void title::_animate_butano_y()
     _butano_up_sprite.set_y(butano_up_sprite_y);
     _butano_down_sprite.set_y(butano_up_sprite_y + 64);
 
-    if(butano_up_sprite_y <= -26)
+    if(int(_state) <= int(state::MENU))
     {
-        btn::fixed blending_intensity = -butano_up_sprite_y - 26;
-        btn::blending::set_intensity_alpha(blending_intensity / 40);
-    }
-    else
-    {
-        btn::blending::set_intensity_alpha(0);
+        if(butano_up_sprite_y <= -26)
+        {
+            btn::fixed blending_intensity = -butano_up_sprite_y - 26;
+            btn::blending::set_intensity_alpha(blending_intensity / 40);
+        }
+        else
+        {
+            btn::blending::set_intensity_alpha(0);
+        }
     }
 }
 
@@ -349,10 +293,7 @@ void title::_animate_fighter_characters()
         if(_fighter_character_move_action->done())
         {
             _fighter_character_move_action.reset();
-            _fighter_character_first_hblank_effect.reset();
-            _fighter_character_second_hblank_effect.reset();
-            _fighter_character_third_hblank_effect.reset();
-            _fighter_character_fourth_hblank_effect.reset();
+            _fighter_character_hblank_effect.reset();
 
             for(btn::sprite_ptr& fighter_character : _fighter_characters)
             {
@@ -377,14 +318,8 @@ void title::_animate_fighter_characters()
                 btn::sprite_affine_mat_ptr affine_mat = btn::sprite_affine_mat_ptr::create();
                 fighter_character.set_affine_mat(affine_mat);
                 fighter_character.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
-                _fighter_character_first_hblank_effect = btn::sprite_affine_mat_first_register_hblank_effect_ptr::create(
-                            affine_mat, fighter_character_hblank_effect_first_register_values);
-                _fighter_character_second_hblank_effect = btn::sprite_affine_mat_second_register_hblank_effect_ptr::create(
-                            affine_mat, fighter_character_hblank_effect_second_register_values);
-                _fighter_character_third_hblank_effect = btn::sprite_affine_mat_third_register_hblank_effect_ptr::create(
-                            affine_mat, fighter_character_hblank_effect_third_register_values);
-                _fighter_character_fourth_hblank_effect = btn::sprite_affine_mat_fourth_register_hblank_effect_ptr::create(
-                            affine_mat, fighter_character_hblank_effect_fourth_register_values);
+                _fighter_character_hblank_effect = btn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
+                            affine_mat, fighter_character_hblank_effect_attributes);
                 return;
             }
         }
@@ -393,8 +328,12 @@ void title::_animate_fighter_characters()
     }
 }
 
-void title::_menu()
+btn::optional<scene_type> title::_menu()
 {
+    const int cursor_scale_frames = 20;
+    const int sprites_hide_frames = 60;
+    btn::optional<scene_type> result;
+
     if(_cursor_move_action)
     {
         _cursor_move_action->update();
@@ -404,50 +343,139 @@ void title::_menu()
             _cursor_move_action.reset();
         }
     }
-    else
+    else if(_state == state::MENU)
     {
-        if(_state == state::MENU)
+        if(! _cursor_sprite.visible())
         {
-            if(! _cursor_sprite.visible())
+            _cursor_sprite.set_visible(true);
+            _cursor_sprite.set_scale(0.01);
+            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 1);
+
+            for(btn::sprite_ptr& sprite : _high_score_text_sprites)
             {
-                _cursor_sprite.set_visible(true);
+                sprite.set_visible(true);
+            }
+
+            for(btn::sprite_ptr& sprite : _start_text_sprites)
+            {
+                sprite.set_visible(true);
+            }
+
+            for(btn::sprite_ptr& sprite : _credits_text_sprites)
+            {
+                sprite.set_visible(true);
+            }
+        }
+
+        if(btn::keypad::pressed(btn::keypad::button_type::A))
+        {
+            if(btn::blending::intensity_alpha() > 0)
+            {
+                _blending_intensity_action.emplace(cursor_scale_frames, 0);
+            }
+
+            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 0.01);
+            _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
+            btn::sound_items::cure.play();
+            _state = state::HIDE_CURSOR;
+        }
+        else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))
+        {
+            if(_start_selected)
+            {
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
+            }
+            else
+            {
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
+            }
+
+            _start_selected = ! _start_selected;
+            btn::sound_items::alert.play();
+        }
+    }
+
+    if(_cursor_scale_action)
+    {
+        _cursor_scale_action->update();
+
+        if(_cursor_scale_action->done())
+        {
+            _cursor_scale_action.reset();
+
+            if(_state == state::HIDE_CURSOR)
+            {
+                for(btn::sprite_ptr& sprite : _butano_characters)
+                {
+                    sprite.set_blending_enabled(true);
+                }
+
+                for(btn::sprite_ptr& sprite : _fighter_characters)
+                {
+                    sprite.set_blending_enabled(true);
+                }
 
                 for(btn::sprite_ptr& sprite : _high_score_text_sprites)
                 {
-                    sprite.set_visible(true);
+                    sprite.set_blending_enabled(true);
                 }
 
                 for(btn::sprite_ptr& sprite : _start_text_sprites)
                 {
-                    sprite.set_visible(true);
+                    sprite.set_blending_enabled(true);
                 }
 
                 for(btn::sprite_ptr& sprite : _credits_text_sprites)
                 {
-                    sprite.set_visible(true);
-                }
-            }
-
-            if(btn::keypad::pressed(btn::keypad::button_type::A))
-            {
-                btn::sound_items::cure.play();
-            }
-            else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))
-            {
-                if(_start_selected)
-                {
-                    _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
-                }
-                else
-                {
-                    _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
+                    sprite.set_blending_enabled(true);
                 }
 
-                _start_selected = ! _start_selected;
-                btn::sound_items::alert.play();
+                _cursor_sprite.set_visible(false);
+                _blending_transparency_action.emplace(sprites_hide_frames, 0);
+                _state = state::HIDE_SPRITES;
             }
         }
     }
+
+    if(_music_volume_action)
+    {
+        _music_volume_action->update();
+
+        if(_music_volume_action->done())
+        {
+            _music_volume_action.reset();
+        }
+    }
+
+    if(_blending_intensity_action)
+    {
+        _blending_intensity_action->update();
+
+        if(_blending_intensity_action->done())
+        {
+            _blending_intensity_action.reset();
+        }
+    }
+
+    if(_blending_transparency_action)
+    {
+        _blending_transparency_action->update();
+
+        if(_blending_transparency_action->done())
+        {
+            _blending_transparency_action.reset();
+            _butano_up_sprite.set_visible(false);
+            _butano_down_sprite.set_visible(false);
+            _butano_characters.clear();
+            _fighter_characters.clear();
+            _high_score_text_sprites.clear();
+            _start_text_sprites.clear();
+            _credits_text_sprites.clear();
+            result = scene_type::GAME;
+        }
+    }
+
+    return result;
 }
 
 }

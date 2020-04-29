@@ -3,7 +3,9 @@
 
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
+#include "btn_blending_actions.h"
 #include "btn_sprite_hblank_effects.h"
 #include "btn_sprite_third_attributes.h"
 #include "btn_sprite_regular_second_attributes.h"
@@ -37,6 +39,8 @@ private:
         BUTANO_CHARACTERS_SHOW,
         FIGHTER_CHARACTERS_SHOW,
         MENU,
+        HIDE_CURSOR,
+        HIDE_SPRITES,
         END
     };
 
@@ -55,13 +59,14 @@ private:
     btn::optional<btn::sprite_move_to_action> _butano_character_move_action;
     btn::optional<btn::sprite_first_attributes_hblank_effect_ptr> _butano_character_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _fighter_character_move_action;
-    btn::optional<btn::sprite_affine_mat_first_register_hblank_effect_ptr> _fighter_character_first_hblank_effect;
-    btn::optional<btn::sprite_affine_mat_second_register_hblank_effect_ptr> _fighter_character_second_hblank_effect;
-    btn::optional<btn::sprite_affine_mat_third_register_hblank_effect_ptr> _fighter_character_third_hblank_effect;
-    btn::optional<btn::sprite_affine_mat_fourth_register_hblank_effect_ptr> _fighter_character_fourth_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _cursor_move_action;
+    btn::optional<btn::sprite_scale_to_action> _cursor_scale_action;
+    btn::optional<btn::music_volume_to_action> _music_volume_action;
+    btn::optional<btn::blending_intensity_alpha_to_action> _blending_intensity_action;
+    btn::optional<btn::blending_transparency_alpha_to_action> _blending_transparency_action;
     state _state = state::START;
     int _butano_x_hblank_effect_speed = 64 * 32;
+    btn::optional<btn::sprite_affine_mat_attributes_hblank_effect_ptr> _fighter_character_hblank_effect;
     bool _start_selected = true;
     bool _butano_y_up = true;
 
@@ -73,7 +78,7 @@ private:
 
     void _animate_fighter_characters();
 
-    void _menu();
+    btn::optional<scene_type> _menu();
 };
 
 }

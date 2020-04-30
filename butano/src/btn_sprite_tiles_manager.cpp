@@ -398,6 +398,18 @@ namespace
 
             BTN_LOG(']');
 
+            BTN_LOG("items_map: ", data.items_map.size());
+            BTN_LOG('[');
+
+            for(const auto& items_map_pair : data.items_map)
+            {
+                BTN_LOG("    ",
+                        " - data: ", items_map_pair.first,
+                        " - id: ", items_map_pair.second);
+            }
+
+            BTN_LOG(']');
+
             if(data.biggest_free_iterator == data.items.end())
             {
                 BTN_LOG("biggest_free_iterator: invalid");

@@ -83,15 +83,18 @@ namespace
         uint8_t start_block = 0;
         uint8_t blocks_count = 0;
         uint8_t next_index = max_list_items;
-        bool commit = false;
 
     private:
         uint8_t _status = uint8_t(status_type::FREE);
 
     public:
-        [[nodiscard]] bool is_tiles() const
+        unsigned is_tiles: 1;
+        unsigned commit: 1;
+
+        item_type()
         {
-            return ! palette_ptr;
+            is_tiles = false;
+            commit = false;
         }
 
         [[nodiscard]] status_type status() const
@@ -130,7 +133,7 @@ namespace
 
         [[nodiscard]] int palette_offset() const
         {
-            return palette_ptr ? palette_ptr->id() : 0;
+            return palette_ptr->id();
         }
     };
 
@@ -341,7 +344,7 @@ namespace
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count);
                 }
-                else if(item.is_tiles())
+                else if(item.is_tiles)
                 {
                     BTN_LOG("    ",
                             (item.status() == item_type::status_type::USED ? "used" : "to_remove"),
@@ -362,11 +365,12 @@ namespace
                             " - blocks_count: ", item.blocks_count,
                             " - data: ", item.data,
                             " - usages: ", item.usages,
-                            " - width: ", item.width,
+                            " - width: ", item.width ,
                             " - height: ", item.height,
-                            " - tiles: ", item.tiles_ptr->id(),
-                            " - palette: ", item.palette_ptr->id(),
-                            " - tiles_offset: ", item.tiles_offset(),
+                            " - tiles: ", (item.tiles_ptr ? item.tiles_ptr->id() : -1),
+                            " - palette: ", (item.palette_ptr ? item.palette_ptr->id() : -1),
+                            " - tiles_offset: ", (item.tiles_ptr ? item.tiles_offset() : -1),
+                            " - palette_offset: ", (item.palette_ptr ? item.palette_offset() : -1),
                             (item.commit ? " - commit" : " - no_commit"));
                 }
             }
@@ -409,7 +413,7 @@ namespace
 
     void _commit_item(item_type& item)
     {
-        if(item.is_tiles())
+        if(item.is_tiles)
         {
             hw::bg_blocks::commit_tiles(item.data, item.start_block, item.half_words());
         }
@@ -458,11 +462,20 @@ namespace
             item = &data.items.item(id);
         }
 
+        bool is_tiles = ! create_data.palette_ptr;
+
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {
             BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-            if(create_data.palette_ptr)
+            if(is_tiles)
+            {
+                item_type new_item;
+                new_item.start_block = uint8_t(item->start_block + blocks_count);
+                new_item.blocks_count = uint8_t(new_item_blocks_count);
+                data.items.insert_after(id, new_item);
+            }
+            else
             {
                 item->blocks_count -= blocks_count;
 
@@ -472,13 +485,6 @@ namespace
                 auto new_item_iterator = data.items.insert_after(id, new_item);
                 id = new_item_iterator.id();
                 item = &data.items.item(id);
-            }
-            else
-            {
-                item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + blocks_count);
-                new_item.blocks_count = uint8_t(new_item_blocks_count);
-                data.items.insert_after(id, new_item);
             }
         }
 
@@ -491,6 +497,7 @@ namespace
         item->height = uint8_t(create_data.height);
         item->usages = 1;
         item->set_status(item_type::status_type::USED);
+        item->is_tiles = is_tiles;
         item->commit = false;
         data.free_blocks_count -= blocks_count;
 
@@ -621,7 +628,7 @@ int used_tile_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && item.is_tiles())
+        if(item.status() != item_type::status_type::FREE && item.is_tiles)
         {
             result += item.blocks_count;
         }
@@ -651,7 +658,7 @@ int used_map_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && ! item.is_tiles())
+        if(item.status() != item_type::status_type::FREE && ! item.is_tiles)
         {
             result += item.blocks_count;
         }
@@ -711,8 +718,7 @@ int find_tiles(const span<const tile>& tiles_ref)
 }
 
 int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
-                     [[maybe_unused]] const bg_tiles_ptr& tiles_ptr,
-                     [[maybe_unused]] const bg_palette_ptr& palette_ptr)
+                     const bg_tiles_ptr& tiles_ptr, const bg_palette_ptr& palette_ptr)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
@@ -728,10 +734,10 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
                    map_dimensions.width(), " - ", item.width);
         BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                    map_dimensions.height(), " - ", item.height);
-        BTN_ASSERT(tiles_ptr.id() == item.tiles_ptr->id(), "Tiles does not match item tiles: ",
-                   tiles_ptr.id(), " - ", item.tiles_ptr->id());
-        BTN_ASSERT(palette_ptr.id() == item.palette_ptr->id(), "Palette does not match item palette: ",
-                   palette_ptr.id(), " - ", item.palette_ptr->id());
+        BTN_ASSERT(! item.tiles_ptr || tiles_ptr == *item.tiles_ptr,
+                   "Tiles does not match item tiles: ", tiles_ptr.id(), " - ", item.tiles_ptr->id());
+        BTN_ASSERT(! item.palette_ptr || palette_ptr == *item.palette_ptr,
+                   "Palette does not match item palette: ", palette_ptr.id(), " - ", item.palette_ptr->id());
 
         switch(item.status())
         {
@@ -748,6 +754,9 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
             item.usages = 1;
             item.set_status(item_type::status_type::USED);
             data.to_remove_blocks_count -= item.blocks_count;
+
+            item.tiles_ptr = tiles_ptr;
+            item.palette_ptr = palette_ptr;
             break;
         }
 
@@ -884,6 +893,9 @@ void decrease_usages(int id)
     {
         item.set_status(item_type::status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
+
+        item.tiles_ptr.reset();
+        item.palette_ptr.reset();
     }
 
     BTN_BG_BLOCKS_LOG_STATUS();
@@ -1134,15 +1146,6 @@ void update()
     if(data.to_remove_blocks_count)
     {
         BTN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
-
-        for(item_type& item : data.items)
-        {
-            if(item.status() == item_type::status_type::TO_REMOVE)
-            {
-                item.tiles_ptr.reset();
-                item.palette_ptr.reset();
-            }
-        }
 
         auto end = data.items.end();
         auto before_previous_iterator = end;

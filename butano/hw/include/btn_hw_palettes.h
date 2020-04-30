@@ -91,6 +91,16 @@ namespace btn::hw::palettes
         commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_BG));
     }
 
+    [[nodiscard]] inline uint16_t* sprite_color_register(int index)
+    {
+        return reinterpret_cast<uint16_t*>(MEM_PAL_OBJ) + index;
+    }
+
+    [[nodiscard]] inline uint16_t* bg_color_register(int index)
+    {
+        return reinterpret_cast<uint16_t*>(MEM_PAL_BG) + index;
+    }
+
     [[nodiscard]] inline uint16_t* bg_transparent_color_register()
     {
         return reinterpret_cast<uint16_t*>(MEM_PAL_BG);

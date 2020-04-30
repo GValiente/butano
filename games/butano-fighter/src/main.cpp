@@ -23,14 +23,25 @@ int main()
     big_text_generator.set_bg_priority(1);
 
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::title(small_text_generator));
+    btn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
-    btn::core::update();
+    btn::optional<bf::scene_type> next_scene_bck;
+    int wait_frames = 0;
 
     while(true)
     {
-        btn::optional<bf::scene_type> next_scene = scene->update();
+        btn::optional<bf::scene_type> next_scene;
+
+        if(scene)
+        {
+            next_scene = scene->update();
+        }
+        else
+        {
+            next_scene = next_scene_bck;
+        }
+
         butano_background.update();
         stats.update();
         keypad_shortcuts.update();
@@ -38,20 +49,33 @@ int main()
 
         if(next_scene)
         {
-            switch(*next_scene)
+            next_scene_bck = next_scene;
+
+            if(scene)
             {
+                scene.reset();
+                wait_frames = 30;
+            }
 
-            case bf::scene_type::INTRO:
-                scene.reset(new bf::intro(big_text_generator));
-                break;
+            --wait_frames;
 
-            case bf::scene_type::TITLE:
-                scene.reset(new bf::title(small_text_generator));
-                break;
+            if(! wait_frames)
+            {
+                switch(*next_scene)
+                {
 
-            case bf::scene_type::GAME:
-                scene.reset(new bf::game::game(small_text_generator));
-                break;
+                case bf::scene_type::INTRO:
+                    scene.reset(new bf::intro(big_text_generator, butano_background));
+                    break;
+
+                case bf::scene_type::TITLE:
+                    scene.reset(new bf::title(small_text_generator, butano_background));
+                    break;
+
+                case bf::scene_type::GAME:
+                    scene.reset(new bf::game::game(small_text_generator, butano_background));
+                    break;
+                }
             }
         }
     }

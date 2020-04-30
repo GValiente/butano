@@ -1,32 +1,10 @@
 #include "btn_window.h"
 
-#include "btn_rect_window.h"
-#include "btn_inside_window.h"
 #include "btn_regular_bg_ptr.h"
 #include "btn_display_manager.h"
 
 namespace btn
 {
-
-rect_window window::internal()
-{
-    return rect_window(0);
-}
-
-rect_window window::external()
-{
-    return rect_window(1);
-}
-
-inside_window window::sprites()
-{
-    return inside_window(2);
-}
-
-window window::outside()
-{
-    return window(3);
-}
 
 bool window::show_bg(const regular_bg_ptr& regular_bg) const
 {

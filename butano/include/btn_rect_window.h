@@ -14,6 +14,16 @@ class rect_window : public inside_window
 {
 
 public:
+    [[nodiscard]] static rect_window internal()
+    {
+        return rect_window(window::internal().id());
+    }
+
+    [[nodiscard]] static window external()
+    {
+        return rect_window(window::external().id());
+    }
+
     [[nodiscard]] fixed top() const;
 
     [[nodiscard]] fixed left() const;

@@ -5,6 +5,12 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 
+namespace bf
+{
+    enum class scene_type;
+    class butano_background;
+}
+
 namespace bf::game
 {
 
@@ -70,8 +76,8 @@ public:
 
     [[nodiscard]] bool throw_bomb();
 
-    void update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
-                objects& objects, background& background);
+    btn::optional<scene_type> update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
+                                     objects& objects, background& background, butano_background& butano_background);
 
 private:
     int _level = 2;
@@ -96,7 +102,7 @@ private:
 
     void _animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
 
-    void _animate_dead(background& background);
+    btn::optional<scene_type> _animate_dead(background& background, butano_background& butano_background);
 };
 
 }

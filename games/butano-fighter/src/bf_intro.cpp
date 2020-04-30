@@ -5,6 +5,7 @@
 #include "btn_optional.h"
 #include "btn_sprite_text_generator.h"
 #include "bf_scene_type.h"
+#include "bf_butano_background.h"
 
 namespace bf
 {
@@ -32,7 +33,7 @@ namespace
     }
 }
 
-intro::intro(btn::sprite_text_generator& text_generator) :
+intro::intro(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
     _bg_fade_action(_create_bg_fade_action()),
     _sprite_fade_action(_create_sprite_fade_action()),
     _blending_action(60, 0)
@@ -47,6 +48,8 @@ intro::intro(btn::sprite_text_generator& text_generator) :
     _enable_blending(_up_text_sprites);
     _enable_blending(_middle_text_sprites);
     _enable_blending(_down_text_sprites);
+
+    butano_background.put_under_all();
 }
 
 btn::optional<scene_type> intro::update()

@@ -16,6 +16,7 @@
 #include "btn_sprite_items_butano_big_sprite.h"
 #include "bf_scene_type.h"
 #include "bf_wave_generator.h"
+#include "bf_butano_background.h"
 
 namespace bf
 {
@@ -109,7 +110,7 @@ namespace
             _create_fighter_character_hblank_effect_attributes();
 }
 
-title::title(btn::sprite_text_generator& text_generator) :
+title::title(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _butano_characters(_create_butano_characters()),
@@ -143,6 +144,7 @@ title::title(btn::sprite_text_generator& text_generator) :
         sprite.set_visible(false);
     }
 
+    butano_background.put_under_all();
     btn::music_items::battle_clean.play(0.6);
 }
 
@@ -471,6 +473,7 @@ btn::optional<scene_type> title::_menu()
             _high_score_text_sprites.clear();
             _start_text_sprites.clear();
             _credits_text_sprites.clear();
+            btn::blending::set_transparency_alpha(1);
             result = scene_type::GAME;
         }
     }

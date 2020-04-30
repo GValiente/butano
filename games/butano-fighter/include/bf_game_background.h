@@ -35,6 +35,8 @@ public:
 
     void show_hero_dead();
 
+    void reset();
+
     void update();
 
 private:

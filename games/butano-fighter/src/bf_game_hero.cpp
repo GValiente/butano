@@ -8,10 +8,12 @@
 #include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_hero_death.h"
 #include "btn_sprite_items_hero_weapons.h"
+#include "bf_scene_type.h"
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_background.h"
+#include "bf_butano_background.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_hero_bullet_level.h"
 
@@ -107,9 +109,12 @@ bool hero::throw_bomb()
     return true;
 }
 
-void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
-                  objects& objects, background& background)
+btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
+                                       enemy_bullets& enemy_bullets, objects& objects, background& background,
+                                       butano_background& butano_background)
 {
+    btn::optional<scene_type> result;
+
     if(alive())
     {
         btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
@@ -161,8 +166,10 @@ void hero::update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bull
     }
     else
     {
-        _animate_dead(background);
+        result = _animate_dead(background, butano_background);
     }
+
+    return result;
 }
 
 btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite)
@@ -258,9 +265,10 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
     }
 }
 
-void hero::_animate_dead(background& background)
+btn::optional<scene_type> hero::_animate_dead(background& background, butano_background& butano_background)
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
+    btn::optional<scene_type> result;
 
     if(_death_counter == 1)
     {
@@ -316,6 +324,15 @@ void hero::_animate_dead(background& background)
         {
             _death_sprites.clear();
         }
+    }
+    else if(_death_counter == 220)
+    {
+        butano_background.show(_weapon_sprite.position());
+    }
+    else if(_death_counter > 220 && ! butano_background.silhouette_visible())
+    {
+        btn::camera::set_x(0);
+        result = scene_type::TITLE;
     }
 
     ++_death_counter;
@@ -378,6 +395,7 @@ void hero::_animate_dead(background& background)
         }
     }
 
+    return result;
 }
 
 }

@@ -6,21 +6,31 @@
 namespace btn
 {
 
-class rect_window;
-class inside_window;
 class regular_bg_ptr;
 
 class window
 {
 
 public:
-    [[nodiscard]] static rect_window internal();
+    [[nodiscard]] static window internal()
+    {
+        return window(0);
+    }
 
-    [[nodiscard]] static rect_window external();
+    [[nodiscard]] static window external()
+    {
+        return window(1);
+    }
 
-    [[nodiscard]] static inside_window sprites();
+    [[nodiscard]] static window sprites()
+    {
+        return window(2);
+    }
 
-    [[nodiscard]] static window outside();
+    [[nodiscard]] static window outside()
+    {
+        return window(3);
+    }
 
     [[nodiscard]] int id() const
     {

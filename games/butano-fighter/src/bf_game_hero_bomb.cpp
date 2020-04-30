@@ -1,7 +1,6 @@
 #include "bf_game_hero_bomb.h"
 
 #include "btn_keypad.h"
-#include "btn_window.h"
 #include "btn_blending.h"
 #include "btn_regular_bg_builder.h"
 #include "btn_bg_items_hero_bomb.h"
@@ -21,14 +20,6 @@ namespace
     constexpr const int open_frames = 50;
     constexpr const int close_frames = 130;
 
-    btn::regular_bg_ptr _create_bg()
-    {
-        btn::regular_bg_builder builder(btn::bg_items::hero_bomb);
-        builder.set_priority(1);
-        builder.set_blending_enabled(true);
-        return builder.release_build();
-    }
-
     [[nodiscard]] constexpr btn::array<btn::fixed, btn::display::height()> _create_wave_hblank_effect_deltas()
     {
         btn::array<btn::fixed, btn::display::height()> result;
@@ -38,19 +29,6 @@ namespace
 
     constexpr const btn::array<btn::fixed, btn::display::height()> wave_hblank_effect_deltas =
             _create_wave_hblank_effect_deltas();
-}
-
-hero_bomb::hero_bomb() :
-    _bg(_create_bg()),
-    _bg_move_action(_bg, -0.5, 4),
-    _circle_hblank_effect(btn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
-                              btn::window::internal(), _circle_hblank_effect_deltas)),
-    _wave_hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(_bg, wave_hblank_effect_deltas))
-{
-    btn::window::outside().set_show_bg(_bg, false);
-    _circle_hblank_effect.set_visible(false);
-
-    _wave_hblank_effect.set_visible(false);
 }
 
 void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullets, background& background)
@@ -66,20 +44,30 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
                 const btn::fixed_point& hero_position = hero.weapon_position();
                 _center = btn::point(hero_position.x().integer(), hero_position.y().integer());
 
-                btn::rect_window window = btn::window::internal();
-                window.set_boundaries(hero_position, hero_position);
-                window.set_show_blending(false);
-                _move_window_top_action.emplace(window, -4);
-                _move_window_bottom_action.emplace(window, 4);
+                btn::regular_bg_builder builder(btn::bg_items::hero_bomb);
+                builder.set_priority(1);
+                builder.set_blending_enabled(true);
+
+                btn::regular_bg_ptr bg = builder.release_build();
+                btn::window::outside().set_show_bg(bg, false);
+                _bg_move_action.emplace(bg, -0.5, 4);
+
+                btn::rect_window internal_window = btn::rect_window::internal();
+                internal_window.set_boundaries(hero_position, hero_position);
+                internal_window.set_show_blending(false);
+                _move_window_top_action.emplace(internal_window, -4);
+                _move_window_bottom_action.emplace(internal_window, 4);
 
                 _circle_generator.set_origin_y(hero_position.y());
                 _circle_generator.set_radius(0);
                 _circle_generator.generate(_circle_hblank_effect_deltas);
-                _circle_hblank_effect.reload_deltas_ref();
-                _circle_hblank_effect.set_visible(true);
+                _circle_hblank_effect = btn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
+                            internal_window, _circle_hblank_effect_deltas);
+
+                _wave_hblank_effect = btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
+                            move(bg), wave_hblank_effect_deltas);
 
                 background.show_bomb_open(open_frames);
-                _wave_hblank_effect.set_visible(true);
                 btn::sound_items::explosion_2.play();
                 _status = status_type::OPEN;
                 _counter = open_frames;
@@ -93,7 +81,7 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
         break;
 
     case status_type::OPEN:
-        _bg_move_action.update();
+        _bg_move_action->update();
 
         if(_counter)
         {
@@ -107,7 +95,7 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
             enemies.check_hero_bomb(_center, integer_radius * integer_radius);
             _circle_generator.set_radius(fixed_radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);
-            _circle_hblank_effect.reload_deltas_ref();
+            _circle_hblank_effect->reload_deltas_ref();
 
             _play_flame_sound();
         }
@@ -116,11 +104,12 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
             _move_window_top_action.reset();
             _move_window_bottom_action.reset();
 
-            _circle_hblank_effect.set_visible(false);
-            btn::window::internal().set_boundaries(-1000, -1000, 1000, 1000);
+            btn::rect_window internal_window = btn::rect_window::internal();
+            internal_window.set_boundaries(-1000, -1000, 1000, 1000);
+            _circle_hblank_effect.reset();
             enemy_bullets.clear();
 
-            btn::window::internal().set_show_blending(true);
+            internal_window.set_show_blending(true);
             btn::blending::set_transparency_alpha(1);
             _intensity_blending_action.emplace(30, 0.5);
             background.show_bomb_close(close_frames - 30);
@@ -131,7 +120,10 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
         break;
 
     case status_type::CLOSE:
-        _bg_move_action.update();
+        if(_bg_move_action)
+        {
+            _bg_move_action->update();
+        }
 
         if(_transparency_blending_action)
         {
@@ -168,9 +160,10 @@ void hero_bomb::update(hero& hero, enemies& enemies, enemy_bullets& enemy_bullet
             }
             else if(_counter == 30)
             {
-                btn::window::internal().set_boundaries(0, 0, 0, 0);
+                btn::rect_window::internal().set_boundaries(0, 0, 0, 0);
                 background.show_clouds(30);
-                _wave_hblank_effect.set_visible(false);
+                _bg_move_action.reset();
+                _wave_hblank_effect.reset();
             }
 
             if(_counter > 40)

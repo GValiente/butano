@@ -20,11 +20,13 @@ namespace btn
 namespace bf
 {
 
+class butano_background;
+
 class title : public scene
 {
 
 public:
-    title(btn::sprite_text_generator& text_generator);
+    title(btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     title(const title& other) = delete;
 

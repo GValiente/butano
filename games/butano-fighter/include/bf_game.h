@@ -11,11 +11,6 @@
 #include "bf_game_objects.h"
 #include "bf_game_scoreboard.h"
 
-namespace bf
-{
-    class background;
-}
-
 namespace bf::game
 {
 
@@ -23,7 +18,7 @@ class game : public scene
 {
 
 public:
-    explicit game(btn::sprite_text_generator& text_generator);
+    game(btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
 
@@ -36,6 +31,7 @@ private:
     enemy_bullets _enemy_bullets;
     objects _objects;
     scoreboard _scoreboard;
+    butano_background& _butano_background;
 };
 
 }

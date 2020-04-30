@@ -89,6 +89,11 @@ void background::show_hero_dead()
     _green_swap_action.reset();
 }
 
+void background::reset()
+{
+    btn::blending::set_transparency_alpha(1);
+}
+
 void background::update()
 {
     _ground_move_action.update();

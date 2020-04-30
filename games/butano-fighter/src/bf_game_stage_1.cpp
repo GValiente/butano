@@ -38,7 +38,7 @@ namespace
 
     constexpr const enemy_event enemy_events[] = {
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
-                bat_bullet_events,  60,     enemy_drop_type::NONE),
+                no_bullet_events,  60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,
                 no_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(-constants::play_width + 20, start_y),     bat_move_events,

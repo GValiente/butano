@@ -32,9 +32,9 @@ namespace bgs_manager
 
     [[nodiscard]] const regular_bg_map_ptr& map(int id);
 
-    void set_map(int id, const regular_bg_map_ptr& map_ptr);
+    void set_map(int id, const regular_bg_map_ptr& map);
 
-    void set_map(int id, regular_bg_map_ptr&& map_ptr);
+    void set_map(int id, regular_bg_map_ptr&& map);
 
     [[nodiscard]] const fixed_point& position(int id);
 

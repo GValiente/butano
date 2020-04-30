@@ -75,13 +75,13 @@ namespace
         }
     }
 
-    void _assign_affine_mat(sprite_affine_mat_ptr affine_mat_ptr, item_type& item)
+    void _assign_affine_mat(sprite_affine_mat_ptr affine_mat, item_type& item)
     {
-        bool old_double_size = item.affine_mat_ptr && hw::sprites::double_size(item.handle);
-        item.affine_mat_ptr = move(affine_mat_ptr);
+        bool old_double_size = item.affine_mat && hw::sprites::double_size(item.handle);
+        item.affine_mat = move(affine_mat);
 
         bool new_double_size = item.double_size();
-        hw::sprites::set_affine_mat(item.affine_mat_ptr->id(), new_double_size, item.handle);
+        hw::sprites::set_affine_mat(item.affine_mat->id(), new_double_size, item.handle);
 
         if(old_double_size != new_double_size)
         {
@@ -93,12 +93,12 @@ namespace
 
     void _remove_affine_mat(item_type& item)
     {
-        sprite_affine_mat_ptr& affine_mat_ptr = *item.affine_mat_ptr;
+        sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
         bool double_size = hw::sprites::double_size(item.handle);
-        hw::sprites::set_horizontal_flip(affine_mat_ptr.horizontal_flip(), item.handle);
-        hw::sprites::set_vertical_flip(affine_mat_ptr.vertical_flip(), item.handle);
+        hw::sprites::set_horizontal_flip(affine_mat.horizontal_flip(), item.handle);
+        hw::sprites::set_vertical_flip(affine_mat.vertical_flip(), item.handle);
         hw::sprites::remove_affine_mat(item.handle);
-        item.affine_mat_ptr.reset();
+        item.affine_mat.reset();
 
         if(double_size)
         {
@@ -116,25 +116,25 @@ namespace
             {
                 for(item_type& item : *layer)
                 {
-                    if(item.affine_mat_ptr)
+                    if(item.affine_mat)
                     {
-                        const sprite_affine_mat_ptr& affine_mat_ptr = *item.affine_mat_ptr;
-                        int affine_mat_ptr_id = affine_mat_ptr.id();
+                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
+                        int affine_mat_id = affine_mat.id();
 
-                        if(sprite_affine_mats_manager::updated(affine_mat_ptr_id))
+                        if(sprite_affine_mats_manager::updated(affine_mat_id))
                         {
-                            if(item.remove_affine_mat_when_not_needed && affine_mat_ptr.identity())
+                            if(item.remove_affine_mat_when_not_needed && affine_mat.identity())
                             {
                                 _remove_affine_mat(item);
                             }
                             else if(sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
                             {
                                 bool old_double_size = hw::sprites::double_size(item.handle);
-                                bool new_double_size = sprite_affine_mats_manager::double_size(affine_mat_ptr_id);
+                                bool new_double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
 
                                 if(old_double_size != new_double_size)
                                 {
-                                    hw::sprites::set_affine_mat(affine_mat_ptr_id, new_double_size, item.handle);
+                                    hw::sprites::set_affine_mat(affine_mat_id, new_double_size, item.handle);
                                     _update_item_dimensions(item);
                                     _update_handle(item);
                                 }
@@ -356,52 +356,52 @@ btn::size dimensions(id_type id)
 const sprite_tiles_ptr& tiles(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->tiles_ptr;
+    return item->tiles;
 }
 
-void set_tiles(id_type id, const sprite_tiles_ptr& tiles_ptr)
+void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(tiles_ptr != item->tiles_ptr)
+    if(tiles != item->tiles)
     {
-        BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid tiles count: ",
-                   item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
+        BTN_ASSERT(item->tiles.tiles_count() == tiles.tiles_count(), "Invalid tiles count: ",
+                   item->tiles.tiles_count(), " - ", tiles.tiles_count());
 
-        hw::sprites::set_tiles(tiles_ptr.id(), item->handle);
-        item->tiles_ptr = tiles_ptr;
+        hw::sprites::set_tiles(tiles.id(), item->handle);
+        item->tiles = tiles;
         _update_handle(*item);
     }
 }
 
-void set_tiles(id_type id, sprite_tiles_ptr&& tiles_ptr)
+void set_tiles(id_type id, sprite_tiles_ptr&& tiles)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(tiles_ptr != item->tiles_ptr)
+    if(tiles != item->tiles)
     {
-        BTN_ASSERT(item->tiles_ptr.tiles_count() == tiles_ptr.tiles_count(), "Invalid tiles count: ",
-                   item->tiles_ptr.tiles_count(), " - ", tiles_ptr.tiles_count());
+        BTN_ASSERT(item->tiles.tiles_count() == tiles.tiles_count(), "Invalid tiles count: ",
+                   item->tiles.tiles_count(), " - ", tiles.tiles_count());
 
-        hw::sprites::set_tiles(tiles_ptr.id(), item->handle);
-        item->tiles_ptr = move(tiles_ptr);
+        hw::sprites::set_tiles(tiles.id(), item->handle);
+        item->tiles = move(tiles);
         _update_handle(*item);
     }
 }
 
-void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr)
+void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(tiles_ptr != item->tiles_ptr)
+    if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(item->palette_ptr.bpp_mode()),
-                   "Invalid tiles or shape size: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette_ptr.bpp_mode()));
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette.bpp_mode()),
+                   "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
+                   shape_size.tiles_count(item->palette.bpp_mode()));
 
         hw::sprites::handle& handle = item->handle;
-        hw::sprites::set_tiles(tiles_ptr.id(), handle);
-        item->tiles_ptr = tiles_ptr;
+        hw::sprites::set_tiles(tiles.id(), handle);
+        item->tiles = tiles;
         _update_handle(*item);
 
         if(shape_size != hw::sprites::shape_size(handle))
@@ -418,19 +418,19 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
     }
 }
 
-void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr)
+void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(tiles_ptr != item->tiles_ptr)
+    if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(item->palette_ptr.bpp_mode()),
-                   "Invalid tiles or shape size: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette_ptr.bpp_mode()));
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette.bpp_mode()),
+                   "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
+                   shape_size.tiles_count(item->palette.bpp_mode()));
 
         hw::sprites::handle& handle = item->handle;
-        hw::sprites::set_tiles(tiles_ptr.id(), handle);
-        item->tiles_ptr = move(tiles_ptr);
+        hw::sprites::set_tiles(tiles.id(), handle);
+        item->tiles = move(tiles);
         _update_handle(*item);
 
         if(shape_size != hw::sprites::shape_size(handle))
@@ -450,53 +450,53 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 const sprite_palette_ptr& palette(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->palette_ptr;
+    return item->palette;
 }
 
-void set_palette(id_type id, const sprite_palette_ptr& palette_ptr)
+void set_palette(id_type id, const sprite_palette_ptr& palette)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(palette_ptr != item->palette_ptr)
+    if(palette != item->palette)
     {
-        BTN_ASSERT(item->palette_ptr.bpp_mode() == palette_ptr.bpp_mode(), "Palette BPP mode mismatch: ",
-                   int(item->palette_ptr.bpp_mode()), " - ", int(palette_ptr.bpp_mode()));
+        BTN_ASSERT(item->palette.bpp_mode() == palette.bpp_mode(), "Palette BPP mode mismatch: ",
+                   int(item->palette.bpp_mode()), " - ", int(palette.bpp_mode()));
 
-        hw::sprites::set_palette(palette_ptr.id(), item->handle);
-        item->palette_ptr = palette_ptr;
+        hw::sprites::set_palette(palette.id(), item->handle);
+        item->palette = palette;
         _update_handle(*item);
     }
 }
 
-void set_palette(id_type id, sprite_palette_ptr&& palette_ptr)
+void set_palette(id_type id, sprite_palette_ptr&& palette)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(palette_ptr != item->palette_ptr)
+    if(palette != item->palette)
     {
-        BTN_ASSERT(item->palette_ptr.bpp_mode() == palette_ptr.bpp_mode(), "Palette BPP mode mismatch: ",
-                   int(item->palette_ptr.bpp_mode()), " - ", int(palette_ptr.bpp_mode()));
+        BTN_ASSERT(item->palette.bpp_mode() == palette.bpp_mode(), "Palette BPP mode mismatch: ",
+                   int(item->palette.bpp_mode()), " - ", int(palette.bpp_mode()));
 
-        hw::sprites::set_palette(palette_ptr.id(), item->handle);
-        item->palette_ptr = move(palette_ptr);
+        hw::sprites::set_palette(palette.id(), item->handle);
+        item->palette = move(palette);
         _update_handle(*item);
     }
 }
 
-void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr,
-                           sprite_palette_ptr&& palette_ptr)
+void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
+                           sprite_palette_ptr&& palette)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle& handle = item->handle;
     bool different_shape_size = shape_size != hw::sprites::shape_size(handle);
-    bool different_tiles = tiles_ptr != item->tiles_ptr;
-    bool different_palette = palette_ptr != item->palette_ptr;
+    bool different_tiles = tiles != item->tiles;
+    bool different_palette = palette != item->palette;
 
     if(different_shape_size || different_tiles || different_palette)
     {
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
-                   "Invalid tiles, palette or shape size: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(palette_ptr.bpp_mode()));
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+                   "Invalid tiles, palette or shape size: ", tiles.tiles_count(), " - ",
+                   shape_size.tiles_count(palette.bpp_mode()));
 
         if(different_shape_size)
         {
@@ -512,15 +512,15 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
         if(different_tiles)
         {
-            hw::sprites::set_tiles(tiles_ptr.id(), handle);
-            item->tiles_ptr = move(tiles_ptr);
+            hw::sprites::set_tiles(tiles.id(), handle);
+            item->tiles = move(tiles);
         }
 
         if(different_palette)
         {
-            hw::sprites::set_palette(palette_ptr.id(), handle);
-            hw::sprites::set_bpp_mode(palette_ptr.bpp_mode(), handle);
-            item->palette_ptr = move(palette_ptr);
+            hw::sprites::set_palette(palette.id(), handle);
+            hw::sprites::set_bpp_mode(palette.bpp_mode(), handle);
+            item->palette = move(palette);
         }
 
         _update_handle(*item);
@@ -608,9 +608,9 @@ bool horizontal_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat_ptr)
+    if(item->affine_mat)
     {
-        return item->affine_mat_ptr->horizontal_flip();
+        return item->affine_mat->horizontal_flip();
     }
 
     return hw::sprites::horizontal_flip(item->handle);
@@ -620,9 +620,9 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat_ptr)
+    if(item->affine_mat)
     {
-        item->affine_mat_ptr->set_horizontal_flip(horizontal_flip);
+        item->affine_mat->set_horizontal_flip(horizontal_flip);
     }
     else
     {
@@ -635,9 +635,9 @@ bool vertical_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat_ptr)
+    if(item->affine_mat)
     {
-        return item->affine_mat_ptr->vertical_flip();
+        return item->affine_mat->vertical_flip();
     }
 
     return hw::sprites::vertical_flip(item->handle);
@@ -647,9 +647,9 @@ void set_vertical_flip(id_type id, bool vertical_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat_ptr)
+    if(item->affine_mat)
     {
-        item->affine_mat_ptr->set_vertical_flip(vertical_flip);
+        item->affine_mat->set_vertical_flip(vertical_flip);
     }
     else
     {
@@ -729,14 +729,14 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 
     item->double_size_mode = unsigned(double_size_mode);
 
-    if(item->affine_mat_ptr)
+    if(item->affine_mat)
     {
         bool old_double_size = double_size(id);
         bool new_double_size = item->double_size();
 
         if(old_double_size != new_double_size)
         {
-            hw::sprites::set_affine_mat(item->affine_mat_ptr->id(), new_double_size, item->handle);
+            hw::sprites::set_affine_mat(item->affine_mat->id(), new_double_size, item->handle);
             _update_item_dimensions(*item);
             _update_handle(*item);
         }
@@ -791,53 +791,51 @@ void set_ignore_camera(id_type id, bool ignore_camera)
 optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->affine_mat_ptr;
+    return item->affine_mat;
 }
 
-void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat_ptr)
+void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(affine_mat_ptr)
+    if(affine_mat)
     {
-        const sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
         item->remove_affine_mat_when_not_needed = false;
 
-        if(item->affine_mat_ptr == affine_mat)
+        if(item->affine_mat == affine_mat)
         {
             return;
         }
 
-        _assign_affine_mat(affine_mat, *item);
+        _assign_affine_mat(*affine_mat, *item);
     }
     else
     {
-        if(item->affine_mat_ptr)
+        if(item->affine_mat)
         {
             _remove_affine_mat(*item);
         }
     }
 }
 
-void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat_ptr)
+void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(affine_mat_ptr)
+    if(affine_mat)
     {
-        sprite_affine_mat_ptr& affine_mat = *affine_mat_ptr;
         item->remove_affine_mat_when_not_needed = false;
 
-        if(item->affine_mat_ptr == affine_mat)
+        if(item->affine_mat == affine_mat)
         {
             return;
         }
 
-        _assign_affine_mat(move(affine_mat), *item);
+        _assign_affine_mat(move(*affine_mat), *item);
     }
     else
     {
-        if(item->affine_mat_ptr)
+        if(item->affine_mat)
         {
             _remove_affine_mat(*item);
         }
@@ -855,7 +853,7 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
     auto item = static_cast<item_type*>(id);
     item->remove_affine_mat_when_not_needed = remove_when_not_needed;
 
-    if(remove_when_not_needed && item->affine_mat_ptr && item->affine_mat_ptr->identity())
+    if(remove_when_not_needed && item->affine_mat && item->affine_mat->identity())
     {
         _remove_affine_mat(*item);
     }
@@ -882,7 +880,7 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
 sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
+    BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
     hw::sprites::handle& handle = item->handle;
     return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
@@ -892,7 +890,7 @@ sprite_regular_second_attributes regular_second_attributes(id_type id)
 void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(! item->affine_mat_ptr, "Item is not regular");
+    BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
     hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
     hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
@@ -902,7 +900,7 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat_ptr;
+    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat;
     BTN_ASSERT(affine_mat, "Item is not affine");
 
     return sprite_affine_second_attributes(item->position.x(), *affine_mat);
@@ -911,7 +909,7 @@ sprite_affine_second_attributes affine_second_attributes(id_type id)
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->affine_mat_ptr, "Item is not affine");
+    BTN_ASSERT(item->affine_mat, "Item is not affine");
 
     set_position(id, fixed_point(second_attributes.x(), item->position.y()));
     set_affine_mat(id, second_attributes.affine_mat());
@@ -920,35 +918,35 @@ void set_affine_second_attributes(id_type id, const sprite_affine_second_attribu
 sprite_third_attributes third_attributes(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return sprite_third_attributes(item->tiles_ptr, item->palette_ptr, item->bg_priority());
+    return sprite_third_attributes(item->tiles, item->palette, item->bg_priority());
 }
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle& handle = item->handle;
-    const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
-    const sprite_palette_ptr& palette_ptr = third_attributes.palette();
-    bool different_tiles = tiles_ptr != item->tiles_ptr;
-    bool different_palette = palette_ptr != item->palette_ptr;
+    const sprite_tiles_ptr& tiles = third_attributes.tiles();
+    const sprite_palette_ptr& palette = third_attributes.palette();
+    bool different_tiles = tiles != item->tiles;
+    bool different_palette = palette != item->palette;
 
     if(different_tiles || different_palette)
     {
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size(id).tiles_count(palette_ptr.bpp_mode()),
-                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size(id).tiles_count(palette_ptr.bpp_mode()));
+        BTN_ASSERT(tiles.tiles_count() == shape_size(id).tiles_count(palette.bpp_mode()),
+                   "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
+                   shape_size(id).tiles_count(palette.bpp_mode()));
 
         if(different_tiles)
         {
-            hw::sprites::set_tiles(tiles_ptr.id(), handle);
-            item->tiles_ptr = tiles_ptr;
+            hw::sprites::set_tiles(tiles.id(), handle);
+            item->tiles = tiles;
         }
 
         if(different_palette)
         {
-            hw::sprites::set_palette(palette_ptr.id(), handle);
-            hw::sprites::set_bpp_mode(palette_ptr.bpp_mode(), handle);
-            item->palette_ptr = palette_ptr;
+            hw::sprites::set_palette(palette.id(), handle);
+            hw::sprites::set_bpp_mode(palette.bpp_mode(), handle);
+            item->palette = palette;
         }
 
         _update_handle(*item);
@@ -989,7 +987,7 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
 void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
         const sprite_regular_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
-    BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat_ptr, "Item is not regular");
+    BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat, "Item is not regular");
 
     if(hw_x == 0)
     {
@@ -1016,7 +1014,7 @@ void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, f
 void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
         const sprite_affine_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
-    BTN_ASSERT(static_cast<item_type*>(id)->affine_mat_ptr, "Item is not affine");
+    BTN_ASSERT(static_cast<item_type*>(id)->affine_mat, "Item is not affine");
 
     if(hw_x == 0)
     {
@@ -1044,14 +1042,14 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         const sprite_third_attributes& third_attributes = third_attributes_ptr[index];
-        const sprite_tiles_ptr& tiles_ptr = third_attributes.tiles();
-        const sprite_palette_ptr& palette_ptr = third_attributes.palette();
-        BTN_ASSERT(tiles_ptr.tiles_count() == shape_size.tiles_count(palette_ptr.bpp_mode()),
-                   "Invalid tiles or palette: ", tiles_ptr.tiles_count(), " - ",
-                   shape_size.tiles_count(palette_ptr.bpp_mode()));
+        const sprite_tiles_ptr& tiles = third_attributes.tiles();
+        const sprite_palette_ptr& palette = third_attributes.palette();
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+                   "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
+                   shape_size.tiles_count(palette.bpp_mode()));
 
         int bg_priority = third_attributes.bg_priority();
-        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles_ptr.id(), palette_ptr.id(), bg_priority));
+        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles.id(), palette.id(), bg_priority));
     }
 }
 

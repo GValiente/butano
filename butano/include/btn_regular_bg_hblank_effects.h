@@ -12,16 +12,16 @@ class regular_bg_position_hblank_effect_ptr : public hblank_effect_ptr
 
 public:
     [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_horizontal(
-            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+            regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_horizontal(
-            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+            regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_vertical(
-            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+            regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_vertical(
-            regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref);
+            regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     regular_bg_position_hblank_effect_ptr(const regular_bg_position_hblank_effect_ptr& other);
 
@@ -33,7 +33,7 @@ public:
 
     [[nodiscard]] const regular_bg_ptr& bg() const
     {
-        return _bg_ptr;
+        return _bg;
     }
 
     [[nodiscard]] span<const fixed> deltas_ref() const;
@@ -50,9 +50,9 @@ public:
     }
 
 private:
-    regular_bg_ptr _bg_ptr;
+    regular_bg_ptr _bg;
 
-    regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr);
+    regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg);
 };
 
 
@@ -61,10 +61,10 @@ class regular_bg_attributes_hblank_effect_ptr : public hblank_effect_ptr
 
 public:
     [[nodiscard]] static regular_bg_attributes_hblank_effect_ptr create(
-            regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref);
+            regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<regular_bg_attributes_hblank_effect_ptr> optional_create(
-            regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref);
+            regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);
 
     regular_bg_attributes_hblank_effect_ptr(const regular_bg_attributes_hblank_effect_ptr& other);
 
@@ -76,7 +76,7 @@ public:
 
     [[nodiscard]] const regular_bg_ptr& bg() const
     {
-        return _bg_ptr;
+        return _bg;
     }
 
     [[nodiscard]] span<const regular_bg_attributes> attributes_ref() const;
@@ -93,9 +93,9 @@ public:
     }
 
 private:
-    regular_bg_ptr _bg_ptr;
+    regular_bg_ptr _bg;
 
-    regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr);
+    regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg);
 };
 
 }

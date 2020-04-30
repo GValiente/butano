@@ -11,36 +11,36 @@ class sprite_third_attributes
 {
 
 public:
-    sprite_third_attributes(sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr, int bg_priority);
+    sprite_third_attributes(sprite_tiles_ptr tiles, sprite_palette_ptr palette, int bg_priority);
 
     [[nodiscard]] const sprite_tiles_ptr& tiles() const
     {
-        return _tiles_ptr;
+        return _tiles;
     }
 
-    void set_tiles(const sprite_tiles_ptr& tiles_ptr)
+    void set_tiles(const sprite_tiles_ptr& tiles)
     {
-        _tiles_ptr = tiles_ptr;
+        _tiles = tiles;
     }
 
-    void set_tiles(sprite_tiles_ptr&& tiles_ptr)
+    void set_tiles(sprite_tiles_ptr&& tiles)
     {
-        _tiles_ptr = move(tiles_ptr);
+        _tiles = move(tiles);
     }
 
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
-        return _palette_ptr;
+        return _palette;
     }
 
-    void set_palette(const sprite_palette_ptr& palette_ptr)
+    void set_palette(const sprite_palette_ptr& palette)
     {
-        _palette_ptr = palette_ptr;
+        _palette = palette;
     }
 
-    void set_palette(sprite_palette_ptr&& palette_ptr)
+    void set_palette(sprite_palette_ptr&& palette)
     {
-        _palette_ptr = move(palette_ptr);
+        _palette = move(palette);
     }
 
     [[nodiscard]] int bg_priority() const
@@ -52,7 +52,7 @@ public:
 
     [[nodiscard]] friend bool operator==(const sprite_third_attributes& a, const sprite_third_attributes& b)
     {
-        return a._tiles_ptr == b._tiles_ptr && a._palette_ptr == b._palette_ptr && a._bg_priority == b._bg_priority;
+        return a._tiles == b._tiles && a._palette == b._palette && a._bg_priority == b._bg_priority;
     }
 
     [[nodiscard]] friend bool operator!=(const sprite_third_attributes& a, const sprite_third_attributes& b)
@@ -61,8 +61,8 @@ public:
     }
 
 private:
-    sprite_tiles_ptr _tiles_ptr;
-    sprite_palette_ptr _palette_ptr;
+    sprite_tiles_ptr _tiles;
+    sprite_palette_ptr _palette;
     int8_t _bg_priority;
 };
 

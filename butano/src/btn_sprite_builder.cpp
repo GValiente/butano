@@ -24,27 +24,27 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
                item.tiles_item().graphics_count());
 }
 
-sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles_ptr,
-                               sprite_palette_ptr palette_ptr) :
-    _tiles_ptr(move(tiles_ptr)),
-    _palette_ptr(move(palette_ptr)),
+sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
+                               sprite_palette_ptr palette) :
+    _tiles(move(tiles)),
+    _palette(move(palette)),
     _shape_size(shape_size),
     _graphics_index(0)
 {
-    BTN_ASSERT(_tiles_ptr->tiles_count() == _shape_size.tiles_count(_palette_ptr->bpp_mode()),
-               "Invalid tiles ptr size: ", _tiles_ptr->tiles_count(), " - ",
-               _shape_size.tiles_count(_palette_ptr->bpp_mode()));
+    BTN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp_mode()),
+               "Invalid tiles ptr size: ", _tiles->tiles_count(), " - ",
+               _shape_size.tiles_count(_palette->bpp_mode()));
 }
 
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 {
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_rotation_angle(rotation_angle);
+        _affine_mat->set_rotation_angle(rotation_angle);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
         {
-            _affine_mat_ptr.reset();
+            _affine_mat.reset();
         }
     }
     else if(rotation_angle != 0)
@@ -53,7 +53,7 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
         affine_mat_attributes.set_rotation_angle(rotation_angle);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -62,13 +62,13 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 
 sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
 {
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_scale_x(scale_x);
+        _affine_mat->set_scale_x(scale_x);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
         {
-            _affine_mat_ptr.reset();
+            _affine_mat.reset();
         }
     }
     else if(scale_x != 1)
@@ -77,7 +77,7 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
         affine_mat_attributes.set_scale_x(scale_x);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -86,13 +86,13 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
 
 sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
 {
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_scale_y(scale_y);
+        _affine_mat->set_scale_y(scale_y);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
         {
-            _affine_mat_ptr.reset();
+            _affine_mat.reset();
         }
     }
     else if(scale_y != 1)
@@ -101,7 +101,7 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
         affine_mat_attributes.set_scale_y(scale_y);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -110,13 +110,13 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
 
 sprite_builder& sprite_builder::set_scale(fixed scale)
 {
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_scale(scale);
+        _affine_mat->set_scale(scale);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
         {
-            _affine_mat_ptr.reset();
+            _affine_mat.reset();
         }
     }
     else if(scale != 1)
@@ -125,7 +125,7 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
         affine_mat_attributes.set_scale(scale);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -134,13 +134,13 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
 
 sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
 {
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_scale(scale_x, scale_y);
+        _affine_mat->set_scale(scale_x, scale_y);
 
-        if(_remove_affine_mat_when_not_needed && _affine_mat_ptr->identity())
+        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
         {
-            _affine_mat_ptr.reset();
+            _affine_mat.reset();
         }
     }
     else if(scale_x != 1 || scale_y != 1)
@@ -149,7 +149,7 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
         affine_mat_attributes.set_scale(scale_x, scale_y);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat_ptr = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
         _remove_affine_mat_when_not_needed = true;
     }
 
@@ -176,9 +176,9 @@ sprite_builder& sprite_builder::set_horizontal_flip(bool horizontal_flip)
 {
     _horizontal_flip = horizontal_flip;
 
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_horizontal_flip(horizontal_flip);
+        _affine_mat->set_horizontal_flip(horizontal_flip);
     }
 
     return *this;
@@ -188,9 +188,9 @@ sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
 {
     _vertical_flip = vertical_flip;
 
-    if(_affine_mat_ptr)
+    if(_affine_mat)
     {
-        _affine_mat_ptr->set_vertical_flip(vertical_flip);
+        _affine_mat->set_vertical_flip(vertical_flip);
     }
 
     return *this;
@@ -239,9 +239,9 @@ sprite_tiles_ptr sprite_builder::tiles() const
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
+    BTN_ASSERT(_tiles, "Tiles has been already released");
 
-    return *_tiles_ptr;
+    return *_tiles;
 }
 
 sprite_palette_ptr sprite_builder::palette() const
@@ -251,9 +251,9 @@ sprite_palette_ptr sprite_builder::palette() const
         return _item->palette_item().create_palette();
     }
 
-    BTN_ASSERT(_palette_ptr, "Palette has been already released");
+    BTN_ASSERT(_palette, "Palette has been already released");
 
-    return *_palette_ptr;
+    return *_palette;
 }
 
 optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
@@ -266,7 +266,7 @@ optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
     }
     else
     {
-        result = _tiles_ptr;
+        result = _tiles;
     }
 
     return result;
@@ -282,7 +282,7 @@ optional<sprite_palette_ptr> sprite_builder::optional_palette() const
     }
     else
     {
-        result = _palette_ptr;
+        result = _palette;
     }
 
     return result;
@@ -295,10 +295,10 @@ sprite_tiles_ptr sprite_builder::release_tiles()
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BTN_ASSERT(_tiles_ptr, "Tiles has been already released");
+    BTN_ASSERT(_tiles, "Tiles has been already released");
 
-    sprite_tiles_ptr result = move(*_tiles_ptr);
-    _tiles_ptr.reset();
+    sprite_tiles_ptr result = move(*_tiles);
+    _tiles.reset();
     return result;
 }
 
@@ -309,10 +309,10 @@ sprite_palette_ptr sprite_builder::release_palette()
         return _item->palette_item().create_palette();
     }
 
-    BTN_ASSERT(_palette_ptr, "Palette has been already released");
+    BTN_ASSERT(_palette, "Palette has been already released");
 
-    sprite_palette_ptr result = move(*_palette_ptr);
-    _palette_ptr.reset();
+    sprite_palette_ptr result = move(*_palette);
+    _palette.reset();
     return result;
 }
 
@@ -326,7 +326,7 @@ optional<sprite_tiles_ptr> sprite_builder::optional_release_tiles()
     }
     else
     {
-        result = move(_tiles_ptr);
+        result = move(_tiles);
     }
 
     return result;
@@ -342,7 +342,7 @@ optional<sprite_palette_ptr> sprite_builder::optional_release_palette()
     }
     else
     {
-        result = move(_palette_ptr);
+        result = move(_palette);
     }
 
     return result;

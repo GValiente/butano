@@ -12,16 +12,16 @@ class sprite_affine_mat_first_register_hblank_effect_ptr : public hblank_effect_
 
 public:
     [[nodiscard]] static sprite_affine_mat_first_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static sprite_affine_mat_first_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_first_register_hblank_effect_ptr(
             const sprite_affine_mat_first_register_hblank_effect_ptr& other);
@@ -37,7 +37,7 @@ public:
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
-        return _affine_mat_ptr;
+        return _affine_mat;
     }
 
     [[nodiscard]] span<const sprite_affine_mat_attributes> attributes_ref() const;
@@ -62,10 +62,10 @@ public:
 
 private:
     bool _from_attributes;
-    sprite_affine_mat_ptr _affine_mat_ptr;
+    sprite_affine_mat_ptr _affine_mat;
 
     sprite_affine_mat_first_register_hblank_effect_ptr(int id, bool from_attributes,
-                                                       sprite_affine_mat_ptr&& affine_mat_ptr);
+                                                       sprite_affine_mat_ptr&& affine_mat);
 };
 
 
@@ -74,16 +74,16 @@ class sprite_affine_mat_second_register_hblank_effect_ptr : public hblank_effect
 
 public:
     [[nodiscard]] static sprite_affine_mat_second_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static sprite_affine_mat_second_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_second_register_hblank_effect_ptr(
             const sprite_affine_mat_second_register_hblank_effect_ptr& other);
@@ -99,7 +99,7 @@ public:
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
-        return _affine_mat_ptr;
+        return _affine_mat;
     }
 
     [[nodiscard]] span<const sprite_affine_mat_attributes> attributes_ref() const;
@@ -124,10 +124,10 @@ public:
 
 private:
     bool _from_attributes;
-    sprite_affine_mat_ptr _affine_mat_ptr;
+    sprite_affine_mat_ptr _affine_mat;
 
     sprite_affine_mat_second_register_hblank_effect_ptr(int id, bool from_attributes,
-                                                       sprite_affine_mat_ptr&& affine_mat_ptr);
+                                                       sprite_affine_mat_ptr&& affine_mat);
 };
 
 
@@ -136,16 +136,16 @@ class sprite_affine_mat_third_register_hblank_effect_ptr : public hblank_effect_
 
 public:
     [[nodiscard]] static sprite_affine_mat_third_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static sprite_affine_mat_third_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_third_register_hblank_effect_ptr(
             const sprite_affine_mat_third_register_hblank_effect_ptr& other);
@@ -161,7 +161,7 @@ public:
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
-        return _affine_mat_ptr;
+        return _affine_mat;
     }
 
     [[nodiscard]] span<const sprite_affine_mat_attributes> attributes_ref() const;
@@ -186,10 +186,10 @@ public:
 
 private:
     bool _from_attributes;
-    sprite_affine_mat_ptr _affine_mat_ptr;
+    sprite_affine_mat_ptr _affine_mat;
 
     sprite_affine_mat_third_register_hblank_effect_ptr(int id, bool from_attributes,
-                                                       sprite_affine_mat_ptr&& affine_mat_ptr);
+                                                       sprite_affine_mat_ptr&& affine_mat);
 };
 
 
@@ -198,16 +198,16 @@ class sprite_affine_mat_fourth_register_hblank_effect_ptr : public hblank_effect
 
 public:
     [[nodiscard]] static sprite_affine_mat_fourth_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static sprite_affine_mat_fourth_register_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const int16_t>& values_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_fourth_register_hblank_effect_ptr(
             const sprite_affine_mat_fourth_register_hblank_effect_ptr& other);
@@ -223,7 +223,7 @@ public:
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
-        return _affine_mat_ptr;
+        return _affine_mat;
     }
 
     [[nodiscard]] span<const sprite_affine_mat_attributes> attributes_ref() const;
@@ -248,10 +248,10 @@ public:
 
 private:
     bool _from_attributes;
-    sprite_affine_mat_ptr _affine_mat_ptr;
+    sprite_affine_mat_ptr _affine_mat;
 
     sprite_affine_mat_fourth_register_hblank_effect_ptr(int id, bool from_attributes,
-                                                       sprite_affine_mat_ptr&& affine_mat_ptr);
+                                                       sprite_affine_mat_ptr&& affine_mat);
 };
 
 
@@ -260,10 +260,10 @@ class sprite_affine_mat_attributes_hblank_effect_ptr
 
 public:
     [[nodiscard]] static sprite_affine_mat_attributes_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat_ptr, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] int id() const
     {

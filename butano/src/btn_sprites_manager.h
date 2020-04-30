@@ -63,22 +63,22 @@ namespace sprites_manager
 
     [[nodiscard]] const sprite_tiles_ptr& tiles(id_type id);
 
-    void set_tiles(id_type id, const sprite_tiles_ptr& tiles_ptr);
+    void set_tiles(id_type id, const sprite_tiles_ptr& tiles);
 
-    void set_tiles(id_type id, sprite_tiles_ptr&& tiles_ptr);
+    void set_tiles(id_type id, sprite_tiles_ptr&& tiles);
 
-    void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr);
+    void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles);
 
-    void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
+    void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles);
 
     [[nodiscard]] const sprite_palette_ptr& palette(id_type id);
 
-    void set_palette(id_type id, const sprite_palette_ptr& palette_ptr);
+    void set_palette(id_type id, const sprite_palette_ptr& palette);
 
-    void set_palette(id_type id, sprite_palette_ptr&& palette_ptr);
+    void set_palette(id_type id, sprite_palette_ptr&& palette);
 
-    void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr,
-                               sprite_palette_ptr&& palette_ptr);
+    void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
+                               sprite_palette_ptr&& palette);
 
     [[nodiscard]] const fixed_point& position(id_type id);
 

@@ -29,7 +29,7 @@ namespace
 
 enemy_bullets::enemy_bullets() :
     _palette_fade_action(_create_palette_fade_action()),
-    _tiles({ btn::sprite_items::enemy_bullets.tiles_item().create_tiles(0),
+    _tiles_list({ btn::sprite_items::enemy_bullets.tiles_item().create_tiles(0),
            btn::sprite_items::enemy_bullets.tiles_item().create_tiles(1) })
 {
 }
@@ -86,7 +86,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         tile_index = int(type);
     }
 
-    btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles[tile_index],
+    btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles_list[tile_index],
                                 _palette_fade_action.palette());
     builder.set_position(enemy_position);
     builder.set_scale(scale);

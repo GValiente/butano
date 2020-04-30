@@ -23,7 +23,7 @@ public:
 
     sprite_builder(const sprite_item& item, int graphics_index);
 
-    sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles_ptr, sprite_palette_ptr palette_ptr);
+    sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
 
     [[nodiscard]] const optional<sprite_item>& item() const
     {
@@ -81,21 +81,21 @@ public:
 
     [[nodiscard]] fixed rotation_angle() const
     {
-        return _affine_mat_ptr ? _affine_mat_ptr->rotation_angle() : 0;
+        return _affine_mat ? _affine_mat->rotation_angle() : 0;
     }
 
     sprite_builder& set_rotation_angle(fixed rotation_angle);
 
     [[nodiscard]] fixed scale_x() const
     {
-        return _affine_mat_ptr ? _affine_mat_ptr->scale_x() : 1;
+        return _affine_mat ? _affine_mat->scale_x() : 1;
     }
 
     sprite_builder& set_scale_x(fixed scale_x);
 
     [[nodiscard]] fixed scale_y() const
     {
-        return _affine_mat_ptr ? _affine_mat_ptr->scale_y() : 1;
+        return _affine_mat ? _affine_mat->scale_y() : 1;
     }
 
     sprite_builder& set_scale_y(fixed scale_y);
@@ -120,14 +120,14 @@ public:
 
     [[nodiscard]] bool horizontal_flip() const
     {
-        return _affine_mat_ptr ? _affine_mat_ptr->horizontal_flip() : _horizontal_flip;
+        return _affine_mat ? _affine_mat->horizontal_flip() : _horizontal_flip;
     }
 
     sprite_builder& set_horizontal_flip(bool horizontal_flip);
 
     [[nodiscard]] bool vertical_flip() const
     {
-        return _affine_mat_ptr ? _affine_mat_ptr->vertical_flip() : _vertical_flip;
+        return _affine_mat ? _affine_mat->vertical_flip() : _vertical_flip;
     }
 
     sprite_builder& set_vertical_flip(bool vertical_flip);
@@ -216,24 +216,24 @@ public:
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const
     {
-        return _affine_mat_ptr;
+        return _affine_mat;
     }
 
     sprite_builder& set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
     {
-        _affine_mat_ptr = affine_mat;
+        _affine_mat = affine_mat;
         return *this;
     }
 
     sprite_builder& set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
     {
-        _affine_mat_ptr = move(affine_mat);
+        _affine_mat = move(affine_mat);
         return *this;
     }
 
     [[nodiscard]] optional<sprite_affine_mat_ptr> release_affine_mat()
     {
-        return move(_affine_mat_ptr);
+        return move(_affine_mat);
     }
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const
@@ -248,9 +248,9 @@ public:
 
 private:
     optional<sprite_item> _item;
-    optional<sprite_tiles_ptr> _tiles_ptr;
-    optional<sprite_palette_ptr> _palette_ptr;
-    optional<sprite_affine_mat_ptr> _affine_mat_ptr;
+    optional<sprite_tiles_ptr> _tiles;
+    optional<sprite_palette_ptr> _palette;
+    optional<sprite_affine_mat_ptr> _affine_mat;
     sprite_shape_size _shape_size;
     sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;

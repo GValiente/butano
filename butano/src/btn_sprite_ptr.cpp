@@ -215,24 +215,24 @@ const sprite_tiles_ptr& sprite_ptr::tiles() const
     return sprites_manager::tiles(_handle);
 }
 
-void sprite_ptr::set_tiles(const sprite_tiles_ptr& tiles_ptr)
+void sprite_ptr::set_tiles(const sprite_tiles_ptr& tiles)
 {
-    sprites_manager::set_tiles(_handle, tiles_ptr);
+    sprites_manager::set_tiles(_handle, tiles);
 }
 
-void sprite_ptr::set_tiles(sprite_tiles_ptr&& tiles_ptr)
+void sprite_ptr::set_tiles(sprite_tiles_ptr&& tiles)
 {
-    sprites_manager::set_tiles(_handle, move(tiles_ptr));
+    sprites_manager::set_tiles(_handle, move(tiles));
 }
 
-void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr)
+void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles)
 {
-    sprites_manager::set_tiles(_handle, shape_size, tiles_ptr);
+    sprites_manager::set_tiles(_handle, shape_size, tiles);
 }
 
-void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr)
+void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles)
 {
-    sprites_manager::set_tiles(_handle, shape_size, move(tiles_ptr));
+    sprites_manager::set_tiles(_handle, shape_size, move(tiles));
 }
 
 void sprite_ptr::set_tiles(const sprite_item& item)
@@ -271,14 +271,14 @@ const sprite_palette_ptr& sprite_ptr::palette() const
     return sprites_manager::palette(_handle);
 }
 
-void sprite_ptr::set_palette(const sprite_palette_ptr& palette_ptr)
+void sprite_ptr::set_palette(const sprite_palette_ptr& palette)
 {
-    sprites_manager::set_palette(_handle, palette_ptr);
+    sprites_manager::set_palette(_handle, palette);
 }
 
-void sprite_ptr::set_palette(sprite_palette_ptr&& palette_ptr)
+void sprite_ptr::set_palette(sprite_palette_ptr&& palette)
 {
-    sprites_manager::set_palette(_handle, move(palette_ptr));
+    sprites_manager::set_palette(_handle, move(palette));
 }
 
 void sprite_ptr::set_palette(const sprite_item& item)
@@ -676,14 +676,14 @@ const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
     return sprites_manager::affine_mat(_handle);
 }
 
-void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat_ptr)
+void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
 {
-    sprites_manager::set_affine_mat(_handle, affine_mat_ptr);
+    sprites_manager::set_affine_mat(_handle, affine_mat);
 }
 
-void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat_ptr)
+void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
 {
-    sprites_manager::set_affine_mat(_handle, move(affine_mat_ptr));
+    sprites_manager::set_affine_mat(_handle, move(affine_mat));
 }
 
 bool sprite_ptr::remove_affine_mat_when_not_needed() const

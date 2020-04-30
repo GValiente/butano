@@ -99,13 +99,13 @@ public:
 
     [[nodiscard]] const sprite_tiles_ptr& tiles() const;
 
-    void set_tiles(const sprite_tiles_ptr& tiles_ptr);
+    void set_tiles(const sprite_tiles_ptr& tiles);
 
-    void set_tiles(sprite_tiles_ptr&& tiles_ptr);
+    void set_tiles(sprite_tiles_ptr&& tiles);
 
-    void set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles_ptr);
+    void set_tiles(const sprite_shape_size& shape_size, const sprite_tiles_ptr& tiles);
 
-    void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles_ptr);
+    void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles);
 
     void set_tiles(const sprite_item& item);
 
@@ -121,9 +121,9 @@ public:
 
     [[nodiscard]] const sprite_palette_ptr& palette() const;
 
-    void set_palette(const sprite_palette_ptr& palette_ptr);
+    void set_palette(const sprite_palette_ptr& palette);
 
-    void set_palette(sprite_palette_ptr&& palette_ptr);
+    void set_palette(sprite_palette_ptr&& palette);
 
     void set_palette(const sprite_item& item);
 
@@ -215,9 +215,9 @@ public:
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
 
-    void set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat_ptr);
+    void set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat);
 
-    void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat_ptr);
+    void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat);
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 

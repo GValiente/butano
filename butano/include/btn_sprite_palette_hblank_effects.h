@@ -14,10 +14,10 @@ class sprite_palette_color_hblank_effect_ptr : public hblank_effect_ptr
 
 public:
     [[nodiscard]] static sprite_palette_color_hblank_effect_ptr create(
-            sprite_palette_ptr palette_ptr, int color_index, const span<const color>& colors_ref);
+            sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
     [[nodiscard]] static optional<sprite_palette_color_hblank_effect_ptr> optional_create(
-            sprite_palette_ptr palette_ptr, int color_index, const span<const color>& colors_ref);
+            sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
     sprite_palette_color_hblank_effect_ptr(const sprite_palette_color_hblank_effect_ptr& other);
 
@@ -29,7 +29,7 @@ public:
 
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
-        return _palette_ptr;
+        return _palette;
     }
 
     [[nodiscard]] int color_index() const
@@ -51,10 +51,10 @@ public:
     }
 
 private:
-    sprite_palette_ptr _palette_ptr;
+    sprite_palette_ptr _palette;
     int16_t _color_index;
 
-    sprite_palette_color_hblank_effect_ptr(int id, int color_index, sprite_palette_ptr&& palette_ptr);
+    sprite_palette_color_hblank_effect_ptr(int id, int color_index, sprite_palette_ptr&& palette);
 };
 
 }

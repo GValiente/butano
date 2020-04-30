@@ -882,15 +882,15 @@ public:
     }
 
     [[nodiscard]] static sprite_cached_animate_action once(
-            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_list)
     {
-        return sprite_cached_animate_action(sprite, wait_frames, false, tiles_ptrs);
+        return sprite_cached_animate_action(sprite, wait_frames, false, tiles_list);
     }
 
     [[nodiscard]] static sprite_cached_animate_action once(
-            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_list)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, false, tiles_ptrs);
+        return sprite_cached_animate_action(move(sprite), wait_frames, false, tiles_list);
     }
 
     [[nodiscard]] static sprite_cached_animate_action forever(
@@ -922,20 +922,20 @@ public:
     }
 
     [[nodiscard]] static sprite_cached_animate_action forever(
-            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+            const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_list)
     {
-        return sprite_cached_animate_action(sprite, wait_frames, true, tiles_ptrs);
+        return sprite_cached_animate_action(sprite, wait_frames, true, tiles_list);
     }
 
     [[nodiscard]] static sprite_cached_animate_action forever(
-            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_ptrs)
+            sprite_ptr&& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_list)
     {
-        return sprite_cached_animate_action(move(sprite), wait_frames, true, tiles_ptrs);
+        return sprite_cached_animate_action(move(sprite), wait_frames, true, tiles_list);
     }
 
     void reset()
     {
-        _current_tiles_ptr_index = 0;
+        _current_tiles_list_index = 0;
         _current_wait_frames = 0;
     }
 
@@ -950,19 +950,19 @@ public:
         else
         {
             _current_wait_frames = _wait_frames;
-            _sprite.set_tiles(_tiles_ptrs[_current_tiles_ptr_index]);
-            ++_current_tiles_ptr_index;
+            _sprite.set_tiles(_tiles_list[_current_tiles_list_index]);
+            ++_current_tiles_list_index;
 
-            if(_forever && _current_tiles_ptr_index == _tiles_ptrs.size())
+            if(_forever && _current_tiles_list_index == _tiles_list.size())
             {
-                _current_tiles_ptr_index = 0;
+                _current_tiles_list_index = 0;
             }
         }
     }
 
     [[nodiscard]] bool done() const
     {
-        return _current_tiles_ptr_index == _tiles_ptrs.size();
+        return _current_tiles_list_index == _tiles_list.size();
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -975,9 +975,9 @@ public:
         return _wait_frames;
     }
 
-    [[nodiscard]] const vector<sprite_tiles_ptr, Size>& tiles_ptrs() const
+    [[nodiscard]] const vector<sprite_tiles_ptr, Size>& tiles_list() const
     {
-        return _tiles_ptrs;
+        return _tiles_list;
     }
 
     [[nodiscard]] bool update_forever() const
@@ -989,8 +989,8 @@ private:
     bool _forever = true;
     uint16_t _wait_frames = 0;
     sprite_ptr _sprite;
-    vector<sprite_tiles_ptr, Size> _tiles_ptrs;
-    uint16_t _current_tiles_ptr_index = 0;
+    vector<sprite_tiles_ptr, Size> _tiles_list;
+    uint16_t _current_tiles_list_index = 0;
     uint16_t _current_wait_frames = 0;
 
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
@@ -1006,7 +1006,7 @@ private:
 
         for(int graphics_index : graphics_indexes)
         {
-            _tiles_ptrs.push_back(tiles_item.create_tiles(graphics_index));
+            _tiles_list.push_back(tiles_item.create_tiles(graphics_index));
         }
     }
 
@@ -1023,39 +1023,39 @@ private:
 
         for(int graphics_index : graphics_indexes)
         {
-            _tiles_ptrs.push_back(tiles_item.create_tiles(graphics_index));
+            _tiles_list.push_back(tiles_item.create_tiles(graphics_index));
         }
     }
 
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_frames, bool forever,
-                                 span<sprite_tiles_ptr> tiles_ptrs) :
+                                 span<sprite_tiles_ptr> tiles_list) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
         _sprite(sprite)
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
-        BTN_ASSERT(tiles_ptrs.size() > 1 && tiles_ptrs.size() <= Size, "Invalid tiles ptrs: ", tiles_ptrs.size());
+        BTN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= Size, "Invalid tiles ptrs: ", tiles_list.size());
 
-        for(sprite_tiles_ptr& tiles_ptr : tiles_ptrs)
+        for(sprite_tiles_ptr& tiles : tiles_list)
         {
-            _tiles_ptrs.push_back(move(tiles_ptr));
+            _tiles_list.push_back(move(tiles));
         }
     }
 
     sprite_cached_animate_action(sprite_ptr&& sprite, int wait_frames, bool forever,
-                                 span<sprite_tiles_ptr> tiles_ptrs) :
+                                 span<sprite_tiles_ptr> tiles_list) :
         _forever(forever),
         _wait_frames(uint16_t(wait_frames)),
         _sprite(move(sprite))
     {
         BTN_ASSERT(wait_frames >= 0, "Invalid wait frames: ", wait_frames);
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
-        BTN_ASSERT(tiles_ptrs.size() > 1 && tiles_ptrs.size() <= Size, "Invalid tiles ptrs: ", tiles_ptrs.size());
+        BTN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= Size, "Invalid tiles ptrs: ", tiles_list.size());
 
-        for(sprite_tiles_ptr& tiles_ptr : tiles_ptrs)
+        for(sprite_tiles_ptr& tiles : tiles_list)
         {
-            _tiles_ptrs.push_back(move(tiles_ptr));
+            _tiles_list.push_back(move(tiles));
         }
     }
 };

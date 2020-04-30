@@ -7,15 +7,15 @@ namespace btn
 {
 
 sprites_manager_item::sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
-                                           sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette) :
+                                           sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette) :
     position(_position),
-    tiles_ptr(move(tiles)),
-    palette_ptr(move(palette)),
+    tiles(move(_tiles)),
+    palette(move(_palette)),
     double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
     ignore_camera(false),
     remove_affine_mat_when_not_needed(true)
 {
-    hw::sprites::setup_regular(shape_size, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
+    hw::sprites::setup_regular(shape_size, tiles.id(), palette.id(), palette.bpp_mode(), handle);
     update_half_dimensions();
     update_sort_key(3, 0);
     on_screen = false;
@@ -23,32 +23,32 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
     check_on_screen = true;
 }
 
-sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& tiles,
-                                           sprite_palette_ptr&& palette) :
+sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& _tiles,
+                                           sprite_palette_ptr&& _palette) :
     position(builder.position()),
-    tiles_ptr(move(tiles)),
-    affine_mat_ptr(builder.release_affine_mat()),
-    palette_ptr(move(palette)),
+    tiles(move(_tiles)),
+    affine_mat(builder.release_affine_mat()),
+    palette(move(_palette)),
     double_size_mode(unsigned(builder.double_size_mode())),
     ignore_camera(builder.ignore_camera()),
     remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
 {
-    if(affine_mat_ptr)
+    if(affine_mat)
     {
-        if(remove_affine_mat_when_not_needed && affine_mat_ptr->identity())
+        if(remove_affine_mat_when_not_needed && affine_mat->identity())
         {
-            affine_mat_ptr.reset();
-            hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
+            affine_mat.reset();
+            hw::sprites::setup_regular(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
         }
         else
         {
-            hw::sprites::setup_affine(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
-            hw::sprites::set_affine_mat(affine_mat_ptr->id(), double_size(), handle);
+            hw::sprites::setup_affine(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
+            hw::sprites::set_affine_mat(affine_mat->id(), double_size(), handle);
         }
     }
     else
     {
-        hw::sprites::setup_regular(builder, tiles_ptr.id(), palette_ptr.id(), palette_ptr.bpp_mode(), handle);
+        hw::sprites::setup_regular(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
     }
 
     update_half_dimensions();
@@ -73,7 +73,7 @@ bool sprites_manager_item::double_size() const
     {
 
     case sprite_double_size_mode::AUTO:
-        return sprite_affine_mats_manager::double_size(affine_mat_ptr->id());
+        return sprite_affine_mats_manager::double_size(affine_mat->id());
 
     case sprite_double_size_mode::ENABLED:
         return true;

@@ -43,7 +43,7 @@ private:
     };
 
     btn::sprite_palette_fade_loop_action _palette_fade_action;
-    btn::array<btn::sprite_tiles_ptr, 2> _tiles;
+    btn::array<btn::sprite_tiles_ptr, 2> _tiles_list;
     btn::vector<bullet, constants::max_enemy_bullets> _bullets;
     bool _hero_check_odds = false;
 };

@@ -56,31 +56,31 @@ namespace
 }
 
 bg_palette_color_hblank_effect_ptr bg_palette_color_hblank_effect_ptr::create(
-        bg_palette_ptr palette_ptr, int color_index, const span<const color>& colors_ref)
+        bg_palette_ptr palette, int color_index, const span<const color>& colors_ref)
 {
-    BTN_ASSERT(color_index >= 0 && color_index < palette_ptr.colors_count(),
-               "Invalid color index: ", color_index, " - ", palette_ptr.colors_count());
+    BTN_ASSERT(color_index >= 0 && color_index < palette.colors_count(),
+               "Invalid color index: ", color_index, " - ", palette.colors_count());
 
-    int final_color_index = (palette_ptr.id() * 16) + color_index;
+    int final_color_index = (palette.id() * 16) + color_index;
     int id = hblank_effects_manager::create(colors_ref.data(), colors_ref.size(), final_color_index,
                                             data.color_handler);
-    return bg_palette_color_hblank_effect_ptr(id, color_index, move(palette_ptr));
+    return bg_palette_color_hblank_effect_ptr(id, color_index, move(palette));
 }
 
 optional<bg_palette_color_hblank_effect_ptr> bg_palette_color_hblank_effect_ptr::optional_create(
-        bg_palette_ptr palette_ptr, int color_index, const span<const color>& colors_ref)
+        bg_palette_ptr palette, int color_index, const span<const color>& colors_ref)
 {
-    BTN_ASSERT(color_index >= 0 && color_index < palette_ptr.colors_count(),
-               "Invalid color index: ", color_index, " - ", palette_ptr.colors_count());
+    BTN_ASSERT(color_index >= 0 && color_index < palette.colors_count(),
+               "Invalid color index: ", color_index, " - ", palette.colors_count());
 
-    int final_color_index = (palette_ptr.id() * 16) + color_index;
+    int final_color_index = (palette.id() * 16) + color_index;
     int id = hblank_effects_manager::optional_create(colors_ref.data(), colors_ref.size(), final_color_index,
                                                      data.color_handler);
     optional<bg_palette_color_hblank_effect_ptr> result;
 
     if(id >= 0)
     {
-        result = bg_palette_color_hblank_effect_ptr(id, color_index, move(palette_ptr));
+        result = bg_palette_color_hblank_effect_ptr(id, color_index, move(palette));
     }
 
     return result;
@@ -89,7 +89,7 @@ optional<bg_palette_color_hblank_effect_ptr> bg_palette_color_hblank_effect_ptr:
 bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
         const bg_palette_color_hblank_effect_ptr& other) :
     hblank_effect_ptr(other),
-    _palette_ptr(other._palette_ptr),
+    _palette(other._palette),
     _color_index(other._color_index)
 {
 }
@@ -98,7 +98,7 @@ bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator
         const bg_palette_color_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::operator=(other);
-    _palette_ptr = other._palette_ptr;
+    _palette = other._palette;
     _color_index = other._color_index;
     return *this;
 }
@@ -106,7 +106,7 @@ bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator
 bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
         bg_palette_color_hblank_effect_ptr&& other) :
     hblank_effect_ptr(move(other)),
-    _palette_ptr(move(other._palette_ptr)),
+    _palette(move(other._palette)),
     _color_index(other._color_index)
 {
 }
@@ -115,7 +115,7 @@ bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator
         bg_palette_color_hblank_effect_ptr&& other)
 {
     hblank_effect_ptr::operator=(move(other));
-    _palette_ptr = move(other._palette_ptr);
+    _palette = move(other._palette);
     _color_index = other._color_index;
     return *this;
 }
@@ -143,9 +143,9 @@ void bg_palette_color_hblank_effect_ptr::swap(bg_palette_color_hblank_effect_ptr
 }
 
 bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
-        int id, int color_index, bg_palette_ptr&& palette_ptr) :
+        int id, int color_index, bg_palette_ptr&& palette) :
     hblank_effect_ptr(id),
-    _palette_ptr(move(palette_ptr)),
+    _palette(move(palette)),
     _color_index(color_index)
 {
 }

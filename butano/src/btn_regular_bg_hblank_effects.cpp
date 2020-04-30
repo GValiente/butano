@@ -185,46 +185,46 @@ namespace
 }
 
 regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::create_horizontal(
-        regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
+        regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg.id(),
                                             data.horizontal_position_handler);
-    return regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
+    return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
 optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_horizontal(
-        regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
+        regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg.id(),
                                                      data.horizontal_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)
     {
-        result = regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
+        result = regular_bg_position_hblank_effect_ptr(id, move(bg));
     }
 
     return result;
 }
 
 regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::create_vertical(
-        regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
+        regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg.id(),
                                             data.vertical_position_handler);
-    return regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
+    return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
 optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_vertical(
-        regular_bg_ptr bg_ptr, const span<const fixed>& deltas_ref)
+        regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg.id(),
                                                      data.vertical_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)
     {
-        result = regular_bg_position_hblank_effect_ptr(id, move(bg_ptr));
+        result = regular_bg_position_hblank_effect_ptr(id, move(bg));
     }
 
     return result;
@@ -233,7 +233,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
         const regular_bg_position_hblank_effect_ptr& other) :
     hblank_effect_ptr(other),
-    _bg_ptr(other._bg_ptr)
+    _bg(other._bg)
 {
 }
 
@@ -241,14 +241,14 @@ regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::op
         const regular_bg_position_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::operator=(other);
-    _bg_ptr = other._bg_ptr;
+    _bg = other._bg;
     return *this;
 }
 
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
         regular_bg_position_hblank_effect_ptr&& other) :
     hblank_effect_ptr(move(other)),
-    _bg_ptr(move(other._bg_ptr))
+    _bg(move(other._bg))
 {
 }
 
@@ -256,7 +256,7 @@ regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::op
         regular_bg_position_hblank_effect_ptr&& other)
 {
     hblank_effect_ptr::operator=(move(other));
-    _bg_ptr = move(other._bg_ptr);
+    _bg = move(other._bg);
     return *this;
 }
 
@@ -279,33 +279,33 @@ void regular_bg_position_hblank_effect_ptr::reload_deltas_ref()
 void regular_bg_position_hblank_effect_ptr::swap(regular_bg_position_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_bg_ptr, other._bg_ptr);
+    btn::swap(_bg, other._bg);
 }
 
-regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :
+regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(int id, regular_bg_ptr&& bg) :
     hblank_effect_ptr(id),
-    _bg_ptr(move(bg_ptr))
+    _bg(move(bg))
 {
 }
 
 regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr::create(
-        regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
+        regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), bg.id(),
                                             data.attributes_handler);
-    return regular_bg_attributes_hblank_effect_ptr(id, move(bg_ptr));
+    return regular_bg_attributes_hblank_effect_ptr(id, move(bg));
 }
 
 optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::optional_create(
-        regular_bg_ptr bg_ptr, const span<const regular_bg_attributes>& attributes_ref)
+        regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), bg_ptr.id(),
+    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), bg.id(),
                                                      data.attributes_handler);
     optional<regular_bg_attributes_hblank_effect_ptr> result;
 
     if(id >= 0)
     {
-        result = regular_bg_attributes_hblank_effect_ptr(id, move(bg_ptr));
+        result = regular_bg_attributes_hblank_effect_ptr(id, move(bg));
     }
 
     return result;
@@ -314,7 +314,7 @@ optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_e
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
         const regular_bg_attributes_hblank_effect_ptr& other) :
     hblank_effect_ptr(other),
-    _bg_ptr(other._bg_ptr)
+    _bg(other._bg)
 {
 }
 
@@ -322,14 +322,14 @@ regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr
         const regular_bg_attributes_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::operator=(other);
-    _bg_ptr = other._bg_ptr;
+    _bg = other._bg;
     return *this;
 }
 
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
         regular_bg_attributes_hblank_effect_ptr&& other) :
     hblank_effect_ptr(move(other)),
-    _bg_ptr(move(other._bg_ptr))
+    _bg(move(other._bg))
 {
 }
 
@@ -337,7 +337,7 @@ regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr
         regular_bg_attributes_hblank_effect_ptr&& other)
 {
     hblank_effect_ptr::operator=(move(other));
-    _bg_ptr = move(other._bg_ptr);
+    _bg = move(other._bg);
     return *this;
 }
 
@@ -361,12 +361,12 @@ void regular_bg_attributes_hblank_effect_ptr::reload_attributes_ref()
 void regular_bg_attributes_hblank_effect_ptr::swap(regular_bg_attributes_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_bg_ptr, other._bg_ptr);
+    btn::swap(_bg, other._bg);
 }
 
-regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg_ptr) :
+regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg) :
     hblank_effect_ptr(id),
-    _bg_ptr(move(bg_ptr))
+    _bg(move(bg))
 {
 }
 

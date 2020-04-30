@@ -34,15 +34,14 @@ public:
         return _dimensions;
     }
 
-    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
-    [[nodiscard]] regular_bg_map_ptr force_create_map(bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+    [[nodiscard]] regular_bg_map_ptr force_create_map(bg_tiles_ptr tiles, bg_palette_ptr palette_ptr) const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(
-            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+    [[nodiscard]] optional<regular_bg_map_ptr> optional_create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     [[nodiscard]] optional<regular_bg_map_ptr> optional_force_create_map(
-            bg_tiles_ptr tiles_ptr, bg_palette_ptr palette_ptr) const;
+            bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b)
     {

@@ -36,17 +36,17 @@ namespace btn::bg_blocks_manager
     [[nodiscard]] int find_tiles(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int find_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                       const bg_tiles_ptr& tiles_ptr, const bg_palette_ptr& palette_ptr);
+                                       const bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
 
     [[nodiscard]] int create_tiles(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                         bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr);
+                                         bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
 
     [[nodiscard]] int allocate_tiles(int tiles_count);
 
-    [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles_ptr,
-                                           bg_palette_ptr&& palette_ptr);
+    [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles,
+                                           bg_palette_ptr&& palette);
 
     void increase_usages(int id);
 
@@ -72,13 +72,13 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] const bg_tiles_ptr& map_tiles(int id);
 
-    void set_map_tiles(int id, bg_tiles_ptr&& tiles_ptr);
+    void set_map_tiles(int id, bg_tiles_ptr&& tiles);
 
     [[nodiscard]] const bg_palette_ptr& map_palette(int id);
 
-    void set_map_palette(int id, bg_palette_ptr&& palette_ptr);
+    void set_map_palette(int id, bg_palette_ptr&& palette);
 
-    void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles_ptr, bg_palette_ptr&& palette_ptr);
+    void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
 
     [[nodiscard]] optional<span<tile>> tiles_vram(int id);
 

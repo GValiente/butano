@@ -7,16 +7,16 @@
 namespace btn
 {
 
-regular_bg_attributes::regular_bg_attributes(const regular_bg_map_ptr& map_ptr, int priority, bool mosaic_enabled) :
-    _map_ptr(map_ptr),
+regular_bg_attributes::regular_bg_attributes(const regular_bg_map_ptr& map, int priority, bool mosaic_enabled) :
+    _map(map),
     _priority(int8_t(priority)),
     _mosaic_enabled(mosaic_enabled)
 {
     BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 }
 
-regular_bg_attributes::regular_bg_attributes(regular_bg_map_ptr&& map_ptr, int priority, bool mosaic_enabled) :
-    _map_ptr(move(map_ptr)),
+regular_bg_attributes::regular_bg_attributes(regular_bg_map_ptr&& map, int priority, bool mosaic_enabled) :
+    _map(move(map)),
     _priority(int8_t(priority)),
     _mosaic_enabled(mosaic_enabled)
 {

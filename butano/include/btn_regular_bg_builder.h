@@ -20,13 +20,13 @@ public:
     {
     }
 
-    explicit regular_bg_builder(const regular_bg_map_ptr& map_ptr) :
-        _map_ptr(map_ptr)
+    explicit regular_bg_builder(const regular_bg_map_ptr& map) :
+        _map(map)
     {
     }
 
-    explicit regular_bg_builder(regular_bg_map_ptr&& map_ptr) :
-        _map_ptr(move(map_ptr))
+    explicit regular_bg_builder(regular_bg_map_ptr&& map) :
+        _map(move(map))
     {
     }
 
@@ -143,7 +143,7 @@ public:
 
 private:
     optional<regular_bg_item> _item;
-    optional<regular_bg_map_ptr> _map_ptr;
+    optional<regular_bg_map_ptr> _map;
     fixed_point _position;
     int _priority = 3;
     bool _mosaic_enabled = false;

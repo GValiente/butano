@@ -3,6 +3,7 @@
 #include "btn_any.h"
 #include "btn_span.h"
 #include "btn_fixed.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_fixed_point.h"
 #include "btn_bg_tiles_ptr.h"
@@ -47,7 +48,7 @@ namespace
             return hw::bgs::regular_horizontal_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -87,7 +88,7 @@ namespace
             return hw::bgs::regular_vertical_position_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             fixed last_value = target_last_value.value<fixed>();
@@ -127,7 +128,7 @@ namespace
             return hw::bgs::attributes_register(target_id);
         }
 
-        void write_output_values(int target_id, const iany&, int, const void* input_values_ptr,
+        void write_output_values(int target_id, const iany&, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(input_values_ptr);
@@ -262,7 +263,7 @@ regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::op
 span<const fixed> regular_bg_position_hblank_effect_ptr::deltas_ref() const
 {
     auto values_ptr = reinterpret_cast<const fixed*>(hblank_effects_manager::values_ref(id()));
-    return span<const fixed>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const fixed>(values_ptr, display::height());
 }
 
 void regular_bg_position_hblank_effect_ptr::set_deltas_ref(const span<const fixed>& deltas_ref)
@@ -343,7 +344,7 @@ regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr
 span<const regular_bg_attributes> regular_bg_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const regular_bg_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const regular_bg_attributes>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const regular_bg_attributes>(values_ptr, display::height());
 }
 
 void regular_bg_attributes_hblank_effect_ptr::set_attributes_ref(

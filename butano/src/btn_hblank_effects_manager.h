@@ -32,8 +32,6 @@ namespace btn::hblank_effects_manager
 
     [[nodiscard]] const void* values_ref(int id);
 
-    [[nodiscard]] int values_count(int id);
-
     void set_values_ref(int id, const void* values_ptr, int values_count);
 
     void reload_values_ref(int id);

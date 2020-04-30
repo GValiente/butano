@@ -2,6 +2,7 @@
 
 #include "btn_any.h"
 #include "btn_span.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_sprite_first_attributes.h"
 #include "btn_sprite_third_attributes.h"
@@ -49,8 +50,8 @@ namespace
             return hw::sprites::first_attributes_register(last_value.hw_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int,
-                                 const void* input_values_ptr, uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
+                                 uint16_t* output_values_ptr) final
         {
             const last_value_type& last_value = target_last_value.value<last_value_type>();
             auto sprite_first_attributes_ptr = reinterpret_cast<const sprite_first_attributes*>(input_values_ptr);
@@ -180,8 +181,8 @@ namespace
             return hw::sprites::second_attributes_register(last_value.hw_id);
         }
 
-        void write_output_values(int target_id, const iany& target_last_value, int,
-                                 const void* input_values_ptr, uint16_t* output_values_ptr) final
+        void write_output_values(int target_id, const iany& target_last_value, const void* input_values_ptr,
+                                 uint16_t* output_values_ptr) final
         {
             auto handle = reinterpret_cast<void*>(target_id);
             const second_attributes_last_value_type& last_value = target_last_value.value<second_attributes_last_value_type>();
@@ -224,8 +225,8 @@ namespace
             return hw::sprites::second_attributes_register(last_value.hw_id);
         }
 
-        void write_output_values(int target_id, const iany& target_last_value, int,
-                                 const void* input_values_ptr, uint16_t* output_values_ptr) final
+        void write_output_values(int target_id, const iany& target_last_value, const void* input_values_ptr,
+                                 uint16_t* output_values_ptr) final
         {
             auto handle = reinterpret_cast<void*>(target_id);
             const second_attributes_last_value_type& last_value = target_last_value.value<second_attributes_last_value_type>();
@@ -268,8 +269,8 @@ namespace
             return hw::sprites::third_attributes_register(last_value.hw_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int,
-                                 const void* input_values_ptr, uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
+                                 uint16_t* output_values_ptr) final
         {
             const last_value_type& last_value = target_last_value.value<last_value_type>();
             auto sprite_third_attributes_ptr = reinterpret_cast<const sprite_third_attributes*>(input_values_ptr);
@@ -384,7 +385,7 @@ sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect
 span<const sprite_first_attributes> sprite_first_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_first_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_first_attributes>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_first_attributes>(values_ptr, display::height());
 }
 
 void sprite_first_attributes_hblank_effect_ptr::set_attributes_ref(
@@ -466,7 +467,7 @@ sprite_regular_second_attributes_hblank_effect_ptr& sprite_regular_second_attrib
 span<const sprite_regular_second_attributes> sprite_regular_second_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_regular_second_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_regular_second_attributes>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_regular_second_attributes>(values_ptr, display::height());
 }
 
 void sprite_regular_second_attributes_hblank_effect_ptr::set_attributes_ref(
@@ -550,7 +551,7 @@ sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attribut
 span<const sprite_affine_second_attributes> sprite_affine_second_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_affine_second_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_second_attributes>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_affine_second_attributes>(values_ptr, display::height());
 }
 
 void sprite_affine_second_attributes_hblank_effect_ptr::set_attributes_ref(
@@ -634,7 +635,7 @@ sprite_third_attributes_hblank_effect_ptr& sprite_third_attributes_hblank_effect
 span<const sprite_third_attributes> sprite_third_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_third_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_third_attributes>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_third_attributes>(values_ptr, display::height());
 }
 
 void sprite_third_attributes_hblank_effect_ptr::set_attributes_ref(

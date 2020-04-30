@@ -40,12 +40,11 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
             auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
 
-            for(int index = 0; index < btn::display::height(); ++index)
+            for(int index = 0; index < display::height(); ++index)
             {
                 output_values_ptr[index] = uint16_t(attributes_ptr[index].first_register_value());
             }
@@ -79,12 +78,11 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
             auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
 
-            for(int index = 0; index < btn::display::height(); ++index)
+            for(int index = 0; index < display::height(); ++index)
             {
                 output_values_ptr[index] = uint16_t(attributes_ptr[index].second_register_value());
             }
@@ -118,12 +116,11 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
             auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
 
-            for(int index = 0; index < btn::display::height(); ++index)
+            for(int index = 0; index < display::height(); ++index)
             {
                 output_values_ptr[index] = uint16_t(attributes_ptr[index].third_register_value());
             }
@@ -157,12 +154,11 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
             auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
 
-            for(int index = 0; index < btn::display::height(); ++index)
+            for(int index = 0; index < display::height(); ++index)
             {
                 output_values_ptr[index] = uint16_t(attributes_ptr[index].fourth_register_value());
             }
@@ -196,10 +192,9 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
         }
     };
 
@@ -230,10 +225,9 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
         }
     };
 
@@ -264,10 +258,9 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
         }
     };
 
@@ -298,10 +291,9 @@ namespace
             return reinterpret_cast<uint16_t*>(result);
         }
 
-        void write_output_values(int, const iany&, int, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
         }
     };
 
@@ -408,7 +400,7 @@ span<const sprite_affine_mat_attributes> sprite_affine_mat_first_register_hblank
     BTN_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_mat_attributes>(attributes_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int16_t> sprite_affine_mat_first_register_hblank_effect_ptr::values_ref() const
@@ -416,7 +408,7 @@ span<const int16_t> sprite_affine_mat_first_register_hblank_effect_ptr::values_r
     BTN_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int16_t*>(hblank_effects_manager::values_ref(id()));
-    return span<const int16_t>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const int16_t>(values_ptr, display::height());
 }
 
 void sprite_affine_mat_first_register_hblank_effect_ptr::set_attributes_ref(
@@ -546,7 +538,7 @@ span<const sprite_affine_mat_attributes> sprite_affine_mat_second_register_hblan
     BTN_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_mat_attributes>(attributes_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int16_t> sprite_affine_mat_second_register_hblank_effect_ptr::values_ref() const
@@ -554,7 +546,7 @@ span<const int16_t> sprite_affine_mat_second_register_hblank_effect_ptr::values_
     BTN_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int16_t*>(hblank_effects_manager::values_ref(id()));
-    return span<const int16_t>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const int16_t>(values_ptr, display::height());
 }
 
 void sprite_affine_mat_second_register_hblank_effect_ptr::set_attributes_ref(
@@ -684,7 +676,7 @@ span<const sprite_affine_mat_attributes> sprite_affine_mat_third_register_hblank
     BTN_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_mat_attributes>(attributes_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int16_t> sprite_affine_mat_third_register_hblank_effect_ptr::values_ref() const
@@ -692,7 +684,7 @@ span<const int16_t> sprite_affine_mat_third_register_hblank_effect_ptr::values_r
     BTN_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int16_t*>(hblank_effects_manager::values_ref(id()));
-    return span<const int16_t>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const int16_t>(values_ptr, display::height());
 }
 
 void sprite_affine_mat_third_register_hblank_effect_ptr::set_attributes_ref(
@@ -822,7 +814,7 @@ span<const sprite_affine_mat_attributes> sprite_affine_mat_fourth_register_hblan
     BTN_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_mat_attributes>(attributes_ptr, hblank_effects_manager::values_count(id()));
+    return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int16_t> sprite_affine_mat_fourth_register_hblank_effect_ptr::values_ref() const
@@ -830,7 +822,7 @@ span<const int16_t> sprite_affine_mat_fourth_register_hblank_effect_ptr::values_
     BTN_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int16_t*>(hblank_effects_manager::values_ref(id()));
-    return span<const int16_t>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const int16_t>(values_ptr, display::height());
 }
 
 void sprite_affine_mat_fourth_register_hblank_effect_ptr::set_attributes_ref(

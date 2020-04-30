@@ -25,7 +25,6 @@ namespace
     public:
         hblank_effect_handler* handler = nullptr;
         const void* values_ptr = nullptr;
-        int values_count = 0;
         int target_id = 0;
         last_value_type target_last_value;
         unsigned usages = 0;
@@ -79,7 +78,7 @@ namespace
                         dest_values_a_active = true;
                     }
 
-                    handler->write_output_values(target_id, target_last_value, values_count, values_ptr, dest_values_ptr);
+                    handler->write_output_values(target_id, target_last_value, values_ptr, dest_values_ptr);
                 }
             }
 
@@ -111,7 +110,7 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    int _create(const void* values_ptr, int values_count, int target_id, hblank_effect_handler& handler)
+    int _create(const void* values_ptr, int target_id, hblank_effect_handler& handler)
     {
         int item_index = data.free_item_indexes.back();
         data.free_item_indexes.pop_back();
@@ -119,7 +118,6 @@ namespace
         item_type& new_item = data.items[item_index];
         new_item.handler = &handler;
         new_item.values_ptr = values_ptr;
-        new_item.values_count = values_count;
         new_item.target_id = target_id;
         new_item.usages = 1;
         new_item.visible = true;
@@ -168,26 +166,28 @@ void disable()
     }
 }
 
-int create(const void* values_ptr, int values_count, int target_id, hblank_effect_handler& handler)
+int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
+hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
     BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
 
-    return _create(values_ptr, values_count, target_id, handler);
+    return _create(values_ptr, target_id, handler);
 }
 
-int optional_create(const void* values_ptr, int values_count, int target_id, hblank_effect_handler& handler)
+int optional_create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
+hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     if(data.free_item_indexes.empty())
     {
         return -1;
     }
 
-    return _create(values_ptr, values_count, target_id, handler);
+    return _create(values_ptr, target_id, handler);
 }
 
 void increase_usages(int id)
@@ -221,20 +221,13 @@ const void* values_ref(int id)
     return item.values_ptr;
 }
 
-int values_count(int id)
-{
-    const item_type& item = data.items[id];
-    return item.values_count;
-}
-
-void set_values_ref(int id, const void* values_ptr, int values_count)
+void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_count)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     item_type& item = data.items[id];
     item.values_ptr = values_ptr;
-    item.values_count = values_count;
     item.update = true;
 
     if(item.visible)

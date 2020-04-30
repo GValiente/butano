@@ -2,6 +2,7 @@
 
 #include "btn_span.h"
 #include "btn_color.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_hblank_effects_manager.h"
@@ -37,10 +38,9 @@ namespace
             return hw::palettes::bg_transparent_color_register();
         }
 
-        void write_output_values(int, const iany&, int values_count, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
+        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), values_count, *output_values_ptr);
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
         }
     };
 
@@ -107,7 +107,7 @@ bg_palettes_transparent_color_hblank_effect_ptr& bg_palettes_transparent_color_h
 span<const color> bg_palettes_transparent_color_hblank_effect_ptr::colors_ref() const
 {
     auto values_ptr = reinterpret_cast<const color*>(hblank_effects_manager::values_ref(id()));
-    return span<const color>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const color>(values_ptr, display::height());
 }
 
 void bg_palettes_transparent_color_hblank_effect_ptr::set_colors_ref(

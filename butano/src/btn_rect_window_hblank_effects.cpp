@@ -45,7 +45,7 @@ namespace
             return hw::display::window_horizontal_boundaries_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
@@ -86,7 +86,7 @@ namespace
             return hw::display::window_vertical_boundaries_register(target_id);
         }
 
-        void write_output_values(int, const iany& target_last_value, int, const void* input_values_ptr,
+        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
             const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
@@ -187,7 +187,7 @@ rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_p
 span<const pair<fixed, fixed>> rect_window_boundaries_hblank_effect_ptr::deltas_ref() const
 {
     auto values_ptr = reinterpret_cast<const pair<fixed, fixed>*>(hblank_effects_manager::values_ref(id()));
-    return span<const pair<fixed, fixed>>(values_ptr, hblank_effects_manager::values_count(id()));
+    return span<const pair<fixed, fixed>>(values_ptr, display::height());
 }
 
 void rect_window_boundaries_hblank_effect_ptr::set_deltas_ref(const span<const pair<fixed, fixed>>& deltas_ref)

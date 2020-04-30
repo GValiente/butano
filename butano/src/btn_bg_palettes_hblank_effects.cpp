@@ -40,12 +40,7 @@ namespace
         void write_output_values(int, const iany&, int values_count, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            auto color_values_ptr = reinterpret_cast<const color*>(input_values_ptr);
-
-            for(int index = 0; index < values_count; ++index)
-            {
-                output_values_ptr[index] = uint16_t(color_values_ptr[index].value());
-            }
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), values_count, *output_values_ptr);
         }
     };
 

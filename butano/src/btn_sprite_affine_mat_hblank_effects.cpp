@@ -2,6 +2,7 @@
 
 #include "btn_any.h"
 #include "btn_span.h"
+#include "btn_memory.h"
 #include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_hblank_effect_handler.h"
@@ -198,7 +199,7 @@ namespace
         void write_output_values(int, const iany&, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            memcpy(output_values_ptr, input_values_ptr, btn::display::height() * sizeof(uint16_t));
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
         }
     };
 
@@ -232,7 +233,7 @@ namespace
         void write_output_values(int, const iany&, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            memcpy(output_values_ptr, input_values_ptr, btn::display::height() * sizeof(uint16_t));
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
         }
     };
 
@@ -266,7 +267,7 @@ namespace
         void write_output_values(int, const iany&, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            memcpy(output_values_ptr, input_values_ptr, btn::display::height() * sizeof(uint16_t));
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
         }
     };
 
@@ -300,7 +301,7 @@ namespace
         void write_output_values(int, const iany&, int, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            memcpy(output_values_ptr, input_values_ptr, btn::display::height() * sizeof(uint16_t));
+            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), btn::display::height(), *output_values_ptr);
         }
     };
 

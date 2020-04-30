@@ -522,6 +522,20 @@ public:
             return end();
         }
 
+        hasher hasher_functor;
+        size_type current_index = index;
+        size_type next_index = _index(index + 1);
+
+        while(allocated[next_index] && _index(hasher_functor(storage[next_index].first)) != next_index)
+        {
+            ::new(storage + current_index) value_type(move(storage[next_index]));
+            storage[next_index].~value_type();
+            allocated[current_index] = true;
+            allocated[next_index] = false;
+            current_index = next_index;
+            next_index = _index(next_index + 1);
+        }
+
         if(_size == 1)
         {
             if(index == _first_valid_index)
@@ -536,20 +550,6 @@ public:
             }
 
             return iterator(index, *this);
-        }
-
-        hasher hasher_functor;
-        size_type current_index = index;
-        size_type next_index = _index(index + 1);
-
-        while(allocated[next_index] && _index(hasher_functor(storage[next_index].first)) != next_index)
-        {
-            ::new(storage + current_index) value_type(move(storage[next_index]));
-            storage[next_index].~value_type();
-            allocated[current_index] = true;
-            allocated[next_index] = false;
-            current_index = next_index;
-            next_index = _index(next_index + 1);
         }
 
         size_type first_valid_index = _first_valid_index;

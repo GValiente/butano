@@ -119,10 +119,10 @@ public:
     {
         int this_left = left();
 
-        if(this_left <= point.x() && point.x() <= this_left + width())
+        if(this_left < point.x() && this_left + width() > point.x())
         {
             int this_top = top();
-            return this_top <= point.y() && point.y() <= this_top + height();
+            return this_top < point.y() && this_top + height() > point.y();
         }
 
         return false;

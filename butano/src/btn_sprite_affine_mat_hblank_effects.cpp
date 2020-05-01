@@ -34,7 +34,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::first_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -72,7 +72,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::second_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -110,7 +110,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::third_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -148,7 +148,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::fourth_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -186,7 +186,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::first_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -219,7 +219,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::second_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -252,7 +252,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::third_register(target_id);
             return reinterpret_cast<uint16_t*>(result);
@@ -285,7 +285,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             int16_t* result = hw::sprite_affine_mats::fourth_register(target_id);
             return reinterpret_cast<uint16_t*>(result);

@@ -33,7 +33,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int) final
         {
             return hw::palettes::bg_transparent_color_register();
         }

@@ -13,7 +13,7 @@ namespace bf
 
 namespace
 {
-    constexpr const int show_hide_frames = 12;
+    constexpr const int show_hide_frames = 10;
 
     [[nodiscard]] constexpr btn::array<btn::color, btn::display::height()> _create_palette_hblank_effect_colors()
     {

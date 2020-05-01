@@ -40,7 +40,7 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             return hw::display::window_horizontal_boundaries_register(target_id);
         }
@@ -81,7 +81,7 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             return hw::display::window_vertical_boundaries_register(target_id);
         }

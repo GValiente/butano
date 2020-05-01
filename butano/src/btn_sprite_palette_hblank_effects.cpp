@@ -33,7 +33,7 @@ namespace
             return false;
         }
 
-        [[nodiscard]] uint16_t* output_register(int target_id, const iany&) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
             return hw::palettes::sprite_color_register(target_id);
         }

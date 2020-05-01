@@ -28,19 +28,20 @@ namespace
         int target_id = 0;
         last_value_type target_last_value;
         unsigned usages = 0;
-        uint16_t dest_values_a[display::height()];
-        uint16_t dest_values_b[display::height()];
+        uint16_t* output_register = nullptr;
+        uint16_t output_values_a[display::height()];
+        uint16_t output_values_b[display::height()];
         unsigned visible: 1;
         unsigned update: 1;
         unsigned on_screen: 1;
-        unsigned dest_values_a_active: 1;
+        unsigned output_values_a_active: 1;
         unsigned output_values_written: 1;
 
         item_type() :
             visible(false),
             update(false),
             on_screen(false),
-            dest_values_a_active(false),
+            output_values_a_active(false),
             output_values_written(false)
         {
         }
@@ -65,21 +66,25 @@ namespace
 
                 if(updated)
                 {
-                    uint16_t* dest_values_ptr;
+                    uint16_t* output_values_ptr;
 
-                    if(dest_values_a_active)
+                    if(output_values_a_active)
                     {
-                        dest_values_ptr = dest_values_b;
-                        dest_values_a_active = false;
+                        output_values_ptr = output_values_b;
+                        output_values_a_active = false;
                     }
                     else
                     {
-                        dest_values_ptr = dest_values_a;
-                        dest_values_a_active = true;
+                        output_values_ptr = output_values_a;
+                        output_values_a_active = true;
                     }
 
-                    handler->write_output_values(target_id, target_last_value, values_ptr, dest_values_ptr);
+                    handler->write_output_values(target_id, target_last_value, values_ptr, output_values_ptr);
                 }
+
+                uint16_t* old_output_register = output_register;
+                output_register = handler->output_register(target_id);
+                updated |= old_output_register != output_register;
             }
 
             updated |= old_on_screen != on_screen;
@@ -88,8 +93,8 @@ namespace
 
         void setup_entry(hw_entry& entry) const
         {
-            entry.src = dest_values_a_active ? dest_values_a : dest_values_b;
-            entry.dest = handler->output_register(target_id, target_last_value);
+            entry.src = output_values_a_active ? output_values_a : output_values_b;
+            entry.dest = output_register;
         }
     };
 
@@ -120,6 +125,7 @@ namespace
         new_item.values_ptr = values_ptr;
         new_item.target_id = target_id;
         new_item.usages = 1;
+        new_item.output_register = nullptr;
         new_item.visible = true;
         new_item.update = true;
         new_item.on_screen = false;

@@ -44,10 +44,10 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int, const iany& target_last_value) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            const last_value_type& last_value = target_last_value.value<last_value_type>();
-            return hw::sprites::first_attributes_register(last_value.hw_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::sprites::first_attributes_register(*sprites_manager::hw_id(handle));
         }
 
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
@@ -65,14 +65,12 @@ namespace
         {
 
         public:
-            int hw_id;
             fixed hw_y;
             sprite_shape shape;
             palette_bpp_mode bpp_mode;
             int affine_mode;
 
             last_value_type() :
-                hw_id(-1),
                 hw_y(-1),
                 shape(sprite_shape::SQUARE),
                 bpp_mode(palette_bpp_mode::BPP_4),
@@ -81,7 +79,6 @@ namespace
             }
 
             explicit last_value_type(void* handle) :
-                hw_id(*sprites_manager::hw_id(handle)),
                 hw_y(sprites_manager::hw_position(handle).y()),
                 shape(sprites_manager::shape(handle)),
                 bpp_mode(sprites_manager::palette(handle).bpp_mode()),
@@ -96,7 +93,7 @@ namespace
 
             [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b)
             {
-                return a.hw_id == b.hw_id && a.hw_y == b.hw_y && a.shape == b.shape && a.bpp_mode == b.bpp_mode &&
+                return a.hw_y == b.hw_y && a.shape == b.shape && a.bpp_mode == b.bpp_mode &&
                         a.affine_mode == b.affine_mode;
             }
 
@@ -112,19 +109,16 @@ namespace
     {
 
     public:
-        int hw_id;
         fixed hw_x;
         sprite_size size;
 
         second_attributes_last_value_type() :
-            hw_id(-1),
             hw_x(-1),
             size(sprite_size::SMALL)
         {
         }
 
         explicit second_attributes_last_value_type(void* handle) :
-            hw_id(*sprites_manager::hw_id(handle)),
             hw_x(sprites_manager::hw_position(handle).x()),
             size(sprites_manager::size(handle))
         {
@@ -138,7 +132,7 @@ namespace
         [[nodiscard]] friend bool operator==(const second_attributes_last_value_type& a,
                                              const second_attributes_last_value_type& b)
         {
-            return a.hw_id == b.hw_id && a.hw_x == b.hw_x && a.size == b.size;
+            return a.hw_x == b.hw_x && a.size == b.size;
         }
 
         [[nodiscard]] friend bool operator!=(const second_attributes_last_value_type& a,
@@ -175,10 +169,10 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int, const iany& target_last_value) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            const second_attributes_last_value_type& last_value = target_last_value.value<second_attributes_last_value_type>();
-            return hw::sprites::second_attributes_register(last_value.hw_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::sprites::second_attributes_register(*sprites_manager::hw_id(handle));
         }
 
         void write_output_values(int target_id, const iany& target_last_value, const void* input_values_ptr,
@@ -219,10 +213,10 @@ namespace
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int, const iany& target_last_value) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            const second_attributes_last_value_type& last_value = target_last_value.value<second_attributes_last_value_type>();
-            return hw::sprites::second_attributes_register(last_value.hw_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::sprites::second_attributes_register(*sprites_manager::hw_id(handle));
         }
 
         void write_output_values(int target_id, const iany& target_last_value, const void* input_values_ptr,
@@ -245,7 +239,7 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = last_value_type();
+            target_last_value = sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL);
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -256,63 +250,28 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            last_value_type& last_value = target_last_value.value<last_value_type>();
-            last_value_type new_value(target_id);
+            sprite_shape_size& last_value = target_last_value.value<sprite_shape_size>();
+            auto handle = reinterpret_cast<void*>(target_id);
+            sprite_shape_size new_value = sprites_manager::shape_size(handle);
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
         }
 
-        [[nodiscard]] uint16_t* output_register(int, const iany& target_last_value) final
+        [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            const last_value_type& last_value = target_last_value.value<last_value_type>();
-            return hw::sprites::third_attributes_register(last_value.hw_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::sprites::third_attributes_register(*sprites_manager::hw_id(handle));
         }
 
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            const last_value_type& last_value = target_last_value.value<last_value_type>();
+            const sprite_shape_size& shape_size = target_last_value.value<sprite_shape_size>();
             auto sprite_third_attributes_ptr = reinterpret_cast<const sprite_third_attributes*>(input_values_ptr);
             sprites_manager::fill_hblank_effect_third_attributes(
-                        last_value.shape_size, sprite_third_attributes_ptr, output_values_ptr);
+                        shape_size, sprite_third_attributes_ptr, output_values_ptr);
         }
-
-    private:
-        class alignas(alignof(int)) last_value_type
-        {
-
-        public:
-            int hw_id;
-            sprite_shape_size shape_size;
-
-            last_value_type() :
-                hw_id(-1),
-                shape_size(sprite_shape::SQUARE, sprite_size::SMALL)
-            {
-            }
-
-            explicit last_value_type(void* handle) :
-                hw_id(*sprites_manager::hw_id(handle)),
-                shape_size(sprites_manager::shape_size(handle))
-            {
-            }
-
-            explicit last_value_type(int target_id) :
-                last_value_type(reinterpret_cast<void*>(target_id))
-            {
-            }
-
-            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b)
-            {
-                return a.hw_id == b.hw_id && a.shape_size == b.shape_size;
-            }
-
-            [[nodiscard]] friend bool operator!=(const last_value_type& a, const last_value_type& b)
-            {
-                return ! (a == b);
-            }
-        };
     };
 
 

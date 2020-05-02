@@ -55,7 +55,7 @@ namespace btn::hw::bgs
 
     [[nodiscard]] inline palette_bpp_mode bpp_mode(const handle& bg)
     {
-        return bg.cnt & BG_8BPP ? palette_bpp_mode::BPP_8 : palette_bpp_mode::BPP_4;
+        return (bg.cnt & BG_8BPP) ? palette_bpp_mode::BPP_8 : palette_bpp_mode::BPP_4;
     }
 
     inline void set_bpp_mode(palette_bpp_mode bpp_mode, uint16_t& bg_cnt)

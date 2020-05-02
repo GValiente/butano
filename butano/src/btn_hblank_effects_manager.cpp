@@ -29,8 +29,8 @@ namespace
         last_value_type target_last_value;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
-        uint16_t output_values_a[display::height()];
-        uint16_t output_values_b[display::height()];
+        uint16_t output_values_a[display::height()] = {};
+        uint16_t output_values_b[display::height()] = {};
         unsigned visible: 1;
         unsigned update: 1;
         unsigned on_screen: 1;
@@ -52,9 +52,10 @@ namespace
             update = false;
 
             bool old_on_screen = on_screen;
-            on_screen = handler->target_visible(target_id);
+            bool new_on_screen = handler->target_visible(target_id);
+            on_screen = new_on_screen;
 
-            if(on_screen)
+            if(new_on_screen)
             {
                 updated |= handler->target_updated(target_id, target_last_value);
 
@@ -87,7 +88,7 @@ namespace
                 updated |= old_output_register != output_register;
             }
 
-            updated |= old_on_screen != on_screen;
+            updated |= old_on_screen != new_on_screen;
             return updated;
         }
 
@@ -263,7 +264,7 @@ void set_visible(int id, bool visible)
 {
     item_type& item = data.items[id];
 
-    if(visible != item.visible)
+    if(visible != static_cast<bool>(item.visible))
     {
         item.visible = visible;
         data.update = true;

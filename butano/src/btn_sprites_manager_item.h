@@ -40,10 +40,10 @@ public:
     unsigned on_screen: 1;
     unsigned check_on_screen: 1;
 
-    sprites_manager_item(const fixed_point& position, const sprite_shape_size& shape_size,
-                         sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette);
+    sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
+                         sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette);
 
-    sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette);
+    sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette);
 
     [[nodiscard]] bool double_size() const;
 

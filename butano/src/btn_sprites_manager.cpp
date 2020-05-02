@@ -918,7 +918,6 @@ sprite_third_attributes third_attributes(id_type id)
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
     const sprite_tiles_ptr& tiles = third_attributes.tiles();
     const sprite_palette_ptr& palette = third_attributes.palette();
     bool different_tiles = tiles != item->tiles;
@@ -929,6 +928,8 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
         BTN_ASSERT(tiles.tiles_count() == shape_size(id).tiles_count(palette.bpp_mode()),
                    "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
                    shape_size(id).tiles_count(palette.bpp_mode()));
+
+        hw::sprites::handle& handle = item->handle;
 
         if(different_tiles)
         {

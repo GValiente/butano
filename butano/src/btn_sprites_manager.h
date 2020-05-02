@@ -114,7 +114,7 @@ namespace sprites_manager
 
     [[nodiscard]] bool window_enabled(id_type id);
 
-    void set_window_enabled(id_type id, bool blending_enabled);
+    void set_window_enabled(id_type id, bool window_enabled);
 
     [[nodiscard]] int affine_mode(id_type id);
 

@@ -432,7 +432,7 @@ namespace
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = fixed_max_characters_per_sprite;
 
-        void _clear(int characters)
+        void _clear(int characters) const
         {
             hw::sprite_tiles::clear_tiles(characters, _tiles_vram + _sprite_character_index);
         }
@@ -604,7 +604,7 @@ namespace
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = fixed_max_characters_per_sprite;
 
-        void _clear(int characters)
+        void _clear(int characters) const
         {
             tile* up_tiles_vram_ptr = _tiles_vram + _sprite_character_index;
             hw::sprite_tiles::clear_tiles(characters, up_tiles_vram_ptr);

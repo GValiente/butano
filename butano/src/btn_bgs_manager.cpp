@@ -437,7 +437,7 @@ void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(visible != item->visible)
+    if(visible != static_cast<bool>(item->visible))
     {
         item->visible = visible;
         data.rebuild_handles = true;

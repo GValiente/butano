@@ -28,7 +28,7 @@ public:
     fixed_point hw_position;
     size half_dimensions;
     unsigned usages = 1;
-    unsigned sort_key;
+    sort_key sprite_sort_key;
     sprite_tiles_ptr tiles;
     int8_t handles_index = -1;
     optional<sprite_affine_mat_ptr> affine_mat;
@@ -49,12 +49,22 @@ public:
 
     [[nodiscard]] int bg_priority() const
     {
-        return sort_key / unsigned(sprites::z_orders());
+        return sprite_sort_key.priority();
+    }
+
+    void set_bg_priority(int bg_priority)
+    {
+        sprite_sort_key.set_priority(bg_priority);
     }
 
     [[nodiscard]] int z_order() const
     {
-        return int(sort_key % unsigned(sprites::z_orders())) - sprites::max_z_order();
+        return sprite_sort_key.z_order();
+    }
+
+    void set_z_order(int z_order)
+    {
+        sprite_sort_key.set_z_order(z_order);
     }
 
     void update_half_dimensions()
@@ -89,11 +99,6 @@ public:
         hw_position.set_x(real_position.x() + (display::width() / 2) - half_dimensions.width());
         hw_position.set_y(real_position.y() + (display::height() / 2) - half_dimensions.height());
         hw::sprites::set_position(hw_position.x().integer(), hw_position.y().integer(), handle);
-    }
-
-    void update_sort_key(int bg_priority, int z_order)
-    {
-        sort_key = unsigned(bg_priority * sprites::z_orders()) + unsigned(z_order + sprites::max_z_order());
     }
 };
 

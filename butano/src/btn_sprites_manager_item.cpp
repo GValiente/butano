@@ -9,6 +9,7 @@ namespace btn
 sprites_manager_item::sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
                                            sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette) :
     position(_position),
+    sprite_sort_key(3, 0),
     tiles(move(_tiles)),
     palette(move(_palette)),
     double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
@@ -17,7 +18,6 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
 {
     hw::sprites::setup_regular(shape_size, tiles.id(), palette.id(), palette.bpp_mode(), handle);
     update_half_dimensions();
-    update_sort_key(3, 0);
     on_screen = false;
     visible = true;
     check_on_screen = true;
@@ -26,6 +26,7 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
 sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& _tiles,
                                            sprite_palette_ptr&& _palette) :
     position(builder.position()),
+    sprite_sort_key(builder.bg_priority(), builder.z_order()),
     tiles(move(_tiles)),
     affine_mat(builder.release_affine_mat()),
     palette(move(_palette)),
@@ -52,7 +53,6 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     }
 
     update_half_dimensions();
-    update_sort_key(builder.bg_priority(), builder.z_order());
     on_screen = false;
 
     if(builder.visible())

@@ -314,16 +314,12 @@ void decrease_usages(id_type id)
 optional<int> hw_id(id_type id)
 {
     auto item = static_cast<item_type*>(id);
+    int handles_index = item->handles_index;
     optional<int> result;
 
-    if(! data.rebuild_handles)
+    if(handles_index >= 0)
     {
-        int handles_index = item->handles_index;
-
-        if(handles_index >= 0)
-        {
-            result = handles_index;
-        }
+        result = handles_index;
     }
 
     return result;
@@ -569,7 +565,7 @@ void set_bg_priority(id_type id, int bg_priority)
     {
         hw::sprites::set_bg_priority(bg_priority, item->handle);
         sorted_sprites::erase(*item);
-        item->update_sort_key(bg_priority, item->z_order());
+        item->set_bg_priority(bg_priority);
         sorted_sprites::insert(*item);
         data.rebuild_handles |= item->on_screen;
     }
@@ -583,14 +579,12 @@ int z_order(id_type id)
 
 void set_z_order(id_type id, int z_order)
 {
-    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
-
     auto item = static_cast<item_type*>(id);
 
     if(z_order != item->z_order())
     {
         sorted_sprites::erase(*item);
-        item->update_sort_key(item->bg_priority(), z_order);
+        item->set_z_order(z_order);
         sorted_sprites::insert(*item);
         data.rebuild_handles |= item->on_screen;
     }

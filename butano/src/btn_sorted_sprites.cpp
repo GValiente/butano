@@ -39,11 +39,11 @@ layers_type& layers()
 void insert(sprites_manager_item& item)
 {
     layers_type& layers = data.layer_ptrs;
-    unsigned sort_key = item.sort_key;
+    sort_key sort_key = item.sprite_sort_key;
     layer new_layer(sort_key);
     auto layers_end = layers.end();
     auto layers_it = lower_bound(layers.begin(), layers_end, &new_layer, [](const layer* a, const layer* b) {
-        return a->sort_key() < b->sort_key();
+        return a->layer_sort_key() < b->layer_sort_key();
     });
 
     if(layers_it == layers_end)
@@ -54,7 +54,7 @@ void insert(sprites_manager_item& item)
         layers.push_back(&pool_layer);
         layers_it = layers_end;
     }
-    else if(sort_key != (*layers_it)->sort_key())
+    else if(sort_key != (*layers_it)->layer_sort_key())
     {
         BTN_ASSERT(! layers.full(), "No more sprite sort layers available");
 
@@ -70,15 +70,15 @@ void insert(sprites_manager_item& item)
 void erase(sprites_manager_item& item)
 {
     layers_type& layers = data.layer_ptrs;
-    unsigned sort_key = item.sort_key;
+    sort_key sort_key = item.sprite_sort_key;
     layer new_list(sort_key);
     auto layers_end = layers.end();
     auto layers_it = lower_bound(layers.begin(), layers_end, &new_list, [](const layer* a, const layer* b) {
-        return a->sort_key() < b->sort_key();
+        return a->layer_sort_key() < b->layer_sort_key();
     });
 
-    BTN_ASSERT(layers_it != layers_end, "Sprite sort key not found: ", sort_key);
-    BTN_ASSERT(sort_key == (*layers_it)->sort_key(), "Sprite sort key not found: ", sort_key);
+    BTN_ASSERT(layers_it != layers_end, "Sprite sort key not found");
+    BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(), "Sprite sort key not found");
 
     layer* layer = *layers_it;
     layer->erase(item);

@@ -11,19 +11,19 @@ namespace btn::sorted_sprites
     {
 
     public:
-        explicit layer(unsigned sort_key) :
+        explicit layer(sort_key sort_key) :
             intrusive_list<sprites_manager_item>(),
             _sort_key(sort_key)
         {
         }
 
-        [[nodiscard]] unsigned sort_key() const
+        [[nodiscard]] sort_key layer_sort_key() const
         {
             return _sort_key;
         }
 
     private:
-        unsigned _sort_key;
+        sort_key _sort_key;
     };
 
 

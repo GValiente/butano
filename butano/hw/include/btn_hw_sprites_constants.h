@@ -1,7 +1,7 @@
 #ifndef BTN_HW_SPRITES_CONSTANTS_H
 #define BTN_HW_SPRITES_CONSTANTS_H
 
-#include "btn_limits.h"
+#include "btn_sort_key.h"
 #include "btn_config_sprites.h"
 
 namespace btn::sprites
@@ -23,17 +23,12 @@ namespace btn::sprites
 
     [[nodiscard]] constexpr int max_z_order()
     {
-        return btn::numeric_limits<int16_t>::max() - 1;
+        return sort_key::max_z_order();
     }
 
     [[nodiscard]] constexpr int min_z_order()
     {
-        return -max_z_order();
-    }
-
-    [[nodiscard]] constexpr int z_orders()
-    {
-        return btn::numeric_limits<uint16_t>::max();
+        return sort_key::min_z_order();
     }
 }
 

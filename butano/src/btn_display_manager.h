@@ -61,6 +61,8 @@ namespace btn::display_manager
 
     void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show);
 
+    void update_windows_visible_bgs();
+
     [[nodiscard]] bool show_sprites_in_window(int window);
 
     void set_show_sprites_in_window(int window, bool show);

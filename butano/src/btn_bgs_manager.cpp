@@ -575,6 +575,8 @@ void update()
         {
             display_manager::set_bg_enabled(index, false);
         }
+
+        display_manager::update_windows_visible_bgs();
     }
 }
 

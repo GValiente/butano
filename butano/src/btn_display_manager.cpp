@@ -247,6 +247,11 @@ void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show)
     }
 }
 
+void update_windows_visible_bgs()
+{
+    data.update_windows_visible_bgs = true;
+}
+
 bool show_sprites_in_window(int window)
 {
     return data.windows_flags[window] & unsigned(hw::display::window_flag::SPRITES);

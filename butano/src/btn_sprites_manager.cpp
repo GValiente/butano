@@ -51,7 +51,7 @@ namespace
         }
     }
 
-    void _hide_handle(item_type& item)
+    void _hide_handle(const item_type& item)
     {
         if(! data.rebuild_handles && item.on_screen)
         {
@@ -313,7 +313,7 @@ void decrease_usages(id_type id)
 
 optional<int> hw_id(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     int handles_index = item->handles_index;
     optional<int> result;
 
@@ -327,31 +327,31 @@ optional<int> hw_id(id_type id)
 
 sprite_shape shape(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::shape(item->handle);
 }
 
 sprite_size size(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::size(item->handle);
 }
 
 sprite_shape_size shape_size(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::shape_size(item->handle);
 }
 
 btn::size dimensions(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->half_dimensions * 2;
 }
 
 const sprite_tiles_ptr& tiles(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->tiles;
 }
 
@@ -445,7 +445,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 
 const sprite_palette_ptr& palette(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->palette;
 }
 
@@ -525,13 +525,13 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
 const fixed_point& position(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->position;
 }
 
 const fixed_point& hw_position(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->hw_position;
 }
 
@@ -551,7 +551,7 @@ void set_position(id_type id, const fixed_point& position)
 
 int bg_priority(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->bg_priority();
 }
 
@@ -573,7 +573,7 @@ void set_bg_priority(id_type id, int bg_priority)
 
 int z_order(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->z_order();
 }
 
@@ -600,7 +600,7 @@ void put_in_front_of_sort_layer(id_type id)
 
 bool horizontal_flip(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
 
     if(item->affine_mat)
     {
@@ -627,7 +627,7 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
 
 bool vertical_flip(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
 
     if(item->affine_mat)
     {
@@ -654,7 +654,7 @@ void set_vertical_flip(id_type id, bool vertical_flip)
 
 bool mosaic_enabled(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::mosaic_enabled(item->handle);
 }
 
@@ -667,7 +667,7 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 
 bool blending_enabled(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::blending_enabled(item->handle);
 }
 
@@ -684,7 +684,7 @@ void set_blending_enabled(id_type id, bool blending_enabled)
 
 bool window_enabled(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::window_enabled(item->handle);
 }
 
@@ -701,19 +701,19 @@ void set_window_enabled(id_type id, bool window_enabled)
 
 int affine_mode(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::affine_mode(item->handle);
 }
 
 bool double_size(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::sprites::double_size(item->handle);
 }
 
 sprite_double_size_mode double_size_mode(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return sprite_double_size_mode(item->double_size_mode);
 }
 
@@ -739,7 +739,7 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 
 bool visible(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->visible;
 }
 
@@ -764,7 +764,7 @@ void set_visible(id_type id, bool visible)
 
 bool ignore_camera(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->ignore_camera;
 }
 
@@ -838,7 +838,7 @@ void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat)
 
 bool remove_affine_mat_when_not_needed(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->remove_affine_mat_when_not_needed;
 }
 
@@ -855,8 +855,8 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
 
 sprite_first_attributes first_attributes(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
+    auto item = static_cast<const item_type*>(id);
+    const hw::sprites::handle& handle = item->handle;
     return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle),
                                    hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle));
 }
@@ -873,10 +873,10 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
 
 sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
-    hw::sprites::handle& handle = item->handle;
+    const hw::sprites::handle& handle = item->handle;
     return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
                                             hw::sprites::vertical_flip(handle));
 }
@@ -893,7 +893,7 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat;
     BTN_ASSERT(affine_mat, "Item is not affine");
 
@@ -911,7 +911,7 @@ void set_affine_second_attributes(id_type id, const sprite_affine_second_attribu
 
 sprite_third_attributes third_attributes(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return sprite_third_attributes(item->tiles, item->palette, item->bg_priority());
 }
 

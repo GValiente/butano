@@ -256,7 +256,7 @@ void reload_values_ref(int id)
 
 [[nodiscard]] bool visible(int id)
 {
-    item_type& item = data.items[id];
+    const item_type& item = data.items[id];
     return item.visible;
 }
 
@@ -300,7 +300,7 @@ void update()
             data.entries_a_active = true;
         }
 
-        for(item_type& item : data.items)
+        for(const item_type& item : data.items)
         {
             if(item.visible && item.on_screen)
             {

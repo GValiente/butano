@@ -124,7 +124,7 @@ namespace
 
         for(auto it = data.items_vector.begin(), end = data.items_vector.end(); it != end; ++it)
         {
-            item_type* item = *it;
+            const item_type* item = *it;
 
             if(bg_sort_key < item->bg_sort_key)
             {
@@ -136,7 +136,7 @@ namespace
         data.items_vector.push_back(&new_item);
     }
 
-    void _update_item(item_type& item)
+    void _update_item(const item_type& item)
     {
         if(! data.rebuild_handles && item.visible)
         {
@@ -147,8 +147,8 @@ namespace
 
     pair<int, int> _indexes(id_type id, id_type other_id)
     {
-        auto item = static_cast<item_type*>(id);
-        auto other_item = static_cast<item_type*>(other_id);
+        auto item = static_cast<const item_type*>(id);
+        auto other_item = static_cast<const item_type*>(other_id);
         int index = -1;
         int other_index = -1;
 
@@ -256,7 +256,7 @@ void decrease_usages(id_type id)
 
 optional<int> hw_id(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     int handles_index = item->handles_index;
     optional<int> result;
 
@@ -270,13 +270,13 @@ optional<int> hw_id(id_type id)
 
 size dimensions(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->quarter_dimensions * 4;
 }
 
 const regular_bg_map_ptr& map(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->map;
 }
 
@@ -306,13 +306,13 @@ void set_map(id_type id, regular_bg_map_ptr&& map)
 
 const fixed_point& position(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->position;
 }
 
 fixed_point hw_position(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->hw_position();
 }
 
@@ -326,7 +326,7 @@ void set_position(id_type id, const fixed_point& position)
 
 int priority(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->bg_sort_key.priority();
 }
 
@@ -347,7 +347,7 @@ void set_priority(id_type id, int priority)
 
 int z_order(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->bg_sort_key.z_order();
 }
 
@@ -385,7 +385,7 @@ void swap_order(id_type id, id_type other_id)
 
 bool mosaic_enabled(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return hw::bgs::mosaic_enabled(item->handle);
 }
 
@@ -412,7 +412,7 @@ void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
 
 bool blending_enabled(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->blending_enabled;
 }
 
@@ -429,7 +429,7 @@ void set_blending_enabled(id_type id, bool blending_enabled)
 
 bool visible(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->visible;
 }
 
@@ -446,7 +446,7 @@ void set_visible(id_type id, bool visible)
 
 bool ignore_camera(id_type id)
 {
-    auto item = static_cast<item_type*>(id);
+    auto item = static_cast<const item_type*>(id);
     return item->ignore_camera;
 }
 

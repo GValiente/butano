@@ -155,7 +155,7 @@ namespace
 
             iterator& operator++()
             {
-                item_type& item = _list->_items[_index];
+                const item_type& item = _list->_items[_index];
                 _index = item.next_index;
                 return *this;
             }
@@ -335,7 +335,7 @@ namespace
             BTN_LOG("items: ", data.items.size());
             BTN_LOG('[');
 
-            for(item_type& item : data.items)
+            for(const item_type& item : data.items)
             {
                 if(item.status() == item_type::status_type::FREE)
                 {
@@ -411,7 +411,7 @@ namespace
     #endif
 
 
-    void _commit_item(item_type& item)
+    void _commit_item(const item_type& item)
     {
         if(item.is_tiles)
         {
@@ -721,7 +721,7 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
                      const bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
 {
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
-                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette_ptr.id());
+                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette.id());
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
     auto items_map_iterator = data.items_map.find(data_ptr);
@@ -1113,7 +1113,7 @@ void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& pa
 
 optional<span<tile>> tiles_vram(int id)
 {
-    item_type& item = data.items.item(id);
+    const item_type& item = data.items.item(id);
     optional<span<tile>> result;
 
     if(! item.data)
@@ -1127,7 +1127,7 @@ optional<span<tile>> tiles_vram(int id)
 
 optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 {
-    item_type& item = data.items.item(id);
+    const item_type& item = data.items.item(id);
     optional<span<regular_bg_map_cell>> result;
 
     if(! item.data)

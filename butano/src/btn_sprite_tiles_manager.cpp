@@ -89,7 +89,7 @@ namespace
 
             iterator& operator++()
             {
-                item_type& item = _list->_items[_index];
+                const item_type& item = _list->_items[_index];
                 _index = item.next_index;
                 return *this;
             }
@@ -384,7 +384,7 @@ namespace
             BTN_LOG("items: ", data.items.size());
             BTN_LOG('[');
 
-            for(item_type& item : data.items)
+            for(const item_type& item : data.items)
             {
                 BTN_LOG("    ",
                         (item.status() == item_type::status_type::FREE ? "free" :
@@ -627,7 +627,7 @@ optional<span<const tile>> tiles_ref(int id)
 
 void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
-    item_type& item = data.items.item(id);
+    const item_type& item = data.items.item(id);
     const tile* old_tiles_data = item.data;
     [[maybe_unused]] int old_tiles_count = item.tiles_count;
     const tile* new_tiles_data = tiles_ref.data();
@@ -669,7 +669,7 @@ void reload_tiles_ref(int id)
 
 optional<span<tile>> vram(int id)
 {
-    item_type& item = data.items.item(id);
+    const item_type& item = data.items.item(id);
     optional<span<tile>> result;
 
     if(! item.data)

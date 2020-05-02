@@ -247,19 +247,19 @@ void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
 
 bool identity(int id)
 {
-    item_type& item = data.items[id];
+    const item_type& item = data.items[id];
     return item.attributes.identity();
 }
 
 bool double_size(int id)
 {
-    item_type& item = data.items[id];
+    const item_type& item = data.items[id];
     return item.attributes.double_size();
 }
 
 bool updated(int id)
 {
-    item_type& item = data.items[id];
+    const item_type& item = data.items[id];
     return item.updated;
 }
 

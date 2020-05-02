@@ -81,11 +81,6 @@ namespace btn::hw::bgs
         bg.vofs = uint16_t(y);
     }
 
-    [[nodiscard]] inline int priority(const handle& bg)
-    {
-        return BFN_GET(bg.cnt, BG_PRIO);
-    }
-
     inline void set_priority(int priority, uint16_t& bg_cnt)
     {
         BFN_SET(bg_cnt, priority, BG_PRIO);

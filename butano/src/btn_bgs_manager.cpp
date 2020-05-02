@@ -1,7 +1,9 @@
 #include "btn_bgs_manager.h"
 
 #include "btn_bgs.h"
+#include "btn_pool.h"
 #include "btn_color.h"
+#include "btn_vector.h"
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
@@ -22,27 +24,37 @@ namespace
         fixed_point position;
         size quarter_dimensions;
         unsigned usages = 1;
+        sort_key bg_sort_key;
+        hw::bgs::handle handle;
         regular_bg_map_ptr map;
-        bool ignore_camera;
+        uint8_t handles_index = -1;
+        unsigned blending_enabled: 1;
+        unsigned visible: 1;
+        unsigned ignore_camera: 1;
+        unsigned update: 1;
 
-        item_type(const regular_bg_builder& builder, regular_bg_map_ptr&& _map, hw::bgs::handle& handle) :
+        item_type(const regular_bg_builder& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
+            bg_sort_key(builder.priority(), builder.z_order()),
             map(move(_map)),
-            ignore_camera(builder.ignore_camera())
+            blending_enabled(builder.blending_enabled()),
+            visible(builder.visible()),
+            ignore_camera(builder.ignore_camera()),
+            update(true)
         {
             hw::bgs::setup_regular(builder, handle);
             hw::bgs::set_tiles_cbb(map.tiles().cbb(), handle);
-            update_map(handle);
+            update_map();
         }
 
-        void update_map(hw::bgs::handle& handle)
+        void update_map()
         {
             size map_dimensions = map.dimensions();
             hw::bgs::set_map_sbb(map.id(), handle);
             hw::bgs::set_bpp_mode(map.bpp_mode(), handle);
             hw::bgs::set_map_dimensions(map_dimensions, handle);
             quarter_dimensions = map_dimensions * 2;
-            update_hw_position(handle);
+            update_hw_position();
         }
 
         fixed_point hw_position() const
@@ -73,13 +85,13 @@ namespace
             return result;
         }
 
-        void update_hw_position(hw::bgs::handle& handle)
+        void update_hw_position()
         {
             fixed_point real_position = hw_position();
             hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
         }
 
-        void update_hw_position(const fixed_point& camera_position, hw::bgs::handle& handle)
+        void update_hw_position(const fixed_point& camera_position)
         {
             fixed_point real_position = hw_position(camera_position);
             hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
@@ -91,28 +103,70 @@ namespace
     {
 
     public:
-        optional<item_type> items[hw::bgs::count()];
+        pool<item_type, hw::bgs::count()> items_pool;
+        vector<item_type*, hw::bgs::count()> items_vector;
         hw::bgs::handle handles[hw::bgs::count()];
+        bool rebuild_handles = false;
         bool commit = false;
     };
 
     BTN_DATA_EWRAM static_data data;
 
 
-    void _create_finish(int new_index, bool visible, bool blending_enabled)
+    void _insert_item(item_type& new_item)
     {
-        if(visible)
+        sort_key bg_sort_key = new_item.bg_sort_key;
+
+        if(new_item.visible)
         {
-            display_manager::set_bg_enabled(new_index, true);
+            data.rebuild_handles = true;
+        }
+
+        for(auto it = data.items_vector.begin(), end = data.items_vector.end(); it != end; ++it)
+        {
+            item_type* item = *it;
+
+            if(bg_sort_key < item->bg_sort_key)
+            {
+                data.items_vector.insert(it, &new_item);
+                return;
+            }
+        }
+
+        data.items_vector.push_back(&new_item);
+    }
+
+    void _update_item(item_type& item)
+    {
+        if(! data.rebuild_handles && item.visible)
+        {
+            data.handles[item.handles_index] = item.handle;
             data.commit = true;
         }
+    }
 
-        if(blending_enabled)
+    pair<int, int> _indexes(id_type id, id_type other_id)
+    {
+        auto item = static_cast<item_type*>(id);
+        auto other_item = static_cast<item_type*>(other_id);
+        int index = -1;
+        int other_index = -1;
+
+        for(int current_index = 0, limit = data.items_vector.size(); current_index < limit; ++current_index)
         {
-            display_manager::set_blending_bg_enabled(new_index, true);
+            const item_type* current_item = data.items_vector[current_index];
+
+            if(current_item == item)
+            {
+                index = current_index;
+            }
+            else if(current_item == other_item)
+            {
+                other_index = current_index;
+            }
         }
 
-        display_manager::set_show_bg_in_all_windows(new_index, true);
+        return make_pair(index, other_index);
     }
 
     void _set_regular_attributes(const regular_bg_map_ptr& current_map, const regular_bg_attributes& attributes,
@@ -131,303 +185,299 @@ namespace
 
 int used_count()
 {
-    int result = 0;
-
-    for(const optional<item_type>& item : data.items)
-    {
-        if(item)
-        {
-            ++result;
-        }
-    }
-
-    return result;
+    return data.items_vector.size();
 }
 
 int available_count()
 {
-    return hw::bgs::count() - used_count();
+    return data.items_vector.available();
 }
 
-int create(regular_bg_builder&& builder)
+id_type create(regular_bg_builder&& builder)
 {
-    int new_index = hw::bgs::count() - 1;
+    BTN_ASSERT(! data.items_vector.full(), "No more available bgs");
 
-    while(new_index >= 0)
-    {
-        if(data.items[new_index])
-        {
-            --new_index;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    BTN_ASSERT(new_index >= 0, "No more available bgs");
-
-    data.items[new_index] = item_type(builder, builder.release_map(), data.handles[new_index]);
-    _create_finish(new_index, builder.visible(), builder.blending_enabled());
-    return new_index;
+    item_type& item = data.items_pool.create(builder, builder.release_map());
+    _insert_item(item);
+    display_manager::set_show_bg_in_all_windows(&item, true);
+    return &item;
 }
 
-int optional_create(regular_bg_builder&& builder)
+id_type optional_create(regular_bg_builder&& builder)
 {
-    int new_index = hw::bgs::count() - 1;
-
-    while(new_index >= 0)
+    if(data.items_vector.full())
     {
-        if(data.items[new_index])
-        {
-            --new_index;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    if(new_index < 0)
-    {
-        return -1;
+        return nullptr;
     }
 
     optional<regular_bg_map_ptr> map = builder.optional_release_map();
 
     if(! map)
     {
-        return -1;
+        return nullptr;
     }
 
-    data.items[new_index] = item_type(builder, move(*map), data.handles[new_index]);
-    _create_finish(new_index, builder.visible(), builder.blending_enabled());
-    return new_index;
+    item_type& item = data.items_pool.create(builder, move(*map));
+    _insert_item(item);
+    display_manager::set_show_bg_in_all_windows(&item, true);
+    return &item;
 }
 
-void increase_usages(int id)
+void increase_usages(id_type id)
 {
-    item_type& item = *data.items[id];
-    ++item.usages;
+    auto item = static_cast<item_type*>(id);
+    ++item->usages;
 }
 
-void decrease_usages(int id)
+void decrease_usages(id_type id)
 {
-    item_type& item = *data.items[id];
-    --item.usages;
+    auto item = static_cast<item_type*>(id);
+    --item->usages;
 
-    if(! item.usages)
+    if(! item->usages)
     {
-        data.items[id].reset();
-        display_manager::set_blending_bg_enabled(id, false);
-
-        if(display_manager::bg_enabled(id))
+        if(! data.rebuild_handles && item->visible)
         {
-            display_manager::set_bg_enabled(id, false);
-            data.commit = true;
+            if(! data.items_vector.empty() && item != data.items_vector.back())
+            {
+                data.rebuild_handles = true;
+            }
+            else
+            {
+                display_manager::set_bg_enabled(item->handles_index, false);
+            }
         }
+
+        display_manager::set_show_bg_in_all_windows(&item, false);
+        erase(data.items_vector, item);
+        data.items_pool.destroy(*item);
     }
 }
 
-size dimensions(int id)
+optional<int> hw_id(id_type id)
 {
-    item_type& item = *data.items[id];
-    return item.quarter_dimensions * 4;
-}
+    auto item = static_cast<item_type*>(id);
+    int handles_index = item->handles_index;
+    optional<int> result;
 
-const regular_bg_map_ptr& map(int id)
-{
-    item_type& item = *data.items[id];
-    return item.map;
-}
-
-void set_map(int id, const regular_bg_map_ptr& map)
-{
-    item_type& item = *data.items[id];
-
-    if(map != item.map)
+    if(handles_index >= 0)
     {
-        item.map = map;
-        item.update_map(data.handles[id]);
-
-        if(display_manager::bg_enabled(id))
-        {
-            data.commit = true;
-        }
+        result = handles_index;
     }
+
+    return result;
 }
 
-void set_map(int id, regular_bg_map_ptr&& map)
+size dimensions(id_type id)
 {
-    item_type& item = *data.items[id];
+    auto item = static_cast<item_type*>(id);
+    return item->quarter_dimensions * 4;
+}
 
-    if(map != item.map)
+const regular_bg_map_ptr& map(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->map;
+}
+
+void set_map(id_type id, const regular_bg_map_ptr& map)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(map != item->map)
     {
-        item.map = move(map);
-        item.update_map(data.handles[id]);
-
-        if(display_manager::bg_enabled(id))
-        {
-            data.commit = true;
-        }
+        item->map = map;
+        item->update_map();
+        _update_item(*item);
     }
 }
 
-const fixed_point& position(int id)
+void set_map(id_type id, regular_bg_map_ptr&& map)
 {
-    item_type& item = *data.items[id];
-    return item.position;
-}
+    auto item = static_cast<item_type*>(id);
 
-fixed_point hw_position(int id)
-{
-    item_type& item = *data.items[id];
-    return item.hw_position();
-}
-
-void set_position(int id, const fixed_point& position)
-{
-    item_type& item = *data.items[id];
-    item.position = position;
-    item.update_hw_position(data.handles[id]);
-
-    if(display_manager::bg_enabled(id))
+    if(map != item->map)
     {
-        data.commit = true;
+        item->map = move(map);
+        item->update_map();
+        _update_item(*item);
     }
 }
 
-int priority(int id)
+const fixed_point& position(id_type id)
 {
-    return hw::bgs::priority(data.handles[id]);
+    auto item = static_cast<item_type*>(id);
+    return item->position;
 }
 
-void set_priority(int id, int priority)
+fixed_point hw_position(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->hw_position();
+}
+
+void set_position(id_type id, const fixed_point& position)
+{
+    auto item = static_cast<item_type*>(id);
+    item->position = position;
+    item->update_hw_position();
+    _update_item(*item);
+}
+
+int priority(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->bg_sort_key.priority();
+}
+
+void set_priority(id_type id, int priority)
 {
     BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
-    hw::bgs::set_priority(priority, data.handles[id]);
+    auto item = static_cast<item_type*>(id);
 
-    if(display_manager::bg_enabled(id))
+    if(item->bg_sort_key.priority() != priority)
     {
-        data.commit = true;
+        item->bg_sort_key.set_priority(priority);
+        hw::bgs::set_priority(priority, item->handle);
+        erase(data.items_vector, item);
+        _insert_item(*item);
     }
 }
 
-bool mosaic_enabled(int id)
+int z_order(id_type id)
 {
-    return hw::bgs::mosaic_enabled(data.handles[id]);
+    auto item = static_cast<item_type*>(id);
+    return item->bg_sort_key.z_order();
 }
 
-void set_mosaic_enabled(int id, bool mosaic_enabled)
+void set_z_order(id_type id, int z_order)
 {
-    hw::bgs::set_mosaic_enabled(mosaic_enabled, data.handles[id]);
+    auto item = static_cast<item_type*>(id);
 
-    if(display_manager::bg_enabled(id))
+    if(item->bg_sort_key.z_order() != z_order)
     {
-        data.commit = true;
+        item->bg_sort_key.set_z_order(z_order);
+        erase(data.items_vector, item);
+        _insert_item(*item);
     }
 }
 
-regular_bg_attributes regular_attributes(int id)
+bool above(id_type id, id_type other_id)
+{
+    pair<int, int> indexes = _indexes(id, other_id);
+    return indexes.first > indexes.second;
+}
+
+void swap_order(id_type id, id_type other_id)
+{
+    auto item = static_cast<item_type*>(id);
+    auto other_item = static_cast<item_type*>(other_id);
+
+    if(item->visible || other_item->visible)
+    {
+        data.rebuild_handles = true;
+    }
+
+    pair<int, int> indexes = _indexes(id, other_id);
+    swap(data.items_vector[indexes.first], data.items_vector[indexes.second]);
+}
+
+bool mosaic_enabled(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return hw::bgs::mosaic_enabled(item->handle);
+}
+
+void set_mosaic_enabled(id_type id, bool mosaic_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::bgs::set_mosaic_enabled(mosaic_enabled, item->handle);
+    _update_item(*item);
+}
+
+regular_bg_attributes regular_attributes(id_type id)
 {
     return regular_bg_attributes(map(id), priority(id), mosaic_enabled(id));
 }
 
-void set_regular_attributes(int id, const regular_bg_attributes& attributes)
+void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
 {
-    item_type& item = *data.items[id];
-    hw::bgs::handle& handle = data.handles[id];
-    _set_regular_attributes(item.map, attributes, handle.cnt);
-    item.map = attributes.map();
+    auto item = static_cast<item_type*>(id);
+    set_priority(id, attributes.priority());
+    _set_regular_attributes(item->map, attributes, item->handle.cnt);
+    item->map = attributes.map();
+    _update_item(*item);
+}
 
-    if(display_manager::bg_enabled(id))
+bool blending_enabled(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->blending_enabled;
+}
+
+void set_blending_enabled(id_type id, bool blending_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    item->blending_enabled = blending_enabled;
+
+    if(! data.rebuild_handles && item->visible)
     {
-        data.commit = true;
+        display_manager::set_blending_bg_enabled(item->handles_index, blending_enabled);
     }
 }
 
-bool blending_enabled(int id)
+bool visible(id_type id)
 {
-    return display_manager::blending_bg_enabled(id);
+    auto item = static_cast<item_type*>(id);
+    return item->visible;
 }
 
-void set_blending_enabled(int id, bool blending_enabled)
+void set_visible(id_type id, bool visible)
 {
-    display_manager::set_blending_bg_enabled(id, blending_enabled);
-}
+    auto item = static_cast<item_type*>(id);
 
-bool visible(int id)
-{
-    return display_manager::bg_enabled(id);
-}
-
-void set_visible(int id, bool visible)
-{
-    display_manager::set_bg_enabled(id, visible);
-
-    if(visible)
+    if(visible != item->visible)
     {
-        data.commit = true;
+        item->visible = visible;
+        data.rebuild_handles = true;
     }
 }
 
-bool ignore_camera(int id)
+bool ignore_camera(id_type id)
 {
-    item_type& item = *data.items[id];
-    return item.ignore_camera;
+    auto item = static_cast<item_type*>(id);
+    return item->ignore_camera;
 }
 
-void set_ignore_camera(int id, bool ignore_camera)
+void set_ignore_camera(id_type id, bool ignore_camera)
 {
-    item_type& item = *data.items[id];
-    item.ignore_camera = ignore_camera;
-    item.update_hw_position(data.handles[id]);
-
-    if(display_manager::bg_enabled(id))
-    {
-        data.commit = true;
-    }
+    auto item = static_cast<item_type*>(id);
+    item->ignore_camera = ignore_camera;
+    item->update_hw_position();
+    _update_item(*item);
 }
 
 void update_map_tiles_cbb(int map_id, int tiles_cbb)
 {
-    for(int id = 0; id < hw::bgs::count(); ++id)
+    for(item_type* item : data.items_vector)
     {
-        if(optional<item_type>& item_cnt = data.items[id])
+        if(item->map.id() == map_id)
         {
-            item_type& item = *item_cnt;
-
-            if(item.map.id() == map_id)
-            {
-                hw::bgs::set_tiles_cbb(tiles_cbb, data.handles[id]);
-
-                if(display_manager::bg_enabled(id))
-                {
-                    data.commit = true;
-                }
-            }
+            hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
+            _update_item(*item);
         }
     }
 }
 
 void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
 {
-    for(int id = 0; id < hw::bgs::count(); ++id)
+    for(item_type* item : data.items_vector)
     {
-        if(optional<item_type>& item_cnt = data.items[id])
+        if(item->map.id() == map_id)
         {
-            item_type& item = *item_cnt;
-
-            if(item.map.id() == map_id)
-            {
-                hw::bgs::set_bpp_mode(new_bpp_mode, data.handles[id]);
-
-                if(display_manager::bg_enabled(id))
-                {
-                    data.commit = true;
-                }
-            }
+            hw::bgs::set_bpp_mode(new_bpp_mode, item->handle);
+            _update_item(*item);
         }
     }
 }
@@ -436,21 +486,12 @@ void update_camera()
 {
     fixed_point camera_position = camera::position();
 
-    for(int id = 0; id < hw::bgs::count(); ++id)
+    for(item_type* item : data.items_vector)
     {
-        if(optional<item_type>& item_cnt = data.items[id])
+        if(! item->ignore_camera)
         {
-            item_type& item = *item_cnt;
-
-            if(! item.ignore_camera)
-            {
-                item.update_hw_position(camera_position, data.handles[id]);
-
-                if(display_manager::bg_enabled(id))
-                {
-                    data.commit = true;
-                }
-            }
+            item->update_hw_position(camera_position);
+            _update_item(*item);
         }
     }
 }
@@ -491,10 +532,11 @@ void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* pos
     }
 }
 
-void fill_hblank_effect_regular_attributes(int id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
 {
-    const regular_bg_map_ptr& map = data.items[id]->map;
-    uint16_t bg_cnt = data.handles[id].cnt;
+    auto item = static_cast<item_type*>(id);
+    const regular_bg_map_ptr& map = item->map;
+    uint16_t bg_cnt = item->handle.cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
@@ -502,6 +544,37 @@ void fill_hblank_effect_regular_attributes(int id, const regular_bg_attributes* 
         uint16_t& dest_cnt = dest_ptr[index];
         dest_cnt = bg_cnt;
         _set_regular_attributes(map, attributes, dest_cnt);
+    }
+}
+
+void update()
+{
+    if(data.rebuild_handles)
+    {
+        int id = 3;
+        data.rebuild_handles = false;
+        data.commit = true;
+
+        for(item_type* item : data.items_vector)
+        {
+            if(item->visible)
+            {
+                item->handles_index = id;
+                data.handles[id] = item->handle;
+                display_manager::set_bg_enabled(id, true);
+                display_manager::set_blending_bg_enabled(id, item->blending_enabled);
+                --id;
+            }
+            else
+            {
+                item->handles_index = -1;
+            }
+        }
+
+        for(int index = 0; index <= id; ++index)
+        {
+            display_manager::set_bg_enabled(index, false);
+        }
     }
 }
 

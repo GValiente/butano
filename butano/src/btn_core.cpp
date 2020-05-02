@@ -134,12 +134,20 @@ void update()
     sprite_tiles_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
+    BTN_PROFILER_ENGINE_START("eng_bgs_update");
+    bgs_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
     BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
     bg_blocks_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_palettes_update");
     palettes_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_display_update");
+    display_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_audio_update");

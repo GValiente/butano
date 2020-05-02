@@ -3,6 +3,7 @@
 
 #include "btn_limits.h"
 #include "btn_fixed_fwd.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
@@ -16,55 +17,67 @@ enum class palette_bpp_mode;
 
 namespace bgs_manager
 {
+    using id_type = void*;
+
     [[nodiscard]] int used_count();
 
     [[nodiscard]] int available_count();
 
-    [[nodiscard]] int create(regular_bg_builder&& builder);
+    [[nodiscard]] id_type create(regular_bg_builder&& builder);
 
-    [[nodiscard]] int optional_create(regular_bg_builder&& builder);
+    [[nodiscard]] id_type optional_create(regular_bg_builder&& builder);
 
-    void increase_usages(int id);
+    void increase_usages(id_type id);
 
-    void decrease_usages(int id);
+    void decrease_usages(id_type id);
 
-    [[nodiscard]] size dimensions(int id);
+    [[nodiscard]] optional<int> hw_id(id_type id);
 
-    [[nodiscard]] const regular_bg_map_ptr& map(int id);
+    [[nodiscard]] size dimensions(id_type id);
 
-    void set_map(int id, const regular_bg_map_ptr& map);
+    [[nodiscard]] const regular_bg_map_ptr& map(id_type id);
 
-    void set_map(int id, regular_bg_map_ptr&& map);
+    void set_map(id_type id, const regular_bg_map_ptr& map);
 
-    [[nodiscard]] const fixed_point& position(int id);
+    void set_map(id_type id, regular_bg_map_ptr&& map);
 
-    [[nodiscard]] fixed_point hw_position(int id);
+    [[nodiscard]] const fixed_point& position(id_type id);
 
-    void set_position(int id, const fixed_point& position);
+    [[nodiscard]] fixed_point hw_position(id_type id);
 
-    [[nodiscard]] int priority(int id);
+    void set_position(id_type id, const fixed_point& position);
 
-    void set_priority(int id, int priority);
+    [[nodiscard]] int priority(id_type id);
 
-    [[nodiscard]] bool mosaic_enabled(int id);
+    void set_priority(id_type id, int priority);
 
-    void set_mosaic_enabled(int id, bool mosaic_enabled);
+    [[nodiscard]] int z_order(id_type id);
 
-    [[nodiscard]] regular_bg_attributes regular_attributes(int id);
+    void set_z_order(id_type id, int z_order);
 
-    void set_regular_attributes(int id, const regular_bg_attributes& attributes);
+    [[nodiscard]] bool above(id_type id, id_type other_id);
 
-    [[nodiscard]] bool blending_enabled(int id);
+    void swap_order(id_type id, id_type other_id);
 
-    void set_blending_enabled(int id, bool blending_enabled);
+    [[nodiscard]] bool mosaic_enabled(id_type id);
 
-    [[nodiscard]] bool visible(int id);
+    void set_mosaic_enabled(id_type id, bool mosaic_enabled);
 
-    void set_visible(int id, bool visible);
+    [[nodiscard]] regular_bg_attributes regular_attributes(id_type id);
 
-    [[nodiscard]] bool ignore_camera(int id);
+    void set_regular_attributes(id_type id, const regular_bg_attributes& attributes);
 
-    void set_ignore_camera(int id, bool ignore_camera);
+    [[nodiscard]] bool blending_enabled(id_type id);
+
+    void set_blending_enabled(id_type id, bool blending_enabled);
+
+    [[nodiscard]] bool visible(id_type id);
+
+    void set_visible(id_type id, bool visible);
+
+    [[nodiscard]] bool ignore_camera(id_type id);
+
+    void set_ignore_camera(id_type id, bool ignore_camera);
 
     void update_map_tiles_cbb(int map_id, int tiles_cbb);
 
@@ -76,7 +89,8 @@ namespace bgs_manager
 
     void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_regular_attributes(int id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr,
+                                               uint16_t* dest_ptr);
 
     void update();
 

@@ -81,6 +81,13 @@ public:
 
     regular_bg_builder& set_priority(int priority);
 
+    [[nodiscard]] int z_order() const
+    {
+        return _z_order;
+    }
+
+    regular_bg_builder& set_z_order(int z_order);
+
     [[nodiscard]] bool mosaic_enabled() const
     {
         return _mosaic_enabled;
@@ -146,6 +153,7 @@ private:
     optional<regular_bg_map_ptr> _map;
     fixed_point _position;
     int _priority = 3;
+    int _z_order = 0;
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
     bool _visible = true;

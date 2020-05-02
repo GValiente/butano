@@ -49,28 +49,23 @@ public:
     regular_bg_ptr& operator=(const regular_bg_ptr& other);
 
     regular_bg_ptr(regular_bg_ptr&& other) :
-        regular_bg_ptr(other._id)
+        regular_bg_ptr(other._handle)
     {
-        other._id = -1;
+        other._handle = nullptr;
     }
 
     regular_bg_ptr& operator=(regular_bg_ptr&& other)
     {
-        btn::swap(_id, other._id);
+        btn::swap(_handle, other._handle);
         return *this;
     }
 
     ~regular_bg_ptr()
     {
-        if(_id >= 0)
+        if(_handle)
         {
             _destroy();
         }
-    }
-
-    [[nodiscard]] int id() const
-    {
-        return _id;
     }
 
     [[nodiscard]] size dimensions() const;
@@ -127,6 +122,10 @@ public:
 
     void set_priority(int priority);
 
+    [[nodiscard]] int z_order() const;
+
+    void set_z_order(int z_order);
+
     [[nodiscard]] bool above(const regular_bg_ptr& other) const;
 
     [[nodiscard]] bool above(const sprite_ptr& sprite_ptr) const;
@@ -159,19 +158,29 @@ public:
 
     void set_attributes(const regular_bg_attributes& attributes);
 
+    [[nodiscard]] const void* handle() const
+    {
+        return _handle;
+    }
+
+    [[nodiscard]] void* handle()
+    {
+        return _handle;
+    }
+
     void swap(regular_bg_ptr& other)
     {
-        btn::swap(_id, other._id);
+        btn::swap(_handle, other._handle);
     }
 
     friend void swap(regular_bg_ptr& a, regular_bg_ptr& b)
     {
-        btn::swap(a._id, b._id);
+        btn::swap(a._handle, b._handle);
     }
 
     [[nodiscard]] friend bool operator==(const regular_bg_ptr& a, const regular_bg_ptr& b)
     {
-        return a._id == b._id;
+        return a._handle == b._handle;
     }
 
     [[nodiscard]] friend bool operator!=(const regular_bg_ptr& a, const regular_bg_ptr& b)
@@ -180,10 +189,12 @@ public:
     }
 
 private:
-    int8_t _id;
+    using handle_type = void*;
 
-    explicit regular_bg_ptr(int id) :
-        _id(int8_t(id))
+    handle_type _handle;
+
+    explicit regular_bg_ptr(handle_type handle) :
+        _handle(handle)
     {
     }
 
@@ -196,7 +207,7 @@ struct hash<regular_bg_ptr>
 {
     [[nodiscard]] unsigned operator()(const regular_bg_ptr& value) const
     {
-        return make_hash(value.id());
+        return make_hash(value.handle());
     }
 };
 

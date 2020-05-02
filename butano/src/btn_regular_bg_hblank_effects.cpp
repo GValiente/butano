@@ -31,13 +31,15 @@ namespace
 
         [[nodiscard]] bool target_visible(int target_id) final
         {
-            return bgs_manager::visible(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return bgs_manager::hw_id(handle).has_value();
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
             fixed& last_value = target_last_value.value<fixed>();
-            fixed new_value = bgs_manager::hw_position(target_id).x();
+            auto handle = reinterpret_cast<void*>(target_id);
+            fixed new_value = bgs_manager::hw_position(handle).x();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -45,7 +47,8 @@ namespace
 
         [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            return hw::bgs::regular_horizontal_position_register(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::bgs::regular_horizontal_position_register(*bgs_manager::hw_id(handle));
         }
 
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
@@ -71,13 +74,15 @@ namespace
 
         [[nodiscard]] bool target_visible(int target_id) final
         {
-            return bgs_manager::visible(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return bgs_manager::hw_id(handle).has_value();
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
             fixed& last_value = target_last_value.value<fixed>();
-            fixed new_value = bgs_manager::hw_position(target_id).y();
+            auto handle = reinterpret_cast<void*>(target_id);
+            fixed new_value = bgs_manager::hw_position(handle).y();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -85,7 +90,8 @@ namespace
 
         [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            return hw::bgs::regular_vertical_position_register(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::bgs::regular_vertical_position_register(*bgs_manager::hw_id(handle));
         }
 
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
@@ -111,7 +117,8 @@ namespace
 
         [[nodiscard]] bool target_visible(int target_id) final
         {
-            return bgs_manager::visible(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return bgs_manager::hw_id(handle).has_value();
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
@@ -125,15 +132,17 @@ namespace
 
         [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            return hw::bgs::attributes_register(target_id);
+            auto handle = reinterpret_cast<void*>(target_id);
+            return hw::bgs::attributes_register(*bgs_manager::hw_id(handle));
         }
 
         void write_output_values(int target_id, const iany&, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
+            auto handle = reinterpret_cast<void*>(target_id);
             auto regular_bg_attributes_ptr = reinterpret_cast<const regular_bg_attributes*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_regular_attributes(
-                        target_id, regular_bg_attributes_ptr, output_values_ptr);
+                        handle, regular_bg_attributes_ptr, output_values_ptr);
         }
 
     private:
@@ -148,8 +157,13 @@ namespace
             {
             }
 
+            explicit last_value_type(void* handle) :
+                last_value_type(bgs_manager::map(handle))
+            {
+            }
+
             explicit last_value_type(int target_id) :
-                last_value_type(bgs_manager::map(target_id))
+                last_value_type(reinterpret_cast<void*>(target_id))
             {
             }
 
@@ -187,7 +201,7 @@ namespace
 regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::create_horizontal(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg.id(),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                             data.horizontal_position_handler);
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
@@ -195,7 +209,7 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
 optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_horizontal(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg.id(),
+    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                                      data.horizontal_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
@@ -210,7 +224,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
 regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::create_vertical(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), bg.id(),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                             data.vertical_position_handler);
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
@@ -218,7 +232,7 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
 optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_vertical(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), bg.id(),
+    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                                      data.vertical_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
@@ -291,7 +305,7 @@ regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(int
 regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr::create(
         regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), bg.id(),
+    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
                                             data.attributes_handler);
     return regular_bg_attributes_hblank_effect_ptr(id, move(bg));
 }
@@ -299,7 +313,7 @@ regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr:
 optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::optional_create(
         regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), bg.id(),
+    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
                                                      data.attributes_handler);
     optional<regular_bg_attributes_hblank_effect_ptr> result;
 

@@ -8,12 +8,14 @@ namespace btn
 
 bool window::show_bg(const regular_bg_ptr& regular_bg) const
 {
-    return display_manager::show_bg_in_window(_id, regular_bg.id());
+    auto bg_handle = const_cast<void*>(regular_bg.handle());
+    return display_manager::show_bg_in_window(_id, bg_handle);
 }
 
 void window::set_show_bg(const regular_bg_ptr& regular_bg, bool show)
 {
-    return display_manager::set_show_bg_in_window(_id, regular_bg.id(), show);
+    auto bg_handle = const_cast<void*>(regular_bg.handle());
+    return display_manager::set_show_bg_in_window(_id, bg_handle, show);
 }
 
 bool window::show_sprites() const

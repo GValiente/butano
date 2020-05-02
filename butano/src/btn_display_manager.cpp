@@ -4,6 +4,7 @@
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_fixed_point.h"
+#include "btn_bgs_manager.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
 
@@ -16,7 +17,7 @@ namespace
     {
 
     public:
-        bool bg_enabled[hw::bgs::count()] = {};
+        bool enabled_bgs[hw::bgs::count()] = {};
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
         fixed bgs_mosaic_horizontal_stretch;
@@ -24,16 +25,18 @@ namespace
         bool blending_bgs[hw::bgs::count()] = {};
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
+        vector<bg_handle_type, hw::bgs::count()> windows_visible_bgs[hw::display::windows_count()];
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         fixed_point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
         bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
-        bool commit_bg[hw::bgs::count()] = {};
+        bool commit_enabled_bgs = false;
         bool green_swap_enabled = false;
         bool commit_mosaic = false;
         bool commit_blending_bgs = true;
         bool commit_blending_alphas = true;
+        bool update_windows_visible_bgs = false;
         bool commit_windows_flags = true;
         bool commit_windows_boundaries = false;
         bool commit_inside_window[hw::display::inside_windows_count()] = {};
@@ -65,10 +68,6 @@ void init()
     hw::display::init();
 
     unsigned initial_window_flags =
-            unsigned(hw::display::window_flag::BG_0) |
-            unsigned(hw::display::window_flag::BG_1) |
-            unsigned(hw::display::window_flag::BG_2) |
-            unsigned(hw::display::window_flag::BG_3) |
             unsigned(hw::display::window_flag::SPRITES) |
             unsigned(hw::display::window_flag::BLENDING);
 
@@ -95,13 +94,13 @@ void init()
 
 bool bg_enabled(int bg)
 {
-    return data.bg_enabled[bg];
+    return data.enabled_bgs[bg];
 }
 
 void set_bg_enabled(int bg, bool enabled)
 {
-    data.bg_enabled[bg] = enabled;
-    data.commit_bg[bg] = true;
+    data.enabled_bgs[bg] = enabled;
+    data.commit_enabled_bgs = true;
 }
 
 fixed sprites_mosaic_horizontal_stretch()
@@ -209,45 +208,43 @@ void set_blending_intensity_alpha(fixed intensity_alpha)
     data.commit_blending_alphas = true;
 }
 
-bool show_bg_in_window(int window, int bg)
+bool show_bg_in_window(int window, bg_handle_type bg_handle)
 {
-    return data.windows_flags[window] & (unsigned(hw::display::window_flag::BG_0) << bg);
+    const ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
+    auto end = windows_visible_bgs.end();
+    return find(windows_visible_bgs.begin(), end, bg_handle) != end;
 }
 
-void set_show_bg_in_window(int window, int bg, bool show)
+void set_show_bg_in_window(int window, bg_handle_type bg_handle, bool show)
 {
-    if(show)
-    {
-        data.windows_flags[window] |= (unsigned(hw::display::window_flag::BG_0) << bg);
-    }
-    else
-    {
-        data.windows_flags[window] &= ~(unsigned(hw::display::window_flag::BG_0) << bg);
-    }
-
-    data.commit_windows_flags = true;
-}
-
-void set_show_bg_in_all_windows(int bg, bool show)
-{
-    unsigned bg_window_flag = unsigned(hw::display::window_flag::BG_0) << bg;
+    ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
+    auto end = windows_visible_bgs.end();
+    auto it = find(windows_visible_bgs.begin(), end, bg_handle);
 
     if(show)
     {
-        for(unsigned& window_flags : data.windows_flags)
+        if(it == end)
         {
-            window_flags |= bg_window_flag;
+            windows_visible_bgs.push_back(bg_handle);
+            data.update_windows_visible_bgs = true;
         }
     }
     else
     {
-        for(unsigned& window_flags : data.windows_flags)
+        if(it != end)
         {
-            window_flags &= ~bg_window_flag;
+            windows_visible_bgs.erase(it);
+            data.update_windows_visible_bgs = true;
         }
     }
+}
 
-    data.commit_windows_flags = true;
+void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show)
+{
+    for(int window = 0; window < hw::display::windows_count(); ++window)
+    {
+        set_show_bg_in_window(window, bg_handle, show);
+    }
 }
 
 bool show_sprites_in_window(int window)
@@ -484,17 +481,43 @@ void update_camera()
     }
 }
 
+void update()
+{
+    if(data.update_windows_visible_bgs)
+    {
+        data.update_windows_visible_bgs = false;
+        data.commit_windows_flags = true;
+
+        for(int window = 0; window < hw::display::windows_count(); ++window)
+        {
+            unsigned& windows_flags = data.windows_flags[window];
+
+            for(int bg = 0; bg < hw::bgs::count(); ++bg)
+            {
+                windows_flags &= ~(unsigned(hw::display::window_flag::BG_0) << bg);
+            }
+
+            for(bg_handle_type bg_handle : data.windows_visible_bgs[window])
+            {
+                if(optional<int> bg = bgs_manager::hw_id(bg_handle))
+                {
+                    windows_flags |= (unsigned(hw::display::window_flag::BG_0) << *bg);
+                }
+            }
+        }
+    }
+}
+
 void commit()
 {
-    for(int index = 0; index < hw::bgs::count(); ++index)
+    if(data.commit_enabled_bgs)
     {
-        bool& commit_bg = data.commit_bg[index];
-
-        if(commit_bg)
+        for(int index = 0; index < hw::bgs::count(); ++index)
         {
-            hw::display::set_bg_enabled(index, data.bg_enabled[index]);
-            commit_bg = false;
+            hw::display::set_bg_enabled(index, data.enabled_bgs[index]);
         }
+
+        data.commit_enabled_bgs = false;
     }
 
     if(data.commit_mosaic)

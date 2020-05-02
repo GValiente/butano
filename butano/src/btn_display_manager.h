@@ -11,6 +11,8 @@ namespace btn
 
 namespace btn::display_manager
 {
+    using bg_handle_type = void*;
+
     void init();
 
     [[nodiscard]] bool bg_enabled(int bg);
@@ -53,11 +55,11 @@ namespace btn::display_manager
 
     void set_blending_intensity_alpha(fixed intensity_alpha);
 
-    [[nodiscard]] bool show_bg_in_window(int window, int bg);
+    [[nodiscard]] bool show_bg_in_window(int window, bg_handle_type bg_handle);
 
-    void set_show_bg_in_window(int window, int bg, bool show);
+    void set_show_bg_in_window(int window, bg_handle_type bg_handle, bool show);
 
-    void set_show_bg_in_all_windows(int bg, bool show);
+    void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show);
 
     [[nodiscard]] bool show_sprites_in_window(int window);
 
@@ -100,6 +102,8 @@ namespace btn::display_manager
     void set_green_swap_enabled(bool enabled);
 
     void update_camera();
+
+    void update();
 
     void commit();
 

@@ -16,6 +16,14 @@ regular_bg_builder& regular_bg_builder::set_priority(int priority)
     return *this;
 }
 
+regular_bg_builder& regular_bg_builder::set_z_order(int z_order)
+{
+    BTN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
+
+    _z_order = z_order;
+    return *this;
+}
+
 regular_bg_ptr regular_bg_builder::build() const
 {
     return regular_bg_ptr::create(*this);

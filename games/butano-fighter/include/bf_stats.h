@@ -25,7 +25,7 @@ public:
         DETAILED
     };
 
-    explicit stats(const btn::sprite_text_generator& text_generator);
+    explicit stats(btn::sprite_text_generator& text_generator);
 
     [[nodiscard]] mode_type mode() const
     {
@@ -37,7 +37,7 @@ public:
     void update();
 
 private:
-    const btn::sprite_text_generator& _text_generator;
+    btn::sprite_text_generator& _text_generator;
     btn::vector<btn::sprite_ptr, 8> _static_text_sprites;
     btn::vector<btn::sprite_ptr, 2> _text_sprites;
     btn::fixed_point _text_position;

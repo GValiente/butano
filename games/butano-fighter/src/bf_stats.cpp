@@ -8,7 +8,7 @@
 namespace bf
 {
 
-stats::stats(const btn::sprite_text_generator& text_generator) :
+stats::stats(btn::sprite_text_generator& text_generator) :
     _text_generator(text_generator)
 {
     set_mode(_mode);
@@ -40,6 +40,9 @@ void stats::set_mode(mode_type mode)
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
             _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - (btn::display::height() / 2));
 
+            int old_bg_priority = _text_generator.bg_priority();
+            _text_generator.set_bg_priority(0);
+
             btn::string<32> text;
             btn::input_string_stream text_stream(text);
             text_stream.append(cpu_label);
@@ -56,6 +59,8 @@ void stats::set_mode(mode_type mode)
             text_stream.append(btn::memory::used_static_ewram());
             text_stream.append("B");
             _text_generator.generate(text_x, _text_position.y() + (text_height * 2), text, _static_text_sprites);
+
+            _text_generator.set_bg_priority(old_bg_priority);
         }
         break;
     }
@@ -99,9 +104,12 @@ void stats::update()
             break;
         }
 
+        int old_bg_priority = _text_generator.bg_priority();
+        _text_generator.set_bg_priority(0);
         text_stream.append("%");
         _text_sprites.clear();
         _text_generator.generate(_text_position, text, _text_sprites);
+        _text_generator.set_bg_priority(old_bg_priority);
 
         _max_cpu_usage = 0;
         _counter = 60;

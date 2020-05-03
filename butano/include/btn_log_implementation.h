@@ -4,7 +4,7 @@
 /*!
  * @brief VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log engine.
  *
- * It crashes on real hardware and on another emulators!
+ * It crashes on real hardware and on other emulators!
  */
 #define BTN_LOG_IMPLEMENTATION_VBA          0
 
@@ -14,7 +14,7 @@
 #define BTN_LOG_IMPLEMENTATION_NOCASHGBA    1
 
 /*!
- * @brief mgba emulator (https://mgba.io) log engine.
+ * @brief mGBA emulator (https://mgba.io) log engine.
  */
 #define BTN_LOG_IMPLEMENTATION_MGBA         2
 

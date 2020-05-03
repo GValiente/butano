@@ -7,6 +7,7 @@
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
+#include "btn_config_bgs.h"
 #include "btn_bg_tiles_ptr.h"
 #include "btn_display_manager.h"
 #include "btn_regular_bg_attributes.h"
@@ -17,6 +18,8 @@ namespace btn::bgs_manager
 
 namespace
 {
+    static_assert(BTN_CFG_BGS_MAX_ITEMS > 0);
+
     class item_type
     {
 
@@ -103,8 +106,8 @@ namespace
     {
 
     public:
-        pool<item_type, hw::bgs::count()> items_pool;
-        vector<item_type*, hw::bgs::count()> items_vector;
+        pool<item_type, BTN_CFG_BGS_MAX_ITEMS> items_pool;
+        vector<item_type*, BTN_CFG_BGS_MAX_ITEMS> items_vector;
         hw::bgs::handle handles[hw::bgs::count()];
         bool rebuild_handles = false;
         bool commit = false;
@@ -551,7 +554,7 @@ void update()
 {
     if(data.rebuild_handles)
     {
-        int id = 3;
+        int id = hw::bgs::count() - 1;
         data.rebuild_handles = false;
         data.commit = true;
 
@@ -559,6 +562,8 @@ void update()
         {
             if(item->visible)
             {
+                BTN_ASSERT(BTN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much bgs on screen");
+
                 item->handles_index = id;
                 data.handles[id] = item->handle;
                 display_manager::set_bg_enabled(id, true);

@@ -17,13 +17,19 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
 {
     // https://www.coranac.com/tonc/text/dma.htm#sec-demo
 
+    int values_count = values.size();
+
+    if(! values_count)
+    {
+        return;
+    }
+
     btn::fixed y0 = (btn::display::height() / 2) + _origin_y;
     btn::fixed x = 0;
     btn::fixed y = _radius;
     btn::fixed d = 1 - _radius;
 
     btn::pair<btn::fixed, btn::fixed>* values_data = values.data();
-    int values_count = values.size();
     btn::memset(values_data, 0, unsigned(values_count) * sizeof(btn::pair<btn::fixed, btn::fixed>));
 
     while(y >= x)

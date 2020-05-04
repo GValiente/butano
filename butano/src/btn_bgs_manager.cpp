@@ -251,7 +251,7 @@ void decrease_usages(id_type id)
             }
         }
 
-        display_manager::set_show_bg_in_all_windows(&item, false);
+        display_manager::set_show_bg_in_all_windows(item, false);
         erase(data.items_vector, item);
         data.items_pool.destroy(*item);
     }

@@ -4,6 +4,10 @@
 #include "tonc.h"
 #include "btn_point.h"
 
+#define REG_DISPCNT_U16     *(vu16*)(REG_BASE+0x0000)
+#define REG_DISPCNT_U16_2   *(vu16*)(REG_BASE+0x0002)
+#define REG_MOSAIC_U16		*(vu16*)(REG_BASE+0x004C)
+
 namespace btn::hw::display
 {
     enum class window_flag
@@ -33,26 +37,26 @@ namespace btn::hw::display
 
     inline void init()
     {
-        REG_DISPCNT = DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
+        REG_DISPCNT_U16 = DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
     }
 
     inline void set_bg_enabled(int bg, bool enabled)
     {
         if(enabled)
         {
-            REG_DISPCNT |= unsigned(DCNT_BG0 << bg);
+            REG_DISPCNT_U16 |= unsigned(DCNT_BG0 << bg);
         }
         else
         {
-            REG_DISPCNT &= ~unsigned(DCNT_BG0 << bg);
+            REG_DISPCNT_U16 &= ~unsigned(DCNT_BG0 << bg);
         }
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
                            int bgs_horizontal_stretch, int bgs_vertical_stretch)
     {
-        REG_MOSAIC = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
-                               unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
+        REG_MOSAIC_U16 = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
+                                   unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
     }
 
     inline void set_blending_bgs(const bool* bgs_ptr, int count)
@@ -79,11 +83,11 @@ namespace btn::hw::display
     {
         if(enabled)
         {
-            REG_DISPCNT |= unsigned(DCNT_WIN0 << window);
+            REG_DISPCNT_U16 |= unsigned(DCNT_WIN0 << window);
         }
         else
         {
-            REG_DISPCNT &= ~unsigned(DCNT_WIN0 << window);
+            REG_DISPCNT_U16 &= ~unsigned(DCNT_WIN0 << window);
         }
     }
 
@@ -120,34 +124,34 @@ namespace btn::hw::display
     {
         if(enabled)
         {
-            REG_DISPCNT |= 0x10000;
+            REG_DISPCNT_U16_2 |= 0x0001;
         }
         else
         {
-            REG_DISPCNT &= unsigned(~0x10000);
+            REG_DISPCNT_U16_2 &= unsigned(~0x0001);
         }
     }
 
     inline void sleep()
     {
-        REG_DISPCNT |= DCNT_BLANK;
+        REG_DISPCNT_U16 |= DCNT_BLANK;
     }
 
     inline void wake_up()
     {
-        REG_DISPCNT &= unsigned(~DCNT_BLANK);
+        REG_DISPCNT_U16 &= unsigned(~DCNT_BLANK);
     }
 
     inline void stop()
     {
         REG_BLDCNT = 0;
-        REG_MOSAIC = 0;
+        REG_MOSAIC_U16 = 0;
     }
 
     inline void set_show_mode()
     {
         stop();
-        REG_DISPCNT = DCNT_MODE3 | DCNT_BG2;
+        REG_DISPCNT_U16 = DCNT_MODE3 | DCNT_BG2;
     }
 }
 

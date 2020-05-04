@@ -2,7 +2,6 @@
 
 #include "btn_bgs.h"
 #include "btn_pool.h"
-#include "btn_color.h"
 #include "btn_vector.h"
 #include "btn_camera.h"
 #include "btn_display.h"
@@ -129,7 +128,7 @@ namespace
         {
             const item_type* item = *it;
 
-            if(bg_sort_key < item->bg_sort_key)
+            if(bg_sort_key > item->bg_sort_key)
             {
                 data.items_vector.insert(it, &new_item);
                 return;

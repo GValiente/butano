@@ -68,6 +68,11 @@ public:
         _value += unsigned(z_order + max_z_order());
     }
 
+    [[nodiscard]] constexpr unsigned value() const
+    {
+        return _value;
+    }
+
     [[nodiscard]] constexpr friend bool operator==(sort_key a, sort_key b)
     {
         return a._value == b._value;

@@ -502,7 +502,9 @@ void update()
                 windows_flags &= ~(unsigned(hw::display::window_flag::BG_0) << bg);
             }
 
-            for(bg_handle_type bg_handle : data.windows_visible_bgs[window])
+            const ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
+
+            for(bg_handle_type bg_handle : windows_visible_bgs)
             {
                 if(optional<int> bg = bgs_manager::hw_id(bg_handle))
                 {

@@ -18,7 +18,7 @@ public:
         _set_visible();
     }
 
-    [[nodiscard]] bool silhouette_visible()
+    [[nodiscard]] bool silhouette_visible() const
     {
         return _silhouette_up_sprite_move_action.has_value();
     }

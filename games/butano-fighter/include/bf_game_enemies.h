@@ -11,6 +11,7 @@
 namespace bf::game
 {
 
+class intro;
 class hero_bomb;
 
 class enemies
@@ -28,7 +29,7 @@ public:
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
-    void update(const hero& hero, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets);
+    void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets);
 
 private:
     btn::pool<enemy, constants::max_enemies> _pool;

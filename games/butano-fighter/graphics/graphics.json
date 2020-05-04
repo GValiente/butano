@@ -48,6 +48,12 @@
         "object_messages": {
             "height": 8
         },
+        "stage_1_intro": {
+            "height": 64
+        },
+        "stage_1_intro_alt": {
+            "height": 8
+        },
         "stage_1_characters_1": {
             "height": 16
         },

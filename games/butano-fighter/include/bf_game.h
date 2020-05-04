@@ -6,6 +6,7 @@
 #include "bf_game_hero.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_hero_bullets.h"
+#include "bf_game_intro.h"
 #include "bf_game_enemies.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_objects.h"
@@ -27,6 +28,7 @@ private:
     hero _hero;
     hero_bullets _hero_bullets;
     hero_bomb _hero_bomb;
+    intro _intro;
     enemies _enemies;
     enemy_bullets _enemy_bullets;
     objects _objects;

@@ -1,6 +1,7 @@
 #include "bf_game_enemies.h"
 
 #include "bf_game_hero.h"
+#include "bf_game_intro.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_check_hero_bullet_data.h"
 #include "bf_game_stage_1.h"
@@ -42,11 +43,11 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
     }
 }
 
-void enemies::update(const hero& hero, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets)
+void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets)
 {
     bool grid_updated = _remove_enemies(hero, enemy_bullets);
 
-    if(hero.alive() && ! hero_bomb.active())
+    if(hero.alive() && ! hero_bomb.active() && ! intro.active())
     {
         grid_updated |= _add_enemies();
     }

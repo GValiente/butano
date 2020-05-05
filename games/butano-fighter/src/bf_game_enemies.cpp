@@ -26,20 +26,25 @@ bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
 
 void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
 {
-    auto enemies_it = _list.begin();
-    auto enemies_end = _list.end();
+    auto it = _list.begin();
+    auto end = _list.end();
     _hero_bomb_check_odds = ! _hero_bomb_check_odds;
 
-    if(_hero_bomb_check_odds)
+    if(_hero_bomb_check_odds && it != end)
     {
-        ++enemies_it;
+        ++it;
     }
 
-    while(enemies_it < enemies_end)
+    while(it != end)
     {
-        enemy* enemy = *enemies_it;
-        enemy->check_hero_bomb(bomb_center, bomb_squared_radius);
-        enemies_it += 2;
+        enemy& enemy = *it;
+        enemy.check_hero_bomb(bomb_center, bomb_squared_radius);
+        ++it;
+
+        if(it != end)
+        {
+            ++it;
+        }
     }
 }
 
@@ -63,35 +68,30 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& 
 bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
 {
     const btn::fixed_point& hero_position = hero.body_position();
-    int enemies_count = _list.size();
+    auto before_it = _list.before_begin();
+    auto it = _list.begin();
+    auto end = _list.end();
     bool grid_updated = false;
 
-    for(int index = 0; index < enemies_count; )
+    while(it != end)
     {
-        enemy*& enemy = _list[index];
-        enemy->update(hero_position, enemy_bullets);
+        enemy& enemy = *it;
+        enemy.update(hero_position, enemy_bullets);
 
-        if(enemy->done())
+        if(enemy.done())
         {
-            _grid.remove_enemy(*enemy);
-            _pool.destroy(*enemy);
+            _grid.remove_enemy(enemy);
             grid_updated = true;
-
-            if(index < enemies_count - 1)
-            {
-                btn::swap(enemy, _list[enemies_count - 1]);
-            }
-
-            --enemies_count;
+            it = _list.erase_after(before_it);
         }
         else
         {
-            grid_updated |= _grid.update_enemy(*enemy);
-            ++index;
+            grid_updated |= _grid.update_enemy(enemy);
+            before_it = it;
+            ++it;
         }
     }
 
-    _list.shrink(enemies_count);
     return grid_updated;
 }
 
@@ -125,9 +125,8 @@ bool enemies::_add_enemies()
     ++_new_enemy_tag;
 
     const enemy_event& event = events[_event_index];
-    enemy& enemy = _pool.create(event, _damage_palette, new_enemy_tag);
-    _list.emplace_back(&enemy);
-    _grid.add_enemy(enemy);
+    _list.emplace_front(event, _damage_palette, new_enemy_tag);
+    _grid.add_enemy(_list.front());
     _event_counter = event.wait_frames;
     return true;
 }

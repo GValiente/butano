@@ -1,7 +1,7 @@
 #ifndef BF_GAME_ENEMIES_H
 #define BF_GAME_ENEMIES_H
 
-#include "btn_pool.h"
+#include "btn_forward_list.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
 #include "bf_constants.h"
@@ -32,8 +32,7 @@ public:
     void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets);
 
 private:
-    btn::pool<enemy, constants::max_enemies> _pool;
-    btn::vector<enemy*, constants::max_enemies> _list;
+    btn::forward_list<enemy, constants::max_enemies> _list;
     enemies_grid _grid;
     btn::sprite_palette_ptr _damage_palette;
     int _event_index = -1;

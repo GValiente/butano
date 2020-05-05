@@ -205,9 +205,18 @@ namespace
             int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
             int first_mat_index_to_commit = commit_data->offset * multiplier;
             int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
-            data.first_index_to_commit = min(data.first_index_to_commit, first_mat_index_to_commit);
-            data.last_index_to_commit = max(data.last_index_to_commit, last_mat_index_to_commit);
-            data.last_visible_items_count = max(data.last_visible_items_count, data.last_index_to_commit + 1);
+
+            if(data.first_index_to_commit < sprites::sprites_count())
+            {
+                data.first_index_to_commit = min(data.first_index_to_commit, first_mat_index_to_commit);
+                data.last_index_to_commit = max(data.last_index_to_commit, last_mat_index_to_commit);
+                data.last_visible_items_count = max(data.last_visible_items_count, data.last_index_to_commit + 1);
+            }
+            else
+            {
+                data.first_index_to_commit = first_mat_index_to_commit;
+                data.last_index_to_commit = last_mat_index_to_commit;
+            }
         }
     }
 }

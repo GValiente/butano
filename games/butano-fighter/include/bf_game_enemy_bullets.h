@@ -28,10 +28,7 @@ public:
     void add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
                     const enemy_bullet_event& event);
 
-    void clear()
-    {
-        _bullets.clear();
-    }
+    void clear();
 
     void update();
 
@@ -45,8 +42,9 @@ private:
 
     btn::sprite_palette_fade_loop_action _palette_fade_action;
     btn::array<btn::sprite_tiles_ptr, 2> _tiles_list;
-    btn::forward_list<bullet, constants::max_enemy_bullets> _bullets;
-    bool _hero_check_odds = false;
+    btn::forward_list<bullet, constants::max_enemy_bullets / 2> _even_bullets;
+    btn::forward_list<bullet, constants::max_enemy_bullets / 2> _odd_bullets;
+    bool _check_odds = false;
 };
 
 }

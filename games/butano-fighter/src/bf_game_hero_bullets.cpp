@@ -66,27 +66,31 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 
 void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
 {
-    for(bullet& bullet : _even_bullets)
+    btn::iforward_list<bullet>* check_and_update_bullets;
+    btn::iforward_list<bullet>* update_bullets;
+
+    if(_check_odds)
     {
-        bullet.sprite_move_action.update();
+        check_and_update_bullets = &_odd_bullets;
+        update_bullets = &_even_bullets;
+        _check_odds = false;
+    }
+    else
+    {
+        check_and_update_bullets = &_even_bullets;
+        update_bullets = &_odd_bullets;
+        _check_odds = true;
     }
 
-    for(bullet& bullet : _odd_bullets)
-    {
-        bullet.sprite_move_action.update();
-    }
-
-    btn::iforward_list<bullet>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
-    _check_odds = ! _check_odds;
-
-    auto before_it = bullets->before_begin();
-    auto it = bullets->begin();
-    auto end = bullets->end();
+    auto before_it = check_and_update_bullets->before_begin();
+    auto it = check_and_update_bullets->begin();
+    auto end = check_and_update_bullets->end();
 
     while(it != end)
     {
         bullet& bullet = *it;
-        const btn::fixed_point& position = bullet.sprite_move_action.sprite().position();
+        btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
+        const btn::fixed_point& position = sprite_move_action.sprite().position();
         const hero_bullet_level& level_data = *bullet.level_data;
 
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
@@ -94,13 +98,19 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
                 enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
                                           level_data.damage, hero, objects }))
         {
-            it = bullets->erase_after(before_it);
+            it = check_and_update_bullets->erase_after(before_it);
         }
         else
         {
+            sprite_move_action.update();
             before_it = it;
             ++it;
         }
+    }
+
+    for(bullet& bullet : *update_bullets)
+    {
+        bullet.sprite_move_action.update();
     }
 }
 
@@ -115,7 +125,7 @@ void hero_bullets::_add_bullets(hero& hero)
         {
             btn::iforward_list<bullet>* bullets = _odd_bullets.size() < _even_bullets.size() ?
                         &_odd_bullets : &_even_bullets;
-            BTN_ASSERT(! bullets->full(), "No more space for sprite bullets");
+            BTN_ASSERT(! bullets->full(), "No more space for hero bullets");
 
             int event_level = event.level;
             const hero_bullet_level& level_data = levels_data[event_level];

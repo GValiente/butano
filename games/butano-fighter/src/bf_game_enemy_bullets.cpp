@@ -36,31 +36,16 @@ enemy_bullets::enemy_bullets() :
 
 bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
 {
-    auto it = _bullets.begin();
-    auto end = _bullets.end();
-    _hero_check_odds = ! _hero_check_odds;
+    btn::iforward_list<bullet>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
 
-    if(_hero_check_odds && it != end)
+    for(const bullet& bullet : *bullets)
     {
-        ++it;
-    }
-
-    while(it != end)
-    {
-        const bullet& bullet = *it;
         const btn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
         btn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
 
         if(bullet_rect.intersects(hero_rect))
         {
             return true;
-        }
-
-        ++it;
-
-        if(it != end)
-        {
-            ++it;
         }
     }
 
@@ -91,6 +76,10 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         tile_index = int(type);
     }
 
+    btn::iforward_list<bullet>* bullets = _odd_bullets.size() < _even_bullets.size() ?
+                &_odd_bullets : &_even_bullets;
+    BTN_ASSERT(! bullets->full(), "No more space for enemy bullets");
+
     btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles_list[tile_index],
                                 _palette_fade_action.palette());
     builder.set_position(enemy_position);
@@ -101,27 +90,49 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
     {
         btn::fixed_point distance = hero_position - enemy_position;
         btn::fixed_point delta_position = aprox_unit_vector(distance.x(), distance.y());
-        _bullets.push_front({ btn::sprite_move_by_action(builder.release_build(), delta_position),
+        bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), delta_position),
                              btn::nullopt, type });
     }
     else
     {
-        _bullets.push_front({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
+        bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
                              btn::nullopt, type });
     }
 
     if(type == enemy_bullet_type::HUGE)
     {
-        bullet& bullet = _bullets.front();
+        bullet& bullet = bullets->front();
         bullet.sprite_rotate_action.emplace(bullet.sprite_move_action.sprite(), 4);
     }
 }
 
+void enemy_bullets::clear()
+{
+    _even_bullets.clear();
+    _odd_bullets.clear();
+}
+
 void enemy_bullets::update()
 {
-    auto before_it = _bullets.before_begin();
-    auto it = _bullets.begin();
-    auto end = _bullets.end();
+    btn::iforward_list<bullet>* check_and_update_bullets;
+    btn::iforward_list<bullet>* update_bullets;
+
+    if(_check_odds)
+    {
+        check_and_update_bullets = &_odd_bullets;
+        update_bullets = &_even_bullets;
+        _check_odds = false;
+    }
+    else
+    {
+        check_and_update_bullets = &_even_bullets;
+        update_bullets = &_odd_bullets;
+        _check_odds = true;
+    }
+
+    auto before_it = check_and_update_bullets->before_begin();
+    auto it = check_and_update_bullets->begin();
+    auto end = check_and_update_bullets->end();
     _palette_fade_action.update();
 
     while(it != end)
@@ -133,7 +144,7 @@ void enemy_bullets::update()
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height)
         {
-            it = _bullets.erase_after(before_it);
+            it = check_and_update_bullets->erase_after(before_it);
         }
         else
         {
@@ -146,6 +157,16 @@ void enemy_bullets::update()
 
             before_it = it;
             ++it;
+        }
+    }
+
+    for(bullet& bullet : *update_bullets)
+    {
+        bullet.sprite_move_action.update();
+
+        if(bullet.sprite_rotate_action)
+        {
+            bullet.sprite_rotate_action->update();
         }
     }
 }

@@ -1,6 +1,7 @@
 #ifndef BF_GAME_HERO_BULLETS_H
 #define BF_GAME_HERO_BULLETS_H
 
+#include "btn_forward_list.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
 #include "bf_constants.h"
@@ -30,10 +31,11 @@ private:
 
     btn::sprite_palette_ptr _palette;
     btn::array<btn::sprite_tiles_ptr, 9> _tiles;
-    btn::vector<bullet, constants::max_hero_bullets> _bullets;
+    btn::forward_list<bullet, constants::max_hero_bullets / 2> _even_bullets;
+    btn::forward_list<bullet, constants::max_hero_bullets / 2> _odd_bullets;
     int _b_held_counter = 0;
     int _event_counter = 0;
-    bool _check_even_bullets = false;
+    bool _check_odds = false;
 
     void _remove_bullets(hero& hero, enemies& enemies, objects& objects);
 

@@ -26,8 +26,8 @@ bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
 
 void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
 {
-    auto it = _list.begin();
-    auto end = _list.end();
+    auto it = _enemies.begin();
+    auto end = _enemies.end();
     _hero_bomb_check_odds = ! _hero_bomb_check_odds;
 
     if(_hero_bomb_check_odds && it != end)
@@ -68,9 +68,9 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& 
 bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
 {
     const btn::fixed_point& hero_position = hero.body_position();
-    auto before_it = _list.before_begin();
-    auto it = _list.begin();
-    auto end = _list.end();
+    auto before_it = _enemies.before_begin();
+    auto it = _enemies.begin();
+    auto end = _enemies.end();
     bool grid_updated = false;
 
     while(it != end)
@@ -82,7 +82,7 @@ bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
         {
             _grid.remove_enemy(enemy);
             grid_updated = true;
-            it = _list.erase_after(before_it);
+            it = _enemies.erase_after(before_it);
         }
         else
         {
@@ -119,14 +119,14 @@ bool enemies::_add_enemies()
         return false;
     }
 
-    BTN_ASSERT(! _list.full(), "Enemies list is full");
+    BTN_ASSERT(! _enemies.full(), "Enemies list is full");
 
     auto new_enemy_tag = btn::max(int8_t(0), int8_t(_new_enemy_tag));
     ++_new_enemy_tag;
 
     const enemy_event& event = events[_event_index];
-    _list.emplace_front(event, _damage_palette, new_enemy_tag);
-    _grid.add_enemy(_list.front());
+    _enemies.emplace_front(event, _damage_palette, new_enemy_tag);
+    _grid.add_enemy(_enemies.front());
     _event_counter = event.wait_frames;
     return true;
 }

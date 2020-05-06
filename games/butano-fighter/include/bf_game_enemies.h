@@ -32,7 +32,7 @@ public:
     void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets);
 
 private:
-    btn::forward_list<enemy, constants::max_enemies> _list;
+    btn::forward_list<enemy, constants::max_enemies> _enemies;
     enemies_grid _grid;
     btn::sprite_palette_ptr _damage_palette;
     int _event_index = -1;

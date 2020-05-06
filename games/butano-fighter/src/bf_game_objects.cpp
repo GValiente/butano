@@ -70,28 +70,22 @@ bool objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bo
 
 int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
 {
-    auto gems_it = _gems.begin();
-    auto gems_end = _gems.end();
+    auto before_it = _gems.before_begin();
+    auto it = _gems.begin();
+    auto end = _gems.end();
     int result = 0;
-    _gem_check_odds = ! _gem_check_odds;
 
-    if(_gem_check_odds)
+    while(it != end)
     {
-        ++gems_it;
-    }
-
-    while(gems_it < gems_end)
-    {
-        if(gems_it->intersects_hero(hero_rect))
+        if(it->intersects_hero(hero_rect))
         {
             result += hero_level + 1;
-            _gems.erase(gems_it);
-            ++gems_it;
-            gems_end = _gems.end();
+            it = _gems.erase_after(before_it);
         }
         else
         {
-            gems_it += 2;
+            before_it = it;
+            ++it;
         }
     }
 
@@ -125,7 +119,7 @@ void objects::spawn_gem(const btn::fixed_point& position)
 {
     if(! _gems.full())
     {
-        _gems.emplace_back(position, _gem_tiles, _gem_palette);
+        _gems.emplace_front(position, _gem_tiles, _gem_palette);
     }
 }
 
@@ -141,28 +135,27 @@ void objects::update()
         _hero_bomb->update();
     }
 
-    int gems_count = _gems.size();
-    int messages_count = _messages.size();
+    auto before_it = _gems.before_begin();
+    auto it = _gems.begin();
+    auto end = _gems.end();
 
-    for(int index = 0; index < gems_count; )
+    while(it != end)
     {
-        gem& gem = _gems[index];
+        gem& gem = *it;
         gem.update();
 
         if(gem.done())
         {
-            if(index < gems_count - 1)
-            {
-                btn::swap(gem, _gems[gems_count - 1]);
-            }
-
-            --gems_count;
+            it = _gems.erase_after(before_it);
         }
         else
         {
-            ++index;
+            before_it = it;
+            ++it;
         }
     }
+
+    int messages_count = _messages.size();
 
     for(int index = 0; index < messages_count; )
     {
@@ -184,7 +177,6 @@ void objects::update()
         }
     }
 
-    _gems.shrink(gems_count);
     _messages.shrink(messages_count);
 }
 

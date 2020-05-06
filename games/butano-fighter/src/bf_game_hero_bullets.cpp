@@ -66,39 +66,42 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 
 void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
 {
-    int bullets_count = _bullets.size();
-    bool check_bullet = _check_even_bullets;
-    _check_even_bullets = ! _check_even_bullets;
-
-    for(int index = 0; index < bullets_count; )
+    for(bullet& bullet : _even_bullets)
     {
-        bullet& bullet = _bullets[index];
-        btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
-        const btn::fixed_point& position = sprite_move_action.sprite().position();
+        bullet.sprite_move_action.update();
+    }
+
+    for(bullet& bullet : _odd_bullets)
+    {
+        bullet.sprite_move_action.update();
+    }
+
+    btn::iforward_list<bullet>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
+    _check_odds = ! _check_odds;
+
+    auto before_it = bullets->before_begin();
+    auto it = bullets->begin();
+    auto end = bullets->end();
+
+    while(it != end)
+    {
+        bullet& bullet = *it;
+        const btn::fixed_point& position = bullet.sprite_move_action.sprite().position();
         const hero_bullet_level& level_data = *bullet.level_data;
 
-        if(check_bullet && (position.x() < -constants::view_width || position.x() > constants::view_width ||
+        if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height ||
                 enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
-                                          level_data.damage, hero, objects })))
+                                          level_data.damage, hero, objects }))
         {
-            if(index < bullets_count - 1)
-            {
-                btn::swap(bullet, _bullets[bullets_count - 1]);
-            }
-
-            --bullets_count;
+            it = bullets->erase_after(before_it);
         }
         else
         {
-            sprite_move_action.update();
-            ++index;
+            before_it = it;
+            ++it;
         }
-
-        check_bullet = ! check_bullet;
     }
-
-    _bullets.shrink(bullets_count);
 }
 
 void hero_bullets::_add_bullets(hero& hero)
@@ -110,14 +113,16 @@ void hero_bullets::_add_bullets(hero& hero)
     {
         if(counter == event.frame)
         {
-            BTN_ASSERT(! _bullets.full(), "No more space for sprite bullets");
+            btn::iforward_list<bullet>* bullets = _odd_bullets.size() < _even_bullets.size() ?
+                        &_odd_bullets : &_even_bullets;
+            BTN_ASSERT(! bullets->full(), "No more space for sprite bullets");
 
             int event_level = event.level;
             const hero_bullet_level& level_data = levels_data[event_level];
             btn::sprite_builder builder(btn::sprite_items::hero_bullets.shape_size(), _tiles[event_level], _palette);
             builder.set_position(hero.weapon_position());
             builder.set_z_order(constants::hero_bullets_z_order);
-            _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.direction), &level_data });
+            bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), event.direction), &level_data });
             hero.show_shoot(level_data.color);
 
             if(event.play_sound)
@@ -125,7 +130,7 @@ void hero_bullets::_add_bullets(hero& hero)
                 level_data.sound_item.play_with_priority(constants::hero_bullets_sound_priority, 0.35);
             }
 
-            break;
+            return;
         }
     }
 }

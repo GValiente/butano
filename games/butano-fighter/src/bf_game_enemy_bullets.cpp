@@ -36,18 +36,18 @@ enemy_bullets::enemy_bullets() :
 
 bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
 {
-    auto bullets_it = _bullets.begin();
-    auto bullets_end = _bullets.end();
+    auto it = _bullets.begin();
+    auto end = _bullets.end();
     _hero_check_odds = ! _hero_check_odds;
 
-    if(_hero_check_odds)
+    if(_hero_check_odds && it != end)
     {
-        ++bullets_it;
+        ++it;
     }
 
-    while(bullets_it < bullets_end)
+    while(it != end)
     {
-        const bullet& bullet = *bullets_it;
+        const bullet& bullet = *it;
         const btn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
         btn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
 
@@ -56,7 +56,12 @@ bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
             return true;
         }
 
-        bullets_it += 2;
+        ++it;
+
+        if(it != end)
+        {
+            ++it;
+        }
     }
 
     return false;
@@ -96,42 +101,39 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
     {
         btn::fixed_point distance = hero_position - enemy_position;
         btn::fixed_point delta_position = aprox_unit_vector(distance.x(), distance.y());
-        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), delta_position),
+        _bullets.push_front({ btn::sprite_move_by_action(builder.release_build(), delta_position),
                              btn::nullopt, type });
     }
     else
     {
-        _bullets.push_back({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
+        _bullets.push_front({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
                              btn::nullopt, type });
     }
 
     if(type == enemy_bullet_type::HUGE)
     {
-        bullet& bullet = _bullets.back();
+        bullet& bullet = _bullets.front();
         bullet.sprite_rotate_action.emplace(bullet.sprite_move_action.sprite(), 4);
     }
 }
 
 void enemy_bullets::update()
 {
-    int bullets_count = _bullets.size();
+    auto before_it = _bullets.before_begin();
+    auto it = _bullets.begin();
+    auto end = _bullets.end();
     _palette_fade_action.update();
 
-    for(int index = 0; index < bullets_count; )
+    while(it != end)
     {
-        bullet& bullet = _bullets[index];
+        bullet& bullet = *it;
         btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
         const btn::fixed_point& position = sprite_move_action.sprite().position();
 
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height)
         {
-            if(index < bullets_count - 1)
-            {
-                btn::swap(bullet, _bullets[bullets_count - 1]);
-            }
-
-            --bullets_count;
+            it = _bullets.erase_after(before_it);
         }
         else
         {
@@ -142,11 +144,10 @@ void enemy_bullets::update()
                 bullet.sprite_rotate_action->update();
             }
 
-            ++index;
+            before_it = it;
+            ++it;
         }
     }
-
-    _bullets.shrink(bullets_count);
 }
 
 }

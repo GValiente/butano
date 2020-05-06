@@ -2,6 +2,7 @@
 #define BF_GAME_OBJECTS_H
 
 #include "btn_deque.h"
+#include "btn_forward_list.h"
 #include "bf_game_gem.h"
 #include "bf_constants.h"
 #include "bf_game_object.h"
@@ -36,9 +37,8 @@ private:
     btn::optional<object> _hero_weapon;
     btn::optional<object> _hero_bomb;
     btn::array<btn::sprite_tiles_ptr, 4> _gem_tiles;
-    btn::vector<gem, constants::max_gems> _gems;
+    btn::forward_list<gem, constants::max_gems> _gems;
     btn::deque<object_message, constants::max_object_messages> _messages;
-    bool _gem_check_odds = false;
 };
 
 }

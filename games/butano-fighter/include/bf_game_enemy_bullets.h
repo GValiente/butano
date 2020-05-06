@@ -1,6 +1,7 @@
 #ifndef BF_GAME_ENEMY_BULLETS_H
 #define BF_GAME_ENEMY_BULLETS_H
 
+#include "btn_forward_list.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "bf_constants.h"
@@ -44,7 +45,7 @@ private:
 
     btn::sprite_palette_fade_loop_action _palette_fade_action;
     btn::array<btn::sprite_tiles_ptr, 2> _tiles_list;
-    btn::vector<bullet, constants::max_enemy_bullets> _bullets;
+    btn::forward_list<bullet, constants::max_enemy_bullets> _bullets;
     bool _hero_check_odds = false;
 };
 

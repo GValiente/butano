@@ -13,6 +13,8 @@ namespace bf::game
 
 namespace
 {
+    constexpr bool skip = true;
+
     constexpr const int wait_1_frames = 30;
     constexpr const int scale_frames = 40;
     constexpr const int wait_2_frames = 120;
@@ -95,8 +97,16 @@ void intro::update(const butano_background& butano_background)
     case state::INIT:
         if(! butano_background.silhouette_visible())
         {
-            _state = state::WAIT_1;
-            _counter = wait_1_frames;
+            if(skip)
+            {
+                _state = state::OUT;
+                _counter = 1;
+            }
+            else
+            {
+                _state = state::WAIT_1;
+                _counter = wait_1_frames;
+            }
         }
         break;
 
@@ -159,30 +169,32 @@ void intro::update(const butano_background& butano_background)
             background_sprite_move_action.update();
         }
 
-        for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
-        {
-            if(! text_sprite_scale_y_action.done())
-            {
-                text_sprite_scale_y_action.update();
-            }
-        }
-
         --_counter;
 
-        if(_counter % 2 == 0)
+        if(_counter)
         {
-            int sprites_count = _text_sprites.size();
-            int actions_count = _text_sprite_scale_y_actions.size();
-
-            if(actions_count < sprites_count)
+            for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
             {
-                btn::sprite_ptr text_sprite = _text_sprites[actions_count];
-                text_sprite.set_visible(true);
-                _text_sprite_scale_y_actions.emplace_back(move(text_sprite), scale_frames / 2, 2);
+                if(! text_sprite_scale_y_action.done())
+                {
+                    text_sprite_scale_y_action.update();
+                }
+            }
+
+            if(_counter % 2 == 0)
+            {
+                int sprites_count = _text_sprites.size();
+                int actions_count = _text_sprite_scale_y_actions.size();
+
+                if(actions_count < sprites_count)
+                {
+                    btn::sprite_ptr text_sprite = _text_sprites[actions_count];
+                    text_sprite.set_visible(true);
+                    _text_sprite_scale_y_actions.emplace_back(move(text_sprite), scale_frames / 2, 2);
+                }
             }
         }
-
-        if(! _counter)
+        else
         {
             _text_sprite_scale_y_actions.clear();
 
@@ -236,36 +248,38 @@ void intro::update(const butano_background& butano_background)
         break;
 
     case state::OUT:
-        for(auto& background_sprite_move_action : _background_sprite_move_actions)
-        {
-            background_sprite_move_action.update();
-        }
-
-        for(auto& background_sprite_scale_y_action : _background_sprite_scale_y_actions)
-        {
-            background_sprite_scale_y_action.update();
-        }
-
-        for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
-        {
-            if(! text_sprite_scale_y_action.done())
-            {
-                text_sprite_scale_y_action.update();
-
-                if(text_sprite_scale_y_action.done())
-                {
-                    btn::sprite_ptr text_sprite = text_sprite_scale_y_action.sprite();
-                    text_sprite.set_visible(false);
-                }
-            }
-        }
-
-        _window_move_top_action->update();
-        _window_move_bottom_action->update();
-
         --_counter;
 
-        if(! _counter)
+        if(_counter)
+        {
+            for(auto& background_sprite_move_action : _background_sprite_move_actions)
+            {
+                background_sprite_move_action.update();
+            }
+
+            for(auto& background_sprite_scale_y_action : _background_sprite_scale_y_actions)
+            {
+                background_sprite_scale_y_action.update();
+            }
+
+            for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
+            {
+                if(! text_sprite_scale_y_action.done())
+                {
+                    text_sprite_scale_y_action.update();
+
+                    if(text_sprite_scale_y_action.done())
+                    {
+                        btn::sprite_ptr text_sprite = text_sprite_scale_y_action.sprite();
+                        text_sprite.set_visible(false);
+                    }
+                }
+            }
+
+            _window_move_top_action->update();
+            _window_move_bottom_action->update();
+        }
+        else
         {
             _background_sprite_move_actions.clear();
             _background_sprite_scale_y_actions.clear();

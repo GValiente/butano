@@ -5,6 +5,7 @@
 #include "btn_colors.h"
 #include "btn_fixed_rect.h"
 #include "btn_sound_items.h"
+#include "btn_sprite_builder.h"
 #include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_hero_death.h"
 #include "btn_sprite_items_hero_weapons.h"
@@ -27,25 +28,42 @@ namespace
     constexpr const int weapon_delta_y = -13;
     constexpr const int scale_weapon_frames = 30;
     constexpr const int scale_weapon_half_frames = scale_weapon_frames / 2;
+    constexpr const int body_shadows_multiplier = 4;
     constexpr const btn::fixed_size dimensions(14, 14);
 
-    btn::sprite_cached_animate_action<2> _build_body_sprite_animate_action()
+    btn::vector<btn::sprite_ptr, 3> _create_body_shadows()
+    {
+        btn::vector<btn::sprite_ptr, 3> result;
+
+        for(int index = 0; index < 3; ++index)
+        {
+            btn::sprite_builder builder(btn::sprite_items::hero_body);
+            builder.set_z_order(constants::hero_shadows_z_order);
+            result.push_back(builder.release_build());
+        }
+
+        return result;
+    }
+
+    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action()
     {
         btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(0, body_delta_y);
         return btn::create_sprite_cached_animate_action_forever(btn::move(body_sprite), 16,
                                                                 btn::sprite_items::hero_body, 0, 2);
     }
 
-    btn::sprite_ptr _build_weapon_sprite(int level, const btn::fixed_point& position)
+    btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position)
     {
         return btn::sprite_items::hero_weapons.create_sprite(position, level);
     }
 }
 
 hero::hero() :
-    _body_sprite_animate_action(_build_body_sprite_animate_action()),
+    _body_shadows(_create_body_shadows()),
+    _body_sprite_animate_action(_create_body_sprite_animate_action()),
+    _body_snapshots(body_snapshots_count, body_snapshot{ _body_sprite_animate_action.sprite().position(), 0 }),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
-    _weapon_sprite(_build_weapon_sprite(_level, _weapon_position))
+    _weapon_sprite(_create_weapon_sprite(_level, _weapon_position))
 {
 }
 
@@ -263,6 +281,46 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
             _weapon_sprite.set_scale(1);
         }
     }
+
+    int shadows_count = _body_shadows.size();
+    _body_snapshots.pop_back();
+    _body_snapshots.push_front(body_snapshot{ new_body_position, _body_sprite_animate_action.current_index() });
+
+    if(_shooting)
+    {
+        _body_shadows_counter = btn::max(_body_shadows_counter - 1, 0);
+    }
+    else
+    {
+        _body_shadows_counter = btn::min(_body_shadows_counter + 1, shadows_count * body_shadows_multiplier);
+    }
+
+    int visible_shadows_count = _body_shadows_counter / body_shadows_multiplier;
+
+    for(int index = 0, limit = _body_shadows.size(); index < limit; ++index)
+    {
+        const body_snapshot& body_snapshot = _body_snapshots[(index + 1) * body_shadows_multiplier];
+        btn::sprite_ptr& body_shadow = _body_shadows[shadows_count - index - 1];
+
+        if(index >= visible_shadows_count || body_snapshot.position == new_body_position)
+        {
+            if(body_shadow.visible())
+            {
+                body_shadow.set_visible(false);
+            }
+        }
+        else
+        {
+            int graphics_index = ((index + 1) * 4) + body_snapshot.graphics_index;
+            body_shadow.set_position(body_snapshot.position);
+            body_shadow.set_tiles(btn::sprite_items::hero_body.tiles_item().create_tiles(graphics_index));
+
+            if(! body_shadow.visible())
+            {
+                body_shadow.set_visible(true);
+            }
+        }
+    }
 }
 
 btn::optional<scene_type> hero::_animate_dead(background& background, butano_background& butano_background)
@@ -284,8 +342,9 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
         _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(10, -10));
         _weapon_rotate_action.emplace(_weapon_sprite, -10);
 
-        _music_volume_action.emplace(50, 0);
+        _body_shadows.clear();
         background.show_hero_dying();
+        _music_volume_action.emplace(50, 0);
         btn::sound_items::boss_shoot.play();
     }
     else if(_death_counter == 70)

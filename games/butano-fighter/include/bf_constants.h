@@ -26,8 +26,9 @@ namespace bf::constants
     constexpr const int objects_z_order = 2;
     constexpr const int hero_bullets_z_order = 3;
     constexpr const int enemies_z_order = 4;
-    constexpr const int intro_sprites_z_order = enemies_z_order;
     constexpr const int object_messages_z_order = 5;
+    constexpr const int hero_shadows_z_order = 6;
+    constexpr const int intro_sprites_z_order = 7;
     constexpr const int hero_bullets_sound_priority = -2;
     constexpr const int enemies_sound_priority = -1;
     constexpr const int enemies_grid_size = 16;

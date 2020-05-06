@@ -1,6 +1,7 @@
 #ifndef BF_GAME_HERO_H
 #define BF_GAME_HERO_H
 
+#include "btn_deque.h"
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
@@ -80,10 +81,20 @@ public:
                                      objects& objects, background& background, butano_background& butano_background);
 
 private:
+    struct body_snapshot
+    {
+        btn::fixed_point position;
+        int graphics_index = 0;
+    };
+
+    constexpr static const int body_snapshots_count = 16;
+
     int _level = 2;
     int _experience = 0;
     int _bombs_count = 2;
+    btn::vector<btn::sprite_ptr, 3> _body_shadows;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
+    btn::deque<body_snapshot, body_snapshots_count> _body_snapshots;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
     btn::optional<btn::sprite_rotate_by_action> _body_rotate_action;
@@ -95,6 +106,7 @@ private:
     btn::vector<btn::sprite_ptr, 4> _death_sprites;
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
+    int _body_shadows_counter = 0;
     int _death_counter = 0;
     bool _shooting = false;
 

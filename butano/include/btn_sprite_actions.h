@@ -681,7 +681,7 @@ public:
 
     void reset()
     {
-        _current_graphics_index_index = 0;
+        _current_graphics_indexes_index = 0;
         _current_wait_frames = 0;
     }
 
@@ -696,19 +696,19 @@ public:
         else
         {
             _current_wait_frames = _wait_frames;
-            _sprite.set_tiles(_tiles_item, _graphics_indexes[_current_graphics_index_index]);
-            ++_current_graphics_index_index;
+            _sprite.set_tiles(_tiles_item, _graphics_indexes[_current_graphics_indexes_index]);
+            ++_current_graphics_indexes_index;
 
-            if(_forever && _current_graphics_index_index == _graphics_indexes.size())
+            if(_forever && _current_graphics_indexes_index == _graphics_indexes.size())
             {
-                _current_graphics_index_index = 0;
+                _current_graphics_indexes_index = 0;
             }
         }
     }
 
     [[nodiscard]] bool done() const
     {
-        return _current_graphics_index_index == _graphics_indexes.size();
+        return _current_graphics_indexes_index == _graphics_indexes.size();
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -736,13 +736,18 @@ public:
         return _forever;
     }
 
+    [[nodiscard]] int current_index() const
+    {
+        return _current_graphics_indexes_index;
+    }
+
 private:
     bool _forever = true;
     uint16_t _wait_frames = 0;
     sprite_ptr _sprite;
     sprite_tiles_item _tiles_item;
     vector<uint16_t, Size> _graphics_indexes;
-    uint16_t _current_graphics_index_index = 0;
+    uint16_t _current_graphics_indexes_index = 0;
     uint16_t _current_wait_frames = 0;
 
     sprite_animate_action(const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
@@ -983,6 +988,11 @@ public:
     [[nodiscard]] bool update_forever() const
     {
         return _forever;
+    }
+
+    [[nodiscard]] int current_index() const
+    {
+        return _current_tiles_list_index;
     }
 
 private:

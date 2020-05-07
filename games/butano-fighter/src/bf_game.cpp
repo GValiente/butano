@@ -20,23 +20,28 @@ game::game(btn::sprite_text_generator& text_generator, butano_background& butano
 
 btn::optional<scene_type> game::update()
 {
-    btn::optional<scene_type> result = _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background,
-                                                    _butano_background);
+    btn::optional<scene_type> result;
+    _pause.update(_butano_background);
 
-    if(result)
+    if(! _pause.active())
     {
-        _background.reset();
-    }
-    else
-    {
-        _hero_bullets.update(_hero, _enemies, _objects);
-        _hero_bomb.update(_intro, _hero, _enemies, _enemy_bullets, _background);
-        _background.update();
-        _intro.update(_butano_background);
-        _enemies.update(_hero, _hero_bomb, _intro, _enemy_bullets);
-        _enemy_bullets.update();
-        _objects.update();
-        _scoreboard.update(_hero);
+        result = _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background, _butano_background);
+
+        if(result)
+        {
+            _background.reset();
+        }
+        else
+        {
+            _hero_bullets.update(_hero, _enemies, _objects);
+            _hero_bomb.update(_intro, _hero, _enemies, _enemy_bullets, _background);
+            _background.update();
+            _intro.update(_butano_background);
+            _enemies.update(_hero, _hero_bomb, _intro, _enemy_bullets);
+            _enemy_bullets.update();
+            _objects.update();
+            _scoreboard.update(_hero);
+        }
     }
 
     return result;

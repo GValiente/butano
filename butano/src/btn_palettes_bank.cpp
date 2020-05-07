@@ -252,7 +252,7 @@ void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref, 
     pal.colors_ref = colors_ref.data();
     pal.hash = hash;
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -264,7 +264,7 @@ void palettes_bank::reload_colors_ref(int id)
 {
     palette& pal = _palettes[id];
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -279,7 +279,7 @@ void palettes_bank::set_inverted(int id, bool inverted)
     palette& pal = _palettes[id];
     pal.inverted = inverted;
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -294,7 +294,7 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
     palette& pal = _palettes[id];
     pal.grayscale_intensity = intensity;
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -310,7 +310,7 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
     pal.fade_color = color;
     pal.fade_intensity = intensity;
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -325,7 +325,7 @@ void palettes_bank::set_rotate_count(int id, int count)
     palette& pal = _palettes[id];
     pal.rotate_count = int16_t(count);
     pal.update = true;
-    _perform_update = true;
+    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -336,7 +336,8 @@ void palettes_bank::set_rotate_count(int id, int count)
 void palettes_bank::set_transparent_color(const optional<color>& transparent_color)
 {
     _transparent_color = transparent_color;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_brightness(fixed brightness)
@@ -344,7 +345,8 @@ void palettes_bank::set_brightness(fixed brightness)
     BTN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
 
     _brightness = brightness;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_contrast(fixed contrast)
@@ -352,7 +354,8 @@ void palettes_bank::set_contrast(fixed contrast)
     BTN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
 
     _contrast = contrast;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_intensity(fixed intensity)
@@ -360,13 +363,15 @@ void palettes_bank::set_intensity(fixed intensity)
     BTN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
 
     _intensity = intensity;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_inverted(bool inverted)
 {
     _inverted = inverted;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_grayscale_intensity(fixed intensity)
@@ -374,7 +379,8 @@ void palettes_bank::set_grayscale_intensity(fixed intensity)
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     _grayscale_intensity = intensity;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::set_fade(color color, fixed intensity)
@@ -383,7 +389,8 @@ void palettes_bank::set_fade(color color, fixed intensity)
 
     _fade_color = color;
     _fade_intensity = intensity;
-    _perform_update = true;
+    _update = true;
+    _update_all = true;
 }
 
 void palettes_bank::update()
@@ -391,17 +398,11 @@ void palettes_bank::update()
     int first_index = numeric_limits<int>::max();
     int last_index = 0;
 
-    if(_perform_update)
+    if(_update)
     {
-        _perform_update = false;
-
-        int brightness = fixed_t<8>(_brightness).value();
-        int contrast = fixed_t<8>(_contrast).value();
-        int intensity = fixed_t<8>(_intensity).value();
-        bool inverted = _inverted;
-        int grayscale_intensity = fixed_t<5>(_grayscale_intensity).value();
-        int fade_intensity = fixed_t<5>(_fade_intensity).value();
-        bool update_all = brightness || contrast || intensity || inverted || grayscale_intensity || fade_intensity;
+        bool update_all = _update_all;
+        _update = false;
+        _update_all = false;
 
         for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
         {
@@ -451,32 +452,32 @@ void palettes_bank::update()
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
 
-            if(brightness)
+            if(int brightness = fixed_t<8>(_brightness).value())
             {
                 hw::palettes::brightness(brightness, all_colors_count, all_colors_ptr);
             }
 
-            if(contrast)
+            if(int contrast = fixed_t<8>(_contrast).value())
             {
                 hw::palettes::contrast(contrast, all_colors_count, all_colors_ptr);
             }
 
-            if(intensity)
+            if(int intensity = fixed_t<8>(_intensity).value())
             {
                 hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
             }
 
-            if(inverted)
+            if(_inverted)
             {
                 hw::palettes::invert(all_colors_count, all_colors_ptr);
             }
 
-            if(grayscale_intensity)
+            if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).value())
             {
                 hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ptr);
             }
 
-            if(fade_intensity)
+            if(int fade_intensity = fixed_t<5>(_fade_intensity).value())
             {
                 hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ptr);
             }

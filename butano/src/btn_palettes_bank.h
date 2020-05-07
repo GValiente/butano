@@ -206,7 +206,8 @@ private:
     int _last_used_4bpp_index = hw::palettes::count() - 1;
     color _fade_color;
     bool _inverted = false;
-    bool _perform_update = false;
+    bool _update = false;
+    bool _update_all = false;
 
     [[nodiscard]] int _bpp8_slots_count() const;
 

@@ -17,6 +17,8 @@ namespace palettes_manager
     void update();
 
     void commit();
+
+    void stop();
 }
 
 }

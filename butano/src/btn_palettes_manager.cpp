@@ -47,4 +47,9 @@ void commit()
     }
 }
 
+void stop()
+{
+    *hw::palettes::bg_transparent_color_register() = 0;
+}
+
 }

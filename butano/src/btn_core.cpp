@@ -80,6 +80,7 @@ namespace
     {
         hw::core::wait_for_vblank();
         audio_manager::stop();
+        palettes_manager::stop();
         display_manager::stop();
     }
 }
@@ -118,6 +119,9 @@ void init()
 
     // First update:
     update();
+
+    // Keypad polling fix:
+    hw::keypad::update();
 
     // Reset profiler:
     BTN_PROFILER_RESET();

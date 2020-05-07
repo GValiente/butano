@@ -20,6 +20,8 @@ namespace btn::music
 
     void stop();
 
+    [[nodiscard]] bool paused();
+
     void pause();
 
     void resume();

@@ -32,6 +32,11 @@ void stop()
     audio_manager::stop_music();
 }
 
+bool paused()
+{
+    return audio_manager::music_paused();
+}
+
 void pause()
 {
     audio_manager::pause_music();

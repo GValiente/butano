@@ -23,6 +23,8 @@ namespace btn::audio_manager
 
     void stop_music();
 
+    [[nodiscard]] bool music_paused();
+
     void pause_music();
 
     void resume_music();

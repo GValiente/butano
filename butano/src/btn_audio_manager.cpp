@@ -220,6 +220,11 @@ void stop_music()
     data.music_paused = false;
 }
 
+bool music_paused()
+{
+    return data.music_paused;
+}
+
 void pause_music()
 {
     BTN_ASSERT(data.music_playing, "There's no music playing");
@@ -324,12 +329,7 @@ void update()
 
     data.commands.clear();
 
-    if(data.music_playing && ! hw::audio::music_playing())
-    {
-        data.music_playing = false;
-    }
-
-    if(data.music_playing)
+    if(data.music_playing && hw::audio::music_playing())
     {
         data.music_position = hw::audio::music_position();
     }

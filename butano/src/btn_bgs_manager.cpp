@@ -24,7 +24,7 @@ namespace
 
     public:
         fixed_point position;
-        size quarter_dimensions;
+        size half_dimensions;
         unsigned usages = 1;
         sort_key bg_sort_key;
         hw::bgs::handle handle;
@@ -55,7 +55,7 @@ namespace
             hw::bgs::set_map_sbb(map.id(), handle);
             hw::bgs::set_bpp_mode(map.bpp_mode(), handle);
             hw::bgs::set_map_dimensions(map_dimensions, handle);
-            quarter_dimensions = map_dimensions * 2;
+            half_dimensions = map_dimensions * 4;
             update_hw_position();
         }
 
@@ -68,8 +68,8 @@ namespace
                 result += camera::position();
             }
 
-            result.set_x(result.x() + quarter_dimensions.width() + 8);
-            result.set_y(result.y() + quarter_dimensions.height() + 8);
+            result.set_x(result.x() + half_dimensions.width() - (display::width() / 2));
+            result.set_y(result.y() + half_dimensions.height() - (display::height() / 2));
             return result;
         }
 
@@ -82,8 +82,8 @@ namespace
                 result += camera_position;
             }
 
-            result.set_x(result.x() + quarter_dimensions.width() + 8);
-            result.set_y(result.y() + quarter_dimensions.height() + 8);
+            result.set_x(result.x() + half_dimensions.width() - (display::width() / 2));
+            result.set_y(result.y() + half_dimensions.height() - (display::height() / 2));
             return result;
         }
 
@@ -273,7 +273,7 @@ optional<int> hw_id(id_type id)
 size dimensions(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->quarter_dimensions * 4;
+    return item->half_dimensions * 2;
 }
 
 const regular_bg_map_ptr& map(id_type id)

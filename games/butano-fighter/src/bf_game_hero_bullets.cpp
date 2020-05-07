@@ -127,17 +127,19 @@ void hero_bullets::_add_bullets(hero& hero)
                         &_odd_bullets : &_even_bullets;
             BTN_ASSERT(! bullets->full(), "No more space for hero bullets");
 
+            const btn::fixed_point& bullet_position = hero.weapon_position();
             int event_level = event.level;
             const hero_bullet_level& level_data = levels_data[event_level];
             btn::sprite_builder builder(btn::sprite_items::hero_bullets.shape_size(), _tiles[event_level], _palette);
-            builder.set_position(hero.weapon_position());
+            builder.set_position(bullet_position);
             builder.set_z_order(constants::hero_bullets_z_order);
             bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), event.direction), &level_data });
             hero.show_shoot(level_data.color);
 
             if(event.play_sound)
             {
-                level_data.sound_item.play_with_priority(constants::hero_bullets_sound_priority, 0.35);
+                btn::fixed panning = btn::clamp(bullet_position.x() / constants::play_width, btn::fixed(-1), btn::fixed(1));
+                level_data.sound_item.play_with_priority(constants::hero_bullets_sound_priority, 0.35, 1, panning);
             }
 
             return;

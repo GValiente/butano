@@ -4,7 +4,6 @@
 #include "tonc.h"
 #include "btn_size.h"
 #include "btn_memory.h"
-#include "btn_sprites.h"
 #include "btn_sprite_builder.h"
 
 namespace btn::hw::sprites
@@ -35,11 +34,6 @@ namespace btn::hw::sprites
         {
             return reinterpret_cast<handle*>(MEM_OAM);
         }
-    }
-
-    inline void init()
-    {
-        oam_init(reinterpret_cast<OBJ_ATTR*>(vram()), unsigned(btn::sprites::sprites_count()));
     }
 
     [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,

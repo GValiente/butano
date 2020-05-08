@@ -84,6 +84,10 @@ namespace sprites_manager
 
     [[nodiscard]] const fixed_point& hw_position(id_type id);
 
+    void set_x(id_type id, fixed x);
+
+    void set_y(id_type id, fixed y);
+
     void set_position(id_type id, const fixed_point& position);
 
     [[nodiscard]] int bg_priority(id_type id);

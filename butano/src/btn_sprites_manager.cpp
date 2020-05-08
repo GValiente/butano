@@ -548,17 +548,64 @@ const fixed_point& hw_position(id_type id)
     return item->hw_position;
 }
 
+void set_x(id_type id, fixed x)
+{
+    auto item = static_cast<item_type*>(id);
+    fixed x_diff = x - item->position.x();
+
+    if(x_diff != 0)
+    {
+        item->position.set_x(x);
+        item->hw_position.set_x(item->hw_position.x() + x_diff);
+        hw::sprites::set_x(item->hw_position.x().integer(), item->handle);
+        _update_handle(*item);
+
+        if(item->visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
+    }
+}
+
+void set_y(id_type id, fixed y)
+{
+    auto item = static_cast<item_type*>(id);
+    fixed y_diff = y - item->position.y();
+
+    if(y_diff != 0)
+    {
+        item->position.set_y(y);
+        item->hw_position.set_y(item->hw_position.y() + y_diff);
+        hw::sprites::set_y(item->hw_position.y().integer(), item->handle);
+        _update_handle(*item);
+
+        if(item->visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
+    }
+}
+
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    item->position = position;
-    item->update_hw_position();
-    _update_handle(*item);
+    fixed_point position_diff = position - item->position;
 
-    if(item->visible)
+    if(position_diff != fixed_point())
     {
-        item->check_on_screen = true;
-        data.check_items_on_screen = true;
+        item->position = position;
+        item->hw_position += position_diff;
+        hw::sprites::set_x(item->hw_position.x().integer(), item->handle);
+        hw::sprites::set_y(item->hw_position.y().integer(), item->handle);
+        _update_handle(*item);
+
+        if(item->visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
     }
 }
 
@@ -760,18 +807,21 @@ void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
 
-    item->visible = visible;
+    if(visible != item->visible)
+    {
+        item->visible = visible;
 
-    if(visible)
-    {
-        item->check_on_screen = true;
-        data.check_items_on_screen = true;
-    }
-    else
-    {
-        _hide_handle(*item);
-        item->on_screen = false;
-        item->check_on_screen = false;
+        if(visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
+        else
+        {
+            _hide_handle(*item);
+            item->on_screen = false;
+            item->check_on_screen = false;
+        }
     }
 }
 
@@ -784,14 +834,18 @@ bool ignore_camera(id_type id)
 void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
-    item->ignore_camera = ignore_camera;
-    item->update_hw_position();
-    _update_handle(*item);
 
-    if(item->visible)
+    if(ignore_camera != item->ignore_camera)
     {
-        item->check_on_screen = true;
-        data.check_items_on_screen = true;
+        item->ignore_camera = ignore_camera;
+        item->update_hw_position();
+        _update_handle(*item);
+
+        if(item->visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
     }
 }
 

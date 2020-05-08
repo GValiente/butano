@@ -63,10 +63,9 @@ namespace btn::hw::sprites
                               palette_bpp_mode bpp_mode, handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false);
-        int a1 = second_attributes(0, shape_size.size(), false, false);
-        int a2 = third_attributes(tiles_id, palette_id, 3);
-        obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+        sprite_ptr->attr0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false);
+        sprite_ptr->attr1 = second_attributes(0, shape_size.size(), false, false);
+        sprite_ptr->attr2 = third_attributes(tiles_id, palette_id, 3);
     }
 
     inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
@@ -74,11 +73,11 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
-                                  builder.blending_enabled(), builder.window_enabled());
-        int a1 = second_attributes(0, shape_size.size(), builder.horizontal_flip(), builder.vertical_flip());
-        int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
-        obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+        sprite_ptr->attr0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+                                             builder.blending_enabled(), builder.window_enabled());
+        sprite_ptr->attr1 = second_attributes(0, shape_size.size(), builder.horizontal_flip(),
+                                              builder.vertical_flip());
+        sprite_ptr->attr2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
     }
 
     inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
@@ -86,11 +85,10 @@ namespace btn::hw::sprites
     {
         const sprite_shape_size& shape_size = builder.shape_size();
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        int a0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
-                                  builder.blending_enabled(), builder.window_enabled());
-        int a1 = second_attributes(0, shape_size.size(), 0);
-        int a2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
-        obj_set_attr(sprite_ptr, uint16_t(a0), uint16_t(a1), uint16_t(a2));
+        sprite_ptr->attr0 = first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+                                             builder.blending_enabled(), builder.window_enabled());
+        sprite_ptr->attr1 = second_attributes(0, shape_size.size(), 0);
+        sprite_ptr->attr2 = third_attributes(tiles_id, palette_id, builder.bg_priority());
     }
 
     [[nodiscard]] inline int affine_mode(const handle& sprite)
@@ -184,10 +182,16 @@ namespace btn::hw::sprites
         BFN_SET(sprite_ptr->attr1, affine_mat_id, ATTR1_AFF_ID);
     }
 
-    inline void set_position(int x, int y, handle& sprite)
+    inline void set_x(int x, handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        obj_set_pos(sprite_ptr, x, y);
+        BFN_SET(sprite_ptr->attr1, x, ATTR1_X);
+    }
+
+    inline void set_y(int y, handle& sprite)
+    {
+        auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
+        BFN_SET(sprite_ptr->attr0, y, ATTR0_Y);
     }
 
     inline void set_bg_priority(int bg_priority, handle& sprite)
@@ -299,7 +303,7 @@ namespace btn::hw::sprites
     inline void hide(handle& sprite)
     {
         auto sprite_ptr = reinterpret_cast<OBJ_ATTR*>(&sprite);
-        obj_hide(sprite_ptr);
+        sprite_ptr->attr0 = ATTR0_HIDE;
     }
 
     inline void commit(const handle& sprites_ref, int offset, int count)

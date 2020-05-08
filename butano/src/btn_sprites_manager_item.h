@@ -75,30 +75,32 @@ public:
 
     void update_hw_position()
     {
-        fixed_point real_position = position;
+        fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
+                                  position.y() + (display::height() / 2) - half_dimensions.height());
 
         if(! ignore_camera)
         {
             real_position -= camera::position();
         }
 
-        hw_position.set_x(real_position.x() + (display::width() / 2) - half_dimensions.width());
-        hw_position.set_y(real_position.y() + (display::height() / 2) - half_dimensions.height());
-        hw::sprites::set_position(hw_position.x().integer(), hw_position.y().integer(), handle);
+        hw_position = real_position;
+        hw::sprites::set_x(real_position.x().integer(), handle);
+        hw::sprites::set_y(real_position.y().integer(), handle);
     }
 
     void update_hw_position(const fixed_point& camera_position)
     {
-        fixed_point real_position = position;
+        fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
+                                  position.y() + (display::height() / 2) - half_dimensions.height());
 
         if(! ignore_camera)
         {
             real_position -= camera_position;
         }
 
-        hw_position.set_x(real_position.x() + (display::width() / 2) - half_dimensions.width());
-        hw_position.set_y(real_position.y() + (display::height() / 2) - half_dimensions.height());
-        hw::sprites::set_position(hw_position.x().integer(), hw_position.y().integer(), handle);
+        hw_position = real_position;
+        hw::sprites::set_x(real_position.x().integer(), handle);
+        hw::sprites::set_y(real_position.y().integer(), handle);
     }
 };
 

@@ -320,17 +320,17 @@ const fixed_point& sprite_ptr::position() const
 
 void sprite_ptr::set_x(fixed x)
 {
-    set_position(fixed_point(x, position().y()));
+    sprites_manager::set_x(_handle, x);
 }
 
 void sprite_ptr::set_y(fixed y)
 {
-    set_position(fixed_point(position().x(), y));
+    sprites_manager::set_y(_handle, y);
 }
 
 void sprite_ptr::set_position(fixed x, fixed y)
 {
-    set_position(fixed_point(x, y));
+    sprites_manager::set_position(_handle, fixed_point(x, y));
 }
 
 void sprite_ptr::set_position(const fixed_point& position)

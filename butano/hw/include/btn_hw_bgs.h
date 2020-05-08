@@ -75,9 +75,13 @@ namespace btn::hw::bgs
         set_bpp_mode(bpp_mode, bg.cnt);
     }
 
-    inline void set_position(int x, int y, handle& bg)
+    inline void set_x(int x, handle& bg)
     {
         bg.hofs = uint16_t(x);
+    }
+
+    inline void set_y(int y, handle& bg)
+    {
         bg.vofs = uint16_t(y);
     }
 

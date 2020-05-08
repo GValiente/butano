@@ -224,17 +224,17 @@ const fixed_point& regular_bg_ptr::position() const
 
 void regular_bg_ptr::set_x(fixed x)
 {
-    set_position(fixed_point(x, position().y()));
+    bgs_manager::set_x(_handle, x);
 }
 
 void regular_bg_ptr::set_y(fixed y)
 {
-    set_position(fixed_point(position().x(), y));
+    bgs_manager::set_y(_handle, y);
 }
 
 void regular_bg_ptr::set_position(fixed x, fixed y)
 {
-    set_position(fixed_point(x, y));
+    bgs_manager::set_position(_handle, fixed_point(x, y));
 }
 
 void regular_bg_ptr::set_position(const fixed_point& position)

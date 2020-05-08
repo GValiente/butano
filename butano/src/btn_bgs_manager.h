@@ -45,6 +45,10 @@ namespace bgs_manager
 
     [[nodiscard]] fixed_point hw_position(id_type id);
 
+    void set_x(id_type id, fixed x);
+
+    void set_y(id_type id, fixed y);
+
     void set_position(id_type id, const fixed_point& position);
 
     [[nodiscard]] int priority(id_type id);

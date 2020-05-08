@@ -24,6 +24,7 @@ namespace
 
     public:
         fixed_point position;
+        fixed_point hw_position;
         size half_dimensions;
         unsigned usages = 1;
         sort_key bg_sort_key;
@@ -59,44 +60,34 @@ namespace
             update_hw_position();
         }
 
-        fixed_point hw_position() const
-        {
-            fixed_point result = -position;
-
-            if(! ignore_camera)
-            {
-                result += camera::position();
-            }
-
-            result.set_x(result.x() + half_dimensions.width() - (display::width() / 2));
-            result.set_y(result.y() + half_dimensions.height() - (display::height() / 2));
-            return result;
-        }
-
-        fixed_point hw_position(const fixed_point& camera_position) const
-        {
-            fixed_point result = -position;
-
-            if(! ignore_camera)
-            {
-                result += camera_position;
-            }
-
-            result.set_x(result.x() + half_dimensions.width() - (display::width() / 2));
-            result.set_y(result.y() + half_dimensions.height() - (display::height() / 2));
-            return result;
-        }
-
         void update_hw_position()
         {
-            fixed_point real_position = hw_position();
-            hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
+            fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
+                                      -position.y() - (display::height() / 2) + half_dimensions.height());
+
+            if(! ignore_camera)
+            {
+                real_position += camera::position();
+            }
+
+            hw_position = real_position;
+            hw::bgs::set_x(real_position.x().integer(), handle);
+            hw::bgs::set_y(real_position.y().integer(), handle);
         }
 
         void update_hw_position(const fixed_point& camera_position)
         {
-            fixed_point real_position = hw_position(camera_position);
-            hw::bgs::set_position(real_position.x().integer(), real_position.y().integer(), handle);
+            fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
+                                      -position.y() - (display::height() / 2) + half_dimensions.height());
+
+            if(! ignore_camera)
+            {
+                real_position += camera_position;
+            }
+
+            hw_position = real_position;
+            hw::bgs::set_x(real_position.x().integer(), handle);
+            hw::bgs::set_y(real_position.y().integer(), handle);
         }
     };
 
@@ -315,15 +306,50 @@ const fixed_point& position(id_type id)
 fixed_point hw_position(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->hw_position();
+    return item->hw_position;
+}
+
+void set_x(id_type id, fixed x)
+{
+    auto item = static_cast<item_type*>(id);
+    fixed x_diff = x - item->position.x();
+
+    if(x_diff != 0)
+    {
+        item->position.set_x(x);
+        item->hw_position.set_x(item->hw_position.x() - x_diff);
+        hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
+        _update_item(*item);
+    }
+}
+
+void set_y(id_type id, fixed y)
+{
+    auto item = static_cast<item_type*>(id);
+    fixed y_diff = y - item->position.y();
+
+    if(y_diff != 0)
+    {
+        item->position.set_y(y);
+        item->hw_position.set_y(item->hw_position.y() - y_diff);
+        hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
+        _update_item(*item);
+    }
 }
 
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    item->position = position;
-    item->update_hw_position();
-    _update_item(*item);
+    fixed_point position_diff = position - item->position;
+
+    if(position_diff != fixed_point())
+    {
+        item->position = position;
+        item->hw_position -= position_diff;
+        hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
+        hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
+        _update_item(*item);
+    }
 }
 
 int priority(id_type id)
@@ -455,9 +481,13 @@ bool ignore_camera(id_type id)
 void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
-    item->ignore_camera = ignore_camera;
-    item->update_hw_position();
-    _update_item(*item);
+
+    if(ignore_camera != static_cast<bool>(item->ignore_camera))
+    {
+        item->ignore_camera = ignore_camera;
+        item->update_hw_position();
+        _update_item(*item);
+    }
 }
 
 void update_map_tiles_cbb(int map_id, int tiles_cbb)

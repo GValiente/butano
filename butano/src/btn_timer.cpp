@@ -29,12 +29,12 @@ int timer::elapsed_ticks() const
 
 fixed timer::elapsed_frames() const
 {
-    return fixed(elapsed_ticks()) / hw::timer::ticks_per_frame();
+    return fixed(elapsed_ticks()) / ticks_per_frame();
 }
 
 fixed timer::elapsed_seconds() const
 {
-    return fixed(elapsed_ticks()) / hw::timer::ticks_per_second();
+    return fixed(elapsed_ticks()) / ticks_per_second();
 }
 
 void timer::restart()

@@ -2,20 +2,10 @@
 #define BTN_HW_TIMER_H
 
 #include "tonc.h"
-#include "btn_common.h"
+#include "btn_hw_timer_constants.h"
 
 namespace btn::hw::timer
 {
-    [[nodiscard]] constexpr int ticks_per_frame()
-    {
-        return 280896 / 64;
-    }
-
-    [[nodiscard]] constexpr int ticks_per_second()
-    {
-        return ticks_per_frame() * 60;
-    }
-
     inline void init()
     {
         REG_TM3CNT = 0;

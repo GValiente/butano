@@ -36,6 +36,13 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
+    void _copy_handle(const hw::sprites::handle& from, hw::sprites::handle& to)
+    {
+        to.attr0 = from.attr0;
+        to.attr1 = from.attr1;
+        to.attr2 = from.attr2;
+    }
+
     void _update_handle(item_type& item)
     {
         if(! data.rebuild_handles)
@@ -44,7 +51,7 @@ namespace
 
             if(handles_index >= 0)
             {
-                item.handle.copy_to(data.handles[handles_index]);
+                _copy_handle(item.handle, data.handles[handles_index]);
                 data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
                 data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
             }
@@ -173,7 +180,7 @@ namespace
                         BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
                                    visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
 
-                        item.handle.copy_to(data.handles[visible_items_count]);
+                        _copy_handle(item.handle, data.handles[visible_items_count]);
                         item.handles_index = int8_t(visible_items_count);
                         ++visible_items_count;
                     }
@@ -215,7 +222,7 @@ void init()
 {
     for(hw::sprites::handle& handle : data.handles)
     {
-        hide(handle);
+        hw::sprites::hide(handle);
     }
 
     sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
@@ -807,7 +814,7 @@ void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(visible != item->visible)
+    if(visible != static_cast<bool>(item->visible))
     {
         item->visible = visible;
 
@@ -835,7 +842,7 @@ void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(ignore_camera != item->ignore_camera)
+    if(ignore_camera != static_cast<bool>(item->ignore_camera))
     {
         item->ignore_camera = ignore_camera;
         item->update_hw_position();

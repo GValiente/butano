@@ -11,30 +11,30 @@ class rule_of_three_approximation
 {
 
 public:
-    constexpr rule_of_three_approximation(unsigned divisor, unsigned multiplicator) :
+    constexpr rule_of_three_approximation(int divisor, int multiplier) :
         _divisor(_build_divisor(divisor)),
-        _multiplicator(_build_multiplicator(multiplicator, divisor))
+        _multiplier(_build_multiplier(multiplier, divisor))
     {
     }
 
     [[nodiscard]] constexpr unsigned calculate(unsigned value) const
     {
-        return unsigned((uint64_t(value) * _multiplicator) / _divisor);
+        return unsigned((uint64_t(value) * _multiplier) / _divisor);
     }
 
     [[nodiscard]] constexpr unsigned unsafe_calculate(unsigned value) const
     {
-        return (value * _multiplicator) / _divisor;
+        return (value * _multiplier) / _divisor;
     }
 
     [[nodiscard]] constexpr int calculate(int value) const
     {
-        return int((int64_t(value) * _multiplicator) / _divisor);
+        return int((int64_t(value) * _multiplier) / _divisor);
     }
 
     [[nodiscard]] constexpr int unsafe_calculate(int value) const
     {
-        return (value * int(_multiplicator)) / int(_divisor);
+        return (value * int(_multiplier)) / int(_divisor);
     }
 
     template<int Precision>
@@ -51,11 +51,11 @@ public:
 
 private:
     unsigned _divisor;
-    unsigned _multiplicator;
+    unsigned _multiplier;
 
-    [[nodiscard]] static constexpr unsigned _build_divisor(unsigned divisor)
+    [[nodiscard]] static constexpr unsigned _build_divisor(int divisor)
     {
-        BTN_CONSTEXPR_ASSERT(divisor, "Divisor is zero");
+        BTN_CONSTEXPR_ASSERT(divisor > 0, "Invalid divisor");
 
         unsigned shift_bits = 0;
 
@@ -63,7 +63,7 @@ private:
         {
             unsigned result = 1u << shift_bits;
 
-            if(result >= divisor)
+            if(result >= unsigned(divisor))
             {
                 return result;
             }
@@ -72,16 +72,16 @@ private:
         }
     }
 
-    [[nodiscard]] constexpr unsigned _build_multiplicator(unsigned multiplicator, unsigned divisor)
+    [[nodiscard]] constexpr unsigned _build_multiplier(int multiplier, int divisor)
     {
-        BTN_CONSTEXPR_ASSERT(divisor, "Divisor is zero");
+        BTN_CONSTEXPR_ASSERT(multiplier > 0, "Invalid multiplier");
 
-        if(_divisor == divisor)
+        if(_divisor == unsigned(divisor))
         {
-            return multiplicator;
+            return multiplier;
         }
 
-        return ((multiplicator * _divisor) / divisor) + 1;
+        return ((unsigned(multiplier) * _divisor) / divisor) + 1;
     }
 };
 

@@ -18,7 +18,7 @@ namespace btn::sram
     void write(const Type& source)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        BTN_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high: ", sizeof(Type));
+        BTN_CONSTEXPR_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high");
 
         _btn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
     }
@@ -37,7 +37,7 @@ namespace btn::sram
     void read(Type& destination)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        BTN_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high: ", sizeof(Type));
+        BTN_CONSTEXPR_ASSERT(int(sizeof(Type)) <= max_size(), "Size is too high");
 
         _btn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }

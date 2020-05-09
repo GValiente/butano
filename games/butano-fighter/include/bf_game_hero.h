@@ -5,6 +5,7 @@
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
+#include "bf_game_status.h"
 
 namespace bf
 {
@@ -25,7 +26,7 @@ class hero
 {
 
 public:
-    hero();
+    explicit hero(status& status);
 
     [[nodiscard]] bool alive() const
     {
@@ -34,21 +35,27 @@ public:
 
     [[nodiscard]] int level() const
     {
-        return _level;
+        return _status.level();
     }
 
     [[nodiscard]] int experience() const
     {
-        return _experience;
+        return _status.experience();
     }
 
-    [[nodiscard]] btn::fixed next_level_experience_ratio() const;
+    [[nodiscard]] btn::fixed next_level_experience_ratio() const
+    {
+        return _status.next_level_experience_ratio();
+    }
 
-    [[nodiscard]] bool add_experience(int experience);
+    [[nodiscard]] bool add_experience(int experience)
+    {
+        return _status.add_experience(experience);
+    }
 
     [[nodiscard]] int bombs_count() const
     {
-        return _bombs_count;
+        return _status.bombs_count();
     }
 
     [[nodiscard]] const btn::fixed_point& body_position() const
@@ -73,9 +80,15 @@ public:
 
     void show_shoot(btn::color fade_color);
 
-    [[nodiscard]] bool add_bomb();
+    [[nodiscard]] bool add_bomb()
+    {
+        return _status.add_bomb();
+    }
 
-    [[nodiscard]] bool throw_bomb();
+    [[nodiscard]] bool throw_bomb()
+    {
+        return _status.throw_bomb();
+    }
 
     btn::optional<scene_type> update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
                                      objects& objects, background& background, butano_background& butano_background);
@@ -89,9 +102,7 @@ private:
 
     constexpr static const int body_snapshots_count = 16;
 
-    int _level = 2;
-    int _experience = 0;
-    int _bombs_count = 2;
+    status& _status;
     btn::vector<btn::sprite_ptr, 3> _body_shadows;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::deque<body_snapshot, body_snapshots_count> _body_snapshots;

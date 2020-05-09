@@ -1,5 +1,6 @@
 #include "bf_title.h"
 
+#include "btn_string.h"
 #include "btn_keypad.h"
 #include "btn_display.h"
 #include "btn_optional.h"
@@ -15,6 +16,7 @@
 #include "btn_sprite_affine_mat_attributes.h"
 #include "btn_sprite_items_butano_big_sprite.h"
 #include "bf_scene_type.h"
+#include "bf_game_status.h"
 #include "bf_wave_generator.h"
 #include "bf_butano_background.h"
 
@@ -110,7 +112,8 @@ namespace
             _create_fighter_character_hblank_effect_attributes();
 }
 
-title::title(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
+title::title(const game::status& game_status, btn::sprite_text_generator& text_generator,
+             butano_background& butano_background) :
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _butano_characters(_create_butano_characters()),
@@ -120,16 +123,19 @@ title::title(btn::sprite_text_generator& text_generator, butano_background& buta
     _butano_up_x_hblank_effect(_create_x_hblank_effect(_butano_up_sprite, _butano_x_hblank_effect_attributes)),
     _butano_down_x_hblank_effect(_create_x_hblank_effect(_butano_down_sprite, _butano_x_hblank_effect_attributes))
 {
+    btn::string<20> high_experience_text("HIGH EXP: ");
+    high_experience_text.append(btn::to_string<8>(game_status.high_experience()));
+
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-    text_generator.generate(0, 12 - (btn::display::height() / 2), "HIGH SCORE: 123456", _high_score_text_sprites);
+    text_generator.generate(0, 12 - (btn::display::height() / 2), high_experience_text, _high_experience_text_sprites);
     text_generator.generate(0, 44, "START", _start_text_sprites);
     text_generator.generate(0, 44 + 12, "CREDITS", _credits_text_sprites);
     text_generator.set_alignment(old_alignment);
     _cursor_sprite.set_position(_credits_text_sprites[0].x() - 28, _start_text_sprites[0].y());
     _cursor_sprite.set_visible(false);
 
-    for(btn::sprite_ptr& sprite : _high_score_text_sprites)
+    for(btn::sprite_ptr& sprite : _high_experience_text_sprites)
     {
         sprite.set_visible(false);
     }
@@ -353,7 +359,7 @@ btn::optional<scene_type> title::_menu()
             _cursor_sprite.set_scale(0.01);
             _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 1);
 
-            for(btn::sprite_ptr& sprite : _high_score_text_sprites)
+            for(btn::sprite_ptr& sprite : _high_experience_text_sprites)
             {
                 sprite.set_visible(true);
             }
@@ -417,7 +423,7 @@ btn::optional<scene_type> title::_menu()
                     sprite.set_blending_enabled(true);
                 }
 
-                for(btn::sprite_ptr& sprite : _high_score_text_sprites)
+                for(btn::sprite_ptr& sprite : _high_experience_text_sprites)
                 {
                     sprite.set_blending_enabled(true);
                 }
@@ -470,7 +476,7 @@ btn::optional<scene_type> title::_menu()
             _butano_down_sprite.set_visible(false);
             _butano_characters.clear();
             _fighter_characters.clear();
-            _high_score_text_sprites.clear();
+            _high_experience_text_sprites.clear();
             _start_text_sprites.clear();
             _credits_text_sprites.clear();
             btn::blending::set_transparency_alpha(1);

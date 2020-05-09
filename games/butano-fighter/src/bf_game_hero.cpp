@@ -58,42 +58,14 @@ namespace
     }
 }
 
-hero::hero() :
+hero::hero(status& status) :
+    _status(status),
     _body_shadows(_create_body_shadows()),
     _body_sprite_animate_action(_create_body_sprite_animate_action()),
     _body_snapshots(body_snapshots_count, body_snapshot{ _body_sprite_animate_action.sprite().position(), 0 }),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
-    _weapon_sprite(_create_weapon_sprite(_level, _weapon_position))
+    _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position))
 {
-}
-
-btn::fixed hero::next_level_experience_ratio() const
-{
-    btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
-
-    if(_level == levels_data.size() - 1)
-    {
-        return 1;
-    }
-
-    int experience_to_current_level = _level == 0 ? 0 : levels_data[_level - 1].experience_to_next_level;
-    int next_level_experience = levels_data[_level].experience_to_next_level - experience_to_current_level;
-    btn::fixed experience = _experience - experience_to_current_level;
-    return btn::min(experience / next_level_experience, btn::fixed(1));
-}
-
-bool hero::add_experience(int experience)
-{
-    btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
-    int level = _level;
-    _experience += experience;
-
-    if(level == levels_data.size() - 1)
-    {
-        return false;
-    }
-
-    return _experience >= levels_data[level].experience_to_next_level;
 }
 
 void hero::show_shoot(btn::color fade_color)
@@ -103,28 +75,6 @@ void hero::show_shoot(btn::color fade_color)
     btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
     body_palette.set_fade(fade_color, 0.5);
     _body_palette_fade_action.emplace(btn::move(body_palette), _show_shoot_counter, 0);
-}
-
-bool hero::add_bomb()
-{
-    if(_bombs_count < constants::max_hero_bombs)
-    {
-        return false;
-    }
-
-    ++_bombs_count;
-    return true;
-}
-
-bool hero::throw_bomb()
-{
-    if(! _bombs_count)
-    {
-        return false;
-    }
-
-    --_bombs_count;
-    return true;
 }
 
 btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
@@ -143,34 +93,34 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
 
         if(objects.check_hero_weapon(new_body_rect))
         {
-            ++_level;
+            [[maybe_unused]] bool level_added = _status.add_level();
+            BTN_ASSERT(level_added, "Level add failed");
+
             _scale_weapon_counter = scale_weapon_frames;
-            _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _level);
+            _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _status.level());
             _weapon_sprite.set_scale(2);
 
             btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
             weapon_palette.set_fade(btn::colors::yellow, 0.5);
         }
 
-        bool max_bombs_count = _bombs_count == constants::max_hero_bombs;
+        bool max_bombs_count = _status.bombs_count() == constants::max_hero_bombs;
 
         if(objects.check_hero_bomb(new_body_rect, max_bombs_count))
         {
-            if(max_bombs_count)
+            if(! _status.add_bomb())
             {
                 //
             }
-            else
-            {
-                ++_bombs_count;
-            }
         }
 
-        if(int experience = objects.check_gem(new_body_rect, _level))
+        int level = _status.level();
+
+        if(int experience = objects.check_gem(new_body_rect, level))
         {
             if(add_experience(experience))
             {
-                objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), _level + 1);
+                objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), level + 1);
             }
         }
 
@@ -391,6 +341,8 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     else if(_death_counter > 220 && ! butano_background.silhouette_visible())
     {
         btn::camera::set_x(0);
+        _status.update_high_experience();
+        _status = status();
         result = scene_type::TITLE;
     }
 

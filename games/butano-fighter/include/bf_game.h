@@ -20,7 +20,7 @@ class game : public scene
 {
 
 public:
-    game(btn::sprite_text_generator& text_generator, butano_background& butano_background);
+    game(status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
 

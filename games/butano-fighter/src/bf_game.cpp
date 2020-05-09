@@ -7,7 +7,8 @@
 namespace bf::game
 {
 
-game::game(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
+game::game(status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background) :
+    _hero(status),
     _intro(text_generator),
     _enemies(btn::sprite_items::flash_palette.palette_item().create_palette()),
     _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),

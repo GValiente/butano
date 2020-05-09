@@ -17,6 +17,11 @@ namespace btn
     class sprite_text_generator;
 }
 
+namespace bf::game
+{
+    class status;
+}
+
 namespace bf
 {
 
@@ -26,7 +31,8 @@ class title : public scene
 {
 
 public:
-    title(btn::sprite_text_generator& text_generator, butano_background& butano_background);
+    title(const game::status& game_status, btn::sprite_text_generator& text_generator,
+          butano_background& butano_background);
 
     title(const title& other) = delete;
 
@@ -50,7 +56,7 @@ private:
     btn::sprite_ptr _butano_down_sprite;
     btn::vector<btn::sprite_ptr, 6> _butano_characters;
     btn::vector<btn::sprite_ptr, 7> _fighter_characters;
-    btn::vector<btn::sprite_ptr, 4> _high_score_text_sprites;
+    btn::vector<btn::sprite_ptr, 4> _high_experience_text_sprites;
     btn::vector<btn::sprite_ptr, 2> _start_text_sprites;
     btn::vector<btn::sprite_ptr, 2> _credits_text_sprites;
     btn::sprite_ptr _cursor_sprite;

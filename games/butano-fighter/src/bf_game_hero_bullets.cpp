@@ -138,7 +138,7 @@ void hero_bullets::_add_bullets(hero& hero)
 
             if(event.play_sound)
             {
-                btn::fixed panning = btn::clamp(bullet_position.x() / constants::play_width, btn::fixed(-1), btn::fixed(1));
+                btn::fixed panning = btn::min(bullet_position.x() / constants::play_width, btn::fixed(1));
                 level_data.sound_item.play_with_priority(constants::hero_bullets_sound_priority, 0.35, 1, panning);
             }
 

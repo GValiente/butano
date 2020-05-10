@@ -21,17 +21,17 @@ def remove_file(file_path):
 
 class GraphicsFolderInfo:
 
-    def __init__(self, sprites, bgs, file_paths):
+    def __init__(self, sprites, regular_bgs, file_paths):
         self.__sprites = sprites
-        self.__bgs = bgs
+        self.__regular_bgs = regular_bgs
         self.__file_paths = file_paths
         self.__new_graphics_json = False
 
     def get_sprite(self, file_name_no_ext):
         return self.__sprites[file_name_no_ext]
 
-    def get_bg(self, file_name_no_ext):
-        return self.__bgs[file_name_no_ext]
+    def get_regular_bg(self, file_name_no_ext):
+        return self.__regular_bgs[file_name_no_ext]
 
     def file_paths(self):
         return self.__file_paths
@@ -190,11 +190,11 @@ class SpriteItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
-class BgItem:
+class RegularBgItem:
 
     @staticmethod
     def valid_sizes_message():
-        return ' (valid BG sizes: 256x256, 512x256, 256x512, 512x512)'
+        return ' (valid regular BG sizes: 256x256, 512x256, 256x512, 512x512)'
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
@@ -211,8 +211,8 @@ class BgItem:
         elif (width == 256 and height == 512) or (width == 512 and height == 256) or (width == 512 and height == 512):
             self.__sbb = True
         else:
-            raise ValueError('Invalid BG size: (' + str(width) + 'x' + str(height) + ')' +
-                             BgItem.valid_sizes_message())
+            raise ValueError('Invalid regular BG size: (' + str(width) + 'x' + str(height) + ')' +
+                             RegularBgItem.valid_sizes_message())
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
@@ -239,7 +239,7 @@ class BgItem:
     def write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = self.__build_folder_path + '/btn_bg_items_' + name + '.h'
+        header_file_path = self.__build_folder_path + '/btn_regular_bg_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
@@ -256,14 +256,14 @@ class BgItem:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
-            include_guard = 'BTN_BG_ITEMS_' + name.upper() + '_H'
+            include_guard = 'BTN_REGULAR_BG_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
             header_file.write('#include "btn_regular_bg_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
-            header_file.write('namespace btn::bg_items' + '\n')
+            header_file.write('namespace btn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr const regular_bg_item ' + name + '(' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
@@ -276,7 +276,7 @@ class BgItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('bg_item file written in ' + header_file_path)
+        print('regular_bg_item file written in ' + header_file_path)
 
     def process(self):
         command = ['grit', self.__file_path]
@@ -313,7 +313,7 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
             with open(graphics_json_file_path) as file:
                 data = json.load(file)
                 sprites = data['sprites']
-                bgs = data['bgs']
+                regular_bgs = data['regular_bgs']
         except Exception as ex:
             raise ValueError(graphics_json_file_path + ' parse failed: ' + str(ex))
 
@@ -332,7 +332,7 @@ def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
             else:
                 print('Graphics file skipped: ' + graphics_file_name)
 
-        graphics_folder_infos.append(GraphicsFolderInfo(sprites, bgs, graphics_file_paths))
+        graphics_folder_infos.append(GraphicsFolderInfo(sprites, regular_bgs, graphics_file_paths))
 
     file_info_path = build_folder_path + '/_btn_graphics_json_file_info.txt'
     old_file_info = FileInfo.read(file_info_path)
@@ -361,7 +361,7 @@ def remove_old_graphics_items(new_graphics_file_names_set, build_folder_path):
                     remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.d')
                     remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.s')
                     remove_file(build_folder_path + '/btn_sprite_items_' + old_graphics_file_name + '.h')
-                    remove_file(build_folder_path + '/btn_bg_items_' + old_graphics_file_name + '.h')
+                    remove_file(build_folder_path + '/btn_regular_bg_items_' + old_graphics_file_name + '.h')
                     remove_file(build_folder_path + '/_' + old_graphics_file_name + '_file_info.txt')
 
     with open(graphics_file_names_set_file_path, 'wb') as graphics_file_names_set_file:
@@ -396,8 +396,9 @@ def process(graphics_folder_paths, build_folder_path):
 
                 if item_info is None:
                     try:
-                        item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
-                        item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
+                        item_info = graphics_folder_info.get_regular_bg(graphics_file_name_no_ext)
+                        item = RegularBgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path,
+                                             item_info)
                     except KeyError:
                         raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
 

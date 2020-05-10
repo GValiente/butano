@@ -6,7 +6,7 @@
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_bg_items_pause.h"
+#include "btn_regular_bg_items_pause.h"
 #include "bf_butano_background.h"
 
 namespace bf::game
@@ -35,7 +35,7 @@ void pause::update(const butano_background& butano_background)
     {
         if(! butano_background.silhouette_visible() && btn::keypad::pressed(btn::keypad::button_type::START))
         {
-            btn::regular_bg_builder builder(btn::bg_items::pause);
+            btn::regular_bg_builder builder(btn::regular_bg_items::pause);
             builder.set_priority(0);
             builder.set_ignore_camera(true);
             _bg = builder.release_build();

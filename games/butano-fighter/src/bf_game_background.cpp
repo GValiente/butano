@@ -3,8 +3,8 @@
 #include "btn_blending.h"
 #include "btn_rect_window.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_bg_items_clouds.h"
-#include "btn_bg_items_stage_1.h"
+#include "btn_regular_bg_items_clouds.h"
+#include "btn_regular_bg_items_stage_1.h"
 #include "bf_wave_generator.h"
 
 namespace bf::game
@@ -16,14 +16,14 @@ namespace
 
     btn::regular_bg_ptr _create_ground_bg()
     {
-        btn::regular_bg_builder builder(btn::bg_items::stage_1);
+        btn::regular_bg_builder builder(btn::regular_bg_items::stage_1);
         builder.set_mosaic_enabled(true);
         return builder.release_build();
     }
 
     btn::regular_bg_ptr _create_clouds_bg()
     {
-        btn::regular_bg_builder builder(btn::bg_items::clouds);
+        btn::regular_bg_builder builder(btn::regular_bg_items::clouds);
         builder.set_priority(2);
         builder.set_blending_enabled(true);
         builder.set_mosaic_enabled(true);

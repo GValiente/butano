@@ -2,9 +2,9 @@
 
 #include "btn_keypad.h"
 #include "btn_blending.h"
-#include "btn_regular_bg_builder.h"
-#include "btn_bg_items_hero_bomb.h"
 #include "btn_sound_items.h"
+#include "btn_regular_bg_builder.h"
+#include "btn_regular_bg_items_hero_bomb.h"
 #include "bf_constants.h"
 #include "bf_game_hero.h"
 #include "bf_game_intro.h"
@@ -46,7 +46,7 @@ void hero_bomb::update(const intro& intro, hero& hero, enemies& enemies, enemy_b
                 const btn::fixed_point& hero_position = hero.weapon_position();
                 _center = btn::point(hero_position.x().integer(), hero_position.y().integer());
 
-                btn::regular_bg_builder builder(btn::bg_items::hero_bomb);
+                btn::regular_bg_builder builder(btn::regular_bg_items::hero_bomb);
                 builder.set_priority(1);
                 builder.set_blending_enabled(true);
 

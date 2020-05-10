@@ -5,8 +5,8 @@
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_bg_items_butano_background.h"
 #include "btn_sprite_items_butano_big_sprite.h"
+#include "btn_regular_bg_items_butano_background.h"
 
 namespace bf
 {
@@ -154,7 +154,7 @@ void butano_background::_set_visible()
 {
     if(! _move_action)
     {
-        btn::regular_bg_builder builder(btn::bg_items::butano_background);
+        btn::regular_bg_builder builder(btn::regular_bg_items::butano_background);
         builder.set_ignore_camera(true);
 
         btn::regular_bg_ptr bg = builder.release_build();

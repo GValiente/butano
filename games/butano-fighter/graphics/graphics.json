@@ -76,7 +76,7 @@
             "height": 16
         }
     },
-    "bgs": {
+    "regular_bgs": {
         "butano_background": {
             "bpp_mode": "bpp4_auto"
         },

@@ -45,6 +45,10 @@ class GraphicsFolderInfo:
 
 class SpriteItem:
 
+    @staticmethod
+    def valid_sizes_message():
+        return ' (valid sprite sizes: 8x8, 16x16, 32x32, 64x64, 16x8, 32x8, 32x16, 8x16, 8x32, 16x32, 32x64)'
+
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
@@ -76,9 +80,10 @@ class SpriteItem:
                 self.__shape = 'TALL'
                 self.__size = 'NORMAL'
             elif height == 64:
-                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
+                raise ValueError('Invalid sprite size: (' + str(width) + 'x' + str(height) + ')' +
+                                 SpriteItem.valid_sizes_message())
             else:
-                raise ValueError('Invalid sprite height: ' + str(height))
+                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes_message())
         elif width == 16:
             if height == 8:
                 self.__shape = 'WIDE'
@@ -90,9 +95,10 @@ class SpriteItem:
                 self.__shape = 'TALL'
                 self.__size = 'BIG'
             elif height == 64:
-                raise ValueError('Invalid sprite size: (: ' + str(width) + ' - ' + str(height) + ')')
+                raise ValueError('Invalid sprite size: (: ' + str(width) + 'x' + str(height) + ')' +
+                                 SpriteItem.valid_sizes_message())
             else:
-                raise ValueError('Invalid sprite height: ' + str(height))
+                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes_message())
         elif width == 32:
             if height == 8:
                 self.__shape = 'WIDE'
@@ -107,12 +113,14 @@ class SpriteItem:
                 self.__shape = 'TALL'
                 self.__size = 'HUGE'
             else:
-                raise ValueError('Invalid sprite height: ' + str(height))
+                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes())
         elif width == 64:
             if height == 8:
-                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
+                raise ValueError('Invalid sprite size: (' + str(width) + 'x' + str(height) + ')' +
+                                 SpriteItem.valid_sizes_message())
             elif height == 16:
-                raise ValueError('Invalid sprite size: (' + str(width) + ' - ' + str(height) + ')')
+                raise ValueError('Invalid sprite size: (' + str(width) + 'x' + str(height) + ')' +
+                                 SpriteItem.valid_sizes_message())
             elif height == 32:
                 self.__shape = 'WIDE'
                 self.__size = 'HUGE'
@@ -120,9 +128,9 @@ class SpriteItem:
                 self.__shape = 'SQUARE'
                 self.__size = 'HUGE'
             else:
-                raise ValueError('Invalid sprite height: ' + str(height))
+                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes_message())
         else:
-            raise ValueError('Invalid sprite width: ' + str(width))
+            raise ValueError('Invalid sprite width: ' + str(width) + SpriteItem.valid_sizes_message())
 
     def write_header(self):
         name = self.__file_name_no_ext
@@ -184,6 +192,10 @@ class SpriteItem:
 
 class BgItem:
 
+    @staticmethod
+    def valid_sizes_message():
+        return ' (valid BG sizes: 256x256, 512x256, 256x512, 512x512)'
+
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
@@ -199,7 +211,8 @@ class BgItem:
         elif (width == 256 and height == 512) or (width == 512 and height == 256) or (width == 512 and height == 512):
             self.__sbb = True
         else:
-            raise ValueError('Invalid BG size: (' + str(width) + ' - ' + str(height) + ')')
+            raise ValueError('Invalid BG size: (' + str(width) + 'x' + str(height) + ')' +
+                             BgItem.valid_sizes_message())
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
@@ -379,6 +392,9 @@ def process(graphics_folder_paths, build_folder_path):
                     item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
                     item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
                 except KeyError:
+                    item_info = None
+
+                if item_info is None:
                     try:
                         item_info = graphics_folder_info.get_bg(graphics_file_name_no_ext)
                         item = BgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)

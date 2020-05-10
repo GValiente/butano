@@ -31,7 +31,7 @@
 .equ mixlen, 1056	// 16khz
 
 	.bss
-	.align
+	.align 2
 
 __mixbuffer:
 	.space mixlen

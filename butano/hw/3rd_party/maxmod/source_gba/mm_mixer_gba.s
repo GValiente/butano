@@ -122,7 +122,7 @@
 @======================================================================
 
 .section .bss
-.align
+.align 2
 
 mp_writepos: 	.space 4	@ wavebuffer write position
 
@@ -139,7 +139,7 @@ mm_bpmdv:	.space 4
 
 mp_mix_seg:	.space 1	@ mixing segment select
 
-.align
+.align 2
 
 mm_fetch:	.space FETCH_SIZE+16
 
@@ -154,12 +154,12 @@ mm_fetch:	.space FETCH_SIZE+16
 .section .iwram, "ax", %progbits
 
 .ARM
-.ALIGN
+.ALIGN 2
 
 mpm_nullsample:
 .byte	128
 
-.align
+.align 2
 @-----------------------------------------------------------------------------------------------------
 mmVBlank:				@ vblank wrapper, used to reset dma...HIGH PRIORITY PLEASE!
 @-----------------------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ mmVBlank:				@ vblank wrapper, used to reset dma...HIGH PRIORITY PLEASE!
 	bx	r0
 .pool
 
-.align
+.align 2
 @-------------------------------------------------------------------------
 mmMixerMix:				@ params={ samples_count }
 @-------------------------------------------------------------------------
@@ -1337,12 +1337,12 @@ mmMixerInit:
 	
 
 // round(rate / 59.737)
-.align
+.align 2
 mp_mixing_lengths:
 	.hword	136,  176,  224,  264,  304,  352,  448,  528
 	@      8khz,10khz,13khz,16khz,18khz,21khz,27khz,32khz
 
-.align
+.align 2
 //mp_freq_scales:		@ (16khz -> real)
 //	.hword 33056, 25536, 20064, 17024, 14784, 12768
 
@@ -1352,13 +1352,13 @@ mp_rate_scales:
 	@       8khz, 10khz, 13khz, 16khz, 18khz, 21khz, 27khz, 32khz
 	@       8121, 10512, 13379, 15768, 18157, 21024, 26758, 31536,
 
-.align
+.align 2
 // gbaclock / rate
 mp_timing_sheet:
 	.hword -2066,-1596,-1254,-1064, -924, -798, -627, -532
 	@       8khz,10khz,13khz,16khz,18khz,21khz,27khz,32khz
 
-.align
+.align 2
 // rate * 2.5
 mp_bpm_divisors:
 	.word 20302,26280,33447,39420,45393,52560,66895,78840

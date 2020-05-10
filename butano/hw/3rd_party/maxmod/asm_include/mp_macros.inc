@@ -179,7 +179,7 @@ mov	r11,r11
 	.hword	0x6464
 	.hword	0
 	.string "\msg"
-	.align
+	.align 2
 9:
 .endm
 //------------------------------

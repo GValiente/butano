@@ -63,7 +63,7 @@
 
 
 	.BSS
-	.ALIGN
+	.ALIGN 2
 
 /******************************************************************************
  * mmLayerMain
@@ -89,7 +89,7 @@ mmLayerSub:		.space MPL_SIZE
 							.global mpp_vars
 mpp_vars:		.space MPV_SIZE
 
-	.ALIGN
+	.ALIGN 2
 
 /******************************************************************************
  * mpp_layerp
@@ -152,7 +152,7 @@ mpp_clayer:		.space 1
  *
  * Channel data/sizes, don't move these around--see mmInit first
  ******************************************************************************/
-							.ALIGN	
+							.ALIGN 2
 							
 .global mm_achannels, mm_pchannels, mm_num_mch, mm_num_ach, mm_schannels
 						
@@ -1271,7 +1271,7 @@ mppUpdateSub:
 //-----------------------------------------------------------------------------
 #ifdef USE_IWRAM
 	.SECTION ".iwram", "ax", %progbits
-	.ALIGN
+	.ALIGN 2
 #endif
 //-----------------------------------------------------------------------------
 
@@ -1448,7 +1448,7 @@ pchannel_loop_finished:
 //-----------------------------------------------------------------------------
 	.TEXT
 	.THUMB
-	.ALIGN
+	.ALIGN 2
 //-----------------------------------------------------------------------------
 
 /******************************************************************************
@@ -1558,7 +1558,7 @@ mppProcessTick_incframe:
 	ldr	r0,=.mppt_exita
 	bx	r0
 .arm
-.align
+.align 2
 .mppt_exita:
 
 	ldmfd	sp!, {r4-r10}
@@ -1573,7 +1573,7 @@ mppProcessTick_incframe:
 //-----------------------------------------------------------------------------
 #ifdef USE_IWRAM
 	.SECTION ".iwram", "ax", %progbits
-	.ALIGN
+	.ALIGN 2
 #endif
 //-----------------------------------------------------------------------------
 
@@ -3889,7 +3889,7 @@ mppe_Retrigger:					@ EFFECT Qxy Retrigger Note
 	strb	r0, [r6, #MCA_FLAGS]
 	b	.mppe_retrig_refill
 
-.align
+.align 2
 .thumb_func
 @---------------------------------------------------------------------------------
 mppe_Tremolo:					@ EFFECT Rxy: Tremolo
@@ -4885,7 +4885,7 @@ mpp_TABLE_LinearSlideDownTable:			@ value = 2^(-val/192), 16.16 fixed
  * LUT for linear periods.
  ******************************************************************************/
 						.global IT_PitchTable
-						.align
+						.align 2
 IT_PitchTable:
 
 .hword	2048, 0,   2170, 0,   2299, 0,   2435, 0,   2580, 0,   2734, 0 @ C-0

@@ -60,7 +60,7 @@ MM_SFX_SIZE:					// 8 bytes total
  ***********************************************************************/
 
 	.BSS
-	.ALIGN
+	.ALIGN 2
 	.GLOBAL mm_sfx_bitmask, mm_sfx_clearmask
 
 mm_sfx_mastervolume:	.space 4

@@ -58,7 +58,7 @@ public:
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _data(Precision < OtherPrecision ?
                    other.data() / (other.scale() / scale()) :
-                   other.data() * (scale() - other.scale()))
+                   other.data() * (scale() / other.scale()))
     {
     }
 

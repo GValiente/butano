@@ -84,8 +84,8 @@ bool enemies_grid::update_enemy(enemy& enemy)
 bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
 {
     const btn::fixed_point& hero_position = hero_rect.position();
-    int row = _row(hero_position);
-    int column = _column(hero_position);
+    int row = _safe_row(hero_position);
+    int column = _safe_column(hero_position);
 
     for(const enemies_list_node_type& enemies_node : _cells_row(row)[column].enemies())
     {
@@ -101,8 +101,8 @@ bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
 bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 {
     const btn::fixed_point& bullet_position = data.bullet_rect.position();
-    int row = _row(bullet_position);
-    int column = _column(bullet_position);
+    int row = _safe_row(bullet_position);
+    int column = _safe_column(bullet_position);
 
     for(const enemies_list_node_type& enemies_node : _cells_row(row)[column].enemies())
     {
@@ -169,9 +169,21 @@ int enemies_grid::_row(const btn::fixed_point& position)
 {
     int row = (position.y().integer() / constants::enemies_grid_size) + (rows / 2);
     BTN_ASSERT(row >= cell_increment && row < rows - cell_increment,
-               "Invalid row: ", row, " - ", position.x().integer());
+               "Invalid row: ", row, " - ", position.y().integer());
 
     return row;
+}
+
+int enemies_grid::_safe_column(const btn::fixed_point& position)
+{
+    int column = (position.x().integer() / constants::enemies_grid_size) + (columns / 2);
+    return btn::clamp(column, 0, columns - 1);
+}
+
+int enemies_grid::_safe_row(const btn::fixed_point& position)
+{
+    int row = (position.y().integer() / constants::enemies_grid_size) + (rows / 2);
+    return btn::clamp(row, 0, rows - 1);
 }
 
 void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)

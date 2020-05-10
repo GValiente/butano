@@ -46,7 +46,7 @@ private:
     public:
         enemy* enemy_ptr;
 
-        enemies_list_node_type(enemy& enemy_ref) :
+        explicit enemies_list_node_type(enemy& enemy_ref) :
             enemy_ptr(&enemy_ref)
         {
         }
@@ -83,6 +83,10 @@ private:
     [[nodiscard]] static int _column(const btn::fixed_point& position);
 
     [[nodiscard]] static int _row(const btn::fixed_point& position);
+
+    [[nodiscard]] static int _safe_column(const btn::fixed_point& position);
+
+    [[nodiscard]] static int _safe_row(const btn::fixed_point& position);
 
     [[nodiscard]] const cell* _cells_row(int row) const
     {

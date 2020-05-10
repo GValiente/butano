@@ -29,7 +29,7 @@ unsigned palettes_bank::colors_ref_hash(const span<const color>& colors_ref)
 
     for(int index = 1; index < colors_count; ++index)
     {
-        result += unsigned(colors_data[index].value());
+        result += unsigned(colors_data[index].data());
     }
 
     return result;
@@ -423,12 +423,12 @@ void palettes_bank::update()
                     hw::palettes::invert(pal_colors_count, pal_colors_ptr);
                 }
 
-                if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).value())
+                if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).data())
                 {
                     hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ptr);
                 }
 
-                if(int pal_fade_intensity = fixed_t<5>(pal.fade_intensity).value())
+                if(int pal_fade_intensity = fixed_t<5>(pal.fade_intensity).data())
                 {
                     hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ptr);
                 }
@@ -452,17 +452,17 @@ void palettes_bank::update()
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
 
-            if(int brightness = fixed_t<8>(_brightness).value())
+            if(int brightness = fixed_t<8>(_brightness).data())
             {
                 hw::palettes::brightness(brightness, all_colors_count, all_colors_ptr);
             }
 
-            if(int contrast = fixed_t<8>(_contrast).value())
+            if(int contrast = fixed_t<8>(_contrast).data())
             {
                 hw::palettes::contrast(contrast, all_colors_count, all_colors_ptr);
             }
 
-            if(int intensity = fixed_t<8>(_intensity).value())
+            if(int intensity = fixed_t<8>(_intensity).data())
             {
                 hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
             }
@@ -472,12 +472,12 @@ void palettes_bank::update()
                 hw::palettes::invert(all_colors_count, all_colors_ptr);
             }
 
-            if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).value())
+            if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).data())
             {
                 hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ptr);
             }
 
-            if(int fade_intensity = fixed_t<5>(_fade_intensity).value())
+            if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
             {
                 hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ptr);
             }

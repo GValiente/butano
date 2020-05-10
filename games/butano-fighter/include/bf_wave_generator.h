@@ -73,7 +73,7 @@ private:
         for(int index = 0, limit = values.size(); index < limit; ++index)
         {
             int lut_angle = int(uint16_t(index * speed)) >> 7;
-            int sin = btn::lut_sin(lut_angle).value();
+            int sin = btn::lut_sin(lut_angle).data();
             values_data[index] = (sin / a) - b;
         }
     }

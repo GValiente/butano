@@ -742,7 +742,7 @@ namespace
                 else
                 {
                     utf8_character utf8_char(text_data[text_index]);
-                    auto it = utf8_characters_map.find(utf8_char.value());
+                    auto it = utf8_characters_map.find(utf8_char.data());
                     BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
 
                     graphics_index = it->second;
@@ -873,7 +873,7 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     for(const string_view& utf8_character_text : font.utf8_characters())
     {
         utf8_character utf8_char(utf8_character_text.data());
-        _utf8_characters_map.insert(utf8_char.value(), utf8_character_index);
+        _utf8_characters_map.insert(utf8_char.data(), utf8_character_index);
         ++utf8_character_index;
     }
 }

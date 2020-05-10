@@ -34,7 +34,7 @@ namespace btn
         static_assert(Precision > 0 && Precision < 31, "Invalid precision");
         BTN_CONSTEXPR_ASSERT(denominator, "Denominator is zero");
 
-        return fixed_t<Precision>::create(numerator * fixed_t<Precision>(denominator).reciprocal().value());
+        return fixed_t<Precision>::from_data(numerator * fixed_t<Precision>(denominator).reciprocal().data());
     }
 
     /**
@@ -61,7 +61,7 @@ namespace btn
 
         constexpr rule_of_three_approximation rule_of_three(360, 512);
         fixed lut_angle = rule_of_three.calculate(degrees_angle);
-        return fixed::create(sin_lut[lut_angle.unsigned_integer()]);
+        return fixed::from_data(sin_lut[lut_angle.unsigned_integer()]);
     }
 
     /**
@@ -73,7 +73,7 @@ namespace btn
     {
         BTN_CONSTEXPR_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]");
 
-        return fixed::create(sin_lut[lut_angle]);
+        return fixed::from_data(sin_lut[lut_angle]);
     }
 
     /**
@@ -87,7 +87,7 @@ namespace btn
 
         constexpr rule_of_three_approximation rule_of_three(360, 512);
         fixed lut_angle = rule_of_three.calculate(degrees_angle);
-        return fixed::create(sin_lut[(lut_angle.unsigned_integer() + 128) & 0x1FF]);
+        return fixed::from_data(sin_lut[(lut_angle.unsigned_integer() + 128) & 0x1FF]);
     }
 
     /**
@@ -99,7 +99,7 @@ namespace btn
     {
         BTN_CONSTEXPR_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]");
 
-        return fixed::create(sin_lut[(lut_angle + 128) & 0x1FF]);
+        return fixed::from_data(sin_lut[(lut_angle + 128) & 0x1FF]);
     }
 }
 

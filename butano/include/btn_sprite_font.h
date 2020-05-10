@@ -78,7 +78,7 @@ private:
         {
             utf8_character utf8_char(utf8_character_text.data());
 
-            if(utf8_char.value() <= '~')
+            if(utf8_char.data() <= '~')
             {
                 return false;
             }

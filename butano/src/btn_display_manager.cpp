@@ -529,10 +529,10 @@ void commit()
 
     if(data.commit_mosaic)
     {
-        hw::display::set_mosaic(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).value(),
-                                fixed_t<4>(data.sprites_mosaic_vertical_stretch).value(),
-                                fixed_t<4>(data.bgs_mosaic_horizontal_stretch).value(),
-                                fixed_t<4>(data.bgs_mosaic_vertical_stretch).value());
+        hw::display::set_mosaic(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(),
+                                fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(),
+                                fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(),
+                                fixed_t<4>(data.bgs_mosaic_vertical_stretch).data());
         data.commit_mosaic = false;
     }
 
@@ -544,8 +544,8 @@ void commit()
 
     if(data.commit_blending_alphas)
     {
-        hw::display::set_blending_alphas(fixed_t<4>(data.blending_transparency_alpha).value(),
-                                         fixed_t<4>(data.blending_intensity_alpha).value());
+        hw::display::set_blending_alphas(fixed_t<4>(data.blending_transparency_alpha).data(),
+                                         fixed_t<4>(data.blending_intensity_alpha).data());
         data.commit_blending_alphas = false;
     }
 

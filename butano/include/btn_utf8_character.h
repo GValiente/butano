@@ -27,40 +27,40 @@ public:
         if(ch8 < 0x80)
         {
             // 7bit
-            _value = int(ch8);
+            _data = int(ch8);
         }
         else if(0xC0 <= ch8 && ch8 < 0xE0)
         {
             // 11bit
-            _value = (*src++ & 0x1F) << 6;
+            _data = (*src++ & 0x1F) << 6;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) << 0;
+            _data |= (*src++ & 0x3F) << 0;
         }
         else if(0xE0 <= ch8 && ch8 < 0xF0)
         {
             // 16bit
-            _value  = (*src++ & 0x0F) << 12;
+            _data  = (*src++ & 0x0F) << 12;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) <<  6;
+            _data |= (*src++ & 0x3F) <<  6;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) <<  0;
+            _data |= (*src++ & 0x3F) <<  0;
         }
         else if(0xF0 <= ch8 && ch8 < 0xF8)
         {
             // 21bit
-            _value  = (*src++ & 0x0F) << 18;
+            _data  = (*src++ & 0x0F) << 18;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) << 12;
+            _data |= (*src++ & 0x3F) << 12;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) <<  6;
+            _data |= (*src++ & 0x3F) <<  6;
             BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
-            _value |= (*src++ & 0x3F) <<  0;
+            _data |= (*src++ & 0x3F) <<  0;
         }
         else
         {
@@ -70,9 +70,9 @@ public:
         _size = src - &text_ref;
     }
 
-    [[nodiscard]] constexpr int value() const
+    [[nodiscard]] constexpr int data() const
     {
-        return _value;
+        return _data;
     }
 
     [[nodiscard]] constexpr int size() const
@@ -81,7 +81,7 @@ public:
     }
 
 private:
-    int _value = 0;
+    int _data = 0;
     int _size = 0;
 };
 

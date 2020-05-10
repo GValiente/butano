@@ -14,9 +14,11 @@ class fixed_t
     static_assert(Precision > 0 && Precision < 31, "Invalid precision");
 
 public:
-    [[nodiscard]] static constexpr fixed_t create(int value)
+    [[nodiscard]] static constexpr fixed_t from_data(int data)
     {
-        return fixed_t(value, false);
+        fixed_t result;
+        result._data = data;
+        return result;
     }
 
     [[nodiscard]] static constexpr int precision()
@@ -32,77 +34,77 @@ public:
     constexpr fixed_t() = default;
 
     constexpr fixed_t(int integer) :
-        _value(integer * scale())
+        _data(integer * scale())
     {
     }
 
     constexpr fixed_t(int integer, int fraction) :
-        _value((integer * scale()) + fraction)
+        _data((integer * scale()) + fraction)
     {
         BTN_CONSTEXPR_ASSERT(fraction >= 0, "Fraction is negative");
     }
 
     constexpr fixed_t(float value) :
-        _value(int(value * scale()))
+        _data(int(value * scale()))
     {
     }
 
     constexpr fixed_t(double value) :
-        _value(int(value * scale()))
+        _data(int(value * scale()))
     {
     }
 
     template<int OtherPrecision>
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
-        _value(Precision < OtherPrecision ?
-                   other.value() / (other.scale() / scale()) :
-                   other.value() * (scale() - other.scale()))
+        _data(Precision < OtherPrecision ?
+                   other.data() / (other.scale() / scale()) :
+                   other.data() * (scale() - other.scale()))
     {
     }
 
-    [[nodiscard]] constexpr int value() const
+    [[nodiscard]] constexpr int data() const
     {
-        return _value;
+        return _data;
     }
 
     [[nodiscard]] constexpr int integer() const
     {
-        return _value / scale();
+        return _data / scale();
     }
 
     [[nodiscard]] constexpr unsigned unsigned_integer() const
     {
-        return _value >> Precision;
+        return _data >> Precision;
     }
 
     [[nodiscard]] constexpr int fraction() const
     {
-        return _value & (scale() - 1);
+        return _data & (scale() - 1);
     }
 
     [[nodiscard]] constexpr float to_float() const
     {
-        return float(_value) / scale();
+        return float(_data) / scale();
     }
 
     [[nodiscard]] constexpr double to_double() const
     {
-        return double(_value) / scale();
+        return double(_data) / scale();
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
-        return fixed_t::create(int((int64_t(_value) * other._value) / scale()));
+        return from_data(int((int64_t(_data) * other._data) / scale()));
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(int integer) const
     {
-        return fixed_t::create(_value * integer);
+        return from_data(_data * integer);
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(fixed_t other) const
     {
-        return fixed_t::create((_value * other._value) / scale());
+        return from_data((_data * other._data) / scale());
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(int integer) const
@@ -112,31 +114,31 @@ public:
 
     [[nodiscard]] constexpr fixed_t reciprocal_division(int integer) const
     {
-        BTN_CONSTEXPR_ASSERT(_value >= 0, "Internal value is not positive");
+        BTN_CONSTEXPR_ASSERT(_data >= 0, "Internal data is not positive");
         BTN_CONSTEXPR_ASSERT(integer >= 0, "Integer is not greater than 0");
 
-        return *this * fixed_t::create((scale() + integer - 1) / integer);
+        return *this * from_data((scale() + integer - 1) / integer);
     }
 
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
-        BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
+        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
 
-        return fixed_t::create(int((int64_t(_value) * scale()) / other._value));
+        return from_data(int((int64_t(_data) * scale()) / other._data));
     }
 
     [[nodiscard]] constexpr fixed_t division(int integer) const
     {
         BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
 
-        return fixed_t::create(_value / integer);
+        return from_data(_data / integer);
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const
     {
-        BTN_CONSTEXPR_ASSERT(other._value, "Other's internal value is zero");
+        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
 
-        return fixed_t::create((_value * scale()) / other._value);
+        return from_data((_data * scale()) / other._data);
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_division(int integer) const
@@ -148,18 +150,18 @@ public:
 
     [[nodiscard]] constexpr fixed_t operator-() const
     {
-        return fixed_t::create(-_value);
+        return from_data(-_data);
     }
 
     constexpr fixed_t& operator+=(fixed_t other)
     {
-        _value += other._value;
+        _data += other._data;
         return *this;
     }
 
     constexpr fixed_t& operator-=(fixed_t other)
     {
-        _value -= other._value;
+        _data -= other._data;
         return *this;
     }
 
@@ -189,12 +191,12 @@ public:
 
     [[nodiscard]] constexpr friend fixed_t operator+(fixed_t a, fixed_t b)
     {
-        return fixed_t::create(a._value + b._value);
+        return from_data(a._data + b._data);
     }
 
     [[nodiscard]] constexpr friend fixed_t operator-(fixed_t a, fixed_t b)
     {
-        return fixed_t::create(a._value - b._value);
+        return from_data(a._data - b._data);
     }
 
     [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, fixed_t b)
@@ -219,41 +221,36 @@ public:
 
     [[nodiscard]] constexpr friend bool operator==(fixed_t a, fixed_t b)
     {
-        return a._value == b._value;
+        return a._data == b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(fixed_t a, fixed_t b)
     {
-        return a._value != b._value;
+        return a._data != b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator<(fixed_t a, fixed_t b)
     {
-        return a._value < b._value;
+        return a._data < b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator<=(fixed_t a, fixed_t b)
     {
-        return a._value <= b._value;
+        return a._data <= b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator>(fixed_t a, fixed_t b)
     {
-        return a._value > b._value;
+        return a._data > b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator>=(fixed_t a, fixed_t b)
     {
-        return a._value >= b._value;
+        return a._data >= b._data;
     }
 
 private:
-    int _value = 0;
-
-    constexpr fixed_t(int value, bool) :
-        _value(value)
-    {
-    }
+    int _data = 0;
 };
 
 using fixed = fixed_t<12>;
@@ -263,7 +260,7 @@ struct hash<fixed_t<Precision>>
 {
     [[nodiscard]] constexpr unsigned operator()(fixed_t<Precision> fixed) const
     {
-        return make_hash(fixed.value());
+        return make_hash(fixed.data());
     }
 };
 

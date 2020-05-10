@@ -34,7 +34,7 @@ public:
     constexpr sort_key() = default;
 
     constexpr sort_key(int priority, int z_order) :
-        _value((priority << 16) + unsigned(z_order + max_z_order()))
+        _data((priority << 16) + unsigned(z_order + max_z_order()))
     {
         BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
         BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
@@ -42,20 +42,20 @@ public:
 
     [[nodiscard]] constexpr int priority() const
     {
-        return _value >> 16;
+        return _data >> 16;
     }
 
     constexpr void set_priority(int priority)
     {
         BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
 
-        unsigned z_order_part = _value & unsigned(z_orders());
-        _value = (priority << 16) + z_order_part;
+        unsigned z_order_part = _data & unsigned(z_orders());
+        _data = (priority << 16) + z_order_part;
     }
 
     [[nodiscard]] constexpr int z_order() const
     {
-        unsigned z_order_part = _value & unsigned(z_orders());
+        unsigned z_order_part = _data & unsigned(z_orders());
         return int(z_order_part) - max_z_order();
     }
 
@@ -63,48 +63,43 @@ public:
     {
         BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
 
-        unsigned z_order_part = _value & unsigned(z_orders());
-        _value -= z_order_part;
-        _value += unsigned(z_order + max_z_order());
-    }
-
-    [[nodiscard]] constexpr unsigned value() const
-    {
-        return _value;
+        unsigned z_order_part = _data & unsigned(z_orders());
+        _data -= z_order_part;
+        _data += unsigned(z_order + max_z_order());
     }
 
     [[nodiscard]] constexpr friend bool operator==(sort_key a, sort_key b)
     {
-        return a._value == b._value;
+        return a._data == b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(sort_key a, sort_key b)
     {
-        return a._value != b._value;
+        return a._data != b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator<(sort_key a, sort_key b)
     {
-        return a._value < b._value;
+        return a._data < b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator<=(sort_key a, sort_key b)
     {
-        return a._value <= b._value;
+        return a._data <= b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator>(sort_key a, sort_key b)
     {
-        return a._value > b._value;
+        return a._data > b._data;
     }
 
     [[nodiscard]] constexpr friend bool operator>=(sort_key a, sort_key b)
     {
-        return a._value >= b._value;
+        return a._data >= b._data;
     }
 
 private:
-    unsigned _value = 0;
+    unsigned _data = 0;
 };
 
 }

@@ -72,7 +72,7 @@ namespace btn::hw::palettes
     inline void fade(color fade_color, int intensity, int count, color* colors_ptr)
     {
         auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_fade_fast(tonc_colors_ptr, uint16_t(fade_color.value()), tonc_colors_ptr, unsigned(count), unsigned(intensity));
+        clr_fade_fast(tonc_colors_ptr, uint16_t(fade_color.data()), tonc_colors_ptr, unsigned(count), unsigned(intensity));
     }
 
     inline void rotate(int rotate_count, int colors_count, color* colors_ptr)

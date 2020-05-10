@@ -124,7 +124,7 @@ public:
         fixed max_scale = max(_scale_x, _scale_y);
         int cos = abs(int(_cos));
         int sin = abs(int(_sin));
-        int size = (cos + sin) * max_scale.value();
+        int size = (cos + sin) * max_scale.data();
         return size > 256 << 16;
     }
 
@@ -176,9 +176,9 @@ private:
     bool _horizontal_flip = false;
     bool _vertical_flip = false;
     int16_t _sin = 0;
-    int16_t _cos = int16_t(fixed(1).value());
-    uint16_t _sx = uint16_t(fixed_t<8>(1).value());
-    uint16_t _sy = uint16_t(fixed_t<8>(1).value());
+    int16_t _cos = int16_t(fixed(1).data());
+    uint16_t _sx = uint16_t(fixed_t<8>(1).data());
+    uint16_t _sy = uint16_t(fixed_t<8>(1).data());
     int8_t _hflip = 1;
     int8_t _vflip = 1;
 
@@ -187,12 +187,12 @@ private:
         if(_rotation_angle == 0)
         {
             _sin = 0;
-            _cos = int16_t(fixed(1).value());
+            _cos = int16_t(fixed(1).data());
         }
         else
         {
-            _sin = int16_t(degrees_sin(_rotation_angle).value());
-            _cos = int16_t(degrees_cos(_rotation_angle).value());
+            _sin = int16_t(degrees_sin(_rotation_angle).data());
+            _cos = int16_t(degrees_cos(_rotation_angle).data());
         }
     }
 
@@ -200,12 +200,12 @@ private:
     {
         if(_scale_x == 1)
         {
-            _sx = uint16_t(fixed_t<8>(1).value());
+            _sx = uint16_t(fixed_t<8>(1).data());
         }
         else
         {
             fixed inv_scale_x = 1 / _scale_x;
-            _sx = uint16_t(fixed_t<8>(inv_scale_x).value());
+            _sx = uint16_t(fixed_t<8>(inv_scale_x).data());
         }
     }
 
@@ -213,12 +213,12 @@ private:
     {
         if(_scale_y == 1)
         {
-            _sy = uint16_t(fixed_t<8>(1).value());
+            _sy = uint16_t(fixed_t<8>(1).data());
         }
         else
         {
             fixed inv_scale_y = 1 / _scale_y;
-            _sy = uint16_t(fixed_t<8>(inv_scale_y).value());
+            _sy = uint16_t(fixed_t<8>(inv_scale_y).data());
         }
     }
 

@@ -160,22 +160,22 @@ namespace
 
     int _hw_music_volume(fixed volume)
     {
-        return fixed_t<10>(volume).value();
+        return fixed_t<10>(volume).data();
     }
 
     int _hw_sound_volume(fixed volume)
     {
-        return min(fixed_t<8>(volume).value(), 255);
+        return min(fixed_t<8>(volume).data(), 255);
     }
 
     int _hw_sound_speed(fixed speed)
     {
-        return min(fixed_t<10>(speed).value(), 65535);
+        return min(fixed_t<10>(speed).data(), 65535);
     }
 
     int _hw_sound_panning(fixed panning)
     {
-        return min(fixed_t<7>(panning + 1).value(), 255);
+        return min(fixed_t<7>(panning + 1).data(), 255);
     }
 }
 

@@ -30,7 +30,7 @@ namespace
 
     constexpr const enemy_bullet_event bat_bullet_events[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,     30),
-        enemy_bullet_event(enemy_bullet_type::SMALL,     1,     60),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,     60),
     };
 
 
@@ -45,7 +45,7 @@ namespace
                 no_bullet_events,   180,    enemy_drop_type::GEM),
 
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
-                no_bullet_events,   60,     enemy_drop_type::NONE),
+                bat_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,
                 no_bullet_events,   60,     enemy_drop_type::NONE),
         enemy_event(bat,    btn::fixed_point(constants::play_width - 20, start_y),      bat_flipped_move_events,

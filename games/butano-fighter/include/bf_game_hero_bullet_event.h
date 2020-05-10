@@ -22,6 +22,7 @@ public:
         level(int8_t(_level)),
         play_sound(_play_sound)
     {
+        BTN_CONSTEXPR_ASSERT(_direction != btn::fixed_point(), "Invalid direction");
         BTN_CONSTEXPR_ASSERT(_frame >= 1 && _frame < btn::numeric_limits<int8_t>::max(), "Invalid frame");
         BTN_CONSTEXPR_ASSERT(_level >= 0 && _level < constants::hero_bullet_levels, "Invalid level");
     }

@@ -16,8 +16,12 @@ public:
         for(int i = 0; i < 100; ++i)
         {
             int btn_sqrt = btn::sqrt(i);
+            btn::fixed btn_fixed_sqrt = btn::sqrt(btn::fixed(i));
             auto std_sqrt = int(std::floor(std::sqrt(i)));
-            BTN_ASSERT(btn_sqrt == std_sqrt, "Invalid btn::sqrt: ", i, " - ", btn_sqrt, " - ", std_sqrt);
+            BTN_ASSERT(btn_sqrt == std_sqrt,
+                       "Invalid btn::sqrt(int): ", i, " - ", btn_sqrt, " - ", std_sqrt);
+            BTN_ASSERT(btn_fixed_sqrt.integer() == std_sqrt,
+                       "Invalid btn::sqrt(btn::fixed): ", i, " - ", btn_fixed_sqrt, " - ", std_sqrt);
 
             if(i == 0)
             {

@@ -42,6 +42,24 @@ namespace btn
      */
     [[nodiscard]] int sqrt(int value);
 
+    /**
+     * @brief Fixed point square root.
+     *
+     * https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp
+     */
+    template<int Precision = 12>
+    [[nodiscard]] fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
+    {
+        if constexpr(Precision % 2)
+        {
+            return fixed_t<(Precision + 1) / 2>::from_data(sqrt(value.data() << 1));
+        }
+        else
+        {
+            return fixed_t<(Precision + 1) / 2>::from_data(sqrt(value.data()));
+        }
+    }
+
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)
     {

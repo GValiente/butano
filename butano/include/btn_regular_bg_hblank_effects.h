@@ -27,9 +27,9 @@ public:
 
     regular_bg_position_hblank_effect_ptr& operator=(const regular_bg_position_hblank_effect_ptr& other);
 
-    regular_bg_position_hblank_effect_ptr(regular_bg_position_hblank_effect_ptr&& other);
+    regular_bg_position_hblank_effect_ptr(regular_bg_position_hblank_effect_ptr&& other) noexcept;
 
-    regular_bg_position_hblank_effect_ptr& operator=(regular_bg_position_hblank_effect_ptr&& other);
+    regular_bg_position_hblank_effect_ptr& operator=(regular_bg_position_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const regular_bg_ptr& bg() const
     {
@@ -70,9 +70,9 @@ public:
 
     regular_bg_attributes_hblank_effect_ptr& operator=(const regular_bg_attributes_hblank_effect_ptr& other);
 
-    regular_bg_attributes_hblank_effect_ptr(regular_bg_attributes_hblank_effect_ptr&& other);
+    regular_bg_attributes_hblank_effect_ptr(regular_bg_attributes_hblank_effect_ptr&& other) noexcept;
 
-    regular_bg_attributes_hblank_effect_ptr& operator=(regular_bg_attributes_hblank_effect_ptr&& other);
+    regular_bg_attributes_hblank_effect_ptr& operator=(regular_bg_attributes_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const regular_bg_ptr& bg() const
     {

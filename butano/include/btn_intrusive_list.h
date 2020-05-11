@@ -177,7 +177,7 @@ public:
 
     intrusive_list(const intrusive_list& other) = delete;
 
-    intrusive_list(intrusive_list&& other) :
+    intrusive_list(intrusive_list&& other) noexcept :
         intrusive_list()
     {
         _assign(move(other));
@@ -185,7 +185,7 @@ public:
 
     intrusive_list& operator=(const intrusive_list& other) = delete;
 
-    intrusive_list& operator=(intrusive_list&& other)
+    intrusive_list& operator=(intrusive_list&& other) noexcept
     {
         if(this != &other)
         {

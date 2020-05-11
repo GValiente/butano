@@ -28,9 +28,9 @@ public:
 
     rect_window_boundaries_hblank_effect_ptr& operator=(const rect_window_boundaries_hblank_effect_ptr& other);
 
-    rect_window_boundaries_hblank_effect_ptr(rect_window_boundaries_hblank_effect_ptr&& other);
+    rect_window_boundaries_hblank_effect_ptr(rect_window_boundaries_hblank_effect_ptr&& other) noexcept;
 
-    rect_window_boundaries_hblank_effect_ptr& operator=(rect_window_boundaries_hblank_effect_ptr&& other);
+    rect_window_boundaries_hblank_effect_ptr& operator=(rect_window_boundaries_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const rect_window& window() const
     {

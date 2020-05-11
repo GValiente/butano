@@ -219,7 +219,7 @@ public:
         return *this;
     }
 
-    ihash_map& operator=(ihash_map&& other)
+    ihash_map& operator=(ihash_map&& other) noexcept
     {
         if(this != &other)
         {
@@ -628,7 +628,7 @@ public:
         hash_map._last_valid_index = last_valid_index;
     }
 
-    void merge(ihash_map&& other)
+    void merge(ihash_map&& other) noexcept
     {
         if(this != &other)
         {
@@ -939,7 +939,7 @@ public:
         this->_assign(other);
     }
 
-    hash_map(hash_map&& other) :
+    hash_map(hash_map&& other) noexcept :
         hash_map()
     {
         this->_assign(move(other));
@@ -953,7 +953,7 @@ public:
         this->_assign(other);
     }
 
-    hash_map(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) :
+    hash_map(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept :
         hash_map()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
@@ -972,7 +972,7 @@ public:
         return *this;
     }
 
-    hash_map& operator=(hash_map&& other)
+    hash_map& operator=(hash_map&& other) noexcept
     {
         if(this != &other)
         {
@@ -996,7 +996,7 @@ public:
         return *this;
     }
 
-    hash_map& operator=(ihash_map<Key, Value, KeyHash, KeyEqual>&& other)
+    hash_map& operator=(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept
     {
         if(this != &other)
         {

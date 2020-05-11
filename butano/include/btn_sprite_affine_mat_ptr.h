@@ -32,13 +32,13 @@ public:
 
     sprite_affine_mat_ptr& operator=(const sprite_affine_mat_ptr& other);
 
-    sprite_affine_mat_ptr(sprite_affine_mat_ptr&& other) :
+    sprite_affine_mat_ptr(sprite_affine_mat_ptr&& other) noexcept :
         sprite_affine_mat_ptr(other._id)
     {
         other._id = -1;
     }
 
-    sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other)
+    sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other) noexcept
     {
         btn::swap(_id, other._id);
         return *this;

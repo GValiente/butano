@@ -33,13 +33,13 @@ public:
 
     sprite_tiles_ptr& operator=(const sprite_tiles_ptr& other);
 
-    sprite_tiles_ptr(sprite_tiles_ptr&& other) :
+    sprite_tiles_ptr(sprite_tiles_ptr&& other) noexcept :
         sprite_tiles_ptr(other._handle)
     {
         other._handle = -1;
     }
 
-    sprite_tiles_ptr& operator=(sprite_tiles_ptr&& other)
+    sprite_tiles_ptr& operator=(sprite_tiles_ptr&& other) noexcept
     {
         btn::swap(_handle, other._handle);
         return *this;

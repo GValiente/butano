@@ -28,7 +28,7 @@ public:
         return *this;
     }
 
-    iany& operator=(iany&& other)
+    iany& operator=(iany&& other) noexcept
     {
         if(this != &other)
         {
@@ -53,7 +53,7 @@ public:
     }
 
     template<typename Type>
-    iany& operator=(Type&& value)
+    iany& operator=(Type&& value) noexcept
     {
         BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
@@ -341,7 +341,7 @@ public:
         _assign(other);
     }
 
-    any(any&& other) :
+    any(any&& other) noexcept :
         any()
     {
         _assign(move(other));
@@ -353,7 +353,7 @@ public:
         _assign(other);
     }
 
-    any(iany&& other) :
+    any(iany&& other) noexcept :
         any()
     {
         _assign(move(other));
@@ -392,7 +392,7 @@ public:
         return *this;
     }
 
-    any& operator=(any&& other)
+    any& operator=(any&& other) noexcept
     {
         if(this != &other)
         {
@@ -414,7 +414,7 @@ public:
         return *this;
     }
 
-    any& operator=(iany&& other)
+    any& operator=(iany&& other) noexcept
     {
         if(this != &other)
         {

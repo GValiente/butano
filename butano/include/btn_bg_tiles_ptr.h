@@ -34,13 +34,13 @@ public:
 
     bg_tiles_ptr& operator=(const bg_tiles_ptr& other);
 
-    bg_tiles_ptr(bg_tiles_ptr&& other) :
+    bg_tiles_ptr(bg_tiles_ptr&& other) noexcept :
         bg_tiles_ptr(other._handle)
     {
         other._handle = -1;
     }
 
-    bg_tiles_ptr& operator=(bg_tiles_ptr&& other)
+    bg_tiles_ptr& operator=(bg_tiles_ptr&& other) noexcept
     {
         btn::swap(_handle, other._handle);
         return *this;

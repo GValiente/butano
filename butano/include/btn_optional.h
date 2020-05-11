@@ -44,7 +44,7 @@ public:
         }
     }
 
-    optional(optional&& other) :
+    optional(optional&& other) noexcept :
         _valid(other)
     {
         if(_valid)
@@ -64,7 +64,7 @@ public:
     }
 
     template<typename OtherType>
-    optional(optional<OtherType>&& other) :
+    optional(optional<OtherType>&& other) noexcept :
         _valid(other)
     {
         if(_valid)
@@ -112,7 +112,7 @@ public:
         return *this;
     }
 
-    optional& operator=(optional&& other)
+    optional& operator=(optional&& other) noexcept
     {
         if(this != &other)
         {
@@ -162,7 +162,7 @@ public:
     }
 
     template<typename OtherType>
-    optional& operator=(optional<OtherType>&& other)
+    optional& operator=(optional<OtherType>&& other) noexcept
     {
         if(this != &other)
         {

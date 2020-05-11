@@ -47,7 +47,7 @@ namespace btn
 
         unique_ptr(const unique_ptr& other) = delete;
 
-        unique_ptr(unique_ptr&& other) :
+        unique_ptr(unique_ptr&& other) noexcept :
             _ptr(other.release()),
             _deleter(move(other._deleter))
         {
@@ -55,7 +55,7 @@ namespace btn
 
         unique_ptr& operator=(const unique_ptr& other) = delete;
 
-        unique_ptr& operator=(unique_ptr&& other)
+        unique_ptr& operator=(unique_ptr&& other) noexcept
         {
             reset(other.release());
             _deleter = move(other._deleter);
@@ -189,7 +189,7 @@ namespace btn
 
         unique_ptr(const unique_ptr& other) = delete;
 
-        unique_ptr(unique_ptr&& other) :
+        unique_ptr(unique_ptr&& other) noexcept :
             _ptr(other.release()),
             _deleter(move(other._deleter))
         {
@@ -197,7 +197,7 @@ namespace btn
 
         unique_ptr& operator=(const unique_ptr& other) = delete;
 
-        unique_ptr& operator=(unique_ptr&& other)
+        unique_ptr& operator=(unique_ptr&& other) noexcept
         {
             reset(other.release());
             _deleter = move(other._deleter);

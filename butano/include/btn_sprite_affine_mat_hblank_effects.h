@@ -30,10 +30,10 @@ public:
             const sprite_affine_mat_first_register_hblank_effect_ptr& other);
 
     sprite_affine_mat_first_register_hblank_effect_ptr(
-            sprite_affine_mat_first_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept;
 
     sprite_affine_mat_first_register_hblank_effect_ptr& operator=(
-            sprite_affine_mat_first_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
@@ -92,10 +92,10 @@ public:
             const sprite_affine_mat_second_register_hblank_effect_ptr& other);
 
     sprite_affine_mat_second_register_hblank_effect_ptr(
-            sprite_affine_mat_second_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept;
 
     sprite_affine_mat_second_register_hblank_effect_ptr& operator=(
-            sprite_affine_mat_second_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
@@ -154,10 +154,10 @@ public:
             const sprite_affine_mat_third_register_hblank_effect_ptr& other);
 
     sprite_affine_mat_third_register_hblank_effect_ptr(
-            sprite_affine_mat_third_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept;
 
     sprite_affine_mat_third_register_hblank_effect_ptr& operator=(
-            sprite_affine_mat_third_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
@@ -216,10 +216,10 @@ public:
             const sprite_affine_mat_fourth_register_hblank_effect_ptr& other);
 
     sprite_affine_mat_fourth_register_hblank_effect_ptr(
-            sprite_affine_mat_fourth_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept;
 
     sprite_affine_mat_fourth_register_hblank_effect_ptr& operator=(
-            sprite_affine_mat_fourth_register_hblank_effect_ptr&& other);
+            sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {

@@ -218,7 +218,7 @@ public:
         return *this;
     }
 
-    ihash_set& operator=(ihash_set&& other)
+    ihash_set& operator=(ihash_set&& other) noexcept
     {
         if(this != &other)
         {
@@ -850,7 +850,7 @@ public:
         this->_assign(other);
     }
 
-    hash_set(hash_set&& other) :
+    hash_set(hash_set&& other) noexcept :
         hash_set()
     {
         this->_assign(move(other));
@@ -864,7 +864,7 @@ public:
         this->_assign(other);
     }
 
-    hash_set(ihash_set<Key, KeyHash, KeyEqual>&& other) :
+    hash_set(ihash_set<Key, KeyHash, KeyEqual>&& other) noexcept :
         hash_set()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash set: ", MaxSize, " - ", other.size());
@@ -883,7 +883,7 @@ public:
         return *this;
     }
 
-    hash_set& operator=(hash_set&& other)
+    hash_set& operator=(hash_set&& other) noexcept
     {
         if(this != &other)
         {
@@ -907,7 +907,7 @@ public:
         return *this;
     }
 
-    hash_set& operator=(ihash_set<Key, KeyHash, KeyEqual>&& other)
+    hash_set& operator=(ihash_set<Key, KeyHash, KeyEqual>&& other) noexcept
     {
         if(this != &other)
         {

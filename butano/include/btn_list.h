@@ -191,7 +191,7 @@ public:
         return *this;
     }
 
-    ilist& operator=(ilist&& other)
+    ilist& operator=(ilist&& other) noexcept
     {
         if(this != &other)
         {
@@ -634,7 +634,7 @@ protected:
         }
     }
 
-    void _assign(ilist&& other)
+    void _assign(ilist&& other) noexcept
     {
         iterator last = end();
 
@@ -707,7 +707,7 @@ public:
         this->_assign(other);
     }
 
-    list(list&& other) :
+    list(list&& other) noexcept :
         list()
     {
         this->_assign(move(other));
@@ -721,7 +721,7 @@ public:
         this->_assign(other);
     }
 
-    list(ilist<Type>&& other) :
+    list(ilist<Type>&& other) noexcept :
         list()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
@@ -740,7 +740,7 @@ public:
         return *this;
     }
 
-    list& operator=(list&& other)
+    list& operator=(list&& other) noexcept
     {
         if(this != &other)
         {
@@ -764,7 +764,7 @@ public:
         return *this;
     }
 
-    list& operator=(ilist<Type>&& other)
+    list& operator=(ilist<Type>&& other) noexcept
     {
         if(this != &other)
         {

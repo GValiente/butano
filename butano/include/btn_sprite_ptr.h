@@ -73,13 +73,13 @@ public:
 
     sprite_ptr& operator=(const sprite_ptr& other);
 
-    sprite_ptr(sprite_ptr&& other) :
+    sprite_ptr(sprite_ptr&& other) noexcept :
         sprite_ptr(other._handle)
     {
         other._handle = nullptr;
     }
 
-    sprite_ptr& operator=(sprite_ptr&& other)
+    sprite_ptr& operator=(sprite_ptr&& other) noexcept
     {
         btn::swap(_handle, other._handle);
         return *this;

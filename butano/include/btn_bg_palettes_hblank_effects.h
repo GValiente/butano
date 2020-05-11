@@ -26,10 +26,10 @@ public:
             const bg_palettes_transparent_color_hblank_effect_ptr& other);
 
     bg_palettes_transparent_color_hblank_effect_ptr(
-            bg_palettes_transparent_color_hblank_effect_ptr&& other);
+            bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept;
 
     bg_palettes_transparent_color_hblank_effect_ptr& operator=(
-            bg_palettes_transparent_color_hblank_effect_ptr&& other);
+            bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] span<const color> colors_ref() const;
 

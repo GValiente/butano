@@ -260,14 +260,14 @@ regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::op
 }
 
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
-        regular_bg_position_hblank_effect_ptr&& other) :
+        regular_bg_position_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _bg(move(other._bg))
 {
 }
 
 regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::operator=(
-        regular_bg_position_hblank_effect_ptr&& other)
+        regular_bg_position_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _bg = move(other._bg);
@@ -341,14 +341,14 @@ regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr
 }
 
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
-        regular_bg_attributes_hblank_effect_ptr&& other) :
+        regular_bg_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _bg(move(other._bg))
 {
 }
 
 regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
-        regular_bg_attributes_hblank_effect_ptr&& other)
+        regular_bg_attributes_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _bg = move(other._bg);

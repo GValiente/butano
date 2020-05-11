@@ -327,14 +327,14 @@ sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect
 }
 
 sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect_ptr(
-        sprite_first_attributes_hblank_effect_ptr&& other) :
+        sprite_first_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
 {
 }
 
 sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect_ptr::operator=(
-        sprite_first_attributes_hblank_effect_ptr&& other)
+        sprite_first_attributes_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
@@ -409,14 +409,14 @@ sprite_regular_second_attributes_hblank_effect_ptr& sprite_regular_second_attrib
 }
 
 sprite_regular_second_attributes_hblank_effect_ptr::sprite_regular_second_attributes_hblank_effect_ptr(
-        sprite_regular_second_attributes_hblank_effect_ptr&& other) :
+        sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
 {
 }
 
 sprite_regular_second_attributes_hblank_effect_ptr& sprite_regular_second_attributes_hblank_effect_ptr::operator=(
-        sprite_regular_second_attributes_hblank_effect_ptr&& other)
+        sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
@@ -493,14 +493,14 @@ sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attribut
 }
 
 sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attributes_hblank_effect_ptr(
-        sprite_affine_second_attributes_hblank_effect_ptr&& other) :
+        sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
 {
 }
 
 sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attributes_hblank_effect_ptr::operator=(
-        sprite_affine_second_attributes_hblank_effect_ptr&& other)
+        sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
@@ -577,14 +577,14 @@ sprite_third_attributes_hblank_effect_ptr& sprite_third_attributes_hblank_effect
 }
 
 sprite_third_attributes_hblank_effect_ptr::sprite_third_attributes_hblank_effect_ptr(
-        sprite_third_attributes_hblank_effect_ptr&& other) :
+        sprite_third_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
 {
 }
 
 sprite_third_attributes_hblank_effect_ptr& sprite_third_attributes_hblank_effect_ptr::operator=(
-        sprite_third_attributes_hblank_effect_ptr&& other)
+        sprite_third_attributes_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);

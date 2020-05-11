@@ -21,9 +21,9 @@ public:
 
     sprite_first_attributes_hblank_effect_ptr& operator=(const sprite_first_attributes_hblank_effect_ptr& other);
 
-    sprite_first_attributes_hblank_effect_ptr(sprite_first_attributes_hblank_effect_ptr&& other);
+    sprite_first_attributes_hblank_effect_ptr(sprite_first_attributes_hblank_effect_ptr&& other) noexcept;
 
-    sprite_first_attributes_hblank_effect_ptr& operator=(sprite_first_attributes_hblank_effect_ptr&& other);
+    sprite_first_attributes_hblank_effect_ptr& operator=(sprite_first_attributes_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_ptr& sprite() const
     {
@@ -67,10 +67,10 @@ public:
             const sprite_regular_second_attributes_hblank_effect_ptr& other);
 
     sprite_regular_second_attributes_hblank_effect_ptr(
-            sprite_regular_second_attributes_hblank_effect_ptr&& other);
+            sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept;
 
     sprite_regular_second_attributes_hblank_effect_ptr& operator=(
-            sprite_regular_second_attributes_hblank_effect_ptr&& other);
+            sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_ptr& sprite() const
     {
@@ -115,10 +115,10 @@ public:
             const sprite_affine_second_attributes_hblank_effect_ptr& other);
 
     sprite_affine_second_attributes_hblank_effect_ptr(
-            sprite_affine_second_attributes_hblank_effect_ptr&& other);
+            sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept;
 
     sprite_affine_second_attributes_hblank_effect_ptr& operator=(
-            sprite_affine_second_attributes_hblank_effect_ptr&& other);
+            sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_ptr& sprite() const
     {
@@ -160,9 +160,9 @@ public:
 
     sprite_third_attributes_hblank_effect_ptr& operator=(const sprite_third_attributes_hblank_effect_ptr& other);
 
-    sprite_third_attributes_hblank_effect_ptr(sprite_third_attributes_hblank_effect_ptr&& other);
+    sprite_third_attributes_hblank_effect_ptr(sprite_third_attributes_hblank_effect_ptr&& other) noexcept;
 
-    sprite_third_attributes_hblank_effect_ptr& operator=(sprite_third_attributes_hblank_effect_ptr&& other);
+    sprite_third_attributes_hblank_effect_ptr& operator=(sprite_third_attributes_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_ptr& sprite() const
     {

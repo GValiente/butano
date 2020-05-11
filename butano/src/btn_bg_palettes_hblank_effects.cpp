@@ -92,13 +92,13 @@ bg_palettes_transparent_color_hblank_effect_ptr& bg_palettes_transparent_color_h
 }
 
 bg_palettes_transparent_color_hblank_effect_ptr::bg_palettes_transparent_color_hblank_effect_ptr(
-        bg_palettes_transparent_color_hblank_effect_ptr&& other) :
+        bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other))
 {
 }
 
 bg_palettes_transparent_color_hblank_effect_ptr& bg_palettes_transparent_color_hblank_effect_ptr::operator=(
-        bg_palettes_transparent_color_hblank_effect_ptr&& other)
+        bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     return *this;

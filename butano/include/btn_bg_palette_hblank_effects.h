@@ -23,9 +23,9 @@ public:
 
     bg_palette_color_hblank_effect_ptr& operator=(const bg_palette_color_hblank_effect_ptr& other);
 
-    bg_palette_color_hblank_effect_ptr(bg_palette_color_hblank_effect_ptr&& other);
+    bg_palette_color_hblank_effect_ptr(bg_palette_color_hblank_effect_ptr&& other) noexcept;
 
-    bg_palette_color_hblank_effect_ptr& operator=(bg_palette_color_hblank_effect_ptr&& other);
+    bg_palette_color_hblank_effect_ptr& operator=(bg_palette_color_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const bg_palette_ptr& palette() const
     {

@@ -170,14 +170,14 @@ rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_p
 }
 
 rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(
-        rect_window_boundaries_hblank_effect_ptr&& other) :
+        rect_window_boundaries_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _window(other._window)
 {
 }
 
 rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_ptr::operator=(
-        rect_window_boundaries_hblank_effect_ptr&& other)
+        rect_window_boundaries_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _window = other._window;

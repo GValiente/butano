@@ -156,7 +156,7 @@ public:
 
     intrusive_forward_list(const intrusive_forward_list& other) = delete;
 
-    intrusive_forward_list(intrusive_forward_list&& other) :
+    intrusive_forward_list(intrusive_forward_list&& other) noexcept :
         intrusive_forward_list()
     {
         _assign(move(other));
@@ -164,7 +164,7 @@ public:
 
     intrusive_forward_list& operator=(const intrusive_forward_list& other) = delete;
 
-    intrusive_forward_list& operator=(intrusive_forward_list&& other)
+    intrusive_forward_list& operator=(intrusive_forward_list&& other) noexcept
     {
         if(this != &other)
         {

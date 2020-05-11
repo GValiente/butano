@@ -35,13 +35,13 @@ public:
 
     bg_palette_ptr& operator=(const bg_palette_ptr& other);
 
-    bg_palette_ptr(bg_palette_ptr&& other) :
+    bg_palette_ptr(bg_palette_ptr&& other) noexcept :
         _id(other._id)
     {
         other._id = -1;
     }
 
-    bg_palette_ptr& operator=(bg_palette_ptr&& other)
+    bg_palette_ptr& operator=(bg_palette_ptr&& other) noexcept
     {
         btn::swap(_id, other._id);
         return *this;

@@ -379,7 +379,7 @@ sprite_affine_mat_first_register_hblank_effect_ptr& sprite_affine_mat_first_regi
 }
 
 sprite_affine_mat_first_register_hblank_effect_ptr::sprite_affine_mat_first_register_hblank_effect_ptr(
-        sprite_affine_mat_first_register_hblank_effect_ptr&& other) :
+        sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
     _affine_mat(move(other._affine_mat))
@@ -387,7 +387,7 @@ sprite_affine_mat_first_register_hblank_effect_ptr::sprite_affine_mat_first_regi
 }
 
 sprite_affine_mat_first_register_hblank_effect_ptr& sprite_affine_mat_first_register_hblank_effect_ptr::operator=(
-        sprite_affine_mat_first_register_hblank_effect_ptr&& other)
+        sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
@@ -517,7 +517,7 @@ sprite_affine_mat_second_register_hblank_effect_ptr& sprite_affine_mat_second_re
 }
 
 sprite_affine_mat_second_register_hblank_effect_ptr::sprite_affine_mat_second_register_hblank_effect_ptr(
-        sprite_affine_mat_second_register_hblank_effect_ptr&& other) :
+        sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
     _affine_mat(move(other._affine_mat))
@@ -525,7 +525,7 @@ sprite_affine_mat_second_register_hblank_effect_ptr::sprite_affine_mat_second_re
 }
 
 sprite_affine_mat_second_register_hblank_effect_ptr& sprite_affine_mat_second_register_hblank_effect_ptr::operator=(
-        sprite_affine_mat_second_register_hblank_effect_ptr&& other)
+        sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
@@ -655,7 +655,7 @@ sprite_affine_mat_third_register_hblank_effect_ptr& sprite_affine_mat_third_regi
 }
 
 sprite_affine_mat_third_register_hblank_effect_ptr::sprite_affine_mat_third_register_hblank_effect_ptr(
-        sprite_affine_mat_third_register_hblank_effect_ptr&& other) :
+        sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
     _affine_mat(move(other._affine_mat))
@@ -663,7 +663,7 @@ sprite_affine_mat_third_register_hblank_effect_ptr::sprite_affine_mat_third_regi
 }
 
 sprite_affine_mat_third_register_hblank_effect_ptr& sprite_affine_mat_third_register_hblank_effect_ptr::operator=(
-        sprite_affine_mat_third_register_hblank_effect_ptr&& other)
+        sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
@@ -793,7 +793,7 @@ sprite_affine_mat_fourth_register_hblank_effect_ptr& sprite_affine_mat_fourth_re
 }
 
 sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_register_hblank_effect_ptr(
-        sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) :
+        sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
     _affine_mat(move(other._affine_mat))
@@ -801,7 +801,7 @@ sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_re
 }
 
 sprite_affine_mat_fourth_register_hblank_effect_ptr& sprite_affine_mat_fourth_register_hblank_effect_ptr::operator=(
-        sprite_affine_mat_fourth_register_hblank_effect_ptr&& other)
+        sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
@@ -892,7 +892,7 @@ optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attri
                         affine_mat, attributes_ref))
             {
                 if(auto fourth = sprite_affine_mat_fourth_register_hblank_effect_ptr::optional_create(
-                            affine_mat, move(attributes_ref)))
+                            affine_mat, attributes_ref))
                 {
                     result = sprite_affine_mat_attributes_hblank_effect_ptr(
                                 move(*first), move(*second), move(*third), move(*fourth));

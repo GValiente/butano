@@ -285,7 +285,7 @@ public:
         return *this;
     }
 
-    ideque& operator=(ideque&& other)
+    ideque& operator=(ideque&& other) noexcept
     {
         if(this != &other)
         {
@@ -1005,7 +1005,7 @@ public:
         this->_assign(other);
     }
 
-    deque(deque&& other) :
+    deque(deque&& other) noexcept :
         deque()
     {
         this->_assign(move(other));
@@ -1019,7 +1019,7 @@ public:
         this->_assign(other);
     }
 
-    deque(ideque<Type>&& other) :
+    deque(ideque<Type>&& other) noexcept :
         deque()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
@@ -1054,7 +1054,7 @@ public:
         return *this;
     }
 
-    deque& operator=(deque&& other)
+    deque& operator=(deque&& other) noexcept
     {
         if(this != &other)
         {
@@ -1078,7 +1078,7 @@ public:
         return *this;
     }
 
-    deque& operator=(ideque<Type>&& other)
+    deque& operator=(ideque<Type>&& other) noexcept
     {
         if(this != &other)
         {

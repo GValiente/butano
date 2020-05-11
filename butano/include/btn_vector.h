@@ -42,7 +42,7 @@ public:
         return *this;
     }
 
-    ivector& operator=(ivector&& other)
+    ivector& operator=(ivector&& other) noexcept
     {
         if(this != &other)
         {
@@ -648,7 +648,7 @@ public:
         this->_assign(other);
     }
 
-    vector(vector&& other) :
+    vector(vector&& other) noexcept :
         vector()
     {
         this->_assign(move(other));
@@ -662,7 +662,7 @@ public:
         this->_assign(other);
     }
 
-    vector(ivector<Type>&& other) :
+    vector(ivector<Type>&& other) noexcept :
         vector()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
@@ -697,7 +697,7 @@ public:
         return *this;
     }
 
-    vector& operator=(vector&& other)
+    vector& operator=(vector&& other) noexcept
     {
         if(this != &other)
         {
@@ -721,7 +721,7 @@ public:
         return *this;
     }
 
-    vector& operator=(ivector<Type>&& other)
+    vector& operator=(ivector<Type>&& other) noexcept
     {
         if(this != &other)
         {

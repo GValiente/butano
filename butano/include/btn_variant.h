@@ -296,7 +296,7 @@ public:
         }
     }
 
-    variant(variant&& other)
+    variant(variant&& other) noexcept
     {
         if(other._assigned)
         {
@@ -349,7 +349,7 @@ public:
         return *this;
     }
 
-    variant& operator=(variant&& other)
+    variant& operator=(variant&& other) noexcept
     {
         if(this != &other)
         {

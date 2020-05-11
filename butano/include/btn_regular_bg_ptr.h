@@ -48,13 +48,13 @@ public:
 
     regular_bg_ptr& operator=(const regular_bg_ptr& other);
 
-    regular_bg_ptr(regular_bg_ptr&& other) :
+    regular_bg_ptr(regular_bg_ptr&& other) noexcept :
         regular_bg_ptr(other._handle)
     {
         other._handle = nullptr;
     }
 
-    regular_bg_ptr& operator=(regular_bg_ptr&& other)
+    regular_bg_ptr& operator=(regular_bg_ptr&& other) noexcept
     {
         btn::swap(_handle, other._handle);
         return *this;

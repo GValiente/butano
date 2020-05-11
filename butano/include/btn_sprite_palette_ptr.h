@@ -35,13 +35,13 @@ public:
 
     sprite_palette_ptr& operator=(const sprite_palette_ptr& other);
 
-    sprite_palette_ptr(sprite_palette_ptr&& other) :
+    sprite_palette_ptr(sprite_palette_ptr&& other) noexcept :
         _id(other._id)
     {
         other._id = -1;
     }
 
-    sprite_palette_ptr& operator=(sprite_palette_ptr&& other)
+    sprite_palette_ptr& operator=(sprite_palette_ptr&& other) noexcept
     {
         btn::swap(_id, other._id);
         return *this;

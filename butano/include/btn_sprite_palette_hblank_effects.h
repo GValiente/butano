@@ -23,9 +23,9 @@ public:
 
     sprite_palette_color_hblank_effect_ptr& operator=(const sprite_palette_color_hblank_effect_ptr& other);
 
-    sprite_palette_color_hblank_effect_ptr(sprite_palette_color_hblank_effect_ptr&& other);
+    sprite_palette_color_hblank_effect_ptr(sprite_palette_color_hblank_effect_ptr&& other) noexcept;
 
-    sprite_palette_color_hblank_effect_ptr& operator=(sprite_palette_color_hblank_effect_ptr&& other);
+    sprite_palette_color_hblank_effect_ptr& operator=(sprite_palette_color_hblank_effect_ptr&& other) noexcept;
 
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {

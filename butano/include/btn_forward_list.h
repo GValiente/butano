@@ -174,7 +174,7 @@ public:
         return *this;
     }
 
-    iforward_list& operator=(iforward_list&& other)
+    iforward_list& operator=(iforward_list&& other) noexcept
     {
         if(this != &other)
         {
@@ -624,7 +624,7 @@ public:
         this->_assign(other);
     }
 
-    forward_list(forward_list&& other) :
+    forward_list(forward_list&& other) noexcept :
         forward_list()
     {
         this->_assign(move(other));
@@ -638,7 +638,7 @@ public:
         this->_assign(other);
     }
 
-    forward_list(iforward_list<Type>&& other) :
+    forward_list(iforward_list<Type>&& other) noexcept :
         forward_list()
     {
         BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
@@ -657,7 +657,7 @@ public:
         return *this;
     }
 
-    forward_list& operator=(forward_list&& other)
+    forward_list& operator=(forward_list&& other) noexcept
     {
         if(this != &other)
         {
@@ -681,7 +681,7 @@ public:
         return *this;
     }
 
-    forward_list& operator=(iforward_list<Type>&& other)
+    forward_list& operator=(iforward_list<Type>&& other) noexcept
     {
         if(this != &other)
         {

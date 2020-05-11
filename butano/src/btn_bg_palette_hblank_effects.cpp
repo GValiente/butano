@@ -104,7 +104,7 @@ bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator
 }
 
 bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
-        bg_palette_color_hblank_effect_ptr&& other) :
+        bg_palette_color_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _palette(move(other._palette)),
     _color_index(other._color_index)
@@ -112,7 +112,7 @@ bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
 }
 
 bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator=(
-        bg_palette_color_hblank_effect_ptr&& other)
+        bg_palette_color_hblank_effect_ptr&& other) noexcept
 {
     hblank_effect_ptr::operator=(move(other));
     _palette = move(other._palette);

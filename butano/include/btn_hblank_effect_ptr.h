@@ -49,13 +49,13 @@ protected:
 
     hblank_effect_ptr& operator=(const hblank_effect_ptr& other);
 
-    hblank_effect_ptr(hblank_effect_ptr&& other) :
+    hblank_effect_ptr(hblank_effect_ptr&& other) noexcept :
         hblank_effect_ptr(other._id)
     {
         other._id = -1;
     }
 
-    hblank_effect_ptr& operator=(hblank_effect_ptr&& other)
+    hblank_effect_ptr& operator=(hblank_effect_ptr&& other) noexcept
     {
         btn::swap(_id, other._id);
         return *this;

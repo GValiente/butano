@@ -13,6 +13,14 @@
 namespace bf::game
 {
 
+enemies_grid::~enemies_grid()
+{
+    for(cell& cell : _cells)
+    {
+        cell.clear(_pool);
+    }
+}
+
 void enemies_grid::add_enemy(enemy& enemy)
 {
     btn::fixed_point position = enemy.position();
@@ -263,6 +271,20 @@ void enemies_grid::cell::remove_enemy(enemy& enemy, enemies_pool& enemies_pool)
 
         before_it = it;
         ++it;
+    }
+}
+
+void enemies_grid::cell::clear(enemies_pool& enemies_pool)
+{
+    auto before_it = _enemies.before_begin();
+    auto it = _enemies.begin();
+    auto end = _enemies.end();
+
+    while(it != end)
+    {
+        enemies_list_node_type& enemies_node = *it;
+        it = _enemies.erase_after(before_it);
+        enemies_pool.destroy(enemies_node);
     }
 }
 

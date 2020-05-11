@@ -1,6 +1,7 @@
 #ifndef BF_CONSTANTS_H
 #define BF_CONSTANTS_H
 
+#include "btn_fixed.h"
 #include "btn_display.h"
 
 #ifndef BF_CFG_ENEMIES_GRID_LOG_ENABLED
@@ -34,6 +35,7 @@ namespace bf::constants
     constexpr const int enemies_grid_size = 16;
     constexpr const int max_enemies_in_grid = 256;
     constexpr const int reserved_sprite_affine_mats = 4;
+    constexpr const btn::fixed background_speed = 0.5;
 }
 
 #endif

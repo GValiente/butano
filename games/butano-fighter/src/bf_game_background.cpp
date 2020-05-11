@@ -5,6 +5,7 @@
 #include "btn_regular_bg_builder.h"
 #include "btn_regular_bg_items_clouds.h"
 #include "btn_regular_bg_items_stage_1.h"
+#include "bf_constants.h"
 #include "bf_wave_generator.h"
 
 namespace bf::game
@@ -32,8 +33,8 @@ namespace
 }
 
 background::background() :
-    _ground_move_action(_create_ground_bg(), 0, 0.5),
-    _clouds_move_action(_create_clouds_bg(), -1.0 / 16, 0.5),
+    _ground_move_action(_create_ground_bg(), 0, constants::background_speed),
+    _clouds_move_action(_create_clouds_bg(), -1.0 / 16, constants::background_speed),
     _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
                        _ground_move_action.bg(), _hblank_effect_deltas))
 {

@@ -31,7 +31,7 @@ private:
     btn::sprite_palettes_fade_to_action _sprite_fade_action;
     btn::blending_transparency_alpha_to_action _blending_action;
     btn::vector<btn::sprite_ptr, 4> _up_text_sprites;
-    btn::vector<btn::sprite_ptr, 4> _middle_text_sprites;
+    btn::vector<btn::sprite_ptr, 8> _middle_text_sprites;
     btn::vector<btn::sprite_ptr, 8> _down_text_sprites;
     int _counter = 60 * 4;
 };

@@ -21,6 +21,8 @@ class enemies_grid
 {
 
 public:
+    ~enemies_grid();
+
     void add_enemy(enemy& enemy);
 
     void remove_enemy(enemy& enemy);
@@ -72,6 +74,8 @@ private:
         void add_enemy(enemy& enemy, enemies_pool& enemies_pool);
 
         void remove_enemy(enemy& enemy, enemies_pool& enemies_pool);
+
+        void clear(enemies_pool& enemies_pool);
 
     private:
         enemies_list _enemies;

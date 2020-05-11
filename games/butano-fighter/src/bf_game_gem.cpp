@@ -44,7 +44,7 @@ bool gem::done() const
 
 void gem::update()
 {
-    _sprite.set_position(_sprite.x(), _sprite.y() + 0.5);
+    _sprite.set_position(_sprite.x(), _sprite.y() + constants::background_speed);
     --_counter;
 
     if(_counter == 12)

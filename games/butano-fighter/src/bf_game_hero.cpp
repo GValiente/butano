@@ -351,7 +351,7 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     if(body_sprite.visible())
     {
         _body_rotate_action->update();
-        body_sprite.set_y(body_sprite.y() + 0.5);
+        body_sprite.set_y(body_sprite.y() + constants::background_speed);
 
         if(_death_counter % 8 == 0)
         {
@@ -380,7 +380,7 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
 
         if(weapon_y < constants::view_height)
         {
-            _weapon_sprite.set_y(weapon_y + 0.5);
+            _weapon_sprite.set_y(weapon_y + constants::background_speed);
         }
     }
 

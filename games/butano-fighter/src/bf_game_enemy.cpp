@@ -72,19 +72,19 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
     if(_life)
     {
         const enemy_data& enemy_data = _event->enemy;
-        btn::fixed_rect enemy_rect(position(), enemy_data.dimensions);
+        btn::fixed_point enemy_position = position();
+        btn::fixed_rect enemy_rect(enemy_position, enemy_data.dimensions);
         const btn::fixed_rect& bullet_rect = data.bullet_rect;
 
         if(enemy_rect.intersects(bullet_rect))
         {
-            bool show_rotation = btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats;
-            _add_damage(enemy_rect.x(), bullet_rect.x(), data.bullet_damage, show_rotation);
+            _add_damage(enemy_position, bullet_rect.x(), data.bullet_damage, true);
 
             if(! _life)
             {
                 if(data.hero_ref.add_experience(enemy_data.experience))
                 {
-                    data.objects_ref.spawn_hero_weapon(enemy_rect.position(), data.hero_ref.level() + 1);
+                    data.objects_ref.spawn_hero_weapon(enemy_position, data.hero_ref.level() + 1);
                 }
 
                 switch(_event->drop)
@@ -94,11 +94,11 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                     break;
 
                 case enemy_drop_type::GEM:
-                    data.objects_ref.spawn_gem(enemy_rect.position());
+                    data.objects_ref.spawn_gem(enemy_position);
                     break;
 
                 case enemy_drop_type::HERO_BOMB:
-                    data.objects_ref.spawn_hero_bomb(enemy_rect.position());
+                    data.objects_ref.spawn_hero_bomb(enemy_position);
                     break;
                 }
             }
@@ -121,7 +121,7 @@ void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radi
 
         if(squared_distance < bomb_squared_radius)
         {
-            _add_damage(enemy_position.x(), bomb_center.x(), _life, false);
+            _add_damage(enemy_position, bomb_center.x(), _life, false);
         }
     }
 }
@@ -180,8 +180,22 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
     {
         if(_move_event_counter)
         {
-            _rotate_action->update();
-            _scale_action->update();
+            _move_action.update();
+
+            if(_rotate_action)
+            {
+                _rotate_action->update();
+            }
+
+            if(_scale_x_action)
+            {
+                _scale_x_action->update();
+            }
+
+            if(_scale_y_action)
+            {
+                _scale_y_action->update();
+            }
         }
         else
         {
@@ -200,7 +214,7 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
     }
 }
 
-void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, bool show_rotation)
+void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage, bool show_animation)
 {
     int life = btn::max(_life - damage, 0);
     _life = int16_t(life);
@@ -215,14 +229,42 @@ void enemy::_add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, boo
     {
         _event->enemy.death_sound_item.play_with_priority(constants::enemies_sound_priority);
 
-        if(show_rotation)
+        if(show_animation)
         {
-            btn::fixed rotation_angle = attack_x < enemy_x ? -1 : 1;
+            show_animation = btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats;
+        }
+
+        if(show_animation)
+        {
+            _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
+            _move_action.update();
             _move_event_counter = 30;
-            _rotate_action.emplace(_sprite, rotation_angle);
-            _rotate_action->update();
-            _scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-            _scale_action->update();
+
+            switch(_event->enemy.death_anim)
+            {
+
+            case enemy_data::death_anim_type::ROTATE:
+                {
+                    btn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
+                    _rotate_action.emplace(_sprite, rotation_angle);
+                    _rotate_action->update();
+                    _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                    _scale_x_action->update();
+                    _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                    _scale_y_action->update();
+                }
+                break;
+
+            case enemy_data::death_anim_type::HORIZONTAL_SCALE:
+                _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _scale_x_action->update();
+                break;
+
+            case enemy_data::death_anim_type::VERTICAL_SCALE:
+                _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _scale_y_action->update();
+                break;
+            }
         }
         else
         {

@@ -79,7 +79,8 @@ private:
     btn::sprite_move_by_action _move_action;
     btn::sprite_cached_animate_action<2> _animate_action;
     btn::optional<btn::sprite_rotate_by_action> _rotate_action;
-    btn::optional<btn::sprite_scale_to_action> _scale_action;
+    btn::optional<btn::sprite_scale_x_to_action> _scale_x_action;
+    btn::optional<btn::sprite_scale_y_to_action> _scale_y_action;
     btn::sprite_palette_ptr _sprite_palette;
     btn::sprite_palette_ptr _damage_palette;
     int16_t _life;
@@ -94,7 +95,7 @@ private:
     int8_t _damage_palette_counter;
     int8_t _tag;
 
-    void _add_damage(btn::fixed enemy_x, btn::fixed attack_x, int damage, bool show_rotation);
+    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage, bool show_animation);
 };
 
 }

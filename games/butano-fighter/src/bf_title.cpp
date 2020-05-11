@@ -384,7 +384,16 @@ btn::optional<scene_type> title::_menu()
 
             _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 0.01);
             _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
-            btn::sound_items::cure.play();
+
+            if(_start_selected)
+            {
+                btn::sound_items::start.play();
+            }
+            else
+            {
+                btn::sound_items::cure.play();
+            }
+
             _state = state::HIDE_CURSOR;
         }
         else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))

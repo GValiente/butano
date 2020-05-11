@@ -14,7 +14,15 @@ class enemy_data
 {
 
 public:
+    enum class death_anim_type
+    {
+        ROTATE,
+        HORIZONTAL_SCALE,
+        VERTICAL_SCALE
+    };
+
     const btn::sprite_item& sprite_item;
+    death_anim_type death_anim;
     btn::sound_item death_sound_item;
     btn::fixed_size dimensions;
     int16_t graphics_index_1;
@@ -22,10 +30,11 @@ public:
     int16_t life;
     int8_t experience;
 
-    constexpr enemy_data(const btn::sprite_item& _sprite_item, const btn::sound_item& _death_sound_item,
-                         const btn::fixed_size& _dimensions, int _graphics_index_1, int _graphics_index_2,
-                         int _life, int _experience) :
+    constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
+                         btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
+                         int _graphics_index_1, int _graphics_index_2, int _life, int _experience) :
         sprite_item(_sprite_item),
+        death_anim(_death_anim),
         death_sound_item(_death_sound_item),
         dimensions(_dimensions),
         graphics_index_1(int16_t(_graphics_index_1)),

@@ -219,12 +219,6 @@ void play_sound(int priority, int id, int volume, int speed, int panning)
 void stop_all_sounds()
 {
     mmEffectCancelAll();
-
-    for(sound_type& sound : data.sounds_queue)
-    {
-        mmEffectRelease(sound.handle);
-    }
-
     data.sounds_queue.clear();
 }
 
@@ -245,7 +239,6 @@ void release_inactive_sounds()
         }
         else
         {
-            mmEffectRelease(handle);
             it = data.sounds_queue.erase_after(before_it);
         }
     }

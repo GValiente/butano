@@ -1,9 +1,9 @@
 #ifndef BTN_HW_SPRITE_TILES_H
 #define BTN_HW_SPRITE_TILES_H
 
-#include "tonc.h"
 #include "btn_tile.h"
 #include "btn_memory.h"
+#include "btn_hw_tonc.h"
 
 namespace btn::hw::sprite_tiles
 {

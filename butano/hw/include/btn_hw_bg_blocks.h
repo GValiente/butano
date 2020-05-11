@@ -1,8 +1,8 @@
 #ifndef BTN_HW_BG_BLOCKS_H
 #define BTN_HW_BG_BLOCKS_H
 
-#include "tonc.h"
 #include "btn_memory.h"
+#include "btn_hw_tonc.h"
 #include "btn_hw_bg_blocks_constants.h"
 
 namespace btn::hw::bg_blocks

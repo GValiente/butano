@@ -4,7 +4,7 @@
     #include "btn_istring_base.h"
 
     #if BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_NOCASHGBA
-        #include "tonc.h"
+        #include "../include/btn_hw_tonc.h"
     #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_MGBA
         #include "btn_memory.h"
     #else

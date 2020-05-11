@@ -1,12 +1,12 @@
 #ifndef BTN_HW_DISPLAY_H
 #define BTN_HW_DISPLAY_H
 
-#include "tonc.h"
 #include "btn_point.h"
+#include "btn_hw_tonc.h"
 
-#define REG_DISPCNT_U16     *(vu16*)(REG_BASE+0x0000)
-#define REG_DISPCNT_U16_2   *(vu16*)(REG_BASE+0x0002)
-#define REG_MOSAIC_U16		*(vu16*)(REG_BASE+0x004C)
+#define REG_DISPCNT_U16     *(u16*)(REG_BASE+0x0000)
+#define REG_DISPCNT_U16_2   *(u16*)(REG_BASE+0x0002)
+#define REG_MOSAIC_U16		*(u16*)(REG_BASE+0x004C)
 
 namespace btn::hw::display
 {

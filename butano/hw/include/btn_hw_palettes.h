@@ -1,9 +1,9 @@
 #ifndef BTN_HW_PALETTES_H
 #define BTN_HW_PALETTES_H
 
-#include "tonc.h"
 #include "btn_color.h"
 #include "btn_memory.h"
+#include "btn_hw_tonc.h"
 
 namespace btn::hw::palettes
 {

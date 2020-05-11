@@ -1,8 +1,7 @@
 #ifndef BTN_HW_CORE_H
 #define BTN_HW_CORE_H
 
-#include "tonc.h"
-#include "btn_common.h"
+#include "btn_hw_tonc.h"
 
 extern "C"
 {

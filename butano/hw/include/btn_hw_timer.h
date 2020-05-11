@@ -1,7 +1,7 @@
 #ifndef BTN_HW_TIMER_H
 #define BTN_HW_TIMER_H
 
-#include "tonc.h"
+#include "btn_hw_tonc.h"
 #include "btn_hw_timer_constants.h"
 
 namespace btn::hw::timer

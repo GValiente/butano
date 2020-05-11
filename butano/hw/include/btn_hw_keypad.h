@@ -1,10 +1,10 @@
 #ifndef BTN_HW_KEYPAD_H
 #define BTN_HW_KEYPAD_H
 
-#include "tonc.h"
 #include "btn_span.h"
 #include "btn_assert.h"
 #include "btn_keypad.h"
+#include "btn_hw_tonc.h"
 
 namespace btn::hw::keypad
 {

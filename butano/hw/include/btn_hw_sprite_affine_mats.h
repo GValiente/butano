@@ -1,8 +1,8 @@
 #ifndef BTN_HW_SPRITE_AFFINE_MATS_H
 #define BTN_HW_SPRITE_AFFINE_MATS_H
 
-#include "tonc.h"
 #include "btn_sprite_affine_mat_attributes.h"
+#include "btn_hw_tonc.h"
 
 namespace btn::hw::sprite_affine_mats
 {

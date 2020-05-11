@@ -1,10 +1,10 @@
 #ifndef BTN_HW_BGS_H
 #define BTN_HW_BGS_H
 
-#include "tonc.h"
 #include "btn_size.h"
 #include "btn_memory.h"
 #include "btn_regular_bg_builder.h"
+#include "btn_hw_tonc.h"
 
 namespace btn::hw::bgs
 {

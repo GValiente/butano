@@ -8,7 +8,7 @@
 # DATA is a list of directories containing binary data
 # GRAPHICS is a list of directories containing files to be processed by grit
 # AUDIO is a list of directories containing files to be processed by mmutil
-# USERFLAGS is a list of additional compiler flags
+# USERFLAGS is a list of additional compiler flags. Pass -flto to enable link-time optimization
 #
 # All directories are specified relative to the project directory where the makefile is found
 #---------------------------------------------------------------------------------------------------------------------

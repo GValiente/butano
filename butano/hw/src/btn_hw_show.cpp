@@ -1,10 +1,10 @@
 #include "../include/btn_hw_show.h"
 
 #if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
-    #include "tonc.h"
     #include "btn_string.h"
     #include "btn_display.h"
     #include "btn_string_view.h"
+    #include "../include/btn_hw_tonc.h"
     #include "../include/btn_hw_display.h"
 #endif
 

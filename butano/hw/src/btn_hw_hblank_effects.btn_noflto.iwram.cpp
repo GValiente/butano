@@ -1,6 +1,6 @@
 #include "../include/btn_hw_hblank_effects.h"
 
-#include "tonc.h"
+#include "../include/btn_hw_tonc.h"
 
 namespace btn::hw::hblank_effects
 {

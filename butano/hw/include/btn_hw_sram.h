@@ -1,15 +1,17 @@
 #ifndef BTN_HW_SRAM_H
 #define BTN_HW_SRAM_H
 
-#include "tonc.h"
 #include "btn_config_sram.h"
+#include "btn_hw_tonc.h"
 #include "btn_hw_sram_constants.h"
+
+#define REG_WAITCNT_NV *(u16*)(REG_BASE+0x0204)
 
 namespace btn::hw::sram
 {
     inline void init()
     {
-        BIT_SET(REG_WAITCNT, BTN_CFG_SRAM_WAIT_STATE);
+        BIT_SET(REG_WAITCNT_NV, BTN_CFG_SRAM_WAIT_STATE);
     }
 
     inline void write(const void* source, int size, int offset)

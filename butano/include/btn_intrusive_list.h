@@ -2,6 +2,7 @@
 #define BTN_INTRUSIVE_LIST_H
 
 #include "btn_assert.h"
+#include "btn_utility.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_intrusive_list_fwd.h"

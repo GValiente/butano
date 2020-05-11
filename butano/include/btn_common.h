@@ -21,11 +21,6 @@
 #define BTN_UNREACHABLE __builtin_unreachable
 
 /*!
- * @brief Indicates if the function call occurs within a constant-evaluated context.
- */
-#define BTN_CONSTANT_EVALUATED __builtin_is_constant_evaluated
-
-/*!
  * @brief Creates a compiler level memory barrier forcing optimizer to not re-order memory accesses across the barrier.
  *
  * https://stackoverflow.com/questions/14950614/working-of-asm-volatile-memory

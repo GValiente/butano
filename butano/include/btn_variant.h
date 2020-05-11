@@ -3,6 +3,7 @@
 
 #include <new>
 #include "btn_assert.h"
+#include "btn_utility.h"
 #include "btn_algorithm.h"
 #include "btn_functional.h"
 

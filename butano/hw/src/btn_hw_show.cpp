@@ -124,7 +124,7 @@ namespace
                 entries.push_back({ ticks_per_entry_pair.first, ticks_per_entry_pair.second });
             }
 
-            stable_sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
+            sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
                 return a.ticks > b.ticks;
             });
 

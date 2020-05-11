@@ -10,20 +10,7 @@ namespace btn
 
     using std::forward;
 
-    template<typename Type>
-    constexpr void swap(Type& a, Type& b)
-    {
-        if(BTN_CONSTANT_EVALUATED())
-        {
-            Type temp = move(a);
-            a = move(b);
-            b = move(temp);
-        }
-        else
-        {
-            std::swap(a, b);
-        }
-    }
+    using std::swap;
 
 
     template<typename Type1, typename Type2>

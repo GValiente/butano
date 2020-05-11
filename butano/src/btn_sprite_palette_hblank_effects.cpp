@@ -87,23 +87,6 @@ optional<sprite_palette_color_hblank_effect_ptr> sprite_palette_color_hblank_eff
 }
 
 sprite_palette_color_hblank_effect_ptr::sprite_palette_color_hblank_effect_ptr(
-        const sprite_palette_color_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _palette(other._palette),
-    _color_index(other._color_index)
-{
-}
-
-sprite_palette_color_hblank_effect_ptr& sprite_palette_color_hblank_effect_ptr::operator=(
-        const sprite_palette_color_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _palette = other._palette;
-    _color_index = other._color_index;
-    return *this;
-}
-
-sprite_palette_color_hblank_effect_ptr::sprite_palette_color_hblank_effect_ptr(
         sprite_palette_color_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _palette(move(other._palette)),
@@ -114,9 +97,9 @@ sprite_palette_color_hblank_effect_ptr::sprite_palette_color_hblank_effect_ptr(
 sprite_palette_color_hblank_effect_ptr& sprite_palette_color_hblank_effect_ptr::operator=(
         sprite_palette_color_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _palette = move(other._palette);
     _color_index = other._color_index;
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 

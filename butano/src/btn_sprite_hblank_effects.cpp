@@ -65,18 +65,12 @@ namespace
         {
 
         public:
-            fixed hw_y;
-            sprite_shape shape;
-            palette_bpp_mode bpp_mode;
-            int affine_mode;
+            fixed hw_y = -1;
+            sprite_shape shape = sprite_shape::SQUARE;
+            palette_bpp_mode bpp_mode = palette_bpp_mode::BPP_4;
+            int affine_mode = -1;
 
-            last_value_type() :
-                hw_y(-1),
-                shape(sprite_shape::SQUARE),
-                bpp_mode(palette_bpp_mode::BPP_4),
-                affine_mode(-1)
-            {
-            }
+            last_value_type() = default;
 
             explicit last_value_type(void* handle) :
                 hw_y(sprites_manager::hw_position(handle).y()),
@@ -109,14 +103,10 @@ namespace
     {
 
     public:
-        fixed hw_x;
-        sprite_size size;
+        fixed hw_x = -1;
+        sprite_size size = sprite_size::SMALL;
 
-        second_attributes_last_value_type() :
-            hw_x(-1),
-            size(sprite_size::SMALL)
-        {
-        }
+        second_attributes_last_value_type() = default;
 
         explicit second_attributes_last_value_type(void* handle) :
             hw_x(sprites_manager::hw_position(handle).x()),
@@ -312,21 +302,6 @@ optional<sprite_first_attributes_hblank_effect_ptr> sprite_first_attributes_hbla
 }
 
 sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect_ptr(
-        const sprite_first_attributes_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _sprite(other._sprite)
-{
-}
-
-sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect_ptr::operator=(
-        const sprite_first_attributes_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _sprite = other._sprite;
-    return *this;
-}
-
-sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect_ptr(
         sprite_first_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
@@ -336,8 +311,8 @@ sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect
 sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect_ptr::operator=(
         sprite_first_attributes_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -394,21 +369,6 @@ optional<sprite_regular_second_attributes_hblank_effect_ptr> sprite_regular_seco
 }
 
 sprite_regular_second_attributes_hblank_effect_ptr::sprite_regular_second_attributes_hblank_effect_ptr(
-        const sprite_regular_second_attributes_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _sprite(other._sprite)
-{
-}
-
-sprite_regular_second_attributes_hblank_effect_ptr& sprite_regular_second_attributes_hblank_effect_ptr::operator=(
-        const sprite_regular_second_attributes_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _sprite = other._sprite;
-    return *this;
-}
-
-sprite_regular_second_attributes_hblank_effect_ptr::sprite_regular_second_attributes_hblank_effect_ptr(
         sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
@@ -418,8 +378,8 @@ sprite_regular_second_attributes_hblank_effect_ptr::sprite_regular_second_attrib
 sprite_regular_second_attributes_hblank_effect_ptr& sprite_regular_second_attributes_hblank_effect_ptr::operator=(
         sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -478,21 +438,6 @@ optional<sprite_affine_second_attributes_hblank_effect_ptr> sprite_affine_second
 }
 
 sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attributes_hblank_effect_ptr(
-        const sprite_affine_second_attributes_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _sprite(other._sprite)
-{
-}
-
-sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attributes_hblank_effect_ptr::operator=(
-        const sprite_affine_second_attributes_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _sprite = other._sprite;
-    return *this;
-}
-
-sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attributes_hblank_effect_ptr(
         sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
@@ -502,8 +447,8 @@ sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attribut
 sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attributes_hblank_effect_ptr::operator=(
         sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -562,21 +507,6 @@ optional<sprite_third_attributes_hblank_effect_ptr> sprite_third_attributes_hbla
 }
 
 sprite_third_attributes_hblank_effect_ptr::sprite_third_attributes_hblank_effect_ptr(
-        const sprite_third_attributes_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _sprite(other._sprite)
-{
-}
-
-sprite_third_attributes_hblank_effect_ptr& sprite_third_attributes_hblank_effect_ptr::operator=(
-        const sprite_third_attributes_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _sprite = other._sprite;
-    return *this;
-}
-
-sprite_third_attributes_hblank_effect_ptr::sprite_third_attributes_hblank_effect_ptr(
         sprite_third_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _sprite(move(other._sprite))
@@ -586,8 +516,8 @@ sprite_third_attributes_hblank_effect_ptr::sprite_third_attributes_hblank_effect
 sprite_third_attributes_hblank_effect_ptr& sprite_third_attributes_hblank_effect_ptr::operator=(
         sprite_third_attributes_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _sprite = move(other._sprite);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 

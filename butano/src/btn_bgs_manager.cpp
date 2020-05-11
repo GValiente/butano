@@ -31,10 +31,10 @@ namespace
         hw::bgs::handle handle;
         regular_bg_map_ptr map;
         uint8_t handles_index = -1;
-        unsigned blending_enabled: 1;
-        unsigned visible: 1;
-        unsigned ignore_camera: 1;
-        unsigned update: 1;
+        bool blending_enabled: 1;
+        bool visible: 1;
+        bool ignore_camera: 1;
+        bool update: 1;
 
         item_type(const regular_bg_builder& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
@@ -465,7 +465,7 @@ void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(visible != static_cast<bool>(item->visible))
+    if(visible != item->visible)
     {
         item->visible = visible;
         data.rebuild_handles = true;
@@ -482,7 +482,7 @@ void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(ignore_camera != static_cast<bool>(item->ignore_camera))
+    if(ignore_camera != item->ignore_camera)
     {
         item->ignore_camera = ignore_camera;
         item->update_hw_position();

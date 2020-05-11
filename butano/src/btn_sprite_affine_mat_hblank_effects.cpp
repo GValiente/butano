@@ -362,23 +362,6 @@ optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_f
 }
 
 sprite_affine_mat_first_register_hblank_effect_ptr::sprite_affine_mat_first_register_hblank_effect_ptr(
-        const sprite_affine_mat_first_register_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _from_attributes(other._from_attributes),
-    _affine_mat(other._affine_mat)
-{
-}
-
-sprite_affine_mat_first_register_hblank_effect_ptr& sprite_affine_mat_first_register_hblank_effect_ptr::operator=(
-        const sprite_affine_mat_first_register_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _from_attributes = other._from_attributes;
-    _affine_mat = other._affine_mat;
-    return *this;
-}
-
-sprite_affine_mat_first_register_hblank_effect_ptr::sprite_affine_mat_first_register_hblank_effect_ptr(
         sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
@@ -389,9 +372,9 @@ sprite_affine_mat_first_register_hblank_effect_ptr::sprite_affine_mat_first_regi
 sprite_affine_mat_first_register_hblank_effect_ptr& sprite_affine_mat_first_register_hblank_effect_ptr::operator=(
         sprite_affine_mat_first_register_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
     _affine_mat = move(other._affine_mat);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -500,23 +483,6 @@ optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_
 }
 
 sprite_affine_mat_second_register_hblank_effect_ptr::sprite_affine_mat_second_register_hblank_effect_ptr(
-        const sprite_affine_mat_second_register_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _from_attributes(other._from_attributes),
-    _affine_mat(other._affine_mat)
-{
-}
-
-sprite_affine_mat_second_register_hblank_effect_ptr& sprite_affine_mat_second_register_hblank_effect_ptr::operator=(
-        const sprite_affine_mat_second_register_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _from_attributes = other._from_attributes;
-    _affine_mat = other._affine_mat;
-    return *this;
-}
-
-sprite_affine_mat_second_register_hblank_effect_ptr::sprite_affine_mat_second_register_hblank_effect_ptr(
         sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
@@ -527,9 +493,9 @@ sprite_affine_mat_second_register_hblank_effect_ptr::sprite_affine_mat_second_re
 sprite_affine_mat_second_register_hblank_effect_ptr& sprite_affine_mat_second_register_hblank_effect_ptr::operator=(
         sprite_affine_mat_second_register_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
     _affine_mat = move(other._affine_mat);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -638,23 +604,6 @@ optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_t
 }
 
 sprite_affine_mat_third_register_hblank_effect_ptr::sprite_affine_mat_third_register_hblank_effect_ptr(
-        const sprite_affine_mat_third_register_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _from_attributes(other._from_attributes),
-    _affine_mat(other._affine_mat)
-{
-}
-
-sprite_affine_mat_third_register_hblank_effect_ptr& sprite_affine_mat_third_register_hblank_effect_ptr::operator=(
-        const sprite_affine_mat_third_register_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _from_attributes = other._from_attributes;
-    _affine_mat = other._affine_mat;
-    return *this;
-}
-
-sprite_affine_mat_third_register_hblank_effect_ptr::sprite_affine_mat_third_register_hblank_effect_ptr(
         sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
@@ -665,9 +614,9 @@ sprite_affine_mat_third_register_hblank_effect_ptr::sprite_affine_mat_third_regi
 sprite_affine_mat_third_register_hblank_effect_ptr& sprite_affine_mat_third_register_hblank_effect_ptr::operator=(
         sprite_affine_mat_third_register_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
     _affine_mat = move(other._affine_mat);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -776,23 +725,6 @@ optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_
 }
 
 sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_register_hblank_effect_ptr(
-        const sprite_affine_mat_fourth_register_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _from_attributes(other._from_attributes),
-    _affine_mat(other._affine_mat)
-{
-}
-
-sprite_affine_mat_fourth_register_hblank_effect_ptr& sprite_affine_mat_fourth_register_hblank_effect_ptr::operator=(
-        const sprite_affine_mat_fourth_register_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _from_attributes = other._from_attributes;
-    _affine_mat = other._affine_mat;
-    return *this;
-}
-
-sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_register_hblank_effect_ptr(
         sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _from_attributes(other._from_attributes),
@@ -803,9 +735,9 @@ sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_re
 sprite_affine_mat_fourth_register_hblank_effect_ptr& sprite_affine_mat_fourth_register_hblank_effect_ptr::operator=(
         sprite_affine_mat_fourth_register_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _from_attributes = other._from_attributes;
     _affine_mat = move(other._affine_mat);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 

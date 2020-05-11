@@ -20,10 +20,10 @@ public:
             const span<const color>& colors_ref);
 
     bg_palettes_transparent_color_hblank_effect_ptr(
-            const bg_palettes_transparent_color_hblank_effect_ptr& other);
+            const bg_palettes_transparent_color_hblank_effect_ptr& other) = default;
 
     bg_palettes_transparent_color_hblank_effect_ptr& operator=(
-            const bg_palettes_transparent_color_hblank_effect_ptr& other);
+            const bg_palettes_transparent_color_hblank_effect_ptr& other) = default;
 
     bg_palettes_transparent_color_hblank_effect_ptr(
             bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept;

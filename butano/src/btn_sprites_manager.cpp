@@ -43,7 +43,7 @@ namespace
         to.attr2 = from.attr2;
     }
 
-    void _update_handle(item_type& item)
+    void _update_handle(const item_type& item)
     {
         if(! data.rebuild_handles)
         {
@@ -814,7 +814,7 @@ void set_visible(id_type id, bool visible)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(visible != static_cast<bool>(item->visible))
+    if(visible != item->visible)
     {
         item->visible = visible;
 
@@ -842,7 +842,7 @@ void set_ignore_camera(id_type id, bool ignore_camera)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(ignore_camera != static_cast<bool>(item->ignore_camera))
+    if(ignore_camera != item->ignore_camera)
     {
         item->ignore_camera = ignore_camera;
         item->update_hw_position();

@@ -79,19 +79,6 @@ optional<bg_palettes_transparent_color_hblank_effect_ptr> bg_palettes_transparen
 }
 
 bg_palettes_transparent_color_hblank_effect_ptr::bg_palettes_transparent_color_hblank_effect_ptr(
-        const bg_palettes_transparent_color_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other)
-{
-}
-
-bg_palettes_transparent_color_hblank_effect_ptr& bg_palettes_transparent_color_hblank_effect_ptr::operator=(
-        const bg_palettes_transparent_color_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    return *this;
-}
-
-bg_palettes_transparent_color_hblank_effect_ptr::bg_palettes_transparent_color_hblank_effect_ptr(
         bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other))
 {

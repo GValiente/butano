@@ -34,11 +34,11 @@ public:
     optional<sprite_affine_mat_ptr> affine_mat;
     sprite_palette_ptr palette;
     unsigned double_size_mode: 2;
-    unsigned visible: 1;
-    unsigned ignore_camera: 1;
-    unsigned remove_affine_mat_when_not_needed: 1;
-    unsigned on_screen: 1;
-    unsigned check_on_screen: 1;
+    bool visible: 1;
+    bool ignore_camera: 1;
+    bool remove_affine_mat_when_not_needed: 1;
+    bool on_screen: 1;
+    bool check_on_screen: 1;
 
     sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
                          sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette);

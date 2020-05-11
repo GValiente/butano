@@ -34,7 +34,7 @@ bool _check_items_on_screen_impl()
                     }
                 }
 
-                if(on_screen != static_cast<bool>(item.on_screen))
+                if(on_screen != item.on_screen)
                 {
                     item.on_screen = on_screen;
                     rebuild_handles = true;

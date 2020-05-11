@@ -25,8 +25,8 @@ namespace
     static_assert(power_of_two(BTN_CFG_SPRITE_TILES_MAX_ITEMS));
 
 
-    static constexpr const int max_items = BTN_CFG_SPRITE_TILES_MAX_ITEMS;
-    static constexpr const int max_list_items = max_items + 1;
+    constexpr const int max_items = BTN_CFG_SPRITE_TILES_MAX_ITEMS;
+    constexpr const int max_list_items = max_items + 1;
 
 
     class item_type

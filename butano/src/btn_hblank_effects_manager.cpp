@@ -31,20 +31,11 @@ namespace
         uint16_t* output_register = nullptr;
         uint16_t output_values_a[display::height()] = {};
         uint16_t output_values_b[display::height()] = {};
-        unsigned visible: 1;
-        unsigned update: 1;
-        unsigned on_screen: 1;
-        unsigned output_values_a_active: 1;
-        unsigned output_values_written: 1;
-
-        item_type() :
-            visible(false),
-            update(false),
-            on_screen(false),
-            output_values_a_active(false),
-            output_values_written(false)
-        {
-        }
+        bool visible: 1 = false;
+        bool update: 1 = false;
+        bool on_screen: 1 = false;
+        bool output_values_a_active: 1 = false;
+        bool output_values_written: 1 = false;
 
         [[nodiscard]] bool check_update()
         {
@@ -264,7 +255,7 @@ void set_visible(int id, bool visible)
 {
     item_type& item = data.items[id];
 
-    if(visible != static_cast<bool>(item.visible))
+    if(visible != item.visible)
     {
         item.visible = visible;
         data.update = true;

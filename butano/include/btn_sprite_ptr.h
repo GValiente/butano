@@ -193,11 +193,11 @@ public:
 
     [[nodiscard]] bool blending_enabled() const;
 
-    void set_blending_enabled(bool mosaic_enabled);
+    void set_blending_enabled(bool blending_enabled);
 
     [[nodiscard]] bool window_enabled() const;
 
-    void set_window_enabled(bool mosaic_enabled);
+    void set_window_enabled(bool window_enabled);
 
     [[nodiscard]] bool double_size() const;
 

@@ -171,16 +171,9 @@ private:
         int16_t rotate_count = 0;
         uint8_t bpp_mode = 0;
         int8_t slots_count = 0;
-        unsigned inverted: 1;
-        unsigned update: 1;
-        unsigned locked: 1;
-
-        palette() :
-            inverted(false),
-            update(false),
-            locked(false)
-        {
-        }
+        bool inverted: 1 = false;
+        bool update: 1 = false;
+        bool locked: 1 = false;
 
         [[nodiscard]] span<const color> colors_span() const
         {

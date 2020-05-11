@@ -88,14 +88,8 @@ namespace
         uint8_t _status = uint8_t(status_type::FREE);
 
     public:
-        unsigned is_tiles: 1;
-        unsigned commit: 1;
-
-        item_type()
-        {
-            is_tiles = false;
-            commit = false;
-        }
+        bool is_tiles: 1 = false;
+        bool commit: 1 = false;
 
         [[nodiscard]] status_type status() const
         {

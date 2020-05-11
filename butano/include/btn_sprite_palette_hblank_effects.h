@@ -19,9 +19,9 @@ public:
     [[nodiscard]] static optional<sprite_palette_color_hblank_effect_ptr> optional_create(
             sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
-    sprite_palette_color_hblank_effect_ptr(const sprite_palette_color_hblank_effect_ptr& other);
+    sprite_palette_color_hblank_effect_ptr(const sprite_palette_color_hblank_effect_ptr& other) = default;
 
-    sprite_palette_color_hblank_effect_ptr& operator=(const sprite_palette_color_hblank_effect_ptr& other);
+    sprite_palette_color_hblank_effect_ptr& operator=(const sprite_palette_color_hblank_effect_ptr& other) = default;
 
     sprite_palette_color_hblank_effect_ptr(sprite_palette_color_hblank_effect_ptr&& other) noexcept;
 

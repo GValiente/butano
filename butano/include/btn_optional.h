@@ -444,7 +444,7 @@ struct hash<optional<Type>>
 {
     [[nodiscard]] unsigned operator()(const optional<Type>& optional) const
     {
-        return bool(optional) ? make_hash(optional.value()) : make_hash(0);
+        return optional.has_value() ? make_hash(optional.value()) : make_hash(0);
     }
 };
 

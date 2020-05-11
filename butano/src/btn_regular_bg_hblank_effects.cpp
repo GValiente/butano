@@ -245,21 +245,6 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
 }
 
 regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
-        const regular_bg_position_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _bg(other._bg)
-{
-}
-
-regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::operator=(
-        const regular_bg_position_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _bg = other._bg;
-    return *this;
-}
-
-regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
         regular_bg_position_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _bg(move(other._bg))
@@ -269,8 +254,8 @@ regular_bg_position_hblank_effect_ptr::regular_bg_position_hblank_effect_ptr(
 regular_bg_position_hblank_effect_ptr& regular_bg_position_hblank_effect_ptr::operator=(
         regular_bg_position_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _bg = move(other._bg);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 
@@ -326,21 +311,6 @@ optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_e
 }
 
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
-        const regular_bg_attributes_hblank_effect_ptr& other) :
-    hblank_effect_ptr(other),
-    _bg(other._bg)
-{
-}
-
-regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
-        const regular_bg_attributes_hblank_effect_ptr& other)
-{
-    hblank_effect_ptr::operator=(other);
-    _bg = other._bg;
-    return *this;
-}
-
-regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
         regular_bg_attributes_hblank_effect_ptr&& other) noexcept :
     hblank_effect_ptr(move(other)),
     _bg(move(other._bg))
@@ -350,8 +320,8 @@ regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr
 regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
         regular_bg_attributes_hblank_effect_ptr&& other) noexcept
 {
-    hblank_effect_ptr::operator=(move(other));
     _bg = move(other._bg);
+    hblank_effect_ptr::operator=(move(other));
     return *this;
 }
 

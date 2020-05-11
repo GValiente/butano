@@ -17,9 +17,10 @@ public:
     [[nodiscard]] static optional<sprite_first_attributes_hblank_effect_ptr> optional_create(
             sprite_ptr sprite, const span<const sprite_first_attributes>& attributes_ref);
 
-    sprite_first_attributes_hblank_effect_ptr(const sprite_first_attributes_hblank_effect_ptr& other);
+    sprite_first_attributes_hblank_effect_ptr(const sprite_first_attributes_hblank_effect_ptr& other) = default;
 
-    sprite_first_attributes_hblank_effect_ptr& operator=(const sprite_first_attributes_hblank_effect_ptr& other);
+    sprite_first_attributes_hblank_effect_ptr& operator=(
+            const sprite_first_attributes_hblank_effect_ptr& other) = default;
 
     sprite_first_attributes_hblank_effect_ptr(sprite_first_attributes_hblank_effect_ptr&& other) noexcept;
 
@@ -61,10 +62,10 @@ public:
             sprite_ptr sprite, const span<const sprite_regular_second_attributes>& attributes_ref);
 
     sprite_regular_second_attributes_hblank_effect_ptr(
-            const sprite_regular_second_attributes_hblank_effect_ptr& other);
+            const sprite_regular_second_attributes_hblank_effect_ptr& other) = default;
 
     sprite_regular_second_attributes_hblank_effect_ptr& operator=(
-            const sprite_regular_second_attributes_hblank_effect_ptr& other);
+            const sprite_regular_second_attributes_hblank_effect_ptr& other) = default;
 
     sprite_regular_second_attributes_hblank_effect_ptr(
             sprite_regular_second_attributes_hblank_effect_ptr&& other) noexcept;
@@ -109,10 +110,10 @@ public:
             sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref);
 
     sprite_affine_second_attributes_hblank_effect_ptr(
-            const sprite_affine_second_attributes_hblank_effect_ptr& other);
+            const sprite_affine_second_attributes_hblank_effect_ptr& other) = default;
 
     sprite_affine_second_attributes_hblank_effect_ptr& operator=(
-            const sprite_affine_second_attributes_hblank_effect_ptr& other);
+            const sprite_affine_second_attributes_hblank_effect_ptr& other) = default;
 
     sprite_affine_second_attributes_hblank_effect_ptr(
             sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept;
@@ -156,9 +157,10 @@ public:
     [[nodiscard]] static optional<sprite_third_attributes_hblank_effect_ptr> optional_create(
             sprite_ptr sprite, const span<const sprite_third_attributes>& attributes_ref);
 
-    sprite_third_attributes_hblank_effect_ptr(const sprite_third_attributes_hblank_effect_ptr& other);
+    sprite_third_attributes_hblank_effect_ptr(const sprite_third_attributes_hblank_effect_ptr& other) = default;
 
-    sprite_third_attributes_hblank_effect_ptr& operator=(const sprite_third_attributes_hblank_effect_ptr& other);
+    sprite_third_attributes_hblank_effect_ptr& operator=(
+            const sprite_third_attributes_hblank_effect_ptr& other) = default;
 
     sprite_third_attributes_hblank_effect_ptr(sprite_third_attributes_hblank_effect_ptr&& other) noexcept;
 

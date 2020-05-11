@@ -1,6 +1,6 @@
 #include "btn_common.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include "btn_assert.h"
 #include "../hw/include/btn_hw_memory.h"
 

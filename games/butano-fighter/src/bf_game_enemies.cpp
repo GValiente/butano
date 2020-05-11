@@ -50,17 +50,24 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
 
 void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets)
 {
-    bool grid_updated = _remove_enemies(hero, enemy_bullets);
-
-    if(hero.alive() && ! hero_bomb.active() && ! intro.active())
-    {
-        grid_updated |= _add_enemies();
-    }
-
     #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
+        bool grid_updated = _remove_enemies(hero, enemy_bullets);
+
+        if(hero.alive() && ! hero_bomb.active() && ! intro.active())
+        {
+            grid_updated |= _add_enemies();
+        }
+
         if(grid_updated)
         {
             _grid.log();
+        }
+    #else
+        _remove_enemies(hero, enemy_bullets);
+
+        if(hero.alive() && ! hero_bomb.active() && ! intro.active())
+        {
+            _add_enemies();
         }
     #endif
 }

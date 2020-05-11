@@ -172,7 +172,7 @@ rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_p
 rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(
         rect_window_boundaries_hblank_effect_ptr&& other) :
     hblank_effect_ptr(move(other)),
-    _window(move(other._window))
+    _window(other._window)
 {
 }
 
@@ -180,7 +180,7 @@ rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_p
         rect_window_boundaries_hblank_effect_ptr&& other)
 {
     hblank_effect_ptr::operator=(move(other));
-    _window = move(other._window);
+    _window = other._window;
     return *this;
 }
 

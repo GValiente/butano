@@ -260,10 +260,10 @@ class sprite_affine_mat_attributes_hblank_effect_ptr
 
 public:
     [[nodiscard]] static sprite_affine_mat_attributes_hblank_effect_ptr create(
-            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> optional_create(
-            sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] int id() const
     {

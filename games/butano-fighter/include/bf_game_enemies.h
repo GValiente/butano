@@ -40,10 +40,9 @@ private:
     int _new_enemy_tag = 0;
     bool _hero_bomb_check_odds = false;
 
-    [[nodiscard]] bool _remove_enemies(const hero& hero, enemy_bullets& enemy_bullets);
+    bool _remove_enemies(const hero& hero, enemy_bullets& enemy_bullets);
 
-    [[nodiscard]] bool _add_enemies();
-
+    bool _add_enemies();
 };
 
 }

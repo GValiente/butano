@@ -868,7 +868,7 @@ sprite_affine_mat_fourth_register_hblank_effect_ptr::sprite_affine_mat_fourth_re
 }
 
 sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hblank_effect_ptr::create(
-        sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
     return sprite_affine_mat_attributes_hblank_effect_ptr(
                 sprite_affine_mat_first_register_hblank_effect_ptr::create(affine_mat, attributes_ref),
@@ -878,7 +878,7 @@ sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hbla
 }
 
 optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attributes_hblank_effect_ptr::optional_create(
-        sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
     optional<sprite_affine_mat_attributes_hblank_effect_ptr> result;
 
@@ -892,7 +892,7 @@ optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attri
                         affine_mat, attributes_ref))
             {
                 if(auto fourth = sprite_affine_mat_fourth_register_hblank_effect_ptr::optional_create(
-                            move(affine_mat), move(attributes_ref)))
+                            affine_mat, move(attributes_ref)))
                 {
                     result = sprite_affine_mat_attributes_hblank_effect_ptr(
                                 move(*first), move(*second), move(*third), move(*fourth));

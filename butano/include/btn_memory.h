@@ -164,6 +164,36 @@ namespace btn
             return a._ptr >= b._ptr;
         }
 
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, nullptr_t)
+        {
+            return ! a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, nullptr_t)
+        {
+            return a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator<(const unique_ptr&, nullptr_t)
+        {
+            return false;
+        }
+
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, nullptr_t)
+        {
+            return ! a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, nullptr_t)
+        {
+            return a._ptr;
+        }
+
+        [[nodiscard]] friend bool operator>=(const unique_ptr&, nullptr_t)
+        {
+            return true;
+        }
+
     private:
         pointer _ptr = nullptr;
         deleter_type _deleter;

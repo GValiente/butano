@@ -170,6 +170,9 @@ public:
     }
 
 private:
+    constexpr static const btn::fixed min_inv_scale = 128;
+    constexpr static const btn::fixed min_scale = 1 / min_inv_scale;
+
     fixed _rotation_angle = 0;
     fixed _scale_x = 1;
     fixed _scale_y = 1;
@@ -202,6 +205,10 @@ private:
         {
             _sx = uint16_t(fixed_t<8>(1).data());
         }
+        else if(_scale_x <= min_scale)
+        {
+            _sx = uint16_t(fixed_t<8>(min_inv_scale).data());
+        }
         else
         {
             fixed inv_scale_x = 1 / _scale_x;
@@ -214,6 +221,10 @@ private:
         if(_scale_y == 1)
         {
             _sy = uint16_t(fixed_t<8>(1).data());
+        }
+        else if(_scale_y <= min_scale)
+        {
+            _sy = uint16_t(fixed_t<8>(min_inv_scale).data());
         }
         else
         {

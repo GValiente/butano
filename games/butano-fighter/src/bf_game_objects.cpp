@@ -28,7 +28,7 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
                 _messages.pop_front();
             }
 
-            _messages.push_back(object_message::create_level_up(hero_rect.position()));
+            _messages.push_back(object_message::create_level_up(_hero_weapon->position()));
             _hero_weapon.reset();
             btn::sound_items::reload.play();
             return true;
@@ -38,34 +38,39 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
     return false;
 }
 
-bool objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs)
+objects::bomb_check_result objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs,
+                                                    int hero_level)
 {
+    bomb_check_result result;
+
     if(_hero_bomb)
     {
         if(_hero_bomb->intersects_hero(hero_rect))
         {
-            _hero_bomb.reset();
+            if(_messages.full())
+            {
+                _messages.pop_front();
+            }
 
             if(max_hero_bombs)
             {
-                //
+                int experience = _hero_bomb->experience(hero_level);
+                result.experience_to_add = experience;
+                _messages.push_back(object_message::create_experience(_hero_bomb->position(), experience));
+                btn::sound_items::gold_3.play();
             }
             else
             {
-                if(_messages.full())
-                {
-                    _messages.pop_front();
-                }
-
-                _messages.push_back(object_message::create_bomb(hero_rect.position()));
+                result.add_bomb = true;
+                _messages.push_back(object_message::create_bomb(_hero_bomb->position()));
                 btn::sound_items::reload.play();
             }
 
-            return true;
+            _hero_bomb.reset();
         }
     }
 
-    return false;
+    return result;
 }
 
 int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
@@ -77,9 +82,19 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
 
     while(it != end)
     {
-        if(it->intersects_hero(hero_rect))
+        gem& gem = *it;
+
+        if(gem.intersects_hero(hero_rect))
         {
-            result += hero_level + 1;
+            int experience = gem.experience(hero_level);
+
+            if(_messages.full())
+            {
+                _messages.pop_front();
+            }
+
+            _messages.push_back(object_message::create_experience(gem.position(), experience));
+            result += experience;
             it = _gems.erase_after(before_it);
         }
         else

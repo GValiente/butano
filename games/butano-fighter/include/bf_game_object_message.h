@@ -20,6 +20,8 @@ public:
         return object_message(position, 2);
     }
 
+    [[nodiscard]] static object_message create_experience(const btn::fixed_point& position, int experience);
+
     [[nodiscard]] bool done() const
     {
         return _move_action.done();

@@ -24,6 +24,8 @@ public:
 
     [[nodiscard]] static btn::span<const hero_bullet_level> all_levels();
 
+    [[nodiscard]] static int gem_experience(int level, btn::fixed y);
+
     constexpr hero_bullet_level(const btn::span<const hero_bullet_event>& _events, const btn::fixed_size& _dimensions,
                                 btn::sound_item _sound_item, int _experience_to_next_level, btn::color _color,
                                 int _loop_frames, int _damage) :

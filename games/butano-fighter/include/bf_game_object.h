@@ -23,7 +23,14 @@ public:
     [[nodiscard]] static object create_hero_bomb(const btn::fixed_point& position,
                                                  const btn::sprite_palette_ptr& flash_palette);
 
+    [[nodiscard]] const btn::fixed_point& position() const
+    {
+        return _position;
+    }
+
     [[nodiscard]] bool intersects_hero(const btn::fixed_rect& hero_rect) const;
+
+    [[nodiscard]] int experience(int hero_level) const;
 
     void update();
 

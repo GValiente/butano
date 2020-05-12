@@ -45,7 +45,7 @@ public:
     void update_high_experience();
 
 private:
-    int _level = 2;
+    int _level = 1;
     int _experience = 0;
     int _bombs_count = 2;
     int _high_experience = 0;

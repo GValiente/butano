@@ -133,26 +133,39 @@ bool enemy::done() const
 
 void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
-    --_move_event_counter;
-
     if(_life)
     {
-        if(! _move_event_counter)
+        if(_move_event_counter)
         {
-            ++_move_event_index;
+            --_move_event_counter;
+        }
+        else
+        {
+            const btn::span<const enemy_move_event>& move_events = _event->move_events;
 
-            if(done())
+            if(_move_event_index + 1 < move_events.size())
             {
-                return;
+                ++_move_event_index;
+
+                const enemy_move_event& move_event = move_events[_move_event_index];
+                _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
+                _move_event_counter = move_event.duration_frames;
+
+                if(move_event.horizontal_flip)
+                {
+                    _sprite.set_horizontal_flip(! _sprite.horizontal_flip());
+                }
             }
-
-            const enemy_move_event& move_event = _event->move_events[_move_event_index];
-            _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
-            _move_event_counter = move_event.duration_frames;
-
-            if(move_event.horizontal_flip)
+            else
             {
-                _sprite.set_horizontal_flip(! _sprite.horizontal_flip());
+                const btn::fixed_point& position = _sprite.position();
+
+                if(position.x() < -constants::view_width || position.x() > constants::view_width ||
+                        position.y() < -constants::view_height || position.y() > constants::view_height)
+                {
+                    ++_move_event_index;
+                    return;
+                }
             }
         }
 
@@ -178,6 +191,8 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
     }
     else
     {
+        --_move_event_counter;
+
         if(_move_event_counter)
         {
             _move_action.update();

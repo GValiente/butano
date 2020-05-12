@@ -21,18 +21,69 @@ namespace
     }
 }
 
-object_message::object_message(const btn::fixed_point& position, int graphics_index) :
-    _move_action(_create_move_action(position, graphics_index)),
-    _animate_action(btn::create_sprite_cached_animate_action_forever(
-                        _move_action.sprite(), 16, btn::sprite_items::object_messages,
-                        graphics_index, graphics_index + 1))
+object_message object_message::create_experience(const btn::fixed_point& position, int experience)
 {
+    int graphics_index = 0;
+
+    switch(experience)
+    {
+
+    case 1:
+        graphics_index = 4;
+        break;
+
+    case 2:
+        graphics_index = 6;
+        break;
+
+    case 3:
+        graphics_index = 8;
+        break;
+
+    case 4:
+        graphics_index = 10;
+        break;
+
+    case 5:
+        graphics_index = 12;
+        break;
+
+    case 10:
+        graphics_index = 14;
+        break;
+
+    case 15:
+        graphics_index = 16;
+        break;
+
+    case 20:
+        graphics_index = 18;
+        break;
+
+    case 25:
+        graphics_index = 20;
+        break;
+
+    default:
+        BTN_ERROR("Invalid experience: ", experience);
+        break;
+    }
+
+    return object_message(position, graphics_index);
 }
 
 void object_message::update()
 {
     _move_action.update();
     _animate_action.update();
+}
+
+object_message::object_message(const btn::fixed_point& position, int graphics_index) :
+    _move_action(_create_move_action(position, graphics_index)),
+    _animate_action(btn::create_sprite_cached_animate_action_forever(
+                        _move_action.sprite(), 16, btn::sprite_items::object_messages,
+                        graphics_index, graphics_index + 1))
+{
 }
 
 }

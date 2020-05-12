@@ -3,7 +3,7 @@
 #include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_gem.h"
-#include "bf_constants.h"
+#include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
 {
@@ -26,6 +26,7 @@ namespace
 
 gem::gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
          const btn::sprite_palette_ptr& palette) :
+    _position(position),
     _sprite(_create_sprite(position, tiles, palette)),
     _tiles(tiles),
     _counter(flash_frames)
@@ -34,17 +35,23 @@ gem::gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr
 
 bool gem::intersects_hero(const btn::fixed_rect& hero_rect) const
 {
-    return btn::fixed_rect(_sprite.position(), dimensions).intersects(hero_rect);
+    return btn::fixed_rect(_position, dimensions).intersects(hero_rect);
 }
 
 bool gem::done() const
 {
-    return _sprite.y() > constants::view_height;
+    return _position.y() > constants::view_height;
+}
+
+int gem::experience(int hero_level) const
+{
+    return hero_bullet_level::gem_experience(hero_level, _position.y());
 }
 
 void gem::update()
 {
-    _sprite.set_position(_sprite.x(), _sprite.y() + constants::background_speed);
+    _position.set_y(_position.y() + constants::background_speed);
+    _sprite.set_y(_position.y());
     --_counter;
 
     if(_counter == 12)

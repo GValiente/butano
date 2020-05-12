@@ -80,11 +80,6 @@ public:
 
     void show_shoot(btn::color fade_color);
 
-    [[nodiscard]] bool add_bomb()
-    {
-        return _status.add_bomb();
-    }
-
     [[nodiscard]] bool throw_bomb()
     {
         return _status.throw_bomb();

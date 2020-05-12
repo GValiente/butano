@@ -15,11 +15,18 @@ class objects
 {
 
 public:
+    struct bomb_check_result
+    {
+        int experience_to_add = 0;
+        bool add_bomb = false;
+    };
+
     explicit objects(const btn::sprite_palette_ptr& flash_palette);
 
     [[nodiscard]] bool check_hero_weapon(const btn::fixed_rect& hero_rect);
 
-    [[nodiscard]] bool check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs);
+    [[nodiscard]] bomb_check_result check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs,
+                                                    int hero_level);
 
     [[nodiscard]] int check_gem(const btn::fixed_rect& hero_rect, int hero_level);
 

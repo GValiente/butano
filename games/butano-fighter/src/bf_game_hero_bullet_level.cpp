@@ -33,9 +33,9 @@ namespace
     constexpr const hero_bullet_level _levels[] = {
         hero_bullet_level(_level0_events, btn::fixed_size(7, 7),    btn::sound_items::gun_5,  6,
                 btn::color(31, 28, 5),  20,   1),
-        hero_bullet_level(_level1_events, btn::fixed_size(14, 14),  btn::sound_items::gun_5,  25,
+        hero_bullet_level(_level1_events, btn::fixed_size(14, 14),  btn::sound_items::gun_5,  250,
                 btn::color(31, 28, 5),  40,   2),
-        hero_bullet_level(_level2_events, btn::fixed_size(11, 16),  btn::sound_items::gun_1,  50,
+        hero_bullet_level(_level2_events, btn::fixed_size(11, 16),  btn::sound_items::gun_1,  500,
                 btn::color(13, 2, 2),   80,   4),
     };
 }
@@ -43,6 +43,29 @@ namespace
 btn::span<const hero_bullet_level> hero_bullet_level::all_levels()
 {
     return _levels;
+}
+
+int hero_bullet_level::gem_experience(int level, btn::fixed y)
+{
+    int height = y.integer() + constants::play_height;
+    int height_level = btn::clamp(height / 16, 0, 4);
+    int multiplier;
+    height_level = 4 - height_level;
+    ++height_level;
+
+    switch(level)
+    {
+
+    case 0:
+        multiplier = 1;
+        break;
+
+    default:
+        multiplier = 5;
+        break;
+    }
+
+    return height_level * multiplier;
 }
 
 }

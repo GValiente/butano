@@ -57,6 +57,8 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
         builder.set_horizontal_flip(false);
         _experience_bar_sprites.push_back(builder.release_build());
     }
+
+    _experience_bar_palette_action.emplace(_experience_bar_sprites[1].palette(), 2, 1);
 }
 
 void scoreboard::update(const hero& hero)
@@ -64,11 +66,7 @@ void scoreboard::update(const hero& hero)
     int level = hero.level();
     int experience = hero.experience();
     int bombs_count = hero.bombs_count();
-
-    if(_experience_bar_palette_action)
-    {
-        _experience_bar_palette_action->update();
-    }
+    _experience_bar_palette_action->update();
 
     if(_bomb_scale_action)
     {
@@ -100,24 +98,11 @@ void scoreboard::update(const hero& hero)
         if(next_level_experience_ratio == 0)
         {
             experience_bar_sprite.set_visible(false);
-            _experience_bar_palette_action.reset();
         }
         else
         {
             experience_bar_sprite.set_scale_x(next_level_experience_ratio);
             experience_bar_sprite.set_visible(true);
-
-            if(next_level_experience_ratio == 1)
-            {
-                if(! _experience_bar_palette_action)
-                {
-                    _experience_bar_palette_action.emplace(experience_bar_sprite.palette(), 2, 1);
-                }
-            }
-            else
-            {
-                _experience_bar_palette_action.reset();
-            }
         }
 
         btn::string<8> text = btn::to_string<8>(experience);

@@ -4,7 +4,7 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_hero_weapons.h"
 #include "btn_sprite_items_hero_bomb_icon.h"
-#include "bf_constants.h"
+#include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
 {
@@ -36,6 +36,11 @@ object object::create_hero_bomb(const btn::fixed_point& position, const btn::spr
 bool object::intersects_hero(const btn::fixed_rect& hero_rect) const
 {
     return btn::fixed_rect(_position, dimensions).intersects(hero_rect);
+}
+
+int object::experience(int hero_level) const
+{
+    return hero_bullet_level::gem_experience(hero_level, -bf::constants::play_height);
 }
 
 void object::update()

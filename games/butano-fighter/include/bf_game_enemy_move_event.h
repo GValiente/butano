@@ -22,6 +22,12 @@ public:
         BTN_CONSTEXPR_ASSERT(_duration_frames >= 1 && _duration_frames < btn::numeric_limits<int16_t>::max(),
                              "Invalid duration frames");
     }
+
+    [[nodiscard]] constexpr enemy_move_event flipped() const
+    {
+        return enemy_move_event(btn::fixed_point(-delta_position.x(), delta_position.y()), duration_frames,
+                                ! horizontal_flip);
+    }
 };
 
 }

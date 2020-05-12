@@ -105,23 +105,22 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
         }
 
         bool max_bombs_count = _status.bombs_count() == constants::max_hero_bombs;
-
-        if(objects.check_hero_bomb(new_body_rect, max_bombs_count))
-        {
-            if(! _status.add_bomb())
-            {
-                //
-            }
-        }
-
         int level = _status.level();
 
-        if(int experience = objects.check_gem(new_body_rect, level))
+        objects::bomb_check_result bomb_check_result = objects.check_hero_bomb(new_body_rect, max_bombs_count, level);
+        int experience_to_add = bomb_check_result.experience_to_add;
+
+        if(bomb_check_result.add_bomb)
         {
-            if(add_experience(experience))
-            {
-                objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), level + 1);
-            }
+            [[maybe_unused]] bool bomb_added = _status.add_bomb();
+            BTN_ASSERT(bomb_added, "Bomb add failed");
+        }
+
+        experience_to_add += objects.check_gem(new_body_rect, level);
+
+        if(experience_to_add && add_experience(experience_to_add))
+        {
+            objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), level + 1);
         }
 
         if(! hero_bomb.active())

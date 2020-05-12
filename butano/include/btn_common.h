@@ -6,16 +6,6 @@
 #include "../hw/include/btn_hw_common.h"
 
 /*!
- * @brief The condition is likely to be true.
- */
-#define BTN_LIKELY(condition) __builtin_expect(!!(condition), true)
-
-/*!
- * @brief The condition is likely to be false.
- */
-#define BTN_UNLIKELY(condition) __builtin_expect(!!(condition), false)
-
-/*!
  * @brief If control flow reaches the point of this macro, the program is undefined.
  */
 #define BTN_UNREACHABLE __builtin_unreachable

@@ -10,7 +10,7 @@
     #define BTN_ASSERT(condition, ...) \
         do \
         { \
-            if(! BTN_UNLIKELY(condition)) \
+            if(! (condition)) [[unlikely]] \
             { \
                 char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
                 btn::istring_base _btn_istring(_btn_string); \
@@ -67,7 +67,7 @@
         constexpr bool constexpr_check(bool condition, const char* file, const char* function, int line,
                                        const char* message)
         {
-            if(BTN_LIKELY(condition))
+            if(condition) [[likely]]
             {
                 return true;
             }

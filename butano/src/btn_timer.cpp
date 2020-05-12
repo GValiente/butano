@@ -16,7 +16,7 @@ int timer::elapsed_ticks() const
 {
     unsigned ticks = hw::timer::ticks();
 
-    if(BTN_UNLIKELY(ticks < _last_ticks))
+    if(ticks < _last_ticks) [[unlikely]]
     {
         uint64_t overflow_result = ticks;
         overflow_result += numeric_limits<unsigned>::max();

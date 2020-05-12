@@ -116,17 +116,40 @@ public:
 
             if(int fraction = value.fraction())
             {
-                auto scale = unsigned(value.scale());
-                unsigned digits = 10000;
-                append('.');
+                constexpr auto scale = unsigned(value.scale());
+                unsigned fraction_result;
 
-                if(uint64_t(scale) * digits < numeric_limits<unsigned>::max())
+                if constexpr(uint64_t(scale) * 10000 < numeric_limits<unsigned>::max())
                 {
-                    append((unsigned(fraction) * digits) / scale);
+                    fraction_result = (unsigned(fraction) * 10000) / scale;
                 }
                 else
                 {
-                    append((uint64_t(fraction) * digits) / scale);
+                    fraction_result = (uint64_t(fraction) * 10000) / scale;
+                }
+
+                if(fraction_result)
+                {
+                    if(fraction_result < 10)
+                    {
+                        append(".000");
+                        append(fraction_result);
+                    }
+                    else if(fraction_result < 100)
+                    {
+                        append(".00");
+                        append(fraction_result);
+                    }
+                    else if(fraction_result < 1000)
+                    {
+                        append(".0");
+                        append(fraction_result);
+                    }
+                    else
+                    {
+                        append('.');
+                        append(fraction_result);
+                    }
                 }
             }
         }

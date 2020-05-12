@@ -3,6 +3,7 @@
 
 #include "btn_math.h"
 #include "btn_fixed.h"
+#include "btn_string.h"
 #include "tests.h"
 
 class fixed_tests : public tests
@@ -29,6 +30,21 @@ public:
 
         BTN_ASSERT(btn::fixed_t<10>(btn::fixed(1)).data() == 1024);
         BTN_ASSERT(btn::fixed_t<10>(btn::fixed(64)).data() == 65536);
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(1)) == btn::string_view("1"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(1)), " - 1");
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.5)) == btn::string_view("0.5000"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.5)), " - 0.5000");
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.25)) == btn::string_view("0.2500"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.25)), " - 0.2500");
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.125)) == btn::string_view("0.1250"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.125)), " - 0.1250");
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.0625)) == btn::string_view("0.0625"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.0625)), " - 0.0625");
     }
 };
 

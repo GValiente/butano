@@ -1,2 +1,2 @@
 # butano
-Modern C++ GBA engine
+Modern C++ high level GBA engine

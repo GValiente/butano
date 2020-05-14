@@ -15,6 +15,8 @@ class BMP:
         self.__file_path = file_path
 
         with open(file_path, 'rb') as file:
+            # https://stackoverflow.com/questions/47003833/how-to-read-bmp-file-header-in-python
+
             file_type = file.read(2).decode()
 
             if file_type != 'BM':
@@ -26,6 +28,10 @@ class BMP:
             self.__pixels_offset = struct.unpack('I', file.read(4))[0]
 
             header_size = struct.unpack('I', file.read(4))[0]
+
+            if header_size == 108:
+                raise ValueError('Invalid header size: ' + str(header_size) +
+                                 ' (BMP files with color space information are not supported)')
 
             if header_size != 40:
                 raise ValueError('Invalid header size: ' + str(header_size))
@@ -54,14 +60,14 @@ class BMP:
             _ = struct.unpack('I', file.read(4))
             _ = struct.unpack('I', file.read(4))
             _ = struct.unpack('I', file.read(4))
-            colors_count = struct.unpack('I', file.read(4))[0]
+            _ = struct.unpack('I', file.read(4))[0]
             _ = struct.unpack('I', file.read(4))
             self.__colors_offset = file.tell()
 
-            if colors_count != 16 and colors_count != 256:
-                raise ValueError('Invalid colors count: ' + str(colors_count))
-
-            if colors_count == 256:
+            if bits_per_pixel == 4:
+                colors_count = 16
+            else:
+                colors_count = 256
                 self.__colors = struct.unpack(str(colors_count) + 'I', file.read(colors_count * 4))
 
                 file.seek(self.__pixels_offset)

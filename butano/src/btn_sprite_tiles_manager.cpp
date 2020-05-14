@@ -779,6 +779,8 @@ void commit()
 
         BTN_SPRITE_TILES_LOG_STATUS();
     }
+
+    data.delay_commit = false;
 }
 
 }

@@ -77,8 +77,10 @@ void erase(sprites_manager_item& item)
         return a->layer_sort_key() < b->layer_sort_key();
     });
 
-    BTN_ASSERT(layers_it != layers_end, "Sprite sort key not found");
-    BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(), "Sprite sort key not found");
+    BTN_ASSERT(layers_it != layers_end,
+               "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
+    BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(),
+               "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
 
     layer* layer = *layers_it;
     layer->erase(item);

@@ -9,8 +9,9 @@
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
-#include "sram_tests.h"
 #include "any_tests.h"
+#include "sprite_sort_test.h"
+#include "sram_tests.h"
 #include "variable_8x16_sprite_font.h"
 
 #if ! BTN_CFG_ASSERT_ENABLED
@@ -32,6 +33,7 @@ int main()
     math_tests();
     sqrt_tests();
     any_tests();
+    sprite_sort_tests();
     sram_tests sram_tests;
 
     if(sram_tests.again())

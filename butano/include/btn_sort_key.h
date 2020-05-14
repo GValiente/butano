@@ -16,14 +16,14 @@ public:
         return numeric_limits<uint16_t>::max();
     }
 
-    [[nodiscard]] constexpr static int max_z_order()
-    {
-        return numeric_limits<int16_t>::max() - 1;
-    }
-
     [[nodiscard]] constexpr static int min_z_order()
     {
-        return -max_z_order();
+        return numeric_limits<int16_t>::min();
+    }
+
+    [[nodiscard]] constexpr static int max_z_order()
+    {
+        return numeric_limits<int16_t>::max();
     }
 
     [[nodiscard]] constexpr static int z_orders()
@@ -34,7 +34,7 @@ public:
     constexpr sort_key() = default;
 
     constexpr sort_key(int priority, int z_order) :
-        _data((priority << 16) + unsigned(z_order + max_z_order()))
+        _fields({ uint16_t(priority), int16_t(z_order) })
     {
         BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
         BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
@@ -42,30 +42,26 @@ public:
 
     [[nodiscard]] constexpr int priority() const
     {
-        return _data >> 16;
+        return _fields.priority;
     }
 
     constexpr void set_priority(int priority)
     {
         BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
 
-        unsigned z_order_part = _data & unsigned(z_orders());
-        _data = (priority << 16) + z_order_part;
+        _fields.priority = priority;
     }
 
     [[nodiscard]] constexpr int z_order() const
     {
-        unsigned z_order_part = _data & unsigned(z_orders());
-        return int(z_order_part) - max_z_order();
+        return _fields.z_order;
     }
 
     constexpr void set_z_order(int z_order)
     {
         BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
 
-        unsigned z_order_part = _data & unsigned(z_orders());
-        _data -= z_order_part;
-        _data += unsigned(z_order + max_z_order());
+        _fields.z_order = z_order;
     }
 
     [[nodiscard]] constexpr friend bool operator==(sort_key a, sort_key b)
@@ -99,7 +95,15 @@ public:
     }
 
 private:
-    unsigned _data = 0;
+    union
+    {
+       struct
+       {
+          uint16_t priority;
+          int16_t z_order;
+       } _fields;
+       unsigned _data = 0;
+    };
 };
 
 }

@@ -34,6 +34,8 @@ public:
         return _dimensions;
     }
 
+    [[nodiscard]] optional<regular_bg_map_ptr> find_map(const bg_tiles_ptr& tiles, const bg_palette_ptr& palette) const;
+
     [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     [[nodiscard]] regular_bg_map_ptr force_create_map(bg_tiles_ptr tiles, bg_palette_ptr palette_ptr) const;

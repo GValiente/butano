@@ -76,8 +76,6 @@ public:
 
     void set_tiles(bg_tiles_ptr&& tiles);
 
-    void set_tiles(const regular_bg_item& item);
-
     void set_tiles(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] const bg_palette_ptr& palette() const;
@@ -86,19 +84,17 @@ public:
 
     void set_palette(bg_palette_ptr&& palette);
 
-    void set_palette(const regular_bg_item& item);
-
     void set_palette(const bg_palette_item& palette_item);
 
     void set_tiles_and_palette(bg_tiles_ptr tiles, bg_palette_ptr palette);
+
+    void set_tiles_and_palette(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
 
     [[nodiscard]] const regular_bg_map_ptr& map() const;
 
     void set_map(const regular_bg_map_ptr& map);
 
     void set_map(regular_bg_map_ptr&& map);
-
-    void set_map(const regular_bg_item& item);
 
     void set_map(const regular_bg_map_item& map_item);
 

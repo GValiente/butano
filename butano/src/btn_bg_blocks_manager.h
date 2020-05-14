@@ -74,9 +74,13 @@ namespace btn::bg_blocks_manager
 
     void set_map_tiles(int id, bg_tiles_ptr&& tiles);
 
+    void remove_map_tiles(int id);
+
     [[nodiscard]] const bg_palette_ptr& map_palette(int id);
 
     void set_map_palette(int id, bg_palette_ptr&& palette);
+
+    void remove_map_palette(int id);
 
     void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
 

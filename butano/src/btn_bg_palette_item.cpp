@@ -6,6 +6,11 @@
 namespace btn
 {
 
+optional<bg_palette_ptr> bg_palette_item::find_palette() const
+{
+    return bg_palette_ptr::find(_palette_ref, _bpp_mode);
+}
+
 bg_palette_ptr bg_palette_item::create_palette() const
 {
     return bg_palette_ptr::find_or_create(_palette_ref, _bpp_mode);

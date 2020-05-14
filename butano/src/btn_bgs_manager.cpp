@@ -29,7 +29,7 @@ namespace
         unsigned usages = 1;
         sort_key bg_sort_key;
         hw::bgs::handle handle;
-        regular_bg_map_ptr map;
+        optional<regular_bg_map_ptr> map;
         uint8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
@@ -46,15 +46,16 @@ namespace
             update(true)
         {
             hw::bgs::setup_regular(builder, handle);
-            hw::bgs::set_tiles_cbb(map.tiles().cbb(), handle);
+            hw::bgs::set_tiles_cbb(map->tiles().cbb(), handle);
             update_map();
         }
 
         void update_map()
         {
-            size map_dimensions = map.dimensions();
-            hw::bgs::set_map_sbb(map.id(), handle);
-            hw::bgs::set_bpp_mode(map.bpp_mode(), handle);
+            const regular_bg_map_ptr& map_ref = *map;
+            size map_dimensions = map_ref.dimensions();
+            hw::bgs::set_map_sbb(map_ref.id(), handle);
+            hw::bgs::set_bpp_mode(map_ref.bpp_mode(), handle);
             hw::bgs::set_map_dimensions(map_dimensions, handle);
             half_dimensions = map_dimensions * 4;
             update_hw_position();
@@ -270,7 +271,7 @@ size dimensions(id_type id)
 const regular_bg_map_ptr& map(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->map;
+    return *item->map;
 }
 
 void set_map(id_type id, const regular_bg_map_ptr& map)
@@ -295,6 +296,12 @@ void set_map(id_type id, regular_bg_map_ptr&& map)
         item->update_map();
         _update_item(*item);
     }
+}
+
+void remove_map(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    item->map.reset();
 }
 
 const fixed_point& position(id_type id)
@@ -433,7 +440,7 @@ void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
 {
     auto item = static_cast<item_type*>(id);
     set_priority(id, attributes.priority());
-    _set_regular_attributes(item->map, attributes, item->handle.cnt);
+    _set_regular_attributes(*item->map, attributes, item->handle.cnt);
     item->map = attributes.map();
     _update_item(*item);
 }
@@ -494,7 +501,7 @@ void update_map_tiles_cbb(int map_id, int tiles_cbb)
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->map.id() == map_id)
+        if(item->map->id() == map_id)
         {
             hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
             _update_item(*item);
@@ -506,7 +513,7 @@ void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->map.id() == map_id)
+        if(item->map->id() == map_id)
         {
             hw::bgs::set_bpp_mode(new_bpp_mode, item->handle);
             _update_item(*item);
@@ -567,7 +574,7 @@ void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* pos
 void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    const regular_bg_map_ptr& map = item->map;
+    const regular_bg_map_ptr& map = *item->map;
     uint16_t bg_cnt = item->handle.cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)

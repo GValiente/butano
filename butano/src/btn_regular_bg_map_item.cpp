@@ -8,6 +8,12 @@
 namespace btn
 {
 
+optional<regular_bg_map_ptr> regular_bg_map_item::find_map(
+        const bg_tiles_ptr& tiles, const bg_palette_ptr& palette) const
+{
+    return regular_bg_map_ptr::find(*_cells_ptr, _dimensions, tiles, palette);
+}
+
 regular_bg_map_ptr regular_bg_map_item::create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
     return regular_bg_map_ptr::find_or_create(*_cells_ptr, _dimensions, move(tiles), move(palette));

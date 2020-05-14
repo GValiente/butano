@@ -1,10 +1,11 @@
 #include "btn_regular_bg_map_ptr.h"
 
 #include "btn_size.h"
-#include "btn_span.h"
 #include "btn_optional.h"
 #include "btn_bg_tiles_ptr.h"
+#include "btn_bg_tiles_item.h"
 #include "btn_bg_palette_ptr.h"
+#include "btn_bg_palette_item.h"
 #include "btn_bg_blocks_manager.h"
 
 namespace btn
@@ -175,6 +176,19 @@ void regular_bg_map_ptr::set_tiles(bg_tiles_ptr&& tiles)
     bg_blocks_manager::set_map_tiles(_handle, move(tiles));
 }
 
+void regular_bg_map_ptr::set_tiles(const bg_tiles_item& tiles_item)
+{
+    if(optional<bg_tiles_ptr> tiles = tiles_item.find_tiles())
+    {
+        bg_blocks_manager::set_map_tiles(_handle, move(*tiles));
+    }
+    else
+    {
+        bg_blocks_manager::remove_map_tiles(_handle);
+        bg_blocks_manager::set_map_tiles(_handle, tiles_item.force_create_tiles());
+    }
+}
+
 const bg_palette_ptr& regular_bg_map_ptr::palette() const
 {
     return bg_blocks_manager::map_palette(_handle);
@@ -190,9 +204,43 @@ void regular_bg_map_ptr::set_palette(bg_palette_ptr&& palette)
     bg_blocks_manager::set_map_palette(_handle, move(palette));
 }
 
+void regular_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
+{
+    if(optional<bg_palette_ptr> palette = palette_item.find_palette())
+    {
+        bg_blocks_manager::set_map_palette(_handle, move(*palette));
+    }
+    else
+    {
+        bg_blocks_manager::remove_map_palette(_handle);
+        bg_blocks_manager::set_map_palette(_handle, palette_item.force_create_palette());
+    }
+}
+
 void regular_bg_map_ptr::set_tiles_and_palette(bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
     bg_blocks_manager::set_map_tiles_and_palette(_handle, move(tiles), move(palette));
+}
+
+void regular_bg_map_ptr::set_tiles_and_palette(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item)
+{
+    optional<bg_tiles_ptr> tiles = tiles_item.find_tiles();
+
+    if(! tiles)
+    {
+        bg_blocks_manager::remove_map_tiles(_handle);
+        tiles = tiles_item.force_create_tiles();
+    }
+
+    optional<bg_palette_ptr> palette = palette_item.find_palette();
+
+    if(! palette)
+    {
+        bg_blocks_manager::remove_map_palette(_handle);
+        palette = palette_item.force_create_palette();
+    }
+
+    bg_blocks_manager::set_map_tiles_and_palette(_handle, move(*tiles), move(*palette));
 }
 
 optional<span<regular_bg_map_cell>> regular_bg_map_ptr::vram()

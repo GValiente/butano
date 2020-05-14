@@ -39,6 +39,8 @@ public:
         return count && count < 1024;
     }
 
+    [[nodiscard]] optional<bg_tiles_ptr> find_tiles() const;
+
     [[nodiscard]] bg_tiles_ptr create_tiles() const;
 
     [[nodiscard]] bg_tiles_ptr force_create_tiles() const;

@@ -40,21 +40,10 @@ namespace
         return blocks * hw::bg_blocks::half_words_per_block();
     }
 
-    [[nodiscard]] constexpr int _half_words_to_blocks(int half_words)
-    {
-        return half_words / hw::bg_blocks::half_words_per_block();
-    }
-
     [[nodiscard]] constexpr int _blocks_to_tiles(int blocks)
     {
         int half_words = _blocks_to_half_words(blocks);
         return _half_words_to_tiles(half_words);
-    }
-
-    [[nodiscard]] constexpr int _tiles_to_blocks(int tiles)
-    {
-        int half_words = _tiles_to_half_words(tiles);
-        return _half_words_to_blocks(half_words);
     }
 
 
@@ -1016,14 +1005,27 @@ void set_map_tiles(int id, bg_tiles_ptr&& tiles)
     {
         BTN_ASSERT(tiles.valid_tiles_count(item.palette->bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
-        int cbb = tiles.cbb();
+        int old_tiles_cbb;
+        int old_tiles_offset;
 
-        if(cbb != item.tiles->cbb())
+        if(item.tiles)
         {
-            bgs_manager::update_map_tiles_cbb(item.start_block, cbb);
+            old_tiles_cbb = item.tiles->cbb();
+            old_tiles_offset = item.tiles_offset();
+        }
+        else
+        {
+            old_tiles_cbb = -1;
+            old_tiles_offset = -1;
         }
 
-        int old_tiles_offset = item.tiles_offset();
+        int new_tiles_cbb = tiles.cbb();
+
+        if(new_tiles_cbb != old_tiles_cbb)
+        {
+            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
+        }
+
         item.tiles = move(tiles);
 
         if(item.tiles_offset() != old_tiles_offset)
@@ -1032,6 +1034,12 @@ void set_map_tiles(int id, bg_tiles_ptr&& tiles)
             data.check_commit = true;
         }
     }
+}
+
+void remove_map_tiles(int id)
+{
+    item_type& item = data.items.item(id);
+    item.tiles.reset();
 }
 
 const bg_palette_ptr& map_palette(int id)
@@ -1046,17 +1054,32 @@ void set_map_palette(int id, bg_palette_ptr&& palette)
 
     if(palette != item.palette)
     {
-        palette_bpp_mode new_bpp_mode = palette.bpp_mode();
-        BTN_ASSERT(item.tiles->valid_tiles_count(new_bpp_mode),
+        palette_bpp_mode new_palette_bpp_mode = palette.bpp_mode();
+        BTN_ASSERT(item.tiles->valid_tiles_count(new_palette_bpp_mode),
                    "Invalid tiles count: ", item.tiles->tiles_count());
 
-        if(new_bpp_mode != item.palette->bpp_mode())
+        int old_palette_bpp_mode;
+        int old_tiles_offset;
+        int old_palette_offset;
+
+        if(item.palette)
         {
-            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_bpp_mode);
+            old_palette_bpp_mode = int(item.palette->bpp_mode());
+            old_tiles_offset = item.tiles_offset();
+            old_palette_offset = item.palette_offset();
+        }
+        else
+        {
+            old_palette_bpp_mode = -1;
+            old_tiles_offset = -1;
+            old_palette_offset = -1;
         }
 
-        int old_tiles_offset = item.tiles_offset();
-        int old_palette_offset = item.palette_offset();
+        if(int(new_palette_bpp_mode) != old_palette_bpp_mode)
+        {
+            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_palette_bpp_mode);
+        }
+
         item.palette = move(palette);
 
         if(item.tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
@@ -1067,22 +1090,40 @@ void set_map_palette(int id, bg_palette_ptr&& palette)
     }
 }
 
+void remove_map_palette(int id)
+{
+    item_type& item = data.items.item(id);
+    item.palette.reset();
+}
+
 void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
     item_type& item = data.items.item(id);
-    palette_bpp_mode new_bpp_mode = palette.bpp_mode();
-    BTN_ASSERT(tiles.valid_tiles_count(new_bpp_mode), "Invalid tiles count: ", tiles.tiles_count());
+    palette_bpp_mode new_palette_bpp_mode = palette.bpp_mode();
+    BTN_ASSERT(tiles.valid_tiles_count(new_palette_bpp_mode), "Invalid tiles count: ", tiles.tiles_count());
 
-    int old_tiles_offset = item.tiles_offset();
-    int old_palette_offset = item.palette_offset();
+    int old_tiles_offset;
+    int old_palette_offset;
+
+    if(item.tiles && item.palette)
+    {
+        old_tiles_offset = item.tiles_offset();
+        old_palette_offset = item.palette_offset();
+    }
+    else
+    {
+        old_tiles_offset = -1;
+        old_palette_offset = -1;
+    }
 
     if(tiles != item.tiles)
     {
-        int cbb = tiles.cbb();
+        int old_tiles_cbb = item.tiles ? item.tiles->cbb() : -1;
+        int new_tiles_cbb = tiles.cbb();
 
-        if(cbb != item.tiles->cbb())
+        if(new_tiles_cbb != old_tiles_cbb)
         {
-            bgs_manager::update_map_tiles_cbb(item.start_block, cbb);
+            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
         item.tiles = move(tiles);
@@ -1090,9 +1131,11 @@ void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& pa
 
     if(palette != item.palette)
     {
-        if(new_bpp_mode != item.palette->bpp_mode())
+        int old_palette_bpp_mode = item.palette ? int(item.palette->bpp_mode()) : -1;
+
+        if(int(new_palette_bpp_mode) != old_palette_bpp_mode)
         {
-            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_bpp_mode);
+            bgs_manager::update_map_palette_bpp_mode(item.start_block, new_palette_bpp_mode);
         }
 
         item.palette = move(palette);

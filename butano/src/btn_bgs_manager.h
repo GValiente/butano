@@ -41,6 +41,8 @@ namespace bgs_manager
 
     void set_map(id_type id, regular_bg_map_ptr&& map);
 
+    void remove_map(id_type id);
+
     [[nodiscard]] const fixed_point& position(id_type id);
 
     [[nodiscard]] fixed_point hw_position(id_type id);

@@ -6,6 +6,11 @@
 namespace btn
 {
 
+optional<bg_tiles_ptr> bg_tiles_item::find_tiles() const
+{
+    return bg_tiles_ptr::find(_tiles_ref);
+}
+
 bg_tiles_ptr bg_tiles_item::create_tiles() const
 {
     return bg_tiles_ptr::find_or_create(_tiles_ref);

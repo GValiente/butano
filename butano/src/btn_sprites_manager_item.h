@@ -29,10 +29,10 @@ public:
     size half_dimensions;
     unsigned usages = 1;
     sort_key sprite_sort_key;
-    sprite_tiles_ptr tiles;
-    int8_t handles_index = -1;
+    optional<sprite_tiles_ptr> tiles;
+    optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
-    sprite_palette_ptr palette;
+    int8_t handles_index = -1;
     unsigned double_size_mode: 2;
     bool visible: 1;
     bool ignore_camera: 1;

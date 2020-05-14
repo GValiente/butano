@@ -16,7 +16,8 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
     ignore_camera(false),
     remove_affine_mat_when_not_needed(true)
 {
-    hw::sprites::setup_regular(shape_size, tiles.id(), palette.id(), palette.bpp_mode(), handle);
+    const sprite_palette_ptr& palette_ref = *palette;
+    hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
     update_half_dimensions();
     on_screen = false;
     visible = true;
@@ -28,28 +29,30 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     position(builder.position()),
     sprite_sort_key(builder.bg_priority(), builder.z_order()),
     tiles(move(_tiles)),
-    affine_mat(builder.release_affine_mat()),
     palette(move(_palette)),
+    affine_mat(builder.release_affine_mat()),
     double_size_mode(unsigned(builder.double_size_mode())),
     ignore_camera(builder.ignore_camera()),
     remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
 {
+    const sprite_palette_ptr& palette_ref = *palette;
+
     if(affine_mat)
     {
         if(remove_affine_mat_when_not_needed && affine_mat->identity())
         {
             affine_mat.reset();
-            hw::sprites::setup_regular(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
+            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
         }
         else
         {
-            hw::sprites::setup_affine(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
+            hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
             hw::sprites::set_affine_mat(affine_mat->id(), double_size(), handle);
         }
     }
     else
     {
-        hw::sprites::setup_regular(builder, tiles.id(), palette.id(), palette.bpp_mode(), handle);
+        hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
     }
 
     update_half_dimensions();

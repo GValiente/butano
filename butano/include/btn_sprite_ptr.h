@@ -107,10 +107,6 @@ public:
 
     void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles);
 
-    void set_tiles(const sprite_item& item);
-
-    void set_tiles(const sprite_item& item, int graphics_index);
-
     void set_tiles(const sprite_tiles_item& tiles_item);
 
     void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index);
@@ -125,9 +121,11 @@ public:
 
     void set_palette(sprite_palette_ptr&& palette);
 
-    void set_palette(const sprite_item& item);
-
     void set_palette(const sprite_palette_item& palette_item);
+
+    void set_tiles_and_palette(sprite_tiles_ptr tiles, sprite_palette_ptr palette);
+
+    void set_tiles_and_palette(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
 
     void set_item(const sprite_item& item);
 

@@ -71,11 +71,15 @@ namespace sprites_manager
 
     void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles);
 
+    void remove_tiles(id_type id);
+
     [[nodiscard]] const sprite_palette_ptr& palette(id_type id);
 
     void set_palette(id_type id, const sprite_palette_ptr& palette);
 
     void set_palette(id_type id, sprite_palette_ptr&& palette);
+
+    void remove_palette(id_type id);
 
     void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                                sprite_palette_ptr&& palette);

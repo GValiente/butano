@@ -41,6 +41,8 @@ public:
         return _bpp_mode;
     }
 
+    [[nodiscard]] optional<sprite_palette_ptr> find_palette() const;
+
     [[nodiscard]] sprite_palette_ptr create_palette() const;
 
     [[nodiscard]] sprite_palette_ptr force_create_palette() const;

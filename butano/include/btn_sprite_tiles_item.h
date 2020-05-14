@@ -53,9 +53,13 @@ public:
         return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
     }
 
+    [[nodiscard]] optional<sprite_tiles_ptr> find_tiles() const;
+
     [[nodiscard]] sprite_tiles_ptr create_tiles() const;
 
     [[nodiscard]] sprite_tiles_ptr force_create_tiles() const;
+
+    [[nodiscard]] optional<sprite_tiles_ptr> find_tiles(int graphics_index) const;
 
     [[nodiscard]] sprite_tiles_ptr create_tiles(int graphics_index) const;
 

@@ -372,7 +372,7 @@ btn::size dimensions(id_type id)
 const sprite_tiles_ptr& tiles(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->tiles;
+    return *item->tiles;
 }
 
 void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
@@ -381,8 +381,8 @@ void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(item->tiles.tiles_count() == tiles.tiles_count(), "Invalid tiles count: ",
-                   item->tiles.tiles_count(), " - ", tiles.tiles_count());
+        BTN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
+                   "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
         item->tiles = tiles;
@@ -396,8 +396,8 @@ void set_tiles(id_type id, sprite_tiles_ptr&& tiles)
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(item->tiles.tiles_count() == tiles.tiles_count(), "Invalid tiles count: ",
-                   item->tiles.tiles_count(), " - ", tiles.tiles_count());
+        BTN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
+                   "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
         item->tiles = move(tiles);
@@ -411,9 +411,9 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette.bpp_mode()),
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette.bpp_mode()));
+                   shape_size.tiles_count(item->palette->bpp_mode()));
 
         hw::sprites::handle& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
@@ -434,15 +434,21 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
     }
 }
 
+void remove_tiles(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    item->tiles.reset();
+}
+
 void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles)
 {
     auto item = static_cast<item_type*>(id);
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette.bpp_mode()),
+        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette.bpp_mode()));
+                   shape_size.tiles_count(item->palette->bpp_mode()));
 
         hw::sprites::handle& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
@@ -466,7 +472,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 const sprite_palette_ptr& palette(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->palette;
+    return *item->palette;
 }
 
 void set_palette(id_type id, const sprite_palette_ptr& palette)
@@ -475,8 +481,8 @@ void set_palette(id_type id, const sprite_palette_ptr& palette)
 
     if(palette != item->palette)
     {
-        BTN_ASSERT(item->palette.bpp_mode() == palette.bpp_mode(), "Palette BPP mode mismatch: ",
-                   int(item->palette.bpp_mode()), " - ", int(palette.bpp_mode()));
+        BTN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
+                   "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
@@ -490,13 +496,19 @@ void set_palette(id_type id, sprite_palette_ptr&& palette)
 
     if(palette != item->palette)
     {
-        BTN_ASSERT(item->palette.bpp_mode() == palette.bpp_mode(), "Palette BPP mode mismatch: ",
-                   int(item->palette.bpp_mode()), " - ", int(palette.bpp_mode()));
+        BTN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
+                   "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);
         _update_handle(*item);
     }
+}
+
+void remove_palette(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    item->palette.reset();
 }
 
 void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
@@ -986,7 +998,7 @@ void set_affine_second_attributes(id_type id, const sprite_affine_second_attribu
 sprite_third_attributes third_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return sprite_third_attributes(item->tiles, item->palette, item->bg_priority());
+    return sprite_third_attributes(*item->tiles, *item->palette, item->bg_priority());
 }
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)

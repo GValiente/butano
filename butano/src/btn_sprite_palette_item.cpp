@@ -6,6 +6,11 @@
 namespace btn
 {
 
+optional<sprite_palette_ptr> sprite_palette_item::find_palette() const
+{
+    return sprite_palette_ptr::find(_palette_ref, _bpp_mode);
+}
+
 sprite_palette_ptr sprite_palette_item::create_palette() const
 {
     return sprite_palette_ptr::find_or_create(_palette_ref, _bpp_mode);

@@ -13,7 +13,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr bool skip = true;
+    constexpr bool skip = false;
 
     constexpr const int wait_1_frames = 30;
     constexpr const int scale_frames = 40;

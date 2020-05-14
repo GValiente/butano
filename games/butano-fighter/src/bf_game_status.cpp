@@ -96,7 +96,7 @@ bool status::add_experience(int experience)
 
 bool status::add_bomb()
 {
-    if(_bombs_count < constants::max_hero_bombs)
+    if(_bombs_count == constants::max_hero_bombs)
     {
         return false;
     }

@@ -39,6 +39,9 @@
         "enemy_bullets": {
             "height": 16
         },
+        "enemy_explosion": {
+            "height": 64
+        },
         "flash_palette": {
             "height": 16
         },
@@ -56,6 +59,9 @@
         },
         "stage_1_characters_1": {
             "height": 16
+        },
+        "stage_1_characters_1_team": {
+            "height": 64
         },
         "stage_1_characters_2": {
             "height": 16

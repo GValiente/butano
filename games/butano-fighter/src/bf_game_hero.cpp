@@ -298,40 +298,12 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     }
     else if(_death_counter == 70)
     {
-        const btn::fixed_point& body_position = body_sprite.position();
-        btn::fixed body_x = body_position.x() + 2;
-        btn::fixed body_y = body_position.y() + 4;
-        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x - 32, body_y - 32));
-        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x + 32, body_y - 32, 1));
-        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x - 32, body_y + 32, 2));
-        _death_sprites.push_back(btn::sprite_items::hero_death.create_sprite(body_x + 32, body_y + 32, 3));
-
+        btn::fixed_point explosion_position = body_sprite.position() + btn::fixed_point(2, 4);
+        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0);
         _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
-
         background.show_hero_dead();
         btn::sound_items::death.play();
-    }
-    else if(_death_counter > 70 && (_death_counter - 70) % 4 == 0)
-    {
-        int animation_index = (_death_counter - 70) / 4;
-
-        if(animation_index < 6)
-        {
-            if(animation_index == 3)
-            {
-                body_sprite.set_visible(false);
-            }
-
-            for(int index = 0; index < 4; ++index)
-            {
-                _death_sprites[index].set_tiles(btn::sprite_items::hero_death, (animation_index * 4) + index);
-            }
-        }
-        else
-        {
-            _death_sprites.clear();
-        }
     }
     else if(_death_counter == 220)
     {
@@ -346,6 +318,12 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     }
 
     ++_death_counter;
+
+    if(_death_explosion && ! _death_explosion->done())
+    {
+        _death_explosion->update();
+        body_sprite.set_visible(_death_explosion->show_target_sprite());
+    }
 
     if(body_sprite.visible())
     {

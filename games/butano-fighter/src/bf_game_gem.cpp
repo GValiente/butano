@@ -19,7 +19,7 @@ namespace
     {
         btn::sprite_builder builder(btn::sprite_items::gem.shape_size(), tiles[0], palette);
         builder.set_position(position);
-        builder.set_z_order(constants::objects_z_order);
+        builder.set_z_order(constants::gems_z_order);
         return builder.release_build();
     }
 }

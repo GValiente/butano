@@ -6,6 +6,7 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "bf_game_status.h"
+#include "bf_game_explosion.h"
 
 namespace bf
 {
@@ -109,7 +110,7 @@ private:
     btn::optional<btn::sprite_rotate_by_action> _weapon_rotate_action;
     btn::optional<btn::sprite_palette_fade_to_action> _weapon_palette_fade_action;
     btn::optional<btn::music_volume_to_action> _music_volume_action;
-    btn::vector<btn::sprite_ptr, 4> _death_sprites;
+    btn::optional<explosion> _death_explosion;
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
     int _body_shadows_counter = 0;

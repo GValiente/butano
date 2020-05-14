@@ -18,7 +18,8 @@ public:
     {
         ROTATE,
         HORIZONTAL_SCALE,
-        VERTICAL_SCALE
+        VERTICAL_SCALE,
+        EXPLOSION
     };
 
     const btn::sprite_item& sprite_item;

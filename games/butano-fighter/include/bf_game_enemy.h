@@ -3,6 +3,7 @@
 
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
+#include "bf_game_explosion.h"
 
 namespace btn
 {
@@ -81,6 +82,7 @@ private:
     btn::optional<btn::sprite_rotate_by_action> _rotate_action;
     btn::optional<btn::sprite_scale_x_to_action> _scale_x_action;
     btn::optional<btn::sprite_scale_y_to_action> _scale_y_action;
+    btn::optional<explosion> _explosion;
     btn::sprite_palette_ptr _sprite_palette;
     btn::sprite_palette_ptr _damage_palette;
     int16_t _life;
@@ -95,7 +97,7 @@ private:
     int8_t _damage_palette_counter;
     int8_t _tag;
 
-    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage, bool show_animation);
+    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage);
 };
 
 }

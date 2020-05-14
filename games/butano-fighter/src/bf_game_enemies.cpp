@@ -16,7 +16,7 @@ enemies::enemies(const btn::sprite_palette_ptr& damage_palette) :
 
 bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
 {
-    if(data.bullet_rect.y() < -(constants::play_height + 16))
+    if(data.bullet_rect.bottom() < -(constants::play_height + 8))
     {
         return false;
     }

@@ -9,7 +9,7 @@ namespace btn
 
 namespace keypad
 {
-    enum class button_type;
+    enum class key_type;
 }
 
 namespace core
@@ -20,9 +20,9 @@ namespace core
 
     void update(int frames);
 
-    void sleep(keypad::button_type wake_up_button);
+    void sleep(keypad::key_type wake_up_key);
 
-    void sleep(const span<const keypad::button_type>& wake_up_buttons);
+    void sleep(const span<const keypad::key_type>& wake_up_keys);
 
     [[noreturn]] void reset();
 

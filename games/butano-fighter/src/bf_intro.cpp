@@ -69,7 +69,7 @@ btn::optional<scene_type> intro::update()
     {
         if(_counter)
         {
-            if(btn::keypad::pressed(btn::keypad::button_type::A))
+            if(btn::keypad::pressed(btn::keypad::key_type::A))
             {
                 _counter = 0;
             }

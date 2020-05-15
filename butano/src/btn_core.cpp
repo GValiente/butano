@@ -9,6 +9,7 @@
 #include "btn_profiler.h"
 #include "btn_bgs_manager.h"
 #include "btn_audio_manager.h"
+#include "btn_keypad_manager.h"
 #include "btn_display_manager.h"
 #include "btn_sprites_manager.h"
 #include "btn_palettes_manager.h"
@@ -20,7 +21,6 @@
 #include "../hw/include/btn_hw_core.h"
 #include "../hw/include/btn_hw_sram.h"
 #include "../hw/include/btn_hw_timer.h"
-#include "../hw/include/btn_hw_keypad.h"
 #include "../hw/include/btn_hw_game_pak.h"
 
 #if BTN_CFG_ASSERT_ENABLED
@@ -121,7 +121,7 @@ void init()
     update();
 
     // Keypad polling fix:
-    hw::keypad::update();
+    keypad_manager::update();
 
     // Reset profiler:
     BTN_PROFILER_RESET();
@@ -205,7 +205,7 @@ void update()
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_keypad");
-    hw::keypad::update();
+    keypad_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 }
 
@@ -219,24 +219,24 @@ void update(int frames)
     }
 }
 
-void sleep(keypad::button_type wake_up_button)
+void sleep(keypad::key_type wake_up_key)
 {
-    const keypad::button_type wake_up_buttons[] = { wake_up_button };
-    sleep(wake_up_buttons);
+    const keypad::key_type wake_up_keys[] = { wake_up_key };
+    sleep(wake_up_keys);
 }
 
-void sleep(const span<const keypad::button_type>& wake_up_buttons)
+void sleep(const span<const keypad::key_type>& wake_up_keys)
 {
-    BTN_ASSERT(! wake_up_buttons.empty(), "There's no wake up buttons");
+    BTN_ASSERT(! wake_up_keys.empty(), "There's no wake up keys");
 
-    // Wait until a wake up button is not pressed:
+    // Wait until a wake up key is not pressed:
     while(true)
     {
         bool wait = true;
 
-        for(keypad::button_type wake_up_button : wake_up_buttons)
+        for(keypad::key_type wake_up_key : wake_up_keys)
         {
-            if(keypad::up(wake_up_button))
+            if(keypad::up(wake_up_key))
             {
                 wait = false;
                 break;
@@ -262,8 +262,8 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     // Disable irqs:
     disable();
 
-    // Enable keypad interrupt with the specified wake up buttons:
-    hw::keypad::set_interrupt(wake_up_buttons);
+    // Enable keypad interrupt with the specified wake up keys:
+    keypad_manager::set_interrupt(wake_up_keys);
     hw::irq::add(hw::irq::id::KEYPAD, nullptr);
 
     // Enable sleep mode:
@@ -276,7 +276,7 @@ void sleep(const span<const keypad::button_type>& wake_up_buttons)
     enable();
 
     // Update keypad:
-    hw::keypad::update();
+    keypad_manager::update();
 
     // Wait for vblank:
     hw::core::wait_for_vblank();

@@ -1,33 +1,28 @@
 #include "btn_keypad.h"
 
-#include "../hw/include/btn_hw_keypad.h"
+#include "btn_keypad_manager.h"
 
 namespace btn::keypad
 {
 
-bool down(button_type button)
+bool down(key_type key)
 {
-    return hw::keypad::down(button);
+    return keypad_manager::down(key);
 }
 
-bool up(button_type button)
+bool up(key_type key)
 {
-    return hw::keypad::up(button);
+    return keypad_manager::up(key);
 }
 
-bool held(button_type button)
+bool pressed(key_type key)
 {
-    return hw::keypad::held(button);
+    return keypad_manager::pressed(key);
 }
 
-bool pressed(button_type button)
+bool released(key_type key)
 {
-    return hw::keypad::pressed(button);
-}
-
-bool released(button_type button)
-{
-    return hw::keypad::released(button);
+    return keypad_manager::released(key);
 }
 
 }

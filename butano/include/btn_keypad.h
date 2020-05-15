@@ -5,7 +5,7 @@
 
 namespace btn::keypad
 {
-    enum class button_type
+    enum class key_type
     {
         A =         0x0001,
         B =         0x0002,
@@ -19,15 +19,13 @@ namespace btn::keypad
         L =         0x0200
     };
 
-    [[nodiscard]] bool down(button_type button);
+    [[nodiscard]] bool down(key_type key);
 
-    [[nodiscard]] bool up(button_type button);
+    [[nodiscard]] bool up(key_type key);
 
-    [[nodiscard]] bool held(button_type button);
+    [[nodiscard]] bool pressed(key_type key);
 
-    [[nodiscard]] bool pressed(button_type button);
-
-    [[nodiscard]] bool released(button_type button);
+    [[nodiscard]] bool released(key_type key);
 }
 
 #endif

@@ -375,7 +375,7 @@ btn::optional<scene_type> title::_menu()
             }
         }
 
-        if(btn::keypad::pressed(btn::keypad::button_type::A))
+        if(btn::keypad::pressed(btn::keypad::key_type::A))
         {
             if(btn::blending::intensity_alpha() > 0)
             {
@@ -396,7 +396,7 @@ btn::optional<scene_type> title::_menu()
 
             _state = state::HIDE_CURSOR;
         }
-        else if(btn::keypad::pressed(btn::keypad::button_type::UP) || btn::keypad::pressed(btn::keypad::button_type::DOWN))
+        else if(btn::keypad::pressed(btn::keypad::key_type::UP) || btn::keypad::pressed(btn::keypad::key_type::DOWN))
         {
             if(_start_selected)
             {

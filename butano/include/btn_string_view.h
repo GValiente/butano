@@ -147,14 +147,8 @@ public:
         BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
         BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
 
-        size_type n = 0;
-
-        if(size_type sz = size())
-        {
-            n = min(count, sz);
-            btn::copy(_begin, _begin + n, destination);
-        }
-
+        size_type n = min(count, size());
+        btn::copy(_begin, _begin + n, destination);
         return n;
     }
 
@@ -217,20 +211,14 @@ public:
     {
         BTN_CONSTEXPR_ASSERT(n <= size(), "Invalid n");
 
-        if(n)
-        {
-            _begin += n;
-        }
+        _begin += n;
     }
 
     constexpr void remove_suffix(size_type n)
     {
         BTN_CONSTEXPR_ASSERT(n <= size(), "Invalid n");
 
-        if(n)
-        {
-            _end -= n;
-        }
+        _end -= n;
     }
 
     [[nodiscard]] constexpr size_type compare(const string_view& other) const

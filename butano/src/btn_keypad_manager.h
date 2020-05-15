@@ -8,9 +8,7 @@ namespace btn::keypad_manager
 {
     using key_type = keypad::key_type;
 
-    [[nodiscard]] bool down(key_type key);
-
-    [[nodiscard]] bool up(key_type key);
+    [[nodiscard]] bool held(key_type key);
 
     [[nodiscard]] bool pressed(key_type key);
 

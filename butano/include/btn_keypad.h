@@ -19,13 +19,71 @@ namespace btn::keypad
         L =         0x0200
     };
 
-    [[nodiscard]] bool down(key_type key);
-
-    [[nodiscard]] bool up(key_type key);
+    [[nodiscard]] bool held(key_type key);
 
     [[nodiscard]] bool pressed(key_type key);
 
     [[nodiscard]] bool released(key_type key);
+
+    [[nodiscard]] bool a_held();
+
+    [[nodiscard]] bool a_pressed();
+
+    [[nodiscard]] bool a_released();
+
+    [[nodiscard]] bool b_held();
+
+    [[nodiscard]] bool b_pressed();
+
+    [[nodiscard]] bool b_released();
+
+    [[nodiscard]] bool select_held();
+
+    [[nodiscard]] bool select_pressed();
+
+    [[nodiscard]] bool select_released();
+
+    [[nodiscard]] bool start_held();
+
+    [[nodiscard]] bool start_pressed();
+
+    [[nodiscard]] bool start_released();
+
+    [[nodiscard]] bool right_held();
+
+    [[nodiscard]] bool right_pressed();
+
+    [[nodiscard]] bool right_released();
+
+    [[nodiscard]] bool left_held();
+
+    [[nodiscard]] bool left_pressed();
+
+    [[nodiscard]] bool left_released();
+
+    [[nodiscard]] bool up_held();
+
+    [[nodiscard]] bool up_pressed();
+
+    [[nodiscard]] bool up_released();
+
+    [[nodiscard]] bool down_held();
+
+    [[nodiscard]] bool down_pressed();
+
+    [[nodiscard]] bool down_released();
+
+    [[nodiscard]] bool r_held();
+
+    [[nodiscard]] bool r_pressed();
+
+    [[nodiscard]] bool r_released();
+
+    [[nodiscard]] bool l_held();
+
+    [[nodiscard]] bool l_pressed();
+
+    [[nodiscard]] bool l_released();
 }
 
 #endif

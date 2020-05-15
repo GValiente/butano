@@ -9,12 +9,12 @@ namespace bf
 
 void keypad_shortcuts::update()
 {
-    bool b_held = btn::keypad::down(btn::keypad::key_type::B);
-    bool a_held = btn::keypad::down(btn::keypad::key_type::A);
-    bool l_held = btn::keypad::down(btn::keypad::key_type::L);
-    bool r_held = btn::keypad::down(btn::keypad::key_type::R);
-    bool select_held = btn::keypad::down(btn::keypad::key_type::SELECT);
-    bool start_held = btn::keypad::down(btn::keypad::key_type::START);
+    bool b_held = btn::keypad::b_held();
+    bool a_held = btn::keypad::a_held();
+    bool l_held = btn::keypad::l_held();
+    bool r_held = btn::keypad::r_held();
+    bool select_held = btn::keypad::select_held();
+    bool start_held = btn::keypad::start_held();
 
     if(_sleep_ready)
     {

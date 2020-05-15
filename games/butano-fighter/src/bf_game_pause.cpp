@@ -16,7 +16,7 @@ void pause::update(const butano_background& butano_background)
 {
     if(_active)
     {
-        if(btn::keypad::pressed(btn::keypad::key_type::START))
+        if(btn::keypad::start_pressed())
         {
             _bg.reset();
             btn::bg_palettes::set_grayscale_intensity(0);
@@ -33,7 +33,7 @@ void pause::update(const butano_background& butano_background)
     }
     else
     {
-        if(! butano_background.silhouette_visible() && btn::keypad::pressed(btn::keypad::key_type::START))
+        if(! butano_background.silhouette_visible() && btn::keypad::start_pressed())
         {
             btn::regular_bg_builder builder(btn::regular_bg_items::pause);
             builder.set_priority(0);

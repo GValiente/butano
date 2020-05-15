@@ -29,7 +29,7 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 {
     if(hero.alive())
     {
-        if(btn::keypad::down(btn::keypad::key_type::B))
+        if(btn::keypad::b_held())
         {
             _b_held_counter = 10;
         }

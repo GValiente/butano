@@ -215,14 +215,14 @@ namespace
                 {
                     core::update();
 
-                    if(current_index && keypad::pressed(keypad::key_type::UP))
+                    if(current_index && keypad::up_pressed())
                     {
                         --current_index;
                         tte_erase_screen();
                         break;
                     }
                     else if(num_entries > max_visible_entries && current_index + max_visible_entries < num_entries &&
-                            keypad::pressed(keypad::key_type::DOWN))
+                            keypad::down_pressed())
                     {
                         ++current_index;
                         tte_erase_screen();

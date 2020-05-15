@@ -144,7 +144,7 @@ btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_
     btn::fixed_point new_body_position = body_position;
     btn::fixed speed = _shooting ? 1 : 2;
 
-    if(btn::keypad::down(btn::keypad::key_type::LEFT))
+    if(btn::keypad::left_held())
     {
         btn::fixed sprite_x = btn::max(body_position.x() - speed, btn::fixed(-constants::play_width));
         body_sprite.set_x(sprite_x);
@@ -155,7 +155,7 @@ btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_
             btn::camera::set_x(btn::max(btn::camera::x() - speed, btn::fixed(-constants::camera_width)));
         }
     }
-    else if(btn::keypad::down(btn::keypad::key_type::RIGHT))
+    else if(btn::keypad::right_held())
     {
         btn::fixed sprite_x = btn::min(body_position.x() + speed, btn::fixed(constants::play_width));
         body_sprite.set_x(sprite_x);
@@ -167,13 +167,13 @@ btn::fixed_point hero::_move(const btn::fixed_point& body_position, btn::sprite_
         }
     }
 
-    if(btn::keypad::down(btn::keypad::key_type::UP))
+    if(btn::keypad::up_held())
     {
         btn::fixed sprite_y = btn::max(body_position.y() - speed, btn::fixed(-constants::play_height));
         body_sprite.set_y(sprite_y);
         new_body_position.set_y(sprite_y);
     }
-    else if(btn::keypad::down(btn::keypad::key_type::DOWN))
+    else if(btn::keypad::down_held())
     {
         btn::fixed sprite_y = btn::min(body_position.y() + speed, btn::fixed(constants::play_height));
         body_sprite.set_y(sprite_y);

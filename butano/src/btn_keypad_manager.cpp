@@ -11,8 +11,7 @@ namespace
     {
 
     public:
-        unsigned down_keys = 0;
-        unsigned up_keys = 0;
+        unsigned held_keys = 0;
         unsigned pressed_keys = 0;
         unsigned released_keys = 0;
     };
@@ -20,14 +19,9 @@ namespace
     BTN_DATA_EWRAM static_data data;
 }
 
-bool down(key_type key)
+bool held(key_type key)
 {
-    return data.down_keys & unsigned(key);
-}
-
-bool up(key_type key)
-{
-    return data.up_keys & unsigned(key);
+    return data.held_keys & unsigned(key);
 }
 
 bool pressed(key_type key)
@@ -42,10 +36,9 @@ bool released(key_type key)
 
 void update()
 {
-    unsigned previous_keys = data.down_keys;
+    unsigned previous_keys = data.held_keys;
     unsigned current_keys = hw::keypad::get();
-    data.down_keys = current_keys;
-    data.up_keys = ~current_keys;
+    data.held_keys = current_keys;
     data.pressed_keys = current_keys & ~previous_keys;
     data.released_keys = ~current_keys & previous_keys;
 }

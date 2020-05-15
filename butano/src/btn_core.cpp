@@ -236,7 +236,7 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
         for(keypad::key_type wake_up_key : wake_up_keys)
         {
-            if(keypad::up(wake_up_key))
+            if(! keypad::held(wake_up_key))
             {
                 wait = false;
                 break;

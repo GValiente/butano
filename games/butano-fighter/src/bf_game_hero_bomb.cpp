@@ -39,7 +39,7 @@ void hero_bomb::update(const intro& intro, hero& hero, enemies& enemies, enemy_b
     {
 
     case status_type::INACTIVE:
-        if(hero.alive() && ! intro.active() && btn::keypad::pressed(btn::keypad::key_type::A))
+        if(hero.alive() && ! intro.active() && btn::keypad::a_pressed())
         {
             if(hero.throw_bomb())
             {

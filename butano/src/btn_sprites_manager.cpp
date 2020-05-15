@@ -614,10 +614,12 @@ void set_position(id_type id, const fixed_point& position)
 
     if(position_diff != fixed_point())
     {
+        hw::sprites::handle& handle = item->handle;
+        fixed_point hw_position = item->hw_position + position_diff;
         item->position = position;
-        item->hw_position += position_diff;
-        hw::sprites::set_x(item->hw_position.x().integer(), item->handle);
-        hw::sprites::set_y(item->hw_position.y().integer(), item->handle);
+        item->hw_position = hw_position;
+        hw::sprites::set_x(hw_position.x().integer(), handle);
+        hw::sprites::set_y(hw_position.y().integer(), handle);
         _update_handle(*item);
 
         if(item->visible)

@@ -87,6 +87,11 @@ namespace
 
 void init()
 {
+    init(string_view());
+}
+
+void init(const string_view& keypad_logger_input)
+{
     // Init storage systems:
     hw::game_pak::init();
     hw::sram::init();
@@ -107,6 +112,7 @@ void init()
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();
+    keypad_manager::init(keypad_logger_input);
 
     // WTF hack (if it isn't present and flto is enabled, sometimes everything crash):
     string<32> hack_string;
@@ -125,7 +131,6 @@ void init()
 
     // Reset profiler:
     BTN_PROFILER_RESET();
-
 }
 
 void update()

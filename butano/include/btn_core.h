@@ -7,6 +7,8 @@
 namespace btn
 {
 
+class string_view;
+
 namespace keypad
 {
     enum class key_type;
@@ -15,6 +17,8 @@ namespace keypad
 namespace core
 {
     void init();
+
+    void init(const string_view& keypad_logger_input);
 
     void update();
 

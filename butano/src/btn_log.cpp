@@ -5,7 +5,7 @@
 
     namespace btn
     {
-        static_assert(BTN_CFG_LOG_MAX_SIZE > 0);
+        static_assert(BTN_CFG_LOG_MAX_SIZE >= 16);
 
         void log(const istring_base& message)
         {

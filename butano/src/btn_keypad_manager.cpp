@@ -1,22 +1,73 @@
 #include "btn_keypad_manager.h"
 
+#include "btn_string_view.h"
+#include "btn_config_keypad.h"
 #include "../hw/include/btn_hw_keypad.h"
+
+#if BTN_CFG_KEYPAD_LOG_ENABLED
+    #include "btn_log.h"
+    #include "btn_string.h"
+
+    static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
+#endif
 
 namespace btn::keypad_manager
 {
 
 namespace
 {
+    #if BTN_CFG_KEYPAD_LOG_ENABLED
+        class keypad_logger
+        {
+
+        public:
+            keypad_logger()
+            {
+                BTN_LOG("-- KEYPAD LOGGER INIT ---");
+            }
+
+            void log(unsigned keys)
+            {
+                uint8_t low_part = keys & 0b11111;
+                uint8_t high_part = (keys & 0b1111100000) >> 5;
+                _buffer.append(char(low_part) + '0');
+                _buffer.append(char(high_part) + '0');
+
+                if(_buffer.available() < 2)
+                {
+                    BTN_LOG(_buffer);
+                    _buffer.clear();
+                }
+            }
+
+        private:
+            string<BTN_CFG_LOG_MAX_SIZE - 8> _buffer;
+        };
+    #endif
+
     class static_data
     {
 
     public:
+        string_view logger_input;
         unsigned held_keys = 0;
         unsigned pressed_keys = 0;
         unsigned released_keys = 0;
+
+        #if BTN_CFG_KEYPAD_LOG_ENABLED
+            keypad_logger logger;
+        #endif
     };
 
     BTN_DATA_EWRAM static_data data;
+}
+
+void init(const string_view& logger_input)
+{
+    BTN_ASSERT(logger_input.empty() || logger_input.size() % 2 == 0,
+               "Invalid logger input size: ", logger_input.size());
+
+    data.logger_input = logger_input;
 }
 
 bool held(key_type key)
@@ -37,10 +88,27 @@ bool released(key_type key)
 void update()
 {
     unsigned previous_keys = data.held_keys;
-    unsigned current_keys = hw::keypad::get();
+    unsigned current_keys;
+
+    if(data.logger_input.empty())
+    {
+        current_keys = hw::keypad::get();
+    }
+    else
+    {
+        uint8_t low_part = data.logger_input[0] - '0';
+        uint8_t high_part = data.logger_input[1] - '0';
+        current_keys = (high_part << 5) + low_part;
+        data.logger_input.remove_prefix(2);
+    }
+
     data.held_keys = current_keys;
     data.pressed_keys = current_keys & ~previous_keys;
     data.released_keys = ~current_keys & previous_keys;
+
+    #if BTN_CFG_KEYPAD_LOG_ENABLED
+        data.logger.log(current_keys);
+    #endif
 }
 
 void set_interrupt(const span<const key_type>& keys)

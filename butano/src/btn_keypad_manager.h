@@ -4,9 +4,16 @@
 #include "btn_keypad.h"
 #include "btn_span_fwd.h"
 
+namespace btn
+{
+    class string_view;
+}
+
 namespace btn::keypad_manager
 {
     using key_type = keypad::key_type;
+
+    void init(const string_view& logger_input);
 
     [[nodiscard]] bool held(key_type key);
 

@@ -2,6 +2,7 @@
 
 #include "btn_sram.h"
 #include "btn_string_view.h"
+#include "btn_input_string_stream.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
@@ -121,9 +122,7 @@ void status::update_high_experience()
     sram_data sram_data_to_write;
     sram_data_to_write.high_experience = btn::max(_experience, _high_experience);
     sram_data_to_write.write();
-
-    sram_data sram_data_to_read;
-    BTN_ASSERT(sram_data_to_read.read(), "SRAM read after write failed");
+    BTN_ASSERT(sram_data().read(), "SRAM read after write failed");
 }
 
 }

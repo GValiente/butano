@@ -163,8 +163,8 @@ namespace
         return make_pair(index, other_index);
     }
 
-    void _set_regular_attributes(const regular_bg_map_ptr& current_map, const regular_bg_attributes& attributes,
-                                 uint16_t& bg_cnt)
+    void _set_regular_attributes([[maybe_unused]] const regular_bg_map_ptr& current_map,
+                                 const regular_bg_attributes& attributes, uint16_t& bg_cnt)
     {
         const regular_bg_map_ptr& attributes_map = attributes.map();
         BTN_ASSERT(current_map.dimensions() == attributes_map.dimensions(), "Map dimensions mismatch");

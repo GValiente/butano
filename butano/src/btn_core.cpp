@@ -7,6 +7,7 @@
 #include "btn_keypad.h"
 #include "btn_optional.h"
 #include "btn_profiler.h"
+#include "btn_string_view.h"
 #include "btn_bgs_manager.h"
 #include "btn_audio_manager.h"
 #include "btn_keypad_manager.h"

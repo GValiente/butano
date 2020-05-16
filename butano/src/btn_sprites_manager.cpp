@@ -43,6 +43,26 @@ namespace
         to.attr2 = from.attr2;
     }
 
+    void _update_indexes_to_commit(int handles_index)
+    {
+        if(data.first_index_to_commit != sprites::sprites_count()) [[likely]]
+        {
+            if(handles_index < data.first_index_to_commit)
+            {
+                data.first_index_to_commit = handles_index;
+            }
+            else
+            {
+                data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+            }
+        }
+        else
+        {
+            data.first_index_to_commit = handles_index;
+            data.last_index_to_commit = handles_index;
+        }
+    }
+
     void _update_handle(const item_type& item)
     {
         if(! data.rebuild_handles)
@@ -52,8 +72,7 @@ namespace
             if(handles_index >= 0)
             {
                 _copy_handle(item.handle, data.handles[handles_index]);
-                data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
-                data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+                _update_indexes_to_commit(handles_index);
             }
         }
     }
@@ -66,8 +85,7 @@ namespace
             BTN_ASSERT(handles_index >= 0, "Invalid handles index");
 
             hw::sprites::hide(data.handles[handles_index]);
-            data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
-            data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+            _update_indexes_to_commit(handles_index);
         }
     }
 
@@ -526,19 +544,27 @@ const fixed_point& hw_position(id_type id)
 void set_x(id_type id, fixed x)
 {
     auto item = static_cast<item_type*>(id);
-    fixed x_diff = x - item->position.x();
+    fixed_point& item_position = item->position;
+    fixed x_diff = x - item_position.x();
 
     if(x_diff != 0)
     {
-        item->position.set_x(x);
-        item->hw_position.set_x(item->hw_position.x() + x_diff);
-        hw::sprites::set_x(item->hw_position.x().integer(), item->handle);
-        _update_handle(*item);
+        fixed hw_x = item->hw_position.x() + x_diff;
+        int hw_x_integer = hw_x.integer();
+        bool hw_changed = hw_x_integer != item->hw_position.x().integer();
+        item_position.set_x(x);
+        item->hw_position.set_x(hw_x);
 
-        if(item->visible)
+        if(hw_changed)
         {
-            item->check_on_screen = true;
-            data.check_items_on_screen = true;
+            hw::sprites::set_x(hw_x_integer, item->handle);
+            _update_handle(*item);
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
         }
     }
 }
@@ -546,19 +572,27 @@ void set_x(id_type id, fixed x)
 void set_y(id_type id, fixed y)
 {
     auto item = static_cast<item_type*>(id);
-    fixed y_diff = y - item->position.y();
+    fixed_point& item_position = item->position;
+    fixed y_diff = y - item_position.y();
 
     if(y_diff != 0)
     {
-        item->position.set_y(y);
-        item->hw_position.set_y(item->hw_position.y() + y_diff);
-        hw::sprites::set_y(item->hw_position.y().integer(), item->handle);
-        _update_handle(*item);
+        fixed hw_y = item->hw_position.y() + y_diff;
+        int hw_y_integer = hw_y.integer();
+        bool hw_changed = hw_y_integer != item->hw_position.y().integer();
+        item_position.set_y(y);
+        item->hw_position.set_y(hw_y);
 
-        if(item->visible)
+        if(hw_changed)
         {
-            item->check_on_screen = true;
-            data.check_items_on_screen = true;
+            hw::sprites::set_y(hw_y_integer, item->handle);
+            _update_handle(*item);
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
         }
     }
 }
@@ -566,22 +600,31 @@ void set_y(id_type id, fixed y)
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point position_diff = position - item->position;
+    fixed_point& item_position = item->position;
+    fixed_point position_diff = position - item_position;
 
     if(position_diff != fixed_point())
     {
-        hw::sprites::handle& handle = item->handle;
         fixed_point hw_position = item->hw_position + position_diff;
-        item->position = position;
+        int hw_x_integer = hw_position.x().integer();
+        int hw_y_integer = hw_position.y().integer();
+        bool hw_changed = hw_x_integer != item->hw_position.x().integer() ||
+                hw_y_integer != item->hw_position.y().integer();
+        item_position = position;
         item->hw_position = hw_position;
-        hw::sprites::set_x(hw_position.x().integer(), handle);
-        hw::sprites::set_y(hw_position.y().integer(), handle);
-        _update_handle(*item);
 
-        if(item->visible)
+        if(hw_changed)
         {
-            item->check_on_screen = true;
-            data.check_items_on_screen = true;
+            hw::sprites::handle& handle = item->handle;
+            hw::sprites::set_x(hw_x_integer, handle);
+            hw::sprites::set_y(hw_y_integer, handle);
+            _update_handle(*item);
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
         }
     }
 }

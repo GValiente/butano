@@ -323,10 +323,17 @@ void set_x(id_type id, fixed x)
 
     if(x_diff != 0)
     {
+        fixed hw_x = item->hw_position.x() - x_diff;
+        int hw_x_integer = hw_x.integer();
+        bool hw_changed = hw_x_integer != item->hw_position.x().integer();
         item->position.set_x(x);
-        item->hw_position.set_x(item->hw_position.x() - x_diff);
-        hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
-        _update_item(*item);
+        item->hw_position.set_x(hw_x);
+
+        if(hw_changed)
+        {
+            hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
+            _update_item(*item);
+        }
     }
 }
 
@@ -337,25 +344,43 @@ void set_y(id_type id, fixed y)
 
     if(y_diff != 0)
     {
+        fixed hw_y = item->hw_position.y() - y_diff;
+        int hw_y_integer = hw_y.integer();
+        bool hw_changed = hw_y_integer != item->hw_position.y().integer();
         item->position.set_y(y);
-        item->hw_position.set_y(item->hw_position.y() - y_diff);
-        hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
-        _update_item(*item);
+        item->hw_position.set_y(hw_y);
+
+        if(hw_changed)
+        {
+            hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
+            _update_item(*item);
+        }
     }
 }
 
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point position_diff = position - item->position;
+    fixed_point& item_position = item->position;
+    fixed_point position_diff = position - item_position;
 
     if(position_diff != fixed_point())
     {
-        item->position = position;
-        item->hw_position -= position_diff;
-        hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
-        hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
-        _update_item(*item);
+        fixed_point hw_position = item->hw_position - position_diff;
+        int hw_x_integer = hw_position.x().integer();
+        int hw_y_integer = hw_position.y().integer();
+        bool hw_changed = hw_x_integer != item->hw_position.x().integer() ||
+                hw_y_integer != item->hw_position.y().integer();
+        item_position = position;
+        item->hw_position = hw_position;
+
+        if(hw_changed)
+        {
+            hw::bgs::handle& handle = item->handle;
+            hw::bgs::set_x(item->hw_position.x().integer(), handle);
+            hw::bgs::set_y(item->hw_position.y().integer(), handle);
+            _update_item(*item);
+        }
     }
 }
 

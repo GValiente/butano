@@ -85,7 +85,14 @@ namespace
     void _assign_affine_mat(sprite_affine_mat_ptr affine_mat, item_type& item)
     {
         bool old_double_size = item.affine_mat && hw::sprites::double_size(item.handle);
+
+        if(item.affine_mat)
+        {
+            sprite_affine_mats_manager::dettach_sprite(item.affine_mat->id(), *item.attached_sprite);
+        }
+
         item.affine_mat = move(affine_mat);
+        item.attached_sprite = &sprite_affine_mats_manager::attach_sprite(item.affine_mat->id(), &item);
 
         bool new_double_size = item.double_size();
         hw::sprites::set_affine_mat(item.affine_mat->id(), new_double_size, item.handle);
@@ -105,7 +112,9 @@ namespace
         hw::sprites::set_horizontal_flip(affine_mat.horizontal_flip(), item.handle);
         hw::sprites::set_vertical_flip(affine_mat.vertical_flip(), item.handle);
         hw::sprites::remove_affine_mat(item.handle);
+        sprite_affine_mats_manager::dettach_sprite(affine_mat.id(), *item.attached_sprite);
         item.affine_mat.reset();
+        item.attached_sprite = nullptr;
 
         if(double_size)
         {
@@ -113,89 +122,6 @@ namespace
         }
 
         _update_handle(item);
-    }
-
-    void _check_affine_mats()
-    {
-        bool identity_changed = sprite_affine_mats_manager::identity_changed();
-        bool double_size_changed = sprite_affine_mats_manager::double_size_changed();
-
-        if(identity_changed && double_size_changed)
-        {
-            for(auto& layer : sorted_sprites::layers())
-            {
-                for(item_type& item : *layer)
-                {
-                    if(item.affine_mat)
-                    {
-                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
-                        int affine_mat_id = affine_mat.id();
-                        bool removed = false;
-
-                        if(sprite_affine_mats_manager::identity_changed(affine_mat_id) &&
-                                item.remove_affine_mat_when_not_needed &&
-                                sprite_affine_mats_manager::identity(affine_mat_id))
-                        {
-                            _remove_affine_mat(item);
-                            removed = true;
-                        }
-
-                        if(! removed && sprite_affine_mats_manager::double_size_changed(affine_mat_id) &&
-                                sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
-                        {
-                            bool double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
-                            hw::sprites::set_affine_mat(affine_mat_id, double_size, item.handle);
-                            _update_item_dimensions(item);
-                            _update_handle(item);
-                        }
-                    }
-                }
-            }
-        }
-        else if(identity_changed)
-        {
-            for(auto& layer : sorted_sprites::layers())
-            {
-                for(item_type& item : *layer)
-                {
-                    if(item.affine_mat && item.remove_affine_mat_when_not_needed)
-                    {
-                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
-                        int affine_mat_id = affine_mat.id();
-
-                        if(sprite_affine_mats_manager::identity_changed(affine_mat_id) &&
-                                sprite_affine_mats_manager::identity(affine_mat_id))
-                        {
-                            _remove_affine_mat(item);
-                        }
-                    }
-                }
-            }
-        }
-        else if(double_size_changed)
-        {
-            for(auto& layer : sorted_sprites::layers())
-            {
-                for(item_type& item : *layer)
-                {
-                    if(item.affine_mat && sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
-                    {
-                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
-                        int affine_mat_id = affine_mat.id();
-
-                        if(sprite_affine_mats_manager::double_size_changed(affine_mat_id))
-                        {
-                            bool double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
-                            hw::sprites::set_affine_mat(affine_mat_id, double_size, item.handle);
-                            _update_item_dimensions(item);
-                            _update_handle(item);
-                        }
-                    }
-                }
-            }
-        }
-
-        sprite_affine_mats_manager::update();
     }
 
     void _check_items_on_screen()
@@ -360,6 +286,12 @@ void decrease_usages(id_type id)
     {
         _hide_handle(*item);
         sorted_sprites::erase(*item);
+
+        if(item->affine_mat)
+        {
+            sprite_affine_mats_manager::dettach_sprite(item->affine_mat->id(), *item->attached_sprite);
+        }
+
         data.items_pool.destroy(*item);
     }
 }
@@ -915,14 +847,10 @@ void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_ma
 
     if(affine_mat)
     {
-        item->remove_affine_mat_when_not_needed = false;
-
-        if(item->affine_mat == affine_mat)
+        if(item->affine_mat != affine_mat)
         {
-            return;
+            _assign_affine_mat(*affine_mat, *item);
         }
-
-        _assign_affine_mat(*affine_mat, *item);
     }
     else
     {
@@ -939,14 +867,10 @@ void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat)
 
     if(affine_mat)
     {
-        item->remove_affine_mat_when_not_needed = false;
-
-        if(item->affine_mat == affine_mat)
+        if(item->affine_mat != affine_mat)
         {
-            return;
+            _assign_affine_mat(move(*affine_mat), *item);
         }
-
-        _assign_affine_mat(move(*affine_mat), *item);
     }
     else
     {
@@ -967,11 +891,6 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
 {
     auto item = static_cast<item_type*>(id);
     item->remove_affine_mat_when_not_needed = remove_when_not_needed;
-
-    if(remove_when_not_needed && item->affine_mat && item->affine_mat->identity())
-    {
-        _remove_affine_mat(*item);
-    }
 }
 
 sprite_first_attributes first_attributes(id_type id)
@@ -1176,9 +1095,31 @@ void update_camera()
     data.rebuild_handles |= result.rebuild_handles;
 }
 
+void remove_identity_affine_mat_if_not_needed(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->remove_affine_mat_when_not_needed)
+    {
+        _remove_affine_mat(*item);
+    }
+}
+
+void update_affine_mat(id_type id, int affine_mat_id, bool double_size)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(sprite_double_size_mode(item->double_size_mode) == sprite_double_size_mode::AUTO)
+    {
+        hw::sprites::set_affine_mat(affine_mat_id, double_size, item->handle);
+        _update_item_dimensions(*item);
+        _update_handle(*item);
+    }
+}
+
 void update()
 {
-    _check_affine_mats();
+    sprite_affine_mats_manager::update();
     _check_items_on_screen();
     _rebuild_handles();
 }

@@ -3,6 +3,7 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
+#include "btn_intrusive_list.h"
 
 namespace btn
 {
@@ -11,6 +12,17 @@ namespace btn
 
 namespace btn::sprite_affine_mats_manager
 {
+    using sprite_id_type = void*;
+
+
+    class attached_sprite_type : public intrusive_list_node_type
+    {
+
+    public:
+        sprite_id_type id = nullptr;
+    };
+
+
     class commit_data
     {
 
@@ -18,6 +30,7 @@ namespace btn::sprite_affine_mats_manager
         int offset;
         int count;
     };
+
 
     void init(int handles_size, void* handles);
 
@@ -36,6 +49,10 @@ namespace btn::sprite_affine_mats_manager
     void increase_usages(int id);
 
     void decrease_usages(int id);
+
+    [[nodiscard]] attached_sprite_type& attach_sprite(int id, sprite_id_type sprite_id);
+
+    void dettach_sprite(int id, attached_sprite_type& attached_sprite);
 
     [[nodiscard]] fixed rotation_angle(int id);
 
@@ -67,15 +84,7 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] bool identity(int id);
 
-    [[nodiscard]] bool identity_changed();
-
-    [[nodiscard]] bool identity_changed(int id);
-
     [[nodiscard]] bool double_size(int id);
-
-    [[nodiscard]] bool double_size_changed();
-
-    [[nodiscard]] bool double_size_changed(int id);
 
     void update();
 

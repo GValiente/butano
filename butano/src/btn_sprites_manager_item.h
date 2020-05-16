@@ -19,6 +19,11 @@ namespace btn
 
 class sprite_builder;
 
+namespace sprite_affine_mats_manager
+{
+    class attached_sprite_type;
+}
+
 class sprites_manager_item : public intrusive_list_node_type
 {
 
@@ -29,6 +34,7 @@ public:
     size half_dimensions;
     unsigned usages = 1;
     sort_key sprite_sort_key;
+    sprite_affine_mats_manager::attached_sprite_type* attached_sprite = nullptr;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;

@@ -46,8 +46,10 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
         }
         else
         {
+            int affine_mat_id = affine_mat->id();
             hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
-            hw::sprites::set_affine_mat(affine_mat->id(), double_size(), handle);
+            hw::sprites::set_affine_mat(affine_mat_id, double_size(), handle);
+            attached_sprite = &sprite_affine_mats_manager::attach_sprite(affine_mat_id, this);
         }
     }
     else

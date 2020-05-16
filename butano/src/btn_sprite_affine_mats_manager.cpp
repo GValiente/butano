@@ -1,9 +1,10 @@
 #include "btn_sprite_affine_mats_manager.h"
 
-#include "btn_limits.h"
+#include "btn_pool.h"
 #include "btn_vector.h"
 #include "btn_optional.h"
-#include "btn_algorithm.h"
+#include "btn_config_sprites.h"
+#include "btn_sprites_manager.h"
 #include "btn_sprite_affine_mats.h"
 #include "btn_sprite_affine_mat_attributes.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
@@ -20,11 +21,11 @@ namespace
 
     public:
         sprite_affine_mat_attributes attributes;
+        intrusive_list<attached_sprite_type> attached_sprites;
         unsigned usages;
         bool identity;
         bool identity_changed;
         bool double_size;
-        bool double_size_changed;
 
         void init()
         {
@@ -33,7 +34,6 @@ namespace
             identity = true;
             identity_changed = false;
             double_size = false;
-            double_size_changed = false;
         }
 
         void init(const sprite_affine_mat_attributes& new_attributes)
@@ -41,7 +41,6 @@ namespace
             attributes = new_attributes;
             usages = 1;
             identity_changed = false;
-            double_size_changed = false;
 
             if(attributes.identity())
             {
@@ -62,11 +61,11 @@ namespace
     public:
         item_type items[sprite_affine_mats::count()];
         vector<int8_t, sprite_affine_mats::count()> free_item_indexes;
+        pool<attached_sprite_type, BTN_CFG_SPRITES_MAX_ITEMS> attached_sprites_pool;
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
         int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
         bool identity_changed = false;
-        bool double_size_changed = false;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -95,17 +94,24 @@ namespace
             new_double_size = attributes.double_size();
         }
 
-        bool identity_changed = item.identity != new_identity;
-        item.identity = new_identity;
-        item.identity_changed = identity_changed;
-        data.identity_changed |= identity_changed;
+        if(item.identity != new_identity)
+        {
+            item.identity_changed = true;
+            data.identity_changed = true;
+        }
 
         bool double_size_changed = item.double_size != new_double_size;
+        item.identity = new_identity;
         item.double_size = new_double_size;
-        item.double_size_changed = double_size_changed;
-        data.double_size_changed |= double_size_changed;
-
         _update_indexes_to_commit(index);
+
+        if(double_size_changed)
+        {
+            for(attached_sprite_type& attached_sprite : item.attached_sprites)
+            {
+                sprites_manager::update_affine_mat(attached_sprite.id, index, new_double_size);
+            }
+        }
     }
 
     [[nodiscard]] int _create()
@@ -204,8 +210,27 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
+        BTN_ASSERT(item.attached_sprites.empty(), "There's still attached sprites");
+
+        item.identity_changed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }
+}
+
+attached_sprite_type& attach_sprite(int id, sprite_id_type sprite_id)
+{
+    item_type& item = data.items[id];
+    attached_sprite_type& attached_sprite = data.attached_sprites_pool.create();
+    attached_sprite.id = sprite_id;
+    item.attached_sprites.push_back(attached_sprite);
+    return attached_sprite;
+}
+
+void dettach_sprite(int id, attached_sprite_type& attached_sprite)
+{
+    item_type& item = data.items[id];
+    item.attached_sprites.erase(attached_sprite);
+    data.attached_sprites_pool.destroy(attached_sprite);
 }
 
 fixed rotation_angle(int id)
@@ -308,46 +333,39 @@ bool identity(int id)
     return item.identity;
 }
 
-bool identity_changed()
-{
-    return data.identity_changed;
-}
-
-bool identity_changed(int id)
-{
-    const item_type& item = data.items[id];
-    return item.identity_changed;
-}
-
 bool double_size(int id)
 {
     const item_type& item = data.items[id];
     return item.double_size;
 }
 
-bool double_size_changed()
-{
-    return data.double_size_changed;
-}
-
-bool double_size_changed(int id)
-{
-    const item_type& item = data.items[id];
-    return item.double_size_changed;
-}
-
 void update()
 {
-    if(data.identity_changed || data.double_size_changed)
+    if(data.identity_changed)
     {
         data.identity_changed = false;
-        data.double_size_changed = false;
 
         for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
         {
             item_type& item = data.items[index];
-            item.identity_changed = false;
-            item.double_size_changed = false;
+
+            if(item.identity_changed)
+            {
+                intrusive_list<attached_sprite_type>& attached_sprites = item.attached_sprites;
+                auto it = attached_sprites.begin();
+                auto end = attached_sprites.end();
+                item.identity_changed = false;
+                increase_usages(index);
+
+                while(it != end)
+                {
+                    attached_sprite_type& attached_sprite = *it;
+                    ++it;
+                    sprites_manager::remove_identity_affine_mat_if_not_needed(attached_sprite.id);
+                }
+
+                decrease_usages(index);
+            }
         }
     }
 }

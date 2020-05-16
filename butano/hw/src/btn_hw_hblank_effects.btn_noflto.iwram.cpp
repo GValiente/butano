@@ -15,7 +15,7 @@ namespace
         int entries_count = 0;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    static_data data;
 }
 
 void commit(entry* entries_ptr, int entries_count)

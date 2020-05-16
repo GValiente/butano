@@ -90,14 +90,12 @@ namespace
         }
     };
 
-    class static_data
+    class static_external_data
     {
 
     public:
         item_type items[max_items];
         vector<int8_t, max_items> free_item_indexes;
-        hw_entry entries_a[max_items];
-        hw_entry entries_b[max_items];
         int8_t entries_count = 0;
         bool entries_a_active = false;
         bool update = false;
@@ -105,14 +103,23 @@ namespace
         bool enabled = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    class static_internal_data
+    {
+
+    public:
+        hw_entry entries_a[max_items];
+        hw_entry entries_b[max_items];
+    };
+
+    BTN_DATA_EWRAM static_external_data external_data;
+    static_internal_data internal_data;
 
     int _create(const void* values_ptr, int target_id, hblank_effect_handler& handler)
     {
-        int item_index = data.free_item_indexes.back();
-        data.free_item_indexes.pop_back();
+        int item_index = external_data.free_item_indexes.back();
+        external_data.free_item_indexes.pop_back();
 
-        item_type& new_item = data.items[item_index];
+        item_type& new_item = external_data.items[item_index];
         new_item.handler = &handler;
         new_item.values_ptr = values_ptr;
         new_item.target_id = target_id;
@@ -123,7 +130,7 @@ namespace
         new_item.on_screen = false;
         new_item.output_values_written = false;
         handler.setup_target(target_id, new_item.target_last_value);
-        data.update = true;
+        external_data.update = true;
         return item_index;
     }
 }
@@ -134,23 +141,23 @@ void init()
 
     for(int index = max_items - 1; index >= 0; --index)
     {
-        data.free_item_indexes.push_back(int8_t(index));
+        external_data.free_item_indexes.push_back(int8_t(index));
     }
 }
 
 int used_count()
 {
-    return data.free_item_indexes.available();
+    return external_data.free_item_indexes.available();
 }
 
 int available_count()
 {
-    return data.free_item_indexes.size();
+    return external_data.free_item_indexes.size();
 }
 
 void enable()
 {
-    if(data.enabled)
+    if(external_data.enabled)
     {
         hw::hblank_effects::enable();
     }
@@ -158,7 +165,7 @@ void enable()
 
 void disable()
 {
-    if(data.enabled)
+    if(external_data.enabled)
     {
         hw::hblank_effects::disable();
     }
@@ -169,7 +176,7 @@ hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
-    BTN_ASSERT(! data.free_item_indexes.empty(), "No more available HBlank effects");
+    BTN_ASSERT(! external_data.free_item_indexes.empty(), "No more available HBlank effects");
 
     return _create(values_ptr, target_id, handler);
 }
@@ -180,7 +187,7 @@ hblank_effect_handler& handler)
     BTN_ASSERT(values_ptr, "Values ptr is null");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
-    if(data.free_item_indexes.empty())
+    if(external_data.free_item_indexes.empty())
     {
         return -1;
     }
@@ -190,32 +197,32 @@ hblank_effect_handler& handler)
 
 void increase_usages(int id)
 {
-    item_type& item = data.items[id];
+    item_type& item = external_data.items[id];
     ++item.usages;
 }
 
 void decrease_usages(int id)
 {
-    item_type& item = data.items[id];
+    item_type& item = external_data.items[id];
     --item.usages;
 
     if(! item.usages)
     {
-        data.free_item_indexes.push_back(int8_t(id));
+        external_data.free_item_indexes.push_back(int8_t(id));
         item.target_last_value.reset();
         item.update = false;
 
         if(item.visible)
         {
             item.visible = false;
-            data.update = true;
+            external_data.update = true;
         }
     }
 }
 
 const void* values_ref(int id)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = external_data.items[id];
     return item.values_ptr;
 }
 
@@ -224,50 +231,50 @@ void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_
     BTN_ASSERT(values_ptr, "Values ptr is null");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
-    item_type& item = data.items[id];
+    item_type& item = external_data.items[id];
     item.values_ptr = values_ptr;
     item.update = true;
 
     if(item.visible)
     {
-        data.update = true;
+        external_data.update = true;
     }
 }
 
 void reload_values_ref(int id)
 {
-    item_type& item = data.items[id];
+    item_type& item = external_data.items[id];
     item.update = true;
 
     if(item.visible)
     {
-        data.update = true;
+        external_data.update = true;
     }
 }
 
 [[nodiscard]] bool visible(int id)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = external_data.items[id];
     return item.visible;
 }
 
 void set_visible(int id, bool visible)
 {
-    item_type& item = data.items[id];
+    item_type& item = external_data.items[id];
 
     if(visible != item.visible)
     {
         item.visible = visible;
-        data.update = true;
+        external_data.update = true;
     }
 }
 
 void update()
 {
-    bool update = data.update;
-    data.update = false;
+    bool update = external_data.update;
+    external_data.update = false;
 
-    for(item_type& item : data.items)
+    for(item_type& item : external_data.items)
     {
         if(item.visible)
         {
@@ -280,18 +287,18 @@ void update()
         hw_entry* entries;
         int entries_count = 0;
 
-        if(data.entries_a_active)
+        if(external_data.entries_a_active)
         {
-            entries = data.entries_b;
-            data.entries_a_active = false;
+            entries = internal_data.entries_b;
+            external_data.entries_a_active = false;
         }
         else
         {
-            entries = data.entries_a;
-            data.entries_a_active = true;
+            entries = internal_data.entries_a;
+            external_data.entries_a_active = true;
         }
 
-        for(const item_type& item : data.items)
+        for(const item_type& item : external_data.items)
         {
             if(item.visible && item.on_screen)
             {
@@ -301,39 +308,39 @@ void update()
             }
         }
 
-        data.entries_count = int8_t(entries_count);
-        data.commit = true;
+        external_data.entries_count = int8_t(entries_count);
+        external_data.commit = true;
     }
 }
 
 void commit()
 {
-    if(data.commit)
+    if(external_data.commit)
     {
-        data.commit = false;
+        external_data.commit = false;
 
-        if(data.entries_a_active)
+        if(external_data.entries_a_active)
         {
-            hw::hblank_effects::commit(data.entries_a, data.entries_count);
+            hw::hblank_effects::commit(internal_data.entries_a, external_data.entries_count);
         }
         else
         {
-            hw::hblank_effects::commit(data.entries_b, data.entries_count);
+            hw::hblank_effects::commit(internal_data.entries_b, external_data.entries_count);
         }
 
-        if(data.entries_count)
+        if(external_data.entries_count)
         {
-            if(! data.enabled)
+            if(! external_data.enabled)
             {
-                data.enabled = true;
+                external_data.enabled = true;
                 hw::hblank_effects::enable();
             }
         }
         else
         {
-            if(data.enabled)
+            if(external_data.enabled)
             {
-                data.enabled = false;
+                external_data.enabled = false;
                 hw::hblank_effects::disable();
             }
         }

@@ -160,12 +160,12 @@ void update()
     display_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_audio_update");
-    audio_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
-
     BTN_PROFILER_ENGINE_START("eng_hblank_effects_update");
     hblank_effects_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_audio_update");
+    audio_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");

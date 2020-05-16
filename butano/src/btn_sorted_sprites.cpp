@@ -20,15 +20,9 @@ namespace
     public:
         pool<layer, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layer_pool;
         vector<layer*, BTN_CFG_SPRITES_MAX_SORT_LAYERS> layer_ptrs;
-        int items_count = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
-}
-
-int items_count()
-{
-    return data.items_count;
 }
 
 layers_type& layers()
@@ -64,7 +58,6 @@ void insert(sprites_manager_item& item)
 
     layer* layer = *layers_it;
     layer->push_front(item);
-    ++data.items_count;
 }
 
 void erase(sprites_manager_item& item)
@@ -84,7 +77,6 @@ void erase(sprites_manager_item& item)
 
     layer* layer = *layers_it;
     layer->erase(item);
-    --data.items_count;
 
     if(layer->empty())
     {

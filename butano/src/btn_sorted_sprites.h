@@ -30,8 +30,6 @@ namespace btn::sorted_sprites
     using layers_type = ivector<layer*>;
 
 
-    [[nodiscard]] int items_count();
-
     [[nodiscard]] layers_type& layers();
 
     void insert(sprites_manager_item& item);

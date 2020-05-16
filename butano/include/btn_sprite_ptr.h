@@ -213,9 +213,11 @@ public:
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
 
-    void set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat);
+    void set_affine_mat(const sprite_affine_mat_ptr& affine_mat);
 
-    void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat);
+    void set_affine_mat(sprite_affine_mat_ptr&& affine_mat);
+
+    void remove_affine_mat();
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 

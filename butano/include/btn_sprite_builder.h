@@ -219,15 +219,13 @@ public:
         return _affine_mat;
     }
 
-    sprite_builder& set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
-    {
-        _affine_mat = affine_mat;
-        return *this;
-    }
+    sprite_builder& set_affine_mat(const sprite_affine_mat_ptr& affine_mat);
 
-    sprite_builder& set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
+    sprite_builder& set_affine_mat(sprite_affine_mat_ptr&& affine_mat);
+
+    sprite_builder& remove_affine_mat()
     {
-        _affine_mat = move(affine_mat);
+        _affine_mat.reset();
         return *this;
     }
 

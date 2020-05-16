@@ -138,9 +138,11 @@ namespace sprites_manager
 
     [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 
-    void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat);
+    void set_affine_mat(id_type id, const sprite_affine_mat_ptr& affine_mat);
 
-    void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat);
+    void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat);
+
+    void remove_affine_mat(id_type id);
 
     [[nodiscard]] bool remove_affine_mat_when_not_needed(id_type id);
 

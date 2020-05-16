@@ -307,7 +307,7 @@ void title::_animate_fighter_characters()
             {
                 if(fighter_character.affine_mat())
                 {
-                    fighter_character.set_affine_mat(btn::nullopt);
+                    fighter_character.remove_affine_mat();
                 }
             }
         }

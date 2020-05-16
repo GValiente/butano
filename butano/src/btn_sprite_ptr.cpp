@@ -423,11 +423,6 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
     if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_rotation_angle(rotation_angle);
-
-        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
-        {
-            sprites_manager::set_affine_mat(_handle, nullopt);
-        }
     }
     else if(rotation_angle != 0)
     {
@@ -455,11 +450,6 @@ void sprite_ptr::set_scale_x(fixed scale_x)
     if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale_x(scale_x);
-
-        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
-        {
-            sprites_manager::set_affine_mat(_handle, nullopt);
-        }
     }
     else if(scale_x != 1)
     {
@@ -487,11 +477,6 @@ void sprite_ptr::set_scale_y(fixed scale_y)
     if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale_y(scale_y);
-
-        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
-        {
-            sprites_manager::set_affine_mat(_handle, nullopt);
-        }
     }
     else if(scale_y != 1)
     {
@@ -509,11 +494,6 @@ void sprite_ptr::set_scale(fixed scale)
     if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale(scale);
-
-        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
-        {
-            sprites_manager::set_affine_mat(_handle, nullopt);
-        }
     }
     else if(scale != 1)
     {
@@ -531,11 +511,6 @@ void sprite_ptr::set_scale(fixed scale_x, fixed scale_y)
     if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
     {
         affine_mat->set_scale(scale_x, scale_y);
-
-        if(remove_affine_mat_when_not_needed() && affine_mat->identity())
-        {
-            sprites_manager::set_affine_mat(_handle, nullopt);
-        }
     }
     else if(scale_x != 1 || scale_y != 1)
     {
@@ -746,24 +721,21 @@ const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
     return sprites_manager::affine_mat(_handle);
 }
 
-void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
+void sprite_ptr::set_affine_mat(const sprite_affine_mat_ptr& affine_mat)
 {
-    if(affine_mat)
-    {
-        sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
-    }
-
+    sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
     sprites_manager::set_affine_mat(_handle, affine_mat);
 }
 
-void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
+void sprite_ptr::set_affine_mat(sprite_affine_mat_ptr&& affine_mat)
 {
-    if(affine_mat)
-    {
-        sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
-    }
-
+    sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
     sprites_manager::set_affine_mat(_handle, move(affine_mat));
+}
+
+void sprite_ptr::remove_affine_mat()
+{
+    sprites_manager::remove_affine_mat(_handle);
 }
 
 bool sprite_ptr::remove_affine_mat_when_not_needed() const

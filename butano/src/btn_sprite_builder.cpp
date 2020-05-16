@@ -41,11 +41,6 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     if(_affine_mat)
     {
         _affine_mat->set_rotation_angle(rotation_angle);
-
-        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
-        {
-            _affine_mat.reset();
-        }
     }
     else if(rotation_angle != 0)
     {
@@ -54,7 +49,6 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
-        _remove_affine_mat_when_not_needed = true;
     }
 
     return *this;
@@ -65,11 +59,6 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
     if(_affine_mat)
     {
         _affine_mat->set_scale_x(scale_x);
-
-        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
-        {
-            _affine_mat.reset();
-        }
     }
     else if(scale_x != 1)
     {
@@ -78,7 +67,6 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
-        _remove_affine_mat_when_not_needed = true;
     }
 
     return *this;
@@ -89,11 +77,6 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
     if(_affine_mat)
     {
         _affine_mat->set_scale_y(scale_y);
-
-        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
-        {
-            _affine_mat.reset();
-        }
     }
     else if(scale_y != 1)
     {
@@ -102,7 +85,6 @@ sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
-        _remove_affine_mat_when_not_needed = true;
     }
 
     return *this;
@@ -113,11 +95,6 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
     if(_affine_mat)
     {
         _affine_mat->set_scale(scale);
-
-        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
-        {
-            _affine_mat.reset();
-        }
     }
     else if(scale != 1)
     {
@@ -126,7 +103,6 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
-        _remove_affine_mat_when_not_needed = true;
     }
 
     return *this;
@@ -137,11 +113,6 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
     if(_affine_mat)
     {
         _affine_mat->set_scale(scale_x, scale_y);
-
-        if(_remove_affine_mat_when_not_needed && _affine_mat->identity())
-        {
-            _affine_mat.reset();
-        }
     }
     else if(scale_x != 1 || scale_y != 1)
     {
@@ -150,7 +121,6 @@ sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
-        _remove_affine_mat_when_not_needed = true;
     }
 
     return *this;
@@ -346,6 +316,20 @@ optional<sprite_palette_ptr> sprite_builder::optional_release_palette()
     }
 
     return result;
+}
+
+sprite_builder& sprite_builder::set_affine_mat(const sprite_affine_mat_ptr& affine_mat)
+{
+    _affine_mat = affine_mat;
+    _remove_affine_mat_when_not_needed = false;
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_affine_mat(sprite_affine_mat_ptr&& affine_mat)
+{
+    _affine_mat = move(affine_mat);
+    _remove_affine_mat_when_not_needed = false;
+    return *this;
 }
 
 }

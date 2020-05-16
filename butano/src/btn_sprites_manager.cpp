@@ -841,43 +841,33 @@ optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
     return item->affine_mat;
 }
 
-void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_mat)
+void set_affine_mat(id_type id, const sprite_affine_mat_ptr& affine_mat)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(affine_mat)
+    if(item->affine_mat != affine_mat)
     {
-        if(item->affine_mat != affine_mat)
-        {
-            _assign_affine_mat(*item, sprite_affine_mat_ptr(*affine_mat));
-        }
-    }
-    else
-    {
-        if(item->affine_mat)
-        {
-            _remove_affine_mat(*item);
-        }
+        _assign_affine_mat(*item, sprite_affine_mat_ptr(affine_mat));
     }
 }
 
-void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat)
+void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(affine_mat)
+    if(item->affine_mat != affine_mat)
     {
-        if(item->affine_mat != affine_mat)
-        {
-            _assign_affine_mat(*item, move(*affine_mat));
-        }
+        _assign_affine_mat(*item, move(affine_mat));
     }
-    else
+}
+
+void remove_affine_mat(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->affine_mat)
     {
-        if(item->affine_mat)
-        {
-            _remove_affine_mat(*item);
-        }
+        _remove_affine_mat(*item);
     }
 }
 

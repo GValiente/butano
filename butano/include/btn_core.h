@@ -18,7 +18,7 @@ namespace core
 {
     void init();
 
-    void init(const string_view& keypad_logger_input);
+    void init(const string_view& keypad_commands);
 
     void update();
 

@@ -13,7 +13,7 @@ namespace btn::keypad_manager
 {
     using key_type = keypad::key_type;
 
-    void init(const string_view& logger_input);
+    void init(const string_view& commands);
 
     [[nodiscard]] bool held(key_type key);
 

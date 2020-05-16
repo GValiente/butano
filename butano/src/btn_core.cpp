@@ -91,7 +91,7 @@ void init()
     init(string_view());
 }
 
-void init(const string_view& keypad_logger_input)
+void init(const string_view& keypad_commands)
 {
     // Init storage systems:
     hw::game_pak::init();
@@ -113,7 +113,7 @@ void init(const string_view& keypad_logger_input)
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();
-    keypad_manager::init(keypad_logger_input);
+    keypad_manager::init(keypad_commands);
 
     // WTF hack (if it isn't present and flto is enabled, sometimes everything crash):
     string<32> hack_string;

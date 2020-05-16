@@ -49,10 +49,11 @@ namespace
     {
 
     public:
-        string_view logger_input;
+        string_view commands;
         unsigned held_keys = 0;
         unsigned pressed_keys = 0;
         unsigned released_keys = 0;
+        bool read_commands = false;
 
         #if BTN_CFG_KEYPAD_LOG_ENABLED
             keypad_logger logger;
@@ -62,12 +63,12 @@ namespace
     BTN_DATA_EWRAM static_data data;
 }
 
-void init(const string_view& logger_input)
+void init(const string_view& commands)
 {
-    BTN_ASSERT(logger_input.empty() || logger_input.size() % 2 == 0,
-               "Invalid logger input size: ", logger_input.size());
+    BTN_ASSERT(commands.empty() || commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
 
-    data.logger_input = logger_input;
+    data.commands = commands;
+    data.read_commands = ! commands.empty();
 }
 
 bool held(key_type key)
@@ -90,16 +91,23 @@ void update()
     unsigned previous_keys = data.held_keys;
     unsigned current_keys;
 
-    if(data.logger_input.empty())
+    if(data.read_commands)
     {
-        current_keys = hw::keypad::get();
+        if(data.commands.empty())
+        {
+            current_keys = 0;
+        }
+        else
+        {
+            uint8_t low_part = data.commands[0] - '0';
+            uint8_t high_part = data.commands[1] - '0';
+            current_keys = (high_part << 5) + low_part;
+            data.commands.remove_prefix(2);
+        }
     }
     else
     {
-        uint8_t low_part = data.logger_input[0] - '0';
-        uint8_t high_part = data.logger_input[1] - '0';
-        current_keys = (high_part << 5) + low_part;
-        data.logger_input.remove_prefix(2);
+        current_keys = hw::keypad::get();
     }
 
     data.held_keys = current_keys;

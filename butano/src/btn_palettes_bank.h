@@ -90,6 +90,10 @@ public:
         return _palettes[id].fade_intensity;
     }
 
+    void set_fade_color(int id, color color);
+
+    void set_fade_intensity(int id, fixed intensity);
+
     void set_fade(int id, color color, fixed intensity);
 
     [[nodiscard]] int rotate_count(int id) const
@@ -150,6 +154,10 @@ public:
     {
         return _fade_intensity;
     }
+
+    void set_fade_color(color color);
+
+    void set_fade_intensity(fixed intensity);
 
     void set_fade(color color, fixed intensity);
 

@@ -222,12 +222,12 @@ fixed sprite_palette_ptr::fade_intensity() const
 
 void sprite_palette_ptr::set_fade_color(color color)
 {
-    set_fade(color, fade_intensity());
+    palettes_manager::sprite_palettes_bank().set_fade_color(_id, color);
 }
 
 void sprite_palette_ptr::set_fade_intensity(fixed intensity)
 {
-    set_fade(fade_color(), intensity);
+    palettes_manager::sprite_palettes_bank().set_fade_intensity(_id, intensity);
 }
 
 void sprite_palette_ptr::set_fade(color color, fixed intensity)

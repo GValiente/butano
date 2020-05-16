@@ -305,6 +305,36 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
     }
 }
 
+void palettes_bank::set_fade_color(int id, color color)
+{
+    palette& pal = _palettes[id];
+    bool update = pal.fade_color != color && fixed_t<5>(pal.fade_intensity).data();
+    pal.fade_color = color;
+    pal.update |= update;
+    _update |= update;
+
+    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    {
+        _last_used_4bpp_index = id;
+    }
+}
+
+void palettes_bank::set_fade_intensity(int id, fixed intensity)
+{
+    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+
+    palette& pal = _palettes[id];
+    bool update = fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
+    pal.fade_intensity = intensity;
+    pal.update |= update;
+    _update |= update;
+
+    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    {
+        _last_used_4bpp_index = id;
+    }
+}
+
 void palettes_bank::set_fade(int id, color color, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
@@ -390,6 +420,24 @@ void palettes_bank::set_grayscale_intensity(fixed intensity)
 
     bool update = fixed_t<5>(_grayscale_intensity) != fixed_t<5>(intensity);
     _grayscale_intensity = intensity;
+    _update |= update;
+    _update_all |= update;
+}
+
+void palettes_bank::set_fade_color(color color)
+{
+    bool update = _fade_color != color && fixed_t<5>(_fade_intensity).data();
+    _fade_color = color;
+    _update |= update;
+    _update_all |= update;
+}
+
+void palettes_bank::set_fade_intensity(fixed intensity)
+{
+    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+
+    bool update = fixed_t<5>(_fade_intensity) != fixed_t<5>(intensity);
+    _fade_intensity = intensity;
     _update |= update;
     _update_all |= update;
 }

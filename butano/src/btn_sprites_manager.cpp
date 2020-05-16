@@ -175,15 +175,6 @@ namespace
                 data.last_index_to_commit = visible_items_count - 1;
             }
         }
-
-        if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
-        {
-            int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
-            int first_mat_index_to_commit = commit_data->offset * multiplier;
-            int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
-            data.first_index_to_commit = min(data.first_index_to_commit, first_mat_index_to_commit);
-            data.last_index_to_commit = max(data.last_index_to_commit, last_mat_index_to_commit);
-        }
     }
 }
 
@@ -1112,6 +1103,15 @@ void update()
     sprite_affine_mats_manager::update();
     _check_items_on_screen();
     _rebuild_handles();
+
+    if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
+    {
+        int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
+        int first_mat_index_to_commit = commit_data->offset * multiplier;
+        int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
+        data.first_index_to_commit = min(data.first_index_to_commit, first_mat_index_to_commit);
+        data.last_index_to_commit = max(data.last_index_to_commit, last_mat_index_to_commit);
+    }
 }
 
 void commit()

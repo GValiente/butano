@@ -222,12 +222,12 @@ fixed bg_palette_ptr::fade_intensity() const
 
 void bg_palette_ptr::set_fade_color(color color)
 {
-    set_fade(color, fade_intensity());
+    palettes_manager::bg_palettes_bank().set_fade_color(_id, color);
 }
 
 void bg_palette_ptr::set_fade_intensity(fixed intensity)
 {
-    set_fade(fade_color(), intensity);
+    palettes_manager::bg_palettes_bank().set_fade_intensity(_id, intensity);
 }
 
 void bg_palette_ptr::set_fade(color color, fixed intensity)

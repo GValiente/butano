@@ -84,7 +84,7 @@ color fade_color()
 void set_fade_color(color color)
 {
     palettes_bank& bank = palettes_manager::bg_palettes_bank();
-    bank.set_fade(color, bank.fade_intensity());
+    bank.set_fade_color(color);
 }
 
 fixed fade_intensity()
@@ -95,7 +95,7 @@ fixed fade_intensity()
 void set_fade_intensity(fixed intensity)
 {
     palettes_bank& bank = palettes_manager::bg_palettes_bank();
-    bank.set_fade(bank.fade_color(), intensity);
+    bank.set_fade_intensity(intensity);
 }
 
 void set_fade(color color, fixed intensity)

@@ -82,7 +82,7 @@ namespace
         }
     }
 
-    void _assign_affine_mat(sprite_affine_mat_ptr affine_mat, item_type& item)
+    void _assign_affine_mat(item_type& item, sprite_affine_mat_ptr&& affine_mat)
     {
         bool old_double_size = item.affine_mat && hw::sprites::double_size(item.handle);
 
@@ -849,7 +849,7 @@ void set_affine_mat(id_type id, const optional<sprite_affine_mat_ptr>& affine_ma
     {
         if(item->affine_mat != affine_mat)
         {
-            _assign_affine_mat(*affine_mat, *item);
+            _assign_affine_mat(*item, sprite_affine_mat_ptr(*affine_mat));
         }
     }
     else
@@ -869,7 +869,7 @@ void set_affine_mat(id_type id, optional<sprite_affine_mat_ptr>&& affine_mat)
     {
         if(item->affine_mat != affine_mat)
         {
-            _assign_affine_mat(move(*affine_mat), *item);
+            _assign_affine_mat(*item, move(*affine_mat));
         }
     }
     else

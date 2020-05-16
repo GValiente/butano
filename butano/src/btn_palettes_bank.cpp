@@ -277,9 +277,11 @@ void palettes_bank::reload_colors_ref(int id)
 void palettes_bank::set_inverted(int id, bool inverted)
 {
     palette& pal = _palettes[id];
+
+    bool update = pal.inverted != inverted;
     pal.inverted = inverted;
-    pal.update = true;
-    _update = true;
+    pal.update |= update;
+    _update |= update;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -292,9 +294,10 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     palette& pal = _palettes[id];
+    bool update = fixed_t<5>(pal.grayscale_intensity) != fixed_t<5>(intensity);
     pal.grayscale_intensity = intensity;
-    pal.update = true;
-    _update = true;
+    pal.update |= update;
+    _update |= update;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -307,10 +310,11 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     palette& pal = _palettes[id];
+    bool update = pal.fade_color != color || fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
     pal.fade_color = color;
     pal.fade_intensity = intensity;
-    pal.update = true;
-    _update = true;
+    pal.update |= update;
+    _update |= update;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -323,9 +327,10 @@ void palettes_bank::set_rotate_count(int id, int count)
     BTN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
 
     palette& pal = _palettes[id];
+    bool update = pal.rotate_count != count;
     pal.rotate_count = int16_t(count);
-    pal.update = true;
-    _update = true;
+    pal.update |= update;
+    _update |= update;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
@@ -335,62 +340,69 @@ void palettes_bank::set_rotate_count(int id, int count)
 
 void palettes_bank::set_transparent_color(const optional<color>& transparent_color)
 {
+    bool update = _transparent_color != transparent_color;
     _transparent_color = transparent_color;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_brightness(fixed brightness)
 {
     BTN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
 
+    bool update = fixed_t<8>(_brightness) != fixed_t<8>(brightness);
     _brightness = brightness;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_contrast(fixed contrast)
 {
     BTN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
 
+    bool update = fixed_t<8>(_contrast) != fixed_t<8>(contrast);
     _contrast = contrast;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_intensity(fixed intensity)
 {
     BTN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    bool update = fixed_t<8>(_intensity) != fixed_t<8>(intensity);
     _intensity = intensity;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_inverted(bool inverted)
 {
+    bool update = _inverted != inverted;
     _inverted = inverted;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_grayscale_intensity(fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    bool update = fixed_t<5>(_grayscale_intensity) != fixed_t<5>(intensity);
     _grayscale_intensity = intensity;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::set_fade(color color, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
+    bool update = _fade_color != color || fixed_t<5>(_fade_intensity) != fixed_t<5>(intensity);
     _fade_color = color;
     _fade_intensity = intensity;
-    _update = true;
-    _update_all = true;
+    _update |= update;
+    _update_all |= update;
 }
 
 void palettes_bank::update()

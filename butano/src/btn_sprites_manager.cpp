@@ -228,24 +228,14 @@ void init()
     sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
 }
 
-int used_sprites_count()
-{
-    return data.last_visible_items_count;
-}
-
-int available_sprites_count()
-{
-    return sprites::sprites_count() - used_sprites_count();
-}
-
 int used_items_count()
 {
-    return sorted_sprites::items_count();
+    return data.items_pool.size();
 }
 
 int available_items_count()
 {
-    return BTN_CFG_SPRITES_MAX_ITEMS - used_items_count();
+    return data.items_pool.available();
 }
 
 id_type create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,

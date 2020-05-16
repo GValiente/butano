@@ -5,16 +5,6 @@
 namespace btn::sprites
 {
 
-int used_sprites_count()
-{
-    return sprites_manager::used_sprites_count();
-}
-
-int available_sprites_count()
-{
-    return sprites_manager::available_sprites_count();
-}
-
 int used_items_count()
 {
     return sprites_manager::used_items_count();

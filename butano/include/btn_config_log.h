@@ -4,7 +4,7 @@
 #include "btn_log_implementation.h"
 
 #ifndef BTN_CFG_LOG_ENABLED
-    #define BTN_CFG_LOG_ENABLED true
+    #define BTN_CFG_LOG_ENABLED false
 #endif
 
 #ifndef BTN_CFG_LOG_IMPLEMENTATION

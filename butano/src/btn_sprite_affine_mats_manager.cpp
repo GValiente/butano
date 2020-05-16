@@ -21,13 +21,38 @@ namespace
     public:
         sprite_affine_mat_attributes attributes;
         unsigned usages;
-        bool updated;
+        bool identity;
+        bool identity_changed;
+        bool double_size;
+        bool double_size_changed;
+
+        void init()
+        {
+            attributes = sprite_affine_mat_attributes();
+            usages = 1;
+            identity = true;
+            identity_changed = false;
+            double_size = false;
+            double_size_changed = false;
+        }
 
         void init(const sprite_affine_mat_attributes& new_attributes)
         {
             attributes = new_attributes;
             usages = 1;
-            updated = false;
+            identity_changed = false;
+            double_size_changed = false;
+
+            if(attributes.identity())
+            {
+                identity = true;
+                double_size = false;
+            }
+            else
+            {
+                identity = false;
+                double_size = attributes.double_size();
+            }
         }
     };
 
@@ -40,15 +65,47 @@ namespace
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
         int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
+        bool identity_changed = false;
+        bool double_size_changed = false;
     };
 
     BTN_DATA_EWRAM static_data data;
 
-    void _update(int index)
+    void _update_indexes_to_commit(int index)
     {
         data.first_index_to_commit = min(data.first_index_to_commit, index);
         data.last_index_to_commit = max(data.last_index_to_commit, index);
-        data.items[index].updated = true;
+    }
+
+    void _update(int index)
+    {
+        item_type& item = data.items[index];
+        const sprite_affine_mat_attributes& attributes = item.attributes;
+        bool new_identity;
+        bool new_double_size;
+
+        if(attributes.identity())
+        {
+            new_identity = true;
+            new_double_size = false;
+        }
+        else
+        {
+            new_identity = false;
+            new_double_size = attributes.double_size();
+        }
+
+        bool identity_changed = item.identity != new_identity;
+        item.identity = new_identity;
+        item.identity_changed = identity_changed;
+        data.identity_changed |= identity_changed;
+
+        bool double_size_changed = item.double_size != new_double_size;
+        item.double_size = new_double_size;
+        item.double_size_changed = double_size_changed;
+        data.double_size_changed |= double_size_changed;
+
+        _update_indexes_to_commit(index);
     }
 
     [[nodiscard]] int _create()
@@ -57,9 +114,9 @@ namespace
         data.free_item_indexes.pop_back();
 
         item_type& new_item = data.items[item_index];
-        new_item.init(sprite_affine_mat_attributes());
+        new_item.init();
         hw::sprite_affine_mats::setup(data.handles_ptr[item_index]);
-        _update(item_index);
+        _update_indexes_to_commit(item_index);
         return item_index;
     }
 
@@ -71,7 +128,7 @@ namespace
         item_type& new_item = data.items[item_index];
         new_item.init(attributes);
         hw::sprite_affine_mats::setup(attributes, data.handles_ptr[item_index]);
-        _update(item_index);
+        _update_indexes_to_commit(item_index);
         return item_index;
     }
 }
@@ -216,7 +273,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
     item_type& item = data.items[id];
     item.attributes.set_horizontal_flip(horizontal_flip);
     hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
-    _update(id);
+    _update_indexes_to_commit(id);
 }
 
 bool vertical_flip(int id)
@@ -229,7 +286,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     item_type& item = data.items[id];
     item.attributes.set_vertical_flip(vertical_flip);
     hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
-    _update(id);
+    _update_indexes_to_commit(id);
 }
 
 const sprite_affine_mat_attributes& attributes(int id)
@@ -248,31 +305,50 @@ void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
 bool identity(int id)
 {
     const item_type& item = data.items[id];
-    return item.attributes.identity();
+    return item.identity;
+}
+
+bool identity_changed()
+{
+    return data.identity_changed;
+}
+
+bool identity_changed(int id)
+{
+    const item_type& item = data.items[id];
+    return item.identity_changed;
 }
 
 bool double_size(int id)
 {
     const item_type& item = data.items[id];
-    return item.attributes.double_size();
+    return item.double_size;
 }
 
-bool updated(int id)
+bool double_size_changed()
+{
+    return data.double_size_changed;
+}
+
+bool double_size_changed(int id)
 {
     const item_type& item = data.items[id];
-    return item.updated;
-}
-
-bool updated()
-{
-    return data.first_index_to_commit < sprite_affine_mats::count();
+    return item.double_size_changed;
 }
 
 void update()
 {
-    for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
+    if(data.identity_changed || data.double_size_changed)
     {
-        data.items[index].updated = false;
+        data.identity_changed = false;
+        data.double_size_changed = false;
+
+        for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
+        {
+            item_type& item = data.items[index];
+            item.identity_changed = false;
+            item.double_size_changed = false;
+        }
     }
 }
 
@@ -280,7 +356,7 @@ optional<commit_data> retrieve_commit_data()
 {
     optional<commit_data> result;
 
-    if(updated())
+    if(data.first_index_to_commit < sprite_affine_mats::count())
     {
         int offset = data.first_index_to_commit;
         int count = data.last_index_to_commit - data.first_index_to_commit + 1;

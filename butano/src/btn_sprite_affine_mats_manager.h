@@ -67,11 +67,15 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] bool identity(int id);
 
+    [[nodiscard]] bool identity_changed();
+
+    [[nodiscard]] bool identity_changed(int id);
+
     [[nodiscard]] bool double_size(int id);
 
-    [[nodiscard]] bool updated(int id);
+    [[nodiscard]] bool double_size_changed();
 
-    [[nodiscard]] bool updated();
+    [[nodiscard]] bool double_size_changed(int id);
 
     void update();
 

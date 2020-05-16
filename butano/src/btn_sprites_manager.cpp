@@ -117,7 +117,10 @@ namespace
 
     void _check_affine_mats()
     {
-        if(sprite_affine_mats_manager::updated())
+        bool identity_changed = sprite_affine_mats_manager::identity_changed();
+        bool double_size_changed = sprite_affine_mats_manager::double_size_changed();
+
+        if(identity_changed && double_size_changed)
         {
             for(auto& layer : sorted_sprites::layers())
             {
@@ -127,32 +130,72 @@ namespace
                     {
                         const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
                         int affine_mat_id = affine_mat.id();
+                        bool removed = false;
 
-                        if(sprite_affine_mats_manager::updated(affine_mat_id))
+                        if(sprite_affine_mats_manager::identity_changed(affine_mat_id) &&
+                                item.remove_affine_mat_when_not_needed &&
+                                sprite_affine_mats_manager::identity(affine_mat_id))
                         {
-                            if(item.remove_affine_mat_when_not_needed && affine_mat.identity())
-                            {
-                                _remove_affine_mat(item);
-                            }
-                            else if(sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
-                            {
-                                bool old_double_size = hw::sprites::double_size(item.handle);
-                                bool new_double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
+                            _remove_affine_mat(item);
+                            removed = true;
+                        }
 
-                                if(old_double_size != new_double_size)
-                                {
-                                    hw::sprites::set_affine_mat(affine_mat_id, new_double_size, item.handle);
-                                    _update_item_dimensions(item);
-                                    _update_handle(item);
-                                }
-                            }
+                        if(! removed && sprite_affine_mats_manager::double_size_changed(affine_mat_id) &&
+                                sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
+                        {
+                            bool double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
+                            hw::sprites::set_affine_mat(affine_mat_id, double_size, item.handle);
+                            _update_item_dimensions(item);
+                            _update_handle(item);
                         }
                     }
                 }
             }
-
-            sprite_affine_mats_manager::update();
         }
+        else if(identity_changed)
+        {
+            for(auto& layer : sorted_sprites::layers())
+            {
+                for(item_type& item : *layer)
+                {
+                    if(item.affine_mat && item.remove_affine_mat_when_not_needed)
+                    {
+                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
+                        int affine_mat_id = affine_mat.id();
+
+                        if(sprite_affine_mats_manager::identity_changed(affine_mat_id) &&
+                                sprite_affine_mats_manager::identity(affine_mat_id))
+                        {
+                            _remove_affine_mat(item);
+                        }
+                    }
+                }
+            }
+        }
+        else if(double_size_changed)
+        {
+            for(auto& layer : sorted_sprites::layers())
+            {
+                for(item_type& item : *layer)
+                {
+                    if(item.affine_mat && sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
+                    {
+                        const sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
+                        int affine_mat_id = affine_mat.id();
+
+                        if(sprite_affine_mats_manager::double_size_changed(affine_mat_id))
+                        {
+                            bool double_size = sprite_affine_mats_manager::double_size(affine_mat_id);
+                            hw::sprites::set_affine_mat(affine_mat_id, double_size, item.handle);
+                            _update_item_dimensions(item);
+                            _update_handle(item);
+                        }
+                    }
+                }
+            }
+        }
+
+        sprite_affine_mats_manager::update();
     }
 
     void _check_items_on_screen()

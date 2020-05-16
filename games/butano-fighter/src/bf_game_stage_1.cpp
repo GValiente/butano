@@ -164,7 +164,7 @@ namespace
 
     constexpr const enemy_data characters_1_team(
         btn::sprite_items::stage_1_characters_1_team, enemy_data::death_anim_type::EXPLOSION,
-        btn::sound_items::boss_shoot, btn::fixed_size(48, 48), 0, 1, 50, 100);
+        btn::sound_items::boss_shoot, btn::fixed_size(47, 47), 0, 1, 50, 100);
 
     constexpr const enemy_move_event characters_1_team_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 150,  false),

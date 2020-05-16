@@ -84,6 +84,7 @@ bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
     {
         enemy& enemy = *it;
         enemy.update(hero_position, enemy_bullets);
+        grid_updated |= _grid.update_enemy(enemy);
 
         if(enemy.done())
         {
@@ -93,7 +94,6 @@ bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
         }
         else
         {
-            grid_updated |= _grid.update_enemy(enemy);
             before_it = it;
             ++it;
         }

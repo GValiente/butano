@@ -102,6 +102,10 @@ private:
         return &(_cells[0]) + (columns * row);
     }
 
+    void _add_enemy(int row, int column, enemy& enemy);
+
+    void _remove_enemy(int row, int column, enemy& enemy);
+
     void _add_enemy_row(int row, int column, enemy& enemy);
 
     void _remove_enemy_row(int row, int column, enemy& enemy);

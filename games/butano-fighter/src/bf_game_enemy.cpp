@@ -46,7 +46,7 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     _move_event_index(0),
     _bullet_event_index(0),
     _grid_columns(int8_t(btn::max(event.enemy.dimensions.width().integer() / constants::enemies_grid_size, 1))),
-    _grid_rows(int8_t(btn::max(event.enemy.dimensions.height().integer() / constants::enemies_grid_size, + 1))),
+    _grid_rows(int8_t(btn::max(event.enemy.dimensions.height().integer() / constants::enemies_grid_size, 1))),
     _last_grid_column(0),
     _last_grid_row(0),
     _damage_palette_counter(0),

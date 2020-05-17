@@ -106,14 +106,15 @@ namespace
 
         if(item.affine_mat)
         {
-            sprite_affine_mats_manager::dettach_sprite(item.affine_mat->id(), *item.attached_sprite);
+            sprite_affine_mats_manager::dettach_sprite(item.affine_mat->id(), item.affine_mat_attach_node);
         }
 
+        int affine_mat_id = affine_mat.id();
         item.affine_mat = move(affine_mat);
-        item.attached_sprite = &sprite_affine_mats_manager::attach_sprite(item.affine_mat->id(), &item);
+        sprite_affine_mats_manager::attach_sprite(affine_mat_id, item.affine_mat_attach_node);
 
         bool new_double_size = item.double_size();
-        hw::sprites::set_affine_mat(item.affine_mat->id(), new_double_size, item.handle);
+        hw::sprites::set_affine_mat(affine_mat_id, new_double_size, item.handle);
 
         if(old_double_size != new_double_size)
         {
@@ -130,9 +131,8 @@ namespace
         hw::sprites::set_horizontal_flip(affine_mat.horizontal_flip(), item.handle);
         hw::sprites::set_vertical_flip(affine_mat.vertical_flip(), item.handle);
         hw::sprites::remove_affine_mat(item.handle);
-        sprite_affine_mats_manager::dettach_sprite(affine_mat.id(), *item.attached_sprite);
+        sprite_affine_mats_manager::dettach_sprite(affine_mat.id(), item.affine_mat_attach_node);
         item.affine_mat.reset();
-        item.attached_sprite = nullptr;
 
         if(double_size)
         {
@@ -298,7 +298,7 @@ void decrease_usages(id_type id)
 
         if(item->affine_mat)
         {
-            sprite_affine_mats_manager::dettach_sprite(item->affine_mat->id(), *item->attached_sprite);
+            sprite_affine_mats_manager::dettach_sprite(item->affine_mat->id(), item->affine_mat_attach_node);
         }
 
         data.items_pool.destroy(*item);

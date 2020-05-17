@@ -1,11 +1,11 @@
 #include "btn_sprite_affine_mats_manager.h"
 
-#include "btn_pool.h"
 #include "btn_vector.h"
 #include "btn_optional.h"
 #include "btn_config_sprites.h"
 #include "btn_sprites_manager.h"
 #include "btn_sprite_affine_mats.h"
+#include "btn_sprites_manager_item.h"
 #include "btn_sprite_affine_mat_attributes.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
 
@@ -21,7 +21,7 @@ namespace
 
     public:
         sprite_affine_mat_attributes attributes;
-        intrusive_list<attached_sprite_type> attached_sprites;
+        intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
         bool identity;
         bool identity_changed;
@@ -61,7 +61,6 @@ namespace
     public:
         item_type items[sprite_affine_mats::count()];
         vector<int8_t, sprite_affine_mats::count()> free_item_indexes;
-        pool<attached_sprite_type, BTN_CFG_SPRITES_MAX_ITEMS> attached_sprites_pool;
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
         int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
@@ -107,9 +106,10 @@ namespace
 
         if(double_size_changed)
         {
-            for(attached_sprite_type& attached_sprite : item.attached_sprites)
+            for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
             {
-                sprites_manager::update_affine_mat(attached_sprite.id, index, new_double_size);
+                sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+                sprites_manager::update_affine_mat(&sprite_item, index, new_double_size);
             }
         }
     }
@@ -210,27 +210,23 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        BTN_ASSERT(item.attached_sprites.empty(), "There's still attached sprites");
+        BTN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
 
         item.identity_changed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }
 }
 
-attached_sprite_type& attach_sprite(int id, sprite_id_type sprite_id)
+void attach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node)
 {
     item_type& item = data.items[id];
-    attached_sprite_type& attached_sprite = data.attached_sprites_pool.create();
-    attached_sprite.id = sprite_id;
-    item.attached_sprites.push_back(attached_sprite);
-    return attached_sprite;
+    item.attached_nodes.push_back(attach_node);
 }
 
-void dettach_sprite(int id, attached_sprite_type& attached_sprite)
+void dettach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node)
 {
     item_type& item = data.items[id];
-    item.attached_sprites.erase(attached_sprite);
-    data.attached_sprites_pool.destroy(attached_sprite);
+    item.attached_nodes.erase(attach_node);
 }
 
 fixed rotation_angle(int id)
@@ -351,17 +347,18 @@ void update()
 
             if(item.identity_changed)
             {
-                intrusive_list<attached_sprite_type>& attached_sprites = item.attached_sprites;
-                auto it = attached_sprites.begin();
-                auto end = attached_sprites.end();
+                auto it = item.attached_nodes.begin();
+                auto end = item.attached_nodes.end();
                 item.identity_changed = false;
                 increase_usages(index);
 
                 while(it != end)
                 {
-                    attached_sprite_type& attached_sprite = *it;
+                    sprite_affine_mat_attach_node_type& attached_node = *it;
                     ++it;
-                    sprites_manager::remove_identity_affine_mat_if_not_needed(attached_sprite.id);
+
+                    sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+                    sprites_manager::remove_identity_affine_mat_if_not_needed(&sprite_item);
                 }
 
                 decrease_usages(index);

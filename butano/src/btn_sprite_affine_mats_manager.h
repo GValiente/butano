@@ -8,21 +8,12 @@
 namespace btn
 {
     class sprite_affine_mat_attributes;
+
+    using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
 }
 
 namespace btn::sprite_affine_mats_manager
 {
-    using sprite_id_type = void*;
-
-
-    class attached_sprite_type : public intrusive_list_node_type
-    {
-
-    public:
-        sprite_id_type id = nullptr;
-    };
-
-
     class commit_data
     {
 
@@ -50,9 +41,9 @@ namespace btn::sprite_affine_mats_manager
 
     void decrease_usages(int id);
 
-    [[nodiscard]] attached_sprite_type& attach_sprite(int id, sprite_id_type sprite_id);
+    void attach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node);
 
-    void dettach_sprite(int id, attached_sprite_type& attached_sprite);
+    void dettach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node);
 
     [[nodiscard]] fixed rotation_angle(int id);
 

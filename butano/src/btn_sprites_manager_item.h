@@ -19,22 +19,19 @@ namespace btn
 
 class sprite_builder;
 
-namespace sprite_affine_mats_manager
-{
-    class attached_sprite_type;
-}
+using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
 
 class sprites_manager_item : public intrusive_list_node_type
 {
 
 public:
+    sprite_affine_mat_attach_node_type affine_mat_attach_node;
     hw::sprites::handle handle;
     fixed_point position;
     fixed_point hw_position;
     size half_dimensions;
     unsigned usages = 1;
     sort_key sprite_sort_key;
-    sprite_affine_mats_manager::attached_sprite_type* attached_sprite = nullptr;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
@@ -45,6 +42,16 @@ public:
     bool remove_affine_mat_when_not_needed: 1;
     bool on_screen: 1;
     bool check_on_screen: 1;
+
+    [[nodiscard]] static sprites_manager_item& affine_mat_attach_node_item(
+            sprite_affine_mat_attach_node_type& attach_node)
+    {
+        auto item_address = reinterpret_cast<int>(&attach_node);
+        item_address -= sizeof(intrusive_list_node_type);
+
+        auto item = reinterpret_cast<sprites_manager_item*>(item_address);
+        return *item;
+    }
 
     sprites_manager_item(const fixed_point& _position, const sprite_shape_size& shape_size,
                          sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette);

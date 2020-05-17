@@ -55,7 +55,7 @@ namespace
     // man:
 
     constexpr const enemy_data man(btn::sprite_items::stage_1_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                   btn::sound_items::scream_4, btn::fixed_size(10, 10), 0, 1, 2, 3);
+                                   btn::sound_items::scream_4, btn::fixed_size(10, 10), 0, 1, 1, 3);
 
     constexpr const enemy_move_event man_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0.25)), 60, false),
@@ -75,7 +75,7 @@ namespace
     // woman:
 
     constexpr const enemy_data woman(btn::sprite_items::stage_1_characters_1, enemy_data::death_anim_type::ROTATE,
-                                     btn::sound_items::enemy_death_ninja_14, btn::fixed_size(9, 10), 2, 3, 2, 3);
+                                     btn::sound_items::enemy_death_ninja_14, btn::fixed_size(9, 10), 2, 3, 1, 3);
 
     constexpr const enemy_move_event woman_moves[] = {
         enemy_move_event(btn::fixed_point(0.75, move_y(0.25)),  75, false),
@@ -91,7 +91,7 @@ namespace
     // knight:
 
     constexpr const enemy_data knight(btn::sprite_items::stage_1_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::scream_3, btn::fixed_size(12, 10), 4, 5, 8, 6);
+                                      btn::sound_items::scream_3, btn::fixed_size(12, 10), 4, 5, 7, 6);
 
     constexpr const enemy_move_event knight_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0)), 1, false),
@@ -105,7 +105,7 @@ namespace
     // outlaw:
 
     constexpr const enemy_data outlaw(btn::sprite_items::stage_1_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::scream_5, btn::fixed_size(10, 10), 6, 7, 3, 5);
+                                      btn::sound_items::scream_5, btn::fixed_size(10, 10), 6, 7, 2, 5);
 
     constexpr const enemy_move_event outlaw_moves[] = {
         enemy_move_event(btn::fixed_point(0.5, move_y(0.25)), 60, false),
@@ -140,7 +140,7 @@ namespace
     // goblin:
 
     constexpr const enemy_data goblin(btn::sprite_items::stage_1_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::enemy_death_ninja_15, btn::fixed_size(13, 10), 2, 3, 3, 7);
+                                      btn::sound_items::enemy_death_ninja_15, btn::fixed_size(13, 10), 2, 3, 2, 7);
 
     constexpr const enemy_move_event goblin_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0.25)), 1, false),
@@ -167,9 +167,9 @@ namespace
         btn::sound_items::boss_shoot, btn::fixed_size(47, 47), 0, 1, 50, 100);
 
     constexpr const enemy_move_event characters_1_team_moves[] = {
-        enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 150,  false),
-        enemy_move_event(btn::fixed_point(0.25, 0),         300, false),
-        enemy_move_event(btn::fixed_point(-0.25, 0),        300, false),
+        enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 220, false),
+        enemy_move_event(btn::fixed_point(0.25, 0),          320, false),
+        enemy_move_event(btn::fixed_point(-0.25, 0),         320, false),
         enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 1,   false),
     };
 

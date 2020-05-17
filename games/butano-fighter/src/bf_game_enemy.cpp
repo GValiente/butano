@@ -258,8 +258,6 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
     if(! life)
     {
         _event->enemy.death_sound_item.play_with_priority(constants::enemies_sound_priority);
-        _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
-        _move_action.update();
         _move_event_counter = 1;
 
         switch(_event->enemy.death_anim)
@@ -269,6 +267,8 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             if(btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats)
             {
                 _move_event_counter = 30;
+                _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
+                _move_action.update();
 
                 btn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
                 _rotate_action.emplace(_sprite, rotation_angle);
@@ -284,7 +284,8 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             if(btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats)
             {
                 _move_event_counter = 30;
-
+                _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
+                _move_action.update();
                 _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
                 _scale_x_action->update();
             }
@@ -294,16 +295,18 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             if(btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats)
             {
                 _move_event_counter = 30;
-
+                _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
+                _move_action.update();
                 _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
                 _scale_y_action->update();
             }
             break;
 
         case enemy_data::death_anim_type::EXPLOSION:
-            _move_event_counter = 40;
-
-            _explosion.emplace(btn::sprite_items::enemy_explosion, _sprite.position(), 4,
+            _move_event_counter = 8 * 6;
+            _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed / 4);
+            _move_action.update();
+            _explosion.emplace(btn::sprite_items::enemy_explosion, _sprite.position(), 6,
                                constants::enemy_explosions_z_order);
             _explosion->update();
             break;

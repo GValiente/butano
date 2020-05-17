@@ -449,12 +449,14 @@ namespace
     template<bool tiles>
     [[nodiscard]] int _create_impl(create_data&& create_data)
     {
+        auto begin = data.items.begin();
+        auto end = data.items.end();
         int blocks_count = create_data.blocks_count;
         bool check_to_remove_blocks = blocks_count <= data.to_remove_blocks_count;
 
         if(check_to_remove_blocks)
         {
-            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            for(auto iterator = begin; iterator != end; ++iterator)
             {
                 const item_type& item = *iterator;
 
@@ -472,19 +474,20 @@ namespace
 
         if(blocks_count <= data.free_blocks_count)
         {
-            auto smallest_iterator = data.items.end();
+            auto smallest_iterator = end;
             int smallest_blocks_count = numeric_limits<int>::max();
             int smallest_padding_blocks_count = 0;
 
-            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            for(auto iterator = begin; iterator != end; ++iterator)
             {
                 const item_type& item = *iterator;
 
                 if(item.status() == status_type::FREE)
                 {
                     int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count);
+                    int requested_blocks_count = blocks_count + padding_blocks_count;
 
-                    if(item.blocks_count >= blocks_count + padding_blocks_count)
+                    if(item.blocks_count > requested_blocks_count)
                     {
                         if(item.blocks_count < smallest_blocks_count)
                         {
@@ -493,10 +496,16 @@ namespace
                             smallest_padding_blocks_count = padding_blocks_count;
                         }
                     }
+                    else if(item.blocks_count == requested_blocks_count)
+                    {
+                        smallest_iterator = iterator;
+                        smallest_padding_blocks_count = padding_blocks_count;
+                        break;
+                    }
                 }
             }
 
-            if(smallest_iterator != data.items.end())
+            if(smallest_iterator != end)
             {
                 return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, data.delay_commit,
                                     move(create_data));
@@ -525,19 +534,21 @@ namespace
 
         if(blocks_count <= data.free_blocks_count)
         {
-            auto smallest_iterator = data.items.end();
+            auto end = data.items.end();
+            auto smallest_iterator = end;
             int smallest_blocks_count = numeric_limits<int>::max();
             int smallest_padding_blocks_count = 0;
 
-            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            for(auto iterator = data.items.begin(); iterator != end; ++iterator)
             {
                 const item_type& item = *iterator;
 
                 if(item.status() == status_type::FREE)
                 {
                     int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count);
+                    int requested_blocks_count = blocks_count + padding_blocks_count;
 
-                    if(item.blocks_count >= blocks_count + padding_blocks_count)
+                    if(item.blocks_count > requested_blocks_count)
                     {
                         if(item.blocks_count < smallest_blocks_count)
                         {
@@ -546,10 +557,16 @@ namespace
                             smallest_padding_blocks_count = padding_blocks_count;
                         }
                     }
+                    else if(item.blocks_count == requested_blocks_count)
+                    {
+                        smallest_iterator = iterator;
+                        smallest_padding_blocks_count = padding_blocks_count;
+                        break;
+                    }
                 }
             }
 
-            if(smallest_iterator != data.items.end())
+            if(smallest_iterator != end)
             {
                 return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, false, move(create_data));
             }

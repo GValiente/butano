@@ -6,6 +6,7 @@
 #include "btn_optional.h"
 #include "btn_hash_map.h"
 #include "btn_sprite_tiles.h"
+#include "btn_intrusive_list.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
@@ -37,13 +38,21 @@ namespace
     };
 
 
+    class id_node_type : public intrusive_list_node_type
+    {
+
+    public:
+        int id = -1;
+    };
+
+
     class item_type
     {
 
     public:
-
         const tile* data = nullptr;
         unsigned usages = 0;
+        id_node_type id_node;
         uint16_t start_tile = 0;
         uint16_t tiles_count = 0;
         uint16_t next_index = max_list_items;
@@ -165,11 +174,6 @@ namespace
             return iterator(max_list_items, *this);
         }
 
-        [[nodiscard]] iterator it(int index)
-        {
-            return iterator(index, *this);
-        }
-
         void push_front(const item_type& value)
         {
             insert_after(0, value);
@@ -180,6 +184,7 @@ namespace
             int free_index = _free_indices.back();
             _free_indices.pop_back();
             _items[free_index] = value;
+            _items[free_index].id_node.id = free_index;
             _insert_node_after(index, free_index);
             return iterator(free_index, *this);
         }
@@ -223,8 +228,8 @@ namespace
     public:
         items_list items;
         hash_map<const tile*, uint16_t, max_items * 2> items_map;
-        items_list::iterator biggest_free_iterator;
-        items_list::iterator last_to_remove_iterator;
+        intrusive_list<id_node_type> free_id_nodes;
+        intrusive_list<id_node_type> to_remove_id_nodes;
         int free_tiles_count = 0;
         int to_remove_tiles_count = 0;
         bool check_commit = false;
@@ -265,12 +270,8 @@ namespace
         {
 
         case status_type::FREE:
+            data.free_id_nodes.erase(item.id_node);
             data.free_tiles_count -= tiles_count;
-
-            if(data.biggest_free_iterator.id() == id)
-            {
-                data.biggest_free_iterator = data.items.end();
-            }
             break;
 
         case status_type::USED:
@@ -279,12 +280,8 @@ namespace
 
         case status_type::TO_REMOVE:
             data.items_map.erase(item.data);
+            data.to_remove_id_nodes.erase(item.id_node);
             data.to_remove_tiles_count -= tiles_count;
-
-            if(data.last_to_remove_iterator.id() == id)
-            {
-                data.last_to_remove_iterator = data.items.end();
-            }
             break;
         }
 
@@ -308,50 +305,23 @@ namespace
             new_item.tiles_count = uint16_t(new_item_tiles_count);
 
             auto new_item_iterator = data.items.insert_after(id, new_item);
-
-            if(data.biggest_free_iterator != data.items.end())
-            {
-                const item_type& biggest_free_item = *data.biggest_free_iterator;
-
-                if(biggest_free_item.tiles_count < new_item_tiles_count)
-                {
-                    data.biggest_free_iterator = new_item_iterator;
-                }
-            }
-            else
-            {
-                data.biggest_free_iterator = new_item_iterator;
-            }
+            data.free_id_nodes.push_front(new_item_iterator->id_node);
         }
     }
 
     int _create_impl(const tile* tiles_data, int tiles_count)
     {
-        auto begin = data.items.begin();
-        auto end = data.items.end();
         bool check_to_remove_tiles = tiles_count <= data.to_remove_tiles_count;
 
         if(check_to_remove_tiles)
         {
-            for(auto iterator = data.last_to_remove_iterator, last = end; iterator != last; ++iterator)
+            for(const id_node_type& to_remove_id_node : data.to_remove_id_nodes)
             {
-                const item_type& item = *iterator;
+                int id = to_remove_id_node.id;
+                const item_type& item = data.items.item(id);
 
-                if(item.status() == status_type::TO_REMOVE && item.tiles_count == tiles_count)
+                if(item.tiles_count == tiles_count)
                 {
-                    int id = iterator.id();
-                    _create_item(id, tiles_data, tiles_count, true);
-                    return id;
-                }
-            }
-
-            for(auto iterator = begin, last = data.last_to_remove_iterator; iterator != last; ++iterator)
-            {
-                const item_type& item = *iterator;
-
-                if(item.status() == status_type::TO_REMOVE && item.tiles_count == tiles_count)
-                {
-                    int id = iterator.id();
                     _create_item(id, tiles_data, tiles_count, true);
                     return id;
                 }
@@ -360,28 +330,33 @@ namespace
 
         if(tiles_count <= data.free_tiles_count)
         {
-            for(auto iterator = data.biggest_free_iterator, last = end; iterator != last; ++iterator)
-            {
-                const item_type& item = *iterator;
+            int smallest_id = -1;
+            int smallest_tiles_count = numeric_limits<int>::max();
 
-                if(item.status() == status_type::FREE && item.tiles_count >= tiles_count)
+            for(const id_node_type& free_id_node : data.free_id_nodes)
+            {
+                int id = free_id_node.id;
+                const item_type& item = data.items.item(id);
+
+                if(item.tiles_count > tiles_count)
                 {
-                    int id = iterator.id();
+                    if(item.tiles_count < smallest_tiles_count)
+                    {
+                        smallest_id = id;
+                        smallest_tiles_count = item.tiles_count;
+                    }
+                }
+                else if(item.tiles_count == tiles_count)
+                {
                     _create_item(id, tiles_data, tiles_count, data.delay_commit);
                     return id;
                 }
             }
 
-            for(auto iterator = begin, last = data.biggest_free_iterator; iterator != last; ++iterator)
+            if(smallest_id >= 0)
             {
-                const item_type& item = *iterator;
-
-                if(item.status() == status_type::FREE && item.tiles_count >= tiles_count)
-                {
-                    int id = iterator.id();
-                    _create_item(id, tiles_data, tiles_count, data.delay_commit);
-                    return id;
-                }
+                _create_item(smallest_id, tiles_data, tiles_count, data.delay_commit);
+                return smallest_id;
             }
         }
 
@@ -404,28 +379,33 @@ namespace
 
         if(tiles_count <= data.free_tiles_count)
         {
-            for(auto iterator = data.biggest_free_iterator, end = data.items.end(); iterator != end; ++iterator)
-            {
-                const item_type& item = *iterator;
+            int smallest_id = -1;
+            int smallest_tiles_count = numeric_limits<int>::max();
 
-                if(item.status() == status_type::FREE && item.tiles_count >= tiles_count)
+            for(const id_node_type& free_id_node : data.free_id_nodes)
+            {
+                int id = free_id_node.id;
+                const item_type& item = data.items.item(id);
+
+                if(item.tiles_count > tiles_count)
                 {
-                    int id = iterator.id();
+                    if(item.tiles_count < smallest_tiles_count)
+                    {
+                        smallest_id = id;
+                        smallest_tiles_count = item.tiles_count;
+                    }
+                }
+                else if(item.tiles_count == tiles_count)
+                {
                     _create_item(id, nullptr, tiles_count, false);
                     return id;
                 }
             }
 
-            for(auto iterator = data.items.begin(), end = data.biggest_free_iterator; iterator != end; ++iterator)
+            if(smallest_id >= 0)
             {
-                const item_type& item = *iterator;
-
-                if(item.status() == status_type::FREE && item.tiles_count >= tiles_count)
-                {
-                    int id = iterator.id();
-                    _create_item(id, nullptr, tiles_count, false);
-                    return id;
-                }
+                _create_item(smallest_id, nullptr, tiles_count, false);
+                return smallest_id;
             }
         }
 
@@ -434,30 +414,32 @@ namespace
 
     bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
     {
-        const item_type& adjacent_item = data.items.item(adjacent_id);
-        status_type adjacent_item_status = adjacent_item.status();
-        bool remove = adjacent_item_status != status_type::USED;
+        item_type& adjacent_item = data.items.item(adjacent_id);
+        int adjacent_tiles_count = adjacent_item.tiles_count;
+        bool remove = false;
 
-        if(remove)
+        switch(adjacent_item.status())
         {
-            current_item.tiles_count += adjacent_item.tiles_count;
 
-            if(adjacent_item_status == status_type::TO_REMOVE)
-            {
-                if(adjacent_item.data)
-                {
-                    data.items_map.erase(adjacent_item.data);
-                }
+        case status_type::FREE:
+            data.free_id_nodes.erase(adjacent_item.id_node);
+            current_item.tiles_count += adjacent_tiles_count;
+            remove = true;
+            break;
 
-                data.free_tiles_count += adjacent_item.tiles_count;
-            }
-            else
+        case status_type::USED:
+            break;
+
+        case status_type::TO_REMOVE:
+            if(adjacent_item.data)
             {
-                if(data.biggest_free_iterator.id() == adjacent_id)
-                {
-                    data.biggest_free_iterator = data.items.end();
-                }
+                data.items_map.erase(adjacent_item.data);
             }
+
+            data.free_tiles_count += adjacent_tiles_count;
+            current_item.tiles_count += adjacent_tiles_count;
+            remove = true;
+            break;
         }
 
         return remove;
@@ -490,31 +472,35 @@ namespace
             for(const auto& items_map_pair : data.items_map)
             {
                 BTN_LOG("    ",
-                        " - data: ", items_map_pair.first,
+                        "data: ", items_map_pair.first,
                         " - id: ", items_map_pair.second);
             }
 
             BTN_LOG(']');
 
-            if(data.biggest_free_iterator == data.items.end())
+            BTN_LOG("free_id_nodes: ", data.free_id_nodes.size());
+            BTN_LOG('[');
+
+            for(const id_node_type& free_id_node : data.free_id_nodes)
             {
-                BTN_LOG("biggest_free_iterator: invalid");
-            }
-            else
-            {
-                BTN_LOG("biggest_free_iterator start_tile: ", data.biggest_free_iterator->start_tile);
-                BTN_LOG("biggest_free_iterator tiles_count: ", data.biggest_free_iterator->tiles_count);
+                BTN_LOG("    ",
+                        "id: ", free_id_node.id,
+                        " - start_tile: ", data.items.item(free_id_node.id).start_tile);
             }
 
-            if(data.last_to_remove_iterator == data.items.end())
+            BTN_LOG(']');
+
+            BTN_LOG("to_remove_id_nodes: ", data.to_remove_id_nodes.size());
+            BTN_LOG('[');
+
+            for(const id_node_type& to_remove_id_node : data.to_remove_id_nodes)
             {
-                BTN_LOG("last_to_remove_iterator: invalid");
+                BTN_LOG("    ",
+                        "id: ", to_remove_id_node.id,
+                        " - start_tile: ", data.items.item(to_remove_id_node.id).start_tile);
             }
-            else
-            {
-                BTN_LOG("last_to_remove_iterator start_tile: ", data.last_to_remove_iterator->start_tile);
-                BTN_LOG("last_to_remove_iterator tiles_count: ", data.last_to_remove_iterator->tiles_count);
-            }
+
+            BTN_LOG(']');
 
             BTN_LOG("free_tiles_count: ", data.free_tiles_count);
             BTN_LOG("to_remove_tiles_count: ", data.to_remove_tiles_count);
@@ -547,8 +533,7 @@ void init()
     new_item.tiles_count = sprite_tiles::tiles_count();
     data.items.init();
     data.items.push_front(new_item);
-    data.biggest_free_iterator = data.items.begin();
-    data.last_to_remove_iterator = data.items.end();
+    data.free_id_nodes.push_front(data.items.begin()->id_node);
     data.free_tiles_count = new_item.tiles_count;
 
     BTN_SPRITE_TILES_LOG_STATUS();
@@ -609,12 +594,8 @@ int find(const span<const tile>& tiles_ref)
         case status_type::TO_REMOVE:
             item.usages = 1;
             item.set_status(status_type::USED);
+            data.to_remove_id_nodes.erase(item.id_node);
             data.to_remove_tiles_count -= item.tiles_count;
-
-            if(data.last_to_remove_iterator.id() == id)
-            {
-                data.last_to_remove_iterator = data.items.end();
-            }
             break;
         }
 
@@ -700,7 +681,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
-        data.last_to_remove_iterator = data.items.it(id);
+        data.to_remove_id_nodes.push_front(item.id_node);
         data.to_remove_tiles_count += item.tiles_count;
     }
 
@@ -796,7 +777,7 @@ void update()
         auto previous_iterator = data.items.before_begin();
         auto iterator = previous_iterator;
         ++iterator;
-        data.last_to_remove_iterator = end;
+        data.to_remove_id_nodes.clear();
         data.to_remove_tiles_count = 0;
 
         while(iterator != end)
@@ -813,6 +794,7 @@ void update()
                 item.data = nullptr;
                 item.set_status(status_type::FREE);
                 item.commit = false;
+                data.free_id_nodes.push_front(item.id_node);
                 data.free_tiles_count += item.tiles_count;
 
                 auto next_iterator = iterator;
@@ -838,18 +820,6 @@ void update()
                         data.items.erase_after(before_previous_iterator.id());
                         previous_iterator = before_previous_iterator;
                     }
-                }
-
-                if(data.biggest_free_iterator != end)
-                {
-                    if(data.biggest_free_iterator->tiles_count < item.tiles_count)
-                    {
-                        data.biggest_free_iterator = iterator;
-                    }
-                }
-                else
-                {
-                    data.biggest_free_iterator = iterator;
                 }
             }
 

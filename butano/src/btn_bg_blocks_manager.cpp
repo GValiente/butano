@@ -52,17 +52,18 @@ namespace
     constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks_per_tiles());
 
 
+    enum class status_type
+    {
+        FREE,
+        USED,
+        TO_REMOVE
+    };
+
+
     class item_type
     {
 
     public:
-        enum class status_type
-        {
-            FREE,
-            USED,
-            TO_REMOVE
-        };
-
         const uint16_t* data = nullptr;
         unsigned usages = 0;
         optional<bg_tiles_ptr> tiles;
@@ -312,6 +313,276 @@ namespace
     BTN_DATA_EWRAM static_data data;
 
 
+    void _commit_item(const item_type& item)
+    {
+        if(item.is_tiles)
+        {
+            hw::bg_blocks::commit_tiles(item.data, item.start_block, item.half_words());
+        }
+        else
+        {
+            hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
+                                      item.palette_offset());
+        }
+    }
+
+    void _check_commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
+    {
+        item_type& item = data.items.item(id);
+        item.data = data_ptr;
+        data.items_map.insert(data_ptr, id);
+
+        if(delay_commit)
+        {
+            item.commit = true;
+            data.check_commit = true;
+        }
+        else
+        {
+            _commit_item(item);
+        }
+    }
+
+    [[nodiscard]] int _create_item(int id, int padding_blocks_count, bool delay_commit, create_data&& create_data)
+    {
+        item_type* item = &data.items.item(id);
+        int blocks_count = create_data.blocks_count;
+
+        if(padding_blocks_count)
+        {
+            BTN_ASSERT(! data.items.full(), "No more items allowed");
+
+            int new_item_blocks_count = item->blocks_count - padding_blocks_count;
+            item->blocks_count = uint8_t(padding_blocks_count);
+
+            item_type new_item;
+            new_item.start_block = item->start_block + item->blocks_count;
+            new_item.blocks_count = uint8_t(new_item_blocks_count);
+
+            auto new_item_iterator = data.items.insert_after(id, new_item);
+            id = new_item_iterator.id();
+            item = &data.items.item(id);
+        }
+
+        bool is_tiles = ! create_data.palette;
+
+        if(int new_item_blocks_count = item->blocks_count - blocks_count)
+        {
+            BTN_ASSERT(! data.items.full(), "No more items allowed");
+
+            if(is_tiles)
+            {
+                item_type new_item;
+                new_item.start_block = uint8_t(item->start_block + blocks_count);
+                new_item.blocks_count = uint8_t(new_item_blocks_count);
+                data.items.insert_after(id, new_item);
+            }
+            else
+            {
+                item->blocks_count -= blocks_count;
+
+                item_type new_item;
+                new_item.start_block = uint8_t(item->start_block + item->blocks_count);
+
+                auto new_item_iterator = data.items.insert_after(id, new_item);
+                id = new_item_iterator.id();
+                item = &data.items.item(id);
+            }
+        }
+
+        switch(item->status())
+        {
+
+        case status_type::FREE:
+            data.free_blocks_count -= blocks_count;
+            break;
+
+        case status_type::USED:
+            BTN_ERROR("Invalid item state");
+            break;
+
+        case status_type::TO_REMOVE:
+            data.items_map.erase(item->data);
+            data.to_remove_blocks_count -= blocks_count;
+            break;
+        }
+
+        const uint16_t* data_ptr = create_data.data_ptr;
+        item->data = create_data.data_ptr;
+        item->blocks_count = uint8_t(blocks_count);
+        item->tiles = move(create_data.tiles);
+        item->palette = move(create_data.palette);
+        item->width = uint16_t(create_data.width);
+        item->height = uint8_t(create_data.height);
+        item->usages = 1;
+        item->set_status(status_type::USED);
+        item->is_tiles = is_tiles;
+        item->commit = false;
+
+        if(data_ptr)
+        {
+            _check_commit_item(id, data_ptr, delay_commit);
+        }
+
+        return id;
+    }
+
+    template<bool tiles>
+    [[nodiscard]] int _padding_blocks_count(int start_block, int blocks_count)
+    {
+        int result = 0;
+
+        if(tiles)
+        {
+            int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
+            int extra_blocks_count = start_block % alignment_blocks_count;
+
+            if(blocks_count + extra_blocks_count > hw::bg_blocks::max_blocks_per_tiles())
+            {
+                result = alignment_blocks_count - extra_blocks_count;
+            }
+        }
+
+        return result;
+    }
+
+    template<bool tiles>
+    [[nodiscard]] int _create_impl(create_data&& create_data)
+    {
+        int blocks_count = create_data.blocks_count;
+        bool check_to_remove_blocks = blocks_count <= data.to_remove_blocks_count;
+
+        if(check_to_remove_blocks)
+        {
+            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            {
+                const item_type& item = *iterator;
+
+                if(item.status() == status_type::TO_REMOVE)
+                {
+                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count);
+
+                    if(item.blocks_count == blocks_count + padding_blocks_count)
+                    {
+                        return _create_item(iterator.id(), padding_blocks_count, true, move(create_data));
+                    }
+                }
+            }
+        }
+
+        if(blocks_count <= data.free_blocks_count)
+        {
+            auto smallest_iterator = data.items.end();
+            int smallest_blocks_count = numeric_limits<int>::max();
+            int smallest_padding_blocks_count = 0;
+
+            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            {
+                const item_type& item = *iterator;
+
+                if(item.status() == status_type::FREE)
+                {
+                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count);
+
+                    if(item.blocks_count >= blocks_count + padding_blocks_count)
+                    {
+                        if(item.blocks_count < smallest_blocks_count)
+                        {
+                            smallest_iterator = iterator;
+                            smallest_blocks_count = item.blocks_count;
+                            smallest_padding_blocks_count = padding_blocks_count;
+                        }
+                    }
+                }
+            }
+
+            if(smallest_iterator != data.items.end())
+            {
+                return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, data.delay_commit,
+                                    move(create_data));
+            }
+        }
+
+        if(check_to_remove_blocks && ! data.delay_commit)
+        {
+            update();
+            data.delay_commit = true;
+            return _create_impl<tiles>(move(create_data));
+        }
+
+        return -1;
+    }
+
+    template<bool tiles>
+    [[nodiscard]] int _allocate_impl(create_data&& create_data)
+    {
+        if(data.delay_commit)
+        {
+            return -1;
+        }
+
+        int blocks_count = create_data.blocks_count;
+
+        if(blocks_count <= data.free_blocks_count)
+        {
+            auto smallest_iterator = data.items.end();
+            int smallest_blocks_count = numeric_limits<int>::max();
+            int smallest_padding_blocks_count = 0;
+
+            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
+            {
+                const item_type& item = *iterator;
+
+                if(item.status() == status_type::FREE)
+                {
+                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count);
+
+                    if(item.blocks_count >= blocks_count + padding_blocks_count)
+                    {
+                        if(item.blocks_count < smallest_blocks_count)
+                        {
+                            smallest_iterator = iterator;
+                            smallest_blocks_count = item.blocks_count;
+                            smallest_padding_blocks_count = padding_blocks_count;
+                        }
+                    }
+                }
+            }
+
+            if(smallest_iterator != data.items.end())
+            {
+                return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, false, move(create_data));
+            }
+        }
+
+        return -1;
+    }
+
+    bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
+    {
+        const item_type& adjacent_item = data.items.item(adjacent_id);
+        status_type adjacent_item_status = adjacent_item.status();
+        bool remove = adjacent_item_status != status_type::USED;
+
+        if(remove)
+        {
+            current_item.blocks_count += adjacent_item.blocks_count;
+
+            if(adjacent_item_status == status_type::TO_REMOVE)
+            {
+                if(adjacent_item.data)
+                {
+                    data.items_map.erase(adjacent_item.data);
+                }
+
+                data.free_blocks_count += adjacent_item.blocks_count;
+            }
+        }
+
+        return remove;
+    }
+
+
     #if BTN_CFG_BG_BLOCKS_LOG_ENABLED
         void _log_status()
         {
@@ -320,7 +591,7 @@ namespace
 
             for(const item_type& item : data.items)
             {
-                if(item.status() == item_type::status_type::FREE)
+                if(item.status() == status_type::FREE)
                 {
                     BTN_LOG("    ",
                             "free",
@@ -330,7 +601,7 @@ namespace
                 else if(item.is_tiles)
                 {
                     BTN_LOG("    ",
-                            (item.status() == item_type::status_type::USED ? "used" : "to_remove"),
+                            (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_tiles",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
@@ -342,7 +613,7 @@ namespace
                 else
                 {
                     BTN_LOG("    ",
-                            (item.status() == item_type::status_type::USED ? "used" : "to_remove"),
+                            (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_map",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
@@ -392,194 +663,6 @@ namespace
             { \
             } while(false)
     #endif
-
-
-    void _commit_item(const item_type& item)
-    {
-        if(item.is_tiles)
-        {
-            hw::bg_blocks::commit_tiles(item.data, item.start_block, item.half_words());
-        }
-        else
-        {
-            hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
-                                      item.palette_offset());
-        }
-    }
-
-    void _check_commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
-    {
-        item_type& item = data.items.item(id);
-        item.data = data_ptr;
-        data.items_map.insert(data_ptr, id);
-
-        if(delay_commit)
-        {
-            item.commit = true;
-            data.check_commit = true;
-        }
-        else
-        {
-            _commit_item(item);
-        }
-    }
-
-    [[nodiscard]] int _create_item(int id, int padding_blocks_count, create_data&& create_data)
-    {
-        item_type* item = &data.items.item(id);
-        int blocks_count = create_data.blocks_count;
-
-        if(padding_blocks_count)
-        {
-            BTN_ASSERT(! data.items.full(), "No more items allowed");
-
-            int new_item_blocks_count = item->blocks_count - padding_blocks_count;
-            item->blocks_count = uint8_t(padding_blocks_count);
-
-            item_type new_item;
-            new_item.start_block = item->start_block + item->blocks_count;
-            new_item.blocks_count = uint8_t(new_item_blocks_count);
-
-            auto new_item_iterator = data.items.insert_after(id, new_item);
-            id = new_item_iterator.id();
-            item = &data.items.item(id);
-        }
-
-        bool is_tiles = ! create_data.palette;
-
-        if(int new_item_blocks_count = item->blocks_count - blocks_count)
-        {
-            BTN_ASSERT(! data.items.full(), "No more items allowed");
-
-            if(is_tiles)
-            {
-                item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + blocks_count);
-                new_item.blocks_count = uint8_t(new_item_blocks_count);
-                data.items.insert_after(id, new_item);
-            }
-            else
-            {
-                item->blocks_count -= blocks_count;
-
-                item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + item->blocks_count);
-
-                auto new_item_iterator = data.items.insert_after(id, new_item);
-                id = new_item_iterator.id();
-                item = &data.items.item(id);
-            }
-        }
-
-        const uint16_t* data_ptr = create_data.data_ptr;
-        item->data = create_data.data_ptr;
-        item->blocks_count = uint8_t(blocks_count);
-        item->tiles = move(create_data.tiles);
-        item->palette = move(create_data.palette);
-        item->width = uint16_t(create_data.width);
-        item->height = uint8_t(create_data.height);
-        item->usages = 1;
-        item->set_status(item_type::status_type::USED);
-        item->is_tiles = is_tiles;
-        item->commit = false;
-        data.free_blocks_count -= blocks_count;
-
-        if(data_ptr)
-        {
-            _check_commit_item(id, data_ptr, data.delay_commit);
-        }
-
-        return id;
-    }
-
-    bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
-    {
-        const item_type& adjacent_item = data.items.item(adjacent_id);
-        item_type::status_type adjacent_item_status = adjacent_item.status();
-        bool remove = adjacent_item_status != item_type::status_type::USED;
-
-        if(remove)
-        {
-            current_item.blocks_count += adjacent_item.blocks_count;
-
-            if(adjacent_item_status == item_type::status_type::TO_REMOVE)
-            {
-                if(adjacent_item.data)
-                {
-                    data.items_map.erase(adjacent_item.data);
-                }
-
-                data.free_blocks_count += adjacent_item.blocks_count;
-            }
-        }
-
-        return remove;
-    }
-
-    template<bool tiles>
-    [[nodiscard]] int _create_impl(create_data&& create_data)
-    {
-        const uint16_t* data_ptr = create_data.data_ptr;
-
-        if(! data_ptr && data.delay_commit)
-        {
-            return -1;
-        }
-
-        int blocks_count = create_data.blocks_count;
-
-        if(blocks_count <= data.free_blocks_count)
-        {
-            auto smallest_iterator = data.items.end();
-            int smallest_blocks_count = numeric_limits<int>::max();
-            int smallest_padding_blocks_count = 0;
-
-            for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
-            {
-                const item_type& item = *iterator;
-
-                if(item.status() == item_type::status_type::FREE)
-                {
-                    int padding_blocks_count = 0;
-
-                    if(tiles)
-                    {
-                        int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
-                        int extra_blocks_count = item.start_block % alignment_blocks_count;
-
-                        if(blocks_count + extra_blocks_count > hw::bg_blocks::max_blocks_per_tiles())
-                        {
-                            padding_blocks_count = alignment_blocks_count - extra_blocks_count;
-                        }
-                    }
-
-                    if(item.blocks_count >= blocks_count + padding_blocks_count)
-                    {
-                        if(item.blocks_count < smallest_blocks_count)
-                        {
-                            smallest_iterator = iterator;
-                            smallest_blocks_count = item.blocks_count;
-                            smallest_padding_blocks_count = padding_blocks_count;
-                        }
-                    }
-                }
-            }
-
-            if(smallest_iterator != data.items.end())
-            {
-                return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, move(create_data));
-            }
-        }
-
-        if(data_ptr && blocks_count <= data.to_remove_blocks_count)
-        {
-            update();
-            data.delay_commit = true;
-            return _create_impl<tiles>(move(create_data));
-        }
-
-        return -1;
-    }
 }
 
 void init()
@@ -611,7 +694,7 @@ int used_tile_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && item.is_tiles)
+        if(item.status() != status_type::FREE && item.is_tiles)
         {
             result += item.blocks_count;
         }
@@ -641,7 +724,7 @@ int used_map_blocks_count()
 
     for(const item_type& item : data.items)
     {
-        if(item.status() != item_type::status_type::FREE && ! item.is_tiles)
+        if(item.status() != status_type::FREE && ! item.is_tiles)
         {
             result += item.blocks_count;
         }
@@ -668,6 +751,8 @@ int find_tiles(const span<const tile>& tiles_ref)
     {
         auto id = int(items_map_iterator->second);
         item_type& item = data.items.item(id);
+        BTN_ASSERT(data_ptr == item.data, "Tiles data does not match item tiles data: ",
+                   data_ptr, " - ", item.data);
         BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
                    "Tiles count does not match item tiles count: ",
                    _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
@@ -675,17 +760,17 @@ int find_tiles(const span<const tile>& tiles_ref)
         switch(item.status())
         {
 
-        case item_type::status_type::FREE:
+        case status_type::FREE:
             BTN_ERROR("Invalid item state");
             break;
 
-        case item_type::status_type::USED:
+        case status_type::USED:
             ++item.usages;
             break;
 
-        case item_type::status_type::TO_REMOVE:
+        case status_type::TO_REMOVE:
             item.usages = 1;
-            item.set_status(item_type::status_type::USED);
+            item.set_status(status_type::USED);
             data.to_remove_blocks_count -= item.blocks_count;
             break;
         }
@@ -725,17 +810,17 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
         switch(item.status())
         {
 
-        case item_type::status_type::FREE:
+        case status_type::FREE:
             BTN_ERROR("Invalid item state");
             break;
 
-        case item_type::status_type::USED:
+        case status_type::USED:
             ++item.usages;
             break;
 
-        case item_type::status_type::TO_REMOVE:
+        case status_type::TO_REMOVE:
             item.usages = 1;
-            item.set_status(item_type::status_type::USED);
+            item.set_status(status_type::USED);
             data.to_remove_blocks_count -= item.blocks_count;
 
             item.tiles = tiles;
@@ -815,7 +900,7 @@ int allocate_tiles(int tiles_count)
     BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 
-    int result = _create_impl<true>(create_data::from_tiles(nullptr, half_words));
+    int result = _allocate_impl<true>(create_data::from_tiles(nullptr, half_words));
 
     if(result >= 0)
     {
@@ -839,7 +924,7 @@ int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles, bg_pa
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
     BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
-    int result = _create_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
+    int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -873,7 +958,7 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        item.set_status(item_type::status_type::TO_REMOVE);
+        item.set_status(status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
 
         item.tiles.reset();
@@ -1193,7 +1278,7 @@ void update()
         {
             item_type& item = *iterator;
 
-            if(item.status() == item_type::status_type::TO_REMOVE)
+            if(item.status() == status_type::TO_REMOVE)
             {
                 if(item.data)
                 {
@@ -1203,7 +1288,7 @@ void update()
                 item.data = nullptr;
                 item.width = 0;
                 item.height = 0;
-                item.set_status(item_type::status_type::FREE);
+                item.set_status(status_type::FREE);
                 item.commit = false;
                 data.free_blocks_count += item.blocks_count;
 
@@ -1258,7 +1343,7 @@ void commit()
             {
                 item.commit = false;
 
-                if(item.status() == item_type::status_type::USED)
+                if(item.status() == status_type::USED)
                 {
                     _commit_item(item);
                 }

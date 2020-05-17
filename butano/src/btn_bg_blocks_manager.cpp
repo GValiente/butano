@@ -498,9 +498,7 @@ namespace
                     }
                     else if(item.blocks_count == requested_blocks_count)
                     {
-                        smallest_iterator = iterator;
-                        smallest_padding_blocks_count = padding_blocks_count;
-                        break;
+                        return _create_item(iterator.id(), padding_blocks_count, data.delay_commit, move(create_data));
                     }
                 }
             }
@@ -559,9 +557,7 @@ namespace
                     }
                     else if(item.blocks_count == requested_blocks_count)
                     {
-                        smallest_iterator = iterator;
-                        smallest_padding_blocks_count = padding_blocks_count;
-                        break;
+                        return _create_item(iterator.id(), padding_blocks_count, false, move(create_data));
                     }
                 }
             }

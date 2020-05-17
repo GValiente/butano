@@ -24,6 +24,8 @@ namespace btn::keypad_manager
     void update();
 
     void set_interrupt(const span<const key_type>& keys);
+
+    void stop();
 }
 
 #endif

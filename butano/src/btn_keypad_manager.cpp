@@ -35,6 +35,14 @@ namespace
 
                 if(_buffer.available() < 2)
                 {
+                    flush();
+                }
+            }
+
+            void flush()
+            {
+                if(! _buffer.empty())
+                {
                     BTN_LOG(_buffer);
                     _buffer.clear();
                 }
@@ -124,6 +132,13 @@ void set_interrupt(const span<const key_type>& keys)
     BTN_ASSERT(! keys.empty(), "There's no keys");
 
     hw::keypad::set_interrupt(keys);
+}
+
+void stop()
+{
+    #if BTN_CFG_KEYPAD_LOG_ENABLED
+        data.logger.flush();
+    #endif
 }
 
 }

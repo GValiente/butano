@@ -549,11 +549,12 @@ void set_x(id_type id, fixed x)
 
     if(x_diff != 0)
     {
-        fixed hw_x = item->hw_position.x() + x_diff;
+        fixed_point& item_hw_position = item->hw_position;
+        fixed hw_x = item_hw_position.x() + x_diff;
         int hw_x_integer = hw_x.integer();
-        bool hw_changed = hw_x_integer != item->hw_position.x().integer();
+        bool hw_changed = hw_x_integer != item_hw_position.x().integer();
         item_position.set_x(x);
-        item->hw_position.set_x(hw_x);
+        item_hw_position.set_x(hw_x);
 
         if(hw_changed)
         {
@@ -577,11 +578,12 @@ void set_y(id_type id, fixed y)
 
     if(y_diff != 0)
     {
-        fixed hw_y = item->hw_position.y() + y_diff;
+        fixed_point& item_hw_position = item->hw_position;
+        fixed hw_y = item_hw_position.y() + y_diff;
         int hw_y_integer = hw_y.integer();
-        bool hw_changed = hw_y_integer != item->hw_position.y().integer();
+        bool hw_changed = hw_y_integer != item_hw_position.y().integer();
         item_position.set_y(y);
-        item->hw_position.set_y(hw_y);
+        item_hw_position.set_y(hw_y);
 
         if(hw_changed)
         {
@@ -605,13 +607,14 @@ void set_position(id_type id, const fixed_point& position)
 
     if(position_diff != fixed_point())
     {
-        fixed_point hw_position = item->hw_position + position_diff;
+        fixed_point& item_hw_position = item->hw_position;
+        fixed_point hw_position = item_hw_position + position_diff;
         int hw_x_integer = hw_position.x().integer();
         int hw_y_integer = hw_position.y().integer();
-        bool hw_changed = hw_x_integer != item->hw_position.x().integer() ||
-                hw_y_integer != item->hw_position.y().integer();
+        bool hw_changed = hw_x_integer != item_hw_position.x().integer() ||
+                hw_y_integer != item_hw_position.y().integer();
         item_position = position;
-        item->hw_position = hw_position;
+        item_hw_position = hw_position;
 
         if(hw_changed)
         {

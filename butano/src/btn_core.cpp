@@ -83,6 +83,7 @@ namespace
         audio_manager::stop();
         palettes_manager::stop();
         display_manager::stop();
+        keypad_manager::stop();
     }
 }
 

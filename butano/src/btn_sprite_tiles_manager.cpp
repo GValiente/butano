@@ -38,21 +38,12 @@ namespace
     };
 
 
-    class id_node_type : public intrusive_list_node_type
-    {
-
-    public:
-        int id = -1;
-    };
-
-
-    class item_type
+    class item_type : public intrusive_list_node_type
     {
 
     public:
         const tile* data = nullptr;
         unsigned usages = 0;
-        id_node_type id_node;
         uint16_t start_tile = 0;
         uint16_t tiles_count = 0;
         uint16_t next_index = max_list_items;
@@ -159,6 +150,11 @@ namespace
             return _items[index];
         }
 
+        [[nodiscard]] int index(const item_type& item) const
+        {
+            return &item - _items;
+        }
+
         [[nodiscard]] iterator before_begin()
         {
             return iterator(0, *this);
@@ -184,7 +180,6 @@ namespace
             int free_index = _free_indices.back();
             _free_indices.pop_back();
             _items[free_index] = value;
-            _items[free_index].id_node.id = free_index;
             _insert_node_after(index, free_index);
             return iterator(free_index, *this);
         }
@@ -228,8 +223,8 @@ namespace
     public:
         items_list items;
         hash_map<const tile*, uint16_t, max_items * 2> items_map;
-        intrusive_list<id_node_type> free_id_nodes;
-        intrusive_list<id_node_type> to_remove_id_nodes;
+        intrusive_list<item_type> free_items;
+        intrusive_list<item_type> to_remove_items;
         int free_tiles_count = 0;
         int to_remove_tiles_count = 0;
         bool check_commit = false;
@@ -245,9 +240,8 @@ namespace
                 tiles_count == 32 || tiles_count == 64 || tiles_count == 128;
     }
 
-    void _commit_item(int id, const tile* tiles_data, bool delay_commit)
+    void _commit_item(const tile* tiles_data, bool delay_commit, item_type& item)
     {
-        item_type& item = data.items.item(id);
         item.data = tiles_data;
 
         if(delay_commit)
@@ -270,7 +264,7 @@ namespace
         {
 
         case status_type::FREE:
-            data.free_id_nodes.erase(item.id_node);
+            data.free_items.erase(item);
             data.free_tiles_count -= tiles_count;
             break;
 
@@ -280,7 +274,7 @@ namespace
 
         case status_type::TO_REMOVE:
             data.items_map.erase(item.data);
-            data.to_remove_id_nodes.erase(item.id_node);
+            data.to_remove_items.erase(item);
             data.to_remove_tiles_count -= tiles_count;
             break;
         }
@@ -293,7 +287,7 @@ namespace
 
         if(tiles_data)
         {
-            _commit_item(id, tiles_data, delay_commit);
+            _commit_item(tiles_data, delay_commit, item);
         }
 
         if(new_item_tiles_count)
@@ -305,7 +299,7 @@ namespace
             new_item.tiles_count = uint16_t(new_item_tiles_count);
 
             auto new_item_iterator = data.items.insert_after(id, new_item);
-            data.free_id_nodes.push_front(new_item_iterator->id_node);
+            data.free_items.push_front(*new_item_iterator);
         }
     }
 
@@ -315,13 +309,11 @@ namespace
 
         if(check_to_remove_tiles)
         {
-            for(const id_node_type& to_remove_id_node : data.to_remove_id_nodes)
+            for(const item_type& item : data.to_remove_items)
             {
-                int id = to_remove_id_node.id;
-                const item_type& item = data.items.item(id);
-
                 if(item.tiles_count == tiles_count)
                 {
+                    int id = data.items.index(item);
                     _create_item(id, tiles_data, tiles_count, true);
                     return id;
                 }
@@ -333,21 +325,19 @@ namespace
             int smallest_id = -1;
             int smallest_tiles_count = numeric_limits<int>::max();
 
-            for(const id_node_type& free_id_node : data.free_id_nodes)
+            for(const item_type& item : data.free_items)
             {
-                int id = free_id_node.id;
-                const item_type& item = data.items.item(id);
-
                 if(item.tiles_count > tiles_count)
                 {
                     if(item.tiles_count < smallest_tiles_count)
                     {
-                        smallest_id = id;
+                        smallest_id = data.items.index(item);
                         smallest_tiles_count = item.tiles_count;
                     }
                 }
                 else if(item.tiles_count == tiles_count)
                 {
+                    int id = data.items.index(item);
                     _create_item(id, tiles_data, tiles_count, data.delay_commit);
                     return id;
                 }
@@ -382,21 +372,19 @@ namespace
             int smallest_id = -1;
             int smallest_tiles_count = numeric_limits<int>::max();
 
-            for(const id_node_type& free_id_node : data.free_id_nodes)
+            for(const item_type& item : data.free_items)
             {
-                int id = free_id_node.id;
-                const item_type& item = data.items.item(id);
-
                 if(item.tiles_count > tiles_count)
                 {
                     if(item.tiles_count < smallest_tiles_count)
                     {
-                        smallest_id = id;
+                        smallest_id = data.items.index(item);
                         smallest_tiles_count = item.tiles_count;
                     }
                 }
                 else if(item.tiles_count == tiles_count)
                 {
+                    int id = data.items.index(item);
                     _create_item(id, nullptr, tiles_count, false);
                     return id;
                 }
@@ -422,7 +410,7 @@ namespace
         {
 
         case status_type::FREE:
-            data.free_id_nodes.erase(adjacent_item.id_node);
+            data.free_items.erase(adjacent_item);
             current_item.tiles_count += adjacent_tiles_count;
             remove = true;
             break;
@@ -478,26 +466,26 @@ namespace
 
             BTN_LOG(']');
 
-            BTN_LOG("free_id_nodes: ", data.free_id_nodes.size());
+            BTN_LOG("free_items: ", data.free_items.size());
             BTN_LOG('[');
 
-            for(const id_node_type& free_id_node : data.free_id_nodes)
+            for(const item_type& item : data.free_items)
             {
                 BTN_LOG("    ",
-                        "id: ", free_id_node.id,
-                        " - start_tile: ", data.items.item(free_id_node.id).start_tile);
+                        "data: ", item.data,
+                        " - start_tile: ", item.start_tile);
             }
 
             BTN_LOG(']');
 
-            BTN_LOG("to_remove_id_nodes: ", data.to_remove_id_nodes.size());
+            BTN_LOG("to_remove_items: ", data.to_remove_items.size());
             BTN_LOG('[');
 
-            for(const id_node_type& to_remove_id_node : data.to_remove_id_nodes)
+            for(const item_type& item : data.to_remove_items)
             {
                 BTN_LOG("    ",
-                        "id: ", to_remove_id_node.id,
-                        " - start_tile: ", data.items.item(to_remove_id_node.id).start_tile);
+                        "data: ", item.data,
+                        " - start_tile: ", item.start_tile);
             }
 
             BTN_LOG(']');
@@ -533,7 +521,7 @@ void init()
     new_item.tiles_count = sprite_tiles::tiles_count();
     data.items.init();
     data.items.push_front(new_item);
-    data.free_id_nodes.push_front(data.items.begin()->id_node);
+    data.free_items.push_front(*data.items.begin());
     data.free_tiles_count = new_item.tiles_count;
 
     BTN_SPRITE_TILES_LOG_STATUS();
@@ -594,7 +582,7 @@ int find(const span<const tile>& tiles_ref)
         case status_type::TO_REMOVE:
             item.usages = 1;
             item.set_status(status_type::USED);
-            data.to_remove_id_nodes.erase(item.id_node);
+            data.to_remove_items.erase(item);
             data.to_remove_tiles_count -= item.tiles_count;
             break;
         }
@@ -681,7 +669,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
-        data.to_remove_id_nodes.push_front(item.id_node);
+        data.to_remove_items.push_front(item);
         data.to_remove_tiles_count += item.tiles_count;
     }
 
@@ -713,7 +701,7 @@ optional<span<const tile>> tiles_ref(int id)
 
 void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
-    const item_type& item = data.items.item(id);
+    item_type& item = data.items.item(id);
     const tile* old_tiles_data = item.data;
     [[maybe_unused]] int old_tiles_count = item.tiles_count;
     const tile* new_tiles_data = tiles_ref.data();
@@ -732,7 +720,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
                    old_tiles_count, " - ", new_tiles_count);
 
         data.items_map.erase(old_tiles_data);
-        _commit_item(id, new_tiles_data, true);
+        _commit_item(new_tiles_data, true, item);
         data.items_map.insert(new_tiles_data, id);
 
         BTN_SPRITE_TILES_LOG_STATUS();
@@ -777,7 +765,7 @@ void update()
         auto previous_iterator = data.items.before_begin();
         auto iterator = previous_iterator;
         ++iterator;
-        data.to_remove_id_nodes.clear();
+        data.to_remove_items.clear();
         data.to_remove_tiles_count = 0;
 
         while(iterator != end)
@@ -794,7 +782,7 @@ void update()
                 item.data = nullptr;
                 item.set_status(status_type::FREE);
                 item.commit = false;
-                data.free_id_nodes.push_front(item.id_node);
+                data.free_items.push_front(item);
                 data.free_tiles_count += item.tiles_count;
 
                 auto next_iterator = iterator;

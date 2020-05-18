@@ -1,5 +1,6 @@
 #include "bf_game_intro.h"
 
+#include "btn_colors.h"
 #include "btn_rect_window.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
@@ -45,11 +46,12 @@ namespace
     }
 
     btn::sprite_third_attributes_hblank_effect_ptr _create_hblank_effect(
-            const btn::sprite_ptr& sprite, btn::ivector<btn::sprite_third_attributes>& hblank_effect_attributes)
+            const btn::sprite_ptr& sprite, const btn::sprite_palette_ptr& second_palette,
+            btn::ivector<btn::sprite_third_attributes>& hblank_effect_attributes)
     {
         btn::sprite_third_attributes attributes = sprite.third_attributes();
         btn::sprite_third_attributes alt_attributes = attributes;
-        alt_attributes.set_palette(btn::sprite_items::stage_1_intro_alt.palette_item().create_palette());
+        alt_attributes.set_palette(second_palette);
 
         for(int index = 0; index < btn::display::height(); index += 2)
         {
@@ -123,10 +125,18 @@ void intro::update(const butano_background& butano_background)
                 _background_sprite_scale_y_actions.emplace_back(background_sprite, scale_frames, 2);
             }
 
+            btn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
+            btn::sprite_palette_ptr second_palette = btn::sprite_items::stage_1_intro_alt.palette_item().create_palette();
+            first_palette.set_fade(btn::colors::white, 1);
+            second_palette.set_fade(btn::colors::black, 1);
+            _background_sprite_palette_actions.emplace_back(first_palette, scale_frames, 0);
+            _background_sprite_palette_actions.emplace_back(second_palette, scale_frames, 0);
             _background_sprite_hblank_effects.push_back(
-                        _create_hblank_effect(_background_sprites[0], _background_sprite_hblank_effect_attributes_1));
+                        _create_hblank_effect(
+                            _background_sprites[0], second_palette, _background_sprite_hblank_effect_attributes_1));
             _background_sprite_hblank_effects.push_back(
-                        _create_hblank_effect(_background_sprites[1], _background_sprite_hblank_effect_attributes_2));
+                        _create_hblank_effect(
+                            _background_sprites[1], second_palette, _background_sprite_hblank_effect_attributes_2));
 
             btn::rect_window internal_window = btn::rect_window::internal();
             internal_window.set_boundaries(0, -128, 0, 128);
@@ -147,6 +157,11 @@ void intro::update(const butano_background& butano_background)
         for(auto& background_sprite_scale_y_action : _background_sprite_scale_y_actions)
         {
             background_sprite_scale_y_action.update();
+        }
+
+        for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
+        {
+            background_sprite_palette_action.update();
         }
 
         _window_move_top_action->update();
@@ -238,6 +253,12 @@ void intro::update(const butano_background& butano_background)
                 _background_sprite_scale_y_actions.emplace_back(background_sprite, scale_frames, 0.1);
             }
 
+            for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
+            {
+                background_sprite_palette_action = btn::sprite_palette_fade_to_action(
+                            background_sprite_palette_action.palette(), scale_frames, 1);
+            }
+
             btn::rect_window internal_window = btn::rect_window::internal();
             _window_move_top_action.emplace(internal_window, scale_frames, 0);
             _window_move_bottom_action.emplace(internal_window, scale_frames, 0);
@@ -262,6 +283,11 @@ void intro::update(const butano_background& butano_background)
                 background_sprite_scale_y_action.update();
             }
 
+            for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
+            {
+                background_sprite_palette_action.update();
+            }
+
             for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
             {
                 if(! text_sprite_scale_y_action.done())
@@ -283,6 +309,7 @@ void intro::update(const butano_background& butano_background)
         {
             _background_sprite_move_actions.clear();
             _background_sprite_scale_y_actions.clear();
+            _background_sprite_palette_actions.clear();
             _window_move_top_action.reset();
             _window_move_bottom_action.reset();
             _background_sprite_hblank_effects.clear();

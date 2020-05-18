@@ -5,6 +5,7 @@
 #include "btn_sprite_actions.h"
 #include "btn_rect_window_actions.h"
 #include "btn_sprite_hblank_effects.h"
+#include "btn_sprite_palette_actions.h"
 #include "btn_sprite_third_attributes.h"
 
 namespace btn
@@ -54,6 +55,7 @@ private:
     btn::vector<btn::sprite_move_to_action, 2> _background_sprite_move_actions;
     btn::vector<btn::sprite_scale_y_to_action, 2> _background_sprite_scale_y_actions;
     btn::vector<btn::sprite_scale_y_to_action, 40> _text_sprite_scale_y_actions;
+    btn::vector<btn::sprite_palette_fade_to_action, 2> _background_sprite_palette_actions;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _background_sprite_hblank_effect_attributes_1;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _background_sprite_hblank_effect_attributes_2;
     btn::vector<btn::sprite_third_attributes_hblank_effect_ptr, 2> _background_sprite_hblank_effects;

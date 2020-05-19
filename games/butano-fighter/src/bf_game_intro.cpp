@@ -127,8 +127,8 @@ void intro::update(const butano_background& butano_background)
 
             btn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
             btn::sprite_palette_ptr second_palette = btn::sprite_items::stage_1_intro_alt.palette_item().create_palette();
-            first_palette.set_fade(btn::colors::white, 1);
-            second_palette.set_fade(btn::colors::black, 1);
+            first_palette.set_fade(btn::colors::white, 0.5);
+            second_palette.set_fade(btn::colors::black, 0.5);
             _background_sprite_palette_actions.emplace_back(first_palette, scale_frames, 0);
             _background_sprite_palette_actions.emplace_back(second_palette, scale_frames, 0);
             _background_sprite_hblank_effects.push_back(
@@ -256,7 +256,7 @@ void intro::update(const butano_background& butano_background)
             for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
             {
                 background_sprite_palette_action = btn::sprite_palette_fade_to_action(
-                            background_sprite_palette_action.palette(), scale_frames, 1);
+                            background_sprite_palette_action.palette(), scale_frames, 0.5);
             }
 
             btn::rect_window internal_window = btn::rect_window::internal();

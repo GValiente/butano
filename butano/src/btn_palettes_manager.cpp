@@ -39,11 +39,13 @@ void commit()
     if(optional<palettes_bank::commit_data> commit_data = data.sprite_palettes_bank.retrieve_commit_data())
     {
         hw::palettes::commit_sprites(commit_data->colors_ptr, commit_data->offset, commit_data->count);
+        data.sprite_palettes_bank.reset_commit_data();
     }
 
     if(optional<palettes_bank::commit_data> commit_data = data.bg_palettes_bank.retrieve_commit_data())
     {
         hw::palettes::commit_bgs(commit_data->colors_ptr, commit_data->offset, commit_data->count);
+        data.bg_palettes_bank.reset_commit_data();
     }
 }
 

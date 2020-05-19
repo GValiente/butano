@@ -1,9 +1,8 @@
 #include "btn_bg_palettes_hblank_effects.h"
 
-#include "btn_span.h"
-#include "btn_color.h"
 #include "btn_display.h"
-#include "btn_optional.h"
+#include "btn_palettes_bank.h"
+#include "btn_palettes_manager.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_hblank_effects_manager.h"
 #include "../hw/include/btn_hw_palettes.h"
@@ -30,6 +29,12 @@ namespace
 
         [[nodiscard]] bool target_updated(int, iany&) final
         {
+            if(optional<palettes_bank::commit_data> commit_data =
+                    palettes_manager::bg_palettes_bank().retrieve_commit_data())
+            {
+                return commit_data->offset == 0;
+            }
+
             return false;
         }
 
@@ -40,7 +45,8 @@ namespace
 
         void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            palettes_manager::bg_palettes_bank().fill_hblank_effect_colors(
+                        reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
         }
     };
 

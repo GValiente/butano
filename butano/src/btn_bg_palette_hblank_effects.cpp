@@ -1,9 +1,8 @@
 #include "btn_bg_palette_hblank_effects.h"
 
-#include "btn_span.h"
-#include "btn_color.h"
 #include "btn_display.h"
-#include "btn_optional.h"
+#include "btn_palettes_bank.h"
+#include "btn_palettes_manager.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_hblank_effects_manager.h"
 #include "../hw/include/btn_hw_palettes.h"
@@ -13,6 +12,33 @@ namespace btn
 
 namespace
 {
+    struct alignas(alignof(int)) palette_target_id
+    {
+        union
+        {
+            struct
+            {
+                int16_t palette_id;
+                int16_t final_color_index;
+            } params;
+            int target_id;
+        };
+
+        palette_target_id(int palette_id, int color_index) :
+            params({ int16_t(palette_id), int16_t((palette_id * 16) + color_index) })
+        {
+        }
+
+        explicit palette_target_id(int _target_id) :
+            target_id(_target_id)
+        {
+        }
+    };
+
+    static_assert(sizeof(palette_target_id) == sizeof(int));
+    static_assert(alignof(palette_target_id) == alignof(int));
+
+
     class color_hblank_effect_handler : public hblank_effect_handler
     {
 
@@ -28,19 +54,34 @@ namespace
             return true;
         }
 
-        [[nodiscard]] bool target_updated(int, iany&) final
+        [[nodiscard]] bool target_updated(int target_id, iany&) final
         {
+            if(optional<palettes_bank::commit_data> commit_data =
+                    palettes_manager::bg_palettes_bank().retrieve_commit_data())
+            {
+                palette_target_id palette_target_id(target_id);
+                int target_color = palette_target_id.params.final_color_index;
+                int first_color = commit_data->offset;
+                int last_color = first_color + commit_data->count - 1;
+                return target_color >= first_color && target_color <= last_color;
+            }
+
             return false;
         }
 
         [[nodiscard]] uint16_t* output_register(int target_id) final
         {
-            return hw::palettes::bg_color_register(target_id);
+            palette_target_id palette_target_id(target_id);
+            return hw::palettes::bg_color_register(palette_target_id.params.final_color_index);
         }
 
-        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
+        void write_output_values(int target_id, const iany&, const void* input_values_ptr,
+                                 uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            palette_target_id palette_target_id(target_id);
+            int palette_id = palette_target_id.params.palette_id;
+            palettes_manager::bg_palettes_bank().fill_hblank_effect_colors(
+                        palette_id, reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
         }
     };
 
@@ -61,9 +102,9 @@ bg_palette_color_hblank_effect_ptr bg_palette_color_hblank_effect_ptr::create(
     BTN_ASSERT(color_index >= 0 && color_index < palette.colors_count(),
                "Invalid color index: ", color_index, " - ", palette.colors_count());
 
-    int final_color_index = (palette.id() * 16) + color_index;
-    int id = hblank_effects_manager::create(colors_ref.data(), colors_ref.size(), final_color_index,
-                                            data.color_handler);
+    palette_target_id palette_target_id(palette.id(), color_index);
+    int id = hblank_effects_manager::create(
+                colors_ref.data(), colors_ref.size(), palette_target_id.target_id, data.color_handler);
     return bg_palette_color_hblank_effect_ptr(id, color_index, move(palette));
 }
 
@@ -73,9 +114,9 @@ optional<bg_palette_color_hblank_effect_ptr> bg_palette_color_hblank_effect_ptr:
     BTN_ASSERT(color_index >= 0 && color_index < palette.colors_count(),
                "Invalid color index: ", color_index, " - ", palette.colors_count());
 
-    int final_color_index = (palette.id() * 16) + color_index;
-    int id = hblank_effects_manager::optional_create(colors_ref.data(), colors_ref.size(), final_color_index,
-                                                     data.color_handler);
+    palette_target_id palette_target_id(palette.id(), color_index);
+    int id = hblank_effects_manager::optional_create(
+                colors_ref.data(), colors_ref.size(), palette_target_id.target_id, data.color_handler);
     optional<bg_palette_color_hblank_effect_ptr> result;
 
     if(id >= 0)

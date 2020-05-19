@@ -163,7 +163,13 @@ public:
 
     void update();
 
-    [[nodiscard]] optional<commit_data> retrieve_commit_data();
+    [[nodiscard]] optional<commit_data> retrieve_commit_data() const;
+
+    void reset_commit_data();
+
+    void fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const;
+
+    void fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const;
 
 private:
     class palette
@@ -192,6 +198,8 @@ private:
         {
             return span<const color>(colors_ref + 1, (hw::palettes::colors_per_palette() * slots_count) - 1);
         }
+
+        void apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
     };
 
     palette _palettes[hw::palettes::count()] = {};
@@ -213,6 +221,8 @@ private:
     [[nodiscard]] int _bpp8_slots_count() const;
 
     [[nodiscard]] int _first_4bpp_palette_index() const;
+
+    void _apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
 };
 
 }

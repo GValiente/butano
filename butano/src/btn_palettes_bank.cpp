@@ -4,6 +4,7 @@
 #include "btn_span.h"
 #include "btn_limits.h"
 #include "btn_memory.h"
+#include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_config_palettes.h"
 
@@ -470,28 +471,14 @@ void palettes_bank::update()
 
             if(pal.update || (update_all && pal.usages))
             {
-                int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
                 pal.update = false;
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
 
+                int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
                 color* pal_colors_ptr = _colors + (index * hw::palettes::colors_per_palette());
                 memory::copy(*pal.colors_ref, pal_colors_count, *pal_colors_ptr);
-
-                if(pal.inverted)
-                {
-                    hw::palettes::invert(pal_colors_count, pal_colors_ptr);
-                }
-
-                if(int pal_grayscale_intensity = fixed_t<5>(pal.grayscale_intensity).data())
-                {
-                    hw::palettes::grayscale(pal_grayscale_intensity, pal_colors_count, pal_colors_ptr);
-                }
-
-                if(int pal_fade_intensity = fixed_t<5>(pal.fade_intensity).data())
-                {
-                    hw::palettes::fade(pal.fade_color, pal_fade_intensity, pal_colors_count, pal_colors_ptr);
-                }
+                pal.apply_effects(pal_colors_count, pal_colors_ptr);
 
                 if(pal.rotate_count)
                 {
@@ -511,36 +498,7 @@ void palettes_bank::update()
             color* all_colors_ptr = _colors + (first_index * hw::palettes::colors_per_palette());
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
-
-            if(int brightness = fixed_t<8>(_brightness).data())
-            {
-                hw::palettes::brightness(brightness, all_colors_count, all_colors_ptr);
-            }
-
-            if(int contrast = fixed_t<8>(_contrast).data())
-            {
-                hw::palettes::contrast(contrast, all_colors_count, all_colors_ptr);
-            }
-
-            if(int intensity = fixed_t<8>(_intensity).data())
-            {
-                hw::palettes::intensity(intensity, all_colors_count, all_colors_ptr);
-            }
-
-            if(_inverted)
-            {
-                hw::palettes::invert(all_colors_count, all_colors_ptr);
-            }
-
-            if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).data())
-            {
-                hw::palettes::grayscale(grayscale_intensity, all_colors_count, all_colors_ptr);
-            }
-
-            if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
-            {
-                hw::palettes::fade(_fade_color, fade_intensity, all_colors_count, all_colors_ptr);
-            }
+            _apply_effects(all_colors_count, all_colors_ptr);
         }
     }
 
@@ -556,7 +514,7 @@ void palettes_bank::update()
     }
 }
 
-optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
+optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
 {
     optional<commit_data> result;
 
@@ -568,11 +526,33 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data()
         int colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                 hw::palettes::colors_per_palette();
         result = commit_data{ _colors, colors_offset, colors_count };
-        _first_index_to_commit.reset();
-        _last_index_to_commit.reset();
     }
 
     return result;
+}
+
+void palettes_bank::reset_commit_data()
+{
+    _first_index_to_commit.reset();
+    _last_index_to_commit.reset();
+}
+
+void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const
+{
+    const palette& pal = _palettes[id];
+    int dest_colors_count = display::height();
+    auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
+    memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
+    pal.apply_effects(dest_colors_count, dest_colors_ptr);
+    _apply_effects(dest_colors_count, dest_colors_ptr);
+}
+
+void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const
+{
+    int dest_colors_count = display::height();
+    auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
+    memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
+    _apply_effects(dest_colors_count, dest_colors_ptr);
 }
 
 int palettes_bank::_bpp8_slots_count() const
@@ -600,6 +580,57 @@ int palettes_bank::_first_4bpp_palette_index() const
     }
 
     return hw::palettes::count();
+}
+
+void palettes_bank::_apply_effects(int dest_colors_count, color* dest_colors_ptr) const
+{
+    if(int brightness = fixed_t<8>(_brightness).data())
+    {
+        hw::palettes::brightness(brightness, dest_colors_count, dest_colors_ptr);
+    }
+
+    if(int contrast = fixed_t<8>(_contrast).data())
+    {
+        hw::palettes::contrast(contrast, dest_colors_count, dest_colors_ptr);
+    }
+
+    if(int intensity = fixed_t<8>(_intensity).data())
+    {
+        hw::palettes::intensity(intensity, dest_colors_count, dest_colors_ptr);
+    }
+
+    if(_inverted)
+    {
+        hw::palettes::invert(dest_colors_count, dest_colors_ptr);
+    }
+
+    if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).data())
+    {
+        hw::palettes::grayscale(grayscale_intensity, dest_colors_count, dest_colors_ptr);
+    }
+
+    if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
+    {
+        hw::palettes::fade(_fade_color, fade_intensity, dest_colors_count, dest_colors_ptr);
+    }
+}
+
+void palettes_bank::palette::apply_effects(int dest_colors_count, color* dest_colors_ptr) const
+{
+     if(inverted)
+     {
+         hw::palettes::invert(dest_colors_count, dest_colors_ptr);
+     }
+
+     if(int pal_grayscale_intensity = fixed_t<5>(grayscale_intensity).data())
+     {
+         hw::palettes::grayscale(pal_grayscale_intensity, dest_colors_count, dest_colors_ptr);
+     }
+
+     if(int pal_fade_intensity = fixed_t<5>(fade_intensity).data())
+     {
+         hw::palettes::fade(fade_color, pal_fade_intensity, dest_colors_count, dest_colors_ptr);
+     }
 }
 
 }

@@ -122,7 +122,6 @@ void status::update_high_experience()
     sram_data sram_data_to_write;
     sram_data_to_write.high_experience = btn::max(_experience, _high_experience);
     sram_data_to_write.write();
-    BTN_ASSERT(sram_data().read(), "SRAM read after write failed");
 }
 
 }

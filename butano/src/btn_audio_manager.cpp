@@ -13,7 +13,7 @@ namespace btn::audio_manager
 
 namespace
 {
-    static_assert(BTN_CFG_AUDIO_MAX_COMMANDS > 1, "Invalid audio max commands");
+    static_assert(BTN_CFG_AUDIO_MAX_COMMANDS > 1, "Invalid max audio commands");
 
 
     class command
@@ -307,20 +307,14 @@ void stop_all_sounds()
     data.commands.push_back(command::sound_stop_all());
 }
 
-void sleep()
-{
-    hw::audio::sleep();
-}
-
-void wake_up()
-{
-    hw::audio::wake_up();
-}
-
-void update()
+void disable_vblank_handler()
 {
     hw::audio::disable_vblank_handler();
-    hw::audio::release_inactive_sounds();
+}
+
+void commit()
+{
+    hw::audio::commit();
 
     for(const command& command : data.commands)
     {
@@ -335,14 +329,21 @@ void update()
     }
 }
 
-void commit()
+void enable_vblank_handler()
 {
     hw::audio::enable_vblank_handler();
 }
 
 void stop()
 {
-    hw::audio::stop();
+    data.commands.clear();
+
+    if(data.music_playing)
+    {
+        stop_music();
+    }
+
+    stop_all_sounds();
 }
 
 }

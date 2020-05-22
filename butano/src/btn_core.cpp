@@ -79,8 +79,12 @@ namespace
 
     void stop()
     {
-        hw::core::wait_for_vblank();
         audio_manager::stop();
+        audio_manager::disable_vblank_handler();
+        hw::core::wait_for_vblank();
+        audio_manager::commit();
+        audio_manager::enable_vblank_handler();
+
         palettes_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
@@ -165,14 +169,12 @@ void update()
     hblank_effects_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_audio_update");
-    audio_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage = data.cpu_usage_timer->elapsed_frames();
     BTN_PROFILER_ENGINE_STOP();
 
+    audio_manager::disable_vblank_handler();
     hw::core::wait_for_vblank();
 
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
@@ -210,6 +212,8 @@ void update()
     BTN_PROFILER_ENGINE_START("eng_audio_commit");
     audio_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
+
+    audio_manager::enable_vblank_handler();
 
     BTN_PROFILER_ENGINE_START("eng_keypad");
     keypad_manager::update();
@@ -260,9 +264,6 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
         }
     }
 
-    // Sleep audio:
-    audio_manager::sleep();
-
     // Sleep display:
     display_manager::sleep();
 
@@ -292,9 +293,6 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage_timer->restart();
     BTN_PROFILER_ENGINE_STOP();
-
-    // Wake up audio:
-    audio_manager::wake_up();
 
     // Wake up display:
     display_manager::wake_up();

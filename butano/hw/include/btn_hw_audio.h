@@ -33,17 +33,11 @@ namespace btn::hw::audio
 
     void stop_all_sounds();
 
-    void release_inactive_sounds();
-
-    void sleep();
-
-    void wake_up();
-
     void disable_vblank_handler();
 
-    void enable_vblank_handler();
+    void commit();
 
-    void stop();
+    void enable_vblank_handler();
 }
 
 #endif

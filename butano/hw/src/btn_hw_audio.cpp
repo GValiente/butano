@@ -13,6 +13,7 @@ namespace btn::hw::audio
 namespace
 {
     static_assert(BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
+    static_assert(BTN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
 
 
     class sound_type
@@ -56,26 +57,6 @@ namespace
     alignas(sizeof(int)) uint8_t maxmod_mixing_buffer[_mix_length()];
 
 
-    class lock
-    {
-
-    public:
-        lock()
-        {
-            while(data.locked)
-            {
-            }
-
-            data.locked = true;
-        }
-
-        ~lock()
-        {
-            data.locked = false;
-        }
-    };
-
-
     void _check_sounds_queue()
     {
         if(data.sounds_queue.full())
@@ -108,19 +89,10 @@ namespace
 
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
     }
-
-    void _commit_handler()
-    {
-        lock lock;
-
-        mmFrame();
-    }
 }
 
 void init()
 {
-    lock lock;
-
     irq::add(irq::id::VBLANK, mmVBlank);
 
     mm_gba_system maxmod_info;
@@ -140,16 +112,15 @@ void init()
 
 void enable()
 {
-    lock lock;
-
+    REG_SNDDSCNT = uint16_t(data.direct_sound_control_value);
     irq::enable(irq::id::VBLANK);
 }
 
 void disable()
 {
-    lock lock;
-
     irq::disable(irq::id::VBLANK);
+    data.direct_sound_control_value = REG_SNDDSCNT;
+    REG_SNDDSCNT = 0;
 }
 
 bool music_playing()
@@ -222,8 +193,15 @@ void stop_all_sounds()
     data.sounds_queue.clear();
 }
 
-void release_inactive_sounds()
+void disable_vblank_handler()
 {
+    mmSetVBlankHandler(nullptr);
+}
+
+void commit()
+{
+    mmFrame();
+
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();
@@ -244,42 +222,9 @@ void release_inactive_sounds()
     }
 }
 
-void sleep()
-{
-    lock lock;
-
-    data.direct_sound_control_value = REG_SNDDSCNT;
-    REG_SNDDSCNT = 0;
-}
-
-void wake_up()
-{
-    lock lock;
-
-    REG_SNDDSCNT = uint16_t(data.direct_sound_control_value);
-}
-
-void disable_vblank_handler()
-{
-    lock lock;
-
-    mmSetVBlankHandler(nullptr);
-}
-
 void enable_vblank_handler()
 {
-    lock lock;
-
-    mmFrame();
-    mmSetVBlankHandler(reinterpret_cast<void*>(_commit_handler));
-}
-
-void stop()
-{
-    lock lock;
-
-    stop_music();
-    stop_all_sounds();
+    mmSetVBlankHandler(reinterpret_cast<void*>(mmFrame));
 }
 
 }

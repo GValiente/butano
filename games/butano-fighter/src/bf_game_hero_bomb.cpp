@@ -163,7 +163,7 @@ void hero_bomb::update(const intro& intro, hero& hero, enemies& enemies, enemy_b
             else if(_counter == 30)
             {
                 btn::rect_window::internal().set_boundaries(0, 0, 0, 0);
-                background.show_clouds(30);
+                background.show_top(30);
                 _bg_move_action.reset();
                 _wave_hblank_effect.reset();
             }

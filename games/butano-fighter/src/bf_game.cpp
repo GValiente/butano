@@ -2,21 +2,23 @@
 
 #include "btn_music_items.h"
 #include "btn_sprite_items_flash_palette.h"
+#include "bf_game_status.h"
 #include "bf_butano_background.h"
 
 namespace bf::game
 {
 
 game::game(status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background) :
+    _background(status.current_stage()),
     _hero(status),
-    _intro(text_generator),
-    _enemies(btn::sprite_items::flash_palette.palette_item().create_palette()),
+    _intro(status.current_stage(), text_generator),
+    _enemies(status.current_stage(), btn::sprite_items::flash_palette.palette_item().create_palette()),
     _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),
     _scoreboard(text_generator),
     _butano_background(butano_background)
 {
     butano_background.hide(_hero.body_position());
-    btn::music_items::cyberrid.play(0.4);
+    status.current_stage().music_item.play(0.4);
 }
 
 btn::optional<scene_type> game::update()

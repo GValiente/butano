@@ -21,11 +21,13 @@ namespace bf
 namespace bf::game
 {
 
+class stage;
+
 class intro
 {
 
 public:
-    explicit intro(btn::sprite_text_generator& text_generator);
+    intro(const stage& stage, btn::sprite_text_generator& text_generator);
 
     intro(const intro& other) = delete;
 
@@ -51,6 +53,7 @@ private:
     };
 
     btn::vector<btn::sprite_ptr, 2> _background_sprites;
+    btn::optional<btn::sprite_palette_ptr> _alt_palette;
     btn::vector<btn::sprite_ptr, 40> _text_sprites;
     btn::vector<btn::sprite_move_to_action, 2> _background_sprite_move_actions;
     btn::vector<btn::sprite_scale_y_to_action, 2> _background_sprite_scale_y_actions;

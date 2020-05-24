@@ -3,12 +3,12 @@
 #include "bf_game_hero.h"
 #include "bf_game_intro.h"
 #include "bf_game_hero_bomb.h"
-#include "bf_game_stage_1.h"
 
 namespace bf::game
 {
 
-enemies::enemies(const btn::sprite_palette_ptr& damage_palette) :
+enemies::enemies(const stage& stage, const btn::sprite_palette_ptr& damage_palette) :
+    _events(stage.enemy_events),
     _damage_palette(damage_palette)
 {
 }
@@ -93,8 +93,7 @@ bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
 
 bool enemies::_add_enemies()
 {
-    const btn::span<const enemy_event>& events = stage_1::get().enemy_events;
-    int events_count = events.size();
+    int events_count = _events.size();
 
     if(_event_index == events_count)
     {
@@ -120,7 +119,7 @@ bool enemies::_add_enemies()
     auto new_enemy_tag = btn::max(int8_t(0), int8_t(_new_enemy_tag));
     ++_new_enemy_tag;
 
-    const enemy_event& event = events[_event_index];
+    const enemy_event& event = _events[_event_index];
     _enemies.emplace_front(event, _damage_palette, new_enemy_tag);
     _grid.add_enemy(_enemies.front());
     _event_counter = event.wait_frames;

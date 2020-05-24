@@ -1,7 +1,12 @@
 #include "bf_game_stage_1.h"
 
 #include "btn_display.h"
+#include "btn_music_items.h"
 #include "btn_sound_items.h"
+#include "btn_regular_bg_items_clouds.h"
+#include "btn_regular_bg_items_stage_1.h"
+#include "btn_sprite_items_stage_1_intro.h"
+#include "btn_sprite_items_stage_1_intro_alt.h"
 #include "btn_sprite_items_stage_1_animals.h"
 #include "btn_sprite_items_stage_1_monsters_1.h"
 #include "btn_sprite_items_stage_1_characters_1.h"
@@ -339,7 +344,9 @@ namespace
 
     // stage:
 
-    constexpr const stage stage_1(enemy_events);
+    constexpr const stage stage_1(
+        btn::regular_bg_items::stage_1, btn::regular_bg_items::clouds, btn::sprite_items::stage_1_intro,
+        btn::sprite_items::stage_1_intro_alt, "STAGE 1", "DWARF LAND", btn::music_items::cyberrid, enemy_events);
 }
 
 const stage& get()

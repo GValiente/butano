@@ -1,7 +1,7 @@
 #ifndef BF_GAME_STATUS_H
 #define BF_GAME_STATUS_H
 
-#include "btn_fixed_fwd.h"
+#include "bf_game_stage_1.h"
 
 namespace bf::game
 {
@@ -11,6 +11,11 @@ class status
 
 public:
     status();
+
+    [[nodiscard]] const stage& current_stage() const
+    {
+        return *_current_stage;
+    }
 
     [[nodiscard]] int level() const
     {
@@ -45,6 +50,7 @@ public:
     void update_high_experience();
 
 private:
+    const stage* _current_stage = &stage_1::get();
     int _level = 0;
     int _experience = 0;
     int _bombs_count = 2;

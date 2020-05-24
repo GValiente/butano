@@ -4,9 +4,7 @@
 #include "btn_rect_window.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
-#include "btn_sprite_items_stage_1_intro.h"
-#include "btn_sprite_items_stage_1_intro_alt.h"
-#include "bf_constants.h"
+#include "bf_game_stage.h"
 #include "bf_butano_background.h"
 
 namespace bf::game
@@ -22,27 +20,29 @@ namespace
     constexpr const int wait_3_frames = 40;
     constexpr const int background_move_frames = wait_2_frames + wait_3_frames + (scale_frames * 2);
 
-    void _load_sprites(btn::ivector<btn::sprite_ptr>& sprites)
+    btn::vector<btn::sprite_ptr, 2> _create_background_sprites(const stage& stage)
     {
+        btn::vector<btn::sprite_ptr, 2> result;
         int x = -64 + 8;
-        btn::sprite_builder builder(btn::sprite_items::stage_1_intro);
+        btn::sprite_builder builder(stage.intro_sprite_item);
         builder.set_x(x);
         builder.set_scale_x(2);
         builder.set_scale_y(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
         builder.set_ignore_camera(true);
         builder.set_visible(false);
-        sprites.push_back(builder.build());
-        x += 128;
+        result.push_back(builder.build());
 
-        builder = btn::sprite_builder(btn::sprite_items::stage_1_intro, 1);
-        builder.set_x(x);
+        builder = btn::sprite_builder(stage.intro_sprite_item, 1);
+        builder.set_x(x + 128);
         builder.set_scale_x(2);
         builder.set_scale_y(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
         builder.set_ignore_camera(true);
         builder.set_visible(false);
-        sprites.push_back(builder.build());
+        result.push_back(builder.build());
+
+        return result;
     }
 
     btn::sprite_third_attributes_hblank_effect_ptr _create_hblank_effect(
@@ -65,10 +65,10 @@ namespace
     }
 }
 
-intro::intro(btn::sprite_text_generator& text_generator)
+intro::intro(const stage& stage, btn::sprite_text_generator& text_generator) :
+    _background_sprites(_create_background_sprites(stage)),
+    _alt_palette(stage.intro_alt_sprite_item.palette_item().create_palette())
 {
-    _load_sprites(_background_sprites);
-
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     int old_bg_priority = text_generator.bg_priority();
     int old_z_order = text_generator.z_order();
@@ -76,8 +76,8 @@ intro::intro(btn::sprite_text_generator& text_generator)
     text_generator.set_bg_priority(3);
     text_generator.set_z_order(constants::intro_sprites_z_order);
     text_generator.set_one_sprite_per_character(true);
-    text_generator.generate(0, -16, "STAGE 1", _text_sprites);
-    text_generator.generate(0, 16, "DWARF LAND", _text_sprites);
+    text_generator.generate(0, -16, stage.intro_top_label, _text_sprites);
+    text_generator.generate(0, 16, stage.intro_bottom_label, _text_sprites);
     text_generator.set_alignment(old_alignment);
     text_generator.set_bg_priority(old_bg_priority);
     text_generator.set_z_order(old_z_order);
@@ -126,7 +126,7 @@ void intro::update(const butano_background& butano_background)
             }
 
             btn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
-            btn::sprite_palette_ptr second_palette = btn::sprite_items::stage_1_intro_alt.palette_item().create_palette();
+            btn::sprite_palette_ptr& second_palette = *_alt_palette;
             first_palette.set_fade(btn::colors::white, 0.5);
             second_palette.set_fade(btn::colors::black, 0.5);
             _background_sprite_palette_actions.emplace_back(first_palette, scale_frames, 0);
@@ -316,6 +316,7 @@ void intro::update(const butano_background& butano_background)
             _background_sprite_hblank_effect_attributes_1.clear();
             _background_sprite_hblank_effect_attributes_2.clear();
             _background_sprites.clear();
+            _alt_palette.reset();
             _text_sprites.clear();
             _text_sprite_scale_y_actions.clear();
 

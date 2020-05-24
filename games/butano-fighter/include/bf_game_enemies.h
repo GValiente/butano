@@ -10,13 +10,14 @@ namespace bf::game
 {
 
 class intro;
+class stage;
 class hero_bomb;
 
 class enemies
 {
 
 public:
-    explicit enemies(const btn::sprite_palette_ptr& damage_palette);
+    enemies(const stage& stage, const btn::sprite_palette_ptr& damage_palette);
 
     [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const
     {
@@ -33,6 +34,7 @@ public:
     void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets);
 
 private:
+    const btn::span<const enemy_event>& _events;
     btn::forward_list<enemy, constants::max_enemies> _enemies;
     enemies_grid _grid;
     btn::sprite_palette_ptr _damage_palette;

@@ -2,9 +2,7 @@
 #define BF_GAME_ENEMIES_H
 
 #include "btn_forward_list.h"
-#include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
-#include "bf_constants.h"
 #include "bf_game_enemy.h"
 #include "bf_game_enemies_grid.h"
 
@@ -25,7 +23,10 @@ public:
         return _grid.check_hero(hero_rect);
     }
 
-    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
+    [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data)
+    {
+        return _grid.check_hero_bullet(data);
+    }
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 

@@ -50,6 +50,7 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     _last_grid_column(0),
     _last_grid_row(0),
     _damage_palette_counter(0),
+    _ignore_hero_bullet_counter(constants::enemies_invencible_frames),
     _tag(tag)
 {
     if(! event.bullet_events.empty())
@@ -70,7 +71,7 @@ bool enemy::check_hero(const btn::fixed_rect& hero_rect) const
 
 bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
 {
-    if(_life)
+    if(_life && ! _ignore_hero_bullet_counter)
     {
         const enemy_data& enemy_data = _event->enemy;
         btn::fixed_point enemy_position = position();
@@ -136,6 +137,11 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
 {
     if(_life)
     {
+        if(_ignore_hero_bullet_counter)
+        {
+            --_ignore_hero_bullet_counter;
+        }
+
         if(_move_event_counter)
         {
             --_move_event_counter;

@@ -3,7 +3,6 @@
 #include "bf_game_hero.h"
 #include "bf_game_intro.h"
 #include "bf_game_hero_bomb.h"
-#include "bf_game_check_hero_bullet_data.h"
 #include "bf_game_stage_1.h"
 
 namespace bf::game
@@ -12,16 +11,6 @@ namespace bf::game
 enemies::enemies(const btn::sprite_palette_ptr& damage_palette) :
     _damage_palette(damage_palette)
 {
-}
-
-bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
-{
-    if(data.bullet_rect.bottom() < -(constants::play_height + 8))
-    {
-        return false;
-    }
-
-    return _grid.check_hero_bullet(data);
 }
 
 void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)

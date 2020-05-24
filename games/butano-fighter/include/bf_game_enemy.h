@@ -95,6 +95,7 @@ private:
     int8_t _last_grid_column;
     int8_t _last_grid_row;
     int8_t _damage_palette_counter;
+    int8_t _ignore_hero_bullet_counter;
     int8_t _tag;
 
     void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage);

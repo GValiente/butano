@@ -761,6 +761,11 @@ private:
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
         BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= Size, "Invalid graphics indexes: ",
                    graphics_indexes.size());
+
+        for(int graphics_index : graphics_indexes)
+        {
+            _graphics_indexes.push_back(graphics_index);
+        }
     }
 
     sprite_animate_action(sprite_ptr&& sprite, int wait_frames, const sprite_tiles_item& tiles_item, bool forever,
@@ -774,6 +779,11 @@ private:
         BTN_ASSERT(wait_frames <= numeric_limits<decltype(_wait_frames)>::max(), "Too much wait frames: ", wait_frames);
         BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= Size, "Invalid graphics indexes: ",
                    graphics_indexes.size());
+
+        for(int graphics_index : graphics_indexes)
+        {
+            _graphics_indexes.push_back(graphics_index);
+        }
     }
 };
 

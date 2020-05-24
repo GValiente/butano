@@ -78,7 +78,7 @@ private:
     const enemy_event* _event;
     btn::sprite_ptr _sprite;
     btn::sprite_move_by_action _move_action;
-    btn::sprite_cached_animate_action<2> _animate_action;
+    btn::sprite_animate_action<2> _animate_action;
     btn::optional<btn::sprite_rotate_by_action> _rotate_action;
     btn::optional<btn::sprite_scale_x_to_action> _scale_x_action;
     btn::optional<btn::sprite_scale_y_to_action> _scale_y_action;

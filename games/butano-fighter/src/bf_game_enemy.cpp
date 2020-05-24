@@ -26,9 +26,9 @@ namespace
         return builder.release_build();
     }
 
-    btn::sprite_cached_animate_action<2> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data)
+    btn::sprite_animate_action<2> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data)
     {
-        return btn::create_sprite_cached_animate_action_forever(
+        return btn::create_sprite_animate_action_forever(
                     sprite, 16, data.sprite_item, data.graphics_index_1, data.graphics_index_2);
     }
 }

@@ -16,12 +16,15 @@ class sprite_tiles_item
 public:
     constexpr sprite_tiles_item(const span<const tile>& tiles_ref, int graphics_count) :
         _tiles_ref(tiles_ref),
-        _graphics_count(graphics_count)
+        _graphics_count(graphics_count),
+        _tiles_count_per_graphic(0)
     {
         BTN_CONSTEXPR_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
         BTN_CONSTEXPR_ASSERT(graphics_count > 0, "Invalid graphics count");
         BTN_CONSTEXPR_ASSERT(graphics_count <= tiles_ref.size(), "Invalid tiles or graphics count");
         BTN_CONSTEXPR_ASSERT(tiles_ref.size() % graphics_count == 0, "Invalid tiles or graphics count");
+
+        _tiles_count_per_graphic = tiles_ref.size() / graphics_count;
     }
 
     [[nodiscard]] constexpr int graphics_count() const
@@ -31,7 +34,7 @@ public:
 
     [[nodiscard]] constexpr int tiles_count_per_graphic() const
     {
-        return _tiles_ref.size() / _graphics_count;
+        return _tiles_count_per_graphic;
     }
 
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
@@ -41,7 +44,7 @@ public:
 
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
     {
-        return span<const tile>(_tiles_ref.data(), tiles_count_per_graphic());
+        return span<const tile>(_tiles_ref.data(), _tiles_count_per_graphic);
     }
 
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
@@ -49,7 +52,7 @@ public:
         BTN_CONSTEXPR_ASSERT(graphics_index >= 0, "Invalid graphics index");
         BTN_CONSTEXPR_ASSERT(graphics_index < _graphics_count, "Invalid graphics index");
 
-        int tiles_count = tiles_count_per_graphic();
+        int tiles_count = _tiles_count_per_graphic;
         return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
     }
 
@@ -87,6 +90,7 @@ public:
 private:
     span<const tile> _tiles_ref;
     int _graphics_count;
+    int _tiles_count_per_graphic;
 };
 
 }

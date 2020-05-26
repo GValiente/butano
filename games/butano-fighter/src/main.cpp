@@ -28,20 +28,14 @@ int main()
     btn::unique_ptr<bf::scene> scene(new bf::game::game(game_status, small_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
-    btn::optional<bf::scene_type> next_scene_bck;
+    btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
     int wait_frames = 0;
 
     while(true)
     {
-        btn::optional<bf::scene_type> next_scene;
-
         if(scene)
         {
             next_scene = scene->update();
-        }
-        else
-        {
-            next_scene = next_scene_bck;
         }
 
         butano_background.update();
@@ -51,8 +45,6 @@ int main()
 
         if(next_scene)
         {
-            next_scene_bck = next_scene;
-
             if(scene)
             {
                 scene.reset();

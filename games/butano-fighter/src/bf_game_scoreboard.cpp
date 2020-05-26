@@ -53,7 +53,7 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
         builder.set_horizontal_flip(true);
         _experience_bar_sprites.push_back(builder.build());
 
-        builder.set_position(btn::fixed_point(experience_bar_x - 14, text_y));
+        builder.set_position(btn::fixed_point(experience_bar_x - 13, text_y));
         builder.set_horizontal_flip(false);
         _experience_bar_sprites.push_back(builder.release_build());
     }
@@ -101,6 +101,11 @@ void scoreboard::update(const hero& hero)
         }
         else
         {
+            if(next_level_experience_ratio < 1)
+            {
+                next_level_experience_ratio *= btn::fixed(0.935);
+            }
+
             experience_bar_sprite.set_scale_x(next_level_experience_ratio);
             experience_bar_sprite.set_visible(true);
         }

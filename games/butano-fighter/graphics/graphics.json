@@ -21,6 +21,30 @@
         "hero_weapons": {
             "height": 16
         },
+        "hero_weapon_big_2": {
+            "height": 16
+        },
+        "hero_weapon_big_3": {
+            "height": 32
+        },
+        "hero_weapon_big_4": {
+            "height": 16
+        },
+        "hero_weapon_big_5": {
+            "height": 16
+        },
+        "hero_weapon_big_6": {
+            "height": 16
+        },
+        "hero_weapon_big_7": {
+            "height": 32
+        },
+        "hero_weapon_big_8": {
+            "height": 32
+        },
+        "hero_weapon_big_9": {
+            "height": 16
+        },
         "hero_bullets": {
             "height": 32
         },

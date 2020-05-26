@@ -2,6 +2,7 @@
 #define BF_GAME_OBJECT_H
 
 #include "btn_sprite_ptr.h"
+#include "btn_fixed_size.h"
 #include "btn_fixed_point.h"
 #include "btn_sprite_palette_ptr.h"
 
@@ -36,14 +37,15 @@ public:
 
 private:
     btn::fixed_point _position;
+    btn::fixed_size _dimensions;
     btn::fixed_point _delta_position;
     btn::sprite_ptr _sprite;
     btn::sprite_palette_ptr _sprite_palette;
     btn::sprite_palette_ptr _flash_palette;
     int _flash_palette_counter;
 
-    object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const btn::fixed_point& delta_position,
-           const btn::sprite_palette_ptr& flash_palette);
+    object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const btn::fixed_size& dimensions,
+           const btn::fixed_point& delta_position, const btn::sprite_palette_ptr& flash_palette);
 };
 
 }

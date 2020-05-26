@@ -10,7 +10,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr const btn::fixed_size dimensions(14, 14);
+    constexpr const btn::fixed_size dimensions(15, 15);
     constexpr const int flash_frames = 60;
 
     [[nodiscard]] btn::sprite_ptr _create_sprite(

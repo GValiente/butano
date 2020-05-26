@@ -2,7 +2,14 @@
 
 #include "btn_fixed_rect.h"
 #include "btn_sprite_builder.h"
-#include "btn_sprite_items_hero_weapons.h"
+#include "btn_sprite_items_hero_weapon_big_2.h"
+#include "btn_sprite_items_hero_weapon_big_3.h"
+#include "btn_sprite_items_hero_weapon_big_4.h"
+#include "btn_sprite_items_hero_weapon_big_5.h"
+#include "btn_sprite_items_hero_weapon_big_6.h"
+#include "btn_sprite_items_hero_weapon_big_7.h"
+#include "btn_sprite_items_hero_weapon_big_8.h"
+#include "btn_sprite_items_hero_weapon_big_9.h"
 #include "btn_sprite_items_hero_bomb_icon.h"
 #include "bf_game_hero_bullet_level.h"
 
@@ -11,18 +18,64 @@ namespace bf::game
 
 namespace
 {
-    constexpr const btn::fixed_size dimensions(14, 14);
     constexpr const int flash_frames = 16;
 }
 
 object object::create_hero_weapon(const btn::fixed_point& position, int hero_level,
                                   const btn::sprite_palette_ptr& flash_palette)
 {
-    btn::fixed_point sprite_position(position.x(), position.y() - 1);
-    btn::sprite_builder builder(btn::sprite_items::hero_weapons, hero_level);
-    builder.set_position(sprite_position);
+    const btn::sprite_item* sprite_item = &btn::sprite_items::hero_weapon_big_2;
+    btn::fixed_size dimensions(28, 16);
+
+    switch(hero_level)
+    {
+
+    case 1:
+        break;
+
+    case 2:
+        sprite_item = &btn::sprite_items::hero_weapon_big_3;
+        dimensions = btn::fixed_size(33, 16);
+        break;
+
+    case 3:
+        sprite_item = &btn::sprite_items::hero_weapon_big_4;
+        dimensions = btn::fixed_size(23, 16);
+        break;
+
+    case 4:
+        sprite_item = &btn::sprite_items::hero_weapon_big_5;
+        dimensions = btn::fixed_size(22, 15);
+        break;
+
+    case 5:
+        sprite_item = &btn::sprite_items::hero_weapon_big_6;
+        dimensions = btn::fixed_size(32, 16);
+        break;
+
+    case 6:
+        sprite_item = &btn::sprite_items::hero_weapon_big_7;
+        dimensions = btn::fixed_size(27, 17);
+        break;
+
+    case 7:
+        sprite_item = &btn::sprite_items::hero_weapon_big_8;
+        dimensions = btn::fixed_size(38, 18);
+        break;
+
+    case 8:
+        sprite_item = &btn::sprite_items::hero_weapon_big_9;
+        dimensions = btn::fixed_size(17, 15);
+        break;
+
+    default:
+        BTN_ERROR("Invalid hero level: ", hero_level);
+    }
+
+    btn::sprite_builder builder(*sprite_item);
+    builder.set_position(position);
     builder.set_z_order(constants::objects_z_order);
-    return object(builder.release_build(), sprite_position, btn::fixed_point(1, -1), flash_palette);
+    return object(builder.release_build(), position, dimensions, btn::fixed_point(1, -1), flash_palette);
 }
 
 object object::create_hero_bomb(const btn::fixed_point& position, const btn::sprite_palette_ptr& flash_palette)
@@ -30,12 +83,12 @@ object object::create_hero_bomb(const btn::fixed_point& position, const btn::spr
     btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
     builder.set_position(position);
     builder.set_z_order(constants::objects_z_order);
-    return object(builder.release_build(), position, btn::fixed_point(-1, -1), flash_palette);
+    return object(builder.release_build(), position, btn::fixed_size(14, 16), btn::fixed_point(-1, -1), flash_palette);
 }
 
 bool object::intersects_hero(const btn::fixed_rect& hero_rect) const
 {
-    return btn::fixed_rect(_position, dimensions).intersects(hero_rect);
+    return btn::fixed_rect(_position, _dimensions).intersects(hero_rect);
 }
 
 int object::experience(int hero_level) const
@@ -78,9 +131,10 @@ void object::update()
     }
 }
 
-object::object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const btn::fixed_point& delta_position,
-               const btn::sprite_palette_ptr& flash_palette) :
+object::object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const btn::fixed_size& dimensions,
+               const btn::fixed_point& delta_position, const btn::sprite_palette_ptr& flash_palette) :
     _position(position),
+    _dimensions(dimensions),
     _delta_position(delta_position),
     _sprite(btn::move(sprite)),
     _sprite_palette(_sprite.palette()),

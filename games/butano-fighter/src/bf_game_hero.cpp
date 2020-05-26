@@ -75,6 +75,10 @@ void hero::show_shoot(btn::color fade_color)
     btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
     body_palette.set_fade(fade_color, 0.5);
     _body_palette_fade_action.emplace(btn::move(body_palette), _show_shoot_counter, 0);
+
+    btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+    weapon_palette.set_fade(fade_color, 0.75);
+    _weapon_palette_fade_action.emplace(btn::move(weapon_palette), _show_shoot_counter, 0);
 }
 
 btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
@@ -99,9 +103,6 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
             _scale_weapon_counter = scale_weapon_frames;
             _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _status.level());
             _weapon_sprite.set_scale(2);
-
-            btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
-            weapon_palette.set_fade(btn::colors::yellow, 0.5);
         }
 
         bool max_bombs_count = _status.bombs_count() == constants::max_hero_bombs;
@@ -192,6 +193,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
         shoot_shift_y = -1;
         --_show_shoot_counter;
         _body_palette_fade_action->update();
+        _weapon_palette_fade_action->update();
     }
     else
     {
@@ -210,7 +212,6 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
 
     if(_scale_weapon_counter)
     {
-        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
         --_scale_weapon_counter;
 
         if(_scale_weapon_counter)
@@ -218,11 +219,6 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
             if(_scale_weapon_counter <= scale_weapon_half_frames)
             {
                 _weapon_sprite.set_scale(1 + (btn::fixed(_scale_weapon_counter) / scale_weapon_half_frames));
-
-                if(_scale_weapon_counter == scale_weapon_half_frames)
-                {
-                    weapon_palette.set_fade_intensity(0);
-                }
             }
         }
         else

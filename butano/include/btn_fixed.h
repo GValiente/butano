@@ -112,14 +112,6 @@ public:
         return multiplication(integer);
     }
 
-    [[nodiscard]] constexpr fixed_t reciprocal_division(int integer) const
-    {
-        BTN_CONSTEXPR_ASSERT(_data >= 0, "Internal data is not positive");
-        BTN_CONSTEXPR_ASSERT(integer >= 0, "Integer is not greater than 0");
-
-        return *this * from_data((scale() + integer - 1) / integer);
-    }
-
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
         BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");

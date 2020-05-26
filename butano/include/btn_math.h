@@ -28,15 +28,6 @@ namespace btn
         return (value >= 0) ? value : -value;
     }
 
-    template<int Precision = 12>
-    [[nodiscard]] constexpr fixed_t<Precision> reciprocal_division(int numerator, int denominator)
-    {
-        static_assert(Precision > 0 && Precision < 31, "Invalid precision");
-        BTN_CONSTEXPR_ASSERT(denominator, "Denominator is zero");
-
-        return fixed_t<Precision>::from_data(numerator * fixed_t<Precision>(denominator).reciprocal().data());
-    }
-
     /**
      * @brief Integer square root.
      */

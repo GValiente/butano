@@ -2,7 +2,7 @@
 #define BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
 
 #include "btn_math.h"
-#include "btn_algorithm.h"
+#include "btn_sprite_affine_mat_scale_lut.h"
 
 namespace btn
 {
@@ -185,6 +185,30 @@ private:
     int8_t _hflip = 1;
     int8_t _vflip = 1;
 
+    [[nodiscard]] constexpr static uint16_t _output_scale(fixed scale)
+    {
+        if(scale == 1)
+        {
+            return uint16_t(fixed_t<8>(1).data());
+        }
+
+        if(scale <= min_scale)
+        {
+            return uint16_t(fixed_t<8>(min_inv_scale).data());
+        }
+
+        fixed_t<8> scale_8(scale);
+        int scale_8_data = scale_8.data();
+
+        if(scale_8_data < sprite_affine_mat_scale_lut.size())
+        {
+            return sprite_affine_mat_scale_lut.data()[scale_8_data];
+        }
+
+        int one = fixed_t<8>(1).data() * fixed_t<8>::scale();
+        return uint16_t(one / scale_8_data);
+    }
+
     constexpr void _update_rotation_angle()
     {
         if(_rotation_angle == 0)
@@ -201,36 +225,12 @@ private:
 
     constexpr void _update_scale_x()
     {
-        if(_scale_x == 1)
-        {
-            _sx = uint16_t(fixed_t<8>(1).data());
-        }
-        else if(_scale_x <= min_scale)
-        {
-            _sx = uint16_t(fixed_t<8>(min_inv_scale).data());
-        }
-        else
-        {
-            fixed inv_scale_x = 1 / _scale_x;
-            _sx = uint16_t(fixed_t<8>(inv_scale_x).data());
-        }
+        _sx = _output_scale(_scale_x);
     }
 
     constexpr void _update_scale_y()
     {
-        if(_scale_y == 1)
-        {
-            _sy = uint16_t(fixed_t<8>(1).data());
-        }
-        else if(_scale_y <= min_scale)
-        {
-            _sy = uint16_t(fixed_t<8>(min_inv_scale).data());
-        }
-        else
-        {
-            fixed inv_scale_y = 1 / _scale_y;
-            _sy = uint16_t(fixed_t<8>(inv_scale_y).data());
-        }
+        _sy = _output_scale(_scale_y);
     }
 
     constexpr void _update_horizontal_flip()

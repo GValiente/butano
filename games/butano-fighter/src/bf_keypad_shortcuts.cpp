@@ -2,7 +2,10 @@
 
 #include "btn_span.h"
 #include "btn_core.h"
+#include "btn_fixed.h"
 #include "btn_keypad.h"
+#include "btn_bg_palettes.h"
+#include "btn_sprite_palettes.h"
 
 namespace bf
 {
@@ -15,6 +18,26 @@ void keypad_shortcuts::update()
     bool r_held = btn::keypad::r_held();
     bool select_held = btn::keypad::select_held();
     bool start_held = btn::keypad::start_held();
+
+    if(l_held)
+    {
+        if(! select_held || ! r_held)
+        {
+            btn::fixed brightness = btn::max(btn::bg_palettes::brightness() - btn::fixed(0.005), btn::fixed(0));
+            btn::bg_palettes::set_brightness(brightness);
+            btn::sprite_palettes::set_brightness(brightness);
+        }
+    }
+
+    if(r_held)
+    {
+        if(! select_held || ! l_held)
+        {
+            btn::fixed brightness = btn::min(btn::bg_palettes::brightness() + btn::fixed(0.005), btn::fixed(0.4));
+            btn::bg_palettes::set_brightness(brightness);
+            btn::sprite_palettes::set_brightness(brightness);
+        }
+    }
 
     if(_sleep_ready)
     {

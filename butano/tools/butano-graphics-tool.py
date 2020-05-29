@@ -218,6 +218,16 @@ class RegularBgItem:
         self.__height = int(height / 8)
         self.__bpp8 = False
 
+        try:
+            self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])
+        except KeyError:
+            self.__repeated_tiles_reduction = True
+
+        try:
+            self.__flipped_tiles_reduction = bool(info['flipped_tiles_reduction'])
+        except KeyError:
+            self.__flipped_tiles_reduction = True
+
         if self.__colors_count > 16:
             try:
                 bpp_mode = str(info['bpp_mode'])
@@ -282,9 +292,21 @@ class RegularBgItem:
         command = ['grit', self.__file_path]
 
         if self.__bpp8:
-            command.append('-gB8 -mR8')
+            command.append('-gB8')
+
+            if self.__repeated_tiles_reduction:
+                command.append('-mRt')
+
+            if self.__flipped_tiles_reduction:
+                command.append('-mRf')
         else:
-            command.append('-gB4 -mR4')
+            command.append('-gB4')
+
+            if self.__repeated_tiles_reduction:
+                command.append('-mRtp')
+
+            if self.__flipped_tiles_reduction:
+                command.append('-mRf')
 
         if self.__sbb:
             command.append('-mLs')

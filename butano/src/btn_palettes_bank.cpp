@@ -374,55 +374,123 @@ void palettes_bank::set_transparent_color(const optional<color>& transparent_col
     bool update = _transparent_color != transparent_color;
     _transparent_color = transparent_color;
     _update |= update;
-    _update_all |= update;
 }
 
 void palettes_bank::set_brightness(fixed brightness)
 {
     BTN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
 
-    bool update = fixed_t<8>(_brightness) != fixed_t<8>(brightness);
+    fixed_t<8> output_brightness(brightness);
+    bool update = fixed_t<8>(_brightness) != output_brightness;
     _brightness = brightness;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_brightness.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_contrast(fixed contrast)
 {
     BTN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
 
-    bool update = fixed_t<8>(_contrast) != fixed_t<8>(contrast);
+    fixed_t<8> output_contrast(contrast);
+    bool update = fixed_t<8>(_contrast) != output_contrast;
     _contrast = contrast;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_contrast.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_intensity(fixed intensity)
 {
     BTN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    bool update = fixed_t<8>(_intensity) != fixed_t<8>(intensity);
+    fixed_t<8> output_intensity(intensity);
+    bool update = fixed_t<8>(_intensity) != output_intensity;
     _intensity = intensity;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_intensity.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_inverted(bool inverted)
 {
     bool update = _inverted != inverted;
     _inverted = inverted;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(inverted)
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_grayscale_intensity(fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    bool update = fixed_t<5>(_grayscale_intensity) != fixed_t<5>(intensity);
+    fixed_t<5> output_intensity(intensity);
+    bool update = fixed_t<5>(_grayscale_intensity) != output_intensity;
     _grayscale_intensity = intensity;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_intensity.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_fade_color(color color)
@@ -430,28 +498,56 @@ void palettes_bank::set_fade_color(color color)
     bool update = _fade_color != color && fixed_t<5>(_fade_intensity).data();
     _fade_color = color;
     _update |= update;
-    _update_all |= update;
+    _update_global_effects |= update;
 }
 
 void palettes_bank::set_fade_intensity(fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    bool update = fixed_t<5>(_fade_intensity) != fixed_t<5>(intensity);
+    fixed_t<5> output_intensity(intensity);
+    bool update = fixed_t<5>(_fade_intensity) != output_intensity;
     _fade_intensity = intensity;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_intensity.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::set_fade(color color, fixed intensity)
 {
     BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    bool update = _fade_color != color || fixed_t<5>(_fade_intensity) != fixed_t<5>(intensity);
+    fixed_t<5> output_intensity(intensity);
+    bool update = _fade_color != color || fixed_t<5>(_fade_intensity) != output_intensity;
     _fade_color = color;
     _fade_intensity = intensity;
-    _update |= update;
-    _update_all |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+
+        if(output_intensity.data())
+        {
+            _global_effects_enabled = true;
+        }
+        else
+        {
+            _check_global_effects_enabled();
+        }
+    }
 }
 
 void palettes_bank::update()
@@ -461,15 +557,15 @@ void palettes_bank::update()
 
     if(_update)
     {
-        bool update_all = _update_all;
+        bool update_global_effects = _update_global_effects || _global_effects_enabled;
         _update = false;
-        _update_all = false;
+        _update_global_effects = false;
 
         for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
         {
             palette& pal = _palettes[index];
 
-            if(pal.update || (update_all && pal.usages))
+            if(pal.update || (update_global_effects && pal.usages))
             {
                 pal.update = false;
                 first_index = min(first_index, index);
@@ -493,12 +589,12 @@ void palettes_bank::update()
             first_index = 0;
         }
 
-        if(update_all && first_index != numeric_limits<int>::max())
+        if(_global_effects_enabled && first_index != numeric_limits<int>::max())
         {
             color* all_colors_ptr = _colors + (first_index * hw::palettes::colors_per_palette());
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
-            _apply_effects(all_colors_count, all_colors_ptr);
+            _apply_global_effects(all_colors_count, all_colors_ptr);
         }
     }
 
@@ -544,7 +640,11 @@ void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
     memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
     pal.apply_effects(dest_colors_count, dest_colors_ptr);
-    _apply_effects(dest_colors_count, dest_colors_ptr);
+
+    if(_global_effects_enabled)
+    {
+        _apply_global_effects(dest_colors_count, dest_colors_ptr);
+    }
 }
 
 void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const
@@ -552,7 +652,11 @@ void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, ui
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
     memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
-    _apply_effects(dest_colors_count, dest_colors_ptr);
+
+    if(_global_effects_enabled)
+    {
+        _apply_global_effects(dest_colors_count, dest_colors_ptr);
+    }
 }
 
 int palettes_bank::_bpp8_slots_count() const
@@ -582,7 +686,14 @@ int palettes_bank::_first_4bpp_palette_index() const
     return hw::palettes::count();
 }
 
-void palettes_bank::_apply_effects(int dest_colors_count, color* dest_colors_ptr) const
+void palettes_bank::_check_global_effects_enabled()
+{
+    _global_effects_enabled = _inverted || fixed_t<8>(_brightness).data() || fixed_t<8>(_contrast).data() ||
+            fixed_t<8>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
+            fixed_t<5>(_fade_intensity).data();
+}
+
+void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const
 {
     if(int brightness = fixed_t<8>(_brightness).data())
     {

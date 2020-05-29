@@ -216,13 +216,16 @@ private:
     color _fade_color;
     bool _inverted = false;
     bool _update = false;
-    bool _update_all = false;
+    bool _update_global_effects = false;
+    bool _global_effects_enabled = false;
 
     [[nodiscard]] int _bpp8_slots_count() const;
 
     [[nodiscard]] int _first_4bpp_palette_index() const;
 
-    void _apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
+    void _check_global_effects_enabled();
+
+    void _apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const;
 };
 
 }

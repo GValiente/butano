@@ -87,11 +87,6 @@ namespace
         enemy_move_event(btn::fixed_point(0,    move_y(-0.75)), 1,  false),
     };
 
-    constexpr const enemy_move_event woman_flipped_moves[] = {
-        woman_moves[0].flipped(),
-        woman_moves[1].flipped(),
-    };
-
 
     // knight:
 
@@ -230,10 +225,6 @@ namespace
         enemy_event(man, btn::fixed_point(-60, start_y), man_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(man, btn::fixed_point(-30, start_y), man_moves, man_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(man, btn::fixed_point(40, start_y), man_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(man, btn::fixed_point(55, start_y), man_flipped_moves, man_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(man, btn::fixed_point(25, start_y), man_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
-
         enemy_event(knight, btn::fixed_point(40, start_y), knight_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(knight, btn::fixed_point(55, start_y), knight_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(knight, btn::fixed_point(25, start_y), knight_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -241,17 +232,13 @@ namespace
         enemy_event(pig, btn::fixed_point(-30, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(sheep, btn::fixed_point(55, start_y), sheep_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
         enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
         enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
-
-        enemy_event(bat, btn::fixed_point(40, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(40, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(40, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(man, btn::fixed_point(40, start_y), man_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(man, btn::fixed_point(55, start_y), man_flipped_moves, man_bullets, 60, enemy_drop_type::NONE),
@@ -259,8 +246,6 @@ namespace
         enemy_event(outlaw, btn::fixed_point(-25, start_y), outlaw_moves, outlaw_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(pig, btn::fixed_point(45, start_y), pig_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(pig, btn::fixed_point(60, start_y), pig_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(pig, btn::fixed_point(30, start_y), pig_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(man, btn::fixed_point(-45, start_y), man_moves, man_bullets, 60, enemy_drop_type::NONE),
         enemy_event(man, btn::fixed_point(-60, start_y), man_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -268,15 +253,13 @@ namespace
         enemy_event(outlaw, btn::fixed_point(25, start_y), outlaw_flipped_moves, outlaw_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(sheep, btn::fixed_point(-40, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-55, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-25, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(goblin, btn::fixed_point(25, start_y), goblin_flipped_moves, goblin_bullets, 60, enemy_drop_type::NONE),
         enemy_event(goblin, btn::fixed_point(40, start_y), goblin_flipped_moves, goblin_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(bat, btn::fixed_point(0, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(0, start_y), bat_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(goblin, btn::fixed_point(-25, start_y), goblin_moves, goblin_bullets, 60, enemy_drop_type::NONE),
         enemy_event(goblin, btn::fixed_point(-40, start_y), goblin_moves, goblin_bullets, 60, enemy_drop_type::NONE),
@@ -304,34 +287,23 @@ namespace
         enemy_event(goblin, btn::fixed_point(55, start_y), goblin_flipped_moves, goblin_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(sheep, btn::fixed_point(-40, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-55, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-25, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(man, btn::fixed_point(40, start_y), man_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(man, btn::fixed_point(55, start_y), man_flipped_moves, man_bullets, 45, enemy_drop_type::NONE),
         enemy_event(man, btn::fixed_point(25, start_y), man_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(outlaw, btn::fixed_point(-25, start_y), outlaw_moves, outlaw_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(knight, btn::fixed_point(-40, start_y), knight_moves, no_bullets, 45, enemy_drop_type::NONE),
-        enemy_event(knight, btn::fixed_point(-55, start_y), knight_moves, no_bullets, 45, enemy_drop_type::NONE),
-        enemy_event(knight, btn::fixed_point(-25, start_y), knight_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(woman, btn::fixed_point(30, start_y), woman_flipped_moves, no_bullets, 45, enemy_drop_type::GEM),
-        enemy_event(pig, btn::fixed_point(30, start_y), pig_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-55, start_y), sheep_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(bat, btn::fixed_point(-40, start_y), bat_moves, no_bullets, 30, enemy_drop_type::NONE),
 
-        enemy_event(outlaw, btn::fixed_point(25, start_y), outlaw_flipped_moves, outlaw_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(man, btn::fixed_point(-25, start_y), man_flipped_moves, man_bullets, 45, enemy_drop_type::NONE),
         enemy_event(outlaw, btn::fixed_point(55, start_y), outlaw_flipped_moves, outlaw_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(pig, btn::fixed_point(45, start_y), pig_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(pig, btn::fixed_point(60, start_y), pig_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(pig, btn::fixed_point(30, start_y), pig_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
-
-        enemy_event(outlaw, btn::fixed_point(-25, start_y), outlaw_moves, outlaw_bullets, 45, enemy_drop_type::NONE),
-        enemy_event(outlaw, btn::fixed_point(-55, start_y), outlaw_moves, outlaw_bullets, 45, enemy_drop_type::NONE),
 
         enemy_event(sheep, btn::fixed_point(-40, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-55, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(sheep, btn::fixed_point(-25, start_y), sheep_moves, no_bullets, 30, enemy_drop_type::NONE),
 
         enemy_event(goblin, btn::fixed_point(0, start_y), goblin_moves, goblin_bullets, 60, enemy_drop_type::NONE),
         enemy_event(goblin, btn::fixed_point(0, start_y), goblin_flipped_moves, goblin_bullets, 60, enemy_drop_type::NONE),

@@ -51,6 +51,9 @@
         "hero_bomb_icon": {
             "height": 16
         },
+        "hero_shield": {
+            "height": 64
+        },
         "experience_bar": {
             "height": 8
         },

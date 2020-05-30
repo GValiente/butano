@@ -7,6 +7,7 @@
         #include "../include/btn_hw_tonc.h"
     #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_MGBA
         #include "btn_memory.h"
+        #include "btn_algorithm.h"
     #else
     #endif
 
@@ -41,16 +42,25 @@
         #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_MGBA
             void log(const istring_base& message)
             {
-                // https://forum.gbadev.org/viewtopic.php?f=14&p=179241&sid=aec6b23d11c25ec75966b3bbc89c91c0
+                // https://github.com/mgba-emu/mgba/blob/master/opt/libgba/mgba.c
 
                 volatile uint16_t& reg_debug_enable = *reinterpret_cast<uint16_t*>(0x4FFF780);
                 reg_debug_enable = 0xC0DE;
 
+                int max_characters_per_line = 256;
                 char& reg_debug_string = *reinterpret_cast<char*>(0x4FFF600);
-                memory::copy(*message.data(), message.size(), reg_debug_string);
-
                 volatile uint16_t& reg_debug_flags = *reinterpret_cast<uint16_t*>(0x4FFF700);
-                reg_debug_flags = 2 | 0x100;
+                const char* message_data = message.data();
+                int characters_left = message.size();
+
+                while(characters_left > 0)
+                {
+                    int characters_to_write = btn::min(characters_left, max_characters_per_line);
+                    memory::copy(*message_data, characters_to_write, reg_debug_string);
+                    reg_debug_flags = 2 | 0x100;
+                    message_data += characters_to_write;
+                    characters_left -= characters_to_write;
+                }
             }
         #else
         #endif

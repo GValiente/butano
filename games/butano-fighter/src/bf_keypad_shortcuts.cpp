@@ -5,10 +5,32 @@
 #include "btn_fixed.h"
 #include "btn_keypad.h"
 #include "btn_bg_palettes.h"
+#include "btn_sprite_builder.h"
 #include "btn_sprite_palettes.h"
+#include "btn_sprite_items_brightness.h"
 
 namespace bf
 {
+
+namespace
+{
+    constexpr const btn::fixed max_brightness(0.4);
+
+    [[nodiscard]] btn::sprite_ptr _create_brightness_sprite()
+    {
+        btn::sprite_builder builder(btn::sprite_items::brightness);
+        builder.set_position(0, -60);
+        builder.set_bg_priority(0);
+        builder.set_visible(false);
+        builder.set_ignore_camera(true);
+        return builder.release_build();
+    }
+}
+
+keypad_shortcuts::keypad_shortcuts() :
+    _brightness_sprite(_create_brightness_sprite())
+{
+}
 
 void keypad_shortcuts::update()
 {
@@ -18,14 +40,15 @@ void keypad_shortcuts::update()
     bool r_held = btn::keypad::r_held();
     bool select_held = btn::keypad::select_held();
     bool start_held = btn::keypad::start_held();
+    btn::fixed new_brightness = -1;
 
     if(l_held)
     {
         if(! select_held || ! r_held)
         {
-            btn::fixed brightness = btn::max(btn::bg_palettes::brightness() - btn::fixed(0.005), btn::fixed(0));
-            btn::bg_palettes::set_brightness(brightness);
-            btn::sprite_palettes::set_brightness(brightness);
+            new_brightness = btn::max(btn::bg_palettes::brightness() - btn::fixed(0.005), btn::fixed(0));
+            btn::bg_palettes::set_brightness(new_brightness);
+            btn::sprite_palettes::set_brightness(new_brightness);
         }
     }
 
@@ -33,9 +56,29 @@ void keypad_shortcuts::update()
     {
         if(! select_held || ! l_held)
         {
-            btn::fixed brightness = btn::min(btn::bg_palettes::brightness() + btn::fixed(0.005), btn::fixed(0.4));
-            btn::bg_palettes::set_brightness(brightness);
-            btn::sprite_palettes::set_brightness(brightness);
+            new_brightness = btn::min(btn::bg_palettes::brightness() + btn::fixed(0.005), max_brightness);
+            btn::bg_palettes::set_brightness(new_brightness);
+            btn::sprite_palettes::set_brightness(new_brightness);
+        }
+    }
+
+    if(new_brightness >= 0)
+    {
+        int graphics_index = ((new_brightness * 8) / max_brightness).integer();
+        _brightness_sprite.set_tiles(btn::sprite_items::brightness.tiles_item(), graphics_index);
+        _brightness_sprite.set_visible(true);
+        _brightness_counter = 60;
+    }
+    else
+    {
+        if(_brightness_counter)
+        {
+            --_brightness_counter;
+
+            if(! _brightness_counter)
+            {
+                _brightness_sprite.set_visible(false);
+            }
         }
     }
 

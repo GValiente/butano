@@ -104,6 +104,9 @@
         },
         "big_font": {
             "height": 16
+        },
+        "brightness": {
+            "height": 32
         }
     },
     "regular_bgs": {

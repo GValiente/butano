@@ -29,7 +29,9 @@ namespace
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         fixed_point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
-        bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
+        #if BTN_CFG_CAMERA_ENABLED
+            bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
+        #endif
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
         bool commit_enabled_bgs = false;
         bool green_swap_enabled = false;
@@ -49,10 +51,12 @@ namespace
     {
         fixed_point window_boundaries = data.rect_windows_boundaries[boundaries_index];
 
-        if(! data.rect_windows_ignore_camera[boundaries_index / 2])
-        {
-            window_boundaries -= camera::position();
-        }
+        #if BTN_CFG_CAMERA_ENABLED
+            if(! data.rect_windows_ignore_camera[boundaries_index / 2])
+            {
+                window_boundaries -= camera::position();
+            }
+        #endif
 
         fixed_point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
         fixed display_width = display::width();
@@ -328,22 +332,24 @@ void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
     _update_rect_windows_hw_boundaries(index + 1);
 }
 
-bool rect_window_ignore_camera(int window)
-{
-    return data.rect_windows_ignore_camera[window];
-}
-
-void set_rect_window_ignore_camera(int window, bool ignore_camera)
-{
-    if(data.rect_windows_ignore_camera[window] != ignore_camera)
+#if BTN_CFG_CAMERA_ENABLED
+    bool rect_window_ignore_camera(int window)
     {
-        data.rect_windows_ignore_camera[window] = ignore_camera;
-
-        int index = window * 2;
-        _update_rect_windows_hw_boundaries(index);
-        _update_rect_windows_hw_boundaries(index + 1);
+        return data.rect_windows_ignore_camera[window];
     }
-}
+
+    void set_rect_window_ignore_camera(int window, bool ignore_camera)
+    {
+        if(data.rect_windows_ignore_camera[window] != ignore_camera)
+        {
+            data.rect_windows_ignore_camera[window] = ignore_camera;
+
+            int index = window * 2;
+            _update_rect_windows_hw_boundaries(index);
+            _update_rect_windows_hw_boundaries(index + 1);
+        }
+    }
+#endif
 
 void fill_rect_window_hblank_effect_horizontal_boundaries(
         pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
@@ -473,18 +479,20 @@ void set_green_swap_enabled(bool enabled)
     data.commit_green_swap = true;
 }
 
-void update_camera()
-{
-    for(int index = 0, limit = hw::display::rect_windows_count(); index < limit; ++index)
+#if BTN_CFG_CAMERA_ENABLED
+    void update_camera()
     {
-        if(! data.rect_windows_ignore_camera[index])
+        for(int index = 0, limit = hw::display::rect_windows_count(); index < limit; ++index)
         {
-            int boundaries_index = index * 2;
-            _update_rect_windows_hw_boundaries(boundaries_index);
-            _update_rect_windows_hw_boundaries(boundaries_index + 1);
+            if(! data.rect_windows_ignore_camera[index])
+            {
+                int boundaries_index = index * 2;
+                _update_rect_windows_hw_boundaries(boundaries_index);
+                _update_rect_windows_hw_boundaries(boundaries_index + 1);
+            }
         }
     }
-}
+#endif
 
 void update()
 {

@@ -3,6 +3,7 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
+#include "btn_config_camera.h"
 
 namespace btn
 {
@@ -132,9 +133,11 @@ namespace sprites_manager
 
     void set_visible(id_type id, bool visible);
 
-    [[nodiscard]] bool ignore_camera(id_type id);
+    #if BTN_CFG_CAMERA_ENABLED
+        [[nodiscard]] bool ignore_camera(id_type id);
 
-    void set_ignore_camera(id_type id, bool ignore_camera);
+        void set_ignore_camera(id_type id, bool ignore_camera);
+    #endif
 
     [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 
@@ -178,7 +181,9 @@ namespace sprites_manager
     void fill_hblank_effect_third_attributes(
             sprite_shape_size shape_size, const sprite_third_attributes* third_attributes_ptr, uint16_t* dest_ptr);
 
-    void update_camera();
+    #if BTN_CFG_CAMERA_ENABLED
+        void update_camera();
+    #endif
 
     void remove_identity_affine_mat_if_not_needed(id_type id);
 
@@ -190,13 +195,15 @@ namespace sprites_manager
 
     [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl();
 
-    struct update_camera_impl_result
-    {
-        bool check_items_on_screen = false;
-        bool rebuild_handles = false;
-    };
+    #if BTN_CFG_CAMERA_ENABLED
+        struct update_camera_impl_result
+        {
+            bool check_items_on_screen = false;
+            bool rebuild_handles = false;
+        };
 
-    [[nodiscard]] BTN_CODE_IWRAM update_camera_impl_result _update_camera_impl(fixed_point camera_position);
+        [[nodiscard]] BTN_CODE_IWRAM update_camera_impl_result _update_camera_impl(fixed_point camera_position);
+    #endif
 }
 
 }

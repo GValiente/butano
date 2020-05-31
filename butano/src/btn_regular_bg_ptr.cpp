@@ -371,15 +371,17 @@ void regular_bg_ptr::set_visible_in_window(bool visible, window& window)
     window.set_show_bg(*this, visible);
 }
 
-bool regular_bg_ptr::ignore_camera() const
-{
-    return bgs_manager::ignore_camera(_handle);
-}
+#if BTN_CFG_CAMERA_ENABLED
+    bool regular_bg_ptr::ignore_camera() const
+    {
+        return bgs_manager::ignore_camera(_handle);
+    }
 
-void regular_bg_ptr::set_ignore_camera(bool ignore_camera)
-{
-    bgs_manager::set_ignore_camera(_handle, ignore_camera);
-}
+    void regular_bg_ptr::set_ignore_camera(bool ignore_camera)
+    {
+        bgs_manager::set_ignore_camera(_handle, ignore_camera);
+    }
+#endif
 
 regular_bg_attributes regular_bg_ptr::attributes() const
 {

@@ -5,6 +5,7 @@
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_optional_fwd.h"
+#include "btn_config_camera.h"
 
 namespace btn
 {
@@ -146,9 +147,11 @@ public:
 
     void set_visible_in_window(bool visible, window& window);
 
-    [[nodiscard]] bool ignore_camera() const;
+    #if BTN_CFG_CAMERA_ENABLED
+        [[nodiscard]] bool ignore_camera() const;
 
-    void set_ignore_camera(bool ignore_camera);
+        void set_ignore_camera(bool ignore_camera);
+    #endif
 
     [[nodiscard]] regular_bg_attributes attributes() const;
 

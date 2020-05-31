@@ -46,29 +46,31 @@ bool _check_items_on_screen_impl()
     return rebuild_handles;
 }
 
-update_camera_impl_result _update_camera_impl(fixed_point camera_position)
-{
-    update_camera_impl_result result;
-
-    for(auto& layer : sorted_sprites::layers())
+#if BTN_CFG_CAMERA_ENABLED
+    update_camera_impl_result _update_camera_impl(fixed_point camera_position)
     {
-        for(sprites_manager_item& item : *layer)
-        {
-            if(! item.ignore_camera)
-            {
-                item.update_hw_position(camera_position);
-                result.rebuild_handles = true;
+        update_camera_impl_result result;
 
-                if(item.visible)
+        for(auto& layer : sorted_sprites::layers())
+        {
+            for(sprites_manager_item& item : *layer)
+            {
+                if(! item.ignore_camera)
                 {
-                    item.check_on_screen = true;
-                    result.check_items_on_screen = true;
+                    item.update_hw_position(camera_position);
+                    result.rebuild_handles = true;
+
+                    if(item.visible)
+                    {
+                        item.check_on_screen = true;
+                        result.check_items_on_screen = true;
+                    }
                 }
             }
         }
-    }
 
-    return result;
-}
+        return result;
+    }
+#endif
 
 }

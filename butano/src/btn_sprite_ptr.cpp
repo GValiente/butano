@@ -706,15 +706,17 @@ void sprite_ptr::set_visible(bool visible)
     sprites_manager::set_visible(_handle, visible);
 }
 
-bool sprite_ptr::ignore_camera() const
-{
-    return sprites_manager::ignore_camera(_handle);
-}
+#if BTN_CFG_CAMERA_ENABLED
+    bool sprite_ptr::ignore_camera() const
+    {
+        return sprites_manager::ignore_camera(_handle);
+    }
 
-void sprite_ptr::set_ignore_camera(bool ignore_camera)
-{
-    sprites_manager::set_ignore_camera(_handle, ignore_camera);
-}
+    void sprite_ptr::set_ignore_camera(bool ignore_camera)
+    {
+        sprites_manager::set_ignore_camera(_handle, ignore_camera);
+    }
+#endif
 
 const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
 {

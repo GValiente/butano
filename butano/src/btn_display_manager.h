@@ -83,9 +83,11 @@ namespace btn::display_manager
 
     void set_rect_window_bottom_right(int window, const fixed_point& bottom_right);
 
-    [[nodiscard]] bool rect_window_ignore_camera(int window);
+    #if BTN_CFG_CAMERA_ENABLED
+        [[nodiscard]] bool rect_window_ignore_camera(int window);
 
-    void set_rect_window_ignore_camera(int window, bool ignore_camera);
+        void set_rect_window_ignore_camera(int window, bool ignore_camera);
+    #endif
 
     void fill_rect_window_hblank_effect_horizontal_boundaries(
             pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
@@ -103,7 +105,9 @@ namespace btn::display_manager
 
     void set_green_swap_enabled(bool enabled);
 
-    void update_camera();
+    #if BTN_CFG_CAMERA_ENABLED
+        void update_camera();
+    #endif
 
     void update();
 

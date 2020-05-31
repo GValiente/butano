@@ -38,7 +38,9 @@ public:
     int8_t handles_index = -1;
     unsigned double_size_mode: 2;
     bool visible: 1;
-    bool ignore_camera: 1;
+    #if BTN_CFG_CAMERA_ENABLED
+        bool ignore_camera: 1;
+    #endif
     bool remove_affine_mat_when_not_needed: 1;
     bool on_screen: 1;
     bool check_on_screen: 1;
@@ -91,30 +93,34 @@ public:
         fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
                                   position.y() + (display::height() / 2) - half_dimensions.height());
 
-        if(! ignore_camera)
-        {
-            real_position -= camera::position();
-        }
+        #if BTN_CFG_CAMERA_ENABLED
+            if(! ignore_camera)
+            {
+                real_position -= camera::position();
+            }
+        #endif
 
         hw_position = real_position;
         hw::sprites::set_x(real_position.x().integer(), handle);
         hw::sprites::set_y(real_position.y().integer(), handle);
     }
 
-    void update_hw_position(const fixed_point& camera_position)
-    {
-        fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
-                                  position.y() + (display::height() / 2) - half_dimensions.height());
-
-        if(! ignore_camera)
+    #if BTN_CFG_CAMERA_ENABLED
+        void update_hw_position(const fixed_point& camera_position)
         {
-            real_position -= camera_position;
-        }
+            fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
+                                      position.y() + (display::height() / 2) - half_dimensions.height());
 
-        hw_position = real_position;
-        hw::sprites::set_x(real_position.x().integer(), handle);
-        hw::sprites::set_y(real_position.y().integer(), handle);
-    }
+            if(! ignore_camera)
+            {
+                real_position -= camera_position;
+            }
+
+            hw_position = real_position;
+            hw::sprites::set_x(real_position.x().integer(), handle);
+            hw::sprites::set_y(real_position.y().integer(), handle);
+        }
+    #endif
 };
 
 }

@@ -127,14 +127,16 @@ void rect_window::set_boundaries(const fixed_rect& boundaries)
     display_manager::set_rect_window_bottom_right(id(), boundaries.position() + half_dimensions);
 }
 
-bool rect_window::ignore_camera() const
-{
-    return display_manager::rect_window_ignore_camera(id());
-}
+#if BTN_CFG_CAMERA_ENABLED
+    bool rect_window::ignore_camera() const
+    {
+        return display_manager::rect_window_ignore_camera(id());
+    }
 
-void rect_window::set_ignore_camera(bool ignore_camera)
-{
-    display_manager::set_rect_window_ignore_camera(id(), ignore_camera);
-}
+    void rect_window::set_ignore_camera(bool ignore_camera)
+    {
+        display_manager::set_rect_window_ignore_camera(id(), ignore_camera);
+    }
+#endif
 
 }

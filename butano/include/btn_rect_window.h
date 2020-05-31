@@ -3,6 +3,7 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_inside_window.h"
+#include "btn_config_camera.h"
 
 namespace btn
 {
@@ -60,9 +61,11 @@ public:
 
     void set_boundaries(const fixed_rect& boundaries);
 
-    [[nodiscard]] bool ignore_camera() const;
+    #if BTN_CFG_CAMERA_ENABLED
+        [[nodiscard]] bool ignore_camera() const;
 
-    void set_ignore_camera(bool ignore_camera);
+        void set_ignore_camera(bool ignore_camera);
+    #endif
 
 private:
     friend class window;

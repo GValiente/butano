@@ -33,7 +33,9 @@ namespace
         uint8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
-        bool ignore_camera: 1;
+        #if BTN_CFG_CAMERA_ENABLED
+            bool ignore_camera: 1;
+        #endif
         bool update: 1;
 
         item_type(const regular_bg_builder& builder, regular_bg_map_ptr&& _map) :
@@ -42,7 +44,9 @@ namespace
             map(move(_map)),
             blending_enabled(builder.blending_enabled()),
             visible(builder.visible()),
-            ignore_camera(builder.ignore_camera()),
+            #if BTN_CFG_CAMERA_ENABLED
+                ignore_camera(builder.ignore_camera()),
+            #endif
             update(true)
         {
             hw::bgs::setup_regular(builder, handle);
@@ -66,30 +70,34 @@ namespace
             fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
                                       -position.y() - (display::height() / 2) + half_dimensions.height());
 
-            if(! ignore_camera)
-            {
-                real_position += camera::position();
-            }
+            #if BTN_CFG_CAMERA_ENABLED
+                if(! ignore_camera)
+                {
+                    real_position += camera::position();
+                }
+            #endif
 
             hw_position = real_position;
             hw::bgs::set_x(real_position.x().integer(), handle);
             hw::bgs::set_y(real_position.y().integer(), handle);
         }
 
-        void update_hw_position(const fixed_point& camera_position)
-        {
-            fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
-                                      -position.y() - (display::height() / 2) + half_dimensions.height());
-
-            if(! ignore_camera)
+        #if BTN_CFG_CAMERA_ENABLED
+            void update_hw_position(const fixed_point& camera_position)
             {
-                real_position += camera_position;
-            }
+                fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
+                                          -position.y() - (display::height() / 2) + half_dimensions.height());
 
-            hw_position = real_position;
-            hw::bgs::set_x(real_position.x().integer(), handle);
-            hw::bgs::set_y(real_position.y().integer(), handle);
-        }
+                if(! ignore_camera)
+                {
+                    real_position += camera_position;
+                }
+
+                hw_position = real_position;
+                hw::bgs::set_x(real_position.x().integer(), handle);
+                hw::bgs::set_y(real_position.y().integer(), handle);
+            }
+        #endif
     };
 
 
@@ -504,23 +512,39 @@ void set_visible(id_type id, bool visible)
     }
 }
 
-bool ignore_camera(id_type id)
-{
-    auto item = static_cast<const item_type*>(id);
-    return item->ignore_camera;
-}
-
-void set_ignore_camera(id_type id, bool ignore_camera)
-{
-    auto item = static_cast<item_type*>(id);
-
-    if(ignore_camera != item->ignore_camera)
+#if BTN_CFG_CAMERA_ENABLED
+    bool ignore_camera(id_type id)
     {
-        item->ignore_camera = ignore_camera;
-        item->update_hw_position();
-        _update_item(*item);
+        auto item = static_cast<const item_type*>(id);
+        return item->ignore_camera;
     }
-}
+
+    void set_ignore_camera(id_type id, bool ignore_camera)
+    {
+        auto item = static_cast<item_type*>(id);
+
+        if(ignore_camera != item->ignore_camera)
+        {
+            item->ignore_camera = ignore_camera;
+            item->update_hw_position();
+            _update_item(*item);
+        }
+    }
+
+    void update_camera()
+    {
+        fixed_point camera_position = camera::position();
+
+        for(item_type* item : data.items_vector)
+        {
+            if(! item->ignore_camera)
+            {
+                item->update_hw_position(camera_position);
+                _update_item(*item);
+            }
+        }
+    }
+#endif
 
 void update_map_tiles_cbb(int map_id, int tiles_cbb)
 {
@@ -541,20 +565,6 @@ void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
         if(item->map->id() == map_id)
         {
             hw::bgs::set_bpp_mode(new_bpp_mode, item->handle);
-            _update_item(*item);
-        }
-    }
-}
-
-void update_camera()
-{
-    fixed_point camera_position = camera::position();
-
-    for(item_type* item : data.items_vector)
-    {
-        if(! item->ignore_camera)
-        {
-            item->update_hw_position(camera_position);
             _update_item(*item);
         }
     }

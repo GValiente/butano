@@ -848,29 +848,31 @@ void set_visible(id_type id, bool visible)
     }
 }
 
-bool ignore_camera(id_type id)
-{
-    auto item = static_cast<const item_type*>(id);
-    return item->ignore_camera;
-}
-
-void set_ignore_camera(id_type id, bool ignore_camera)
-{
-    auto item = static_cast<item_type*>(id);
-
-    if(ignore_camera != item->ignore_camera)
+#if BTN_CFG_CAMERA_ENABLED
+    bool ignore_camera(id_type id)
     {
-        item->ignore_camera = ignore_camera;
-        item->update_hw_position();
-        _update_handle(*item);
+        auto item = static_cast<const item_type*>(id);
+        return item->ignore_camera;
+    }
 
-        if(item->visible)
+    void set_ignore_camera(id_type id, bool ignore_camera)
+    {
+        auto item = static_cast<item_type*>(id);
+
+        if(ignore_camera != item->ignore_camera)
         {
-            item->check_on_screen = true;
-            data.check_items_on_screen = true;
+            item->ignore_camera = ignore_camera;
+            item->update_hw_position();
+            _update_handle(*item);
+
+            if(item->visible)
+            {
+                item->check_on_screen = true;
+                data.check_items_on_screen = true;
+            }
         }
     }
-}
+#endif
 
 optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
 {
@@ -1115,12 +1117,14 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
     }
 }
 
-void update_camera()
-{
-    update_camera_impl_result result = _update_camera_impl(camera::position());
-    data.check_items_on_screen |= result.check_items_on_screen;
-    data.rebuild_handles |= result.rebuild_handles;
-}
+#if BTN_CFG_CAMERA_ENABLED
+    void update_camera()
+    {
+        update_camera_impl_result result = _update_camera_impl(camera::position());
+        data.check_items_on_screen |= result.check_items_on_screen;
+        data.rebuild_handles |= result.rebuild_handles;
+    }
+#endif
 
 void remove_identity_affine_mat_if_not_needed(id_type id)
 {

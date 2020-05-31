@@ -4,6 +4,7 @@
 #include "btn_optional.h"
 #include "btn_sprite_item.h"
 #include "btn_fixed_point.h"
+#include "btn_config_camera.h"
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_palette_ptr.h"
@@ -179,16 +180,18 @@ public:
         return *this;
     }
 
-    [[nodiscard]] bool ignore_camera() const
-    {
-        return _ignore_camera;
-    }
+    #if BTN_CFG_CAMERA_ENABLED
+        [[nodiscard]] bool ignore_camera() const
+        {
+            return _ignore_camera;
+        }
 
-    sprite_builder& set_ignore_camera(bool ignore_camera)
-    {
-        _ignore_camera = ignore_camera;
-        return *this;
-    }
+        sprite_builder& set_ignore_camera(bool ignore_camera)
+        {
+            _ignore_camera = ignore_camera;
+            return *this;
+        }
+    #endif
 
     [[nodiscard]] sprite_ptr build() const;
 
@@ -261,7 +264,9 @@ private:
     bool _blending_enabled = false;
     bool _window_enabled = false;
     bool _visible = true;
-    bool _ignore_camera = false;
+    #if BTN_CFG_CAMERA_ENABLED
+        bool _ignore_camera = false;
+    #endif
     bool _remove_affine_mat_when_not_needed = true;
 };
 

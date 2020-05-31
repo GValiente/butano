@@ -1,28 +1,33 @@
 #ifndef BTN_CAMERA_H
 #define BTN_CAMERA_H
 
-#include "btn_fixed_fwd.h"
+#include "btn_common.h"
+#include "btn_config_camera.h"
 
-namespace btn
-{
-    class fixed_point;
-}
+#if BTN_CFG_CAMERA_ENABLED
+    #include "btn_fixed_fwd.h"
 
-namespace btn::camera
-{
-    [[nodiscard]] fixed x();
+    namespace btn
+    {
+        class fixed_point;
+    }
 
-    [[nodiscard]] fixed y();
+    namespace btn::camera
+    {
+        [[nodiscard]] fixed x();
 
-    [[nodiscard]] const fixed_point& position();
+        [[nodiscard]] fixed y();
 
-    void set_x(fixed x);
+        [[nodiscard]] const fixed_point& position();
 
-    void set_y(fixed y);
+        void set_x(fixed x);
 
-    void set_position(fixed x, fixed y);
+        void set_y(fixed y);
 
-    void set_position(const fixed_point& position);
-}
+        void set_position(fixed x, fixed y);
+
+        void set_position(const fixed_point& position);
+    }
+#endif
 
 #endif

@@ -13,6 +13,45 @@
 namespace btn
 {
 
+// visible
+
+class sprite_visible_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.visible();
+    }
+
+    static void set(bool visible, sprite_ptr& sprite)
+    {
+        sprite.set_visible(visible);
+    }
+};
+
+
+class sprite_visible_toggle_action : public bool_toggle_value_template_action<sprite_ptr, sprite_visible_manager>
+{
+
+public:
+    sprite_visible_toggle_action(const sprite_ptr& sprite, int duration_frames) :
+        bool_toggle_value_template_action(sprite, duration_frames)
+    {
+    }
+
+    sprite_visible_toggle_action(sprite_ptr&& sprite, int duration_frames) :
+        bool_toggle_value_template_action(move(sprite), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
 // position
 
 class sprite_position_manager

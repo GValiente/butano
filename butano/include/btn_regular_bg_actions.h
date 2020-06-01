@@ -8,6 +8,46 @@
 namespace btn
 {
 
+// visible
+
+class regular_bg_visible_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const regular_bg_ptr& bg)
+    {
+        return bg.visible();
+    }
+
+    static void set(bool visible, regular_bg_ptr& bg)
+    {
+        bg.set_visible(visible);
+    }
+};
+
+
+class regular_bg_visible_toggle_action :
+        public bool_toggle_value_template_action<regular_bg_ptr, regular_bg_visible_manager>
+{
+
+public:
+    regular_bg_visible_toggle_action(const regular_bg_ptr& bg, int duration_frames) :
+        bool_toggle_value_template_action(bg, duration_frames)
+    {
+    }
+
+    regular_bg_visible_toggle_action(regular_bg_ptr&& bg, int duration_frames) :
+        bool_toggle_value_template_action(move(bg), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const regular_bg_ptr& bg() const
+    {
+        return value();
+    }
+};
+
+
 // position
 
 class bg_position_manager

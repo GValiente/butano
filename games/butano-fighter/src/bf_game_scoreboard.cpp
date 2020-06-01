@@ -19,7 +19,8 @@ namespace
 }
 
 scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
-    _text_generator(text_generator)
+    _text_generator(text_generator),
+    _bombs_affine_mat(btn::sprite_affine_mat_ptr::create())
 {
     int experience_bar_x = (btn::display::width() / 2) - 22;
     _text_generator.generate(8 - (btn::display::width() / 2), text_y, "LVL:", _level_label_sprites);
@@ -68,13 +69,25 @@ void scoreboard::update(const hero& hero)
     int bombs_count = hero.bombs_count();
     _experience_bar_palette_action->update();
 
-    if(_bomb_scale_action)
+    if(_bombs_affine_mat_scale_action)
     {
-        _bomb_scale_action->update();
+        _bombs_affine_mat_scale_action->update();
 
-        if(_bomb_scale_action->done())
+        if(_bombs_affine_mat_scale_action->done())
         {
-            _bomb_scale_action.reset();
+            _bombs_affine_mat_scale_action.reset();
+
+            if(_bomb_sprites.size() > _last_bombs_count)
+            {
+                _bomb_sprites.shrink(_last_bombs_count);
+            }
+            else
+            {
+                for(btn::sprite_ptr& bomb_sprite : _bomb_sprites)
+                {
+                    bomb_sprite.remove_affine_mat();
+                }
+            }
         }
     }
 
@@ -120,42 +133,42 @@ void scoreboard::update(const hero& hero)
 
     if(bombs_count != _last_bombs_count)
     {
-        bool scale_down_effect = _last_bombs_count == bombs_count + 1;
-        bool scale_up_effect = _last_bombs_count == bombs_count - 1;
+        int last_bombs_count = _last_bombs_count;
         _last_bombs_count = bombs_count;
+        _bomb_sprites.clear();
 
-        if(scale_down_effect)
+        for(int index = 0, limit = btn::max(bombs_count, last_bombs_count); index < limit; ++index)
         {
-            btn::sprite_ptr bomb_sprite = btn::move(_bomb_sprites.back());
-            _bomb_sprites.pop_back();
-            bomb_sprite.set_scale(1);
-            _bomb_scale_action.emplace(btn::move(bomb_sprite), 16, 0.01);
+            btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
+            builder.set_x((btn::display::width() / 2) - ((index + 1) * 16));
+            builder.set_y(16 - (btn::display::height() / 2));
+            builder.set_bg_priority(_text_generator.bg_priority());
+            builder.set_z_order(_text_generator.z_order());
+            builder.set_ignore_camera(true);
+            _bomb_sprites.push_back(builder.release_build());
+        }
+
+        if(bombs_count > last_bombs_count)
+        {
+            if(last_bombs_count != -1)
+            {
+                _bombs_affine_mat.set_scale(0.01);
+                _bombs_affine_mat_scale_action.emplace(_bombs_affine_mat, 16, 1);
+
+                for(int index = last_bombs_count; index < bombs_count; ++index)
+                {
+                    _bomb_sprites[index].set_affine_mat(_bombs_affine_mat);
+                }
+            }
         }
         else
         {
-            _bomb_sprites.clear();
-            _bomb_scale_action.reset();
+            _bombs_affine_mat.set_scale(1);
+            _bombs_affine_mat_scale_action.emplace(_bombs_affine_mat, 16, 0.01);
 
-            for(int index = 0; index < bombs_count; ++index)
+            for(int index = bombs_count; index < last_bombs_count; ++index)
             {
-                btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
-                builder.set_x((btn::display::width() / 2) - ((index + 1) * 16));
-                builder.set_y(16 - (btn::display::height() / 2));
-                builder.set_bg_priority(_text_generator.bg_priority());
-                builder.set_z_order(_text_generator.z_order());
-                builder.set_ignore_camera(true);
-                _bomb_sprites.push_back(builder.release_build());
-            }
-
-            if(scale_up_effect)
-            {
-                btn::sprite_ptr& bomb_sprite = _bomb_sprites.back();
-                bomb_sprite.set_scale(0.01);
-                _bomb_scale_action.emplace(bomb_sprite, 16, 1);
-            }
-            else
-            {
-                _bomb_scale_action.reset();
+                _bomb_sprites[index].set_affine_mat(_bombs_affine_mat);
             }
         }
     }

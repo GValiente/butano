@@ -42,6 +42,8 @@ public:
 
     [[nodiscard]] bool throw_bomb();
 
+    [[nodiscard]] bool throw_shield();
+
     [[nodiscard]] int high_experience() const
     {
         return _high_experience;

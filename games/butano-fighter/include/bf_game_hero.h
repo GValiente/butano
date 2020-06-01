@@ -5,6 +5,7 @@
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
+#include "btn_sprite_affine_mat_actions.h"
 #include "bf_game_status.h"
 #include "bf_game_explosion.h"
 
@@ -104,22 +105,33 @@ private:
     btn::deque<body_snapshot, body_snapshots_count> _body_snapshots;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
+    btn::sprite_ptr _shield_sprite;
+    btn::sprite_affine_mat_ptr _bomb_sprites_affine_mat;
     btn::optional<btn::sprite_rotate_by_action> _body_rotate_action;
     btn::optional<btn::sprite_palette_fade_to_action> _body_palette_fade_action;
     btn::optional<btn::sprite_move_to_action> _weapon_move_action;
     btn::optional<btn::sprite_rotate_by_action> _weapon_rotate_action;
     btn::optional<btn::sprite_palette_fade_to_action> _weapon_palette_fade_action;
+    btn::optional<btn::sprite_visible_toggle_action> _shield_toggle_action;
+    btn::optional<btn::sprite_rotate_by_action> _shield_rotate_action;
+    btn::vector<btn::sprite_move_by_action, constants::max_hero_bombs> _bomb_sprite_move_actions;
+    btn::optional<btn::sprite_affine_mat_rotate_by_action> _bomb_sprites_rotate_action;
     btn::optional<btn::music_volume_to_action> _music_volume_action;
     btn::optional<explosion> _death_explosion;
     int _show_shoot_counter = 0;
     int _scale_weapon_counter = 0;
     int _body_shadows_counter = 0;
+    int _shield_counter = 0;
     int _death_counter = 0;
     bool _shooting = false;
 
     [[nodiscard]] btn::fixed_point _move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite);
 
     void _animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
+
+    void _show_shield(int old_bombs_count, const btn::fixed_point& new_body_position, background& background);
+
+    void _animate_shield(const btn::fixed_point& new_body_position, background& background);
 
     btn::optional<scene_type> _animate_dead(background& background, butano_background& butano_background);
 };

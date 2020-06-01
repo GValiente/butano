@@ -81,8 +81,25 @@ void background::show_hero_dying()
     _green_swap_action.emplace(5);
 }
 
+void background::show_hero_alive()
+{
+    btn::bg_palette_ptr bottom_palette = _bottom_move_action.bg().palette();
+    btn::bg_palette_ptr top_palette = _top_move_action.bg().palette();
+    bottom_palette.set_inverted(false);
+    top_palette.set_inverted(false);
+    btn::green_swap::set_enabled(false);
+    _bottom_palette_inverted_action.reset();
+    _top_palette_inverted_action.reset();
+    _green_swap_action.reset();
+}
+
 void background::show_hero_dead()
 {
+    btn::bg_palette_ptr bottom_palette = _bottom_move_action.bg().palette();
+    btn::bg_palette_ptr top_palette = _top_move_action.bg().palette();
+    bottom_palette.set_inverted(true);
+    top_palette.set_inverted(true);
+    btn::green_swap::set_enabled(false);
     _bottom_palette_inverted_action.reset();
     _top_palette_inverted_action.reset();
     _green_swap_action.reset();

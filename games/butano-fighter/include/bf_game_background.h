@@ -35,6 +35,8 @@ public:
 
     void show_hero_dying();
 
+    void show_hero_alive();
+
     void show_hero_dead();
 
     void reset();

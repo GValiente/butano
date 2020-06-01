@@ -8,7 +8,9 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_hero_death.h"
+#include "btn_sprite_items_hero_shield.h"
 #include "btn_sprite_items_hero_weapons.h"
+#include "btn_sprite_items_hero_bomb_icon.h"
 #include "bf_scene_type.h"
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
@@ -56,6 +58,14 @@ namespace
     {
         return btn::sprite_items::hero_weapons.create_sprite(position, level);
     }
+
+    btn::sprite_ptr _create_shield_sprite()
+    {
+        btn::sprite_builder builder(btn::sprite_items::hero_shield);
+        builder.set_z_order(constants::hero_shield_z_order);
+        builder.set_visible(false);
+        return builder.release_build();
+    }
 }
 
 hero::hero(status& status) :
@@ -64,7 +74,9 @@ hero::hero(status& status) :
     _body_sprite_animate_action(_create_body_sprite_animate_action()),
     _body_snapshots(body_snapshots_count, body_snapshot{ _body_sprite_animate_action.sprite().position(), 0 }),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
-    _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position))
+    _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position)),
+    _shield_sprite(_create_shield_sprite()),
+    _bomb_sprites_affine_mat(btn::sprite_affine_mat_ptr::create())
 {
 }
 
@@ -124,11 +136,27 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
             objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), level + 1);
         }
 
-        if(! hero_bomb.active())
+        if(_shield_counter)
         {
-            if(enemies.check_hero(new_body_rect) || enemy_bullets.check_hero(new_body_rect))
+            hero::_animate_shield(new_body_position, background);
+        }
+        else
+        {
+            if(! hero_bomb.active())
             {
-                ++_death_counter;
+                if(enemies.check_hero(new_body_rect) || enemy_bullets.check_hero(new_body_rect))
+                {
+                    int old_bombs_count = _status.bombs_count();
+
+                    if(_status.throw_shield())
+                    {
+                        _show_shield(old_bombs_count, new_body_position, background);
+                    }
+                    else
+                    {
+                        ++_death_counter;
+                    }
+                }
             }
         }
     }
@@ -265,6 +293,81 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
                 body_shadow.set_visible(true);
             }
         }
+    }
+}
+
+void hero::_show_shield(int old_bombs_count, const btn::fixed_point& new_body_position, background& background)
+{
+    _shield_toggle_action.emplace(_shield_sprite, 1);
+    _shield_rotate_action.emplace(_shield_sprite, 5);
+    _shield_counter = 210;
+
+    for(int index = 0; index < old_bombs_count; ++index)
+    {
+        btn::fixed x = (index % 2) ? btn::fixed(0.5) : btn::fixed(-0.5);
+        btn::fixed y = (index / 2) ? btn::fixed(-0.5) : btn::fixed(0.5);
+        btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
+        builder.set_position(new_body_position);
+        builder.set_z_order(constants::hero_shield_z_order);
+        builder.set_affine_mat(_bomb_sprites_affine_mat);
+        _bomb_sprite_move_actions.emplace_back(builder.release_build(), x, y);
+    }
+
+    _bomb_sprites_affine_mat.set_rotation_angle(0);
+    _bomb_sprites_affine_mat.set_scale(1);
+    _bomb_sprites_rotate_action.emplace(_bomb_sprites_affine_mat, 4);
+    background.show_hero_dying();
+    btn::sound_items::explosion_2.play();
+}
+
+void hero::_animate_shield(const btn::fixed_point& new_body_position, background& background)
+{
+    --_shield_counter;
+
+    if(int shield_counter = _shield_counter)
+    {
+        _shield_sprite.set_position(new_body_position);
+        _shield_toggle_action->update();
+        _shield_rotate_action->update();
+
+        if(shield_counter > 150)
+        {
+            _bomb_sprites_rotate_action->update();
+
+            for(btn::sprite_move_by_action& bomb_sprite_move_action : _bomb_sprite_move_actions)
+            {
+                bomb_sprite_move_action.update();
+            }
+
+            int scale_counter = shield_counter - 150;
+
+            if(scale_counter < 30)
+            {
+                _bomb_sprites_affine_mat.set_scale(scale_counter * btn::fixed(1.0f / 30));
+            }
+        }
+        else if(shield_counter == 150)
+        {
+            _bomb_sprites_rotate_action.reset();
+            _bomb_sprite_move_actions.clear();
+            background.show_hero_alive();
+        }
+        else if(shield_counter < 60)
+        {
+            _shield_sprite.set_scale(shield_counter * btn::fixed(1.0f / 60));
+        }
+
+        if(shield_counter % 16 == 0)
+        {
+            btn::sound_items::flame_thrower.play();
+        }
+    }
+    else
+    {
+        _shield_sprite.set_scale(1);
+        _shield_sprite.set_visible(false);
+        _shield_toggle_action.reset();
+        _shield_rotate_action.reset();
     }
 }
 

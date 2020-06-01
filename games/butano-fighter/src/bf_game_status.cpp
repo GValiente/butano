@@ -124,6 +124,17 @@ bool status::throw_bomb()
     return true;
 }
 
+bool status::throw_shield()
+{
+    if(_bombs_count <= 1)
+    {
+        return false;
+    }
+
+    _bombs_count = 0;
+    return true;
+}
+
 void status::update_high_experience()
 {
     sram_data sram_data_to_write;

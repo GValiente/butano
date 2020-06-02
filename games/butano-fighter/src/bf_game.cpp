@@ -33,6 +33,11 @@ btn::optional<scene_type> game::update()
         if(result)
         {
             _background.reset();
+
+            if(btn::music::playing())
+            {
+                btn::music::stop();
+            }
         }
         else
         {

@@ -129,10 +129,12 @@ title::title(const game::status& game_status, btn::sprite_text_generator& text_g
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
     text_generator.generate(0, 12 - (btn::display::height() / 2), high_experience_text, _high_experience_text_sprites);
-    text_generator.generate(0, 44, "START", _start_text_sprites);
-    text_generator.generate(0, 44 + 12, "CREDITS", _credits_text_sprites);
+    text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+    text_generator.generate(-28, 42, "START", _start_text_sprites);
+    text_generator.generate(-28, 42 + 12, "HOW TO PLAY", _how_to_play_sprites);
+    text_generator.generate(-28, 42 + 12 + 12, "CREDITS", _credits_text_sprites);
     text_generator.set_alignment(old_alignment);
-    _cursor_sprite.set_position(_credits_text_sprites[0].x() - 28, _start_text_sprites[0].y());
+    _cursor_sprite.set_position(_how_to_play_sprites[0].x() - 28, _start_text_sprites[0].y());
     _cursor_sprite.set_visible(false);
 
     for(btn::sprite_ptr& sprite : _high_experience_text_sprites)
@@ -145,13 +147,22 @@ title::title(const game::status& game_status, btn::sprite_text_generator& text_g
         sprite.set_visible(false);
     }
 
+    for(btn::sprite_ptr& sprite : _how_to_play_sprites)
+    {
+        sprite.set_visible(false);
+    }
+
     for(btn::sprite_ptr& sprite : _credits_text_sprites)
     {
         sprite.set_visible(false);
     }
 
     butano_background.put_under_all();
-    btn::music_items::battle_clean.play(0.6);
+
+    if(! btn::music::playing())
+    {
+        btn::music_items::battle_clean.play(0.6);
+    }
 }
 
 btn::optional<scene_type> title::update()
@@ -369,6 +380,11 @@ btn::optional<scene_type> title::_menu()
                 sprite.set_visible(true);
             }
 
+            for(btn::sprite_ptr& sprite : _how_to_play_sprites)
+            {
+                sprite.set_visible(true);
+            }
+
             for(btn::sprite_ptr& sprite : _credits_text_sprites)
             {
                 sprite.set_visible(true);
@@ -383,10 +399,10 @@ btn::optional<scene_type> title::_menu()
             }
 
             _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 0.01);
-            _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
 
-            if(_start_selected)
+            if(_menu_index == 0)
             {
+                _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
                 btn::sound_items::start.play();
             }
             else
@@ -398,16 +414,45 @@ btn::optional<scene_type> title::_menu()
         }
         else if(btn::keypad::up_pressed() || btn::keypad::down_pressed())
         {
-            if(_start_selected)
+            if(btn::keypad::up_pressed())
             {
-                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
+                if(_menu_index == 0)
+                {
+                    _menu_index = 2;
+                }
+                else
+                {
+                    _menu_index -= 1;
+                }
             }
             else
             {
-                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
+                if(_menu_index == 2)
+                {
+                    _menu_index = 0;
+                }
+                else
+                {
+                    _menu_index += 1;
+                }
             }
 
-            _start_selected = ! _start_selected;
+            switch(_menu_index)
+            {
+
+            case 0:
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _start_text_sprites[0].y());
+                break;
+
+            case 1:
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _how_to_play_sprites[0].y());
+                break;
+
+            case 2:
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
+                break;
+            }
+
             btn::sound_items::alert.play();
         }
     }
@@ -438,6 +483,11 @@ btn::optional<scene_type> title::_menu()
                 }
 
                 for(btn::sprite_ptr& sprite : _start_text_sprites)
+                {
+                    sprite.set_blending_enabled(true);
+                }
+
+                for(btn::sprite_ptr& sprite : _how_to_play_sprites)
                 {
                     sprite.set_blending_enabled(true);
                 }
@@ -487,9 +537,18 @@ btn::optional<scene_type> title::_menu()
             _fighter_characters.clear();
             _high_experience_text_sprites.clear();
             _start_text_sprites.clear();
+            _how_to_play_sprites.clear();
             _credits_text_sprites.clear();
             btn::blending::set_transparency_alpha(1);
-            result = scene_type::GAME;
+
+            if(_menu_index == 0)
+            {
+                result = scene_type::GAME;
+            }
+            else
+            {
+                result = scene_type::HOW_TO_PLAY_AND_TITLE;
+            }
         }
     }
 

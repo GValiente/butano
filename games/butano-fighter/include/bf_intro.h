@@ -22,7 +22,7 @@ class intro : public scene
 {
 
 public:
-    explicit intro(btn::sprite_text_generator& text_generator, butano_background& butano_background);
+    intro(btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
 

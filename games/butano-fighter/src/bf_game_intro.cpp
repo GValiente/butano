@@ -205,7 +205,7 @@ void intro::update(const butano_background& butano_background)
                 {
                     btn::sprite_ptr text_sprite = _text_sprites[actions_count];
                     text_sprite.set_visible(true);
-                    _text_sprite_scale_y_actions.emplace_back(move(text_sprite), scale_frames / 2, 2);
+                    _text_sprite_scale_y_actions.emplace_back(btn::move(text_sprite), scale_frames / 2, 2);
                 }
             }
         }

@@ -25,14 +25,6 @@ namespace
         btn::sprite_palettes::set_fade(btn::colors::maroon, 1);
         return btn::sprite_palettes_fade_to_action(60, 0);
     }
-
-    void _enable_blending(btn::ivector<btn::sprite_ptr>& text_sprites)
-    {
-        for(btn::sprite_ptr& text_sprite : text_sprites)
-        {
-            text_sprite.set_blending_enabled(true);
-        }
-    }
 }
 
 intro::intro(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
@@ -49,14 +41,15 @@ intro::intro(btn::sprite_text_generator& text_generator, butano_background& buta
 
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-    text_generator.generate(0, -20, "Made with", _up_text_sprites);
-    text_generator.generate(0, 0, middle_text, _middle_text_sprites);
-    text_generator.generate(0, 20, "https://github.com/GValiente/butano", _down_text_sprites);
+    text_generator.generate(0, -20, "Made with", _text_sprites);
+    text_generator.generate(0, 0, middle_text, _text_sprites);
+    text_generator.generate(0, 20, "https://github.com/GValiente/butano", _text_sprites);
     text_generator.set_alignment(old_alignment);
 
-    _enable_blending(_up_text_sprites);
-    _enable_blending(_middle_text_sprites);
-    _enable_blending(_down_text_sprites);
+    for(btn::sprite_ptr& text_sprite : _text_sprites)
+    {
+        text_sprite.set_blending_enabled(true);
+    }
 
     butano_background.put_under_all();
 }
@@ -82,9 +75,7 @@ btn::optional<scene_type> intro::update()
         {
             if(_blending_action.done())
             {
-                _up_text_sprites.clear();
-                _middle_text_sprites.clear();
-                _down_text_sprites.clear();
+                _text_sprites.clear();
                 btn::blending::set_transparency_alpha(1);
                 result = scene_type::TITLE;
             }

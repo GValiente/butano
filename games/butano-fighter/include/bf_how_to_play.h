@@ -30,11 +30,7 @@ public:
 private:
     struct entry_type
     {
-        btn::vector<btn::sprite_ptr, 6> text_sprites_1;
-        btn::vector<btn::sprite_ptr, 6> text_sprites_2;
-        btn::vector<btn::sprite_ptr, 6> text_sprites_3;
-        btn::vector<btn::sprite_ptr, 6> text_sprites_4;
-        btn::vector<btn::sprite_ptr, 5> graphic_sprites;
+        btn::vector<btn::sprite_ptr, 30> sprites;
         btn::optional<btn::sprite_visible_toggle_action> toggle_action;
         btn::optional<btn::sprite_rotate_by_action> rotate_action;
         btn::optional<btn::sprite_palette_rotate_by_action> palette_rotate_action;

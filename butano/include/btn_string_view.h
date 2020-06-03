@@ -120,7 +120,7 @@ public:
 
     [[nodiscard]] constexpr size_type size() const
     {
-        return size_type(_end - _begin);
+        return _end - _begin;
     }
 
     [[nodiscard]] constexpr size_type length() const

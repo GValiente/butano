@@ -91,7 +91,7 @@ public:
                                      objects& objects, background& background, butano_background& butano_background);
 
 private:
-    struct body_snapshot
+    struct body_snapshot_type
     {
         btn::fixed_point position;
         int graphics_index = 0;
@@ -102,7 +102,7 @@ private:
     status& _status;
     btn::vector<btn::sprite_ptr, 3> _body_shadows;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
-    btn::deque<body_snapshot, body_snapshots_count> _body_snapshots;
+    btn::deque<body_snapshot_type, body_snapshots_count> _body_snapshots;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
     btn::sprite_ptr _shield_sprite;

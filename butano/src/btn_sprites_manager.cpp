@@ -26,7 +26,7 @@ namespace
 
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
-        hw::sprites::handle handles[sprites::sprites_count()];
+        hw::sprites::handle_type handles[sprites::sprites_count()];
         int first_index_to_commit = 0;
         int last_index_to_commit = sprites::sprites_count() - 1;
         int last_visible_items_count = 0;
@@ -36,7 +36,7 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void _copy_handle(const hw::sprites::handle& from, hw::sprites::handle& to)
+    void _copy_handle(const hw::sprites::handle_type& from, hw::sprites::handle_type& to)
     {
         to.attr0 = from.attr0;
         to.attr1 = from.attr1;
@@ -198,7 +198,7 @@ namespace
 
 void init()
 {
-    for(hw::sprites::handle& handle : data.handles)
+    for(hw::sprites::handle_type& handle : data.handles)
     {
         hw::sprites::hide(handle);
     }
@@ -389,7 +389,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(item->palette->bpp_mode()));
 
-        hw::sprites::handle& handle = item->handle;
+        hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
         item->tiles = tiles;
         _update_handle(*item);
@@ -424,7 +424,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(item->palette->bpp_mode()));
 
-        hw::sprites::handle& handle = item->handle;
+        hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
         item->tiles = move(tiles);
         _update_handle(*item);
@@ -489,7 +489,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
                            sprite_palette_ptr&& palette)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
+    hw::sprites::handle_type& handle = item->handle;
     bool different_shape_size = shape_size != hw::sprites::shape_size(handle);
     bool different_tiles = tiles != item->tiles;
     bool different_palette = palette != item->palette;
@@ -618,7 +618,7 @@ void set_position(id_type id, const fixed_point& position)
 
         if(hw_changed)
         {
-            hw::sprites::handle& handle = item->handle;
+            hw::sprites::handle_type& handle = item->handle;
             hw::sprites::set_x(hw_x_integer, handle);
             hw::sprites::set_y(hw_y_integer, handle);
             _update_handle(*item);
@@ -757,7 +757,7 @@ bool blending_enabled(id_type id)
 void set_blending_enabled(id_type id, bool blending_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
+    hw::sprites::handle_type& handle = item->handle;
     BTN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
                "Blending and window can't be enabled at the same time");
 
@@ -774,7 +774,7 @@ bool window_enabled(id_type id)
 void set_window_enabled(id_type id, bool window_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
+    hw::sprites::handle_type& handle = item->handle;
     BTN_ASSERT(! window_enabled || ! hw::sprites::blending_enabled(handle),
                "Blending and window can't be enabled at the same time");
 
@@ -925,7 +925,7 @@ void set_remove_affine_mat_when_not_needed(id_type id, bool remove_when_not_need
 sprite_first_attributes first_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    const hw::sprites::handle& handle = item->handle;
+    const hw::sprites::handle_type& handle = item->handle;
     return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle),
                                    hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle));
 }
@@ -933,7 +933,7 @@ sprite_first_attributes first_attributes(id_type id)
 void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle& handle = item->handle;
+    hw::sprites::handle_type& handle = item->handle;
     hw::sprites::set_mosaic_enabled(first_attributes.mosaic_enabled(), handle);
     hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), handle);
     hw::sprites::set_window_enabled(first_attributes.window_enabled(), handle);
@@ -945,7 +945,7 @@ sprite_regular_second_attributes regular_second_attributes(id_type id)
     auto item = static_cast<const item_type*>(id);
     BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
-    const hw::sprites::handle& handle = item->handle;
+    const hw::sprites::handle_type& handle = item->handle;
     return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
                                             hw::sprites::vertical_flip(handle));
 }
@@ -998,7 +998,7 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
                    "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
                    shape_size(id).tiles_count(palette.bpp_mode()));
 
-        hw::sprites::handle& handle = item->handle;
+        hw::sprites::handle_type& handle = item->handle;
 
         if(different_tiles)
         {

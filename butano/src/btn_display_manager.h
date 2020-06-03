@@ -3,6 +3,7 @@
 
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
+#include "btn_config_camera.h"
 
 namespace btn
 {

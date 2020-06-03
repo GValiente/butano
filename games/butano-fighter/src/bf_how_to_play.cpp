@@ -73,7 +73,7 @@ btn::optional<scene_type> how_to_play::update()
 {
     btn::optional<scene_type> result;
 
-    for(entry& entry : _entries)
+    for(entry_type& entry : _entries)
     {
         entry.animate();
     }
@@ -113,7 +113,7 @@ btn::optional<scene_type> how_to_play::update()
             {
                 _blending_action.emplace(blending_frames, 0);
 
-                for(entry& entry : _entries)
+                for(entry_type& entry : _entries)
                 {
                     entry.move_counter = blending_frames;
                 }
@@ -173,7 +173,7 @@ btn::optional<scene_type> how_to_play::update()
     return result;
 }
 
-void how_to_play::entry::setup(int x, int y)
+void how_to_play::entry_type::setup(int x, int y)
 {
     _enable_blending(text_sprites_1);
     _enable_blending(text_sprites_2);
@@ -185,7 +185,7 @@ void how_to_play::entry::setup(int x, int y)
     move_counter = blending_frames;
 }
 
-void how_to_play::entry::set_position(int x, int y)
+void how_to_play::entry_type::set_position(int x, int y)
 {
     btn::fixed_point new_position(x, y);
     _set_position(new_position, text_sprites_1);
@@ -195,7 +195,7 @@ void how_to_play::entry::set_position(int x, int y)
     _set_position(new_position, graphic_sprites);
 }
 
-void how_to_play::entry::animate()
+void how_to_play::entry_type::animate()
 {
     if(move_counter)
     {
@@ -224,9 +224,9 @@ void how_to_play::entry::animate()
     }
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_hero_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_hero_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     _text_generator.generate(left_text_sprites_x, 0,  "This is Butano Fighter!", result.text_sprites_1);
     _text_generator.generate(left_text_sprites_x, 12, "Your goal is to stay alive", result.text_sprites_2);
@@ -251,9 +251,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_move_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_move_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
     _text_generator.generate(right_text_sprites_x, 0,  "Move the hero with the", result.text_sprites_1);
     _text_generator.generate(right_text_sprites_x, 12, "control pad. If you don't", result.text_sprites_2);
@@ -301,9 +301,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_shoot_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_shoot_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     _text_generator.generate(left_text_sprites_x, 0,  "Shoot with the B button!", result.text_sprites_1);
     _text_generator.generate(left_text_sprites_x, 12, "You can leave the button", result.text_sprites_2);
@@ -322,9 +322,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_bomb_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_bomb_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
     _text_generator.generate(right_text_sprites_x, 0,  "Throw a bomb with the A", result.text_sprites_1);
     _text_generator.generate(right_text_sprites_x, 12, "button! Use it just before", result.text_sprites_2);
@@ -338,9 +338,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_shield_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_shield_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     _text_generator.generate(left_text_sprites_x, 0,  "If you have two or more", result.text_sprites_1);
     _text_generator.generate(left_text_sprites_x, 12, "bombs when you are hit,", result.text_sprites_2);
@@ -371,9 +371,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_brightness_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_brightness_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
     _text_generator.generate(right_text_sprites_x, 0,  "Change screen's", result.text_sprites_1);
     _text_generator.generate(right_text_sprites_x, 12, "brightness anytime with", result.text_sprites_2);
@@ -387,9 +387,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_experience_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_experience_entry()
 {
-    entry result;
+    entry_type result;
     btn::fixed x = left_text_sprites_x + 16;
     _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     _text_generator.generate(x, 0,  "Shoot a lot of baddies ", result.text_sprites_1);
@@ -423,9 +423,9 @@ void how_to_play::entry::animate()
     return result;
 }
 
-[[nodiscard]] how_to_play::entry how_to_play::_create_weapon_entry()
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_weapon_entry()
 {
-    entry result;
+    entry_type result;
     _text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
     _text_generator.generate(right_text_sprites_x, 0,  "If you get enough", result.text_sprites_1);
     _text_generator.generate(right_text_sprites_x, 12, "experience, a new weapon", result.text_sprites_2);

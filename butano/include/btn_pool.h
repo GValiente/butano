@@ -44,8 +44,8 @@ public:
     }
 
 protected:
-    ipool(char* _buffer, size_type max_size) :
-        base_type(reinterpret_cast<char*>(&_buffer[0]), max_size)
+    ipool(char* buffer, size_type max_size) :
+        base_type(reinterpret_cast<char*>(&buffer[0]), max_size)
     {
     }
 };

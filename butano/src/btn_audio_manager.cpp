@@ -130,13 +130,13 @@ namespace
             SOUND_STOP_ALL
         };
 
-        explicit command(type type, int id = 0, int16_t priority = 0, int volume = 0, bool loop = false,
+        explicit command(type command_type, int id = 0, int16_t priority = 0, int volume = 0, bool loop = false,
                          int speed = 0, int panning = 0) :
             _id(id),
             _priority(priority),
             _volume(uint16_t(volume)),
             _speed(uint16_t(speed)),
-            _type(type),
+            _type(command_type),
             _panning(uint8_t(panning)),
             _loop(loop)
         {

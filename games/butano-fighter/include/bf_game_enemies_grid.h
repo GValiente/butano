@@ -57,7 +57,7 @@ private:
     using enemies_list = btn::intrusive_forward_list<enemies_list_node_type>;
     using enemies_pool = btn::pool<enemies_list_node_type, constants::max_enemies_in_grid>;
 
-    class cell
+    class cell_type
     {
 
     public:
@@ -81,7 +81,7 @@ private:
         enemies_list _enemies;
     };
 
-    cell _cells[columns * rows];
+    cell_type _cells[columns * rows];
     enemies_pool _pool;
 
     [[nodiscard]] static int _column(const btn::fixed_point& position);
@@ -92,12 +92,12 @@ private:
 
     [[nodiscard]] static int _safe_row(const btn::fixed_point& position);
 
-    [[nodiscard]] const cell* _cells_row(int row) const
+    [[nodiscard]] const cell_type* _cells_row(int row) const
     {
         return &(_cells[0]) + (columns * row);
     }
 
-    [[nodiscard]] cell* _cells_row(int row)
+    [[nodiscard]] cell_type* _cells_row(int row)
     {
         return &(_cells[0]) + (columns * row);
     }

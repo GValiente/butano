@@ -112,7 +112,7 @@ void init()
 
 void enable()
 {
-    REG_SNDDSCNT = uint16_t(data.direct_sound_control_value);
+    REG_SNDDSCNT = data.direct_sound_control_value;
     irq::enable(irq::id::VBLANK);
 }
 

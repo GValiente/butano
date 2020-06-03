@@ -38,15 +38,15 @@ public:
     }
 
     template<int Precision>
-    [[nodiscard]] constexpr fixed_t<Precision> calculate(fixed_t<Precision> fixed) const
+    [[nodiscard]] constexpr fixed_t<Precision> calculate(fixed_t<Precision> value) const
     {
-        return fixed_t<Precision>::from_data(calculate(fixed.data()));
+        return fixed_t<Precision>::from_data(calculate(value.data()));
     }
 
     template<int Precision>
-    [[nodiscard]] constexpr fixed_t<Precision> unsafe_calculate(fixed_t<Precision> fixed) const
+    [[nodiscard]] constexpr fixed_t<Precision> unsafe_calculate(fixed_t<Precision> value) const
     {
-        return fixed_t<Precision>::from_data(unsafe_calculate(fixed.data()));
+        return fixed_t<Precision>::from_data(unsafe_calculate(value.data()));
     }
 
 private:

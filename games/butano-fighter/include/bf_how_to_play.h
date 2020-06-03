@@ -28,7 +28,7 @@ public:
     [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
-    struct entry
+    struct entry_type
     {
         btn::vector<btn::sprite_ptr, 6> text_sprites_1;
         btn::vector<btn::sprite_ptr, 6> text_sprites_2;
@@ -52,26 +52,26 @@ private:
     scene_type _next_scene;
     btn::sprite_text_generator& _text_generator;
     btn::vector<btn::sprite_ptr, 3> _title_sprites;
-    btn::vector<entry, 4> _entries;
+    btn::vector<entry_type, 2> _entries;
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
     btn::optional<btn::music_volume_to_action> _music_volume_action;
     int _page_index = 0;
 
-    [[nodiscard]] entry _create_hero_entry();
+    [[nodiscard]] entry_type _create_hero_entry();
 
-    [[nodiscard]] entry _create_move_entry();
+    [[nodiscard]] entry_type _create_move_entry();
 
-    [[nodiscard]] entry _create_shoot_entry();
+    [[nodiscard]] entry_type _create_shoot_entry();
 
-    [[nodiscard]] entry _create_bomb_entry();
+    [[nodiscard]] entry_type _create_bomb_entry();
 
-    [[nodiscard]] entry _create_shield_entry();
+    [[nodiscard]] entry_type _create_shield_entry();
 
-    [[nodiscard]] entry _create_brightness_entry();
+    [[nodiscard]] entry_type _create_brightness_entry();
 
-    [[nodiscard]] entry _create_experience_entry();
+    [[nodiscard]] entry_type _create_experience_entry();
 
-    [[nodiscard]] entry _create_weapon_entry();
+    [[nodiscard]] entry_type _create_weapon_entry();
 };
 
 }

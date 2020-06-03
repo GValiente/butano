@@ -340,9 +340,9 @@ public:
         {
             _size = _max_size;
 
-            iterator last = end();
+            iterator end_it = end();
 
-            while(append_position != last)
+            while(append_position != end_it)
             {
                 *append_position++ = *first++;
             }
@@ -434,9 +434,9 @@ public:
 
             _size = _max_size;
 
-            iterator last = end();
+            iterator end_it = end();
 
-            while(insert_position != last)
+            while(insert_position != end_it)
             {
                 *insert_position++ = *first++;
             }

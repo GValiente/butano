@@ -72,7 +72,7 @@ hero::hero(status& status) :
     _status(status),
     _body_shadows(_create_body_shadows()),
     _body_sprite_animate_action(_create_body_sprite_animate_action()),
-    _body_snapshots(body_snapshots_count, body_snapshot{ _body_sprite_animate_action.sprite().position(), 0 }),
+    _body_snapshots(body_snapshots_count, body_snapshot_type{ _body_sprite_animate_action.sprite().position(), 0 }),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
     _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position)),
     _shield_sprite(_create_shield_sprite()),
@@ -257,7 +257,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
 
     int shadows_count = _body_shadows.size();
     _body_snapshots.pop_back();
-    _body_snapshots.push_front(body_snapshot{ new_body_position, _body_sprite_animate_action.current_index() });
+    _body_snapshots.push_front(body_snapshot_type{ new_body_position, _body_sprite_animate_action.current_index() });
 
     if(_shooting)
     {
@@ -272,7 +272,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position, const btn::
 
     for(int index = 0, limit = _body_shadows.size(); index < limit; ++index)
     {
-        const body_snapshot& body_snapshot = _body_snapshots[(index + 1) * body_shadows_multiplier];
+        const body_snapshot_type& body_snapshot = _body_snapshots[(index + 1) * body_shadows_multiplier];
         btn::sprite_ptr& body_shadow = _body_shadows[shadows_count - index - 1];
 
         if(index >= visible_shadows_count || body_snapshot.position == new_body_position)

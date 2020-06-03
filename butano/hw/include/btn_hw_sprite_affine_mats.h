@@ -24,7 +24,7 @@ namespace btn::hw::sprite_affine_mats
         affine_mat.pb = 0;
         affine_mat.pc = 0;
         affine_mat.pd = 1 << 8;
-    };
+    }
 
     inline void setup(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
     {
@@ -32,19 +32,19 @@ namespace btn::hw::sprite_affine_mats
         affine_mat.pb = int16_t(attributes.second_register_value());
         affine_mat.pc = int16_t(attributes.third_register_value());
         affine_mat.pd = int16_t(attributes.fourth_register_value());
-    };
+    }
 
     inline void update_scale_x(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
     {
         affine_mat.pa = int16_t(attributes.first_register_value());
         affine_mat.pb = int16_t(attributes.second_register_value());
-    };
+    }
 
     inline void update_scale_y(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
     {
         affine_mat.pc = int16_t(attributes.third_register_value());
         affine_mat.pd = int16_t(attributes.fourth_register_value());
-    };
+    }
 
     [[nodiscard]] inline int16_t* first_register(int id)
     {

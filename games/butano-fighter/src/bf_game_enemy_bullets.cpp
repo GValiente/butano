@@ -36,9 +36,9 @@ enemy_bullets::enemy_bullets() :
 
 bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
 {
-    btn::iforward_list<bullet>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
+    btn::iforward_list<bullet_type>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
 
-    for(const bullet& bullet : *bullets)
+    for(const bullet_type& bullet : *bullets)
     {
         const btn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
         btn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
@@ -76,7 +76,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         tile_index = int(type);
     }
 
-    btn::iforward_list<bullet>* bullets = _odd_bullets.size() < _even_bullets.size() ?
+    btn::iforward_list<bullet_type>* bullets = _odd_bullets.size() < _even_bullets.size() ?
                 &_odd_bullets : &_even_bullets;
     BTN_ASSERT(! bullets->full(), "No more space for enemy bullets");
 
@@ -101,7 +101,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
 
     if(type == enemy_bullet_type::HUGE)
     {
-        bullet& bullet = bullets->front();
+        bullet_type& bullet = bullets->front();
         bullet.sprite_rotate_action.emplace(bullet.sprite_move_action.sprite(), 4);
     }
 }
@@ -114,8 +114,8 @@ void enemy_bullets::clear()
 
 void enemy_bullets::update()
 {
-    btn::iforward_list<bullet>* check_and_update_bullets;
-    btn::iforward_list<bullet>* update_bullets;
+    btn::iforward_list<bullet_type>* check_and_update_bullets;
+    btn::iforward_list<bullet_type>* update_bullets;
 
     if(_check_odds)
     {
@@ -137,7 +137,7 @@ void enemy_bullets::update()
 
     while(it != end)
     {
-        bullet& bullet = *it;
+        bullet_type& bullet = *it;
         btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
         const btn::fixed_point& position = sprite_move_action.sprite().position();
 
@@ -160,7 +160,7 @@ void enemy_bullets::update()
         }
     }
 
-    for(bullet& bullet : *update_bullets)
+    for(bullet_type& bullet : *update_bullets)
     {
         bullet.sprite_move_action.update();
 

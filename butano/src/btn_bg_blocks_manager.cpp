@@ -804,7 +804,7 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette.id());
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
+    const uint16_t* data_ptr = &map_cells_ref;
     auto items_map_iterator = data.items_map.find(data_ptr);
 
     if(items_map_iterator != data.items_map.end())
@@ -887,7 +887,7 @@ int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map
     BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
     BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
+    const uint16_t* data_ptr = &map_cells_ref;
     BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(), "Multiple copies of the same data not supported");
 
     int result = _create_impl<false>(create_data::from_map(data_ptr, map_dimensions, move(tiles), move(palette)));
@@ -1062,7 +1062,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref,
     BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                map_dimensions.height(), " - ", item.height);
 
-    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_cells_ref);
+    const uint16_t* data_ptr = &map_cells_ref;
 
     if(item.data != data_ptr)
     {
@@ -1267,7 +1267,7 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 
     if(! item.data)
     {
-        auto vram_ptr = reinterpret_cast<regular_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
+        regular_bg_map_cell* vram_ptr = hw::bg_blocks::vram(item.start_block);
         result.emplace(vram_ptr, item.half_words());
     }
 

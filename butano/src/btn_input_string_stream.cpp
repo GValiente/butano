@@ -23,14 +23,14 @@ void input_string_stream::append(char character)
     string().push_back(character);
 }
 
-void input_string_stream::append(const string_view& str_view)
+void input_string_stream::append(const string_view& string_view)
 {
-    string().append(str_view.data(), str_view.size());
+    string().append(string_view.data(), string_view.size());
 }
 
-void input_string_stream::append(const istring& _string)
+void input_string_stream::append(const istring& istring)
 {
-    string().append(_string);
+    string().append(istring);
 }
 
 void input_string_stream::append(const char* char_array)

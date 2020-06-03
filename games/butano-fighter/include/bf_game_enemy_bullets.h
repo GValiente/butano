@@ -33,7 +33,7 @@ public:
     void update();
 
 private:
-    struct bullet
+    struct bullet_type
     {
         btn::sprite_move_by_action sprite_move_action;
         btn::optional<btn::sprite_rotate_by_action> sprite_rotate_action;
@@ -42,8 +42,8 @@ private:
 
     btn::sprite_palette_fade_loop_action _palette_fade_action;
     btn::array<btn::sprite_tiles_ptr, 2> _tiles_list;
-    btn::forward_list<bullet, constants::max_enemy_bullets / 2> _even_bullets;
-    btn::forward_list<bullet, constants::max_enemy_bullets / 2> _odd_bullets;
+    btn::forward_list<bullet_type, constants::max_enemy_bullets / 2> _even_bullets;
+    btn::forward_list<bullet_type, constants::max_enemy_bullets / 2> _odd_bullets;
     bool _check_odds = false;
 };
 

@@ -66,8 +66,8 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 
 void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
 {
-    btn::iforward_list<bullet>* check_and_update_bullets;
-    btn::iforward_list<bullet>* update_bullets;
+    btn::iforward_list<bullet_type>* check_and_update_bullets;
+    btn::iforward_list<bullet_type>* update_bullets;
 
     if(_check_odds)
     {
@@ -88,7 +88,7 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
 
     while(it != end)
     {
-        bullet& bullet = *it;
+        bullet_type& bullet = *it;
         btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
         const btn::fixed_point& position = sprite_move_action.sprite().position();
         const hero_bullet_level& level_data = *bullet.level_data;
@@ -108,7 +108,7 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
         }
     }
 
-    for(bullet& bullet : *update_bullets)
+    for(bullet_type& bullet : *update_bullets)
     {
         bullet.sprite_move_action.update();
     }
@@ -123,7 +123,7 @@ void hero_bullets::_add_bullets(hero& hero)
     {
         if(counter == event.frame)
         {
-            btn::iforward_list<bullet>* bullets = _odd_bullets.size() < _even_bullets.size() ?
+            btn::iforward_list<bullet_type>* bullets = _odd_bullets.size() < _even_bullets.size() ?
                         &_odd_bullets : &_even_bullets;
             BTN_ASSERT(! bullets->full(), "No more space for hero bullets");
 

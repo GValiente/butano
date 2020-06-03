@@ -15,7 +15,7 @@ namespace bf::game
 
 enemies_grid::~enemies_grid()
 {
-    for(cell& cell : _cells)
+    for(cell_type& cell : _cells)
     {
         cell.clear(_pool);
     }
@@ -184,7 +184,7 @@ void enemies_grid::_remove_enemy(int row, int column, enemy& enemy)
 
 void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)
 {
-    cell* cells_row = _cells_row(row);
+    cell_type* cells_row = _cells_row(row);
     int enemy_columns = enemy.grid_columns();
 
     for(int c = column - enemy_columns; c <= column + enemy_columns; ++c)
@@ -195,7 +195,7 @@ void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)
 
 void enemies_grid::_remove_enemy_row(int row, int column, enemy& enemy)
 {
-    cell* cells_row = _cells_row(row);
+    cell_type* cells_row = _cells_row(row);
     int enemy_columns = enemy.grid_columns();
 
     for(int c = column - enemy_columns; c <= column + enemy_columns; ++c)
@@ -224,7 +224,7 @@ void enemies_grid::_remove_enemy_column(int row, int column, enemy& enemy)
     }
 }
 
-void enemies_grid::cell::add_enemy(enemy& enemy, enemies_pool& enemies_pool)
+void enemies_grid::cell_type::add_enemy(enemy& enemy, enemies_pool& enemies_pool)
 {
     for(const enemies_list_node_type& enemies_node : _enemies)
     {
@@ -240,7 +240,7 @@ void enemies_grid::cell::add_enemy(enemy& enemy, enemies_pool& enemies_pool)
     _enemies.push_front(enemies_node);
 }
 
-void enemies_grid::cell::remove_enemy(enemy& enemy, enemies_pool& enemies_pool)
+void enemies_grid::cell_type::remove_enemy(enemy& enemy, enemies_pool& enemies_pool)
 {
     auto before_it = _enemies.before_begin();
     auto it = _enemies.begin();
@@ -262,7 +262,7 @@ void enemies_grid::cell::remove_enemy(enemy& enemy, enemies_pool& enemies_pool)
     }
 }
 
-void enemies_grid::cell::clear(enemies_pool& enemies_pool)
+void enemies_grid::cell_type::clear(enemies_pool& enemies_pool)
 {
     auto before_it = _enemies.before_begin();
     auto it = _enemies.begin();

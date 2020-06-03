@@ -26,7 +26,7 @@ class sprites_manager_item : public intrusive_list_node_type
 
 public:
     sprite_affine_mat_attach_node_type affine_mat_attach_node;
-    hw::sprites::handle handle;
+    hw::sprites::handle_type handle;
     fixed_point position;
     fixed_point hw_position;
     size half_dimensions;

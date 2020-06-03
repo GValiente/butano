@@ -31,8 +31,11 @@ include $(DEVKITARM)/gba_rules
 # Options for code generation
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork
+CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wuseless-cast -Wnon-virtual-dtor \
+				-Woverloaded-virtual -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op \
+				-Wnull-dereference -Wstack-usage=16384
 
-CFLAGS      :=	-Wall -Wextra -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math $(ARCH)
+CFLAGS      :=	$(CWARNINGS) -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -ffunction-sections -fdata-sections $(ARCH)
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 

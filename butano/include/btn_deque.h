@@ -632,17 +632,18 @@ public:
     iterator erase(const const_iterator& first, const const_iterator& last)
     {
         size_type first_index = first._index;
-        BTN_ASSERT(first_index >= 0 && first_index < _size, "Invalid first: ", first_index, " - ", _size);
+        size_type size = _size;
+        BTN_ASSERT(first_index >= 0 && first_index < size, "Invalid first: ", first_index, " - ", size);
 
         size_type last_index = last._index;
-        BTN_ASSERT(last_index >= 0 && last_index < _size, "Invalid last: ", last_index, " - ", _size);
+        BTN_ASSERT(last_index >= 0 && last_index < size, "Invalid last: ", last_index, " - ", size);
 
         size_type delete_count = last_index - first_index;
-        BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
+        BTN_ASSERT(delete_count >= 0 && delete_count <= size, "Invalid delete count: ", delete_count, " - ", size);
 
         if(delete_count)
         {
-            if(delete_count == _size)
+            if(delete_count == size)
             {
                 clear();
             }
@@ -659,21 +660,21 @@ public:
                 pointer data = _data;
                 size_type index = first_index;
                 size_type next_index = first_index + delete_count;
-                size_type last_index = _size;
-                _size -= delete_count;
 
-                while(next_index != last_index)
+                while(next_index != size)
                 {
                     data[_real_index(index)] = move(data[_real_index(next_index)]);
                     ++index;
                     ++next_index;
                 }
 
-                while(index != last_index)
+                while(index != size)
                 {
                     data[_real_index(index)].~value_type();
                     ++index;
                 }
+
+                _size -= delete_count;
             }
         }
 

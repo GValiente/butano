@@ -6,6 +6,6 @@
 namespace bf::game::stage_1
 {
     [[nodiscard]] const stage& get();
-};
+}
 
 #endif

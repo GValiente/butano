@@ -61,9 +61,9 @@ public:
 
     void append(char character);
 
-    void append(const string_view& str_view);
+    void append(const string_view& string_view);
 
-    void append(const istring& string);
+    void append(const istring& istring);
 
     void append(const char* char_array);
 

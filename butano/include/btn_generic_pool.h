@@ -71,9 +71,9 @@ public:
     }
 
 protected:
-    igeneric_pool(char* _buffer, size_type max_size) :
-        _buffer(_buffer),
-        _next_ptr(_buffer),
+    igeneric_pool(char* buffer, size_type max_size) :
+        _buffer(buffer),
+        _next_ptr(buffer),
         _max_size(max_size),
         _allocated_items_count(0),
         _initialised_items_count(0)

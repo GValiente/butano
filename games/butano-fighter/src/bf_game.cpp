@@ -2,7 +2,7 @@
 
 #include "btn_music_items.h"
 #include "btn_sprite_items_flash_palette.h"
-#include "bf_game_status.h"
+#include "bf_status.h"
 #include "bf_butano_background.h"
 
 namespace bf::game

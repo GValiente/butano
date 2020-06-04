@@ -6,8 +6,8 @@
 #include "bf_stats.h"
 #include "bf_intro.h"
 #include "bf_title.h"
+#include "bf_status.h"
 #include "bf_how_to_play.h"
-#include "bf_game_status.h"
 #include "bf_big_sprite_font.h"
 #include "bf_keypad_shortcuts.h"
 #include "bf_butano_background.h"
@@ -23,9 +23,9 @@ int main()
     btn::sprite_text_generator big_text_generator(bf::big_sprite_font);
     big_text_generator.set_bg_priority(1);
 
-    bf::game::status game_status;
+    bf::status status;
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::how_to_play(bf::scene_type::TITLE, big_text_generator, butano_background));
+    btn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
@@ -63,19 +63,21 @@ int main()
                     break;
 
                 case bf::scene_type::TITLE:
-                    scene.reset(new bf::title(game_status, small_text_generator, butano_background));
+                    scene.reset(new bf::title(status, small_text_generator, butano_background));
                     break;
 
                 case bf::scene_type::GAME:
-                    scene.reset(new bf::game::game(game_status, small_text_generator, butano_background));
+                    scene.reset(new bf::game::game(status, small_text_generator, butano_background));
                     break;
 
                 case bf::scene_type::HOW_TO_PLAY_AND_TITLE:
-                    scene.reset(new bf::how_to_play(bf::scene_type::TITLE, big_text_generator, butano_background));
+                    scene.reset(new bf::how_to_play(bf::scene_type::TITLE, status, big_text_generator,
+                                                    butano_background));
                     break;
 
                 case bf::scene_type::HOW_TO_PLAY_AND_GAME:
-                    scene.reset(new bf::how_to_play(bf::scene_type::GAME, big_text_generator, butano_background));
+                    scene.reset(new bf::how_to_play(bf::scene_type::GAME, status, big_text_generator,
+                                                    butano_background));
                     break;
 
                 default:

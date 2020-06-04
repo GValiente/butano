@@ -51,6 +51,9 @@
         "hero_bomb_icon": {
             "height": 16
         },
+        "hero_bomb_mini": {
+            "height": 32
+        },
         "hero_shield": {
             "height": 64
         },

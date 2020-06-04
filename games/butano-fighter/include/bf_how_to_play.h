@@ -16,13 +16,14 @@ namespace btn
 namespace bf
 {
 
+class status;
 class butano_background;
 
 class how_to_play : public scene
 {
 
 public:
-    how_to_play(scene_type next_scene, btn::sprite_text_generator& text_generator,
+    how_to_play(scene_type next_scene, status& status, btn::sprite_text_generator& text_generator,
                 butano_background& butano_background);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
@@ -33,10 +34,13 @@ private:
         btn::vector<btn::sprite_ptr, 30> sprites;
         btn::optional<btn::sprite_visible_toggle_action> toggle_action;
         btn::optional<btn::sprite_rotate_by_action> rotate_action;
+        btn::optional<btn::sprite_palette_fade_loop_action> palette_fade_action;
         btn::optional<btn::sprite_palette_rotate_by_action> palette_rotate_action;
-        btn::vector<btn::sprite_cached_animate_action<2>, 4> animate_actions;
+        btn::vector<btn::sprite_cached_animate_action<4>, 4> animate_actions;
+        btn::optional<btn::sprite_palette_ptr> flash_palette;
         int move_x = 0;
         int move_counter = 0;
+        int flash_palette_counter = 1;
 
         void setup(int x, int y);
 
@@ -46,6 +50,7 @@ private:
     };
 
     scene_type _next_scene;
+    status& _status;
     btn::sprite_text_generator& _text_generator;
     btn::vector<btn::sprite_ptr, 3> _title_sprites;
     btn::vector<entry_type, 2> _entries;
@@ -68,6 +73,10 @@ private:
     [[nodiscard]] entry_type _create_experience_entry();
 
     [[nodiscard]] entry_type _create_weapon_entry();
+
+    [[nodiscard]] entry_type _create_gem_entry();
+
+    [[nodiscard]] entry_type _create_bomb_item_entry();
 };
 
 }

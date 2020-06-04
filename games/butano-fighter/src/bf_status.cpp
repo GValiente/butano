@@ -1,4 +1,4 @@
-#include "bf_game_status.h"
+#include "bf_status.h"
 
 #include "btn_sram.h"
 #include "btn_string_view.h"
@@ -7,18 +7,19 @@
 #include "btn_input_string_stream.h"
 #include "bf_game_hero_bullet_level.h"
 
-namespace bf::game
+namespace bf
 {
 
 namespace
 {
     struct sram_data
     {
-        constexpr static const char* valid_label = "bf000";
+        constexpr static const char* valid_label = "bf001";
 
         char label[8] = {};
         int high_experience = 0;
         int brightness = 0;
+        bool how_to_play_viewed = false;
 
         [[nodiscard]] bool read()
         {
@@ -34,11 +35,20 @@ namespace
             btn::sram::write(*this);
         }
     };
+
+    void _write_sram(status& status)
+    {
+        sram_data sram_data_to_write;
+        sram_data_to_write.high_experience = status.high_experience();
+        sram_data_to_write.brightness = btn::bg_palettes::brightness().data();
+        sram_data_to_write.how_to_play_viewed = status.how_to_play_viewed();
+        sram_data_to_write.write();
+    }
 }
 
 status::status()
 {
-    btn::span<const hero_bullet_level> hero_bullet_levels = hero_bullet_level::all_levels();
+    btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
     int min_experience = 0;
 
     for(int index = 0, limit = _level; index < limit; ++index)
@@ -53,6 +63,7 @@ status::status()
     if(sram_data_to_read.read())
     {
         _high_experience = sram_data_to_read.high_experience;
+        _how_to_play_viewed = sram_data_to_read.how_to_play_viewed;
 
         btn::fixed brightness = btn::fixed::from_data(sram_data_to_read.brightness);
         btn::bg_palettes::set_brightness(brightness);
@@ -62,7 +73,7 @@ status::status()
 
 bool status::add_level()
 {
-    btn::span<const hero_bullet_level> hero_bullet_levels = hero_bullet_level::all_levels();
+    btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
 
     if(_level == hero_bullet_levels.size() - 1)
     {
@@ -75,7 +86,7 @@ bool status::add_level()
 
 btn::fixed status::next_level_experience_ratio() const
 {
-    btn::span<const hero_bullet_level> hero_bullet_levels = hero_bullet_level::all_levels();
+    btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
 
     if(_level == hero_bullet_levels.size() - 1)
     {
@@ -90,7 +101,7 @@ btn::fixed status::next_level_experience_ratio() const
 
 bool status::add_experience(int experience)
 {
-    btn::span<const hero_bullet_level> hero_bullet_levels = hero_bullet_level::all_levels();
+    btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
     int level = _level;
     _experience += experience;
 
@@ -137,10 +148,14 @@ bool status::throw_shield()
 
 void status::update_high_experience()
 {
-    sram_data sram_data_to_write;
-    sram_data_to_write.high_experience = btn::max(_experience, _high_experience);
-    sram_data_to_write.brightness = btn::bg_palettes::brightness().data();
-    sram_data_to_write.write();
+    _high_experience = btn::max(_experience, _high_experience);
+    _write_sram(*this);
+}
+
+void status::mark_how_to_play_as_viewed()
+{
+    _how_to_play_viewed = true;
+    _write_sram(*this);
 }
 
 }

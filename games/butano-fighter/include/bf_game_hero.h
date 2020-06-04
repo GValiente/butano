@@ -6,7 +6,7 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "btn_sprite_affine_mat_actions.h"
-#include "bf_game_status.h"
+#include "bf_status.h"
 #include "bf_game_explosion.h"
 
 namespace bf

@@ -15,8 +15,8 @@
 #include "btn_sprite_items_fighter_font.h"
 #include "btn_sprite_affine_mat_attributes.h"
 #include "btn_sprite_items_butano_big_sprite.h"
+#include "bf_status.h"
 #include "bf_scene_type.h"
-#include "bf_game_status.h"
 #include "bf_wave_generator.h"
 #include "bf_butano_background.h"
 
@@ -112,8 +112,8 @@ namespace
             _create_fighter_character_hblank_effect_attributes();
 }
 
-title::title(const game::status& game_status, btn::sprite_text_generator& text_generator,
-             butano_background& butano_background) :
+title::title(const status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background) :
+    _status(status),
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _butano_characters(_create_butano_characters()),
@@ -124,7 +124,7 @@ title::title(const game::status& game_status, btn::sprite_text_generator& text_g
     _butano_down_x_hblank_effect(_create_x_hblank_effect(_butano_down_sprite, _butano_x_hblank_effect_attributes))
 {
     btn::string<20> high_experience_text("HIGH EXP: ");
-    high_experience_text.append(btn::to_string<8>(game_status.high_experience()));
+    high_experience_text.append(btn::to_string<8>(status.high_experience()));
 
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
@@ -402,8 +402,12 @@ btn::optional<scene_type> title::_menu()
 
             if(_menu_index == 0)
             {
-                _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
                 btn::sound_items::start.play();
+
+                if(_status.how_to_play_viewed())
+                {
+                    _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
+                }
             }
             else
             {
@@ -547,7 +551,14 @@ btn::optional<scene_type> title::_menu()
 
             if(_menu_index == 0)
             {
-                result = scene_type::GAME;
+                if(_status.how_to_play_viewed())
+                {
+                    result = scene_type::GAME;
+                }
+                else
+                {
+                    result = scene_type::HOW_TO_PLAY_AND_GAME;
+                }
             }
             else
             {

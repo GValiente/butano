@@ -1,9 +1,9 @@
-#ifndef BF_GAME_STATUS_H
-#define BF_GAME_STATUS_H
+#ifndef BF_STATUS_H
+#define BF_STATUS_H
 
 #include "bf_game_stage_1.h"
 
-namespace bf::game
+namespace bf
 {
 
 class status
@@ -12,7 +12,7 @@ class status
 public:
     status();
 
-    [[nodiscard]] const stage& current_stage() const
+    [[nodiscard]] const game::stage& current_stage() const
     {
         return *_current_stage;
     }
@@ -51,12 +51,20 @@ public:
 
     void update_high_experience();
 
+    [[nodiscard]] bool how_to_play_viewed() const
+    {
+        return _how_to_play_viewed;
+    }
+
+    void mark_how_to_play_as_viewed();
+
 private:
-    const stage* _current_stage = &stage_1::get();
+    const game::stage* _current_stage = &game::stage_1::get();
     int _level = 0;
     int _experience = 0;
     int _bombs_count = 2;
     int _high_experience = 0;
+    bool _how_to_play_viewed = false;
 };
 
 }

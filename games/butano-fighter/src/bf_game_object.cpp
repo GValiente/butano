@@ -16,11 +16,6 @@
 namespace bf::game
 {
 
-namespace
-{
-    constexpr const int flash_frames = 16;
-}
-
 object object::create_hero_weapon(const btn::fixed_point& position, int hero_level,
                                   const btn::sprite_palette_ptr& flash_palette)
 {
@@ -121,14 +116,14 @@ void object::update()
     _sprite.set_position(_position);
     --_flash_palette_counter;
 
-    if(_flash_palette_counter == flash_frames / 2)
+    if(_flash_palette_counter == constants::object_flash_frames / 2)
     {
         _sprite.set_palette(_flash_palette);
     }
     else if(! _flash_palette_counter)
     {
         _sprite.set_palette(_sprite_palette);
-        _flash_palette_counter = flash_frames;
+        _flash_palette_counter = constants::object_flash_frames;
     }
 }
 
@@ -140,7 +135,7 @@ object::object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const
     _sprite(btn::move(sprite)),
     _sprite_palette(_sprite.palette()),
     _flash_palette(flash_palette),
-    _flash_palette_counter(flash_frames)
+    _flash_palette_counter(constants::object_flash_frames)
 {
 }
 

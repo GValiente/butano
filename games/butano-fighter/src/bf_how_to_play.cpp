@@ -5,17 +5,22 @@
 #include "btn_music_items.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
+#include "btn_sprite_items_gem.h"
 #include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_brightness.h"
 #include "btn_sprite_items_hero_death.h"
 #include "btn_sprite_items_hero_shield.h"
 #include "btn_sprite_items_hero_weapons.h"
 #include "btn_sprite_items_hero_bullets.h"
+#include "btn_sprite_items_flash_palette.h"
 #include "btn_sprite_items_hero_bomb_icon.h"
+#include "btn_sprite_items_hero_bomb_mini.h"
 #include "btn_sprite_items_experience_bar.h"
 #include "btn_sprite_items_hero_weapon_big_2.h"
 #include "btn_sprite_items_experience_frame_back.h"
 #include "btn_sprite_items_experience_frame_front.h"
+#include "bf_status.h"
+#include "bf_constants.h"
 #include "bf_scene_type.h"
 #include "bf_butano_background.h"
 
@@ -29,7 +34,7 @@ namespace
     constexpr const int blending_frames = 30;
     constexpr const int left_move_x = blending_frames;
     constexpr const int right_move_x = -blending_frames;
-    constexpr const int pages = 4;
+    constexpr const int pages = 5;
 
     void _enable_blending(btn::ivector<btn::sprite_ptr>& sprites)
     {
@@ -48,9 +53,10 @@ namespace
     }
 }
 
-how_to_play::how_to_play(scene_type next_scene, btn::sprite_text_generator& text_generator,
+how_to_play::how_to_play(scene_type next_scene, status& status, btn::sprite_text_generator& text_generator,
                          butano_background& butano_background) :
     _next_scene(next_scene),
+    _status(status),
     _text_generator(text_generator)
 {
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
@@ -156,9 +162,15 @@ btn::optional<scene_type> how_to_play::update()
                 _entries.push_back(_create_weapon_entry());
                 break;
 
+            case 4:
+                _entries.push_back(_create_gem_entry());
+                _entries.push_back(_create_bomb_item_entry());
+                break;
+
             default:
                 _title_sprites.clear();
                 btn::blending::set_transparency_alpha(1);
+                _status.mark_how_to_play_as_viewed();
                 result = _next_scene;
 
                 if(_next_scene == scene_type::GAME && btn::music::playing())
@@ -205,6 +217,11 @@ void how_to_play::entry_type::animate()
         rotate_action->update();
     }
 
+    if(palette_fade_action)
+    {
+        palette_fade_action->update();
+    }
+
     if(palette_rotate_action)
     {
         palette_rotate_action->update();
@@ -213,6 +230,20 @@ void how_to_play::entry_type::animate()
     for(auto& animate_action : animate_actions)
     {
         animate_action.update();
+    }
+
+    if(flash_palette)
+    {
+        --flash_palette_counter;
+
+        if(! flash_palette_counter)
+        {
+            btn::sprite_ptr& last_sprite = sprites.back();
+            btn::sprite_palette_ptr last_sprite_palette = last_sprite.palette();
+            last_sprite.set_palette(*flash_palette);
+            flash_palette = btn::move(last_sprite_palette);
+            flash_palette_counter = constants::object_flash_frames / 2;
+        }
     }
 }
 
@@ -231,7 +262,7 @@ void how_to_play::entry_type::animate()
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -258,7 +289,7 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 12, 14));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 12, 14, 12, 14));
 
     shadow_position += btn::fixed_point(4, 1);
     shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 8);
@@ -266,7 +297,7 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 8, 10));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 8, 10, 8, 10));
 
     shadow_position += btn::fixed_point(4, 1);
     shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 4);
@@ -274,14 +305,14 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 4, 6));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 4, 6, 4, 6));
 
     btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(body_position);
     body_sprite.set_horizontal_flip(true);
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -303,12 +334,10 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(left_text_sprites_x, 36, "to mash it.", result.sprites);
 
     btn::fixed_point weapon_position(left_text_sprites_x - 24, 28);
-    btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
-    result.sprites.push_back(btn::move(weapon_sprite));
+    result.sprites.push_back(btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1));
 
     btn::fixed_point bullet_position = weapon_position + btn::fixed_point(0, -18);
-    btn::sprite_ptr bullet_sprite = btn::sprite_items::hero_bullets.create_sprite(bullet_position, 1);
-    result.sprites.push_back(btn::move(bullet_sprite));
+    result.sprites.push_back(btn::sprite_items::hero_bullets.create_sprite(bullet_position, 1));
 
     result.setup(-left_move_x, -40);
     return result;
@@ -323,8 +352,13 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(right_text_sprites_x, 24, "being hit to avoid all", result.sprites);
     _text_generator.generate(right_text_sprites_x, 36, "baddies and their bullets.", result.sprites);
 
-    btn::sprite_ptr bomb_sprite = btn::sprite_items::hero_bomb_icon.create_sprite(right_text_sprites_x + 24, 18);
-    result.sprites.push_back(btn::move(bomb_sprite));
+    btn::fixed_point bomb_position(right_text_sprites_x + 24, 18);
+    btn::sprite_ptr bomb_halo_sprite = btn::sprite_items::hero_bomb_mini.create_sprite(bomb_position);
+    btn::sprite_palette_ptr bomb_halo_palette = bomb_halo_sprite.palette();
+    bomb_halo_palette.set_fade_color(btn::color(31, 31, 31));
+    result.sprites.push_back(btn::move(bomb_halo_sprite));
+    result.sprites.push_back(btn::sprite_items::hero_bomb_icon.create_sprite(bomb_position));
+    result.palette_fade_action.emplace(btn::move(bomb_halo_palette), 15, 0.125);
 
     result.setup(-right_move_x, 24);
     return result;
@@ -345,7 +379,7 @@ void how_to_play::entry_type::animate()
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -371,9 +405,7 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(right_text_sprites_x, 12, "brightness anytime with", result.sprites);
     _text_generator.generate(right_text_sprites_x, 24, "L and R buttons.", result.sprites);
 
-    btn::fixed_point brightness_position(right_text_sprites_x + 24, 12);
-    btn::sprite_ptr brightness_sprite = btn::sprite_items::brightness.create_sprite(brightness_position, 4);
-    result.sprites.push_back(btn::move(brightness_sprite));
+    result.sprites.push_back(btn::sprite_items::brightness.create_sprite(right_text_sprites_x + 24, 12, 4));
 
     result.setup(-right_move_x, 24);
     return result;
@@ -423,9 +455,41 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(right_text_sprites_x, 12, "experience, a new weapon", result.sprites);
     _text_generator.generate(right_text_sprites_x, 24, "will appear. Get it!", result.sprites);
 
-    btn::fixed_point weapon_position(right_text_sprites_x + 24, 12);
-    btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapon_big_2.create_sprite(weapon_position);
-    result.sprites.push_back(btn::move(weapon_sprite));
+    result.sprites.push_back(btn::sprite_items::hero_weapon_big_2.create_sprite(right_text_sprites_x + 24, 12));
+    result.flash_palette = btn::sprite_items::flash_palette.palette_item().create_palette();
+
+    result.setup(-right_move_x, 24);
+    return result;
+}
+
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_gem_entry()
+{
+    entry_type result;
+    _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+    _text_generator.generate(left_text_sprites_x, 0,  "You can get more experience", result.sprites);
+    _text_generator.generate(left_text_sprites_x, 12, "with gems too. The quicker", result.sprites);
+    _text_generator.generate(left_text_sprites_x, 24, "you pick up the item,", result.sprites);
+    _text_generator.generate(left_text_sprites_x, 36, "the higher the experience!", result.sprites);
+
+    btn::sprite_ptr gem_sprite = btn::sprite_items::gem.create_sprite(left_text_sprites_x - 24, 18);
+    result.sprites.push_back(gem_sprite);
+    result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
+                btn::move(gem_sprite), 4, btn::sprite_items::gem, 0, 1, 2, 3));
+
+    result.setup(-left_move_x, -40);
+    return result;
+}
+
+[[nodiscard]] how_to_play::entry_type how_to_play::_create_bomb_item_entry()
+{
+    entry_type result;
+    _text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
+    _text_generator.generate(right_text_sprites_x, 0,  "At last, you can get", result.sprites);
+    _text_generator.generate(right_text_sprites_x, 12, "more bombs too.", result.sprites);
+    _text_generator.generate(right_text_sprites_x, 24, "Don't waste them!", result.sprites);
+
+    result.sprites.push_back(btn::sprite_items::hero_bomb_icon.create_sprite(right_text_sprites_x + 24, 12));
+    result.flash_palette = btn::sprite_items::flash_palette.palette_item().create_palette();
 
     result.setup(-right_move_x, 24);
     return result;

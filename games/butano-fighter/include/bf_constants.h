@@ -40,6 +40,7 @@ namespace bf::constants
     constexpr const int enemies_invencible_frames = 30;
     constexpr const int reserved_sprite_affine_mats = 3;
     constexpr const btn::fixed background_speed = 0.5;
+    constexpr const int object_flash_frames = 16;
 }
 
 #endif

@@ -17,22 +17,17 @@ namespace btn
     class sprite_text_generator;
 }
 
-namespace bf::game
-{
-    class status;
-}
-
 namespace bf
 {
 
+class status;
 class butano_background;
 
 class title : public scene
 {
 
 public:
-    title(const game::status& game_status, btn::sprite_text_generator& text_generator,
-          butano_background& butano_background);
+    title(const status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     title(const title& other) = delete;
 
@@ -52,6 +47,7 @@ private:
         END
     };
 
+    const status& _status;
     btn::sprite_ptr _butano_up_sprite;
     btn::sprite_ptr _butano_down_sprite;
     btn::vector<btn::sprite_ptr, 6> _butano_characters;

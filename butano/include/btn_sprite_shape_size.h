@@ -71,6 +71,10 @@ public:
 
             case sprite_size::HUGE:
                 return 64;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
 
@@ -89,6 +93,10 @@ public:
 
             case sprite_size::HUGE:
                 return 64;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
 
@@ -107,12 +115,17 @@ public:
 
             case sprite_size::HUGE:
                 return 32;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
-        }
 
-        BTN_CONSTEXPR_ASSERT(false, "Invalid shape or size");
-        return 0;
+        default:
+            BTN_CONSTEXPR_ERROR("Invalid shape");
+            return 0;
+        }
     }
 
     [[nodiscard]] constexpr int height() const
@@ -135,6 +148,10 @@ public:
 
             case sprite_size::HUGE:
                 return 64;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
 
@@ -153,6 +170,10 @@ public:
 
             case sprite_size::HUGE:
                 return 32;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
 
@@ -171,12 +192,17 @@ public:
 
             case sprite_size::HUGE:
                 return 64;
+
+            default:
+                BTN_CONSTEXPR_ERROR("Invalid size");
+                return 0;
             }
             break;
-        }
 
-        BTN_CONSTEXPR_ASSERT(false, "Invalid shape or size");
-        return 0;
+        default:
+            BTN_CONSTEXPR_ERROR("Invalid shape");
+            return 0;
+        }
     }
 
     [[nodiscard]] constexpr int pixels_count() const

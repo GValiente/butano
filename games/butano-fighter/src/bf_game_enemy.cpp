@@ -102,6 +102,10 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                 case enemy_drop_type::HERO_BOMB:
                     data.objects_ref.spawn_hero_bomb(enemy_position);
                     break;
+
+                default:
+                    BTN_ERROR("Invalid drop type: ", int(_event->drop));
+                    break;
                 }
             }
 
@@ -315,6 +319,10 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             _explosion.emplace(btn::sprite_items::enemy_explosion, _sprite.position(), 6,
                                constants::enemy_explosions_z_order);
             _explosion->update();
+            break;
+
+        default:
+            BTN_ERROR("Invalid death anim type: ", int(_event->enemy.death_anim));
             break;
         }
     }

@@ -63,6 +63,10 @@ void stats::set_mode(mode_type mode)
             _text_generator.set_bg_priority(old_bg_priority);
         }
         break;
+
+    default:
+        BTN_ERROR("Invalid mode: ", int(mode));
+        break;
     }
 }
 
@@ -78,6 +82,10 @@ void stats::update()
         break;
 
     case mode_type::DETAILED:
+        break;
+
+    default:
+        BTN_ERROR("Invalid mode: ", int(_mode));
         break;
     }
 
@@ -101,6 +109,10 @@ void stats::update()
 
         case mode_type::DETAILED:
             text_stream.append(max_cpu_pct);
+            break;
+
+        default:
+            BTN_ERROR("Invalid mode: ", int(_mode));
             break;
         }
 

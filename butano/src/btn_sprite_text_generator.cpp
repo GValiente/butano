@@ -806,6 +806,10 @@ namespace
         case horizontal_alignment_type::RIGHT:
             aligned_position.set_x(aligned_position.x() - generator.width(text));
             break;
+
+        default:
+            BTN_ERROR("Invalid alignment: ", int(generator.alignment()));
+            break;
         }
 
         const sprite_font& font = generator.font();

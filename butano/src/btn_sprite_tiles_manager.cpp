@@ -277,6 +277,10 @@ namespace
             data.to_remove_items.erase(item);
             data.to_remove_tiles_count -= tiles_count;
             break;
+
+        default:
+            BTN_ERROR("Invalid item status: ", int(item.status()));
+            break;
         }
 
         item.data = tiles_data;
@@ -427,6 +431,10 @@ namespace
             data.free_tiles_count += adjacent_tiles_count;
             current_item.tiles_count += adjacent_tiles_count;
             remove = true;
+            break;
+
+        default:
+            BTN_ERROR("Invalid adjacent item status: ", int(adjacent_item.status()));
             break;
         }
 
@@ -584,6 +592,10 @@ int find(const span<const tile>& tiles_ref)
             item.set_status(status_type::USED);
             data.to_remove_items.erase(item);
             data.to_remove_tiles_count -= item.tiles_count;
+            break;
+
+        default:
+            BTN_ERROR("Invalid item status: ", int(item.status()));
             break;
         }
 

@@ -105,6 +105,10 @@ namespace
             case SOUND_STOP_ALL:
                 hw::audio::stop_all_sounds();
                 return;
+
+            default:
+                BTN_ERROR("Invalid type: ", int(_type));
+                return;
             }
         }
 

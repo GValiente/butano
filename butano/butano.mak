@@ -33,7 +33,7 @@ include $(DEVKITARM)/gba_rules
 ARCH        :=	-mthumb -mthumb-interwork
 CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wuseless-cast -Wnon-virtual-dtor \
 				-Woverloaded-virtual -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op \
-				-Wnull-dereference -Wstack-usage=16384
+				-Wnull-dereference -Wswitch-default -Wstack-usage=16384
 
 CFLAGS      :=	$(CWARNINGS) -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -ffunction-sections -fdata-sections $(ARCH)
 CFLAGS      +=	$(INCLUDE)

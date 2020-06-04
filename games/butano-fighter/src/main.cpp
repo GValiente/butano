@@ -77,6 +77,10 @@ int main()
                 case bf::scene_type::HOW_TO_PLAY_AND_GAME:
                     scene.reset(new bf::how_to_play(bf::scene_type::GAME, big_text_generator, butano_background));
                     break;
+
+                default:
+                    BTN_ERROR("Invalid next scene: ", int(*next_scene));
+                    break;
                 }
             }
         }

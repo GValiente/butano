@@ -89,9 +89,11 @@ bool sprites_manager_item::double_size() const
 
     case sprite_double_size_mode::DISABLED:
         return false;
-    }
 
-    return false;
+    default:
+        BTN_ERROR("Invalid double size mode: ", int(double_size_mode));
+        return false;
+    }
 }
 
 }

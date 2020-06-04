@@ -23,6 +23,9 @@
     #define BTN_CONSTEXPR_ASSERT(condition, message) \
         _btn::assert::constexpr_check(condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, message)
 
+    #define BTN_CONSTEXPR_ERROR(message) \
+        _btn::assert::constexpr_check(false, _btn::assert::base_name(__FILE__), __func__, __LINE__, message)
+
     #define BTN_ERROR(...) \
         do \
         { \
@@ -82,6 +85,9 @@
         } while(false)
 
     #define BTN_CONSTEXPR_ASSERT(condition, message) \
+        _btn::assert::dummy_constexpr_check()
+
+    #define BTN_CONSTEXPR_ERROR(message) \
         _btn::assert::dummy_constexpr_check()
 
     #define BTN_ERROR(...) \

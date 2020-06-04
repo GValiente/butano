@@ -178,6 +178,10 @@ void hero_bomb::update(const intro& intro, hero& hero, enemies& enemies, enemy_b
             _status = status_type::INACTIVE;
         }
         break;
+
+    default:
+        BTN_ERROR("Invalid status: ", int(_status));
+        break;
     }
 }
 

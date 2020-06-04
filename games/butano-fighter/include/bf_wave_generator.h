@@ -56,6 +56,10 @@ public:
         case 4:
             _generate_impl<4>(_speed, values);
             break;
+
+        default:
+            BTN_CONSTEXPR_ERROR("Invalid amplitude");
+            break;
         }
     }
 

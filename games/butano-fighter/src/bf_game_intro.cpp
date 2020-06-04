@@ -330,6 +330,10 @@ void intro::update(const butano_background& butano_background)
 
     case state::DONE:
         break;
+
+    default:
+        BTN_ERROR("Invalid state: ", int(_state));
+        break;
     }
 }
 

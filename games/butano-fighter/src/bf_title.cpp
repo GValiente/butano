@@ -451,6 +451,10 @@ btn::optional<scene_type> title::_menu()
             case 2:
                 _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
                 break;
+
+            default:
+                BTN_ERROR("Invalid menu index: ", _menu_index);
+                break;
             }
 
             btn::sound_items::alert.play();

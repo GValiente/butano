@@ -70,6 +70,7 @@ object object::create_hero_weapon(const btn::fixed_point& position, int hero_lev
 
     default:
         BTN_ERROR("Invalid hero level: ", hero_level);
+        break;
     }
 
     btn::sprite_builder builder(*sprite_item);

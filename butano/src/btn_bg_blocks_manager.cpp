@@ -405,6 +405,10 @@ namespace
             data.items_map.erase(item->data);
             data.to_remove_blocks_count -= blocks_count;
             break;
+
+        default:
+            BTN_ERROR("Invalid item status: ", int(item->status()));
+            break;
         }
 
         const uint16_t* data_ptr = create_data.data_ptr;
@@ -786,6 +790,10 @@ int find_tiles(const span<const tile>& tiles_ref)
             item.set_status(status_type::USED);
             data.to_remove_blocks_count -= item.blocks_count;
             break;
+
+        default:
+            BTN_ERROR("Invalid item status: ", int(item.status()));
+            break;
         }
 
         BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
@@ -838,6 +846,10 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
 
             item.tiles = tiles;
             item.palette = palette;
+            break;
+
+        default:
+            BTN_ERROR("Invalid item status: ", int(item.status()));
             break;
         }
 

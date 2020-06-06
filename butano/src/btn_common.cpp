@@ -9,14 +9,12 @@ namespace btn
 
 void* malloc(size_t bytes)
 {
-    BTN_ASSERT(bytes, "Size in bytes is 0");
-
     return ::malloc(bytes);
 }
 
 void* malloc(int bytes)
 {
-    BTN_ASSERT(bytes > 0, "Invalid bytes: ", bytes);
+    BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
     return ::malloc(unsigned(bytes));
 }
@@ -62,38 +60,34 @@ void memset(void* destination, uint8_t value, int bytes)
 
 void* operator new(size_t bytes)
 {
-    BTN_ASSERT(bytes, "Size in bytes is 0");
-
-    void* ptr = btn::malloc(bytes);
+    void* ptr = ::malloc(bytes);
     BTN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
     return ptr;
 }
 
 void operator delete(void* ptr) noexcept
 {
-    btn::free(ptr);
+    ::free(ptr);
 }
 
 void operator delete(void* ptr, [[maybe_unused]] size_t bytes) noexcept
 {
-    btn::free(ptr);
+    ::free(ptr);
 }
 
 void* operator new[](size_t bytes)
 {
-    BTN_ASSERT(bytes, "Size in bytes is 0");
-
-    void* ptr = btn::malloc(bytes);
+    void* ptr = ::malloc(bytes);
     BTN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
     return ptr;
 }
 
 void operator delete[](void* ptr) noexcept
 {
-    btn::free(ptr);
+    ::free(ptr);
 }
 
 void operator delete[](void* ptr, [[maybe_unused]] size_t bytes) noexcept
 {
-    btn::free(ptr);
+    ::free(ptr);
 }

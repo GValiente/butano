@@ -121,6 +121,10 @@ public:
                     }
                 }
                 break;
+
+            default:
+                BTN_ERROR("Invalid command: ", command);
+                break;
             }
         }
     }

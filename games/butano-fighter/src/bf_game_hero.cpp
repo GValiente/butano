@@ -343,7 +343,7 @@ void hero::_animate_shield(const btn::fixed_point& new_body_position, background
 
             if(scale_counter < 30)
             {
-                _bomb_sprites_affine_mat.set_scale(scale_counter * btn::fixed(1.0f / 30));
+                _bomb_sprites_affine_mat.set_scale(scale_counter * btn::fixed(1.0 / 30));
             }
         }
         else if(shield_counter == 150)
@@ -354,7 +354,7 @@ void hero::_animate_shield(const btn::fixed_point& new_body_position, background
         }
         else if(shield_counter < 60)
         {
-            _shield_sprite.set_scale(shield_counter * btn::fixed(1.0f / 60));
+            _shield_sprite.set_scale(shield_counter * btn::fixed(1.0 / 60));
         }
 
         if(shield_counter % 16 == 0)

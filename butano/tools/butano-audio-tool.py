@@ -1,6 +1,6 @@
 """
 Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
-MIT License, see LICENSE file.
+zlib License, see LICENSE file.
 """
 
 import os

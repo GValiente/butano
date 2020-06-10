@@ -1,6 +1,8 @@
 #ifndef BTN_AUDIO_KHZ_H
 #define BTN_AUDIO_KHZ_H
 
+#include "btn_common.h"
+
 #define BTN_AUDIO_KHZ_8     0
 
 #define BTN_AUDIO_KHZ_10    1

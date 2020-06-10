@@ -30,6 +30,7 @@ namespace
 
     public:
         forward_list<sound_type, BTN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
     };
@@ -112,6 +113,7 @@ void init()
 
 void enable()
 {
+    REG_SNDSTAT = data.stat_value;
     REG_SNDDSCNT = data.direct_sound_control_value;
     irq::enable(irq::id::VBLANK);
 }
@@ -119,8 +121,10 @@ void enable()
 void disable()
 {
     irq::disable(irq::id::VBLANK);
+    data.stat_value = REG_SNDSTAT;
     data.direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
+    REG_SNDSTAT = 0;
 }
 
 bool music_playing()

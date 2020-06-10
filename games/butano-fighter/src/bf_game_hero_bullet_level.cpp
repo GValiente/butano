@@ -35,7 +35,7 @@ namespace
                 btn::color(31, 28, 5),  20,   1),
         hero_bullet_level(_level1_events, btn::fixed_size(16, 16),  btn::sound_items::gun_5,  300,
                 btn::color(31, 28, 5),  40,   2),
-        hero_bullet_level(_level2_events, btn::fixed_size(13, 16),  btn::sound_items::gun_1,  500,
+        hero_bullet_level(_level2_events, btn::fixed_size(13, 16),  btn::sound_items::gun_1,  800,
                 btn::color(13, 2, 2),   80,   4),
     };
 }
@@ -60,8 +60,12 @@ int hero_bullet_level::gem_experience(int level, btn::fixed y)
         multiplier = 1;
         break;
 
-    default:
+    case 1:
         multiplier = 5;
+        break;
+
+    default:
+        multiplier = 10;
         break;
     }
 

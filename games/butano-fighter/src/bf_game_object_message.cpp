@@ -64,6 +64,18 @@ object_message object_message::create_experience(const btn::fixed_point& positio
         graphics_index = 20;
         break;
 
+    case 30:
+        graphics_index = 22;
+        break;
+
+    case 40:
+        graphics_index = 24;
+        break;
+
+    case 50:
+        graphics_index = 26;
+        break;
+
     default:
         BTN_ERROR("Invalid experience: ", experience);
         break;

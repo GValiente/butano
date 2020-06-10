@@ -161,11 +161,7 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
                 const enemy_move_event& move_event = move_events[_move_event_index];
                 _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
                 _move_event_counter = move_event.duration_frames;
-
-                if(move_event.horizontal_flip)
-                {
-                    _sprite.set_horizontal_flip(! _sprite.horizontal_flip());
-                }
+                _sprite.set_horizontal_flip(move_event.horizontal_flip);
             }
             else
             {

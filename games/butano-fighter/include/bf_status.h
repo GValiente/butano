@@ -60,7 +60,7 @@ public:
 
 private:
     const game::stage* _current_stage = &game::stage_1::get();
-    int _level = 0;
+    int _level = 2;
     int _experience = 0;
     int _bombs_count = 2;
     int _high_experience = 0;

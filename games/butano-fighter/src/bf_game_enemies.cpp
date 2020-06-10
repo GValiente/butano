@@ -100,11 +100,21 @@ bool enemies::_add_enemies()
         return false;
     }
 
-    --_event_counter;
-
     if(_event_counter)
     {
-        return false;
+        --_event_counter;
+
+        if(_event_counter)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if(! _enemies.empty())
+        {
+            return false;
+        }
     }
 
     ++_event_index;

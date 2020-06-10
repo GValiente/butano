@@ -35,6 +35,15 @@ public:
         BTN_CONSTEXPR_ASSERT(_wait_frames >= 1 && _wait_frames < btn::numeric_limits<int16_t>::max(),
                              "Invalid wait frames");
     }
+
+    [[nodiscard]] constexpr enemy_bullet_event flipped() const
+    {
+        enemy_bullet_event result(type, 1, wait_frames);
+        result.delta_position.set_x(-delta_position.x());
+        result.delta_position.set_y(delta_position.y());
+        result.delta_speed = delta_speed;
+        return result;
+    }
 };
 
 }

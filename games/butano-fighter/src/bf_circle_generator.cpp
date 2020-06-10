@@ -1,6 +1,7 @@
 #include "bf_circle_generator.h"
 
 #include "btn_span.h"
+#include "btn_cstring.h"
 #include "btn_display.h"
 
 namespace bf
@@ -30,7 +31,7 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
     btn::fixed d = 1 - _radius;
 
     btn::pair<btn::fixed, btn::fixed>* values_data = values.data();
-    btn::memset(values_data, 0, unsigned(values_count) * sizeof(btn::pair<btn::fixed, btn::fixed>));
+    btn::memclear(values_data, unsigned(values_count) * sizeof(btn::pair<btn::fixed, btn::fixed>));
 
     while(y >= x)
     {

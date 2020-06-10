@@ -25,7 +25,7 @@ int main()
 
     bf::status status;
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
+    btn::unique_ptr<bf::scene> scene(new bf::game::game(status, small_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;

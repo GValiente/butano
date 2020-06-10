@@ -13,12 +13,12 @@ class nullopt_t
 {
 
 public:
-    explicit nullopt_t(int)
+    constexpr explicit nullopt_t(int)
     {
     }
 };
 
-inline nullopt_t nullopt{0};
+constexpr const nullopt_t nullopt{0};
 
 template<typename Type>
 class optional

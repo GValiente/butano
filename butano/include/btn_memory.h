@@ -164,32 +164,32 @@ namespace btn
             return a._ptr >= b._ptr;
         }
 
-        [[nodiscard]] friend bool operator==(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, decltype(nullptr))
         {
             return ! a._ptr;
         }
 
-        [[nodiscard]] friend bool operator!=(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, decltype(nullptr))
         {
             return a._ptr;
         }
 
-        [[nodiscard]] friend bool operator<(const unique_ptr&, nullptr_t)
+        [[nodiscard]] friend bool operator<(const unique_ptr&, decltype(nullptr))
         {
             return false;
         }
 
-        [[nodiscard]] friend bool operator<=(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, decltype(nullptr))
         {
             return ! a._ptr;
         }
 
-        [[nodiscard]] friend bool operator>(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, decltype(nullptr))
         {
             return a._ptr;
         }
 
-        [[nodiscard]] friend bool operator>=(const unique_ptr&, nullptr_t)
+        [[nodiscard]] friend bool operator>=(const unique_ptr&, decltype(nullptr))
         {
             return true;
         }
@@ -331,32 +331,32 @@ namespace btn
             return a._ptr >= b._ptr;
         }
 
-        [[nodiscard]] friend bool operator==(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator==(const unique_ptr& a, decltype(nullptr))
         {
             return ! a._ptr;
         }
 
-        [[nodiscard]] friend bool operator!=(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator!=(const unique_ptr& a, decltype(nullptr))
         {
             return a._ptr;
         }
 
-        [[nodiscard]] friend bool operator<(const unique_ptr&, nullptr_t)
+        [[nodiscard]] friend bool operator<(const unique_ptr&, decltype(nullptr))
         {
             return false;
         }
 
-        [[nodiscard]] friend bool operator<=(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator<=(const unique_ptr& a, decltype(nullptr))
         {
             return ! a._ptr;
         }
 
-        [[nodiscard]] friend bool operator>(const unique_ptr& a, nullptr_t)
+        [[nodiscard]] friend bool operator>(const unique_ptr& a, decltype(nullptr))
         {
             return a._ptr;
         }
 
-        [[nodiscard]] friend bool operator>=(const unique_ptr&, nullptr_t)
+        [[nodiscard]] friend bool operator>=(const unique_ptr&, decltype(nullptr))
         {
             return true;
         }
@@ -403,11 +403,17 @@ namespace _btn::memory
 
 namespace btn::memory
 {
+    [[nodiscard]] void* ewram_alloc(int bytes);
+
+    void ewram_free(void* ptr);
+
+    [[nodiscard]] int used_alloc_ewram();
+
+    [[nodiscard]] int available_alloc_ewram();
+
     [[nodiscard]] int used_static_iwram();
 
     [[nodiscard]] int used_static_ewram();
-
-    [[nodiscard]] int used_malloc_ewram();
 
     template<typename Type>
     void copy(const Type& source, int elements, Type& destination)

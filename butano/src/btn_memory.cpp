@@ -1,7 +1,42 @@
 #include "btn_memory.h"
 
 #include "btn_alignment.h"
+#include "btn_memory_manager.h"
 #include "../hw/include/btn_hw_memory.h"
+
+void* operator new(unsigned bytes)
+{
+    void* ptr = btn::memory_manager::ewram_alloc(bytes);
+    BTN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+    return ptr;
+}
+
+void operator delete(void* ptr) noexcept
+{
+    btn::memory_manager::ewram_free(ptr);
+}
+
+void operator delete(void* ptr, [[maybe_unused]] unsigned bytes) noexcept
+{
+    btn::memory_manager::ewram_free(ptr);
+}
+
+void* operator new[](unsigned bytes)
+{
+    void* ptr = btn::memory_manager::ewram_alloc(bytes);
+    BTN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+    return ptr;
+}
+
+void operator delete[](void* ptr) noexcept
+{
+    btn::memory_manager::ewram_free(ptr);
+}
+
+void operator delete[](void* ptr, [[maybe_unused]] unsigned bytes) noexcept
+{
+    btn::memory_manager::ewram_free(ptr);
+}
 
 namespace _btn::memory
 {
@@ -42,6 +77,26 @@ void unsafe_clear32(int words, void* destination)
 namespace btn::memory
 {
 
+void* ewram_alloc(int bytes)
+{
+    return memory_manager::ewram_alloc(bytes);
+}
+
+void ewram_free(void* ptr)
+{
+    memory_manager::ewram_free(ptr);
+}
+
+int used_alloc_ewram()
+{
+    return memory_manager::used_alloc_ewram();
+}
+
+int available_alloc_ewram()
+{
+    return memory_manager::available_alloc_ewram();
+}
+
 int used_static_iwram()
 {
     return hw::memory::used_static_iwram();
@@ -50,11 +105,6 @@ int used_static_iwram()
 int used_static_ewram()
 {
     return hw::memory::used_static_ewram();
-}
-
-int used_malloc_ewram()
-{
-    return hw::memory::used_malloc_ewram();
 }
 
 void set(uint8_t value, int bytes, void* destination)

@@ -11,6 +11,7 @@
 #include "btn_bgs_manager.h"
 #include "btn_audio_manager.h"
 #include "btn_keypad_manager.h"
+#include "btn_memory_manager.h"
 #include "btn_display_manager.h"
 #include "btn_sprites_manager.h"
 #include "btn_palettes_manager.h"
@@ -115,6 +116,7 @@ void init(const string_view& keypad_commands)
     audio_manager::init();
 
     // Init high level systems:
+    memory_manager::init();
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();

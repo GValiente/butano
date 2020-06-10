@@ -92,12 +92,6 @@ public:
 
     void append(uint64_t value);
 
-    void append(float value);
-
-    void append(double value);
-
-    void append(long double value);
-
     void append(const void* ptr);
 
     template<int Precision>
@@ -247,24 +241,6 @@ inline input_string_stream& operator<<(input_string_stream& stream, unsigned lon
 }
 
 inline input_string_stream& operator<<(input_string_stream& stream, uint64_t value)
-{
-    stream.append(value);
-    return stream;
-}
-
-inline input_string_stream& operator<<(input_string_stream& stream, float value)
-{
-    stream.append(value);
-    return stream;
-}
-
-inline input_string_stream& operator<<(input_string_stream& stream, double value)
-{
-    stream.append(value);
-    return stream;
-}
-
-inline input_string_stream& operator<<(input_string_stream& stream, long double value)
 {
     stream.append(value);
     return stream;

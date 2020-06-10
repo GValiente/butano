@@ -85,33 +85,6 @@ void input_string_stream::append(uint64_t value)
     string().append(buffer.data(), size);
 }
 
-void input_string_stream::append(float value)
-{
-    array<char, 32> buffer;
-    int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%g", double(value));
-    BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
-
-    string().append(buffer.data(), buffer_size);
-}
-
-void input_string_stream::append(double value)
-{
-    array<char, 32> buffer;
-    int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%lg", value);
-    BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
-
-    string().append(buffer.data(), buffer_size);
-}
-
-void input_string_stream::append(long double value)
-{
-    array<char, 32> buffer;
-    int buffer_size = ::snprintf(buffer.data(), buffer.size(), "%Lg", value);
-    BTN_ASSERT(buffer_size > 0, "snprintf call failed: ", buffer_size);
-
-    string().append(buffer.data(), buffer_size);
-}
-
 void input_string_stream::append(const void* ptr)
 {
     if(ptr)

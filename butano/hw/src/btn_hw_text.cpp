@@ -13,6 +13,17 @@ extern "C"
 namespace btn::hw::text
 {
 
+namespace
+{
+    [[nodiscard]] int _append_high_value(char* output_data)
+    {
+        output_data[0] = '+';
+        output_data[1] = '!';
+        output_data[2] = '+';
+        return 3;
+    }
+}
+
 int parse(int value, array<char, 32>& output)
 {
     char* output_data = output.data();
@@ -33,8 +44,7 @@ int parse(int value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%d", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;
@@ -60,8 +70,7 @@ int parse(long value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%ld", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;
@@ -87,8 +96,7 @@ int parse(int64_t value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%lld", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;
@@ -113,8 +121,7 @@ int parse(unsigned value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%u", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;
@@ -139,8 +146,7 @@ int parse(unsigned long value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%lu", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;
@@ -165,8 +171,7 @@ int parse(uint64_t value, array<char, 32>& output)
     }
     else
     {
-        size = ::snprintf(output_data, size_t(output.size()), "%llu", value);
-        BTN_ASSERT(size > 0, "snprintf call failed: ", size);
+        size = _append_high_value(output_data);
     }
 
     return size;

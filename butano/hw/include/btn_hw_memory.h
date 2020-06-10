@@ -9,7 +9,9 @@ namespace btn::hw::memory
 
     [[nodiscard]] int used_static_ewram();
 
-    [[nodiscard]] int used_malloc_ewram();
+    [[nodiscard]] char* ewram_heap_start();
+
+    [[nodiscard]] char* ewram_heap_end();
 
     inline void copy(const void* source, int bytes, void* destination)
     {

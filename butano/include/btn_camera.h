@@ -1,7 +1,6 @@
 #ifndef BTN_CAMERA_H
 #define BTN_CAMERA_H
 
-#include "btn_common.h"
 #include "btn_config_camera.h"
 
 #if BTN_CFG_CAMERA_ENABLED

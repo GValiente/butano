@@ -1,6 +1,8 @@
 #ifndef BTN_CONFIG_PROFILER_H
 #define BTN_CONFIG_PROFILER_H
 
+#include "btn_common.h"
+
 #ifndef BTN_CFG_PROFILER_ENABLED
     #define BTN_CFG_PROFILER_ENABLED false
 #endif

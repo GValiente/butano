@@ -1,6 +1,8 @@
 #ifndef BTN_CONFIG_SPRITE_TILES_H
 #define BTN_CONFIG_SPRITE_TILES_H
 
+#include "btn_common.h"
+
 #ifndef BTN_CFG_SPRITE_TILES_MAX_ITEMS
     #define BTN_CFG_SPRITE_TILES_MAX_ITEMS 128
 #endif

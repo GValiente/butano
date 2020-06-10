@@ -1,6 +1,8 @@
 #ifndef BTN_LOG_IMPLEMENTATION_H
 #define BTN_LOG_IMPLEMENTATION_H
 
+#include "btn_common.h"
+
 /*!
  * @brief VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log engine.
  *

@@ -1,6 +1,8 @@
 #ifndef BTN_GAME_PAK_WAIT_STATE_H
 #define BTN_GAME_PAK_WAIT_STATE_H
 
+#include "btn_common.h"
+
 #define BTN_GAME_PAK_WAIT_STATE_FIRST_4     0x0000
 #define BTN_GAME_PAK_WAIT_STATE_FIRST_3     0x0004
 #define BTN_GAME_PAK_WAIT_STATE_FIRST_2     0x0008

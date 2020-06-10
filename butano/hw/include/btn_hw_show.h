@@ -1,7 +1,6 @@
 #ifndef BTN_HW_SHOW_H
 #define BTN_HW_SHOW_H
 
-#include "btn_common.h"
 #include "btn_config_assert.h"
 #include "btn_config_profiler.h"
 

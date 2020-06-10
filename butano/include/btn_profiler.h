@@ -1,7 +1,6 @@
 #ifndef BTN_PROFILER_H
 #define BTN_PROFILER_H
 
-#include "btn_common.h"
 #include "btn_config_profiler.h"
 
 #if BTN_CFG_PROFILER_ENABLED

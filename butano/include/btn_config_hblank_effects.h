@@ -1,6 +1,8 @@
 #ifndef BTN_CONFIG_HBLANK_EFFECTS_H
 #define BTN_CONFIG_HBLANK_EFFECTS_H
 
+#include "btn_common.h"
+
 #ifndef BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS
     #define BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS 8
 #endif

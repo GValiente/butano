@@ -1,7 +1,6 @@
 #ifndef BTN_ASSERT_H
 #define BTN_ASSERT_H
 
-#include "btn_common.h"
 #include "btn_config_assert.h"
 
 #if BTN_CFG_ASSERT_ENABLED

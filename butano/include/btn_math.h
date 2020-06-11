@@ -18,6 +18,19 @@ namespace _btn
         Type new_result = (current_result + (value / current_result)) / 2;
         return newton_raphson_sqrt_impl(value, new_result, current_result);
     }
+
+    template<>
+    [[nodiscard]] constexpr btn::fixed newton_raphson_sqrt_impl(btn::fixed value, btn::fixed current_result,
+                                                                btn::fixed previous_result)
+    {
+        if(current_result == previous_result)
+        {
+            return current_result;
+        }
+
+        btn::fixed new_result = (current_result + (value.hp_division(current_result))) / 2;
+        return newton_raphson_sqrt_impl(value, new_result, current_result);
+    }
 }
 
 namespace btn

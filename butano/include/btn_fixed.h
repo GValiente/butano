@@ -31,6 +31,13 @@ public:
         return 1 << Precision;
     }
 
+    [[nodiscard]] static constexpr int half_scale()
+    {
+        static_assert(Precision % 2 == 0, "Invalid precision");
+
+        return 1 << (Precision / 2);
+    }
+
     constexpr fixed_t() = default;
 
     constexpr fixed_t(int integer) :
@@ -94,12 +101,24 @@ public:
 
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
-        return from_data(int((int64_t(_data) * other._data) / scale()));
+        if(Precision % 2 == 0)
+        {
+            int data = _data / half_scale();
+            int other_data = other._data / half_scale();
+            return from_data(data * other_data);
+        }
+
+        return hp_multiplication(other);
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(int integer) const
     {
         return from_data(_data * integer);
+    }
+
+    [[nodiscard]] constexpr fixed_t hp_multiplication(fixed_t other) const
+    {
+        return from_data(int((int64_t(_data) * other._data) / scale()));
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(fixed_t other) const
@@ -114,9 +133,16 @@ public:
 
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
-        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
+        if(Precision % 2 == 0)
+        {
+            int data = _data * half_scale();
+            int other_data = other._data / half_scale();
+            BTN_CONSTEXPR_ASSERT(other_data, "Other's internal data is zero");
 
-        return from_data(int((int64_t(_data) * scale()) / other._data));
+            return from_data(data / other_data);
+        }
+
+        return hp_division(other);
     }
 
     [[nodiscard]] constexpr fixed_t division(int integer) const
@@ -124,6 +150,13 @@ public:
         BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
 
         return from_data(_data / integer);
+    }
+
+    [[nodiscard]] constexpr fixed_t hp_division(fixed_t other) const
+    {
+        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
+
+        return from_data(int((int64_t(_data) * scale()) / other._data));
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const

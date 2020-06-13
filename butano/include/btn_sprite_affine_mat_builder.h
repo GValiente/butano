@@ -93,7 +93,7 @@ public:
 
     [[nodiscard]] sprite_affine_mat_ptr build() const;
 
-    [[nodiscard]] optional<sprite_affine_mat_ptr> optional_build() const;
+    [[nodiscard]] optional<sprite_affine_mat_ptr> build_optional() const;
 
 private:
     sprite_affine_mat_attributes _attributes;

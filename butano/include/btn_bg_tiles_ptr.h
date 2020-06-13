@@ -24,11 +24,11 @@ public:
 
     [[nodiscard]] static bg_tiles_ptr allocate(int tiles_count);
 
-    [[nodiscard]] static optional<bg_tiles_ptr> optional_create(const span<const tile>& tiles_ref);
+    [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static optional<bg_tiles_ptr> optional_find_or_create(const span<const tile>& tiles_ref);
+    [[nodiscard]] static optional<bg_tiles_ptr> find_or_create_optional(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static optional<bg_tiles_ptr> optional_allocate(int tiles_count);
+    [[nodiscard]] static optional<bg_tiles_ptr> allocate_optional(int tiles_count);
 
     bg_tiles_ptr(const bg_tiles_ptr& other);
 

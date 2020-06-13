@@ -34,13 +34,13 @@ public:
     [[nodiscard]] static regular_bg_map_ptr allocate(
             const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_create(
+    [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
             const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_find_or_create(
+    [[nodiscard]] static optional<regular_bg_map_ptr> find_or_create_optional(
             const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
-    [[nodiscard]] static optional<regular_bg_map_ptr> optional_allocate(
+    [[nodiscard]] static optional<regular_bg_map_ptr> allocate_optional(
             const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     regular_bg_map_ptr(const regular_bg_map_ptr& other);

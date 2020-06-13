@@ -22,9 +22,9 @@ sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_buil
     return create(builder.attributes());
 }
 
-optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional()
 {
-    int id = sprite_affine_mats_manager::optional_create();
+    int id = sprite_affine_mats_manager::create_optional();
     optional<sprite_affine_mat_ptr> result;
 
     if(id >= 0)
@@ -35,9 +35,9 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create()
     return result;
 }
 
-optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_attributes& attributes)
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const sprite_affine_mat_attributes& attributes)
 {
-    int id = sprite_affine_mats_manager::optional_create(attributes);
+    int id = sprite_affine_mats_manager::create_optional(attributes);
     optional<sprite_affine_mat_ptr> result;
 
     if(id >= 0)
@@ -48,9 +48,9 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const spr
     return result;
 }
 
-optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::optional_create(const sprite_affine_mat_builder& builder)
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const sprite_affine_mat_builder& builder)
 {
-    return optional_create(builder.attributes());
+    return create_optional(builder.attributes());
 }
 
 sprite_affine_mat_ptr::sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other) :

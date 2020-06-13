@@ -49,7 +49,7 @@ sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count)
     return sprite_tiles_ptr(handle);
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_create(const span<const tile>& tiles_ref)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const span<const tile>& tiles_ref)
 {
     int handle = sprite_tiles_manager::create(tiles_ref);
     optional<sprite_tiles_ptr> result;
@@ -62,7 +62,7 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_create(const span<const ti
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_find_or_create(const span<const tile>& tiles_ref)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
 {
     int handle = sprite_tiles_manager::find(tiles_ref);
     optional<sprite_tiles_ptr> result;
@@ -84,7 +84,7 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_find_or_create(const span<
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::optional_allocate(int tiles_count)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::allocate_optional(int tiles_count)
 {
     int handle = sprite_tiles_manager::allocate(tiles_count);
     optional<sprite_tiles_ptr> result;

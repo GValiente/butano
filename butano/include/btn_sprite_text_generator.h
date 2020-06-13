@@ -108,10 +108,10 @@ public:
 
     void generate(const fixed_point& position, const string_view& text, ivector<sprite_ptr>& output_sprites) const;
 
-    [[nodiscard]] bool optional_generate(fixed x, fixed y, const string_view& text,
+    [[nodiscard]] bool generate_optional(fixed x, fixed y, const string_view& text,
                                          ivector<sprite_ptr>& output_sprites) const;
 
-    [[nodiscard]] bool optional_generate(const fixed_point& position, const string_view& text,
+    [[nodiscard]] bool generate_optional(const fixed_point& position, const string_view& text,
                                          ivector<sprite_ptr>& output_sprites) const;
 
 private:

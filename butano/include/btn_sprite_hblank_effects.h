@@ -14,7 +14,7 @@ public:
     [[nodiscard]] static sprite_first_attributes_hblank_effect_ptr create(
             sprite_ptr sprite, const span<const sprite_first_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_first_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_first_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_first_attributes>& attributes_ref);
 
     sprite_first_attributes_hblank_effect_ptr(const sprite_first_attributes_hblank_effect_ptr& other) = default;
@@ -58,7 +58,7 @@ public:
     [[nodiscard]] static sprite_regular_second_attributes_hblank_effect_ptr create(
             sprite_ptr sprite, const span<const sprite_regular_second_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_regular_second_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_regular_second_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_regular_second_attributes>& attributes_ref);
 
     sprite_regular_second_attributes_hblank_effect_ptr(
@@ -106,7 +106,7 @@ public:
     [[nodiscard]] static sprite_affine_second_attributes_hblank_effect_ptr create(
             sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_second_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_second_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref);
 
     sprite_affine_second_attributes_hblank_effect_ptr(
@@ -154,7 +154,7 @@ public:
     [[nodiscard]] static sprite_third_attributes_hblank_effect_ptr create(
             sprite_ptr sprite, const span<const sprite_third_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_third_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_third_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_third_attributes>& attributes_ref);
 
     sprite_third_attributes_hblank_effect_ptr(const sprite_third_attributes_hblank_effect_ptr& other) = default;

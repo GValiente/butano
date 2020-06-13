@@ -16,7 +16,7 @@ sprite_tiles_ptr sprite_tiles_item::create_tiles() const
     return sprite_tiles_ptr::find_or_create(graphics_tiles_ref());
 }
 
-sprite_tiles_ptr sprite_tiles_item::force_create_tiles() const
+sprite_tiles_ptr sprite_tiles_item::create_new_tiles() const
 {
     return sprite_tiles_ptr::create(graphics_tiles_ref());
 }
@@ -31,29 +31,29 @@ sprite_tiles_ptr sprite_tiles_item::create_tiles(int graphics_index) const
     return sprite_tiles_ptr::find_or_create(graphics_tiles_ref(graphics_index));
 }
 
-sprite_tiles_ptr sprite_tiles_item::force_create_tiles(int graphics_index) const
+sprite_tiles_ptr sprite_tiles_item::create_new_tiles(int graphics_index) const
 {
     return sprite_tiles_ptr::create(graphics_tiles_ref(graphics_index));
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles() const
+optional<sprite_tiles_ptr> sprite_tiles_item::create_tiles_optional() const
 {
-    return sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref());
+    return sprite_tiles_ptr::find_or_create_optional(graphics_tiles_ref());
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_force_create_tiles() const
+optional<sprite_tiles_ptr> sprite_tiles_item::create_new_tiles_optional() const
 {
-    return sprite_tiles_ptr::optional_create(graphics_tiles_ref());
+    return sprite_tiles_ptr::create_optional(graphics_tiles_ref());
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_create_tiles(int graphics_index) const
+optional<sprite_tiles_ptr> sprite_tiles_item::create_tiles_optional(int graphics_index) const
 {
-    return sprite_tiles_ptr::optional_find_or_create(graphics_tiles_ref(graphics_index));
+    return sprite_tiles_ptr::find_or_create_optional(graphics_tiles_ref(graphics_index));
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_item::optional_force_create_tiles(int graphics_index) const
+optional<sprite_tiles_ptr> sprite_tiles_item::create_new_tiles_optional(int graphics_index) const
 {
-    return sprite_tiles_ptr::optional_create(graphics_tiles_ref(graphics_index));
+    return sprite_tiles_ptr::create_optional(graphics_tiles_ref(graphics_index));
 }
 
 }

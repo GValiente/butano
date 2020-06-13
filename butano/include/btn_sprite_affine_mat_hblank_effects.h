@@ -17,10 +17,10 @@ public:
     [[nodiscard]] static sprite_affine_mat_first_register_hblank_effect_ptr create(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_first_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_first_register_hblank_effect_ptr(
@@ -79,10 +79,10 @@ public:
     [[nodiscard]] static sprite_affine_mat_second_register_hblank_effect_ptr create(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_second_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_second_register_hblank_effect_ptr(
@@ -141,10 +141,10 @@ public:
     [[nodiscard]] static sprite_affine_mat_third_register_hblank_effect_ptr create(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_third_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_third_register_hblank_effect_ptr(
@@ -203,10 +203,10 @@ public:
     [[nodiscard]] static sprite_affine_mat_fourth_register_hblank_effect_ptr create(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
     sprite_affine_mat_fourth_register_hblank_effect_ptr(
@@ -262,7 +262,7 @@ public:
     [[nodiscard]] static sprite_affine_mat_attributes_hblank_effect_ptr create(
             const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> create_optional(
             const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
 
     [[nodiscard]] int id() const

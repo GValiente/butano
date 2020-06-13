@@ -51,7 +51,7 @@ bg_tiles_ptr bg_tiles_ptr::allocate(int tiles_count)
     return bg_tiles_ptr(handle);
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::optional_create(const span<const tile>& tiles_ref)
+optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const span<const tile>& tiles_ref)
 {
     int handle = bg_blocks_manager::create_tiles(tiles_ref);
     optional<bg_tiles_ptr> result;
@@ -64,7 +64,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_create(const span<const tile>& til
     return result;
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::optional_find_or_create(const span<const tile>& tiles_ref)
+optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
 {
     int handle = bg_blocks_manager::find_tiles(tiles_ref);
     optional<bg_tiles_ptr> result;
@@ -86,7 +86,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::optional_find_or_create(const span<const ti
     return result;
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::optional_allocate(int tiles_count)
+optional<bg_tiles_ptr> bg_tiles_ptr::allocate_optional(int tiles_count)
 {
     int handle = bg_blocks_manager::allocate_tiles(tiles_count);
     optional<bg_tiles_ptr> result;

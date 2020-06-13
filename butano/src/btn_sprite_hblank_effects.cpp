@@ -286,10 +286,10 @@ sprite_first_attributes_hblank_effect_ptr sprite_first_attributes_hblank_effect_
     return sprite_first_attributes_hblank_effect_ptr(id, move(sprite));
 }
 
-optional<sprite_first_attributes_hblank_effect_ptr> sprite_first_attributes_hblank_effect_ptr::optional_create(
+optional<sprite_first_attributes_hblank_effect_ptr> sprite_first_attributes_hblank_effect_ptr::create_optional(
         sprite_ptr sprite, const span<const sprite_first_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(),
                                                      int(sprite.handle()), data.first_attributes_handler);
     optional<sprite_first_attributes_hblank_effect_ptr> result;
 
@@ -353,10 +353,10 @@ sprite_regular_second_attributes_hblank_effect_ptr sprite_regular_second_attribu
     return sprite_regular_second_attributes_hblank_effect_ptr(id, move(sprite));
 }
 
-optional<sprite_regular_second_attributes_hblank_effect_ptr> sprite_regular_second_attributes_hblank_effect_ptr::optional_create(
+optional<sprite_regular_second_attributes_hblank_effect_ptr> sprite_regular_second_attributes_hblank_effect_ptr::create_optional(
         sprite_ptr sprite, const span<const sprite_regular_second_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(),
                                                      int(sprite.handle()), data.regular_second_attributes_handler);
     optional<sprite_regular_second_attributes_hblank_effect_ptr> result;
 
@@ -422,10 +422,10 @@ sprite_affine_second_attributes_hblank_effect_ptr sprite_affine_second_attribute
     return sprite_affine_second_attributes_hblank_effect_ptr(id, move(sprite));
 }
 
-optional<sprite_affine_second_attributes_hblank_effect_ptr> sprite_affine_second_attributes_hblank_effect_ptr::optional_create(
+optional<sprite_affine_second_attributes_hblank_effect_ptr> sprite_affine_second_attributes_hblank_effect_ptr::create_optional(
         sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(),
                                                      int(sprite.handle()), data.affine_second_attributes_handler);
     optional<sprite_affine_second_attributes_hblank_effect_ptr> result;
 
@@ -491,10 +491,10 @@ sprite_third_attributes_hblank_effect_ptr sprite_third_attributes_hblank_effect_
     return sprite_third_attributes_hblank_effect_ptr(id, move(sprite));
 }
 
-optional<sprite_third_attributes_hblank_effect_ptr> sprite_third_attributes_hblank_effect_ptr::optional_create(
+optional<sprite_third_attributes_hblank_effect_ptr> sprite_third_attributes_hblank_effect_ptr::create_optional(
         sprite_ptr sprite, const span<const sprite_third_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(),
                                                      int(sprite.handle()), data.third_attributes_handler);
     optional<sprite_third_attributes_hblank_effect_ptr> result;
 

@@ -227,7 +227,7 @@ id_type create(const fixed_point& position, const sprite_shape_size& shape_size,
     return &new_item;
 }
 
-id_type optional_create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
+id_type create_optional(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                         sprite_palette_ptr&& palette)
 {
     if(data.items_pool.full())
@@ -253,21 +253,21 @@ id_type create(sprite_builder&& builder)
     return &new_item;
 }
 
-id_type optional_create(sprite_builder&& builder)
+id_type create_optional(sprite_builder&& builder)
 {
     if(data.items_pool.full())
     {
         return nullptr;
     }
 
-    optional<sprite_tiles_ptr> tiles = builder.optional_release_tiles();
+    optional<sprite_tiles_ptr> tiles = builder.release_tiles_optional();
 
     if(! tiles)
     {
         return nullptr;
     }
 
-    optional<sprite_palette_ptr> palette = builder.optional_release_palette();
+    optional<sprite_palette_ptr> palette = builder.release_palette_optional();
 
     if(! palette)
     {

@@ -52,9 +52,9 @@ public:
 
     [[nodiscard]] regular_bg_ptr create_bg(const fixed_point& position) const;
 
-    [[nodiscard]] optional<regular_bg_ptr> optional_create_bg(fixed x, fixed y) const;
+    [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(fixed x, fixed y) const;
 
-    [[nodiscard]] optional<regular_bg_ptr> optional_create_bg(const fixed_point& position) const;
+    [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(const fixed_point& position) const;
 
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_item& a, const regular_bg_item& b)
     {

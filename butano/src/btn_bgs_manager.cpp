@@ -205,14 +205,14 @@ id_type create(regular_bg_builder&& builder)
     return &item;
 }
 
-id_type optional_create(regular_bg_builder&& builder)
+id_type create_optional(regular_bg_builder&& builder)
 {
     if(data.items_vector.full())
     {
         return nullptr;
     }
 
-    optional<regular_bg_map_ptr> map = builder.optional_release_map();
+    optional<regular_bg_map_ptr> map = builder.release_map_optional();
 
     if(! map)
     {

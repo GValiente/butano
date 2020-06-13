@@ -71,17 +71,17 @@ sprite_ptr sprite_ptr::create(sprite_builder&& builder)
     return sprite_ptr(sprites_manager::create(move(builder)));
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item)
+optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_item& item)
 {
-    return optional_create(fixed_point(x, y), item);
+    return create_optional(fixed_point(x, y), item);
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_item& item, int graphics_index)
+optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
-    return optional_create(fixed_point(x, y), item, graphics_index);
+    return create_optional(fixed_point(x, y), item, graphics_index);
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item)
+optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item)
 {
     optional<sprite_ptr> result;
 
@@ -89,7 +89,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     {
         if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
         {
-            if(handle_type handle = sprites_manager::optional_create(position, item.shape_size(), move(*tiles),
+            if(handle_type handle = sprites_manager::create_optional(position, item.shape_size(), move(*tiles),
                                                                      move(*palette)))
             {
                 result = sprite_ptr(handle);
@@ -100,7 +100,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_item& item,
+optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item,
                                                  int graphics_index)
 {
     optional<sprite_ptr> result;
@@ -109,7 +109,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     {
         if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
         {
-            if(handle_type handle = sprites_manager::optional_create(position, item.shape_size(), move(*tiles),
+            if(handle_type handle = sprites_manager::create_optional(position, item.shape_size(), move(*tiles),
                                                                      move(*palette)))
             {
                 result = sprite_ptr(handle);
@@ -120,7 +120,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_shape_size& shape_size,
+optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
     BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
@@ -129,7 +129,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_
 
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::optional_create(fixed_point(x, y), shape_size, move(tiles), move(palette)))
+    if(handle_type handle = sprites_manager::create_optional(fixed_point(x, y), shape_size, move(tiles), move(palette)))
     {
         result = sprite_ptr(handle);
     }
@@ -137,7 +137,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(fixed x, fixed y, const sprite_
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, const sprite_shape_size& shape_size,
+optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
     BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
@@ -146,7 +146,7 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
 
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::optional_create(position, shape_size, move(tiles), move(palette)))
+    if(handle_type handle = sprites_manager::create_optional(position, shape_size, move(tiles), move(palette)))
     {
         result = sprite_ptr(handle);
     }
@@ -154,11 +154,11 @@ optional<sprite_ptr> sprite_ptr::optional_create(const fixed_point& position, co
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(const sprite_builder& builder)
+optional<sprite_ptr> sprite_ptr::create_optional(const sprite_builder& builder)
 {
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::optional_create(sprite_builder(builder)))
+    if(handle_type handle = sprites_manager::create_optional(sprite_builder(builder)))
     {
         result = sprite_ptr(handle);
     }
@@ -166,11 +166,11 @@ optional<sprite_ptr> sprite_ptr::optional_create(const sprite_builder& builder)
     return result;
 }
 
-optional<sprite_ptr> sprite_ptr::optional_create(sprite_builder&& builder)
+optional<sprite_ptr> sprite_ptr::create_optional(sprite_builder&& builder)
 {
     optional<sprite_ptr> result;
 
-    if(handle_type handle = sprites_manager::optional_create(move(builder)))
+    if(handle_type handle = sprites_manager::create_optional(move(builder)))
     {
         result = sprite_ptr(handle);
     }
@@ -244,7 +244,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.force_create_tiles());
+        sprites_manager::set_tiles(_handle, tiles_item.create_new_tiles());
     }
 }
 
@@ -257,7 +257,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.force_create_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, tiles_item.create_new_tiles(graphics_index));
     }
 }
 
@@ -270,7 +270,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.force_create_tiles());
+        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_new_tiles());
     }
 }
 
@@ -284,7 +284,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.force_create_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_new_tiles(graphics_index));
     }
 }
 
@@ -312,7 +312,7 @@ void sprite_ptr::set_palette(const sprite_palette_item& palette_item)
     else
     {
         sprites_manager::remove_palette(_handle);
-        sprites_manager::set_palette(_handle, palette_item.force_create_palette());
+        sprites_manager::set_palette(_handle, palette_item.create_new_palette());
     }
 }
 
@@ -335,7 +335,7 @@ void sprite_ptr::set_item(const sprite_item& item)
     if(! tiles)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.force_create_tiles();
+        tiles = tiles_item.create_new_tiles();
     }
 
     const sprite_palette_item& palette_item = item.palette_item();
@@ -344,7 +344,7 @@ void sprite_ptr::set_item(const sprite_item& item)
     if(! palette)
     {
         sprites_manager::remove_palette(_handle);
-        palette = palette_item.force_create_palette();
+        palette = palette_item.create_new_palette();
     }
 
     sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), move(*tiles), move(*palette));
@@ -358,7 +358,7 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
     if(! tiles)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.force_create_tiles(graphics_index);
+        tiles = tiles_item.create_new_tiles(graphics_index);
     }
 
     const sprite_palette_item& palette_item = item.palette_item();
@@ -367,7 +367,7 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
     if(! palette)
     {
         sprites_manager::remove_palette(_handle);
-        palette = palette_item.force_create_palette();
+        palette = palette_item.create_new_palette();
     }
 
     sprites_manager::set_tiles_and_palette(_handle, item.shape_size(), move(*tiles), move(*palette));

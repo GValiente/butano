@@ -331,10 +331,10 @@ sprite_affine_mat_first_register_hblank_effect_ptr sprite_affine_mat_first_regis
     return sprite_affine_mat_first_register_hblank_effect_ptr(id, false, move(affine_mat));
 }
 
-optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_first_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_first_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                                      data.first_attributes_handler);
     optional<sprite_affine_mat_first_register_hblank_effect_ptr> result;
 
@@ -346,10 +346,10 @@ optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_f
     return result;
 }
 
-optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_first_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_first_register_hblank_effect_ptr> sprite_affine_mat_first_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::optional_create(values_ref.data(), values_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), affine_mat.id(),
                                                      data.first_values_handler);
     optional<sprite_affine_mat_first_register_hblank_effect_ptr> result;
 
@@ -452,10 +452,10 @@ sprite_affine_mat_second_register_hblank_effect_ptr sprite_affine_mat_second_reg
     return sprite_affine_mat_second_register_hblank_effect_ptr(id, false, move(affine_mat));
 }
 
-optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_second_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_second_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                                      data.second_attributes_handler);
     optional<sprite_affine_mat_second_register_hblank_effect_ptr> result;
 
@@ -467,10 +467,10 @@ optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_
     return result;
 }
 
-optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_second_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_second_register_hblank_effect_ptr> sprite_affine_mat_second_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::optional_create(values_ref.data(), values_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), affine_mat.id(),
                                                      data.second_values_handler);
     optional<sprite_affine_mat_second_register_hblank_effect_ptr> result;
 
@@ -573,10 +573,10 @@ sprite_affine_mat_third_register_hblank_effect_ptr sprite_affine_mat_third_regis
     return sprite_affine_mat_third_register_hblank_effect_ptr(id, false, move(affine_mat));
 }
 
-optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_third_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_third_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                                      data.third_attributes_handler);
     optional<sprite_affine_mat_third_register_hblank_effect_ptr> result;
 
@@ -588,10 +588,10 @@ optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_t
     return result;
 }
 
-optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_third_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_third_register_hblank_effect_ptr> sprite_affine_mat_third_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::optional_create(values_ref.data(), values_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), affine_mat.id(),
                                                      data.third_values_handler);
     optional<sprite_affine_mat_third_register_hblank_effect_ptr> result;
 
@@ -694,10 +694,10 @@ sprite_affine_mat_fourth_register_hblank_effect_ptr sprite_affine_mat_fourth_reg
     return sprite_affine_mat_fourth_register_hblank_effect_ptr(id, false, move(affine_mat));
 }
 
-optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_fourth_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_fourth_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                                      data.fourth_attributes_handler);
     optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> result;
 
@@ -709,10 +709,10 @@ optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_
     return result;
 }
 
-optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_fourth_register_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> sprite_affine_mat_fourth_register_hblank_effect_ptr::create_optional(
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::optional_create(values_ref.data(), values_ref.size(), affine_mat.id(),
+    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), affine_mat.id(),
                                                      data.fourth_values_handler);
     optional<sprite_affine_mat_fourth_register_hblank_effect_ptr> result;
 
@@ -809,21 +809,21 @@ sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hbla
                 sprite_affine_mat_fourth_register_hblank_effect_ptr::create(affine_mat, attributes_ref));
 }
 
-optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attributes_hblank_effect_ptr::optional_create(
+optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attributes_hblank_effect_ptr::create_optional(
         const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
     optional<sprite_affine_mat_attributes_hblank_effect_ptr> result;
 
-    if(auto first = sprite_affine_mat_first_register_hblank_effect_ptr::optional_create(
+    if(auto first = sprite_affine_mat_first_register_hblank_effect_ptr::create_optional(
                 affine_mat, attributes_ref))
     {
-        if(auto second = sprite_affine_mat_second_register_hblank_effect_ptr::optional_create(
+        if(auto second = sprite_affine_mat_second_register_hblank_effect_ptr::create_optional(
                     affine_mat, attributes_ref))
         {
-            if(auto third = sprite_affine_mat_third_register_hblank_effect_ptr::optional_create(
+            if(auto third = sprite_affine_mat_third_register_hblank_effect_ptr::create_optional(
                         affine_mat, attributes_ref))
             {
-                if(auto fourth = sprite_affine_mat_fourth_register_hblank_effect_ptr::optional_create(
+                if(auto fourth = sprite_affine_mat_fourth_register_hblank_effect_ptr::create_optional(
                             affine_mat, attributes_ref))
                 {
                     result = sprite_affine_mat_attributes_hblank_effect_ptr(

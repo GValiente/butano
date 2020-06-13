@@ -16,19 +16,19 @@ bg_tiles_ptr bg_tiles_item::create_tiles() const
     return bg_tiles_ptr::find_or_create(_tiles_ref);
 }
 
-bg_tiles_ptr bg_tiles_item::force_create_tiles() const
+bg_tiles_ptr bg_tiles_item::create_new_tiles() const
 {
     return bg_tiles_ptr::create(_tiles_ref);
 }
 
-optional<bg_tiles_ptr> bg_tiles_item::optional_create_tiles() const
+optional<bg_tiles_ptr> bg_tiles_item::create_tiles_optional() const
 {
-    return bg_tiles_ptr::optional_find_or_create(_tiles_ref);
+    return bg_tiles_ptr::find_or_create_optional(_tiles_ref);
 }
 
-optional<bg_tiles_ptr> bg_tiles_item::optional_force_create_tiles() const
+optional<bg_tiles_ptr> bg_tiles_item::create_new_tiles_optional() const
 {
-    return bg_tiles_ptr::optional_create(_tiles_ref);
+    return bg_tiles_ptr::create_optional(_tiles_ref);
 }
 
 }

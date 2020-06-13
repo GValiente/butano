@@ -60,21 +60,21 @@ public:
 
     [[nodiscard]] sprite_tiles_ptr create_tiles() const;
 
-    [[nodiscard]] sprite_tiles_ptr force_create_tiles() const;
+    [[nodiscard]] sprite_tiles_ptr create_new_tiles() const;
 
     [[nodiscard]] optional<sprite_tiles_ptr> find_tiles(int graphics_index) const;
 
     [[nodiscard]] sprite_tiles_ptr create_tiles(int graphics_index) const;
 
-    [[nodiscard]] sprite_tiles_ptr force_create_tiles(int graphics_index) const;
+    [[nodiscard]] sprite_tiles_ptr create_new_tiles(int graphics_index) const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles() const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional() const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_force_create_tiles() const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional() const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_create_tiles(int graphics_index) const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional(int graphics_index) const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_force_create_tiles(int graphics_index) const;
+    [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional(int graphics_index) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

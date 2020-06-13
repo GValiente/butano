@@ -69,10 +69,10 @@ bg_palettes_transparent_color_hblank_effect_ptr bg_palettes_transparent_color_hb
     return bg_palettes_transparent_color_hblank_effect_ptr(id);
 }
 
-optional<bg_palettes_transparent_color_hblank_effect_ptr> bg_palettes_transparent_color_hblank_effect_ptr::optional_create(
+optional<bg_palettes_transparent_color_hblank_effect_ptr> bg_palettes_transparent_color_hblank_effect_ptr::create_optional(
         const span<const color>& colors_ref)
 {
-    int id = hblank_effects_manager::optional_create(colors_ref.data(), colors_ref.size(), 0,
+    int id = hblank_effects_manager::create_optional(colors_ref.data(), colors_ref.size(), 0,
                                                      data.transparent_color_handler);
     optional<bg_palettes_transparent_color_hblank_effect_ptr> result;
 

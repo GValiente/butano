@@ -43,11 +43,11 @@ public:
 
     [[nodiscard]] bg_tiles_ptr create_tiles() const;
 
-    [[nodiscard]] bg_tiles_ptr force_create_tiles() const;
+    [[nodiscard]] bg_tiles_ptr create_new_tiles() const;
 
-    [[nodiscard]] optional<bg_tiles_ptr> optional_create_tiles() const;
+    [[nodiscard]] optional<bg_tiles_ptr> create_tiles_optional() const;
 
-    [[nodiscard]] optional<bg_tiles_ptr> optional_force_create_tiles() const;
+    [[nodiscard]] optional<bg_tiles_ptr> create_new_tiles_optional() const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_tiles_item& a, const bg_tiles_item& b)
     {

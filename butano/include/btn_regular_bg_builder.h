@@ -139,17 +139,17 @@ public:
 
     [[nodiscard]] regular_bg_ptr release_build();
 
-    [[nodiscard]] optional<regular_bg_ptr> optional_build() const;
+    [[nodiscard]] optional<regular_bg_ptr> build_optional() const;
 
-    [[nodiscard]] optional<regular_bg_ptr> optional_release_build();
+    [[nodiscard]] optional<regular_bg_ptr> release_build_optional();
 
     [[nodiscard]] regular_bg_map_ptr map() const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> optional_map() const;
+    [[nodiscard]] optional<regular_bg_map_ptr> map_optional() const;
 
     [[nodiscard]] regular_bg_map_ptr release_map();
 
-    [[nodiscard]] optional<regular_bg_map_ptr> optional_release_map();
+    [[nodiscard]] optional<regular_bg_map_ptr> release_map_optional();
 
 private:
     optional<regular_bg_item> _item;

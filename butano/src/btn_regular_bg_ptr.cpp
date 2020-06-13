@@ -36,13 +36,13 @@ regular_bg_ptr regular_bg_ptr::create(regular_bg_builder&& builder)
     return regular_bg_ptr(bgs_manager::create(move(builder)));
 }
 
-optional<regular_bg_ptr> regular_bg_ptr::optional_create(fixed x, fixed y, const regular_bg_item& item)
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(fixed x, fixed y, const regular_bg_item& item)
 {
     optional<regular_bg_ptr> result;
     regular_bg_builder builder(item);
     builder.set_position(fixed_point(x, y));
 
-    if(handle_type handle = bgs_manager::optional_create(move(builder)))
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
     {
         result = regular_bg_ptr(handle);
     }
@@ -50,13 +50,13 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(fixed x, fixed y, const
     return result;
 }
 
-optional<regular_bg_ptr> regular_bg_ptr::optional_create(const fixed_point& position, const regular_bg_item& item)
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(const fixed_point& position, const regular_bg_item& item)
 {
     optional<regular_bg_ptr> result;
     regular_bg_builder builder(item);
     builder.set_position(position);
 
-    if(handle_type handle = bgs_manager::optional_create(move(builder)))
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
     {
         result = regular_bg_ptr(handle);
     }
@@ -64,11 +64,11 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(const fixed_point& posi
     return result;
 }
 
-optional<regular_bg_ptr> regular_bg_ptr::optional_create(const regular_bg_builder& builder)
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(const regular_bg_builder& builder)
 {
     optional<regular_bg_ptr> result;
 
-    if(handle_type handle = bgs_manager::optional_create(regular_bg_builder(builder)))
+    if(handle_type handle = bgs_manager::create_optional(regular_bg_builder(builder)))
     {
         result = regular_bg_ptr(handle);
     }
@@ -76,11 +76,11 @@ optional<regular_bg_ptr> regular_bg_ptr::optional_create(const regular_bg_builde
     return result;
 }
 
-optional<regular_bg_ptr> regular_bg_ptr::optional_create(regular_bg_builder&& builder)
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(regular_bg_builder&& builder)
 {
     optional<regular_bg_ptr> result;
 
-    if(handle_type handle = bgs_manager::optional_create(move(builder)))
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
     {
         result = regular_bg_ptr(handle);
     }
@@ -201,7 +201,7 @@ void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
     {
         bgs_manager::remove_map(_handle);
         bgs_manager::set_map(_handle,
-                             map_item.force_create_map(bg_tiles_ptr(current_tiles), bg_palette_ptr(current_palette)));
+                             map_item.create_new_map(bg_tiles_ptr(current_tiles), bg_palette_ptr(current_palette)));
     }
 }
 

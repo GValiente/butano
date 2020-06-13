@@ -181,7 +181,7 @@ hblank_effect_handler& handler)
     return _create(values_ptr, target_id, handler);
 }
 
-int optional_create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
+int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
 hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");

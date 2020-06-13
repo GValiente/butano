@@ -42,11 +42,11 @@ public:
 
     [[nodiscard]] bg_palette_ptr create_palette() const;
 
-    [[nodiscard]] bg_palette_ptr force_create_palette() const;
+    [[nodiscard]] bg_palette_ptr create_new_palette() const;
 
-    [[nodiscard]] optional<bg_palette_ptr> optional_create_palette() const;
+    [[nodiscard]] optional<bg_palette_ptr> create_palette_optional() const;
 
-    [[nodiscard]] optional<bg_palette_ptr> optional_force_create_palette() const;
+    [[nodiscard]] optional<bg_palette_ptr> create_new_palette_optional() const;
 
     [[nodiscard]] constexpr friend bool operator==(const bg_palette_item& a, const bg_palette_item& b)
     {

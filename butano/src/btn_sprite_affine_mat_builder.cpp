@@ -11,9 +11,9 @@ sprite_affine_mat_ptr sprite_affine_mat_builder::build() const
     return sprite_affine_mat_ptr::create(_attributes);
 }
 
-optional<sprite_affine_mat_ptr> sprite_affine_mat_builder::optional_build() const
+optional<sprite_affine_mat_ptr> sprite_affine_mat_builder::build_optional() const
 {
-    return sprite_affine_mat_ptr::optional_create(_attributes);
+    return sprite_affine_mat_ptr::create_optional(_attributes);
 }
 
 }

@@ -16,7 +16,7 @@ public:
     [[nodiscard]] static bg_palettes_transparent_color_hblank_effect_ptr create(
             const span<const color>& colors_ref);
 
-    [[nodiscard]] static optional<bg_palettes_transparent_color_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<bg_palettes_transparent_color_hblank_effect_ptr> create_optional(
             const span<const color>& colors_ref);
 
     bg_palettes_transparent_color_hblank_effect_ptr(

@@ -23,7 +23,7 @@ namespace btn::hblank_effects_manager
     [[nodiscard]] int create(const void* values_ptr, int values_count, int target_id,
                              hblank_effect_handler& handler);
 
-    [[nodiscard]] int optional_create(const void* values_ptr, int values_count, int target_id,
+    [[nodiscard]] int create_optional(const void* values_ptr, int values_count, int target_id,
                                       hblank_effect_handler& handler);
 
     void increase_usages(int id);

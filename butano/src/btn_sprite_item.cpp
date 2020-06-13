@@ -27,24 +27,24 @@ sprite_ptr sprite_item::create_sprite(const fixed_point& position, int graphics_
     return sprite_ptr::create(position, *this, graphics_index);
 }
 
-optional<sprite_ptr> sprite_item::optional_create_sprite(fixed x, fixed y) const
+optional<sprite_ptr> sprite_item::create_sprite_optional(fixed x, fixed y) const
 {
-    return sprite_ptr::optional_create(x, y, *this);
+    return sprite_ptr::create_optional(x, y, *this);
 }
 
-optional<sprite_ptr> sprite_item::optional_create_sprite(fixed x, fixed y, int graphics_index) const
+optional<sprite_ptr> sprite_item::create_sprite_optional(fixed x, fixed y, int graphics_index) const
 {
-    return sprite_ptr::optional_create(x, y, *this, graphics_index);
+    return sprite_ptr::create_optional(x, y, *this, graphics_index);
 }
 
-optional<sprite_ptr> sprite_item::optional_create_sprite(const fixed_point& position) const
+optional<sprite_ptr> sprite_item::create_sprite_optional(const fixed_point& position) const
 {
-    return sprite_ptr::optional_create(position, *this);
+    return sprite_ptr::create_optional(position, *this);
 }
 
-optional<sprite_ptr> sprite_item::optional_create_sprite(const fixed_point& position, int graphics_index) const
+optional<sprite_ptr> sprite_item::create_sprite_optional(const fixed_point& position, int graphics_index) const
 {
-    return sprite_ptr::optional_create(position, *this, graphics_index);
+    return sprite_ptr::create_optional(position, *this, graphics_index);
 }
 
 }

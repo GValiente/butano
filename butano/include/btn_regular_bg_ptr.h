@@ -36,14 +36,14 @@ public:
 
     [[nodiscard]] static regular_bg_ptr create(regular_bg_builder&& builder);
 
-    [[nodiscard]] static optional<regular_bg_ptr> optional_create(fixed x, fixed y, const regular_bg_item& item);
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(fixed x, fixed y, const regular_bg_item& item);
 
-    [[nodiscard]] static optional<regular_bg_ptr> optional_create(const fixed_point& position,
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
                                                                   const regular_bg_item& item);
 
-    [[nodiscard]] static optional<regular_bg_ptr> optional_create(const regular_bg_builder& builder);
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const regular_bg_builder& builder);
 
-    [[nodiscard]] static optional<regular_bg_ptr> optional_create(regular_bg_builder&& builder);
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(regular_bg_builder&& builder);
 
     regular_bg_ptr(const regular_bg_ptr& other);
 

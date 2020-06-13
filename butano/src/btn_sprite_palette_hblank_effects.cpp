@@ -108,14 +108,14 @@ sprite_palette_color_hblank_effect_ptr sprite_palette_color_hblank_effect_ptr::c
     return sprite_palette_color_hblank_effect_ptr(id, color_index, move(palette));
 }
 
-optional<sprite_palette_color_hblank_effect_ptr> sprite_palette_color_hblank_effect_ptr::optional_create(
+optional<sprite_palette_color_hblank_effect_ptr> sprite_palette_color_hblank_effect_ptr::create_optional(
         sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref)
 {
     BTN_ASSERT(color_index >= 0 && color_index < palette.colors_count(),
                "Invalid color index: ", color_index, " - ", palette.colors_count());
 
     palette_target_id palette_target_id(palette.id(), color_index);
-    int id = hblank_effects_manager::optional_create(
+    int id = hblank_effects_manager::create_optional(
                 colors_ref.data(), colors_ref.size(), palette_target_id.target_id, data.color_handler);
     optional<sprite_palette_color_hblank_effect_ptr> result;
 

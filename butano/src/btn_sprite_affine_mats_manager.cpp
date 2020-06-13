@@ -177,7 +177,7 @@ int create(const sprite_affine_mat_attributes& attributes)
     return _create(attributes);
 }
 
-int optional_create()
+int create_optional()
 {
     if(data.free_item_indexes.empty())
     {
@@ -187,7 +187,7 @@ int optional_create()
     return _create();
 }
 
-int optional_create(const sprite_affine_mat_attributes& attributes)
+int create_optional(const sprite_affine_mat_attributes& attributes)
 {
     if(data.free_item_indexes.empty())
     {

@@ -17,14 +17,14 @@ regular_bg_ptr regular_bg_item::create_bg(const fixed_point& position) const
     return regular_bg_ptr::create(position, *this);
 }
 
-optional<regular_bg_ptr> regular_bg_item::optional_create_bg(fixed x, fixed y) const
+optional<regular_bg_ptr> regular_bg_item::create_bg_optional(fixed x, fixed y) const
 {
-    return regular_bg_ptr::optional_create(x, y, *this);
+    return regular_bg_ptr::create_optional(x, y, *this);
 }
 
-optional<regular_bg_ptr> regular_bg_item::optional_create_bg(const fixed_point& position) const
+optional<regular_bg_ptr> regular_bg_item::create_bg_optional(const fixed_point& position) const
 {
-    return regular_bg_ptr::optional_create(position, *this);
+    return regular_bg_ptr::create_optional(position, *this);
 }
 
 }

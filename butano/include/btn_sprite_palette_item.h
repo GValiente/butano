@@ -45,11 +45,11 @@ public:
 
     [[nodiscard]] sprite_palette_ptr create_palette() const;
 
-    [[nodiscard]] sprite_palette_ptr force_create_palette() const;
+    [[nodiscard]] sprite_palette_ptr create_new_palette() const;
 
-    [[nodiscard]] optional<sprite_palette_ptr> optional_create_palette() const;
+    [[nodiscard]] optional<sprite_palette_ptr> create_palette_optional() const;
 
-    [[nodiscard]] optional<sprite_palette_ptr> optional_force_create_palette() const;
+    [[nodiscard]] optional<sprite_palette_ptr> create_new_palette_optional() const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a, const sprite_palette_item& b)
     {

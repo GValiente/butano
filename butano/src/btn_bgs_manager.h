@@ -26,7 +26,7 @@ namespace bgs_manager
 
     [[nodiscard]] id_type create(regular_bg_builder&& builder);
 
-    [[nodiscard]] id_type optional_create(regular_bg_builder&& builder);
+    [[nodiscard]] id_type create_optional(regular_bg_builder&& builder);
 
     void increase_usages(id_type id);
 

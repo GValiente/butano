@@ -15,13 +15,13 @@ public:
     [[nodiscard]] static rect_window_boundaries_hblank_effect_ptr create_horizontal(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
 
-    [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> optional_create_horizontal(
+    [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_horizontal_optional(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
 
     [[nodiscard]] static rect_window_boundaries_hblank_effect_ptr create_vertical(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
 
-    [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> optional_create_vertical(
+    [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_vertical_optional(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
 
     rect_window_boundaries_hblank_effect_ptr(const rect_window_boundaries_hblank_effect_ptr& other) = default;

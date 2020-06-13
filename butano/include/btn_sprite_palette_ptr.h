@@ -25,10 +25,10 @@ public:
     [[nodiscard]] static sprite_palette_ptr find_or_create(const span<const color>& colors_ref,
                                                            palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static optional<sprite_palette_ptr> optional_create(const span<const color>& colors_ref,
+    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors_ref,
                                                                       palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static optional<sprite_palette_ptr> optional_find_or_create(const span<const color>& colors_ref,
+    [[nodiscard]] static optional<sprite_palette_ptr> find_or_create_optional(const span<const color>& colors_ref,
                                                                               palette_bpp_mode bpp_mode);
 
     sprite_palette_ptr(const sprite_palette_ptr& other);

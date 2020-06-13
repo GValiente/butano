@@ -16,7 +16,7 @@ public:
     [[nodiscard]] static bg_palette_color_hblank_effect_ptr create(
             bg_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
-    [[nodiscard]] static optional<bg_palette_color_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<bg_palette_color_hblank_effect_ptr> create_optional(
             bg_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
     bg_palette_color_hblank_effect_ptr(const bg_palette_color_hblank_effect_ptr& other) = default;

@@ -197,25 +197,25 @@ public:
 
     [[nodiscard]] sprite_ptr release_build();
 
-    [[nodiscard]] optional<sprite_ptr> optional_build() const;
+    [[nodiscard]] optional<sprite_ptr> build_optional() const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_release_build();
+    [[nodiscard]] optional<sprite_ptr> release_build_optional();
 
     [[nodiscard]] sprite_tiles_ptr tiles() const;
 
     [[nodiscard]] sprite_palette_ptr palette() const;
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_tiles() const;
+    [[nodiscard]] optional<sprite_tiles_ptr> tiles_optional() const;
 
-    [[nodiscard]] optional<sprite_palette_ptr> optional_palette() const;
+    [[nodiscard]] optional<sprite_palette_ptr> palette_optional() const;
 
     [[nodiscard]] sprite_tiles_ptr release_tiles();
 
     [[nodiscard]] sprite_palette_ptr release_palette();
 
-    [[nodiscard]] optional<sprite_tiles_ptr> optional_release_tiles();
+    [[nodiscard]] optional<sprite_tiles_ptr> release_tiles_optional();
 
-    [[nodiscard]] optional<sprite_palette_ptr> optional_release_palette();
+    [[nodiscard]] optional<sprite_palette_ptr> release_palette_optional();
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const
     {

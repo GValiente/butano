@@ -206,10 +206,10 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
-optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_horizontal(
+optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::create_horizontal_optional(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                                      data.horizontal_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
@@ -229,10 +229,10 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
-optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::optional_create_vertical(
+optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effect_ptr::create_vertical_optional(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
                                                      data.vertical_position_handler);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
@@ -295,10 +295,10 @@ regular_bg_attributes_hblank_effect_ptr regular_bg_attributes_hblank_effect_ptr:
     return regular_bg_attributes_hblank_effect_ptr(id, move(bg));
 }
 
-optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::optional_create(
+optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_effect_ptr::create_optional(
         regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::optional_create(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
                                                      data.attributes_handler);
     optional<regular_bg_attributes_hblank_effect_ptr> result;
 

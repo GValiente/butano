@@ -116,10 +116,10 @@ rect_window_boundaries_hblank_effect_ptr rect_window_boundaries_hblank_effect_pt
     return rect_window_boundaries_hblank_effect_ptr(id, window);
 }
 
-optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank_effect_ptr::optional_create_horizontal(
+optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank_effect_ptr::create_horizontal_optional(
         rect_window window, const span<const pair<fixed, fixed>>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), window.id(),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), window.id(),
                                                      data.horizontal_boundaries_handler);
     optional<rect_window_boundaries_hblank_effect_ptr> result;
 
@@ -139,10 +139,10 @@ rect_window_boundaries_hblank_effect_ptr rect_window_boundaries_hblank_effect_pt
     return rect_window_boundaries_hblank_effect_ptr(id, window);
 }
 
-optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank_effect_ptr::optional_create_vertical(
+optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank_effect_ptr::create_vertical_optional(
         rect_window window, const span<const pair<fixed, fixed>>& deltas_ref)
 {
-    int id = hblank_effects_manager::optional_create(deltas_ref.data(), deltas_ref.size(), window.id(),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), window.id(),
                                                      data.vertical_boundaries_handler);
     optional<rect_window_boundaries_hblank_effect_ptr> result;
 

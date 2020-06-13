@@ -33,9 +33,9 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] int create(const sprite_affine_mat_attributes& attributes);
 
-    [[nodiscard]] int optional_create();
+    [[nodiscard]] int create_optional();
 
-    [[nodiscard]] int optional_create(const sprite_affine_mat_attributes& attributes);
+    [[nodiscard]] int create_optional(const sprite_affine_mat_attributes& attributes);
 
     void increase_usages(int id);
 

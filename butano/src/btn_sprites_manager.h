@@ -37,12 +37,12 @@ namespace sprites_manager
     [[nodiscard]] id_type create(const fixed_point& position, const sprite_shape_size& shape_size,
                                  sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette);
 
-    [[nodiscard]] id_type optional_create(const fixed_point& position, const sprite_shape_size& shape_size,
+    [[nodiscard]] id_type create_optional(const fixed_point& position, const sprite_shape_size& shape_size,
                                           sprite_tiles_ptr&& tiles, sprite_palette_ptr&& palette);
 
     [[nodiscard]] id_type create(sprite_builder&& builder);
 
-    [[nodiscard]] id_type optional_create(sprite_builder&& builder);
+    [[nodiscard]] id_type create_optional(sprite_builder&& builder);
 
     void increase_usages(id_type id);
 

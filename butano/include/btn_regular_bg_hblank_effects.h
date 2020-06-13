@@ -14,13 +14,13 @@ public:
     [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_horizontal(
             regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
-    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_horizontal(
+    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> create_horizontal_optional(
             regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     [[nodiscard]] static regular_bg_position_hblank_effect_ptr create_vertical(
             regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
-    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> optional_create_vertical(
+    [[nodiscard]] static optional<regular_bg_position_hblank_effect_ptr> create_vertical_optional(
             regular_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     regular_bg_position_hblank_effect_ptr(const regular_bg_position_hblank_effect_ptr& other) = default;
@@ -63,7 +63,7 @@ public:
     [[nodiscard]] static regular_bg_attributes_hblank_effect_ptr create(
             regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);
 
-    [[nodiscard]] static optional<regular_bg_attributes_hblank_effect_ptr> optional_create(
+    [[nodiscard]] static optional<regular_bg_attributes_hblank_effect_ptr> create_optional(
             regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);
 
     regular_bg_attributes_hblank_effect_ptr(const regular_bg_attributes_hblank_effect_ptr& other) = default;

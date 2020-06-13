@@ -37,7 +37,7 @@ namespace
 
         if(allow_failure)
         {
-            tiles_ptr = sprite_tiles_ptr::optional_allocate(max_tiles_per_sprite);
+            tiles_ptr = sprite_tiles_ptr::allocate_optional(max_tiles_per_sprite);
 
             if(! tiles_ptr)
             {
@@ -62,7 +62,7 @@ namespace
 
         if(allow_failure)
         {
-            optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
+            optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
 
             if(! sprite_ptr)
             {
@@ -212,7 +212,7 @@ namespace
 
             if(allow_failure)
             {
-                source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+                source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(source_tiles_ref);
 
                 if(! source_tiles_ptr)
                 {
@@ -235,7 +235,7 @@ namespace
 
             if(allow_failure)
             {
-                optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
+                optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
 
                 if(! sprite_ptr)
                 {
@@ -315,7 +315,7 @@ namespace
 
                 if(allow_failure)
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::optional_find_or_create(source_tiles_ref);
+                    source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(source_tiles_ref);
 
                     if(! source_tiles_ptr)
                     {
@@ -338,7 +338,7 @@ namespace
 
                 if(allow_failure)
                 {
-                    optional<sprite_ptr> sprite_ptr = sprite_ptr::optional_create(move(builder));
+                    optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
 
                     if(! sprite_ptr)
                     {
@@ -779,7 +779,7 @@ namespace
 
         if(allow_failure)
         {
-            palette_ptr = generator.palette_item().optional_create_palette();
+            palette_ptr = generator.palette_item().create_palette_optional();
 
             if(! palette_ptr)
             {
@@ -937,13 +937,13 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
     _generate<false>(*this, position, text, output_sprites);
 }
 
-bool sprite_text_generator::optional_generate(fixed x, fixed y, const string_view& text,
+bool sprite_text_generator::generate_optional(fixed x, fixed y, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
     return _generate<true>(*this, fixed_point(x, y), text, output_sprites);
 }
 
-bool sprite_text_generator::optional_generate(const fixed_point& position, const string_view& text,
+bool sprite_text_generator::generate_optional(const fixed_point& position, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
     return _generate<true>(*this, position, text, output_sprites);

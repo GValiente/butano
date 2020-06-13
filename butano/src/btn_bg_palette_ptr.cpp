@@ -81,7 +81,7 @@ bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors_re
     return bg_palette_ptr(id);
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::optional_create(const span<const color>& colors_ref,
+optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>& colors_ref,
                                                          palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
@@ -107,7 +107,7 @@ optional<bg_palette_ptr> bg_palette_ptr::optional_create(const span<const color>
     return result;
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::optional_find_or_create(const span<const color>& colors_ref,
+optional<bg_palette_ptr> bg_palette_ptr::find_or_create_optional(const span<const color>& colors_ref,
                                                                  palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();

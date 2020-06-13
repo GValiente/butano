@@ -192,14 +192,14 @@ sprite_ptr sprite_builder::release_build()
     return sprite_ptr::create(move(*this));
 }
 
-optional<sprite_ptr> sprite_builder::optional_build() const
+optional<sprite_ptr> sprite_builder::build_optional() const
 {
-    return sprite_ptr::optional_create(*this);
+    return sprite_ptr::create_optional(*this);
 }
 
-optional<sprite_ptr> sprite_builder::optional_release_build()
+optional<sprite_ptr> sprite_builder::release_build_optional()
 {
-    return sprite_ptr::optional_create(move(*this));
+    return sprite_ptr::create_optional(move(*this));
 }
 
 sprite_tiles_ptr sprite_builder::tiles() const
@@ -226,13 +226,13 @@ sprite_palette_ptr sprite_builder::palette() const
     return *_palette;
 }
 
-optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
+optional<sprite_tiles_ptr> sprite_builder::tiles_optional() const
 {
     optional<sprite_tiles_ptr> result;
 
     if(_item)
     {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index);
+        result = _item->tiles_item().create_tiles_optional(_graphics_index);
     }
     else
     {
@@ -242,13 +242,13 @@ optional<sprite_tiles_ptr> sprite_builder::optional_tiles() const
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_builder::optional_palette() const
+optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 {
     optional<sprite_palette_ptr> result;
 
     if(_item)
     {
-        result = _item->palette_item().optional_create_palette();
+        result = _item->palette_item().create_palette_optional();
     }
     else
     {
@@ -286,13 +286,13 @@ sprite_palette_ptr sprite_builder::release_palette()
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_builder::optional_release_tiles()
+optional<sprite_tiles_ptr> sprite_builder::release_tiles_optional()
 {
     optional<sprite_tiles_ptr> result;
 
     if(_item)
     {
-        result = _item->tiles_item().optional_create_tiles(_graphics_index);
+        result = _item->tiles_item().create_tiles_optional(_graphics_index);
     }
     else
     {
@@ -302,13 +302,13 @@ optional<sprite_tiles_ptr> sprite_builder::optional_release_tiles()
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_builder::optional_release_palette()
+optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
 {
     optional<sprite_palette_ptr> result;
 
     if(_item)
     {
-        result = _item->palette_item().optional_create_palette();
+        result = _item->palette_item().create_palette_optional();
     }
     else
     {

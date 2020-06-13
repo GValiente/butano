@@ -56,13 +56,13 @@ public:
 
     [[nodiscard]] sprite_ptr create_sprite(const fixed_point& position, int graphics_index) const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_create_sprite(fixed x, fixed y) const;
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional(fixed x, fixed y) const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_create_sprite(fixed x, fixed y, int graphics_index) const;
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional(fixed x, fixed y, int graphics_index) const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_create_sprite(const fixed_point& position) const;
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional(const fixed_point& position) const;
 
-    [[nodiscard]] optional<sprite_ptr> optional_create_sprite(const fixed_point& position, int graphics_index) const;
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional(const fixed_point& position, int graphics_index) const;
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b)
     {

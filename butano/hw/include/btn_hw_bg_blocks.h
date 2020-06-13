@@ -41,6 +41,12 @@ namespace btn::hw::bg_blocks
         memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
     }
 
+    BTN_CODE_IWRAM void _commit_map_tiles_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
+                                                 uint16_t* destination_vram_ptr);
+
+    BTN_CODE_IWRAM void _commit_map_palette_offset(const uint16_t* source_data_ptr, int half_words, int palette_offset,
+                                                   uint16_t* destination_vram_ptr);
+
     BTN_CODE_IWRAM void _commit_map_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
                                            int palette_offset, uint16_t* destination_vram_ptr);
 
@@ -49,13 +55,27 @@ namespace btn::hw::bg_blocks
     {
         uint16_t* destination_vram_ptr = bg_block_vram(block_index);
 
-        if(tiles_offset || palette_offset)
+        if(tiles_offset)
         {
-            _commit_map_offset(source_data_ptr, half_words, tiles_offset, palette_offset, destination_vram_ptr);
+            if(palette_offset)
+            {
+                _commit_map_offset(source_data_ptr, half_words, tiles_offset, palette_offset, destination_vram_ptr);
+            }
+            else
+            {
+                _commit_map_tiles_offset(source_data_ptr, half_words, tiles_offset, destination_vram_ptr);
+            }
         }
         else
         {
-            memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+            if(palette_offset)
+            {
+                _commit_map_palette_offset(source_data_ptr, half_words, palette_offset, destination_vram_ptr);
+            }
+            else
+            {
+                memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+            }
         }
     }
 }

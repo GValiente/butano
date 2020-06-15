@@ -99,6 +99,8 @@ private:
     int8_t _tag;
 
     void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage);
+
+    [[nodiscard]] bool _is_outside() const;
 };
 
 }

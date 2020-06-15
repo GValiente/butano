@@ -165,12 +165,9 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
             }
             else
             {
-                const btn::fixed_point& position = _sprite.position();
-
-                if(position.x() < -constants::view_width || position.x() > constants::view_width ||
-                        position.y() < -constants::view_height || position.y() > constants::view_height)
+                if(_is_outside())
                 {
-                    ++_move_event_index;
+                    _move_event_index = int8_t(_event->move_events.size());
                     return;
                 }
             }
@@ -204,32 +201,39 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
         {
             _move_action.update();
 
-            if(_rotate_action)
+            if(_is_outside())
             {
-                _rotate_action->update();
+                _move_event_counter = 1;
             }
-
-            if(_scale_x_action)
+            else
             {
-                _scale_x_action->update();
-            }
-
-            if(_scale_y_action)
-            {
-                _scale_y_action->update();
-            }
-
-            if(_explosion)
-            {
-                _explosion->update();
-
-                if(_explosion->done())
+                if(_rotate_action)
                 {
-                    _explosion.reset();
+                    _rotate_action->update();
                 }
-                else
+
+                if(_scale_x_action)
                 {
-                    _sprite.set_visible(_explosion->show_target_sprite());
+                    _scale_x_action->update();
+                }
+
+                if(_scale_y_action)
+                {
+                    _scale_y_action->update();
+                }
+
+                if(_explosion)
+                {
+                    _explosion->update();
+
+                    if(_explosion->done())
+                    {
+                        _explosion.reset();
+                    }
+                    else
+                    {
+                        _sprite.set_visible(_explosion->show_target_sprite());
+                    }
                 }
             }
         }
@@ -322,6 +326,14 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             break;
         }
     }
+}
+
+bool enemy::_is_outside() const
+{
+    const btn::fixed_point& position = _sprite.position();
+
+    return position.x() < -constants::view_width || position.x() > constants::view_width ||
+            position.y() < -constants::view_height || position.y() > constants::view_height;
 }
 
 }

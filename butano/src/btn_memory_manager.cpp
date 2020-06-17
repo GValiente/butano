@@ -2,16 +2,17 @@
 
 #include "btn_list.h"
 #include "btn_vector.h"
-#include "btn_hash_map.h"
 #include "btn_config_memory.h"
 #include "../hw/include/btn_hw_memory.h"
+
+#include "btn_log.h"
 
 namespace btn::memory_manager
 {
 
 namespace
 {
-    static_assert(power_of_two(BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS));
+    static_assert(BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS > 0);
 
 
     constexpr const int max_items = BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS;
@@ -30,13 +31,15 @@ namespace
     using items_list = list<item_type, max_items>;
     using items_iterator = items_list::iterator;
 
+    static_assert(sizeof(items_iterator) == sizeof(int));
+    static_assert(alignof(items_iterator) == alignof(int));
+
 
     class static_data
     {
 
     public:
         items_list items;
-        hash_map<void*, items_iterator, max_items * 2> used_items;
         vector<items_iterator, max_items> free_items;
         int total_bytes_count = 0;
         int free_bytes_count = 0;
@@ -76,7 +79,7 @@ namespace
         data.free_items.erase(free_items_it);
     }
 
-    void _create_item(items_iterator items_it, int bytes)
+    [[nodiscard]] void* _create_item(items_iterator items_it, int bytes)
     {
         item_type& item = *items_it;
         BTN_ASSERT(! item.used, "Item is not free: ", item.size);
@@ -97,8 +100,10 @@ namespace
             item.size = bytes;
         }
 
-        data.used_items.insert(item.data, items_it);
+        auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
+        *items_it_ptr = items_it;
         data.free_bytes_count -= bytes;
+        return items_it_ptr + 1;
     }
 }
 
@@ -122,7 +127,14 @@ void* ewram_alloc(int bytes)
 {
     BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
-    bytes = max(bytes, int(sizeof(int)));
+    int alignment_bytes = sizeof(int);
+
+    if(int extra_bytes = bytes % alignment_bytes)
+    {
+        bytes += alignment_bytes - extra_bytes;
+    }
+
+    bytes += sizeof(items_iterator);
 
     if(bytes <= data.free_bytes_count)
     {
@@ -133,8 +145,7 @@ void* ewram_alloc(int bytes)
         {
             auto items_it = *free_items_it;
             data.free_items.erase(free_items_it);
-            _create_item(items_it, bytes);
-            return items_it->data;
+            return _create_item(items_it, bytes);
         }
     }
 
@@ -145,15 +156,12 @@ void ewram_free(void* ptr)
 {
     if(ptr)
     {
-        auto used_items_it = data.used_items.find(ptr);
-        BTN_ASSERT(used_items_it != data.used_items.end(), "Ptr not found: ", ptr);
-
-        items_iterator items_it = used_items_it->second;
+        auto items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
+        items_iterator items_it = *items_it_ptr;
         item_type& item = *items_it;
         BTN_ASSERT(item.used, "Item is not used: ", item.size);
 
         item.used = false;
-        data.used_items.erase(used_items_it);
         data.free_bytes_count += item.size;
 
         if(items_it != data.items.begin())

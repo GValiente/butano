@@ -16,20 +16,21 @@ public:
 
         void* ptr = btn::malloc(4);
         BTN_ASSERT(ptr);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 4);
+        BTN_ASSERT(btn::memory::used_alloc_ewram() == 8);
 
         btn::free(ptr);
         BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
 
         ptr = btn::malloc(0);
         BTN_ASSERT(ptr);
+        BTN_ASSERT(btn::memory::used_alloc_ewram() == 4);
 
         btn::free(ptr);
         BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
 
         auto integer = new int(123);
         BTN_ASSERT(integer);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 4);
+        BTN_ASSERT(btn::memory::used_alloc_ewram() == 8);
 
         delete integer;
         BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);

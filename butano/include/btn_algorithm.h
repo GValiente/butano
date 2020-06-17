@@ -26,6 +26,7 @@ namespace btn
     using std::find_if;
 
     using std::lower_bound;
+    using std::upper_bound;
 
     using std::remove;
     using std::remove_if;

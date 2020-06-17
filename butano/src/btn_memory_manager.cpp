@@ -44,6 +44,30 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
+    void _insert_free_item(items_iterator items_it)
+    {
+        auto comparator = [](const items_iterator& a, const items_iterator& b) {
+            return a->size < b->size;
+        };
+
+        auto free_items_it = upper_bound(data.free_items.begin(), data.free_items.end(), items_it, comparator);
+        data.free_items.insert(free_items_it, items_it);
+    }
+
+    void _erase_free_item(items_iterator items_it)
+    {
+        auto comparator = [](const items_iterator& a, const items_iterator& b) {
+            return a->size < b->size;
+        };
+
+        auto free_items_end = data.free_items.end();
+        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, items_it, comparator);
+        BTN_ASSERT(free_items_it != free_items_end, "Free item not found: ", static_cast<void*>(items_it->data));
+        BTN_ASSERT(*free_items_it == items_it, "Free item not found: ", static_cast<void*>(items_it->data), " - ",
+                   static_cast<void*>((*free_items_it)->data));
+
+        data.free_items.erase(free_items_it);
+    }
 
     void _create_item(items_iterator items_it, int bytes)
     {
@@ -61,26 +85,13 @@ namespace
             new_item.size = new_item_size;
 
             items_iterator new_items_it = data.items.insert(items_it, new_item);
-            data.free_items.push_back(new_items_it);
+            _insert_free_item(new_items_it);
             item.data += new_item_size;
             item.size = bytes;
         }
 
         data.used_items.insert(item.data, items_it);
         data.free_bytes_count -= bytes;
-    }
-
-    void _erase_free_items_it(items_iterator items_it)
-    {
-        for(auto free_items_it = data.free_items.begin(), free_items_end = data.free_items.end();
-            free_items_it != free_items_end; ++free_items_it)
-        {
-            if(*free_items_it == items_it)
-            {
-                data.free_items.erase(free_items_it);
-                return;
-            }
-        }
     }
 }
 
@@ -108,36 +119,18 @@ void* ewram_alloc(int bytes)
 
     if(bytes <= data.free_bytes_count)
     {
+        auto comparator = [](const items_iterator& items_it, int search_bytes) {
+            return items_it->size < search_bytes;
+        };
+
         auto free_items_end = data.free_items.end();
-        auto smallest_free_items_it = free_items_end;
-        int smallest_size = numeric_limits<int>::max();
+        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, bytes, comparator);
 
-        for(auto free_items_it = data.free_items.begin(); free_items_it != free_items_end; ++free_items_it)
+        if(free_items_it != free_items_end)
         {
-            items_iterator items_it = *free_items_it;
-            item_type& item = *items_it;
-
-            if(item.size > bytes)
-            {
-                if(item.size < smallest_size)
-                {
-                    smallest_free_items_it = free_items_it;
-                    smallest_size = item.size;
-                }
-            }
-            else if(item.size == bytes)
-            {
-                _create_item(items_it, bytes);
-                data.free_items.erase(free_items_it);
-                return items_it->data;
-            }
-        }
-
-        if(smallest_free_items_it != free_items_end)
-        {
-            items_iterator items_it = *smallest_free_items_it;
+            auto items_it = *free_items_it;
+            data.free_items.erase(free_items_it);
             _create_item(items_it, bytes);
-            data.free_items.erase(smallest_free_items_it);
             return items_it->data;
         }
     }
@@ -171,7 +164,7 @@ void ewram_free(void* ptr)
             {
                 item.data = previous_item.data;
                 item.size += previous_item.size;
-                _erase_free_items_it(previous_items_it);
+                _erase_free_item(previous_items_it);
                 data.items.erase(previous_items_it);
             }
         }
@@ -186,12 +179,12 @@ void ewram_free(void* ptr)
             if(! next_item.used && item.data + item.size == next_item.data)
             {
                 item.size += next_item.size;
-                _erase_free_items_it(next_items_it);
+                _erase_free_item(next_items_it);
                 data.items.erase(next_items_it);
             }
         }
 
-        data.free_items.push_back(items_it);
+        _insert_free_item(items_it);
     }
 }
 

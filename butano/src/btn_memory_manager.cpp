@@ -44,27 +44,34 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
+    constexpr const auto lower_bound_comparator = [](const items_iterator& items_it, int size)
+    {
+        return items_it->size < size;
+    };
+
+    constexpr const auto upper_bound_comparator = [](int size, const items_iterator& items_it)
+    {
+        return size < items_it->size;
+    };
+
     void _insert_free_item(items_iterator items_it)
     {
-        auto comparator = [](const items_iterator& a, const items_iterator& b) {
-            return a->size < b->size;
-        };
-
-        auto free_items_it = upper_bound(data.free_items.begin(), data.free_items.end(), items_it, comparator);
+        auto free_items_it = upper_bound(data.free_items.begin(), data.free_items.end(), items_it->size,
+                                         upper_bound_comparator);
         data.free_items.insert(free_items_it, items_it);
     }
 
     void _erase_free_item(items_iterator items_it)
     {
-        auto comparator = [](const items_iterator& a, const items_iterator& b) {
-            return a->size < b->size;
-        };
-
         auto free_items_end = data.free_items.end();
-        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, items_it, comparator);
+        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, items_it->size,
+                                         lower_bound_comparator);
         BTN_ASSERT(free_items_it != free_items_end, "Free item not found: ", static_cast<void*>(items_it->data));
-        BTN_ASSERT(*free_items_it == items_it, "Free item not found: ", static_cast<void*>(items_it->data), " - ",
-                   static_cast<void*>((*free_items_it)->data));
+
+        while(*free_items_it != items_it)
+        {
+            ++free_items_it;
+        }
 
         data.free_items.erase(free_items_it);
     }
@@ -119,12 +126,8 @@ void* ewram_alloc(int bytes)
 
     if(bytes <= data.free_bytes_count)
     {
-        auto comparator = [](const items_iterator& items_it, int search_bytes) {
-            return items_it->size < search_bytes;
-        };
-
         auto free_items_end = data.free_items.end();
-        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, bytes, comparator);
+        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, bytes, lower_bound_comparator);
 
         if(free_items_it != free_items_end)
         {

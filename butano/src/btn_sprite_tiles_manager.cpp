@@ -26,7 +26,7 @@ namespace
 
 
     constexpr const int max_items = BTN_CFG_SPRITE_TILES_MAX_ITEMS;
-    constexpr const int max_list_items = max_items + 1;
+    constexpr const int max_list_items = max_items + 2;
 
 
     enum class status_type
@@ -37,21 +37,30 @@ namespace
     };
 
 
-    class item_type
+    class node_type
+    {
+
+    public:
+        uint16_t prev_index = max_list_items;
+        uint16_t next_index = max_list_items;
+    };
+
+
+    class item_type : public node_type
     {
 
     public:
         const tile* data = nullptr;
         unsigned usages = 0;
-        uint16_t start_tile = 0;
-        uint16_t tiles_count = 0;
-        uint16_t next_index = max_list_items;
-        bool commit = false;
+        unsigned start_tile: 12 = 0;
+        unsigned tiles_count: 12 = 0;
 
     private:
-        uint8_t _status = uint8_t(status_type::FREE);
+        unsigned _status: 2 = unsigned(status_type::FREE);
 
     public:
+        bool commit: 1 = false;
+
         [[nodiscard]] status_type status() const
         {
             return static_cast<status_type>(_status);
@@ -59,7 +68,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = uint8_t(status);
+            _status = unsigned(status);
         }
     };
 
@@ -79,6 +88,13 @@ namespace
             [[nodiscard]] int id() const
             {
                 return _index;
+            }
+
+            iterator& operator--()
+            {
+                const item_type& item = _list->_items[_index];
+                _index = item.prev_index;
+                return *this;
             }
 
             iterator& operator++()
@@ -125,8 +141,11 @@ namespace
 
             for(int index = 0; index < max_items; ++index)
             {
-                _free_indices[index] = int16_t(index + 1);
+                _free_indices[index] = int16_t(max_items - index);
             }
+
+            _items[0].next_index = max_list_items - 1;
+            _items[max_list_items - 1].prev_index = 0;
         }
 
         [[nodiscard]] int size() const
@@ -154,9 +173,9 @@ namespace
             return &item - _items;
         }
 
-        [[nodiscard]] iterator before_begin()
+        [[nodiscard]] iterator it(int index)
         {
-            return iterator(0, *this);
+            return iterator(index, *this);
         }
 
         [[nodiscard]] iterator begin()
@@ -166,52 +185,56 @@ namespace
 
         [[nodiscard]] iterator end()
         {
-            return iterator(max_list_items, *this);
+            return iterator(max_list_items - 1, *this);
         }
 
         void push_front(const item_type& value)
         {
-            insert_after(0, value);
+            insert(_items[0].next_index, value);
         }
 
-        iterator insert_after(int index, const item_type& value)
+        iterator insert(int index, const item_type& value)
         {
             int free_index = _free_indices.back();
             _free_indices.pop_back();
             _items[free_index] = value;
-            _insert_node_after(index, free_index);
+            _insert_node(index, free_index);
             return iterator(free_index, *this);
         }
 
-        iterator erase_after(int index)
+        iterator erase(int index)
         {
-            _remove_node_after(index);
-            return iterator(_items[index].next_index, *this);
+            int next_index = _items[index].next_index;
+            _free_indices.push_back(index);
+            _remove_node(index);
+            return iterator(next_index, *this);
         }
 
     private:
         item_type _items[max_list_items];
         vector<int16_t, max_items> _free_indices;
 
-        void _join(int index, int new_index)
+        void _insert_node(int position_index, int new_index)
         {
-            _items[index].next_index = uint16_t(new_index);
+            node_type& position_node = _items[position_index];
+            node_type& new_node = _items[new_index];
+            int prev_index = position_node.prev_index;
+            node_type& prev_node = _items[prev_index];
+            prev_node.next_index = new_index;
+            new_node.prev_index = prev_index;
+            new_node.next_index = position_index;
+            position_node.prev_index = new_index;
         }
 
-        void _insert_node_after(int index, int new_index)
+        void _remove_node(int position_index)
         {
-            auto next_index = int(_items[index].next_index);
-            _join(new_index, next_index);
-            _join(index, new_index);
-        }
-
-        void _remove_node_after(int index)
-        {
-            auto next_index = int(_items[index].next_index);
-            _free_indices.push_back(int16_t(next_index));
-
-            auto next_next_index = int(_items[next_index].next_index);
-            _join(index, next_next_index);
+            node_type& position_node = _items[position_index];
+            int prev_index = position_node.prev_index;
+            node_type& prev_node = _items[prev_index];
+            int next_index = position_node.next_index;
+            node_type& next_node = _items[next_index];
+            prev_node.next_index = next_index;
+            next_node.prev_index = prev_index;
         }
     };
 
@@ -442,7 +465,7 @@ namespace
             new_item.start_tile = item.start_tile + item.tiles_count;
             new_item.tiles_count = uint16_t(new_item_tiles_count);
 
-            auto new_item_iterator = data.items.insert_after(id, new_item);
+            auto new_item_iterator = data.items.insert(item.next_index, new_item);
             _insert_free_item(new_item_iterator.id());
         }
     }
@@ -519,43 +542,6 @@ namespace
         }
 
         return -1;
-    }
-
-    bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
-    {
-        item_type& adjacent_item = data.items.item(adjacent_id);
-        int adjacent_tiles_count = adjacent_item.tiles_count;
-        bool remove = false;
-
-        switch(adjacent_item.status())
-        {
-
-        case status_type::FREE:
-            _erase_free_item(adjacent_id);
-            current_item.tiles_count += adjacent_tiles_count;
-            remove = true;
-            break;
-
-        case status_type::USED:
-            break;
-
-        case status_type::TO_REMOVE:
-            if(adjacent_item.data)
-            {
-                data.items_map.erase(adjacent_item.data);
-            }
-
-            data.free_tiles_count += adjacent_tiles_count;
-            current_item.tiles_count += adjacent_tiles_count;
-            remove = true;
-            break;
-
-        default:
-            BTN_ERROR("Invalid adjacent item status: ", int(adjacent_item.status()));
-            break;
-        }
-
-        return remove;
     }
 }
 
@@ -810,62 +796,62 @@ void update()
     {
         BTN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE");
 
+        auto begin = data.items.begin();
         auto end = data.items.end();
-        auto before_previous_iterator = end;
-        auto previous_iterator = data.items.before_begin();
-        auto iterator = previous_iterator;
-        ++iterator;
-        data.to_remove_items.clear();
-        data.to_remove_tiles_count = 0;
 
-        while(iterator != end)
+        for(int to_remove_item_index : data.to_remove_items)
         {
+            auto iterator = data.items.it(to_remove_item_index);
             item_type& item = *iterator;
 
-            if(item.status() == status_type::TO_REMOVE)
+            if(item.data)
             {
-                if(item.data)
-                {
-                    data.items_map.erase(item.data);
-                }
-
-                item.data = nullptr;
-                item.set_status(status_type::FREE);
-                item.commit = false;
-                data.free_tiles_count += item.tiles_count;
-
-                auto next_iterator = iterator;
-                ++next_iterator;
-
-                while(next_iterator != end)
-                {
-                    if(_remove_adjacent_item(next_iterator.id(), item))
-                    {
-                        next_iterator = data.items.erase_after(iterator.id());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                if(before_previous_iterator != end)
-                {
-                    if(_remove_adjacent_item(previous_iterator.id(), item))
-                    {
-                        item.start_tile = previous_iterator->start_tile;
-                        data.items.erase_after(before_previous_iterator.id());
-                        previous_iterator = before_previous_iterator;
-                    }
-                }
-
-                _insert_free_item(iterator.id());
+                data.items_map.erase(item.data);
             }
 
-            before_previous_iterator = previous_iterator;
-            previous_iterator = iterator;
-            ++iterator;
+            item.data = nullptr;
+            item.set_status(status_type::FREE);
+            item.commit = false;
+            data.free_tiles_count += item.tiles_count;
+
+            auto next_iterator = iterator;
+            ++next_iterator;
+
+            if(next_iterator != end)
+            {
+                item_type& next_item = *next_iterator;
+
+                if(next_item.status() == status_type::FREE)
+                {
+                    int next_id = next_iterator.id();
+                    item.tiles_count += next_item.tiles_count;
+                    _erase_free_item(next_id);
+                    data.items.erase(next_id);
+                }
+            }
+
+            if(iterator != begin)
+            {
+                auto previous_iterator = iterator;
+                --previous_iterator;
+
+                item_type& previous_item = *previous_iterator;
+
+                if(previous_item.status() == status_type::FREE)
+                {
+                    int previous_id = previous_iterator.id();
+                    item.start_tile = previous_item.start_tile;
+                    item.tiles_count += previous_item.tiles_count;
+                    _erase_free_item(previous_id);
+                    data.items.erase(previous_id);
+                }
+            }
+
+            _insert_free_item(to_remove_item_index);
         }
+
+        data.to_remove_items.clear();
+        data.to_remove_tiles_count = 0;
 
         BTN_SPRITE_TILES_LOG_STATUS();
     }

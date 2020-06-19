@@ -351,12 +351,17 @@ namespace
         return tiles_count < data.items.item(item_index).tiles_count;
     };
 
-    void _insert_free_item(int id)
+    void _insert_free_item(int id, ivector<uint16_t>::iterator free_items_last)
     {
         const item_type& item = data.items.item(id);
-        auto free_items_it = upper_bound(data.free_items.begin(), data.free_items.end(), item.tiles_count,
+        auto free_items_it = upper_bound(data.free_items.begin(), free_items_last, item.tiles_count,
                                          upper_bound_comparator);
         data.free_items.insert(free_items_it, id);
+    }
+
+    void _insert_free_item(int id)
+    {
+        _insert_free_item(id, data.free_items.end());
     }
 
     void _erase_free_item(int id)
@@ -420,7 +425,7 @@ namespace
         }
     }
 
-    void _create_item(int id, const tile* tiles_data, int tiles_count, bool delay_commit)
+    [[nodiscard]] optional<int> _create_item(int id, const tile* tiles_data, int tiles_count, bool delay_commit)
     {
         item_type& item = data.items.item(id);
         int new_item_tiles_count = item.tiles_count - tiles_count;
@@ -457,6 +462,8 @@ namespace
             _commit_item(tiles_data, delay_commit, item);
         }
 
+        optional<int> new_free_item_id;
+
         if(new_item_tiles_count)
         {
             BTN_ASSERT(! data.items.full(), "No more items allowed");
@@ -466,8 +473,10 @@ namespace
             new_item.tiles_count = uint16_t(new_item_tiles_count);
 
             auto new_item_iterator = data.items.insert(item.next_index, new_item);
-            _insert_free_item(new_item_iterator.id());
+            new_free_item_id = new_item_iterator.id();
         }
+
+        return new_free_item_id;
     }
 
     int _create_impl(const tile* tiles_data, int tiles_count)
@@ -488,7 +497,12 @@ namespace
                 if(item.tiles_count == tiles_count)
                 {
                     data.to_remove_items.erase(to_remove_items_it);
-                    _create_item(id, tiles_data, tiles_count, true);
+
+                    if(optional<int> new_free_item_id = _create_item(id, tiles_data, tiles_count, true))
+                    {
+                        _insert_free_item(*new_free_item_id);
+                    }
+
                     return id;
                 }
             }
@@ -503,8 +517,14 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
+
+                if(optional<int> new_free_item_id = _create_item(id, tiles_data, tiles_count, data.delay_commit))
+                {
+                    _insert_free_item(*new_free_item_id, free_items_it);
+                    ++free_items_it;
+                }
+
                 data.free_items.erase(free_items_it);
-                _create_item(id, tiles_data, tiles_count, data.delay_commit);
                 return id;
             }
         }
@@ -535,8 +555,14 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
+
+                if(optional<int> new_free_item_id = _create_item(id, nullptr, tiles_count, false))
+                {
+                    _insert_free_item(*new_free_item_id, free_items_it);
+                    ++free_items_it;
+                }
+
                 data.free_items.erase(free_items_it);
-                _create_item(id, nullptr, tiles_count, false);
                 return id;
             }
         }

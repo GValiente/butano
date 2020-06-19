@@ -57,11 +57,16 @@ namespace
         return size < items_it->size;
     };
 
-    void _insert_free_item(items_iterator items_it)
+    void _insert_free_item(items_iterator items_it, ivector<items_iterator>::iterator free_items_last)
     {
-        auto free_items_it = upper_bound(data.free_items.begin(), data.free_items.end(), items_it->size,
+        auto free_items_it = upper_bound(data.free_items.begin(), free_items_last, items_it->size,
                                          upper_bound_comparator);
         data.free_items.insert(free_items_it, items_it);
+    }
+
+    void _insert_free_item(items_iterator items_it)
+    {
+        _insert_free_item(items_it, data.free_items.end());
     }
 
     void _erase_free_item(items_iterator items_it)
@@ -77,33 +82,6 @@ namespace
         }
 
         data.free_items.erase(free_items_it);
-    }
-
-    [[nodiscard]] void* _create_item(items_iterator items_it, int bytes)
-    {
-        item_type& item = *items_it;
-        BTN_ASSERT(! item.used, "Item is not free: ", item.size);
-
-        item.used = true;
-
-        if(int new_item_size = item.size - bytes)
-        {
-            BTN_ASSERT(! data.items.full(), "No more items allowed");
-
-            item_type new_item;
-            new_item.data = item.data;
-            new_item.size = new_item_size;
-
-            items_iterator new_items_it = data.items.insert(items_it, new_item);
-            _insert_free_item(new_items_it);
-            item.data += new_item_size;
-            item.size = bytes;
-        }
-
-        auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
-        *items_it_ptr = items_it;
-        data.free_bytes_count -= bytes;
-        return items_it_ptr + 1;
     }
 }
 
@@ -143,9 +121,33 @@ void* ewram_alloc(int bytes)
 
         if(free_items_it != free_items_end)
         {
-            auto items_it = *free_items_it;
+            items_iterator items_it = *free_items_it;
+            item_type& item = *items_it;
+            BTN_ASSERT(! item.used, "Item is not free: ", item.size);
+
+            item.used = true;
+
+            if(int new_item_size = item.size - bytes)
+            {
+                BTN_ASSERT(! data.items.full(), "No more items allowed");
+
+                item_type new_item;
+                new_item.data = item.data;
+                new_item.size = new_item_size;
+
+                items_iterator new_items_it = data.items.insert(items_it, new_item);
+                _insert_free_item(new_items_it, free_items_it);
+                ++free_items_it;
+                item.data += new_item_size;
+                item.size = bytes;
+            }
+
             data.free_items.erase(free_items_it);
-            return _create_item(items_it, bytes);
+
+            auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
+            *items_it_ptr = items_it;
+            data.free_bytes_count -= bytes;
+            return items_it_ptr + 1;
         }
     }
 

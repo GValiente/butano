@@ -1,4 +1,8 @@
-@ Source code taken from https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/sdiv32.s
+@--------------------------------------------------------------------------------
+@ udiv.s
+@--------------------------------------------------------------------------------
+@ Provides an implementation of signed division
+@--------------------------------------------------------------------------------
 
 @ refer to the unsigned division
     .extern __aeabi_uidivmod
@@ -37,10 +41,10 @@ __aeabi_idiv:
 
     @ Test the old sign bits
     tst     r12, #1 << 30
-    rsbne   r0, #0
-    rsbne   r1, #0
+    rsbne   r0, r0, #0
+    rsbne   r1, r0, #0
     tst     r12, #1 << 31
-    rsbne   r0, #0
+    rsbne   r0, r0, #0
 
     @ Erase the sign bits from the return address, and return
     bic     r12, #3 << 30

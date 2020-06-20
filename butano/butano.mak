@@ -57,7 +57,8 @@ LIBDIRS     :=	$(DEVKITPRO)/libtonc $(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files
 #---------------------------------------------------------------------------------------------------------------------
-BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src $(LIBBUTANOABS)/hw/3rd_party/posprintf/src
+BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src $(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
+				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once)

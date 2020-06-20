@@ -1,8 +1,9 @@
-@ Source code taken from https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/lmul.s
+@--------------------------------------------------------------------------------
+@ lmul.s
+@--------------------------------------------------------------------------------
+@ Provides an implementation of long multiplication
+@--------------------------------------------------------------------------------
 
-@ Provides an implementation of long multiplication:
-@ long long __aeabi_lmul(long long a, long long b)
-@
 @ r0:r1 and r2:r3 are factors
 @ after it, r0:r1 has the product
     .section .iwram, "ax", %progbits

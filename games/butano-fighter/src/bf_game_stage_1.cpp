@@ -298,7 +298,7 @@ namespace
     // blacksmith:
 
     constexpr const enemy_data blacksmith(btn::sprite_items::stage_1_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                          btn::sound_items::scream_2, btn::fixed_size(13, 12), 6, 7, 10, 9);
+                                          btn::sound_items::scream_2, btn::fixed_size(13, 12), 6, 7, 7, 9);
 
     constexpr const enemy_move_event blacksmith_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0)), 1, false),

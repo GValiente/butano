@@ -177,7 +177,7 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 int enemies_grid::_column(const btn::fixed_point& top_left)
 {
     int column = (top_left.x().integer() / constants::enemies_grid_size) + (columns / 2);
-    BTN_ASSERT(column >= 1 && column < columns - cell_increment,
+    BTN_ASSERT(column >= 1 && column < columns - max_cell_increment,
                "Invalid column: ", column, " - ", top_left.x().integer());
 
     return column;
@@ -186,7 +186,7 @@ int enemies_grid::_column(const btn::fixed_point& top_left)
 int enemies_grid::_row(const btn::fixed_point& top_left)
 {
     int row = (top_left.y().integer() / constants::enemies_grid_size) + (rows / 2);
-    BTN_ASSERT(row >= 1 && row < rows - cell_increment,
+    BTN_ASSERT(row >= 1 && row < rows - max_cell_increment,
                "Invalid row: ", row, " - ", top_left.y().integer());
 
     return row;

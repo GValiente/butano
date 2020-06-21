@@ -38,9 +38,9 @@ public:
     #endif
 
 private:
-    static constexpr int cell_increment = constants::max_enemy_size / constants::enemies_grid_size;
-    static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (cell_increment * 2);
-    static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (cell_increment * 2);
+    static constexpr int max_cell_increment = constants::max_enemy_size / constants::enemies_grid_size;
+    static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (max_cell_increment * 2);
+    static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (max_cell_increment * 2);
 
     class enemies_list_node_type : public btn::intrusive_forward_list_node_type
     {

@@ -72,6 +72,9 @@
         "enemy_explosion": {
             "height": 64
         },
+        "boss_intro": {
+            "height": 32
+        },
         "flash_palette": {
             "height": 16
         },

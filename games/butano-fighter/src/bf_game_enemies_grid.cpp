@@ -26,7 +26,14 @@ void enemies_grid::add_enemy(enemy& enemy)
     btn::fixed_point position = enemy.position();
     int row = _row(position);
     int column = _column(position);
-    _add_enemy(row, column, enemy);
+    int enemy_rows = enemy.grid_rows();
+    enemy.set_last_grid_row(row);
+    enemy.set_last_grid_column(column);
+
+    for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
+    {
+        _add_enemy_row(r, column, enemy);
+    }
 }
 
 void enemies_grid::remove_enemy(enemy& enemy)
@@ -34,7 +41,12 @@ void enemies_grid::remove_enemy(enemy& enemy)
     btn::fixed_point position = enemy.position();
     int row = _row(position);
     int column = _column(position);
-    _remove_enemy(row, column, enemy);
+    int enemy_rows = enemy.grid_rows();
+
+    for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
+    {
+        _remove_enemy_row(r, column, enemy);
+    }
 }
 
 bool enemies_grid::update_enemy(enemy& enemy)
@@ -44,12 +56,70 @@ bool enemies_grid::update_enemy(enemy& enemy)
     int old_column = enemy.last_grid_column();
     int new_row = _row(position);
     int new_column = _column(position);
-    bool updated = old_row != new_row || old_column != new_column;
+    bool updated = false;
+
+    if(old_row < new_row)
+    {
+        BTN_ASSERT(old_row == new_row - 1, "Enemy is too fast: ", old_row, " - ", new_row);
+
+        int enemy_rows = enemy.grid_rows();
+        enemy.set_last_grid_row(new_row);
+        _remove_enemy_row(old_row - enemy_rows, old_column, enemy);
+        _add_enemy_row(new_row + enemy_rows, old_column, enemy);
+        updated = true;
+    }
+    else if(old_row > new_row)
+    {
+        BTN_ASSERT(old_row == new_row + 1, "Enemy is too fast: ", old_row, " - ", new_row);
+
+        int enemy_rows = enemy.grid_rows();
+        enemy.set_last_grid_row(new_row);
+        _remove_enemy_row(old_row + enemy_rows, old_column, enemy);
+        _add_enemy_row(new_row - enemy_rows, old_column, enemy);
+        updated = true;
+    }
+
+    if(old_column < new_column)
+    {
+        BTN_ASSERT(old_column == new_column - 1, "Enemy is too fast: ", old_column, " - ", new_column);
+
+        int enemy_columns = enemy.grid_columns();
+        enemy.set_last_grid_column(new_column);
+        _remove_enemy_column(new_row, old_column - enemy_columns, enemy);
+        _add_enemy_column(new_row, new_column + enemy_columns, enemy);
+        updated = true;
+    }
+    else if(old_column > new_column)
+    {
+        BTN_ASSERT(old_column == new_column + 1, "Enemy is too fast: ", old_column, " - ", new_column);
+
+        int enemy_columns = enemy.grid_columns();
+        enemy.set_last_grid_column(new_column);
+        _remove_enemy_column(new_row, old_column + enemy_columns, enemy);
+        _add_enemy_column(new_row, new_column - enemy_columns, enemy);
+        updated = true;
+    }
 
     if(updated)
     {
-        _remove_enemy(old_row, old_column, enemy);
-        _add_enemy(new_row, new_column, enemy);
+        int counter = 0;
+
+        for(cell_type& cell : _cells)
+        {
+            for(enemies_list_node_type& enemy_node : cell._enemies)
+            {
+                if(enemy_node.enemy_ptr == &enemy)
+                {
+                    ++counter;
+                }
+            }
+        }
+
+        int enemy_columns = enemy.grid_columns();
+        int enemy_rows = enemy.grid_rows();
+        BTN_ASSERT(counter == ((enemy_columns * 2) + 1) * ((enemy_rows * 2) + 1),
+                   "Invalid update: ", counter, " - ", enemy_columns, " - ", enemy_rows, " - ",
+                   old_column, " - ", new_column, " - ", old_row, " - ", new_row);
     }
 
     return updated;
@@ -158,28 +228,6 @@ int enemies_grid::_safe_row(const btn::fixed_point& position)
 {
     int row = (position.y().integer() / constants::enemies_grid_size) + (rows / 2);
     return btn::clamp(row, 0, rows - 1);
-}
-
-void enemies_grid::_add_enemy(int row, int column, enemy& enemy)
-{
-    int enemy_rows = enemy.grid_rows();
-    enemy.set_last_grid_row(row);
-    enemy.set_last_grid_column(column);
-
-    for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
-    {
-        _add_enemy_row(r, column, enemy);
-    }
-}
-
-void enemies_grid::_remove_enemy(int row, int column, enemy& enemy)
-{
-    int enemy_rows = enemy.grid_rows();
-
-    for(int r = row - enemy_rows; r <= row + enemy_rows; ++r)
-    {
-        _remove_enemy_row(r, column, enemy);
-    }
 }
 
 void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)

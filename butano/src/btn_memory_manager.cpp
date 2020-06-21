@@ -5,8 +5,6 @@
 #include "btn_config_memory.h"
 #include "../hw/include/btn_hw_memory.h"
 
-#include "btn_log.h"
-
 namespace btn::memory_manager
 {
 

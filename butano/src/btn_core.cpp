@@ -147,7 +147,7 @@ void update()
     sprites_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprite_tiles_update");
+    BTN_PROFILER_ENGINE_START("eng_spr_tiles_update");
     sprite_tiles_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
@@ -167,7 +167,7 @@ void update()
     display_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_hblank_effects_update");
+    BTN_PROFILER_ENGINE_START("eng_hblank_fx_update");
     hblank_effects_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
@@ -183,7 +183,7 @@ void update()
     data.cpu_usage_timer->restart();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_hblank_effects_commit");
+    BTN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
     hblank_effects_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 
@@ -203,7 +203,7 @@ void update()
     palettes_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprite_tiles_commit");
+    BTN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
     sprite_tiles_manager::commit();
     BTN_PROFILER_ENGINE_STOP();
 

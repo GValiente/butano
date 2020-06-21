@@ -108,17 +108,17 @@ void scoreboard::update(const hero& hero)
         btn::sprite_ptr& experience_bar_sprite = _experience_bar_sprites[1];
         btn::fixed next_level_experience_ratio = hero.next_level_experience_ratio();
 
+        if(next_level_experience_ratio < 1)
+        {
+            next_level_experience_ratio *= btn::fixed(0.935);
+        }
+
         if(next_level_experience_ratio == 0)
         {
             experience_bar_sprite.set_visible(false);
         }
         else
         {
-            if(next_level_experience_ratio < 1)
-            {
-                next_level_experience_ratio *= btn::fixed(0.935);
-            }
-
             experience_bar_sprite.set_scale_x(next_level_experience_ratio);
             experience_bar_sprite.set_visible(true);
         }

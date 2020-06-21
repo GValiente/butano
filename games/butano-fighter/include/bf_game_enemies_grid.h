@@ -77,7 +77,7 @@ private:
 
         void clear(enemies_pool& enemies_pool);
 
-    public:
+    private:
         enemies_list _enemies;
     };
 

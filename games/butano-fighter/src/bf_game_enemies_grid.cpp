@@ -100,28 +100,6 @@ bool enemies_grid::update_enemy(enemy& enemy)
         updated = true;
     }
 
-    if(updated)
-    {
-        int counter = 0;
-
-        for(cell_type& cell : _cells)
-        {
-            for(enemies_list_node_type& enemy_node : cell._enemies)
-            {
-                if(enemy_node.enemy_ptr == &enemy)
-                {
-                    ++counter;
-                }
-            }
-        }
-
-        int enemy_columns = enemy.grid_columns();
-        int enemy_rows = enemy.grid_rows();
-        BTN_ASSERT(counter == ((enemy_columns * 2) + 1) * ((enemy_rows * 2) + 1),
-                   "Invalid update: ", counter, " - ", enemy_columns, " - ", enemy_rows, " - ",
-                   old_column, " - ", new_column, " - ", old_row, " - ", new_row);
-    }
-
     return updated;
 }
 

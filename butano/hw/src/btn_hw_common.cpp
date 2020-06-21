@@ -12,7 +12,7 @@ extern "C"
     }
 
     // Disable strtol (used by tte_cmd_default) to reduce IWRAM usage:
-    long strtol(const char* str, char**, int base)
+    long strtol([[maybe_unused]] const char* str, char**, [[maybe_unused]] int base)
     {
         BTN_ERROR("strtol not supported: ", str, " - ", base);
         return 0;

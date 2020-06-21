@@ -29,6 +29,8 @@ public:
         return _sprite.position();
     }
 
+    [[nodiscard]] btn::fixed_point top_left() const;
+
     [[nodiscard]] int grid_columns() const
     {
         return _grid_columns;

@@ -26,6 +26,7 @@ public:
     death_anim_type death_anim;
     btn::sound_item death_sound_item;
     btn::fixed_size dimensions;
+    btn::fixed_size half_dimensions;
     int16_t graphics_index_1;
     int16_t graphics_index_2;
     int16_t life;
@@ -38,6 +39,7 @@ public:
         death_anim(_death_anim),
         death_sound_item(_death_sound_item),
         dimensions(_dimensions),
+        half_dimensions(_dimensions / 2),
         graphics_index_1(int16_t(_graphics_index_1)),
         graphics_index_2(int16_t(_graphics_index_2)),
         life(int16_t(_life)),

@@ -59,6 +59,12 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     }
 }
 
+btn::fixed_point enemy::top_left() const
+{
+    const btn::fixed_size& half_dimensions = _event->enemy.half_dimensions;
+    return position() - btn::fixed_point(half_dimensions.width(), half_dimensions.height());
+}
+
 bool enemy::check_hero(const btn::fixed_rect& hero_rect) const
 {
     if(_life)

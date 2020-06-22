@@ -195,6 +195,8 @@ namespace sprites_manager
 
     [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl();
 
+    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles);
+
     #if BTN_CFG_CAMERA_ENABLED
         struct update_camera_impl_result
         {

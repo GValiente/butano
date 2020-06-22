@@ -36,13 +36,6 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
-    void _copy_handle(const hw::sprites::handle_type& from, hw::sprites::handle_type& to)
-    {
-        to.attr0 = from.attr0;
-        to.attr1 = from.attr1;
-        to.attr2 = from.attr2;
-    }
-
     void _update_indexes_to_commit(int handles_index)
     {
         if(data.first_index_to_commit != sprites::sprites_count()) [[likely]]
@@ -71,7 +64,7 @@ namespace
 
             if(handles_index >= 0)
             {
-                _copy_handle(item.handle, data.handles[handles_index]);
+                hw::sprites::copy_handle(item.handle, data.handles[handles_index]);
                 _update_indexes_to_commit(handles_index);
             }
         }
@@ -155,42 +148,16 @@ namespace
     {
         if(data.rebuild_handles)
         {
-            int visible_items_count = 0;
-            data.rebuild_handles = false;
-
-            for(auto& layer : sorted_sprites::layers())
-            {
-                for(item_type& item : *layer)
-                {
-                    if(item.on_screen)
-                    {
-                        BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
-                                   visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
-
-                        _copy_handle(item.handle, data.handles[visible_items_count]);
-                        item.handles_index = int8_t(visible_items_count);
-                        ++visible_items_count;
-                    }
-                    else
-                    {
-                        item.handles_index = -1;
-                    }
-                }
-            }
-
             int last_visible_items_count = data.last_visible_items_count;
+            int visible_items_count = _rebuild_handles_impl(last_visible_items_count, data.handles);
+            int to_commit_items_count = max(visible_items_count, last_visible_items_count);
+            data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
 
-            while(visible_items_count < last_visible_items_count)
-            {
-                hw::sprites::hide(data.handles[visible_items_count]);
-                ++visible_items_count;
-            }
-
-            if(visible_items_count)
+            if(to_commit_items_count)
             {
                 data.first_index_to_commit = 0;
-                data.last_index_to_commit = visible_items_count - 1;
+                data.last_index_to_commit = to_commit_items_count - 1;
             }
         }
     }

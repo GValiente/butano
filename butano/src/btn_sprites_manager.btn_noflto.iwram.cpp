@@ -1,7 +1,6 @@
 #include "btn_sprites_manager.h"
 
 #include "btn_vector.h"
-#include "btn_display.h"
 #include "btn_sorted_sprites.h"
 #include "btn_sprites_manager_item.h"
 
@@ -44,6 +43,42 @@ bool _check_items_on_screen_impl()
     }
 
     return rebuild_handles;
+}
+
+int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
+{
+    auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
+    int visible_items_count = 0;
+
+    for(auto& layer : sorted_sprites::layers())
+    {
+        for(sprites_manager_item& item : *layer)
+        {
+            if(item.on_screen)
+            {
+                BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
+                           visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
+
+                hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
+                item.handles_index = int8_t(visible_items_count);
+                ++visible_items_count;
+            }
+            else
+            {
+                item.handles_index = -1;
+            }
+        }
+    }
+
+    int hide_handles_index = visible_items_count;
+
+    while(hide_handles_index < last_visible_items_count)
+    {
+        hw::sprites::hide(handles[hide_handles_index]);
+        ++hide_handles_index;
+    }
+
+    return visible_items_count;
 }
 
 #if BTN_CFG_CAMERA_ENABLED

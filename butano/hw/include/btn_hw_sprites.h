@@ -10,6 +10,13 @@ namespace btn::hw::sprites
 {
     using handle_type = OBJ_ATTR;
 
+    inline void copy_handle(const handle_type& from, handle_type& to)
+    {
+        to.attr0 = from.attr0;
+        to.attr1 = from.attr1;
+        to.attr2 = from.attr2;
+    }
+
     namespace
     {
         handle_type* vram()

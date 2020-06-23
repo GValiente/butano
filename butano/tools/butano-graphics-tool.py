@@ -8,7 +8,6 @@ import json
 import argparse
 import subprocess
 import time
-import pickle
 
 from bmp import BMP
 from file_info import FileInfo
@@ -17,30 +16,6 @@ from file_info import FileInfo
 def remove_file(file_path):
     if os.path.exists(file_path):
         os.remove(file_path)
-
-
-class GraphicsFolderInfo:
-
-    def __init__(self, sprites, regular_bgs, file_paths):
-        self.__sprites = sprites
-        self.__regular_bgs = regular_bgs
-        self.__file_paths = file_paths
-        self.__new_graphics_json = False
-
-    def get_sprite(self, file_name_no_ext):
-        return self.__sprites[file_name_no_ext]
-
-    def get_regular_bg(self, file_name_no_ext):
-        return self.__regular_bgs[file_name_no_ext]
-
-    def file_paths(self):
-        return self.__file_paths
-
-    def new_graphics_json(self):
-        return self.__new_graphics_json
-
-    def set_new_graphics_json(self, new_graphics_json):
-        self.__new_graphics_json = new_graphics_json
 
 
 class SpriteItem:
@@ -113,7 +88,7 @@ class SpriteItem:
                 self.__shape = 'TALL'
                 self.__size = 'HUGE'
             else:
-                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes())
+                raise ValueError('Invalid sprite height: ' + str(height) + SpriteItem.valid_sizes_message())
         elif width == 64:
             if height == 8:
                 raise ValueError('Invalid sprite size: (' + str(width) + 'x' + str(height) + ')' +
@@ -322,115 +297,105 @@ class RegularBgItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
-def list_graphics_folder_infos(graphics_folder_paths, build_folder_path):
+class GraphicsFileInfo:
+
+    def __init__(self, graphics_type, info, file_path, file_name_no_ext, new_file_info,
+                 file_info_path, new_json_file_info, json_file_info_path):
+        self.__graphics_type = graphics_type
+        self.__info = info
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__new_file_info = new_file_info
+        self.__file_info_path = file_info_path
+        self.__new_json_file_info = new_json_file_info
+        self.__json_file_info_path = json_file_info_path
+
+    def process(self, build_folder_path):
+        print('Processing graphics file: ' + self.__file_path)
+
+        if self.__graphics_type == 'sprite':
+            item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
+        else:
+            item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
+
+        item.process()
+        item.write_header()
+        self.__new_file_info.write(self.__file_info_path)
+        self.__new_json_file_info.write(self.__json_file_info_path)
+
+
+def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
-    graphics_folder_infos = []
-    graphics_json_file_paths = []
+    graphics_file_infos = []
+    sprite_file_names_set = set()
+    regular_bg_file_names_set = set()
 
     for graphics_folder_path in graphics_folder_path_list:
-        graphics_json_file_path = graphics_folder_path + '/graphics.json'
-        graphics_json_file_paths.append(graphics_json_file_path)
-
-        try:
-            with open(graphics_json_file_path) as file:
-                data = json.load(file)
-                sprites = data['sprites']
-                regular_bgs = data['regular_bgs']
-        except Exception as ex:
-            raise ValueError(graphics_json_file_path + ' parse failed: ' + str(ex))
-
         graphics_file_names = sorted(os.listdir(graphics_folder_path))
-        graphics_file_paths = []
 
         for graphics_file_name in graphics_file_names:
+            graphics_file_path = graphics_folder_path + '/' + graphics_file_name
+
             if FileInfo.validate(graphics_file_name):
-                graphics_file_name_ext = os.path.splitext(graphics_file_name)[-1]
+                graphics_file_name_split = os.path.splitext(graphics_file_name)
+                graphics_file_name_no_ext = graphics_file_name_split[0]
+                graphics_file_name_ext = graphics_file_name_split[1]
 
-                if graphics_file_name_ext.lower() == '.bmp':
-                    graphics_file_path = graphics_folder_path + '/' + graphics_file_name
+                if graphics_file_name_ext == '.bmp':
+                    json_file_path = graphics_folder_path + '/' + graphics_file_name_no_ext + '.json'
 
-                    if os.path.isfile(graphics_file_path):
-                        graphics_file_paths.append(graphics_file_path)
+                    if not os.path.isfile(json_file_path):
+                        raise ValueError('Graphics json file not found: ' + json_file_path)
+
+                    try:
+                        with open(json_file_path) as json_file:
+                            info = json.load(json_file)
+                    except Exception as ex:
+                        raise ValueError(json_file_path + ' graphics json file parse failed: ' + str(ex))
+
+                    try:
+                        graphics_type = str(info['type'])
+                    except KeyError:
+                        raise ValueError('type filed not found in graphics json file: ' + json_file_path)
+
+                    if graphics_type == 'sprite':
+                        file_names_set = sprite_file_names_set
+                    elif graphics_type == 'regular_bg':
+                        file_names_set = regular_bg_file_names_set
+                    else:
+                        raise ValueError('Unknown type (' + graphics_type + ') in graphics json file: ' +
+                                         json_file_path)
+
+                    if graphics_file_name_no_ext in file_names_set:
+                        raise ValueError('There\'s two or more ' + graphics_type +
+                                         ' graphics files with the same name: ' + graphics_file_name_no_ext)
+
+                    file_names_set.add(graphics_file_name_no_ext)
+
+                    file_info_path_prefix = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_'
+                    file_info_path = file_info_path_prefix + graphics_type + '_file_info.txt'
+                    json_file_info_path = file_info_path_prefix + graphics_type + '_json_file_info.txt'
+                    old_file_info = FileInfo.read(file_info_path)
+                    new_file_info = FileInfo.build_from_file(graphics_file_path)
+                    old_json_file_info = FileInfo.read(json_file_info_path)
+                    new_json_file_info = FileInfo.build_from_file(json_file_path)
+
+                    if old_file_info != new_file_info or old_json_file_info != new_json_file_info:
+                        graphics_file_infos.append(GraphicsFileInfo(
+                            graphics_type, info, graphics_file_path, graphics_file_name_no_ext, new_file_info,
+                            file_info_path, new_json_file_info, json_file_info_path))
             else:
-                print('Graphics file skipped: ' + graphics_file_name)
+                print('Graphics file skipped: ' + graphics_file_path)
 
-        graphics_folder_infos.append(GraphicsFolderInfo(sprites, regular_bgs, graphics_file_paths))
-
-    file_info_path = build_folder_path + '/_btn_graphics_json_file_info.txt'
-    old_file_info = FileInfo.read(file_info_path)
-    new_file_info = FileInfo.build_from_files(graphics_json_file_paths)
-
-    if old_file_info != new_file_info:
-        new_file_info.write(file_info_path)
-
-        for graphics_folder_info in graphics_folder_infos:
-            graphics_folder_info.set_new_graphics_json(True)
-
-    return graphics_folder_infos
-
-
-def remove_old_graphics_items(new_graphics_file_names_set, build_folder_path):
-    graphics_file_names_set_file_path = build_folder_path + '/_btn_graphics_file_names_set.pickle'
-
-    if os.path.isfile(graphics_file_names_set_file_path):
-        with open(graphics_file_names_set_file_path, 'rb') as graphics_file_names_set_file:
-            old_graphics_file_names_set = pickle.load(graphics_file_names_set_file)
-
-            for old_graphics_file_name in old_graphics_file_names_set:
-                if old_graphics_file_name not in new_graphics_file_names_set:
-                    print('Removing old graphics item build files: ' + old_graphics_file_name)
-                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.o')
-                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.d')
-                    remove_file(build_folder_path + '/' + old_graphics_file_name + '_btn_graphics.s')
-                    remove_file(build_folder_path + '/btn_sprite_items_' + old_graphics_file_name + '.h')
-                    remove_file(build_folder_path + '/btn_regular_bg_items_' + old_graphics_file_name + '.h')
-                    remove_file(build_folder_path + '/_' + old_graphics_file_name + '_file_info.txt')
-
-    with open(graphics_file_names_set_file_path, 'wb') as graphics_file_names_set_file:
-        pickle.dump(new_graphics_file_names_set, graphics_file_names_set_file)
+    return graphics_file_infos
 
 
 def process(graphics_folder_paths, build_folder_path):
-    graphics_folder_infos = list_graphics_folder_infos(graphics_folder_paths, build_folder_path)
-    graphics_file_names_set = set()
+    graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
 
-    for graphics_folder_info in graphics_folder_infos:
-        for graphics_file_path in graphics_folder_info.file_paths():
-            graphics_file_name = os.path.basename(graphics_file_path)
-            graphics_file_name_no_ext = os.path.splitext(graphics_file_name)[0]
-            if graphics_file_name_no_ext in graphics_file_names_set:
-                raise ValueError('There\'s two or more graphics items with the same name: ' + graphics_file_name_no_ext)
+    for graphics_file_info in graphics_file_infos:
+        graphics_file_info.process(build_folder_path)
 
-            graphics_file_names_set.add(graphics_file_name_no_ext)
-            file_info_path = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_file_info.txt'
-            old_file_info = FileInfo.read(file_info_path)
-            new_file_info = FileInfo.build_from_file(graphics_file_path)
-            new_graphics_json = old_file_info != new_file_info
-
-            if new_graphics_json or graphics_folder_info.new_graphics_json():
-                print('Processing graphics file: ' + graphics_file_path)
-
-                try:
-                    item_info = graphics_folder_info.get_sprite(graphics_file_name_no_ext)
-                    item = SpriteItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path, item_info)
-                except KeyError:
-                    item_info = None
-
-                if item_info is None:
-                    try:
-                        item_info = graphics_folder_info.get_regular_bg(graphics_file_name_no_ext)
-                        item = RegularBgItem(graphics_file_path, graphics_file_name_no_ext, build_folder_path,
-                                             item_info)
-                    except KeyError:
-                        raise ValueError(graphics_file_name_no_ext + ' not found in graphics.json')
-
-                item.process()
-                item.write_header()
-
-                if new_graphics_json:
-                    new_file_info.write(file_info_path)
-
-    remove_old_graphics_items(graphics_file_names_set, build_folder_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='butano graphics tool.')

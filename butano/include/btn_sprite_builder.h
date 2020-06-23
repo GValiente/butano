@@ -163,7 +163,7 @@ public:
         return _double_size_mode;
     }
 
-    sprite_builder& set_double_size(sprite_double_size_mode double_size_mode)
+    sprite_builder& set_double_size_mode(sprite_double_size_mode double_size_mode)
     {
         _double_size_mode = double_size_mode;
         return *this;

@@ -19,7 +19,11 @@ void pause::update(const butano_background& butano_background)
         if(btn::keypad::start_pressed())
         {
             _bg.reset();
+            btn::bg_palettes::set_contrast(_contrast);
+            btn::bg_palettes::set_fade_intensity(_fade_intensity);
             btn::bg_palettes::set_grayscale_intensity(0);
+            btn::sprite_palettes::set_contrast(_contrast);
+            btn::sprite_palettes::set_fade_intensity(_fade_intensity);
             btn::sprite_palettes::set_grayscale_intensity(0);
             btn::sound_items::pause_out.play();
 
@@ -39,7 +43,13 @@ void pause::update(const butano_background& butano_background)
             builder.set_priority(0);
             builder.set_ignore_camera(true);
             _bg = builder.release_build();
+            _contrast = btn::bg_palettes::contrast();
+            _fade_intensity = btn::bg_palettes::fade_intensity();
+            btn::bg_palettes::set_contrast(0);
+            btn::bg_palettes::set_fade_intensity(0);
             btn::bg_palettes::set_grayscale_intensity(1);
+            btn::sprite_palettes::set_contrast(0);
+            btn::sprite_palettes::set_fade_intensity(0);
             btn::sprite_palettes::set_grayscale_intensity(1);
             btn::sound_items::pause_in.play();
 

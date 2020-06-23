@@ -1,6 +1,7 @@
 #ifndef BF_GAME_PAUSE_H
 #define BF_GAME_PAUSE_H
 
+#include "btn_fixed.h"
 #include "btn_optional.h"
 #include "btn_regular_bg_ptr.h"
 
@@ -25,6 +26,8 @@ public:
 
 private:
     btn::optional<btn::regular_bg_ptr> _bg;
+    btn::fixed _contrast;
+    btn::fixed _fade_intensity;
     bool _active = false;
 };
 

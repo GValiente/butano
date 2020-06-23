@@ -11,6 +11,7 @@
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_objects.h"
 #include "bf_game_scoreboard.h"
+#include "bf_game_boss_intro.h"
 #include "bf_game_pause.h"
 
 namespace bf::game
@@ -34,6 +35,7 @@ private:
     enemy_bullets _enemy_bullets;
     objects _objects;
     scoreboard _scoreboard;
+    boss_intro _boss_intro;
     pause _pause;
     butano_background& _butano_background;
 };

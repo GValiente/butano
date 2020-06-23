@@ -49,6 +49,7 @@ btn::optional<scene_type> game::update()
             _enemy_bullets.update();
             _objects.update();
             _scoreboard.update(_hero);
+            _boss_intro.update();
         }
     }
 

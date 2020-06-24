@@ -58,25 +58,22 @@ namespace
 
     void _update_handle(const item_type& item)
     {
-        if(! data.rebuild_handles)
-        {
-            int handles_index = item.handles_index;
+        int handles_index = item.handles_index;
 
-            if(handles_index >= 0)
-            {
-                hw::sprites::copy_handle(item.handle, data.handles[handles_index]);
-                _update_indexes_to_commit(handles_index);
-            }
+        if(handles_index >= 0)
+        {
+            hw::sprites::copy_handle(item.handle, data.handles[handles_index]);
+            _update_indexes_to_commit(handles_index);
         }
     }
 
-    void _hide_handle(const item_type& item)
+    void _hide_handle(item_type& item)
     {
-        if(! data.rebuild_handles && item.on_screen)
-        {
-            int handles_index = item.handles_index;
-            BTN_ASSERT(handles_index >= 0, "Invalid handles index");
+        int handles_index = item.handles_index;
 
+        if(handles_index >= 0)
+        {
+            item.handles_index = -1;
             hw::sprites::hide(data.handles[handles_index]);
             _update_indexes_to_commit(handles_index);
         }
@@ -88,6 +85,7 @@ namespace
 
         if(item.visible)
         {
+            _update_handle(item);
             item.check_on_screen = true;
             data.check_items_on_screen = true;
         }
@@ -113,8 +111,7 @@ namespace
         {
             _update_item_dimensions(item);
         }
-
-        if(item.visible)
+        else
         {
             _update_handle(item);
         }
@@ -134,19 +131,25 @@ namespace
         {
             _update_item_dimensions(item);
         }
-
-        if(item.visible)
+        else
         {
             _update_handle(item);
         }
     }
 
-    void _check_items_on_screen()
+    void _enable_rebuild_handles()
     {
-        if(data.check_items_on_screen)
+        if(! data.rebuild_handles)
         {
-            data.check_items_on_screen = false;
-            data.rebuild_handles |= _check_items_on_screen_impl();
+            data.rebuild_handles = true;
+
+            for(auto& layer : sorted_sprites::layers())
+            {
+                for(item_type& item : *layer)
+                {
+                    item.handles_index = -1;
+                }
+            }
         }
     }
 
@@ -164,6 +167,19 @@ namespace
             {
                 data.first_index_to_commit = 0;
                 data.last_index_to_commit = to_commit_items_count - 1;
+            }
+        }
+    }
+
+    void _check_items_on_screen()
+    {
+        if(data.check_items_on_screen)
+        {
+            data.check_items_on_screen = false;
+
+            if(_check_items_on_screen_impl())
+            {
+                _enable_rebuild_handles();
             }
         }
     }
@@ -333,11 +349,7 @@ void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
         item->tiles = tiles;
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -352,11 +364,7 @@ void set_tiles(id_type id, sprite_tiles_ptr&& tiles)
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
         item->tiles = move(tiles);
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -372,24 +380,16 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
 
         hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
-        bool visible = item->visible;
         item->tiles = tiles;
-
-        if(visible)
-        {
-            _update_handle(*item);
-        }
 
         if(shape_size != hw::sprites::shape_size(handle))
         {
             hw::sprites::set_shape_size(shape_size, handle);
-            item->update_half_dimensions();
-
-            if(visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            _update_item_dimensions(*item);
+        }
+        else
+        {
+            _update_handle(*item);
         }
     }
 }
@@ -412,24 +412,16 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 
         hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
-        bool visible = item->visible;
         item->tiles = move(tiles);
-
-        if(visible)
-        {
-            _update_handle(*item);
-        }
 
         if(shape_size != hw::sprites::shape_size(handle))
         {
             hw::sprites::set_shape_size(shape_size, handle);
-            item->update_half_dimensions();
-
-            if(visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            _update_item_dimensions(*item);
+        }
+        else
+        {
+            _update_handle(*item);
         }
     }
 }
@@ -451,11 +443,7 @@ void set_palette(id_type id, const sprite_palette_ptr& palette)
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -470,11 +458,7 @@ void set_palette(id_type id, sprite_palette_ptr&& palette)
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -499,18 +483,6 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
                    "Invalid tiles, palette or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(palette.bpp_mode()));
 
-        if(different_shape_size)
-        {
-            hw::sprites::set_shape_size(shape_size, handle);
-            item->update_half_dimensions();
-
-            if(item->visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
-        }
-
         if(different_tiles)
         {
             hw::sprites::set_tiles(tiles.id(), handle);
@@ -524,7 +496,12 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
             item->palette = move(palette);
         }
 
-        if(item->visible)
+        if(different_shape_size)
+        {
+            hw::sprites::set_shape_size(shape_size, handle);
+            _update_item_dimensions(*item);
+        }
+        else
         {
             _update_handle(*item);
         }
@@ -652,7 +629,11 @@ void set_bg_priority(id_type id, int bg_priority)
         sorted_sprites::erase(*item);
         item->set_bg_priority(bg_priority);
         sorted_sprites::insert(*item);
-        data.rebuild_handles |= item->on_screen;
+
+        if(! item->check_on_screen && item->on_screen)
+        {
+            _enable_rebuild_handles();
+        }
     }
 }
 
@@ -671,7 +652,11 @@ void set_z_order(id_type id, int z_order)
         sorted_sprites::erase(*item);
         item->set_z_order(z_order);
         sorted_sprites::insert(*item);
-        data.rebuild_handles |= item->on_screen;
+
+        if(! item->check_on_screen && item->on_screen)
+        {
+            _enable_rebuild_handles();
+        }
     }
 }
 
@@ -680,7 +665,11 @@ void put_in_front_of_sort_layer(id_type id)
     auto item = static_cast<item_type*>(id);
     sorted_sprites::erase(*item);
     sorted_sprites::insert(*item);
-    data.rebuild_handles |= item->on_screen;
+
+    if(! item->check_on_screen && item->on_screen)
+    {
+        _enable_rebuild_handles();
+    }
 }
 
 bool horizontal_flip(id_type id)
@@ -706,11 +695,7 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
     else
     {
         hw::sprites::set_horizontal_flip(horizontal_flip, item->handle);
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -737,11 +722,7 @@ void set_vertical_flip(id_type id, bool vertical_flip)
     else
     {
         hw::sprites::set_vertical_flip(vertical_flip, item->handle);
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 }
 
@@ -755,11 +736,7 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::set_mosaic_enabled(mosaic_enabled, item->handle);
-
-    if(item->visible)
-    {
-        _update_handle(*item);
-    }
+    _update_handle(*item);
 }
 
 bool blending_enabled(id_type id)
@@ -776,11 +753,7 @@ void set_blending_enabled(id_type id, bool blending_enabled)
                "Blending and window can't be enabled at the same time");
 
     hw::sprites::set_blending_enabled(blending_enabled, handle);
-
-    if(item->visible)
-    {
-        _update_handle(*item);
-    }
+    _update_handle(*item);
 }
 
 bool window_enabled(id_type id)
@@ -797,11 +770,7 @@ void set_window_enabled(id_type id, bool window_enabled)
                "Blending and window can't be enabled at the same time");
 
     hw::sprites::set_window_enabled(window_enabled, handle);
-
-    if(item->visible)
-    {
-        _update_handle(*item);
-    }
+    _update_handle(*item);
 }
 
 int affine_mode(id_type id)
@@ -825,7 +794,6 @@ sprite_double_size_mode double_size_mode(id_type id)
 void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 {
     auto item = static_cast<item_type*>(id);
-
     item->double_size_mode = unsigned(double_size_mode);
 
     if(item->affine_mat)
@@ -837,11 +805,6 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
         {
             hw::sprites::set_affine_mat(item->affine_mat->id(), new_double_size, item->handle);
             _update_item_dimensions(*item);
-
-            if(item->visible)
-            {
-                _update_handle(*item);
-            }
         }
     }
 }
@@ -1039,10 +1002,7 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
             item->palette = palette;
         }
 
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
+        _update_handle(*item);
     }
 
     set_bg_priority(id, third_attributes.bg_priority());
@@ -1173,11 +1133,6 @@ void update_affine_mat(id_type id, int affine_mat_id, bool double_size)
     {
         hw::sprites::set_affine_mat(affine_mat_id, double_size, item->handle);
         _update_item_dimensions(*item);
-
-        if(item->visible)
-        {
-            _update_handle(*item);
-        }
     }
 }
 

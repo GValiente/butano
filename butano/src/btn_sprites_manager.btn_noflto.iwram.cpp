@@ -63,10 +63,6 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
                 item.handles_index = int8_t(visible_items_count);
                 ++visible_items_count;
             }
-            else
-            {
-                item.handles_index = -1;
-            }
         }
     }
 

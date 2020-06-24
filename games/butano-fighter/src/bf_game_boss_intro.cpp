@@ -23,6 +23,7 @@ namespace
         builder.set_x(x);
         builder.set_affine_mat(affine_mat);
         builder.set_bg_priority(2);
+        builder.set_ignore_camera(true);
         return builder.release_build();
     }
 
@@ -72,10 +73,9 @@ void boss_intro::enable()
     _sprites.push_back(_create_sprite(x, 5, affine_mat));
     x += 30;
     _sprites.push_back(_create_sprite(x, 6, affine_mat));
+    _music_volume_action.emplace(amplitude * 2, 0);
     _hblank_effect = btn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
                 btn::move(affine_mat), _hblank_effect_attributes);
-    btn::bg_palettes::set_fade_color(btn::colors::red);
-    btn::sprite_palettes::set_fade_color(btn::colors::red);
 
     _state = state::ACTIVE;
     _loops = 5;
@@ -105,9 +105,7 @@ void boss_intro::update()
             else
             {
                 btn::bg_palettes::set_contrast(0);
-                btn::bg_palettes::set_fade_intensity(0);
                 btn::sprite_palettes::set_contrast(0);
-                btn::sprite_palettes::set_fade_intensity(0);
                 _sprites.clear();
                 _hblank_effect.reset();
                 _state = state::DONE;
@@ -124,11 +122,18 @@ void boss_intro::update()
             }
 
             btn::fixed contrast = (amplitude - btn::abs(y)) / amplitude;
-            btn::fixed fade = contrast * btn::fixed(0.75);
             btn::bg_palettes::set_contrast(contrast);
-            btn::bg_palettes::set_fade_intensity(fade);
             btn::sprite_palettes::set_contrast(contrast);
-            btn::sprite_palettes::set_fade_intensity(fade);
+        }
+
+        if(_music_volume_action)
+        {
+            _music_volume_action->update();
+
+            if(_music_volume_action->done())
+            {
+                _music_volume_action.reset();
+            }
         }
         break;
 

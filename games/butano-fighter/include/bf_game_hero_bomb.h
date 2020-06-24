@@ -17,6 +17,7 @@ class hero;
 class intro;
 class enemies;
 class background;
+class boss_intro;
 class enemy_bullets;
 
 class hero_bomb
@@ -34,8 +35,8 @@ public:
         return _status != status_type::INACTIVE;
     }
 
-    void update(const intro& intro, hero& hero, enemies& enemies, enemy_bullets& enemy_bullets,
-                background& background);
+    void update(const intro& intro, const boss_intro& boss_intro, hero& hero, enemies& enemies,
+                enemy_bullets& enemy_bullets, background& background);
 
 private:
     enum class status_type

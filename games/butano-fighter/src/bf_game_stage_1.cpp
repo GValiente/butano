@@ -357,7 +357,7 @@ namespace
 
         // level 0
 
-        /*enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-60, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-30, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
 
@@ -456,7 +456,7 @@ namespace
         enemy_event(goblin, btn::fixed_point(0, start_y), goblin_moves, goblin_bullets, 60, enemy_drop_type::NONE),
         enemy_event(goblin, btn::fixed_point(0, start_y), goblin_flipped_moves, goblin_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(characters_1_team, btn::fixed_point(-40, start_y - 16), characters_1_team_moves, characters_1_team_bullets, 0, enemy_drop_type::HERO_BOMB),*/
+        enemy_event(characters_1_team, btn::fixed_point(-40, start_y - 16), characters_1_team_moves, characters_1_team_bullets, 0, enemy_drop_type::HERO_BOMB),
 
         // level 2
 

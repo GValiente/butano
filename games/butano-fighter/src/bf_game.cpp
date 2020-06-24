@@ -42,10 +42,10 @@ btn::optional<scene_type> game::update()
         else
         {
             _hero_bullets.update(_hero, _enemies, _objects);
-            _hero_bomb.update(_intro, _hero, _enemies, _enemy_bullets, _background);
+            _hero_bomb.update(_intro, _boss_intro, _hero, _enemies, _enemy_bullets, _background);
             _background.update();
             _intro.update(_butano_background);
-            _enemies.update(_hero, _hero_bomb, _intro, _enemy_bullets);
+            _enemies.update(_hero, _hero_bomb, _intro, _enemy_bullets, _boss_intro);
             _enemy_bullets.update();
             _objects.update();
             _scoreboard.update(_hero);

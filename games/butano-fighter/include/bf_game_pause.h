@@ -27,7 +27,6 @@ public:
 private:
     btn::optional<btn::regular_bg_ptr> _bg;
     btn::fixed _contrast;
-    btn::fixed _fade_intensity;
     bool _active = false;
 };
 

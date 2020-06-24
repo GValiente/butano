@@ -10,6 +10,7 @@
 #include "bf_game_intro.h"
 #include "bf_game_enemies.h"
 #include "bf_wave_generator.h"
+#include "bf_game_boss_intro.h"
 #include "bf_game_background.h"
 #include "bf_game_enemy_bullets.h"
 
@@ -32,14 +33,14 @@ namespace
             _create_wave_hblank_effect_deltas();
 }
 
-void hero_bomb::update(const intro& intro, hero& hero, enemies& enemies, enemy_bullets& enemy_bullets,
-                       background& background)
+void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, hero& hero, enemies& enemies,
+                       enemy_bullets& enemy_bullets, background& background)
 {
     switch(_status)
     {
 
     case status_type::INACTIVE:
-        if(hero.alive() && ! intro.active() && btn::keypad::a_pressed())
+        if(hero.alive() && ! intro.active() && ! boss_intro.active() && btn::keypad::a_pressed())
         {
             if(hero.throw_bomb())
             {

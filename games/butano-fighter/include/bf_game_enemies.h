@@ -12,6 +12,7 @@ namespace bf::game
 class intro;
 class stage;
 class hero_bomb;
+class boss_intro;
 
 class enemies
 {
@@ -31,7 +32,8 @@ public:
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
-    void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets);
+    void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
+                boss_intro& boss_intro);
 
 private:
     const btn::span<const enemy_event>& _events;
@@ -46,6 +48,8 @@ private:
     bool _remove_enemies(const hero& hero, enemy_bullets& enemy_bullets);
 
     bool _add_enemies();
+
+    void _enable_boss_intro(boss_intro& boss_intro);
 };
 
 }

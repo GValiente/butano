@@ -3,6 +3,7 @@
 #include "bf_game_hero.h"
 #include "bf_game_intro.h"
 #include "bf_game_hero_bomb.h"
+#include "bf_game_boss_intro.h"
 
 namespace bf::game
 {
@@ -37,7 +38,8 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
     }
 }
 
-void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets)
+void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
+                     boss_intro& boss_intro)
 {
     #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
         bool grid_updated = _remove_enemies(hero, enemy_bullets);
@@ -45,6 +47,7 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& 
         if(hero.alive() && ! hero_bomb.active() && ! intro.active())
         {
             grid_updated |= _add_enemies();
+            _enable_boss_intro(boss_intro);
         }
 
         if(grid_updated)
@@ -57,6 +60,7 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& 
         if(hero.alive() && ! hero_bomb.active() && ! intro.active())
         {
             _add_enemies();
+            _enable_boss_intro(boss_intro);
         }
     #endif
 }
@@ -134,6 +138,14 @@ bool enemies::_add_enemies()
     _grid.add_enemy(_enemies.front());
     _event_counter = event.wait_frames;
     return true;
+}
+
+void enemies::_enable_boss_intro(boss_intro& boss_intro)
+{
+    if(_event_index == _events.size() && ! boss_intro.active() && ! boss_intro.done() && _enemies.empty())
+    {
+        boss_intro.enable();
+    }
 }
 
 }

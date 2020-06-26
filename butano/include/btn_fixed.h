@@ -101,7 +101,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
-        if(Precision % 2 == 0)
+        if constexpr(Precision % 2 == 0)
         {
             int data = _data / half_scale();
             int other_data = other._data / half_scale();
@@ -133,7 +133,7 @@ public:
 
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
-        if(Precision % 2 == 0)
+        if constexpr(Precision % 2 == 0)
         {
             int data = _data * half_scale();
             int other_data = other._data / half_scale();

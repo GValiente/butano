@@ -281,22 +281,22 @@ private:
 
     constexpr void _update_pa()
     {
-        _pa = _cos * (_sx * int(_hflip)) >> 12;
+        _pa = int16_t(_cos * (_sx * int(_hflip)) >> 12);
     }
 
     constexpr void _update_pb()
     {
-        _pb = -_sin * (_sx * int(_hflip)) >> 12;
+        _pb = int16_t(-_sin * (_sx * int(_hflip)) >> 12);
     }
 
     constexpr void _update_pc()
     {
-        _pc = _sin * (_sy * int(_vflip)) >> 12;
+        _pc = int16_t(_sin * (_sy * int(_vflip)) >> 12);
     }
 
     constexpr void _update_pd()
     {
-        _pd = _cos * (_sy * int(_vflip)) >> 12;
+        _pd = int16_t(_cos * (_sy * int(_vflip)) >> 12);
     }
 };
 

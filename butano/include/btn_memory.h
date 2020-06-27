@@ -67,7 +67,12 @@ namespace btn
             reset();
         }
 
-        [[nodiscard]] pointer get() const
+        [[nodiscard]] const Type* get() const
+        {
+            return _ptr;
+        }
+
+        [[nodiscard]] pointer get()
         {
             return _ptr;
         }
@@ -109,14 +114,28 @@ namespace btn
             return _ptr != nullptr;
         }
 
-        [[nodiscard]] reference operator*() const
+        [[nodiscard]] const Type& operator*() const
         {
             BTN_ASSERT(_ptr, "Managed pointer is null");
 
             return *_ptr;
         }
 
-        [[nodiscard]] pointer operator->() const
+        [[nodiscard]] reference operator*()
+        {
+            BTN_ASSERT(_ptr, "Managed pointer is null");
+
+            return *_ptr;
+        }
+
+        [[nodiscard]] const Type* operator->() const
+        {
+            BTN_ASSERT(_ptr, "Managed pointer is null");
+
+            return _ptr;
+        }
+
+        [[nodiscard]] pointer operator->()
         {
             BTN_ASSERT(_ptr, "Managed pointer is null");
 

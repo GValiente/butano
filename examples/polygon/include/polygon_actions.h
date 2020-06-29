@@ -4,154 +4,67 @@
 #include "btn_value_template_actions.h"
 #include "polygon.h"
 
-class polygon_ptr
+class polygon_vertex
 {
 
 public:
-    polygon_ptr(polygon& ref) :
-        _ptr(&ref)
+    polygon_vertex(int index, polygon& ref) :
+        _ptr(&ref),
+        _index(index)
     {
     }
 
-    [[nodiscard]] const polygon& operator*() const
+    [[nodiscard]] const btn::fixed_point& get() const
     {
-        return *_ptr;
+        return _ptr->vertex(_index);
     }
 
-    [[nodiscard]] polygon& operator*()
+    void set(const btn::fixed_point& position)
     {
-        return *_ptr;
-    }
-
-    [[nodiscard]] const polygon* operator->() const
-    {
-        return _ptr;
-    }
-
-    [[nodiscard]] polygon* operator->()
-    {
-        return _ptr;
+        _ptr->set_vertex(_index, position);
     }
 
 private:
     polygon* _ptr;
+    int _index;
 };
 
 
-// panning
+// vertex position
 
-class polygon_panning_manager
+class polygon_vertex_position_manager
 {
 
 public:
-    [[nodiscard]] static btn::fixed get(const polygon_ptr& polygon_ptr)
+    [[nodiscard]] static const btn::fixed_point& get(const polygon_vertex& polygon_vertex)
     {
-        return polygon_ptr->panning();
+        return polygon_vertex.get();
     }
 
-    static void set(btn::fixed panning, polygon_ptr& polygon_ptr)
+    static void set(const btn::fixed_point& position, polygon_vertex& polygon_vertex)
     {
-        polygon_ptr->set_panning(panning);
+        polygon_vertex.set(position);
     }
 };
 
 
-class polygon_panning_to_action :
-        public btn::to_value_template_action<polygon_ptr, btn::fixed, polygon_panning_manager>
+class polygon_vertex_move_to_action :
+        public btn::to_value_template_action<polygon_vertex, btn::fixed_point, polygon_vertex_position_manager>
 {
 
 public:
-    polygon_panning_to_action(const polygon_ptr& polygon, int duration_frames, btn::fixed final_panning) :
-        to_value_template_action(polygon, duration_frames, final_panning)
+    polygon_vertex_move_to_action(const polygon_vertex& polygon_vertex, int duration_frames,
+                                  const btn::fixed_point& final_position) :
+        to_value_template_action(polygon_vertex, duration_frames, final_position)
     {
     }
 
-    [[nodiscard]] const polygon_ptr& polygon() const
+    [[nodiscard]] const polygon_vertex& vertex() const
     {
         return value();
     }
 
-    [[nodiscard]] btn::fixed final_panning() const
-    {
-        return final_property();
-    }
-};
-
-
-// scale_x
-
-class polygon_scale_x_manager
-{
-
-public:
-    [[nodiscard]] static btn::fixed get(const polygon_ptr& polygon_ptr)
-    {
-        return polygon_ptr->scale_x();
-    }
-
-    static void set(btn::fixed scale_x, polygon_ptr& polygon_ptr)
-    {
-        polygon_ptr->set_scale_x(scale_x);
-    }
-};
-
-
-class polygon_scale_x_to_action :
-        public btn::to_value_template_action<polygon_ptr, btn::fixed, polygon_scale_x_manager>
-{
-
-public:
-    polygon_scale_x_to_action(const polygon_ptr& polygon, int duration_frames, btn::fixed final_scale_x) :
-        to_value_template_action(polygon, duration_frames, final_scale_x)
-    {
-    }
-
-    [[nodiscard]] const polygon_ptr& polygon() const
-    {
-        return value();
-    }
-
-    [[nodiscard]] btn::fixed final_scale_x() const
-    {
-        return final_property();
-    }
-};
-
-
-// scale_y
-
-class polygon_scale_y_manager
-{
-
-public:
-    [[nodiscard]] static btn::fixed get(const polygon_ptr& polygon_ptr)
-    {
-        return polygon_ptr->scale_y();
-    }
-
-    static void set(btn::fixed scale_y, polygon_ptr& polygon_ptr)
-    {
-        polygon_ptr->set_scale_y(scale_y);
-    }
-};
-
-
-class polygon_scale_y_to_action :
-        public btn::to_value_template_action<polygon_ptr, btn::fixed, polygon_scale_y_manager>
-{
-
-public:
-    polygon_scale_y_to_action(const polygon_ptr& polygon, int duration_frames, btn::fixed final_scale_y) :
-        to_value_template_action(polygon, duration_frames, final_scale_y)
-    {
-    }
-
-    [[nodiscard]] const polygon_ptr& polygon() const
-    {
-        return value();
-    }
-
-    [[nodiscard]] btn::fixed final_scale_y() const
+    [[nodiscard]] const btn::fixed_point& final_position() const
     {
         return final_property();
     }

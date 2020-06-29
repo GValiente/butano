@@ -2,35 +2,31 @@
 
 #include "btn_random.h"
 
-namespace
-{
-    const int duration_frames = 120;
-}
-
-demo_polygon::demo_polygon(const btn::sprite_item& sprite_item, btn::fixed x, btn::fixed y, int z_order) :
-    _polygon(sprite_item, x, y, z_order)
+demo_polygon::demo_polygon(const btn::span<const btn::fixed_point>& vertices, btn::fixed x, btn::fixed y,
+                           int graphics_index, int z_order) :
+    _polygon(vertices, x, y, graphics_index, z_order)
 {
 }
 
 void demo_polygon::update(btn::random& random)
 {
-    if(! _scale_x_action || _scale_x_action->done())
+    if(_vertex_actions.empty() || _vertex_actions.front().done())
     {
-        btn::fixed final_panning(-0.99);
-        final_panning += btn::fixed::from_data(random.get() % btn::fixed(1.88).data());
-        _panning_action.emplace(_polygon, duration_frames, final_panning);
+        _vertex_actions.clear();
 
-        btn::fixed final_scale_x(0.5);
-        final_scale_x += btn::fixed::from_data(random.get() % btn::fixed(0.5).data());
-        _scale_x_action.emplace(_polygon, duration_frames, final_scale_x);
-
-        btn::fixed final_scale_y(0.5);
-        final_scale_y += btn::fixed::from_data(random.get() % btn::fixed(0.5).data());
-        _scale_y_action.emplace(_polygon, duration_frames, final_scale_y);
+        for(int index = 0; index < 4; ++index)
+        {
+            int x = -32 + int(random.get() % 64);
+            int y = -32 + int(random.get() % 64);
+            polygon_vertex vertex(index, _polygon);
+            _vertex_actions.emplace_back(vertex, 120, btn::fixed_point(x, y));
+        }
     }
 
-    _panning_action->update();
-    _scale_x_action->update();
-    _scale_y_action->update();
+    for(polygon_vertex_move_to_action& vertex_action : _vertex_actions)
+    {
+        vertex_action.update();
+    }
+
     _polygon.update();
 }

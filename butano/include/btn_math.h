@@ -28,7 +28,7 @@ namespace _btn
             return current_result;
         }
 
-        btn::fixed new_result = (current_result + (value.hp_division(current_result))) / 2;
+        btn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
         return newton_raphson_sqrt_impl(value, new_result, current_result);
     }
 }

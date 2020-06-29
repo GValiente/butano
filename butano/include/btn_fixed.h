@@ -108,7 +108,7 @@ public:
             return from_data(data * other_data);
         }
 
-        return hp_multiplication(other);
+        return safe_multiplication(other);
     }
 
     [[nodiscard]] constexpr fixed_t multiplication(int integer) const
@@ -116,7 +116,7 @@ public:
         return from_data(_data * integer);
     }
 
-    [[nodiscard]] constexpr fixed_t hp_multiplication(fixed_t other) const
+    [[nodiscard]] constexpr fixed_t safe_multiplication(fixed_t other) const
     {
         return from_data(int((int64_t(_data) * other._data) / scale()));
     }
@@ -142,7 +142,7 @@ public:
             return from_data(data / other_data);
         }
 
-        return hp_division(other);
+        return safe_division(other);
     }
 
     [[nodiscard]] constexpr fixed_t division(int integer) const
@@ -152,7 +152,7 @@ public:
         return from_data(_data / integer);
     }
 
-    [[nodiscard]] constexpr fixed_t hp_division(fixed_t other) const
+    [[nodiscard]] constexpr fixed_t safe_division(fixed_t other) const
     {
         BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
 

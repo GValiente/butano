@@ -18,8 +18,8 @@ public:
         _rotation_angle(rotation_angle),
         _scale_x(scale_x),
         _scale_y(scale_y),
-        _hflip(1 - (2 * horizontal_flip)),
-        _vflip(1 - (2 * vertical_flip))
+        _horizontal_flip(horizontal_flip),
+        _vertical_flip(vertical_flip)
     {
         BTN_CONSTEXPR_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle");
         BTN_CONSTEXPR_ASSERT(scale_x > 0, "Invalid scale x");
@@ -28,10 +28,8 @@ public:
         _update_rotation_angle();
         _update_scale_x();
         _update_scale_y();
-        _update_pa();
-        _update_pb();
-        _update_pc();
-        _update_pd();
+        _update_horizontal_flip();
+        _update_vertical_flip();
     }
 
     [[nodiscard]] constexpr fixed rotation_angle() const
@@ -45,10 +43,6 @@ public:
 
         _rotation_angle = rotation_angle;
         _update_rotation_angle();
-        _update_pa();
-        _update_pb();
-        _update_pc();
-        _update_pd();
     }
 
     [[nodiscard]] constexpr fixed scale_x() const
@@ -62,8 +56,6 @@ public:
 
         _scale_x = scale_x;
         _update_scale_x();
-        _update_pa();
-        _update_pb();
     }
 
     [[nodiscard]] constexpr fixed scale_y() const
@@ -77,8 +69,6 @@ public:
 
         _scale_y = scale_y;
         _update_scale_y();
-        _update_pc();
-        _update_pd();
     }
 
     constexpr void set_scale(fixed scale)
@@ -89,10 +79,6 @@ public:
         _scale_y = scale;
         _update_scale_x();
         _sy = _sx;
-        _update_pa();
-        _update_pb();
-        _update_pc();
-        _update_pd();
     }
 
     constexpr void set_scale(fixed scale_x, fixed scale_y)
@@ -104,39 +90,33 @@ public:
         _scale_y = scale_y;
         _update_scale_x();
         _update_scale_y();
-        _update_pa();
-        _update_pb();
-        _update_pc();
-        _update_pd();
     }
 
     [[nodiscard]] constexpr bool horizontal_flip() const
     {
-        return _hflip == -1;
+        return _horizontal_flip;
     }
 
     constexpr void set_horizontal_flip(bool horizontal_flip)
     {
-        _hflip = 1 - (2 * horizontal_flip);
-        _update_pa();
-        _update_pb();
+        _horizontal_flip = horizontal_flip;
+        _update_horizontal_flip();
     }
 
     [[nodiscard]] constexpr bool vertical_flip() const
     {
-        return _vflip == -1;
+        return _vertical_flip;
     }
 
     constexpr void set_vertical_flip(bool vertical_flip)
     {
-        _vflip = 1 - (2 * vertical_flip);
-        _update_pc();
-        _update_pd();
+        _vertical_flip = vertical_flip;
+        _update_vertical_flip();
     }
 
     [[nodiscard]] constexpr bool identity() const
     {
-        return _rotation_angle == 0 && _scale_x == 1 && _scale_y == 1 && _hflip == 1 && _vflip == 1;
+        return _rotation_angle == 0 && _scale_x == 1 && _scale_y == 1 && ! _horizontal_flip && ! _vertical_flip;
     }
 
     [[nodiscard]] constexpr bool double_size() const
@@ -150,61 +130,37 @@ public:
 
     [[nodiscard]] constexpr int first_register_value() const
     {
-        return _pa;
-    }
-
-    constexpr void set_first_register_value(int value)
-    {
-        BTN_CONSTEXPR_ASSERT(value >= btn::numeric_limits<int16_t>::min() &&
-                             value <= btn::numeric_limits<int16_t>::max(), "Invalid first register value");
-
-        _pa = int16_t(value);
+        int cos = _cos;
+        int sx = _hflip * _sx;
+        return cos * sx >> 12;
     }
 
     [[nodiscard]] constexpr int second_register_value() const
     {
-        return _pb;
-    }
-
-    constexpr void set_second_register_value(int value)
-    {
-        BTN_CONSTEXPR_ASSERT(value >= btn::numeric_limits<int16_t>::min() &&
-                             value <= btn::numeric_limits<int16_t>::max(), "Invalid second register value");
-
-        _pb = int16_t(value);
+        int sin = _sin;
+        int sx = _hflip * _sx;
+        return -sin * sx >> 12;
     }
 
     [[nodiscard]] constexpr int third_register_value() const
     {
-        return _pc;
-    }
-
-    constexpr void set_third_register_value(int value)
-    {
-        BTN_CONSTEXPR_ASSERT(value >= btn::numeric_limits<int16_t>::min() &&
-                             value <= btn::numeric_limits<int16_t>::max(), "Invalid third register value");
-
-        _pc = int16_t(value);
+        int sin = _sin;
+        int sy = _vflip * _sy;
+        return sin * sy >> 12;
     }
 
     [[nodiscard]] constexpr int fourth_register_value() const
     {
-        return _pd;
-    }
-
-    constexpr void set_fourth_register_value(int value)
-    {
-        BTN_CONSTEXPR_ASSERT(value >= btn::numeric_limits<int16_t>::min() &&
-                             value <= btn::numeric_limits<int16_t>::max(), "Invalid fourth register value");
-
-        _pd = int16_t(value);
+        int cos = _cos;
+        int sy = _vflip * _sy;
+        return cos * sy >> 12;
     }
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)
     {
         return a._rotation_angle == b._rotation_angle && a._scale_x == b._scale_x && a._scale_y == b._scale_y &&
-                a._hflip == b._hflip && a._vflip == b._vflip;
+                a._horizontal_flip == b._horizontal_flip && a._vertical_flip == b._vertical_flip;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const sprite_affine_mat_attributes& a,
@@ -220,16 +176,14 @@ private:
     fixed _rotation_angle = 0;
     fixed _scale_x = 1;
     fixed _scale_y = 1;
-    int8_t _hflip = 1;
-    int8_t _vflip = 1;
+    bool _horizontal_flip = false;
+    bool _vertical_flip = false;
     int16_t _sin = 0;
     int16_t _cos = int16_t(fixed(1).data());
     uint16_t _sx = uint16_t(fixed_t<8>(1).data());
     uint16_t _sy = uint16_t(fixed_t<8>(1).data());
-    int16_t _pa = 256;
-    int16_t _pb = 0;
-    int16_t _pc = 0;
-    int16_t _pd = 256;
+    int8_t _hflip = 1;
+    int8_t _vflip = 1;
 
     [[nodiscard]] constexpr static uint16_t _output_scale(fixed scale)
     {
@@ -279,28 +233,17 @@ private:
         _sy = _output_scale(_scale_y);
     }
 
-    constexpr void _update_pa()
+    constexpr void _update_horizontal_flip()
     {
-        _pa = int16_t(_cos * (_sx * int(_hflip)) >> 12);
+        _hflip = 1 - (2 * _horizontal_flip);
     }
 
-    constexpr void _update_pb()
+    constexpr void _update_vertical_flip()
     {
-        _pb = int16_t(-_sin * (_sx * int(_hflip)) >> 12);
-    }
-
-    constexpr void _update_pc()
-    {
-        _pc = int16_t(_sin * (_sy * int(_vflip)) >> 12);
-    }
-
-    constexpr void _update_pd()
-    {
-        _pd = int16_t(_cos * (_sy * int(_vflip)) >> 12);
+        _vflip = 1 - (2 * _vertical_flip);
     }
 };
 
 }
 
 #endif
-

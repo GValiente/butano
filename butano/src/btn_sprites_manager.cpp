@@ -1008,6 +1008,56 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
+void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+    uint16_t attr1 = item->handle.attr1;
+
+    if(hw_x == 0)
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            uint16_t& dest_value = dest_ptr[index];
+            dest_value = attr1;
+            hw::sprites::set_x(positions_ptr[index].integer(), dest_value);
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            uint16_t& dest_value = dest_ptr[index];
+            dest_value = attr1;
+            hw::sprites::set_x((hw_x + positions_ptr[index]).integer(), dest_value);
+        }
+    }
+}
+
+void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* positions_ptr, uint16_t* dest_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+    uint16_t attr0 = item->handle.attr0;
+
+    if(hw_y == 0)
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            uint16_t& dest_value = dest_ptr[index];
+            dest_value = attr0;
+            hw::sprites::set_y(positions_ptr[index].integer(), dest_value);
+        }
+    }
+    else
+    {
+        for(int index = 0, limit = display::height(); index < limit; ++index)
+        {
+            uint16_t& dest_value = dest_ptr[index];
+            dest_value = attr0;
+            hw::sprites::set_y((hw_y + positions_ptr[index]).integer(), dest_value);
+        }
+    }
+}
+
 void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {

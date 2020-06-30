@@ -16,12 +16,12 @@ public:
 
     [[nodiscard]] const btn::fixed_point& get() const
     {
-        return _ptr->vertex(_index);
+        return _ptr->vertices()[_index];
     }
 
     void set(const btn::fixed_point& position)
     {
-        _ptr->set_vertex(_index, position);
+        _ptr->vertices()[_index] = position;
     }
 
 private:

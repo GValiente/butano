@@ -23,7 +23,9 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-USERFLAGS   :=  -flto -D BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS=20
+USERFLAGS   :=  -flto \
+                -D BTN_CFG_GAME_PAK_WAIT_STATE_FIRST=BTN_GAME_PAK_WAIT_STATE_FIRST_2 \
+                -D BTN_CFG_GAME_PAK_WAIT_STATE_SECOND=BTN_GAME_PAK_WAIT_STATE_SECOND_1
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path

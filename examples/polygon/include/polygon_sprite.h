@@ -1,13 +1,13 @@
 #ifndef POLYGON_SPRITE_H
 #define POLYGON_SPRITE_H
 
-#include "btn_span.h"
+#include "btn_array.h"
+#include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_span_fwd.h"
 #include "btn_sprite_ptr.h"
 #include "btn_sprite_hblank_effects.h"
-#include "btn_sprite_first_attributes.h"
-#include "btn_sprite_regular_second_attributes.h"
 
 class polygon;
 
@@ -39,16 +39,16 @@ private:
 
     btn::vector<const polygon*, 2> _polygons;
     btn::sprite_ptr _sprite;
-    btn::vector<btn::sprite_first_attributes, btn::display::height()> _first_attributes;
-    btn::sprite_first_attributes_hblank_effect_ptr _first_hblank_effect;
-    btn::vector<btn::sprite_regular_second_attributes, btn::display::height()> _second_attributes;
-    btn::sprite_regular_second_attributes_hblank_effect_ptr _second_hblank_effect;
+    btn::array<btn::fixed, btn::display::height()> _vertical_values;
+    btn::sprite_position_hblank_effect_ptr _vertical_hblank_effect;
+    btn::array<btn::fixed, btn::display::height()> _horizontal_values;
+    btn::sprite_position_hblank_effect_ptr _horizontal_hblank_effect;
     bool _update = true;
 
     BTN_CODE_IWRAM static void _draw_line(const btn::fixed_point& from, const btn::fixed_point& to, hline* hlines);
 
-    BTN_CODE_IWRAM static void _setup_attributes(const hline* hlines, btn::sprite_first_attributes* first_attributes,
-                                                 btn::sprite_regular_second_attributes* second_attributes);
+    BTN_CODE_IWRAM static void _setup_attributes(const hline* hlines, btn::fixed* vertical_values,
+                                                 btn::fixed* horizontal_values);
 };
 
 #endif

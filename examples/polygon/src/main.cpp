@@ -91,8 +91,8 @@ int main()
     polygon_sprite user_polygon_sprite(user_polygon, 0, 0);
 
     btn::random random;
-    btn::vector<demo_polygon, 6> demo_polygons;
-    btn::unique_ptr<btn::vector<polygon_sprite, 3>> demo_polygon_sprites(new btn::vector<polygon_sprite, 3>());
+    btn::vector<demo_polygon, 4> demo_polygons;
+    btn::unique_ptr<btn::vector<polygon_sprite, 2>> demo_polygon_sprites(new btn::vector<polygon_sprite, 2>());
     bool demo_shown = false;
 
     while(true)
@@ -118,12 +118,8 @@ int main()
         {
             if(demo_polygons.empty())
             {
-                btn::fixed x = 0;
-                _create_demo_polygon_sprite(x, demo_polygons, *demo_polygon_sprites);
-                x += 64;
-                _create_demo_polygon_sprite(x, demo_polygons, *demo_polygon_sprites);
-                x += 64;
-                _create_demo_polygon_sprite(x, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(60 - 32, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(180 - 32, demo_polygons, *demo_polygon_sprites);
                 demo_shown = true;
             }
             else

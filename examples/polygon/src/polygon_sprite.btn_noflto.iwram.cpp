@@ -73,9 +73,10 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
     }
 }
 
-void polygon_sprite::_setup_attributes(const hline* hlines, btn::sprite_first_attributes* first_attributes,
-                                       btn::sprite_regular_second_attributes* second_attributes)
+void polygon_sprite::_setup_attributes(const hline* hlines, btn::fixed* vertical_values, btn::fixed* horizontal_values)
 {
+    btn::fixed invalid_y = btn::display::height();
+
     for(int index = 0; index < btn::display::height(); ++index)
     {
         const hline& hline = hlines[index];
@@ -84,12 +85,12 @@ void polygon_sprite::_setup_attributes(const hline* hlines, btn::sprite_first_at
 
         if(length > 0)
         {
-            first_attributes[index].set_y(-length + index + 1);
-            second_attributes[index].set_x(ixl);
+            vertical_values[index] = -length + index + 1;
+            horizontal_values[index] = ixl;
         }
         else
         {
-            first_attributes[index].set_y(btn::display::height());
+            vertical_values[index] = invalid_y;
         }
     }
 }

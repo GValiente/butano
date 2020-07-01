@@ -32,12 +32,12 @@ namespace
 
         if(btn::keypad::left_held())
         {
-            vertex.set_x(btn::max(vertex.x() - 1, btn::fixed(120 - 32)));
+            vertex.set_x(btn::max(vertex.x() - 1, btn::fixed(120 - 31)));
             polygon_sprite.reload_polygons();
         }
         else if(btn::keypad::right_held())
         {
-            vertex.set_x(btn::min(vertex.x() + 1, btn::fixed(120 + 32)));
+            vertex.set_x(btn::min(vertex.x() + 1, btn::fixed(120 + 31)));
             polygon_sprite.reload_polygons();
         }
 
@@ -81,8 +81,8 @@ int main()
     stats stats(small_text_generator);
 
     const btn::fixed_point vertices[] = {
-        btn::fixed_point(120 - 32, 1),
-        btn::fixed_point(120 + 32, 30),
+        btn::fixed_point(120 - 31, 1),
+        btn::fixed_point(120 + 31, 30),
         btn::fixed_point(120 + 24, 159),
         btn::fixed_point(120 - 24, 128)
     };
@@ -91,8 +91,8 @@ int main()
     polygon_sprite user_polygon_sprite(user_polygon, 0, 0);
 
     btn::random random;
-    btn::vector<demo_polygon, 4> demo_polygons;
-    btn::unique_ptr<btn::vector<polygon_sprite, 2>> demo_polygon_sprites(new btn::vector<polygon_sprite, 2>());
+    btn::vector<demo_polygon, 6> demo_polygons;
+    btn::unique_ptr<btn::vector<polygon_sprite, 3>> demo_polygon_sprites(new btn::vector<polygon_sprite, 3>());
     bool demo_shown = false;
 
     while(true)
@@ -118,8 +118,9 @@ int main()
         {
             if(demo_polygons.empty())
             {
-                _create_demo_polygon_sprite(60 - 32, demo_polygons, *demo_polygon_sprites);
-                _create_demo_polygon_sprite(180 - 32, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(16, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(btn::display::width() - 64 - 8 - 32, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(btn::display::width() - 64 - 8, demo_polygons, *demo_polygon_sprites);
                 demo_shown = true;
             }
             else

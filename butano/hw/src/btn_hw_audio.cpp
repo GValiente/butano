@@ -94,7 +94,7 @@ namespace
 
 void init()
 {
-    irq::add(irq::id::VBLANK, mmVBlank);
+    irq::replace_or_push_back(irq::id::VBLANK, mmVBlank);
 
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);

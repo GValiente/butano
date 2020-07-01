@@ -14,7 +14,7 @@ namespace
 {
     constexpr const int max_items = BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS;
 
-    static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
+    static_assert(max_items > 0 && max_items <= 8);
 
     using last_value_type = any<8 * sizeof(int)>;
     using hw_entry = hw::hblank_effects::entry;
@@ -96,7 +96,8 @@ namespace
     public:
         item_type items[max_items];
         vector<int8_t, max_items> free_item_indexes;
-        int8_t entries_count = 0;
+        int8_t old_entries_count = 0;
+        int8_t new_entries_count = 0;
         bool entries_a_active = false;
         bool update = false;
         bool commit = false;
@@ -308,7 +309,7 @@ void update()
             }
         }
 
-        external_data.entries_count = int8_t(entries_count);
+        external_data.new_entries_count = int8_t(entries_count);
         external_data.commit = true;
     }
 }
@@ -317,20 +318,22 @@ void commit()
 {
     if(external_data.commit)
     {
+        int old_entries_count = external_data.old_entries_count;
+        int new_entries_count = external_data.new_entries_count;
+        external_data.old_entries_count = external_data.new_entries_count;
         external_data.commit = false;
 
-        if(external_data.entries_a_active)
+        if(new_entries_count)
         {
-            hw::hblank_effects::commit(internal_data.entries_a, external_data.entries_count);
-        }
-        else
-        {
-            hw::hblank_effects::commit(internal_data.entries_b, external_data.entries_count);
-        }
+            hw_entry* entries_ptr = external_data.entries_a_active ? internal_data.entries_a : internal_data.entries_b;
+            hw::hblank_effects::commit_entries_ptr(entries_ptr);
 
-        if(external_data.entries_count)
-        {
-            if(! external_data.enabled)
+            if(old_entries_count != new_entries_count)
+            {
+                hw::hblank_effects::commit_entries_count(new_entries_count);
+                external_data.enabled = true;
+            }
+            else if(! external_data.enabled)
             {
                 external_data.enabled = true;
                 hw::hblank_effects::enable();

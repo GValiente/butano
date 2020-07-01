@@ -28,7 +28,7 @@ namespace btn::hw::irq
         irq_init(nullptr);
     }
 
-    inline void add(id irq_id, void(*isr)())
+    inline void replace_or_push_back(id irq_id, void(*isr)())
     {
         irq_add(eIrqIndex(irq_id), isr);
     }

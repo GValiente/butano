@@ -21,9 +21,9 @@ public:
     void update();
 
 private:
-    btn::sprite_text_generator& _text_generator;
     btn::vector<btn::sprite_ptr, 48> _sprites;
-    btn::vector<btn::sprite_ptr, 8> _down_sprites;
+    btn::vector<btn::sprite_ptr, 4> _hide_info_sprites;
+    btn::vector<btn::sprite_ptr, 4> _show_info_sprites;
     bool _enabled = false;
 
     void _update_sprites();

@@ -10,30 +10,54 @@ namespace bf::game
 
 enemies::enemies(const stage& stage, const btn::sprite_palette_ptr& damage_palette) :
     _events(stage.enemy_events),
+    _boss_type(stage.boss_type),
     _damage_palette(damage_palette)
 {
 }
 
-void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
+bool enemies::check_hero(const btn::fixed_rect& hero_rect) const
 {
-    auto it = _enemies.begin();
-    auto end = _enemies.end();
-    _hero_bomb_check_odds = ! _hero_bomb_check_odds;
-
-    if(_hero_bomb_check_odds && it != end)
+    if(_boss)
     {
-        ++it;
+        return _boss->check_hero(hero_rect);
     }
 
-    while(it != end)
-    {
-        enemy& enemy = *it;
-        enemy.check_hero_bomb(bomb_center, bomb_squared_radius);
-        ++it;
+    return _grid.check_hero(hero_rect);
+}
 
-        if(it != end)
+bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
+{
+    if(_boss)
+    {
+        return _boss->check_hero_bullet(data);
+    }
+
+    return _grid.check_hero_bullet(data);
+}
+
+void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
+{
+    if(! _boss)
+    {
+        auto it = _enemies.begin();
+        auto end = _enemies.end();
+        _hero_bomb_check_odds = ! _hero_bomb_check_odds;
+
+        if(_hero_bomb_check_odds && it != end)
         {
             ++it;
+        }
+
+        while(it != end)
+        {
+            enemy& enemy = *it;
+            enemy.check_hero_bomb(bomb_center, bomb_squared_radius);
+            ++it;
+
+            if(it != end)
+            {
+                ++it;
+            }
         }
     }
 }
@@ -41,33 +65,46 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
 void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
                      boss_intro& boss_intro)
 {
-    #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
-        bool grid_updated = _remove_enemies(hero, enemy_bullets);
+    const btn::fixed_point& hero_position = hero.body_position();
 
-        if(hero.alive() && ! hero_bomb.active() && ! intro.active())
-        {
-            grid_updated |= _add_enemies();
-            _enable_boss_intro(boss_intro);
-        }
+    if(_boss)
+    {
+        _boss->update(hero_position, hero_bomb, enemy_bullets);
+    }
+    else
+    {
+        #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
+            bool grid_updated = _remove_enemies(hero_position, enemy_bullets);
 
-        if(grid_updated)
-        {
-            _grid.log();
-        }
-    #else
-        _remove_enemies(hero, enemy_bullets);
+            if(hero.alive() && ! hero_bomb.active() && ! intro.active())
+            {
+                grid_updated |= _add_enemies();
+                _enable_boss_intro(boss_intro);
+            }
 
-        if(hero.alive() && ! hero_bomb.active() && ! intro.active())
+            if(grid_updated)
+            {
+                _grid.log();
+            }
+        #else
+            _remove_enemies(hero_position, enemy_bullets);
+
+            if(hero.alive() && ! hero_bomb.active() && ! intro.active())
+            {
+                _add_enemies();
+                _enable_boss_intro(boss_intro);
+            }
+        #endif
+
+        if(boss_intro.done())
         {
-            _add_enemies();
-            _enable_boss_intro(boss_intro);
+            _boss = boss::create(_boss_type, _damage_palette);
         }
-    #endif
+    }
 }
 
-bool enemies::_remove_enemies(const hero& hero, enemy_bullets& enemy_bullets)
+bool enemies::_remove_enemies(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
-    const btn::fixed_point& hero_position = hero.body_position();
     auto before_it = _enemies.before_begin();
     auto it = _enemies.begin();
     auto end = _enemies.end();

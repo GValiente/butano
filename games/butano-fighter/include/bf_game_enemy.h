@@ -24,11 +24,6 @@ class enemy
 public:
     enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag);
 
-    [[nodiscard]] const btn::fixed_point& position() const
-    {
-        return _sprite.position();
-    }
-
     [[nodiscard]] btn::fixed_point top_left() const;
 
     [[nodiscard]] int grid_columns() const

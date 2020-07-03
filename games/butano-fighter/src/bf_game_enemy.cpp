@@ -62,14 +62,14 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
 btn::fixed_point enemy::top_left() const
 {
     const btn::fixed_size& half_dimensions = _event->enemy.half_dimensions;
-    return position() - btn::fixed_point(half_dimensions.width(), half_dimensions.height());
+    return _sprite.position() - btn::fixed_point(half_dimensions.width(), half_dimensions.height());
 }
 
 bool enemy::check_hero(const btn::fixed_rect& hero_rect) const
 {
     if(_life)
     {
-        return btn::fixed_rect(position(), _event->enemy.dimensions).intersects(hero_rect);
+        return btn::fixed_rect(_sprite.position(), _event->enemy.dimensions).intersects(hero_rect);
     }
 
     return false;
@@ -80,7 +80,7 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
     if(_life && ! _ignore_hero_bullet_counter)
     {
         const enemy_data& enemy_data = _event->enemy;
-        btn::fixed_point enemy_position = position();
+        btn::fixed_point enemy_position = _sprite.position();
         btn::fixed_rect enemy_rect(enemy_position, enemy_data.dimensions);
         const btn::fixed_rect& bullet_rect = data.bullet_rect;
 
@@ -126,7 +126,7 @@ void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radi
 {
     if(_life)
     {
-        btn::fixed_point enemy_position = position();
+        btn::fixed_point enemy_position = _sprite.position();
         int distance_x = enemy_position.x().integer() - bomb_center.x();
         int distance_y = enemy_position.y().integer() - bomb_center.y();
         int squared_distance = (distance_x * distance_x) + (distance_y * distance_y);

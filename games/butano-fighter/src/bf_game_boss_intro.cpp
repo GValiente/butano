@@ -3,6 +3,7 @@
 #include "btn_colors.h"
 #include "btn_display.h"
 #include "btn_bg_palettes.h"
+#include "btn_music_items.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_palettes.h"
@@ -15,6 +16,7 @@ namespace bf::game
 namespace
 {
     constexpr const int amplitude = 32;
+    constexpr const bool skip = true;
 
     [[nodiscard]] btn::sprite_ptr _create_sprite(int x, int graphics_index,
                                                  const btn::sprite_affine_mat_ptr& affine_mat)
@@ -97,7 +99,7 @@ void boss_intro::update()
         {
             --_loops;
 
-            if(_loops)
+            if(_loops && ! skip)
             {
                 btn::sound_items::space_shooter_7.play();
                 _counter = amplitude * 2;
@@ -108,6 +110,8 @@ void boss_intro::update()
                 btn::sprite_palettes::set_contrast(0);
                 _sprites.clear();
                 _hblank_effect.reset();
+                btn::music_items::minor_boss_r.play(0.4);
+                _loops = 0;
                 _state = state::DONE;
             }
         }

@@ -265,9 +265,14 @@ namespace btn::hw::sprites
         }
     }
 
+    inline void hide(uint16_t& attr0)
+    {
+        attr0 = ATTR0_HIDE;
+    }
+
     inline void hide(handle_type& sprite)
     {
-        sprite.attr0 = ATTR0_HIDE;
+        hide(sprite.attr0);
     }
 
     inline void commit(const handle_type& sprites_ref, int offset, int count)

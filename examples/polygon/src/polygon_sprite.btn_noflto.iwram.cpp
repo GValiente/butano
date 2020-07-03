@@ -13,16 +13,39 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
     int y1 = to.y().integer();
     int dy = -btn::abs(y1 - y0);
 
+    hline* current_hline = hlines + y0;
+
     if(dy == 0)
     {
-        hline& hline = hlines[y0];
-        hline.ixl = btn::min(hline.ixl, x0);
-        hline.ixr = btn::max(hline.ixr, x0);
-        hline.ixl = btn::min(hline.ixl, x1);
-        hline.ixr = btn::max(hline.ixr, x1);
+        if(x0 < x1)
+        {
+            if(x0 < current_hline->ixl)
+            {
+                current_hline->ixl = x0;
+            }
+
+            if(x1 > current_hline->ixr)
+            {
+                current_hline->ixr = x1;
+            }
+        }
+        else
+        {
+            if(x1 < current_hline->ixl)
+            {
+                current_hline->ixl = x1;
+            }
+
+            if(x0 > current_hline->ixr)
+            {
+                current_hline->ixr = x0;
+            }
+        }
+
         return;
     }
 
+    const hline* last_hline = hlines + y1;
     int dx = btn::abs(x1 - x0);
     int sy = y0 < y1 ? 1 : -1;
 
@@ -30,16 +53,22 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
     {
         while(true)
         {
-            hline& hline = hlines[y0];
-            hline.ixl = btn::min(hline.ixl, x0);
-            hline.ixr = btn::max(hline.ixr, x0);
+            if(x0 < current_hline->ixl)
+            {
+                current_hline->ixl = x0;
+            }
 
-            if(y0 == y1)
+            if(x0 > current_hline->ixr)
+            {
+                current_hline->ixr = x0;
+            }
+
+            if(current_hline == last_hline)
             {
                 return;
             }
 
-            y0 += sy;
+            current_hline += sy;
         }
     }
 
@@ -48,11 +77,17 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
 
     while(true)
     {
-        hline& hline = hlines[y0];
-        hline.ixl = btn::min(hline.ixl, x0);
-        hline.ixr = btn::max(hline.ixr, x0);
+        if(x0 < current_hline->ixl)
+        {
+            current_hline->ixl = x0;
+        }
 
-        if(x0 == x1 && y0 == y1)
+        if(x0 > current_hline->ixr)
+        {
+            current_hline->ixr = x0;
+        }
+
+        if(x0 == x1 && current_hline == last_hline)
         {
             return;
         }
@@ -68,7 +103,7 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
         if(e2 <= dx) // e_xy + e_y < 0
         {
             err += dx;
-            y0 += sy;
+            current_hline += sy;
         }
     }
 }

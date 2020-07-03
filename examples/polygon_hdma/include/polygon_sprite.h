@@ -39,11 +39,14 @@ private:
     btn::sprite_tiles_ptr _tiles;
     btn::sprite_palette_ptr _palette;
     int _z_order;
+    int _minimum_y = 0;
+    int _maximum_y = btn::display::height() - 1;
 
     BTN_CODE_IWRAM static void _draw_line(const btn::fixed_point& from, const btn::fixed_point& to, hline* hlines);
 
     BTN_CODE_IWRAM static void _setup_attributes(const void* base_sprite_handle_ptr, const hline* hlines, int z_order,
-                                                 int max_polygon_sprites, uint16_t* hdma_source);
+                                                 int max_polygon_sprites, int minimum_y, int maximum_y,
+                                                 uint16_t* hdma_source);
 };
 
 #endif

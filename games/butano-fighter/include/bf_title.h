@@ -7,8 +7,6 @@
 #include "btn_sprite_actions.h"
 #include "btn_blending_actions.h"
 #include "btn_sprite_hblank_effects.h"
-#include "btn_sprite_third_attributes.h"
-#include "btn_sprite_regular_second_attributes.h"
 #include "btn_sprite_affine_mat_hblank_effects.h"
 #include "bf_scene.h"
 
@@ -58,11 +56,11 @@ private:
     btn::vector<btn::sprite_ptr, 2> _credits_text_sprites;
     btn::sprite_ptr _cursor_sprite;
     btn::fixed _butano_y_inc = -4.05;
-    btn::vector<btn::sprite_regular_second_attributes, btn::display::height()> _butano_x_hblank_effect_attributes;
-    btn::optional<btn::sprite_regular_second_attributes_hblank_effect_ptr> _butano_up_x_hblank_effect;
-    btn::optional<btn::sprite_regular_second_attributes_hblank_effect_ptr> _butano_down_x_hblank_effect;
+    btn::array<btn::fixed, btn::display::height()> _butano_x_hblank_effect_deltas;
+    btn::optional<btn::sprite_position_hblank_effect_ptr> _butano_up_x_hblank_effect;
+    btn::optional<btn::sprite_position_hblank_effect_ptr> _butano_down_x_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _butano_character_move_action;
-    btn::optional<btn::sprite_first_attributes_hblank_effect_ptr> _butano_character_hblank_effect;
+    btn::optional<btn::sprite_position_hblank_effect_ptr> _butano_character_hblank_effect;
     btn::optional<btn::sprite_move_to_action> _fighter_character_move_action;
     btn::optional<btn::sprite_move_to_action> _cursor_move_action;
     btn::optional<btn::sprite_scale_to_action> _cursor_scale_action;

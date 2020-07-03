@@ -69,29 +69,21 @@ namespace
         return result;
     }
 
-    [[nodiscard]] btn::sprite_regular_second_attributes_hblank_effect_ptr _create_x_hblank_effect(
-        const btn::sprite_ptr& sprite, const btn::ivector<btn::sprite_regular_second_attributes>& attributes)
+    [[nodiscard]] constexpr btn::array<btn::fixed, btn::display::height()> _create_butano_character_hblank_effect_deltas()
     {
-        btn::span<const btn::sprite_regular_second_attributes> span(attributes.data(), attributes.size());
-        return btn::sprite_regular_second_attributes_hblank_effect_ptr::create(sprite, span);
-    }
-
-    [[nodiscard]] constexpr btn::array<btn::sprite_first_attributes, btn::display::height()>
-    _create_butano_character_hblank_effect_attributes()
-    {
-        btn::array<btn::sprite_first_attributes, btn::display::height()> result;
+        btn::array<btn::fixed, btn::display::height()> result;
         int start = 64;
 
         for(int index = start; index < btn::display::height(); ++index)
         {
-            result[index].set_y(index - start);
+            result[index] = index - start;
         }
 
         return result;
     }
 
-    constexpr const btn::array<btn::sprite_first_attributes, btn::display::height()> butano_character_hblank_effect_attributes =
-            _create_butano_character_hblank_effect_attributes();
+    constexpr const btn::array<btn::fixed, btn::display::height()> butano_character_hblank_effect_deltas =
+            _create_butano_character_hblank_effect_deltas();
 
     [[nodiscard]] constexpr btn::array<btn::sprite_affine_mat_attributes, btn::display::height()>
     _create_fighter_character_hblank_effect_attributes()
@@ -119,9 +111,10 @@ title::title(const status& status, btn::sprite_text_generator& text_generator, b
     _butano_characters(_create_butano_characters()),
     _fighter_characters(_create_fighter_characters()),
     _cursor_sprite(btn::sprite_items::hero_head.create_sprite(0, 0)),
-    _butano_x_hblank_effect_attributes(btn::display::height(), _butano_up_sprite.regular_second_attributes()),
-    _butano_up_x_hblank_effect(_create_x_hblank_effect(_butano_up_sprite, _butano_x_hblank_effect_attributes)),
-    _butano_down_x_hblank_effect(_create_x_hblank_effect(_butano_down_sprite, _butano_x_hblank_effect_attributes))
+    _butano_up_x_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_horizontal(
+                                   _butano_up_sprite, _butano_x_hblank_effect_deltas)),
+    _butano_down_x_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_horizontal(
+                                     _butano_down_sprite, _butano_x_hblank_effect_deltas))
 {
     btn::string<20> high_experience_text("HIGH EXP: ");
     high_experience_text.append(btn::to_string<8>(status.high_experience()));
@@ -192,16 +185,9 @@ void title::_animate_butano_x()
             _butano_x_hblank_effect_speed /= 2;
         }
 
-        btn::fixed values[btn::display::height()];
-        generator.generate(values);
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            _butano_x_hblank_effect_attributes[index].set_x(values[index]);
-        }
-
-        _butano_up_x_hblank_effect->reload_attributes_ref();
-        _butano_down_x_hblank_effect->reload_attributes_ref();
+        generator.generate(_butano_x_hblank_effect_deltas);
+        _butano_up_x_hblank_effect->reload_deltas_ref();
+        _butano_down_x_hblank_effect->reload_deltas_ref();
     }
     else
     {
@@ -288,8 +274,8 @@ void title::_animate_butano_characters()
                 butano_character.set_y(0);
                 butano_character.set_visible(true);
                 _butano_character_move_action.emplace(butano_character, 12, position);
-                _butano_character_hblank_effect = btn::sprite_first_attributes_hblank_effect_ptr::create(
-                            butano_character, butano_character_hblank_effect_attributes);
+                _butano_character_hblank_effect = btn::sprite_position_hblank_effect_ptr::create_vertical(
+                            butano_character, butano_character_hblank_effect_deltas);
                 return;
             }
         }

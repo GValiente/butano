@@ -42,6 +42,11 @@ public:
         _position = position;
     }
 
+    constexpr void set_position(fixed x, fixed y)
+    {
+        _position = btn::fixed_point(x, y);
+    }
+
     [[nodiscard]] constexpr const fixed_size& dimensions() const
     {
         return _dimensions;
@@ -50,6 +55,11 @@ public:
     constexpr void set_dimensions(const fixed_size& dimensions)
     {
         _dimensions = dimensions;
+    }
+
+    constexpr void set_dimensions(fixed width, fixed height)
+    {
+        _dimensions = btn::fixed_size(width, height);
     }
 
     [[nodiscard]] constexpr fixed x() const

@@ -35,6 +35,11 @@ public:
         _position = position;
     }
 
+    constexpr void set_position(int x, int y)
+    {
+        _position = btn::point(x, y);
+    }
+
     [[nodiscard]] constexpr const size& dimensions() const
     {
         return _dimensions;
@@ -43,6 +48,11 @@ public:
     constexpr void set_dimensions(const size& dimensions)
     {
         _dimensions = dimensions;
+    }
+
+    constexpr void set_dimensions(int width, int height)
+    {
+        _dimensions = btn::size(width, height);
     }
 
     [[nodiscard]] constexpr int x() const

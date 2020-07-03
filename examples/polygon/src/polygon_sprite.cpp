@@ -49,10 +49,18 @@ void polygon_sprite::update()
 
             for(int index = 0, limit = vertices.size() - 1; index < limit; ++index)
             {
-                _draw_line(vertices[index], vertices[index + 1], hlines_data);
+                int x0 = vertices[index].x().integer();
+                int y0 = vertices[index].y().integer();
+                int x1 = vertices[index + 1].x().integer();
+                int y1 = vertices[index + 1].y().integer();
+                _draw_line(x0, y0, x1, y1, hlines_data);
             }
 
-            _draw_line(vertices.back(), vertices.front(), hlines_data);
+            int x0 = vertices.back().x().integer();
+            int y0 = vertices.back().y().integer();
+            int x1 = vertices[0].x().integer();
+            int y1 = vertices[0].y().integer();
+            _draw_line(x0, y0, x1, y1, hlines_data);
         }
 
         _setup_attributes(hlines_data, _vertical_values.data(), _horizontal_values.data());

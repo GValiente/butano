@@ -36,32 +36,38 @@ void polygon_sprite::update(int max_polygon_sprites, uint16_t* hdma_source)
 
         for(int index = 0, limit = vertices.size() - 1; index < limit; ++index)
         {
-            int y = vertices[index].y().integer();
+            int x0 = vertices[index].x().integer();
+            int y0 = vertices[index].y().integer();
+            int x1 = vertices[index + 1].x().integer();
+            int y1 = vertices[index + 1].y().integer();
 
-            if(y < new_minimum_y)
+            if(y0 < new_minimum_y)
             {
-                new_minimum_y = y;
+                new_minimum_y = y0;
             }
-            else if(y > new_maximum_y)
+            else if(y0 > new_maximum_y)
             {
-                new_maximum_y = y;
+                new_maximum_y = y0;
             }
 
-            _draw_line(vertices[index], vertices[index + 1], hlines_data);
+            _draw_line(x0, y0, x1, y1, hlines_data);
         }
 
-        int y = vertices.back().y().integer();
+        int x0 = vertices.back().x().integer();
+        int y0 = vertices.back().y().integer();
+        int x1 = vertices[0].x().integer();
+        int y1 = vertices[0].y().integer();
 
-        if(y < new_minimum_y)
+        if(y0 < new_minimum_y)
         {
-            new_minimum_y = y;
+            new_minimum_y = y0;
         }
-        else if(y > new_maximum_y)
+        else if(y0 > new_maximum_y)
         {
-            new_maximum_y = y;
+            new_maximum_y = y0;
         }
 
-        _draw_line(vertices.back(), vertices.front(), hlines_data);
+        _draw_line(x0, y0, x1, y1, hlines_data);
     }
 
     btn::hw::sprites::handle_type base_sprite_handle;

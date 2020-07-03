@@ -42,7 +42,13 @@ private:
     int _minimum_y = 0;
     int _maximum_y = btn::display::height() - 1;
 
-    BTN_CODE_IWRAM static void _draw_line(const btn::fixed_point& from, const btn::fixed_point& to, hline* hlines);
+    BTN_CODE_IWRAM static void _draw_line(int x0, int y0, int x1, int y1, hline* hlines);
+
+    BTN_CODE_IWRAM static void _draw_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                   hline* hlines);
+
+    BTN_CODE_IWRAM static void _draw_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                   hline* hlines);
 
     BTN_CODE_IWRAM static void _setup_attributes(const void* base_sprite_handle_ptr, const hline* hlines, int z_order,
                                                  int max_polygon_sprites, int minimum_y, int maximum_y,

@@ -104,8 +104,8 @@ int main()
 
     const int max_polygon_sprites = 9;
     using hdma_source_array = btn::array<uint16_t, btn::display::height() * 4 * max_polygon_sprites>;
-    btn::unique_ptr<hdma_source_array> initial_hdma_source(new hdma_source_array());
-    hdma_source_array final_hdma_source;
+    btn::unique_ptr<hdma_source_array> hdma_source(new hdma_source_array());
+    uint16_t* hdma_source_data = hdma_source->data();
 
     while(true)
     {
@@ -131,24 +131,17 @@ int main()
             demo_polygon.update(random);
         }
 
-        uint16_t* initial_hdma_source_data = initial_hdma_source->data();
-
         for(polygon_sprite& demo_polygon_sprite : *demo_polygon_sprites)
         {
-            demo_polygon_sprite.update(max_polygon_sprites, initial_hdma_source_data);
+            demo_polygon_sprite.update(max_polygon_sprites, hdma_source_data);
         }
 
-        user_polygon_sprite.update(max_polygon_sprites, initial_hdma_source_data);
+        user_polygon_sprite.update(max_polygon_sprites, hdma_source_data);
 
         info.update();
         stats.update();
         btn::core::update();
-
-        uint16_t* final_hdma_source_data = final_hdma_source.data();
-        btn::hw::hdma::stop();
-        btn::memory::copy(*initial_hdma_source_data, initial_hdma_source->size(), *final_hdma_source_data);
-
-        btn::span<const uint16_t> hdma_source_span(final_hdma_source_data, 4 * max_polygon_sprites);
-        btn::hw::hdma::start(final_hdma_source.data(), 4 * max_polygon_sprites, &btn::hw::sprites::vram()[64].attr0);
+        btn::hw::hdma::start(hdma_source_data, 4 * max_polygon_sprites,
+                             &btn::hw::sprites::vram()[128 - max_polygon_sprites].attr0);
     }
 }

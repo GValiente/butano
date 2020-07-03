@@ -1,22 +1,13 @@
 #include "polygon_sprite.h"
 
-#include "btn_math.h"
-#include "btn_fixed_point.h"
-
-void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_point& to, hline* hlines)
+void polygon_sprite::_draw_line(int x0, int y0, int x1, int y1, hline* hlines)
 {
-    // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+    // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
 
-    int x0 = from.x().integer();
-    int y0 = from.y().integer();
-    int x1 = to.x().integer();
-    int y1 = to.y().integer();
-    int dy = -btn::abs(y1 - y0);
-
-    hline* current_hline = hlines + y0;
-
-    if(dy == 0)
+    if(y0 == y1)
     {
+        hline* current_hline = hlines + y0;
+
         if(x0 < x1)
         {
             if(x0 < current_hline->ixl)
@@ -45,12 +36,21 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
         return;
     }
 
-    const hline* last_hline = hlines + y1;
-    int dx = btn::abs(x1 - x0);
-    int sy = y0 < y1 ? 1 : -1;
-
-    if(dx == 0)
+    if(y0 > y1)
     {
+        btn::swap(x0, x1);
+        btn::swap(y0, y1);
+    }
+
+    hline* current_hline = hlines + y0;
+    const hline* last_hline = hlines + y1;
+    int delta_x = x1 - x0;
+    int delta_y = y1 - y0;
+
+    if(delta_x == 0)
+    {
+        int sy = delta_y > 0 ? 1 : -1;
+
         while(true)
         {
             if(x0 < current_hline->ixl)
@@ -72,11 +72,126 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
         }
     }
 
-    int sx = x0 < x1 ? 1 : -1;
-    int err = dx + dy;  // error value e_xy
+    int x_direction;
 
-    while(true)
+    if(delta_x > 0)
     {
+        x_direction = 1;
+    }
+    else
+    {
+        delta_x = -delta_x;
+        x_direction = -1;
+    }
+
+    if(delta_x > delta_y)
+    {
+        _draw_line_octant_0(x0, y0, delta_x, delta_y, x_direction, hlines);
+    }
+    else
+    {
+        _draw_line_octant_1(x0, y0, delta_x, delta_y, x_direction, hlines);
+    }
+}
+
+void polygon_sprite::_draw_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+{
+    // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
+
+    hline* current_hline = hlines + y0;
+
+    if(x0 < current_hline->ixl)
+    {
+        current_hline->ixl = x0;
+    }
+
+    if(x0 > current_hline->ixr)
+    {
+        current_hline->ixr = x0;
+    }
+
+    int delta_y2 = delta_y * 2;
+    int delta_y2_minus_delta_x2 = delta_y2 - (delta_x * 2);
+    int error_term = delta_y2 - delta_x;
+    bool x_direction_positive = x_direction > 0;
+
+    while(delta_x--)
+    {
+        bool new_line = error_term >= 0;
+
+        if(new_line)
+        {
+            ++current_hline;
+            error_term += delta_y2_minus_delta_x2;
+            x0 += x_direction;
+
+            if(x0 < current_hline->ixl)
+            {
+                current_hline->ixl = x0;
+            }
+
+            if(x0 > current_hline->ixr)
+            {
+                current_hline->ixr = x0;
+            }
+        }
+        else
+        {
+            error_term += delta_y2;
+            x0 += x_direction;
+
+            if(x_direction_positive)
+            {
+                if(x0 > current_hline->ixr)
+                {
+                    current_hline->ixr = x0;
+                }
+            }
+            else
+            {
+                if(x0 < current_hline->ixl)
+                {
+                    current_hline->ixl = x0;
+                }
+            }
+        }
+    }
+}
+
+void polygon_sprite::_draw_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+{
+    // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
+
+    hline* current_hline = hlines + y0;
+
+    if(x0 < current_hline->ixl)
+    {
+        current_hline->ixl = x0;
+    }
+
+    if(x0 > current_hline->ixr)
+    {
+        current_hline->ixr = x0;
+    }
+
+    int delta_x2 = delta_x * 2;
+    int delta_y2_minus_delta_x2 = delta_x2 - (delta_y * 2);
+    int error_term = delta_x2 - delta_y;
+
+    while(delta_y--)
+    {
+        if(error_term >= 0)
+        {
+            x0 += x_direction;
+            error_term += delta_y2_minus_delta_x2;
+        }
+        else
+        {
+            error_term += delta_x2;
+        }
+
+        ++current_hline;
+
         if(x0 < current_hline->ixl)
         {
             current_hline->ixl = x0;
@@ -85,25 +200,6 @@ void polygon_sprite::_draw_line(const btn::fixed_point& from, const btn::fixed_p
         if(x0 > current_hline->ixr)
         {
             current_hline->ixr = x0;
-        }
-
-        if(x0 == x1 && current_hline == last_hline)
-        {
-            return;
-        }
-
-        int e2 = err * 2;
-
-        if(e2 >= dy) // e_xy + e_x > 0
-        {
-            err += dy;
-            x0 += sx;
-        }
-
-        if(e2 <= dx) // e_xy + e_y < 0
-        {
-            err += dx;
-            current_hline += sy;
         }
     }
 }

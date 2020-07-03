@@ -121,18 +121,17 @@ void polygon_sprite::_setup_attributes(const void* base_sprite_handle_ptr, const
 
     for(int index = 0; index < btn::display::height(); ++index)
     {
-        sprite_hdma_source[0] = base_sprite_handle.attr0;
-        sprite_hdma_source[1] = base_sprite_handle.attr1;
-        sprite_hdma_source[2] = base_sprite_handle.attr2;
-
         const hline& hline = hlines[index];
         int ixl = hline.ixl;
         int length = hline.ixr - ixl;
 
         if(length > 0)
         {
+            sprite_hdma_source[0] = base_sprite_handle.attr0;
             btn::hw::sprites::set_y(index - length + 1, sprite_hdma_source[0]);
+            sprite_hdma_source[1] = base_sprite_handle.attr1;
             btn::hw::sprites::set_x(ixl, sprite_hdma_source[1]);
+            sprite_hdma_source[2] = base_sprite_handle.attr2;
         }
         else
         {

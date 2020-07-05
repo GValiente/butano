@@ -24,6 +24,11 @@ enum class sprite_shape;
 enum class palette_bpp_mode;
 enum class sprite_double_size_mode;
 
+namespace sorted_sprites
+{
+    class layer;
+}
+
 namespace sprites_manager
 {
     using id_type = void*;
@@ -197,9 +202,9 @@ namespace sprites_manager
 
     void commit();
 
-    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl();
+    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(sorted_sprites::layer& layer);
 
-    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles);
+    BTN_CODE_IWRAM void _rebuild_handles_impl(sorted_sprites::layer& layer, void* hw_handles, int& visible_items_count);
 
     #if BTN_CFG_CAMERA_ENABLED
         struct update_camera_impl_result
@@ -208,7 +213,8 @@ namespace sprites_manager
             bool rebuild_handles = false;
         };
 
-        [[nodiscard]] BTN_CODE_IWRAM update_camera_impl_result _update_camera_impl(fixed_point camera_position);
+        BTN_CODE_IWRAM void _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer,
+                                                update_camera_impl_result& result);
     #endif
 }
 

@@ -143,7 +143,7 @@ namespace
         {
             data.rebuild_handles = true;
 
-            for(auto& layer : sorted_sprites::layers())
+            for(sorted_sprites::layer* layer : sorted_sprites::layers())
             {
                 for(item_type& item : *layer)
                 {
@@ -157,8 +157,23 @@ namespace
     {
         if(data.rebuild_handles)
         {
+            hw::sprites::handle_type* handles = data.handles;
+            int visible_items_count = 0;
+
+            for(sorted_sprites::layer* layer : sorted_sprites::layers())
+            {
+                _rebuild_handles_impl(*layer, handles, visible_items_count);
+            }
+
             int last_visible_items_count = data.last_visible_items_count;
-            int visible_items_count = _rebuild_handles_impl(last_visible_items_count, data.handles);
+            int hide_handles_index = visible_items_count;
+
+            while(hide_handles_index < last_visible_items_count)
+            {
+                hw::sprites::hide(handles[hide_handles_index]);
+                ++hide_handles_index;
+            }
+
             int to_commit_items_count = max(visible_items_count, last_visible_items_count);
             data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
@@ -175,9 +190,15 @@ namespace
     {
         if(data.check_items_on_screen)
         {
+            bool rebuild_handles = false;
             data.check_items_on_screen = false;
 
-            if(_check_items_on_screen_impl())
+            for(sorted_sprites::layer* layer : sorted_sprites::layers())
+            {
+                rebuild_handles |= _check_items_on_screen_impl(*layer);
+            }
+
+            if(rebuild_handles)
             {
                 _enable_rebuild_handles();
             }
@@ -1159,7 +1180,14 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
 #if BTN_CFG_CAMERA_ENABLED
     void update_camera()
     {
-        update_camera_impl_result result = _update_camera_impl(camera::position());
+        fixed_point camera_position = camera::position();
+        update_camera_impl_result result;
+
+        for(sorted_sprites::layer* layer : sorted_sprites::layers())
+        {
+            _update_camera_impl(camera_position, *layer, result);
+        }
+
         data.check_items_on_screen |= result.check_items_on_screen;
         data.rebuild_handles |= result.rebuild_handles;
     }

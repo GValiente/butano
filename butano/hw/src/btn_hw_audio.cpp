@@ -40,14 +40,36 @@ namespace
 
     constexpr int _mix_length()
     {
-        return BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_8 ? MM_MIXLEN_8KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_10 ? MM_MIXLEN_10KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_13 ? MM_MIXLEN_13KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_16 ? MM_MIXLEN_16KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_18 ? MM_MIXLEN_18KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_21 ? MM_MIXLEN_21KHZ :
-                BTN_CFG_AUDIO_KHZ == BTN_AUDIO_KHZ_27 ? MM_MIXLEN_27KHZ :
-                MM_MIXLEN_31KHZ;
+        switch(BTN_CFG_AUDIO_MIXING_RATE)
+        {
+
+        case BTN_AUDIO_MIXING_RATE_8_KHZ:
+            return MM_MIXLEN_8KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_10_KHZ:
+            return MM_MIXLEN_10KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_13_KHZ:
+            return MM_MIXLEN_13KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_16_KHZ:
+            return MM_MIXLEN_16KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_18_KHZ:
+            return MM_MIXLEN_18KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_21_KHZ:
+            return MM_MIXLEN_21KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_27_KHZ:
+            return MM_MIXLEN_27KHZ;
+
+        case BTN_AUDIO_MIXING_RATE_31_KHZ:
+            return MM_MIXLEN_31KHZ;
+
+        default:
+            BTN_CONSTEXPR_ERROR("Invalid maxing rate");
+        }
     }
 
     constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
@@ -97,7 +119,7 @@ void init()
     irq::replace_or_push_back(irq::id::VBLANK, mmVBlank);
 
     mm_gba_system maxmod_info;
-    maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_KHZ);
+    maxmod_info.mixing_mode = mm_mixmode(BTN_CFG_AUDIO_MIXING_RATE);
     maxmod_info.mod_channel_count = _max_channels;
     maxmod_info.mix_channel_count = _max_channels;
     maxmod_info.module_channels = mm_addr(maxmod_engine_buffer);

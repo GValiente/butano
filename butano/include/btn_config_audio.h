@@ -1,10 +1,10 @@
 #ifndef BTN_CONFIG_AUDIO_H
 #define BTN_CONFIG_AUDIO_H
 
-#include "btn_audio_khz.h"
+#include "btn_audio_mixing_rate.h"
 
-#ifndef BTN_CFG_AUDIO_KHZ
-    #define BTN_CFG_AUDIO_KHZ BTN_AUDIO_KHZ_21
+#ifndef BTN_CFG_AUDIO_MIXING_RATE
+    #define BTN_CFG_AUDIO_MIXING_RATE BTN_AUDIO_MIXING_RATE_21_KHZ
 #endif
 
 #ifndef BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS

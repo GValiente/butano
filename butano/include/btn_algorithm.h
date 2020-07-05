@@ -32,6 +32,8 @@ namespace btn
     using std::remove_if;
 
     using std::sort;
+
+    using std::reverse;
 }
 
 #endif

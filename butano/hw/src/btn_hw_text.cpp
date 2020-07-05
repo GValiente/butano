@@ -15,12 +15,31 @@ namespace btn::hw::text
 
 namespace
 {
-    [[nodiscard]] int _append_high_value(char* output_data)
+    template<typename Type>
+    [[nodiscard]] int _to_string(Type value, char* output_data)
     {
-        output_data[0] = '+';
-        output_data[1] = '!';
-        output_data[2] = '+';
-        return 3;
+        if(value < 0)
+        {
+            *output_data = '-';
+            ++output_data;
+            return _to_string(-value, output_data) + 1;
+        }
+
+        char* current_output_data = output_data;
+
+        while(value > 9)
+        {
+            auto digit = int(value % 10);
+            value /= 10;
+            *current_output_data = '0' + digit;
+            ++current_output_data;
+        }
+
+        auto digit = int(value);
+        *current_output_data = '0' + digit;
+        ++current_output_data;
+        std::reverse(output_data, current_output_data);
+        return current_output_data - output_data;
     }
 }
 
@@ -44,7 +63,7 @@ int parse(int value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;
@@ -70,7 +89,7 @@ int parse(long value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;
@@ -96,7 +115,7 @@ int parse(int64_t value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;
@@ -121,7 +140,7 @@ int parse(unsigned value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;
@@ -146,7 +165,7 @@ int parse(unsigned long value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;
@@ -171,7 +190,7 @@ int parse(uint64_t value, array<char, 32>& output)
     }
     else
     {
-        size = _append_high_value(output_data);
+        size = _to_string(value, output_data);
     }
 
     return size;

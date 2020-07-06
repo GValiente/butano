@@ -10,7 +10,6 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_sprite_items_hero_head.h"
-#include "btn_sprite_first_attributes.h"
 #include "btn_sprite_items_butano_font.h"
 #include "btn_sprite_items_fighter_font.h"
 #include "btn_sprite_affine_mat_attributes.h"

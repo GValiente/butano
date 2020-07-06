@@ -28,7 +28,8 @@ public:
         TANK
     };
 
-    static btn::unique_ptr<boss> create(type type, const btn::sprite_palette_ptr& damage_palette);
+    static btn::unique_ptr<boss> create(type type, const btn::fixed_point& hero_position,
+                                        const btn::sprite_palette_ptr& damage_palette);
 
     virtual ~boss() = default;
 
@@ -49,7 +50,7 @@ protected:
 
     virtual void _update_alive(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) = 0;
 
-    [[nodiscard]] virtual bool _update_dead() = 0;
+    [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position) = 0;
 
     virtual void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) = 0;
 

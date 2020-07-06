@@ -98,7 +98,7 @@ void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& 
 
         if(boss_intro.done())
         {
-            _boss = boss::create(_boss_type, _damage_palette);
+            _boss = boss::create(_boss_type, hero_position, _damage_palette);
         }
     }
 }

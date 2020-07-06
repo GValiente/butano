@@ -15,7 +15,8 @@ namespace
     constexpr const int damage_frames = 12;
 }
 
-btn::unique_ptr<boss> boss::create(type type, const btn::sprite_palette_ptr& damage_palette)
+btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_position,
+                                   const btn::sprite_palette_ptr& damage_palette)
 {
     btn::unique_ptr<boss> result;
 
@@ -23,7 +24,7 @@ btn::unique_ptr<boss> boss::create(type type, const btn::sprite_palette_ptr& dam
     {
 
     case type::TANK:
-        result.reset(new tank_boss(damage_palette));
+        result.reset(new tank_boss(hero_position, damage_palette));
         break;
 
     default:
@@ -101,7 +102,7 @@ void boss::update(const btn::fixed_point& hero_position, const hero_bomb& hero_b
     {
         enemy_bullets.clear();
 
-        if(_update_dead())
+        if(_update_dead(hero_position))
         {
             _done = true;
         }

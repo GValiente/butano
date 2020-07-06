@@ -2,6 +2,7 @@
 
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_tank_base.h"
+#include "btn_sprite_items_tank_jelly.h"
 #include "btn_sprite_items_tank_cannon.h"
 #include "btn_sprite_items_tank_footprint.h"
 #include "bf_constants.h"
@@ -9,9 +10,16 @@
 namespace bf::game
 {
 
-tank_boss::tank_boss(const btn::sprite_palette_ptr& damage_palette) :
+namespace
+{
+    constexpr const int jelly_x = 31;
+    constexpr const int jelly_damage_frames = 60;
+}
+
+tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
     boss(500, 500, _tank_rects, damage_palette),
-   _base_palette(btn::sprite_items::tank_base.palette_item().create_palette()),
+    _base_palette(btn::sprite_items::tank_base.palette_item().create_palette()),
+    _jelly_palette(btn::sprite_items::tank_jelly.palette_item().create_palette()),
     _cannon_palette(btn::sprite_items::tank_cannon.palette_item().create_palette()),
     _y(-70)
 {
@@ -21,7 +29,7 @@ tank_boss::tank_boss(const btn::sprite_palette_ptr& damage_palette) :
     {
         btn::sprite_builder builder(btn::sprite_items::tank_footprint);
         builder.set_position(-32, footprint_y + (index * 32));
-        builder.set_z_order(constants::enemies_z_order);
+        builder.set_z_order(constants::intro_sprites_z_order);
         _footprint_sprites.push_back(builder.release_build());
 
         builder = btn::sprite_builder(btn::sprite_items::tank_footprint);
@@ -48,7 +56,12 @@ tank_boss::tank_boss(const btn::sprite_palette_ptr& damage_palette) :
         _base_sprites.push_back(builder.release_build());
     }
 
-    btn::sprite_builder builder(btn::sprite_items::tank_cannon);
+    btn::sprite_builder builder(btn::sprite_items::tank_jelly);
+    builder.set_x(jelly_x);
+    builder.set_z_order(constants::enemies_z_order);
+    _jelly_sprite = builder.release_build();
+
+    builder = btn::sprite_builder(btn::sprite_items::tank_cannon);
     builder.set_rotation_angle(45);
     builder.set_z_order(constants::enemies_z_order);
     _cannon_sprite = builder.release_build();
@@ -59,6 +72,7 @@ tank_boss::tank_boss(const btn::sprite_palette_ptr& damage_palette) :
     btn::fixed y = _calculate_y();
     _update_footprint_sprites(y);
     _update_base_sprites(y);
+    _update_jelly_sprite(y, hero_position);
     _update_cannon_sprite(y);
     _update_rects(y);
 }
@@ -68,26 +82,31 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, enemy_bulle
     btn::fixed y = _calculate_y();
     _update_footprint_sprites(y);
     _update_base_sprites(y);
+    _update_jelly_sprite(y, hero_position);
     _update_cannon_sprite(y);
     _update_rects(y);
 }
 
-bool tank_boss::_update_dead()
+bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
 {
     btn::fixed y = _calculate_y();
     _update_footprint_sprites(y);
     _update_base_sprites(y);
+    _update_jelly_sprite(y, hero_position);
     _update_cannon_sprite(y);
     return false;
 }
 
 void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette)
 {
+    _jelly_damage_counter = jelly_damage_frames;
+
     for(btn::sprite_ptr& sprite : _base_sprites)
     {
         sprite.set_palette(damage_palette);
     }
 
+    _jelly_sprite->set_palette(damage_palette);
     _cannon_sprite->set_palette(damage_palette);
 }
 
@@ -98,6 +117,7 @@ void tank_boss::_hide_damage_palette()
         sprite.set_palette(_base_palette);
     }
 
+    _jelly_sprite->set_palette(_jelly_palette);
     _cannon_sprite->set_palette(_cannon_palette);
 }
 
@@ -166,6 +186,36 @@ void tank_boss::_update_base_sprites(btn::fixed y)
         _base_sprites[sprite_index + 1].set_y(base_y);
         _base_sprites[sprite_index + 2].set_y(base_y);
     }
+}
+
+void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_position)
+{
+    btn::sprite_ptr& jelly_sprite = *_jelly_sprite;
+
+    if(_jelly_damage_counter)
+    {
+        --_jelly_damage_counter;
+
+        if(_jelly_damage_counter)
+        {
+            if(! _jelly_crying)
+            {
+                _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
+                            jelly_sprite, 16, btn::sprite_items::tank_jelly, 2, 3);
+                _jelly_crying = true;
+            }
+        }
+        else
+        {
+            _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
+                        jelly_sprite, 16, btn::sprite_items::tank_jelly, 0, 1);
+            _jelly_crying = false;
+        }
+    }
+
+    jelly_sprite.set_y(y + 20);
+    jelly_sprite.set_horizontal_flip(hero_position.x() < jelly_x);
+    _jelly_animate_action->update();
 }
 
 void tank_boss::_update_cannon_sprite(btn::fixed y)

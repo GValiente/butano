@@ -1,7 +1,7 @@
 #ifndef BF_STATUS_H
 #define BF_STATUS_H
 
-#include "bf_game_stage_1.h"
+#include "bf_game_stage.h"
 
 namespace bf
 {
@@ -59,7 +59,7 @@ public:
     void mark_how_to_play_as_viewed();
 
 private:
-    const game::stage* _current_stage = &game::stage_1::get();
+    const game::stage* _current_stage;
     int _level = 2;
     int _experience = 0;
     int _bombs_count = 2;

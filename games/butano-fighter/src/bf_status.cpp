@@ -5,6 +5,7 @@
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
 #include "btn_input_string_stream.h"
+#include "bf_game_stage_1.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf
@@ -46,7 +47,8 @@ namespace
     }
 }
 
-status::status()
+status::status() :
+    _current_stage(&game::stage_1::get())
 {
     btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
     int min_experience = 0;

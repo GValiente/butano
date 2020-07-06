@@ -56,6 +56,10 @@ void _rebuild_handles_impl(sorted_sprites::layer& layer, void* hw_handles, int& 
             item.handles_index = int8_t(local_visible_items_count);
             ++local_visible_items_count;
         }
+        else
+        {
+            item.handles_index = -1;
+        }
     }
 
     visible_items_count = local_visible_items_count;

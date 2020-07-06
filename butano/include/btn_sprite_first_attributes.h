@@ -12,11 +12,13 @@ class sprite_first_attributes
 public:
     constexpr sprite_first_attributes() = default;
 
-    constexpr sprite_first_attributes(fixed y, bool mosaic_enabled, bool blending_enabled, bool window_enabled) :
+    constexpr sprite_first_attributes(fixed y, bool mosaic_enabled, bool blending_enabled, bool window_enabled,
+                                      bool visible) :
         _y(y),
         _mosaic_enabled(mosaic_enabled),
         _blending_enabled(blending_enabled),
-        _window_enabled(window_enabled)
+        _window_enabled(window_enabled),
+        _visible(visible)
     {
         BTN_CONSTEXPR_ASSERT(! blending_enabled || ! window_enabled,
                              "Blending and window can't be enabled at the same time");
@@ -68,10 +70,20 @@ public:
         _window_enabled = window_enabled;
     }
 
+    [[nodiscard]] constexpr bool visible() const
+    {
+        return _visible;
+    }
+
+    constexpr void set_visible(bool visible)
+    {
+        _visible = visible;
+    }
+
     [[nodiscard]] constexpr friend bool operator==(const sprite_first_attributes& a, const sprite_first_attributes& b)
     {
-        return a._y == b._y && a._mosaic_enabled == b._mosaic_enabled &&
-                a._blending_enabled == b._blending_enabled && a._window_enabled == b._window_enabled;
+        return a._y == b._y && a._mosaic_enabled == b._mosaic_enabled && a._blending_enabled == b._blending_enabled &&
+                a._window_enabled == b._window_enabled && a._visible == b._visible;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const sprite_first_attributes& a, const sprite_first_attributes& b)
@@ -84,6 +96,7 @@ private:
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
     bool _window_enabled = false;
+    bool _visible = false;
 };
 
 }

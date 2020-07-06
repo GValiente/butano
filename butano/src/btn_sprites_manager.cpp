@@ -938,7 +938,8 @@ sprite_first_attributes first_attributes(id_type id)
     auto item = static_cast<const item_type*>(id);
     const hw::sprites::handle_type& handle = item->handle;
     return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle),
-                                   hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle));
+                                   hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle),
+                                   item->visible);
 }
 
 void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes)
@@ -948,6 +949,7 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
     hw::sprites::set_mosaic_enabled(first_attributes.mosaic_enabled(), handle);
     hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), handle);
     hw::sprites::set_window_enabled(first_attributes.window_enabled(), handle);
+    set_visible(id, first_attributes.visible());
     set_position(id, fixed_point(item->position.x(), first_attributes.y()));
 }
 
@@ -1088,11 +1090,19 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
-            int y = first_attributes.y().integer();
-            int dest_value = hw::sprites::first_attributes(
-                        y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
-                        first_attributes.blending_enabled(), first_attributes.window_enabled());
-            dest_ptr[index] = uint16_t(dest_value);
+
+            if(first_attributes.visible())
+            {
+                int y = first_attributes.y().integer();
+                int dest_value = hw::sprites::first_attributes(
+                            y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
+                            first_attributes.blending_enabled(), first_attributes.window_enabled());
+                dest_ptr[index] = uint16_t(dest_value);
+            }
+            else
+            {
+                hw::sprites::hide(dest_ptr[index]);
+            }
         }
     }
     else
@@ -1100,11 +1110,19 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
-            int y = (hw_y + first_attributes.y()).integer();
-            int dest_value = hw::sprites::first_attributes(
-                        y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
-                        first_attributes.blending_enabled(), first_attributes.window_enabled());
-            dest_ptr[index] = uint16_t(dest_value);
+
+            if(first_attributes.visible())
+            {
+                int y = (hw_y + first_attributes.y()).integer();
+                int dest_value = hw::sprites::first_attributes(
+                            y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
+                            first_attributes.blending_enabled(), first_attributes.window_enabled());
+                dest_ptr[index] = uint16_t(dest_value);
+            }
+            else
+            {
+                hw::sprites::hide(dest_ptr[index]);
+            }
         }
     }
 }

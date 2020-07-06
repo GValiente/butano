@@ -35,6 +35,8 @@ namespace btn::sorted_sprites
     void insert(sprites_manager_item& item);
 
     void erase(sprites_manager_item& item);
+
+    [[nodiscard]] bool put_in_front_of_layer(sprites_manager_item& item);
 }
 
 #endif

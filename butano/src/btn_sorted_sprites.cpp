@@ -23,6 +23,14 @@ namespace
     };
 
     BTN_DATA_EWRAM static_data data;
+
+    [[nodiscard]] ivector<layer*>::iterator _find_layers_it(sort_key key)
+    {
+        layers_type& layers = data.layer_ptrs;
+        return lower_bound(layers.begin(), layers.end(), key, [](const layer* layer, sort_key sort_key) {
+            return layer->layer_sort_key() < sort_key;
+        });
+    }
 }
 
 layers_type& layers()
@@ -34,19 +42,14 @@ void insert(sprites_manager_item& item)
 {
     layers_type& layers = data.layer_ptrs;
     sort_key sort_key = item.sprite_sort_key;
-    layer new_layer(sort_key);
-    auto layers_end = layers.end();
-    auto layers_it = lower_bound(layers.begin(), layers_end, &new_layer, [](const layer* a, const layer* b) {
-        return a->layer_sort_key() < b->layer_sort_key();
-    });
+    ivector<layer*>::iterator layers_it = _find_layers_it(sort_key);
 
-    if(layers_it == layers_end)
+    if(layers_it == layers.end())
     {
         BTN_ASSERT(! layers.full(), "No more sprite sort layers available");
 
         layer& pool_layer = data.layer_pool.create(sort_key);
         layers.push_back(&pool_layer);
-        layers_it = layers_end;
     }
     else if(sort_key != (*layers_it)->layer_sort_key())
     {
@@ -64,13 +67,9 @@ void erase(sprites_manager_item& item)
 {
     layers_type& layers = data.layer_ptrs;
     sort_key sort_key = item.sprite_sort_key;
-    layer new_list(sort_key);
-    auto layers_end = layers.end();
-    auto layers_it = lower_bound(layers.begin(), layers_end, &new_list, [](const layer* a, const layer* b) {
-        return a->layer_sort_key() < b->layer_sort_key();
-    });
+    ivector<layer*>::iterator layers_it = _find_layers_it(sort_key);
 
-    BTN_ASSERT(layers_it != layers_end,
+    BTN_ASSERT(layers_it != layers.end(),
                "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
     BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(),
                "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
@@ -83,6 +82,29 @@ void erase(sprites_manager_item& item)
         layers.erase(layers_it);
         data.layer_pool.destroy(*layer);
     }
+}
+
+bool put_in_front_of_layer(sprites_manager_item& item)
+{
+    layers_type& layers = data.layer_ptrs;
+    sort_key sort_key = item.sprite_sort_key;
+    ivector<layer*>::iterator layers_it = _find_layers_it(sort_key);
+
+    BTN_ASSERT(layers_it != layers.end(),
+               "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
+    BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(),
+               "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
+
+    layer* layer = *layers_it;
+    bool sort = &layer->front() != &item;
+
+    if(sort)
+    {
+        layer->erase(item);
+        layer->push_front(item);
+    }
+
+    return sort;
 }
 
 }

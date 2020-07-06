@@ -684,12 +684,13 @@ void set_z_order(id_type id, int z_order)
 void put_in_front_of_sort_layer(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    sorted_sprites::erase(*item);
-    sorted_sprites::insert(*item);
 
-    if(! item->check_on_screen && item->on_screen)
+    if(sorted_sprites::put_in_front_of_layer(*item))
     {
-        _enable_rebuild_handles();
+        if(! item->check_on_screen && item->on_screen)
+        {
+            _enable_rebuild_handles();
+        }
     }
 }
 

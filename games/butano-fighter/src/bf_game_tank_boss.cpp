@@ -1,5 +1,6 @@
 #include "bf_game_tank_boss.h"
 
+#include "btn_math.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_tank_base.h"
 #include "btn_sprite_items_tank_jelly.h"
@@ -14,6 +15,18 @@ namespace
 {
     constexpr const int jelly_x = 31;
     constexpr const int jelly_damage_frames = 60;
+
+    [[nodiscard]] btn::fixed_point _cannon_end_position(btn::fixed rotation_angle, btn::fixed y)
+    {
+        return btn::fixed_point(btn::degrees_sin(rotation_angle) * -32, (btn::degrees_cos(rotation_angle) * -32) + y);
+    }
+
+    [[nodiscard]] btn::fixed _squared_distance(const btn::fixed_point& a, const btn::fixed_point& b)
+    {
+        btn::fixed distance_x = a.x() - b.x();
+        btn::fixed distance_y = a.y() - b.y();
+        return (distance_x * distance_x) + (distance_y * distance_y);
+    }
 }
 
 tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
@@ -62,9 +75,12 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     _jelly_sprite = builder.release_build();
 
     builder = btn::sprite_builder(btn::sprite_items::tank_cannon);
-    builder.set_rotation_angle(45);
+    builder.set_rotation_angle(180);
     builder.set_z_order(constants::enemies_z_order);
     _cannon_sprite = builder.release_build();
+
+    builder = btn::sprite_builder(btn::sprite_items::tank_jelly);
+    builder.set_z_order(constants::enemies_z_order);
 
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(84, 58));
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(76, 74));
@@ -73,7 +89,7 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     _update_footprint_sprites(y);
     _update_base_sprites(y);
     _update_jelly_sprite(y, hero_position);
-    _update_cannon_sprite(y);
+    _update_cannon_sprite(y, hero_position);
     _update_rects(y);
 }
 
@@ -83,7 +99,7 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, enemy_bulle
     _update_footprint_sprites(y);
     _update_base_sprites(y);
     _update_jelly_sprite(y, hero_position);
-    _update_cannon_sprite(y);
+    _update_cannon_sprite(y, hero_position);
     _update_rects(y);
 }
 
@@ -93,7 +109,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
     _update_footprint_sprites(y);
     _update_base_sprites(y);
     _update_jelly_sprite(y, hero_position);
-    _update_cannon_sprite(y);
+    _update_cannon_sprite(y, hero_position);
     return false;
 }
 
@@ -121,7 +137,7 @@ void tank_boss::_hide_damage_palette()
     _cannon_sprite->set_palette(_cannon_palette);
 }
 
-[[nodiscard]] btn::fixed tank_boss::_calculate_y()
+btn::fixed tank_boss::_calculate_y()
 {
     --_vibration_counter;
 
@@ -218,9 +234,52 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
     _jelly_animate_action->update();
 }
 
-void tank_boss::_update_cannon_sprite(btn::fixed y)
+void tank_boss::_update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero_position)
 {
     _cannon_sprite->set_y(y);
+
+    btn::fixed current_rotation_angle = _cannon_sprite->rotation_angle();
+    btn::fixed previous_rotation_angle = current_rotation_angle - 1;
+    btn::fixed next_rotation_angle = current_rotation_angle + 1;
+
+    if(previous_rotation_angle < 0)
+    {
+        previous_rotation_angle += 360;
+    }
+    else if(next_rotation_angle >= 360)
+    {
+        next_rotation_angle -= 360;
+    }
+
+    btn::fixed_point current_end_position = _cannon_end_position(current_rotation_angle, y);
+    btn::fixed_point previous_end_position = _cannon_end_position(previous_rotation_angle, y);
+    btn::fixed_point next_end_position = _cannon_end_position(next_rotation_angle, y);
+    btn::fixed current_hero_distance = _squared_distance(current_end_position, hero_position);
+    btn::fixed previous_hero_distance = _squared_distance(previous_end_position, hero_position);
+    btn::fixed next_hero_distance = _squared_distance(next_end_position, hero_position);
+
+    if(previous_hero_distance < current_hero_distance && previous_hero_distance < next_hero_distance)
+    {
+        previous_rotation_angle = current_rotation_angle - btn::fixed(0.25);
+
+        if(previous_rotation_angle < 0)
+        {
+            previous_rotation_angle += 360;
+        }
+
+        _cannon_sprite->set_rotation_angle(previous_rotation_angle);
+    }
+    else if(next_hero_distance < current_hero_distance)
+    {
+        next_rotation_angle = current_rotation_angle + btn::fixed(0.25);
+
+        if(next_rotation_angle >= 360)
+        {
+            next_rotation_angle -= 360;
+        }
+
+        _cannon_sprite->set_rotation_angle(next_rotation_angle);
+    }
 }
 
 void tank_boss::_update_rects(btn::fixed y)

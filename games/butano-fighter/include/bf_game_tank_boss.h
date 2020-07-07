@@ -49,7 +49,7 @@ private:
 
     void _update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_position);
 
-    void _update_cannon_sprite(btn::fixed y);
+    void _update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero_position);
 
     void _update_rects(btn::fixed y);
 };

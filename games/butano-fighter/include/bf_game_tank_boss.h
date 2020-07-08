@@ -35,6 +35,9 @@ private:
     btn::sprite_palette_ptr _jelly_palette;
     btn::sprite_palette_ptr _cannon_palette;
     btn::fixed _y;
+    btn::fixed _y_inc;
+    int _bullets_index = 0;
+    int _bullets_counter = 240;
     int _vibration_counter = 1;
     int _jelly_damage_counter = 1;
     int _footprint_graphics_index = 0;
@@ -52,6 +55,8 @@ private:
     void _update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero_position);
 
     void _update_rects(btn::fixed y);
+
+    void _update_bullets(const btn::fixed_point& hero_position, btn::fixed y, enemy_bullets& enemy_bullets);
 };
 
 }

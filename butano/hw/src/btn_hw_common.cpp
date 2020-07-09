@@ -11,10 +11,10 @@ extern "C"
         return 0;
     }
 
-    // Disable __cxa_pure_virtual to reduce IWRAM usage:
+    // Override __cxa_pure_virtual to reduce IWRAM usage:
     // https://stackoverflow.com/questions/14689639/can-i-disable-exceptions-for-when-a-pure-virtual-function-is-called
     void __cxa_pure_virtual()
     {
-        BTN_ERROR("__cxa_pure_virtual not supported");
+        BTN_ERROR("Pure virtual function call");
     }
 }

@@ -37,9 +37,19 @@ public:
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
+    [[nodiscard]] int life() const
+    {
+        return _life;
+    }
+
     [[nodiscard]] bool done() const
     {
         return _done;
+    }
+
+    [[nodiscard]] bool hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+    {
+        return _hero_should_look_down_impl(hero_position, hero_is_looking_down);
     }
 
     void update(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets);
@@ -55,6 +65,9 @@ protected:
     virtual void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) = 0;
 
     virtual void _hide_damage_palette() = 0;
+
+    [[nodiscard]] virtual bool _hero_should_look_down_impl(const btn::fixed_point& hero_position,
+                                                           bool hero_is_looking_down) const = 0;
 
 private:
     const btn::ivector<btn::fixed_rect>& _rects;

@@ -9,6 +9,8 @@
 namespace bf::game
 {
 
+class hero;
+
 class tank_boss : public boss
 {
 
@@ -24,6 +26,9 @@ protected:
 
     void _hide_damage_palette() final;
 
+    [[nodiscard]] bool _hero_should_look_down_impl(const btn::fixed_point& hero_position,
+                                                   bool hero_is_looking_down) const final;
+
 private:
     btn::vector<btn::fixed_rect, 2> _tank_rects;
     btn::vector<btn::sprite_ptr, 10> _footprint_sprites;
@@ -36,6 +41,7 @@ private:
     btn::sprite_palette_ptr _cannon_palette;
     btn::fixed _y;
     btn::fixed _y_inc;
+    int _state_index = 0;
     int _bullets_index = 0;
     int _bullets_counter = 240;
     int _vibration_counter = 1;
@@ -45,6 +51,8 @@ private:
     bool _jelly_crying = false;
 
     [[nodiscard]] btn::fixed _calculate_y();
+
+    [[nodiscard]] btn::fixed _cannon_rotation_angle_inc() const;
 
     void _update_footprint_sprites(btn::fixed y);
 

@@ -62,7 +62,7 @@ public:
 
     [[nodiscard]] const btn::fixed_point& body_position() const
     {
-        return _body_sprite_animate_action.sprite().position();
+        return _body_position;
     }
 
     [[nodiscard]] const btn::fixed_point& weapon_position() const
@@ -80,6 +80,11 @@ public:
         _shooting = shooting;
     }
 
+    [[nodiscard]] bool looking_down() const
+    {
+        return _looking_down;
+    }
+
     void show_shoot(btn::color fade_color);
 
     [[nodiscard]] bool throw_bomb()
@@ -94,7 +99,8 @@ private:
     struct body_snapshot_type
     {
         btn::fixed_point position;
-        int graphics_index = 0;
+        int16_t graphics_index = 0;
+        bool looking_down = false;
     };
 
     constexpr static const int body_snapshots_count = 16;
@@ -103,6 +109,7 @@ private:
     btn::vector<btn::sprite_ptr, 3> _body_shadows;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::deque<body_snapshot_type, body_snapshots_count> _body_snapshots;
+    btn::fixed_point _body_position;
     btn::fixed_point _weapon_position;
     btn::sprite_ptr _weapon_sprite;
     btn::sprite_ptr _shield_sprite;
@@ -124,14 +131,15 @@ private:
     int _shield_counter = 0;
     int _death_counter = 0;
     bool _shooting = false;
+    bool _looking_down = false;
 
-    [[nodiscard]] btn::fixed_point _move(const btn::fixed_point& body_position, btn::sprite_ptr& body_sprite);
+    void _move();
 
-    void _animate_alive(const btn::fixed_point& old_body_position, const btn::fixed_point& new_body_position);
+    void _animate_alive(const btn::fixed_point& old_body_position);
 
-    void _show_shield(int old_bombs_count, const btn::fixed_point& new_body_position, background& background);
+    void _show_shield(int old_bombs_count, background& background);
 
-    void _animate_shield(const btn::fixed_point& new_body_position, background& background);
+    void _animate_shield(background& background);
 
     btn::optional<scene_type> _animate_dead(background& background, butano_background& butano_background);
 };

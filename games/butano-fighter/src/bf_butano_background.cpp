@@ -5,7 +5,7 @@
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
 #include "btn_regular_bg_builder.h"
-#include "btn_sprite_items_butano_big_sprite.h"
+#include "btn_sprite_items_butano_big_silhouette.h"
 #include "btn_regular_bg_items_butano_background.h"
 
 namespace bf
@@ -64,7 +64,7 @@ void butano_background::show(const btn::fixed_point& silhouette_position)
     bg.set_priority(0);
     btn::window::sprites().set_show_bg(bg, false);
 
-    btn::sprite_builder builder(btn::sprite_items::butano_big_sprite, 0);
+    btn::sprite_builder builder(btn::sprite_items::butano_big_silhouette, 0);
     builder.set_position(silhouette_position.x(), silhouette_position.y() - 63);
     builder.set_scale(2);
     builder.set_window_enabled(true);
@@ -73,7 +73,7 @@ void butano_background::show(const btn::fixed_point& silhouette_position)
     _silhouette_up_sprite_move_action.emplace(silhouette_up_sprite, show_hide_frames, silhouette_position);
     _silhouette_up_sprite_scale_action.emplace(silhouette_up_sprite, show_hide_frames, 0.01);
 
-    builder = btn::sprite_builder(btn::sprite_items::butano_big_sprite, 1);
+    builder = btn::sprite_builder(btn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position.x(), silhouette_position.y() + 63);
     builder.set_scale(2);
     builder.set_window_enabled(true);
@@ -91,7 +91,7 @@ void butano_background::hide(const btn::fixed_point& silhouette_position)
     bg.set_priority(0);
     btn::window::sprites().set_show_bg(bg, false);
 
-    btn::sprite_builder builder(btn::sprite_items::butano_big_sprite, 0);
+    btn::sprite_builder builder(btn::sprite_items::butano_big_silhouette, 0);
     builder.set_position(silhouette_position);
     builder.set_scale(0.01);
     builder.set_window_enabled(true);
@@ -101,7 +101,7 @@ void butano_background::hide(const btn::fixed_point& silhouette_position)
                                               silhouette_position.y() - 63);
     _silhouette_up_sprite_scale_action.emplace(silhouette_up_sprite, show_hide_frames, 2);
 
-    builder = btn::sprite_builder(btn::sprite_items::butano_big_sprite, 1);
+    builder = btn::sprite_builder(btn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position);
     builder.set_scale(0.01);
     builder.set_window_enabled(true);

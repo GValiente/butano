@@ -62,6 +62,16 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
     }
 }
 
+bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+{
+    if(_boss)
+    {
+        return _boss->hero_should_look_down(hero_position, hero_is_looking_down);
+    }
+
+    return false;
+}
+
 void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
                      boss_intro& boss_intro)
 {

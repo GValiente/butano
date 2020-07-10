@@ -105,6 +105,7 @@ void stats::update()
             break;
 
         case mode_type::DETAILED:
+            text_stream.set_precision(4);
             text_stream.append(max_cpu_pct);
             break;
 

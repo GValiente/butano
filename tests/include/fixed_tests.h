@@ -32,19 +32,22 @@ public:
         BTN_ASSERT(btn::fixed_t<10>(btn::fixed(64)).data() == 65536);
 
         BTN_ASSERT(btn::to_string<8>(btn::fixed(1)) == btn::string_view("1"),
-                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(1)), " - 1");
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(1)));
 
-        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.5)) == btn::string_view("0.5000"),
-                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.5)), " - 0.5000");
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.5)) == btn::string_view("0.50000"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.5)));
 
-        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.25)) == btn::string_view("0.2500"),
-                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.25)), " - 0.2500");
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.25)) == btn::string_view("0.25000"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.25)));
 
-        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.125)) == btn::string_view("0.1250"),
-                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.125)), " - 0.1250");
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.125)) == btn::string_view("0.12500"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.125)));
 
-        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.0625)) == btn::string_view("0.0625"),
-                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.0625)), " - 0.0625");
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.0625)) == btn::string_view("0.06250"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.0625)));
+
+        BTN_ASSERT(btn::to_string<8>(btn::fixed(0.03125)) == btn::string_view("0.03125"),
+                   "Fixed to string conversion failed: ", btn::to_string<8>(btn::fixed(0.03125)));
     }
 };
 

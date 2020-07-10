@@ -2,6 +2,7 @@
 #define BTN_STRING_H
 
 #include "btn_assert.h"
+#include "btn_limits.h"
 #include "btn_sstream.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"

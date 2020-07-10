@@ -26,6 +26,21 @@ istring_base* ostringstream::rdbuf(istring_base* sb)
     return sb;
 }
 
+int ostringstream::precision(int new_precision)
+{
+    BTN_ASSERT(new_precision >= 0, "Invalid precision: ", new_precision);
+
+    _precision = new_precision;
+    return new_precision;
+}
+
+void ostringstream::set_precision(int precision)
+{
+    BTN_ASSERT(precision >= 0, "Invalid precision: ", precision);
+
+    _precision = precision;
+}
+
 string_view ostringstream::view() const
 {
     return string_view(*_string);
@@ -115,6 +130,22 @@ void ostringstream::append(const void* ptr)
 void ostringstream::swap(ostringstream& other)
 {
     btn::swap(_string, other._string);
+    btn::swap(_precision, other._precision);
+}
+
+void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digits)
+{
+    array<char, 32> buffer;
+    int fraction_size = btn::hw::text::parse(fraction_result, buffer);
+    istring& string = ostringstream::str();
+    string.append('.');
+
+    for(int index = fraction_size; index < fraction_digits; ++index)
+    {
+        string.append('0');
+    }
+
+    string.append(buffer.data(), fraction_size);
 }
 
 }

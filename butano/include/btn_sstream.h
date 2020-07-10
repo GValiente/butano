@@ -1,7 +1,6 @@
 #ifndef BTN_SSTREAM_H
 #define BTN_SSTREAM_H
 
-#include "btn_limits.h"
 #include "btn_fixed_fwd.h"
 #include "btn_string_fwd.h"
 #include "btn_istring_base.h"
@@ -35,6 +34,20 @@ public:
     }
 
     istring_base* rdbuf(istring_base* sb);
+
+    void set_rdbuf(istring_base& sb)
+    {
+        _string = &sb;
+    }
+
+    [[nodiscard]] int precision() const
+    {
+        return _precision;
+    }
+
+    int precision(int new_precision);
+
+    void set_precision(int precision);
 
     [[nodiscard]] string_view view() const;
 
@@ -132,43 +145,28 @@ public:
         }
         else
         {
+            int old_size = size();
             append(value.integer());
 
-            if(int fraction = value.fraction())
+            int integer_digits = size() - old_size;
+            int fraction_digits = precision() - integer_digits;
+
+            if(fraction_digits > 0)
             {
-                constexpr auto scale = unsigned(value.scale());
-                unsigned fraction_result;
+                if(int fraction = value.fraction())
+                {
+                    unsigned zeros = 1;
 
-                if constexpr(uint64_t(scale) * 10000 < numeric_limits<unsigned>::max())
-                {
-                    fraction_result = (unsigned(fraction) * 10000) / scale;
-                }
-                else
-                {
-                    fraction_result = (uint64_t(fraction) * 10000) / scale;
-                }
+                    for(int index = 0; index < fraction_digits; ++index)
+                    {
+                        zeros *= 10;
+                    }
 
-                if(fraction_result)
-                {
-                    if(fraction_result < 10)
+                    unsigned fraction_result = (uint64_t(fraction) * zeros) / unsigned(value.scale());
+
+                    if(fraction_result)
                     {
-                        append(".000");
-                        append(fraction_result);
-                    }
-                    else if(fraction_result < 100)
-                    {
-                        append(".00");
-                        append(fraction_result);
-                    }
-                    else if(fraction_result < 1000)
-                    {
-                        append(".0");
-                        append(fraction_result);
-                    }
-                    else
-                    {
-                        append('.');
-                        append(fraction_result);
+                        _append_fraction(fraction_result, fraction_digits);
                     }
                 }
             }
@@ -201,6 +199,9 @@ public:
 
 private:
     istring_base* _string;
+    int _precision = 6;
+
+    void _append_fraction(unsigned fraction_result, int fraction_digits);
 };
 
 

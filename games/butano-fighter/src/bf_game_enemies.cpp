@@ -73,13 +73,13 @@ bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool 
 }
 
 void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
-                     boss_intro& boss_intro)
+                     objects& objects, boss_intro& boss_intro)
 {
     const btn::fixed_point& hero_position = hero.body_position();
 
     if(_boss)
     {
-        _boss->update(hero_position, hero_bomb, enemy_bullets);
+        _boss->update(hero_position, hero_bomb, enemy_bullets, objects);
     }
     else
     {

@@ -121,12 +121,20 @@ void objects::spawn_hero_weapon(const btn::fixed_point& position, int hero_level
     }
 }
 
-void objects::spawn_hero_bomb(const btn::fixed_point& position)
+void objects::spawn_hero_bomb_with_sound(const btn::fixed_point& position)
+{
+    if(! _hero_bomb)
+    {
+        spawn_hero_bomb_without_sound(position);
+        btn::sound_items::cure.play();
+    }
+}
+
+void objects::spawn_hero_bomb_without_sound(const btn::fixed_point& position)
 {
     if(! _hero_bomb)
     {
         _hero_bomb = object::create_hero_bomb(position, _flash_palette);
-        btn::sound_items::cure.play();
     }
 }
 

@@ -18,7 +18,7 @@ namespace bf::constants
     constexpr const int max_object_messages = max_gems;
     constexpr const int max_enemy_size = 48;
     constexpr const int play_width = 72;
-    constexpr const int play_height = (btn::display::height() - 72) / 2;
+    constexpr const int play_height = (btn::display::height() - 70) / 2;
     constexpr const int view_width = play_width * 2;
     constexpr const int view_height = (btn::display::height() + max_enemy_size) / 2;
     constexpr const int camera_width = 32;
@@ -33,6 +33,7 @@ namespace bf::constants
     constexpr const int object_messages_z_order = 6;
     constexpr const int hero_shadows_z_order = 7;
     constexpr const int intro_sprites_z_order = 8;
+    constexpr const int footprint_z_order = 9;
     constexpr const int hero_bullets_sound_priority = -2;
     constexpr const int enemies_sound_priority = -1;
     constexpr const int enemies_grid_size = 16;

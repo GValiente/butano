@@ -1,12 +1,13 @@
 #include "bf_game_explosion.h"
 
 #include "btn_sprite_builder.h"
+#include "btn_sprite_affine_mat_attributes.h"
 
 namespace bf::game
 {
 
 explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point& position, int animation_frames,
-                     int z_order) :
+                     int z_order, bool double_size) :
     _sprite_item(sprite_item),
     _animation_frames(animation_frames),
     _animation_index(0),
@@ -19,24 +20,68 @@ explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point
     btn::fixed x = position.x();
     btn::fixed y = position.y();
 
+    if(double_size)
+    {
+        btn::sprite_affine_mat_attributes attributes;
+        attributes.set_scale(2);
+        _affine_mat = btn::sprite_affine_mat_ptr::create(attributes);
+    }
+
     btn::sprite_builder builder(sprite_item);
-    builder.set_position(x - 32, y - 32);
     builder.set_z_order(z_order);
-    _sprites.push_back(builder.release_build());
 
+    if(double_size)
+    {
+        builder.set_affine_mat(*_affine_mat);
+        builder.set_position(x - 64, y - 64);
+    }
+    else
+    {
+        builder.set_position(x - 32, y - 32);
+    }
+
+    _sprites.push_back(builder.release_build());
     builder = btn::sprite_builder(sprite_item, 1);
-    builder.set_position(x + 32, y - 32);
     builder.set_z_order(z_order);
-    _sprites.push_back(builder.release_build());
 
+    if(double_size)
+    {
+        builder.set_affine_mat(*_affine_mat);
+        builder.set_position(x + 64, y - 64);
+    }
+    else
+    {
+        builder.set_position(x + 32, y - 32);
+    }
+
+    _sprites.push_back(builder.release_build());
     builder = btn::sprite_builder(sprite_item, 2);
-    builder.set_position(x - 32, y + 32);
     builder.set_z_order(z_order);
-    _sprites.push_back(builder.release_build());
 
+    if(double_size)
+    {
+        builder.set_affine_mat(*_affine_mat);
+        builder.set_position(x - 64, y + 64);
+    }
+    else
+    {
+        builder.set_position(x - 32, y + 32);
+    }
+
+    _sprites.push_back(builder.release_build());
     builder = btn::sprite_builder(sprite_item, 3);
-    builder.set_position(x + 32, y + 32);
     builder.set_z_order(z_order);
+
+    if(double_size)
+    {
+        builder.set_affine_mat(*_affine_mat);
+        builder.set_position(x + 64, y + 64);
+    }
+    else
+    {
+        builder.set_position(x + 32, y + 32);
+    }
+
     _sprites.push_back(builder.release_build());
 }
 

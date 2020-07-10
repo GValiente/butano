@@ -20,7 +20,7 @@ public:
     const btn::sprite_item& intro_alt_sprite_item;
     btn::string_view intro_top_label;
     btn::string_view intro_bottom_label;
-    const btn::music_item& music_item;
+    btn::music_item music_item;
     btn::span<const enemy_event> enemy_events;
     boss::type boss_type;
 
@@ -28,8 +28,7 @@ public:
             const btn::regular_bg_item& _background_bottom_bg_item, const btn::regular_bg_item& _background_top_bg_item,
             const btn::sprite_item& _intro_sprite_item, const btn::sprite_item& _intro_alt_sprite_item,
             const btn::string_view& _intro_top_label, const btn::string_view& _intro_bottom_label,
-            const btn::music_item& _music_item, const btn::span<const enemy_event>& _enemy_events,
-            boss::type _boss_type) :
+            btn::music_item _music_item, const btn::span<const enemy_event>& _enemy_events, boss::type _boss_type) :
         background_bottom_bg_item(_background_bottom_bg_item),
         background_top_bg_item(_background_top_bg_item),
         intro_sprite_item(_intro_sprite_item),

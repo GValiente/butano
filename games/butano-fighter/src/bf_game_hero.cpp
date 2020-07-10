@@ -422,7 +422,7 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     else if(_death_counter == 70)
     {
         btn::fixed_point explosion_position = body_sprite.position() + btn::fixed_point(2, 4);
-        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0);
+        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0, false);
         _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
         background.show_hero_dead();

@@ -106,7 +106,7 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                     break;
 
                 case enemy_drop_type::HERO_BOMB:
-                    data.objects_ref.spawn_hero_bomb(enemy_position);
+                    data.objects_ref.spawn_hero_bomb_with_sound(enemy_position);
                     break;
 
                 default:
@@ -323,7 +323,7 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed / 4);
             _move_action.update();
             _explosion.emplace(btn::sprite_items::enemy_explosion, _sprite.position(), 6,
-                               constants::enemy_explosions_z_order);
+                               constants::enemy_explosions_z_order, false);
             _explosion->update();
             break;
 

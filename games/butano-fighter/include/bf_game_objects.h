@@ -32,7 +32,9 @@ public:
 
     void spawn_hero_weapon(const btn::fixed_point& position, int hero_level);
 
-    void spawn_hero_bomb(const btn::fixed_point& position);
+    void spawn_hero_bomb_with_sound(const btn::fixed_point& position);
+
+    void spawn_hero_bomb_without_sound(const btn::fixed_point& position);
 
     void spawn_gem(const btn::fixed_point& position);
 

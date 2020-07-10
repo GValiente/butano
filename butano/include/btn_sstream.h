@@ -1,5 +1,5 @@
-#ifndef BTN_INPUT_STRING_STREAM_H
-#define BTN_INPUT_STRING_STREAM_H
+#ifndef BTN_SSTREAM_H
+#define BTN_SSTREAM_H
 
 #include "btn_limits.h"
 #include "btn_fixed_fwd.h"
@@ -11,55 +11,75 @@ namespace btn
 
 class string_view;
 
-class input_string_stream
+class ostringstream
 {
 
 public:
-    explicit input_string_stream(istring_base& string) :
-        _string(string)
+    explicit ostringstream(istring_base& string) :
+        _string(&string)
     {
     }
 
-    [[nodiscard]] const istring& string() const;
+    [[nodiscard]] const istring& str() const;
 
-    [[nodiscard]] istring& string();
+    [[nodiscard]] istring& str();
+
+    [[nodiscard]] const istring_base* rdbuf() const
+    {
+        return _string;
+    }
+
+    [[nodiscard]] istring_base* rdbuf()
+    {
+        return _string;
+    }
+
+    istring_base* rdbuf(istring_base* sb);
+
+    [[nodiscard]] string_view view() const;
 
     [[nodiscard]] int size() const
     {
-        return _string.size();
+        return _string->size();
     }
 
     [[nodiscard]] int length() const
     {
-        return _string.length();
+        return _string->length();
     }
 
     [[nodiscard]] int capacity() const
     {
-        return _string.capacity();
+        return _string->capacity();
     }
 
     [[nodiscard]] int max_size() const
     {
-        return _string.max_size();
+        return _string->max_size();
     }
 
     [[nodiscard]] int available() const
     {
-        return _string.available();
+        return _string->available();
     }
 
     [[nodiscard]] bool empty() const
     {
-        return _string.empty();
+        return _string->empty();
     }
 
     [[nodiscard]] bool full() const
     {
-        return _string.full();
+        return _string->full();
     }
 
     void append(char character);
+
+    ostringstream& put(char character)
+    {
+        append(character);
+        return *this;
+    }
 
     void append(const string_view& string_view);
 
@@ -68,6 +88,12 @@ public:
     void append(const char* char_array);
 
     void append(const char* char_array, int size);
+
+    ostringstream& write(const char* char_array, int size)
+    {
+        append(char_array, size);
+        return *this;
+    }
 
     template<int MaxSize>
     void append(char(&char_array)[MaxSize])
@@ -166,88 +192,96 @@ public:
     {
     }
 
-    void clear();
+    void swap(ostringstream& other);
+
+    friend void swap(ostringstream& a, ostringstream& b)
+    {
+        a.swap(b);
+    }
 
 private:
-    istring_base& _string;
+    istring_base* _string;
 };
 
 
-inline input_string_stream& operator<<(input_string_stream& stream, char character)
+using stringstream = ostringstream;
+
+
+inline ostringstream& operator<<(ostringstream& stream, char character)
 {
     stream.append(character);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, const string_view& string_view)
+inline ostringstream& operator<<(ostringstream& stream, const string_view& string_view)
 {
     stream.append(string_view);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, const istring& string)
+inline ostringstream& operator<<(ostringstream& stream, const istring& string)
 {
     stream.append(string);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, const char* char_array)
+inline ostringstream& operator<<(ostringstream& stream, const char* char_array)
 {
     stream.append(char_array);
     return stream;
 }
 
 template<int MaxSize>
-inline input_string_stream& operator<<(input_string_stream& stream, char(&char_array)[MaxSize])
+inline ostringstream& operator<<(ostringstream& stream, char(&char_array)[MaxSize])
 {
     stream.append<MaxSize>(char_array);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, bool value)
+inline ostringstream& operator<<(ostringstream& stream, bool value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, int value)
+inline ostringstream& operator<<(ostringstream& stream, int value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, long value)
+inline ostringstream& operator<<(ostringstream& stream, long value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, int64_t value)
+inline ostringstream& operator<<(ostringstream& stream, int64_t value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, unsigned value)
+inline ostringstream& operator<<(ostringstream& stream, unsigned value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, unsigned long value)
+inline ostringstream& operator<<(ostringstream& stream, unsigned long value)
 {
     stream.append(value);
     return stream;
 }
 
-inline input_string_stream& operator<<(input_string_stream& stream, uint64_t value)
+inline ostringstream& operator<<(ostringstream& stream, uint64_t value)
 {
     stream.append(value);
     return stream;
 }
 
 template<int Precision>
-input_string_stream& operator<<(input_string_stream& stream, fixed_t<Precision> value)
+ostringstream& operator<<(ostringstream& stream, fixed_t<Precision> value)
 {
     stream.append(value);
     return stream;

@@ -1,10 +1,10 @@
 #include "bf_status.h"
 
 #include "btn_sram.h"
+#include "btn_sstream.h"
 #include "btn_string_view.h"
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
-#include "btn_input_string_stream.h"
 #include "bf_game_stage_1.h"
 #include "bf_game_hero_bullet_level.h"
 
@@ -31,7 +31,7 @@ namespace
         void write()
         {
             btn::istring_base label_istring(label);
-            btn::input_string_stream label_stream(label_istring);
+            btn::ostringstream label_stream(label_istring);
             label_stream.append(valid_label);
             btn::sram::write(*this);
         }

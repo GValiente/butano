@@ -2,11 +2,11 @@
 #define BTN_STRING_H
 
 #include "btn_assert.h"
+#include "btn_sstream.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_functional.h"
-#include "btn_input_string_stream.h"
 
 namespace btn
 {
@@ -1099,7 +1099,7 @@ template<int MaxSize, typename Type>
 string<MaxSize> to_string(const Type& value)
 {
     string<MaxSize> result;
-    input_string_stream stream(result);
+    ostringstream stream(result);
     stream << value;
     return result;
 }

@@ -25,11 +25,11 @@ public:
 
         btn::unique_ptr<test_data> expected = btn::make_unique<test_data>();
         btn::istring_base begin_istring(expected->begin._data);
-        btn::input_string_stream begin_stream(begin_istring);
+        btn::ostringstream begin_stream(begin_istring);
         begin_stream.append("butano SRAM test");
 
         btn::istring_base end_istring(expected->end._data);
-        btn::input_string_stream end_stream(end_istring);
+        btn::ostringstream end_stream(end_istring);
         end_stream.append("32KB!");
 
         if(loaded->begin == expected->begin)

@@ -4,7 +4,7 @@
 #include "btn_config_assert.h"
 
 #if BTN_CFG_ASSERT_ENABLED
-    #include "btn_input_string_stream.h"
+    #include "btn_sstream.h"
 
     #define BTN_ASSERT(condition, ...) \
         do \
@@ -13,8 +13,8 @@
             { \
                 char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
                 btn::istring_base _btn_istring(_btn_string); \
-                btn::input_string_stream _btn_input_string_stream(_btn_istring); \
-                _btn_input_string_stream.append_args(__VA_ARGS__); \
+                btn::ostringstream _btn_string_stream(_btn_istring); \
+                _btn_string_stream.append_args(__VA_ARGS__); \
                 _btn::assert::show(#condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
             } \
         } while(false)
@@ -30,8 +30,8 @@
         { \
             char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
             btn::istring_base _btn_istring(_btn_string); \
-            btn::input_string_stream _btn_input_string_stream(_btn_istring); \
-            _btn_input_string_stream.append_args(__VA_ARGS__); \
+            btn::ostringstream _btn_string_stream(_btn_istring); \
+            _btn_string_stream.append_args(__VA_ARGS__); \
             _btn::assert::show("", _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
         } while(false)
 

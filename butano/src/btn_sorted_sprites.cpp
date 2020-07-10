@@ -68,7 +68,6 @@ void erase(sprites_manager_item& item)
     layers_type& layers = data.layer_ptrs;
     sort_key sort_key = item.sprite_sort_key;
     ivector<layer*>::iterator layers_it = _find_layers_it(sort_key);
-
     BTN_ASSERT(layers_it != layers.end(),
                "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
     BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(),
@@ -86,11 +85,9 @@ void erase(sprites_manager_item& item)
 
 bool put_in_front_of_layer(sprites_manager_item& item)
 {
-    layers_type& layers = data.layer_ptrs;
     sort_key sort_key = item.sprite_sort_key;
     ivector<layer*>::iterator layers_it = _find_layers_it(sort_key);
-
-    BTN_ASSERT(layers_it != layers.end(),
+    BTN_ASSERT(layers_it != data.layer_ptrs.end(),
                "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());
     BTN_ASSERT(sort_key == (*layers_it)->layer_sort_key(),
                "Sprite sort key not found: ", sort_key.priority(), " - ", sort_key.z_order());

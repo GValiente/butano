@@ -16,7 +16,6 @@
 #include "btn_sprites_manager.h"
 #include "btn_palettes_manager.h"
 #include "btn_bg_blocks_manager.h"
-#include "btn_input_string_stream.h"
 #include "btn_sprite_tiles_manager.h"
 #include "btn_hblank_effects_manager.h"
 #include "../hw/include/btn_hw_irq.h"
@@ -124,8 +123,8 @@ void init(const string_view& keypad_commands)
 
     // WTF hack (if it isn't present and flto is enabled, sometimes everything crash):
     string<32> hack_string;
-    input_string_stream hack_input_string_stream(hack_string);
-    hack_input_string_stream.append(2);
+    ostringstream hack_string_stream(hack_string);
+    hack_string_stream.append(2);
 
     // Init timer system:
     hw::timer::init();

@@ -71,8 +71,8 @@ namespace
             tte_write("::");
         }
 
-        input_string_stream buffer_stream(buffer);
-        buffer_stream.clear();
+        ostringstream buffer_stream(buffer);
+        buffer.clear();
         buffer_stream << line;
         tte_write(buffer.c_str());
         tte_write("\n\n");
@@ -130,7 +130,7 @@ namespace
 
             // Retrieve max width for indexes,  labels and ticks:
             string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
-            input_string_stream buffer_stream(buffer);
+            ostringstream buffer_stream(buffer);
             int num_entries = entries.size();
             int max_index_width = 0;
             int max_id_width = 0;
@@ -139,15 +139,15 @@ namespace
             for(int index = 0; index < num_entries; ++index)
             {
                 const entry& entry = entries[index];
-                buffer_stream.clear();
+                buffer.clear();
                 buffer_stream << index + 1 << '.';
                 max_index_width = max(max_index_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
 
-                buffer_stream.clear();
+                buffer.clear();
                 buffer_stream << entry.id;
                 max_id_width = max(max_id_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
 
-                buffer_stream.clear();
+                buffer.clear();
                 buffer_stream << entry.ticks;
                 max_ticks_width = max(max_ticks_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
             }
@@ -180,28 +180,28 @@ namespace
                     tte_get_pos(&x, &y);
 
                     const entry& entry = entries[index];
-                    buffer_stream.clear();
+                    buffer.clear();
                     buffer_stream << index + 1 << '.';
                     tte_write(buffer.c_str());
 
                     tte_set_pos(x + max_index_width + index_margin, y);
                     tte_get_pos(&x, &y);
 
-                    buffer_stream.clear();
+                    buffer.clear();
                     buffer_stream << entry.id;
                     tte_write(buffer.c_str());
 
                     tte_set_pos(x + max_id_width + margin, y);
                     tte_get_pos(&x, &y);
 
-                    buffer_stream.clear();
+                    buffer.clear();
                     buffer_stream << entry.ticks;
                     tte_write(buffer.c_str());
 
                     if(total_ticks)
                     {
                         auto pct = int((entry.ticks * 100) / total_ticks);
-                        buffer_stream.clear();
+                        buffer.clear();
                         buffer_stream << pct << '%';
                         tte_set_pos(x + max_ticks_width + margin, y);
                         tte_write(buffer.c_str());

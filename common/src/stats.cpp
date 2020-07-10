@@ -41,17 +41,17 @@ void stats::set_mode(mode_type mode)
             _text_generator.set_bg_priority(0);
 
             btn::string<32> text;
-            btn::input_string_stream text_stream(text);
+            btn::ostringstream text_stream(text);
             text_stream.append(cpu_label);
             _text_generator.generate(text_x, _text_position.y(), text, _static_text_sprites);
 
-            text_stream.clear();
+            text.clear();
             text_stream.append("IWR: ");
             text_stream.append(btn::memory::used_static_iwram());
             text_stream.append("B");
             _text_generator.generate(text_x, _text_position.y() + text_height, text, _static_text_sprites);
 
-            text_stream.clear();
+            text.clear();
             text_stream.append("EWR: ");
             text_stream.append(btn::memory::used_static_ewram());
             text_stream.append("B");
@@ -92,7 +92,7 @@ void stats::update()
     {
         btn::fixed max_cpu_pct = _max_cpu_usage * 100;
         btn::string<32> text;
-        btn::input_string_stream text_stream(text);
+        btn::ostringstream text_stream(text);
 
         switch(_mode)
         {

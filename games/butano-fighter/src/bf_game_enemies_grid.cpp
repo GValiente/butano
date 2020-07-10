@@ -142,7 +142,7 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
         {
             const cell* cells_row = _cells_row(r);
             btn::string<BTN_CFG_LOG_MAX_SIZE> string;
-            btn::input_string_stream stream(string);
+            btn::ostringstream stream(string);
             stream.append("\t[");
 
             for(int c = 0; c < columns; ++c)

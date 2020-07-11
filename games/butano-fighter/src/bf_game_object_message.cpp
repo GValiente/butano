@@ -72,8 +72,20 @@ object_message object_message::create_experience(const btn::fixed_point& positio
         graphics_index = 24;
         break;
 
-    case 50:
+    case 45:
         graphics_index = 26;
+        break;
+
+    case 50:
+        graphics_index = 28;
+        break;
+
+    case 60:
+        graphics_index = 30;
+        break;
+
+    case 75:
+        graphics_index = 32;
         break;
 
     default:

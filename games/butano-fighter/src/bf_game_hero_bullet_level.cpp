@@ -88,8 +88,28 @@ int hero_bullet_level::gem_experience(int level, btn::fixed y)
         multiplier = 10;
         break;
 
-    default:
+    case 3:
         multiplier = 15;
+        break;
+
+    case 4:
+        multiplier = 20;
+        break;
+
+    case 5:
+        multiplier = 25;
+        break;
+
+    case 6:
+        multiplier = 30;
+        break;
+
+    case 7:
+        multiplier = 35;
+        break;
+
+    default:
+        multiplier = 40;
         break;
     }
 

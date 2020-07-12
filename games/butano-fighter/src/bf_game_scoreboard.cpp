@@ -16,6 +16,14 @@ namespace bf::game
 namespace
 {
     constexpr const int text_y = (btn::display::height() / 2) - 16;
+
+    void _set_visible(bool visible, btn::ivector<btn::sprite_ptr>& sprites)
+    {
+        for(btn::sprite_ptr& sprite : sprites)
+        {
+            sprite.set_visible(visible);
+        }
+    }
 }
 
 scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
@@ -62,11 +70,22 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
     _experience_bar_palette_action.emplace(_experience_bar_sprites[1].palette(), 2, 1);
 }
 
+void scoreboard::set_visible(bool visible)
+{
+    _set_visible(visible, _level_label_sprites);
+    _set_visible(visible, _level_number_sprites);
+    _set_visible(visible, _experience_label_sprites);
+    _set_visible(visible, _experience_number_sprites);
+    _set_visible(visible, _experience_bar_sprites);
+    _set_visible(visible, _bomb_sprites);
+}
+
 void scoreboard::update(const hero& hero)
 {
     int level = hero.level();
     int experience = hero.experience();
     int bombs_count = hero.bombs_count();
+    bool visible = _level_label_sprites.front().visible();
     _experience_bar_palette_action->update();
 
     if(_bombs_affine_mat_scale_action)
@@ -99,6 +118,7 @@ void scoreboard::update(const hero& hero)
         btn::string<2> text = btn::to_string<2>(level + 1);
         _level_number_sprites.clear();
         _text_generator.generate(39 - (btn::display::width() / 2), text_y, text, _level_number_sprites);
+        _set_visible(visible, _level_number_sprites);
     }
 
     if(experience != _last_experience)
@@ -128,6 +148,7 @@ void scoreboard::update(const hero& hero)
         _experience_number_sprites.clear();
         _text_generator.generate(_experience_bar_sprites[2].x() - 36, text_y, text, _experience_number_sprites);
         _experience_label_sprites[0].set_x(_experience_number_sprites[0].x() - 30);
+        _set_visible(visible, _experience_number_sprites);
         _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     }
 
@@ -144,6 +165,7 @@ void scoreboard::update(const hero& hero)
             builder.set_y(16 - (btn::display::height() / 2));
             builder.set_bg_priority(_text_generator.bg_priority());
             builder.set_z_order(_text_generator.z_order());
+            builder.set_visible(visible);
             builder.set_ignore_camera(true);
             _bomb_sprites.push_back(builder.release_build());
         }

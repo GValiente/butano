@@ -17,6 +17,7 @@ namespace bf::game
 class hero;
 class objects;
 class hero_bomb;
+class scoreboard;
 class enemy_bullets;
 class check_hero_bullet_data;
 
@@ -54,7 +55,7 @@ public:
     }
 
     void update(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets,
-                objects& objects);
+                objects& objects, scoreboard& scoreboard);
 
 protected:
     boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,

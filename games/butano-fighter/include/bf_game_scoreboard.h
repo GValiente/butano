@@ -25,6 +25,8 @@ class scoreboard
 public:
     explicit scoreboard(btn::sprite_text_generator& text_generator);
 
+    void set_visible(bool visible);
+
     void update(const hero& hero);
 
 private:

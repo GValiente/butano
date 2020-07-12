@@ -357,7 +357,7 @@ namespace
 
         // level 0
 
-        enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
+        /*enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-60, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-30, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
 
@@ -591,7 +591,7 @@ namespace
         enemy_event(jelly, btn::fixed_point(-30, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(25, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(-60, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
-        enemy_event(jelly, btn::fixed_point(55, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),
+        enemy_event(jelly, btn::fixed_point(55, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),*/
         enemy_event(jelly, btn::fixed_point(-15, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
     };
 

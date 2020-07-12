@@ -8,6 +8,7 @@
 #include "bf_game_objects.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_tank_boss.h"
+#include "bf_game_scoreboard.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_check_hero_bullet_data.h"
 
@@ -97,7 +98,7 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
 }
 
 void boss::update(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets,
-                  objects& objects)
+                  objects& objects, scoreboard& scoreboard)
 {
     if(_life)
     {
@@ -114,10 +115,14 @@ void boss::update(const btn::fixed_point& hero_position, const hero_bomb& hero_b
     {
         if(_death_flash_counter)
         {
-            enemy_bullets.clear();
             --_death_flash_counter;
+            scoreboard.set_visible(! _death_flash_counter);
 
-            if(! _death_flash_counter)
+            if(_death_flash_counter)
+            {
+                enemy_bullets.clear();
+            }
+            else
             {
                 btn::bg_palettes::set_fade_intensity(0);
                 btn::sprite_palettes::set_fade_intensity(0);

@@ -26,6 +26,11 @@ public:
 
     void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
 
+    [[nodiscard]] bool boss_dying() const
+    {
+        return _boss && ! _boss->life();
+    }
+
     [[nodiscard]] bool hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const;
 
     void update(const hero_bomb& hero_bomb, const intro& intro, hero& hero, enemy_bullets& enemy_bullets,

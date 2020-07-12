@@ -140,7 +140,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
 
         if(_update_dead(hero_position))
         {
-            _done = true;
+            _dead = true;
         }
     }
 
@@ -165,7 +165,7 @@ boss::boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
     _ignore_hero_bullet_counter(constants::enemies_invencible_frames),
     _death_flash_counter(0),
     _hero_bomb_active(false),
-    _done(false)
+    _dead(false)
 {
 }
 

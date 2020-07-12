@@ -28,6 +28,7 @@ namespace
     constexpr const int body_delta_y = 40;
     constexpr const int weapon_delta_x = 2;
     constexpr const int weapon_delta_y = -13;
+    constexpr const int shoot_frames = 5;
     constexpr const int scale_weapon_frames = 30;
     constexpr const int scale_weapon_half_frames = scale_weapon_frames / 2;
     constexpr const int body_shadows_multiplier = 4;
@@ -83,15 +84,18 @@ hero::hero(status& status) :
 
 void hero::show_shoot(btn::color fade_color)
 {
-    _show_shoot_counter = 5;
-
     btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
     body_palette.set_fade(fade_color, 0.5);
-    _body_palette_fade_action.emplace(btn::move(body_palette), _show_shoot_counter, 0);
+    _body_palette_fade_action.emplace(btn::move(body_palette), shoot_frames, 0);
 
     btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
     weapon_palette.set_fade(fade_color, 0.75);
-    _weapon_palette_fade_action.emplace(btn::move(weapon_palette), _show_shoot_counter, 0);
+    _weapon_palette_fade_action.emplace(btn::move(weapon_palette), shoot_frames, 0);
+
+    if(! _show_shoot_counter)
+    {
+        _show_shoot_counter = shoot_frames * 2;
+    }
 }
 
 btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
@@ -220,18 +224,16 @@ void hero::_move()
 
 void hero::_animate_alive(const btn::fixed_point& old_body_position)
 {
-    int shoot_shift_y;
+    int weapon_shift_y = 0;
 
     if(_show_shoot_counter)
     {
-        shoot_shift_y = -1;
+        if(_show_shoot_counter > 5)
+        {
+            weapon_shift_y = -1;
+        }
+
         --_show_shoot_counter;
-        _body_palette_fade_action->update();
-        _weapon_palette_fade_action->update();
-    }
-    else
-    {
-        shoot_shift_y = 0;
     }
 
     const btn::fixed_point& new_body_position = _body_position;
@@ -246,7 +248,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
         _weapon_position = new_body_position + btn::fixed_point(weapon_delta_x, weapon_delta_y);
     }
 
-    _weapon_sprite.set_position(_weapon_position + btn::fixed_point(0, shoot_shift_y));
+    _weapon_sprite.set_position(_weapon_position + btn::fixed_point(0, weapon_shift_y));
     _weapon_sprite.set_horizontal_flip(looking_down);
     _weapon_sprite.set_vertical_flip(looking_down);
 
@@ -256,6 +258,18 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
     }
 
     _body_sprite_animate_action.update();
+
+    if(_body_palette_fade_action)
+    {
+        _body_palette_fade_action->update();
+        _weapon_palette_fade_action->update();
+
+        if(_body_palette_fade_action->done())
+        {
+            _body_palette_fade_action.reset();
+            _weapon_palette_fade_action.reset();
+        }
+    }
 
     if(_scale_weapon_counter)
     {

@@ -30,7 +30,9 @@ public:
 
     [[nodiscard]] int check_gem(const btn::fixed_rect& hero_rect, int hero_level);
 
-    void spawn_hero_weapon(const btn::fixed_point& position, int hero_level);
+    void spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level);
+
+    void spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level);
 
     void spawn_hero_bomb_with_sound(const btn::fixed_point& position);
 

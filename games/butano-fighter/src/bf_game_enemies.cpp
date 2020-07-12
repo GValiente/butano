@@ -72,17 +72,17 @@ bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool 
     return false;
 }
 
-void enemies::update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
+void enemies::update(const hero_bomb& hero_bomb, const intro& intro, hero& hero, enemy_bullets& enemy_bullets,
                      objects& objects, boss_intro& boss_intro, scoreboard& scoreboard)
 {
-    const btn::fixed_point& hero_position = hero.body_position();
-
     if(_boss)
     {
-        _boss->update(hero_position, hero_bomb, enemy_bullets, objects, scoreboard);
+        _boss->update(hero_bomb, hero, enemy_bullets, objects, scoreboard);
     }
     else
     {
+        const btn::fixed_point& hero_position = hero.body_position();
+
         #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
             bool grid_updated = _remove_enemies(hero_position, enemy_bullets);
 

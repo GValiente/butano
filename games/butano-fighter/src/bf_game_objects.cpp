@@ -112,12 +112,20 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
     return result;
 }
 
-void objects::spawn_hero_weapon(const btn::fixed_point& position, int hero_level)
+void objects::spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level)
+{
+    if(! _hero_weapon)
+    {
+        spawn_hero_weapon_without_sound(position, hero_level);
+        btn::sound_items::power_up_1.play();
+    }
+}
+
+void objects::spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level)
 {
     if(! _hero_weapon)
     {
         _hero_weapon = object::create_hero_weapon(position, hero_level, _flash_palette);
-        btn::sound_items::power_up_1.play();
     }
 }
 

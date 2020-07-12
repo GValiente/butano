@@ -136,7 +136,7 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
 
         if(experience_to_add && add_experience(experience_to_add))
         {
-            objects.spawn_hero_weapon(btn::fixed_point(0, -constants::view_height), level + 1);
+            objects.spawn_hero_weapon_with_sound(btn::fixed_point(0, -constants::view_height), level + 1);
         }
 
         if(_shield_counter)

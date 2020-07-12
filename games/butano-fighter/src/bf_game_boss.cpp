@@ -80,7 +80,6 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
                     {
                         _life = 0;
 
-                        [[maybe_unused]] bool level_up = data.hero_ref.add_experience(_experience);
                         btn::bg_palettes::set_fade(btn::colors::white, 1);
                         btn::sprite_palettes::set_fade(btn::colors::black, 1);
                         btn::sound_items::glass_breaking_2.play();
@@ -97,9 +96,11 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
     return false;
 }
 
-void boss::update(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets,
-                  objects& objects, scoreboard& scoreboard)
+void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
+                  scoreboard& scoreboard)
 {
+    const btn::fixed_point& hero_position = hero.body_position();
+
     if(_life)
     {
         _hero_bomb_active = hero_bomb.active();
@@ -124,9 +125,16 @@ void boss::update(const btn::fixed_point& hero_position, const hero_bomb& hero_b
             }
             else
             {
+                btn::fixed_point enemy_position = _position();
+                objects.spawn_hero_bomb_without_sound(enemy_position);
+
+                if(hero.add_experience(_experience))
+                {
+                    objects.spawn_hero_weapon_without_sound(enemy_position, hero.level() + 1);
+                }
+
                 btn::bg_palettes::set_fade_intensity(0);
                 btn::sprite_palettes::set_fade_intensity(0);
-                objects.spawn_hero_bomb_without_sound(_position());
             }
         }
 

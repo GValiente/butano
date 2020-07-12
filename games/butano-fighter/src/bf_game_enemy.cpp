@@ -92,7 +92,7 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
             {
                 if(data.hero_ref.add_experience(enemy_data.experience))
                 {
-                    data.objects_ref.spawn_hero_weapon(enemy_position, data.hero_ref.level() + 1);
+                    data.objects_ref.spawn_hero_weapon_with_sound(enemy_position, data.hero_ref.level() + 1);
                 }
 
                 switch(_event->drop)

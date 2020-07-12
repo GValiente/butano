@@ -54,8 +54,8 @@ public:
         return _hero_should_look_down_impl(hero_position, hero_is_looking_down);
     }
 
-    void update(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb, enemy_bullets& enemy_bullets,
-                objects& objects, scoreboard& scoreboard);
+    void update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
+                scoreboard& scoreboard);
 
 protected:
     boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,

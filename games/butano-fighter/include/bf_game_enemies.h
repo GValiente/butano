@@ -28,7 +28,7 @@ public:
 
     [[nodiscard]] bool hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const;
 
-    void update(const hero& hero, const hero_bomb& hero_bomb, const intro& intro, enemy_bullets& enemy_bullets,
+    void update(const hero_bomb& hero_bomb, const intro& intro, hero& hero, enemy_bullets& enemy_bullets,
                 objects& objects, boss_intro& boss_intro, scoreboard& scoreboard);
 
 private:

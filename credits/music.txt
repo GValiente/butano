@@ -12,3 +12,9 @@
     By Spring/Spring Enterprises
     Licensed under the CC-BY 4.0 license
     https://opengameart.org/content/minor-boss-r
+
+- soda7_xcopy_ohc.s3m
+	By Soda7
+	Licensed under the Attribution Non-commercial No Derivatives license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=174106
+	

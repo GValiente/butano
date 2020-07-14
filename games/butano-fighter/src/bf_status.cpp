@@ -6,6 +6,7 @@
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
 #include "bf_game_stage_1.h"
+#include "bf_game_stage_2.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf
@@ -48,17 +49,15 @@ namespace
 }
 
 status::status() :
-    _current_stage(&game::stage_1::get())
+    _current_stage(&game::stage_2::get())
 {
     btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
-    int min_experience = 0;
 
-    for(int index = 0, limit = _level; index < limit; ++index)
+    if(_level > 0)
     {
-        min_experience += hero_bullet_levels[index].experience_to_next_level;
+        int experience_to_current_level = hero_bullet_levels[_level - 1].experience_to_next_level;
+        _experience = btn::max(_experience, experience_to_current_level);
     }
-
-    _experience = btn::max(_experience, min_experience);
 
     sram_data sram_data_to_read;
 
@@ -71,6 +70,17 @@ status::status() :
         btn::bg_palettes::set_brightness(brightness);
         btn::sprite_palettes::set_brightness(brightness);
     }
+}
+
+bool status::go_to_next_stage()
+{
+    if(_current_stage == &game::stage_1::get())
+    {
+        _current_stage = &game::stage_2::get();
+        return true;
+    }
+
+    return false;
 }
 
 bool status::add_level()

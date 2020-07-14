@@ -1,6 +1,8 @@
 #ifndef BF_GAME_TANK_BOSS_H
 #define BF_GAME_TANK_BOSS_H
 
+#include "btn_deque.h"
+#include "btn_random.h"
 #include "btn_fixed_rect.h"
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_actions.h"
@@ -47,9 +49,9 @@ private:
     btn::sprite_palette_ptr _jelly_palette;
     btn::sprite_palette_ptr _cannon_palette;
     btn::optional<btn::sprite_palette_fade_loop_action> _cannon_palette_action;
-    btn::optional<btn::sprite_animate_action<7>> _mini_explosion_1;
-    btn::optional<btn::sprite_animate_action<7>> _mini_explosion_2;
-    btn::optional<explosion> _explosion_1;
+    btn::deque<btn::sprite_animate_action<7>, 8> _mini_explosions;
+    btn::optional<explosion> _explosion;
+    btn::random _random;
     btn::fixed _y;
     btn::fixed _y_inc;
     int _state_index = 0;

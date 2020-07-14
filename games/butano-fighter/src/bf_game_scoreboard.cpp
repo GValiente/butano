@@ -10,6 +10,8 @@
 #include "btn_sprite_items_hero_bomb_icon.h"
 #include "bf_game_hero.h"
 
+#include "btn_log.h"
+
 namespace bf::game
 {
 
@@ -139,8 +141,12 @@ void scoreboard::update(const hero& hero)
         }
         else
         {
+            BTN_LOG(next_level_experience_ratio);
+
             experience_bar_sprite.set_scale_x(next_level_experience_ratio);
             experience_bar_sprite.set_visible(true);
+
+            BTN_LOG("done");
         }
 
         btn::string<8> text = btn::to_string<8>(experience);

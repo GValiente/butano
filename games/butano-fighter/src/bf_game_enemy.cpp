@@ -19,17 +19,19 @@ namespace
     btn::sprite_ptr _create_sprite(const enemy_event& event)
     {
         const enemy_data& enemy_data = event.enemy;
-        btn::sprite_builder builder(enemy_data.sprite_item, enemy_data.graphics_index_1);
+        int animation_index = event.move_events[0].animation_index;
+        btn::sprite_builder builder(enemy_data.sprite_item, enemy_data.graphics_indexes_groups[animation_index][0]);
         builder.set_position(event.start_position);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_horizontal_flip(event.move_events[0].horizontal_flip);
         return builder.release_build();
     }
 
-    btn::sprite_animate_action<2> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data)
+    btn::sprite_animate_action<4> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data,
+                                                         int animation_index)
     {
-        return btn::create_sprite_animate_action_forever(
-                    sprite, 16, data.sprite_item, data.graphics_index_1, data.graphics_index_2);
+        return btn::sprite_animate_action<4>::forever(sprite, 16, data.sprite_item,
+                                                      data.graphics_indexes_groups[animation_index]);
     }
 }
 
@@ -37,7 +39,7 @@ enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_pal
     _event(&event),
     _sprite(_create_sprite(event)),
     _move_action(_sprite, event.move_events[0].delta_position),
-    _animate_action(_create_animate_action(_sprite, event.enemy)),
+    _animate_action(_create_animate_action(_sprite, event.enemy, event.move_events[0].animation_index)),
     _sprite_palette(_sprite.palette()),
     _damage_palette(damage_palette),
     _life(event.enemy.life),
@@ -162,12 +164,18 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
 
             if(_move_event_index + 1 < move_events.size())
             {
+                int previous_animation_index = move_events[_move_event_index].animation_index;
                 ++_move_event_index;
 
                 const enemy_move_event& move_event = move_events[_move_event_index];
                 _move_action = btn::sprite_move_by_action(_sprite, move_event.delta_position);
                 _move_event_counter = move_event.duration_frames;
                 _sprite.set_horizontal_flip(move_event.horizontal_flip);
+
+                if(move_event.animation_index != previous_animation_index)
+                {
+                    _animate_action = _create_animate_action(_sprite, _event->enemy, move_event.animation_index);
+                }
             }
             else
             {

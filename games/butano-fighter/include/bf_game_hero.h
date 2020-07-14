@@ -132,6 +132,7 @@ private:
     int _death_counter = 0;
     bool _shooting = false;
     bool _looking_down = false;
+    bool _stage_done = false;
 
     void _move();
 

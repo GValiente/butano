@@ -166,6 +166,28 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
                 }
             }
         }
+
+        if(enemies.boss_dead())
+        {
+            if(! _stage_done)
+            {
+                butano_background.show(_weapon_sprite.position());
+                _stage_done = true;
+            }
+            else if(! butano_background.silhouette_visible())
+            {
+                btn::camera::set_x(0);
+
+                if(_status.go_to_next_stage())
+                {
+                    result = scene_type::GAME;
+                }
+                else
+                {
+                    result = scene_type::TITLE;
+                }
+            }
+        }
     }
     else
     {

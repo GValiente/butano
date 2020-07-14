@@ -17,6 +17,8 @@ public:
         return *_current_stage;
     }
 
+    [[nodiscard]] bool go_to_next_stage();
+
     [[nodiscard]] int level() const
     {
         return _level;
@@ -60,8 +62,8 @@ public:
 
 private:
     const game::stage* _current_stage;
-    int _level = 2;
-    int _experience = 0;
+    int _level = 3;
+    int _experience = 1100;
     int _bombs_count = 2;
     int _high_experience = 0;
     bool _how_to_play_viewed = false;

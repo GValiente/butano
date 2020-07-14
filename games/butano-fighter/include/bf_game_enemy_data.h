@@ -22,26 +22,49 @@ public:
         EXPLOSION
     };
 
+    using graphics_indexes_group = btn::array<uint16_t, 4>;
+
     const btn::sprite_item& sprite_item;
     death_anim_type death_anim;
     btn::sound_item death_sound_item;
     btn::fixed_size dimensions;
     btn::fixed_size half_dimensions;
-    int16_t graphics_index_1;
-    int16_t graphics_index_2;
+    btn::array<graphics_indexes_group, 4> graphics_indexes_groups;
     int16_t life;
     int8_t experience;
 
     constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
                          btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
-                         int _graphics_index_1, int _graphics_index_2, int _life, int _experience) :
+                         int graphics_index_1, int graphics_index_2, int _life, int _experience) :
+        enemy_data(_sprite_item, _death_anim, _death_sound_item, _dimensions,
+                   graphics_indexes_group{ uint16_t(graphics_index_1), uint16_t(graphics_index_2),
+                                           uint16_t(graphics_index_1), uint16_t(graphics_index_2) },
+                   _life, _experience)
+    {
+        BTN_CONSTEXPR_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
+                             "Invalid graphics index 1");
+        BTN_CONSTEXPR_ASSERT(graphics_index_2 >= 0 && graphics_index_2 < sprite_item.tiles_item().graphics_count(),
+                             "Invalid graphics index 2");
+    }
+
+    constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
+                         btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
+                         const btn::array<uint16_t, 4>& graphics_indexes, int _life, int _experience) :
+        enemy_data(_sprite_item, _death_anim, _death_sound_item, _dimensions,
+                   { graphics_indexes, graphics_indexes, graphics_indexes, graphics_indexes }, _life, _experience)
+    {
+    }
+
+    constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
+                         btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
+                         const btn::array<graphics_indexes_group, 4> _graphics_indexes_groups, int _life,
+                         int _experience) :
         sprite_item(_sprite_item),
         death_anim(_death_anim),
         death_sound_item(_death_sound_item),
         dimensions(_dimensions),
         half_dimensions(_dimensions / 2),
-        graphics_index_1(int16_t(_graphics_index_1)),
-        graphics_index_2(int16_t(_graphics_index_2)),
+        graphics_indexes_groups(_graphics_indexes_groups),
         life(int16_t(_life)),
         experience(int8_t(_experience))
     {
@@ -49,13 +72,29 @@ public:
                              "Invalid width");
         BTN_CONSTEXPR_ASSERT(dimensions.height() >= 1 && dimensions.height() <= constants::max_enemy_size,
                              "Invalid height");
-        BTN_CONSTEXPR_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
-                             "Invalid graphics index 1");
-        BTN_CONSTEXPR_ASSERT(graphics_index_2 >= 0 && graphics_index_2 < sprite_item.tiles_item().graphics_count(),
-                             "Invalid graphics index 2");
+        BTN_CONSTEXPR_ASSERT(_validate_graphic_indexes_groups(), "Invalid graphic indexes groups");
         BTN_CONSTEXPR_ASSERT(_life >= 1 && _life < btn::numeric_limits<int16_t>::max(), "Invalid life");
         BTN_CONSTEXPR_ASSERT(_experience >= 1 && _experience < btn::numeric_limits<int8_t>::max(),
                              "Invalid experience");
+    }
+
+private:
+    [[nodiscard]] constexpr bool _validate_graphic_indexes_groups() const
+    {
+        int graphics_count = sprite_item.tiles_item().graphics_count();
+
+        for(const graphics_indexes_group& group : graphics_indexes_groups)
+        {
+            for(int graphics_index : group)
+            {
+                if(graphics_index >= graphics_count)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 };
 

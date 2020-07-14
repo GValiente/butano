@@ -245,11 +245,6 @@ namespace
         enemy_move_event(btn::fixed_point(0, move_y(0)),    1,  false),
     };
 
-    constexpr const enemy_move_event cowboy_flipped_moves[] = {
-        cowboy_moves[0].flipped(),
-        cowboy_moves[1].flipped(),
-    };
-
     constexpr const enemy_bullet_event cowboy_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL, 1, 45),
     };
@@ -357,7 +352,7 @@ namespace
 
         // level 0
 
-        /*enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(pig, btn::fixed_point(-45, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-60, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(pig, btn::fixed_point(-30, start_y), pig_moves, no_bullets, 60, enemy_drop_type::NONE),
 
@@ -591,12 +586,12 @@ namespace
         enemy_event(jelly, btn::fixed_point(-30, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(25, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(-60, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
-        enemy_event(jelly, btn::fixed_point(55, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),*/
+        enemy_event(jelly, btn::fixed_point(55, start_y), jelly_flipped_moves, no_bullets, 5, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(-15, start_y), jelly_moves, no_bullets, 5, enemy_drop_type::NONE),
     };
 
 
-    // stage:
+    // stage (start with level 0, exp 0):
 
     constexpr const stage stage_1(
         btn::regular_bg_items::stage_1, btn::regular_bg_items::clouds, btn::sprite_items::stage_1_intro,

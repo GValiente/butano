@@ -46,7 +46,7 @@ public:
 
     [[nodiscard]] bool dead() const
     {
-        return _dead;
+        return ! _dead_counter;
     }
 
     [[nodiscard]] bool hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
@@ -87,8 +87,8 @@ private:
     int _damage_palette_counter;
     int _ignore_hero_bullet_counter;
     int _death_flash_counter;
+    int _dead_counter;
     bool _hero_bomb_active;
-    bool _dead;
 };
 
 }

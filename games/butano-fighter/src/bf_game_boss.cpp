@@ -79,12 +79,12 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
                     if(_life <= 0)
                     {
                         _life = 0;
+                        _death_flash_counter = 50;
 
                         btn::bg_palettes::set_fade(btn::colors::white, 1);
                         btn::sprite_palettes::set_fade(btn::colors::black, 1);
                         btn::sound_items::glass_breaking_2.play();
                         btn::music::stop();
-                        _death_flash_counter = 50;
                     }
                 }
 
@@ -140,7 +140,10 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
 
         if(_update_dead(hero_position))
         {
-            _dead = true;
+            if(_dead_counter)
+            {
+               --_dead_counter;
+            }
         }
     }
 
@@ -164,8 +167,8 @@ boss::boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
     _damage_palette_counter(0),
     _ignore_hero_bullet_counter(constants::enemies_invencible_frames),
     _death_flash_counter(0),
-    _hero_bomb_active(false),
-    _dead(false)
+    _dead_counter(60),
+    _hero_bomb_active(false)
 {
 }
 

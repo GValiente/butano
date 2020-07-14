@@ -217,7 +217,8 @@ class RegularBgItem:
                 start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
                 end = time.time()
-                print('4bpp image generated successfully in ' + str(int((end - start) * 1000)) + ' milliseconds')
+                print('4bpp image with ' + str(self.__colors_count) + ' colors generated in ' +
+                      str(int((end - start) * 1000)) + ' milliseconds')
             elif bpp_mode != 'bpp4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 

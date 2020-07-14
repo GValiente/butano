@@ -476,18 +476,16 @@ public:
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(value);
-        ++_size;
+        _push_front();
     }
 
     void push_front(value_type&& value)
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(move(value));
-        ++_size;
+        _push_front();
     }
 
     template<typename... Args>
@@ -495,9 +493,8 @@ public:
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        _begin = (_begin - 1) & _max_size_minus_one;
         ::new(_data + _begin) value_type(forward<Args>(args)...);
-        ++_size;
+        _push_front();
     }
 
     void pop_front()
@@ -513,11 +510,12 @@ public:
 
         if(index == 0)
         {
-            push_front(value);
+            ::new(_data + _begin) value_type(value);
+            _push_front();
         }
         else
         {
-            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
             BTN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
@@ -543,11 +541,12 @@ public:
 
         if(index == 0)
         {
-            push_front(move(value));
+            ::new(_data + _begin) value_type(move(value));
+            _push_front();
         }
         else
         {
-            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
             BTN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
@@ -574,11 +573,12 @@ public:
 
         if(index == 0)
         {
-            emplace_front(forward<Args>(args)...);
+            ::new(_data + _begin) value_type(forward<Args>(args)...);
+            _push_front();
         }
         else
         {
-            BTN_ASSERT(index >= 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
             BTN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
@@ -604,11 +604,11 @@ public:
 
         if(index == 0)
         {
-            pop_front();
+            _pop_front();
         }
         else
         {
-            BTN_ASSERT(index >= 0 && index < _size, "Invalid position: ", index, " - ", _size);
+            BTN_ASSERT(index > 0 && index < _size, "Invalid position: ", index, " - ", _size);
 
             --_size;
 
@@ -969,11 +969,17 @@ private:
         return _data[_real_index(index)];
     }
 
+    void _push_front()
+    {
+        _begin = (_begin - 1) & _max_size_minus_one;
+        ++_size;
+    }
+
     void _pop_front()
     {
-        _data[_size].~value_type();
-        --_size;
+        _data[_begin].~value_type();
         _begin = (_begin + 1) & _max_size_minus_one;
+        --_size;
     }
 };
 

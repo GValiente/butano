@@ -1,5 +1,5 @@
-#ifndef BTN_SPRITE_AFFINE_MAT_SCALE_LUT_H
-#define BTN_SPRITE_AFFINE_MAT_SCALE_LUT_H
+#ifndef BTN_AFFINE_MAT_SCALE_LUT_H
+#define BTN_AFFINE_MAT_SCALE_LUT_H
 
 #include "btn_array.h"
 #include "btn_fixed.h"
@@ -7,7 +7,7 @@
 namespace btn
 {
 
-[[nodiscard]] constexpr array<uint16_t, 1025> create_sprite_affine_mat_scale_lut()
+[[nodiscard]] constexpr array<uint16_t, 1025> create_affine_mat_scale_lut()
 {
     array<uint16_t, 1025> result = {};
     int one = fixed_t<8>(1).data() * fixed_t<8>::scale();
@@ -20,7 +20,7 @@ namespace btn
     return result;
 }
 
-constexpr const array<uint16_t, 1025> sprite_affine_mat_scale_lut = create_sprite_affine_mat_scale_lut();
+constexpr const array<uint16_t, 1025> affine_mat_scale_lut = create_affine_mat_scale_lut();
 
 }
 

@@ -8,6 +8,7 @@
 #include "btn_sprite_items_stage_2_intro.h"
 #include "btn_sprite_items_stage_2_intro_alt.h"
 #include "btn_sprite_items_stage_2_monsters_1.h"
+#include "btn_sprite_items_stage_2_characters_1.h"
 #include "bf_constants.h"
 #include "bf_game_bullet_util.h"
 
@@ -58,6 +59,22 @@ namespace
     };
 
 
+    // dog:
+
+    constexpr const enemy_data dog(btn::sprite_items::stage_2_characters_1, enemy_data::death_anim_type::ROTATE,
+                                   btn::sound_items::monster_2, btn::fixed_size(12, 10), 48, 49, 2, 4);
+
+    constexpr const enemy_move_event dog_moves[] = {
+        enemy_move_event(btn::fixed_point(0.75, move_y(0.15)), 75, false),
+        enemy_move_event(btn::fixed_point(0.75, move_y(-1.1)), 1,  false),
+    };
+
+    constexpr const enemy_move_event dog_flipped_moves[] = {
+        dog_moves[0].flipped(),
+        dog_moves[1].flipped(),
+    };
+
+
     // enemy events:
 
     constexpr const enemy_event enemy_events[] = {
@@ -67,6 +84,9 @@ namespace
         enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-60, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(dog, btn::fixed_point(-60, start_y), dog_moves, no_bullets, 60, enemy_drop_type::GEM),
+        enemy_event(dog, btn::fixed_point(55, start_y), dog_flipped_moves, no_bullets, 60, enemy_drop_type::GEM),
     };
 
 

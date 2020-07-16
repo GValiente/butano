@@ -86,25 +86,49 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
     auto it = check_and_update_bullets->begin();
     auto end = check_and_update_bullets->end();
 
-    while(it != end)
+    if(hero.alive())
     {
-        bullet_type& bullet = *it;
-        btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
-        const btn::fixed_point& position = sprite_move_action.sprite().position();
-        const hero_bullet_level& level_data = *bullet.level_data;
+        while(it != end)
+        {
+            bullet_type& bullet = *it;
+            btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
+            const btn::fixed_point& position = sprite_move_action.sprite().position();
+            const hero_bullet_level& level_data = *bullet.level_data;
 
-        if(position.x() < -constants::view_width || position.x() > constants::view_width ||
-                position.y() < -constants::view_height || position.y() > constants::view_height ||
-                enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
-                                          level_data.damage, hero, objects }))
-        {
-            it = check_and_update_bullets->erase_after(before_it);
+            if(position.x() < -constants::view_width || position.x() > constants::view_width ||
+                    position.y() < -constants::view_height || position.y() > constants::view_height ||
+                    enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
+                                              level_data.damage, hero, objects }))
+            {
+                it = check_and_update_bullets->erase_after(before_it);
+            }
+            else
+            {
+                sprite_move_action.update();
+                before_it = it;
+                ++it;
+            }
         }
-        else
+    }
+    else
+    {
+        while(it != end)
         {
-            sprite_move_action.update();
-            before_it = it;
-            ++it;
+            bullet_type& bullet = *it;
+            btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
+            const btn::fixed_point& position = sprite_move_action.sprite().position();
+
+            if(position.x() < -constants::view_width || position.x() > constants::view_width ||
+                    position.y() < -constants::view_height || position.y() > constants::view_height)
+            {
+                it = check_and_update_bullets->erase_after(before_it);
+            }
+            else
+            {
+                sprite_move_action.update();
+                before_it = it;
+                ++it;
+            }
         }
     }
 

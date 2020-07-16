@@ -55,6 +55,37 @@ namespace
         }
     };
 
+
+    class registers
+    {
+
+    public:
+        explicit registers(const sprite_affine_mat_attributes& attributes) :
+            _pa(attributes.first_register_value()),
+            _pb(attributes.second_register_value()),
+            _pc(attributes.third_register_value()),
+            _pd(attributes.fourth_register_value())
+        {
+        }
+
+        [[nodiscard]] friend bool operator==(const registers& a, const registers& b)
+        {
+            return a._pa == b._pa && a._pb == b._pb && a._pc == b._pc && a._pd == b._pd;
+        }
+
+        [[nodiscard]] friend bool operator!=(const registers& a, const registers& b)
+        {
+            return ! (a == b);
+        }
+
+    private:
+        int _pa;
+        int _pb;
+        int _pc;
+        int _pd;
+    };
+
+
     class static_data
     {
 
@@ -69,6 +100,7 @@ namespace
 
     BTN_DATA_EWRAM static_data data;
 
+
     void _update_indexes_to_commit(int index)
     {
         data.first_index_to_commit = min(data.first_index_to_commit, index);
@@ -79,28 +111,26 @@ namespace
     {
         item_type& item = data.items[index];
         const sprite_affine_mat_attributes& attributes = item.attributes;
-        bool new_identity;
         bool new_double_size;
 
         if(attributes.identity())
         {
-            new_identity = true;
             new_double_size = false;
+
+            if(! item.identity)
+            {
+                item.identity = true;
+                item.identity_changed = true;
+                data.identity_changed = true;
+            }
         }
         else
         {
-            new_identity = false;
             new_double_size = attributes.double_size();
-        }
-
-        if(item.identity != new_identity)
-        {
-            item.identity_changed = true;
-            data.identity_changed = true;
+            item.identity = false;
         }
 
         bool double_size_changed = item.double_size != new_double_size;
-        item.identity = new_identity;
         item.double_size = new_double_size;
         _update_indexes_to_commit(index);
 
@@ -237,9 +267,14 @@ fixed rotation_angle(int id)
 void set_rotation_angle(int id, fixed rotation_angle)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_rotation_angle(rotation_angle);
-    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 fixed scale_x(int id)
@@ -250,9 +285,14 @@ fixed scale_x(int id)
 void set_scale_x(int id, fixed scale_x)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_scale_x(scale_x);
-    hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 fixed scale_y(int id)
@@ -263,25 +303,40 @@ fixed scale_y(int id)
 void set_scale_y(int id, fixed scale_y)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_scale_y(scale_y);
-    hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 void set_scale(int id, fixed scale)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_scale(scale);
-    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 void set_scale(int id, fixed scale_x, fixed scale_y)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_scale(scale_x, scale_y);
-    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 bool horizontal_flip(int id)
@@ -292,9 +347,14 @@ bool horizontal_flip(int id)
 void set_horizontal_flip(int id, bool horizontal_flip)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_horizontal_flip(horizontal_flip);
-    hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 bool vertical_flip(int id)
@@ -305,9 +365,14 @@ bool vertical_flip(int id)
 void set_vertical_flip(int id, bool vertical_flip)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes.set_vertical_flip(vertical_flip);
-    hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
-    _update_indexes_to_commit(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 const sprite_affine_mat_attributes& attributes(int id)
@@ -318,9 +383,14 @@ const sprite_affine_mat_attributes& attributes(int id)
 void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
 {
     item_type& item = data.items[id];
+    registers old_registers(item.attributes);
     item.attributes = attributes;
-    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-    _update(id);
+
+    if(registers(item.attributes) != old_registers)
+    {
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+        _update(id);
+    }
 }
 
 bool identity(int id)

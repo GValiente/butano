@@ -1208,7 +1208,11 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
         }
 
         data.check_items_on_screen |= result.check_items_on_screen;
-        data.rebuild_handles |= result.rebuild_handles;
+
+        if(result.rebuild_handles)
+        {
+            _enable_rebuild_handles();
+        }
     }
 #endif
 

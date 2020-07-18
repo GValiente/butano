@@ -1,6 +1,7 @@
 #include "../include/btn_hw_show.h"
 
 #if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
+    #include "btn_colors.h"
     #include "btn_string.h"
     #include "btn_display.h"
     #include "btn_string_view.h"
@@ -44,6 +45,7 @@ namespace
         init_tte();
 
         // Show file name:
+        tte_set_ink(colors::red.data());
         tte_write("ERROR in ");
 
         if(file_name.empty())
@@ -59,6 +61,8 @@ namespace
         tte_write("\n");
 
         // Show function and line:
+        tte_set_ink(colors::blue.data());
+
         if(function.empty())
         {
             tte_write("Line: ");
@@ -82,6 +86,7 @@ namespace
         {
             buffer.clear();
             buffer.append(condition.data(), condition.size());
+            tte_set_ink(colors::yellow.data());
             tte_write(buffer.c_str());
             tte_write("\n\n");
         }
@@ -89,6 +94,7 @@ namespace
         // Show message:
         buffer.clear();
         buffer.append(message.begin(), message.end());
+        tte_set_ink(colors::white.data());
         tte_write(buffer.c_str());
     }
 #endif
@@ -98,6 +104,7 @@ namespace
     {
         const auto& ticks_per_entry = _btn::profiler::ticks_per_entry();
         init_tte();
+        tte_set_ink(colors::green.data());
 
         if(ticks_per_entry.empty())
         {
@@ -141,15 +148,15 @@ namespace
                 const entry& entry = entries[index];
                 buffer.clear();
                 buffer_stream << index + 1 << '.';
-                max_index_width = max(max_index_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
+                max_index_width = max(max_index_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
 
                 buffer.clear();
                 buffer_stream << entry.id;
-                max_id_width = max(max_id_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
+                max_id_width = max(max_id_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
 
                 buffer.clear();
                 buffer_stream << entry.ticks;
-                max_ticks_width = max(max_ticks_width, int(tte_get_text_size(buffer_stream.string().c_str()).x));
+                max_ticks_width = max(max_ticks_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
             }
 
             // Print entries:
@@ -164,6 +171,7 @@ namespace
             while(true)
             {
                 tte_set_pos(init_x, init_y);
+                tte_set_ink(colors::green.data());
                 tte_write("PROFILER results");
 
                 if(num_entries > max_visible_entries)
@@ -182,6 +190,7 @@ namespace
                     const entry& entry = entries[index];
                     buffer.clear();
                     buffer_stream << index + 1 << '.';
+                    tte_set_ink(colors::blue.data());
                     tte_write(buffer.c_str());
 
                     tte_set_pos(x + max_index_width + index_margin, y);
@@ -189,6 +198,7 @@ namespace
 
                     buffer.clear();
                     buffer_stream << entry.id;
+                    tte_set_ink(colors::white.data());
                     tte_write(buffer.c_str());
 
                     tte_set_pos(x + max_id_width + margin, y);
@@ -196,6 +206,7 @@ namespace
 
                     buffer.clear();
                     buffer_stream << entry.ticks;
+                    tte_set_ink(colors::yellow.data());
                     tte_write(buffer.c_str());
 
                     if(total_ticks)
@@ -204,6 +215,7 @@ namespace
                         buffer.clear();
                         buffer_stream << pct << '%';
                         tte_set_pos(x + max_ticks_width + margin, y);
+                        tte_set_ink(colors::orange.data());
                         tte_write(buffer.c_str());
                     }
 

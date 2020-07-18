@@ -202,19 +202,12 @@ namespace sprites_manager
 
     void commit();
 
-    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(sorted_sprites::layer& layer);
+    BTN_CODE_IWRAM void _check_items_on_screen_impl();
 
-    BTN_CODE_IWRAM void _rebuild_handles_impl(sorted_sprites::layer& layer, void* hw_handles, int& visible_items_count);
+    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles);
 
     #if BTN_CFG_CAMERA_ENABLED
-        struct update_camera_impl_result
-        {
-            bool check_items_on_screen = false;
-            bool rebuild_handles = false;
-        };
-
-        BTN_CODE_IWRAM void _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer,
-                                                update_camera_impl_result& result);
+        [[nodiscard]] BTN_CODE_IWRAM bool _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer);
     #endif
 }
 

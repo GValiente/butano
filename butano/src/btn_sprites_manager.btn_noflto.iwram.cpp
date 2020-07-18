@@ -1,88 +1,101 @@
 #include "btn_sprites_manager.h"
 
+#include "btn_vector.h"
 #include "btn_sorted_sprites.h"
 
 namespace btn::sprites_manager
 {
 
-bool _check_items_on_screen_impl(sorted_sprites::layer& layer)
+void _check_items_on_screen_impl()
 {
     fixed display_width = display::width();
     fixed display_height = display::height();
-    bool rebuild_handles = false;
 
-    for(sprites_manager_item& item : layer)
+    for(sorted_sprites::layer* layer : sorted_sprites::layers())
     {
-        if(item.check_on_screen)
+        for(sprites_manager_item& item : *layer)
         {
-            fixed x = item.hw_position.x();
-            bool on_screen = false;
-            item.check_on_screen = false;
-
-            if(x < display_width && x + (item.half_dimensions.width() * 2) > 0)
+            if(item.check_on_screen)
             {
-                fixed y = item.hw_position.y();
+                fixed x = item.hw_position.x();
+                bool on_screen = false;
+                item.check_on_screen = false;
 
-                if(y < display_height && y + (item.half_dimensions.height() * 2) > 0)
+                if(x < display_width)
                 {
-                    on_screen = true;
-                }
-            }
+                    fixed y = item.hw_position.y();
 
-            if(on_screen != item.on_screen)
-            {
+                    if(y < display_height)
+                    {
+                        if(x + (item.half_dimensions.width() * 2) > 0)
+                        {
+                            if(y + (item.half_dimensions.height() * 2) > 0)
+                            {
+                                on_screen = true;
+                            }
+                        }
+                    }
+                }
+
                 item.on_screen = on_screen;
-                rebuild_handles = true;
             }
         }
     }
-
-    return rebuild_handles;
 }
 
-void _rebuild_handles_impl(sorted_sprites::layer& layer, void* hw_handles, int& visible_items_count)
+int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
 {
     auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
-    int local_visible_items_count = visible_items_count;
+    int visible_items_count = 0;
 
-    for(sprites_manager_item& item : layer)
+    for(sorted_sprites::layer* layer : sorted_sprites::layers())
     {
-        if(item.on_screen)
+        for(sprites_manager_item& item : *layer)
         {
-            BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
-                       local_visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
+            if(item.on_screen)
+            {
+                BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
+                           visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
 
-            hw::sprites::copy_handle(item.handle, handles[local_visible_items_count]);
-            item.handles_index = int8_t(local_visible_items_count);
-            ++local_visible_items_count;
-        }
-        else
-        {
-            item.handles_index = -1;
+                hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
+                item.handles_index = int8_t(visible_items_count);
+                ++visible_items_count;
+            }
+            else
+            {
+                item.handles_index = -1;
+            }
         }
     }
 
-    visible_items_count = local_visible_items_count;
+    for(int index = visible_items_count; index < last_visible_items_count; ++index)
+    {
+        hw::sprites::hide(handles[index]);
+    }
+
+    return visible_items_count;
 }
 
 #if BTN_CFG_CAMERA_ENABLED
-    void _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer,
-                             update_camera_impl_result& result)
+    bool _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer)
     {
+        bool check_items_on_screen = false;
+
         for(sprites_manager_item& item : layer)
         {
             if(! item.ignore_camera)
             {
                 item.update_hw_position(camera_position);
-                result.rebuild_handles = true;
 
                 if(item.visible)
                 {
                     item.check_on_screen = true;
-                    result.check_items_on_screen = true;
+                    check_items_on_screen = true;
                 }
             }
         }
+
+        return check_items_on_screen;
     }
 #endif
 

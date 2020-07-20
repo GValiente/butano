@@ -31,15 +31,16 @@ include $(DEVKITARM)/gba_rules
 # Options for code generation
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork
-CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wuseless-cast -Wnon-virtual-dtor \
-				-Woverloaded-virtual -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op \
-				-Wnull-dereference -Wswitch-default -Wstack-usage=16384
+CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wmisleading-indentation \
+				-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wswitch-default \
+				-Wstack-usage=16384
 
 CFLAGS      :=	$(CWARNINGS) -g -O3 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -ffunction-sections -fdata-sections $(ARCH)
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 
-CXXFLAGS    :=	$(CFLAGS) -std=c++20 -fno-rtti -fno-exceptions
+CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
+CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
 ASFLAGS     :=	-g $(ARCH)
 LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -47,18 +48,20 @@ LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------------------------------------------
-LIBS        :=  -ltonc -lmm
+LIBS        := -lmm
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories
 #---------------------------------------------------------------------------------------------------------------------
-LIBDIRS     :=	$(DEVKITPRO)/libtonc $(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/maxmod
+LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBBUTANOABS)/hw/3rd_party/maxmod
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files
 #---------------------------------------------------------------------------------------------------------------------
-BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src $(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
-				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
+BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
+				$(LIBBUTANOABS)/hw/3rd_party/libtonc/asm $(LIBBUTANOABS)/hw/3rd_party/libtonc/src \
+				$(LIBBUTANOABS)/hw/3rd_party/libtonc/src/font $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
+				$(LIBBUTANOABS)/hw/3rd_party/posprintf/src $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once)

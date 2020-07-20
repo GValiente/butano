@@ -1,0 +1,63 @@
+
+      ----------------------------------------------------------
+    //                                                          \\
+   ||        TTT           q     cc                              ||
+   ||       TT             qq   c  c                   bb        ||
+   ||       TT             qq   c  c    lll           b  b       ||
+   ||       TT      ooo  qqq     cc    l      i   i   b  b       ||
+   ||       TT     o       q    c  c    lll   i  i    b  b       ||
+   ||       TT     o       q   c    c      l   ii     b  b       ||
+   ||    TTTTTTTT   ooo    q  c  cccc  llll   i i     b          ||
+   ||                                         i i   b b          ||
+   ||                                         ii     b           ||
+   ||                                                            ||
+   ||============================================================||
+   ||                        libtonc                             ||
+   ||              part of TONC: GBA Programming in rot 13       ||
+   ||                          v a0                              ||
+   ||                  20050316-20091221, J Vijn                 ||
+    \\___________________________________________________________//
+
+
+A revamped libtonc. It's actually changed quite a bit since the 
+first incarnations. I've renamed a good deal of the defines, 
+structures and functions, added some text functions and tried to 
+make things a little bit faster. 
+
+// === NOTES ===
+
+* I'm making liberal use of typedefs and structs this time around. 
+  In fact, you can pretty much say I've typedef'd the crap out of 
+  it. Used lots and lots of structures too. Structs are good. They, 
+  well structure things so that accessing becomse easier (tile_mem).
+  Also, it allows the compiler to optimise certain things like copies 
+  (TILE struct) and clustered register accesses (DMACHN and BGAFF). 
+  Yes, this creates a bit of a learning curve, but it's worth it.
+* Macros. Yes, the C preprocessor is evil, but there's always been 
+  a lot of gray area in game programming *cough* global variables 
+  *cough*. Don't get scared by the bitfield macros BF_MSK and 
+  BF_UNMSK. The pretty much do what bit-fields do. Only faster.
+  Btw, the "do {} while(0)" is just a construct that is used to keep 
+  multi-statement macros safe (after an if for example). No trace of 
+  loopiness will remain in the final binary if compiled with 
+  optimisations.
+* You will find that a number of the defines have an underscore prefix.
+  You will also find that this always concerns 0 defines (i.e., default 
+  values). I do this so you can tell that they are the default values 
+  and won't do something silly like reg&0 when checking for a bit or 
+  reg|=0 when setting one.
+* Broken record advice: GBA is a 32bit machine. Use int if you can, 
+  char or short if you must. You are NOT saving space by using u8 or 
+  u16 as variables. In fact, probably just the opposite, and it's 
+  slower too.
+
+
+
+// Notes to self:
+* check DMA flags once more
+* swi_ex names?
+* text stuff should be singletons
+* timer: TM_ or TMR_ ?
+* INT_ALL ???
+* IN_SBSS !!
+* Oi! Where'd by xxx_BUILDs go?

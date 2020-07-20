@@ -1,11 +1,12 @@
-#include "btn_assert.h"
+#include <stdlib.h>
+#include "btn_cstdlib.h"
 
-extern "C"
+void* malloc(size_t bytes)
 {
-    // Disable strtol (used by tonc's tte_cmd_default) to reduce IWRAM usage:
-    long strtol([[maybe_unused]] const char* str, char**, [[maybe_unused]] int base)
-    {
-        BTN_ERROR("strtol not supported: ", str, " - ", base);
-        return 0;
-    }
+    return btn::malloc(bytes);
+}
+
+void free(void* ptr)
+{
+    btn::free(ptr);
 }

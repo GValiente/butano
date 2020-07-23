@@ -10,7 +10,8 @@ enum class enemy_bullet_type : int8_t
 {
     SMALL,
     BIG,
-    HUGE
+    HUGE,
+    ROBOT_DOUBLE,
 };
 
 }

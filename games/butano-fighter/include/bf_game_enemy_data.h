@@ -31,15 +31,17 @@ public:
     btn::fixed_size half_dimensions;
     btn::array<graphics_indexes_group, 4> graphics_indexes_groups;
     int16_t life;
-    int8_t experience;
+    int16_t experience;
+    int8_t animation_wait_frames;
 
     constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
                          btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
-                         int graphics_index_1, int graphics_index_2, int _life, int _experience) :
+                         int graphics_index_1, int graphics_index_2, int _life, int _experience,
+                         int _animation_wait_frames = 16) :
         enemy_data(_sprite_item, _death_anim, _death_sound_item, _dimensions,
                    graphics_indexes_group{ uint16_t(graphics_index_1), uint16_t(graphics_index_2),
                                            uint16_t(graphics_index_1), uint16_t(graphics_index_2) },
-                   _life, _experience)
+                   _life, _experience, _animation_wait_frames)
     {
         BTN_CONSTEXPR_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
                              "Invalid graphics index 1");
@@ -49,16 +51,18 @@ public:
 
     constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
                          btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
-                         const btn::array<uint16_t, 4>& graphics_indexes, int _life, int _experience) :
+                         const btn::array<uint16_t, 4>& graphics_indexes, int _life, int _experience,
+                         int _animation_wait_frames = 16) :
         enemy_data(_sprite_item, _death_anim, _death_sound_item, _dimensions,
-                   { graphics_indexes, graphics_indexes, graphics_indexes, graphics_indexes }, _life, _experience)
+                   { graphics_indexes, graphics_indexes, graphics_indexes, graphics_indexes }, _life, _experience,
+                   _animation_wait_frames)
     {
     }
 
     constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
                          btn::sound_item _death_sound_item, const btn::fixed_size& _dimensions,
                          const btn::array<graphics_indexes_group, 4> _graphics_indexes_groups, int _life,
-                         int _experience) :
+                         int _experience, int _animation_wait_frames = 16) :
         sprite_item(_sprite_item),
         death_anim(_death_anim),
         death_sound_item(_death_sound_item),
@@ -66,7 +70,8 @@ public:
         half_dimensions(_dimensions / 2),
         graphics_indexes_groups(_graphics_indexes_groups),
         life(int16_t(_life)),
-        experience(int8_t(_experience))
+        experience(int16_t(_experience)),
+        animation_wait_frames(int8_t(_animation_wait_frames))
     {
         BTN_CONSTEXPR_ASSERT(dimensions.width() >= 1 && dimensions.width() <= constants::max_enemy_size,
                              "Invalid width");
@@ -74,8 +79,11 @@ public:
                              "Invalid height");
         BTN_CONSTEXPR_ASSERT(_validate_graphic_indexes_groups(), "Invalid graphic indexes groups");
         BTN_CONSTEXPR_ASSERT(_life >= 1 && _life < btn::numeric_limits<int16_t>::max(), "Invalid life");
-        BTN_CONSTEXPR_ASSERT(_experience >= 1 && _experience < btn::numeric_limits<int8_t>::max(),
+        BTN_CONSTEXPR_ASSERT(_experience >= 1 && _experience < btn::numeric_limits<int16_t>::max(),
                              "Invalid experience");
+        BTN_CONSTEXPR_ASSERT(_animation_wait_frames >= 1 &&
+                             _animation_wait_frames < btn::numeric_limits<int8_t>::max(),
+                             "Invalid animation wait frames");
     }
 
 private:

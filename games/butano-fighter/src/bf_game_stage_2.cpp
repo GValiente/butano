@@ -6,6 +6,7 @@
 #include "btn_regular_bg_items_clouds.h"
 #include "btn_regular_bg_items_stage_2.h"
 #include "btn_sprite_items_stage_2_intro.h"
+#include "btn_sprite_items_stage_2_robot.h"
 #include "btn_sprite_items_stage_2_intro_alt.h"
 #include "btn_sprite_items_stage_2_monsters_1.h"
 #include "btn_sprite_items_stage_2_monsters_2.h"
@@ -169,7 +170,7 @@ namespace
 
     constexpr const enemy_data green_ninja(
         btn::sprite_items::stage_2_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-        btn::sound_items::dinosaur_4, btn::fixed_size(14, 14), _create_graphics_indexes(0), 2, 4);
+        btn::sound_items::scream_4, btn::fixed_size(14, 14), _create_graphics_indexes(0), 2, 4);
 
     constexpr const enemy_move_event green_ninja_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  60,     down_index,     false),
@@ -224,7 +225,7 @@ namespace
 
     constexpr const enemy_data bald(
         btn::sprite_items::stage_2_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-        btn::sound_items::scream_6, btn::fixed_size(14, 15), _create_graphics_indexes(32), 15, 10);
+        btn::sound_items::scream_6, btn::fixed_size(14, 15), _create_graphics_indexes(32), 12, 10);
 
     constexpr const enemy_move_event bald_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.3)),   60, down_index,     false),
@@ -259,11 +260,56 @@ namespace
     };
 
 
+    // robot:
+
+    constexpr const enemy_data robot(
+        btn::sprite_items::stage_2_robot, enemy_data::death_anim_type::EXPLOSION,
+        btn::sound_items::boss_shoot, btn::fixed_size(26, 47), 0, 1, 150, 200, 4);
+
+    constexpr const enemy_move_event robot_moves[] = {
+        enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 220, false),
+        enemy_move_event(btn::fixed_point(0.25, 0),          160, false),
+        enemy_move_event(btn::fixed_point(-0.25, 0),         320, false),
+        enemy_move_event(btn::fixed_point(0.25, 0),          160, false),
+        enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 1,   false),
+    };
+
+    constexpr const enemy_bullet_event robot_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+    };
+
+
     // black_ninja:
 
     constexpr const enemy_data black_ninja(
         btn::sprite_items::stage_2_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-        btn::sound_items::scream_4, btn::fixed_size(14, 14), _create_graphics_indexes(0), 3, 6);
+        btn::sound_items::scream_5, btn::fixed_size(14, 14), _create_graphics_indexes(0), 3, 6);
 
     constexpr const enemy_move_event black_ninja_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.35)),  40, down_index,     false),
@@ -283,7 +329,7 @@ namespace
 
         // level 3 slow (25s)
 
-        /*enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(beaver, btn::fixed_point(40, start_y), beaver_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -316,17 +362,16 @@ namespace
 
         enemy_event(old_woman, btn::fixed_point(-45, start_y), old_woman_moves, old_woman_bullets, 45, enemy_drop_type::NONE),
         enemy_event(dog, btn::fixed_point(55, start_y), dog_flipped_moves, no_bullets, 60, enemy_drop_type::GEM),
-        enemy_event(old_woman, btn::fixed_point(40, start_y), old_woman_flipped_moves, old_woman_bullets, 75, enemy_drop_type::NONE),*/
+        enemy_event(old_woman, btn::fixed_point(40, start_y), old_woman_flipped_moves, old_woman_bullets, 75, enemy_drop_type::NONE),
 
-        // level 3 fast
+        // level 3 fast (25s)
 
         enemy_event(bald, btn::fixed_point(5, start_y), bald_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(bald, btn::fixed_point(55, start_y), bald_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(bald, btn::fixed_point(-60, start_y), bald_moves, no_bullets, 45, enemy_drop_type::NONE),
-        enemy_event(bald, btn::fixed_point(40, start_y), bald_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(bald, btn::fixed_point(-45, start_y), bald_moves, no_bullets, 45, enemy_drop_type::NONE),
 
-        enemy_event(fire, btn::fixed_point(40, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(fire, btn::fixed_point(55, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
         enemy_event(fire, btn::fixed_point(25, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
 
         enemy_event(fire, btn::fixed_point(-45, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
@@ -334,6 +379,34 @@ namespace
 
         enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(green_ninja, btn::fixed_point(40, start_y), green_ninja_flipped_moves, green_ninja_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(green_ninja, btn::fixed_point(55, start_y), green_ninja_flipped_moves, green_ninja_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(green_ninja, btn::fixed_point(25, start_y), green_ninja_flipped_moves, green_ninja_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(beaver, btn::fixed_point(25, start_y), beaver_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(eye, btn::fixed_point(-30, start_y), eye_moves, eye_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(beaver, btn::fixed_point(-30, start_y), beaver_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(eye, btn::fixed_point(55, start_y), eye_flipped_moves, eye_flipped_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(bald, btn::fixed_point(-60, start_y), bald_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(bald, btn::fixed_point(-45, start_y), bald_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(fire, btn::fixed_point(55, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(fire, btn::fixed_point(40, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(fire, btn::fixed_point(-60, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(fire, btn::fixed_point(-45, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(fire, btn::fixed_point(-30, start_y), fire_moves, fire_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(old_woman, btn::fixed_point(-45, start_y), old_woman_moves, old_woman_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(dog, btn::fixed_point(55, start_y), dog_flipped_moves, no_bullets, 60, enemy_drop_type::GEM),
+        enemy_event(old_woman, btn::fixed_point(40, start_y), old_woman_flipped_moves, old_woman_bullets, 60, enemy_drop_type::NONE),
+
+        // level 3 mid boss (12s)
+
+        enemy_event(robot, btn::fixed_point(0, start_y - 16), robot_moves, robot_bullets, 0, enemy_drop_type::HERO_BOMB),
     };
 
 

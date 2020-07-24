@@ -19,7 +19,7 @@ public:
     using mapped_type = Value;
     using value_type = pair<const key_type, mapped_type>;
     using size_type = int;
-    using hash_type = size_t;
+    using hash_type = unsigned;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;
@@ -919,7 +919,7 @@ public:
     using mapped_type = Value;
     using value_type = pair<const key_type, mapped_type>;
     using size_type = int;
-    using hash_type = size_t;
+    using hash_type = unsigned;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;

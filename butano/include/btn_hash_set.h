@@ -18,7 +18,7 @@ public:
     using key_type = Key;
     using value_type = Key;
     using size_type = int;
-    using hash_type = size_t;
+    using hash_type = unsigned;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;
@@ -831,7 +831,7 @@ public:
     using key_type = Key;
     using value_type = Key;
     using size_type = int;
-    using hash_type = size_t;
+    using hash_type = unsigned;
     using hasher = KeyHash;
     using key_equal = KeyEqual;
     using reference = value_type&;

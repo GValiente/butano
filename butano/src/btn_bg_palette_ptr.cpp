@@ -13,8 +13,7 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const span<const color>& colors_re
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
-        id = bg_palettes_bank.find_bpp_4(colors_ref, hash);
+        id = bg_palettes_bank.find_bpp_4(colors_ref);
     }
     else
     {
@@ -38,8 +37,7 @@ bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors_ref, palet
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
-        id = bg_palettes_bank.create_bpp_4(colors_ref, hash);
+        id = bg_palettes_bank.create_bpp_4(colors_ref);
     }
     else
     {
@@ -58,12 +56,11 @@ bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors_re
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
-        id = bg_palettes_bank.find_bpp_4(colors_ref, hash);
+        id = bg_palettes_bank.find_bpp_4(colors_ref);
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_4(colors_ref, hash);
+            id = bg_palettes_bank.create_bpp_4(colors_ref);
             BTN_ASSERT(id >= 0, "Palette find or create failed");
         }
     }
@@ -89,8 +86,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
-        id = bg_palettes_bank.create_bpp_4(colors_ref, hash);
+        id = bg_palettes_bank.create_bpp_4(colors_ref);
     }
     else
     {
@@ -115,12 +111,11 @@ optional<bg_palette_ptr> bg_palette_ptr::find_or_create_optional(const span<cons
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_ref_hash(colors_ref);
-        id = bg_palettes_bank.find_bpp_4(colors_ref, hash);
+        id = bg_palettes_bank.find_bpp_4(colors_ref);
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_4(colors_ref, hash);
+            id = bg_palettes_bank.create_bpp_4(colors_ref);
         }
     }
     else

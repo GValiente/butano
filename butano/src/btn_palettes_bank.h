@@ -24,8 +24,6 @@ public:
         int count;
     };
 
-    [[nodiscard]] static unsigned colors_ref_hash(const span<const color>& colors_ref);
-
     [[nodiscard]] int used_count() const;
 
     [[nodiscard]] int available_count() const
@@ -33,11 +31,11 @@ public:
         return hw::palettes::count() - used_count();
     }
 
-    [[nodiscard]] int find_bpp_4(const span<const color>& colors_ref, unsigned hash);
+    [[nodiscard]] int find_bpp_4(const span<const color>& colors_ref);
 
     [[nodiscard]] int find_bpp_8(const span<const color>& colors_ref);
 
-    [[nodiscard]] int create_bpp_4(const span<const color>& colors_ref, unsigned hash);
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors_ref);
 
     [[nodiscard]] int create_bpp_8(const span<const color>& colors_ref);
 
@@ -61,8 +59,6 @@ public:
     }
 
     void set_colors_ref(int id, const span<const color>& colors_ref);
-
-    void set_colors_ref(int id, const span<const color>& colors_ref, unsigned hash);
 
     void reload_colors_ref(int id);
 
@@ -177,7 +173,6 @@ private:
 
     public:
         const color* colors_ref = nullptr;
-        unsigned hash = 0;
         unsigned usages = 0;
         fixed grayscale_intensity;
         fixed fade_intensity;
@@ -212,16 +207,16 @@ private:
     fixed _intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
-    int _last_used_4bpp_index = hw::palettes::count() - 1;
+    int _last_used_bpp_4_index = hw::palettes::count() - 1;
     color _fade_color;
     bool _inverted = false;
     bool _update = false;
     bool _update_global_effects = false;
     bool _global_effects_enabled = false;
 
-    [[nodiscard]] int _bpp8_slots_count() const;
+    [[nodiscard]] int _bpp_8_slots_count() const;
 
-    [[nodiscard]] int _first_4bpp_palette_index() const;
+    [[nodiscard]] int _first_bpp_4_palette_index() const;
 
     void _check_global_effects_enabled();
 

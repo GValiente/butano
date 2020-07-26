@@ -7,6 +7,7 @@
 #include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_alignment.h"
+#include "btn_palette_bpp_mode.h"
 
 namespace btn
 {
@@ -41,7 +42,8 @@ unsigned palettes_bank::colors_hash(const span<const color>& colors)
     result += int_colors[1];
     result += int_colors[2];
     result += int_colors[3];
-    return result;
+    result += result >> 16;
+    return unsigned(uint16_t(result));
 }
 
 int palettes_bank::used_count() const
@@ -68,7 +70,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
         int index = bpp_4_indexes_map_it->second;
         palette& pal = _palettes[index];
 
-        if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+        if(pal.usages && ! pal.bpp_8)
         {
             if(_same_colors(colors, index))
             {
@@ -82,7 +84,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
     {
         palette& pal = _palettes[index];
 
-        if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+        if(pal.usages && ! pal.bpp_8)
         {
             if(_same_colors(colors, index))
             {
@@ -133,10 +135,8 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash)
 
             if(free_slots_count == required_slots_count)
             {
-                pal = palette();
                 pal.usages = 1;
                 pal.hash = hash;
-                pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_4);
                 pal.slots_count = int8_t(required_slots_count);
 
                 for(int slot = 0; slot < required_slots_count; ++slot)
@@ -164,7 +164,7 @@ int palettes_bank::create_bpp_8(const span<const color>& colors)
     int required_slots_count = colors_count / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
 
-    if(! first_pal.usages || palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
+    if(! first_pal.usages || first_pal.bpp_8)
     {
         if(bpp_8_slots_count >= required_slots_count)
         {
@@ -180,9 +180,8 @@ int palettes_bank::create_bpp_8(const span<const color>& colors)
             }
             else
             {
-                first_pal = palette();
                 first_pal.usages = 1;
-                first_pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_8);
+                first_pal.bpp_8 = true;
             }
 
             first_pal.slots_count = int8_t(required_slots_count);
@@ -218,13 +217,18 @@ void palettes_bank::decrease_usages(int id)
             _palettes[id + slot].locked = false;
         }
 
-        if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+        if(! pal.bpp_8)
         {
             _bpp_4_indexes_map.erase(pal.hash);
         }
 
         pal = palette();
     }
+}
+
+palette_bpp_mode palettes_bank::bpp_mode(int id) const
+{
+    return palette_bpp_mode(_palettes[id].bpp_8);
 }
 
 span<const color> palettes_bank::colors(int id) const
@@ -241,7 +245,11 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 
     palette& pal = _palettes[id];
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(pal.bpp_8)
+    {
+        BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    }
+    else
     {
         unsigned old_hash = pal.hash;
         unsigned new_hash = colors_hash(colors);
@@ -252,10 +260,6 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
             _bpp_4_indexes_map.insert_or_assign(new_hash, id);
             pal.hash = new_hash;
         }
-    }
-    else
-    {
-        BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
     }
 
     _set_colors_bpp_impl(id, colors);
@@ -677,7 +681,7 @@ int palettes_bank::_bpp_8_slots_count() const
 {
     const palette& first_pal = _palettes[0];
 
-    if(first_pal.usages && palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
+    if(first_pal.usages && first_pal.bpp_8)
     {
         return first_pal.slots_count;
     }
@@ -691,7 +695,7 @@ int palettes_bank::_first_bpp_4_palette_index() const
     {
         const palette& pal = _palettes[index];
 
-        if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+        if(pal.usages && ! pal.bpp_8)
         {
             return index;
         }

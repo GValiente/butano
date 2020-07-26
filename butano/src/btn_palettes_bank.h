@@ -6,11 +6,12 @@
 #include "btn_color.h"
 #include "btn_optional.h"
 #include "btn_hash_map.h"
-#include "btn_palette_bpp_mode.h"
 #include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
 {
+
+enum class palette_bpp_mode;
 
 class palettes_bank
 {
@@ -51,10 +52,7 @@ public:
         return _palettes[id].slots_count * hw::palettes::colors_per_palette();
     }
 
-    [[nodiscard]] palette_bpp_mode bpp_mode(int id) const
-    {
-        return palette_bpp_mode(_palettes[id].bpp_mode);
-    }
+    [[nodiscard]] palette_bpp_mode bpp_mode(int id) const;
 
     [[nodiscard]] span<const color> colors(int id) const;
 
@@ -171,13 +169,13 @@ private:
 
     public:
         unsigned usages = 0;
-        unsigned hash = 0;
         fixed grayscale_intensity;
         fixed fade_intensity;
         color fade_color;
+        uint16_t hash = 0;
         int16_t rotate_count = 0;
-        uint8_t bpp_mode = 0;
         int8_t slots_count = 0;
+        bool bpp_8: 1 = 0;
         bool inverted: 1 = false;
         bool update: 1 = false;
         bool locked: 1 = false;
@@ -189,7 +187,7 @@ private:
     {
 
     public:
-        [[nodiscard]] constexpr unsigned operator()(unsigned value) const
+        [[nodiscard]] constexpr unsigned operator()(uint16_t value) const
         {
             return value;
         }
@@ -206,7 +204,7 @@ private:
     fixed _intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
-    hash_map<unsigned, int, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
+    hash_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
     color _fade_color;
     bool _inverted = false;
     bool _update = false;

@@ -1,6 +1,7 @@
 #include "btn_sprite_palette_ptr.h"
 
 #include "btn_palettes_bank.h"
+#include "btn_palette_bpp_mode.h"
 #include "btn_palettes_manager.h"
 
 namespace btn

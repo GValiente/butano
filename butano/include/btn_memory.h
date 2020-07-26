@@ -440,19 +440,19 @@ namespace btn::memory
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        int bytes = elements * int(sizeof(Type));
+        unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
+        if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_copy32(&source, bytes / 4, &destination);
+            _btn::memory::unsafe_copy32(&source, int(bytes / 4), &destination);
         }
-        else if(sizeof(Type) % 2 == 0 && alignof(Type) % 2 == 0)
+        else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_copy16(&source, bytes / 2, &destination);
+            _btn::memory::unsafe_copy16(&source, int(bytes / 2), &destination);
         }
         else
         {
-            _btn::memory::unsafe_copy(&source, bytes, &destination);
+            _btn::memory::unsafe_copy(&source, int(bytes), &destination);
         }
     }
 
@@ -462,19 +462,19 @@ namespace btn::memory
         static_assert(is_trivial<Type>(), "Type is not trivial");
         BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        int bytes = elements * int(sizeof(Type));
+        unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(sizeof(Type) % 4 == 0 && alignof(Type) % 4 == 0)
+        if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_clear32(bytes / 4, &destination);
+            _btn::memory::unsafe_clear32(int(bytes / 4), &destination);
         }
-        else if(sizeof(Type) % 2 == 0 && alignof(Type) % 2 == 0)
+        else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_clear16(bytes / 2, &destination);
+            _btn::memory::unsafe_clear16(int(bytes / 2), &destination);
         }
         else
         {
-            _btn::memory::unsafe_clear(bytes, &destination);
+            _btn::memory::unsafe_clear(int(bytes), &destination);
         }
     }
 

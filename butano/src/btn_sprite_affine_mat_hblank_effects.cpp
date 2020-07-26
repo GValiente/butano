@@ -194,7 +194,9 @@ namespace
 
         void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            auto int_source = static_cast<const unsigned*>(input_values_ptr);
+            auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
+            memory::copy(*int_source, display::height() / 2, *int_destination);
         }
     };
 
@@ -227,7 +229,9 @@ namespace
 
         void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            auto int_source = static_cast<const unsigned*>(input_values_ptr);
+            auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
+            memory::copy(*int_source, display::height() / 2, *int_destination);
         }
     };
 
@@ -260,7 +264,9 @@ namespace
 
         void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            auto int_source = static_cast<const unsigned*>(input_values_ptr);
+            auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
+            memory::copy(*int_source, display::height() / 2, *int_destination);
         }
     };
 
@@ -293,7 +299,9 @@ namespace
 
         void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
         {
-            memory::copy(*static_cast<const uint16_t*>(input_values_ptr), display::height(), *output_values_ptr);
+            auto int_source = static_cast<const unsigned*>(input_values_ptr);
+            auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
+            memory::copy(*int_source, display::height() / 2, *int_destination);
         }
     };
 

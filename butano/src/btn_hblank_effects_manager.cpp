@@ -3,6 +3,7 @@
 #include "btn_any.h"
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_alignment.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
@@ -29,8 +30,8 @@ namespace
         last_value_type target_last_value;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
-        uint16_t output_values_a[display::height()] = {};
-        uint16_t output_values_b[display::height()] = {};
+        alignas(alignof(int)) uint16_t output_values_a[display::height()] = {};
+        alignas(alignof(int)) uint16_t output_values_b[display::height()] = {};
         bool visible: 1 = false;
         bool update: 1 = false;
         bool on_screen: 1 = false;
@@ -173,9 +174,10 @@ void disable()
 }
 
 int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
-hblank_effect_handler& handler)
+           hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
+    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
     BTN_ASSERT(! external_data.free_item_indexes.empty(), "No more available HBlank effects");
 
@@ -183,9 +185,10 @@ hblank_effect_handler& handler)
 }
 
 int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
-hblank_effect_handler& handler)
+                    hblank_effect_handler& handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
+    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     if(external_data.free_item_indexes.empty())
@@ -230,6 +233,7 @@ const void* values_ref(int id)
 void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_count)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
+    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
     BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     item_type& item = external_data.items[id];

@@ -5,6 +5,7 @@
 #include "btn_fixed.h"
 #include "btn_color.h"
 #include "btn_optional.h"
+#include "btn_hash_map.h"
 #include "btn_palette_bpp_mode.h"
 #include "../hw/include/btn_hw_palettes.h"
 
@@ -24,6 +25,8 @@ public:
         int count;
     };
 
+    [[nodiscard]] static unsigned colors_hash(const span<const color>& colors);
+
     [[nodiscard]] int used_count() const;
 
     [[nodiscard]] int available_count() const
@@ -31,11 +34,11 @@ public:
         return hw::palettes::count() - used_count();
     }
 
-    [[nodiscard]] int find_bpp_4(const span<const color>& colors);
+    [[nodiscard]] int find_bpp_4(const span<const color>& colors, unsigned hash);
 
     [[nodiscard]] int find_bpp_8(const span<const color>& colors);
 
-    [[nodiscard]] int create_bpp_4(const span<const color>& colors);
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors, unsigned hash);
 
     [[nodiscard]] int create_bpp_8(const span<const color>& colors);
 
@@ -168,6 +171,7 @@ private:
 
     public:
         unsigned usages = 0;
+        unsigned hash = 0;
         fixed grayscale_intensity;
         fixed fade_intensity;
         color fade_color;
@@ -181,6 +185,16 @@ private:
         void apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
     };
 
+    class identity_hasher
+    {
+
+    public:
+        [[nodiscard]] constexpr unsigned operator()(unsigned value) const
+        {
+            return value;
+        }
+    };
+
     palette _palettes[hw::palettes::count()] = {};
     alignas(alignof(int)) color _initial_colors[hw::palettes::colors()] = {};
     alignas(alignof(int)) color _final_colors[hw::palettes::colors()] = {};
@@ -192,7 +206,7 @@ private:
     fixed _intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
-    int _last_used_bpp_4_index = hw::palettes::count() - 1;
+    hash_map<unsigned, int, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
     color _fade_color;
     bool _inverted = false;
     bool _update = false;
@@ -206,6 +220,8 @@ private:
     [[nodiscard]] int _first_bpp_4_palette_index() const;
 
     void _check_global_effects_enabled();
+
+    void _set_colors_bpp_impl(int id, const span<const color>& colors);
 
     void _apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const;
 };

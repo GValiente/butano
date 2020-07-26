@@ -13,7 +13,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.find_bpp_4(colors);
+        id = sprite_palettes_bank.find_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
     else
     {
@@ -37,7 +37,7 @@ sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors, p
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.create_bpp_4(colors);
+        id = sprite_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
     else
     {
@@ -56,11 +56,12 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.find_bpp_4(colors);
+        unsigned hash = palettes_bank::colors_hash(colors);
+        id = sprite_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)
         {
-            id = sprite_palettes_bank.create_bpp_4(colors);
+            id = sprite_palettes_bank.create_bpp_4(colors, hash);
             BTN_ASSERT(id >= 0, "Palette find or create failed");
         }
     }
@@ -86,7 +87,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const span<cons
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.create_bpp_4(colors);
+        id = sprite_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
     else
     {
@@ -111,11 +112,12 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find_or_create_optional(const s
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = sprite_palettes_bank.find_bpp_4(colors);
+        unsigned hash = palettes_bank::colors_hash(colors);
+        id = sprite_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)
         {
-            id = sprite_palettes_bank.create_bpp_4(colors);
+            id = sprite_palettes_bank.create_bpp_4(colors, hash);
         }
     }
     else

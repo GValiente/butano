@@ -7,7 +7,6 @@
 #include "btn_display.h"
 #include "btn_algorithm.h"
 #include "btn_alignment.h"
-#include "btn_config_palettes.h"
 
 namespace btn
 {
@@ -30,6 +29,21 @@ namespace
     }
 }
 
+unsigned palettes_bank::colors_hash(const span<const color>& colors)
+{
+    int colors_count = colors.size();
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+
+    auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
+    auto result = unsigned(colors_count);
+    result += int_colors[0];
+    result += int_colors[1];
+    result += int_colors[2];
+    result += int_colors[3];
+    return result;
+}
+
 int palettes_bank::used_count() const
 {
     int result = 0;
@@ -45,53 +59,36 @@ int palettes_bank::used_count() const
     return result;
 }
 
-int palettes_bank::find_bpp_4(const span<const color>& colors)
+int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 {
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    auto bpp_4_indexes_map_it = _bpp_4_indexes_map.find(hash);
 
-    int inferior_index = _last_used_bpp_4_index;
-    int superior_index = inferior_index + 1;
-    int bpp_8_slots_count = _bpp_8_slots_count();
-    bool valid_inferior_index = inferior_index >= bpp_8_slots_count;
-    bool valid_superior_index = superior_index < hw::palettes::count();
-
-    while(valid_inferior_index || valid_superior_index)
+    if(bpp_4_indexes_map_it != _bpp_4_indexes_map.end())
     {
-        if(valid_inferior_index)
+        int index = bpp_4_indexes_map_it->second;
+        palette& pal = _palettes[index];
+
+        if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
         {
-            palette& pal = _palettes[inferior_index];
-
-            if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+            if(_same_colors(colors, index))
             {
-                if(_same_colors(colors, inferior_index))
-                {
-                    ++pal.usages;
-                    _last_used_bpp_4_index = inferior_index;
-                    return inferior_index;
-                }
+                ++pal.usages;
+                return index;
             }
-
-            --inferior_index;
-            valid_inferior_index = inferior_index >= bpp_8_slots_count;
         }
+    }
 
-        if(valid_superior_index)
+    for(int index = hw::palettes::count() - 1, limit = _bpp_8_slots_count(); index >= limit; --index)
+    {
+        palette& pal = _palettes[index];
+
+        if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
         {
-            palette& pal = _palettes[superior_index];
-
-            if(pal.usages)
+            if(_same_colors(colors, index))
             {
-                if(_same_colors(colors, superior_index))
-                {
-                    ++pal.usages;
-                    _last_used_bpp_4_index = superior_index;
-                    return superior_index;
-                }
+                ++pal.usages;
+                return index;
             }
-
-            ++superior_index;
-            valid_superior_index = superior_index < hw::palettes::count();
         }
     }
 
@@ -100,11 +97,12 @@ int palettes_bank::find_bpp_4(const span<const color>& colors)
 
 int palettes_bank::find_bpp_8(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    int colors_count = colors.size();
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
     BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     int bpp_8_slots_count = _bpp_8_slots_count();
-    int slots_count = colors.size() / hw::palettes::colors_per_palette();
+    int slots_count = colors_count / hw::palettes::colors_per_palette();
 
     if(bpp_8_slots_count >= slots_count)
     {
@@ -115,11 +113,8 @@ int palettes_bank::find_bpp_8(const span<const color>& colors)
     return -1;
 }
 
-int palettes_bank::create_bpp_4(const span<const color>& colors)
+int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash)
 {
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
-
     int required_slots_count = colors.size() / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
     int free_slots_count = 0;
@@ -140,6 +135,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors)
             {
                 pal = palette();
                 pal.usages = 1;
+                pal.hash = hash;
                 pal.bpp_mode = uint8_t(palette_bpp_mode::BPP_4);
                 pal.slots_count = int8_t(required_slots_count);
 
@@ -148,7 +144,8 @@ int palettes_bank::create_bpp_4(const span<const color>& colors)
                     _palettes[index + slot].locked = true;
                 }
 
-                set_colors(index, colors);
+                _set_colors_bpp_impl(index, colors);
+                _bpp_4_indexes_map.insert_or_assign(hash, index);
                 return index;
             }
         }
@@ -159,11 +156,12 @@ int palettes_bank::create_bpp_4(const span<const color>& colors)
 
 int palettes_bank::create_bpp_8(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    int colors_count = colors.size();
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
     BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     palette& first_pal = _palettes[0];
-    int required_slots_count = colors.size() / hw::palettes::colors_per_palette();
+    int required_slots_count = colors_count / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
 
     if(! first_pal.usages || palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
@@ -194,7 +192,7 @@ int palettes_bank::create_bpp_8(const span<const color>& colors)
                 _palettes[slot].locked = true;
             }
 
-            set_colors(0, colors);
+            _set_colors_bpp_impl(0, colors);
             return 0;
         }
     }
@@ -220,6 +218,11 @@ void palettes_bank::decrease_usages(int id)
             _palettes[id + slot].locked = false;
         }
 
+        if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+        {
+            _bpp_4_indexes_map.erase(pal.hash);
+        }
+
         pal = palette();
     }
 }
@@ -234,33 +237,40 @@ span<const color> palettes_bank::colors(int id) const
 
 void palettes_bank::set_colors(int id, const span<const color>& colors)
 {
-    int colors_size = colors.size();
     BTN_ASSERT(colors.size() == colors_count(id), "Colors count mismatch: ", colors.size(), " - ", colors_count(id));
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     palette& pal = _palettes[id];
-    copy_colors(colors.data(), colors_size, _initial_colors + (id * hw::palettes::colors_per_palette()));
-    pal.update = true;
-    _update = true;
 
     if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
     {
-        _last_used_bpp_4_index = id;
+        unsigned old_hash = pal.hash;
+        unsigned new_hash = colors_hash(colors);
+
+        if(old_hash != new_hash)
+        {
+            _bpp_4_indexes_map.erase(old_hash);
+            _bpp_4_indexes_map.insert_or_assign(new_hash, id);
+            pal.hash = new_hash;
+        }
     }
+    else
+    {
+        BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    }
+
+    _set_colors_bpp_impl(id, colors);
 }
 
 void palettes_bank::set_inverted(int id, bool inverted)
 {
     palette& pal = _palettes[id];
-
     bool update = pal.inverted != inverted;
     pal.inverted = inverted;
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -271,12 +281,11 @@ void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
     palette& pal = _palettes[id];
     bool update = fixed_t<5>(pal.grayscale_intensity) != fixed_t<5>(intensity);
     pal.grayscale_intensity = intensity;
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -285,12 +294,11 @@ void palettes_bank::set_fade_color(int id, color color)
     palette& pal = _palettes[id];
     bool update = pal.fade_color != color && fixed_t<5>(pal.fade_intensity).data();
     pal.fade_color = color;
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -301,12 +309,11 @@ void palettes_bank::set_fade_intensity(int id, fixed intensity)
     palette& pal = _palettes[id];
     bool update = fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
     pal.fade_intensity = intensity;
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -318,12 +325,11 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
     bool update = pal.fade_color != color || fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
     pal.fade_color = color;
     pal.fade_intensity = intensity;
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -334,12 +340,11 @@ void palettes_bank::set_rotate_count(int id, int count)
     palette& pal = _palettes[id];
     bool update = pal.rotate_count != count;
     pal.rotate_count = int16_t(count);
-    pal.update |= update;
-    _update |= update;
 
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
+    if(update)
     {
-        _last_used_bpp_4_index = id;
+        pal.update = true;
+        _update = true;
     }
 }
 
@@ -471,8 +476,12 @@ void palettes_bank::set_fade_color(color color)
 {
     bool update = _fade_color != color && fixed_t<5>(_fade_intensity).data();
     _fade_color = color;
-    _update |= update;
-    _update_global_effects |= update;
+
+    if(update)
+    {
+        _update = true;
+        _update_global_effects = true;
+    }
 }
 
 void palettes_bank::set_fade_intensity(fixed intensity)
@@ -696,6 +705,14 @@ void palettes_bank::_check_global_effects_enabled()
     _global_effects_enabled = _inverted || fixed_t<8>(_brightness).data() || fixed_t<8>(_contrast).data() ||
             fixed_t<8>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
             fixed_t<5>(_fade_intensity).data();
+}
+
+void palettes_bank::_set_colors_bpp_impl(int id, const span<const color>& colors)
+{
+    palette& pal = _palettes[id];
+    copy_colors(colors.data(), colors.size(), _initial_colors + (id * hw::palettes::colors_per_palette()));
+    pal.update = true;
+    _update = true;
 }
 
 void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const

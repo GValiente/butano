@@ -51,9 +51,9 @@ namespace
 
     // rat:
 
-    constexpr const enemy_data rat(btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                   btn::sound_items::dinosaur_5, btn::fixed_size(16, 16), _create_graphics_indexes(0),
-                                   2, 2);
+    constexpr const enemy_data rat(
+        btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::dinosaur_5, btn::fixed_size(16, 16), _create_graphics_indexes(0), 2, 2);
 
     constexpr const enemy_move_event rat_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
@@ -70,9 +70,9 @@ namespace
 
     // beaver:
 
-    constexpr const enemy_data beaver(btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::enemy_death_rpg_25, btn::fixed_size(16, 15), _create_graphics_indexes(16),
-                                      5, 5);
+    constexpr const enemy_data beaver(
+        btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::enemy_death_rpg_25, btn::fixed_size(16, 15), _create_graphics_indexes(16), 5, 5);
 
     constexpr const enemy_move_event beaver_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
@@ -131,9 +131,9 @@ namespace
 
     // eye:
 
-    constexpr const enemy_data eye(btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                   btn::sound_items::dinosaur_5, btn::fixed_size(16, 14), _create_graphics_indexes(48),
-                                   6, 6);
+    constexpr const enemy_data eye(
+        btn::sprite_items::stage_2_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::dinosaur_5, btn::fixed_size(16, 14), _create_graphics_indexes(48), 6, 6);
 
     constexpr const enemy_move_event eye_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  60, down_index,     false),
@@ -246,8 +246,9 @@ namespace
 
     // dog:
 
-    constexpr const enemy_data dog(btn::sprite_items::stage_2_characters_1, enemy_data::death_anim_type::ROTATE,
-                                   btn::sound_items::monster_2, btn::fixed_size(12, 10), 48, 49, 2, 4);
+    constexpr const enemy_data dog(
+        btn::sprite_items::stage_2_characters_1, enemy_data::death_anim_type::ROTATE,
+        btn::sound_items::monster_2, btn::fixed_size(12, 10), 48, 49, 2, 4);
 
     constexpr const enemy_move_event dog_moves[] = {
         enemy_move_event(btn::fixed_point(0.75, move_y(0.15)), 75, false),
@@ -323,13 +324,150 @@ namespace
     };
 
 
+    // dog_mask:
+
+    constexpr const enemy_data dog_mask(
+        btn::sprite_items::stage_2_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::monster_2, btn::fixed_size(14, 14), _create_graphics_indexes(16), 6, 6);
+
+    constexpr const enemy_move_event dog_mask_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  60, down_index,     false),
+        enemy_move_event(btn::fixed_point(0.5,  move_y(0)),     70, right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(-1)),    1,  up_index,       false),
+    };
+
+    constexpr const enemy_bullet_event dog_mask_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(0.5),    1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(0.5),    1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(0.5),    1),  20),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0),      1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0.5),    1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(-0.5),   1),  30),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(-1),     1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(-1),     1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(-1),     1),  20),
+    };
+
+
+    // samurai:
+
+    constexpr const enemy_data samurai(
+        btn::sprite_items::stage_2_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::scream_2, btn::fixed_size(16, 15), _create_graphics_indexes(32), 7, 8);
+
+    constexpr const enemy_move_event samurai_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  40, down_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     30, down_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  up_index,       false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     1,  down_index,     false),
+    };
+
+    constexpr const enemy_bullet_event samurai_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::BIG,   1, 40 + 30 + 30),
+        enemy_bullet_event(enemy_bullet_type::SMALL, 1, 12),
+        enemy_bullet_event(enemy_bullet_type::SMALL, 1, 12),
+    };
+
+
+    // red_ninja:
+
+    constexpr const enemy_data red_ninja(
+        btn::sprite_items::stage_2_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::scream_4, btn::fixed_size(12, 15), _create_graphics_indexes(48), 4, 6);
+
+    constexpr const enemy_move_event red_ninja_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
+
+        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
+
+        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, left_index,     false),
+        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   1,  down_index,     false),
+    };
+
+
+    // green_snake:
+
+    constexpr const enemy_data green_snake(
+        btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::dinosaur_4, btn::fixed_size(14, 15), _create_graphics_indexes(0), 5, 7);
+
+    constexpr const enemy_move_event green_snake_moves[] = {
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.75,     move_y(0.25)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.75,    move_y(0.25)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  1,   down_index,     false),
+    };
+
+
+    // lizard:
+
+    constexpr const enemy_data lizard(
+        btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::ROTATE,
+        btn::sound_items::dinosaur_5, btn::fixed_size(12, 15), _create_graphics_indexes(16), 3, 5);
+
+    constexpr const enemy_move_event lizard_moves[] = {
+        enemy_move_event(btn::fixed_point(0.75, move_y(0.15)), 35, down_index,  false),
+        enemy_move_event(btn::fixed_point(0.75, move_y(0.0)),  55, right_index, false),
+        enemy_move_event(btn::fixed_point(0.75, move_y(-1.1)), 1,  up_index,    false),
+    };
+
+
+    // red_snake:
+
+    constexpr const enemy_data red_snake(
+        btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::dinosaur_4, btn::fixed_size(14, 15), _create_graphics_indexes(32), 4, 7);
+
+    constexpr const enemy_move_event red_snake_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.5,  move_y(0.2)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.5, move_y(0.2)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  1,   down_index,     false),
+    };
+
+    constexpr const enemy_bullet_event red_snake_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL, 1, 60),
+        enemy_bullet_event(enemy_bullet_type::SMALL, 1, 60),
+    };
+
+
+    // ogre:
+
+    constexpr const enemy_data ogre(
+        btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::scream_3, btn::fixed_size(16, 16), _create_graphics_indexes(48), 14, 12);
+
+    constexpr const enemy_move_event ogre_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0.1)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0.1)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0.1)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0.1)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  1,   down_index,     false),
+    };
+
+
     // enemy events:
 
     constexpr const enemy_event enemy_events[] = {
 
         // level 3 slow (25s)
 
-        enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+        /*enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(beaver, btn::fixed_point(40, start_y), beaver_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -407,6 +545,38 @@ namespace
         // level 3 mid boss (12s)
 
         enemy_event(robot, btn::fixed_point(0, start_y - 16), robot_moves, robot_bullets, 0, enemy_drop_type::HERO_BOMB),
+
+        // level 4 slow
+
+        enemy_event(black_ninja, btn::fixed_point(-45, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(-60, start_y), black_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(-30, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(dog_mask, btn::fixed_point(-45, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(dog_mask, btn::fixed_point(-60, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(dog_mask, btn::fixed_point(-30, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(samurai, btn::fixed_point(-60, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(samurai, btn::fixed_point(-30, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(red_ninja, btn::fixed_point(-45, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-60, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-30, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 60, enemy_drop_type::GEM),
+
+        enemy_event(red_snake, btn::fixed_point(-45, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(-60, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(-30, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(green_snake, btn::fixed_point(-45, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(green_snake, btn::fixed_point(-60, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(green_snake, btn::fixed_point(-30, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),*/
+
+        enemy_event(ogre, btn::fixed_point(-45, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
     };
 
 

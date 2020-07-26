@@ -6,6 +6,7 @@
 #include "btn_memory.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
+#include "btn_alignment.h"
 #include "btn_config_palettes.h"
 
 namespace btn
@@ -13,12 +14,19 @@ namespace btn
 
 namespace
 {
-    [[maybe_unused]] bool _valid_colors_count(const span<const color>& colors_ref)
+    [[maybe_unused]] bool _valid_colors_count(const span<const color>& colors)
     {
-        int colors_count = colors_ref.size();
+        int colors_count = colors.size();
         return colors_count >= hw::palettes::colors_per_palette() &&
                 colors_count <= hw::palettes::colors() &&
                 colors_count % hw::palettes::colors_per_palette() == 0;
+    }
+
+    void copy_colors(const color* source, int count, color* destination)
+    {
+        auto int_source = reinterpret_cast<const unsigned*>(source);
+        auto int_destination = reinterpret_cast<unsigned*>(destination);
+        memory::copy(*int_source, count / 2, *int_destination);
     }
 }
 
@@ -37,11 +45,11 @@ int palettes_bank::used_count() const
     return result;
 }
 
-int palettes_bank::find_bpp_4(const span<const color>& colors_ref)
+int palettes_bank::find_bpp_4(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
-    span<const color> visible_colors = colors_ref.subspan(1);
     int inferior_index = _last_used_bpp_4_index;
     int superior_index = inferior_index + 1;
     int bpp_8_slots_count = _bpp_8_slots_count();
@@ -56,7 +64,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors_ref)
 
             if(pal.usages && palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
             {
-                if(visible_colors == pal.visible_colors_span())
+                if(_same_colors(colors, inferior_index))
                 {
                     ++pal.usages;
                     _last_used_bpp_4_index = inferior_index;
@@ -74,7 +82,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors_ref)
 
             if(pal.usages)
             {
-                if(visible_colors == pal.visible_colors_span())
+                if(_same_colors(colors, superior_index))
                 {
                     ++pal.usages;
                     _last_used_bpp_4_index = superior_index;
@@ -90,12 +98,13 @@ int palettes_bank::find_bpp_4(const span<const color>& colors_ref)
     return -1;
 }
 
-int palettes_bank::find_bpp_8(const span<const color>& colors_ref)
+int palettes_bank::find_bpp_8(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     int bpp_8_slots_count = _bpp_8_slots_count();
-    int slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+    int slots_count = colors.size() / hw::palettes::colors_per_palette();
 
     if(bpp_8_slots_count >= slots_count)
     {
@@ -106,11 +115,12 @@ int palettes_bank::find_bpp_8(const span<const color>& colors_ref)
     return -1;
 }
 
-int palettes_bank::create_bpp_4(const span<const color>& colors_ref)
+int palettes_bank::create_bpp_4(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
-    int required_slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+    int required_slots_count = colors.size() / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
     int free_slots_count = 0;
 
@@ -138,7 +148,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors_ref)
                     _palettes[index + slot].locked = true;
                 }
 
-                set_colors_ref(index, colors_ref);
+                set_colors(index, colors);
                 return index;
             }
         }
@@ -147,12 +157,13 @@ int palettes_bank::create_bpp_4(const span<const color>& colors_ref)
     return -1;
 }
 
-int palettes_bank::create_bpp_8(const span<const color>& colors_ref)
+int palettes_bank::create_bpp_8(const span<const color>& colors)
 {
-    BTN_ASSERT(_valid_colors_count(colors_ref), "Invalid colors count: ", colors_ref.size());
+    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors.size());
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     palette& first_pal = _palettes[0];
-    int required_slots_count = colors_ref.size() / hw::palettes::colors_per_palette();
+    int required_slots_count = colors.size() / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
 
     if(! first_pal.usages || palette_bpp_mode(first_pal.bpp_mode) == palette_bpp_mode::BPP_8)
@@ -183,7 +194,7 @@ int palettes_bank::create_bpp_8(const span<const color>& colors_ref)
                 _palettes[slot].locked = true;
             }
 
-            set_colors_ref(0, colors_ref);
+            set_colors(0, colors);
             return 0;
         }
     }
@@ -213,25 +224,22 @@ void palettes_bank::decrease_usages(int id)
     }
 }
 
-void palettes_bank::set_colors_ref(int id, const span<const color>& colors_ref)
+span<const color> palettes_bank::colors(int id) const
 {
-    BTN_ASSERT(colors_ref.size() == colors_count(id), "Colors count mismatch: ",
-               colors_ref.size(), " - ", colors_count(id));
-
-    palette& pal = _palettes[id];
-    pal.colors_ref = colors_ref.data();
-    pal.update = true;
-    _update = true;
-
-    if(palette_bpp_mode(pal.bpp_mode) == palette_bpp_mode::BPP_4)
-    {
-        _last_used_bpp_4_index = id;
-    }
+    int colors_per_palette = hw::palettes::colors_per_palette();
+    const color* colors_data = _initial_colors + (id * colors_per_palette);
+    int colors_count = colors_per_palette * _palettes[id].slots_count;
+    return span<const color>(colors_data, colors_count);
 }
 
-void palettes_bank::reload_colors_ref(int id)
+void palettes_bank::set_colors(int id, const span<const color>& colors)
 {
+    int colors_size = colors.size();
+    BTN_ASSERT(colors.size() == colors_count(id), "Colors count mismatch: ", colors.size(), " - ", colors_count(id));
+    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+
     palette& pal = _palettes[id];
+    copy_colors(colors.data(), colors_size, _initial_colors + (id * hw::palettes::colors_per_palette()));
     pal.update = true;
     _update = true;
 
@@ -537,27 +545,28 @@ void palettes_bank::update()
                 first_index = min(first_index, index);
                 last_index = max(last_index, index);
 
+                const color* initial_pal_colors_ptr = _initial_colors + (index * hw::palettes::colors_per_palette());
+                color* final_pal_colors_ptr = _final_colors + (index * hw::palettes::colors_per_palette());
                 int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
-                color* pal_colors_ptr = _colors + (index * hw::palettes::colors_per_palette());
-                memory::copy(*pal.colors_ref, pal_colors_count, *pal_colors_ptr);
-                pal.apply_effects(pal_colors_count, pal_colors_ptr);
+                copy_colors(initial_pal_colors_ptr, pal_colors_count, final_pal_colors_ptr);
+                pal.apply_effects(pal_colors_count, final_pal_colors_ptr);
 
                 if(pal.rotate_count)
                 {
-                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, pal_colors_ptr + 1);
+                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, final_pal_colors_ptr + 1);
                 }
             }
         }
 
         if(_transparent_color)
         {
-            _colors[0] = *_transparent_color;
+            _final_colors[0] = *_transparent_color;
             first_index = 0;
         }
 
         if(_global_effects_enabled && first_index != numeric_limits<int>::max())
         {
-            color* all_colors_ptr = _colors + (first_index * hw::palettes::colors_per_palette());
+            color* all_colors_ptr = _final_colors + (first_index * hw::palettes::colors_per_palette());
             int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                     hw::palettes::colors_per_palette();
             _apply_global_effects(all_colors_count, all_colors_ptr);
@@ -587,7 +596,7 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
         int colors_offset = first_index * hw::palettes::colors_per_palette();
         int colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                 hw::palettes::colors_per_palette();
-        result = commit_data{ _colors, colors_offset, colors_count };
+        result = commit_data{ _final_colors, colors_offset, colors_count };
     }
 
     return result;
@@ -601,10 +610,13 @@ void palettes_bank::reset_commit_data()
 
 void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
+    BTN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
+    BTN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
+
     const palette& pal = _palettes[id];
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
-    memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
+    copy_colors(source_colors_ptr, dest_colors_count, dest_colors_ptr);
     pal.apply_effects(dest_colors_count, dest_colors_ptr);
 
     if(_global_effects_enabled)
@@ -615,14 +627,41 @@ void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors
 
 void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
+    BTN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
+    BTN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
+
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
-    memory::copy(*source_colors_ptr, dest_colors_count, *dest_colors_ptr);
+    copy_colors(source_colors_ptr, dest_colors_count, dest_colors_ptr);
 
     if(_global_effects_enabled)
     {
         _apply_global_effects(dest_colors_count, dest_colors_ptr);
     }
+}
+
+[[nodiscard]] bool palettes_bank::_same_colors(const span<const color>& colors, int id) const
+{
+    int colors_per_palette = hw::palettes::colors_per_palette();
+    int stored_colors_count = colors_per_palette * _palettes[id].slots_count;
+
+    if(colors.size() != stored_colors_count)
+    {
+        return false;
+    }
+
+    auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
+    auto int_stored_colors = reinterpret_cast<const unsigned*>(_initial_colors + (id * colors_per_palette));
+
+    for(int index = 0, limit = stored_colors_count / 2; index < limit; ++index)
+    {
+        if(int_colors[index] != int_stored_colors[index])
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 int palettes_bank::_bpp_8_slots_count() const

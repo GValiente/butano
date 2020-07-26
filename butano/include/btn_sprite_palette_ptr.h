@@ -17,18 +17,16 @@ class sprite_palette_ptr
 {
 
 public:
-    [[nodiscard]] static optional<sprite_palette_ptr> find(const span<const color>& colors_ref,
-                                                           palette_bpp_mode bpp_mode);
+    [[nodiscard]] static optional<sprite_palette_ptr> find(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static sprite_palette_ptr create(const span<const color>& colors_ref, palette_bpp_mode bpp_mode);
+    [[nodiscard]] static sprite_palette_ptr create(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static sprite_palette_ptr find_or_create(const span<const color>& colors_ref,
-                                                           palette_bpp_mode bpp_mode);
+    [[nodiscard]] static sprite_palette_ptr find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors_ref,
+    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors,
                                                                       palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static optional<sprite_palette_ptr> find_or_create_optional(const span<const color>& colors_ref,
+    [[nodiscard]] static optional<sprite_palette_ptr> find_or_create_optional(const span<const color>& colors,
                                                                               palette_bpp_mode bpp_mode);
 
     sprite_palette_ptr(const sprite_palette_ptr& other);
@@ -60,11 +58,9 @@ public:
         return _id;
     }
 
-    [[nodiscard]] span<const color> colors_ref() const;
+    [[nodiscard]] span<const color> colors() const;
 
-    void set_colors_ref(const span<const color>& colors_ref);
-
-    void reload_colors_ref();
+    void set_colors(const span<const color>& colors);
 
     [[nodiscard]] int colors_count() const;
 

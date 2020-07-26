@@ -31,13 +31,13 @@ public:
         return hw::palettes::count() - used_count();
     }
 
-    [[nodiscard]] int find_bpp_4(const span<const color>& colors_ref);
+    [[nodiscard]] int find_bpp_4(const span<const color>& colors);
 
-    [[nodiscard]] int find_bpp_8(const span<const color>& colors_ref);
+    [[nodiscard]] int find_bpp_8(const span<const color>& colors);
 
-    [[nodiscard]] int create_bpp_4(const span<const color>& colors_ref);
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors);
 
-    [[nodiscard]] int create_bpp_8(const span<const color>& colors_ref);
+    [[nodiscard]] int create_bpp_8(const span<const color>& colors);
 
     void increase_usages(int id);
 
@@ -53,14 +53,9 @@ public:
         return palette_bpp_mode(_palettes[id].bpp_mode);
     }
 
-    [[nodiscard]] span<const color> colors_ref(int id) const
-    {
-        return _palettes[id].colors_span();
-    }
+    [[nodiscard]] span<const color> colors(int id) const;
 
-    void set_colors_ref(int id, const span<const color>& colors_ref);
-
-    void reload_colors_ref(int id);
+    void set_colors(int id, const span<const color>& colors);
 
     [[nodiscard]] bool inverted(int id) const
     {
@@ -172,7 +167,6 @@ private:
     {
 
     public:
-        const color* colors_ref = nullptr;
         unsigned usages = 0;
         fixed grayscale_intensity;
         fixed fade_intensity;
@@ -184,21 +178,12 @@ private:
         bool update: 1 = false;
         bool locked: 1 = false;
 
-        [[nodiscard]] span<const color> colors_span() const
-        {
-            return span<const color>(colors_ref, hw::palettes::colors_per_palette() * slots_count);
-        }
-
-        [[nodiscard]] span<const color> visible_colors_span() const
-        {
-            return span<const color>(colors_ref + 1, (hw::palettes::colors_per_palette() * slots_count) - 1);
-        }
-
         void apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
     };
 
     palette _palettes[hw::palettes::count()] = {};
-    color _colors[hw::palettes::colors()] = {};
+    alignas(alignof(int)) color _initial_colors[hw::palettes::colors()] = {};
+    alignas(alignof(int)) color _final_colors[hw::palettes::colors()] = {};
     optional<int> _first_index_to_commit;
     optional<int> _last_index_to_commit;
     optional<color> _transparent_color;
@@ -213,6 +198,8 @@ private:
     bool _update = false;
     bool _update_global_effects = false;
     bool _global_effects_enabled = false;
+
+    [[nodiscard]] bool _same_colors(const span<const color>& colors, int id) const;
 
     [[nodiscard]] int _bpp_8_slots_count() const;
 

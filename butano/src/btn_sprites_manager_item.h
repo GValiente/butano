@@ -1,7 +1,6 @@
 #ifndef BTN_SPRITES_MANAGER_ITEM_H
 #define BTN_SPRITES_MANAGER_ITEM_H
 
-#include "btn_size.h"
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_sprites.h"
@@ -29,13 +28,14 @@ public:
     hw::sprites::handle_type handle;
     fixed_point position;
     fixed_point hw_position;
-    size half_dimensions;
     unsigned usages = 1;
     sort_key sprite_sort_key;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
     int8_t handles_index = -1;
+    int8_t half_width;
+    int8_t half_height;
     unsigned double_size_mode: 2;
     bool visible: 1;
     #if BTN_CFG_CAMERA_ENABLED
@@ -84,14 +84,16 @@ public:
 
     void update_half_dimensions()
     {
-        half_dimensions = hw::sprites::dimensions(handle) / 2;
+        pair<int, int> dimensions = hw::sprites::dimensions(handle);
+        half_width = dimensions.first / 2;
+        half_height = dimensions.second / 2;
         update_hw_position();
     }
 
     void update_hw_position()
     {
-        fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
-                                  position.y() + (display::height() / 2) - half_dimensions.height());
+        fixed_point real_position(position.x() + (display::width() / 2) - int(half_width),
+                                  position.y() + (display::height() / 2) - int(half_height));
 
         #if BTN_CFG_CAMERA_ENABLED
             if(! ignore_camera)
@@ -108,8 +110,8 @@ public:
     #if BTN_CFG_CAMERA_ENABLED
         void update_hw_position(const fixed_point& camera_position)
         {
-            fixed_point real_position(position.x() + (display::width() / 2) - half_dimensions.width(),
-                                      position.y() + (display::height() / 2) - half_dimensions.height());
+            fixed_point real_position(position.x() + (display::width() / 2) - int(half_width),
+                                      position.y() + (display::height() / 2) - int(half_height));
 
             if(! ignore_camera)
             {

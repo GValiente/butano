@@ -1,7 +1,6 @@
 #ifndef BTN_HW_SPRITES_H
 #define BTN_HW_SPRITES_H
 
-#include "btn_size.h"
 #include "btn_memory.h"
 #include "btn_sprite_builder.h"
 #include "btn_hw_tonc.h"
@@ -102,14 +101,15 @@ namespace btn::hw::sprites
         return sprite_shape_size(shape(sprite), size(sprite));
     }
 
-    [[nodiscard]] inline btn::size dimensions(const handle_type& sprite)
+    [[nodiscard]] inline pair<int, int> dimensions(const handle_type& sprite)
     {
         const uint8_t* obj_size = obj_get_size(&sprite);
-        btn::size result(obj_size[0], obj_size[1]);
+        pair<int, int> result(obj_size[0], obj_size[1]);
 
         if(double_size(sprite))
         {
-            result *= 2;
+            result.first *= 2;
+            result.second *= 2;
         }
 
         return result;

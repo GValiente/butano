@@ -1,5 +1,6 @@
 #include "btn_sprites_manager.h"
 
+#include "btn_size.h"
 #include "btn_pool.h"
 #include "btn_vector.h"
 #include "btn_sorted_sprites.h"
@@ -267,7 +268,7 @@ sprite_shape_size shape_size(id_type id)
 btn::size dimensions(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->half_dimensions * 2;
+    return btn::size(item->half_width * 2, item->half_height * 2);
 }
 
 const sprite_tiles_ptr& tiles(id_type id)

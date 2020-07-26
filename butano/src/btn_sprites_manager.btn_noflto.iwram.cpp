@@ -27,9 +27,9 @@ void _check_items_on_screen_impl()
 
                     if(y < display_height)
                     {
-                        if(x + (item.half_dimensions.width() * 2) > 0)
+                        if(x + (item.half_width * 2) > 0)
                         {
-                            if(y + (item.half_dimensions.height() * 2) > 0)
+                            if(y + (item.half_height * 2) > 0)
                             {
                                 on_screen = true;
                             }

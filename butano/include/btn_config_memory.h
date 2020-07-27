@@ -4,7 +4,7 @@
 #include "btn_common.h"
 
 #ifndef BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
-    #define BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS 32
+    #define BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS 16
 #endif
 
 #endif

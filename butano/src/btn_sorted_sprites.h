@@ -12,7 +12,6 @@ namespace btn::sorted_sprites
 
     public:
         explicit layer(sort_key sort_key) :
-            intrusive_list<sprites_manager_item>(),
             _sort_key(sort_key)
         {
         }

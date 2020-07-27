@@ -25,6 +25,9 @@ namespace btn::bg_blocks_manager
 
 namespace
 {
+    static_assert(BTN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BTN_CFG_BG_BLOCKS_MAX_ITEMS <= bg_tiles::blocks_count());
+    static_assert(power_of_two(BTN_CFG_BG_BLOCKS_MAX_ITEMS));
+
     [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
     {
         return tiles * int(sizeof(tile) / 2);
@@ -47,7 +50,7 @@ namespace
     }
 
 
-    constexpr const int max_items = bg_tiles::blocks_count();
+    constexpr const int max_items = BTN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr const int max_list_items = max_items + 1;
     constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks_per_tiles());
 
@@ -303,7 +306,7 @@ namespace
 
     public:
         items_list items;
-        hash_map<const uint16_t*, uint16_t, max_items * 2> items_map;
+        hash_map<const uint16_t*, int, max_items * 2> items_map;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         bool check_commit = false;
@@ -687,7 +690,7 @@ void init()
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
-    new_item.blocks_count = max_items;
+    new_item.blocks_count = bg_tiles::blocks_count();
     data.items.init();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
@@ -766,7 +769,7 @@ int find_tiles(const span<const tile>& tiles_ref)
 
     if(items_map_iterator != data.items_map.end())
     {
-        auto id = int(items_map_iterator->second);
+        int id = items_map_iterator->second;
         item_type& item = data.items.item(id);
         BTN_ASSERT(data_ptr == item.data, "Tiles data does not match item tiles data: ",
                    data_ptr, " - ", item.data);
@@ -817,7 +820,7 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
 
     if(items_map_iterator != data.items_map.end())
     {
-        auto id = int(items_map_iterator->second);
+        int id = items_map_iterator->second;
         item_type& item = data.items.item(id);
         BTN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
                    map_dimensions.width(), " - ", item.width);

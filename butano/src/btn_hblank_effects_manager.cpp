@@ -17,17 +17,17 @@ namespace
 
     static_assert(max_items > 0 && max_items <= 8);
 
-    using last_value_type = any<8 * sizeof(int)>;
+    using last_value_type = any<4 * sizeof(int)>;
     using hw_entry = hw::hblank_effects::entry;
 
     class item_type
     {
 
     public:
+        last_value_type target_last_value;
         hblank_effect_handler* handler = nullptr;
         const void* values_ptr = nullptr;
         int target_id = 0;
-        last_value_type target_last_value;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
         alignas(alignof(int)) uint16_t output_values_a[display::height()] = {};

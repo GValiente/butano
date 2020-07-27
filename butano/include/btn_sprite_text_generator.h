@@ -19,7 +19,7 @@ class sprite_text_generator
 {
 
 public:
-    using utf8_characters_map_type = hash_map<int, int16_t, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;
+    using utf8_characters_map_type = hash_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;
 
     explicit sprite_text_generator(const sprite_font& font);
 

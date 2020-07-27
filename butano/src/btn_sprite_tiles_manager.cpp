@@ -244,7 +244,7 @@ namespace
 
     public:
         items_list items;
-        hash_map<const tile*, uint16_t, max_items * 2> items_map;
+        hash_map<const tile*, int, max_items * 2> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
         int free_tiles_count = 0;

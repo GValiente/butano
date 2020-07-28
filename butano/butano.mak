@@ -12,20 +12,20 @@ include $(DEVKITARM)/gba_rules
 # Butano custom base rules without flto
 #---------------------------------------------------------------------------------------------------------------------
 %.btn_noflto.o: %.btn_noflto.cpp
-	@echo $(notdir $<)
-	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 %.btn_noflto.o: %.btn_noflto.c
-	@echo $(notdir $<)
-	$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 %.btn_noflto.iwram.o: %.btn_noflto.iwram.cpp
-	@echo $(notdir $<)
-	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CXXFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CXXFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
 
 %.btn_noflto.iwram.o: %.btn_noflto.iwram.c
-	@echo $(notdir $<)
-	$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation
@@ -53,7 +53,7 @@ LIBS        := -lmm
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories
 #---------------------------------------------------------------------------------------------------------------------
-LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBBUTANOABS)/hw/3rd_party/maxmod
+LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files
@@ -134,13 +134,11 @@ $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-audio-tool.py --audio="$(AUDIO)" --build=$(BUILD)
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-graphics-tool.py --graphics="$(GRAPHICS)" --build=$(BUILD)
-	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod gba
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod clean
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba 
 
 #---------------------------------------------------------------------------------------------------------------------

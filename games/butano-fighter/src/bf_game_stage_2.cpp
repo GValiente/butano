@@ -265,7 +265,7 @@ namespace
 
     constexpr const enemy_data robot(
         btn::sprite_items::stage_2_robot, enemy_data::death_anim_type::EXPLOSION,
-        btn::sound_items::boss_shoot, btn::fixed_size(26, 47), 0, 1, 150, 200, 4);
+        btn::sound_items::boss_shoot, btn::fixed_size(26, 47), 0, 1, 150, 75, 4);
 
     constexpr const enemy_move_event robot_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 220, false),
@@ -276,33 +276,33 @@ namespace
     };
 
     constexpr const enemy_bullet_event robot_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 90),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 1), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
     };
 
 
@@ -315,6 +315,12 @@ namespace
     constexpr const enemy_move_event black_ninja_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.35)),  40, down_index,     false),
         enemy_move_event(btn::fixed_point(0.7,  move_y(0)),     80, right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.35)),  1,  down_index,     false),
+    };
+
+    constexpr const enemy_move_event black_ninja_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.35)),  40, down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.7, move_y(0)),     80, left_index,     false),
         enemy_move_event(btn::fixed_point(0,    move_y(0.35)),  1,  down_index,     false),
     };
 
@@ -336,18 +342,38 @@ namespace
         enemy_move_event(btn::fixed_point(0,    move_y(-1)),    1,  up_index,       false),
     };
 
+    constexpr const enemy_move_event dog_mask_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  60, down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.5, move_y(0)),     70, left_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(-1)),    1,  up_index,       false),
+    };
+
     constexpr const enemy_bullet_event dog_mask_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(0.5),    1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(0.5),    1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(0.5),    1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(0.5),    0.9),   20),
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0),      1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0.5),    1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(-0.5),   1),  30),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0),      0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1,    move_y(-0.5),   0.9),   30),
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(-1),     1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(-1),     1),  20),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(-1),     1),  20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(-1),     0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(-1),     0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(-1),     0.9),   20),
+    };
+
+    constexpr const enemy_bullet_event dog_mask_flipped_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(0.5),    0.9),   20),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1,   move_y(0),      0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1,   move_y(0.5),    0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1,   move_y(-0.5),   0.9),   30),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0,    move_y(-1),     0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.5, move_y(-1),     0.9),   20),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.5,  move_y(-1),     0.9),   20),
     };
 
 
@@ -363,6 +389,15 @@ namespace
         enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  right_index,    false),
         enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  up_index,       false),
         enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     1,  down_index,     false),
+    };
+
+    constexpr const enemy_move_event samurai_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.25)),  40, down_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     30, down_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  up_index,       false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),     6,  right_index,    false),
         enemy_move_event(btn::fixed_point(0,    move_y(0)),     1,  down_index,     false),
     };
 
@@ -382,14 +417,28 @@ namespace
     constexpr const enemy_move_event red_ninja_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
 
-        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, right_index,    false),
-        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, up_index,       false),
-        enemy_move_event(btn::fixed_point(1.5,  move_y(0.5)),   10, left_index,     false),
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, left_index,     false),
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
 
-        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, left_index,     false),
-        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, up_index,       false),
-        enemy_move_event(btn::fixed_point(-1.5, move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, left_index,     false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   1,  down_index,     false),
+    };
+
+    constexpr const enemy_move_event red_ninja_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
+
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, left_index,     false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
+
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, right_index,    false),
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, up_index,       false),
+        enemy_move_event(btn::fixed_point(1.2,  move_y(0.5)),   10, left_index,     false),
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   1,  down_index,     false),
     };
 
@@ -408,6 +457,14 @@ namespace
         enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  1,   down_index,     false),
     };
 
+    constexpr const enemy_move_event green_snake_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.75,    move_y(0.25)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.75,     move_y(0.25)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,        move_y(0.25)),  1,   down_index,     false),
+    };
+
 
     // lizard:
 
@@ -416,9 +473,9 @@ namespace
         btn::sound_items::dinosaur_5, btn::fixed_size(12, 15), _create_graphics_indexes(16), 3, 5);
 
     constexpr const enemy_move_event lizard_moves[] = {
-        enemy_move_event(btn::fixed_point(0.75, move_y(0.15)), 35, down_index,  false),
-        enemy_move_event(btn::fixed_point(0.75, move_y(0.0)),  55, right_index, false),
-        enemy_move_event(btn::fixed_point(0.75, move_y(-1.1)), 1,  up_index,    false),
+        enemy_move_event(btn::fixed_point(0.75,     move_y(0.15)), 35, down_index,  false),
+        enemy_move_event(btn::fixed_point(0.75,     move_y(0.0)),  55, right_index, false),
+        enemy_move_event(btn::fixed_point(0.75,     move_y(-1.1)), 1,  up_index,    false),
     };
 
 
@@ -436,6 +493,14 @@ namespace
         enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  1,   down_index,     false),
     };
 
+    constexpr const enemy_move_event red_snake_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.5, move_y(0.2)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.5,  move_y(0.2)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0.2)),  1,   down_index,     false),
+    };
+
     constexpr const enemy_bullet_event red_snake_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL, 1, 60),
         enemy_bullet_event(enemy_bullet_type::SMALL, 1, 60),
@@ -446,18 +511,34 @@ namespace
 
     constexpr const enemy_data ogre(
         btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-        btn::sound_items::scream_3, btn::fixed_size(16, 16), _create_graphics_indexes(48), 14, 12);
+        btn::sound_items::scream_3, btn::fixed_size(16, 16), _create_graphics_indexes(48), 20, 12);
+
+    constexpr const enemy_data ogre_weak(
+        btn::sprite_items::stage_2_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::scream_3, btn::fixed_size(16, 16), _create_graphics_indexes(48), 12, 10);
 
     constexpr const enemy_move_event ogre_moves[] = {
-        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
-        enemy_move_event(btn::fixed_point(0.2,  move_y(0.1)),  30,  right_index,    false),
-        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
-        enemy_move_event(btn::fixed_point(-0.2, move_y(0.1)),  30,  left_index,     false),
-        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
-        enemy_move_event(btn::fixed_point(0.2,  move_y(0.1)),  30,  right_index,    false),
-        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  30,  down_index,     false),
-        enemy_move_event(btn::fixed_point(-0.2, move_y(0.1)),  30,  left_index,     false),
-        enemy_move_event(btn::fixed_point(0,    move_y(0.1)),  1,   down_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  1,   down_index,     false),
+    };
+
+    constexpr const enemy_move_event ogre_flipped_moves[] = {
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(-0.2, move_y(0)),  30,  left_index,     false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  30,  down_index,     false),
+        enemy_move_event(btn::fixed_point(0.2,  move_y(0)),  30,  right_index,    false),
+        enemy_move_event(btn::fixed_point(0,    move_y(0)),  1,   down_index,     false),
     };
 
 
@@ -467,7 +548,7 @@ namespace
 
         // level 3 slow (25s)
 
-        /*enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(beaver, btn::fixed_point(40, start_y), beaver_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -546,37 +627,114 @@ namespace
 
         enemy_event(robot, btn::fixed_point(0, start_y - 16), robot_moves, robot_bullets, 0, enemy_drop_type::HERO_BOMB),
 
-        // level 4 slow
+        // level 4 slow (22s)
 
-        enemy_event(black_ninja, btn::fixed_point(-45, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(black_ninja, btn::fixed_point(-60, start_y), black_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(black_ninja, btn::fixed_point(-30, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
-
+        enemy_event(red_ninja, btn::fixed_point(-45, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-60, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-30, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
         enemy_event(dog_mask, btn::fixed_point(-45, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(dog_mask, btn::fixed_point(-60, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(dog_mask, btn::fixed_point(-30, start_y), dog_mask_moves, dog_mask_bullets, 60, enemy_drop_type::NONE),
-
-        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(samurai, btn::fixed_point(-60, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(samurai, btn::fixed_point(-30, start_y), samurai_moves, samurai_bullets, 60, enemy_drop_type::NONE),
-
-        enemy_event(red_ninja, btn::fixed_point(-45, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(red_ninja, btn::fixed_point(-60, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(red_ninja, btn::fixed_point(-30, start_y), red_ninja_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 60, enemy_drop_type::GEM),
 
-        enemy_event(red_snake, btn::fixed_point(-45, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(red_snake, btn::fixed_point(-60, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(red_snake, btn::fixed_point(-30, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(40, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(55, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(25, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(dog_mask, btn::fixed_point(40, start_y), dog_mask_flipped_moves, dog_mask_flipped_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 75, enemy_drop_type::GEM),
+
+        enemy_event(black_ninja, btn::fixed_point(-45, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(-60, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(-30, start_y), black_ninja_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(black_ninja, btn::fixed_point(40, start_y), black_ninja_flipped_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(55, start_y), black_ninja_flipped_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(25, start_y), black_ninja_flipped_moves, black_ninja_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(green_snake, btn::fixed_point(-45, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(green_snake, btn::fixed_point(-60, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(green_snake, btn::fixed_point(-30, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),*/
+        enemy_event(red_snake, btn::fixed_point(40, start_y), red_snake_flipped_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(ogre, btn::fixed_point(-45, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(ogre, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
-        enemy_event(ogre, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(-30, start_y), red_snake_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(green_snake, btn::fixed_point(25, start_y), green_snake_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(green_snake, btn::fixed_point(-60, start_y), green_snake_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(55, start_y), red_snake_flipped_moves, red_snake_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 60, enemy_drop_type::GEM),
+
+        // level 4 fast (28s)
+
+        enemy_event(ogre, btn::fixed_point(0, start_y), ogre_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(25, start_y), ogre_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre, btn::fixed_point(55, start_y), ogre_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(samurai, btn::fixed_point(40, start_y), samurai_flipped_moves, samurai_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 45, enemy_drop_type::GEM),
+
+        enemy_event(red_ninja, btn::fixed_point(-45, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-60, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(-30, start_y), red_ninja_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(dog_mask, btn::fixed_point(-45, start_y), dog_mask_moves, dog_mask_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(black_ninja, btn::fixed_point(55, start_y), black_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(25, start_y), black_ninja_flipped_moves, black_ninja_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(40, start_y), black_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(black_ninja, btn::fixed_point(65, start_y), black_ninja_flipped_moves, black_ninja_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(red_ninja, btn::fixed_point(40, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(55, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_ninja, btn::fixed_point(25, start_y), red_ninja_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(dog_mask, btn::fixed_point(40, start_y), dog_mask_flipped_moves, dog_mask_flipped_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(green_snake, btn::fixed_point(-60, start_y), green_snake_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(-30, start_y), red_snake_moves, red_snake_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(green_snake, btn::fixed_point(-45, start_y), green_snake_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(red_snake, btn::fixed_point(-70, start_y), red_snake_moves, red_snake_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(lizard, btn::fixed_point(-60, start_y), lizard_moves, no_bullets, 180, enemy_drop_type::GEM),
+
+        enemy_event(ogre_weak, btn::fixed_point(0, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(ogre_weak, btn::fixed_point(0 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25 + 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55 + 10, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(ogre_weak, btn::fixed_point(0 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25 - 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55 - 10, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(ogre_weak, btn::fixed_point(0, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(ogre_weak, btn::fixed_point(0 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25 + 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55 + 10, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+
+        enemy_event(ogre_weak, btn::fixed_point(0 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-30 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(25 - 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(55 - 10, start_y), ogre_flipped_moves, no_bullets, 120, enemy_drop_type::NONE),
+
+        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(samurai, btn::fixed_point(40, start_y), samurai_flipped_moves, samurai_bullets, 45, enemy_drop_type::NONE),
     };
 
 

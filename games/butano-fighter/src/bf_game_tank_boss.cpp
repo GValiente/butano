@@ -62,7 +62,8 @@ namespace
         btn::fixed_point cannon_position = _cannon_end_position(cannon_rotation_angle, y);
         btn::fixed_point bullet_position = _cannon_end_position(bullet_rotation_angle, y);
         btn::fixed_point distance = bullet_position - base_position;
-        btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), 1);
+        btn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
+        btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), bullet_speed);
         enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1));
     }
 
@@ -142,7 +143,8 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     _update_rects(y);
 }
 
-void tank_boss::_update_alive(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void tank_boss::_update_alive(const btn::fixed_point& hero_position, bool hero_bomb_active,
+                              enemy_bullets& enemy_bullets)
 {
     switch(_state_index)
     {
@@ -221,7 +223,11 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, enemy_bulle
     _update_cannon_sprite(y, hero_position);
     _update_explosions();
     _update_rects(y);
-    _update_bullets(hero_position, y, enemy_bullets);
+
+    if(! hero_bomb_active)
+    {
+        _update_bullets(hero_position, y, enemy_bullets);
+    }
 }
 
 bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
@@ -680,7 +686,7 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
             break;
 
         case 5:
-            _bullets_counter = 60;
+            _bullets_counter = 70;
 
             switch(_bullets_index)
             {

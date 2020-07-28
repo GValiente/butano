@@ -110,7 +110,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             --_ignore_hero_bullet_counter;
         }
 
-        _update_alive(hero_position, enemy_bullets);
+        _update_alive(hero_position, _hero_bomb_active, enemy_bullets);
     }
     else
     {

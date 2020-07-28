@@ -26,7 +26,8 @@ protected:
         return btn::fixed_point(0, _y);
     }
 
-    void _update_alive(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) final;
+    void _update_alive(const btn::fixed_point& hero_position, bool hero_bomb_active,
+                       enemy_bullets& enemy_bullets) final;
 
     [[nodiscard]] bool _update_dead(const btn::fixed_point& hero_position) final;
 

@@ -32,7 +32,7 @@ namespace
     constexpr const int scale_weapon_frames = 30;
     constexpr const int scale_weapon_half_frames = scale_weapon_frames / 2;
     constexpr const int body_shadows_multiplier = 4;
-    constexpr const btn::fixed_size dimensions(14, 14);
+    constexpr const btn::fixed_size dimensions(12, 12);
 
     btn::vector<btn::sprite_ptr, 3> _create_body_shadows()
     {

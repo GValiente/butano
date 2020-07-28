@@ -63,7 +63,8 @@ protected:
 
     [[nodiscard]] virtual btn::fixed_point _position() const = 0;
 
-    virtual void _update_alive(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) = 0;
+    virtual void _update_alive(const btn::fixed_point& hero_position, bool hero_bomb_active,
+                               enemy_bullets& enemy_bullets) = 0;
 
     [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position) = 0;
 

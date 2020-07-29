@@ -25,6 +25,8 @@ public:
 
     background& operator=(const background& other) = delete;
 
+    void set_visible(bool visible);
+
     void show_bomb_open(int frames);
 
     void show_bomb_close(int frames);

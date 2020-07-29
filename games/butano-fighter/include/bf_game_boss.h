@@ -1,8 +1,10 @@
 #ifndef BF_GAME_BOSS_H
 #define BF_GAME_BOSS_H
 
+#include "btn_color.h"
 #include "btn_vector.h"
 #include "btn_memory.h"
+#include "btn_optional.h"
 #include "btn_sprite_palette_ptr.h"
 
 namespace btn
@@ -18,6 +20,7 @@ class hero;
 class objects;
 class hero_bomb;
 class scoreboard;
+class background;
 class enemy_bullets;
 class check_hero_bullet_data;
 
@@ -55,7 +58,7 @@ public:
     }
 
     void update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
-                scoreboard& scoreboard);
+                scoreboard& scoreboard, background& background);
 
 protected:
     boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
@@ -83,6 +86,7 @@ protected:
 private:
     const btn::ivector<btn::fixed_rect>& _rects;
     btn::sprite_palette_ptr _damage_palette;
+    btn::optional<btn::color> _transparent_color;
     int _life;
     int _experience;
     int _damage_palette_counter;

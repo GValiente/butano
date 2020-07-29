@@ -1,6 +1,7 @@
 #include "bf_game_boss.h"
 
 #include "btn_colors.h"
+#include "btn_green_swap.h"
 #include "btn_sound_items.h"
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
@@ -9,8 +10,10 @@
 #include "bf_game_hero_bomb.h"
 #include "bf_game_tank_boss.h"
 #include "bf_game_scoreboard.h"
+#include "bf_game_background.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_check_hero_bullet_data.h"
+
 
 namespace bf::game
 {
@@ -18,6 +21,7 @@ namespace bf::game
 namespace
 {
     constexpr const int damage_frames = 12;
+    constexpr const int death_flash_frames = 50;
 }
 
 btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_position,
@@ -79,12 +83,7 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
                     if(_life <= 0)
                     {
                         _life = 0;
-                        _death_flash_counter = 50;
-
-                        btn::bg_palettes::set_fade(btn::colors::white, 1);
-                        btn::sprite_palettes::set_fade(btn::colors::black, 1);
-                        btn::sound_items::glass_breaking_2.play();
-                        btn::music::stop();
+                        _death_flash_counter = death_flash_frames;
                     }
                 }
 
@@ -97,7 +96,7 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
 }
 
 void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
-                  scoreboard& scoreboard)
+                  scoreboard& scoreboard, background& background)
 {
     const btn::fixed_point& hero_position = hero.body_position();
 
@@ -116,14 +115,22 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
     {
         if(_death_flash_counter)
         {
-            --_death_flash_counter;
-            scoreboard.set_visible(! _death_flash_counter);
-
-            if(_death_flash_counter)
+            if(_death_flash_counter == death_flash_frames)
             {
+                _transparent_color = btn::bg_palettes::transparent_color();
+                btn::bg_palettes::set_transparent_color(btn::colors::white);
+                btn::sprite_palettes::set_fade(btn::colors::black, 1);
+                btn::green_swap::set_enabled(true);
+                btn::sound_items::glass_breaking_2.play();
+                scoreboard.set_visible(false);
+                background.set_visible(false);
                 enemy_bullets.clear();
+                btn::music::stop();
             }
-            else
+
+            --_death_flash_counter;
+
+            if(! _death_flash_counter)
             {
                 btn::fixed_point enemy_position = _position();
                 objects.spawn_hero_bomb_without_sound(enemy_position);
@@ -133,8 +140,11 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
                     objects.spawn_hero_weapon_without_sound(enemy_position, hero.level() + 1);
                 }
 
-                btn::bg_palettes::set_fade_intensity(0);
+                btn::bg_palettes::set_transparent_color(_transparent_color);
                 btn::sprite_palettes::set_fade_intensity(0);
+                btn::green_swap::set_enabled(false);
+                scoreboard.set_visible(true);
+                background.set_visible(true);
             }
         }
 

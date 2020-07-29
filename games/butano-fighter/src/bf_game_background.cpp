@@ -41,6 +41,15 @@ background::background(const stage& stage) :
     _hblank_effect.set_visible(false);
 }
 
+void background::set_visible(bool visible)
+{
+    btn::regular_bg_ptr bottom_bg = _bottom_move_action.bg();
+    bottom_bg.set_visible(visible);
+
+    btn::regular_bg_ptr top_bg = _top_move_action.bg();
+    top_bg.set_visible(visible);
+}
+
 void background::show_bomb_open(int frames)
 {
     btn::bg_palette_ptr bottom_palette = _bottom_move_action.bg().palette();

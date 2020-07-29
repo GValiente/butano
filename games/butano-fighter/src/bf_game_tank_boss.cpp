@@ -129,9 +129,6 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     builder.set_z_order(constants::enemies_z_order);
     _cannon_sprite = builder.release_build();
 
-    builder = btn::sprite_builder(btn::sprite_items::tank_jelly);
-    builder.set_z_order(constants::enemies_z_order);
-
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(84, 58));
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(76, 74));
 
@@ -279,8 +276,8 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
             {
                 ++_state_index;
 
-                _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
-                                   constants::enemy_explosions_z_order, true);
+                _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, btn::display::height() / 2),
+                                   6, constants::enemy_explosions_z_order, true);
                 btn::sound_items::explosion_2.play();
             }
         }
@@ -371,7 +368,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_counter = 80;
 
             _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
-                                 constants::enemy_explosions_z_order, false);
+                               constants::enemy_explosions_z_order, false);
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8));
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 24));
             _base_palette.set_fade(btn::colors::red, 0);
@@ -677,10 +674,6 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
                           y, enemy_bullets);
             break;
 
-        default:
-            BTN_ERROR("Invalid state index: ", _state_index);
-            break;
-
         case 4:
             _bullets_counter = 60;
             break;
@@ -747,6 +740,10 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
                 BTN_ERROR("Invalid bullets index: ", _bullets_index);
                 break;
             }
+            break;
+
+        default:
+            BTN_ERROR("Invalid state index: ", _state_index);
             break;
         }
     }

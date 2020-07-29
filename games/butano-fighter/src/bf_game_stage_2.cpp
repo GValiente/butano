@@ -548,7 +548,7 @@ namespace
 
         // level 3 slow (25s)
 
-        enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+        /*enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(beaver, btn::fixed_point(40, start_y), beaver_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -733,12 +733,12 @@ namespace
         enemy_event(ogre_weak, btn::fixed_point(-60 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(55 - 10, start_y), ogre_flipped_moves, no_bullets, 120, enemy_drop_type::NONE),
 
-        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),
+        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),*/
         enemy_event(samurai, btn::fixed_point(40, start_y), samurai_flipped_moves, samurai_bullets, 45, enemy_drop_type::NONE),
     };
 
 
-    // stage (start with level 3, exp 1100):
+    // stage (start with level 3, exp 1050):
 
     constexpr const stage stage_2(
         btn::regular_bg_items::stage_2, btn::regular_bg_items::clouds, btn::sprite_items::stage_2_intro,

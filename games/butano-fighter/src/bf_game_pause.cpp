@@ -20,7 +20,6 @@ void pause::update(const butano_background& butano_background)
         {
             _bg.reset();
             btn::bg_palettes::set_contrast(_contrast);
-            btn::bg_palettes::set_fade_intensity(_fade_intensity);
             btn::bg_palettes::set_grayscale_intensity(0);
             btn::sprite_palettes::set_contrast(_contrast);
             btn::sprite_palettes::set_fade_intensity(_fade_intensity);
@@ -46,7 +45,6 @@ void pause::update(const butano_background& butano_background)
             _contrast = btn::bg_palettes::contrast();
             _fade_intensity = btn::bg_palettes::fade_intensity();
             btn::bg_palettes::set_contrast(0);
-            btn::bg_palettes::set_fade_intensity(0);
             btn::bg_palettes::set_grayscale_intensity(1);
             btn::sprite_palettes::set_contrast(0);
             btn::sprite_palettes::set_fade_intensity(0);

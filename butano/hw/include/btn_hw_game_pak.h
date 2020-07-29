@@ -4,8 +4,6 @@
 #include "btn_config_game_pak.h"
 #include "btn_hw_tonc.h"
 
-#define REG_WAITCNT_NV *(u16*)(REG_BASE+0x0204)
-
 namespace btn::hw::game_pak
 {
     inline void init()

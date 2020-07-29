@@ -5,8 +5,6 @@
 #include "btn_hw_tonc.h"
 #include "btn_hw_sram_constants.h"
 
-#define REG_WAITCNT_NV *(u16*)(REG_BASE+0x0204)
-
 namespace btn::hw::sram
 {
     inline void init()

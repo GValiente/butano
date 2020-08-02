@@ -2,6 +2,7 @@
 
 #include "btn_music.h"
 #include "btn_keypad.h"
+#include "btn_green_swap.h"
 #include "btn_sound_items.h"
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
@@ -24,6 +25,7 @@ void pause::update(const butano_background& butano_background)
             btn::sprite_palettes::set_contrast(_contrast);
             btn::sprite_palettes::set_fade_intensity(_fade_intensity);
             btn::sprite_palettes::set_grayscale_intensity(0);
+            btn::green_swap::set_enabled(_green_swap);
             btn::sound_items::pause_out.play();
 
             if(btn::music::paused())
@@ -44,11 +46,13 @@ void pause::update(const butano_background& butano_background)
             _bg = builder.release_build();
             _contrast = btn::bg_palettes::contrast();
             _fade_intensity = btn::bg_palettes::fade_intensity();
+            _green_swap = btn::green_swap::enabled();
             btn::bg_palettes::set_contrast(0);
             btn::bg_palettes::set_grayscale_intensity(1);
             btn::sprite_palettes::set_contrast(0);
             btn::sprite_palettes::set_fade_intensity(0);
             btn::sprite_palettes::set_grayscale_intensity(1);
+            btn::green_swap::set_enabled(false);
             btn::sound_items::pause_in.play();
 
             if(btn::music::playing())

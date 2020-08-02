@@ -29,6 +29,7 @@ private:
     btn::fixed _contrast;
     btn::fixed _fade_intensity;
     bool _active = false;
+    bool _green_swap = false;
 };
 
 }

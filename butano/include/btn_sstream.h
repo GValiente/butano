@@ -173,23 +173,6 @@ public:
         }
     }
 
-    template<typename Type, typename... Args>
-    void append_args(const Type& value, const Args&... args)
-    {
-        append(value);
-        append_args(args...);
-    }
-
-    template<typename Type>
-    void append_args(const Type& value)
-    {
-        append(value);
-    }
-
-    void append_args()
-    {
-    }
-
     void swap(ostringstream& other);
 
     friend void swap(ostringstream& a, ostringstream& b)

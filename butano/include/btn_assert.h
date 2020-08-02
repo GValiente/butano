@@ -14,7 +14,7 @@
                 char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
                 btn::istring_base _btn_istring(_btn_string); \
                 btn::ostringstream _btn_string_stream(_btn_istring); \
-                _btn_string_stream.append_args(__VA_ARGS__); \
+                _btn::assert::append_args(_btn_string_stream, __VA_ARGS__); \
                 _btn::assert::show(#condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
             } \
         } while(false)
@@ -31,7 +31,7 @@
             char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
             btn::istring_base _btn_istring(_btn_string); \
             btn::ostringstream _btn_string_stream(_btn_istring); \
-            _btn_string_stream.append_args(__VA_ARGS__); \
+            _btn::assert::append_args(_btn_string_stream, __VA_ARGS__); \
             _btn::assert::show("", _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
         } while(false)
 
@@ -75,6 +75,23 @@
             }
 
             constexpr_error(file, function, line, message);
+        }
+
+        inline void append_args(btn::ostringstream&)
+        {
+        }
+
+        template<typename Type, typename... Args>
+        void append_args(btn::ostringstream& string_stream, const Type& value, const Args&... args)
+        {
+            string_stream << value;
+            append_args(string_stream, args...);
+        }
+
+        template<typename Type>
+        void append_args(btn::ostringstream& string_stream, const Type& value)
+        {
+            string_stream << value;
         }
     }
 #else

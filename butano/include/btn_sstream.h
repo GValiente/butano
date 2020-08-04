@@ -173,6 +173,17 @@ public:
         }
     }
 
+    template<typename Type, typename... Args>
+    void append(const Type& value, const Args&... args)
+    {
+        *this << value;
+        append(args...);
+    }
+
+    void append()
+    {
+    }
+
     void swap(ostringstream& other);
 
     friend void swap(ostringstream& a, ostringstream& b)

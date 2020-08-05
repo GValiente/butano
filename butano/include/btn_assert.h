@@ -14,7 +14,7 @@
                 char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
                 btn::istring_base _btn_istring(_btn_string); \
                 btn::ostringstream _btn_string_stream(_btn_istring); \
-                _btn_string_stream.append(__VA_ARGS__); \
+                _btn_string_stream.append_args(__VA_ARGS__); \
                 _btn::assert::show(#condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
             } \
         } while(false)
@@ -31,7 +31,7 @@
             char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
             btn::istring_base _btn_istring(_btn_string); \
             btn::ostringstream _btn_string_stream(_btn_istring); \
-            _btn_string_stream.append(__VA_ARGS__); \
+            _btn_string_stream.append_args(__VA_ARGS__); \
             _btn::assert::show("", _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
         } while(false)
 

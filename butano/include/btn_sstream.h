@@ -174,13 +174,19 @@ public:
     }
 
     template<typename Type, typename... Args>
-    void append(const Type& value, const Args&... args)
+    void append_args(const Type& value, const Args&... args)
     {
         *this << value;
-        append(args...);
+        append_args(args...);
     }
 
-    void append()
+    template<typename Type>
+    void append_args(const Type& value)
+    {
+        *this << value;
+    }
+
+    void append_args()
     {
     }
 

@@ -24,10 +24,10 @@ namespace
     constexpr const int jelly_damage_frames = 60;
 
     constexpr const int state_0_1_life = 190;     // 13 seconds
-    constexpr const int state_1_life = 100;     // 7 seconds
+    constexpr const int state_2_life = 100;     // 7 seconds
     constexpr const int state_2_3_life = 190;   // 30 seconds
     constexpr const int state_4_5_life = 190;   // 13 seconds
-    constexpr const int total_life = state_0_1_life + state_1_life + state_2_3_life + state_4_5_life;
+    constexpr const int total_life = state_0_1_life + state_2_life + state_2_3_life + state_4_5_life;
 
     [[nodiscard]] btn::fixed _fix_rotation_angle(btn::fixed rotation_angle)
     {
@@ -339,7 +339,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
         break;
 
     case 1:
-        if(current_life < total_life - state_0_1_life - state_1_life)
+        if(current_life < total_life - state_0_1_life - state_2_life)
         {
             ++_state_index;
             _bullets_index = 0;
@@ -362,7 +362,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
         break;
 
     case 3:
-        if(current_life < total_life - state_0_1_life - state_1_life - state_2_3_life)
+        if(current_life < total_life - state_0_1_life - state_2_life - state_2_3_life)
         {
             ++_state_index;
             _bullets_index = 0;

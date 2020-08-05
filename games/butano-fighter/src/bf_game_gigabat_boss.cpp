@@ -5,8 +5,8 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_items_gigabat.h"
 #include "btn_sprite_items_gigabat_shadow.h"
-#include "btn_sprite_items_mini_explosion.h"
 #include "btn_sprite_items_enemy_explosion.h"
+#include "btn_sprite_items_mini_explosion_2.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
@@ -17,20 +17,21 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_life = 340;   // 15 seconds
-    constexpr const int state_1_life = 100;     // 7 seconds
+    // constexpr const int state_0_1_life = 350;   // 16 seconds
+    constexpr const int state_0_1_life = 50;   // 16 seconds
+    constexpr const int state_2_life = 400;     // ? seconds
     constexpr const int state_2_3_life = 190;   // 30 seconds
     constexpr const int state_4_5_life = 190;   // 13 seconds
-    constexpr const int total_life = state_0_1_life + state_1_life + state_2_3_life + state_4_5_life;
+    constexpr const int total_life = state_0_1_life + state_2_life + state_2_3_life + state_4_5_life;
 
-    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y)
+    [[nodiscard]] btn::sprite_animate_action<5> _create_mini_explosion(btn::fixed x, btn::fixed y)
     {
-        btn::sprite_builder builder(btn::sprite_items::mini_explosion);
+        btn::sprite_builder builder(btn::sprite_items::mini_explosion_2);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
-        return btn::create_sprite_animate_action_once(builder.release_build(), 6, btn::sprite_items::mini_explosion,
-                                                      0, 1, 2, 3, 4, 5, 6);
+        return btn::create_sprite_animate_action_once(builder.release_build(), 8, btn::sprite_items::mini_explosion_2,
+                                                      0, 1, 2, 3, 4);
     }
 }
 
@@ -101,8 +102,66 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             }
         }
 
-        _lut_sin_index = (_lut_sin_index + 8) % 512;
-        _gigabat_position.set_y((btn::lut_sin(_lut_sin_index) * 5) - 50);
+        _movement_counter = (_movement_counter + 8) % 512;
+        _gigabat_position.set_y((btn::lut_sin(_movement_counter) * 5) - 50);
+        break;
+
+    case 2:
+        --_movement_counter;
+
+        if(! _movement_counter)
+        {
+            switch(_movement_index)
+            {
+
+            case 0:
+                _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 10);
+                _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 11);
+                _movement_index = 1;
+                _movement_counter = 100;
+                _vibrate = false;
+                break;
+
+            case 1:
+                _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 8);
+                _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 9);
+                _movement_index = 0;
+                _movement_counter = 100;
+                _vibrate = true;
+                break;
+
+            default:
+                BTN_ERROR("Invalid movement index: ", _movement_index);
+                break;
+            }
+        }
+
+        switch(_movement_index)
+        {
+
+        case 0:
+            if(y < -50)
+            {
+                _gigabat_position.set_y(btn::min(y + 0.25, btn::fixed(-50)));
+            }
+            else if(y > -50)
+            {
+                _gigabat_position.set_y(btn::max(y - 0.25, btn::fixed(-50)));
+            }
+
+            if(_movement_counter % 4 == 0)
+            {
+                _vibrate = ! _vibrate;
+            }
+            break;
+
+        case 1:
+            break;
+
+        default:
+            BTN_ERROR("Invalid movement index: ", _movement_index);
+            break;
+        }
         break;
 
     default:
@@ -213,11 +272,15 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
         if(current_life < total_life - state_0_1_life)
         {
             ++_state_index;
+            _movement_index = 1;
+            _movement_counter = 1;
             _bullets_index = 0;
             _bullets_counter = 80;
+            _animate_actions.clear();
 
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24));
+            _mini_explosions.push_back(_create_mini_explosion(x, y - 16));
             _palette.set_fade(btn::colors::red, 0);
             _palette_action.emplace(_palette, 30, 0.2);
             btn::sound_items::explosion_3.play();
@@ -225,7 +288,7 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
         break;
 
     case 2:
-        if(current_life < total_life - state_0_1_life - state_1_life)
+        if(current_life < total_life - state_0_1_life - state_2_life)
         {
             ++_state_index;
             _bullets_index = 0;
@@ -243,7 +306,7 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
         break;
 
     case 3:
-        if(current_life < total_life - state_0_1_life - state_1_life - state_2_3_life)
+        if(current_life < total_life - state_0_1_life - state_2_life - state_2_3_life)
         {
             ++_state_index;
             _bullets_index = 0;
@@ -318,20 +381,21 @@ void gigabat_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed
 void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing)
 {
     bool flip = hero_position.x() < _gigabat_position.x();
-    btn::fixed x1 = flip ? 32 : -32;
-    btn::fixed x2 = flip ? -32 : 32;
+    btn::fixed x1_inc = flip ? 32 : -32;
+    btn::fixed x2_inc = flip ? -32 : 32;
+    btn::fixed y_inc = _vibrate ? 1 : 0;
 
     if(_sprites.size() == 2)
     {
-        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1, 0));
-        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2, 0));
+        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc));
+        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc));
     }
     else
     {
-        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1, -32));
-        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2, -32));
-        _sprites[2].set_position(_gigabat_position + btn::fixed_point(x1, 32));
-        _sprites[3].set_position(_gigabat_position + btn::fixed_point(x2, 32));
+        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc - 32));
+        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc - 32));
+        _sprites[2].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc + 32));
+        _sprites[3].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc + 32));
     }
 
     for(btn::sprite_ptr& sprite : _sprites)
@@ -387,6 +451,7 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
             break;
 
         case 1:
+        case 2:
             _bullets_counter = 50;
 
             switch(_bullets_index)
@@ -432,7 +497,7 @@ void gigabat_boss::_update_explosions()
 {
     for(auto it = _mini_explosions.begin(), end = _mini_explosions.end(); it != end; )
     {
-        btn::sprite_animate_action<7>& mini_explosions = *it;
+        btn::sprite_animate_action<5>& mini_explosions = *it;
         mini_explosions.update();
 
         if(mini_explosions.done())

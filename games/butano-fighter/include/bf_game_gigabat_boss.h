@@ -47,15 +47,16 @@ private:
     btn::fixed_point _gigabat_position;
     btn::sprite_palette_ptr _palette;
     btn::optional<btn::sprite_palette_fade_loop_action> _palette_action;
-    btn::deque<btn::sprite_animate_action<7>, 8> _mini_explosions;
+    btn::deque<btn::sprite_animate_action<5>, 8> _mini_explosions;
     btn::optional<explosion> _explosion;
     btn::random _random;
     int _state_index = 0;
     int _movement_index = 0;
-    int _lut_sin_index = 0;
+    int _movement_counter = 0;
     int _bullets_index = 0;
     int _bullets_counter = 240;
     bool _alive = true;
+    bool _vibrate = false;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                        const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;

@@ -17,7 +17,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_life = 190;   // 13 seconds
+    constexpr const int state_0_1_life = 340;   // 15 seconds
     constexpr const int state_1_life = 100;     // 7 seconds
     constexpr const int state_2_3_life = 190;   // 30 seconds
     constexpr const int state_4_5_life = 190;   // 13 seconds
@@ -82,13 +82,13 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
         break;
 
     case 1:
-        if(_movement_counter == 0)
+        if(_movement_index == 0)
         {
             _gigabat_position.set_x(x + 0.35);
 
             if(_gigabat_position.x() >= 50)
             {
-                _movement_counter = 1;
+                _movement_index = 1;
             }
         }
         else
@@ -97,9 +97,12 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
 
             if(_gigabat_position.x() <= -50)
             {
-                _movement_counter = 0;
+                _movement_index = 0;
             }
         }
+
+        _lut_sin_index = (_lut_sin_index + 8) % 512;
+        _gigabat_position.set_y((btn::lut_sin(_lut_sin_index) * 5) - 50);
         break;
 
     default:
@@ -304,6 +307,14 @@ bool gigabat_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posi
     return hero_is_looking_down;
 }
 
+
+void gigabat_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
+                                 const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+{
+    btn::fixed_point mouth_position = _gigabat_position + btn::fixed_point(0, 10);
+    enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1));
+}
+
 void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing)
 {
     bool flip = hero_position.x() < _gigabat_position.x();
@@ -366,16 +377,48 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
 {
     --_bullets_counter;
 
-    if(! _bullets_counter && _alive)
+    if(! _bullets_counter)
     {
         switch(_state_index)
         {
 
         case 0:
+            _bullets_counter = 1;
             break;
 
         case 1:
-            _bullets_counter = 60;
+            _bullets_counter = 50;
+
+            switch(_bullets_index)
+            {
+
+            case 0:
+                _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                _bullets_index = 1;
+                break;
+
+            case 1:
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _bullets_index = 2;
+                break;
+
+            case 2:
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                _bullets_index = 3;
+                break;
+
+            case 3:
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _bullets_index = 0;
+                break;
+
+            default:
+                BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                break;
+            }
             break;
 
         default:

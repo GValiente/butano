@@ -13,6 +13,7 @@ namespace bf::game
 {
 
 class hero;
+enum class enemy_bullet_type : int8_t;
 
 class gigabat_boss : public boss
 {
@@ -50,10 +51,14 @@ private:
     btn::optional<explosion> _explosion;
     btn::random _random;
     int _state_index = 0;
-    int _movement_counter = 0;
+    int _movement_index = 0;
+    int _lut_sin_index = 0;
     int _bullets_index = 0;
     int _bullets_counter = 240;
     bool _alive = true;
+
+    void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
+                       const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
 
     void _update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing);
 

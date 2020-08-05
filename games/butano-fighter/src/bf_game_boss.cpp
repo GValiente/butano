@@ -11,6 +11,7 @@
 #include "bf_game_tank_boss.h"
 #include "bf_game_scoreboard.h"
 #include "bf_game_background.h"
+#include "bf_game_gigabat_boss.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_check_hero_bullet_data.h"
 
@@ -34,6 +35,10 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
 
     case type::TANK:
         result.reset(new tank_boss(hero_position, damage_palette));
+        break;
+
+    case type::GIGABAT:
+        result.reset(new gigabat_boss(hero_position, damage_palette));
         break;
 
     default:
@@ -109,7 +114,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             --_ignore_hero_bullet_counter;
         }
 
-        _update_alive(hero_position, _hero_bomb_active, enemy_bullets);
+        _update_alive(hero_position, hero_bomb, enemy_bullets);
     }
     else
     {

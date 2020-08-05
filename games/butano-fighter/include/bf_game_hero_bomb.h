@@ -35,6 +35,11 @@ public:
         return _status != status_type::INACTIVE;
     }
 
+    [[nodiscard]] bool closing() const
+    {
+        return _status == status_type::CLOSE;
+    }
+
     void update(const intro& intro, const boss_intro& boss_intro, hero& hero, enemies& enemies,
                 enemy_bullets& enemy_bullets, background& background);
 

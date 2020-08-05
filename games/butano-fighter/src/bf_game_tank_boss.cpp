@@ -10,6 +10,7 @@
 #include "btn_sprite_items_tank_footprint.h"
 #include "btn_sprite_items_mini_explosion.h"
 #include "btn_sprite_items_enemy_explosion.h"
+#include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_enemy_bullet_event.h"
@@ -22,11 +23,11 @@ namespace
     constexpr const int jelly_x = 31;
     constexpr const int jelly_damage_frames = 60;
 
-    constexpr const int state_0_life = 190;     // 13 seconds
+    constexpr const int state_0_1_life = 190;     // 13 seconds
     constexpr const int state_1_life = 100;     // 7 seconds
     constexpr const int state_2_3_life = 190;   // 30 seconds
     constexpr const int state_4_5_life = 190;   // 13 seconds
-    constexpr const int total_life = state_0_life + state_1_life + state_2_3_life + state_4_5_life;
+    constexpr const int total_life = state_0_1_life + state_1_life + state_2_3_life + state_4_5_life;
 
     [[nodiscard]] btn::fixed _fix_rotation_angle(btn::fixed rotation_angle)
     {
@@ -140,7 +141,7 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     _update_rects(y);
 }
 
-void tank_boss::_update_alive(const btn::fixed_point& hero_position, bool hero_bomb_active,
+void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
                               enemy_bullets& enemy_bullets)
 {
     switch(_state_index)
@@ -221,7 +222,7 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, bool hero_b
     _update_explosions();
     _update_rects(y);
 
-    if(! hero_bomb_active)
+    if(! hero_bomb.active())
     {
         _update_bullets(hero_position, y, enemy_bullets);
     }
@@ -321,7 +322,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
     {
 
     case 0:
-        if(current_life < total_life - state_0_life)
+        if(current_life < total_life - state_0_1_life)
         {
             ++_state_index;
             _bullets_index = 0;
@@ -338,7 +339,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
         break;
 
     case 1:
-        if(current_life < total_life - state_0_life - state_1_life)
+        if(current_life < total_life - state_0_1_life - state_1_life)
         {
             ++_state_index;
             _bullets_index = 0;
@@ -361,7 +362,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
         break;
 
     case 3:
-        if(current_life < total_life - state_0_life - state_1_life - state_2_3_life)
+        if(current_life < total_life - state_0_1_life - state_1_life - state_2_3_life)
         {
             ++_state_index;
             _bullets_index = 0;

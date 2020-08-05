@@ -743,7 +743,7 @@ namespace
     constexpr const stage stage_2(
         btn::regular_bg_items::stage_2, btn::regular_bg_items::clouds, btn::sprite_items::stage_2_intro,
         btn::sprite_items::stage_2_intro_alt, "STAGE 2", "NINJA VILLAGE", btn::music_items::soda7_xcopy_ohc,
-        enemy_events, boss::type::TANK);
+        enemy_events, boss::type::GIGABAT);
 }
 
 const stage& get()

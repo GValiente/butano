@@ -30,7 +30,8 @@ class boss
 public:
     enum class type
     {
-        TANK
+        TANK,
+        GIGABAT
     };
 
     static btn::unique_ptr<boss> create(type type, const btn::fixed_point& hero_position,
@@ -66,7 +67,7 @@ protected:
 
     [[nodiscard]] virtual btn::fixed_point _position() const = 0;
 
-    virtual void _update_alive(const btn::fixed_point& hero_position, bool hero_bomb_active,
+    virtual void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
                                enemy_bullets& enemy_bullets) = 0;
 
     [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position) = 0;

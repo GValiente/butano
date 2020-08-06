@@ -61,6 +61,8 @@ private:
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                        const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
 
+    void _shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+
     void _update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing);
 
     void _update_rects();

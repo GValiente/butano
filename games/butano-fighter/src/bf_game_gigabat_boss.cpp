@@ -126,7 +126,7 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
                 _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 8);
                 _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 9);
                 _movement_index = 0;
-                _movement_counter = 100;
+                _movement_counter = 1000;
                 _vibrate = true;
                 break;
 
@@ -370,12 +370,26 @@ bool gigabat_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posi
     return hero_is_looking_down;
 }
 
-
 void gigabat_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                                  const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
 {
     btn::fixed_point mouth_position = _gigabat_position + btn::fixed_point(0, 10);
     enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1));
+}
+
+void gigabat_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+{
+    btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
+    btn::fixed bullet_y = btn::fixed::from_data(int(_random.get() % btn::fixed(1).data()));
+
+    if(bullet_x == 0 && bullet_y == 0)
+    {
+        bullet_y = 1;
+    }
+
+    enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
+    btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
+    _shoot_bullet(bullet_type, aprox_direction_vector(bullet_x, bullet_y, bullet_speed), hero_position, enemy_bullets);
 }
 
 void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing)
@@ -451,37 +465,55 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
             break;
 
         case 1:
-        case 2:
             _bullets_counter = 50;
 
             switch(_bullets_index)
             {
 
             case 0:
-                _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
                 _bullets_index = 1;
                 break;
 
             case 1:
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
                 _bullets_index = 2;
                 break;
 
             case 2:
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
                 _bullets_index = 3;
                 break;
 
             case 3:
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
                 _bullets_index = 0;
                 break;
 
             default:
                 BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                break;
+            }
+            break;
+
+        case 2:
+            _bullets_counter = 12;
+
+            switch(_movement_index)
+            {
+
+            case 0:
+                _shoot_random_bullet(hero_position, enemy_bullets);
+                break;
+
+            case 1:
+                break;
+
+            default:
+                BTN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
             break;

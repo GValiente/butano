@@ -48,7 +48,9 @@ private:
     btn::sprite_palette_ptr _palette;
     btn::optional<btn::sprite_palette_fade_loop_action> _palette_action;
     btn::deque<btn::sprite_animate_action<5>, 8> _mini_explosions;
+    btn::optional<btn::fixed> _target_x;
     btn::optional<explosion> _explosion;
+    btn::fixed_point _delta_position;
     btn::random _random;
     int _state_index = 0;
     int _movement_index = 0;
@@ -61,7 +63,9 @@ private:
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                        const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
 
-    void _shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+    void _shoot_target_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+
+    void _shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
 
     void _update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing);
 

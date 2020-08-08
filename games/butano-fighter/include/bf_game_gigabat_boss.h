@@ -57,7 +57,6 @@ private:
     int _movement_counter = 0;
     int _bullets_index = 0;
     int _bullets_counter = 240;
-    bool _alive = true;
     bool _vibrate = false;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
@@ -67,7 +66,7 @@ private:
 
     void _shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
 
-    void _update_sprites(const btn::fixed_point& hero_position, bool hero_bomb_closing);
+    void _update_sprites(const btn::fixed_point& hero_position, bool hide_shadow);
 
     void _update_rects();
 

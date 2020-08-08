@@ -276,31 +276,31 @@ namespace
     };
 
     constexpr const enemy_bullet_event robot_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 90),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
     };
@@ -548,7 +548,7 @@ namespace
 
         // level 3 slow (25s)
 
-        /*enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(rat, btn::fixed_point(-45, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(rat, btn::fixed_point(-30, start_y), rat_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(beaver, btn::fixed_point(40, start_y), beaver_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
@@ -733,7 +733,7 @@ namespace
         enemy_event(ogre_weak, btn::fixed_point(-60 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(55 - 10, start_y), ogre_flipped_moves, no_bullets, 120, enemy_drop_type::NONE),
 
-        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),*/
+        enemy_event(samurai, btn::fixed_point(-45, start_y), samurai_moves, samurai_bullets, 1, enemy_drop_type::NONE),
         enemy_event(samurai, btn::fixed_point(40, start_y), samurai_flipped_moves, samurai_bullets, 45, enemy_drop_type::NONE),
     };
 

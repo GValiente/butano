@@ -276,33 +276,33 @@ namespace
     };
 
     constexpr const enemy_bullet_event robot_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
 
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.9), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
     };
 
 

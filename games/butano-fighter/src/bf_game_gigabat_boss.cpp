@@ -259,9 +259,8 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
     if(_sprites.size() == 4)
     {
         _movement_counter = 1;
-
-        btn::fixed delta_y = ((btn::display::height() / 2) - _gigabat_position.y()) / 240;
-        _delta_position.set_y(delta_y);
+        _delta_position.set_x((0 - _gigabat_position.x()) / 240);
+        _delta_position.set_y((0 - _gigabat_position.y()) / 240);
 
         _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 28);
         _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 29);
@@ -277,7 +276,7 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
         _palette_action.emplace(_palette, 15, 0.6);
     }
 
-    _gigabat_position.set_y(_gigabat_position.y() + _delta_position.y());
+    _gigabat_position += _delta_position;
     --_movement_counter;
 
     if(! _movement_counter)
@@ -315,8 +314,8 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
             {
                 ++_state_index;
 
-                _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(0, btn::display::height() / 2),
-                                   6, constants::enemy_explosions_z_order, true);
+                _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(), 6,
+                                   constants::enemy_explosions_z_order, true);
                 btn::sound_items::explosion_2.play();
             }
         }

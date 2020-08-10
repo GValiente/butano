@@ -4,9 +4,9 @@
 #include "btn_music_items.h"
 #include "btn_sound_items.h"
 #include "btn_regular_bg_items_stage_3.h"
-#include "btn_sprite_items_stage_2_intro.h"
+#include "btn_sprite_items_stage_3_intro.h"
 #include "btn_sprite_items_stage_2_robot.h"
-#include "btn_sprite_items_stage_2_intro_alt.h"
+#include "btn_sprite_items_stage_3_intro_alt.h"
 #include "btn_sprite_items_stage_2_monsters_1.h"
 #include "btn_sprite_items_stage_2_monsters_2.h"
 #include "btn_regular_bg_items_mountain_clouds.h"
@@ -271,32 +271,32 @@ namespace
 
     constexpr const enemy_bullet_event robot_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
 
         enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 100),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
-        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 12),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
+        enemy_bullet_event(enemy_bullet_type::ROBOT_DOUBLE, direction_vector(0, 1, 0.85), 14),
     };
 
 
@@ -735,8 +735,8 @@ namespace
     // stage (start with level 5, exp 2400):
 
     constexpr const stage stage_3(
-        btn::regular_bg_items::stage_3, btn::regular_bg_items::mountain_clouds, btn::sprite_items::stage_2_intro,
-        btn::sprite_items::stage_2_intro_alt, "STAGE 3", "GIANT MOUNTAIN", btn::music_items::stardstm,
+        btn::regular_bg_items::stage_3, btn::regular_bg_items::mountain_clouds, btn::sprite_items::stage_3_intro,
+        btn::sprite_items::stage_3_intro_alt, "STAGE 3", "GIANT MOUNTAIN", btn::music_items::stardstm,
         enemy_events, boss::type::GIGABAT);
 }
 

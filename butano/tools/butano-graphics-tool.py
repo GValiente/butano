@@ -30,7 +30,7 @@ class SpriteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
-        self.__bpp8 = self.__colors_count > 16
+        self.__bpp_8 = self.__colors_count > 16
 
         try:
             height = int(info['height'])
@@ -120,7 +120,7 @@ class SpriteItem:
 
         remove_file(grit_file_path)
 
-        if self.__bpp8:
+        if self.__bpp_8:
             bpp_mode_label = 'palette_bpp_mode::BPP_8'
         else:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
@@ -191,7 +191,7 @@ class RegularBgItem:
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
-        self.__bpp8 = False
+        self.__bpp_8 = False
 
         try:
             self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])
@@ -207,11 +207,11 @@ class RegularBgItem:
             try:
                 bpp_mode = str(info['bpp_mode'])
             except KeyError:
-                bpp_mode = 'bpp8'
+                bpp_mode = 'bpp_8'
 
-            if bpp_mode == 'bpp8':
-                self.__bpp8 = True
-            elif bpp_mode == 'bpp4_auto':
+            if bpp_mode == 'bpp_8':
+                self.__bpp_8 = True
+            elif bpp_mode == 'bpp_4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
                 print('Generating 4bpp image in ' + self.__file_path + '...')
                 start = time.time()
@@ -219,7 +219,7 @@ class RegularBgItem:
                 end = time.time()
                 print('4bpp image with ' + str(self.__colors_count) + ' colors generated in ' +
                       str(int((end - start) * 1000)) + ' milliseconds')
-            elif bpp_mode != 'bpp4_manual':
+            elif bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
     def write_header(self):
@@ -236,7 +236,7 @@ class RegularBgItem:
 
         remove_file(grit_file_path)
 
-        if self.__bpp8:
+        if self.__bpp_8:
             bpp_mode_label = 'palette_bpp_mode::BPP_8'
         else:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
@@ -267,7 +267,7 @@ class RegularBgItem:
     def process(self):
         command = ['grit', self.__file_path]
 
-        if self.__bpp8:
+        if self.__bpp_8:
             command.append('-gB8')
 
             if self.__repeated_tiles_reduction:

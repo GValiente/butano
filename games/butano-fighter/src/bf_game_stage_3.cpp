@@ -9,7 +9,7 @@
 #include "btn_sprite_items_stage_2_intro_alt.h"
 #include "btn_sprite_items_stage_2_monsters_1.h"
 #include "btn_sprite_items_stage_2_monsters_2.h"
-#include "btn_regular_bg_items_clouds_mountain.h"
+#include "btn_regular_bg_items_mountain_clouds.h"
 #include "btn_sprite_items_stage_2_characters_1.h"
 #include "btn_sprite_items_stage_2_characters_2.h"
 #include "bf_constants.h"
@@ -735,7 +735,7 @@ namespace
     // stage (start with level 5, exp 2400):
 
     constexpr const stage stage_3(
-        btn::regular_bg_items::stage_3, btn::regular_bg_items::clouds_mountain, btn::sprite_items::stage_2_intro,
+        btn::regular_bg_items::stage_3, btn::regular_bg_items::mountain_clouds, btn::sprite_items::stage_2_intro,
         btn::sprite_items::stage_2_intro_alt, "STAGE 3", "GIANT MOUNTAIN", btn::music_items::stardstm,
         enemy_events, boss::type::GIGABAT);
 }

@@ -61,12 +61,6 @@ namespace
         enemy_move_event(btn::fixed_point(0,    move_y(-1.5)),  1,  up_index,       false),
     };
 
-    constexpr const enemy_move_event rat_flipped_moves[] = {
-        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
-        enemy_move_event(btn::fixed_point(-1,   move_y(0)),     70, left_index,     false),
-        enemy_move_event(btn::fixed_point(0,    move_y(-1.5)),  1,  up_index,       false),
-    };
-
 
     // beaver:
 

@@ -3,13 +3,13 @@
 #include "btn_display.h"
 #include "btn_music_items.h"
 #include "btn_sound_items.h"
-#include "btn_regular_bg_items_clouds.h"
-#include "btn_regular_bg_items_stage_2.h"
+#include "btn_regular_bg_items_stage_3.h"
 #include "btn_sprite_items_stage_2_intro.h"
 #include "btn_sprite_items_stage_2_robot.h"
 #include "btn_sprite_items_stage_2_intro_alt.h"
 #include "btn_sprite_items_stage_2_monsters_1.h"
 #include "btn_sprite_items_stage_2_monsters_2.h"
+#include "btn_regular_bg_items_clouds_mountain.h"
 #include "btn_sprite_items_stage_2_characters_1.h"
 #include "btn_sprite_items_stage_2_characters_2.h"
 #include "bf_constants.h"
@@ -58,12 +58,6 @@ namespace
     constexpr const enemy_move_event rat_moves[] = {
         enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
         enemy_move_event(btn::fixed_point(1,    move_y(0)),     70, right_index,    false),
-        enemy_move_event(btn::fixed_point(0,    move_y(-1.5)),  1,  up_index,       false),
-    };
-
-    constexpr const enemy_move_event rat_flipped_moves[] = {
-        enemy_move_event(btn::fixed_point(0,    move_y(0.5)),   30, down_index,     false),
-        enemy_move_event(btn::fixed_point(-1,   move_y(0)),     70, left_index,     false),
         enemy_move_event(btn::fixed_point(0,    move_y(-1.5)),  1,  up_index,       false),
     };
 
@@ -741,7 +735,7 @@ namespace
     // stage (start with level 5, exp 2400):
 
     constexpr const stage stage_3(
-        btn::regular_bg_items::stage_2, btn::regular_bg_items::clouds, btn::sprite_items::stage_2_intro,
+        btn::regular_bg_items::stage_3, btn::regular_bg_items::clouds_mountain, btn::sprite_items::stage_2_intro,
         btn::sprite_items::stage_2_intro_alt, "STAGE 3", "GIANT MOUNTAIN", btn::music_items::stardstm,
         enemy_events, boss::type::GIGABAT);
 }

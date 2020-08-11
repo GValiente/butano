@@ -45,13 +45,19 @@ private:
     btn::sprite_position_hblank_effect_ptr _horizontal_hblank_effect;
     bool _update = true;
 
-    BTN_CODE_IWRAM static void _draw_line(int x0, int y0, int x1, int y1, hline* hlines);
+    static void _draw_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);
 
-    BTN_CODE_IWRAM static void _draw_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
-                                                   hline* hlines);
+    BTN_CODE_IWRAM static void _draw_left_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                        hline* hlines);
 
-    BTN_CODE_IWRAM static void _draw_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction,
-                                                   hline* hlines);
+    BTN_CODE_IWRAM static void _draw_right_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                         hline* hlines);
+
+    BTN_CODE_IWRAM static void _draw_left_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                        hline* hlines);
+
+    BTN_CODE_IWRAM static void _draw_right_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction,
+                                                         hline* hlines);
 
     BTN_CODE_IWRAM static void _setup_attributes(const hline* hlines, btn::fixed* vertical_values,
                                                  btn::fixed* horizontal_values);

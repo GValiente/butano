@@ -1,6 +1,6 @@
 #include "polygon_sprite.h"
 
-void polygon_sprite::_draw_line(int x0, int y0, int x1, int y1, hline* hlines)
+void polygon_sprite::_draw_line(bool left, int x0, int y0, int x1, int y1, hline* hlines)
 {
     // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
 
@@ -51,24 +51,39 @@ void polygon_sprite::_draw_line(int x0, int y0, int x1, int y1, hline* hlines)
     {
         int sy = delta_y > 0 ? 1 : -1;
 
-        while(true)
+        if(left)
         {
-            if(x0 < current_hline->ixl)
+            while(true)
             {
-                current_hline->ixl = x0;
-            }
+                if(x0 < current_hline->ixl)
+                {
+                    current_hline->ixl = x0;
+                }
 
-            if(x0 > current_hline->ixr)
+                if(current_hline == last_hline)
+                {
+                    return;
+                }
+
+                current_hline += sy;
+            }
+        }
+        else
+        {
+            while(true)
             {
-                current_hline->ixr = x0;
-            }
+                if(x0 > current_hline->ixr)
+                {
+                    current_hline->ixr = x0;
+                }
 
-            if(current_hline == last_hline)
-            {
-                return;
-            }
+                if(current_hline == last_hline)
+                {
+                    return;
+                }
 
-            current_hline += sy;
+                current_hline += sy;
+            }
         }
     }
 
@@ -84,17 +99,31 @@ void polygon_sprite::_draw_line(int x0, int y0, int x1, int y1, hline* hlines)
         x_direction = -1;
     }
 
-    if(delta_x > delta_y)
+    if(left)
     {
-        _draw_line_octant_0(x0, y0, delta_x, delta_y, x_direction, hlines);
+        if(delta_x > delta_y)
+        {
+            _draw_left_line_octant_0(x0, y0, delta_x, delta_y, x_direction, hlines);
+        }
+        else
+        {
+            _draw_left_line_octant_1(x0, y0, delta_x, delta_y, x_direction, hlines);
+        }
     }
     else
     {
-        _draw_line_octant_1(x0, y0, delta_x, delta_y, x_direction, hlines);
+        if(delta_x > delta_y)
+        {
+            _draw_right_line_octant_0(x0, y0, delta_x, delta_y, x_direction, hlines);
+        }
+        else
+        {
+            _draw_right_line_octant_1(x0, y0, delta_x, delta_y, x_direction, hlines);
+        }
     }
 }
 
-void polygon_sprite::_draw_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+void polygon_sprite::_draw_left_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
 {
     // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
 
@@ -103,11 +132,6 @@ void polygon_sprite::_draw_line_octant_0(int x0, int y0, int delta_x, int delta_
     if(x0 < current_hline->ixl)
     {
         current_hline->ixl = x0;
-    }
-
-    if(x0 > current_hline->ixr)
-    {
-        current_hline->ixr = x0;
     }
 
     int delta_y2 = delta_y * 2;
@@ -129,6 +153,52 @@ void polygon_sprite::_draw_line_octant_0(int x0, int y0, int delta_x, int delta_
             {
                 current_hline->ixl = x0;
             }
+        }
+        else
+        {
+            error_term += delta_y2;
+            x0 += x_direction;
+
+            if(x_direction_positive)
+            {
+                //
+            }
+            else
+            {
+                if(x0 < current_hline->ixl)
+                {
+                    current_hline->ixl = x0;
+                }
+            }
+        }
+    }
+}
+
+void polygon_sprite::_draw_right_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+{
+    // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
+
+    hline* current_hline = hlines + y0;
+
+    if(x0 > current_hline->ixr)
+    {
+        current_hline->ixr = x0;
+    }
+
+    int delta_y2 = delta_y * 2;
+    int delta_y2_minus_delta_x2 = delta_y2 - (delta_x * 2);
+    int error_term = delta_y2 - delta_x;
+    bool x_direction_positive = x_direction > 0;
+
+    while(delta_x--)
+    {
+        bool new_line = error_term >= 0;
+
+        if(new_line)
+        {
+            ++current_hline;
+            error_term += delta_y2_minus_delta_x2;
+            x0 += x_direction;
 
             if(x0 > current_hline->ixr)
             {
@@ -149,16 +219,13 @@ void polygon_sprite::_draw_line_octant_0(int x0, int y0, int delta_x, int delta_
             }
             else
             {
-                if(x0 < current_hline->ixl)
-                {
-                    current_hline->ixl = x0;
-                }
+                //
             }
         }
     }
 }
 
-void polygon_sprite::_draw_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+void polygon_sprite::_draw_left_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
 {
     // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
 
@@ -167,11 +234,6 @@ void polygon_sprite::_draw_line_octant_1(int x0, int y0, int delta_x, int delta_
     if(x0 < current_hline->ixl)
     {
         current_hline->ixl = x0;
-    }
-
-    if(x0 > current_hline->ixr)
-    {
-        current_hline->ixr = x0;
     }
 
     int delta_x2 = delta_x * 2;
@@ -196,6 +258,37 @@ void polygon_sprite::_draw_line_octant_1(int x0, int y0, int delta_x, int delta_
         {
             current_hline->ixl = x0;
         }
+    }
+}
+
+void polygon_sprite::_draw_right_line_octant_1(int x0, int y0, int delta_x, int delta_y, int x_direction, hline* hlines)
+{
+    // https://github.com/jagregory/abrash-black-book/blob/master/src/chapter-35.md
+
+    hline* current_hline = hlines + y0;
+
+    if(x0 > current_hline->ixr)
+    {
+        current_hline->ixr = x0;
+    }
+
+    int delta_x2 = delta_x * 2;
+    int delta_y2_minus_delta_x2 = delta_x2 - (delta_y * 2);
+    int error_term = delta_x2 - delta_y;
+
+    while(delta_y--)
+    {
+        if(error_term >= 0)
+        {
+            x0 += x_direction;
+            error_term += delta_y2_minus_delta_x2;
+        }
+        else
+        {
+            error_term += delta_x2;
+        }
+
+        ++current_hline;
 
         if(x0 > current_hline->ixr)
         {

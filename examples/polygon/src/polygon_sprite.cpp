@@ -45,22 +45,56 @@ void polygon_sprite::update()
 
         for(const polygon* polygon : _polygons)
         {
-            const btn::ivector<btn::fixed_point>& vertices = polygon->vertices();
+            const btn::fixed_point* vertices_data = polygon->vertices().data();
 
-            for(int index = 0, limit = vertices.size() - 1; index < limit; ++index)
+            btn::point vertices[] = {
+                btn::point(vertices_data[0].x().integer(), vertices_data[0].y().integer()),
+                btn::point(vertices_data[1].x().integer(), vertices_data[1].y().integer()),
+                btn::point(vertices_data[2].x().integer(), vertices_data[2].y().integer()),
+                btn::point(vertices_data[3].x().integer(), vertices_data[3].y().integer())
+            };
+
+            int top_index = 0;
+            int top_index_y = vertices[0].y();
+
+            for(int index = 1; index < 4; ++index)
             {
-                int x0 = vertices[index].x().integer();
-                int y0 = vertices[index].y().integer();
-                int x1 = vertices[index + 1].x().integer();
-                int y1 = vertices[index + 1].y().integer();
-                _draw_line(x0, y0, x1, y1, hlines_data);
+                int y = vertices[index].y();
+
+                if(y < top_index_y)
+                {
+                    top_index = index;
+                    top_index_y = y;
+                }
             }
 
-            int x0 = vertices.back().x().integer();
-            int y0 = vertices.back().y().integer();
-            int x1 = vertices[0].x().integer();
-            int y1 = vertices[0].y().integer();
-            _draw_line(x0, y0, x1, y1, hlines_data);
+            int left_index, right_index, bottom_index;
+
+            if(top_index == 0)
+            {
+                left_index = 3;
+                right_index = 1;
+                bottom_index = 2;
+            }
+            else
+            {
+                left_index = top_index - 1;
+                right_index = (top_index + 1) % 4;
+                bottom_index = (top_index + 2) % 4;
+            }
+
+            const btn::point& top_vertex = vertices[top_index];
+            const btn::point& left_vertex = vertices[left_index];
+            const btn::point& right_vertex = vertices[right_index];
+            const btn::point& bottom_vertex = vertices[bottom_index];
+            _draw_line(true,
+                       top_vertex.x(), top_vertex.y(), left_vertex.x(), left_vertex.y(), hlines_data);
+            _draw_line(false,
+                       top_vertex.x(), top_vertex.y(), right_vertex.x(), right_vertex.y(), hlines_data);
+            _draw_line(left_vertex.y() < bottom_vertex.y(),
+                       left_vertex.x(), left_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            _draw_line(right_vertex.y() > bottom_vertex.y(),
+                       right_vertex.x(), right_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
         }
 
         _setup_attributes(hlines_data, _vertical_values.data(), _horizontal_values.data());

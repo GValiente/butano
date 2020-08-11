@@ -5,14 +5,9 @@
 
 namespace btn::sram
 {
-    [[nodiscard]] constexpr int unused_bytes()
-    {
-        return sizeof(int);
-    }
-
     [[nodiscard]] constexpr int max_size()
     {
-        return (32 * 1024) - (unused_bytes() * 2);
+        return 32 * 1024;
     }
 }
 

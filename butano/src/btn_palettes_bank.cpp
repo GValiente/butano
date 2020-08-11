@@ -68,15 +68,12 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
     if(bpp_4_indexes_map_it != _bpp_4_indexes_map.end())
     {
         int index = bpp_4_indexes_map_it->second;
-        palette& pal = _palettes[index];
 
-        if(pal.usages && ! pal.bpp_8)
+        if(_same_colors(colors, index))
         {
-            if(hash == pal.hash && _same_colors(colors, index))
-            {
-                ++pal.usages;
-                return index;
-            }
+            palette& pal = _palettes[index];
+            ++pal.usages;
+            return index;
         }
     }
 
@@ -84,7 +81,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
     {
         palette& pal = _palettes[index];
 
-        if(pal.usages && ! pal.bpp_8)
+        if(pal.usages)
         {
             if(hash == pal.hash && _same_colors(colors, index))
             {

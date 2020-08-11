@@ -72,7 +72,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 
         if(pal.usages && ! pal.bpp_8)
         {
-            if(_same_colors(colors, index))
+            if(hash == pal.hash && _same_colors(colors, index))
             {
                 ++pal.usages;
                 return index;
@@ -86,7 +86,7 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 
         if(pal.usages && ! pal.bpp_8)
         {
-            if(_same_colors(colors, index))
+            if(hash == pal.hash && _same_colors(colors, index))
             {
                 ++pal.usages;
                 return index;

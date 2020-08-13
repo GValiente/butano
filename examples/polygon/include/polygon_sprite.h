@@ -45,7 +45,9 @@ private:
     btn::sprite_position_hblank_effect_ptr _horizontal_hblank_effect;
     bool _update = true;
 
-    static void _draw_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);
+    static void _draw_not_horizontal_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);
+
+    static void _draw_horizontal_line(int x0, int x1, int y, hline* hlines);
 
     BTN_CODE_IWRAM static void _draw_left_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
                                                         hline* hlines);

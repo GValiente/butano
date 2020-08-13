@@ -33,20 +33,48 @@ namespace
 
         if(btn::keypad::left_held())
         {
-            vertex.set_x(btn::max(vertex.x() - 1, btn::fixed(120 - 31)));
+            if(vertex_index == 0 || vertex_index == 3)
+            {
+                vertex.set_x(btn::max(vertex.x() - 1, btn::fixed(120 - 31)));
+            }
+            else
+            {
+                vertex.set_x(btn::max(vertex.x() - 1, btn::fixed(120)));
+            }
         }
         else if(btn::keypad::right_held())
         {
-            vertex.set_x(btn::min(vertex.x() + 1, btn::fixed(120 + 31)));
+            if(vertex_index == 0 || vertex_index == 3)
+            {
+                vertex.set_x(btn::min(vertex.x() + 1, btn::fixed(120)));
+            }
+            else
+            {
+                vertex.set_x(btn::min(vertex.x() + 1, btn::fixed(120 + 31)));
+            }
         }
 
         if(btn::keypad::up_held())
         {
-            vertex.set_y(btn::max(vertex.y() - 1, btn::fixed(1)));
+            if(vertex_index == 0 || vertex_index == 1)
+            {
+                vertex.set_y(btn::max(vertex.y() - 1, btn::fixed(1)));
+            }
+            else
+            {
+                vertex.set_y(btn::max(vertex.y() - 1, btn::fixed(80)));
+            }
         }
         else if(btn::keypad::down_held())
         {
-            vertex.set_y(btn::min(vertex.y() + 1, btn::fixed(159)));
+            if(vertex_index == 0 || vertex_index == 1)
+            {
+                vertex.set_y(btn::min(vertex.y() + 1, btn::fixed(80)));
+            }
+            else
+            {
+                vertex.set_y(btn::min(vertex.y() + 1, btn::fixed(159)));
+            }
         }
     }
 

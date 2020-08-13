@@ -87,14 +87,53 @@ void polygon_sprite::update()
             const btn::point& left_vertex = vertices[left_index];
             const btn::point& right_vertex = vertices[right_index];
             const btn::point& bottom_vertex = vertices[bottom_index];
-            _draw_line(true,
-                       top_vertex.x(), top_vertex.y(), left_vertex.x(), left_vertex.y(), hlines_data);
-            _draw_line(false,
-                       top_vertex.x(), top_vertex.y(), right_vertex.x(), right_vertex.y(), hlines_data);
-            _draw_line(left_vertex.y() < bottom_vertex.y(),
-                       left_vertex.x(), left_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
-            _draw_line(right_vertex.y() > bottom_vertex.y(),
-                       right_vertex.x(), right_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            bool tlh = top_vertex.y() == left_vertex.y();
+            bool trh = top_vertex.y() == right_vertex.y();
+            bool lbh = left_vertex.y() == bottom_vertex.y();
+            bool rbh = right_vertex.y() == bottom_vertex.y();
+
+            if(! tlh)
+            {
+                _draw_not_horizontal_line(true,
+                                          top_vertex.x(), top_vertex.y(), left_vertex.x(), left_vertex.y(), hlines_data);
+            }
+
+            if(! trh)
+            {
+                _draw_not_horizontal_line(false,
+                                          top_vertex.x(), top_vertex.y(), right_vertex.x(), right_vertex.y(), hlines_data);
+            }
+
+            if(! lbh)
+            {
+                _draw_not_horizontal_line(left_vertex.y() < bottom_vertex.y(),
+                                          left_vertex.x(), left_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            }
+
+            if(! rbh)
+            {
+                _draw_not_horizontal_line(right_vertex.y() > bottom_vertex.y(),
+                                          right_vertex.x(), right_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            }
+            else
+            {
+                _draw_horizontal_line(right_vertex.x(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            }
+
+            if(tlh)
+            {
+                _draw_horizontal_line(top_vertex.x(), left_vertex.x(), left_vertex.y(), hlines_data);
+            }
+
+            if(trh)
+            {
+                _draw_horizontal_line(top_vertex.x(), right_vertex.x(), right_vertex.y(), hlines_data);
+            }
+
+            if(lbh)
+            {
+                _draw_horizontal_line(left_vertex.x(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+            }
         }
 
         _setup_attributes(hlines_data, _vertical_values.data(), _horizontal_values.data());

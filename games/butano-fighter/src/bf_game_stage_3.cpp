@@ -732,7 +732,7 @@ namespace
     };
 
 
-    // stage (start with level 5, exp 2400):
+    // stage (start with level 5, exp 2350):
 
     constexpr const stage stage_3(
         btn::regular_bg_items::stage_3, btn::regular_bg_items::mountain_clouds, btn::sprite_items::stage_3_intro,

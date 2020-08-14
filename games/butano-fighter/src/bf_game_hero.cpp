@@ -184,6 +184,8 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
                 }
                 else
                 {
+                    _status.update_high_experience();
+                    _status = status();
                     result = scene_type::TITLE;
                 }
             }

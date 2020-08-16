@@ -32,22 +32,49 @@ namespace btn
         {
         }
 
-        constexpr pair(first_type&& x, const second_type& y) :
-            first(move(x)),
-            second(y)
+        template<typename OtherType1, typename OtherType2>
+        constexpr pair(OtherType1&& x, OtherType2&& y) :
+            first(forward<OtherType1>(x)),
+            second(forward<OtherType2>(y))
         {
         }
 
-        constexpr pair(const first_type& x, second_type&& y) :
-            first(x),
-            second(move(y))
+        constexpr pair(const pair& other) = default;
+
+        template<typename OtherType1, typename OtherType2>
+        constexpr pair(const pair<OtherType1, OtherType2>& other) :
+            first(other.first),
+            second(other.second)
         {
         }
 
-        constexpr pair(first_type&& x, second_type&& y) :
-            first(move(x)),
-            second(move(y))
+        constexpr pair(pair&& other) = default;
+
+        template<typename OtherType1, typename OtherType2>
+        constexpr pair(pair<OtherType1, OtherType2>&& other) :
+            first(move(other.first)),
+            second(move(other.second))
         {
+        }
+
+        constexpr pair& operator=(const pair& other) = default;
+
+        template<typename OtherType1, typename OtherType2>
+        constexpr pair& operator=(const pair<OtherType1, OtherType2>& other)
+        {
+            first = other.first;
+            second = other.second;
+            return *this;
+        }
+
+        constexpr pair& operator=(pair&& other) = default;
+
+        template<typename OtherType1, typename OtherType2>
+        constexpr pair& operator=(pair<OtherType1, OtherType2>&& other)
+        {
+            first = move(other.first);
+            second = move(other.second);
+            return *this;
         }
 
         constexpr void swap(pair& other)

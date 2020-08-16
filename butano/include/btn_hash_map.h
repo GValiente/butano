@@ -231,6 +231,9 @@ public:
         }
     };
 
+    using reverse_iterator = btn::reverse_iterator<iterator>;
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+
     ihash_map(const ihash_map& other) = delete;
 
     ihash_map& operator=(const ihash_map& other)
@@ -312,6 +315,36 @@ public:
     [[nodiscard]] const_iterator cend() const
     {
         return const_iterator(max_size(), *this);
+    }
+
+    [[nodiscard]] const_reverse_iterator rbegin() const
+    {
+        return const_reverse_iterator(end());
+    }
+
+    [[nodiscard]] reverse_iterator rbegin()
+    {
+        return reverse_iterator(end());
+    }
+
+    [[nodiscard]] const_reverse_iterator rend() const
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    [[nodiscard]] reverse_iterator rend()
+    {
+        return reverse_iterator(begin());
+    }
+
+    [[nodiscard]] const_reverse_iterator crbegin() const
+    {
+        return const_reverse_iterator(cend());
+    }
+
+    [[nodiscard]] const_reverse_iterator crend() const
+    {
+        return const_reverse_iterator(cbegin());
     }
 
     [[nodiscard]] bool contains(const key_type& key) const

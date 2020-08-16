@@ -4,8 +4,8 @@
 #include "btn_tile.h"
 #include "btn_vector.h"
 #include "btn_optional.h"
-#include "btn_hash_map.h"
 #include "btn_sprite_tiles.h"
+#include "btn_unordered_map.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
@@ -244,7 +244,7 @@ namespace
 
     public:
         items_list items;
-        hash_map<const tile*, int, max_items * 2> items_map;
+        unordered_map<const tile*, int, max_items * 2> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
         int free_tiles_count = 0;

@@ -6,9 +6,9 @@
 #include "btn_vector.h"
 #include "btn_limits.h"
 #include "btn_optional.h"
-#include "btn_hash_map.h"
 #include "btn_bgs_manager.h"
 #include "btn_bg_tiles_ptr.h"
+#include "btn_unordered_map.h"
 #include "btn_bg_palette_ptr.h"
 #include "btn_palette_bpp_mode.h"
 #include "btn_config_bg_blocks.h"
@@ -306,7 +306,7 @@ namespace
 
     public:
         items_list items;
-        hash_map<const uint16_t*, int, max_items * 2> items_map;
+        unordered_map<const uint16_t*, int, max_items * 2> items_map;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         bool check_commit = false;

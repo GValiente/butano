@@ -5,7 +5,7 @@
 #include "btn_fixed.h"
 #include "btn_color.h"
 #include "btn_optional.h"
-#include "btn_hash_map.h"
+#include "btn_unordered_map.h"
 #include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
@@ -204,7 +204,7 @@ private:
     fixed _intensity;
     fixed _grayscale_intensity;
     fixed _fade_intensity;
-    hash_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
+    unordered_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
     color _fade_color;
     bool _inverted = false;
     bool _update = false;

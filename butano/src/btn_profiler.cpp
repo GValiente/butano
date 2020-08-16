@@ -3,7 +3,7 @@
 #if BTN_CFG_PROFILER_ENABLED
     #include "btn_timer.h"
     #include "btn_optional.h"
-    #include "btn_hash_map.h"
+    #include "btn_unordered_map.h"
 
     namespace _btn::profiler
     {

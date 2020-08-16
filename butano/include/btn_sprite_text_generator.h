@@ -3,9 +3,9 @@
 
 #include "btn_fixed.h"
 #include "btn_vector.h"
-#include "btn_hash_map.h"
 #include "btn_sprite_font.h"
 #include "btn_config_camera.h"
+#include "btn_unordered_map.h"
 #include "btn_config_sprite_text.h"
 #include "btn_horizontal_alignment_type.h"
 
@@ -19,7 +19,7 @@ class sprite_text_generator
 {
 
 public:
-    using utf8_characters_map_type = hash_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;
+    using utf8_characters_map_type = unordered_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;
 
     explicit sprite_text_generator(const sprite_font& font);
 

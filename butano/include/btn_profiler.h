@@ -4,7 +4,7 @@
 #include "btn_config_profiler.h"
 
 #if BTN_CFG_PROFILER_ENABLED
-    #include "btn_hash_map_fwd.h"
+    #include "btn_unordered_map_fwd.h"
 
     namespace btn::profiler
     {
@@ -13,7 +13,7 @@
 
     namespace _btn::profiler
     {
-        using ticks_map = btn::hash_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES>;
+        using ticks_map = btn::unordered_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES>;
 
         void start(const char* id, unsigned id_hash);
 

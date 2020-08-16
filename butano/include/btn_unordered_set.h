@@ -1,24 +1,23 @@
-#ifndef BTN_HASH_MAP_H
-#define BTN_HASH_MAP_H
+#ifndef BTN_UNORDERED_SET_H
+#define BTN_UNORDERED_SET_H
 
 #include <new>
 #include "btn_memory.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_power_of_two.h"
-#include "btn_hash_map_fwd.h"
+#include "btn_unordered_set_fwd.h"
 
 namespace btn
 {
 
-template<typename Key, typename Value, typename KeyHash, typename KeyEqual>
-class ihash_map
+template<typename Key, typename KeyHash, typename KeyEqual>
+class iunordered_set
 {
 
 public:
     using key_type = Key;
-    using mapped_type = Value;
-    using value_type = pair<const key_type, mapped_type>;
+    using value_type = Key;
     using size_type = int;
     using hash_type = unsigned;
     using hasher = KeyHash;
@@ -32,24 +31,23 @@ public:
     {
 
     public:
-        using key_type = ihash_map::key_type;
-        using mapped_type = ihash_map::mapped_type;
-        using value_type = ihash_map::value_type;
-        using size_type = ihash_map::size_type;
-        using hash_type = ihash_map::hash_type;
-        using hasher = ihash_map::hasher;
-        using key_equal = ihash_map::key_equal;
-        using reference = ihash_map::reference;
-        using const_reference = ihash_map::const_reference;
-        using pointer = ihash_map::pointer;
-        using const_pointer = ihash_map::const_pointer;
+        using key_type = iunordered_set::key_type;
+        using value_type = iunordered_set::value_type;
+        using size_type = iunordered_set::size_type;
+        using hash_type = iunordered_set::hash_type;
+        using hasher = iunordered_set::hasher;
+        using key_equal = iunordered_set::key_equal;
+        using reference = iunordered_set::reference;
+        using const_reference = iunordered_set::const_reference;
+        using pointer = iunordered_set::pointer;
+        using const_pointer = iunordered_set::const_pointer;
         using iterator_category = bidirectional_iterator_tag;
 
         iterator& operator++()
         {
             size_type index = _index;
-            size_type last_valid_index = _map->_last_valid_index;
-            const bool* allocated = _map->_allocated;
+            size_type last_valid_index = _set->_last_valid_index;
+            const bool* allocated = _set->_allocated;
             ++index;
 
             while(index <= last_valid_index && ! allocated[index])
@@ -59,7 +57,7 @@ public:
 
             if(index > last_valid_index)
             {
-                index = _map->max_size();
+                index = _set->max_size();
             }
 
             _index = index;
@@ -69,8 +67,8 @@ public:
         iterator& operator--()
         {
             int index = _index;
-            int first_valid_index = _map->_first_valid_index;
-            const bool* allocated = _map->_allocated;
+            int first_valid_index = _set->_first_valid_index;
+            const bool* allocated = _set->_allocated;
             --index;
 
             while(index >= first_valid_index && ! allocated[index])
@@ -84,35 +82,35 @@ public:
 
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage[_index];
+            return _set->_storage[_index];
         }
 
         [[nodiscard]] reference operator*()
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage[_index];
+            return _set->_storage[_index];
         }
 
         const_pointer operator->() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage + _index;
+            return _set->_storage + _index;
         }
 
         pointer operator->()
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage + _index;
+            return _set->_storage + _index;
         }
 
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
-            return  a._index == b._index;
+            return a._index == b._index;
         }
 
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
@@ -121,14 +119,14 @@ public:
         }
 
     private:
-        friend class ihash_map;
+        friend class iunordered_set;
 
         size_type _index;
-        ihash_map* _map;
+        iunordered_set* _set;
 
-        iterator(size_type index, ihash_map& map) :
+        iterator(size_type index, iunordered_set& set) :
             _index(index),
-            _map(&map)
+            _set(&set)
         {
         }
     };
@@ -137,30 +135,29 @@ public:
     {
 
     public:
-        using key_type = ihash_map::key_type;
-        using mapped_type = ihash_map::mapped_type;
-        using value_type = ihash_map::value_type;
-        using size_type = ihash_map::size_type;
-        using hash_type = ihash_map::hash_type;
-        using hasher = ihash_map::hasher;
-        using key_equal = ihash_map::key_equal;
-        using reference = ihash_map::reference;
-        using const_reference = ihash_map::const_reference;
-        using pointer = ihash_map::pointer;
-        using const_pointer = ihash_map::const_pointer;
+        using key_type = iunordered_set::key_type;
+        using value_type = iunordered_set::value_type;
+        using size_type = iunordered_set::size_type;
+        using hash_type = iunordered_set::hash_type;
+        using hasher = iunordered_set::hasher;
+        using key_equal = iunordered_set::key_equal;
+        using reference = iunordered_set::reference;
+        using const_reference = iunordered_set::const_reference;
+        using pointer = iunordered_set::pointer;
+        using const_pointer = iunordered_set::const_pointer;
         using iterator_category = bidirectional_iterator_tag;
 
         const_iterator(const iterator& other) :
             _index(other._index),
-            _map(other._map)
+            _set(other._set)
         {
         }
 
         const_iterator& operator++()
         {
             size_type index = _index;
-            size_type last_valid_index = _map->_last_valid_index;
-            const bool* allocated = _map->_allocated;
+            size_type last_valid_index = _set->_last_valid_index;
+            const bool* allocated = _set->_allocated;
             ++index;
 
             while(index <= last_valid_index && ! allocated[index])
@@ -170,7 +167,7 @@ public:
 
             if(index > last_valid_index)
             {
-                index = _map->max_size();
+                index = _set->max_size();
             }
 
             _index = index;
@@ -180,8 +177,8 @@ public:
         const_iterator& operator--()
         {
             int index = _index;
-            int first_valid_index = _map->_first_valid_index;
-            const bool* allocated = _map->_allocated;
+            int first_valid_index = _set->_first_valid_index;
+            const bool* allocated = _set->_allocated;
             --index;
 
             while(index >= first_valid_index && ! allocated[index])
@@ -195,21 +192,21 @@ public:
 
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage[_index];
+            return _set->_storage[_index];
         }
 
         const_pointer operator->() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
-            return _map->_storage + _index;
+            return _set->_storage + _index;
         }
 
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
-            return  a._index == b._index;
+            return a._index == b._index;
         }
 
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
@@ -218,15 +215,15 @@ public:
         }
 
     private:
-        friend class ihash_map;
+        friend class iunordered_set;
         friend class iterator;
 
         size_type _index;
-        const ihash_map* _map;
+        const iunordered_set* _set;
 
-        const_iterator(size_type index, const ihash_map& map) :
+        const_iterator(size_type index, const iunordered_set& set) :
             _index(index),
-            _map(&map)
+            _set(&set)
         {
         }
     };
@@ -234,13 +231,13 @@ public:
     using reverse_iterator = btn::reverse_iterator<iterator>;
     using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
 
-    ihash_map(const ihash_map& other) = delete;
+    iunordered_set(const iunordered_set& other) = delete;
 
-    ihash_map& operator=(const ihash_map& other)
+    iunordered_set& operator=(const iunordered_set& other)
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map: ", max_size(), " - ", other._size);
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -249,11 +246,11 @@ public:
         return *this;
     }
 
-    ihash_map& operator=(ihash_map&& other) noexcept
+    iunordered_set& operator=(iunordered_set&& other) noexcept
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in hash map: ", max_size(), " - ", other._size);
+            BTN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -374,7 +371,7 @@ public:
 
     [[nodiscard]] const_iterator find(const key_type& key) const
     {
-        return const_cast<ihash_map&>(*this).find(key);
+        return const_cast<iunordered_set&>(*this).find(key);
     }
 
     [[nodiscard]] iterator find(const key_type& key)
@@ -389,7 +386,7 @@ public:
 
     [[nodiscard]] const_iterator find_hash(hash_type key_hash, const key_type& key) const
     {
-        return const_cast<ihash_map&>(*this).find_hash(key_hash, key);
+        return const_cast<iunordered_set&>(*this).find_hash(key_hash, key);
     }
 
     [[nodiscard]] iterator find_hash(hash_type key_hash, const key_type& key)
@@ -408,7 +405,7 @@ public:
 
         while(its < max_size && allocated[index])
         {
-            if(key_equal_functor(key, storage[index].first))
+            if(key_equal_functor(key, storage[index]))
             {
                 return iterator(index, *this);
             }
@@ -420,47 +417,14 @@ public:
         return end();
     }
 
-    [[nodiscard]] const mapped_type& at(const key_type& key) const
-    {
-        return const_cast<ihash_map&>(*this).at_hash(key);
-    }
-
-    [[nodiscard]] mapped_type& at(const key_type& key)
-    {
-        return at_hash(hasher()(key), key);
-    }
-
-    [[nodiscard]] const mapped_type& at_hash(hash_type key_hash, const key_type& key) const
-    {
-        return const_cast<ihash_map&>(*this).at_hash(key_hash, key);
-    }
-
-    [[nodiscard]] mapped_type& at_hash(hash_type key_hash, const key_type& key)
-    {
-        iterator it = find_hash(key_hash, key);
-        BTN_ASSERT(it != end(), "Key not found");
-
-        return it->second;
-    }
-
     iterator insert(const value_type& value)
     {
-        return insert_hash(hasher()(value.first), value);
+        return insert_hash(hasher()(value), value);
     }
 
     iterator insert(value_type&& value)
     {
-        return insert_hash(hasher()(value.first), move(value));
-    }
-
-    iterator insert(const key_type& key, const mapped_type& mapped_value)
-    {
-        return insert_hash(hasher()(key), value_type(key, mapped_value));
-    }
-
-    iterator insert(const key_type& key, mapped_type&& mapped_value)
-    {
-        return insert_hash(hasher()(key), value_type(key, move(mapped_value)));
+        return insert_hash(hasher()(value), move(value));
     }
 
     iterator insert_hash(hash_type key_hash, const value_type& value)
@@ -470,8 +434,6 @@ public:
 
     iterator insert_hash(hash_type key_hash, value_type&& value)
     {
-        BTN_ASSERT(! full(), "Hash map is full");
-
         size_type index = _index(key_hash);
         pointer storage = _storage;
         bool* allocated = _allocated;
@@ -480,7 +442,7 @@ public:
 
         while(allocated[current_index])
         {
-            if(key_equal_functor(value.first, storage[current_index].first))
+            if(key_equal_functor(value, storage[current_index]))
             {
                 return end();
             }
@@ -497,34 +459,14 @@ public:
         return iterator(current_index, *this);
     }
 
-    iterator insert_hash(hash_type key_hash, const key_type& key, const mapped_type& mapped_value)
-    {
-        return insert_hash(key_hash, value_type(key, mapped_value));
-    }
-
-    iterator insert_hash(hash_type key_hash, const key_type& key, mapped_type&& mapped_value)
-    {
-        return insert_hash(key_hash, value_type(key, move(mapped_value)));
-    }
-
     iterator insert_or_assign(const value_type& value)
     {
-        return insert_or_assign_hash(hasher()(value.first), value);
+        return insert_or_assign_hash(hasher()(value), value);
     }
 
     iterator insert_or_assign(value_type&& value)
     {
-        return insert_or_assign_hash(hasher()(value.first), move(value));
-    }
-
-    iterator insert_or_assign(const key_type& key, const mapped_type& mapped_value)
-    {
-        return insert_or_assign_hash(hasher()(key), value_type(key, mapped_value));
-    }
-
-    iterator insert_or_assign(const key_type& key, mapped_type&& mapped_value)
-    {
-        return insert_or_assign_hash(hasher()(key), value_type(key, move(mapped_value)));
+        return insert_or_assign_hash(hasher()(value), move(value));
     }
 
     iterator insert_or_assign_hash(hash_type key_hash, const value_type& value)
@@ -534,7 +476,7 @@ public:
 
     iterator insert_or_assign_hash(hash_type key_hash, value_type&& value)
     {
-        iterator it = find_hash(key_hash, value.first);
+        iterator it = find_hash(key_hash, value);
 
         if(it == end())
         {
@@ -552,20 +494,8 @@ public:
         return it;
     }
 
-    iterator insert_or_assign_hash(hash_type key_hash, const key_type& key, const mapped_type& mapped_value)
-    {
-        return insert_or_assign_hash(key_hash, value_type(key, mapped_value));
-    }
-
-    iterator insert_or_assign_hash(hash_type key_hash, const key_type& key, mapped_type&& mapped_value)
-    {
-        return insert_or_assign_hash(key_hash, value_type(key, move(mapped_value)));
-    }
-
     iterator erase(const const_iterator& position)
     {
-        BTN_ASSERT(! empty(), "Hash map is empty");
-
         bool* allocated = _allocated;
         size_type index = position._index;
         BTN_ASSERT(allocated[index], "Index is not allocated: ", index);
@@ -586,7 +516,7 @@ public:
         size_type current_index = index;
         size_type next_index = _index(index + 1);
 
-        while(allocated[next_index] && _index(hasher_functor(storage[next_index].first)) != next_index)
+        while(allocated[next_index] && _index(hasher_functor(storage[next_index])) != next_index)
         {
             ::new(storage + current_index) value_type(move(storage[next_index]));
             storage[next_index].~value_type();
@@ -657,15 +587,15 @@ public:
     }
 
     template<class Pred>
-    friend void erase_if(ihash_map& hash_map, const Pred& pred)
+    friend void erase_if(iunordered_set& set, const Pred& pred)
     {
-        pointer storage = hash_map._storage;
-        bool* allocated = hash_map._allocated;
-        size_type size = hash_map._size;
-        size_type first_valid_index = hash_map.max_size();
+        pointer storage = set._storage;
+        bool* allocated = set._allocated;
+        size_type size = set._size;
+        size_type first_valid_index = set.max_size();
         size_type last_valid_index = 0;
 
-        for(size_type index = hash_map._first_valid_index, last = hash_map._last_valid_index; index <= last; ++index)
+        for(size_type index = set._first_valid_index, last = set._last_valid_index; index <= last; ++index)
         {
             if(allocated[index])
             {
@@ -683,12 +613,12 @@ public:
             }
         }
 
-        hash_map._size = size;
-        hash_map._first_valid_index = first_valid_index;
-        hash_map._last_valid_index = last_valid_index;
+        set._size = size;
+        set._first_valid_index = first_valid_index;
+        set._last_valid_index = last_valid_index;
     }
 
-    void merge(ihash_map&& other) noexcept
+    void merge(iunordered_set&& other)
     {
         if(this != &other)
         {
@@ -760,30 +690,7 @@ public:
         }
     }
 
-    [[nodiscard]] mapped_type& operator[](const key_type& key)
-    {
-        return operator()(hasher()(key), key);
-    }
-
-    [[nodiscard]] mapped_type& operator()(const key_type& key)
-    {
-        return operator()(hasher()(key), key);
-    }
-
-    [[nodiscard]] mapped_type& operator()(hash_type key_hash, const key_type& key)
-    {
-        iterator it = find_hash(key_hash, key);
-
-        if(it == end())
-        {
-            it = insert_hash(key_hash, key, mapped_type());
-            BTN_ASSERT(it != end(), "Insertion failed");
-        }
-
-        return it->second;
-    }
-
-    void swap(ihash_map& other)
+    void swap(iunordered_set& other)
     {
         if(this != &other)
         {
@@ -831,12 +738,12 @@ public:
         }
     }
 
-    friend void swap(ihash_map& a, ihash_map& b)
+    friend void swap(iunordered_set& a, iunordered_set& b)
     {
         a.swap(b);
     }
 
-    [[nodiscard]] friend bool operator==(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator==(const iunordered_set& a, const iunordered_set& b)
     {
         size_type first_valid_index = a._first_valid_index;
         size_type last_valid_index = a._last_valid_index;
@@ -867,33 +774,33 @@ public:
         return true;
     }
 
-    [[nodiscard]] bool friend operator!=(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator!=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a == b);
     }
 
-    [[nodiscard]] friend bool operator<(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator<(const iunordered_set& a, const iunordered_set& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
-    [[nodiscard]] friend bool operator>(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator>(const iunordered_set& a, const iunordered_set& b)
     {
         return b < a;
     }
 
-    [[nodiscard]] friend bool operator<=(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator<=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a > b);
     }
 
-    [[nodiscard]] friend bool operator>=(const ihash_map& a, const ihash_map& b)
+    [[nodiscard]] friend bool operator>=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a < b);
     }
 
 protected:
-    ihash_map(reference storage, bool& allocated, size_type max_size) :
+    iunordered_set(reference storage, bool& allocated, size_type max_size) :
         _storage(&storage),
         _allocated(&allocated),
         _max_size_minus_one(max_size - 1),
@@ -910,7 +817,7 @@ private:
     size_type _last_valid_index = 0;
     size_type _size = 0;
 
-    void _assign(const ihash_map& other)
+    void _assign(const iunordered_set& other)
     {
         const_pointer other_storage = other._storage;
         pointer storage = _storage;
@@ -932,7 +839,7 @@ private:
         _size = other._size;
     }
 
-    void _assign(ihash_map&& other)
+    void _assign(iunordered_set&& other)
     {
         pointer other_storage = other._storage;
         pointer storage = _storage;
@@ -969,15 +876,14 @@ private:
 };
 
 
-template<typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual>
-class hash_map : public ihash_map<Key, Value, KeyHash, KeyEqual>
+template<typename Key, int MaxSize, typename KeyHash, typename KeyEqual>
+class unordered_set : public iunordered_set<Key, KeyHash, KeyEqual>
 {
     static_assert(power_of_two(MaxSize));
 
 public:
     using key_type = Key;
-    using mapped_type = Value;
-    using value_type = pair<const key_type, mapped_type>;
+    using value_type = Key;
     using size_type = int;
     using hash_type = unsigned;
     using hasher = KeyHash;
@@ -987,41 +893,40 @@ public:
     using pointer = value_type*;
     using const_pointer = const value_type*;
 
-    hash_map() :
-        ihash_map<Key, Value, KeyHash, KeyEqual>(
-            *reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer, MaxSize)
+    unordered_set() :
+        iunordered_set<Key, KeyHash, KeyEqual>(*reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer, MaxSize)
     {
     }
 
-    hash_map(const hash_map& other) :
-        hash_map()
+    unordered_set(const unordered_set& other) :
+        unordered_set()
     {
         this->_assign(other);
     }
 
-    hash_map(hash_map&& other) noexcept :
-        hash_map()
+    unordered_set(unordered_set&& other) noexcept :
+        unordered_set()
     {
         this->_assign(move(other));
     }
 
-    hash_map(const ihash_map<Key, Value, KeyHash, KeyEqual>& other) :
-        hash_map()
+    unordered_set(const iunordered_set<Key, KeyHash, KeyEqual>& other) :
+        unordered_set()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
 
-    hash_map(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept :
-        hash_map()
+    unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
+        unordered_set()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
 
-    hash_map& operator=(const hash_map& other)
+    unordered_set& operator=(const unordered_set& other)
     {
         if(this != &other)
         {
@@ -1032,7 +937,7 @@ public:
         return *this;
     }
 
-    hash_map& operator=(hash_map&& other) noexcept
+    unordered_set& operator=(unordered_set&& other) noexcept
     {
         if(this != &other)
         {
@@ -1043,11 +948,11 @@ public:
         return *this;
     }
 
-    hash_map& operator=(const ihash_map<Key, Value, KeyHash, KeyEqual>& other)
+    unordered_set& operator=(const iunordered_set<Key, KeyHash, KeyEqual>& other)
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1056,11 +961,11 @@ public:
         return *this;
     }
 
-    hash_map& operator=(ihash_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept
+    unordered_set& operator=(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in hash map: ", MaxSize, " - ", other.size());
+            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));
@@ -1069,7 +974,7 @@ public:
         return *this;
     }
 
-    ~hash_map()
+    ~unordered_set()
     {
         this->clear();
     }

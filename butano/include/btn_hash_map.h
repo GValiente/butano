@@ -3,6 +3,7 @@
 
 #include <new>
 #include "btn_memory.h"
+#include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_power_of_two.h"
 #include "btn_hash_map_fwd.h"
@@ -31,6 +32,19 @@ public:
     {
 
     public:
+        using key_type = ihash_map::key_type;
+        using mapped_type = ihash_map::mapped_type;
+        using value_type = ihash_map::value_type;
+        using size_type = ihash_map::size_type;
+        using hash_type = ihash_map::hash_type;
+        using hasher = ihash_map::hasher;
+        using key_equal = ihash_map::key_equal;
+        using reference = ihash_map::reference;
+        using const_reference = ihash_map::const_reference;
+        using pointer = ihash_map::pointer;
+        using const_pointer = ihash_map::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         iterator& operator++()
         {
             size_type index = _index;
@@ -123,6 +137,19 @@ public:
     {
 
     public:
+        using key_type = ihash_map::key_type;
+        using mapped_type = ihash_map::mapped_type;
+        using value_type = ihash_map::value_type;
+        using size_type = ihash_map::size_type;
+        using hash_type = ihash_map::hash_type;
+        using hasher = ihash_map::hasher;
+        using key_equal = ihash_map::key_equal;
+        using reference = ihash_map::reference;
+        using const_reference = ihash_map::const_reference;
+        using pointer = ihash_map::pointer;
+        using const_pointer = ihash_map::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         const_iterator(const iterator& other) :
             _index(other._index),
             _map(other._map)

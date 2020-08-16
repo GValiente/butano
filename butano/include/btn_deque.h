@@ -28,6 +28,14 @@ public:
     {
 
     public:
+        using value_type = ideque::value_type;
+        using size_type = ideque::size_type;
+        using reference = ideque::reference;
+        using const_reference = ideque::const_reference;
+        using pointer = ideque::pointer;
+        using const_pointer = ideque::const_pointer;
+        using iterator_category = random_access_iterator_tag;
+
         iterator& operator++()
         {
             ++_index;
@@ -152,6 +160,14 @@ public:
     {
 
     public:
+        using value_type = ideque::value_type;
+        using size_type = ideque::size_type;
+        using reference = ideque::reference;
+        using const_reference = ideque::const_reference;
+        using pointer = ideque::pointer;
+        using const_pointer = ideque::const_pointer;
+        using iterator_category = random_access_iterator_tag;
+
         const_iterator(iterator it) :
             _deque(it._deque),
             _index(it._index)

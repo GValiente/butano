@@ -3,6 +3,7 @@
 
 #include "btn_assert.h"
 #include "btn_utility.h"
+#include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_forward_list_fwd.h"
 
@@ -38,6 +39,14 @@ public:
     {
 
     public:
+        using value_type = intrusive_forward_list::value_type;
+        using size_type = intrusive_forward_list::size_type;
+        using reference = intrusive_forward_list::reference;
+        using const_reference = intrusive_forward_list::const_reference;
+        using pointer = intrusive_forward_list::pointer;
+        using const_pointer = intrusive_forward_list::const_pointer;
+        using iterator_category = forward_iterator_tag;
+
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -102,6 +111,14 @@ public:
     {
 
     public:
+        using value_type = intrusive_forward_list::value_type;
+        using size_type = intrusive_forward_list::size_type;
+        using reference = intrusive_forward_list::reference;
+        using const_reference = intrusive_forward_list::const_reference;
+        using pointer = intrusive_forward_list::pointer;
+        using const_pointer = intrusive_forward_list::const_pointer;
+        using iterator_category = forward_iterator_tag;
+
         const_iterator(iterator it) :
             _node(it._node)
         {

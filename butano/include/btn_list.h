@@ -47,6 +47,14 @@ public:
     {
 
     public:
+        using value_type = ilist::value_type;
+        using size_type = ilist::size_type;
+        using reference = ilist::reference;
+        using const_reference = ilist::const_reference;
+        using pointer = ilist::pointer;
+        using const_pointer = ilist::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -117,6 +125,14 @@ public:
     {
 
     public:
+        using value_type = ilist::value_type;
+        using size_type = ilist::size_type;
+        using reference = ilist::reference;
+        using const_reference = ilist::const_reference;
+        using pointer = ilist::pointer;
+        using const_pointer = ilist::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         const_iterator(iterator it) :
             _node(it._node)
         {

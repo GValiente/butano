@@ -39,6 +39,14 @@ public:
     {
 
     public:
+        using value_type = intrusive_list::value_type;
+        using size_type = intrusive_list::size_type;
+        using reference = intrusive_list::reference;
+        using const_reference = intrusive_list::const_reference;
+        using pointer = intrusive_list::pointer;
+        using const_pointer = intrusive_list::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -109,6 +117,14 @@ public:
     {
 
     public:
+        using value_type = intrusive_list::value_type;
+        using size_type = intrusive_list::size_type;
+        using reference = intrusive_list::reference;
+        using const_reference = intrusive_list::const_reference;
+        using pointer = intrusive_list::pointer;
+        using const_pointer = intrusive_list::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         const_iterator(iterator it) :
             _node(it._node)
         {

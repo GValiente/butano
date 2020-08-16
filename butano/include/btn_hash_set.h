@@ -3,6 +3,7 @@
 
 #include <new>
 #include "btn_memory.h"
+#include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_power_of_two.h"
 #include "btn_hash_set_fwd.h"
@@ -30,6 +31,18 @@ public:
     {
 
     public:
+        using key_type = ihash_set::key_type;
+        using value_type = ihash_set::value_type;
+        using size_type = ihash_set::size_type;
+        using hash_type = ihash_set::hash_type;
+        using hasher = ihash_set::hasher;
+        using key_equal = ihash_set::key_equal;
+        using reference = ihash_set::reference;
+        using const_reference = ihash_set::const_reference;
+        using pointer = ihash_set::pointer;
+        using const_pointer = ihash_set::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         iterator& operator++()
         {
             size_type index = _index;
@@ -122,6 +135,18 @@ public:
     {
 
     public:
+        using key_type = ihash_set::key_type;
+        using value_type = ihash_set::value_type;
+        using size_type = ihash_set::size_type;
+        using hash_type = ihash_set::hash_type;
+        using hasher = ihash_set::hasher;
+        using key_equal = ihash_set::key_equal;
+        using reference = ihash_set::reference;
+        using const_reference = ihash_set::const_reference;
+        using pointer = ihash_set::pointer;
+        using const_pointer = ihash_set::const_pointer;
+        using iterator_category = bidirectional_iterator_tag;
+
         const_iterator(const iterator& other) :
             _index(other._index),
             _set(other._set)

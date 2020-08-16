@@ -2,6 +2,7 @@
 #define BTN_FORWARD_LIST_H
 
 #include "btn_pool.h"
+#include "btn_iterator.h"
 #include "btn_algorithm.h"
 #include "btn_forward_list_fwd.h"
 
@@ -45,6 +46,14 @@ public:
     {
 
     public:
+        using value_type = iforward_list::value_type;
+        using size_type = iforward_list::size_type;
+        using reference = iforward_list::reference;
+        using const_reference = iforward_list::const_reference;
+        using pointer = iforward_list::pointer;
+        using const_pointer = iforward_list::const_pointer;
+        using iterator_category = forward_iterator_tag;
+
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -109,6 +118,14 @@ public:
     {
 
     public:
+        using value_type = iforward_list::value_type;
+        using size_type = iforward_list::size_type;
+        using reference = iforward_list::reference;
+        using const_reference = iforward_list::const_reference;
+        using pointer = iforward_list::pointer;
+        using const_pointer = iforward_list::const_pointer;
+        using iterator_category = forward_iterator_tag;
+
         const_iterator(iterator it) :
             _node(it._node)
         {

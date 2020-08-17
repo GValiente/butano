@@ -57,19 +57,48 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
 {
     enemy_bullet_type type = event.type;
 
-    if(type == enemy_bullet_type::ROBOT_DOUBLE)
+    switch(type)
     {
-        enemy_bullet_event single_event = event;
-        single_event.type = enemy_bullet_type::SMALL;
-        add_bullet(hero_position, enemy_position + btn::fixed_point(-18, 20), single_event);
-        add_bullet(hero_position, enemy_position + btn::fixed_point(18, 20), single_event);
-        return;
-    }
 
-    if(type == enemy_bullet_type::HUGE &&
-            btn::sprite_affine_mats::available_count() <= constants::reserved_sprite_affine_mats)
-    {
-        type = enemy_bullet_type::BIG;
+    case enemy_bullet_type::SMALL:
+    case enemy_bullet_type::BIG:
+        break;
+
+    case enemy_bullet_type::HUGE:
+        if(btn::sprite_affine_mats::available_count() <= constants::reserved_sprite_affine_mats)
+        {
+            type = enemy_bullet_type::BIG;
+        }
+        break;
+
+    case enemy_bullet_type::ROBOT_DOUBLE:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-18, 20), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(18, 20), single_event);
+        }
+        return;
+
+    case enemy_bullet_type::CAVEMAN_SMALL:
+        {
+            enemy_bullet_event hand_event = event;
+            hand_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event);
+        }
+        return;
+
+    case enemy_bullet_type::CAVEMAN_BIG:
+        {
+            enemy_bullet_event hand_event = event;
+            hand_event.type = enemy_bullet_type::BIG;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event);
+        }
+        return;
+
+    default:
+        BTN_ERROR("Invalid bullet type: ", int(type));
+        break;
     }
 
     btn::fixed scale = 1;

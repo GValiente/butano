@@ -14,6 +14,8 @@ enum class enemy_bullet_type : int8_t
     ROBOT_DOUBLE,
     CAVEMAN_SMALL,
     CAVEMAN_BIG,
+    CAVEMAN_FLIPPED_SMALL,
+    CAVEMAN_FLIPPED_BIG,
 };
 
 }

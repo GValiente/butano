@@ -8,9 +8,11 @@
 #include "btn_sprite_items_stage_3_blonde.h"
 #include "btn_sprite_items_stage_3_intro_alt.h"
 #include "btn_sprite_items_stage_3_monsters_1.h"
+#include "btn_sprite_items_stage_3_monsters_2.h"
 #include "btn_sprite_items_stage_3_dragon_man.h"
 #include "btn_regular_bg_items_mountain_clouds.h"
 #include "btn_sprite_items_stage_3_characters_1.h"
+#include "btn_sprite_items_stage_3_characters_2.h"
 #include "bf_constants.h"
 #include "bf_game_bullet_util.h"
 
@@ -102,7 +104,7 @@ namespace
 
     constexpr const enemy_data black_caveman(
         btn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-        btn::sound_items::scream_5, btn::fixed_size(38, 52), black_caveman_graphics_indexes, 6, 16, 16);
+        btn::sound_items::scream_5, btn::fixed_size(38, 52), black_caveman_graphics_indexes, 16, 16);
 
     constexpr const enemy_move_event black_caveman_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0.5)),  45, 0,  false),
@@ -117,15 +119,15 @@ namespace
     };
 
     constexpr const enemy_bullet_event black_caveman_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_BIG,      1.25,   45 + 15),
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    1.25,   8),
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    1.25,   8),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_BIG,      1,   45 + 15),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    1,   8),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    1,   8),
     };
 
     constexpr const enemy_bullet_event black_caveman_flipped_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_BIG,      1.25,   45 + 15),
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    1.25,   8),
-        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    1.25,   8),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_BIG,      1,   45 + 15),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    1,   8),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    1,   8),
     };
 
 
@@ -139,7 +141,7 @@ namespace
     };
 
     constexpr const enemy_data green_cavegirl(
-        btn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::ROTATE,
         btn::sound_items::enemy_death_ninja_11, btn::fixed_size(52, 60), green_cavegirl_graphics_indexes, 14, 14);
 
     constexpr const enemy_move_event green_cavegirl_moves[] = {
@@ -281,37 +283,176 @@ namespace
     };
 
     constexpr const enemy_bullet_event dragon_man_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     100),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.35, 1, 1), 1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.35, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0, 1, 1),     100),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 1, 1),   1),
 
         enemy_bullet_event(enemy_bullet_type::BIG,      1,  80),
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,  10),
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,  10),
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     80),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.35, 1, 1), 1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.35, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0, 1, 1),     80),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 1, 1),   1),
 
         enemy_bullet_event(enemy_bullet_type::HUGE,      0.9,  80),
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     80),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.35, 1, 1), 1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.35, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0, 1, 1),     80),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 1, 1),   1),
 
         enemy_bullet_event(enemy_bullet_type::BIG,      1,  80),
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,  10),
         enemy_bullet_event(enemy_bullet_type::SMALL,    1,  10),
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     80),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.35, 1, 1), 1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.35, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0, 1, 1),     80),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 1, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 1, 1),   1),
 
-        enemy_bullet_event(enemy_bullet_type::HUGE,      0.9,  80),
+        enemy_bullet_event(enemy_bullet_type::HUGE,     0.9,  80),
+    };
 
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     80),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-0.35, 1, 1), 1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0.35, 1, 1),  1),
+    // red_cavegirl:
+
+    constexpr const btn::array<enemy_data::graphics_indexes_group, 4> red_cavegirl_graphics_indexes = {
+        enemy_data::graphics_indexes_group{ 0, 1, 0, 2 },
+        enemy_data::graphics_indexes_group{ 4, 4, 4, 4 },
+        enemy_data::graphics_indexes_group{ 5, 5, 5, 5 },
+        enemy_data::graphics_indexes_group{ 0, 1, 0, 2 },
+    };
+
+    constexpr const enemy_data red_cavegirl(
+        btn::sprite_items::stage_3_characters_2, enemy_data::death_anim_type::ROTATE,
+        btn::sound_items::enemy_death_ninja_14, btn::fixed_size(52, 60), red_cavegirl_graphics_indexes, 16, 16);
+
+    constexpr const enemy_move_event red_cavegirl_moves[] = {
+        enemy_move_event(btn::fixed_point(0, move_y(0.5)),  60, 0,  false),
+
+        enemy_move_event(btn::fixed_point(0, move_y(0)),    10, 2,  false),
+        enemy_move_event(btn::fixed_point(0, move_y(0.5)),  50, 0,  false),
+
+        enemy_move_event(btn::fixed_point(0, move_y(0)),    10, 1,  false),
+        enemy_move_event(btn::fixed_point(0, move_y(0.5)),  50, 0,  false),
+    };
+
+    constexpr const enemy_move_event red_cavegirl_flipped_moves[] = {
+        red_cavegirl_moves[0].flipped(),
+
+        red_cavegirl_moves[1].flipped(),
+        red_cavegirl_moves[2].flipped(),
+
+        red_cavegirl_moves[3].flipped(),
+        red_cavegirl_moves[4].flipped(),
+    };
+
+    constexpr const enemy_bullet_event red_cavegirl_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1, 60),
+        enemy_bullet_event(enemy_bullet_type::BIG,      1, 60),
+    };
+
+    // egg_caveman:
+
+    constexpr const btn::array<enemy_data::graphics_indexes_group, 4> egg_caveman_graphics_indexes = {
+        enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
+        enemy_data::graphics_indexes_group{ 9, 10, 11, 11 },
+        enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
+        enemy_data::graphics_indexes_group{ 6, 7, 6, 8 }
+    };
+
+    constexpr const enemy_data egg_caveman(
+        btn::sprite_items::stage_3_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+        btn::sound_items::scream_6, btn::fixed_size(42, 62), egg_caveman_graphics_indexes, 18, 18);
+
+    constexpr const enemy_move_event egg_caveman_moves[] = {
+        enemy_move_event(btn::fixed_point(0, move_y(0.5)),  45, 0,  false),
+        enemy_move_event(btn::fixed_point(0, move_y(0)),    30, 1,  false),
+        enemy_move_event(btn::fixed_point(0, move_y(0.5)),  1,  0,  false),
+    };
+
+    constexpr const enemy_move_event egg_caveman_flipped_moves[] = {
+        egg_caveman_moves[0].flipped(),
+        egg_caveman_moves[1].flipped(),
+        egg_caveman_moves[2].flipped(),
+    };
+
+    constexpr const enemy_bullet_event egg_caveman_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(1, 0, 1),      45 + 15),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(0.5, 0.5, 1),  1),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(0, 1, 1),      1),
+    };
+
+    constexpr const enemy_bullet_event egg_caveman_flipped_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(-1, 0, 1),     45 + 15),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(-0.5, 0.5, 1), 1),
+        enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(0, 1, 1),      1),
+    };
+
+
+    // minidino:
+
+    constexpr const enemy_data minidino(btn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+                                      btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 22, 22);
+
+    constexpr const enemy_move_event minidino_moves[] = {
+        enemy_move_event(btn::fixed_point(1.25, move_y(0.6)), 60, false),
+        enemy_move_event(btn::fixed_point(-1.25, move_y(0.6)), 60, true),
+        enemy_move_event(btn::fixed_point(1.25, move_y(0.6)), 60, false),
+        enemy_move_event(btn::fixed_point(-1.25, move_y(0.6)), 1, true),
+    };
+
+    constexpr const enemy_move_event minidino_flipped_moves[] = {
+        minidino_moves[0].flipped(),
+        minidino_moves[1].flipped(),
+        minidino_moves[2].flipped(),
+        minidino_moves[3].flipped(),
+    };
+
+    constexpr const enemy_bullet_event minidino_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 0.5, 1),     60),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-1, 0, 1),         1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, -0.5, 1),    1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 0.5, 1),      57),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(1, 0, 1),          1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, -0.5, 1),     1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 0.5, 1),     57),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-1, 0, 1),         1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, -0.5, 1),    1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+    };
+
+    constexpr const enemy_bullet_event minidino_flipped_bullets[] = {
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 0.5, 1),      60),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(1, 0, 1),          1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, -0.5, 1),     1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 0.5, 1),     57),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-1, 0, 1),         1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, -0.5, 1),    1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 0.5, 1),      57),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(1, 0, 1),          1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, -0.5, 1),     1),
+        enemy_bullet_event(enemy_bullet_type::SMALL,    1,                                  1),
+    };
+
+
+    // turtle:
+
+    constexpr const enemy_data turtle(btn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+                                      btn::sound_items::enemy_death_rpg_12, btn::fixed_size(52, 30), _create_graphics_indexes(3), 14, 14);
+
+    constexpr const enemy_move_event turtle_moves[] = {
+        enemy_move_event(btn::fixed_point(0, move_y(0.4)), 1, false),
+    };
+
+    constexpr const enemy_move_event turtle_flipped_moves[] = {
+        turtle_moves[0].flipped()
     };
 
 
@@ -319,9 +460,9 @@ namespace
 
     constexpr const enemy_event enemy_events[] = {
 
-        // level 3 slow (22s)
+        // level 5 slow (22s)
 
-        enemy_event(grasshopper, btn::fixed_point(-20, start_y), grasshopper_moves, no_bullets, 60, enemy_drop_type::NONE),
+        /*enemy_event(grasshopper, btn::fixed_point(-20, start_y), grasshopper_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(grasshopper, btn::fixed_point(50, start_y), grasshopper_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(cavebat, btn::fixed_point(-35, start_y), cavebat_moves, cavebat_bullets, 60, enemy_drop_type::NONE),
@@ -351,7 +492,7 @@ namespace
 
         enemy_event(blonde, btn::fixed_point(55, start_y), blonde_flipped_moves, no_bullets, 90, enemy_drop_type::GEM),
 
-        // level 3 fast (23s)
+        // level 5 fast (23s)
 
         enemy_event(lizard, btn::fixed_point(35, start_y), lizard_flipped_moves, no_bullets, 50, enemy_drop_type::NONE),
         enemy_event(lizard, btn::fixed_point(-35, start_y), lizard_moves, no_bullets, 50, enemy_drop_type::NONE),
@@ -389,9 +530,14 @@ namespace
 
         enemy_event(blonde, btn::fixed_point(55, start_y), blonde_flipped_moves, no_bullets, 70, enemy_drop_type::GEM),
 
-        // level 3 mid boss (15s)
+        // level 5 mid boss (15s)
 
-        enemy_event(dragon_man, btn::fixed_point(50, start_y), dragon_man_moves, dragon_man_bullets, 0, enemy_drop_type::HERO_BOMB),
+        enemy_event(dragon_man, btn::fixed_point(50, start_y), dragon_man_moves, dragon_man_bullets, 0, enemy_drop_type::HERO_BOMB),*/
+
+        // level 6 slow
+
+        enemy_event(minidino, btn::fixed_point(-50, start_y), minidino_moves, minidino_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(minidino, btn::fixed_point(-50, start_y), minidino_moves, minidino_bullets, 60, enemy_drop_type::NONE),
     };
 
 

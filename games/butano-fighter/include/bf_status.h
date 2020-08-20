@@ -62,8 +62,8 @@ public:
 
 private:
     const game::stage* _current_stage;
-    int _level = 5;
-    int _experience = 2350;
+    int _level = 6;
+    int _experience = 3500;
     int _bombs_count = 2;
     int _high_experience = 0;
     bool _how_to_play_viewed = false;

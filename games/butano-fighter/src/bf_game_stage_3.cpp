@@ -142,7 +142,7 @@ namespace
 
     constexpr const enemy_data green_cavegirl(
         btn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::ROTATE,
-        btn::sound_items::enemy_death_ninja_11, btn::fixed_size(46, 60), green_cavegirl_graphics_indexes, 14, 14);
+        btn::sound_items::enemy_death_ninja_11, btn::fixed_size(46, 60), green_cavegirl_graphics_indexes, 12, 12);
 
     constexpr const enemy_move_event green_cavegirl_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0.5)),  60, 0,  false),
@@ -175,15 +175,14 @@ namespace
     };
 
     constexpr const enemy_bullet_event green_cavegirl_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::SMALL, 0.9,                           60),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9),   4),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9),   60),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9),  4),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, -1, 0.9), 4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 0, 0.9),  4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, -1, 0.9),  4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 0, 0.9),   4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, -1, 0.9),  4),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9),  4),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   4),
     };
 
 
@@ -393,13 +392,13 @@ namespace
     // minidino:
 
     constexpr const enemy_data minidino(btn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 28, 28);
+                                      btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 26, 26);
 
     constexpr const enemy_move_event minidino_moves[] = {
-        enemy_move_event(btn::fixed_point(1.25, move_y(0.6)), 60, false),
-        enemy_move_event(btn::fixed_point(-1.25, move_y(0.6)), 60, true),
-        enemy_move_event(btn::fixed_point(1.25, move_y(0.6)), 60, false),
-        enemy_move_event(btn::fixed_point(-1.25, move_y(0.6)), 1, true),
+        enemy_move_event(btn::fixed_point(1.2, move_y(0.6)), 60, false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.6)), 60, true),
+        enemy_move_event(btn::fixed_point(1.2, move_y(0.6)), 60, false),
+        enemy_move_event(btn::fixed_point(-1.2, move_y(0.6)), 1, true),
     };
 
     constexpr const enemy_move_event minidino_flipped_moves[] = {

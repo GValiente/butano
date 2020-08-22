@@ -180,7 +180,7 @@ namespace
                 btn::color(18, 25, 27), 86,     5),
         hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3450,
                 btn::color(31, 0, 0),   97,     3),
-        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            4500,
+        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5500,
                 btn::color(9, 20, 24),  101,    4),
         hero_bullet_level(_level7_events,   btn::fixed_size(10, 16),    btn::sound_items::space_shooter_5,  5500,
                 btn::color(31, 0, 0),   89,     6),

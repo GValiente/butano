@@ -42,9 +42,9 @@ private:
     int _minimum_y = 0;
     int _maximum_y = btn::display::height() - 1;
 
-    static void _draw_not_horizontal_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);
+    BTN_CODE_IWRAM static void _draw_not_horizontal_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);
 
-    static void _draw_horizontal_line(int x0, int x1, int y, hline* hlines);
+    BTN_CODE_IWRAM static void _draw_horizontal_line(int x0, int x1, int y, hline* hlines);
 
     BTN_CODE_IWRAM static void _draw_left_line_octant_0(int x0, int y0, int delta_x, int delta_y, int x_direction,
                                                         hline* hlines);

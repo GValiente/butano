@@ -9,23 +9,15 @@ endif
 include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom base rules without flto
+# Butano custom IWRAM base rules without flto
 #---------------------------------------------------------------------------------------------------------------------
-%.btn_noflto.o: %.btn_noflto.cpp
+%.btn_iwram.o: %.btn_iwram.cpp
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_iwram.d $(CXXFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
 
-%.btn_noflto.o: %.btn_noflto.c
+%.btn_iwram.o: %.btn_iwram.c
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
-
-%.btn_noflto.iwram.o: %.btn_noflto.iwram.cpp
-	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CXXFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
-
-%.btn_noflto.iwram.o: %.btn_noflto.iwram.c
-	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_noflto.iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation

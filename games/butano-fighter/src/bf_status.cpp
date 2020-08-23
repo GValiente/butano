@@ -114,6 +114,12 @@ btn::fixed status::next_level_experience_ratio() const
 
     int experience_to_current_level = _level == 0 ? 0 : hero_bullet_levels[_level - 1].experience_to_next_level;
     int next_level_experience = hero_bullet_levels[_level].experience_to_next_level - experience_to_current_level;
+
+    if(next_level_experience <= 0)
+    {
+        return 1;
+    }
+
     btn::fixed experience = _experience - experience_to_current_level;
     return btn::min(experience / next_level_experience, btn::fixed(1));
 }

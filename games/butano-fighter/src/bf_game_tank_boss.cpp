@@ -74,8 +74,8 @@ namespace
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
-        return btn::create_sprite_animate_action_once(builder.release_build(), 6, btn::sprite_items::mini_explosion,
-                                                      0, 1, 2, 3, 4, 5, 6);
+        return btn::create_sprite_animate_action_once(
+                    builder.release_build(), 6, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
@@ -561,7 +561,7 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
             if(! _jelly_crying)
             {
                 _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
-                            jelly_sprite, 16, btn::sprite_items::tank_jelly, 2, 3);
+                            jelly_sprite, 16, btn::sprite_items::tank_jelly.tiles_item(), 2, 3);
                 _jelly_crying = true;
             }
         }
@@ -570,7 +570,7 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
             if(life())
             {
                 _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
-                            jelly_sprite, 16, btn::sprite_items::tank_jelly, 0, 1);
+                            jelly_sprite, 16, btn::sprite_items::tank_jelly.tiles_item(), 0, 1);
                 _jelly_crying = false;
             }
         }

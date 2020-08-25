@@ -30,8 +30,9 @@ namespace
     btn::sprite_animate_action<4> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data,
                                                          int animation_index)
     {
-        return btn::sprite_animate_action<4>::forever(sprite, data.animation_wait_frames, data.sprite_item,
-                                                      data.graphics_indexes_groups[animation_index]);
+        return btn::sprite_animate_action<4>::forever(
+                    sprite, data.animation_wait_frames, data.sprite_item.tiles_item(),
+                    data.graphics_indexes_groups[animation_index]);
     }
 }
 

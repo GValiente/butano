@@ -130,7 +130,7 @@ void object_message::update()
 object_message::object_message(const btn::fixed_point& position, int graphics_index) :
     _move_action(_create_move_action(position, graphics_index)),
     _animate_action(btn::create_sprite_cached_animate_action_forever(
-                        _move_action.sprite(), 16, btn::sprite_items::object_messages,
+                        _move_action.sprite(), 16, btn::sprite_items::object_messages.tiles_item(),
                         graphics_index, graphics_index + 1))
 {
 }

@@ -1,11 +1,11 @@
-#include "bf_game_gigabat_boss.h"
+#include "bf_game_wizard_boss.h"
 
 #include "btn_colors.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_builder.h"
-#include "btn_sprite_items_gigabat.h"
+#include "btn_sprite_items_wizard.h"
 #include "btn_sprite_items_hero_death.h"
-#include "btn_sprite_items_gigabat_shadow.h"
+#include "btn_sprite_items_wizard_aura.h"
 #include "btn_sprite_items_mini_explosion_2.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
@@ -36,75 +36,152 @@ namespace
     }
 }
 
-gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
-    boss(total_life, 400, _gigabat_rects, damage_palette),
-    _gigabat_position(0, -125),
-    _palette(btn::sprite_items::gigabat.palette_item().create_palette())
+wizard_boss::wizard_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
+    boss(total_life, 400, _wizard_rects, damage_palette),
+    _wizard_position(0, -160),
+    _palette(btn::sprite_items::wizard.palette_item().create_palette())
 {
-    btn::sprite_builder builder(btn::sprite_items::gigabat);
+    btn::sprite_builder builder(btn::sprite_items::wizard);
     builder.set_z_order(constants::enemies_z_order);
     _sprites.push_back(builder.release_build());
 
-    const btn::sprite_tiles_item& tiles_item = btn::sprite_items::gigabat.tiles_item();
-    _animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(_sprites.back(), 8, tiles_item, 0, 2, 0, 4, 6));
-
-    builder = btn::sprite_builder(btn::sprite_items::gigabat, 1);
-    builder.set_z_order(constants::enemies_z_order);
-    _sprites.push_back(builder.release_build());
-    _animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(_sprites.back(), 8, tiles_item, 1, 3, 1, 5, 7));
-
-    builder = btn::sprite_builder(btn::sprite_items::gigabat_shadow);
+    builder = btn::sprite_builder(btn::sprite_items::wizard_aura);
     builder.set_blending_enabled(true);
-    builder.set_z_order(constants::footprint_z_order);
-    _shadow_sprite = builder.release_build();
+    builder.set_z_order(constants::enemy_explosions_z_order);
+    _aura_sprites.push_back(builder.build());
+    _aura_sprite_animate_actions.push_back(
+                btn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 0, 4, 8, 12));
 
-    _gigabat_rects.emplace_back(btn::fixed_point(), btn::fixed_size(44, 45));
-    _update_sprites(hero_position, false);
+    _aura_sprites.push_back(builder.build());
+    _aura_sprite_animate_actions.push_back(
+                btn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 1, 5, 9, 13));
+
+    _aura_sprites.push_back(builder.build());
+    _aura_sprite_animate_actions.push_back(
+                btn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 2, 6, 10, 14));
+
+    _aura_sprites.push_back(builder.build());
+    _aura_sprite_animate_actions.push_back(
+                btn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 3, 7, 11, 15));
+
+    _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(46, 62));
+    _update_sprites(hero_position);
     _update_rects();
 }
 
-void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                                 enemy_bullets& enemy_bullets)
+void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
+                                enemy_bullets& enemy_bullets)
 {
-    btn::fixed x = _gigabat_position.x();
-    btn::fixed y = _gigabat_position.y();
+    btn::fixed x = _wizard_position.x();
+    btn::fixed y = _wizard_position.y();
 
     switch(_state_index)
     {
 
     case 0:
-        _gigabat_position.set_y(y + 0.35);
+        _wizard_position.set_y(y + constants::background_speed);
 
-        if(y >= -50)
+        if(y >= -46)
         {
+            _movement_index = 2;
+            _movement_counter = 1;
             ++_state_index;
         }
         break;
 
     case 1:
-        if(_movement_index == 0)
-        {
-            _gigabat_position.set_x(x + 0.35);
+        --_movement_counter;
 
-            if(_gigabat_position.x() >= 50)
-            {
-                _movement_index = 1;
-            }
-        }
-        else
+        if(! _movement_counter)
         {
-            _gigabat_position.set_x(x - 0.35);
-
-            if(_gigabat_position.x() <= -50)
+            switch(_movement_index)
             {
+
+            case 0:
+                ++_movement_index;
+                _movement_counter = 6 * 8;
+
+                _delta_position = (btn::fixed_point(x, -16) - _wizard_position) / _movement_counter;
+                _animate_actions.clear();
+                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 8,
+                                           btn::sprite_items::wizard.tiles_item(), 8, 9, 10, 11, 12, 13));
+                break;
+
+            case 1:
+                ++_movement_index;
+                _movement_counter = 120;
+
+                _animate_actions.clear();
+                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 14);
+                break;
+
+            case 2:
                 _movement_index = 0;
+                _movement_counter = 240;
+
+                _target_x = 46;
+                _animate_actions.clear();
+                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                           btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
+                break;
+
+            default:
+                BTN_ERROR("Invalid movement index: ", _movement_index);
+                break;
             }
         }
 
-        _movement_counter = (_movement_counter + 8) % 512;
-        _gigabat_position.set_y((btn::lut_sin(_movement_counter) * 5) - 50);
+        switch(_movement_index)
+        {
+
+        case 0:
+            if(*_target_x > 0)
+            {
+                if(x <= *_target_x)
+                {
+                    _wizard_position.set_x(x + 0.75);
+                }
+                else
+                {
+                    _target_x = -46;
+                }
+            }
+            else
+            {
+                if(x >= *_target_x)
+                {
+                    _wizard_position.set_x(x - 0.75);
+                }
+                else
+                {
+                    _target_x = 46;
+                }
+            }
+            break;
+
+        case 1:
+            _wizard_position += _delta_position;
+            break;
+
+        case 2:
+            if(y > -46)
+            {
+                _wizard_position.set_y(btn::max(y - constants::background_speed, btn::fixed(-46)));
+            }
+            else
+            {
+                _movement_counter = 1;
+            }
+            break;
+
+        default:
+            BTN_ERROR("Invalid movement index: ", _movement_index);
+            break;
+        }
         break;
 
     case 2:
@@ -116,18 +193,18 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             {
 
             case 0:
-                _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 10);
-                _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 11);
+                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 10);
+                _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 11);
                 _target_x = hero_position.x();
                 _movement_index = 1;
                 _movement_counter = 80;
                 _vibrate = false;
-                _delta_position = (hero_position - _gigabat_position) / _movement_counter;
+                _delta_position = (hero_position - _wizard_position) / _movement_counter;
                 break;
 
             case 1:
-                _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 8);
-                _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 9);
+                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 8);
+                _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 9);
                 _target_x.reset();
                 _movement_index = 0;
                 _movement_counter = 500;
@@ -147,11 +224,11 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
         case 0:
             if(y < -56)
             {
-                _gigabat_position.set_y(btn::min(y + 0.5, btn::fixed(-56)));
+                _wizard_position.set_y(btn::min(y + 0.5, btn::fixed(-56)));
             }
             else if(y > -56)
             {
-                _gigabat_position.set_y(btn::max(y - 0.5, btn::fixed(-56)));
+                _wizard_position.set_y(btn::max(y - 0.5, btn::fixed(-56)));
             }
 
             if(_movement_counter % 4 == 0)
@@ -161,7 +238,7 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             break;
 
         case 1:
-            _gigabat_position += _delta_position;
+            _wizard_position += _delta_position;
             break;
 
         default:
@@ -173,11 +250,11 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
     case 3:
         if(y < -34)
         {
-            _gigabat_position.set_y(btn::min(y + 0.25, btn::fixed(-34)));
+            _wizard_position.set_y(btn::min(y + 0.25, btn::fixed(-34)));
         }
         else if(y > -34)
         {
-            _gigabat_position.set_y(btn::max(y - 0.25, btn::fixed(-34)));
+            _wizard_position.set_y(btn::max(y - 0.25, btn::fixed(-34)));
         }
 
         --_movement_counter;
@@ -207,10 +284,10 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             _vibrate = ! _vibrate;
 
             int base_graphics_index = 16 + (_movement_index * 4);
-            _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), base_graphics_index);
-            _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), base_graphics_index + 1);
-            _sprites[2].set_tiles(btn::sprite_items::gigabat.tiles_item(), base_graphics_index + 2);
-            _sprites[3].set_tiles(btn::sprite_items::gigabat.tiles_item(), base_graphics_index + 3);
+            _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index);
+            _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 1);
+            _sprites[2].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 2);
+            _sprites[3].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 3);
         }
 
         if(x <= -constants::play_width + 30)
@@ -233,7 +310,7 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             _delta_position.set_y(-rotate_speed);
         }
 
-        _gigabat_position += _delta_position;
+        _wizard_position += _delta_position;
         break;
 
     default:
@@ -241,7 +318,7 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
         break;
     }
 
-    _update_sprites(hero_position, hero_bomb.closing());
+    _update_sprites(hero_position);
     _update_explosions();
     _update_rects();
 
@@ -251,19 +328,18 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
     }
 }
 
-bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
+bool wizard_boss::_update_dead(const btn::fixed_point& hero_position)
 {
-    bool hide_shadow = false;
     bool done = false;
 
     if(_sprites.size() == 4)
     {
         _movement_counter = 1;
-        _delta_position.set_x((0 - _gigabat_position.x()) / 240);
-        _delta_position.set_y((0 - _gigabat_position.y()) / 240);
+        _delta_position.set_x((0 - _wizard_position.x()) / 240);
+        _delta_position.set_y((0 - _wizard_position.y()) / 240);
 
-        _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 28);
-        _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 29);
+        _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 28);
+        _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 29);
         _sprites.pop_back();
         _sprites.pop_back();
 
@@ -276,7 +352,7 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
         _palette_action.emplace(_palette, 15, 0.6);
     }
 
-    _gigabat_position += _delta_position;
+    _wizard_position += _delta_position;
     --_movement_counter;
 
     if(! _movement_counter)
@@ -289,7 +365,6 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
     {
         _state_index = 0;
         _movement_index = 1;
-        hide_shadow = true;
     }
     else
     {
@@ -302,8 +377,8 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
                 ++_state_index;
                 _movement_index = 16;
 
-                btn::fixed x = int(_random.get() % 48) - 24 + _gigabat_position.x();
-                btn::fixed y = int(_random.get() % 48) - 24 + _gigabat_position.y();
+                btn::fixed x = int(_random.get() % 48) - 24 + _wizard_position.x();
+                btn::fixed y = int(_random.get() % 48) - 24 + _wizard_position.y();
                 _mini_explosions.push_back(_create_mini_explosion(x, y));
                 btn::sound_items::explosion_1.play();
             }
@@ -326,7 +401,8 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
                 if(! _explosion->show_target_sprite())
                 {
                     _sprites.clear();
-                    _shadow_sprite.reset();
+                    _aura_sprites.clear();
+                    _aura_sprite_animate_actions.clear();
                 }
             }
             else
@@ -338,22 +414,17 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
 
     if(! _sprites.empty())
     {
-        if(! hide_shadow)
-        {
-            _shadow_sprite->set_scale(1);
-        }
-
-        _update_sprites(hero_position, hide_shadow);
+        _update_sprites(hero_position);
     }
 
     _update_explosions();
     return done;
 }
 
-void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette)
+void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette)
 {
-    btn::fixed x = _gigabat_position.x();
-    btn::fixed y = _gigabat_position.y();
+    btn::fixed x = _wizard_position.x();
+    btn::fixed y = _wizard_position.y();
     int current_life = life();
 
     switch(_state_index)
@@ -393,14 +464,14 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
             _delta_position = btn::fixed_point(rotate_speed, -rotate_speed);
             _target_x = constants::play_width;
 
-            _sprites[0].set_tiles(btn::sprite_items::gigabat.tiles_item(), 12);
-            _sprites[1].set_tiles(btn::sprite_items::gigabat.tiles_item(), 13);
+            _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 12);
+            _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 13);
 
-            btn::sprite_builder builder(btn::sprite_items::gigabat, 14);
+            btn::sprite_builder builder(btn::sprite_items::wizard, 14);
             builder.set_z_order(constants::enemies_z_order);
             _sprites.push_back(builder.release_build());
 
-            builder = btn::sprite_builder(btn::sprite_items::gigabat, 15);
+            builder = btn::sprite_builder(btn::sprite_items::wizard, 15);
             builder.set_z_order(constants::enemies_z_order);
             _sprites.push_back(builder.release_build());
 
@@ -431,7 +502,7 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
     }
 }
 
-void gigabat_boss::_hide_damage_palette()
+void wizard_boss::_hide_damage_palette()
 {
     for(btn::sprite_ptr& sprite : _sprites)
     {
@@ -439,14 +510,14 @@ void gigabat_boss::_hide_damage_palette()
     }
 }
 
-bool gigabat_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+bool wizard_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
 {
     if(_sprites.empty())
     {
         return false;
     }
 
-    btn::fixed y = _gigabat_position.y();
+    btn::fixed y = _wizard_position.y();
 
     if(hero_position.y() < y - 48)
     {
@@ -461,21 +532,21 @@ bool gigabat_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posi
     return hero_is_looking_down;
 }
 
-void gigabat_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
+void wizard_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                                  const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
 {
-    btn::fixed_point mouth_position = _gigabat_position + btn::fixed_point(0, mouth_y);
+    btn::fixed_point mouth_position = _wizard_position + btn::fixed_point(0, mouth_y);
     enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1));
 }
 
-void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void wizard_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
 
     if(_random.get() % 8 == 0)
     {
-        btn::fixed_point mouth_position = _gigabat_position + btn::fixed_point(0, mouth_y);
+        btn::fixed_point mouth_position = _wizard_position + btn::fixed_point(0, mouth_y);
         btn::fixed_point distance = hero_position - mouth_position;
 
         if(distance == btn::fixed_point())
@@ -501,7 +572,7 @@ void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_posi
     }
 }
 
-void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void wizard_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
@@ -517,25 +588,30 @@ void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_positi
     _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
 }
 
-void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool hide_shadow)
+void wizard_boss::_update_sprites(const btn::fixed_point& hero_position)
 {
     btn::fixed target_x = _target_x.value_or(hero_position.x());
-    bool flip = target_x < _gigabat_position.x();
-    btn::fixed x1_inc = flip ? 32 : -32;
-    btn::fixed x2_inc = flip ? -32 : 32;
+    bool flip = target_x < _wizard_position.x();
     btn::fixed y_inc = _vibrate ? 1 : 0;
 
     if(_sprites.size() == 2)
     {
-        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc));
-        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc));
+        if(life())
+        {
+            btn::fixed x1_inc = flip ? 32 : -32;
+            btn::fixed x2_inc = flip ? -32 : 32;
+            _sprites[0].set_position(_wizard_position + btn::fixed_point(x1_inc, y_inc));
+            _sprites[1].set_position(_wizard_position + btn::fixed_point(x2_inc, y_inc));
+        }
+        else
+        {
+            _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc));
+            _sprites[1].set_position(_wizard_position + btn::fixed_point(0, y_inc));
+        }
     }
     else
     {
-        _sprites[0].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc - 32));
-        _sprites[1].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc - 32));
-        _sprites[2].set_position(_gigabat_position + btn::fixed_point(x1_inc, y_inc + 32));
-        _sprites[3].set_position(_gigabat_position + btn::fixed_point(x2_inc, y_inc + 32));
+        _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc));
     }
 
     for(btn::sprite_ptr& sprite : _sprites)
@@ -543,27 +619,24 @@ void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool h
         sprite.set_horizontal_flip(flip);
     }
 
-    for(btn::sprite_animate_action<5>& animate_action : _animate_actions)
+    for(btn::sprite_animate_action<6>& animate_action : _animate_actions)
     {
         animate_action.update();
     }
 
-    if(hide_shadow)
-    {
-        _shadow_sprite->set_visible(false);
-        _shadow_sprite->set_scale(0.01);
-    }
-    else
-    {
-        _shadow_sprite->set_visible(true);
-        _shadow_sprite->set_position(_gigabat_position + btn::fixed_point(0, 40));
+    bool aura_visible = ! _aura_sprites[0].visible() && ! _death_flash();
+    _aura_sprites[0].set_visible(aura_visible);
+    _aura_sprites[0].set_position(_wizard_position + btn::fixed_point(-32, -32 - 4));
+    _aura_sprites[1].set_visible(aura_visible);
+    _aura_sprites[1].set_position(_wizard_position + btn::fixed_point(32, -32 - 4));
+    _aura_sprites[2].set_visible(aura_visible);
+    _aura_sprites[2].set_position(_wizard_position + btn::fixed_point(-32, 32 - 4));
+    _aura_sprites[3].set_visible(aura_visible);
+    _aura_sprites[3].set_position(_wizard_position + btn::fixed_point(32, 32 - 4));
 
-        btn::fixed scale = _shadow_sprite->scale_x();
-
-        if(scale < 1)
-        {
-            _shadow_sprite->set_scale(btn::min(scale + 0.05, btn::fixed(1)));
-        }
+    for(btn::sprite_animate_action<5>& aura_sprite_animate_action : _aura_sprite_animate_actions)
+    {
+        aura_sprite_animate_action.update();
     }
 
     if(_palette_action)
@@ -572,12 +645,12 @@ void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool h
     }
 }
 
-void gigabat_boss::_update_rects()
+void wizard_boss::_update_rects()
 {
-    _gigabat_rects[0].set_position(_gigabat_position);
+    _wizard_rects[0].set_position(_wizard_position);
 }
 
-void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
 
@@ -591,7 +664,7 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
             break;
 
         case 1:
-            _bullets_counter = 50;
+            _bullets_counter = 40;
 
             switch(_bullets_index)
             {
@@ -663,7 +736,7 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
     }
 }
 
-void gigabat_boss::_update_explosions()
+void wizard_boss::_update_explosions()
 {
     for(auto it = _mini_explosions.begin(), end = _mini_explosions.end(); it != end; )
     {

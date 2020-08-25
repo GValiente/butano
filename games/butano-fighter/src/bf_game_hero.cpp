@@ -51,8 +51,8 @@ namespace
     btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action()
     {
         btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(0, body_delta_y);
-        return btn::create_sprite_cached_animate_action_forever(btn::move(body_sprite), 16,
-                                                                btn::sprite_items::hero_body, 0, 2);
+        return btn::create_sprite_cached_animate_action_forever(
+                    btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2);
     }
 
     btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position)

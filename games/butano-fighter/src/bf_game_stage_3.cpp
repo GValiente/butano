@@ -207,7 +207,7 @@ namespace
     };
 
 
-    // lizard:
+    // grasshopper:
 
     constexpr const btn::array<enemy_data::graphics_indexes_group, 4> grasshopper_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 2, 2, 2, 2 },
@@ -392,7 +392,7 @@ namespace
     // minidino:
 
     constexpr const enemy_data minidino(btn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 26, 26);
+                                        btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 26, 26);
 
     constexpr const enemy_move_event minidino_moves[] = {
         enemy_move_event(btn::fixed_point(1.2, move_y(0.6)), 60, false),
@@ -453,7 +453,7 @@ namespace
 
         // level 5 slow (22s)
 
-        enemy_event(grasshopper, btn::fixed_point(-20, start_y), grasshopper_moves, no_bullets, 60, enemy_drop_type::NONE),
+        /*enemy_event(grasshopper, btn::fixed_point(-20, start_y), grasshopper_moves, no_bullets, 60, enemy_drop_type::NONE),
         enemy_event(grasshopper, btn::fixed_point(50, start_y), grasshopper_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(cavebat, btn::fixed_point(-35, start_y), cavebat_moves, cavebat_bullets, 60, enemy_drop_type::NONE),
@@ -629,7 +629,7 @@ namespace
         enemy_event(turtle, btn::fixed_point(55, start_y), turtle_flipped_moves, no_bullets, 50, enemy_drop_type::NONE),
 
         enemy_event(cavebat, btn::fixed_point(-50, start_y), cavebat_moves, cavebat_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(cavebat, btn::fixed_point(50, start_y), cavebat_flipped_moves, cavebat_bullets, 80, enemy_drop_type::NONE),
+        enemy_event(cavebat, btn::fixed_point(50, start_y), cavebat_flipped_moves, cavebat_bullets, 80, enemy_drop_type::NONE),*/
 
         enemy_event(blonde, btn::fixed_point(55, start_y), blonde_flipped_moves, no_bullets, 50, enemy_drop_type::GEM),
     };
@@ -640,7 +640,7 @@ namespace
     constexpr const stage stage_3(
         btn::regular_bg_items::stage_3, btn::regular_bg_items::mountain_clouds, btn::sprite_items::stage_3_intro,
         btn::sprite_items::stage_3_intro_alt, "STAGE 3", "GIANT MOUNTAIN", btn::music_items::stardstm,
-        enemy_events, boss::type::GIGABAT);
+        enemy_events, boss::type::WIZARD);
 }
 
 const stage& get()

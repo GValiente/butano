@@ -6,8 +6,8 @@
 #include "btn_optional.h"
 #include "btn_sprite_ptr.h"
 #include "btn_fixed_point.h"
-#include "btn_sprite_item.h"
 #include "btn_sprite_tiles_ptr.h"
+#include "btn_sprite_tiles_item.h"
 #include "btn_value_template_actions.h"
 
 namespace btn
@@ -676,20 +676,6 @@ public:
         return sprite_animate_action(move(sprite), wait_frames, tiles_item, false, graphics_indexes);
     }
 
-    [[nodiscard]] static sprite_animate_action once(
-            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_animate_action(sprite, wait_frames, item.tiles_item(), false, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_animate_action once(
-            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
-    }
-
     [[nodiscard]] static sprite_animate_action forever(
             const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item,
             const span<const uint16_t>& graphics_indexes)
@@ -702,20 +688,6 @@ public:
             const span<const uint16_t>& graphics_indexes)
     {
         return sprite_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_animate_action forever(
-            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_animate_action(sprite, wait_frames, item.tiles_item(), true, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_animate_action forever(
-            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
     }
 
     void reset()
@@ -845,24 +817,6 @@ template<typename ...Args>
 }
 
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_once(
-        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_animate_action<sizeof...(Args)>::once(
-                sprite, wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_once(
-        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_forever(
         const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
@@ -877,24 +831,6 @@ template<typename ...Args>
 {
     return sprite_animate_action<sizeof...(Args)>::forever(
                 move(sprite), wait_frames, tiles_item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
-        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_animate_action<sizeof...(Args)>::forever(
-                sprite, wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
-        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
@@ -922,20 +858,6 @@ public:
     }
 
     [[nodiscard]] static sprite_cached_animate_action once(
-            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_cached_animate_action(sprite, wait_frames, item.tiles_item(), false, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_cached_animate_action once(
-            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), false, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_cached_animate_action once(
             const sprite_ptr& sprite, int wait_frames, span<sprite_tiles_ptr> tiles_list)
     {
         return sprite_cached_animate_action(sprite, wait_frames, false, tiles_list);
@@ -959,20 +881,6 @@ public:
             const span<const uint16_t>& graphics_indexes)
     {
         return sprite_cached_animate_action(move(sprite), wait_frames, tiles_item, true, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_cached_animate_action forever(
-            const sprite_ptr& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_cached_animate_action(sprite, wait_frames, item.tiles_item(), true, graphics_indexes);
-    }
-
-    [[nodiscard]] static sprite_cached_animate_action forever(
-            sprite_ptr&& sprite, int wait_frames, const sprite_item& item,
-            const span<const uint16_t>& graphics_indexes)
-    {
-        return sprite_cached_animate_action(move(sprite), wait_frames, item.tiles_item(), true, graphics_indexes);
     }
 
     [[nodiscard]] static sprite_cached_animate_action forever(
@@ -1137,24 +1045,6 @@ template<typename ...Args>
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_cached_animate_action<sizeof...(Args)>::once(
-                sprite, wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
-        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_cached_animate_action<sizeof...(Args)>::once(
-                move(sprite), wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
 template< typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
         const sprite_ptr& sprite, int wait_frames, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
@@ -1170,24 +1060,6 @@ template< typename ...Args>
 {
     return sprite_cached_animate_action<sizeof...(Args)>::forever(
                 move(sprite), wait_frames, tiles_item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        const sprite_ptr& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                sprite, wait_frames, item,
-                array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
-}
-
-template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
-        sprite_ptr&& sprite, int wait_frames, const sprite_item& item, Args ...graphics_indexes)
-{
-    return sprite_cached_animate_action<sizeof...(Args)>::forever(
-                move(sprite), wait_frames, item,
                 array<uint16_t, sizeof...(Args)>{{ uint16_t(graphics_indexes)... }});
 }
 

@@ -262,7 +262,7 @@ void how_to_play::entry_type::animate()
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -289,7 +289,7 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 12, 14, 12, 14));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 12, 14, 12, 14));
 
     shadow_position += btn::fixed_point(4, 1);
     shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 8);
@@ -297,7 +297,7 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 8, 10, 8, 10));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 8, 10, 8, 10));
 
     shadow_position += btn::fixed_point(4, 1);
     shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 4);
@@ -305,14 +305,14 @@ void how_to_play::entry_type::animate()
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body, 4, 6, 4, 6));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 4, 6, 4, 6));
 
     btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(body_position);
     body_sprite.set_horizontal_flip(true);
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -379,7 +379,7 @@ void how_to_play::entry_type::animate()
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body, 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -474,7 +474,7 @@ void how_to_play::entry_type::animate()
     btn::sprite_ptr gem_sprite = btn::sprite_items::gem.create_sprite(left_text_sprites_x - 24, 18);
     result.sprites.push_back(gem_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(gem_sprite), 4, btn::sprite_items::gem, 0, 1, 2, 3));
+                btn::move(gem_sprite), 4, btn::sprite_items::gem.tiles_item(), 0, 1, 2, 3));
 
     result.setup(-left_move_x, -40);
     return result;

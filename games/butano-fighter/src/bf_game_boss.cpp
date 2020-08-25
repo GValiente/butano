@@ -11,6 +11,7 @@
 #include "bf_game_tank_boss.h"
 #include "bf_game_scoreboard.h"
 #include "bf_game_background.h"
+#include "bf_game_wizard_boss.h"
 #include "bf_game_gigabat_boss.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_check_hero_bullet_data.h"
@@ -38,7 +39,11 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
         break;
 
     case type::GIGABAT:
-        result.reset(new gigabat_boss(hero_position, damage_palette));
+        result.reset(new wizard_boss(hero_position, damage_palette));
+        break;
+
+    case type::WIZARD:
+        result.reset(new wizard_boss(hero_position, damage_palette));
         break;
 
     default:

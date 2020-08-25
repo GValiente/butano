@@ -31,7 +31,8 @@ public:
     enum class type
     {
         TANK,
-        GIGABAT
+        GIGABAT,
+        WIZARD
     };
 
     static btn::unique_ptr<boss> create(type type, const btn::fixed_point& hero_position,

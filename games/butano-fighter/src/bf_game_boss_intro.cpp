@@ -16,7 +16,7 @@ namespace bf::game
 namespace
 {
     constexpr const int amplitude = 32;
-    constexpr const bool skip = false;
+    constexpr const bool skip = true;
 
     [[nodiscard]] btn::sprite_ptr _create_sprite(int x, int graphics_index,
                                                  const btn::sprite_affine_mat_ptr& affine_mat)

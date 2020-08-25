@@ -1,5 +1,5 @@
-#ifndef BF_GAME_GIGABAT_BOSS_H
-#define BF_GAME_GIGABAT_BOSS_H
+#ifndef BF_GAME_WIZARD_BOSS_H
+#define BF_GAME_WIZARD_BOSS_H
 
 #include "btn_deque.h"
 #include "btn_random.h"
@@ -15,16 +15,16 @@ namespace bf::game
 class hero;
 enum class enemy_bullet_type : int8_t;
 
-class gigabat_boss : public boss
+class wizard_boss : public boss
 {
 
 public:
-    gigabat_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette);
+    wizard_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette);
 
 protected:
     [[nodiscard]] btn::fixed_point _position() const final
     {
-        return _gigabat_position;
+        return _wizard_position;
     }
 
     void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
@@ -40,11 +40,12 @@ protected:
                                                    bool hero_is_looking_down) const final;
 
 private:
-    btn::vector<btn::fixed_rect, 1> _gigabat_rects;
-    btn::vector<btn::sprite_ptr, 4> _sprites;
-    btn::optional<btn::sprite_ptr> _shadow_sprite;
-    btn::vector<btn::sprite_animate_action<5>, 2> _animate_actions;
-    btn::fixed_point _gigabat_position;
+    btn::vector<btn::fixed_rect, 1> _wizard_rects;
+    btn::vector<btn::sprite_ptr, 2> _sprites;
+    btn::vector<btn::sprite_animate_action<6>, 2> _animate_actions;
+    btn::vector<btn::sprite_ptr, 4> _aura_sprites;
+    btn::vector<btn::sprite_animate_action<5>, 4> _aura_sprite_animate_actions;
+    btn::fixed_point _wizard_position;
     btn::sprite_palette_ptr _palette;
     btn::optional<btn::sprite_palette_fade_loop_action> _palette_action;
     btn::deque<btn::sprite_animate_action<5>, 8> _mini_explosions;
@@ -66,7 +67,7 @@ private:
 
     void _shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
 
-    void _update_sprites(const btn::fixed_point& hero_position, bool hide_shadow);
+    void _update_sprites(const btn::fixed_point& hero_position);
 
     void _update_rects();
 

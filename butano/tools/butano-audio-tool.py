@@ -10,23 +10,27 @@ import subprocess
 from file_info import FileInfo
 
 
-def list_audio_file_paths(audio_folder_paths):
+def list_audio_files(audio_folder_paths):
     audio_folder_path_list = audio_folder_paths.split(' ')
+    audio_file_names_no_ext = []
     audio_file_paths = []
 
     for audio_folder_path in audio_folder_path_list:
-        audio_file_names = sorted(os.listdir(audio_folder_path))
+        folder_audio_file_names = sorted(os.listdir(audio_folder_path))
 
-        for audio_file_name in audio_file_names:
+        for audio_file_name in folder_audio_file_names:
             if FileInfo.validate(audio_file_name):
                 audio_file_path = audio_folder_path + '/' + audio_file_name
 
                 if os.path.isfile(audio_file_path):
+                    audio_file_name_split = os.path.splitext(audio_file_name)
+                    audio_file_name_no_ext = audio_file_name_split[0]
+                    audio_file_names_no_ext.append(audio_file_name_no_ext)
                     audio_file_paths.append(audio_file_path)
             else:
                 print('Audio file skipped: ' + audio_file_name)
 
-    return audio_file_paths
+    return audio_file_names_no_ext, audio_file_paths
 
 
 def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path):
@@ -73,7 +77,7 @@ def write_output_file(items, include_guard, include_file, namespace, item_class,
     print(item_class + 's file written in ' + output_file_path)
 
 
-def write_output_files(soundbank_header_path, build_folder_path):
+def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path):
     music_items_list = []
     sound_items_list = []
     music_final_names_set = set()
@@ -86,17 +90,23 @@ def write_output_files(soundbank_header_path, build_folder_path):
             final_name = soundbank_name[4:].lower()
 
             if soundbank_name.startswith('MOD_'):
-                if final_name in music_final_names_set:
-                    raise ValueError('There\'s two or more music items with the same name: ' + final_name)
+                if final_name not in audio_file_names_no_ext:
+                    print('Music item not present in files. Skipped: ' + final_name)
+                else:
+                    if final_name in music_final_names_set:
+                        raise ValueError('There\'s two or more music items with the same name: ' + final_name)
 
-                music_final_names_set.add(final_name)
-                music_items_list.append([final_name, soundbank_words[2]])
+                    music_final_names_set.add(final_name)
+                    music_items_list.append([final_name, soundbank_words[2]])
             elif soundbank_name.startswith('SFX_'):
-                if final_name in sound_final_names_set:
-                    raise ValueError('There\'s two or more sound items with the same name: ' + final_name)
+                if final_name not in audio_file_names_no_ext:
+                    print('Sound item not present in files. Skipped: ' + final_name)
+                else:
+                    if final_name in sound_final_names_set:
+                        raise ValueError('There\'s two or more sound items with the same name: ' + final_name)
 
-                sound_final_names_set.add(final_name)
-                sound_items_list.append([final_name, soundbank_words[2]])
+                    sound_final_names_set.add(final_name)
+                    sound_items_list.append([final_name, soundbank_words[2]])
 
     write_output_file(music_items_list, 'BTN_MUSIC_ITEMS_H', 'btn_music_item.h', 'btn::music_items', 'music_item',
                       build_folder_path + '/btn_music_items.h')
@@ -106,7 +116,7 @@ def write_output_files(soundbank_header_path, build_folder_path):
 
 
 def process(audio_folder_paths, build_folder_path):
-    audio_file_paths = list_audio_file_paths(audio_folder_paths)
+    audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_folder_paths)
     file_info_path = build_folder_path + '/_btn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
     new_file_info = FileInfo.build_from_files(audio_file_paths)
@@ -118,7 +128,7 @@ def process(audio_folder_paths, build_folder_path):
     soundbank_bin_path = build_folder_path + '/_btn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/_btn_audio_soundbank.h'
     process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)
-    write_output_files(soundbank_header_path, build_folder_path)
+    write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path)
     os.remove(soundbank_header_path)
     new_file_info.write(file_info_path)
 

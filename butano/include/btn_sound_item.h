@@ -33,15 +33,7 @@ public:
 
     void play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const;
 
-    [[nodiscard]] constexpr friend bool operator==(sound_item a, sound_item b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(sound_item a, sound_item b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(sound_item a, sound_item b) = default;
 
 private:
     int _id;

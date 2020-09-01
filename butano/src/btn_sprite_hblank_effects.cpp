@@ -175,16 +175,7 @@ namespace
             {
             }
 
-            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b)
-            {
-                return a.hw_y == b.hw_y && a.shape == b.shape && a.bpp_mode == b.bpp_mode &&
-                        a.affine_mode == b.affine_mode;
-            }
-
-            [[nodiscard]] friend bool operator!=(const last_value_type& a, const last_value_type& b)
-            {
-                return ! (a == b);
-            }
+            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b) = default;
         };
     };
 
@@ -210,16 +201,7 @@ namespace
         }
 
         [[nodiscard]] friend bool operator==(const second_attributes_last_value_type& a,
-                                             const second_attributes_last_value_type& b)
-        {
-            return a.hw_x == b.hw_x && a.size == b.size;
-        }
-
-        [[nodiscard]] friend bool operator!=(const second_attributes_last_value_type& a,
-                                             const second_attributes_last_value_type& b)
-        {
-            return ! (a == b);
-        }
+                                             const second_attributes_last_value_type& b) = default;
     };
 
 

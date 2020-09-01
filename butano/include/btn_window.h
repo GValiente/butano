@@ -49,15 +49,7 @@ public:
 
     void set_show_blending(bool show);
 
-    [[nodiscard]] friend bool operator==(const window& a, const window& b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] friend bool operator!=(const window& a, const window& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const window& a, const window& b) = default;
 
 protected:
     explicit window(int id) :

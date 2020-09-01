@@ -80,15 +80,7 @@ public:
         btn::swap(a._handle, b._handle);
     }
 
-    [[nodiscard]] friend bool operator==(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
-    {
-        return a._handle == b._handle;
-    }
-
-    [[nodiscard]] friend bool operator!=(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const sprite_tiles_ptr& a, const sprite_tiles_ptr& b) = default;
 
 private:
     int16_t _handle;

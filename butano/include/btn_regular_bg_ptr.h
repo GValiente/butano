@@ -177,15 +177,7 @@ public:
         btn::swap(a._handle, b._handle);
     }
 
-    [[nodiscard]] friend bool operator==(const regular_bg_ptr& a, const regular_bg_ptr& b)
-    {
-        return a._handle == b._handle;
-    }
-
-    [[nodiscard]] friend bool operator!=(const regular_bg_ptr& a, const regular_bg_ptr& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const regular_bg_ptr& a, const regular_bg_ptr& b) = default;
 
 private:
     using handle_type = void*;

@@ -3,6 +3,7 @@
 #include "btn_fixed.h"
 #include "btn_optional.h"
 #include "btn_sprite_ptr.h"
+#include "btn_fixed_point.h"
 
 namespace btn
 {

@@ -27,15 +27,7 @@ public:
 
     void play(fixed volume, bool loop) const;
 
-    [[nodiscard]] constexpr friend bool operator==(music_item a, music_item b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(music_item a, music_item b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(music_item a, music_item b) = default;
 
 private:
     int _id;

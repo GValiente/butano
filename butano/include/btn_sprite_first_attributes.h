@@ -80,16 +80,8 @@ public:
         _visible = visible;
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const sprite_first_attributes& a, const sprite_first_attributes& b)
-    {
-        return a._y == b._y && a._mosaic_enabled == b._mosaic_enabled && a._blending_enabled == b._blending_enabled &&
-                a._window_enabled == b._window_enabled && a._visible == b._visible;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_first_attributes& a, const sprite_first_attributes& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const sprite_first_attributes& a,
+                                                   const sprite_first_attributes& b) = default;
 
 private:
     fixed _y = 0;

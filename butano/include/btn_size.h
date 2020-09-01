@@ -105,15 +105,7 @@ public:
         return size(a._width / b, a._height / b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const size& a, const size& b)
-    {
-        return a._width == b._width && a._height == b._height;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const size& a, const size& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const size& a, const size& b) = default;
 
 private:
     int _width = 0;

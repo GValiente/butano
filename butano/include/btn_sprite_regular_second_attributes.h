@@ -50,16 +50,7 @@ public:
     }
 
     [[nodiscard]] constexpr friend bool operator==(const sprite_regular_second_attributes& a,
-                                                   const sprite_regular_second_attributes& b)
-    {
-        return a._x == b._x && a._horizontal_flip == b._horizontal_flip && a._vertical_flip == b._vertical_flip;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_regular_second_attributes& a,
-                                                   const sprite_regular_second_attributes& b)
-    {
-        return ! (a == b);
-    }
+                                                   const sprite_regular_second_attributes& b) = default;
 
 private:
     fixed _x = 0;

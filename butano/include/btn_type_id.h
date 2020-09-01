@@ -21,15 +21,7 @@ public:
 
     type_id_t() = default;
 
-    [[nodiscard]] friend bool operator==(type_id_t a, type_id_t b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] friend bool operator!=(type_id_t a, type_id_t b)
-    {
-        return a._id != b._id;
-    }
+    [[nodiscard]] friend bool operator==(type_id_t a, type_id_t b) = default;
 
 protected:
     using id_type = type_id_t();

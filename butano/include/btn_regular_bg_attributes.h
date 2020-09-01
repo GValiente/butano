@@ -46,15 +46,7 @@ public:
         _mosaic_enabled = mosaic_enabled;
     }
 
-    [[nodiscard]] friend bool operator==(const regular_bg_attributes& a, const regular_bg_attributes& b)
-    {
-        return a._map == b._map && a._priority == b._priority && a._mosaic_enabled == b._mosaic_enabled;
-    }
-
-    [[nodiscard]] friend bool operator!=(const regular_bg_attributes& a, const regular_bg_attributes& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const regular_bg_attributes& a, const regular_bg_attributes& b) = default;
 
 private:
     regular_bg_map_ptr _map;

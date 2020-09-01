@@ -96,15 +96,7 @@ public:
         return point(a._x / b, a._y / b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const point& a, const point& b)
-    {
-        return a._x == b._x && a._y == b._y;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const point& a, const point& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const point& a, const point& b) = default;
 
 private:
     int _x = 0;

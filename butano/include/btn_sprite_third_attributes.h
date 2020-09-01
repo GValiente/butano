@@ -50,15 +50,7 @@ public:
 
     void set_bg_priority(int bg_priority);
 
-    [[nodiscard]] friend bool operator==(const sprite_third_attributes& a, const sprite_third_attributes& b)
-    {
-        return a._tiles == b._tiles && a._palette == b._palette && a._bg_priority == b._bg_priority;
-    }
-
-    [[nodiscard]] friend bool operator!=(const sprite_third_attributes& a, const sprite_third_attributes& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const sprite_third_attributes& a, const sprite_third_attributes& b) = default;
 
 private:
     sprite_tiles_ptr _tiles;

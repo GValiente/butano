@@ -56,16 +56,7 @@ public:
         return _character_widths;
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const sprite_font& a, const sprite_font& b)
-    {
-        return a._item == b._item && a._utf8_characters == b._utf8_characters &&
-                a._character_widths == b._character_widths;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_font& a, const sprite_font& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const sprite_font& a, const sprite_font& b) = default;
 
 private:
     sprite_item _item;

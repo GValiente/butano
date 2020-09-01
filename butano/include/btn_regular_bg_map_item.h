@@ -42,18 +42,9 @@ public:
 
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
-    [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional(
-            bg_tiles_ptr tiles, bg_palette_ptr palette) const;
+    [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
-    [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b)
-    {
-        return a._cells_ptr == b._cells_ptr && a._dimensions == b._dimensions;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const regular_bg_map_item& a, const regular_bg_map_item& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b) = default;
 
 private:
     const regular_bg_map_cell* _cells_ptr;

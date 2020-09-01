@@ -29,15 +29,7 @@ public:
 
     void set_visible(bool visible);
 
-    [[nodiscard]] friend bool operator==(const hblank_effect_ptr& a, const hblank_effect_ptr& b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] friend bool operator!=(const hblank_effect_ptr& a, const hblank_effect_ptr& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const hblank_effect_ptr& a, const hblank_effect_ptr& b) = default;
 
 protected:
     explicit hblank_effect_ptr(int id) :

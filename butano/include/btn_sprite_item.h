@@ -64,15 +64,7 @@ public:
 
     [[nodiscard]] optional<sprite_ptr> create_sprite_optional(const fixed_point& position, int graphics_index) const;
 
-    [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b)
-    {
-        return a._shape_size == b._shape_size && a._tiles_item == b._tiles_item && a._palette_item == b._palette_item;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_item& a, const sprite_item& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b) = default;
 
 private:
     sprite_shape_size _shape_size;

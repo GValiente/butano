@@ -167,16 +167,7 @@ namespace
             {
             }
 
-            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b)
-            {
-                return a._map_dimensions == b._map_dimensions && a._tiles_cbb == b._tiles_cbb &&
-                        a._bpp_mode == b._bpp_mode;
-            }
-
-            [[nodiscard]] friend bool operator!=(const last_value_type& a, const last_value_type& b)
-            {
-                return ! (a == b);
-            }
+            [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b) = default;
 
         private:
             size _map_dimensions;

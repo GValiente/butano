@@ -85,15 +85,7 @@ public:
         btn::swap(a._handle, b._handle);
     }
 
-    [[nodiscard]] friend bool operator==(const bg_tiles_ptr& a, const bg_tiles_ptr& b)
-    {
-        return a._handle == b._handle;
-    }
-
-    [[nodiscard]] friend bool operator!=(const bg_tiles_ptr& a, const bg_tiles_ptr& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const bg_tiles_ptr& a, const bg_tiles_ptr& b) = default;
 
 private:
     int8_t _handle;

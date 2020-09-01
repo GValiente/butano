@@ -97,15 +97,7 @@ public:
         btn::swap(a._id, b._id);
     }
 
-    [[nodiscard]] friend bool operator==(const sprite_affine_mat_ptr& a, const sprite_affine_mat_ptr& b)
-    {
-        return a._id == b._id;
-    }
-
-    [[nodiscard]] friend bool operator!=(const sprite_affine_mat_ptr& a, const sprite_affine_mat_ptr& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] friend bool operator==(const sprite_affine_mat_ptr& a, const sprite_affine_mat_ptr& b) = default;
 
 private:
     int8_t _id;

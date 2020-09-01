@@ -91,15 +91,7 @@ public:
             return static_cast<pointer>(_node);
         }
 
-        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
-        {
-            return a._node == b._node;
-        }
-
-        [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
-        {
-            return ! (a == b);
-        }
+        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b) = default;
 
     private:
         friend class intrusive_list;
@@ -160,15 +152,7 @@ public:
             return static_cast<const_pointer>(_node);
         }
 
-        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
-        {
-            return a._node == b._node;
-        }
-
-        [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
-        {
-            return ! (a == b);
-        }
+        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b) = default;
 
     private:
         friend class intrusive_list;

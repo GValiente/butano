@@ -143,15 +143,7 @@ public:
         return fixed_size(a._width / b, a._height / b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const fixed_size& a, const fixed_size& b)
-    {
-        return a._width == b._width && a._height == b._height;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const fixed_size& a, const fixed_size& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const fixed_size& a, const fixed_size& b) = default;
 
 private:
     fixed _width;

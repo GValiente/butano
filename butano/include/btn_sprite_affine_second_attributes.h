@@ -41,16 +41,7 @@ public:
     }
 
     [[nodiscard]] friend bool operator==(const sprite_affine_second_attributes& a,
-                                         const sprite_affine_second_attributes& b)
-    {
-        return a._x == b._x && a._affine_mat == b._affine_mat;
-    }
-
-    [[nodiscard]] friend bool operator!=(const sprite_affine_second_attributes& a,
-                                         const sprite_affine_second_attributes& b)
-    {
-        return ! (a == b);
-    }
+                                         const sprite_affine_second_attributes& b) = default;
 
 private:
     fixed _x;

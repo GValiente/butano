@@ -20,4 +20,3 @@
 #define BTN_AUDIO_MIXING_RATE_31_KHZ    7
 
 #endif
-

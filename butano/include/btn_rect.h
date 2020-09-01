@@ -175,15 +175,7 @@ public:
         return rect(a._position, a._dimensions / b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const rect& a, const rect& b)
-    {
-        return a._position == b._position && a._dimensions == b._dimensions;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const rect& a, const rect& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const rect& a, const rect& b) = default;
 
 private:
     point _position;

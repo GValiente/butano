@@ -90,15 +90,7 @@ public:
             return &static_cast<value_node_type*>(_node)->value;
         }
 
-        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
-        {
-            return a._node == b._node;
-        }
-
-        [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
-        {
-            return ! (a == b);
-        }
+        [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b) = default;
 
     private:
         friend class iforward_list;
@@ -153,15 +145,7 @@ public:
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
-        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
-        {
-            return a._node == b._node;
-        }
-
-        [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
-        {
-            return ! (a == b);
-        }
+        [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b) = default;
 
     private:
         friend class iforward_list;

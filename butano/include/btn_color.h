@@ -84,15 +84,7 @@ public:
         _data = uint16_t((_data & 0x001F) + (_data & 0x03E0) + (blue << 10));
     }
 
-    [[nodiscard]] constexpr friend bool operator==(color a, color b)
-    {
-        return a._data == b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(color a, color b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(color a, color b) = default;
 
 private:
     uint16_t _data = 0;

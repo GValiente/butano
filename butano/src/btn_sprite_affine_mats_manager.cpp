@@ -68,15 +68,7 @@ namespace
         {
         }
 
-        [[nodiscard]] friend bool operator==(const registers& a, const registers& b)
-        {
-            return a._pa == b._pa && a._pb == b._pb && a._pc == b._pc && a._pd == b._pd;
-        }
-
-        [[nodiscard]] friend bool operator!=(const registers& a, const registers& b)
-        {
-            return ! (a == b);
-        }
+        [[nodiscard]] friend bool operator==(const registers& a, const registers& b) = default;
 
     private:
         int _pa;

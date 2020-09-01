@@ -182,15 +182,7 @@ public:
         return fixed_rect(a._position, a._dimensions / b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(const fixed_rect& a, const fixed_rect& b)
-    {
-        return a._position == b._position && a._dimensions == b._dimensions;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const fixed_rect& a, const fixed_rect& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const fixed_rect& a, const fixed_rect& b) = default;
 
 private:
     fixed_point _position;

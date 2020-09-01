@@ -3,6 +3,7 @@
 
 #include "btn_assert.h"
 #include "btn_limits.h"
+#include "btn_compare.h"
 #include "btn_functional.h"
 
 namespace btn
@@ -244,35 +245,7 @@ public:
         return a.division(b);
     }
 
-    [[nodiscard]] constexpr friend bool operator==(fixed_t a, fixed_t b)
-    {
-        return a._data == b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(fixed_t a, fixed_t b)
-    {
-        return a._data != b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator<(fixed_t a, fixed_t b)
-    {
-        return a._data < b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator<=(fixed_t a, fixed_t b)
-    {
-        return a._data <= b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator>(fixed_t a, fixed_t b)
-    {
-        return a._data > b._data;
-    }
-
-    [[nodiscard]] constexpr friend bool operator>=(fixed_t a, fixed_t b)
-    {
-        return a._data >= b._data;
-    }
+    [[nodiscard]] constexpr friend auto operator<=>(fixed_t a, fixed_t b) = default;
 
 private:
     int _data = 0;

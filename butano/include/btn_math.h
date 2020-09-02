@@ -31,6 +31,8 @@ namespace _btn
         btn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
         return newton_raphson_sqrt_impl(value, new_result, current_result);
     }
+
+    [[nodiscard]] int sqrt_impl(int value);
 }
 
 namespace btn
@@ -44,7 +46,19 @@ namespace btn
     /**
      * @brief Integer square root.
      */
-    [[nodiscard]] int sqrt(int value);
+    [[nodiscard]] constexpr int sqrt(int value)
+    {
+        BTN_ASSERT(value >= 0, "Invalid value: ", value);
+
+        if(is_constant_evaluated())
+        {
+            return _btn::newton_raphson_sqrt_impl(value, value, 0);
+        }
+        else
+        {
+            return _btn::sqrt_impl(value);
+        }
+    }
 
     /**
      * @brief Fixed point square root.
@@ -52,7 +66,7 @@ namespace btn
      * https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp
      */
     template<int Precision = 12>
-    [[nodiscard]] fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
+    [[nodiscard]] constexpr fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
     {
         if constexpr(Precision % 2)
         {
@@ -67,7 +81,7 @@ namespace btn
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)
     {
-        BTN_ASSERT(value >= 0, "Value is negative: ", value);
+        BTN_ASSERT(value >= 0, "Invalid value: ", value);
 
         return _btn::newton_raphson_sqrt_impl(value, value, Type(0));
     }

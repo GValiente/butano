@@ -2,14 +2,12 @@
 
 #include "../hw/include/btn_hw_math.h"
 
-namespace btn
+namespace _btn
 {
 
-int sqrt(int value)
+int sqrt_impl(int value)
 {
-    BTN_ASSERT(value >= 0, "Value must be positive: ", value);
-
-    return hw::sqrt(value);
+    return btn::hw::sqrt(value);
 }
 
 }

@@ -32,7 +32,7 @@ public:
 
     constexpr istring& operator=(const istring& other)
     {
-        BTN_CONSTEXPR_ASSERT(other._size <= _max_size, "Not enough space in string");
+        BTN_ASSERT(other._size <= _max_size, "Not enough space in string: ", other._size, " - ", _max_size);
 
         btn::copy(other.begin(), other.end(), begin());
         _size = other._size;
@@ -42,10 +42,10 @@ public:
 
     constexpr istring& operator=(const_pointer str)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(str, "Str is null");
 
         size_type length = _strlen(str);
-        BTN_CONSTEXPR_ASSERT(length <= _max_size, "Not enough space in string");
+        BTN_ASSERT(length <= _max_size, "Not enough space in string: ", length, " - ", _max_size);
 
         btn::copy(str, str + length, begin());
         _size = length;
@@ -120,56 +120,56 @@ public:
 
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < _size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < _size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr const_reference at(size_type index) const
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < _size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr reference at(size_type index)
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < _size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr const_reference front() const
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
 
     [[nodiscard]] constexpr reference front()
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
 
     [[nodiscard]] constexpr const_reference back() const
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
 
     [[nodiscard]] constexpr reference back()
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
@@ -238,7 +238,7 @@ public:
 
     constexpr void push_back(value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(! full(), "String is full");
+        BTN_ASSERT(! full(), "String is full");
 
         pointer data = _data + _size;
         data[0] = value;
@@ -248,7 +248,7 @@ public:
 
     constexpr void pop_back()
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         --_size;
         _data[_size] = 0;
@@ -262,7 +262,8 @@ public:
 
     constexpr istring& append(const istring& other, size_type subposition)
     {
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
 
         size_type sublength = other._size - subposition;
         append(other.begin() + subposition, other.begin() + subposition + sublength);
@@ -271,9 +272,10 @@ public:
 
     constexpr istring& append(const istring& other, size_type subposition, size_type sublength)
     {
-        BTN_CONSTEXPR_ASSERT(subposition >= 0, "Invalid subposition");
-        BTN_CONSTEXPR_ASSERT(sublength >= 0, "Invalid sublength");
-        BTN_CONSTEXPR_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength");
+        BTN_ASSERT(subposition >= 0, "Invalid subposition: ", subposition);
+        BTN_ASSERT(sublength >= 0, "Invalid sublength: ", sublength);
+        BTN_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength: ",
+                   subposition, " - ", sublength, " - ", other._size);
 
         append(other.begin() + subposition, other.begin() + subposition + sublength);
         return *this;
@@ -287,7 +289,7 @@ public:
 
     constexpr istring& append(const_pointer str)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(str, "Str is null");
 
         append(str, str + _strlen(str));
         return *this;
@@ -295,8 +297,8 @@ public:
 
     constexpr istring& append(const_pointer str, size_type str_size)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(str_size >= 0, "Invalid str size");
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
 
         append(str, str + str_size);
         return *this;
@@ -304,12 +306,12 @@ public:
 
     constexpr istring& append(size_type count, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
 
         auto append_position = end();
         size_type size = _size;
         size_type to_position = size + count;
-        BTN_CONSTEXPR_ASSERT(to_position <= _max_size, "Not enough space in string");
+        BTN_ASSERT(to_position <= _max_size, "Not enough space in string: ", to_position, " - ", _max_size);
 
         if(to_position == _max_size)
         {
@@ -330,12 +332,12 @@ public:
     constexpr istring& append(const_iterator first, const_iterator last)
     {
         size_type count = last - first;
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid range");
+        BTN_ASSERT(count >= 0, "Invalid range");
 
         iterator append_position = end();
         size_type size = _size;
         size_type to_position = size + count;
-        BTN_CONSTEXPR_ASSERT(to_position <= _max_size, "Not enough space in string");
+        BTN_ASSERT(to_position <= _max_size, "Not enough space in string: ", to_position, " - ", _max_size);
 
         if(to_position == _max_size)
         {
@@ -365,7 +367,7 @@ public:
 
     constexpr iterator insert(const_iterator position, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(! full(), "String is full");
+        BTN_ASSERT(! full(), "String is full");
 
         auto insert_position = const_cast<iterator>(position);
         iterator last = end();
@@ -389,15 +391,16 @@ public:
 
     constexpr void insert(const_iterator position, size_type count, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
 
         auto insert_position = const_cast<iterator>(position);
         size_type start = position - begin();
-        BTN_CONSTEXPR_ASSERT(start < _max_size, "Not enough space in string");
+        BTN_ASSERT(start < _max_size, "Not enough space in string: ", start, " - ", _max_size);
 
         if(start + count >= _max_size)
         {
-            BTN_CONSTEXPR_ASSERT(_size + count <= _max_size, "Not enough space in string");
+            BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ",
+                       _size, " - ", count, " - ", _max_size);
 
             _size = _max_size;
             fill(insert_position, end(), value);
@@ -409,7 +412,8 @@ public:
             size_type remaining_characters = _size - start;
             size_type max_shift_characters = _max_size - start - shift_amount;
             size_type characters_to_shift = min(max_shift_characters, remaining_characters);
-            BTN_CONSTEXPR_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string");
+            BTN_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string: ",
+                       start, " - ", shift_amount, " - ", remaining_characters, " - ", _max_size);
 
             _size += shift_amount;
             copy_backward(insert_position, insert_position + characters_to_shift,
@@ -423,15 +427,16 @@ public:
     constexpr void insert(const_iterator position, const_iterator first, const_iterator last)
     {
         size_type count = last - first;
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid range");
+        BTN_ASSERT(count >= 0, "Invalid range");
 
         auto insert_position = const_cast<iterator>(position);
         size_type start = position - begin();
-        BTN_CONSTEXPR_ASSERT(start < _max_size, "Not enough space in string");
+        BTN_ASSERT(start < _max_size, "Not enough space in string: ", start, " - ", _max_size);
 
         if(start + count >= _max_size)
         {
-            BTN_CONSTEXPR_ASSERT(_size + count <= _max_size, "Not enough space in string");
+            BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ",
+                       _size, " - ", count, " - ", _max_size);
 
             _size = _max_size;
 
@@ -449,7 +454,8 @@ public:
             size_type remaining_characters = _size - start;
             size_type max_shift_characters = _max_size - start - shift_amount;
             size_type characters_to_shift = min(max_shift_characters, remaining_characters);
-            BTN_CONSTEXPR_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string");
+            BTN_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string: ",
+                       start, " - ", shift_amount, " - ", remaining_characters, " - ", _max_size);
 
             _size += shift_amount;
             copy_backward(position, position + characters_to_shift, begin() + to_position + characters_to_shift);
@@ -465,7 +471,7 @@ public:
 
     constexpr istring& insert(size_type position, const istring& other)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         insert(begin() + position, other.begin(), other.end());
         return *this;
@@ -473,8 +479,9 @@ public:
 
     constexpr istring& insert(size_type position, const istring& other, size_type subposition)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
 
         size_type sublength = other._size - subposition;
         insert(begin() + position, other.begin() + subposition, other.begin() + subposition + sublength);
@@ -483,10 +490,11 @@ public:
 
     constexpr istring& insert(size_type position, const istring& other, size_type subposition, size_type sublength)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0, "Invalid subposition");
-        BTN_CONSTEXPR_ASSERT(sublength >= 0, "Invalid sublength");
-        BTN_CONSTEXPR_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BTN_ASSERT(subposition >= 0, "Invalid subposition: ", subposition);
+        BTN_ASSERT(sublength >= 0, "Invalid sublength: ", sublength);
+        BTN_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength: ",
+                   subposition, " - ", sublength, " - ", other._size);
 
         insert(begin() + position, other.begin() + subposition, other.begin() + subposition + sublength);
         return *this;
@@ -494,8 +502,8 @@ public:
 
     constexpr istring& insert(size_type position, const_pointer str)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BTN_ASSERT(str, "Str is null");
 
         insert(begin() + position, str, str + _strlen(str));
         return *this;
@@ -503,9 +511,9 @@ public:
 
     constexpr istring& insert(size_type position, const_pointer str, size_type str_size)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(str_size >= 0, "Invalid str size");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
 
         insert(begin() + position, str, str + str_size);
         return *this;
@@ -513,7 +521,7 @@ public:
 
     constexpr istring& insert(size_type position, size_type count, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         insert(begin() + position, count, value);
         return *this;
@@ -521,7 +529,7 @@ public:
 
     constexpr istring& erase(size_type position)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type length = _size - position;
         erase(begin() + position, begin() + position + length);
@@ -530,8 +538,8 @@ public:
 
     constexpr istring& erase(size_type position, size_type length)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0, "Invalid length");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BTN_ASSERT(length >= 0, "Invalid length: ", length);
 
         erase(begin() + position, begin() + position + length);
         return *this;
@@ -539,7 +547,7 @@ public:
 
     constexpr iterator erase(const_iterator position)
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String is empty");
+        BTN_ASSERT(! empty(), "String is empty");
 
         auto erase_position = const_cast<iterator>(position);
         btn::copy(erase_position + 1, end(), erase_position);
@@ -551,7 +559,7 @@ public:
     constexpr iterator erase(const_iterator first, const_iterator last)
     {
         size_type delete_count = last - first;
-        BTN_CONSTEXPR_ASSERT(_size >= delete_count, "Invalid range");
+        BTN_ASSERT(delete_count <= _size, "Invalid range: ", delete_count, " - ", _size);
 
         auto erase_first = const_cast<iterator>(first);
         auto erase_last = const_cast<iterator>(last);
@@ -575,8 +583,8 @@ public:
 
     constexpr size_type copy(pointer str, size_type length)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size, "Invalid length");
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(length >= 0 && length <= _size, "Invalid length: ", length, " - ", _size);
 
         for(size_type index = 0; index < length; ++index)
         {
@@ -588,12 +596,12 @@ public:
 
     constexpr size_type copy(pointer str, size_type length, size_type position)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(length >= 0, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(length >= 0, "Invalid length: ", length);
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type end = position + length;
-        BTN_CONSTEXPR_ASSERT(end <= _size, "Invalid position or length");
+        BTN_ASSERT(end <= _size, "Invalid position or length: ", end, " - ", _size);
 
         for(size_type index = position; index < end; ++index)
         {
@@ -605,8 +613,9 @@ public:
 
     constexpr istring& replace(size_type position, size_type length, const istring& other)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
 
         erase(position, length);
         insert(position, other);
@@ -624,9 +633,11 @@ public:
 
     constexpr istring& replace(size_type position, size_type length, const istring& other, size_type subposition)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
 
         size_type sublength = other._size - subposition;
         erase(position, length);
@@ -637,10 +648,13 @@ public:
     constexpr istring& replace(size_type position, size_type length, const istring& other, size_type subposition,
                                size_type sublength)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
-        BTN_CONSTEXPR_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
+        BTN_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength: ",
+                   sublength, " - ", other._size, " - ", subposition);
 
         erase(position, length);
         insert(position, other, subposition, sublength);
@@ -649,9 +663,10 @@ public:
 
     constexpr istring& replace(size_type position, size_type length, const_pointer str)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(str, "Str is null");
 
         erase(position, length);
         insert(position, str, _strlen(str));
@@ -660,7 +675,7 @@ public:
 
     constexpr istring& replace(const_iterator first, const_iterator last, const_pointer str)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(str, "Str is null");
 
         auto replace_first = const_cast<iterator>(first);
         auto replace_last = const_cast<iterator>(last);
@@ -671,10 +686,11 @@ public:
 
     constexpr istring& replace(size_type position, size_type length, const_pointer str, size_type str_size)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(str_size >= 0, "Invalid str size");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
 
         erase(position, length);
         insert(position, str, str_size);
@@ -683,8 +699,8 @@ public:
 
     constexpr istring& replace(const_iterator first, const_iterator last, const_pointer str, size_type str_size)
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(str_size >= 0, "Invalid str size");
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
 
         auto replace_first = const_cast<iterator>(first);
         auto replace_last = const_cast<iterator>(last);
@@ -695,9 +711,10 @@ public:
 
     constexpr istring& replace(size_type position, size_type length, size_type count, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
 
         erase(position, length);
         insert(position, count, value);
@@ -706,7 +723,7 @@ public:
 
     constexpr istring& replace(const_iterator first, const_iterator last, size_type count, value_type value)
     {
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
 
         auto replace_first = const_cast<iterator>(first);
         auto replace_last = const_cast<iterator>(last);
@@ -727,25 +744,26 @@ public:
 
     [[nodiscard]] constexpr size_type compare(const istring& other) const
     {
-        return _compare(_data, _data + _size,
-                        other._data, other._data + other._size);
+        return _compare(_data, _data + _size, other._data, other._data + other._size);
     }
 
     [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
 
-        return _compare(_data + position, _data + position + length,
-                        other._data, other._data + other._size);
+        return _compare(_data + position, _data + position + length, other._data, other._data + other._size);
     }
 
     [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other,
                                               size_type subposition) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
 
         size_type sublength = other._size - subposition;
         return _compare(_data + position, _data + position + length,
@@ -755,10 +773,13 @@ public:
     [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other,
                                               size_type subposition, size_type sublength) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition");
-        BTN_CONSTEXPR_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
+                   subposition, " - ", other._size);
+        BTN_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength: ",
+                   sublength, " - ", other._size, " - ", subposition);
 
         return _compare(_data + position, _data + position + length,
                         other._data + subposition, other._data + subposition + sublength);
@@ -766,29 +787,29 @@ public:
 
     [[nodiscard]] constexpr size_type compare(const_pointer str) const
     {
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(str, "Str is null");
 
-        return _compare(_data, _data + _size,
-                        str, str + _strlen(str));
+        return _compare(_data, _data + _size, str, str + _strlen(str));
     }
 
     [[nodiscard]] size_type compare(size_type position, size_type length, const_pointer str) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(str, "Str is null");
 
-        return _compare(_data + position, _data + position + length,
-                        str, str + _strlen(str));
+        return _compare(_data + position, _data + position + length, str, str + _strlen(str));
     }
 
     [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const_pointer str,
                                               size_type str_size) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position <= _size, "Invalid position");
-        BTN_CONSTEXPR_ASSERT(length >= 0 && length <= _size - position, "Invalid length");
-        BTN_CONSTEXPR_ASSERT(str, "Str is null");
-        BTN_CONSTEXPR_ASSERT(str_size >= 0, "Invalid str size");
+        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
+        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
+                   length, " - ", _size, " - ", position);
+        BTN_ASSERT(str, "Str is null");
+        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
 
         return _compare(_data + position, _data + position + length,
                         str, str + str_size);
@@ -818,8 +839,8 @@ public:
     {
         if(_data != other._data)
         {
-            BTN_CONSTEXPR_ASSERT(_size <= other._max_size, "Invalid size");
-            BTN_CONSTEXPR_ASSERT(_max_size <= other._size, "Invalid max size");
+            BTN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
+            BTN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
 
             pointer min_data = nullptr;
             pointer max_data = nullptr;

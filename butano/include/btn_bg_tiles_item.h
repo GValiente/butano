@@ -18,8 +18,8 @@ public:
     constexpr explicit bg_tiles_item(const span<const tile>& tiles_ref) :
         _tiles_ref(tiles_ref)
     {
-        BTN_CONSTEXPR_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
-                             "Invalid tiles count");
+        BTN_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
+                   "Invalid tiles count: ", _tiles_ref.size());
     }
 
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const

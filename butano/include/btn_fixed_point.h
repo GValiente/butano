@@ -80,8 +80,6 @@ public:
 
     constexpr fixed_point& operator/=(int value)
     {
-        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
-
         _x /= value;
         _y /= value;
         return *this;
@@ -89,8 +87,6 @@ public:
 
     constexpr fixed_point& operator/=(fixed value)
     {
-        BTN_CONSTEXPR_ASSERT(value != 0, "Invalid value");
-
         _x /= value;
         _y /= value;
         return *this;
@@ -118,15 +114,11 @@ public:
 
     [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(b != 0, "Invalid value");
-
         return fixed_point(a._x / b, a._y / b);
     }
 
     [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, fixed b)
     {
-        BTN_CONSTEXPR_ASSERT(b != 0, "Invalid value");
-
         return fixed_point(a._x / b, a._y / b);
     }
 

@@ -51,19 +51,19 @@ public:
         _begin(str),
         _end(str + size)
     {
-        BTN_CONSTEXPR_ASSERT(size >= 0, "Invalid size");
+        BTN_ASSERT(size >= 0, "Invalid size: ", size);
     }
 
     [[nodiscard]] constexpr const_reference front() const
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String view is empty");
+        BTN_ASSERT(! empty(), "String view is empty");
 
         return *_begin;
     }
 
     [[nodiscard]] constexpr const_reference back() const
     {
-        BTN_CONSTEXPR_ASSERT(! empty(), "String view is empty");
+        BTN_ASSERT(! empty(), "String view is empty");
 
         return *(_end - 1);
     }
@@ -130,22 +130,22 @@ public:
 
     [[nodiscard]] constexpr const_reference operator[](size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position < size(), "Invalid position");
+        BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
 
         return _begin[position];
     }
 
     [[nodiscard]] constexpr const_reference at(size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0 && position < size(), "Invalid position");
+        BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
 
         return _begin[position];
     }
 
     constexpr size_type copy(pointer destination, size_type count) const
     {
-        BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
+        BTN_ASSERT(destination, "Destination is null");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
 
         size_type n = min(count, size());
         btn::copy(_begin, _begin + n, destination);
@@ -154,9 +154,9 @@ public:
 
     constexpr size_type copy(pointer destination, size_type count, size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(destination, "Destination is null");
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(destination, "Destination is null");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type sz = size();
         size_type n = 0;
@@ -177,7 +177,7 @@ public:
 
     [[nodiscard]] constexpr string_view substr(size_type position) const
     {
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type sz = size();
         string_view view;
@@ -192,8 +192,8 @@ public:
 
     [[nodiscard]] constexpr string_view substr(size_type position, size_type count) const
     {
-        BTN_CONSTEXPR_ASSERT(count >= 0, "Invalid count");
-        BTN_CONSTEXPR_ASSERT(position >= 0, "Invalid position");
+        BTN_ASSERT(count >= 0, "Invalid count: ", count);
+        BTN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type sz = size();
         string_view view;
@@ -209,14 +209,14 @@ public:
 
     constexpr void remove_prefix(size_type n)
     {
-        BTN_CONSTEXPR_ASSERT(n <= size(), "Invalid n");
+        BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
 
         _begin += n;
     }
 
     constexpr void remove_suffix(size_type n)
     {
-        BTN_CONSTEXPR_ASSERT(n <= size(), "Invalid n");
+        BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
 
         _end -= n;
     }

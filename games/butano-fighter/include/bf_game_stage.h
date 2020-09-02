@@ -39,7 +39,7 @@ public:
         enemy_events(_enemy_events),
         boss_type(_boss_type)
     {
-        BTN_CONSTEXPR_ASSERT(! enemy_events.empty(), "Enemy events is empty");
+        BTN_ASSERT(! enemy_events.empty(), "Enemy events is empty");
     }
 };
 

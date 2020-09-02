@@ -43,10 +43,10 @@ public:
                                            uint16_t(graphics_index_1), uint16_t(graphics_index_2) },
                    _life, _experience, _animation_wait_frames)
     {
-        BTN_CONSTEXPR_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
-                             "Invalid graphics index 1");
-        BTN_CONSTEXPR_ASSERT(graphics_index_2 >= 0 && graphics_index_2 < sprite_item.tiles_item().graphics_count(),
-                             "Invalid graphics index 2");
+        BTN_ASSERT(graphics_index_1 >= 0 && graphics_index_1 < sprite_item.tiles_item().graphics_count(),
+                   "Invalid graphics index 1: ", graphics_index_1, " - ", sprite_item.tiles_item().graphics_count());
+        BTN_ASSERT(graphics_index_2 >= 0 && graphics_index_2 < sprite_item.tiles_item().graphics_count(),
+                   "Invalid graphics index 2: ", graphics_index_2, " - ", sprite_item.tiles_item().graphics_count());
     }
 
     constexpr enemy_data(const btn::sprite_item& _sprite_item, death_anim_type _death_anim,
@@ -73,17 +73,16 @@ public:
         experience(int16_t(_experience)),
         animation_wait_frames(int8_t(_animation_wait_frames))
     {
-        BTN_CONSTEXPR_ASSERT(dimensions.width() >= 1 && dimensions.width() <= constants::max_enemy_size,
-                             "Invalid width");
-        BTN_CONSTEXPR_ASSERT(dimensions.height() >= 1 && dimensions.height() <= constants::max_enemy_size,
-                             "Invalid height");
-        BTN_CONSTEXPR_ASSERT(_validate_graphic_indexes_groups(), "Invalid graphic indexes groups");
-        BTN_CONSTEXPR_ASSERT(_life >= 1 && _life < btn::numeric_limits<int16_t>::max(), "Invalid life");
-        BTN_CONSTEXPR_ASSERT(_experience >= 1 && _experience < btn::numeric_limits<int16_t>::max(),
-                             "Invalid experience");
-        BTN_CONSTEXPR_ASSERT(_animation_wait_frames >= 1 &&
-                             _animation_wait_frames < btn::numeric_limits<int8_t>::max(),
-                             "Invalid animation wait frames");
+        BTN_ASSERT(dimensions.width() >= 1 && dimensions.width() <= constants::max_enemy_size,
+                   "Invalid width: ", dimensions.width());
+        BTN_ASSERT(dimensions.height() >= 1 && dimensions.height() <= constants::max_enemy_size,
+                   "Invalid height: ", dimensions.height());
+        BTN_ASSERT(_validate_graphic_indexes_groups(), "Invalid graphic indexes groups");
+        BTN_ASSERT(_life >= 1 && _life < btn::numeric_limits<int16_t>::max(), "Invalid life: ", _life);
+        BTN_ASSERT(_experience >= 1 && _experience < btn::numeric_limits<int16_t>::max(),
+                   "Invalid experience: ", _experience);
+        BTN_ASSERT(_animation_wait_frames >= 1 && _animation_wait_frames < btn::numeric_limits<int8_t>::max(),
+                   "Invalid animation wait frames: ", _animation_wait_frames);
     }
 
 private:

@@ -27,9 +27,9 @@ public:
         animation_index(int8_t(_animation_index)),
         horizontal_flip(_horizontal_flip)
     {
-        BTN_CONSTEXPR_ASSERT(_duration_frames >= 1 && _duration_frames < btn::numeric_limits<int16_t>::max(),
-                             "Invalid duration frames");
-        BTN_CONSTEXPR_ASSERT(_animation_index >= 0 && _animation_index < 4, "Invalid animation index");
+        BTN_ASSERT(_duration_frames >= 1 && _duration_frames < btn::numeric_limits<int16_t>::max(),
+                   "Invalid duration frames: ", _duration_frames);
+        BTN_ASSERT(_animation_index >= 0 && _animation_index < 4, "Invalid animation index: ", _animation_index);
     }
 
     [[nodiscard]] constexpr enemy_move_event flipped() const

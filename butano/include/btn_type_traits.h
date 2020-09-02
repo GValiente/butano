@@ -38,6 +38,8 @@ namespace btn
 
     using std::decay;
     using std::decay_t;
+
+    using std::is_constant_evaluated;
 }
 
 #endif

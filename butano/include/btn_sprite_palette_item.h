@@ -19,11 +19,10 @@ public:
         _palette_ref(palette_ref),
         _bpp_mode(bpp_mode)
     {
-        BTN_CONSTEXPR_ASSERT(
-                    (bpp_mode == palette_bpp_mode::BPP_4 && colors_count() == 16) ||
-                    (bpp_mode == palette_bpp_mode::BPP_8 && colors_count() >= 16 && colors_count() <= 256 &&
+        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_count() == 16) ||
+                   (bpp_mode == palette_bpp_mode::BPP_8 && colors_count() >= 16 && colors_count() <= 256 &&
                             colors_count() % 16 == 0),
-                    "Invalid colors count");
+                   "Invalid colors count: ", colors_count());
     }
 
     [[nodiscard]] constexpr const span<const color>& palette_ref() const

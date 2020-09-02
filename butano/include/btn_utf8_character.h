@@ -12,7 +12,7 @@ class utf8_character
 public:
     constexpr explicit utf8_character(const char* text_ptr)
     {
-        BTN_CONSTEXPR_ASSERT(text_ptr, "Text is null");
+        BTN_ASSERT(text_ptr, "Text is null");
 
         *this = utf8_character(*text_ptr);
     }
@@ -33,7 +33,7 @@ public:
         {
             // 11bit
             _data = (*src++ & 0x1F) << 6;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) << 0;
         }
@@ -41,10 +41,10 @@ public:
         {
             // 16bit
             _data  = (*src++ & 0x0F) << 12;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }
@@ -52,19 +52,19 @@ public:
         {
             // 21bit
             _data  = (*src++ & 0x0F) << 18;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) << 12;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BTN_CONSTEXPR_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }
         else
         {
-            BTN_CONSTEXPR_ASSERT(true, "Invalid utf8 character");
+            BTN_ERROR("Invalid utf8 character");
         }
 
         _size = src - &text_ref;

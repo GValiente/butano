@@ -21,9 +21,9 @@ public:
         wait_frames(int16_t(_wait_frames)),
         type(_type)
     {
-        BTN_CONSTEXPR_ASSERT(_delta_position != btn::fixed_point(), "Invalid delta position");
-        BTN_CONSTEXPR_ASSERT(_wait_frames >= 1 && _wait_frames < btn::numeric_limits<int16_t>::max(),
-                             "Invalid wait frames");
+        BTN_ASSERT(_delta_position != btn::fixed_point(), "Invalid delta position");
+        BTN_ASSERT(_wait_frames >= 1 && _wait_frames < btn::numeric_limits<int16_t>::max(),
+                   "Invalid wait frames: ", _wait_frames);
     }
 
     constexpr enemy_bullet_event(enemy_bullet_type _type, btn::fixed _delta_speed, int _wait_frames) :
@@ -31,9 +31,9 @@ public:
         wait_frames(int16_t(_wait_frames)),
         type(_type)
     {
-        BTN_CONSTEXPR_ASSERT(_delta_speed > 0, "Invalid delta speed");
-        BTN_CONSTEXPR_ASSERT(_wait_frames >= 1 && _wait_frames < btn::numeric_limits<int16_t>::max(),
-                             "Invalid wait frames");
+        BTN_ASSERT(_delta_speed > 0, "Invalid delta speed: ", _delta_speed);
+        BTN_ASSERT(_wait_frames >= 1 && _wait_frames < btn::numeric_limits<int16_t>::max(),
+                   "Invalid wait frames: ", _wait_frames);
     }
 
     [[nodiscard]] constexpr enemy_bullet_event flipped() const

@@ -32,10 +32,11 @@ public:
         wait_frames(_wait_frames),
         drop(_drop)
     {
-        BTN_CONSTEXPR_ASSERT(move_events.size() > 0 && move_events.size() < btn::numeric_limits<int8_t>::max(),
-                             "Invalid move events count");
-        BTN_CONSTEXPR_ASSERT(bullet_events.size() < btn::numeric_limits<int8_t>::max(), "Invalid bullet events count");
-        BTN_CONSTEXPR_ASSERT(_wait_frames >= 0, "Invalid wait frames");
+        BTN_ASSERT(move_events.size() > 0 && move_events.size() < btn::numeric_limits<int8_t>::max(),
+                   "Invalid move events count: ", move_events.size());
+        BTN_ASSERT(bullet_events.size() < btn::numeric_limits<int8_t>::max(),
+                   "Invalid bullet events count: ", bullet_events.size());
+        BTN_ASSERT(_wait_frames >= 0, "Invalid wait frames: ", _wait_frames);
     }
 };
 

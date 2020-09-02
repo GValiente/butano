@@ -17,8 +17,8 @@ public:
         _width(width),
         _height(height)
     {
-        BTN_CONSTEXPR_ASSERT(width >= 0, "Invalid width");
-        BTN_CONSTEXPR_ASSERT(height >= 0, "Invalid height");
+        BTN_ASSERT(width >= 0, "Invalid width: ", width);
+        BTN_ASSERT(height >= 0, "Invalid height: ", height);
     }
 
     [[nodiscard]] constexpr int width() const
@@ -28,7 +28,7 @@ public:
 
     constexpr void set_width(int width)
     {
-        BTN_CONSTEXPR_ASSERT(width >= 0, "Invalid width");
+        BTN_ASSERT(width >= 0, "Invalid width: ", width);
 
         _width = width;
     }
@@ -40,7 +40,7 @@ public:
 
     constexpr void set_height(int height)
     {
-        BTN_CONSTEXPR_ASSERT(height >= 0, "Invalid height");
+        BTN_ASSERT(height >= 0, "Invalid height: ", height);
 
         _height = height;
     }
@@ -55,17 +55,17 @@ public:
     constexpr size& operator-=(const size& other)
     {
         _width -= other._width;
-        BTN_CONSTEXPR_ASSERT(_width >= 0, "Invalid width");
+        BTN_ASSERT(_width >= 0, "Invalid width: ", _width);
 
         _height -= other._height;
-        BTN_CONSTEXPR_ASSERT(_height >= 0, "Invalid height");
+        BTN_ASSERT(_height >= 0, "Invalid height: ", _height);
 
         return *this;
     }
 
     constexpr size& operator*=(int value)
     {
-        BTN_CONSTEXPR_ASSERT(value >= 0, "Invalid value");
+        BTN_ASSERT(value >= 0, "Invalid value: ", value);
 
         _width *= value;
         _height *= value;
@@ -74,7 +74,7 @@ public:
 
     constexpr size& operator/=(int value)
     {
-        BTN_CONSTEXPR_ASSERT(value > 0, "Invalid value");
+        BTN_ASSERT(value > 0, "Invalid value: ", value);
 
         _width /= value;
         _height /= value;
@@ -93,14 +93,14 @@ public:
 
     [[nodiscard]] constexpr friend size operator*(const size& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(b >= 0, "Invalid value");
+        BTN_ASSERT(b >= 0, "Invalid value: ", b);
 
         return size(a._width * b, a._height * b);
     }
 
     [[nodiscard]] constexpr friend size operator/(const size& a, int b)
     {
-        BTN_CONSTEXPR_ASSERT(b > 0, "Invalid value");
+        BTN_ASSERT(b > 0, "Invalid value: ", b);
 
         return size(a._width / b, a._height / b);
     }

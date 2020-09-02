@@ -20,8 +20,8 @@ public:
         _cells_ptr(&cells_ref),
         _dimensions(dimensions)
     {
-        BTN_CONSTEXPR_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width");
-        BTN_CONSTEXPR_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height");
+        BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
+        BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
     }
 
     [[nodiscard]] constexpr const regular_bg_map_cell& cells_ref() const

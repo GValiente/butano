@@ -28,9 +28,9 @@ public:
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
-        BTN_CONSTEXPR_ASSERT(tiles_item.tiles_ref().size() ==
-                             _shape_size.tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
-                             "Invalid shape or size");
+        BTN_ASSERT(tiles_item.tiles_ref().size() ==
+                   _shape_size.tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
+                   "Invalid shape or size");
     }
 
     [[nodiscard]] constexpr const sprite_shape_size& shape_size() const

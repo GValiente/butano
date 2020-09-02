@@ -49,7 +49,7 @@ public:
     constexpr fixed_t(int integer, int fraction) :
         _data((integer * scale()) + fraction)
     {
-        BTN_CONSTEXPR_ASSERT(fraction >= 0, "Fraction is negative");
+        BTN_ASSERT(fraction >= 0, "Fraction is negative");
     }
 
     constexpr fixed_t(float value) :
@@ -138,7 +138,7 @@ public:
         {
             int data = _data * half_scale();
             int other_data = other._data / half_scale();
-            BTN_CONSTEXPR_ASSERT(other_data, "Other's internal data is zero");
+            BTN_ASSERT(other_data, "Other's internal data is zero");
 
             return from_data(data / other_data);
         }
@@ -148,28 +148,28 @@ public:
 
     [[nodiscard]] constexpr fixed_t division(int integer) const
     {
-        BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
+        BTN_ASSERT(integer, "Integer is zero");
 
         return from_data(_data / integer);
     }
 
     [[nodiscard]] constexpr fixed_t safe_division(fixed_t other) const
     {
-        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
+        BTN_ASSERT(other._data, "Other's internal data is zero");
 
         return from_data(int((int64_t(_data) * scale()) / other._data));
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const
     {
-        BTN_CONSTEXPR_ASSERT(other._data, "Other's internal data is zero");
+        BTN_ASSERT(other._data, "Other's internal data is zero");
 
         return from_data((_data * scale()) / other._data);
     }
 
     [[nodiscard]] constexpr fixed_t unsafe_division(int integer) const
     {
-        BTN_CONSTEXPR_ASSERT(integer, "Integer is zero");
+        BTN_ASSERT(integer, "Integer is zero");
 
         return division(integer);
     }

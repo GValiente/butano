@@ -1,6 +1,8 @@
 #ifndef BTN_ASSERT_H
 #define BTN_ASSERT_H
 
+#include <assert.h>
+#include "btn_type_traits.h"
 #include "btn_config_assert.h"
 
 #if BTN_CFG_ASSERT_ENABLED
@@ -9,30 +11,32 @@
     #define BTN_ASSERT(condition, ...) \
         do \
         { \
-            if(! (condition)) [[unlikely]] \
+            if(btn::is_constant_evaluated()) \
             { \
-                char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
-                btn::istring_base _btn_istring(_btn_string); \
-                btn::ostringstream _btn_string_stream(_btn_istring); \
-                _btn_string_stream.append_args(__VA_ARGS__); \
-                _btn::assert::show(#condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
+                assert(condition); \
+            } \
+            else \
+            { \
+                if(! (condition)) [[unlikely]] \
+                { \
+                    _btn::assert::constexpr_check(true, #condition, _btn::assert::base_name(__FILE__), __func__, \
+                            __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                } \
             } \
         } while(false)
-
-    #define BTN_CONSTEXPR_ASSERT(condition, message) \
-        _btn::assert::constexpr_check(condition, _btn::assert::base_name(__FILE__), __func__, __LINE__, message)
-
-    #define BTN_CONSTEXPR_ERROR(message) \
-        _btn::assert::constexpr_check(false, _btn::assert::base_name(__FILE__), __func__, __LINE__, message)
 
     #define BTN_ERROR(...) \
         do \
         { \
-            char _btn_string[BTN_CFG_ASSERT_BUFFER_SIZE]; \
-            btn::istring_base _btn_istring(_btn_string); \
-            btn::ostringstream _btn_string_stream(_btn_istring); \
-            _btn_string_stream.append_args(__VA_ARGS__); \
-            _btn::assert::show("", _btn::assert::base_name(__FILE__), __func__, __LINE__, _btn_istring); \
+            if(btn::is_constant_evaluated()) \
+            { \
+                assert(false); \
+            } \
+            else \
+            { \
+                _btn::assert::constexpr_check(true, "", _btn::assert::base_name(__FILE__), __func__, \
+                        __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+            } \
         } while(false)
 
     namespace _btn::assert
@@ -61,47 +65,45 @@
             return base_name_impl(char_array, 2);
         }
 
-        [[noreturn]] inline void constexpr_error(const char* file, const char* function, int line, const char* message)
+        template<typename... Args>
+        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
+                                           int line, const Args&... args)
         {
-            show("", file, function, line, message);
+            char istring_buffer[BTN_CFG_ASSERT_BUFFER_SIZE];
+            btn::istring_base istring(istring_buffer);
+            btn::ostringstream string_stream(istring);
+            string_stream.append_args(args...);
+            _btn::assert::show(condition_msg, file, function, line, istring);
         }
 
-        constexpr bool constexpr_check(bool condition, const char* file, const char* function, int line,
-                                       const char* message)
+        template<typename... Args>
+        constexpr void constexpr_check(bool condition_failed, const char* condition_msg, const char* file,
+                                       const char* function, int line, const Args&... args)
         {
-            if(condition) [[likely]]
+            if(condition_failed) [[likely]]
             {
-                return true;
+                show_args(condition_msg, file, function, line, args...);
             }
-
-            constexpr_error(file, function, line, message);
         }
     }
 #else
     #define BTN_ASSERT(condition, ...) \
         do \
         { \
+            if(btn::is_constant_evaluated()) \
+            { \
+                assert(condition); \
+            } \
         } while(false)
-
-    #define BTN_CONSTEXPR_ASSERT(condition, message) \
-        _btn::assert::dummy_constexpr_check()
-
-    #define BTN_CONSTEXPR_ERROR(message) \
-        _btn::assert::dummy_constexpr_check()
 
     #define BTN_ERROR(...) \
         do \
         { \
-            BTN_UNREACHABLE(); \
+            if(btn::is_constant_evaluated()) \
+            { \
+                assert(false); \
+            } \
         } while(false)
-
-    namespace _btn::assert
-    {
-        constexpr bool dummy_constexpr_check()
-        {
-            return true;
-        }
-    }
 #endif
 
 #endif

@@ -31,8 +31,8 @@ public:
     constexpr sort_key(int priority, int z_order) :
         _fields({ uint16_t(z_order + numeric_limits<int16_t>::max()), uint16_t(priority) })
     {
-        BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
-        BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
+        BTN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
+        BTN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
     }
 
     [[nodiscard]] constexpr int priority() const
@@ -42,7 +42,7 @@ public:
 
     constexpr void set_priority(int priority)
     {
-        BTN_CONSTEXPR_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority");
+        BTN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
 
         _fields.priority = priority;
     }
@@ -54,7 +54,7 @@ public:
 
     constexpr void set_z_order(int z_order)
     {
-        BTN_CONSTEXPR_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order");
+        BTN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
 
         _fields.z_order = z_order + numeric_limits<int16_t>::max();
     }

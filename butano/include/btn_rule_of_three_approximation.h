@@ -13,7 +13,7 @@ class rule_of_three_approximation
 public:
     constexpr rule_of_three_approximation(int divisor, int multiplier) :
         _divisor(_build_divisor(divisor)),
-        _multiplier(_build_multiplier(multiplier, divisor))
+        _multiplier(_build_multiplier(multiplier, divisor, _divisor))
     {
     }
 
@@ -55,7 +55,7 @@ private:
 
     [[nodiscard]] static constexpr unsigned _build_divisor(int divisor)
     {
-        BTN_CONSTEXPR_ASSERT(divisor > 0, "Invalid divisor");
+        BTN_ASSERT(divisor > 0, "Invalid divisor: ", divisor);
 
         unsigned shift_bits = 0;
 
@@ -72,16 +72,16 @@ private:
         }
     }
 
-    [[nodiscard]] constexpr unsigned _build_multiplier(int multiplier, int divisor)
+    [[nodiscard]] static constexpr unsigned _build_multiplier(int multiplier, int divisor, unsigned internal_divisor)
     {
-        BTN_CONSTEXPR_ASSERT(multiplier > 0, "Invalid multiplier");
+        BTN_ASSERT(multiplier > 0, "Invalid multiplier: ", multiplier);
 
-        if(_divisor == unsigned(divisor))
+        if(internal_divisor == unsigned(divisor))
         {
             return multiplier;
         }
 
-        return ((unsigned(multiplier) * _divisor) / divisor) + 1;
+        return ((unsigned(multiplier) * internal_divisor) / divisor) + 1;
     }
 };
 

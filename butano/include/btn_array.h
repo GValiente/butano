@@ -44,28 +44,28 @@ public:
 
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < Size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < Size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr const_reference at(size_type index) const
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < Size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
 
     [[nodiscard]] constexpr reference at(size_type index)
     {
-        BTN_CONSTEXPR_ASSERT(index >= 0 && index < Size, "Invalid index");
+        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }

@@ -73,7 +73,7 @@ public:
                 return 64;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
@@ -95,7 +95,7 @@ public:
                 return 64;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
@@ -117,13 +117,13 @@ public:
                 return 32;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
 
         default:
-            BTN_CONSTEXPR_ERROR("Invalid shape");
+            BTN_ERROR("Invalid shape: ", int(_shape));
             return 0;
         }
     }
@@ -150,7 +150,7 @@ public:
                 return 64;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
@@ -172,7 +172,7 @@ public:
                 return 32;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
@@ -194,13 +194,13 @@ public:
                 return 64;
 
             default:
-                BTN_CONSTEXPR_ERROR("Invalid size");
+                BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
             break;
 
         default:
-            BTN_CONSTEXPR_ERROR("Invalid shape");
+            BTN_ERROR("Invalid shape: ", int(_shape));
             return 0;
         }
     }

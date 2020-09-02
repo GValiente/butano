@@ -30,7 +30,8 @@ public:
         _map_item(map_item),
         _palette_item(palette_item)
     {
-        BTN_CONSTEXPR_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()), "Invalid tiles count");
+        BTN_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()),
+                   "Invalid tiles count: ", tiles_item.tiles_ref().size());
     }
 
     [[nodiscard]] constexpr const bg_tiles_item& tiles_item() const

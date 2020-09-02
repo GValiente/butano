@@ -2,7 +2,6 @@
 #define BTN_SRAM_H
 
 #include "btn_assert.h"
-#include "btn_type_traits.h"
 #include "../hw/include/btn_hw_sram_constants.h"
 
 namespace _btn::sram

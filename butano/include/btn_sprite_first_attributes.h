@@ -20,8 +20,7 @@ public:
         _window_enabled(window_enabled),
         _visible(visible)
     {
-        BTN_CONSTEXPR_ASSERT(! blending_enabled || ! window_enabled,
-                             "Blending and window can't be enabled at the same time");
+        BTN_ASSERT(! blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
     }
 
     [[nodiscard]] constexpr fixed y() const
@@ -51,8 +50,7 @@ public:
 
     constexpr void set_blending_enabled(bool blending_enabled)
     {
-        BTN_CONSTEXPR_ASSERT(! blending_enabled || ! _window_enabled,
-                             "Blending and window can't be enabled at the same time");
+        BTN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
 
         _blending_enabled = blending_enabled;
     }
@@ -64,8 +62,7 @@ public:
 
     constexpr void set_window_enabled(bool window_enabled)
     {
-        BTN_CONSTEXPR_ASSERT(! _blending_enabled || ! window_enabled,
-                             "Blending and window can't be enabled at the same time");
+        BTN_ASSERT(! _blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
 
         _window_enabled = window_enabled;
     }

@@ -68,7 +68,7 @@ namespace
             return MM_MIXLEN_31KHZ;
 
         default:
-            BTN_CONSTEXPR_ERROR("Invalid maxing rate");
+            BTN_ERROR("Invalid maxing rate: ", BTN_CFG_AUDIO_MIXING_RATE);
         }
     }
 

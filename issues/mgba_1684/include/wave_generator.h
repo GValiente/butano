@@ -16,7 +16,7 @@ public:
 
     constexpr void set_speed(int speed)
     {
-        BTN_CONSTEXPR_ASSERT(speed >= 0, "Invalid speed");
+        BTN_ASSERT(speed >= 0, "Invalid speed: ", speed);
 
         _speed = speed;
     }
@@ -28,7 +28,7 @@ public:
 
     constexpr void set_amplitude(int amplitude)
     {
-        BTN_CONSTEXPR_ASSERT(amplitude >= 1 && amplitude <= 4, "Invalid amplitude");
+        BTN_ASSERT(amplitude >= 1 && amplitude <= 4, "Invalid amplitude: ", amplitude);
 
         _amplitude = amplitude;
     }
@@ -55,7 +55,7 @@ public:
             break;
 
         default:
-            BTN_CONSTEXPR_ERROR("Invalid amplitude");
+            BTN_ERROR("Invalid amplitude: ", _amplitude);
             break;
         }
     }

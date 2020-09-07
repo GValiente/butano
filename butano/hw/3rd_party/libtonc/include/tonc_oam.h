@@ -149,7 +149,7 @@ INLINE void obj_aff_identity(OBJ_AFFINE *oaff)
 INLINE void obj_aff_scale(OBJ_AFFINE *oaff, FIXED sx, FIXED sy)
 {
 	oaff->pa= sx;	oaff->pb= 0;
-	oaff->pb= 0;	oaff->pd= sy;
+        oaff->pc= 0;	oaff->pd= sy;
 }
 
 INLINE void obj_aff_shearx(OBJ_AFFINE *oaff, FIXED hx)

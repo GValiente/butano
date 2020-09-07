@@ -39,7 +39,7 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
         break;
 
     case type::GIGABAT:
-        result.reset(new wizard_boss(hero_position, damage_palette));
+        result.reset(new gigabat_boss(hero_position, damage_palette));
         break;
 
     case type::WIZARD:

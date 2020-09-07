@@ -12,7 +12,6 @@
 namespace bf::game
 {
 
-class hero;
 enum class enemy_bullet_type : int8_t;
 
 class gigabat_boss : public boss

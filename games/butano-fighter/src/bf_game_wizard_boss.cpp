@@ -17,13 +17,21 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_life = 350;   // 16 seconds
-    constexpr const int state_2_life = 440;     // 24 seconds
-    constexpr const int state_3_4_life = 400;   // 23 seconds
+    constexpr const int state_0_1_life = 600;   // 21 seconds
+    constexpr const int state_2_life = 400;     // 21 seconds
+    constexpr const int state_3_4_life = 500;   // 18 seconds
     constexpr const int total_life = state_0_1_life + state_2_life + state_3_4_life;
 
-    constexpr const int mouth_y = 10;
-    constexpr const btn::fixed rotate_speed = 0.35;
+    constexpr const int limit_x = 38;
+    constexpr const int limit_y = 46;
+    constexpr const btn::fixed rotate_speed = 0.5;
+
+    void _add_wizard_sprite(btn::ivector<btn::sprite_ptr>& sprites)
+    {
+        btn::sprite_builder builder(btn::sprite_items::wizard);
+        builder.set_z_order(constants::enemies_z_order);
+        sprites.push_back(builder.release_build());
+    }
 
     [[nodiscard]] btn::sprite_animate_action<5> _create_mini_explosion(btn::fixed x, btn::fixed y)
     {
@@ -37,15 +45,13 @@ namespace
 }
 
 wizard_boss::wizard_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
-    boss(total_life, 400, _wizard_rects, damage_palette),
+    boss(total_life, 600, _wizard_rects, damage_palette),
     _wizard_position(0, -160),
     _palette(btn::sprite_items::wizard.palette_item().create_palette())
 {
-    btn::sprite_builder builder(btn::sprite_items::wizard);
-    builder.set_z_order(constants::enemies_z_order);
-    _sprites.push_back(builder.release_build());
+    _add_wizard_sprite(_sprites);
 
-    builder = btn::sprite_builder(btn::sprite_items::wizard_aura);
+    btn::sprite_builder builder(btn::sprite_items::wizard_aura);
     builder.set_blending_enabled(true);
     builder.set_z_order(constants::enemy_explosions_z_order);
     _aura_sprites.push_back(builder.build());
@@ -85,7 +91,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
     case 0:
         _wizard_position.set_y(y + constants::background_speed);
 
-        if(y >= -46)
+        if(y >= -limit_y)
         {
             _movement_index = 2;
             _movement_counter = 1;
@@ -105,7 +111,8 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                 ++_movement_index;
                 _movement_counter = 6 * 8;
 
-                _delta_position = (btn::fixed_point(x, -16) - _wizard_position) / _movement_counter;
+                _delta_position.set_x(-0.75);
+                _delta_position.set_y(-(_wizard_position.y() + 16) / _movement_counter);
                 _animate_actions.clear();
                 _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 8,
                                            btn::sprite_items::wizard.tiles_item(), 8, 9, 10, 11, 12, 13));
@@ -121,9 +128,9 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
             case 2:
                 _movement_index = 0;
-                _movement_counter = 240;
+                _movement_counter = 260;
 
-                _target_x = 46;
+                _target_x = limit_x;
                 _animate_actions.clear();
                 _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
                                            btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
@@ -147,7 +154,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                 }
                 else
                 {
-                    _target_x = -46;
+                    _target_x = -limit_x;
                 }
             }
             else
@@ -158,7 +165,22 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                 }
                 else
                 {
-                    _target_x = 46;
+                    _target_x = limit_x;
+                }
+            }
+
+            if(*_target_x > 0)
+            {
+                if(_movement_counter == 1 && _wizard_position.x() != -30)
+                {
+                    ++_movement_counter;
+                }
+            }
+            else
+            {
+                if(_movement_counter == 1 && _wizard_position.x() != 30)
+                {
+                    ++_movement_counter;
                 }
             }
             break;
@@ -168,9 +190,9 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             break;
 
         case 2:
-            if(y > -46)
+            if(y > -limit_y)
             {
-                _wizard_position.set_y(btn::max(y - constants::background_speed, btn::fixed(-46)));
+                _wizard_position.set_y(btn::max(y - constants::background_speed, btn::fixed(-limit_y)));
             }
             else
             {
@@ -193,23 +215,46 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             {
 
             case 0:
-                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 10);
-                _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 11);
-                _target_x = hero_position.x();
                 _movement_index = 1;
-                _movement_counter = 80;
-                _vibrate = false;
-                _delta_position = (hero_position - _wizard_position) / _movement_counter;
+                _movement_counter = 6 * 3;
+
+                if(_wizard_position.x() > 0)
+                {
+                    _target_x = -limit_x;
+                }
+                else
+                {
+                    _target_x = limit_x;
+                }
+
+                _delta_position = (btn::fixed_point(*_target_x, limit_y) - _wizard_position) / 240;
+                _animate_actions.clear();
+                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[0], 3,
+                                           btn::sprite_items::wizard.tiles_item(), 18, 18, 18, 19, 19, 19));
                 break;
 
             case 1:
-                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 8);
-                _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 9);
-                _target_x.reset();
+                _movement_index = 2;
+                _movement_counter = 120;
+
+                _add_wizard_sprite(_sprites);
+                _animate_actions.clear();
+                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[0], 4,
+                                           btn::sprite_items::wizard.tiles_item(), 20, 20, 22, 22, 24, 24));
+                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[1], 4,
+                                           btn::sprite_items::wizard.tiles_item(), 21, 21, 23, 23, 25, 25));
+                break;
+
+            case 2:
                 _movement_index = 0;
-                _movement_counter = 500;
-                _vibrate = true;
-                _bullets_counter = 100;
+                _movement_counter = (btn::abs((*_target_x - _wizard_position.x())) / btn::fixed(0.75)).integer();
+                _movement_counter = btn::max(_movement_counter, 1);
+
+                _delta_position = (btn::fixed_point(*_target_x, -limit_y) - _wizard_position) / _movement_counter;
+                _sprites.shrink(1);
+                _animate_actions.clear();
+                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                           btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
                 break;
 
             default:
@@ -222,23 +267,12 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         {
 
         case 0:
-            if(y < -56)
-            {
-                _wizard_position.set_y(btn::min(y + 0.5, btn::fixed(-56)));
-            }
-            else if(y > -56)
-            {
-                _wizard_position.set_y(btn::max(y - 0.5, btn::fixed(-56)));
-            }
-
-            if(_movement_counter % 4 == 0)
-            {
-                _vibrate = ! _vibrate;
-            }
+            _wizard_position += _delta_position;
             break;
 
         case 1:
-            _wizard_position += _delta_position;
+        case 2:
+            _wizard_position.set_y(_wizard_position.y() + constants::background_speed);
             break;
 
         default:
@@ -248,24 +282,16 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         break;
 
     case 3:
-        if(y < -34)
-        {
-            _wizard_position.set_y(btn::min(y + 0.25, btn::fixed(-34)));
-        }
-        else if(y > -34)
-        {
-            _wizard_position.set_y(btn::max(y - 0.25, btn::fixed(-34)));
-        }
-
+        _wizard_position += _delta_position;
         --_movement_counter;
 
         if(! _movement_counter)
         {
             ++_state_index;
-            _movement_index = 0;
             _movement_counter = 1;
             _bullets_index = 0;
             _bullets_counter = 1;
+            _delta_position = btn::fixed_point(rotate_speed, -rotate_speed);
             _vibrate = false;
         }
         else if(_movement_counter % 4 == 0)
@@ -279,33 +305,26 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
         if(! _movement_counter)
         {
-            _movement_index = (_movement_index + 1) % 3;
             _movement_counter = 4;
             _vibrate = ! _vibrate;
-
-            int base_graphics_index = 16 + (_movement_index * 4);
-            _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index);
-            _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 1);
-            _sprites[2].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 2);
-            _sprites[3].set_tiles(btn::sprite_items::wizard.tiles_item(), base_graphics_index + 3);
         }
 
-        if(x <= -constants::play_width + 30)
+        if(x <= -constants::play_width + 16)
         {
             _delta_position.set_x(rotate_speed);
             _target_x = constants::play_width;
         }
-        else if(x >= constants::play_width - 30)
+        else if(x >= constants::play_width - 16)
         {
             _delta_position.set_x(-rotate_speed);
             _target_x = -constants::play_width;
         }
 
-        if(y <= -constants::play_height - 16)
+        if(y <= -constants::play_height - 24)
         {
             _delta_position.set_y(rotate_speed);
         }
-        else if(y >= constants::play_height - 24)
+        else if(y >= constants::play_height - 16)
         {
             _delta_position.set_y(-rotate_speed);
         }
@@ -332,16 +351,18 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position)
 {
     bool done = false;
 
-    if(_sprites.size() == 4)
+    if(! _aura_sprites.empty())
     {
         _movement_counter = 1;
         _delta_position.set_x((0 - _wizard_position.x()) / 240);
         _delta_position.set_y((0 - _wizard_position.y()) / 240);
 
-        _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 28);
-        _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 29);
-        _sprites.pop_back();
-        _sprites.pop_back();
+        _aura_sprites.clear();
+        _animate_actions.clear();
+        _aura_sprite_animate_actions.clear();
+        _add_wizard_sprite(_sprites);
+        _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 26);
+        _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 27);
 
         for(btn::sprite_ptr& sprite : _sprites)
         {
@@ -401,8 +422,6 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position)
                 if(! _explosion->show_target_sprite())
                 {
                     _sprites.clear();
-                    _aura_sprites.clear();
-                    _aura_sprite_animate_actions.clear();
                 }
             }
             else
@@ -437,11 +456,20 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         if(current_life < total_life - state_0_1_life)
         {
             ++_state_index;
-            _movement_index = 1;
+            _movement_index = 2;
             _movement_counter = 1;
             _bullets_index = 0;
-            _bullets_counter = 80;
+            _bullets_counter = 1;
             _animate_actions.clear();
+
+            if(_wizard_position.x() > 0)
+            {
+                _target_x = -limit_x;
+            }
+            else
+            {
+                _target_x = limit_x;
+            }
 
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24));
@@ -457,26 +485,20 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         {
             ++_state_index;
             _movement_index = 0;
-            _movement_counter = 180;
+            _movement_counter = 128;
             _bullets_index = 0;
             _bullets_counter = 80;
-            _random = btn::random();
-            _delta_position = btn::fixed_point(rotate_speed, -rotate_speed);
+            _delta_position = (btn::fixed_point(0, -32) - _wizard_position) / _movement_counter;
             _target_x = constants::play_width;
+            _wizard_rects.clear();
+            _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(50, 56));
 
-            _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 12);
-            _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 13);
+            _sprites.shrink(1);
+            _animate_actions.clear();
+            _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 2,
+                                       btn::sprite_items::wizard.tiles_item(), 15, 16, 17, 15, 16, 17));
 
-            btn::sprite_builder builder(btn::sprite_items::wizard, 14);
-            builder.set_z_order(constants::enemies_z_order);
-            _sprites.push_back(builder.release_build());
-
-            builder = btn::sprite_builder(btn::sprite_items::wizard, 15);
-            builder.set_z_order(constants::enemies_z_order);
-            _sprites.push_back(builder.release_build());
-
-            _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(x, y), 6,
-                               constants::enemy_explosions_z_order, false);
+            _mini_explosions.push_back(_create_mini_explosion(x, y));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 8));
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 24));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16));
@@ -533,47 +555,19 @@ bool wizard_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posit
 }
 
 void wizard_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
-                                 const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+                                const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
 {
-    btn::fixed_point mouth_position = _wizard_position + btn::fixed_point(0, mouth_y);
-    enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1));
+    enemy_bullets.add_bullet(hero_position, _wizard_position, enemy_bullet_event(bullet_type, delta_position, 1));
 }
 
-void wizard_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void wizard_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
-    enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
-    btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
-
-    if(_random.get() % 8 == 0)
+    if(btn::abs(_wizard_position.x() - hero_position.x()) < 48 &&
+            btn::abs(_wizard_position.y() - hero_position.y()) < 48)
     {
-        btn::fixed_point mouth_position = _wizard_position + btn::fixed_point(0, mouth_y);
-        btn::fixed_point distance = hero_position - mouth_position;
-
-        if(distance == btn::fixed_point())
-        {
-            distance.set_y(1);
-        }
-
-        btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), bullet_speed);
-        _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
+        return;
     }
-    else
-    {
-        btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
-        btn::fixed bullet_y = btn::fixed::from_data(int(_random.get() % btn::fixed(1).data()));
 
-        if(bullet_x == 0 && bullet_y == 0)
-        {
-            bullet_y = 1;
-        }
-
-        btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
-        _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
-    }
-}
-
-void wizard_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
-{
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
     btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
@@ -605,8 +599,8 @@ void wizard_boss::_update_sprites(const btn::fixed_point& hero_position)
         }
         else
         {
-            _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc));
-            _sprites[1].set_position(_wizard_position + btn::fixed_point(0, y_inc));
+            _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc - 32));
+            _sprites[1].set_position(_wizard_position + btn::fixed_point(0, y_inc + 32));
         }
     }
     else
@@ -621,22 +615,28 @@ void wizard_boss::_update_sprites(const btn::fixed_point& hero_position)
 
     for(btn::sprite_animate_action<6>& animate_action : _animate_actions)
     {
-        animate_action.update();
+        if(! animate_action.done())
+        {
+            animate_action.update();
+        }
     }
 
-    bool aura_visible = ! _aura_sprites[0].visible() && ! _death_flash();
-    _aura_sprites[0].set_visible(aura_visible);
-    _aura_sprites[0].set_position(_wizard_position + btn::fixed_point(-32, -32 - 4));
-    _aura_sprites[1].set_visible(aura_visible);
-    _aura_sprites[1].set_position(_wizard_position + btn::fixed_point(32, -32 - 4));
-    _aura_sprites[2].set_visible(aura_visible);
-    _aura_sprites[2].set_position(_wizard_position + btn::fixed_point(-32, 32 - 4));
-    _aura_sprites[3].set_visible(aura_visible);
-    _aura_sprites[3].set_position(_wizard_position + btn::fixed_point(32, 32 - 4));
-
-    for(btn::sprite_animate_action<5>& aura_sprite_animate_action : _aura_sprite_animate_actions)
+    if(! _aura_sprites.empty())
     {
-        aura_sprite_animate_action.update();
+        bool aura_visible = ! _aura_sprites[0].visible() && ! _death_flash();
+        _aura_sprites[0].set_visible(aura_visible);
+        _aura_sprites[0].set_position(_wizard_position + btn::fixed_point(-32, -32 - 4));
+        _aura_sprites[1].set_visible(aura_visible);
+        _aura_sprites[1].set_position(_wizard_position + btn::fixed_point(32, -32 - 4));
+        _aura_sprites[2].set_visible(aura_visible);
+        _aura_sprites[2].set_position(_wizard_position + btn::fixed_point(-32, 32 - 4));
+        _aura_sprites[3].set_visible(aura_visible);
+        _aura_sprites[3].set_position(_wizard_position + btn::fixed_point(32, 32 - 4));
+
+        for(btn::sprite_animate_action<5>& aura_sprite_animate_action : _aura_sprite_animate_actions)
+        {
+            aura_sprite_animate_action.update();
+        }
     }
 
     if(_palette_action)
@@ -656,62 +656,107 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
 
     if(! _bullets_counter)
     {
+        _bullets_counter = 1;
+
         switch(_state_index)
         {
 
         case 0:
-            _bullets_counter = 1;
             break;
 
         case 1:
-            _bullets_counter = 40;
-
-            switch(_bullets_index)
+            switch(_movement_index)
             {
 
             case 0:
-                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
-                _bullets_index = 1;
+                if(_movement_counter > 20)
+                {
+                    _bullets_counter = 50;
+
+                    switch(_bullets_index)
+                    {
+
+                    case 0:
+                        _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                        _bullets_index = 1;
+                        break;
+
+                    case 1:
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                        _bullets_index = 2;
+                        break;
+
+                    case 2:
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                        _bullets_index = 3;
+                        break;
+
+                    case 3:
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                        _bullets_index = 0;
+                        break;
+
+                    default:
+                        BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                        break;
+                    }
+                }
                 break;
 
             case 1:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
-                _bullets_index = 2;
+                if(_movement_counter == 1)
+                {
+                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(1, 1, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(1, 0, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(1, -1, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, -1, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-1, -1, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(-1, 0, 0.9), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-1, 1, 0.9), hero_position, enemy_bullets);
+                }
                 break;
 
             case 2:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
-                _bullets_index = 3;
-                break;
-
-            case 3:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
-                _bullets_index = 0;
+                _bullets_counter = 45;
                 break;
 
             default:
-                BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                BTN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
             break;
 
         case 2:
-            _bullets_counter = 12;
-
             switch(_movement_index)
             {
 
             case 0:
-                if(_movement_counter >= 80)
+                if(_movement_counter > 30 && _wizard_position.y() <= 20 && _wizard_position.y() >= 1 - limit_y)
                 {
-                    _shoot_target_random_bullet(hero_position, enemy_bullets);
+                    _bullets_counter = 20;
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, enemy_bullets);
                 }
                 break;
 
             case 1:
+                if(_movement_counter == 1)
+                {
+                    _bullets_counter = 20;
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.75, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.75, 1, 1), hero_position, enemy_bullets);
+                }
+                break;
+
+            case 2:
                 break;
 
             default:
@@ -726,7 +771,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
 
         case 4:
             _bullets_counter = 20;
-            _shoot_free_random_bullet(hero_position, enemy_bullets);
+            _shoot_random_bullet(hero_position, enemy_bullets);
             break;
 
         default:

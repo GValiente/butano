@@ -7,7 +7,9 @@ import os
 import json
 import argparse
 import subprocess
+import sys
 import time
+import traceback
 
 from bmp import BMP
 from file_info import FileInfo
@@ -402,5 +404,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='butano graphics tool.')
     parser.add_argument('--graphics', required=True, help='graphics folder paths')
     parser.add_argument('--build', required=True, help='build folder path')
-    args = parser.parse_args()
-    process(args.graphics, args.build)
+
+    try:
+        args = parser.parse_args()
+        process(args.graphics, args.build)
+    except Exception as ex:
+        print('Error: ' + str(ex), file=sys.stderr)
+        print('Stack trace: ', file=sys.stderr)
+        traceback.print_tb(ex.__traceback__)
+        exit(-1)

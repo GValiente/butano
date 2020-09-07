@@ -6,6 +6,8 @@ zlib License, see LICENSE file.
 import os
 import argparse
 import subprocess
+import sys
+import traceback
 
 from file_info import FileInfo
 
@@ -137,5 +139,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='butano audio tool.')
     parser.add_argument('--audio', required=True, help='audio folder paths')
     parser.add_argument('--build', required=True, help='build folder path')
-    args = parser.parse_args()
-    process(args.audio, args.build)
+
+    try:
+        args = parser.parse_args()
+        process(args.audio, args.build)
+    except Exception as ex:
+        print('Error: ' + str(ex), file=sys.stderr)
+        print('Stack trace: ', file=sys.stderr)
+        traceback.print_tb(ex.__traceback__)
+        exit(-1)

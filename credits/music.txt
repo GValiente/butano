@@ -22,3 +22,13 @@
 	By jester/sanity
 	Licensed under the Attribution Non-commercial Share Alike license
 	https://modarchive.org/index.php?request=view_by_moduleid&query=59344
+	
+- galgox_snowheart_melody.xm
+	By Galgox, Robyn, MiDoRi, and ViLXDRYAD
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=182155
+	
+- basic_instinct.mod
+	By jes ^ ter
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=34603

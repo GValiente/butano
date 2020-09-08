@@ -17,8 +17,9 @@ game::game(status& status, btn::sprite_text_generator& text_generator, butano_ba
     _scoreboard(text_generator),
     _butano_background(butano_background)
 {
+    const stage& current_stage = status.current_stage();
     butano_background.hide(_hero.body_position());
-    status.current_stage().music_item.play(0.4);
+    current_stage.music_item.play(current_stage.music_volume);
 }
 
 btn::optional<scene_type> game::update()

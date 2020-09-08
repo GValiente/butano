@@ -6,11 +6,12 @@
 #include "btn_fixed_rect.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_builder.h"
-#include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_hero_death.h"
 #include "btn_sprite_items_hero_shield.h"
 #include "btn_sprite_items_hero_weapons.h"
 #include "btn_sprite_items_hero_bomb_icon.h"
+#include "btn_sprite_items_hero_body_flying.h"
+#include "btn_sprite_items_hero_body_walking.h"
 #include "bf_scene_type.h"
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
@@ -34,13 +35,13 @@ namespace
     constexpr const int body_shadows_multiplier = 4;
     constexpr const btn::fixed_size dimensions(12, 12);
 
-    btn::vector<btn::sprite_ptr, 3> _create_body_shadows()
+    btn::vector<btn::sprite_ptr, 3> _create_body_shadows(const btn::sprite_item& body_sprite_item)
     {
         btn::vector<btn::sprite_ptr, 3> result;
 
         for(int index = 0; index < 3; ++index)
         {
-            btn::sprite_builder builder(btn::sprite_items::hero_body);
+            btn::sprite_builder builder(body_sprite_item);
             builder.set_z_order(constants::hero_shadows_z_order);
             result.push_back(builder.release_build());
         }
@@ -48,11 +49,11 @@ namespace
         return result;
     }
 
-    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action()
+    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action(const btn::sprite_item& body_sprite_item)
     {
-        btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(0, body_delta_y);
+        btn::sprite_ptr body_sprite = body_sprite_item.create_sprite(0, body_delta_y);
         return btn::create_sprite_cached_animate_action_forever(
-                    btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2);
+                    btn::move(body_sprite), 16, body_sprite_item.tiles_item(), 0, 1);
     }
 
     btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position)
@@ -71,8 +72,10 @@ namespace
 
 hero::hero(status& status) :
     _status(status),
-    _body_shadows(_create_body_shadows()),
-    _body_sprite_animate_action(_create_body_sprite_animate_action()),
+    _body_sprite_item(status.current_stage().in_air ?
+                          btn::sprite_items::hero_body_flying : btn::sprite_items::hero_body_walking),
+    _body_shadows(_create_body_shadows(_body_sprite_item)),
+    _body_sprite_animate_action(_create_body_sprite_animate_action(_body_sprite_item)),
     _body_snapshots(body_snapshots_count, body_snapshot_type{ _body_sprite_animate_action.sprite().position(), 0 }),
     _body_position(0, body_delta_y),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
@@ -326,6 +329,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
         _body_shadows_counter = btn::min(_body_shadows_counter + 1, shadows_count * body_shadows_multiplier);
     }
 
+    const btn::sprite_tiles_item& body_tiles_item = _body_sprite_item.tiles_item();
     int visible_shadows_count = _body_shadows_counter / body_shadows_multiplier;
 
     for(int index = 0, limit = _body_shadows.size(); index < limit; ++index)
@@ -339,9 +343,9 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
         }
         else
         {
-            int graphics_index = ((index + 1) * 4) + body_snapshot.graphics_index;
+            int graphics_index = ((index + 1) * 2) + body_snapshot.graphics_index;
             body_shadow.set_position(body_snapshot.position);
-            body_shadow.set_tiles(btn::sprite_items::hero_body.tiles_item().create_tiles(graphics_index));
+            body_shadow.set_tiles(body_tiles_item.create_tiles(graphics_index));
             body_shadow.set_horizontal_flip(body_snapshot.looking_down);
             body_shadow.set_vertical_flip(body_snapshot.looking_down);
             body_shadow.set_visible(true);

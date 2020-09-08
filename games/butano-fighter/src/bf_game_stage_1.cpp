@@ -594,9 +594,10 @@ namespace
     // stage (start with level 0, exp 0):
 
     constexpr const stage stage_1(
-        btn::regular_bg_items::stage_1, btn::regular_bg_items::clouds, btn::sprite_items::stage_1_intro,
-        btn::sprite_items::stage_1_intro_alt, "STAGE 1", "DWARF LAND", btn::music_items::cyberrid, enemy_events,
-        boss::type::TANK);
+        btn::regular_bg_items::stage_1, btn::fixed_point(0, constants::background_speed),
+        btn::regular_bg_items::clouds, btn::fixed_point(-1.0 / 16, constants::background_speed),
+        btn::sprite_items::stage_1_intro, btn::sprite_items::stage_1_intro_alt, "STAGE 1", "DWARF LAND",
+        btn::music_items::cyberrid, 0.4, enemy_events, boss::type::TANK, false);
 }
 
 const stage& get()

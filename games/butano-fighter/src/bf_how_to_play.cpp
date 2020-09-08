@@ -6,7 +6,6 @@
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_sprite_items_gem.h"
-#include "btn_sprite_items_hero_body.h"
 #include "btn_sprite_items_brightness.h"
 #include "btn_sprite_items_hero_death.h"
 #include "btn_sprite_items_hero_shield.h"
@@ -16,6 +15,7 @@
 #include "btn_sprite_items_hero_bomb_icon.h"
 #include "btn_sprite_items_hero_bomb_mini.h"
 #include "btn_sprite_items_experience_bar.h"
+#include "btn_sprite_items_hero_body_walking.h"
 #include "btn_sprite_items_hero_weapon_big_2.h"
 #include "btn_sprite_items_experience_frame_back.h"
 #include "btn_sprite_items_experience_frame_front.h"
@@ -257,12 +257,12 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(left_text_sprites_x, 36, "everything that moves!", result.sprites);
 
     btn::fixed_point body_position(left_text_sprites_x - 24, 18);
-    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(body_position);
+    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body_walking.create_sprite(body_position);
     body_sprite.set_horizontal_flip(true);
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 0, 1, 0, 1));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -284,35 +284,35 @@ void how_to_play::entry_type::animate()
 
     btn::fixed_point body_position(right_text_sprites_x + 24, 12);
     btn::fixed_point shadow_position = body_position + btn::fixed_point(-12, -4);
-    btn::sprite_ptr shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 12);
+    btn::sprite_ptr shadow_sprite = btn::sprite_items::hero_body_walking.create_sprite(shadow_position, 6);
     shadow_sprite.set_horizontal_flip(true);
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 12, 14, 12, 14));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 6, 7, 6, 7));
 
     shadow_position += btn::fixed_point(4, 1);
-    shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 8);
+    shadow_sprite = btn::sprite_items::hero_body_walking.create_sprite(shadow_position, 4);
     shadow_sprite.set_horizontal_flip(true);
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 8, 10, 8, 10));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 4, 5, 4, 5));
 
     shadow_position += btn::fixed_point(4, 1);
-    shadow_sprite = btn::sprite_items::hero_body.create_sprite(shadow_position, 4);
+    shadow_sprite = btn::sprite_items::hero_body_walking.create_sprite(shadow_position, 2);
     shadow_sprite.set_horizontal_flip(true);
     shadow_sprite.set_vertical_flip(true);
     result.sprites.push_back(shadow_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 4, 6, 4, 6));
+                btn::move(shadow_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 2, 3, 2, 3));
 
-    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(body_position);
+    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body_walking.create_sprite(body_position);
     body_sprite.set_horizontal_flip(true);
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 0, 1, 0, 1));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);
@@ -374,12 +374,12 @@ void how_to_play::entry_type::animate()
     _text_generator.generate(left_text_sprites_x, 36, "but you'll lose all bombs!", result.sprites);
 
     btn::fixed_point body_position(left_text_sprites_x - 24, 18);
-    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body.create_sprite(body_position);
+    btn::sprite_ptr body_sprite = btn::sprite_items::hero_body_walking.create_sprite(body_position);
     body_sprite.set_horizontal_flip(true);
     body_sprite.set_vertical_flip(true);
     result.sprites.push_back(body_sprite);
     result.animate_actions.push_back(btn::create_sprite_cached_animate_action_forever(
-                btn::move(body_sprite), 16, btn::sprite_items::hero_body.tiles_item(), 0, 2, 0, 2));
+                btn::move(body_sprite), 16, btn::sprite_items::hero_body_walking.tiles_item(), 0, 1, 0, 1));
 
     btn::fixed_point weapon_position = body_position + btn::fixed_point(-2, 13);
     btn::sprite_ptr weapon_sprite = btn::sprite_items::hero_weapons.create_sprite(weapon_position, 1);

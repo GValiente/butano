@@ -8,6 +8,7 @@
 #include "bf_game_stage_1.h"
 #include "bf_game_stage_2.h"
 #include "bf_game_stage_3.h"
+#include "bf_game_stage_4.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf
@@ -50,7 +51,7 @@ namespace
 }
 
 status::status() :
-    _current_stage(&game::stage_3::get())
+    _current_stage(&game::stage_4::get())
 {
     btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
 
@@ -84,6 +85,12 @@ bool status::go_to_next_stage()
     if(_current_stage == &game::stage_2::get())
     {
         _current_stage = &game::stage_3::get();
+        return true;
+    }
+
+    if(_current_stage == &game::stage_3::get())
+    {
+        _current_stage = &game::stage_4::get();
         return true;
     }
 

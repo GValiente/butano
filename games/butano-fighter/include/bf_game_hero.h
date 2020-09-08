@@ -106,6 +106,7 @@ private:
     constexpr static const int body_snapshots_count = 16;
 
     status& _status;
+    const btn::sprite_item& _body_sprite_item;
     btn::vector<btn::sprite_ptr, 3> _body_shadows;
     btn::sprite_cached_animate_action<2> _body_sprite_animate_action;
     btn::deque<body_snapshot_type, body_snapshots_count> _body_snapshots;

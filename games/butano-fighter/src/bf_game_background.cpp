@@ -31,8 +31,8 @@ namespace
 }
 
 background::background(const stage& stage) :
-    _bottom_move_action(_create_bottom_bg(stage), 0, constants::background_speed),
-    _top_move_action(_create_top_bg(stage), -1.0 / 16, constants::background_speed),
+    _bottom_move_action(_create_bottom_bg(stage), stage.background_bottom_bg_delta_position),
+    _top_move_action(_create_top_bg(stage), stage.background_top_bg_delta_position),
     _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
                        _bottom_move_action.bg(), _hblank_effect_deltas))
 {

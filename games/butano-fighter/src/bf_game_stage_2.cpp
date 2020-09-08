@@ -735,9 +735,10 @@ namespace
     // stage (start with level 3, exp 950):
 
     constexpr const stage stage_3(
-        btn::regular_bg_items::stage_2, btn::regular_bg_items::clouds, btn::sprite_items::stage_2_intro,
-        btn::sprite_items::stage_2_intro_alt, "STAGE 2", "NINJA VILLAGE", btn::music_items::soda7_xcopy_ohc,
-        enemy_events, boss::type::GIGABAT);
+        btn::regular_bg_items::stage_2, btn::fixed_point(0, constants::background_speed),
+        btn::regular_bg_items::clouds, btn::fixed_point(-1.0 / 16, constants::background_speed),
+        btn::sprite_items::stage_2_intro, btn::sprite_items::stage_2_intro_alt, "STAGE 2", "NINJA VILLAGE",
+        btn::music_items::soda7_xcopy_ohc, 0.4, enemy_events, boss::type::GIGABAT, false);
 }
 
 const stage& get()

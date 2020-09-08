@@ -18,9 +18,9 @@ namespace bf::game
 namespace
 {
     constexpr const int state_0_1_life = 600;   // 21 seconds
-    constexpr const int state_2_life = 400;     // 21 seconds
-    constexpr const int state_3_4_life = 500;   // 18 seconds
-    constexpr const int total_life = state_0_1_life + state_2_life + state_3_4_life;
+    constexpr const int state_2_3_life = 400;   // 20 seconds
+    constexpr const int state_4_5_life = 500;   // 18 seconds
+    constexpr const int total_life = state_0_1_life + state_2_3_life + state_4_5_life;
 
     constexpr const int limit_x = 38;
     constexpr const int limit_y = 46;
@@ -211,6 +211,26 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
         if(! _movement_counter)
         {
+            ++_state_index;
+            _movement_index = 2;
+            _movement_counter = 1;
+
+            if(_wizard_position.x() > 0)
+            {
+                _target_x = -limit_x;
+            }
+            else
+            {
+                _target_x = limit_x;
+            }
+        }
+        break;
+
+    case 3:
+        --_movement_counter;
+
+        if(! _movement_counter)
+        {
             switch(_movement_index)
             {
 
@@ -281,7 +301,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         }
         break;
 
-    case 3:
+    case 4:
         _wizard_position += _delta_position;
         --_movement_counter;
 
@@ -300,7 +320,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         }
         break;
 
-    case 4:
+    case 5:
         --_movement_counter;
 
         if(! _movement_counter)
@@ -456,21 +476,15 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         if(current_life < total_life - state_0_1_life)
         {
             ++_state_index;
-            _movement_index = 2;
-            _movement_counter = 1;
+            _movement_index = 0;
+            _movement_counter = 120;
             _bullets_index = 0;
             _bullets_counter = 1;
+            _target_x.reset();
+
             _animate_actions.clear();
-
-            if(_wizard_position.x() > 0)
-            {
-                _target_x = -limit_x;
-            }
-            else
-            {
-                _target_x = limit_x;
-            }
-
+            _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                       btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16));
@@ -481,7 +495,10 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         break;
 
     case 2:
-        if(current_life < total_life - state_0_1_life - state_2_life)
+        break;
+
+    case 3:
+        if(current_life < total_life - state_0_1_life - state_2_3_life)
         {
             ++_state_index;
             _movement_index = 0;
@@ -509,8 +526,8 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         }
         break;
 
-    case 3:
     case 4:
+    case 5:
         break;
 
     default:
@@ -731,6 +748,9 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
             break;
 
         case 2:
+            break;
+
+        case 3:
             switch(_movement_index)
             {
 
@@ -765,11 +785,10 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
             }
             break;
 
-        case 3:
-            _bullets_counter = 1;
+        case 4:
             break;
 
-        case 4:
+        case 5:
             _bullets_counter = 20;
             _shoot_random_bullet(hero_position, enemy_bullets);
             break;

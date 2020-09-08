@@ -1,22 +1,22 @@
-#include "bf_game_stage_3.h"
+#include "bf_game_stage_4.h"
 
 #include "btn_display.h"
 #include "btn_music_items.h"
 #include "btn_sound_items.h"
-#include "btn_regular_bg_items_stage_3.h"
-#include "btn_sprite_items_stage_3_intro.h"
+#include "btn_regular_bg_items_stars.h"
+#include "btn_regular_bg_items_stage_4.h"
+#include "btn_sprite_items_stage_4_intro.h"
 #include "btn_sprite_items_stage_3_blonde.h"
-#include "btn_sprite_items_stage_3_intro_alt.h"
+#include "btn_sprite_items_stage_4_intro_alt.h"
 #include "btn_sprite_items_stage_3_monsters_1.h"
 #include "btn_sprite_items_stage_3_monsters_2.h"
 #include "btn_sprite_items_stage_3_dragon_man.h"
-#include "btn_regular_bg_items_mountain_clouds.h"
 #include "btn_sprite_items_stage_3_characters_1.h"
 #include "btn_sprite_items_stage_3_characters_2.h"
 #include "bf_constants.h"
 #include "bf_game_bullet_util.h"
 
-namespace bf::game::stage_3
+namespace bf::game::stage_4
 {
 
 namespace
@@ -638,18 +638,18 @@ namespace
     };
 
 
-    // stage (start with level 5, exp 2350):
+    // stage (start with level 7, exp 5600):
 
-    constexpr const stage stage_3(
-        btn::regular_bg_items::stage_3, btn::fixed_point(0, constants::background_speed),
-        btn::regular_bg_items::mountain_clouds, btn::fixed_point(-1.0 / 16, constants::background_speed),
-        btn::sprite_items::stage_3_intro, btn::sprite_items::stage_3_intro_alt, "STAGE 3", "GIANT MOUNTAIN",
-        btn::music_items::stardstm, 0.4, enemy_events, boss::type::WIZARD, false);
+    constexpr const stage stage_4(
+        btn::regular_bg_items::stage_4, btn::fixed_point(0, constants::background_speed / 8),
+        btn::regular_bg_items::stars, btn::fixed_point(0, constants::background_speed),
+        btn::sprite_items::stage_4_intro, btn::sprite_items::stage_4_intro_alt, "STAGE 4", "FAR FAR AWAY",
+        btn::music_items::galgox_snowheart_melody, 0.8, enemy_events, boss::type::WIZARD, true);
 }
 
 const stage& get()
 {
-    return stage_3;
+    return stage_4;
 }
 
 }

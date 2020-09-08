@@ -503,6 +503,12 @@ void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_posi
 
 void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
 {
+    if(btn::abs(_gigabat_position.x() - hero_position.x()) < 48 &&
+            btn::abs(_gigabat_position.y() - hero_position.y()) < 48)
+    {
+        return;
+    }
+
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
     btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;

@@ -148,7 +148,7 @@ class SpriteItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('sprite_item file written in ' + header_file_path)
+        print('    sprite_item file written in ' + header_file_path)
 
     def process(self):
         command = ['grit', self.__file_path, '-gt']
@@ -215,11 +215,11 @@ class RegularBgItem:
                 self.__bpp_8 = True
             elif bpp_mode == 'bpp_4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
-                print('Generating 4bpp image in ' + self.__file_path + '...')
+                print('    Generating bpp4 image in ' + self.__file_path + '...')
                 start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
                 end = time.time()
-                print('4bpp image with ' + str(self.__colors_count) + ' colors generated in ' +
+                print('    bpp4 image with ' + str(self.__colors_count) + ' colors generated in ' +
                       str(int((end - start) * 1000)) + ' milliseconds')
             elif bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
@@ -264,7 +264,7 @@ class RegularBgItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('regular_bg_item file written in ' + header_file_path)
+        print('    regular_bg_item file written in ' + header_file_path)
 
     def process(self):
         command = ['grit', self.__file_path]
@@ -302,11 +302,12 @@ class RegularBgItem:
 
 class GraphicsFileInfo:
 
-    def __init__(self, graphics_type, info, file_path, file_name_no_ext, new_file_info,
+    def __init__(self, graphics_type, info, file_path, file_name, file_name_no_ext, new_file_info,
                  file_info_path, new_json_file_info, json_file_info_path):
         self.__graphics_type = graphics_type
         self.__info = info
         self.__file_path = file_path
+        self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
         self.__new_file_info = new_file_info
         self.__file_info_path = file_info_path
@@ -314,7 +315,7 @@ class GraphicsFileInfo:
         self.__json_file_info_path = json_file_info_path
 
     def process(self, build_folder_path):
-        print('Processing graphics file: ' + self.__file_path)
+        print(self.__file_name)
 
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
@@ -385,10 +386,8 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 
                     if old_file_info != new_file_info or old_json_file_info != new_json_file_info:
                         graphics_file_infos.append(GraphicsFileInfo(
-                            graphics_type, info, graphics_file_path, graphics_file_name_no_ext, new_file_info,
-                            file_info_path, new_json_file_info, json_file_info_path))
-            else:
-                print('Graphics file skipped: ' + graphics_file_path)
+                            graphics_type, info, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
+                            new_file_info, file_info_path, new_json_file_info, json_file_info_path))
 
     return graphics_file_infos
 

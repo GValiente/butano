@@ -6,6 +6,7 @@ zlib License, see LICENSE file.
 import os
 import string
 
+
 class FileInfo:
 
     @staticmethod

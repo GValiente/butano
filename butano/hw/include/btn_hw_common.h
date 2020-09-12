@@ -7,14 +7,14 @@
 #define BTN_DATA_EWRAM __attribute__((section(".ewram")))
 
 /*!
- * @brief Store code in IWRAM.
+ * @brief Store ARM code in IWRAM.
  */
-#define BTN_CODE_IWRAM __attribute__((section(".iwram"), long_call))
+#define BTN_CODE_IWRAM __attribute__((section(".iwram"), target("arm")))
 
 /*!
- * @brief Store code in EWRAM.
+ * @brief Store Thumb code in EWRAM.
  */
-#define BTN_CODE_EWRAM __attribute__((section(".ewram"), long_call))
+#define BTN_CODE_EWRAM __attribute__((section(".ewram")))
 
 /*!
  * @brief Creates a compiler level memory barrier forcing optimizer to not re-order memory accesses across the barrier.

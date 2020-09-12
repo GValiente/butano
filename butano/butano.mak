@@ -9,7 +9,7 @@ endif
 include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom IWRAM base rules without flto
+# Butano custom IWRAM and EWRAM base rules without flto
 #---------------------------------------------------------------------------------------------------------------------
 %.btn_iwram.o: %.btn_iwram.cpp
 	$(SILENTMSG) $(notdir $<)
@@ -18,6 +18,14 @@ include $(DEVKITARM)/gba_rules
 %.btn_iwram.o: %.btn_iwram.c
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_iwram.d $(CFLAGS) -fno-lto -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
+	
+%.btn_ewram.o: %.btn_ewram.cpp
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_ewram.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+
+%.btn_ewram.o: %.btn_ewram.c
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_ewram.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation

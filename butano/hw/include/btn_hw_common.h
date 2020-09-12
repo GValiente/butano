@@ -12,6 +12,11 @@
 #define BTN_CODE_IWRAM __attribute__((section(".iwram"), long_call))
 
 /*!
+ * @brief Store code in EWRAM.
+ */
+#define BTN_CODE_EWRAM __attribute__((section(".ewram"), long_call))
+
+/*!
  * @brief Creates a compiler level memory barrier forcing optimizer to not re-order memory accesses across the barrier.
  *
  * https://stackoverflow.com/questions/14950614/working-of-asm-volatile-memory

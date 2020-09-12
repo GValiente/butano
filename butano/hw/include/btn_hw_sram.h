@@ -3,7 +3,6 @@
 
 #include "btn_config_sram.h"
 #include "btn_hw_tonc.h"
-#include "btn_hw_sram_constants.h"
 
 namespace btn::hw::sram
 {
@@ -23,16 +22,7 @@ namespace btn::hw::sram
         }
     }
 
-    inline void read(void* destination, int size, int offset)
-    {
-        volatile const uint8_t* sram_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
-        volatile uint8_t* destination_ptr = static_cast<uint8_t*>(destination);
-
-        for(int i = 0; i < size; i++)
-        {
-            destination_ptr[i] = sram_ptr[i];
-        }
-    }
+    BTN_CODE_IWRAM void read(void* destination, int size, int offset);
 }
 
 #endif

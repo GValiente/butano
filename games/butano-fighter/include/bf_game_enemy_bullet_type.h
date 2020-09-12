@@ -16,6 +16,8 @@ enum class enemy_bullet_type : int8_t
     CAVEMAN_BIG,
     CAVEMAN_FLIPPED_SMALL,
     CAVEMAN_FLIPPED_BIG,
+    ASTRONAUT_SMALL,
+    ASTRONAUT_BIG,
 };
 
 }

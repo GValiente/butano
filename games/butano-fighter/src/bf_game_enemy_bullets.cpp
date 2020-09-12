@@ -112,6 +112,22 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         }
         return;
 
+    case enemy_bullet_type::ASTRONAUT_SMALL:
+        {
+            enemy_bullet_event hand_event = event;
+            hand_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), hand_event);
+        }
+        return;
+
+    case enemy_bullet_type::ASTRONAUT_BIG:
+        {
+            enemy_bullet_event hand_event = event;
+            hand_event.type = enemy_bullet_type::BIG;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), hand_event);
+        }
+        return;
+
     default:
         BTN_ERROR("Invalid bullet type: ", int(type));
         break;

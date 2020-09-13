@@ -25,6 +25,8 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] int create(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] int find_or_create(const span<const tile>& tiles_ref);
+
     [[nodiscard]] int allocate(int tiles_count);
 
     void increase_usages(int id);

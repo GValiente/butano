@@ -19,6 +19,7 @@ public:
         ROTATE,
         HORIZONTAL_SCALE,
         VERTICAL_SCALE,
+        MINI_EXPLOSION,
         EXPLOSION
     };
 

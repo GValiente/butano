@@ -2,6 +2,7 @@
 
 #include "btn_sprite_builder.h"
 #include "btn_sprite_affine_mats.h"
+#include "btn_sprite_items_mini_explosion.h"
 #include "btn_sprite_items_enemy_explosion.h"
 #include "bf_game_hero.h"
 #include "bf_game_objects.h"
@@ -16,7 +17,7 @@ namespace
 {
     constexpr const int damage_frames = 12;
 
-    btn::sprite_ptr _create_sprite(const enemy_event& event)
+    [[nodiscard]] btn::sprite_ptr _create_sprite(const enemy_event& event)
     {
         const enemy_data& enemy_data = event.enemy;
         int animation_index = event.move_events[0].animation_index;
@@ -27,12 +28,21 @@ namespace
         return builder.release_build();
     }
 
-    btn::sprite_animate_action<4> _create_animate_action(const btn::sprite_ptr& sprite, const enemy_data& data,
-                                                         int animation_index)
+    [[nodiscard]] btn::sprite_animate_action<4> _create_animate_action(
+            const btn::sprite_ptr& sprite, const enemy_data& data, int animation_index)
     {
         return btn::sprite_animate_action<4>::forever(
                     sprite, data.animation_wait_frames, data.sprite_item.tiles_item(),
                     data.graphics_indexes_groups[animation_index]);
+    }
+
+    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(const btn::fixed_point& position)
+    {
+        btn::sprite_builder builder(btn::sprite_items::mini_explosion);
+        builder.set_z_order(constants::enemy_explosions_z_order);
+        builder.set_position(position);
+        return btn::create_sprite_animate_action_once(
+                    builder.release_build(), 4, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
@@ -237,6 +247,16 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
                     _scale_y_action->update();
                 }
 
+                if(_mini_explosion)
+                {
+                    _mini_explosion->update();
+
+                    if(_mini_explosion->done())
+                    {
+                        _mini_explosion.reset();
+                    }
+                }
+
                 if(_explosion)
                 {
                     _explosion->update();
@@ -269,6 +289,14 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
     }
 }
 
+bool enemy::_is_outside() const
+{
+    const btn::fixed_point& position = _sprite.position();
+
+    return position.x() < -constants::view_width || position.x() > constants::view_width ||
+            position.y() < -constants::view_height || position.y() > constants::view_height;
+}
+
 void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage)
 {
     int life = btn::max(_life - damage, 0);
@@ -289,20 +317,7 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
         {
 
         case enemy_data::death_anim_type::ROTATE:
-            if(btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats)
-            {
-                _move_event_counter = 30;
-                _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
-                _move_action.update();
-
-                btn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
-                _rotate_action.emplace(_sprite, rotation_angle);
-                _rotate_action->update();
-                _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-                _scale_x_action->update();
-                _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-                _scale_y_action->update();
-            }
+            _show_rotate_death(enemy_position, attack_x);
             break;
 
         case enemy_data::death_anim_type::HORIZONTAL_SCALE:
@@ -327,6 +342,13 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             }
             break;
 
+        case enemy_data::death_anim_type::MINI_EXPLOSION:
+            _show_rotate_death(enemy_position, attack_x);
+            _move_event_counter = 7 * 4;
+            _mini_explosion = _create_mini_explosion(_sprite.position());
+            _mini_explosion->update();
+            break;
+
         case enemy_data::death_anim_type::EXPLOSION:
             _move_event_counter = 8 * 6;
             _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed / 4);
@@ -343,12 +365,22 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
     }
 }
 
-bool enemy::_is_outside() const
+void enemy::_show_rotate_death(const btn::fixed_point& enemy_position, btn::fixed attack_x)
 {
-    const btn::fixed_point& position = _sprite.position();
+    if(btn::sprite_affine_mats::available_count() > constants::reserved_sprite_affine_mats)
+    {
+        _move_event_counter = 30;
+        _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
+        _move_action.update();
 
-    return position.x() < -constants::view_width || position.x() > constants::view_width ||
-            position.y() < -constants::view_height || position.y() > constants::view_height;
+        btn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
+        _rotate_action.emplace(_sprite, rotation_angle);
+        _rotate_action->update();
+        _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _scale_x_action->update();
+        _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _scale_y_action->update();
+    }
 }
 
 }

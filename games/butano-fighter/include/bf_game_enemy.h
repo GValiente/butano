@@ -79,6 +79,7 @@ private:
     btn::optional<btn::sprite_rotate_by_action> _rotate_action;
     btn::optional<btn::sprite_scale_x_to_action> _scale_x_action;
     btn::optional<btn::sprite_scale_y_to_action> _scale_y_action;
+    btn::optional<btn::sprite_animate_action<7>> _mini_explosion;
     btn::optional<explosion> _explosion;
     btn::sprite_palette_ptr _sprite_palette;
     btn::sprite_palette_ptr _damage_palette;
@@ -95,9 +96,11 @@ private:
     int8_t _ignore_hero_bullet_counter;
     int8_t _tag;
 
+    [[nodiscard]] bool _is_outside() const;
+
     void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage);
 
-    [[nodiscard]] bool _is_outside() const;
+    void _show_rotate_death(const btn::fixed_point& enemy_position, btn::fixed attack_x);
 };
 
 }

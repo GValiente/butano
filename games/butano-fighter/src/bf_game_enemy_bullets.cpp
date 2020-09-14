@@ -71,7 +71,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         }
         break;
 
-    case enemy_bullet_type::ROBOT_DOUBLE:
+    case enemy_bullet_type::ROBOT_SMALL:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
@@ -125,6 +125,24 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::BIG;
             add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), hand_event);
+        }
+        return;
+
+    case enemy_bullet_type::YELLOW_SPACESHIP_SMALL:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-14, 14), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(14, 14), single_event);
+        }
+        return;
+
+    case enemy_bullet_type::GREEN_SPACESHIP_SMALL:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-15, 22), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(15, 22), single_event);
         }
         return;
 

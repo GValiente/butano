@@ -659,7 +659,7 @@ public:
 template<int Size>
 class sprite_animate_action
 {
-    static_assert(Size > 0);
+    static_assert(Size > 1);
 
 public:
     [[nodiscard]] static sprite_animate_action once(
@@ -706,13 +706,23 @@ public:
         }
         else
         {
+            int current_graphics_indexes_index = _current_graphics_indexes_index;
+            int current_graphics_index = _graphics_indexes[current_graphics_indexes_index];
             _current_wait_frames = _wait_frames;
-            _sprite.set_tiles(_tiles_item, _graphics_indexes[_current_graphics_indexes_index]);
-            ++_current_graphics_indexes_index;
 
-            if(_forever && _current_graphics_indexes_index == _graphics_indexes.size())
+            if(current_graphics_indexes_index == 0 ||
+                    _graphics_indexes[current_graphics_indexes_index - 1] != current_graphics_index)
+            {
+                _sprite.set_tiles(_tiles_item, current_graphics_index);
+            }
+
+            if(_forever && current_graphics_indexes_index == _graphics_indexes.size() - 1)
             {
                 _current_graphics_indexes_index = 0;
+            }
+            else
+            {
+                ++_current_graphics_indexes_index;
             }
         }
     }
@@ -840,7 +850,7 @@ template<typename ...Args>
 template<int Size>
 class sprite_cached_animate_action
 {
-    static_assert(Size > 0);
+    static_assert(Size > 1);
 
 public:
     [[nodiscard]] static sprite_cached_animate_action once(

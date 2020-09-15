@@ -114,17 +114,17 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
 
     case enemy_bullet_type::ASTRONAUT_SMALL:
         {
-            enemy_bullet_event hand_event = event;
-            hand_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), hand_event);
+            enemy_bullet_event shotgun_event = event;
+            shotgun_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event);
         }
         return;
 
     case enemy_bullet_type::ASTRONAUT_BIG:
         {
-            enemy_bullet_event hand_event = event;
-            hand_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), hand_event);
+            enemy_bullet_event shotgun_event = event;
+            shotgun_event.type = enemy_bullet_type::BIG;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event);
         }
         return;
 
@@ -143,6 +143,57 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
             single_event.type = enemy_bullet_type::SMALL;
             add_bullet(hero_position, enemy_position + btn::fixed_point(-15, 22), single_event);
             add_bullet(hero_position, enemy_position + btn::fixed_point(15, 22), single_event);
+        }
+        return;
+
+    case enemy_bullet_type::BRAIN_SMALL:
+        {
+            enemy_bullet_event mouth_event = event;
+            mouth_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+        }
+        return;
+
+    case enemy_bullet_type::BRAIN_BIG:
+        {
+            enemy_bullet_event mouth_event = event;
+            mouth_event.type = enemy_bullet_type::BIG;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+        }
+        return;
+
+    case enemy_bullet_type::BRAIN_HUGE:
+        {
+            enemy_bullet_event mouth_event = event;
+            mouth_event.type = enemy_bullet_type::HUGE;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+        }
+        return;
+
+    case enemy_bullet_type::RED_SPACESHIP_BIG:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::BIG;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-11, 17), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(11, 17), single_event);
+        }
+        return;
+
+    case enemy_bullet_type::BLUE_SPACESHIP_SMALL:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(25, -12), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(25, 12), single_event);
+        }
+        return;
+
+    case enemy_bullet_type::BLUE_SPACESHIP_FLIPPED_SMALL:
+        {
+            enemy_bullet_event single_event = event;
+            single_event.type = enemy_bullet_type::SMALL;
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, -12), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, 12), single_event);
         }
         return;
 

@@ -766,13 +766,13 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
                 if(_movement_counter == 1)
                 {
                     _bullets_counter = 20;
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.75, 1, 1), hero_position, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.75, 1, 1), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.225, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.225, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.45, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.45, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.675, 1, 0.85), hero_position, enemy_bullets);
+                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.675, 1, 0.85), hero_position, enemy_bullets);
                 }
                 break;
 

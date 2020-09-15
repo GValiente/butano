@@ -148,7 +148,7 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
 
         if(_shield_counter)
         {
-            hero::_animate_shield(background);
+            _animate_shield(background);
         }
         else
         {

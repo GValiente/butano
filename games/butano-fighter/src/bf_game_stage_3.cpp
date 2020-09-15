@@ -398,7 +398,7 @@ namespace
     // minidino:
 
     constexpr const enemy_data minidino(btn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                        btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 26, 26);
+                                        btn::sound_items::dinosaur_2, btn::fixed_size(58, 46), _create_graphics_indexes(0), 23, 26);
 
     constexpr const enemy_move_event minidino_moves[] = {
         enemy_move_event(btn::fixed_point(1.2, move_y(0.6)), 60, false),

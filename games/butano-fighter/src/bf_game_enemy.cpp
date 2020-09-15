@@ -344,7 +344,7 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
 
         case enemy_data::death_anim_type::MINI_EXPLOSION:
             _show_rotate_death(enemy_position, attack_x);
-            _move_event_counter = 7 * 4;
+            _move_event_counter = 30;
             _mini_explosion = _create_mini_explosion(_sprite.position());
             _mini_explosion->update();
             break;

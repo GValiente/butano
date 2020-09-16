@@ -115,7 +115,17 @@ void scoreboard::update(const hero& hero)
         _last_level = level;
         _last_experience = -1;
 
-        btn::string<2> text = btn::to_string<2>(level + 1);
+        btn::string<4> text;
+
+        if(level < constants::hero_bullet_levels - 1)
+        {
+            text = btn::to_string<4>(level + 1);
+        }
+        else
+        {
+            text = "MAX";
+        }
+
         _level_number_sprites.clear();
         _text_generator.generate(39 - (btn::display::width() / 2), text_y, text, _level_number_sprites);
         _set_visible(visible, _level_number_sprites);

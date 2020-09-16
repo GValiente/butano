@@ -15,24 +15,19 @@ class sprite_palette_item
 {
 
 public:
-    constexpr sprite_palette_item(const span<const color>& palette_ref, palette_bpp_mode bpp_mode) :
-        _palette_ref(palette_ref),
+    constexpr sprite_palette_item(const span<const color>& colors, palette_bpp_mode bpp_mode) :
+        _colors(colors),
         _bpp_mode(bpp_mode)
     {
-        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_count() == 16) ||
-                   (bpp_mode == palette_bpp_mode::BPP_8 && colors_count() >= 16 && colors_count() <= 256 &&
-                            colors_count() % 16 == 0),
-                   "Invalid colors count: ", colors_count());
+        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && _colors.size() == 16) ||
+                   (bpp_mode == palette_bpp_mode::BPP_8 && _colors.size() >= 16 && _colors.size() <= 256 &&
+                            _colors.size() % 16 == 0),
+                   "Invalid colors count: ", _colors.size());
     }
 
-    [[nodiscard]] constexpr const span<const color>& palette_ref() const
+    [[nodiscard]] constexpr const span<const color>& colors() const
     {
-        return _palette_ref;
-    }
-
-    [[nodiscard]] constexpr int colors_count() const
-    {
-        return _palette_ref.size();
+        return _colors;
     }
 
     [[nodiscard]] constexpr palette_bpp_mode bpp_mode() const
@@ -50,19 +45,11 @@ public:
 
     [[nodiscard]] optional<sprite_palette_ptr> create_new_palette_optional() const;
 
-    [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a, const sprite_palette_item& b)
-    {
-        return a._palette_ref.data() == b._palette_ref.data() && a._palette_ref.size() == b._palette_ref.size() &&
-                a._bpp_mode == b._bpp_mode;
-    }
-
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_palette_item& a, const sprite_palette_item& b)
-    {
-        return ! (a == b);
-    }
+    [[nodiscard]] constexpr friend bool operator==(const sprite_palette_item& a,
+                                                   const sprite_palette_item& b) = default;
 
 private:
-    span<const color> _palette_ref;
+    span<const color> _colors;
     palette_bpp_mode _bpp_mode;
 };
 

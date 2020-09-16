@@ -66,6 +66,16 @@ namespace btn::hw::sprites
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
     }
 
+    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
+                              bool horizontal_flip, bool vertical_flip, handle_type& sprite)
+    {
+        const sprite_shape_size& shape_size = builder.shape_size();
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+                                                 builder.blending_enabled(), builder.window_enabled()));
+        sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), horizontal_flip, vertical_flip));
+        sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
+    }
+
     inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
                              handle_type& sprite)
     {

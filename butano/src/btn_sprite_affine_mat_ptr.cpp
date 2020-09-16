@@ -150,6 +150,11 @@ bool sprite_affine_mat_ptr::identity() const
     return sprite_affine_mats_manager::identity(_id);
 }
 
+bool sprite_affine_mat_ptr::flipped_identity() const
+{
+    return sprite_affine_mats_manager::flipped_identity(_id);
+}
+
 void sprite_affine_mat_ptr::_destroy()
 {
     sprite_affine_mats_manager::decrease_usages(_id);

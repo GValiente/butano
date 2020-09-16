@@ -23,16 +23,16 @@ namespace
         sprite_affine_mat_attributes attributes;
         intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
-        bool identity;
-        bool identity_changed;
+        bool flipped_identity;
+        bool flipped_identity_changed;
         bool double_size;
 
         void init()
         {
             attributes = sprite_affine_mat_attributes();
             usages = 1;
-            identity = true;
-            identity_changed = false;
+            flipped_identity = true;
+            flipped_identity_changed = false;
             double_size = false;
         }
 
@@ -40,16 +40,16 @@ namespace
         {
             attributes = new_attributes;
             usages = 1;
-            identity_changed = false;
+            flipped_identity_changed = false;
 
-            if(attributes.identity())
+            if(attributes.flipped_identity())
             {
-                identity = true;
+                flipped_identity = true;
                 double_size = false;
             }
             else
             {
-                identity = false;
+                flipped_identity = false;
                 double_size = attributes.double_size();
             }
         }
@@ -87,7 +87,7 @@ namespace
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
         int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
-        bool identity_changed = false;
+        bool flipped_identity_changed = false;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -105,29 +105,29 @@ namespace
         const sprite_affine_mat_attributes& attributes = item.attributes;
         bool new_double_size;
 
-        if(attributes.identity())
+        if(attributes.flipped_identity())
         {
             new_double_size = false;
 
-            if(! item.identity)
+            if(! item.flipped_identity)
             {
-                item.identity = true;
-                item.identity_changed = true;
-                data.identity_changed = true;
+                item.flipped_identity = true;
+                item.flipped_identity_changed = true;
+                data.flipped_identity_changed = true;
             }
         }
         else
         {
             new_double_size = attributes.double_size();
-            item.identity = false;
+            item.flipped_identity = false;
         }
 
-        bool double_size_changed = item.double_size != new_double_size;
-        item.double_size = new_double_size;
         _update_indexes_to_commit(index);
 
-        if(double_size_changed)
+        if(item.double_size != new_double_size)
         {
+            item.double_size = new_double_size;
+
             for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
             {
                 sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
@@ -234,7 +234,7 @@ void decrease_usages(int id)
     {
         BTN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
 
-        item.identity_changed = false;
+        item.flipped_identity_changed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }
 }
@@ -366,7 +366,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
     {
         item.attributes.set_horizontal_flip(horizontal_flip);
         hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        _update_indexes_to_commit(id);
     }
 }
 
@@ -383,7 +383,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     {
         item.attributes.set_vertical_flip(vertical_flip);
         hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        _update_indexes_to_commit(id);
     }
 }
 
@@ -408,7 +408,13 @@ void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
 bool identity(int id)
 {
     const item_type& item = data.items[id];
-    return item.identity;
+    return item.attributes.identity();
+}
+
+bool flipped_identity(int id)
+{
+    const item_type& item = data.items[id];
+    return item.flipped_identity;
 }
 
 bool double_size(int id)
@@ -419,19 +425,19 @@ bool double_size(int id)
 
 void update()
 {
-    if(data.identity_changed)
+    if(data.flipped_identity_changed)
     {
-        data.identity_changed = false;
+        data.flipped_identity_changed = false;
 
         for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
         {
             item_type& item = data.items[index];
 
-            if(item.identity_changed)
+            if(item.flipped_identity_changed)
             {
                 auto it = item.attached_nodes.begin();
                 auto end = item.attached_nodes.end();
-                item.identity_changed = false;
+                item.flipped_identity_changed = false;
                 increase_usages(index);
 
                 while(it != end)

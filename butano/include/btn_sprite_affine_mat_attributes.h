@@ -136,7 +136,12 @@ public:
 
     [[nodiscard]] constexpr bool identity() const
     {
-        return _rotation_angle == 0 && _scale_x == 1 && _scale_y == 1 && _hflip == 1 && _vflip == 1;
+        return flipped_identity() && _hflip == 1 && _vflip == 1;
+    }
+
+    [[nodiscard]] constexpr bool flipped_identity() const
+    {
+        return _rotation_angle == 0 && _scale_x == 1 && _scale_y == 1;
     }
 
     [[nodiscard]] constexpr bool double_size() const

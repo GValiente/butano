@@ -75,6 +75,8 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] bool identity(int id);
 
+    [[nodiscard]] bool flipped_identity(int id);
+
     [[nodiscard]] bool double_size(int id);
 
     void update();

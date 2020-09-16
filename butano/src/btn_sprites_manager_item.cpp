@@ -43,14 +43,17 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
 
     if(affine_mat)
     {
-        if(remove_affine_mat_when_not_needed && affine_mat->identity())
+        const sprite_affine_mat_ptr& affine_mat_ref = *affine_mat;
+
+        if(remove_affine_mat_when_not_needed && affine_mat_ref.flipped_identity())
         {
+            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                                       affine_mat_ref.horizontal_flip(), affine_mat_ref.vertical_flip(), handle);
             affine_mat.reset();
-            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
         }
         else
         {
-            int affine_mat_id = affine_mat->id();
+            int affine_mat_id = affine_mat_ref.id();
             hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
             hw::sprites::set_affine_mat(affine_mat_id, double_size(), handle);
             sprite_affine_mats_manager::attach_sprite(affine_mat_id, affine_mat_attach_node);

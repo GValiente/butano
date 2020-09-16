@@ -87,6 +87,8 @@ public:
 
     [[nodiscard]] bool identity() const;
 
+    [[nodiscard]] bool flipped_identity() const;
+
     void swap(sprite_affine_mat_ptr& other)
     {
         btn::swap(_id, other._id);

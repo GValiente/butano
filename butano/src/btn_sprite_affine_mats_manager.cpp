@@ -259,13 +259,17 @@ fixed rotation_angle(int id)
 void set_rotation_angle(int id, fixed rotation_angle)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_rotation_angle(rotation_angle);
 
-    if(registers(item.attributes) != old_registers)
+    if(rotation_angle != item.attributes.rotation_angle())
     {
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        registers old_registers(item.attributes);
+        item.attributes.set_rotation_angle(rotation_angle);
+
+        if(registers(item.attributes) != old_registers)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
     }
 }
 
@@ -277,13 +281,18 @@ fixed scale_x(int id)
 void set_scale_x(int id, fixed scale_x)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_scale_x(scale_x);
 
-    if(registers(item.attributes) != old_registers)
+    if(scale_x != item.attributes.scale_x())
     {
-        hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        int pa = item.attributes.first_register_value();
+        int pb = item.attributes.second_register_value();
+        item.attributes.set_scale_x(scale_x);
+
+        if(item.attributes.first_register_value() != pa || item.attributes.second_register_value() != pb)
+        {
+            hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
     }
 }
 
@@ -295,39 +304,52 @@ fixed scale_y(int id)
 void set_scale_y(int id, fixed scale_y)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_scale_y(scale_y);
 
-    if(registers(item.attributes) != old_registers)
+    if(scale_y != item.attributes.scale_y())
     {
-        hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        int pc = item.attributes.third_register_value();
+        int pd = item.attributes.fourth_register_value();
+        item.attributes.set_scale_y(scale_y);
+
+        if(item.attributes.third_register_value() != pc || item.attributes.fourth_register_value() != pd)
+        {
+            hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
     }
 }
 
 void set_scale(int id, fixed scale)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_scale(scale);
 
-    if(registers(item.attributes) != old_registers)
+    if(scale != item.attributes.scale_x() || scale != item.attributes.scale_y())
     {
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        registers old_registers(item.attributes);
+        item.attributes.set_scale(scale);
+
+        if(registers(item.attributes) != old_registers)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
     }
 }
 
 void set_scale(int id, fixed scale_x, fixed scale_y)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_scale(scale_x, scale_y);
 
-    if(registers(item.attributes) != old_registers)
+    if(scale_x != item.attributes.scale_x() || scale_y != item.attributes.scale_y())
     {
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-        _update(id);
+        registers old_registers(item.attributes);
+        item.attributes.set_scale(scale_x, scale_y);
+
+        if(registers(item.attributes) != old_registers)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
     }
 }
 
@@ -339,11 +361,10 @@ bool horizontal_flip(int id)
 void set_horizontal_flip(int id, bool horizontal_flip)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_horizontal_flip(horizontal_flip);
 
-    if(registers(item.attributes) != old_registers)
+    if(horizontal_flip != item.attributes.horizontal_flip())
     {
+        item.attributes.set_horizontal_flip(horizontal_flip);
         hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
         _update(id);
     }
@@ -357,11 +378,10 @@ bool vertical_flip(int id)
 void set_vertical_flip(int id, bool vertical_flip)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
-    item.attributes.set_vertical_flip(vertical_flip);
 
-    if(registers(item.attributes) != old_registers)
+    if(vertical_flip != item.attributes.vertical_flip())
     {
+        item.attributes.set_vertical_flip(vertical_flip);
         hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
         _update(id);
     }

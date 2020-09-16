@@ -32,13 +32,16 @@ public:
     {
         TANK,
         GIGABAT,
-        WIZARD
+        WIZARD,
+        BUTANO
     };
 
     static btn::unique_ptr<boss> create(type type, const btn::fixed_point& hero_position,
                                         const btn::sprite_palette_ptr& damage_palette);
 
     virtual ~boss() = default;
+
+    virtual void play_music() const;
 
     [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
 

@@ -2,6 +2,7 @@
 
 #include "btn_colors.h"
 #include "btn_green_swap.h"
+#include "btn_music_items.h"
 #include "btn_sound_items.h"
 #include "btn_bg_palettes.h"
 #include "btn_sprite_palettes.h"
@@ -11,6 +12,7 @@
 #include "bf_game_tank_boss.h"
 #include "bf_game_scoreboard.h"
 #include "bf_game_background.h"
+#include "bf_game_butano_boss.h"
 #include "bf_game_wizard_boss.h"
 #include "bf_game_gigabat_boss.h"
 #include "bf_game_enemy_bullets.h"
@@ -46,12 +48,21 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
         result.reset(new wizard_boss(hero_position, damage_palette));
         break;
 
+    case type::BUTANO:
+        result.reset(new butano_boss(damage_palette));
+        break;
+
     default:
         BTN_ERROR("Invalid type: ", int(type));
         break;
     }
 
     return result;
+}
+
+void boss::play_music() const
+{
+    btn::music_items::minor_boss_r.play(0.4);
 }
 
 bool boss::check_hero(const btn::fixed_rect& hero_rect) const

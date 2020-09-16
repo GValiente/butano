@@ -434,7 +434,7 @@ namespace
 
         // level 7 (51s)
 
-        enemy_event(small_brown_meteor, btn::fixed_point(-55, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
+        /*enemy_event(small_brown_meteor, btn::fixed_point(-55, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
         enemy_event(small_brown_meteor, btn::fixed_point(-25, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
         enemy_event(small_brown_meteor, btn::fixed_point(-40, start_y_small), small_brown_meteor_moves, no_bullets, 60, enemy_drop_type::NONE),
 
@@ -665,8 +665,9 @@ namespace
 
         enemy_event(big_red_meteor, btn::fixed_point(0, start_y_big), big_red_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),
         enemy_event(medium_brown_meteor, btn::fixed_point(25, start_y_big), big_red_meteor_flipped_moves, no_bullets, 10, enemy_drop_type::NONE),
-        enemy_event(big_brown_meteor, btn::fixed_point(-40, start_y_big), big_brown_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),
+        enemy_event(big_brown_meteor, btn::fixed_point(-40, start_y_big), big_brown_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),*/
 
+        enemy_event(small_octopus, btn::fixed_point(-55, start_y_small), small_octopus_moves, no_bullets, 80, enemy_drop_type::GEM),
     };
 
 
@@ -676,7 +677,7 @@ namespace
         btn::regular_bg_items::stage_4, btn::fixed_point(0, constants::background_speed / 8),
         btn::regular_bg_items::stars, btn::fixed_point(0, constants::background_speed),
         btn::sprite_items::stage_4_intro, btn::sprite_items::stage_4_intro_alt, "STAGE 4", "FAR FAR AWAY",
-        btn::music_items::galgox_snowheart_melody, 0.8, enemy_events, boss::type::WIZARD, true);
+        btn::music_items::galgox_snowheart_melody, 0.8, enemy_events, boss::type::BUTANO, true);
 }
 
 const stage& get()

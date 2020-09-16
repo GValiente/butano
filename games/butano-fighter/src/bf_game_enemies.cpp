@@ -109,6 +109,7 @@ void enemies::update(const hero_bomb& hero_bomb, const intro& intro, hero& hero,
         if(boss_intro.done())
         {
             _boss = boss::create(_boss_type, hero_position, _damage_palette);
+            _boss->play_music();
         }
     }
 }

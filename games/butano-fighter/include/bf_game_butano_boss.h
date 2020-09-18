@@ -47,7 +47,8 @@ private:
     btn::fixed_point _butano_position;
     btn::fixed_point _delta_position;
     btn::random _random;
-    btn::fixed _scale;
+    btn::fixed _rotation_angle = 180;
+    btn::fixed _scale = 0.2;
     btn::fixed _fire_scale_mult = 1;
     int _state_index = 0;
     int _movement_index = 0;
@@ -55,8 +56,9 @@ private:
     int _bullets_index = 0;
     int _bullets_counter = 1;
     bool _vibrate = false;
-    bool _flipped = true;
     bool _increase_fire_scale_mult = false;
+
+    [[nodiscard]] btn::fixed_point _top_position() const;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
                        const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;

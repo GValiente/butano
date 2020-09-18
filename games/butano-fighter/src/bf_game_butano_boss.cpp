@@ -39,8 +39,7 @@ namespace
 
 butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette) :
     boss(total_life, 1000, _butano_rects, damage_palette),
-    _butano_position(0, -100),
-    _scale(0.2)
+    _butano_position(0, -100)
 {
     _sprites.push_back(btn::sprite_items::butano_big_sprite.create_sprite(0, 0));
     _sprites.push_back(btn::sprite_items::butano_big_sprite.create_sprite(0, 0, 1));
@@ -151,20 +150,20 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
             case 4:
                 ++_movement_index;
                 _movement_counter = 260;
+                _rotation_angle = 0;
                 _scale = 0.3;
-                _flipped = false;
                 break;
 
             case 2:
                 ++_movement_index;
                 _movement_counter = 260;
-                _flipped = true;
+                _rotation_angle = 180;
                 break;
 
             case 5:
                 _movement_index = 0;
                 _movement_counter = 260;
-                _flipped = true;
+                _rotation_angle = 180;
                 break;
 
             default:
@@ -240,12 +239,6 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
             {
                 _butano_position.set_y(y - 0.5);
             }
-
-            if(_movement_counter % 4 == 0)
-            {
-                _vibrate = ! _vibrate;
-            }
-            break;
 
             if(_movement_counter % 4 == 0)
             {
@@ -434,40 +427,42 @@ bool butano_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posit
     return hero_is_looking_down;
 }
 
-void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
-                                const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+btn::fixed_point butano_boss::_top_position() const
 {
     btn::fixed_point top_position = _butano_position;
-    btn::fixed y_inc = 54 * _scale;
+    btn::fixed rotation_angle = _rotation_angle;
+    btn::fixed inc = 54 * _scale;
 
-    if(_flipped)
+    if(rotation_angle == 90)
     {
-        top_position.set_y(top_position.y() + y_inc);
+        top_position.set_x(top_position.x() + inc);
+    }
+    else if(rotation_angle == 180)
+    {
+        top_position.set_y(top_position.y() + inc);
+    }
+    else if(rotation_angle == 270)
+    {
+        top_position.set_x(top_position.x() - inc);
     }
     else
     {
-        top_position.set_y(top_position.y() - y_inc);
+        top_position.set_y(top_position.y() - inc);
     }
 
-    enemy_bullets.add_bullet(hero_position, top_position, enemy_bullet_event(bullet_type, delta_speed, 1));
+    return top_position;
+}
+
+void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
+                                const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+{
+    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_speed, 1));
 }
 
 void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                                 const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
 {
-    btn::fixed_point top_position = _butano_position;
-    btn::fixed y_inc = 54 * _scale;
-
-    if(_flipped)
-    {
-        top_position.set_y(top_position.y() + y_inc);
-    }
-    else
-    {
-        top_position.set_y(top_position.y() - y_inc);
-    }
-
-    enemy_bullets.add_bullet(hero_position, top_position, enemy_bullet_event(bullet_type, delta_position, 1));
+    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_position, 1));
 }
 
 void butano_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
@@ -520,32 +515,44 @@ void butano_boss::_update_sprites()
         }
     }
 
-    btn::fixed x_inc = _vibrate ? 1 : 0;
-    btn::fixed y_inc = 32 * scale;
-    btn::fixed fire_y_inc = 54 * scale;
+    btn::fixed vibrate_inc = _vibrate ? 1 : 0;
+    btn::fixed scale_inc = 32 * scale;
+    btn::fixed fire_scale_inc = 54 * scale;
     int z_order = _sprites[2].visible() && scale >= 1 - scale_margin ?
                 constants::enemies_z_order : constants::footprint_z_order;
-    bool flipped = _flipped;
+    btn::fixed rotation_angle = _rotation_angle;
     _sprites[0].set_scale(scale);
     _sprites[1].set_scale(scale);
     _sprites[2].set_scale(fire_scale);
     _sprites[0].set_z_order(z_order);
     _sprites[1].set_z_order(z_order);
-    _sprites[0].set_vertical_flip(flipped);
-    _sprites[1].set_vertical_flip(flipped);
-    _sprites[2].set_vertical_flip(flipped);
+    _sprites[0].set_rotation_angle(rotation_angle);
+    _sprites[1].set_rotation_angle(rotation_angle);
+    _sprites[2].set_rotation_angle(rotation_angle);
 
-    if(flipped)
+    if(rotation_angle == 90)
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(x_inc, y_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(x_inc, -y_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(x_inc, -fire_y_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(scale_inc, vibrate_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(-scale_inc, vibrate_inc));
+        _sprites[2].set_position(_butano_position + btn::fixed_point(-fire_scale_inc, vibrate_inc));
+    }
+    else if(rotation_angle == 180)
+    {
+        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc));
+        _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, -fire_scale_inc));
+    }
+    else if(rotation_angle == 270)
+    {
+        _sprites[0].set_position(_butano_position + btn::fixed_point(-scale_inc, vibrate_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(scale_inc, vibrate_inc));
+        _sprites[2].set_position(_butano_position + btn::fixed_point(fire_scale_inc, vibrate_inc));
     }
     else
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(x_inc, -y_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(x_inc, y_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(x_inc, fire_y_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc));
+        _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, fire_scale_inc));
     }
 
     btn::fixed fade_intensity = 1 - btn::min(scale, btn::fixed(1));
@@ -563,12 +570,26 @@ void butano_boss::_update_rects()
     if(btn::abs(scale - 1) < scale_margin)
     {
         btn::fixed_point position = _butano_position;
-        btn::fixed_point center(position.x(), _flipped ? position.y() - 6 : position.y() + 6);
-        _butano_rects.emplace_back(center, btn::fixed_size(58 * scale, 80 * scale));
-        _butano_rects.emplace_back(center, btn::fixed_size(47 * scale, 86 * scale));
-        _butano_rects.emplace_back(center, btn::fixed_size(36 * scale, 92 * scale));
-        _butano_rects.emplace_back(center, btn::fixed_size(25 * scale, 98 * scale));
-        _butano_rects.emplace_back(position, btn::fixed_size(10 * scale, 112 * scale));
+        btn::fixed rotation_angle = _rotation_angle;
+
+        if(rotation_angle == 0 || rotation_angle == 180)
+        {
+            btn::fixed_point center(position.x(), rotation_angle == 0 ? position.y() - 6 : position.y() + 6);
+            _butano_rects.emplace_back(center, btn::fixed_size(58 * scale, 80 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(47 * scale, 86 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(36 * scale, 92 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(25 * scale, 98 * scale));
+            _butano_rects.emplace_back(position, btn::fixed_size(10 * scale, 112 * scale));
+        }
+        else
+        {
+            btn::fixed_point center(rotation_angle == 90 ? position.x() - 6 : position.x() + 6, position.y());
+            _butano_rects.emplace_back(center, btn::fixed_size(80 * scale, 58 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(86 * scale, 47 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(92 * scale, 36 * scale));
+            _butano_rects.emplace_back(center, btn::fixed_size(98 * scale, 25 * scale));
+            _butano_rects.emplace_back(position, btn::fixed_size(112 * scale, 10 * scale));
+        }
     }
 }
 

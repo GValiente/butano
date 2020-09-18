@@ -7,7 +7,7 @@
 #include "btn_sprite_items_tank_base.h"
 #include "btn_sprite_items_tank_jelly.h"
 #include "btn_sprite_items_tank_cannon.h"
-#include "btn_sprite_items_tank_footprint.h"
+#include "btn_sprite_items_tank_extras.h"
 #include "btn_sprite_items_mini_explosion.h"
 #include "btn_sprite_items_enemy_explosion.h"
 #include "bf_game_hero_bomb.h"
@@ -22,8 +22,9 @@ namespace
 {
     constexpr const int jelly_x = 31;
     constexpr const int jelly_damage_frames = 60;
+    constexpr const int vibration_frames = 10;
 
-    constexpr const int state_0_1_life = 190;     // 13 seconds
+    constexpr const int state_0_1_life = 190;   // 13 seconds
     constexpr const int state_2_life = 100;     // 7 seconds
     constexpr const int state_3_4_life = 190;   // 30 seconds
     constexpr const int state_4_5_life = 190;   // 13 seconds
@@ -91,12 +92,12 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
 
     for(int index = 0; index < 5; ++index)
     {
-        btn::sprite_builder builder(btn::sprite_items::tank_footprint);
+        btn::sprite_builder builder(btn::sprite_items::tank_extras);
         builder.set_position(-32, footprint_y + (index * 32));
         builder.set_z_order(constants::footprint_z_order);
         _footprint_sprites.push_back(builder.release_build());
 
-        builder = btn::sprite_builder(btn::sprite_items::tank_footprint);
+        builder = btn::sprite_builder(btn::sprite_items::tank_extras);
         builder.set_position(32, footprint_y + (index * 32));
         builder.set_horizontal_flip(true);
         builder.set_z_order(constants::footprint_z_order);
@@ -129,6 +130,11 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     builder.set_rotation_angle(180);
     builder.set_z_order(constants::enemies_z_order);
     _cannon_sprite = builder.release_build();
+
+    builder = btn::sprite_builder(btn::sprite_items::tank_extras, 4);
+    builder.set_z_order(constants::footprint_z_order);
+    builder.set_visible(false);
+    _arrow_sprite = builder.release_build();
 
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(84, 58));
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(76, 74));
@@ -180,6 +186,31 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_
         else if(_y <= -90)
         {
             _y_inc = 0.25;
+        }
+
+        if(_y_inc < 0)
+        {
+            if(_y >= 20)
+            {
+                _arrow_sprite->set_visible(true);
+                _arrow_sprite->set_vertical_flip(true);
+            }
+            else
+            {
+                _arrow_sprite->set_visible(false);
+            }
+        }
+        else
+        {
+            if(_y <= -40)
+            {
+                _arrow_sprite->set_visible(true);
+                _arrow_sprite->set_vertical_flip(false);
+            }
+            else
+            {
+                _arrow_sprite->set_visible(false);
+            }
         }
         break;
 
@@ -291,6 +322,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
                     _base_sprites.clear();
                     _jelly_sprite.reset();
                     _jelly_animate_action.reset();
+                    _arrow_sprite.reset();
                 }
             }
             else
@@ -376,6 +408,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _base_palette_action.emplace(_base_palette, 20, 0.4);
             _cannon_palette.set_fade(btn::colors::red, 0);
             _cannon_palette_action.emplace(_cannon_palette, 20, 0.4);
+            _arrow_sprite->set_visible(false);
             btn::sound_items::explosion_1.play();
             btn::sound_items::explosion_3.play();
         }
@@ -442,12 +475,12 @@ btn::fixed tank_boss::_calculate_y_alive()
 
     if(! _vibration_counter)
     {
-        _vibration_counter = 20;
+        _vibration_counter = vibration_frames * 2;
     }
 
     btn::fixed result = _y;
 
-    if(_vibration_counter > 10)
+    if(_vibration_counter > vibration_frames)
     {
         result += 1;
     }
@@ -505,7 +538,7 @@ void tank_boss::_update_footprint_sprites(btn::fixed y)
         _footprint_counter = 2;
 
         btn::sprite_tiles_ptr tiles = _footprint_sprites[0].tiles();
-        tiles.set_tiles_ref(btn::sprite_items::tank_footprint.tiles_item().graphics_tiles_ref(_footprint_graphics_index));
+        tiles.set_tiles_ref(btn::sprite_items::tank_extras.tiles_item().graphics_tiles_ref(_footprint_graphics_index));
     }
 
     btn::fixed hidden_y = -44;
@@ -540,6 +573,25 @@ void tank_boss::_update_base_sprites(btn::fixed y)
         _base_sprites[sprite_index + 0].set_y(base_y);
         _base_sprites[sprite_index + 1].set_y(base_y);
         _base_sprites[sprite_index + 2].set_y(base_y);
+    }
+
+    if(_arrow_sprite->visible())
+    {
+        if(_vibration_counter > vibration_frames)
+        {
+            if(_arrow_sprite->vertical_flip())
+            {
+                _arrow_sprite->set_y(_y - 64);
+            }
+            else
+            {
+                _arrow_sprite->set_y(_y + 64);
+            }
+        }
+        else
+        {
+            _arrow_sprite->set_y(btn::display::height());
+        }
     }
 
     if(_base_palette_action)

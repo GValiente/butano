@@ -44,6 +44,7 @@ private:
     btn::vector<btn::sprite_ptr, 9> _base_sprites;
     btn::optional<btn::sprite_ptr> _jelly_sprite;
     btn::optional<btn::sprite_ptr> _cannon_sprite;
+    btn::optional<btn::sprite_ptr> _arrow_sprite;
     btn::optional<btn::sprite_cached_animate_action<2>> _jelly_animate_action;
     btn::sprite_palette_ptr _base_palette;
     btn::optional<btn::sprite_palette_fade_loop_action> _base_palette_action;

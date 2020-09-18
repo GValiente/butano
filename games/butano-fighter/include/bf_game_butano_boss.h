@@ -41,21 +41,25 @@ protected:
 
 private:
     btn::vector<btn::fixed_rect, 5> _butano_rects;
-    btn::vector<btn::sprite_ptr, 2> _sprites;
+    btn::vector<btn::sprite_ptr, 3> _sprites;
     btn::deque<btn::sprite_animate_action<7>, 8> _mini_explosions;
     btn::optional<explosion> _explosion;
     btn::fixed_point _butano_position;
-    btn::fixed _scale;
     btn::fixed_point _delta_position;
     btn::random _random;
+    btn::fixed _scale;
+    btn::fixed _fire_scale_mult = 1;
     int _state_index = 0;
     int _movement_index = 0;
     int _movement_counter = 0;
     int _bullets_index = 0;
-    int _bullets_counter = 240;
-    bool _alive = true;
+    int _bullets_counter = 1;
     bool _vibrate = false;
     bool _flipped = true;
+    bool _increase_fire_scale_mult = false;
+
+    void _shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
+                       const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
                        const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;

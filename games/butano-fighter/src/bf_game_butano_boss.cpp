@@ -1,6 +1,5 @@
 #include "bf_game_butano_boss.h"
 
-#include "btn_colors.h"
 #include "btn_music_items.h"
 #include "btn_sound_items.h"
 #include "btn_sprite_builder.h"
@@ -10,6 +9,7 @@
 #include "btn_sprite_items_butano_big_sprite.h"
 #include "btn_sprite_items_butano_flash_palette.h"
 #include "bf_game_hero_bomb.h"
+#include "bf_game_background.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
 #include "bf_game_enemy_bullet_event.h"
@@ -21,10 +21,11 @@ namespace
 {
     constexpr const int state_0_1_2_3_life = 900;   // 15 seconds
     constexpr const int state_4_life = 1100;        // 30 seconds
-    constexpr const int state_4_5_life = 1;         // 18 seconds
-    constexpr const int total_life = state_0_1_2_3_life + state_4_life + state_4_5_life;
+    constexpr const int state_5_6_life = 600;       // 17 seconds
+    constexpr const int total_life = state_0_1_2_3_life + state_4_life + state_5_6_life;
 
     constexpr const btn::fixed scale_margin = 0.1;
+    constexpr const btn::fixed x_limit = (btn::display::width() + 256) / 2;
 
     [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y)
     {
@@ -58,7 +59,7 @@ butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette) :
 
 void butano_boss::play_music() const
 {
-    btn::music_items::basic_instinct.play(0.4);
+    btn::music_items::basic_instinct.play(1);
 }
 
 void butano_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
@@ -72,7 +73,6 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
     case 0:
         _butano_position.set_y(y + 0.1);
-        // _butano_position.set_y(y + 1);
 
         if(_butano_position.y() >= -10)
         {
@@ -149,7 +149,7 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
             case 1:
             case 4:
                 ++_movement_index;
-                _movement_counter = 260;
+                _movement_counter = 200;
                 _rotation_angle = 0;
                 _scale = 0.3;
                 break;
@@ -213,9 +213,9 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
             break;
 
         case 2:
-            _butano_position.set_x(btn::min(x + 0.4, btn::fixed(64)));
-            _butano_position.set_y(y - 1.25);
-            _scale += 0.0015;
+            _butano_position.set_x(btn::min(x + 0.6, btn::fixed(64)));
+            _butano_position.set_y(y - 1.6);
+            _scale += 0.002;
             _vibrate = false;
             break;
 
@@ -247,15 +247,61 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
             break;
 
         case 5:
-            _butano_position.set_x(btn::max(x - 0.4, btn::fixed(-64)));
-            _butano_position.set_y(y - 1.25);
-            _scale += 0.0015;
+            _butano_position.set_x(btn::max(x - 0.6, btn::fixed(-64)));
+            _butano_position.set_y(y - 1.6);
+            _scale += 0.002;
             _vibrate = false;
             break;
 
         default:
             BTN_ERROR("Invalid movement index: ", _movement_index);
             break;
+        }
+        break;
+
+    case 5:
+        _butano_position += _delta_position;
+        _scale += _delta_scale;
+        --_movement_counter;
+
+        if(! _movement_counter)
+        {
+            ++_state_index;
+            _movement_index = 1;
+            _movement_counter = 1;
+            _butano_position.set_y(-48);
+            _scale = 1;
+        }
+        break;
+
+    case 6:
+        --_movement_counter;
+
+        if(! _movement_counter)
+        {
+            _movement_counter = 256;
+
+            if(_movement_index == 0)
+            {
+                _movement_index = 1;
+                _rotation_angle = 90;
+                _butano_position.set_x(x_limit);
+                _delta_position = (btn::fixed_point(-x_limit, -48) - _butano_position) / _movement_counter;
+            }
+            else
+            {
+                _movement_index = 0;
+                _rotation_angle = 270;
+                _butano_position.set_x(-x_limit);
+                _delta_position = (btn::fixed_point(x_limit, -48) - _butano_position) / _movement_counter;
+            }
+        }
+
+        _butano_position += _delta_position;
+
+        if(_movement_counter % 4 == 0)
+        {
+            _vibrate = ! _vibrate;
         }
         break;
 
@@ -274,19 +320,25 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
     }
 }
 
-bool butano_boss::_update_dead(const btn::fixed_point&)
+bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
 {
     bool done = false;
 
-    if(_sprites[2].visible())
+    if(_sprites.size() > 2)
     {
-        _sprites[2].set_visible(false);
+        btn::fixed x = _butano_position.x().integer();
+        btn::fixed y = _butano_position.y().integer();
         _movement_counter = 1;
-        _delta_position.set_x((0 - _butano_position.x()) / 240);
-        _delta_position.set_y((0 - _butano_position.y()) / 240);
+        _sprites.pop_back();
+        _butano_position.set_x(x);
+        _butano_position.set_y(y);
+        _delta_position.set_x((0 - x) / 300);
+        _delta_position.set_y((0 - y) / 300);
+        _delta_scale = btn::fixed(0 - 1) / 300;
     }
 
     _butano_position += _delta_position;
+    _scale += _delta_scale;
     --_movement_counter;
 
     if(! _movement_counter)
@@ -311,34 +363,73 @@ bool butano_boss::_update_dead(const btn::fixed_point&)
                 ++_state_index;
                 _movement_index = 16;
 
-                btn::fixed x = int(_random.get() % 48) - 24 + _butano_position.x();
-                btn::fixed y = int(_random.get() % 48) - 24 + _butano_position.y();
-                _mini_explosions.push_back(_create_mini_explosion(x, y));
+                btn::fixed scale = _scale;
+                btn::fixed x = (int(_random.get() % 96) - 48) * scale;
+                btn::fixed y = (int(_random.get() % 48) - 24) * scale;
+                _mini_explosions.push_back(_create_mini_explosion(_butano_position.x() + x, _butano_position.y() + y));
+
+                btn::sprite_ptr mini_explosion_sprite = _mini_explosions.back().sprite();
+                mini_explosion_sprite.set_scale(scale);
                 btn::sound_items::explosion_1.play();
             }
         }
         else if(_state_index == 15)
         {
-            if(_mini_explosions.empty())
-            {
-                ++_state_index;
+            ++_state_index;
 
-                _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(), 6,
-                                   constants::enemy_explosions_z_order, true);
-                btn::sound_items::explosion_2.play();
-            }
+            btn::rect_window external_window = btn::rect_window::external();
+            external_window.set_boundaries(0, 0, 0, 0);
+            _move_window_top_action.emplace(external_window, -4);
+            _move_window_bottom_action.emplace(external_window, 4);
+
+            _circle_generator.set_radius(0);
+            _circle_generator.generate(_circle_hblank_effect_deltas);
+            _circle_hblank_effect = btn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
+                        external_window, _circle_hblank_effect_deltas);
+
+            _explosion_counter = 50;
+            _flame_sound_counter = 0;
+            background.show_explosion_open(_explosion_counter);
+            _sprites.clear();
+            _mini_explosions.clear();
+            btn::sound_items::explosion_2.play();
         }
         else if(_state_index == 16)
         {
-            if(_explosion)
+            if(_explosion_counter)
             {
-                if(! _explosion->show_target_sprite())
-                {
-                    _sprites.clear();
-                }
+                --_explosion_counter;
+
+                _move_window_top_action->update();
+                _move_window_bottom_action->update();
+
+                _circle_generator.set_radius(_circle_generator.radius() + 4);
+                _circle_generator.generate(_circle_hblank_effect_deltas);
+                _circle_hblank_effect->reload_deltas_ref();
             }
             else
             {
+                btn::rect_window external_window = btn::rect_window::external();
+                external_window.set_boundaries(0, 0, 0, 0);
+                _move_window_top_action.reset();
+                _move_window_bottom_action.reset();
+
+                _circle_hblank_effect.reset();
+                ++_state_index;
+
+                _explosion_counter = 130;
+                background.show_explosion_close(_explosion_counter);
+            }
+        }
+        else if(_state_index == 17)
+        {
+            if(_explosion_counter)
+            {
+                --_explosion_counter;
+            }
+            else
+            {
+                _flame_sound_counter = -1;
                 done = true;
             }
         }
@@ -350,6 +441,17 @@ bool butano_boss::_update_dead(const btn::fixed_point&)
     }
 
     _update_explosions();
+
+    if(_flame_sound_counter >= 0)
+    {
+        ++_flame_sound_counter;
+
+        if(_flame_sound_counter > 16 && _flame_sound_counter % 16 == 0)
+        {
+            btn::sound_items::flame_thrower.play();
+        }
+    }
+
     return done;
 }
 
@@ -388,6 +490,33 @@ void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&)
         break;
 
     case 4:
+        if(current_life < total_life - state_0_1_2_3_life - state_4_life)
+        {
+            ++_state_index;
+            _movement_index = 0;
+            _movement_counter = 160;
+            _bullets_index = 0;
+            _bullets_counter = 1;
+            _delta_position = (btn::fixed_point(-x_limit, -48) - _butano_position) / _movement_counter;
+            _delta_scale = (0.4 - _scale) / _movement_counter;
+            _random = btn::random();
+
+            _mini_explosions.push_back(_create_mini_explosion(x, y));
+            _mini_explosions.push_back(_create_mini_explosion(x - 24, y - 16));
+            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 16));
+            _mini_explosions.push_back(_create_mini_explosion(x - 16, y + 48));
+            _mini_explosions.push_back(_create_mini_explosion(x + 16, y - 48));
+            _mini_explosions.push_back(_create_mini_explosion(x - 8, y + 32));
+            _mini_explosions.push_back(_create_mini_explosion(x + 8, y - 32));
+            btn::sound_items::explosion_1.play();
+            btn::sound_items::explosion_3.play();
+        }
+        break;
+
+    case 5:
+        break;
+
+    case 6:
         break;
 
     default:
@@ -427,6 +556,11 @@ bool butano_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posit
     return hero_is_looking_down;
 }
 
+bool butano_boss::_throw_bomb() const
+{
+    return false;
+}
+
 btn::fixed_point butano_boss::_top_position() const
 {
     btn::fixed_point top_position = _butano_position;
@@ -435,7 +569,7 @@ btn::fixed_point butano_boss::_top_position() const
 
     if(rotation_angle == 90)
     {
-        top_position.set_x(top_position.x() + inc);
+        top_position.set_x(top_position.x() - inc);
     }
     else if(rotation_angle == 180)
     {
@@ -443,7 +577,7 @@ btn::fixed_point butano_boss::_top_position() const
     }
     else if(rotation_angle == 270)
     {
-        top_position.set_x(top_position.x() - inc);
+        top_position.set_x(top_position.x() + inc);
     }
     else
     {
@@ -465,7 +599,8 @@ void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_
     enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_position, 1));
 }
 
-void butano_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void butano_boss::_shoot_random_bullet(bool down_only, const btn::fixed_point& hero_position,
+                                       enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
@@ -477,7 +612,9 @@ void butano_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, en
     else
     {
         btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
-        btn::fixed bullet_y = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
+        btn::fixed bullet_y = down_only ?
+                    btn::fixed::from_data(int(_random.get() % btn::fixed(1).data())) :
+                    btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
 
         if(bullet_x == 0 && bullet_y == 0)
         {
@@ -518,48 +655,73 @@ void butano_boss::_update_sprites()
     btn::fixed vibrate_inc = _vibrate ? 1 : 0;
     btn::fixed scale_inc = 32 * scale;
     btn::fixed fire_scale_inc = 54 * scale;
-    int z_order = _sprites[2].visible() && scale >= 1 - scale_margin ?
+    bool fire_active = _sprites.size() > 2;
+    int z_order = fire_active && scale >= 1 - scale_margin ?
                 constants::enemies_z_order : constants::footprint_z_order;
     btn::fixed rotation_angle = _rotation_angle;
     _sprites[0].set_scale(scale);
-    _sprites[1].set_scale(scale);
-    _sprites[2].set_scale(fire_scale);
     _sprites[0].set_z_order(z_order);
-    _sprites[1].set_z_order(z_order);
     _sprites[0].set_rotation_angle(rotation_angle);
+    _sprites[1].set_scale(scale);
+    _sprites[1].set_z_order(z_order);
     _sprites[1].set_rotation_angle(rotation_angle);
-    _sprites[2].set_rotation_angle(rotation_angle);
+
+    if(fire_active)
+    {
+        _sprites[2].set_scale(fire_scale);
+        _sprites[2].set_rotation_angle(rotation_angle);
+    }
 
     if(rotation_angle == 90)
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(scale_inc, vibrate_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(-scale_inc, vibrate_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(-fire_scale_inc, vibrate_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(-scale_inc + 1, vibrate_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(scale_inc - 1, vibrate_inc));
+
+        if(fire_active)
+        {
+            _sprites[2].set_position(_butano_position + btn::fixed_point(fire_scale_inc, vibrate_inc));
+        }
     }
     else if(rotation_angle == 180)
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, -fire_scale_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc - 1));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc + 1));
+
+        if(fire_active)
+        {
+            _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, -fire_scale_inc));
+        }
     }
     else if(rotation_angle == 270)
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(-scale_inc, vibrate_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(scale_inc, vibrate_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(fire_scale_inc, vibrate_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(scale_inc - 1, vibrate_inc));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(-scale_inc + 1, vibrate_inc));
+
+        if(fire_active)
+        {
+            _sprites[2].set_position(_butano_position + btn::fixed_point(-fire_scale_inc, vibrate_inc));
+        }
     }
     else
     {
-        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc));
-        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc));
-        _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, fire_scale_inc));
+        _sprites[0].set_position(_butano_position + btn::fixed_point(vibrate_inc, -scale_inc + 1));
+        _sprites[1].set_position(_butano_position + btn::fixed_point(vibrate_inc, scale_inc - 1));
+
+        if(fire_active)
+        {
+            _sprites[2].set_position(_butano_position + btn::fixed_point(vibrate_inc, fire_scale_inc));
+        }
     }
 
     btn::fixed fade_intensity = 1 - btn::min(scale, btn::fixed(1));
     btn::sprite_palette_ptr body_palette = _sprites[0].palette();
-    btn::sprite_palette_ptr fire_palette = _sprites[2].palette();
     body_palette.set_fade_intensity(fade_intensity);
-    fire_palette.set_fade_intensity(fade_intensity);
+
+    if(fire_active)
+    {
+        btn::sprite_palette_ptr fire_palette = _sprites[2].palette();
+        fire_palette.set_fade_intensity(fade_intensity);
+    }
 }
 
 void butano_boss::_update_rects()
@@ -583,7 +745,7 @@ void butano_boss::_update_rects()
         }
         else
         {
-            btn::fixed_point center(rotation_angle == 90 ? position.x() - 6 : position.x() + 6, position.y());
+            btn::fixed_point center(rotation_angle == 270 ? position.x() - 6 : position.x() + 6, position.y());
             _butano_rects.emplace_back(center, btn::fixed_size(80 * scale, 58 * scale));
             _butano_rects.emplace_back(center, btn::fixed_size(86 * scale, 47 * scale));
             _butano_rects.emplace_back(center, btn::fixed_size(92 * scale, 36 * scale));
@@ -680,7 +842,7 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
             case 3:
             case 4:
                 _bullets_counter = 12;
-                _shoot_random_bullet(hero_position, enemy_bullets);
+                _shoot_random_bullet(false, hero_position, enemy_bullets);
                 break;
 
             case 2:
@@ -692,6 +854,14 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
                 BTN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
+            break;
+
+        case 5:
+            break;
+
+        case 6:
+            _bullets_counter = 16;
+            _shoot_random_bullet(true, hero_position, enemy_bullets);
             break;
 
         default:
@@ -716,16 +886,6 @@ void butano_boss::_update_explosions()
         else
         {
             ++it;
-        }
-    }
-
-    if(_explosion)
-    {
-        _explosion->update();
-
-        if(_explosion->done())
-        {
-            _explosion.reset();
         }
     }
 }

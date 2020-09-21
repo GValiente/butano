@@ -154,7 +154,11 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             if(! _death_flash_counter)
             {
                 btn::fixed_point enemy_position = _position();
-                objects.spawn_hero_bomb_without_sound(enemy_position);
+
+                if(_throw_bomb())
+                {
+                    objects.spawn_hero_bomb_without_sound(enemy_position);
+                }
 
                 if(hero.add_experience(_experience))
                 {
@@ -169,7 +173,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             }
         }
 
-        if(_update_dead(hero_position))
+        if(_update_dead(hero_position, background))
         {
             if(_dead_counter)
             {
@@ -201,6 +205,11 @@ boss::boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
     _dead_counter(60),
     _hero_bomb_active(false)
 {
+}
+
+bool boss::_throw_bomb() const
+{
+    return true;
 }
 
 }

@@ -251,7 +251,7 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
     }
 }
 
-bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position)
+bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, background&)
 {
     bool hide_shadow = false;
     bool done = false;

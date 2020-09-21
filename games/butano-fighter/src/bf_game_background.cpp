@@ -1,6 +1,8 @@
 #include "bf_game_background.h"
 
+#include "btn_colors.h"
 #include "btn_blending.h"
+#include "btn_bg_palettes.h"
 #include "btn_rect_window.h"
 #include "btn_regular_bg_builder.h"
 #include "bf_game_stage.h"
@@ -66,7 +68,7 @@ void background::show_bomb_close(int frames)
     _mosaic_action.reset();
 
     _hblank_effect.set_visible(true);
-    _bomb_fade_frames = frames;
+    _fade_frames = frames;
 }
 
 void background::hide_bomb_close(int frames)
@@ -74,6 +76,49 @@ void background::hide_bomb_close(int frames)
     btn::bg_palette_ptr bottom_palette = _bottom_move_action.bg().palette();
     bottom_palette.set_grayscale_intensity(1);
     _bottom_palette_grayscale_action.emplace(btn::move(bottom_palette), frames, 0);
+}
+
+void background::show_explosion_open(int frames)
+{
+    const btn::regular_bg_ptr& bottom_bg = _bottom_move_action.bg();
+    btn::bg_palette_ptr bottom_palette = bottom_bg.palette();
+    bottom_palette.set_fade(btn::colors::orange, 0);
+    _bottom_palette_fade_action.emplace(btn::move(bottom_palette), frames, 1);
+
+    const btn::regular_bg_ptr& top_bg = _top_move_action.bg();
+    btn::bg_palette_ptr top_palette = top_bg.palette();
+    top_palette.set_fade(btn::colors::orange, 0);
+    _top_palette_fade_action.emplace(btn::move(top_palette), frames, 1);
+
+    btn::bgs_mosaic::set_stretch(0.1);
+    _mosaic_action = btn::bgs_mosaic_stretch_loop_action(4, 0.2);
+
+    btn::rect_window external_window = btn::rect_window::external();
+    external_window.set_show_bg(bottom_bg, false);
+    external_window.set_show_bg(top_bg, false);
+
+    btn::bg_palettes::set_transparent_color(btn::colors::orange);
+}
+
+void background::show_explosion_close(int frames)
+{
+    const btn::regular_bg_ptr& bottom_bg = _bottom_move_action.bg();
+    btn::bg_palette_ptr bottom_palette = bottom_bg.palette();
+    _bottom_palette_fade_action.emplace(btn::move(bottom_palette), frames, 0);
+
+    const btn::regular_bg_ptr& top_bg = _top_move_action.bg();
+    btn::bg_palette_ptr top_palette = top_bg.palette();
+    _top_palette_fade_action.emplace(btn::move(top_palette), frames, 0);
+
+    btn::bgs_mosaic::set_stretch(0);
+    _mosaic_action.reset();
+
+    btn::rect_window external_window = btn::rect_window::external();
+    external_window.set_show_bg(bottom_bg, true);
+    external_window.set_show_bg(top_bg, true);
+
+    _hblank_effect.set_visible(true);
+    _fade_frames = frames;
 }
 
 void background::show_top(int frames)
@@ -139,6 +184,18 @@ void background::update()
         }
     }
 
+    if(_bottom_palette_fade_action)
+    {
+        _bottom_palette_fade_action->update();
+        _top_palette_fade_action->update();
+
+        if(_bottom_palette_fade_action->done())
+        {
+            _bottom_palette_fade_action.reset();
+            _top_palette_fade_action.reset();
+        }
+    }
+
     if(_bottom_palette_grayscale_action)
     {
         _bottom_palette_grayscale_action->update();
@@ -156,17 +213,17 @@ void background::update()
         _green_swap_action->update();
     }
 
-    if(_bomb_fade_frames)
+    if(_fade_frames)
     {
-        --_bomb_fade_frames;
+        --_fade_frames;
 
-        if(_bomb_fade_frames)
+        if(_fade_frames)
         {
             wave_generator wave_generator;
             int hblank_effect_speed_multiplier;
             int hblank_effect_amplitude;
 
-            switch(_bomb_fade_frames)
+            switch(_fade_frames)
             {
 
             case 1:
@@ -200,7 +257,7 @@ void background::update()
                 break;
             }
 
-            wave_generator.set_speed(_bomb_fade_frames * hblank_effect_speed_multiplier);
+            wave_generator.set_speed(_fade_frames * hblank_effect_speed_multiplier);
             wave_generator.set_amplitude(hblank_effect_amplitude);
             wave_generator.generate(_hblank_effect_deltas);
             _hblank_effect.reload_deltas_ref();

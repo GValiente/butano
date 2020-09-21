@@ -74,7 +74,7 @@ protected:
     virtual void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
                                enemy_bullets& enemy_bullets) = 0;
 
-    [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position) = 0;
+    [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position, background& background) = 0;
 
     virtual void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) = 0;
 
@@ -82,6 +82,8 @@ protected:
 
     [[nodiscard]] virtual bool _hero_should_look_down_impl(const btn::fixed_point& hero_position,
                                                            bool hero_is_looking_down) const = 0;
+
+    [[nodiscard]] virtual bool _throw_bomb() const;
 
     [[nodiscard]] bool _death_flash() const
     {

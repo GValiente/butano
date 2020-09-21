@@ -33,6 +33,10 @@ public:
 
     void hide_bomb_close(int frames);
 
+    void show_explosion_open(int frames);
+
+    void show_explosion_close(int frames);
+
     void show_top(int frames);
 
     void show_hero_dying();
@@ -52,11 +56,13 @@ private:
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
     btn::fixed _hblank_effect_deltas[btn::display::height()];
     btn::regular_bg_position_hblank_effect_ptr _hblank_effect;
+    btn::optional<btn::bg_palette_fade_to_action> _bottom_palette_fade_action;
+    btn::optional<btn::bg_palette_fade_to_action> _top_palette_fade_action;
     btn::optional<btn::bg_palette_grayscale_to_action> _bottom_palette_grayscale_action;
     btn::optional<btn::bg_palette_inverted_toggle_action> _bottom_palette_inverted_action;
     btn::optional<btn::bg_palette_inverted_toggle_action> _top_palette_inverted_action;
     btn::optional<btn::green_swap_toggle_action> _green_swap_action;
-    int _bomb_fade_frames = 0;
+    int _fade_frames = 0;
 };
 
 }

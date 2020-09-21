@@ -434,7 +434,7 @@ namespace
 
         // level 7 (51s)
 
-        /*enemy_event(small_brown_meteor, btn::fixed_point(-55, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
+        enemy_event(small_brown_meteor, btn::fixed_point(-55, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
         enemy_event(small_brown_meteor, btn::fixed_point(-25, start_y_small), small_brown_meteor_moves, no_bullets, 20, enemy_drop_type::NONE),
         enemy_event(small_brown_meteor, btn::fixed_point(-40, start_y_small), small_brown_meteor_moves, no_bullets, 60, enemy_drop_type::NONE),
 
@@ -665,9 +665,7 @@ namespace
 
         enemy_event(big_red_meteor, btn::fixed_point(0, start_y_big), big_red_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),
         enemy_event(medium_brown_meteor, btn::fixed_point(25, start_y_big), big_red_meteor_flipped_moves, no_bullets, 10, enemy_drop_type::NONE),
-        enemy_event(big_brown_meteor, btn::fixed_point(-40, start_y_big), big_brown_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),*/
-
-        enemy_event(small_octopus, btn::fixed_point(-55, start_y_small), small_octopus_moves, no_bullets, 80, enemy_drop_type::GEM),
+        enemy_event(big_brown_meteor, btn::fixed_point(-40, start_y_big), big_brown_meteor_moves, no_bullets, 10, enemy_drop_type::NONE),
     };
 
 

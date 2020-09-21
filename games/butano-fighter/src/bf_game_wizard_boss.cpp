@@ -367,7 +367,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
     }
 }
 
-bool wizard_boss::_update_dead(const btn::fixed_point& hero_position)
+bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, background&)
 {
     bool done = false;
 

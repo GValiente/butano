@@ -259,7 +259,7 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_
     }
 }
 
-bool tank_boss::_update_dead(const btn::fixed_point& hero_position)
+bool tank_boss::_update_dead(const btn::fixed_point& hero_position, background&)
 {
     bool done = false;
     _y += constants::background_speed;

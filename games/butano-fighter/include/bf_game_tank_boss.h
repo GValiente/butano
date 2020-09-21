@@ -29,7 +29,7 @@ protected:
     void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
                        enemy_bullets& enemy_bullets) final;
 
-    [[nodiscard]] bool _update_dead(const btn::fixed_point& hero_position) final;
+    [[nodiscard]] bool _update_dead(const btn::fixed_point& hero_position, background& background) final;
 
     void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) final;
 

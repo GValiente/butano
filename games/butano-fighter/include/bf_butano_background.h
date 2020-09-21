@@ -15,7 +15,7 @@ class butano_background
 public:
     butano_background()
     {
-        _set_visible();
+        set_visible();
     }
 
     [[nodiscard]] bool silhouette_visible() const
@@ -26,6 +26,10 @@ public:
     void show(const btn::fixed_point& silhouette_position);
 
     void hide(const btn::fixed_point& silhouette_position);
+
+    void set_visible();
+
+    void set_hidden();
 
     void put_under_all();
 
@@ -38,10 +42,6 @@ private:
     btn::optional<btn::sprite_move_to_action> _silhouette_down_sprite_move_action;
     btn::optional<btn::sprite_scale_to_action> _silhouette_up_sprite_scale_action;
     btn::optional<btn::sprite_scale_to_action> _silhouette_down_sprite_scale_action;
-
-    void _set_visible();
-
-    void _set_hidden();
 };
 
 }

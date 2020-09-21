@@ -20,7 +20,7 @@ public:
         return rect_window(window::internal().id());
     }
 
-    [[nodiscard]] static window external()
+    [[nodiscard]] static rect_window external()
     {
         return rect_window(window::external().id());
     }

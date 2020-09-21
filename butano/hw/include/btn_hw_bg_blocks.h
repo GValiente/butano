@@ -7,9 +7,9 @@
 
 namespace btn::hw::bg_blocks
 {
-    [[nodiscard]] constexpr int max_blocks_per_tiles()
+    [[nodiscard]] constexpr int max_blocks()
     {
-        return 16;
+        return 32;
     }
 
     [[nodiscard]] constexpr int tiles_alignment_blocks_count()

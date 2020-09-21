@@ -49,10 +49,22 @@ namespace
         return _half_words_to_tiles(half_words);
     }
 
+    [[nodiscard]] constexpr int _ceil_half_words_to_blocks(int half_words)
+    {
+        int result = half_words / hw::bg_blocks::half_words_per_block();
+
+        if(half_words % hw::bg_blocks::half_words_per_block())
+        {
+            ++result;
+        }
+
+        return result;
+    }
+
 
     constexpr const int max_items = BTN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr const int max_list_items = max_items + 1;
-    constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks_per_tiles());
+    constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks());
 
 
     enum class status_type
@@ -284,19 +296,6 @@ namespace
         {
             return create_data{ data_ptr, _ceil_half_words_to_blocks(dimensions.width() * dimensions.height()),
                         dimensions.width(), dimensions.height(), move(tiles), move(palette) };
-        }
-
-    private:
-        [[nodiscard]] static int _ceil_half_words_to_blocks(int half_words)
-        {
-            int result = half_words / hw::bg_blocks::half_words_per_block();
-
-            if(half_words % hw::bg_blocks::half_words_per_block())
-            {
-                ++result;
-            }
-
-            return result;
         }
     };
 
@@ -627,7 +626,7 @@ namespace
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
             int extra_blocks_count = start_block % alignment_blocks_count;
 
-            if(blocks_count + extra_blocks_count > hw::bg_blocks::max_blocks_per_tiles())
+            if(blocks_count + extra_blocks_count > alignment_blocks_count)
             {
                 result = alignment_blocks_count - extra_blocks_count;
             }
@@ -881,9 +880,11 @@ int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] 
 
 int create_tiles(const span<const tile>& tiles_ref)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_ref.data(), " - ", tiles_ref.size());
-
     int half_words = _tiles_to_half_words(tiles_ref.size());
+
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_ref.data(), " - ", tiles_ref.size(), " - ",
+                      _ceil_half_words_to_blocks(half_words));
+
     BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_ref.size(), " - ", half_words);
 
@@ -937,10 +938,11 @@ int find_or_create_tiles(const span<const tile>& tiles_ref)
 {
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
-
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND OR CREATE TILES: ", tiles_data, " - ", tiles_count);
-
     int half_words = _tiles_to_half_words(tiles_count);
+
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND OR CREATE TILES: ", tiles_data, " - ", tiles_count, " - ",
+                      _ceil_half_words_to_blocks(half_words));
+
     int result = _find_tiles_impl(tiles_data, half_words);
 
     if(result != -1)
@@ -1000,9 +1002,10 @@ int find_or_create_regular_map(const regular_bg_map_cell& map_cells_ref, const s
 
 int allocate_tiles(int tiles_count)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count);
-
     int half_words = _tiles_to_half_words(tiles_count);
+
+    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+
     BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 

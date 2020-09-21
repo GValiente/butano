@@ -294,6 +294,29 @@ void set_show_blending_in_window(int window, bool show)
     data.commit_windows_flags = true;
 }
 
+bool show_all_in_window(int window)
+{
+    return data.windows_flags[window] & unsigned(hw::display::window_flag::ALL);
+}
+
+void set_show_all_in_window(int window)
+{
+    data.windows_flags[window] |= unsigned(hw::display::window_flag::ALL);
+    data.commit_windows_flags = true;
+}
+
+bool show_nothing_in_window(int window)
+{
+    unsigned window_flags = data.windows_flags[window];
+    return window_flags == 0 || window_flags == unsigned(hw::display::window_flag::BLENDING);
+}
+
+void set_show_nothing_in_window(int window)
+{
+    data.windows_flags[window] &= ~unsigned(hw::display::window_flag::ALL);
+    data.commit_windows_flags = true;
+}
+
 const fixed_point& rect_window_top_left(int window)
 {
     return data.rect_windows_boundaries[window * 2];

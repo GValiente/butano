@@ -17,6 +17,7 @@ namespace btn::hw::display
         BG_2 = 0x0004,
         BG_3 = 0x0008,
         SPRITES = 0x0010,
+        ALL = 0x001F,
         BLENDING = 0x0020
     };
 

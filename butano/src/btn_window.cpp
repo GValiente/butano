@@ -15,7 +15,7 @@ bool window::show_bg(const regular_bg_ptr& regular_bg) const
 void window::set_show_bg(const regular_bg_ptr& regular_bg, bool show)
 {
     auto bg_handle = const_cast<void*>(regular_bg.handle());
-    return display_manager::set_show_bg_in_window(_id, bg_handle, show);
+    display_manager::set_show_bg_in_window(_id, bg_handle, show);
 }
 
 bool window::show_sprites() const
@@ -25,7 +25,7 @@ bool window::show_sprites() const
 
 void window::set_show_sprites(bool show)
 {
-    return display_manager::set_show_sprites_in_window(_id, show);
+    display_manager::set_show_sprites_in_window(_id, show);
 }
 
 bool window::show_blending() const
@@ -35,7 +35,27 @@ bool window::show_blending() const
 
 void window::set_show_blending(bool show)
 {
-    return display_manager::set_show_blending_in_window(_id, show);
+    display_manager::set_show_blending_in_window(_id, show);
+}
+
+bool window::show_all() const
+{
+    return display_manager::show_all_in_window(_id);
+}
+
+void window::set_show_all()
+{
+    display_manager::set_show_all_in_window(_id);
+}
+
+bool window::show_nothing() const
+{
+    return display_manager::show_nothing_in_window(_id);
+}
+
+void window::set_show_nothing()
+{
+    display_manager::set_show_nothing_in_window(_id);
 }
 
 }

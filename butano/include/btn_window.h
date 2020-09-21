@@ -49,6 +49,14 @@ public:
 
     void set_show_blending(bool show);
 
+    [[nodiscard]] bool show_all() const;
+
+    void set_show_all();
+
+    [[nodiscard]] bool show_nothing() const;
+
+    void set_show_nothing();
+
     [[nodiscard]] friend bool operator==(const window& a, const window& b) = default;
 
 protected:

@@ -72,6 +72,14 @@ namespace btn::display_manager
 
     void set_show_blending_in_window(int window, bool show);
 
+    [[nodiscard]] bool show_all_in_window(int window);
+
+    void set_show_all_in_window(int window);
+
+    [[nodiscard]] bool show_nothing_in_window(int window);
+
+    void set_show_nothing_in_window(int window);
+
     [[nodiscard]] const fixed_point& rect_window_top_left(int window);
 
     [[nodiscard]] const fixed_point& rect_window_bottom_right(int window);

@@ -32,7 +32,7 @@ intro::intro(btn::sprite_text_generator& text_generator, butano_background& buta
     _sprite_fade_action(_create_sprite_fade_action()),
     _blending_action(60, 0)
 {
-    btn::string<32> middle_text("BUTANO ENGINE ");
+    btn::string<32> middle_text("BUTANO ");
     middle_text.append(btn::to_string<4>(btn::version::major()));
     middle_text.append('.');
     middle_text.append(btn::to_string<4>(btn::version::minor()));

@@ -11,7 +11,8 @@ namespace bf
         TITLE,
         GAME,
         HOW_TO_PLAY_AND_TITLE,
-        HOW_TO_PLAY_AND_GAME
+        HOW_TO_PLAY_AND_GAME,
+        ENDING
     };
 }
 

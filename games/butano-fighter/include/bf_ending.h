@@ -1,6 +1,7 @@
 #ifndef BF_ENDING_H
 #define BF_ENDING_H
 
+#include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_optional.h"
 #include "btn_sprite_ptr.h"
@@ -16,23 +17,20 @@ namespace btn
 namespace bf
 {
 
-class butano_background;
-
 class ending : public scene
 {
 
 public:
-    ending(btn::sprite_text_generator& text_generator, butano_background& butano_background);
+    explicit ending(btn::sprite_text_generator& text_generator);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
-    butano_background& _butano_background;
-    btn::optional<btn::regular_bg_ptr> _bg;
-    btn::blending_transparency_alpha_to_action _blending_action;
-    btn::vector<btn::sprite_ptr, 20> _text_sprites;
-    int _counter = 10000;
-    bool _updated = false;
+    btn::regular_bg_ptr _bg;
+    btn::vector<btn::sprite_ptr, 32> _text_sprites;
+    btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
+    btn::fixed _bg_y_inc;
+    bool wait_for_key = false;
 };
 
 }

@@ -58,7 +58,7 @@ namespace
 
 void butano_background::show(const btn::fixed_point& silhouette_position)
 {
-    set_visible();
+    _set_visible();
 
     btn::regular_bg_ptr bg = _move_action->bg();
     bg.set_priority(0);
@@ -85,7 +85,7 @@ void butano_background::show(const btn::fixed_point& silhouette_position)
 
 void butano_background::hide(const btn::fixed_point& silhouette_position)
 {
-    set_visible();
+    _set_visible();
 
     btn::regular_bg_ptr bg = _move_action->bg();
     bg.set_priority(0);
@@ -112,29 +112,9 @@ void butano_background::hide(const btn::fixed_point& silhouette_position)
     _silhouette_down_sprite_scale_action.emplace(silhouette_down_sprite, show_hide_frames, 2);
 }
 
-void butano_background::set_visible()
-{
-    if(! _move_action)
-    {
-        btn::regular_bg_builder builder(btn::regular_bg_items::butano_background);
-        builder.set_ignore_camera(true);
-
-        btn::regular_bg_ptr bg = builder.release_build();
-        _move_action.emplace(bg, 1, -1);
-        _palette_hblank_effect = btn::bg_palette_color_hblank_effect_ptr::create(
-                    bg.palette(), 1, palette_hblank_effect_colors);
-    }
-}
-
-void butano_background::set_hidden()
-{
-    _move_action.reset();
-    _palette_hblank_effect.reset();
-}
-
 void butano_background::put_under_all()
 {
-    set_visible();
+    _set_visible();
 
     btn::regular_bg_ptr bg = _move_action->bg();
     bg.set_priority(3);
@@ -167,6 +147,20 @@ void butano_background::update()
                 _silhouette_down_sprite_scale_action.reset();
             }
         }
+    }
+}
+
+void butano_background::_set_visible()
+{
+    if(! _move_action)
+    {
+        btn::regular_bg_builder builder(btn::regular_bg_items::butano_background);
+        builder.set_ignore_camera(true);
+
+        btn::regular_bg_ptr bg = builder.release_build();
+        _move_action.emplace(bg, 1, -1);
+        _palette_hblank_effect = btn::bg_palette_color_hblank_effect_ptr::create(
+                    bg.palette(), 1, palette_hblank_effect_colors);
     }
 }
 

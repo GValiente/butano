@@ -26,7 +26,7 @@ int main()
 
     bf::status status;
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::ending(big_text_generator, butano_background));
+    btn::unique_ptr<bf::scene> scene(new bf::ending(big_text_generator));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
@@ -79,6 +79,10 @@ int main()
                 case bf::scene_type::HOW_TO_PLAY_AND_GAME:
                     scene.reset(new bf::how_to_play(bf::scene_type::GAME, status, big_text_generator,
                                                     butano_background));
+                    break;
+
+                case bf::scene_type::ENDING:
+                    scene.reset(new bf::ending(big_text_generator));
                     break;
 
                 default:

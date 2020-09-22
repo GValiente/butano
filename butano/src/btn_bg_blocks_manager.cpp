@@ -555,23 +555,29 @@ namespace
         {
             BTN_ASSERT(! data.items.full(), "No more items allowed");
 
-            if(is_tiles)
-            {
-                item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + blocks_count);
-                new_item.blocks_count = uint8_t(new_item_blocks_count);
-                data.items.insert_after(id, new_item);
-            }
-            else
+            int start_block = item->start_block;
+            int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
+            bool create_item_at_back = ! is_tiles &&
+                    (start_block % alignment_blocks_count == 0 ||
+                     start_block / alignment_blocks_count != (start_block + blocks_count - 1) / alignment_blocks_count);
+
+            if(create_item_at_back)
             {
                 item->blocks_count -= blocks_count;
 
                 item_type new_item;
-                new_item.start_block = uint8_t(item->start_block + item->blocks_count);
+                new_item.start_block = uint8_t(start_block + item->blocks_count);
 
                 auto new_item_iterator = data.items.insert_after(id, new_item);
                 id = new_item_iterator.id();
                 item = &data.items.item(id);
+            }
+            else
+            {
+                item_type new_item;
+                new_item.start_block = uint8_t(start_block + blocks_count);
+                new_item.blocks_count = uint8_t(new_item_blocks_count);
+                data.items.insert_after(id, new_item);
             }
         }
 

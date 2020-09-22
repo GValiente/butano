@@ -632,7 +632,7 @@ namespace
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
             int extra_blocks_count = start_block % alignment_blocks_count;
 
-            if(blocks_count + extra_blocks_count > alignment_blocks_count)
+            if(blocks_count + extra_blocks_count > hw::bg_blocks::max_bpp_4_tiles_blocks_count())
             {
                 result = alignment_blocks_count - extra_blocks_count;
             }

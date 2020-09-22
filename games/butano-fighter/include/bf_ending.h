@@ -17,11 +17,13 @@ namespace btn
 namespace bf
 {
 
+class butano_background;
+
 class ending : public scene
 {
 
 public:
-    explicit ending(btn::sprite_text_generator& text_generator);
+    ending(btn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     [[nodiscard]] btn::optional<scene_type> update() final;
 

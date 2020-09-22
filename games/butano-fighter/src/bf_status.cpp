@@ -51,7 +51,7 @@ namespace
 }
 
 status::status() :
-    _current_stage(&game::stage_4::get())
+    _current_stage(&game::stage_1::get())
 {
     btn::span<const game::hero_bullet_level> hero_bullet_levels = game::hero_bullet_level::all_levels();
 

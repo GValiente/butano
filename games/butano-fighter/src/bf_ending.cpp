@@ -5,6 +5,7 @@
 #include "btn_sprite_text_generator.h"
 #include "btn_regular_bg_items_butano_huge.h"
 #include "bf_scene_type.h"
+#include "bf_butano_background.h"
 
 namespace bf
 {
@@ -17,10 +18,11 @@ namespace
     constexpr const btn::fixed transparency_alpha_inc = 1 / ((bg_y_inc_start - bg_y_inc_end) / bg_y_inc_dec);
 }
 
-ending::ending(btn::sprite_text_generator& text_generator) :
+ending::ending(btn::sprite_text_generator& text_generator, butano_background& butano_background) :
     _bg(btn::regular_bg_items::butano_huge.create_bg(0, 0)),
     _bg_y_inc(bg_y_inc_start)
 {
+    _bg.set_priority(2);
     _bg.set_blending_enabled(true);
 
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
@@ -38,6 +40,7 @@ ending::ending(btn::sprite_text_generator& text_generator) :
     }
 
     btn::blending::set_transparency_alpha(0);
+    butano_background.put_under_all();
     btn::music_items::fruit.play(0.4);
 }
 

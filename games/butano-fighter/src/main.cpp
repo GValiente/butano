@@ -8,6 +8,7 @@
 #include "bf_title.h"
 #include "bf_status.h"
 #include "bf_ending.h"
+#include "bf_credits.h"
 #include "bf_how_to_play.h"
 #include "bf_big_sprite_font.h"
 #include "bf_keypad_shortcuts.h"
@@ -26,7 +27,7 @@ int main()
 
     bf::status status;
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
+    btn::unique_ptr<bf::scene> scene(new bf::credits(big_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
     btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
@@ -79,6 +80,10 @@ int main()
                 case bf::scene_type::HOW_TO_PLAY_AND_GAME:
                     scene.reset(new bf::how_to_play(bf::scene_type::GAME, status, big_text_generator,
                                                     butano_background));
+                    break;
+
+                case bf::scene_type::CREDITS:
+                    scene.reset(new bf::credits(big_text_generator, butano_background));
                     break;
 
                 case bf::scene_type::ENDING:

@@ -69,7 +69,7 @@ btn::optional<scene_type> ending::update()
                     {
                         _bg.set_visible(false);
                         btn::blending::set_transparency_alpha(1);
-                        result = scene_type::TITLE;
+                        result = scene_type::CREDITS;
                     }
                     else
                     {

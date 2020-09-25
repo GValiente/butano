@@ -2,7 +2,7 @@
 #define BF_CREDITS_H
 
 #include "btn_deque.h"
-#include "btn_optional.h"
+#include "btn_random.h"
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_blending_actions.h"
@@ -39,6 +39,8 @@ private:
     btn::deque<background_sprite, 8> _background_sprites;
     btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
     btn::optional<btn::music_volume_to_action> _music_volume_action;
+    btn::random _random;
+    int _background_sprite_counter = 1;
 };
 
 }

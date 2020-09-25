@@ -6,8 +6,31 @@
 #include "btn_sprite_text_generator.h"
 #include "btn_sprite_double_size_mode.h"
 #include "btn_sprite_affine_mat_attributes.h"
-#include "btn_sprite_items_stage_3_blonde.h"
 #include "btn_sprite_items_stage_1_animals.h"
+#include "btn_sprite_items_stage_1_characters_1.h"
+#include "btn_sprite_items_stage_1_characters_2.h"
+#include "btn_sprite_items_stage_1_monsters_1.h"
+#include "btn_sprite_items_stage_1_monsters_2.h"
+#include "btn_sprite_items_stage_1_characters_1_team.h"
+#include "btn_sprite_items_stage_2_characters_1.h"
+#include "btn_sprite_items_stage_2_characters_2.h"
+#include "btn_sprite_items_stage_2_monsters_1.h"
+#include "btn_sprite_items_stage_2_monsters_2.h"
+#include "btn_sprite_items_stage_2_robot.h"
+#include "btn_sprite_items_stage_3_blonde.h"
+#include "btn_sprite_items_stage_3_characters_1.h"
+#include "btn_sprite_items_stage_3_characters_2.h"
+#include "btn_sprite_items_stage_3_monsters_1.h"
+#include "btn_sprite_items_stage_3_monsters_2.h"
+#include "btn_sprite_items_stage_3_dragon_man.h"
+#include "btn_sprite_items_stage_4_brain.h"
+#include "btn_sprite_items_stage_4_enemies_1.h"
+#include "btn_sprite_items_stage_4_enemies_2.h"
+#include "btn_sprite_items_stage_4_enemies_3_1.h"
+#include "btn_sprite_items_stage_4_enemies_3_2.h"
+#include "btn_sprite_items_stage_4_enemies_4.h"
+#include "btn_sprite_items_stage_4_meteors_big.h"
+#include "btn_sprite_items_stage_4_meteors_small.h"
 #include "bf_scene_type.h"
 #include "bf_butano_background.h"
 
@@ -18,6 +41,80 @@ namespace
 {
     constexpr const int blending_frames = 60;
 
+    struct background_sprite_item
+    {
+        const btn::sprite_item* sprite_item;
+        int graphics_index_0;
+        int graphics_index_1;
+        int graphics_index_2;
+        int graphics_index_3;
+    };
+
+    constexpr const background_sprite_item background_sprite_items[] = {
+        { &btn::sprite_items::stage_1_animals, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_1_animals, 2, 3, 2, 3 },
+        { &btn::sprite_items::stage_1_animals, 4, 5, 4, 5 },
+        { &btn::sprite_items::stage_1_animals, 6, 7, 6, 7 },
+        { &btn::sprite_items::stage_1_characters_1, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_1_characters_1, 2, 3, 2, 3 },
+        { &btn::sprite_items::stage_1_characters_1, 4, 5, 4, 5 },
+        { &btn::sprite_items::stage_1_characters_1, 6, 7, 6, 7 },
+        { &btn::sprite_items::stage_1_characters_2, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_1_characters_2, 2, 3, 2, 3 },
+        { &btn::sprite_items::stage_1_characters_2, 4, 5, 4, 5 },
+        { &btn::sprite_items::stage_1_characters_2, 6, 7, 6, 7 },
+        { &btn::sprite_items::stage_1_monsters_1, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_1_monsters_1, 2, 3, 2, 3 },
+        { &btn::sprite_items::stage_1_monsters_2, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_1_monsters_2, 2, 3, 2, 3 },
+        { &btn::sprite_items::stage_1_characters_1_team, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_2_characters_1, 0, 1, 2, 3 },
+        { &btn::sprite_items::stage_2_characters_1, 16, 17, 18, 19 },
+        { &btn::sprite_items::stage_2_characters_1, 32, 33, 34, 35 },
+        { &btn::sprite_items::stage_2_characters_1, 48, 49, 48, 49 },
+        { &btn::sprite_items::stage_2_characters_2, 0, 1, 2, 3 },
+        { &btn::sprite_items::stage_2_characters_2, 16, 17, 18, 19 },
+        { &btn::sprite_items::stage_2_characters_2, 32, 33, 34, 35 },
+        { &btn::sprite_items::stage_2_characters_2, 48, 49, 50, 51 },
+        { &btn::sprite_items::stage_2_monsters_1, 0, 1, 2, 3 },
+        { &btn::sprite_items::stage_2_monsters_1, 16, 17, 18, 19 },
+        { &btn::sprite_items::stage_2_monsters_1, 32, 33, 34, 35 },
+        { &btn::sprite_items::stage_2_monsters_1, 48, 49, 50, 51 },
+        { &btn::sprite_items::stage_2_monsters_2, 0, 1, 2, 3 },
+        { &btn::sprite_items::stage_2_monsters_2, 16, 17, 18, 19 },
+        { &btn::sprite_items::stage_2_monsters_2, 32, 33, 34, 35 },
+        { &btn::sprite_items::stage_2_monsters_2, 48, 49, 50, 51 },
+        { &btn::sprite_items::stage_2_robot, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_3_blonde, 0, 1, 0, 2 },
+        { &btn::sprite_items::stage_3_characters_1, 0, 1, 0, 2 },
+        { &btn::sprite_items::stage_3_characters_1, 6, 7, 6, 8 },
+        { &btn::sprite_items::stage_3_characters_1, 12, 13, 12, 14 },
+        { &btn::sprite_items::stage_3_characters_2, 0, 1, 0, 2 },
+        { &btn::sprite_items::stage_3_characters_2, 6, 7, 6, 8 },
+        { &btn::sprite_items::stage_3_monsters_1, 0, 1, 0, 1 },
+        { &btn::sprite_items::stage_3_monsters_1, 2, 3, 4, 2 },
+        { &btn::sprite_items::stage_3_monsters_1, 5, 6, 5, 7 },
+        { &btn::sprite_items::stage_3_monsters_2, 0, 1, 0, 2 },
+        { &btn::sprite_items::stage_3_monsters_2, 3, 4, 3, 5 },
+        { &btn::sprite_items::stage_3_dragon_man, 0, 1, 0, 2 },
+        { &btn::sprite_items::stage_4_brain, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_1, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_1, 1, 1, 1, 1 },
+        { &btn::sprite_items::stage_4_enemies_1, 2, 2, 2, 2 },
+        { &btn::sprite_items::stage_4_enemies_2, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_2, 1, 1, 1, 1 },
+        { &btn::sprite_items::stage_4_enemies_3_1, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_3_2, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_4, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_enemies_4, 1, 1, 1, 1 },
+        { &btn::sprite_items::stage_4_enemies_4, 2, 2, 2, 2 },
+        { &btn::sprite_items::stage_4_meteors_big, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_meteors_big, 1, 1, 1, 1 },
+        { &btn::sprite_items::stage_4_meteors_small, 0, 0, 0, 0 },
+        { &btn::sprite_items::stage_4_meteors_small, 1, 1, 1, 1 },
+        { &btn::sprite_items::stage_4_meteors_small, 2, 2, 2, 2 },
+    };
+
     [[nodiscard]] constexpr btn::array<btn::sprite_affine_mat_attributes, btn::display::height()>
     _create_hblank_effect_attributes()
     {
@@ -26,7 +123,7 @@ namespace
         for(int index = 0; index < btn::display::height(); ++index)
         {
             btn::sprite_affine_mat_attributes& attributes = result[index];
-            btn::fixed sin = btn::lut_sin((index * 512) / btn::display::height());
+            btn::fixed sin = btn::lut_sin((index * 256) / btn::display::height());
             attributes.set_rotation_angle((index * 360) / btn::display::height());
             attributes.set_scale(1 + (sin / 2));
         }
@@ -43,14 +140,6 @@ credits::credits(btn::sprite_text_generator& text_generator, butano_background& 
     _hblank_effect(btn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
                        btn::sprite_affine_mat_ptr::create(), _hblank_effect_attributes))
 {
-    int y_limit = (btn::display::height() + 64) / 2;
-    btn::sprite_ptr sprite = btn::sprite_items::stage_3_blonde.create_sprite(0, y_limit);
-    sprite.set_affine_mat(_hblank_effect.affine_mat());
-    sprite.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
-    sprite.set_blending_enabled(true);
-    _background_sprites.push_back({ btn::sprite_move_to_action(sprite, 300, 0, -y_limit),
-                                    btn::create_sprite_animate_action_forever(sprite, 6, btn::sprite_items::stage_3_blonde.tiles_item(), 0, 1, 0, 2) });
-
     btn::blending::set_transparency_alpha(0);
     _blending_action.emplace(blending_frames, 1);
     butano_background.put_under_all();
@@ -100,6 +189,31 @@ btn::optional<scene_type> credits::update()
         {
             _blending_action.reset();
         }
+    }
+
+    --_background_sprite_counter;
+
+    if(! _background_sprite_counter)
+    {
+        _background_sprite_counter = 60;
+
+        unsigned background_sprite_items_count = sizeof(background_sprite_items) / sizeof(*background_sprite_items);
+        unsigned background_sprite_index = _random.get() % background_sprite_items_count;
+        const background_sprite_item& background_item = background_sprite_items[background_sprite_index];
+        int x = (_random.get() % btn::display::width()) - (btn::display::width() / 2);
+        int y_limit = (btn::display::height() + 64) / 2;
+        btn::sprite_ptr sprite = background_item.sprite_item->create_sprite(x, y_limit);
+        sprite.set_affine_mat(_hblank_effect.affine_mat());
+        sprite.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
+        sprite.set_blending_enabled(true);
+        x = (_random.get() % btn::display::width()) - (btn::display::width() / 2);
+        _background_sprites.push_back({
+                btn::sprite_move_to_action(sprite, 300, x, -y_limit),
+                btn::create_sprite_animate_action_forever(
+                        sprite, 6, background_item.sprite_item->tiles_item(),
+                        background_item.graphics_index_0, background_item.graphics_index_1,
+                        background_item.graphics_index_2, background_item.graphics_index_3)
+        });
     }
 
     return result;

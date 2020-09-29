@@ -560,10 +560,10 @@ void commit()
 
     if(data.commit_mosaic)
     {
-        hw::display::set_mosaic(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(),
-                                fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(),
-                                fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(),
-                                fixed_t<4>(data.bgs_mosaic_vertical_stretch).data());
+        hw::display::set_mosaic(btn::min(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(), 15),
+                                btn::min(fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(), 15),
+                                btn::min(fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(), 15),
+                                btn::min(fixed_t<4>(data.bgs_mosaic_vertical_stretch).data(), 15));
         data.commit_mosaic = false;
     }
 

@@ -59,7 +59,7 @@ butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette) :
 
 void butano_boss::play_music() const
 {
-    btn::music_items::basic_instinct.play(1);
+    btn::music_items::basic_instinct.play(0.8);
 }
 
 void butano_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,

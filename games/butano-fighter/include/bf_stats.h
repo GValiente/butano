@@ -42,7 +42,7 @@ private:
     btn::vector<btn::sprite_ptr, 3> _text_sprites;
     btn::fixed_point _text_position;
     btn::fixed _max_cpu_usage;
-    mode_type _mode = mode_type::SIMPLE;
+    mode_type _mode = mode_type::DISABLED;
     int _counter = 0;
 };
 

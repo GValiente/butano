@@ -397,6 +397,11 @@ btn::optional<scene_type> title::_menu()
             else
             {
                 btn::sound_items::cure.play();
+
+                if(_menu_index == 2)
+                {
+                    _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
+                }
             }
 
             _state = state::HIDE_CURSOR;
@@ -545,9 +550,14 @@ btn::optional<scene_type> title::_menu()
                     result = scene_type::HOW_TO_PLAY_AND_GAME;
                 }
             }
-            else
+            else if(_menu_index == 1)
             {
                 result = scene_type::HOW_TO_PLAY_AND_TITLE;
+            }
+            else
+            {
+                result = scene_type::CREDITS;
+                btn::music::stop();
             }
         }
     }

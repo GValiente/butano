@@ -39,7 +39,9 @@ namespace bf
 
 namespace
 {
-    constexpr const int blending_frames = 60;
+    constexpr const btn::fixed text_y_inc = 0.5;
+    constexpr const btn::fixed text_y_limit = (btn::display::height() + 16) / 2;
+    constexpr const int blending_frames = 90;
 
     struct background_sprite_item
     {
@@ -48,6 +50,111 @@ namespace
         int graphics_index_1;
         int graphics_index_2;
         int graphics_index_3;
+    };
+
+    constexpr const btn::string_view text_items[] = {
+        "BUTANO FIGHTER",
+        "",
+        "",
+        "A game made with",
+        "BUTANO",
+        "github.com/GValiente/butano",
+        "",
+        "",
+        "GBA hardware access and more",
+        "provided by Tonclib",
+        "coranac.com/projects/#tonc",
+        "",
+        "",
+        "Music and sound provided by",
+        "Maxmod",
+        "maxmod.devkitpro.org",
+        "",
+        "",
+        "Fast number to string conversion",
+        "provided by posprintf",
+        "danposluns.com/gbadev"
+        "",
+        "",
+        "Fast math routines provided by",
+        "gba-modern",
+        "github.com/JoaoBaptMG/gba-modern",
+        "",
+        "",
+        "Built with",
+        "devkitARM",
+        "devkitpro.org",
+        "",
+        "",
+        "GRAPHICS",
+        "(see credits/graphics.txt for details)",
+        "",
+        "",
+        "Butano images",
+        "By Sun Ladder",
+        "commons.wikimedia.org",
+        "",
+        "",
+        "mountain_clouds.bmp",
+        "By Luis Zuno",
+        "ansimuz.com",
+        "",
+        "",
+        "Everything else",
+        "By Pixel-boy at Sparklin Labs",
+        "twitter.com/2pblog1",
+        "",
+        "",
+        "MUSIC",
+        "(see credits/music.txt for details)",
+        "",
+        "",
+        "battle_clean.it",
+        "By Spring with VinsCool",
+        "opengameart.org",
+        "",
+        "",
+        "cyberrid.mod",
+        "By jester/sanity",
+        "modarchive.org",
+        "",
+        "",
+        "minor_boss_r.it",
+        "By Spring/Spring Enterprises",
+        "opengameart.org",
+        "",
+        "",
+        "soda7_xcopy_ohc.s3m",
+        "By Soda7",
+        "modarchive.org",
+        "",
+        "",
+        "stardstm.mod",
+        "By jester/sanity",
+        "modarchive.org",
+        "",
+        "",
+        "galgox_snowheart_melody.xm",
+        "By Galgox, Robyn,",
+        "MiDoRi, and ViLXDRYAD",
+        "modarchive.org",
+        "",
+        "",
+        "basic_instinct.mod",
+        "By jes ^ ter",
+        "modarchive.org",
+        "",
+        "",
+        "fruit.mod",
+        "By jester/sanity",
+        "modarchive.org",
+        "",
+        "",
+        "SOUND EFFECTS",
+        "By Pixel-boy at Sparklin Labs",
+        "twitter.com/2pblog1",
+        "(see credits/sound_effects.txt",
+        "for details)",
     };
 
     constexpr const background_sprite_item background_sprite_items[] = {
@@ -141,7 +248,7 @@ credits::credits(btn::sprite_text_generator& text_generator, butano_background& 
                        btn::sprite_affine_mat_ptr::create(), _hblank_effect_attributes))
 {
     btn::blending::set_transparency_alpha(0);
-    _blending_action.emplace(blending_frames, 1);
+    _blending_action.emplace(blending_frames, 0.5);
     butano_background.put_under_all();
 
     if(! btn::music::playing())
@@ -171,26 +278,6 @@ btn::optional<scene_type> credits::update()
         }
     }
 
-    if(_music_volume_action)
-    {
-        _music_volume_action->update();
-
-        if(_music_volume_action->done())
-        {
-            _music_volume_action.reset();
-        }
-    }
-
-    if(_blending_action)
-    {
-        _blending_action->update();
-
-        if(_blending_action->done())
-        {
-            _blending_action.reset();
-        }
-    }
-
     --_background_sprite_counter;
 
     if(! _background_sprite_counter)
@@ -214,6 +301,94 @@ btn::optional<scene_type> credits::update()
                         background_item.graphics_index_0, background_item.graphics_index_1,
                         background_item.graphics_index_2, background_item.graphics_index_3)
         });
+    }
+
+    if(_blending_action)
+    {
+        _blending_action->update();
+
+        if(_blending_action->done())
+        {
+            _blending_action.reset();
+        }
+    }
+
+    if(_music_volume_action)
+    {
+        _music_volume_action->update();
+
+        if(_music_volume_action->done())
+        {
+            _music_volume_action.reset();
+
+            if(_text_entries.empty())
+            {
+                _background_sprites.clear();
+                btn::blending::set_transparency_alpha(1);
+                btn::music::stop();
+                result = scene_type::TITLE;
+            }
+        }
+    }
+
+    if(! result)
+    {
+        for(int index = 0, limit = btn::keypad::a_held() ? 6 : 1; index < limit; ++index)
+        {
+            for(auto it = _text_entries.begin(), end = _text_entries.end(); it != end; )
+            {
+                text_entry& text = *it;
+
+                if(text.y <= -text_y_limit)
+                {
+                    _text_entries.erase(it);
+                    end = _text_entries.end();
+
+                    if(_text_entries.empty())
+                    {
+                        _music_volume_action.emplace(blending_frames, 0);
+                        _blending_action.emplace(blending_frames, 0);
+                    }
+                }
+                else
+                {
+                    text.y -= text_y_inc;
+                    ++it;
+
+                    for(btn::sprite_ptr& sprite : text.sprites)
+                    {
+                        sprite.set_y(text.y);
+                    }
+                }
+            }
+
+            if(! _blending_action)
+            {
+                --_text_counter;
+
+                if(! _text_counter)
+                {
+                    int text_items_count = sizeof(text_items) / sizeof(*text_items);
+                    _text_counter = (14 / text_y_inc).integer();
+
+                    if(_text_index < text_items_count)
+                    {
+                        const btn::string_view& text_item = text_items[_text_index];
+                        ++_text_index;
+
+                        text_entry entry;
+                        entry.y = text_y_limit;
+
+                        btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
+                        _text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+                        _text_generator.generate(0, text_y_limit, text_item, entry.sprites);
+                        _text_generator.set_alignment(old_alignment);
+
+                        _text_entries.push_back(btn::move(entry));
+                    }
+                }
+            }
+        }
     }
 
     return result;

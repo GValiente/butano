@@ -30,7 +30,7 @@ ending::ending(btn::sprite_text_generator& text_generator, butano_background& bu
     text_generator.generate(0, -40, "YOU DID IT!", _text_sprites);
     text_generator.generate(0, 0, "Now make your own", _text_sprites);
     text_generator.generate(0, 20, "GBA games with BUTANO", _text_sprites);
-    text_generator.generate(0, 40, "https://github.com/GValiente/butano", _text_sprites);
+    text_generator.generate(0, 40, "github.com/GValiente/butano", _text_sprites);
     text_generator.set_alignment(old_alignment);
 
     for(btn::sprite_ptr& text_sprite : _text_sprites)

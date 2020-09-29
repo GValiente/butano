@@ -18,10 +18,14 @@ class info
 public:
     info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator);
 
+    info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
+         btn::sprite_text_generator& text_generator);
+
     void update();
 
 private:
-    btn::vector<btn::sprite_ptr, 48> _sprites;
+    btn::vector<btn::sprite_ptr, 8> _title_sprites;
+    btn::vector<btn::sprite_ptr, 48> _text_sprites;
     btn::vector<btn::sprite_ptr, 4> _hide_info_sprites;
     btn::vector<btn::sprite_ptr, 4> _show_info_sprites;
     bool _enabled = false;

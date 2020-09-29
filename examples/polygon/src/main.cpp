@@ -16,6 +16,8 @@
 namespace
 {
     constexpr const btn::string_view info_text_lines[] = {
+        "",
+        "",
         "Polygon rendering with sprites",
         "",
         "L + PAD: move top left vertex",

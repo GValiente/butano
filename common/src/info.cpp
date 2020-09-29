@@ -4,20 +4,33 @@
 #include "btn_display.h"
 #include "btn_sprite_text_generator.h"
 
-info::info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator)
+info::info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator) :
+    info("", text_lines, text_generator)
 {
-    btn::fixed y_inc = 12;
-    btn::fixed y = (-btn::display::height() / 2) + (y_inc * 3);
+}
+
+info::info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
+           btn::sprite_text_generator& text_generator)
+{
+    btn::fixed y_inc = 14;
+    btn::fixed y = (-btn::display::height() / 2) + y_inc;
     text_generator.set_bg_priority(0);
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-    text_generator.generate(0, (btn::display::height() / 2) - 12, "SELECT: hide info", _hide_info_sprites);
-    text_generator.generate(0, (btn::display::height() / 2) - 12, "SELECT: show info", _show_info_sprites);
+
+    if(! title.empty())
+    {
+        text_generator.generate(0, y, title, _title_sprites);
+        y += y_inc * 2;
+    }
 
     for(const btn::string_view& text_line : text_lines)
     {
-        text_generator.generate(0, y, text_line, _sprites);
+        text_generator.generate(0, y, text_line, _text_sprites);
         y += y_inc;
     }
+
+    text_generator.generate(0, (btn::display::height() / 2) - y_inc, "SELECT: hide info", _hide_info_sprites);
+    text_generator.generate(0, (btn::display::height() / 2) - y_inc, "SELECT: show info", _show_info_sprites);
 
     _update_sprites();
 }
@@ -60,7 +73,7 @@ void info::_update_sprites()
         }
     }
 
-    for(btn::sprite_ptr& sprite : _sprites)
+    for(btn::sprite_ptr& sprite : _text_sprites)
     {
         sprite.set_visible(enabled);
     }

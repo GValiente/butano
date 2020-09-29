@@ -19,7 +19,9 @@
 namespace
 {
     constexpr const btn::string_view info_text_lines[] = {
-        "Polygon rendering with sprites",
+        "",
+        "",
+        "Polygon rendering with HDMA sprites",
         "",
         "L + PAD: move top left vertex",
         "R + PAD: move top right vertex",

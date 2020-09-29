@@ -61,10 +61,10 @@ namespace
 
     public:
         explicit registers(const sprite_affine_mat_attributes& attributes) :
-            _pa(attributes.first_register_value()),
-            _pb(attributes.second_register_value()),
-            _pc(attributes.third_register_value()),
-            _pd(attributes.fourth_register_value())
+            _pa(attributes.pa_register_value()),
+            _pb(attributes.pb_register_value()),
+            _pc(attributes.pc_register_value()),
+            _pd(attributes.pd_register_value())
         {
         }
 
@@ -284,11 +284,11 @@ void set_scale_x(int id, fixed scale_x)
 
     if(scale_x != item.attributes.scale_x())
     {
-        int pa = item.attributes.first_register_value();
-        int pb = item.attributes.second_register_value();
+        int pa = item.attributes.pa_register_value();
+        int pb = item.attributes.pb_register_value();
         item.attributes.set_scale_x(scale_x);
 
-        if(item.attributes.first_register_value() != pa || item.attributes.second_register_value() != pb)
+        if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb)
         {
             hw::sprite_affine_mats::update_scale_x(item.attributes, data.handles_ptr[id]);
             _update(id);
@@ -307,11 +307,11 @@ void set_scale_y(int id, fixed scale_y)
 
     if(scale_y != item.attributes.scale_y())
     {
-        int pc = item.attributes.third_register_value();
-        int pd = item.attributes.fourth_register_value();
+        int pc = item.attributes.pc_register_value();
+        int pd = item.attributes.pd_register_value();
         item.attributes.set_scale_y(scale_y);
 
-        if(item.attributes.third_register_value() != pc || item.attributes.fourth_register_value() != pd)
+        if(item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
         {
             hw::sprite_affine_mats::update_scale_y(item.attributes, data.handles_ptr[id]);
             _update(id);

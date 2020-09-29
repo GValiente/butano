@@ -153,22 +153,22 @@ public:
         return size > 256 << 16;
     }
 
-    [[nodiscard]] constexpr int first_register_value() const
+    [[nodiscard]] constexpr int pa_register_value() const
     {
         return _pa;
     }
 
-    [[nodiscard]] constexpr int second_register_value() const
+    [[nodiscard]] constexpr int pb_register_value() const
     {
         return _pb;
     }
 
-    [[nodiscard]] constexpr int third_register_value() const
+    [[nodiscard]] constexpr int pc_register_value() const
     {
         return _pc;
     }
 
-    [[nodiscard]] constexpr int fourth_register_value() const
+    [[nodiscard]] constexpr int pd_register_value() const
     {
         return _pd;
     }

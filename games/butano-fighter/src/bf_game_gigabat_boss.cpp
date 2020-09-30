@@ -224,11 +224,11 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
             _target_x = -constants::play_width;
         }
 
-        if(y <= -constants::play_height - 16)
+        if(y <= -constants::play_height + 16)
         {
             _delta_position.set_y(rotate_speed);
         }
-        else if(y >= constants::play_height - 24)
+        else if(y >= constants::play_height - 16)
         {
             _delta_position.set_y(-rotate_speed);
         }

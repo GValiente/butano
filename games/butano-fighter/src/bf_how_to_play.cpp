@@ -253,7 +253,7 @@ void how_to_play::entry_type::animate()
     _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
     _text_generator.generate(left_text_sprites_x, 0,  "This is Butano Fighter!", result.sprites);
     _text_generator.generate(left_text_sprites_x, 12, "Your goal is to stay alive", result.sprites);
-    _text_generator.generate(left_text_sprites_x, 24, "while you shoot to", result.sprites);
+    _text_generator.generate(left_text_sprites_x, 24, "while you shoot at", result.sprites);
     _text_generator.generate(left_text_sprites_x, 36, "everything that moves!", result.sprites);
 
     btn::fixed_point body_position(left_text_sprites_x - 24, 18);

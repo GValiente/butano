@@ -112,14 +112,14 @@ namespace
     };
 
     constexpr const enemy_bullet_event fire_bullets[] = {
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 1),     44 + 20 + 20 + 20 + 4),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 1),     1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 0, 1),     1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, -1, 1),    1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, -1, 1),    1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, -1, 1),   1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 0, 1),    1),
-        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 1),    1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   44 + 20 + 20 + 20 + 4),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9),   1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 0, 0.9),   1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, -1, 0.9),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, -1, 0.9),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, -1, 0.9), 1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 0, 0.9),  1),
+        enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9),  1),
     };
 
 
@@ -694,28 +694,23 @@ namespace
         enemy_event(ogre_weak, btn::fixed_point(0, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(25, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(ogre_weak, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(ogre_weak, btn::fixed_point(55, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
+        enemy_event(ogre_weak, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 45, enemy_drop_type::NONE),
 
         enemy_event(ogre_weak, btn::fixed_point(0 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-30 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(25 + 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(ogre_weak, btn::fixed_point(-60 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(55 + 10, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
 
         enemy_event(ogre_weak, btn::fixed_point(0 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-30 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(ogre_weak, btn::fixed_point(25 - 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-60 - 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(55 - 10, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
 
         enemy_event(ogre_weak, btn::fixed_point(0, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(ogre_weak, btn::fixed_point(-30, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(25, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-60, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(55, start_y), ogre_flipped_moves, no_bullets, 45, enemy_drop_type::NONE),
 
-        enemy_event(ogre_weak, btn::fixed_point(0 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-30 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(25 + 10, start_y), ogre_flipped_moves, no_bullets, 1, enemy_drop_type::NONE),
         enemy_event(ogre_weak, btn::fixed_point(-60 + 10, start_y), ogre_moves, no_bullets, 1, enemy_drop_type::NONE),

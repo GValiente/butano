@@ -93,7 +93,7 @@ namespace
     // knight:
 
     constexpr const enemy_data knight(btn::sprite_items::stage_1_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                      btn::sound_items::scream_3, btn::fixed_size(12, 10), 4, 5, 7, 6);
+                                      btn::sound_items::scream_3, btn::fixed_size(12, 10), 4, 5, 6, 6);
 
     constexpr const enemy_move_event knight_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0)), 1, false),
@@ -171,7 +171,7 @@ namespace
     constexpr const enemy_move_event characters_1_team_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 220, false),
         enemy_move_event(btn::fixed_point(0.25, 0),          320, false),
-        enemy_move_event(btn::fixed_point(-0.25, 0),         320, false),
+        enemy_move_event(btn::fixed_point(-0.25, 0),         320, true),
         enemy_move_event(btn::fixed_point(0, move_y(-0.25)), 1,   false),
     };
 
@@ -321,7 +321,7 @@ namespace
     // skeleton:
 
     constexpr const enemy_data skeleton(btn::sprite_items::stage_1_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
-                                        btn::sound_items::hit_2, btn::fixed_size(13, 11), 0, 1, 12, 10);
+                                        btn::sound_items::hit_2, btn::fixed_size(13, 11), 0, 1, 10, 10);
 
     constexpr const enemy_move_event skeleton_moves[] = {
         enemy_move_event(btn::fixed_point(0, move_y(0)), 1, false),
@@ -511,11 +511,12 @@ namespace
 
         enemy_event(horse, btn::fixed_point(-60, start_y), horse_moves, no_bullets, 30, enemy_drop_type::NONE),
         enemy_event(jelly, btn::fixed_point(-30, start_y), jelly_moves, no_bullets, 30, enemy_drop_type::NONE),
-        enemy_event(thief, btn::fixed_point(-60, start_y), thief_moves, no_bullets, 30, enemy_drop_type::GEM),
+        enemy_event(thief, btn::fixed_point(-60, start_y), thief_moves, no_bullets, 60, enemy_drop_type::GEM),
 
         enemy_event(blacksmith, btn::fixed_point(-60, start_y), blacksmith_moves, blacksmith_flipped_bullets, 1, enemy_drop_type::NONE),
-        enemy_event(blacksmith, btn::fixed_point(-5, start_y), blacksmith_moves, blacksmith_flipped_bullets, 1, enemy_drop_type::NONE),
         enemy_event(blacksmith, btn::fixed_point(55, start_y), blacksmith_flipped_moves, blacksmith_bullets, 60, enemy_drop_type::NONE),
+
+        enemy_event(blacksmith, btn::fixed_point(0, start_y), blacksmith_moves, blacksmith_flipped_bullets, 60, enemy_drop_type::NONE),
 
         enemy_event(jelly, btn::fixed_point(-30, start_y), jelly_moves, no_bullets, 30, enemy_drop_type::NONE),
 

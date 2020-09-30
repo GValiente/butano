@@ -18,7 +18,7 @@ namespace bf::constants
     constexpr const int max_object_messages = max_gems;
     constexpr const int max_enemy_size = 64;
     constexpr const int play_width = 72;
-    constexpr const int play_height = (btn::display::height() - 70) / 2;
+    constexpr const int play_height = (btn::display::height() - 42) / 2;
     constexpr const int view_width = (play_width * 2) + (max_enemy_size / 2);
     constexpr const int view_height = (btn::display::height() + max_enemy_size) / 2;
     constexpr const int camera_width = 32;

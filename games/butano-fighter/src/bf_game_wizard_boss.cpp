@@ -340,11 +340,11 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             _target_x = -constants::play_width;
         }
 
-        if(y <= -constants::play_height - 24)
+        if(y <= -constants::play_height - 6)
         {
             _delta_position.set_y(rotate_speed);
         }
-        else if(y >= constants::play_height - 16)
+        else if(y >= constants::play_height - 12)
         {
             _delta_position.set_y(-rotate_speed);
         }

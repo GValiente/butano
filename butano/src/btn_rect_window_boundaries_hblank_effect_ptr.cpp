@@ -1,4 +1,4 @@
-#include "btn_rect_window_hblank_effects.h"
+#include "btn_rect_window_boundaries_hblank_effect_ptr.h"
 
 #include "btn_any.h"
 #include "btn_span.h"

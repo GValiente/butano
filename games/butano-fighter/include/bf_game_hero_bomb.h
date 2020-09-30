@@ -6,8 +6,8 @@
 #include "btn_blending_actions.h"
 #include "btn_regular_bg_actions.h"
 #include "btn_rect_window_actions.h"
-#include "btn_regular_bg_hblank_effects.h"
-#include "btn_rect_window_hblank_effects.h"
+#include "btn_regular_bg_position_hblank_effect_ptr.h"
+#include "btn_rect_window_boundaries_hblank_effect_ptr.h"
 #include "bf_circle_generator.h"
 
 namespace bf::game

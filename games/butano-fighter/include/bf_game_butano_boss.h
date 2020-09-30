@@ -7,7 +7,7 @@
 #include "btn_fixed_rect.h"
 #include "btn_sprite_actions.h"
 #include "btn_rect_window_actions.h"
-#include "btn_rect_window_hblank_effects.h"
+#include "btn_rect_window_boundaries_hblank_effect_ptr.h"
 #include "bf_game_boss.h"
 #include "bf_circle_generator.h"
 

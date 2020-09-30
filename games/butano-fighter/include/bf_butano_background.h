@@ -4,7 +4,7 @@
 #include "btn_optional.h"
 #include "btn_sprite_actions.h"
 #include "btn_regular_bg_actions.h"
-#include "btn_bg_palette_hblank_effects.h"
+#include "btn_bg_palette_color_hblank_effect_ptr.h"
 
 namespace bf
 {

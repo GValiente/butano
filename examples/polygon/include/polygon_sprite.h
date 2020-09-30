@@ -5,9 +5,7 @@
 #include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_display.h"
-#include "btn_span_fwd.h"
-#include "btn_sprite_ptr.h"
-#include "btn_sprite_hblank_effects.h"
+#include "btn_sprite_position_hblank_effect_ptr.h"
 
 class polygon;
 

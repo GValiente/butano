@@ -6,7 +6,7 @@
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_blending_actions.h"
-#include "btn_sprite_affine_mat_hblank_effects.h"
+#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
 #include "bf_scene.h"
 
 namespace btn

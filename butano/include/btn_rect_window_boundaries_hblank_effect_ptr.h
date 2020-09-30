@@ -1,5 +1,5 @@
-#ifndef BTN_RECT_WINDOW_HBLANK_EFFECTS_H
-#define BTN_RECT_WINDOW_HBLANK_EFFECTS_H
+#ifndef BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
+#define BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
 
 #include "btn_rect_window.h"
 #include "btn_optional_fwd.h"

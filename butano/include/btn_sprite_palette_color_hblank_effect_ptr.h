@@ -1,5 +1,5 @@
-#ifndef BTN_SPRITE_PALETTE_HBLANK_EFFECTS_H
-#define BTN_SPRITE_PALETTE_HBLANK_EFFECTS_H
+#ifndef BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
+#define BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 
 #include "btn_hblank_effect_ptr.h"
 #include "btn_sprite_palette_ptr.h"

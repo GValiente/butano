@@ -1,4 +1,4 @@
-#include "btn_bg_palettes_hblank_effects.h"
+#include "btn_bg_palettes_transparent_color_hblank_effect_ptr.h"
 
 #include "btn_display.h"
 #include "btn_palettes_bank.h"

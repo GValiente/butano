@@ -1,9 +1,8 @@
 #include "btn_core.h"
 #include "btn_display.h"
 #include "btn_bgs_mosaic.h"
-#include "btn_regular_bg_ptr.h"
 #include "btn_regular_bg_items_stage_1.h"
-#include "btn_regular_bg_hblank_effects.h"
+#include "btn_regular_bg_position_hblank_effect_ptr.h"
 #include "wave_generator.h"
 
 namespace

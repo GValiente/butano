@@ -5,7 +5,7 @@
 #include "btn_optional.h"
 #include "btn_sprite_ptr.h"
 #include "btn_music_actions.h"
-#include "btn_sprite_affine_mat_hblank_effects.h"
+#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
 
 namespace bf::game
 {

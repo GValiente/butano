@@ -1,5 +1,5 @@
-#ifndef BTN_BG_PALETTE_HBLANK_EFFECTS_H
-#define BTN_BG_PALETTE_HBLANK_EFFECTS_H
+#ifndef BTN_BG_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
+#define BTN_BG_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 
 #include "btn_bg_palette_ptr.h"
 #include "btn_hblank_effect_ptr.h"

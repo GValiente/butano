@@ -4,9 +4,9 @@
 #include "btn_display.h"
 #include "btn_sprite_actions.h"
 #include "btn_rect_window_actions.h"
-#include "btn_sprite_hblank_effects.h"
 #include "btn_sprite_palette_actions.h"
 #include "btn_sprite_third_attributes.h"
+#include "btn_sprite_third_attributes_hblank_effect_ptr.h"
 
 namespace btn
 {

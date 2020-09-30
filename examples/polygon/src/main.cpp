@@ -24,8 +24,7 @@ namespace
         "R + PAD: move top right vertex",
         "B + PAD: move bottom left vertex",
         "A + PAD: move bottom right vertex",
-        "",
-        "START: show more polygons :D",
+        "START: hide/show back polygons",
     };
 
     void _move_vertex(int vertex_index, polygon& polygon, polygon_sprite& polygon_sprite)

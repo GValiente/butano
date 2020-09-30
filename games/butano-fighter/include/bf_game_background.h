@@ -8,7 +8,7 @@
 #include "btn_bg_palette_actions.h"
 #include "btn_bgs_mosaic_actions.h"
 #include "btn_green_swap_actions.h"
-#include "btn_regular_bg_hblank_effects.h"
+#include "btn_regular_bg_position_hblank_effect_ptr.h"
 
 namespace bf::game
 {

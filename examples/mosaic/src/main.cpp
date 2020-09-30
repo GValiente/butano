@@ -1,11 +1,12 @@
 #include "btn_core.h"
 #include "btn_keypad.h"
+#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_bg_palettes.h"
-#include "btn_bgs_mosaic.h"
 #include "btn_regular_bg_ptr.h"
-#include "btn_sprites_mosaic.h"
+#include "btn_bgs_mosaic_actions.h"
 #include "btn_sprite_text_generator.h"
+#include "btn_sprites_mosaic_actions.h"
 
 #include "btn_sprite_items_blonde.h"
 #include "btn_regular_bg_items_land.h"
@@ -108,6 +109,54 @@ namespace
         btn::bgs_mosaic::set_horizontal_stretch(0);
         btn::bgs_mosaic::set_vertical_stretch(0);
     }
+
+    void sprites_mosaic_actions_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Sprites mosaic actions", info_text_lines, text_generator);
+
+        btn::sprite_ptr blonde_sprite = btn::sprite_items::blonde.create_sprite(0, 0);
+        blonde_sprite.set_mosaic_enabled(true);
+
+        btn::sprites_mosaic_stretch_loop_action action(120, 1);
+
+        while(! btn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            btn::core::update();
+        }
+
+        btn::sprites_mosaic::set_horizontal_stretch(0);
+        btn::sprites_mosaic::set_vertical_stretch(0);
+    }
+
+    void bgs_mosaic_actions_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Backgrounds mosaic actions", info_text_lines, text_generator);
+
+        btn::regular_bg_ptr land_bg = btn::regular_bg_items::land.create_bg(0, 0);
+        land_bg.set_mosaic_enabled(true);
+
+        btn::bgs_mosaic_stretch_loop_action action(120, 1);
+
+        while(! btn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            btn::core::update();
+        }
+
+        btn::bgs_mosaic::set_horizontal_stretch(0);
+        btn::bgs_mosaic::set_vertical_stretch(0);
+    }
 }
 
 int main()
@@ -123,6 +172,12 @@ int main()
         btn::core::update();
 
         bgs_mosaic_scene(text_generator);
+        btn::core::update();
+
+        sprites_mosaic_actions_scene(text_generator);
+        btn::core::update();
+
+        bgs_mosaic_actions_scene(text_generator);
         btn::core::update();
     }
 }

@@ -75,6 +75,16 @@ private:
             sprite_affine_mat_pd_register_hblank_effect_ptr&& pd_hblank_effect_ptr);
 };
 
+
+template<>
+struct hash<sprite_affine_mat_attributes_hblank_effect_ptr>
+{
+    [[nodiscard]] unsigned operator()(const sprite_affine_mat_attributes_hblank_effect_ptr& value) const
+    {
+        return make_hash(value.id());
+    }
+};
+
 }
 
 #endif

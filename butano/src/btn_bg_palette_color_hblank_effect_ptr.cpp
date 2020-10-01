@@ -164,6 +164,8 @@ void bg_palette_color_hblank_effect_ptr::reload_colors_ref()
 void bg_palette_color_hblank_effect_ptr::swap(bg_palette_color_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
+    _palette.swap(other._palette);
+    btn::swap(_color_index, other._color_index);
 }
 
 bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(

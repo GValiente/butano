@@ -164,6 +164,8 @@ void sprite_palette_color_hblank_effect_ptr::reload_colors_ref()
 void sprite_palette_color_hblank_effect_ptr::swap(sprite_palette_color_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
+    _palette.swap(other._palette);
+    btn::swap(_color_index, other._color_index);
 }
 
 sprite_palette_color_hblank_effect_ptr::sprite_palette_color_hblank_effect_ptr(

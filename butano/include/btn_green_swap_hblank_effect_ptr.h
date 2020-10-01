@@ -7,8 +7,6 @@
 namespace btn
 {
 
-class color;
-
 class green_swap_hblank_effect_ptr : public hblank_effect_ptr
 {
 

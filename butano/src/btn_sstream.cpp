@@ -74,42 +74,42 @@ void ostringstream::append(const char* char_array, int size)
 void ostringstream::append(int value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
 void ostringstream::append(long value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
 void ostringstream::append(int64_t value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
 void ostringstream::append(unsigned value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
 void ostringstream::append(unsigned long value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
 void ostringstream::append(uint64_t value)
 {
     array<char, 32> buffer;
-    int size = btn::hw::text::parse(value, buffer);
+    int size = hw::text::parse(value, buffer);
     str().append(buffer.data(), size);
 }
 
@@ -118,7 +118,7 @@ void ostringstream::append(const void* ptr)
     if(ptr)
     {
         array<char, 32> buffer;
-        int size = btn::hw::text::parse(ptr, buffer);
+        int size = hw::text::parse(ptr, buffer);
         str().append(buffer.data(), size);
     }
     else
@@ -136,7 +136,7 @@ void ostringstream::swap(ostringstream& other)
 void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digits)
 {
     array<char, 32> buffer;
-    int fraction_size = btn::hw::text::parse(fraction_result, buffer);
+    int fraction_size = hw::text::parse(fraction_result, buffer);
     istring& string = ostringstream::str();
     string.append('.');
 

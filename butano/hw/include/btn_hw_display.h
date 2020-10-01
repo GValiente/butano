@@ -121,16 +121,26 @@ namespace btn::hw::display
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0044 + (0x0002 * id));
     }
 
-    inline void set_green_swap_enabled(bool enabled)
+    inline void set_green_swap_enabled(bool enabled, uint16_t& green_swap_cnt)
     {
         if(enabled)
         {
-            REG_DISPCNT_U16_2 |= 0x0001;
+            green_swap_cnt |= 0x0001;
         }
         else
         {
-            REG_DISPCNT_U16_2 &= unsigned(~0x0001);
+            green_swap_cnt &= unsigned(~0x0001);
         }
+    }
+
+    inline void set_green_swap_enabled(bool enabled)
+    {
+        set_green_swap_enabled(enabled, REG_DISPCNT_U16_2);
+    }
+
+    [[nodiscard]] inline uint16_t* green_swap_register()
+    {
+        return &REG_DISPCNT_U16_2;
     }
 
     inline void sleep()

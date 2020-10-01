@@ -114,6 +114,8 @@ namespace btn::display_manager
 
     void set_green_swap_enabled(bool enabled);
 
+    void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest_ptr);
+
     #if BTN_CFG_CAMERA_ENABLED
         void update_camera();
     #endif

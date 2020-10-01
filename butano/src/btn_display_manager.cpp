@@ -502,6 +502,14 @@ void set_green_swap_enabled(bool enabled)
     data.commit_green_swap = true;
 }
 
+void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest_ptr)
+{
+    for(int index = 0; index < display::height(); ++index)
+    {
+        hw::display::set_green_swap_enabled(states_ptr[index], dest_ptr[index]);
+    }
+}
+
 #if BTN_CFG_CAMERA_ENABLED
     void update_camera()
     {
@@ -560,10 +568,10 @@ void commit()
 
     if(data.commit_mosaic)
     {
-        hw::display::set_mosaic(btn::min(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(), 15),
-                                btn::min(fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(), 15),
-                                btn::min(fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(), 15),
-                                btn::min(fixed_t<4>(data.bgs_mosaic_vertical_stretch).data(), 15));
+        hw::display::set_mosaic(min(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(), 15),
+                                min(fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(), 15),
+                                min(fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(), 15),
+                                min(fixed_t<4>(data.bgs_mosaic_vertical_stretch).data(), 15));
         data.commit_mosaic = false;
     }
 

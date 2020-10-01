@@ -2,6 +2,7 @@
 #define BTN_TEMPLATE_ACTIONS_H
 
 #include "btn_assert.h"
+#include "btn_limits.h"
 
 namespace btn
 {

@@ -4,6 +4,7 @@
 #include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_fixed_point.h"
+#include "btn_mosaic_attributes.h"
 #include "btn_bgs_manager.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
@@ -177,6 +178,45 @@ void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
     data.bgs_mosaic_horizontal_stretch = horizontal_stretch;
     data.bgs_mosaic_vertical_stretch = vertical_stretch;
     data.commit_mosaic = true;
+}
+
+void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr)
+{
+    int base_sprites_horizontal_stretch = fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data();
+    int base_sprites_vertical_stretch = fixed_t<4>(data.sprites_mosaic_vertical_stretch).data();
+    int base_bgs_horizontal_stretch = fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data();
+    int base_bgs_vertical_stretch = fixed_t<4>(data.bgs_mosaic_vertical_stretch).data();
+
+    if(base_sprites_horizontal_stretch == 0 && base_sprites_vertical_stretch == 0 &&
+            base_bgs_horizontal_stretch == 0 && base_bgs_vertical_stretch == 0)
+    {
+        for(int index = 0; index < display::height(); ++index)
+        {
+            const mosaic_attributes& attributes = mosaic_attributes_ptr[index];
+            int sprites_horizontal_stretch = fixed_t<4>(attributes.sprites_horizontal_stretch()).data();
+            int sprites_vertical_stretch = fixed_t<4>(attributes.sprites_vertical_stretch()).data();
+            int bgs_horizontal_stretch = fixed_t<4>(attributes.bgs_horizontal_stretch()).data();
+            int bgs_vertical_stretch = fixed_t<4>(attributes.bgs_vertical_stretch()).data();
+            hw::display::set_mosaic(min(sprites_horizontal_stretch, 15), min(sprites_vertical_stretch, 15),
+                                    min(bgs_horizontal_stretch, 15), min(bgs_vertical_stretch, 15), dest_ptr[index]);
+        }
+    }
+    else
+    {
+        for(int index = 0; index < display::height(); ++index)
+        {
+            const mosaic_attributes& attributes = mosaic_attributes_ptr[index];
+            int sprites_horizontal_stretch = fixed_t<4>(attributes.sprites_horizontal_stretch()).data();
+            int sprites_vertical_stretch = fixed_t<4>(attributes.sprites_vertical_stretch()).data();
+            int bgs_horizontal_stretch = fixed_t<4>(attributes.bgs_horizontal_stretch()).data();
+            int bgs_vertical_stretch = fixed_t<4>(attributes.bgs_vertical_stretch()).data();
+            hw::display::set_mosaic(
+                        clamp(base_sprites_horizontal_stretch + sprites_horizontal_stretch, 0, 15),
+                        clamp(base_sprites_vertical_stretch + sprites_vertical_stretch, 0, 15),
+                        clamp(base_bgs_horizontal_stretch + bgs_horizontal_stretch, 0, 15),
+                        clamp(base_bgs_vertical_stretch + bgs_vertical_stretch, 0, 15), dest_ptr[index]);
+        }
+    }
 }
 
 bool blending_bg_enabled(int bg)

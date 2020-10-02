@@ -8,6 +8,7 @@
 namespace btn
 {
     class fixed_point;
+    class mosaic_attributes;
 }
 
 namespace btn::display_manager
@@ -43,6 +44,8 @@ namespace btn::display_manager
     void set_bgs_mosaic_stretch(fixed stretch);
 
     void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch);
+
+    void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr);
 
     [[nodiscard]] bool blending_bg_enabled(int bg);
 

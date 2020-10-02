@@ -54,10 +54,22 @@ namespace btn::hw::display
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
+                           int bgs_horizontal_stretch, int bgs_vertical_stretch, uint16_t& mosaic_cnt)
+    {
+        mosaic_cnt = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
+                               unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
+    }
+
+    inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
                            int bgs_horizontal_stretch, int bgs_vertical_stretch)
     {
-        REG_MOSAIC_U16 = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
-                                   unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
+        set_mosaic(sprites_horizontal_stretch, sprites_vertical_stretch, bgs_horizontal_stretch, bgs_vertical_stretch,
+                   REG_MOSAIC_U16);
+    }
+
+    [[nodiscard]] inline uint16_t* mosaic_register()
+    {
+        return &REG_MOSAIC_U16;
     }
 
     inline void set_blending_bgs(const bool* bgs_ptr, int count)

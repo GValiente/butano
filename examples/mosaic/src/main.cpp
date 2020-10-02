@@ -4,9 +4,11 @@
 #include "btn_optional.h"
 #include "btn_bg_palettes.h"
 #include "btn_regular_bg_ptr.h"
+#include "btn_mosaic_attributes.h"
 #include "btn_bgs_mosaic_actions.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_sprites_mosaic_actions.h"
+#include "btn_mosaic_attributes_hblank_effect_ptr.h"
 
 #include "btn_sprite_items_blonde.h"
 #include "btn_regular_bg_items_land.h"
@@ -59,8 +61,7 @@ namespace
             btn::core::update();
         }
 
-        btn::sprites_mosaic::set_horizontal_stretch(0);
-        btn::sprites_mosaic::set_vertical_stretch(0);
+        btn::sprites_mosaic::set_stretch(0);
     }
 
     void bgs_mosaic_scene(btn::sprite_text_generator& text_generator)
@@ -106,8 +107,7 @@ namespace
             btn::core::update();
         }
 
-        btn::bgs_mosaic::set_horizontal_stretch(0);
-        btn::bgs_mosaic::set_vertical_stretch(0);
+        btn::bgs_mosaic::set_stretch(0);
     }
 
     void sprites_mosaic_actions_scene(btn::sprite_text_generator& text_generator)
@@ -130,8 +130,7 @@ namespace
             btn::core::update();
         }
 
-        btn::sprites_mosaic::set_horizontal_stretch(0);
-        btn::sprites_mosaic::set_vertical_stretch(0);
+        btn::sprites_mosaic::set_stretch(0);
     }
 
     void bgs_mosaic_actions_scene(btn::sprite_text_generator& text_generator)
@@ -154,8 +153,49 @@ namespace
             btn::core::update();
         }
 
-        btn::bgs_mosaic::set_horizontal_stretch(0);
-        btn::bgs_mosaic::set_vertical_stretch(0);
+        btn::bgs_mosaic::set_stretch(0);
+    }
+
+    void mosaic_hblank_effect_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Mosaic H-Blank effect", info_text_lines, text_generator);
+
+        btn::regular_bg_ptr land_bg = btn::regular_bg_items::land.create_bg(0, 0);
+        land_bg.set_mosaic_enabled(true);
+
+        btn::sprite_ptr blonde_sprite = btn::sprite_items::blonde.create_sprite(0, 0);
+        blonde_sprite.set_mosaic_enabled(true);
+
+        btn::array<btn::mosaic_attributes, btn::display::height()> mosaic_attributes;
+
+        for(int index = 0; index < btn::display::height(); ++index)
+        {
+            btn::mosaic_attributes& attributes = mosaic_attributes[index];
+            attributes.set_sprites_stretch(btn::fixed(index / 2) / btn::display::height());
+            attributes.set_bgs_stretch(0.5 - (btn::fixed(index / 2) / btn::display::height()));
+        }
+
+        btn::fixed max_strech(0.5);
+
+        for(int index = 0, amplitude = 32; index < amplitude; ++index)
+        {
+            btn::fixed stretch = max_strech - ((index * max_strech) / amplitude);
+            mosaic_attributes[(btn::display::height() / 2) + index].set_horizontal_stretch(stretch);
+            mosaic_attributes[(btn::display::height() / 2) - index - 1].set_horizontal_stretch(stretch);
+        }
+
+        btn::mosaic_attributes_hblank_effect_ptr mosaic_hblank_effect =
+                btn::mosaic_attributes_hblank_effect_ptr::create(mosaic_attributes);
+
+        while(! btn::keypad::start_pressed())
+        {
+            info.update();
+            btn::core::update();
+        }
     }
 }
 
@@ -168,6 +208,9 @@ int main()
 
     while(true)
     {
+        mosaic_hblank_effect_scene(text_generator);
+        btn::core::update();
+
         sprites_mosaic_scene(text_generator);
         btn::core::update();
 

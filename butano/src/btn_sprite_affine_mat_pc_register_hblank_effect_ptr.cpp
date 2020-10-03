@@ -7,6 +7,7 @@
 #include "btn_optional.h"
 #include "btn_hblank_effect_handler.h"
 #include "btn_hblank_effects_manager.h"
+#include "btn_sprite_affine_mats_manager.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
 
 namespace btn
@@ -49,6 +50,11 @@ namespace
                 output_values_ptr[index] = uint16_t(attributes_ptr[index].pc_register_value());
             }
         }
+
+        void cleanup(int target_id) final
+        {
+            sprite_affine_mats_manager::reload(target_id);
+        }
     };
 
 
@@ -83,6 +89,11 @@ namespace
             auto int_source = static_cast<const unsigned*>(input_values_ptr);
             auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
             memory::copy(*int_source, display::height() / 2, *int_destination);
+        }
+
+        void cleanup(int target_id) final
+        {
+            sprite_affine_mats_manager::reload(target_id);
         }
     };
 

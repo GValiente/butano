@@ -94,6 +94,8 @@ namespace bgs_manager
 
     void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode);
 
+    void reload();
+
     void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);

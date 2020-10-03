@@ -79,6 +79,8 @@ namespace btn::sprite_affine_mats_manager
 
     [[nodiscard]] bool double_size(int id);
 
+    void reload(int id);
+
     void update();
 
     [[nodiscard]] optional<commit_data> retrieve_commit_data();

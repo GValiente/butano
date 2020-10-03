@@ -57,6 +57,12 @@ namespace
                         sprite_first_attributes_ptr, output_values_ptr);
         }
 
+        void cleanup(int target_id) final
+        {
+            auto handle = reinterpret_cast<void*>(target_id);
+            sprites_manager::reload(handle);
+        }
+
     private:
         class alignas(alignof(int)) last_value_type
         {

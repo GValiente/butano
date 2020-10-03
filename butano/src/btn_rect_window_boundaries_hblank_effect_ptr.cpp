@@ -53,6 +53,11 @@ namespace
             display_manager::fill_rect_window_hblank_effect_horizontal_boundaries(
                         last_value, fixed_pairs_ptr, output_values_ptr);
         }
+
+        void cleanup(int) final
+        {
+            display_manager::reload_rect_windows_boundaries();
+        }
     };
 
 
@@ -93,6 +98,11 @@ namespace
             auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(input_values_ptr);
             display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
                         last_value, fixed_pairs_ptr, output_values_ptr);
+        }
+
+        void cleanup(int) final
+        {
+            display_manager::reload_rect_windows_boundaries();
         }
     };
 

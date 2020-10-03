@@ -935,6 +935,14 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
+void reload(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    int handles_index = item->handles_index;
+    data.first_index_to_commit = min(data.first_index_to_commit, handles_index);
+    data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
+}
+
 void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
@@ -1140,24 +1148,25 @@ void update()
     sprite_affine_mats_manager::update();
     _check_items_on_screen();
     _rebuild_handles();
-
-    if(auto commit_data = sprite_affine_mats_manager::retrieve_commit_data())
-    {
-        int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
-        int first_mat_index_to_commit = commit_data->offset * multiplier;
-        int last_mat_index_to_commit = first_mat_index_to_commit + (commit_data->count * multiplier) - 1;
-        data.first_index_to_commit = min(data.first_index_to_commit, first_mat_index_to_commit);
-        data.last_index_to_commit = max(data.last_index_to_commit, last_mat_index_to_commit);
-    }
 }
 
 void commit()
 {
     int first_index_to_commit = data.first_index_to_commit;
+    int last_index_to_commit = data.last_index_to_commit;
+
+    if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
+    {
+        int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
+        int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
+        int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
+        first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);
+        last_index_to_commit = max(last_index_to_commit, last_mat_index_to_commit);
+    }
 
     if(first_index_to_commit < sprites::sprites_count())
     {
-        int commit_items_count = data.last_index_to_commit - first_index_to_commit + 1;
+        int commit_items_count = last_index_to_commit - first_index_to_commit + 1;
         hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count);
         data.first_index_to_commit = sprites::sprites_count();
         data.last_index_to_commit = 0;

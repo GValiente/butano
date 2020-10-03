@@ -55,6 +55,11 @@ namespace
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_horizontal_positions(last_value, fixed_values_ptr, output_values_ptr);
         }
+
+        void cleanup(int) final
+        {
+            bgs_manager::reload();
+        }
     };
 
 
@@ -97,6 +102,11 @@ namespace
             fixed last_value = target_last_value.value<fixed>();
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_vertical_positions(last_value, fixed_values_ptr, output_values_ptr);
+        }
+
+        void cleanup(int) final
+        {
+            bgs_manager::reload();
         }
     };
 

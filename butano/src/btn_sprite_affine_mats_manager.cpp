@@ -423,6 +423,11 @@ bool double_size(int id)
     return item.double_size;
 }
 
+void reload(int id)
+{
+    _update_indexes_to_commit(id);
+}
+
 void update()
 {
     if(data.flipped_identity_changed)

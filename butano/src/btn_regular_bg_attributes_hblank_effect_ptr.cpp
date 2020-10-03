@@ -57,6 +57,11 @@ namespace
                         handle, regular_bg_attributes_ptr, output_values_ptr);
         }
 
+        void cleanup(int) final
+        {
+            bgs_manager::reload();
+        }
+
     private:
         class alignas(alignof(int)) last_value_type
         {

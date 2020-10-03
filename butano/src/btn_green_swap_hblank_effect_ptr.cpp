@@ -43,6 +43,11 @@ namespace
             auto states_ptr = reinterpret_cast<const bool*>(input_values_ptr);
             display_manager::fill_green_swap_hblank_effect_states(states_ptr, output_values_ptr);
         }
+
+        void cleanup(int) final
+        {
+            display_manager::reload_green_swap();
+        }
     };
 
 

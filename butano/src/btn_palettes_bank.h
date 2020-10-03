@@ -95,6 +95,8 @@ public:
 
     void set_rotate_count(int id, int count);
 
+    void reload(int id);
+
     [[nodiscard]] const optional<color>& transparent_color() const
     {
         return _transparent_color;

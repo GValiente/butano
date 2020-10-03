@@ -45,6 +45,8 @@ namespace btn::display_manager
 
     void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch);
 
+    void reload_mosaic();
+
     void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr);
 
     [[nodiscard]] bool blending_bg_enabled(int bg);
@@ -101,6 +103,8 @@ namespace btn::display_manager
         void set_rect_window_ignore_camera(int window, bool ignore_camera);
     #endif
 
+    void reload_rect_windows_boundaries();
+
     void fill_rect_window_hblank_effect_horizontal_boundaries(
             pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
             uint16_t* dest_ptr);
@@ -116,6 +120,8 @@ namespace btn::display_manager
     [[nodiscard]] bool green_swap_enabled();
 
     void set_green_swap_enabled(bool enabled);
+
+    void reload_green_swap();
 
     void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest_ptr);
 

@@ -172,6 +172,8 @@ namespace sprites_manager
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
+    void reload(id_type id);
+
     void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);

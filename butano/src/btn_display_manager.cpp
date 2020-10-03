@@ -180,6 +180,11 @@ void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
     data.commit_mosaic = true;
 }
 
+void reload_mosaic()
+{
+    data.commit_mosaic = true;
+}
+
 void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr)
 {
     int base_sprites_horizontal_stretch = fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data();
@@ -414,6 +419,11 @@ void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
     }
 #endif
 
+void reload_rect_windows_boundaries()
+{
+    data.commit_windows_boundaries = true;
+}
+
 void fill_rect_window_hblank_effect_horizontal_boundaries(
         pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
         uint16_t* dest_ptr)
@@ -539,6 +549,11 @@ bool green_swap_enabled()
 void set_green_swap_enabled(bool enabled)
 {
     data.green_swap_enabled = enabled;
+    data.commit_green_swap = true;
+}
+
+void reload_green_swap()
+{
     data.commit_green_swap = true;
 }
 

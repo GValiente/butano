@@ -83,6 +83,13 @@ namespace
             palettes_manager::sprite_palettes_bank().fill_hblank_effect_colors(
                         palette_id, reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
         }
+
+        void cleanup(int target_id) final
+        {
+            palette_target_id palette_target_id(target_id);
+            int palette_id = palette_target_id.params.palette_id;
+            palettes_manager::bg_palettes_bank().reload(palette_id);
+        }
     };
 
 

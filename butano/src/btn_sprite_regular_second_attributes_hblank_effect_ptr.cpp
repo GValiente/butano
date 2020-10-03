@@ -81,6 +81,12 @@ namespace
             sprites_manager::fill_hblank_effect_regular_second_attributes(
                         handle, last_value.hw_x, last_value.size, second_attributes_ptr, output_values_ptr);
         }
+
+        void cleanup(int target_id) final
+        {
+            auto handle = reinterpret_cast<void*>(target_id);
+            sprites_manager::reload(handle);
+        }
     };
 
 

@@ -89,6 +89,11 @@ namespace
             entry.src = output_values_a_active ? output_values_a : output_values_b;
             entry.dest = output_register;
         }
+
+        void cleanup() const
+        {
+            handler->cleanup(target_id);
+        }
     };
 
     class static_external_data
@@ -212,15 +217,16 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        external_data.free_item_indexes.push_back(int8_t(id));
-        item.target_last_value.reset();
-        item.update = false;
-
         if(item.visible)
         {
             item.visible = false;
             external_data.update = true;
+            item.cleanup();
         }
+
+        external_data.free_item_indexes.push_back(int8_t(id));
+        item.target_last_value.reset();
+        item.update = false;
     }
 }
 
@@ -271,6 +277,11 @@ void set_visible(int id, bool visible)
     {
         item.visible = visible;
         external_data.update = true;
+
+        if(! visible)
+        {
+            item.cleanup();
+        }
     }
 }
 

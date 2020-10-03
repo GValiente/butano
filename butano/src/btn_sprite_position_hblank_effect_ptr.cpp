@@ -56,6 +56,12 @@ namespace
             sprites_manager::fill_hblank_effect_horizontal_positions(handle, last_value, fixed_values_ptr,
                                                                      output_values_ptr);
         }
+
+        void cleanup(int target_id) final
+        {
+            auto handle = reinterpret_cast<void*>(target_id);
+            sprites_manager::reload(handle);
+        }
     };
 
 
@@ -100,6 +106,12 @@ namespace
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             sprites_manager::fill_hblank_effect_vertical_positions(handle, last_value, fixed_values_ptr,
                                                                    output_values_ptr);
+        }
+
+        void cleanup(int target_id) final
+        {
+            auto handle = reinterpret_cast<void*>(target_id);
+            sprites_manager::reload(handle);
         }
     };
 

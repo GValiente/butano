@@ -171,14 +171,6 @@ namespace
         blonde_sprite.set_mosaic_enabled(true);
 
         btn::array<btn::mosaic_attributes, btn::display::height()> mosaic_attributes;
-
-        for(int index = 0; index < btn::display::height(); ++index)
-        {
-            btn::mosaic_attributes& attributes = mosaic_attributes[index];
-            attributes.set_sprites_stretch(btn::fixed(index / 2) / btn::display::height());
-            attributes.set_bgs_stretch(0.5 - (btn::fixed(index / 2) / btn::display::height()));
-        }
-
         btn::fixed max_strech(0.5);
 
         for(int index = 0, amplitude = 32; index < amplitude; ++index)
@@ -208,9 +200,6 @@ int main()
 
     while(true)
     {
-        mosaic_hblank_effect_scene(text_generator);
-        btn::core::update();
-
         sprites_mosaic_scene(text_generator);
         btn::core::update();
 
@@ -221,6 +210,9 @@ int main()
         btn::core::update();
 
         bgs_mosaic_actions_scene(text_generator);
+        btn::core::update();
+
+        mosaic_hblank_effect_scene(text_generator);
         btn::core::update();
     }
 }

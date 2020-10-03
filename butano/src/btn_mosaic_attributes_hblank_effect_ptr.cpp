@@ -53,6 +53,11 @@ namespace
             auto attributes_ptr = reinterpret_cast<const mosaic_attributes*>(input_values_ptr);
             display_manager::fill_mosaic_hblank_effect_attributes(attributes_ptr, output_values_ptr);
         }
+
+        void cleanup(int) final
+        {
+            display_manager::reload_mosaic();
+        }
     };
 
     class static_data

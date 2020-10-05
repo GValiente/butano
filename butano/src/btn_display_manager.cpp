@@ -5,7 +5,10 @@
 #include "btn_display.h"
 #include "btn_fixed_point.h"
 #include "btn_mosaic_attributes.h"
+#include "btn_blending_fade_alpha.h"
+#include "btn_blending_transparency_attributes.h"
 #include "btn_bgs_manager.h"
+#include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
 
@@ -26,6 +29,10 @@ namespace
         bool blending_bgs[hw::bgs::count()] = {};
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
+        fixed blending_fade_alpha = 0;
+        int blending_fade_usages = 0;
+        int blending_layers = 0;
+        hw::display::blending_mode blending_mode;
         vector<bg_handle_type, hw::bgs::count()> windows_visible_bgs[hw::display::windows_count()];
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
@@ -37,8 +44,12 @@ namespace
         bool commit_enabled_bgs = false;
         bool green_swap_enabled = false;
         bool commit_mosaic = false;
-        bool commit_blending_bgs = true;
-        bool commit_blending_alphas = true;
+        bool blending_fade_to_black = true;
+        bool update_blending_layers = true;
+        bool update_blending_mode = true;
+        bool commit_blending_cnt = false;
+        bool commit_blending_transparency = true;
+        bool commit_blending_fade = false;
         bool update_windows_visible_bgs = false;
         bool commit_windows_flags = true;
         bool commit_windows_boundaries = false;
@@ -187,40 +198,13 @@ void reload_mosaic()
 
 void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr)
 {
-    int base_sprites_horizontal_stretch = fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data();
-    int base_sprites_vertical_stretch = fixed_t<4>(data.sprites_mosaic_vertical_stretch).data();
-    int base_bgs_horizontal_stretch = fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data();
-    int base_bgs_vertical_stretch = fixed_t<4>(data.bgs_mosaic_vertical_stretch).data();
-
-    if(base_sprites_horizontal_stretch == 0 && base_sprites_vertical_stretch == 0 &&
-            base_bgs_horizontal_stretch == 0 && base_bgs_vertical_stretch == 0)
+    for(int index = 0; index < display::height(); ++index)
     {
-        for(int index = 0; index < display::height(); ++index)
-        {
-            const mosaic_attributes& attributes = mosaic_attributes_ptr[index];
-            int sprites_horizontal_stretch = fixed_t<4>(attributes.sprites_horizontal_stretch()).data();
-            int sprites_vertical_stretch = fixed_t<4>(attributes.sprites_vertical_stretch()).data();
-            int bgs_horizontal_stretch = fixed_t<4>(attributes.bgs_horizontal_stretch()).data();
-            int bgs_vertical_stretch = fixed_t<4>(attributes.bgs_vertical_stretch()).data();
-            hw::display::set_mosaic(min(sprites_horizontal_stretch, 15), min(sprites_vertical_stretch, 15),
-                                    min(bgs_horizontal_stretch, 15), min(bgs_vertical_stretch, 15), dest_ptr[index]);
-        }
-    }
-    else
-    {
-        for(int index = 0; index < display::height(); ++index)
-        {
-            const mosaic_attributes& attributes = mosaic_attributes_ptr[index];
-            int sprites_horizontal_stretch = fixed_t<4>(attributes.sprites_horizontal_stretch()).data();
-            int sprites_vertical_stretch = fixed_t<4>(attributes.sprites_vertical_stretch()).data();
-            int bgs_horizontal_stretch = fixed_t<4>(attributes.bgs_horizontal_stretch()).data();
-            int bgs_vertical_stretch = fixed_t<4>(attributes.bgs_vertical_stretch()).data();
-            hw::display::set_mosaic(
-                        clamp(base_sprites_horizontal_stretch + sprites_horizontal_stretch, 0, 15),
-                        clamp(base_sprites_vertical_stretch + sprites_vertical_stretch, 0, 15),
-                        clamp(base_bgs_horizontal_stretch + bgs_horizontal_stretch, 0, 15),
-                        clamp(base_bgs_vertical_stretch + bgs_vertical_stretch, 0, 15), dest_ptr[index]);
-        }
+        const mosaic_attributes& attributes = mosaic_attributes_ptr[index];
+        hw::display::set_mosaic(min(fixed_t<4>(attributes.sprites_horizontal_stretch()).data(), 15),
+                                min(fixed_t<4>(attributes.sprites_vertical_stretch()).data(), 15),
+                                min(fixed_t<4>(attributes.bgs_horizontal_stretch()).data(), 15),
+                                min(fixed_t<4>(attributes.bgs_vertical_stretch()).data(), 15), dest_ptr[index]);
     }
 }
 
@@ -232,7 +216,7 @@ bool blending_bg_enabled(int bg)
 void set_blending_bg_enabled(int bg, bool enabled)
 {
     data.blending_bgs[bg] = enabled;
-    data.commit_blending_bgs = true;
+    data.update_blending_layers = true;
 }
 
 fixed blending_transparency_alpha()
@@ -243,7 +227,7 @@ fixed blending_transparency_alpha()
 void set_blending_transparency_alpha(fixed transparency_alpha)
 {
     data.blending_transparency_alpha = transparency_alpha;
-    data.commit_blending_alphas = true;
+    data.commit_blending_transparency = true;
 }
 
 fixed blending_intensity_alpha()
@@ -254,7 +238,110 @@ fixed blending_intensity_alpha()
 void set_blending_intensity_alpha(fixed intensity_alpha)
 {
     data.blending_intensity_alpha = intensity_alpha;
-    data.commit_blending_alphas = true;
+    data.commit_blending_transparency = true;
+}
+
+void reload_blending_transparency()
+{
+    data.commit_blending_transparency = true;
+}
+
+void fill_blending_transparency_hblank_effect_attributes(
+        const blending_transparency_attributes* blending_transparency_attributes_ptr, uint16_t* dest_ptr)
+{
+    for(int index = 0; index < display::height(); ++index)
+    {
+        const blending_transparency_attributes& attributes = blending_transparency_attributes_ptr[index];
+        hw::display::set_blending_transparency(fixed_t<4>(attributes.transparency_alpha()).data(),
+                                               fixed_t<4>(attributes.intensity_alpha()).data(), dest_ptr[index]);
+    }
+}
+
+bool blending_fade_enabled()
+{
+    return data.blending_fade_usages > 0;
+}
+
+void blending_enable_fade()
+{
+    ++data.blending_fade_usages;
+
+    if(data.blending_fade_usages == 1)
+    {
+        data.update_blending_mode = true;
+        data.update_blending_layers = true;
+        sprites_manager::reload_blending();
+    }
+}
+
+void blending_disable_fade()
+{
+    --data.blending_fade_usages;
+
+    if(! data.blending_fade_usages)
+    {
+        data.update_blending_mode = true;
+        data.update_blending_layers = true;
+        sprites_manager::reload_blending();
+    }
+}
+
+bool blending_fade_to_black()
+{
+    return data.blending_fade_to_black;
+}
+
+void set_blending_fade_to_black(bool fade_to_black)
+{
+    data.blending_fade_to_black = fade_to_black;
+
+    if(blending_fade_enabled())
+    {
+        data.update_blending_mode = true;
+    }
+}
+
+fixed blending_fade_alpha()
+{
+    return data.blending_fade_alpha;
+}
+
+void set_blending_fade_alpha(fixed fade_alpha)
+{
+    bool old_blending_fade_enabled = fixed_t<4>(data.blending_fade_alpha).data() > 0;
+    bool new_blending_fade_enabled = fixed_t<4>(fade_alpha).data() > 0;
+    data.blending_fade_alpha = fade_alpha;
+    data.commit_blending_fade = true;
+
+    if(old_blending_fade_enabled)
+    {
+        if(! new_blending_fade_enabled)
+        {
+            blending_disable_fade();
+        }
+    }
+    else
+    {
+        if(new_blending_fade_enabled)
+        {
+            blending_enable_fade();
+        }
+    }
+}
+
+void reload_blending_fade()
+{
+    data.commit_blending_fade = true;
+}
+
+void fill_blending_fade_hblank_effect_alphas(const class blending_fade_alpha* blending_fade_alphas_ptr,
+                                             uint16_t* dest_ptr)
+{
+    for(int index = 0; index < display::height(); ++index)
+    {
+        const class blending_fade_alpha& alpha = blending_fade_alphas_ptr[index];
+        hw::display::set_blending_fade(fixed_t<4>(alpha.value()).data(), dest_ptr[index]);
+    }
 }
 
 bool show_bg_in_window(int window, bg_handle_type bg_handle)
@@ -582,6 +669,36 @@ void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest
 
 void update()
 {
+    if(data.update_blending_mode)
+    {
+        if(data.blending_fade_usages)
+        {
+            if(data.blending_fade_to_black)
+            {
+                data.blending_mode = hw::display::blending_mode::FADE_TO_BLACK;
+            }
+            else
+            {
+                data.blending_mode = hw::display::blending_mode::FADE_TO_WHITE;
+            }
+        }
+        else
+        {
+            data.blending_mode = hw::display::blending_mode::TRANSPARENCY;
+        }
+
+        data.update_blending_mode = false;
+        data.commit_blending_cnt = true;
+    }
+
+    if(data.update_blending_layers)
+    {
+        bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
+        data.blending_layers = hw::display::blending_layers(data.blending_bgs, hw::bgs::count(), fade);
+        data.update_blending_layers = false;
+        data.commit_blending_cnt = true;
+    }
+
     if(data.update_windows_visible_bgs)
     {
         data.update_windows_visible_bgs = false;
@@ -630,17 +747,24 @@ void commit()
         data.commit_mosaic = false;
     }
 
-    if(data.commit_blending_bgs)
+    if(data.commit_blending_cnt)
     {
-        hw::display::set_blending_bgs(data.blending_bgs, hw::bgs::count());
-        data.commit_blending_bgs = false;
+        hw::display::set_blending_cnt(data.blending_layers, data.blending_mode);
+        data.commit_blending_cnt = false;
     }
 
-    if(data.commit_blending_alphas)
+    if(data.commit_blending_transparency)
     {
-        hw::display::set_blending_alphas(fixed_t<4>(data.blending_transparency_alpha).data(),
-                                         fixed_t<4>(data.blending_intensity_alpha).data());
-        data.commit_blending_alphas = false;
+        hw::display::set_blending_transparency(
+                    fixed_t<4>(data.blending_transparency_alpha).data(),
+                    fixed_t<4>(data.blending_intensity_alpha).data());
+        data.commit_blending_transparency = false;
+    }
+
+    if(data.commit_blending_fade)
+    {
+        hw::display::set_blending_fade(fixed_t<4>(data.blending_fade_alpha).data());
+        data.commit_blending_fade = false;
     }
 
     if(data.commit_windows_flags)

@@ -155,6 +155,77 @@ public:
     }
 };
 
+
+// fade_alpha
+
+class blending_fade_alpha_manager
+{
+
+public:
+    [[nodiscard]] static fixed get()
+    {
+        return blending::fade_alpha();
+    }
+
+    static void set(fixed fade_alpha)
+    {
+        blending::set_fade_alpha(fade_alpha);
+    }
+};
+
+
+class blending_fade_alpha_to_action : public to_template_action<fixed, blending_fade_alpha_manager>
+{
+
+public:
+    blending_fade_alpha_to_action(int duration_frames, fixed final_fade_alpha) :
+        to_template_action(duration_frames, final_fade_alpha)
+    {
+        BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
+    }
+
+    [[nodiscard]] fixed final_fade_alpha() const
+    {
+        return final_property();
+    }
+};
+
+
+class blending_fade_alpha_loop_action :
+        public loop_template_action<fixed, blending_fade_alpha_manager>
+{
+
+public:
+    blending_fade_alpha_loop_action(int duration_frames, fixed final_fade_alpha) :
+        loop_template_action(duration_frames, final_fade_alpha)
+    {
+        BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
+    }
+
+    [[nodiscard]] fixed final_fade_alpha() const
+    {
+        return final_property();
+    }
+};
+
+
+class blending_fade_alpha_toggle_action :
+        public toggle_template_action<fixed, blending_fade_alpha_manager>
+{
+
+public:
+    blending_fade_alpha_toggle_action(int duration_frames, fixed new_fade_alpha) :
+        toggle_template_action(duration_frames, new_fade_alpha)
+    {
+        BTN_ASSERT(new_fade_alpha >= 0 && new_fade_alpha <= 1, "Invalid new fade alpha: ", new_fade_alpha);
+    }
+
+    [[nodiscard]] fixed new_fade_alpha() const
+    {
+        return new_property();
+    }
+};
+
 }
 
 #endif

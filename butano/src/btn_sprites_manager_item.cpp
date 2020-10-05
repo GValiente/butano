@@ -1,6 +1,7 @@
 #include "btn_sprites_manager_item.h"
 
 #include "btn_sprite_builder.h"
+#include "btn_display_manager.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn
@@ -13,13 +14,15 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
     tiles(move(_tiles)),
     palette(move(_palette)),
     double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
+    blending_enabled(false),
     #if BTN_CFG_CAMERA_ENABLED
         ignore_camera(false),
     #endif
     remove_affine_mat_when_not_needed(true)
 {
     const sprite_palette_ptr& palette_ref = *palette;
-    hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
+    hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                               display_manager::blending_fade_enabled(), handle);
     update_half_dimensions();
     on_screen = false;
     visible = true;
@@ -34,6 +37,7 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     palette(move(_palette)),
     affine_mat(builder.release_affine_mat()),
     double_size_mode(unsigned(builder.double_size_mode())),
+    blending_enabled(builder.blending_enabled()),
     #if BTN_CFG_CAMERA_ENABLED
         ignore_camera(builder.ignore_camera()),
     #endif
@@ -48,20 +52,23 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
         if(remove_affine_mat_when_not_needed && affine_mat_ref.flipped_identity())
         {
             hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
-                                       affine_mat_ref.horizontal_flip(), affine_mat_ref.vertical_flip(), handle);
+                                       affine_mat_ref.horizontal_flip(), affine_mat_ref.vertical_flip(),
+                                       display_manager::blending_fade_enabled(), handle);
             affine_mat.reset();
         }
         else
         {
             int affine_mat_id = affine_mat_ref.id();
-            hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
+            hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                                      display_manager::blending_fade_enabled(), handle);
             hw::sprites::set_affine_mat(affine_mat_id, double_size(), handle);
             sprite_affine_mats_manager::attach_sprite(affine_mat_id, affine_mat_attach_node);
         }
     }
     else
     {
-        hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(), handle);
+        hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                                   display_manager::blending_fade_enabled(), handle);
     }
 
     update_half_dimensions();

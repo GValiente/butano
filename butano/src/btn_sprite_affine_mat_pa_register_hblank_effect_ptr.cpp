@@ -51,6 +51,10 @@ namespace
             }
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int target_id) final
         {
             sprite_affine_mats_manager::reload(target_id);
@@ -89,6 +93,10 @@ namespace
             auto int_source = static_cast<const unsigned*>(input_values_ptr);
             auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
             memory::copy(*int_source, display::height() / 2, *int_destination);
+        }
+
+        void show(int) final
+        {
         }
 
         void cleanup(int target_id) final

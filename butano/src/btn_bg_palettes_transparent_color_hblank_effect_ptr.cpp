@@ -49,6 +49,10 @@ namespace
                         reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int) final
         {
             palettes_manager::bg_palettes_bank().reload(0);

@@ -9,6 +9,8 @@ namespace btn
 {
     class fixed_point;
     class mosaic_attributes;
+    class blending_fade_alpha;
+    class blending_transparency_attributes;
 }
 
 namespace btn::display_manager
@@ -60,6 +62,30 @@ namespace btn::display_manager
     [[nodiscard]] fixed blending_intensity_alpha();
 
     void set_blending_intensity_alpha(fixed intensity_alpha);
+
+    void reload_blending_transparency();
+
+    void fill_blending_transparency_hblank_effect_attributes(
+            const blending_transparency_attributes* blending_transparency_attributes_ptr, uint16_t* dest_ptr);
+
+    [[nodiscard]] bool blending_fade_enabled();
+
+    void blending_enable_fade();
+
+    void blending_disable_fade();
+
+    [[nodiscard]] bool blending_fade_to_black();
+
+    void set_blending_fade_to_black(bool fade_to_black);
+
+    [[nodiscard]] fixed blending_fade_alpha();
+
+    void set_blending_fade_alpha(fixed fade_alpha);
+
+    void reload_blending_fade();
+
+    void fill_blending_fade_hblank_effect_alphas(const class blending_fade_alpha* blending_fade_alphas_ptr,
+                                                 uint16_t* dest_ptr);
 
     [[nodiscard]] bool show_bg_in_window(int window, bg_handle_type bg_handle);
 

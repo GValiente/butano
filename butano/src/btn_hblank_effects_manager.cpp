@@ -90,7 +90,12 @@ namespace
             entry.dest = output_register;
         }
 
-        void cleanup() const
+        void show()
+        {
+            handler->show(target_id);
+        }
+
+        void cleanup()
         {
             handler->cleanup(target_id);
         }
@@ -137,6 +142,7 @@ namespace
         new_item.on_screen = false;
         new_item.output_values_written = false;
         handler.setup_target(target_id, new_item.target_last_value);
+        new_item.show();
         external_data.update = true;
         return item_index;
     }
@@ -278,7 +284,11 @@ void set_visible(int id, bool visible)
         item.visible = visible;
         external_data.update = true;
 
-        if(! visible)
+        if(visible)
+        {
+            item.show();
+        }
+        else
         {
             item.cleanup();
         }

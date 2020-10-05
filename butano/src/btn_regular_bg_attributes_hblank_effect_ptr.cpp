@@ -57,6 +57,10 @@ namespace
                         handle, regular_bg_attributes_ptr, output_values_ptr);
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int) final
         {
             bgs_manager::reload();

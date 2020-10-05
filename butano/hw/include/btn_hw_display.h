@@ -72,24 +72,64 @@ namespace btn::hw::display
         return &REG_MOSAIC_U16;
     }
 
-    inline void set_blending_bgs(const bool* bgs_ptr, int count)
+    enum class blending_mode
     {
-        unsigned top = 0;
+        OFF,
+        TRANSPARENCY,
+        FADE_TO_WHITE,
+        FADE_TO_BLACK
+    };
+
+    [[nodiscard]] inline int blending_layers(const bool* bgs_ptr, int count, bool fade)
+    {
+        unsigned result = fade ? BLD_OBJ : 0;
 
         for(int index = 0; index < count; ++index)
         {
             if(bgs_ptr[index])
             {
-                top |= unsigned(1 << index);
+                result |= unsigned(1 << index);
             }
         }
 
-        REG_BLDCNT = uint16_t(BLD_BUILD(top, BLD_ALL | BLD_BACKDROP, 1));
+        return int(result);
     }
 
-    inline void set_blending_alphas(int transparency_alpha, int intensity_alpha)
+    inline void set_blending_cnt(int layers, blending_mode mode)
     {
-        REG_BLDALPHA = uint16_t(BLDA_BUILD(transparency_alpha, max(16 - transparency_alpha, intensity_alpha)));
+        REG_BLDCNT = uint16_t(BLD_BUILD(layers, BLD_ALL | BLD_BACKDROP, unsigned(mode)));
+    }
+
+    inline void set_blending_transparency(int transparency_alpha, int intensity_alpha,
+                                          uint16_t& blending_transparency_cnt)
+    {
+        blending_transparency_cnt =
+                uint16_t(BLDA_BUILD(transparency_alpha, max(16 - transparency_alpha, intensity_alpha)));
+    }
+
+    inline void set_blending_transparency(int transparency_alpha, int intensity_alpha)
+    {
+        set_blending_transparency(transparency_alpha, intensity_alpha, const_cast<uint16_t&>(REG_BLDALPHA));
+    }
+
+    [[nodiscard]] inline uint16_t* blending_transparency_register()
+    {
+        return const_cast<uint16_t*>(&REG_BLDALPHA);
+    }
+
+    inline void set_blending_fade(int fade_alpha, uint16_t& blending_fade_cnt)
+    {
+        blending_fade_cnt = BLDY_BUILD(fade_alpha);
+    }
+
+    inline void set_blending_fade(int fade_alpha)
+    {
+        set_blending_fade(fade_alpha, const_cast<uint16_t&>(REG_BLDY));
+    }
+
+    [[nodiscard]] inline uint16_t* blending_fade_register()
+    {
+        return const_cast<uint16_t*>(&REG_BLDY);
     }
 
     inline void set_inside_window_enabled(int window, bool enabled)

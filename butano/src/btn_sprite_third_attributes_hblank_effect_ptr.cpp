@@ -57,6 +57,10 @@ namespace
                         shape_size, sprite_third_attributes_ptr, output_values_ptr);
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int target_id) final
         {
             auto handle = reinterpret_cast<void*>(target_id);

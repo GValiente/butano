@@ -37,6 +37,7 @@ public:
     int8_t half_width;
     int8_t half_height;
     unsigned double_size_mode: 2;
+    bool blending_enabled: 1;
     bool visible: 1;
     #if BTN_CFG_CAMERA_ENABLED
         bool ignore_camera: 1;
@@ -85,8 +86,8 @@ public:
     void update_half_dimensions()
     {
         pair<int, int> dimensions = hw::sprites::dimensions(handle);
-        half_width = dimensions.first / 2;
-        half_height = dimensions.second / 2;
+        half_width = int8_t(dimensions.first / 2);
+        half_height = int8_t(dimensions.second / 2);
         update_hw_position();
     }
 

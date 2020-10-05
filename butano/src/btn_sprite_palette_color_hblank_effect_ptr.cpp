@@ -84,6 +84,10 @@ namespace
                         palette_id, reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int target_id) final
         {
             palette_target_id palette_target_id(target_id);

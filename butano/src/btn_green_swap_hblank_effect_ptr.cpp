@@ -44,6 +44,10 @@ namespace
             display_manager::fill_green_swap_hblank_effect_states(states_ptr, output_values_ptr);
         }
 
+        void show(int) final
+        {
+        }
+
         void cleanup(int) final
         {
             display_manager::reload_green_swap();

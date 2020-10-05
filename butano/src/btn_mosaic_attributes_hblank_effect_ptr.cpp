@@ -26,21 +26,13 @@ namespace
             return true;
         }
 
-        void setup_target(int, iany& target_last_value) final
+        void setup_target(int, iany&) final
         {
-            target_last_value = mosaic_attributes();
         }
 
-        [[nodiscard]] bool target_updated(int, iany& target_last_value) final
+        [[nodiscard]] bool target_updated(int, iany&) final
         {
-            mosaic_attributes& last_value = target_last_value.value<mosaic_attributes>();
-            mosaic_attributes new_value(display_manager::sprites_mosaic_horizontal_stretch(),
-                                        display_manager::sprites_mosaic_vertical_stretch(),
-                                        display_manager::bgs_mosaic_horizontal_stretch(),
-                                        display_manager::bgs_mosaic_vertical_stretch());
-            bool updated = last_value != new_value;
-            last_value = new_value;
-            return updated;
+            return false;
         }
 
         [[nodiscard]] uint16_t* output_register(int) final
@@ -52,6 +44,10 @@ namespace
         {
             auto attributes_ptr = reinterpret_cast<const mosaic_attributes*>(input_values_ptr);
             display_manager::fill_mosaic_hblank_effect_attributes(attributes_ptr, output_values_ptr);
+        }
+
+        void show(int) final
+        {
         }
 
         void cleanup(int) final

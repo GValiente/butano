@@ -174,6 +174,8 @@ namespace sprites_manager
 
     void reload(id_type id);
 
+    void reload_blending();
+
     void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);

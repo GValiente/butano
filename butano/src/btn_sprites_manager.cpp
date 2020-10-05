@@ -3,14 +3,15 @@
 #include "btn_size.h"
 #include "btn_pool.h"
 #include "btn_vector.h"
-#include "btn_sorted_sprites.h"
 #include "btn_config_sprites.h"
 #include "btn_sprite_affine_mats.h"
 #include "btn_sprite_first_attributes.h"
 #include "btn_sprite_third_attributes.h"
-#include "btn_sprite_affine_mats_manager.h"
 #include "btn_sprite_affine_second_attributes.h"
 #include "btn_sprite_regular_second_attributes.h"
+#include "btn_sorted_sprites.h"
+#include "btn_display_manager.h"
+#include "btn_sprite_affine_mats_manager.h"
 
 namespace btn::sprites_manager
 {
@@ -661,25 +662,35 @@ bool mosaic_enabled(id_type id)
 void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::set_mosaic_enabled(mosaic_enabled, item->handle);
-    data.rebuild_handles = true;
+    hw::sprites::handle_type& handle = item->handle;
+
+    if(mosaic_enabled != hw::sprites::mosaic_enabled(handle))
+    {
+        hw::sprites::set_mosaic_enabled(mosaic_enabled, handle);
+        data.rebuild_handles = true;
+    }
 }
 
 bool blending_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return hw::sprites::blending_enabled(item->handle);
+    return item->blending_enabled;
 }
 
 void set_blending_enabled(id_type id, bool blending_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::sprites::handle_type& handle = item->handle;
-    BTN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
-               "Blending and window can't be enabled at the same time");
 
-    hw::sprites::set_blending_enabled(blending_enabled, handle);
-    data.rebuild_handles = true;
+    if(blending_enabled != item->blending_enabled)
+    {
+        hw::sprites::handle_type& handle = item->handle;
+        BTN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
+                   "Blending and window can't be enabled at the same time");
+
+        hw::sprites::set_blending_enabled(blending_enabled, display_manager::blending_fade_enabled(), handle);
+        item->blending_enabled = blending_enabled;
+        data.rebuild_handles = true;
+    }
 }
 
 bool window_enabled(id_type id)
@@ -692,11 +703,15 @@ void set_window_enabled(id_type id, bool window_enabled)
 {
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle_type& handle = item->handle;
-    BTN_ASSERT(! window_enabled || ! hw::sprites::blending_enabled(handle),
-               "Blending and window can't be enabled at the same time");
 
-    hw::sprites::set_window_enabled(window_enabled, handle);
-    data.rebuild_handles = true;
+    if(window_enabled != hw::sprites::window_enabled(handle))
+    {
+        BTN_ASSERT(! window_enabled || ! item->blending_enabled,
+                   "Blending and window can't be enabled at the same time");
+
+        hw::sprites::set_window_enabled(window_enabled, handle);
+        data.rebuild_handles = true;
+    }
 }
 
 int affine_mode(id_type id)
@@ -840,9 +855,8 @@ sprite_first_attributes first_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
     const hw::sprites::handle_type& handle = item->handle;
-    return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle),
-                                   hw::sprites::blending_enabled(handle), hw::sprites::window_enabled(handle),
-                                   item->visible);
+    return sprite_first_attributes(item->position.y(), hw::sprites::mosaic_enabled(handle), item->blending_enabled,
+                                   hw::sprites::window_enabled(handle), item->visible);
 }
 
 void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes)
@@ -850,7 +864,8 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
     auto item = static_cast<item_type*>(id);
     hw::sprites::handle_type& handle = item->handle;
     hw::sprites::set_mosaic_enabled(first_attributes.mosaic_enabled(), handle);
-    hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), handle);
+    hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), display_manager::blending_fade_enabled(),
+                                      handle);
     hw::sprites::set_window_enabled(first_attributes.window_enabled(), handle);
     set_visible(id, first_attributes.visible());
     set_position(id, fixed_point(item->position.x(), first_attributes.y()));
@@ -871,8 +886,9 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
-    hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), item->handle);
-    hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), item->handle);
+    hw::sprites::handle_type& handle = item->handle;
+    hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), handle);
+    hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), handle);
     set_position(id, fixed_point(second_attributes.x(), item->position.y()));
 }
 
@@ -943,6 +959,21 @@ void reload(id_type id)
     data.last_index_to_commit = max(data.last_index_to_commit, handles_index);
 }
 
+void reload_blending()
+{
+    bool fade_enabled = display_manager::blending_fade_enabled();
+
+    for(sorted_sprites::layer* layer : sorted_sprites::layers())
+    {
+        for(item_type& item : *layer)
+        {
+            hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
+        }
+    }
+
+    data.rebuild_handles = true;
+}
+
 void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
@@ -996,6 +1027,8 @@ void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* 
 void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {
+    bool fade_enabled = display_manager::blending_fade_enabled();
+
     if(hw_y == 0)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
@@ -1007,7 +1040,7 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
                 int y = first_attributes.y().integer();
                 int dest_value = hw::sprites::first_attributes(
                             y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
-                            first_attributes.blending_enabled(), first_attributes.window_enabled());
+                            first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }
             else
@@ -1027,7 +1060,7 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
                 int y = (hw_y + first_attributes.y()).integer();
                 int dest_value = hw::sprites::first_attributes(
                             y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
-                            first_attributes.blending_enabled(), first_attributes.window_enabled());
+                            first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }
             else

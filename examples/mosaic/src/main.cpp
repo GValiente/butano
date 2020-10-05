@@ -34,6 +34,8 @@ namespace
         btn::sprite_ptr blonde_sprite = btn::sprite_items::blonde.create_sprite(0, 0);
         blonde_sprite.set_mosaic_enabled(true);
 
+        btn::sprites_mosaic::set_stretch(0.1);
+
         while(! btn::keypad::start_pressed())
         {
             btn::fixed horizontal_stretch = btn::sprites_mosaic::horizontal_stretch();
@@ -79,6 +81,8 @@ namespace
 
         btn::regular_bg_ptr land_bg = btn::regular_bg_items::land.create_bg(0, 0);
         land_bg.set_mosaic_enabled(true);
+
+        btn::bgs_mosaic::set_stretch(0.1);
 
         while(! btn::keypad::start_pressed())
         {

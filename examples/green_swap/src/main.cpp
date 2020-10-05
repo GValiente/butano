@@ -2,7 +2,6 @@
 #include "btn_keypad.h"
 #include "btn_display.h"
 #include "btn_optional.h"
-#include "btn_bg_palettes.h"
 #include "btn_regular_bg_ptr.h"
 #include "btn_green_swap_actions.h"
 #include "btn_sprite_text_generator.h"
@@ -25,7 +24,7 @@ namespace
 
         info info("Green swap", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr village_bg = btn::regular_bg_items::village.create_bg(0, 0);
+        btn::green_swap::set_enabled(true);
 
         while(! btn::keypad::start_pressed())
         {
@@ -49,8 +48,6 @@ namespace
 
         info info("Green swap actions", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr village_bg = btn::regular_bg_items::village.create_bg(0, 0);
-
         btn::green_swap_toggle_action action(60);
 
         while(! btn::keypad::start_pressed())
@@ -70,8 +67,6 @@ namespace
         };
 
         info info("Green swap H-Blank effect", info_text_lines, text_generator);
-
-        btn::regular_bg_ptr village_bg = btn::regular_bg_items::village.create_bg(0, 0);
 
         btn::array<bool, btn::display::height()> green_swap_states;
         btn::green_swap_hblank_effect_ptr green_swap_hblank_effect =
@@ -112,8 +107,8 @@ int main()
 {
     btn::core::init();
 
+    btn::regular_bg_ptr village_bg = btn::regular_bg_items::village.create_bg(0, 0);
     btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-    btn::bg_palettes::set_transparent_color(btn::color(16, 16, 16));
 
     while(true)
     {

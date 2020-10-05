@@ -1,7 +1,6 @@
 #include "btn_core.h"
 #include "btn_keypad.h"
 #include "btn_display.h"
-#include "btn_optional.h"
 #include "btn_regular_bg_ptr.h"
 #include "btn_green_swap_actions.h"
 #include "btn_sprite_text_generator.h"

@@ -11,7 +11,6 @@ namespace btn
     class sprite_text_generator;
 }
 
-
 class info
 {
 
@@ -21,6 +20,13 @@ public:
     info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
          btn::sprite_text_generator& text_generator);
 
+    [[nodiscard]] bool show_always() const
+    {
+        return _show_always;
+    }
+
+    void set_show_always(bool show_always);
+
     void update();
 
 private:
@@ -28,6 +34,7 @@ private:
     btn::vector<btn::sprite_ptr, 48> _text_sprites;
     btn::vector<btn::sprite_ptr, 4> _hide_info_sprites;
     btn::vector<btn::sprite_ptr, 4> _show_info_sprites;
+    bool _show_always = false;
     bool _enabled = false;
 
     void _update_sprites();

@@ -35,9 +35,20 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
     _update_sprites();
 }
 
+void info::set_show_always(bool show_always)
+{
+    _show_always = show_always;
+
+    if(show_always && ! _enabled)
+    {
+        _enabled = true;
+        _update_sprites();
+    }
+}
+
 void info::update()
 {
-    if(btn::keypad::select_pressed())
+    if(! _show_always && btn::keypad::select_pressed())
     {
         _enabled = ! _enabled;
         _update_sprites();
@@ -47,30 +58,36 @@ void info::update()
 void info::_update_sprites()
 {
     bool enabled = _enabled;
+    bool show_show_info_sprites;
+    bool show_hide_info_sprites;
 
-    if(enabled)
+    if(_show_always)
     {
-        for(btn::sprite_ptr& sprite : _show_info_sprites)
-        {
-            sprite.set_visible(false);
-        }
-
-        for(btn::sprite_ptr& sprite : _hide_info_sprites)
-        {
-            sprite.set_visible(true);
-        }
+        show_show_info_sprites = false;
+        show_hide_info_sprites = false;
     }
     else
     {
-        for(btn::sprite_ptr& sprite : _hide_info_sprites)
+        if(enabled)
         {
-            sprite.set_visible(false);
+            show_show_info_sprites = false;
+            show_hide_info_sprites = true;
         }
+        else
+        {
+            show_show_info_sprites = true;
+            show_hide_info_sprites = false;
+        }
+    }
 
-        for(btn::sprite_ptr& sprite : _show_info_sprites)
-        {
-            sprite.set_visible(true);
-        }
+    for(btn::sprite_ptr& sprite : _show_info_sprites)
+    {
+        sprite.set_visible(show_show_info_sprites);
+    }
+
+    for(btn::sprite_ptr& sprite : _hide_info_sprites)
+    {
+        sprite.set_visible(show_hide_info_sprites);
     }
 
     for(btn::sprite_ptr& sprite : _text_sprites)

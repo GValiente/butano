@@ -24,23 +24,23 @@ namespace
         intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
         bool flipped_identity;
-        bool flipped_identity_changed;
         bool double_size;
+        bool remove_if_not_needed;
 
         void init()
         {
             attributes = sprite_affine_mat_attributes();
             usages = 1;
             flipped_identity = true;
-            flipped_identity_changed = false;
             double_size = false;
+            remove_if_not_needed = false;
         }
 
         void init(const sprite_affine_mat_attributes& new_attributes)
         {
             attributes = new_attributes;
             usages = 1;
-            flipped_identity_changed = false;
+            remove_if_not_needed = false;
 
             if(attributes.flipped_identity())
             {
@@ -87,7 +87,7 @@ namespace
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
         int first_index_to_commit = sprite_affine_mats::count();
         int last_index_to_commit = 0;
-        bool flipped_identity_changed = false;
+        bool check_remove_if_not_needed = false;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -112,14 +112,19 @@ namespace
             if(! item.flipped_identity)
             {
                 item.flipped_identity = true;
-                item.flipped_identity_changed = true;
-                data.flipped_identity_changed = true;
+
+                if(! item.attached_nodes.empty())
+                {
+                    item.remove_if_not_needed = true;
+                    data.check_remove_if_not_needed = true;
+                }
             }
         }
         else
         {
             new_double_size = attributes.double_size();
             item.flipped_identity = false;
+            item.remove_if_not_needed = false;
         }
 
         _update_indexes_to_commit(index);
@@ -234,7 +239,7 @@ void decrease_usages(int id)
     {
         BTN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
 
-        item.flipped_identity_changed = false;
+        item.remove_if_not_needed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }
 }
@@ -430,19 +435,19 @@ void reload(int id)
 
 void update()
 {
-    if(data.flipped_identity_changed)
+    if(data.check_remove_if_not_needed)
     {
-        data.flipped_identity_changed = false;
+        data.check_remove_if_not_needed = false;
 
         for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
         {
             item_type& item = data.items[index];
 
-            if(item.flipped_identity_changed)
+            if(item.remove_if_not_needed)
             {
                 auto it = item.attached_nodes.begin();
                 auto end = item.attached_nodes.end();
-                item.flipped_identity_changed = false;
+                item.remove_if_not_needed = false;
                 increase_usages(index);
 
                 while(it != end)

@@ -30,13 +30,13 @@ public:
                    item.shape_size() == sprite_shape_size(sprite_shape::TALL, sprite_size::SMALL),
                    "Invalid shape size");
         BTN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters.size(),
-                   "Invalid graphics count or utf8 characters count: ", item.tiles_item().graphics_count(), " - ",
+                   "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
                    utf8_characters.size(), " - ", minimum_graphics + utf8_characters.size());
         BTN_ASSERT(item.palette_item().bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
         BTN_ASSERT(utf8_characters.size() <= BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
-                   "Invalid utf8 characters count: ", utf8_characters.size());
-        BTN_ASSERT(_validate_utf8_characters(utf8_characters), "Utf8 characters validation failed");
-        BTN_ASSERT(! _duplicated_utf8_characters(utf8_characters), "There's duplicated utf8 characters");
+                   "Invalid UTF-8 characters count: ", utf8_characters.size());
+        BTN_ASSERT(_validate_utf8_characters(utf8_characters), "UTF-8 characters validation failed");
+        BTN_ASSERT(! _duplicated_utf8_characters(utf8_characters), "There's duplicated UTF-8 characters");
         BTN_ASSERT(character_widths.empty() || character_widths.size() == 1 + minimum_graphics + utf8_characters.size(),
                    "Invalid characters width count: ", character_widths.size(), " - ",
                    utf8_characters.size(), " - ", minimum_graphics + utf8_characters.size());

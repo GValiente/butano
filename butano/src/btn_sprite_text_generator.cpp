@@ -749,7 +749,7 @@ namespace
                 {
                     utf8_character utf8_char(text_data[text_index]);
                     auto it = utf8_characters_map.find(utf8_char.data());
-                    BTN_ASSERT(it != utf8_characters_map.end(), "Utf8 character not found: ", text);
+                    BTN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", text);
 
                     graphics_index = it->second;
                     text_index += utf8_char.size();

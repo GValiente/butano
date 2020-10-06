@@ -33,7 +33,7 @@ public:
         {
             // 11bit
             _data = (*src++ & 0x1F) << 6;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) << 0;
         }
@@ -41,10 +41,10 @@ public:
         {
             // 16bit
             _data  = (*src++ & 0x0F) << 12;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }
@@ -52,19 +52,19 @@ public:
         {
             // 21bit
             _data  = (*src++ & 0x0F) << 18;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) << 12;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BTN_ASSERT((*src >> 6) == 2, "Invalid utf8 character");
+            BTN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }
         else
         {
-            BTN_ERROR("Invalid utf8 character");
+            BTN_ERROR("Invalid UTF-8 character");
         }
 
         _size = src - &text_ref;

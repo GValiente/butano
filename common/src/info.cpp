@@ -13,7 +13,8 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
            btn::sprite_text_generator& text_generator)
 {
     btn::fixed y_inc = 14;
-    btn::fixed y = (-btn::display::height() / 2) + y_inc;
+    btn::fixed start_y = (-btn::display::height() / 2) + y_inc + 1;
+    btn::fixed y = start_y;
     text_generator.set_bg_priority(0);
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
 
@@ -23,14 +24,28 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
         y += y_inc * 2;
     }
 
-    for(const btn::string_view& text_line : text_lines)
+    if(! text_lines.empty())
     {
-        text_generator.generate(0, y, text_line, _text_sprites);
-        y += y_inc;
-    }
+        btn::fixed info_y = start_y + (y_inc * 9);
 
-    text_generator.generate(0, (btn::display::height() / 2) - y_inc, "SELECT: hide info", _hide_info_sprites);
-    text_generator.generate(0, (btn::display::height() / 2) - y_inc, "SELECT: show info", _show_info_sprites);
+        if(text_lines.size() == 1)
+        {
+            text_generator.generate(0, info_y, text_lines[0], _text_sprites);
+            _enabled = true;
+            _show_always = true;
+        }
+        else
+        {
+            for(const btn::string_view& text_line : text_lines)
+            {
+                text_generator.generate(0, y, text_line, _text_sprites);
+                y += y_inc;
+            }
+
+            text_generator.generate(0, info_y, "SELECT: hide info", _hide_info_sprites);
+            text_generator.generate(0, info_y, "SELECT: show info", _show_info_sprites);
+        }
+    }
 
     _update_sprites();
 }

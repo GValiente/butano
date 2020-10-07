@@ -1,6 +1,5 @@
 #include "btn_core.h"
 #include "btn_keypad.h"
-#include "btn_display.h"
 #include "btn_optional.h"
 #include "btn_bg_palettes.h"
 #include "btn_music_actions.h"
@@ -22,6 +21,9 @@ namespace
             "LEFT: decrease volume",
             "RIGHT: increase volume",
             "A: pause/resume music",
+            "",
+            "",
+            "",
             "",
             "START: go to next scene",
         };
@@ -91,6 +93,11 @@ namespace
         constexpr const btn::string_view info_text_lines[] = {
             "A: play sound",
             "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "START: go to next scene",
         };
 
@@ -119,9 +126,8 @@ namespace
         info.set_show_always(true);
 
         int sprite_x_range = 96;
-        int sprite_y = 16;
-        btn::sprite_ptr sprite = btn::sprite_items::bullet.create_sprite(-sprite_x_range, sprite_y);
-        btn::sprite_move_loop_action bullet_sprite_move_action(sprite, sprite_x_range * 4, sprite_x_range, sprite_y);
+        btn::sprite_ptr sprite = btn::sprite_items::bullet.create_sprite(-sprite_x_range, 0);
+        btn::sprite_move_loop_action bullet_sprite_move_action(sprite, sprite_x_range * 4, sprite_x_range, 0);
         int sound_counter = 1;
 
         while(! btn::keypad::start_pressed())

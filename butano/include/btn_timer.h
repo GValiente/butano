@@ -16,9 +16,9 @@ public:
         return timers::ticks_per_frame();
     }
 
-    [[nodiscard]] constexpr static int ticks_per_second()
+    [[nodiscard]] constexpr static int ticks_per_vblank()
     {
-        return timers::ticks_per_second();
+        return timers::ticks_per_vblank();
     }
 
     timer();
@@ -26,8 +26,6 @@ public:
     [[nodiscard]] int elapsed_ticks() const;
 
     [[nodiscard]] fixed elapsed_frames() const;
-
-    [[nodiscard]] fixed elapsed_seconds() const;
 
     void restart();
 

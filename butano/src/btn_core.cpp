@@ -5,7 +5,6 @@
 #include "btn_timer.h"
 #include "btn_string.h"
 #include "btn_keypad.h"
-#include "btn_optional.h"
 #include "btn_profiler.h"
 #include "btn_string_view.h"
 #include "btn_bgs_manager.h"
@@ -59,8 +58,9 @@ namespace
     {
 
     public:
-        optional<timer> cpu_usage_timer;
-        fixed cpu_usage;
+        timer cpu_usage_timer;
+        int cpu_usage_ticks = 0;
+        int vblank_usage_ticks = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -128,7 +128,7 @@ void init(const string_view& keypad_commands)
 
     // Init timer system:
     hw::timer::init();
-    data.cpu_usage_timer = timer();
+    data.cpu_usage_timer.restart();
 
     // First update:
     update();
@@ -170,16 +170,15 @@ void update()
     hblank_effects_manager::update();
     BTN_PROFILER_ENGINE_STOP();
 
-
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.cpu_usage = data.cpu_usage_timer->elapsed_frames();
+    data.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     BTN_PROFILER_ENGINE_STOP();
 
     audio_manager::disable_vblank_handler();
     hw::core::wait_for_vblank();
 
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.cpu_usage_timer->restart();
+    data.cpu_usage_timer.restart();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
@@ -208,6 +207,10 @@ void update()
 
     BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
     bg_blocks_manager::commit();
+    BTN_PROFILER_ENGINE_STOP();
+
+    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    data.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     BTN_PROFILER_ENGINE_STOP();
 
     BTN_PROFILER_ENGINE_START("eng_audio_commit");
@@ -292,7 +295,7 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
     // Restart CPU usage timer:
     BTN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.cpu_usage_timer->restart();
+    data.cpu_usage_timer.restart();
     BTN_PROFILER_ENGINE_STOP();
 
     // Wake up display:
@@ -308,7 +311,12 @@ void reset()
 
 fixed cpu_usage()
 {
-    return data.cpu_usage;
+    return fixed(data.cpu_usage_ticks) / timer::ticks_per_frame();
+}
+
+fixed vblank_usage()
+{
+    return fixed(data.vblank_usage_ticks) / timer::ticks_per_vblank();
 }
 
 }

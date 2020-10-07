@@ -31,6 +31,8 @@ namespace core
     [[noreturn]] void reset();
 
     [[nodiscard]] fixed cpu_usage();
+
+    [[nodiscard]] fixed vblank_usage();
 }
 }
 

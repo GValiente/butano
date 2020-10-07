@@ -5,14 +5,23 @@
 
 namespace btn::timers
 {
-    [[nodiscard]] constexpr int ticks_per_frame()
+    [[nodiscard]] constexpr int divisor()
     {
-        return 280896 / 64;
+        return 64;
     }
 
-    [[nodiscard]] constexpr int ticks_per_second()
+    [[nodiscard]] constexpr int ticks_per_frame()
     {
-        return ticks_per_frame() * 60;
+        // http://problemkaputt.de/gbatek.htm#lcddimensionsandtimings
+
+        return 280896 / divisor();
+    }
+
+    [[nodiscard]] constexpr int ticks_per_vblank()
+    {
+        // http://problemkaputt.de/gbatek.htm#lcddimensionsandtimings
+
+        return 83776 / divisor();
     }
 }
 

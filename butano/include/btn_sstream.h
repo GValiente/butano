@@ -1,6 +1,7 @@
 #ifndef BTN_SSTREAM_H
 #define BTN_SSTREAM_H
 
+#include "btn_cstddef.h"
 #include "btn_fixed_fwd.h"
 #include "btn_string_fwd.h"
 #include "btn_istring_base.h"
@@ -132,6 +133,8 @@ public:
     void append(uint64_t value);
 
     void append(const void* ptr);
+
+    void append(const nullptr_t& null_ptr);
 
     template<int Precision>
     void append(fixed_t<Precision> value)
@@ -278,6 +281,18 @@ inline ostringstream& operator<<(ostringstream& stream, unsigned long value)
 inline ostringstream& operator<<(ostringstream& stream, uint64_t value)
 {
     stream.append(value);
+    return stream;
+}
+
+inline ostringstream& operator<<(ostringstream& stream, const void* ptr)
+{
+    stream.append(ptr);
+    return stream;
+}
+
+inline ostringstream& operator<<(ostringstream& stream, const nullptr_t& null_ptr)
+{
+    stream.append(null_ptr);
     return stream;
 }
 

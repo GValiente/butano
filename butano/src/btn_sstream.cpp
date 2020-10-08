@@ -123,8 +123,13 @@ void ostringstream::append(const void* ptr)
     }
     else
     {
-        str().append("nullptr");
+        append(nullptr);
     }
+}
+
+void ostringstream::append(const nullptr_t&)
+{
+    str().append("nullptr");
 }
 
 void ostringstream::swap(ostringstream& other)

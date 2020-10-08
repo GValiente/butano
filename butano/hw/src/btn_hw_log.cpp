@@ -3,9 +3,9 @@
 #if BTN_CFG_LOG_ENABLED
     #include "btn_istring_base.h"
 
-    #if BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_NOCASHGBA
+    #if BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_NOCASHGBA
         #include "../include/btn_hw_tonc.h"
-    #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_MGBA
+    #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_MGBA
         #include "btn_memory.h"
         #include "btn_algorithm.h"
     #else
@@ -13,7 +13,7 @@
 
     namespace btn::hw
     {
-        #if BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_VBA
+        #if BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_VBA
             void log(const istring_base& message)
             {
                 asm volatile
@@ -34,12 +34,12 @@
                     : "r0"
                 );
             }
-        #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_NOCASHGBA
+        #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_NOCASHGBA
             void log(const istring_base& message)
             {
                 nocash_puts(message.data());
             }
-        #elif BTN_CFG_LOG_IMPLEMENTATION == BTN_LOG_IMPLEMENTATION_MGBA
+        #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_MGBA
             void log(const istring_base& message)
             {
                 // https://github.com/mgba-emu/mgba/blob/master/opt/libgba/mgba.c
@@ -63,6 +63,7 @@
                 }
             }
         #else
+            static_assert(false, "Unknown log backend");
         #endif
     }
 #endif

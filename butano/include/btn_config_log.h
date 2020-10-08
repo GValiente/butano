@@ -1,14 +1,14 @@
 #ifndef BTN_CONFIG_LOG_H
 #define BTN_CONFIG_LOG_H
 
-#include "btn_log_implementation.h"
+#include "btn_log_backend.h"
 
 #ifndef BTN_CFG_LOG_ENABLED
     #define BTN_CFG_LOG_ENABLED true
 #endif
 
-#ifndef BTN_CFG_LOG_IMPLEMENTATION
-    #define BTN_CFG_LOG_IMPLEMENTATION BTN_LOG_IMPLEMENTATION_MGBA
+#ifndef BTN_CFG_LOG_BACKEND
+    #define BTN_CFG_LOG_BACKEND BTN_LOG_BACKEND_MGBA
 #endif
 
 #ifndef BTN_CFG_LOG_MAX_SIZE

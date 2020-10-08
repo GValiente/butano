@@ -114,5 +114,4 @@ int main()
     btn::core::update();
 
     reset_scene(text_generator);
-
 }

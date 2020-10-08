@@ -6,7 +6,12 @@
 - mountain_clouds.bmp
     By Luis Zuno (@ansimuz)
     License (CC0) http://creativecommons.org/publicdomain/zero/1.0/
-	ansimuz.com
+    ansimuz.com
+	
+- GBA images
+    By Evan-Amos
+    Released into the public domain
+	https://commons.wikimedia.org/wiki/File:Nintendo-Game-Boy-Advance-Purple-FL.jpg
 
 - everything else
     The assets in this repository are created at Sparklin Labs by Pixel-boy: https://twitter.com/2pblog1

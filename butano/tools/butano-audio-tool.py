@@ -59,24 +59,28 @@ def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_p
 
 
 def write_output_file(items, include_guard, include_file, namespace, item_class, output_file_path):
-    with open(output_file_path, 'w') as output_file:
-        output_file.write('#ifndef ' + include_guard + '\n')
-        output_file.write('#define ' + include_guard + '\n')
-        output_file.write('\n')
-        output_file.write('#include "' + include_file + '"' + '\n')
-        output_file.write('\n')
-        output_file.write('namespace ' + namespace + '\n')
-        output_file.write('{' + '\n')
+    if len(items) > 0:
+        with open(output_file_path, 'w') as output_file:
+            output_file.write('#ifndef ' + include_guard + '\n')
+            output_file.write('#define ' + include_guard + '\n')
+            output_file.write('\n')
+            output_file.write('#include "' + include_file + '"' + '\n')
+            output_file.write('\n')
+            output_file.write('namespace ' + namespace + '\n')
+            output_file.write('{' + '\n')
 
-        for item in items:
-            output_file.write('    constexpr const ' + item_class + ' ' + item[0] + '(' + item[1] + ');' + '\n')
+            for item in items:
+                output_file.write('    constexpr const ' + item_class + ' ' + item[0] + '(' + item[1] + ');' + '\n')
 
-        output_file.write('}' + '\n')
-        output_file.write('\n')
-        output_file.write('#endif' + '\n')
-        output_file.write('\n')
+            output_file.write('}' + '\n')
+            output_file.write('\n')
+            output_file.write('#endif' + '\n')
+            output_file.write('\n')
 
-    print('    ' + item_class + 's file written in ' + output_file_path)
+        print('    ' + item_class + 's file written in ' + output_file_path)
+    else:
+        if os.path.exists(output_file_path):
+            os.remove(output_file_path)
 
 
 def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path):

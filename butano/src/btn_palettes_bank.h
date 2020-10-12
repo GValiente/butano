@@ -223,6 +223,8 @@ private:
 
     void _set_colors_bpp_impl(int id, const span<const color>& colors);
 
+    void _update_palette(int id);
+
     void _apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const;
 };
 

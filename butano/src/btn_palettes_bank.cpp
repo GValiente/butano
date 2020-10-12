@@ -43,7 +43,10 @@ unsigned palettes_bank::colors_hash(const span<const color>& colors)
     result += int_colors[2];
     result += int_colors[3];
     result += result >> 16;
-    return unsigned(uint16_t(result));
+    result = unsigned(uint16_t(result));
+
+    // Active palettes hash > 0:
+    return max(result, unsigned(1));
 }
 
 int palettes_bank::used_count() const
@@ -81,13 +84,11 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
     {
         palette& pal = _palettes[index];
 
-        if(pal.usages)
+        // Active palettes hash > 0:
+        if(hash == pal.hash && _same_colors(colors, index))
         {
-            if(hash == pal.hash && _same_colors(colors, index))
-            {
-                ++pal.usages;
-                return index;
-            }
+            ++pal.usages;
+            return index;
         }
     }
 
@@ -559,25 +560,31 @@ void palettes_bank::update()
         _update = false;
         _update_global_effects = false;
 
-        for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
+        if(update_global_effects)
         {
-            palette& pal = _palettes[index];
-
-            if(pal.update || (update_global_effects && pal.usages))
+            for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
             {
-                pal.update = false;
-                first_index = min(first_index, index);
-                last_index = max(last_index, index);
+                palette& pal = _palettes[index];
 
-                const color* initial_pal_colors_ptr = _initial_colors + (index * hw::palettes::colors_per_palette());
-                color* final_pal_colors_ptr = _final_colors + (index * hw::palettes::colors_per_palette());
-                int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
-                copy_colors(initial_pal_colors_ptr, pal_colors_count, final_pal_colors_ptr);
-                pal.apply_effects(pal_colors_count, final_pal_colors_ptr);
-
-                if(pal.rotate_count)
+                if(pal.usages)
                 {
-                    hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, final_pal_colors_ptr + 1);
+                    _update_palette(index);
+                    first_index = min(first_index, index);
+                    last_index = index;
+                }
+            }
+        }
+        else
+        {
+            for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
+            {
+                palette& pal = _palettes[index];
+
+                if(pal.update)
+                {
+                    _update_palette(index);
+                    first_index = min(first_index, index);
+                    last_index = index;
                 }
             }
         }
@@ -720,6 +727,21 @@ void palettes_bank::_set_colors_bpp_impl(int id, const span<const color>& colors
     copy_colors(colors.data(), colors.size(), _initial_colors + (id * hw::palettes::colors_per_palette()));
     pal.update = true;
     _update = true;
+}
+
+void palettes_bank::_update_palette(int id)
+{
+    palette& pal = _palettes[id];
+    const color* initial_pal_colors_ptr = _initial_colors + (id * hw::palettes::colors_per_palette());
+    color* final_pal_colors_ptr = _final_colors + (id * hw::palettes::colors_per_palette());
+    int pal_colors_count = pal.slots_count * hw::palettes::colors_per_palette();
+    copy_colors(initial_pal_colors_ptr, pal_colors_count, final_pal_colors_ptr);
+    pal.apply_effects(pal_colors_count, final_pal_colors_ptr);
+
+    if(pal.rotate_count)
+    {
+        hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, final_pal_colors_ptr + 1);
+    }
 }
 
 void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const

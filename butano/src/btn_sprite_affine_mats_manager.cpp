@@ -14,7 +14,9 @@ namespace btn::sprite_affine_mats_manager
 
 namespace
 {
-    static_assert(sprite_affine_mats::count() <= numeric_limits<int8_t>::max());
+    constexpr const int max_items = sprite_affine_mats::count();
+
+    static_assert(max_items <= numeric_limits<int8_t>::max());
 
     class item_type
     {
@@ -82,12 +84,13 @@ namespace
     {
 
     public:
-        item_type items[sprite_affine_mats::count()];
-        vector<int8_t, sprite_affine_mats::count()> free_item_indexes;
+        item_type items[max_items];
+        vector<int8_t, max_items> free_item_indexes;
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
-        int first_index_to_commit = sprite_affine_mats::count();
+        int first_index_to_commit = max_items;
         int last_index_to_commit = 0;
-        bool check_remove_if_not_needed = false;
+        int first_index_to_remove_if_not_needed = max_items;
+        int last_index_to_remove_if_not_needed = 0;
     };
 
     BTN_DATA_EWRAM static_data data;
@@ -116,7 +119,9 @@ namespace
                 if(! item.attached_nodes.empty())
                 {
                     item.remove_if_not_needed = true;
-                    data.check_remove_if_not_needed = true;
+
+                    data.first_index_to_remove_if_not_needed = min(data.first_index_to_remove_if_not_needed, index);
+                    data.last_index_to_remove_if_not_needed = max(data.last_index_to_remove_if_not_needed, index);
                 }
             }
         }
@@ -168,13 +173,12 @@ namespace
 
 void init([[maybe_unused]] int handles_size, void* handles)
 {
-    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * sprite_affine_mats::count(),
-               "Invalid handles size: ", handles_size,
-               sizeof(hw::sprite_affine_mats::handle) * sprite_affine_mats::count());
+    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * max_items,
+               "Invalid handles size: ", handles_size, sizeof(hw::sprite_affine_mats::handle) * max_items);
 
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 
-    for(int index = sprite_affine_mats::count() - 1; index >= 0; --index)
+    for(int index = max_items - 1; index >= 0; --index)
     {
         data.free_item_indexes.push_back(int8_t(index));
     }
@@ -435,11 +439,10 @@ void reload(int id)
 
 void update()
 {
-    if(data.check_remove_if_not_needed)
+    if(data.first_index_to_remove_if_not_needed < max_items)
     {
-        data.check_remove_if_not_needed = false;
-
-        for(int index = data.first_index_to_commit, last = data.last_index_to_commit; index <= last; ++index)
+        for(int index = data.first_index_to_remove_if_not_needed, last = data.last_index_to_remove_if_not_needed;
+            index <= last; ++index)
         {
             item_type& item = data.items[index];
 
@@ -462,6 +465,9 @@ void update()
                 decrease_usages(index);
             }
         }
+
+        data.first_index_to_remove_if_not_needed = max_items;
+        data.last_index_to_remove_if_not_needed = 0;
     }
 }
 
@@ -469,12 +475,12 @@ optional<commit_data> retrieve_commit_data()
 {
     optional<commit_data> result;
 
-    if(data.first_index_to_commit < sprite_affine_mats::count())
+    if(data.first_index_to_commit < max_items)
     {
         int offset = data.first_index_to_commit;
         int count = data.last_index_to_commit - data.first_index_to_commit + 1;
         result = commit_data{ offset, count };
-        data.first_index_to_commit = sprite_affine_mats::count();
+        data.first_index_to_commit = max_items;
         data.last_index_to_commit = 0;
     }
 

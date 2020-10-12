@@ -198,8 +198,6 @@ private:
     palette _palettes[hw::palettes::count()] = {};
     alignas(alignof(int)) color _initial_colors[hw::palettes::colors()] = {};
     alignas(alignof(int)) color _final_colors[hw::palettes::colors()] = {};
-    optional<int> _first_index_to_commit;
-    optional<int> _last_index_to_commit;
     optional<color> _transparent_color;
     fixed _brightness;
     fixed _contrast;
@@ -207,6 +205,8 @@ private:
     fixed _grayscale_intensity;
     fixed _fade_intensity;
     unordered_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
+    int _first_index_to_commit = numeric_limits<int>::max();
+    int _last_index_to_commit = 0;
     color _fade_color;
     bool _inverted = false;
     bool _update = false;

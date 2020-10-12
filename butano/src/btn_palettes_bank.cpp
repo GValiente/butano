@@ -351,10 +351,10 @@ void palettes_bank::set_rotate_count(int id, int count)
 
 void palettes_bank::reload(int id)
 {
-    if(_first_index_to_commit)
+    if(_first_index_to_commit != numeric_limits<int>::max())
     {
-        _first_index_to_commit = min(*_first_index_to_commit, id);
-        _last_index_to_commit = max(*_last_index_to_commit, id);
+        _first_index_to_commit = min(_first_index_to_commit, id);
+        _last_index_to_commit = max(_last_index_to_commit, id);
     }
     else
     {
@@ -597,26 +597,18 @@ void palettes_bank::update()
         }
     }
 
-    if(first_index == numeric_limits<int>::max())
-    {
-        _first_index_to_commit.reset();
-        _last_index_to_commit.reset();
-    }
-    else
-    {
-        _first_index_to_commit = first_index;
-        _last_index_to_commit = last_index;
-    }
+    _first_index_to_commit = first_index;
+    _last_index_to_commit = last_index;
 }
 
 optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
 {
     optional<commit_data> result;
 
-    if(_first_index_to_commit)
+    if(_first_index_to_commit != numeric_limits<int>::max())
     {
-        int first_index = *_first_index_to_commit;
-        int last_index = *_last_index_to_commit;
+        int first_index = _first_index_to_commit;
+        int last_index = _last_index_to_commit;
         int colors_offset = first_index * hw::palettes::colors_per_palette();
         int colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
                 hw::palettes::colors_per_palette();
@@ -628,8 +620,8 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
 
 void palettes_bank::reset_commit_data()
 {
-    _first_index_to_commit.reset();
-    _last_index_to_commit.reset();
+    _first_index_to_commit = numeric_limits<int>::max();
+    _last_index_to_commit = 0;
 }
 
 void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const

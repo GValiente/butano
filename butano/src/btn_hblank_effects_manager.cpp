@@ -109,6 +109,8 @@ namespace
         vector<int8_t, max_items> free_item_indexes;
         int8_t old_entries_count = 0;
         int8_t new_entries_count = 0;
+        int8_t first_visible_item_index = 0;
+        int8_t last_visible_item_index = 0;
         bool entries_a_active = false;
         bool update = false;
         bool commit = false;
@@ -126,7 +128,31 @@ namespace
     BTN_DATA_EWRAM static_external_data external_data;
     static_internal_data internal_data;
 
-    int _create(const void* values_ptr, int target_id, hblank_effect_handler& handler)
+    void _update_visible_item_index(int item_index)
+    {
+        static_external_data& data = external_data;
+        data.items[item_index].show();
+
+        if(data.first_visible_item_index != max_items)
+        {
+            data.first_visible_item_index = int8_t(min(int(data.first_visible_item_index), item_index));
+            data.last_visible_item_index = int8_t(max(int(data.last_visible_item_index), item_index));
+        }
+    }
+
+    void _update_hidden_item_index(int item_index)
+    {
+        static_external_data& data = external_data;
+        data.items[item_index].cleanup();
+
+        if(item_index == data.first_visible_item_index || item_index == data.last_visible_item_index)
+        {
+            data.first_visible_item_index = max_items;
+            data.last_visible_item_index = 0;
+        }
+    }
+
+    [[nodiscard]] int _create(const void* values_ptr, int target_id, hblank_effect_handler& handler)
     {
         int item_index = external_data.free_item_indexes.back();
         external_data.free_item_indexes.pop_back();
@@ -142,8 +168,10 @@ namespace
         new_item.on_screen = false;
         new_item.output_values_written = false;
         handler.setup_target(target_id, new_item.target_last_value);
-        new_item.show();
+
+        _update_visible_item_index(item_index);
         external_data.update = true;
+
         return item_index;
     }
 }
@@ -226,8 +254,9 @@ void decrease_usages(int id)
         if(item.visible)
         {
             item.visible = false;
+
+            _update_hidden_item_index(id);
             external_data.update = true;
-            item.cleanup();
         }
 
         external_data.free_item_indexes.push_back(int8_t(id));
@@ -286,11 +315,11 @@ void set_visible(int id, bool visible)
 
         if(visible)
         {
-            item.show();
+            _update_visible_item_index(id);
         }
         else
         {
-            item.cleanup();
+            _update_hidden_item_index(id);
         }
     }
 }
@@ -300,11 +329,44 @@ void update()
     bool update = external_data.update;
     external_data.update = false;
 
-    for(item_type& item : external_data.items)
+    int first_visible_item_index = external_data.first_visible_item_index;
+    int last_visible_item_index = external_data.last_visible_item_index;
+
+    if(first_visible_item_index < max_items)
     {
-        if(item.visible)
+        for(int item_index = first_visible_item_index; item_index <= last_visible_item_index; ++item_index)
         {
-            update |= item.check_update();
+            item_type& item = external_data.items[item_index];
+
+            if(item.visible)
+            {
+                update |= item.check_update();
+            }
+        }
+    }
+    else
+    {
+        for(int item_index = 0; item_index < max_items; ++item_index)
+        {
+            item_type& item = external_data.items[item_index];
+
+            if(item.visible)
+            {
+                update |= item.check_update();
+                first_visible_item_index = min(first_visible_item_index, item_index);
+                last_visible_item_index = item_index;
+            }
+        }
+
+        if(first_visible_item_index == max_items)
+        {
+            external_data.first_visible_item_index = 0;
+            external_data.last_visible_item_index = 0;
+        }
+        else
+        {
+            external_data.first_visible_item_index = int8_t(first_visible_item_index);
+            external_data.last_visible_item_index = int8_t(last_visible_item_index);
         }
     }
 
@@ -324,8 +386,10 @@ void update()
             external_data.entries_a_active = true;
         }
 
-        for(const item_type& item : external_data.items)
+        for(int item_index = first_visible_item_index; item_index <= last_visible_item_index; ++item_index)
         {
+            const item_type& item = external_data.items[item_index];
+
             if(item.visible && item.on_screen)
             {
                 hw_entry& entry = entries[entries_count];

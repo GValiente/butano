@@ -109,7 +109,7 @@ namespace
         vector<int8_t, max_items> free_item_indexes;
         int8_t old_entries_count = 0;
         int8_t new_entries_count = 0;
-        int8_t first_visible_item_index = 0;
+        int8_t first_visible_item_index = max_items - 1;
         int8_t last_visible_item_index = 0;
         bool entries_a_active = false;
         bool update = false;
@@ -360,7 +360,7 @@ void update()
 
         if(first_visible_item_index == max_items)
         {
-            external_data.first_visible_item_index = 0;
+            external_data.first_visible_item_index = max_items - 1;
             external_data.last_visible_item_index = 0;
         }
         else

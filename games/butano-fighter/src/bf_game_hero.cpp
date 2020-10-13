@@ -1,6 +1,5 @@
 #include "bf_game_hero.h"
 
-#include "btn_camera.h"
 #include "btn_keypad.h"
 #include "btn_colors.h"
 #include "btn_fixed_rect.h"
@@ -35,7 +34,8 @@ namespace
     constexpr const int body_shadows_multiplier = 4;
     constexpr const btn::fixed_size dimensions(12, 12);
 
-    btn::vector<btn::sprite_ptr, 3> _create_body_shadows(const btn::sprite_item& body_sprite_item)
+    btn::vector<btn::sprite_ptr, 3> _create_body_shadows(const btn::sprite_item& body_sprite_item,
+                                                         const btn::camera_ptr& camera)
     {
         btn::vector<btn::sprite_ptr, 3> result;
 
@@ -43,44 +43,53 @@ namespace
         {
             btn::sprite_builder builder(body_sprite_item);
             builder.set_z_order(constants::hero_shadows_z_order);
+            builder.set_camera(camera);
             result.push_back(builder.release_build());
         }
 
         return result;
     }
 
-    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action(const btn::sprite_item& body_sprite_item)
+    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action(const btn::sprite_item& body_sprite_item,
+                                                                            const btn::camera_ptr& camera)
     {
-        btn::sprite_ptr body_sprite = body_sprite_item.create_sprite(0, body_delta_y);
-        return btn::create_sprite_cached_animate_action_forever(
-                    btn::move(body_sprite), 16, body_sprite_item.tiles_item(), 0, 1);
+        btn::sprite_builder builder(body_sprite_item);
+        builder.set_position(0, body_delta_y);
+        builder.set_camera(camera);
+
+        return btn::create_sprite_cached_animate_action_forever(builder.release_build(), 16,
+                                                                body_sprite_item.tiles_item(), 0, 1);
     }
 
-    btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position)
+    btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position, const btn::camera_ptr& camera)
     {
-        return btn::sprite_items::hero_weapons.create_sprite(position, level);
+        btn::sprite_builder builder(btn::sprite_items::hero_weapons, level);
+        builder.set_position(position);
+        builder.set_camera(camera);
+        return builder.release_build();
     }
 
-    btn::sprite_ptr _create_shield_sprite()
+    btn::sprite_ptr _create_shield_sprite(const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::hero_shield);
         builder.set_z_order(constants::hero_shield_z_order);
+        builder.set_camera(camera);
         builder.set_visible(false);
         return builder.release_build();
     }
 }
 
-hero::hero(status& status) :
+hero::hero(const btn::camera_ptr& camera, status& status) :
     _status(status),
     _body_sprite_item(status.current_stage().in_air ?
                           btn::sprite_items::hero_body_flying : btn::sprite_items::hero_body_walking),
-    _body_shadows(_create_body_shadows(_body_sprite_item)),
-    _body_sprite_animate_action(_create_body_sprite_animate_action(_body_sprite_item)),
+    _body_shadows(_create_body_shadows(_body_sprite_item, camera)),
+    _body_sprite_animate_action(_create_body_sprite_animate_action(_body_sprite_item, camera)),
     _body_snapshots(body_snapshots_count, body_snapshot_type{ _body_sprite_animate_action.sprite().position(), 0 }),
     _body_position(0, body_delta_y),
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
-    _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position)),
-    _shield_sprite(_create_shield_sprite()),
+    _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position, camera)),
+    _shield_sprite(_create_shield_sprite(camera)),
     _bomb_sprites_affine_mat(btn::sprite_affine_mat_ptr::create())
 {
 }
@@ -103,7 +112,7 @@ void hero::show_shoot(btn::color fade_color)
 
 btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
                                        enemy_bullets& enemy_bullets, objects& objects, background& background,
-                                       butano_background& butano_background)
+                                       butano_background& butano_background, btn::camera_ptr& camera)
 {
     btn::optional<scene_type> result;
 
@@ -112,12 +121,12 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
         btn::fixed_point old_body_position = _body_position;
         bool looking_down = _looking_down;
         _looking_down = enemies.hero_should_look_down(old_body_position, looking_down);
-        _move();
+        _move(camera);
 
         btn::fixed_rect new_body_rect(_body_position, dimensions);
         _animate_alive(old_body_position);
 
-        if(objects.check_hero_weapon(new_body_rect))
+        if(objects.check_hero_weapon(new_body_rect, camera))
         {
             [[maybe_unused]] bool level_added = _status.add_level();
             BTN_ASSERT(level_added, "Level add failed");
@@ -130,8 +139,8 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
         bool max_bombs_count = _status.bombs_count() == constants::max_hero_bombs;
         int level = _status.level();
 
-        objects::bomb_check_result bomb_check_result = objects.check_hero_bomb(new_body_rect, max_bombs_count, level);
-        int experience_to_add = bomb_check_result.experience_to_add;
+        objects::bomb_check_result bomb_check_result =
+                objects.check_hero_bomb(new_body_rect, max_bombs_count, level, camera);
 
         if(bomb_check_result.add_bomb)
         {
@@ -139,11 +148,11 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
             BTN_ASSERT(bomb_added, "Bomb add failed");
         }
 
-        experience_to_add += objects.check_gem(new_body_rect, level);
+        int experience_to_add = bomb_check_result.experience_to_add + objects.check_gem(new_body_rect, level, camera);
 
         if(experience_to_add && add_experience(experience_to_add))
         {
-            objects.spawn_hero_weapon_with_sound(btn::fixed_point(0, -constants::view_height), level + 1);
+            objects.spawn_hero_weapon_with_sound(btn::fixed_point(0, -constants::view_height), level + 1, camera);
         }
 
         if(_shield_counter)
@@ -160,7 +169,7 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
 
                     if(_status.throw_shield())
                     {
-                        _show_shield(old_bombs_count, background);
+                        _show_shield(old_bombs_count, camera, background);
                     }
                     else
                     {
@@ -179,8 +188,6 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
             }
             else if(! butano_background.silhouette_visible())
             {
-                btn::camera::set_x(0);
-
                 if(_status.go_to_next_stage())
                 {
                     result = scene_type::GAME;
@@ -196,14 +203,14 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
     }
     else
     {
-        result = _animate_dead(background, butano_background);
+        result = _animate_dead(camera, background, butano_background);
         _body_position = _body_sprite_animate_action.sprite().position();
     }
 
     return result;
 }
 
-void hero::_move()
+void hero::_move(btn::camera_ptr& camera)
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     btn::fixed speed = _shooting ? 1 : 2;
@@ -216,7 +223,7 @@ void hero::_move()
 
         if(sprite_x < constants::camera_width)
         {
-            btn::camera::set_x(btn::max(btn::camera::x() - speed, btn::fixed(-constants::camera_width)));
+            camera.set_x(btn::max(camera.x() - speed, btn::fixed(-constants::camera_width)));
         }
     }
     else if(btn::keypad::right_held())
@@ -227,7 +234,7 @@ void hero::_move()
 
         if(sprite_x > -constants::camera_width)
         {
-            btn::camera::set_x(btn::min(btn::camera::x() + speed, btn::fixed(constants::camera_width)));
+            camera.set_x(btn::min(camera.x() + speed, btn::fixed(constants::camera_width)));
         }
     }
 
@@ -353,7 +360,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
     }
 }
 
-void hero::_show_shield(int old_bombs_count, background& background)
+void hero::_show_shield(int old_bombs_count, const btn::camera_ptr& camera, background& background)
 {
     bool looking_down = _looking_down;
     _shield_toggle_action.emplace(_shield_sprite, 1);
@@ -368,6 +375,7 @@ void hero::_show_shield(int old_bombs_count, background& background)
         builder.set_position(_body_position);
         builder.set_z_order(constants::hero_shield_z_order);
         builder.set_affine_mat(_bomb_sprites_affine_mat);
+        builder.set_camera(camera);
 
         if(looking_down)
         {
@@ -437,7 +445,8 @@ void hero::_animate_shield(background& background)
     }
 }
 
-btn::optional<scene_type> hero::_animate_dead(background& background, butano_background& butano_background)
+btn::optional<scene_type> hero::_animate_dead(const btn::camera_ptr& camera, background& background,
+                                              butano_background& butano_background)
 {
     btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     btn::optional<scene_type> result;
@@ -464,7 +473,7 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     else if(_death_counter == 70)
     {
         btn::fixed_point explosion_position = body_sprite.position() + btn::fixed_point(2, 4);
-        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0, false);
+        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0, false, camera);
         _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
         background.show_hero_dead();
@@ -476,7 +485,6 @@ btn::optional<scene_type> hero::_animate_dead(background& background, butano_bac
     }
     else if(_death_counter > 220 && ! butano_background.silhouette_visible())
     {
-        btn::camera::set_x(0);
         _status.update_high_experience();
         _status = status();
         result = scene_type::TITLE;

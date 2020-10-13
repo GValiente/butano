@@ -17,7 +17,7 @@ namespace bf::game
 {
 
 object object::create_hero_weapon(const btn::fixed_point& position, int hero_level,
-                                  const btn::sprite_palette_ptr& flash_palette)
+                                  const btn::sprite_palette_ptr& flash_palette, const btn::camera_ptr& camera)
 {
     const btn::sprite_item* sprite_item = &btn::sprite_items::hero_weapon_big_2;
     btn::fixed_size dimensions(28, 16);
@@ -71,14 +71,17 @@ object object::create_hero_weapon(const btn::fixed_point& position, int hero_lev
     btn::sprite_builder builder(*sprite_item);
     builder.set_position(position);
     builder.set_z_order(constants::objects_z_order);
+    builder.set_camera(camera);
     return object(builder.release_build(), position, dimensions, btn::fixed_point(1, -1), flash_palette);
 }
 
-object object::create_hero_bomb(const btn::fixed_point& position, const btn::sprite_palette_ptr& flash_palette)
+object object::create_hero_bomb(const btn::fixed_point& position, const btn::sprite_palette_ptr& flash_palette,
+                                const btn::camera_ptr& camera)
 {
     btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
     builder.set_position(position);
     builder.set_z_order(constants::objects_z_order);
+    builder.set_camera(camera);
     return object(builder.release_build(), position, btn::fixed_size(14, 16), btn::fixed_point(-1, -1), flash_palette);
 }
 

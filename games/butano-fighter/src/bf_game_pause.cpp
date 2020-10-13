@@ -42,7 +42,6 @@ void pause::update(const butano_background& butano_background)
         {
             btn::regular_bg_builder builder(btn::regular_bg_items::pause);
             builder.set_priority(0);
-            builder.set_ignore_camera(true);
             _bg = builder.release_build();
             _contrast = btn::bg_palettes::contrast();
             _fade_intensity = btn::bg_palettes::fade_intensity();

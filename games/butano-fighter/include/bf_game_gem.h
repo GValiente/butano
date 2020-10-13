@@ -18,7 +18,7 @@ class gem
 
 public:
     gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
-        const btn::sprite_palette_ptr& palette);
+        const btn::sprite_palette_ptr& palette, const btn::camera_ptr& camera);
 
     [[nodiscard]] const btn::fixed_point& position() const
     {

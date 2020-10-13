@@ -28,7 +28,7 @@ class hero
 {
 
 public:
-    explicit hero(status& status);
+    hero(const btn::camera_ptr& camera, status& status);
 
     [[nodiscard]] bool alive() const
     {
@@ -93,7 +93,8 @@ public:
     }
 
     btn::optional<scene_type> update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
-                                     objects& objects, background& background, butano_background& butano_background);
+                                     objects& objects, background& background, butano_background& butano_background,
+                                     btn::camera_ptr& camera);
 
 private:
     struct body_snapshot_type
@@ -135,15 +136,16 @@ private:
     bool _looking_down = false;
     bool _stage_done = false;
 
-    void _move();
+    void _move(btn::camera_ptr& camera);
 
     void _animate_alive(const btn::fixed_point& old_body_position);
 
-    void _show_shield(int old_bombs_count, background& background);
+    void _show_shield(int old_bombs_count, const btn::camera_ptr& camera, background& background);
 
     void _animate_shield(background& background);
 
-    btn::optional<scene_type> _animate_dead(background& background, butano_background& butano_background);
+    btn::optional<scene_type> _animate_dead(const btn::camera_ptr& camera, background& background,
+                                            butano_background& butano_background);
 };
 
 }

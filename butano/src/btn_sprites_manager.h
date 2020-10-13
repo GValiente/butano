@@ -3,12 +3,12 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
-#include "btn_config_camera.h"
 
 namespace btn
 {
 
 class size;
+class camera_ptr;
 class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
@@ -138,11 +138,9 @@ namespace sprites_manager
 
     void set_visible(id_type id, bool visible);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera(id_type id);
+    [[nodiscard]] const optional<camera_ptr>& camera(id_type id);
 
-        void set_ignore_camera(id_type id, bool ignore_camera);
-    #endif
+    void set_camera(id_type id, optional<camera_ptr> camera);
 
     [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 
@@ -194,9 +192,7 @@ namespace sprites_manager
     void fill_hblank_effect_third_attributes(
             sprite_shape_size shape_size, const sprite_third_attributes* third_attributes_ptr, uint16_t* dest_ptr);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        void update_camera();
-    #endif
+    void update_cameras();
 
     void remove_identity_affine_mat_if_not_needed(id_type id);
 
@@ -210,9 +206,7 @@ namespace sprites_manager
 
     [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] BTN_CODE_IWRAM bool _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer);
-    #endif
+    [[nodiscard]] BTN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
 }
 
 }

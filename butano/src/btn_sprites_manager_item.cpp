@@ -15,9 +15,6 @@ sprites_manager_item::sprites_manager_item(const fixed_point& _position, const s
     palette(move(_palette)),
     double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
     blending_enabled(false),
-    #if BTN_CFG_CAMERA_ENABLED
-        ignore_camera(false),
-    #endif
     remove_affine_mat_when_not_needed(true)
 {
     const sprite_palette_ptr& palette_ref = *palette;
@@ -36,11 +33,9 @@ sprites_manager_item::sprites_manager_item(sprite_builder&& builder, sprite_tile
     tiles(move(_tiles)),
     palette(move(_palette)),
     affine_mat(builder.release_affine_mat()),
+    camera(builder.release_camera()),
     double_size_mode(unsigned(builder.double_size_mode())),
     blending_enabled(builder.blending_enabled()),
-    #if BTN_CFG_CAMERA_ENABLED
-        ignore_camera(builder.ignore_camera()),
-    #endif
     remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
 {
     const sprite_palette_ptr& palette_ref = *palette;

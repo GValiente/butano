@@ -4,7 +4,6 @@
 #include "btn_window.h"
 #include "btn_display.h"
 #include "btn_sprite_builder.h"
-#include "btn_regular_bg_builder.h"
 #include "btn_sprite_items_butano_big_silhouette.h"
 #include "btn_regular_bg_items_butano_background.h"
 
@@ -154,13 +153,10 @@ void butano_background::_set_visible()
 {
     if(! _move_action)
     {
-        btn::regular_bg_builder builder(btn::regular_bg_items::butano_background);
-        builder.set_ignore_camera(true);
-
-        btn::regular_bg_ptr bg = builder.release_build();
-        _move_action.emplace(bg, 1, -1);
+        btn::regular_bg_ptr bg = btn::regular_bg_items::butano_background.create_bg(0, 0);
         _palette_hblank_effect = btn::bg_palette_color_hblank_effect_ptr::create(
                     bg.palette(), 1, palette_hblank_effect_colors);
+        _move_action.emplace(btn::move(bg), 1, -1);
     }
 }
 

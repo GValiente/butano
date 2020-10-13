@@ -15,19 +15,20 @@ namespace
 
     [[nodiscard]] btn::sprite_ptr _create_sprite(
         const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
-        const btn::sprite_palette_ptr& palette)
+        const btn::sprite_palette_ptr& palette, const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::gem.shape_size(), tiles[0], palette);
         builder.set_position(position);
         builder.set_z_order(constants::gems_z_order);
+        builder.set_camera(camera);
         return builder.release_build();
     }
 }
 
 gem::gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
-         const btn::sprite_palette_ptr& palette) :
+         const btn::sprite_palette_ptr& palette, const btn::camera_ptr& camera) :
     _position(position),
-    _sprite(_create_sprite(position, tiles, palette)),
+    _sprite(_create_sprite(position, tiles, palette, camera)),
     _tiles(tiles),
     _counter(flash_frames)
 {

@@ -13,6 +13,7 @@
 #include "btn_memory_manager.h"
 #include "btn_display_manager.h"
 #include "btn_sprites_manager.h"
+#include "btn_cameras_manager.h"
 #include "btn_palettes_manager.h"
 #include "btn_bg_blocks_manager.h"
 #include "btn_sprite_tiles_manager.h"
@@ -116,6 +117,7 @@ void init(const string_view& keypad_commands)
 
     // Init high level systems:
     memory_manager::init();
+    cameras_manager::init();
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();
@@ -142,6 +144,10 @@ void init(const string_view& keypad_commands)
 
 void update()
 {
+    BTN_PROFILER_ENGINE_START("eng_cameras_update");
+    cameras_manager::update();
+    BTN_PROFILER_ENGINE_STOP();
+
     BTN_PROFILER_ENGINE_START("eng_sprites_update");
     sprites_manager::update();
     BTN_PROFILER_ENGINE_STOP();

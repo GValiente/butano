@@ -23,22 +23,24 @@ public:
 
     explicit objects(const btn::sprite_palette_ptr& flash_palette);
 
-    [[nodiscard]] bool check_hero_weapon(const btn::fixed_rect& hero_rect);
+    [[nodiscard]] bool check_hero_weapon(const btn::fixed_rect& hero_rect, const btn::camera_ptr& camera);
 
     [[nodiscard]] bomb_check_result check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs,
-                                                    int hero_level);
+                                                    int hero_level, const btn::camera_ptr& camera);
 
-    [[nodiscard]] int check_gem(const btn::fixed_rect& hero_rect, int hero_level);
+    [[nodiscard]] int check_gem(const btn::fixed_rect& hero_rect, int hero_level, const btn::camera_ptr& camera);
 
-    void spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level);
+    void spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level,
+                                      const btn::camera_ptr& camera);
 
-    void spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level);
+    void spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level,
+                                         const btn::camera_ptr& camera);
 
-    void spawn_hero_bomb_with_sound(const btn::fixed_point& position);
+    void spawn_hero_bomb_with_sound(const btn::fixed_point& position, const btn::camera_ptr& camera);
 
-    void spawn_hero_bomb_without_sound(const btn::fixed_point& position);
+    void spawn_hero_bomb_without_sound(const btn::fixed_point& position, const btn::camera_ptr& camera);
 
-    void spawn_gem(const btn::fixed_point& position);
+    void spawn_gem(const btn::fixed_point& position, const btn::camera_ptr& camera);
 
     void update();
 

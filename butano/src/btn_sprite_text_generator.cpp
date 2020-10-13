@@ -56,9 +56,6 @@ namespace
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
-        #if BTN_CFG_CAMERA_ENABLED
-            builder.set_ignore_camera(generator.ignore_camera());
-        #endif
 
         if(allow_failure)
         {
@@ -229,9 +226,6 @@ namespace
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
-            #if BTN_CFG_CAMERA_ENABLED
-                builder.set_ignore_camera(_generator.ignore_camera());
-            #endif
 
             if(allow_failure)
             {
@@ -332,9 +326,6 @@ namespace
                 builder.set_position(_current_position);
                 builder.set_bg_priority(_generator.bg_priority());
                 builder.set_z_order(_generator.z_order());
-                #if BTN_CFG_CAMERA_ENABLED
-                    builder.set_ignore_camera(_generator.ignore_camera());
-                #endif
 
                 if(allow_failure)
                 {

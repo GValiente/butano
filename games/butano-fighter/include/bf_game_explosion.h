@@ -14,7 +14,7 @@ class explosion
 
 public:
     explosion(const btn::sprite_item& sprite_item, const btn::fixed_point& position, int animation_frames,
-              int z_order, bool double_size);
+              int z_order, bool double_size, const btn::camera_ptr& camera);
 
     [[nodiscard]] bool show_target_sprite() const
     {

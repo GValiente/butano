@@ -76,27 +76,25 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
     return visible_items_count;
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    bool _update_camera_impl(fixed_point camera_position, sorted_sprites::layer& layer)
+bool _update_cameras_impl(sorted_sprites::layer& layer)
+{
+    bool check_items_on_screen = false;
+
+    for(sprites_manager_item& item : layer)
     {
-        bool check_items_on_screen = false;
-
-        for(sprites_manager_item& item : layer)
+        if(item.camera)
         {
-            if(! item.ignore_camera)
-            {
-                item.update_hw_position(camera_position);
+            item.update_hw_position();
 
-                if(item.visible)
-                {
-                    item.check_on_screen = true;
-                    check_items_on_screen = true;
-                }
+            if(item.visible)
+            {
+                item.check_on_screen = true;
+                check_items_on_screen = true;
             }
         }
-
-        return check_items_on_screen;
     }
-#endif
+
+    return check_items_on_screen;
+}
 
 }

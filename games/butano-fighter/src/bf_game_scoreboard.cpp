@@ -44,7 +44,6 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
         builder.set_position(btn::fixed_point(experience_bar_x - 8, experience_bar_y));
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_z_order(_text_generator.z_order());
-        builder.set_ignore_camera(true);
         _experience_bar_sprites.push_back(builder.release_build());
     }
 
@@ -54,7 +53,6 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_scale_x(0.5);
         builder.set_z_order(_text_generator.z_order());
-        builder.set_ignore_camera(true);
         _experience_bar_sprites.push_back(builder.release_build());
     }
 
@@ -63,7 +61,6 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
         builder.set_position(btn::fixed_point(experience_bar_x - 2, experience_bar_y));
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_z_order(_text_generator.z_order());
-        builder.set_ignore_camera(true);
         builder.set_horizontal_flip(true);
         _experience_bar_sprites.push_back(builder.build());
 
@@ -180,7 +177,6 @@ void scoreboard::update(const hero& hero)
             builder.set_bg_priority(_text_generator.bg_priority());
             builder.set_z_order(_text_generator.z_order());
             builder.set_visible(visible);
-            builder.set_ignore_camera(true);
             _bomb_sprites.push_back(builder.release_build());
         }
 

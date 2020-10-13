@@ -778,30 +778,28 @@ void set_visible(id_type id, bool visible)
     }
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    bool ignore_camera(id_type id)
-    {
-        auto item = static_cast<const item_type*>(id);
-        return item->ignore_camera;
-    }
+const optional<camera_ptr>& camera(id_type id)
+{
+    auto item = static_cast<const item_type*>(id);
+    return item->camera;
+}
 
-    void set_ignore_camera(id_type id, bool ignore_camera)
-    {
-        auto item = static_cast<item_type*>(id);
+void set_camera(id_type id, optional<camera_ptr> camera)
+{
+    auto item = static_cast<item_type*>(id);
 
-        if(ignore_camera != item->ignore_camera)
+    if(camera != item->camera)
+    {
+        item->camera = move(camera);
+        item->update_hw_position();
+
+        if(item->visible)
         {
-            item->ignore_camera = ignore_camera;
-            item->update_hw_position();
-
-            if(item->visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
         }
     }
-#endif
+}
 
 optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
 {
@@ -1140,20 +1138,17 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
     }
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    void update_camera()
+void update_cameras()
+{
+    bool check_items_on_screen = false;
+
+    for(sorted_sprites::layer* layer : sorted_sprites::layers())
     {
-        fixed_point camera_position = camera::position();
-        bool check_items_on_screen = false;
-
-        for(sorted_sprites::layer* layer : sorted_sprites::layers())
-        {
-            check_items_on_screen |= _update_camera_impl(camera_position, *layer);
-        }
-
-        data.check_items_on_screen |= check_items_on_screen;
+        check_items_on_screen |= _update_cameras_impl(*layer);
     }
-#endif
+
+    data.check_items_on_screen |= check_items_on_screen;
+}
 
 void remove_identity_affine_mat_if_not_needed(id_type id)
 {

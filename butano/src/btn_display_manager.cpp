@@ -1,8 +1,8 @@
 #include "btn_display_manager.h"
 
 #include "btn_vector.h"
-#include "btn_camera.h"
 #include "btn_display.h"
+#include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"
 #include "btn_mosaic_attributes.h"
 #include "btn_blending_fade_alpha.h"
@@ -37,9 +37,7 @@ namespace
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         fixed_point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
-        #if BTN_CFG_CAMERA_ENABLED
-            bool rect_windows_ignore_camera[hw::display::rect_windows_count()] = {};
-        #endif
+        optional<camera_ptr> rect_windows_camera[hw::display::rect_windows_count()] = {};
         bool inside_window_enabled[hw::display::inside_windows_count()] = {};
         bool commit = true;
         bool commit_enabled_bgs = false;
@@ -64,12 +62,10 @@ namespace
     {
         fixed_point window_boundaries = data.rect_windows_boundaries[boundaries_index];
 
-        #if BTN_CFG_CAMERA_ENABLED
-            if(! data.rect_windows_ignore_camera[boundaries_index / 2])
-            {
-                window_boundaries -= camera::position();
-            }
-        #endif
+        if(const optional<camera_ptr>& camera = data.rect_windows_camera[boundaries_index / 2])
+        {
+            window_boundaries -= camera->position();
+        }
 
         fixed_point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
         fixed display_width = display::width();
@@ -508,24 +504,22 @@ void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
     _update_rect_windows_hw_boundaries(index + 1);
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    bool rect_window_ignore_camera(int window)
-    {
-        return data.rect_windows_ignore_camera[window];
-    }
+const optional<camera_ptr>& rect_window_camera(int window)
+{
+    return data.rect_windows_camera[window];
+}
 
-    void set_rect_window_ignore_camera(int window, bool ignore_camera)
+void set_rect_window_camera(int window, optional<camera_ptr> camera)
+{
+    if(data.rect_windows_camera[window] != camera)
     {
-        if(data.rect_windows_ignore_camera[window] != ignore_camera)
-        {
-            data.rect_windows_ignore_camera[window] = ignore_camera;
+        data.rect_windows_camera[window] = move(camera);
 
-            int index = window * 2;
-            _update_rect_windows_hw_boundaries(index);
-            _update_rect_windows_hw_boundaries(index + 1);
-        }
+        int index = window * 2;
+        _update_rect_windows_hw_boundaries(index);
+        _update_rect_windows_hw_boundaries(index + 1);
     }
-#endif
+}
 
 void reload_rect_windows_boundaries()
 {
@@ -677,20 +671,18 @@ void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest
     }
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    void update_camera()
+void update_cameras()
+{
+    for(int index = 0, limit = hw::display::rect_windows_count(); index < limit; ++index)
     {
-        for(int index = 0, limit = hw::display::rect_windows_count(); index < limit; ++index)
+        if(data.rect_windows_camera[index])
         {
-            if(! data.rect_windows_ignore_camera[index])
-            {
-                int boundaries_index = index * 2;
-                _update_rect_windows_hw_boundaries(boundaries_index);
-                _update_rect_windows_hw_boundaries(boundaries_index + 1);
-            }
+            int boundaries_index = index * 2;
+            _update_rect_windows_hw_boundaries(boundaries_index);
+            _update_rect_windows_hw_boundaries(boundaries_index + 1);
         }
     }
-#endif
+}
 
 void update()
 {

@@ -33,8 +33,8 @@ namespace
             _create_wave_hblank_effect_deltas();
 }
 
-void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, hero& hero, enemies& enemies,
-                       enemy_bullets& enemy_bullets, background& background)
+void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const btn::camera_ptr& camera, hero& hero,
+                       enemies& enemies, enemy_bullets& enemy_bullets, background& background)
 {
     switch(_status)
     {
@@ -59,6 +59,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, hero& h
                 btn::rect_window internal_window = btn::rect_window::internal();
                 internal_window.set_boundaries(hero_position, hero_position);
                 internal_window.set_show_blending(false);
+                internal_window.set_camera(camera);
                 _move_window_top_action.emplace(internal_window, -4);
                 _move_window_bottom_action.emplace(internal_window, 4);
 
@@ -96,7 +97,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, hero& h
 
             btn::fixed fixed_radius = _circle_generator.radius() + 4;
             int integer_radius = fixed_radius.integer();
-            enemies.check_hero_bomb(_center, integer_radius * integer_radius);
+            enemies.check_hero_bomb(_center, integer_radius * integer_radius, camera);
             _circle_generator.set_radius(fixed_radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);
             _circle_hblank_effect->reload_deltas_ref();
@@ -164,7 +165,9 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, hero& h
             }
             else if(_counter == 30)
             {
-                btn::rect_window::internal().set_boundaries(0, 0, 0, 0);
+                btn::rect_window internal_window = btn::rect_window::internal();
+                internal_window.set_boundaries(0, 0, 0, 0);
+                internal_window.remove_camera();
                 background.show_top(30);
                 _bg_move_action.reset();
                 _wave_hblank_effect.reset();

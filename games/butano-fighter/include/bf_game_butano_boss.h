@@ -20,7 +20,7 @@ class butano_boss : public boss
 {
 
 public:
-    explicit butano_boss(const btn::sprite_palette_ptr& damage_palette);
+    butano_boss(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera);
 
     void play_music() const override;
 
@@ -31,11 +31,12 @@ protected:
     }
 
     void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                       enemy_bullets& enemy_bullets) final;
+                       const btn::camera_ptr& camera, enemy_bullets& enemy_bullets) final;
 
-    [[nodiscard]] bool _update_dead(const btn::fixed_point& hero_position, background& background) final;
+    [[nodiscard]] bool _update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                    background& background) final;
 
-    void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) final;
+    void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera) final;
 
     void _hide_damage_palette() final;
 
@@ -74,18 +75,22 @@ private:
     [[nodiscard]] btn::fixed_point _top_position() const;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
-                       const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
+                       const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                       enemy_bullets& enemy_bullets) const;
 
     void _shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
-                       const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const;
+                       const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                       enemy_bullets& enemy_bullets) const;
 
-    void _shoot_random_bullet(bool down_only, const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+    void _shoot_random_bullet(bool down_only, const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                              enemy_bullets& enemy_bullets);
 
     void _update_sprites();
 
     void _update_rects();
 
-    void _update_bullets(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+    void _update_bullets(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                         enemy_bullets& enemy_bullets);
 
     void _update_explosions();
 };

@@ -2,8 +2,8 @@
 #define BTN_REGULAR_BG_BUILDER_H
 
 #include "btn_optional.h"
+#include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"
-#include "btn_config_camera.h"
 #include "btn_regular_bg_item.h"
 #include "btn_regular_bg_map_ptr.h"
 
@@ -122,18 +122,27 @@ public:
         return *this;
     }
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera() const
-        {
-            return _ignore_camera;
-        }
+    [[nodiscard]] const optional<camera_ptr>& camera() const
+    {
+        return _camera;
+    }
 
-        regular_bg_builder& set_ignore_camera(bool ignore_camera)
-        {
-            _ignore_camera = ignore_camera;
-            return *this;
-        }
-    #endif
+    regular_bg_builder& set_camera(optional<camera_ptr> camera)
+    {
+        _camera = move(camera);
+        return *this;
+    }
+
+    regular_bg_builder& remove_camera()
+    {
+        _camera.reset();
+        return *this;
+    }
+
+    [[nodiscard]] optional<camera_ptr> release_camera()
+    {
+        return move(_camera);
+    }
 
     [[nodiscard]] regular_bg_ptr build() const;
 
@@ -153,16 +162,14 @@ public:
 
 private:
     optional<regular_bg_item> _item;
-    optional<regular_bg_map_ptr> _map;
     fixed_point _position;
     int _priority = 3;
     int _z_order = 0;
+    optional<regular_bg_map_ptr> _map;
+    optional<camera_ptr> _camera;
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
     bool _visible = true;
-    #if BTN_CFG_CAMERA_ENABLED
-        bool _ignore_camera = false;
-    #endif
 };
 
 }

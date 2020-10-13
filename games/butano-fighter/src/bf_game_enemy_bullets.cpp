@@ -53,7 +53,7 @@ bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
 }
 
 void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
-                               const enemy_bullet_event& event)
+                               const enemy_bullet_event& event, const btn::camera_ptr& camera)
 {
     enemy_bullet_type type = event.type;
 
@@ -75,8 +75,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-18, 20), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(18, 20), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-18, 20), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(18, 20), single_event, camera);
         }
         return;
 
@@ -84,7 +84,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event, camera);
         }
         return;
 
@@ -92,7 +92,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event, camera);
         }
         return;
 
@@ -100,7 +100,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event, camera);
         }
         return;
 
@@ -108,7 +108,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event, camera);
         }
         return;
 
@@ -116,7 +116,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event shotgun_event = event;
             shotgun_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event, camera);
         }
         return;
 
@@ -124,7 +124,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event shotgun_event = event;
             shotgun_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event, camera);
         }
         return;
 
@@ -132,8 +132,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-14, 14), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(14, 14), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-14, 14), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(14, 14), single_event, camera);
         }
         return;
 
@@ -141,8 +141,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-15, 22), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(15, 22), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-15, 22), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(15, 22), single_event, camera);
         }
         return;
 
@@ -150,7 +150,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -158,7 +158,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -166,7 +166,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::HUGE;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -174,8 +174,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-11, 17), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(11, 17), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-11, 17), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(11, 17), single_event, camera);
         }
         return;
 
@@ -183,8 +183,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(25, -12), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(25, 12), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(25, -12), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(25, 12), single_event, camera);
         }
         return;
 
@@ -192,8 +192,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, -12), single_event);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, 12), single_event);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, -12), single_event, camera);
+            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, 12), single_event, camera);
         }
         return;
 
@@ -224,6 +224,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
     builder.set_position(enemy_position);
     builder.set_scale(scale);
     builder.set_z_order(constants::enemy_bullets_z_order);
+    builder.set_camera(camera);
 
     if(event.delta_speed > 0)
     {

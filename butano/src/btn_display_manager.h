@@ -3,10 +3,11 @@
 
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
-#include "btn_config_camera.h"
+#include "btn_optional_fwd.h"
 
 namespace btn
 {
+    class camera_ptr;
     class fixed_point;
     class mosaic_attributes;
     class blending_fade_alpha;
@@ -123,11 +124,9 @@ namespace btn::display_manager
 
     void set_rect_window_bottom_right(int window, const fixed_point& bottom_right);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool rect_window_ignore_camera(int window);
+    [[nodiscard]] const optional<camera_ptr>& rect_window_camera(int window);
 
-        void set_rect_window_ignore_camera(int window, bool ignore_camera);
-    #endif
+    void set_rect_window_camera(int window, optional<camera_ptr> camera);
 
     void reload_rect_windows_boundaries();
 
@@ -151,9 +150,7 @@ namespace btn::display_manager
 
     void fill_green_swap_hblank_effect_states(const bool* states_ptr, uint16_t* dest_ptr);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        void update_camera();
-    #endif
+    void update_cameras();
 
     void update();
 

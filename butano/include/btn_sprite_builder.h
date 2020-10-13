@@ -2,9 +2,9 @@
 #define BTN_SPRITE_BUILDER_H
 
 #include "btn_optional.h"
+#include "btn_camera_ptr.h"
 #include "btn_sprite_item.h"
 #include "btn_fixed_point.h"
-#include "btn_config_camera.h"
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_shape_size.h"
 #include "btn_sprite_palette_ptr.h"
@@ -180,18 +180,27 @@ public:
         return *this;
     }
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera() const
-        {
-            return _ignore_camera;
-        }
+    [[nodiscard]] const optional<camera_ptr>& camera() const
+    {
+        return _camera;
+    }
 
-        sprite_builder& set_ignore_camera(bool ignore_camera)
-        {
-            _ignore_camera = ignore_camera;
-            return *this;
-        }
-    #endif
+    sprite_builder& set_camera(optional<camera_ptr> camera)
+    {
+        _camera = move(camera);
+        return *this;
+    }
+
+    sprite_builder& remove_camera()
+    {
+        _camera.reset();
+        return *this;
+    }
+
+    [[nodiscard]] optional<camera_ptr> release_camera()
+    {
+        return move(_camera);
+    }
 
     [[nodiscard]] sprite_ptr build() const;
 
@@ -249,24 +258,22 @@ public:
 
 private:
     optional<sprite_item> _item;
-    optional<sprite_tiles_ptr> _tiles;
-    optional<sprite_palette_ptr> _palette;
-    optional<sprite_affine_mat_ptr> _affine_mat;
     sprite_shape_size _shape_size;
     sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;
     int _graphics_index;
     int _bg_priority = 3;
     int _z_order = 0;
+    optional<sprite_tiles_ptr> _tiles;
+    optional<sprite_palette_ptr> _palette;
+    optional<sprite_affine_mat_ptr> _affine_mat;
+    optional<camera_ptr> _camera;
     bool _horizontal_flip = false;
     bool _vertical_flip = false;
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
     bool _window_enabled = false;
     bool _visible = true;
-    #if BTN_CFG_CAMERA_ENABLED
-        bool _ignore_camera = false;
-    #endif
     bool _remove_affine_mat_when_not_needed = true;
 };
 

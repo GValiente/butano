@@ -58,7 +58,7 @@ namespace
 
     void _shoot_bullet(btn::fixed bullet_rotation_angle, enemy_bullet_type bullet_type,
                        btn::fixed cannon_rotation_angle, const btn::fixed_point& hero_position, btn::fixed y,
-                       enemy_bullets& enemy_bullets)
+                       const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
     {
         btn::fixed_point base_position(0, y);
         btn::fixed_point cannon_position = _cannon_end_position(cannon_rotation_angle, y);
@@ -66,21 +66,25 @@ namespace
         btn::fixed_point distance = bullet_position - base_position;
         btn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
         btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), bullet_speed);
-        enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1));
+        enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1),
+                                 camera);
     }
 
-    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y)
+    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y,
+                                                                       const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::mini_explosion);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
+        builder.set_camera(camera);
         return btn::create_sprite_animate_action_once(
                     builder.release_build(), 6, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
-tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
+tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette,
+                     const btn::camera_ptr& camera) :
     boss(total_life, 300, _tank_rects, damage_palette),
     _base_palette(btn::sprite_items::tank_base.palette_item().create_palette()),
     _jelly_palette(btn::sprite_items::tank_jelly.palette_item().create_palette()),
@@ -95,12 +99,14 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
         btn::sprite_builder builder(btn::sprite_items::tank_extras);
         builder.set_position(-32, footprint_y + (index * 32));
         builder.set_z_order(constants::footprint_z_order);
+        builder.set_camera(camera);
         _footprint_sprites.push_back(builder.release_build());
 
         builder = btn::sprite_builder(btn::sprite_items::tank_extras);
         builder.set_position(32, footprint_y + (index * 32));
         builder.set_horizontal_flip(true);
         builder.set_z_order(constants::footprint_z_order);
+        builder.set_camera(camera);
         _footprint_sprites.push_back(builder.release_build());
     }
 
@@ -109,31 +115,37 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
         btn::sprite_builder builder(btn::sprite_items::tank_base, index);
         builder.set_x(-32);
         builder.set_z_order(constants::enemies_z_order);
+        builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
 
         builder = btn::sprite_builder(btn::sprite_items::tank_base, index + 1);
         builder.set_z_order(constants::enemies_z_order);
+        builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
 
         builder = btn::sprite_builder(btn::sprite_items::tank_base, index + 2);
         builder.set_x(32);
         builder.set_z_order(constants::enemies_z_order);
+        builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
     }
 
     btn::sprite_builder builder(btn::sprite_items::tank_jelly);
     builder.set_x(jelly_x);
     builder.set_z_order(constants::enemies_z_order);
+    builder.set_camera(camera);
     _jelly_sprite = builder.release_build();
 
     builder = btn::sprite_builder(btn::sprite_items::tank_cannon);
     builder.set_rotation_angle(180);
     builder.set_z_order(constants::enemies_z_order);
+    builder.set_camera(camera);
     _cannon_sprite = builder.release_build();
 
     builder = btn::sprite_builder(btn::sprite_items::tank_extras, 4);
     builder.set_z_order(constants::footprint_z_order);
     builder.set_visible(false);
+    builder.set_camera(camera);
     _arrow_sprite = builder.release_build();
 
     _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(84, 58));
@@ -148,7 +160,7 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
 }
 
 void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                              enemy_bullets& enemy_bullets)
+                              const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     switch(_state_index)
     {
@@ -255,11 +267,11 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_
 
     if(! hero_bomb.active())
     {
-        _update_bullets(hero_position, y, enemy_bullets);
+        _update_bullets(hero_position, y, camera, enemy_bullets);
     }
 }
 
-bool tank_boss::_update_dead(const btn::fixed_point& hero_position, background&)
+bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, background&)
 {
     bool done = false;
     _y += constants::background_speed;
@@ -298,7 +310,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, background&)
 
                 btn::fixed x = int(_random.get() % 48) - 24;
                 btn::fixed y = int(_random.get() % 48) - 24 + _y;
-                _mini_explosions.push_back(_create_mini_explosion(x, y));
+                _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
                 btn::sound_items::explosion_1.play();
             }
         }
@@ -309,7 +321,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, background&)
                 ++_state_index;
 
                 _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, btn::display::height() / 2),
-                                   6, constants::enemy_explosions_z_order, true);
+                                   6, constants::enemy_explosions_z_order, true, camera);
                 btn::sound_items::explosion_2.play();
             }
         }
@@ -345,7 +357,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, background&)
     return done;
 }
 
-void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette)
+void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
 {
     int current_life = life();
     _jelly_damage_counter = jelly_damage_frames;
@@ -360,8 +372,8 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_index = 0;
             _bullets_counter = 80;
 
-            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8));
-            _mini_explosions.push_back(_create_mini_explosion(24, _y + 24));
+            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
             _base_palette.set_fade(btn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 30, 0.2);
             _cannon_palette.set_fade(btn::colors::red, 0);
@@ -378,9 +390,9 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_counter = 80;
 
             _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
-                               constants::enemy_explosions_z_order, false);
-            _mini_explosions.push_back(_create_mini_explosion(24, _y + 8));
-            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 24));
+                               constants::enemy_explosions_z_order, false, camera);
+            _mini_explosions.push_back(_create_mini_explosion(24, _y + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 24, camera));
             _base_palette.set_fade(btn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 25, 0.3);
             _cannon_palette.set_fade(btn::colors::red, 0);
@@ -401,9 +413,9 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_counter = 80;
 
             _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
-                               constants::enemy_explosions_z_order, false);
-            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8));
-            _mini_explosions.push_back(_create_mini_explosion(24, _y + 24));
+                               constants::enemy_explosions_z_order, false, camera);
+            _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
             _base_palette.set_fade(btn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 20, 0.4);
             _cannon_palette.set_fade(btn::colors::red, 0);
@@ -670,7 +682,8 @@ void tank_boss::_update_rects(btn::fixed y)
     _tank_rects[1].set_y(y);
 }
 
-void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixed y, enemy_bullets& enemy_bullets)
+void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixed y, const btn::camera_ptr& camera,
+                                enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
 
@@ -689,15 +702,15 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
 
             case 0:
                 _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::SMALL, cannon_rotation_angle, hero_position,
-                              y, enemy_bullets);
+                              y, camera, enemy_bullets);
                 _bullets_index = 1;
                 break;
 
             case 1:
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 15), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 15), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _bullets_index = 0;
                 break;
 
@@ -710,11 +723,11 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
         case 1:
             _bullets_counter = 80;
             _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::BIG, cannon_rotation_angle, hero_position,
-                          y, enemy_bullets);
+                          y, camera, enemy_bullets);
             _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 30), enemy_bullet_type::SMALL,
-                          cannon_rotation_angle, hero_position, y, enemy_bullets);
+                          cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
             _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 30), enemy_bullet_type::SMALL,
-                          cannon_rotation_angle, hero_position, y, enemy_bullets);
+                          cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
             break;
 
         case 2:
@@ -724,7 +737,7 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
         case 3:
             _bullets_counter = 60;
             _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::SMALL, cannon_rotation_angle, hero_position,
-                          y, enemy_bullets);
+                          y, camera, enemy_bullets);
             break;
 
         case 4:
@@ -739,53 +752,53 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
 
             case 0:
                 _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::SMALL, cannon_rotation_angle, hero_position,
-                              y, enemy_bullets);
+                              y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 25), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 25), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 50), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 50), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 75), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 75), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 1:
                 _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::BIG, cannon_rotation_angle, hero_position,
-                              y, enemy_bullets);
+                              y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 30), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 30), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 2:
                 _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::SMALL, cannon_rotation_angle, hero_position,
-                              y, enemy_bullets);
+                              y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 25), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 25), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 50), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 50), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle - 75), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 _shoot_bullet(_fix_rotation_angle(cannon_rotation_angle + 75), enemy_bullet_type::SMALL,
-                              cannon_rotation_angle, hero_position, y, enemy_bullets);
+                              cannon_rotation_angle, hero_position, y, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 3:
                 _shoot_bullet(cannon_rotation_angle, enemy_bullet_type::HUGE, cannon_rotation_angle, hero_position,
-                              y, enemy_bullets);
+                              y, camera, enemy_bullets);
                 _bullets_index = 0;
                 break;
 

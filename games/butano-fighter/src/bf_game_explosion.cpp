@@ -7,7 +7,7 @@ namespace bf::game
 {
 
 explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point& position, int animation_frames,
-                     int z_order, bool double_size) :
+                     int z_order, bool double_size, const btn::camera_ptr& camera) :
     _sprite_item(sprite_item),
     _animation_frames(animation_frames),
     _animation_index(0),
@@ -29,6 +29,7 @@ explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point
 
     btn::sprite_builder builder(sprite_item);
     builder.set_z_order(z_order);
+    builder.set_camera(camera);
 
     if(double_size)
     {
@@ -41,8 +42,10 @@ explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point
     }
 
     _sprites.push_back(builder.release_build());
+
     builder = btn::sprite_builder(sprite_item, 1);
     builder.set_z_order(z_order);
+    builder.set_camera(camera);
 
     if(double_size)
     {
@@ -55,8 +58,10 @@ explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point
     }
 
     _sprites.push_back(builder.release_build());
+
     builder = btn::sprite_builder(sprite_item, 2);
     builder.set_z_order(z_order);
+    builder.set_camera(camera);
 
     if(double_size)
     {
@@ -69,8 +74,10 @@ explosion::explosion(const btn::sprite_item& sprite_item, const btn::fixed_point
     }
 
     _sprites.push_back(builder.release_build());
+
     builder = btn::sprite_builder(sprite_item, 3);
     builder.set_z_order(z_order);
+    builder.set_camera(camera);
 
     if(double_size)
     {

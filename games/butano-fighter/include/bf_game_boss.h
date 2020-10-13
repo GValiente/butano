@@ -9,6 +9,7 @@
 
 namespace btn
 {
+    class camera_ptr;
     class fixed_rect;
     class fixed_point;
 }
@@ -37,7 +38,7 @@ public:
     };
 
     static btn::unique_ptr<boss> create(type type, const btn::fixed_point& hero_position,
-                                        const btn::sprite_palette_ptr& damage_palette);
+                                        const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera);
 
     virtual ~boss() = default;
 
@@ -62,8 +63,8 @@ public:
         return _hero_should_look_down_impl(hero_position, hero_is_looking_down);
     }
 
-    void update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
-                scoreboard& scoreboard, background& background);
+    void update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
+                objects& objects, scoreboard& scoreboard, background& background);
 
 protected:
     boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
@@ -72,11 +73,12 @@ protected:
     [[nodiscard]] virtual btn::fixed_point _position() const = 0;
 
     virtual void _update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                               enemy_bullets& enemy_bullets) = 0;
+                               const btn::camera_ptr& camera, enemy_bullets& enemy_bullets) = 0;
 
-    [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position, background& background) = 0;
+    [[nodiscard]] virtual bool _update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                            background& background) = 0;
 
-    virtual void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette) = 0;
+    virtual void _show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera) = 0;
 
     virtual void _hide_damage_palette() = 0;
 

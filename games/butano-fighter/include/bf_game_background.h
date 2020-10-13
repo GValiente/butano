@@ -19,7 +19,7 @@ class background
 {
 
 public:
-    explicit background(const stage& stage);
+    background(const stage& stage, const btn::camera_ptr& camera);
 
     background(const background& other) = delete;
 

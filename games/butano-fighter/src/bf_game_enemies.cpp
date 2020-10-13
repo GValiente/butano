@@ -35,7 +35,7 @@ bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
     return _grid.check_hero_bullet(data);
 }
 
-void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
+void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera)
 {
     if(! _boss)
     {
@@ -51,7 +51,7 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
         while(it != end)
         {
             enemy& enemy = *it;
-            enemy.check_hero_bomb(bomb_center, bomb_squared_radius);
+            enemy.check_hero_bomb(bomb_center, bomb_squared_radius, camera);
             ++it;
 
             if(it != end)
@@ -72,23 +72,24 @@ bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool 
     return false;
 }
 
-void enemies::update(const hero_bomb& hero_bomb, const intro& intro, hero& hero, enemy_bullets& enemy_bullets,
-                     objects& objects, boss_intro& boss_intro, scoreboard& scoreboard, background& background)
+void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const btn::camera_ptr& camera, hero& hero,
+                     enemy_bullets& enemy_bullets, objects& objects, boss_intro& boss_intro, scoreboard& scoreboard,
+                     background& background)
 {
     if(_boss)
     {
-        _boss->update(hero_bomb, hero, enemy_bullets, objects, scoreboard, background);
+        _boss->update(hero_bomb, camera, hero, enemy_bullets, objects, scoreboard, background);
     }
     else
     {
         const btn::fixed_point& hero_position = hero.body_position();
 
         #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
-            bool grid_updated = _remove_enemies(hero_position, enemy_bullets);
+            bool grid_updated = _remove_enemies(hero_position, camera, enemy_bullets);
 
             if(hero.alive() && ! hero_bomb.active() && ! intro.active())
             {
-                grid_updated |= _add_enemies();
+                grid_updated |= _add_enemies(camera);
                 _enable_boss_intro(boss_intro);
             }
 
@@ -97,24 +98,25 @@ void enemies::update(const hero_bomb& hero_bomb, const intro& intro, hero& hero,
                 _grid.log();
             }
         #else
-            _remove_enemies(hero_position, enemy_bullets);
+            _remove_enemies(hero_position, camera, enemy_bullets);
 
             if(hero.alive() && ! hero_bomb.active() && ! intro.active())
             {
-                _add_enemies();
+                _add_enemies(camera);
                 _enable_boss_intro(boss_intro);
             }
         #endif
 
         if(boss_intro.done())
         {
-            _boss = boss::create(_boss_type, hero_position, _damage_palette);
+            _boss = boss::create(_boss_type, hero_position, _damage_palette, camera);
             _boss->play_music();
         }
     }
 }
 
-bool enemies::_remove_enemies(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+bool enemies::_remove_enemies(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                              enemy_bullets& enemy_bullets)
 {
     auto before_it = _enemies.before_begin();
     auto it = _enemies.begin();
@@ -124,7 +126,7 @@ bool enemies::_remove_enemies(const btn::fixed_point& hero_position, enemy_bulle
     while(it != end)
     {
         enemy& enemy = *it;
-        enemy.update(hero_position, enemy_bullets);
+        enemy.update(hero_position, camera, enemy_bullets);
         grid_updated |= _grid.update_enemy(enemy);
 
         if(enemy.done())
@@ -143,7 +145,7 @@ bool enemies::_remove_enemies(const btn::fixed_point& hero_position, enemy_bulle
     return grid_updated;
 }
 
-bool enemies::_add_enemies()
+bool enemies::_add_enemies(const btn::camera_ptr& camera)
 {
     int events_count = _events.size();
 
@@ -182,7 +184,7 @@ bool enemies::_add_enemies()
     ++_new_enemy_tag;
 
     const enemy_event& event = _events[_event_index];
-    _enemies.emplace_front(event, _damage_palette, new_enemy_tag);
+    _enemies.emplace_front(event, _damage_palette, new_enemy_tag, camera);
     _grid.add_enemy(_enemies.front());
     _event_counter = event.wait_frames;
     return true;

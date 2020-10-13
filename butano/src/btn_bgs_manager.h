@@ -4,12 +4,12 @@
 #include "btn_limits.h"
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
-#include "btn_config_camera.h"
 
 namespace btn
 {
 
 class size;
+class camera_ptr;
 class fixed_point;
 class regular_bg_builder;
 class regular_bg_map_ptr;
@@ -82,13 +82,11 @@ namespace bgs_manager
 
     void set_visible(id_type id, bool visible);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera(id_type id);
+    [[nodiscard]] const optional<camera_ptr>& camera(id_type id);
 
-        void set_ignore_camera(id_type id, bool ignore_camera);
+    void set_camera(id_type id, optional<camera_ptr> camera);
 
-        void update_camera();
-    #endif
+    void update_cameras();
 
     void update_map_tiles_cbb(int map_id, int tiles_cbb);
 

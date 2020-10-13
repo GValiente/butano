@@ -22,7 +22,8 @@ class enemy
 {
 
 public:
-    enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag);
+    enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag,
+          const btn::camera_ptr& camera);
 
     [[nodiscard]] btn::fixed_point top_left() const;
 
@@ -65,11 +66,11 @@ public:
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
-    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
+    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera);
 
     [[nodiscard]] bool done() const;
 
-    void update(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+    void update(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, enemy_bullets& enemy_bullets);
 
 private:
     const enemy_event* _event;
@@ -98,7 +99,8 @@ private:
 
     [[nodiscard]] bool _is_outside() const;
 
-    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage);
+    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage,
+                     const btn::camera_ptr& camera);
 
     void _show_rotate_death(const btn::fixed_point& enemy_position, btn::fixed attack_x);
 };

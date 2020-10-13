@@ -15,26 +15,28 @@ namespace
 {
     constexpr const btn::fixed blending_transparency = 0.4;
 
-    btn::regular_bg_ptr _create_bottom_bg(const stage& stage)
+    btn::regular_bg_ptr _create_bottom_bg(const stage& stage, const btn::camera_ptr& camera)
     {
         btn::regular_bg_builder builder(stage.background_bottom_bg_item);
         builder.set_mosaic_enabled(true);
+        builder.set_camera(camera);
         return builder.release_build();
     }
 
-    btn::regular_bg_ptr _create_top_bg(const stage& stage)
+    btn::regular_bg_ptr _create_top_bg(const stage& stage, const btn::camera_ptr& camera)
     {
         btn::regular_bg_builder builder(stage.background_top_bg_item);
         builder.set_priority(2);
         builder.set_blending_enabled(true);
         builder.set_mosaic_enabled(true);
+        builder.set_camera(camera);
         return builder.release_build();
     }
 }
 
-background::background(const stage& stage) :
-    _bottom_move_action(_create_bottom_bg(stage), stage.background_bottom_bg_delta_position),
-    _top_move_action(_create_top_bg(stage), stage.background_top_bg_delta_position),
+background::background(const stage& stage, const btn::camera_ptr& camera) :
+    _bottom_move_action(_create_bottom_bg(stage, camera), stage.background_bottom_bg_delta_position),
+    _top_move_action(_create_top_bg(stage, camera), stage.background_top_bg_delta_position),
     _hblank_effect(btn::regular_bg_position_hblank_effect_ptr::create_horizontal(
                        _bottom_move_action.bg(), _hblank_effect_deltas))
 {

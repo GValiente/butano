@@ -29,7 +29,7 @@ namespace
 }
 
 btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_position,
-                                   const btn::sprite_palette_ptr& damage_palette)
+                                   const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
 {
     btn::unique_ptr<boss> result;
 
@@ -37,19 +37,19 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
     {
 
     case type::TANK:
-        result.reset(new tank_boss(hero_position, damage_palette));
+        result.reset(new tank_boss(hero_position, damage_palette, camera));
         break;
 
     case type::GIGABAT:
-        result.reset(new gigabat_boss(hero_position, damage_palette));
+        result.reset(new gigabat_boss(hero_position, damage_palette, camera));
         break;
 
     case type::WIZARD:
-        result.reset(new wizard_boss(hero_position, damage_palette));
+        result.reset(new wizard_boss(hero_position, damage_palette, camera));
         break;
 
     case type::BUTANO:
-        result.reset(new butano_boss(damage_palette));
+        result.reset(new butano_boss(damage_palette, camera));
         break;
 
     default:
@@ -94,7 +94,7 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
                 if(! _damage_palette_counter)
                 {
                     _damage_palette_counter = damage_frames;
-                    _show_damage_palette(_damage_palette);
+                    _show_damage_palette(_damage_palette, data.camera_ref);
                 }
 
                 if(! _hero_bomb_active)
@@ -116,8 +116,8 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
     return false;
 }
 
-void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_bullets, objects& objects,
-                  scoreboard& scoreboard, background& background)
+void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
+                  objects& objects, scoreboard& scoreboard, background& background)
 {
     const btn::fixed_point& hero_position = hero.body_position();
 
@@ -130,7 +130,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             --_ignore_hero_bullet_counter;
         }
 
-        _update_alive(hero_position, hero_bomb, enemy_bullets);
+        _update_alive(hero_position, hero_bomb, camera, enemy_bullets);
     }
     else
     {
@@ -157,12 +157,12 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
 
                 if(_throw_bomb())
                 {
-                    objects.spawn_hero_bomb_without_sound(enemy_position);
+                    objects.spawn_hero_bomb_without_sound(enemy_position, camera);
                 }
 
                 if(hero.add_experience(_experience))
                 {
-                    objects.spawn_hero_weapon_without_sound(enemy_position, hero.level() + 1);
+                    objects.spawn_hero_weapon_without_sound(enemy_position, hero.level() + 1, camera);
                 }
 
                 btn::bg_palettes::set_transparent_color(_transparent_color);
@@ -173,7 +173,7 @@ void boss::update(const hero_bomb& hero_bomb, hero& hero, enemy_bullets& enemy_b
             }
         }
 
-        if(_update_dead(hero_position, background))
+        if(_update_dead(hero_position, camera, background))
         {
             if(_dead_counter)
             {

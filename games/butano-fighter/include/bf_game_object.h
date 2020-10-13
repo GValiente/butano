@@ -18,11 +18,13 @@ class object
 {
 
 public:
-    [[nodiscard]] static object create_hero_weapon(const btn::fixed_point& position, int hero_level,
-                                                   const btn::sprite_palette_ptr& flash_palette);
+    [[nodiscard]] static object create_hero_weapon(
+            const btn::fixed_point& position, int hero_level, const btn::sprite_palette_ptr& flash_palette,
+            const btn::camera_ptr& camera);
 
-    [[nodiscard]] static object create_hero_bomb(const btn::fixed_point& position,
-                                                 const btn::sprite_palette_ptr& flash_palette);
+    [[nodiscard]] static object create_hero_bomb(
+            const btn::fixed_point& position, const btn::sprite_palette_ptr& flash_palette,
+            const btn::camera_ptr& camera);
 
     [[nodiscard]] const btn::fixed_point& position() const
     {

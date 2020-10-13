@@ -1,6 +1,8 @@
 #include "btn_rect_window.h"
 
+#include "btn_optional.h"
 #include "btn_fixed_rect.h"
+#include "btn_camera_ptr.h"
 #include "btn_display_manager.h"
 
 namespace btn
@@ -127,16 +129,19 @@ void rect_window::set_boundaries(const fixed_rect& boundaries)
     display_manager::set_rect_window_bottom_right(id(), boundaries.position() + half_dimensions);
 }
 
-#if BTN_CFG_CAMERA_ENABLED
-    bool rect_window::ignore_camera() const
-    {
-        return display_manager::rect_window_ignore_camera(id());
-    }
+const optional<camera_ptr>& rect_window::camera() const
+{
+    return display_manager::rect_window_camera(id());
+}
 
-    void rect_window::set_ignore_camera(bool ignore_camera)
-    {
-        display_manager::set_rect_window_ignore_camera(id(), ignore_camera);
-    }
-#endif
+void rect_window::set_camera(optional<camera_ptr> camera)
+{
+    display_manager::set_rect_window_camera(id(), move(camera));
+}
+
+void rect_window::remove_camera()
+{
+    display_manager::set_rect_window_camera(id(), nullopt);
+}
 
 }

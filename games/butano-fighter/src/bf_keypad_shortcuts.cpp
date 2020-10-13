@@ -22,7 +22,6 @@ namespace
         builder.set_position(0, -60);
         builder.set_bg_priority(0);
         builder.set_visible(false);
-        builder.set_ignore_camera(true);
         return builder.release_build();
     }
 }

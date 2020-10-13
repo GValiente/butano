@@ -20,7 +20,7 @@ class hero_bullets
 public:
     hero_bullets();
 
-    void update(hero& hero, enemies& enemies, objects& objects);
+    void update(const btn::camera_ptr& camera, hero& hero, enemies& enemies, objects& objects);
 
 private:
     struct bullet_type
@@ -37,9 +37,9 @@ private:
     int _event_counter = 0;
     bool _check_odds = false;
 
-    void _remove_bullets(hero& hero, enemies& enemies, objects& objects);
+    void _remove_bullets(const btn::camera_ptr& camera, hero& hero, enemies& enemies, objects& objects);
 
-    void _add_bullets(hero& hero);
+    void _add_bullets(const btn::camera_ptr& camera, hero& hero);
 };
 
 }

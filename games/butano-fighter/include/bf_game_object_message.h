@@ -10,17 +10,18 @@ class object_message
 {
 
 public:
-    [[nodiscard]] static object_message create_level_up(const btn::fixed_point& position)
+    [[nodiscard]] static object_message create_level_up(const btn::fixed_point& position, const btn::camera_ptr& camera)
     {
-        return object_message(position, 0);
+        return object_message(position, 0, camera);
     }
 
-    [[nodiscard]] static object_message create_bomb(const btn::fixed_point& position)
+    [[nodiscard]] static object_message create_bomb(const btn::fixed_point& position, const btn::camera_ptr& camera)
     {
-        return object_message(position, 2);
+        return object_message(position, 2, camera);
     }
 
-    [[nodiscard]] static object_message create_experience(const btn::fixed_point& position, int experience);
+    [[nodiscard]] static object_message create_experience(const btn::fixed_point& position, int experience,
+                                                          const btn::camera_ptr& camera);
 
     [[nodiscard]] bool done() const
     {
@@ -33,7 +34,7 @@ private:
     btn::sprite_move_to_action _move_action;
     btn::sprite_cached_animate_action<2> _animate_action;
 
-    object_message(const btn::fixed_point& position, int graphics_index);
+    object_message(const btn::fixed_point& position, int graphics_index, const btn::camera_ptr& camera);
 };
 
 }

@@ -12,11 +12,13 @@ namespace
     constexpr const int wait_frames = 180;
     constexpr const int move_y = -wait_frames / 4;
 
-    [[nodiscard]] btn::sprite_move_to_action _create_move_action(const btn::fixed_point& position, int graphics_index)
+    [[nodiscard]] btn::sprite_move_to_action _create_move_action(const btn::fixed_point& position, int graphics_index,
+                                                                 const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::object_messages, graphics_index);
         builder.set_position(position);
         builder.set_z_order(constants::object_messages_z_order);
+        builder.set_camera(camera);
         return btn::sprite_move_to_action(builder.release_build(), wait_frames, position.x(), position.y() + move_y);
     }
 
@@ -116,9 +118,10 @@ namespace
     }
 }
 
-object_message object_message::create_experience(const btn::fixed_point& position, int experience)
+object_message object_message::create_experience(const btn::fixed_point& position, int experience,
+                                                 const btn::camera_ptr& camera)
 {
-    return object_message(position, _graphics_index(experience));
+    return object_message(position, _graphics_index(experience), camera);
 }
 
 void object_message::update()
@@ -127,8 +130,8 @@ void object_message::update()
     _animate_action.update();
 }
 
-object_message::object_message(const btn::fixed_point& position, int graphics_index) :
-    _move_action(_create_move_action(position, graphics_index)),
+object_message::object_message(const btn::fixed_point& position, int graphics_index, const btn::camera_ptr& camera) :
+    _move_action(_create_move_action(position, graphics_index, camera)),
     _animate_action(btn::create_sprite_cached_animate_action_forever(
                         _move_action.sprite(), 16, btn::sprite_items::object_messages.tiles_item(),
                         graphics_index, graphics_index + 1))

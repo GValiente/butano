@@ -5,12 +5,12 @@
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 #include "btn_optional_fwd.h"
-#include "btn_config_camera.h"
 
 namespace btn
 {
 
 class size;
+class camera_ptr;
 class fixed_point;
 class sprite_item;
 class sprite_builder;
@@ -208,11 +208,11 @@ public:
 
     void set_visible(bool visible);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera() const;
+    [[nodiscard]] const optional<camera_ptr>& camera() const;
 
-        void set_ignore_camera(bool ignore_camera);
-    #endif
+    void set_camera(optional<camera_ptr> camera);
+
+    void remove_camera();
 
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
 

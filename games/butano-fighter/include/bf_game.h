@@ -1,6 +1,7 @@
 #ifndef BF_GAME_H
 #define BF_GAME_H
 
+#include "btn_camera_ptr.h"
 #include "bf_scene.h"
 #include "bf_game_background.h"
 #include "bf_game_hero.h"
@@ -26,6 +27,7 @@ public:
     [[nodiscard]] btn::optional<scene_type> update() final;
 
 private:
+    btn::camera_ptr _camera;
     background _background;
     hero _hero;
     hero_bullets _hero_bullets;

@@ -25,24 +25,28 @@ namespace
     constexpr const int mouth_y = 10;
     constexpr const btn::fixed rotate_speed = 0.35;
 
-    [[nodiscard]] btn::sprite_animate_action<5> _create_mini_explosion(btn::fixed x, btn::fixed y)
+    [[nodiscard]] btn::sprite_animate_action<5> _create_mini_explosion(btn::fixed x, btn::fixed y,
+                                                                       const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::mini_explosion_2);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
+        builder.set_camera(camera);
         return btn::create_sprite_animate_action_once(
                     builder.release_build(), 6, btn::sprite_items::mini_explosion_2.tiles_item(), 0, 1, 2, 3, 4);
     }
 }
 
-gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette) :
+gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette,
+                           const btn::camera_ptr& camera) :
     boss(total_life, 400, _gigabat_rects, damage_palette),
     _gigabat_position(0, -125),
     _palette(btn::sprite_items::gigabat.palette_item().create_palette())
 {
     btn::sprite_builder builder(btn::sprite_items::gigabat);
     builder.set_z_order(constants::enemies_z_order);
+    builder.set_camera(camera);
     _sprites.push_back(builder.release_build());
 
     const btn::sprite_tiles_item& tiles_item = btn::sprite_items::gigabat.tiles_item();
@@ -51,6 +55,7 @@ gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::spr
 
     builder = btn::sprite_builder(btn::sprite_items::gigabat, 1);
     builder.set_z_order(constants::enemies_z_order);
+    builder.set_camera(camera);
     _sprites.push_back(builder.release_build());
     _animate_actions.push_back(
                 btn::create_sprite_animate_action_forever(_sprites.back(), 8, tiles_item, 1, 3, 1, 5, 7));
@@ -58,6 +63,7 @@ gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::spr
     builder = btn::sprite_builder(btn::sprite_items::gigabat_shadow);
     builder.set_blending_enabled(true);
     builder.set_z_order(constants::footprint_z_order);
+    builder.set_camera(camera);
     _shadow_sprite = builder.release_build();
 
     _gigabat_rects.emplace_back(btn::fixed_point(), btn::fixed_size(44, 45));
@@ -66,7 +72,7 @@ gigabat_boss::gigabat_boss(const btn::fixed_point& hero_position, const btn::spr
 }
 
 void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                                 enemy_bullets& enemy_bullets)
+                                 const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     btn::fixed x = _gigabat_position.x();
     btn::fixed y = _gigabat_position.y();
@@ -247,11 +253,11 @@ void gigabat_boss::_update_alive(const btn::fixed_point& hero_position, const he
 
     if(! hero_bomb.active())
     {
-        _update_bullets(hero_position, enemy_bullets);
+        _update_bullets(hero_position, camera, enemy_bullets);
     }
 }
 
-bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, background&)
+bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, background&)
 {
     bool hide_shadow = false;
     bool done = false;
@@ -304,7 +310,7 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, backgroun
 
                 btn::fixed x = int(_random.get() % 48) - 24 + _gigabat_position.x();
                 btn::fixed y = int(_random.get() % 48) - 24 + _gigabat_position.y();
-                _mini_explosions.push_back(_create_mini_explosion(x, y));
+                _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
                 btn::sound_items::explosion_1.play();
             }
         }
@@ -315,7 +321,7 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, backgroun
                 ++_state_index;
 
                 _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(), 6,
-                                   constants::enemy_explosions_z_order, true);
+                                   constants::enemy_explosions_z_order, true, camera);
                 btn::sound_items::explosion_2.play();
             }
         }
@@ -350,7 +356,7 @@ bool gigabat_boss::_update_dead(const btn::fixed_point& hero_position, backgroun
     return done;
 }
 
-void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette)
+void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
 {
     btn::fixed x = _gigabat_position.x();
     btn::fixed y = _gigabat_position.y();
@@ -372,9 +378,9 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
             _bullets_counter = 80;
             _animate_actions.clear();
 
-            _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8));
-            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24));
-            _mini_explosions.push_back(_create_mini_explosion(x, y - 16));
+            _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
             _palette.set_fade(btn::colors::red, 0);
             _palette_action.emplace(_palette, 25, 0.4);
             btn::sound_items::explosion_3.play();
@@ -398,17 +404,19 @@ void gigabat_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pa
 
             btn::sprite_builder builder(btn::sprite_items::gigabat, 14);
             builder.set_z_order(constants::enemies_z_order);
+            builder.set_camera(camera);
             _sprites.push_back(builder.release_build());
 
             builder = btn::sprite_builder(btn::sprite_items::gigabat, 15);
             builder.set_z_order(constants::enemies_z_order);
+            builder.set_camera(camera);
             _sprites.push_back(builder.release_build());
 
             _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(x, y), 6,
-                               constants::enemy_explosions_z_order, false);
-            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 8));
-            _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 24));
-            _mini_explosions.push_back(_create_mini_explosion(x, y - 16));
+                               constants::enemy_explosions_z_order, false, camera);
+            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 24, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
             _palette.set_fade(btn::colors::red, 0);
             _palette_action.emplace(_palette, 20, 0.5);
             btn::sound_items::explosion_1.play();
@@ -462,13 +470,15 @@ bool gigabat_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posi
 }
 
 void gigabat_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
-                                 const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+                                 const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                 enemy_bullets& enemy_bullets) const
 {
     btn::fixed_point mouth_position = _gigabat_position + btn::fixed_point(0, mouth_y);
-    enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1));
+    enemy_bullets.add_bullet(hero_position, mouth_position, enemy_bullet_event(bullet_type, delta_position, 1), camera);
 }
 
-void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                               enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
@@ -484,7 +494,7 @@ void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_posi
         }
 
         btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), bullet_speed);
-        _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
+        _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
     }
     else
     {
@@ -497,11 +507,12 @@ void gigabat_boss::_shoot_target_random_bullet(const btn::fixed_point& hero_posi
         }
 
         btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
-        _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
+        _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
     }
 }
 
-void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                             enemy_bullets& enemy_bullets)
 {
     if(btn::abs(_gigabat_position.x() - hero_position.x()) < 48 &&
             btn::abs(_gigabat_position.y() - hero_position.y()) < 48)
@@ -520,7 +531,7 @@ void gigabat_boss::_shoot_free_random_bullet(const btn::fixed_point& hero_positi
     }
 
     btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
-    _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
+    _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
 }
 
 void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool hide_shadow)
@@ -583,7 +594,8 @@ void gigabat_boss::_update_rects()
     _gigabat_rects[0].set_position(_gigabat_position);
 }
 
-void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                   enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
 
@@ -603,25 +615,32 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
             {
 
             case 0:
-                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, camera,
+                              enemy_bullets);
                 _bullets_index = 1;
                 break;
 
             case 1:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 _bullets_index = 2;
                 break;
 
             case 2:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 _bullets_index = 3;
                 break;
 
             case 3:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 _bullets_index = 0;
                 break;
 
@@ -640,7 +659,7 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
             case 0:
                 if(_movement_counter >= 80)
                 {
-                    _shoot_target_random_bullet(hero_position, enemy_bullets);
+                    _shoot_target_random_bullet(hero_position, camera, enemy_bullets);
                 }
                 break;
 
@@ -659,7 +678,7 @@ void gigabat_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_
 
         case 4:
             _bullets_counter = 20;
-            _shoot_free_random_bullet(hero_position, enemy_bullets);
+            _shoot_free_random_bullet(hero_position, camera, enemy_bullets);
             break;
 
         default:

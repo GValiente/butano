@@ -4,7 +4,6 @@
 #include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_sprite_font.h"
-#include "btn_config_camera.h"
 #include "btn_unordered_map.h"
 #include "btn_config_sprite_text.h"
 #include "btn_horizontal_alignment_type.h"
@@ -59,18 +58,6 @@ public:
 
     void set_z_order(int z_order);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera() const
-        {
-            return _ignore_camera;
-        }
-
-        void set_ignore_camera(bool ignore_camera)
-        {
-            _ignore_camera = ignore_camera;
-        }
-    #endif
-
     [[nodiscard]] bool one_sprite_per_character() const
     {
         return _one_sprite_per_character;
@@ -121,9 +108,6 @@ private:
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 3;
     int _z_order = 0;
-    #if BTN_CFG_CAMERA_ENABLED
-        bool _ignore_camera = true;
-    #endif
     bool _one_sprite_per_character = false;
 };
 

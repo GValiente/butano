@@ -17,7 +17,7 @@ objects::objects(const btn::sprite_palette_ptr& flash_palette) :
 {
 }
 
-bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
+bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect, const btn::camera_ptr& camera)
 {
     if(_hero_weapon)
     {
@@ -28,7 +28,7 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
                 _messages.pop_front();
             }
 
-            _messages.push_back(object_message::create_level_up(_hero_weapon->position()));
+            _messages.push_back(object_message::create_level_up(_hero_weapon->position(), camera));
             _hero_weapon.reset();
             btn::sound_items::reload.play();
             return true;
@@ -39,7 +39,7 @@ bool objects::check_hero_weapon(const btn::fixed_rect& hero_rect)
 }
 
 objects::bomb_check_result objects::check_hero_bomb(const btn::fixed_rect& hero_rect, bool max_hero_bombs,
-                                                    int hero_level)
+                                                    int hero_level, const btn::camera_ptr& camera)
 {
     bomb_check_result result;
 
@@ -56,13 +56,13 @@ objects::bomb_check_result objects::check_hero_bomb(const btn::fixed_rect& hero_
             {
                 int experience = _hero_bomb->experience(hero_level);
                 result.experience_to_add = experience;
-                _messages.push_back(object_message::create_experience(_hero_bomb->position(), experience));
+                _messages.push_back(object_message::create_experience(_hero_bomb->position(), experience, camera));
                 btn::sound_items::gold_3.play();
             }
             else
             {
                 result.add_bomb = true;
-                _messages.push_back(object_message::create_bomb(_hero_bomb->position()));
+                _messages.push_back(object_message::create_bomb(_hero_bomb->position(), camera));
                 btn::sound_items::reload.play();
             }
 
@@ -73,7 +73,7 @@ objects::bomb_check_result objects::check_hero_bomb(const btn::fixed_rect& hero_
     return result;
 }
 
-int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
+int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level, const btn::camera_ptr& camera)
 {
     auto before_it = _gems.before_begin();
     auto it = _gems.begin();
@@ -93,7 +93,7 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
                 _messages.pop_front();
             }
 
-            _messages.push_back(object_message::create_experience(gem.position(), experience));
+            _messages.push_back(object_message::create_experience(gem.position(), experience, camera));
             result += experience;
             it = _gems.erase_after(before_it);
         }
@@ -112,45 +112,47 @@ int objects::check_gem(const btn::fixed_rect& hero_rect, int hero_level)
     return result;
 }
 
-void objects::spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level)
+void objects::spawn_hero_weapon_with_sound(const btn::fixed_point& position, int hero_level,
+                                           const btn::camera_ptr& camera)
 {
     if(! _hero_weapon)
     {
-        spawn_hero_weapon_without_sound(position, hero_level);
+        spawn_hero_weapon_without_sound(position, hero_level, camera);
         btn::sound_items::power_up_1.play();
     }
 }
 
-void objects::spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level)
+void objects::spawn_hero_weapon_without_sound(const btn::fixed_point& position, int hero_level,
+                                              const btn::camera_ptr& camera)
 {
     if(! _hero_weapon)
     {
-        _hero_weapon = object::create_hero_weapon(position, hero_level, _flash_palette);
+        _hero_weapon = object::create_hero_weapon(position, hero_level, _flash_palette, camera);
     }
 }
 
-void objects::spawn_hero_bomb_with_sound(const btn::fixed_point& position)
+void objects::spawn_hero_bomb_with_sound(const btn::fixed_point& position, const btn::camera_ptr& camera)
 {
     if(! _hero_bomb)
     {
-        spawn_hero_bomb_without_sound(position);
+        spawn_hero_bomb_without_sound(position, camera);
         btn::sound_items::cure.play();
     }
 }
 
-void objects::spawn_hero_bomb_without_sound(const btn::fixed_point& position)
+void objects::spawn_hero_bomb_without_sound(const btn::fixed_point& position, const btn::camera_ptr& camera)
 {
     if(! _hero_bomb)
     {
-        _hero_bomb = object::create_hero_bomb(position, _flash_palette);
+        _hero_bomb = object::create_hero_bomb(position, _flash_palette, camera);
     }
 }
 
-void objects::spawn_gem(const btn::fixed_point& position)
+void objects::spawn_gem(const btn::fixed_point& position, const btn::camera_ptr& camera)
 {
     if(! _gems.full())
     {
-        _gems.emplace_front(position, _gem_tiles, _gem_palette);
+        _gems.emplace_front(position, _gem_tiles, _gem_palette, camera);
     }
 }
 

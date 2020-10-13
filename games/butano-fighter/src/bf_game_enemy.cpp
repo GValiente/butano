@@ -17,7 +17,7 @@ namespace
 {
     constexpr const int damage_frames = 12;
 
-    [[nodiscard]] btn::sprite_ptr _create_sprite(const enemy_event& event)
+    [[nodiscard]] btn::sprite_ptr _create_sprite(const enemy_event& event, const btn::camera_ptr& camera)
     {
         const enemy_data& enemy_data = event.enemy;
         int animation_index = event.move_events[0].animation_index;
@@ -25,6 +25,7 @@ namespace
         builder.set_position(event.start_position);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_horizontal_flip(event.move_events[0].horizontal_flip);
+        builder.set_camera(camera);
         return builder.release_build();
     }
 
@@ -36,19 +37,22 @@ namespace
                     data.graphics_indexes_groups[animation_index]);
     }
 
-    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(const btn::fixed_point& position)
+    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(const btn::fixed_point& position,
+                                                                       const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::mini_explosion);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_position(position);
+        builder.set_camera(camera);
         return btn::create_sprite_animate_action_once(
                     builder.release_build(), 4, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
-enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag) :
+enemy::enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag,
+             const btn::camera_ptr& camera) :
     _event(&event),
-    _sprite(_create_sprite(event)),
+    _sprite(_create_sprite(event, camera)),
     _move_action(_sprite, event.move_events[0].delta_position),
     _animate_action(_create_animate_action(_sprite, event.enemy, event.move_events[0].animation_index)),
     _sprite_palette(_sprite.palette()),
@@ -99,13 +103,14 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
 
         if(enemy_rect.intersects(bullet_rect))
         {
-            _add_damage(enemy_position, bullet_rect.x(), data.bullet_damage);
+            const btn::camera_ptr& camera = data.camera_ref;
+            _add_damage(enemy_position, bullet_rect.x(), data.bullet_damage, camera);
 
             if(! _life)
             {
                 if(data.hero_ref.add_experience(enemy_data.experience))
                 {
-                    data.objects_ref.spawn_hero_weapon_with_sound(enemy_position, data.hero_ref.level() + 1);
+                    data.objects_ref.spawn_hero_weapon_with_sound(enemy_position, data.hero_ref.level() + 1, camera);
                 }
 
                 switch(_event->drop)
@@ -115,11 +120,11 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
                     break;
 
                 case enemy_drop_type::GEM:
-                    data.objects_ref.spawn_gem(enemy_position);
+                    data.objects_ref.spawn_gem(enemy_position, camera);
                     break;
 
                 case enemy_drop_type::HERO_BOMB:
-                    data.objects_ref.spawn_hero_bomb_with_sound(enemy_position);
+                    data.objects_ref.spawn_hero_bomb_with_sound(enemy_position, camera);
                     break;
 
                 default:
@@ -135,7 +140,7 @@ bool enemy::check_hero_bullet(const check_hero_bullet_data& data)
     return false;
 }
 
-void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius)
+void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera)
 {
     if(_life)
     {
@@ -146,7 +151,7 @@ void enemy::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radi
 
         if(squared_distance < bomb_squared_radius)
         {
-            _add_damage(enemy_position, bomb_center.x(), _life);
+            _add_damage(enemy_position, bomb_center.x(), _life, camera);
         }
     }
 }
@@ -156,7 +161,7 @@ bool enemy::done() const
     return _move_event_index == _event->move_events.size();
 }
 
-void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void enemy::update(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     if(_life)
     {
@@ -208,7 +213,7 @@ void enemy::update(const btn::fixed_point& hero_position, enemy_bullets& enemy_b
             if(! _bullet_event_counter)
             {
                 const btn::span<const enemy_bullet_event>& bullet_events = _event->bullet_events;
-                enemy_bullets.add_bullet(hero_position, _sprite.position(), bullet_events[_bullet_event_index]);
+                enemy_bullets.add_bullet(hero_position, _sprite.position(), bullet_events[_bullet_event_index], camera);
                 ++_bullet_event_index;
 
                 if(_bullet_event_index < bullet_events.size())
@@ -297,7 +302,8 @@ bool enemy::_is_outside() const
             position.y() < -constants::view_height || position.y() > constants::view_height;
 }
 
-void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage)
+void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage,
+                        const btn::camera_ptr& camera)
 {
     int life = btn::max(_life - damage, 0);
     _life = int16_t(life);
@@ -345,7 +351,7 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
         case enemy_data::death_anim_type::MINI_EXPLOSION:
             _show_rotate_death(enemy_position, attack_x);
             _move_event_counter = 30;
-            _mini_explosion = _create_mini_explosion(_sprite.position());
+            _mini_explosion = _create_mini_explosion(_sprite.position(), camera);
             _mini_explosion->update();
             break;
 
@@ -354,7 +360,7 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
             _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed / 4);
             _move_action.update();
             _explosion.emplace(btn::sprite_items::enemy_explosion, _sprite.position(), 6,
-                               constants::enemy_explosions_z_order, false);
+                               constants::enemy_explosions_z_order, false, camera);
             _explosion->update();
             break;
 

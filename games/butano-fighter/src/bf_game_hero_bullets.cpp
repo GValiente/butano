@@ -25,7 +25,7 @@ hero_bullets::hero_bullets() :
 {
 }
 
-void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
+void hero_bullets::update(const btn::camera_ptr& camera, hero& hero, enemies& enemies, objects& objects)
 {
     if(hero.alive())
     {
@@ -43,7 +43,7 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
         _b_held_counter = 0;
     }
 
-    _remove_bullets(hero, enemies, objects);
+    _remove_bullets(camera, hero, enemies, objects);
     hero.set_shooting(_b_held_counter);
 
     if(_event_counter || _b_held_counter)
@@ -53,7 +53,7 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
 
     if(_b_held_counter)
     {
-        _add_bullets(hero);
+        _add_bullets(camera, hero);
     }
 
     btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
@@ -64,7 +64,7 @@ void hero_bullets::update(hero& hero, enemies& enemies, objects& objects)
     }
 }
 
-void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& objects)
+void hero_bullets::_remove_bullets(const btn::camera_ptr& camera, hero& hero, enemies& enemies, objects& objects)
 {
     btn::iforward_list<bullet_type>* check_and_update_bullets;
     btn::iforward_list<bullet_type>* update_bullets;
@@ -88,17 +88,20 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
 
     if(hero.alive())
     {
+        check_hero_bullet_data check_data{ btn::fixed_rect(), 0, camera, hero, objects };
+
         while(it != end)
         {
             bullet_type& bullet = *it;
             btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
             const btn::fixed_point& position = sprite_move_action.sprite().position();
             const hero_bullet_level& level_data = *bullet.level_data;
+            check_data.bullet_rect = btn::fixed_rect(position, level_data.dimensions);
+            check_data.bullet_damage = level_data.damage;
 
             if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                     position.y() < -constants::view_height || position.y() > constants::view_height ||
-                    enemies.check_hero_bullet({ btn::fixed_rect(position, level_data.dimensions),
-                                              level_data.damage, hero, objects }))
+                    enemies.check_hero_bullet(check_data))
             {
                 it = check_and_update_bullets->erase_after(before_it);
             }
@@ -138,7 +141,7 @@ void hero_bullets::_remove_bullets(hero& hero, enemies& enemies, objects& object
     }
 }
 
-void hero_bullets::_add_bullets(hero& hero)
+void hero_bullets::_add_bullets(const btn::camera_ptr& camera, hero& hero)
 {
     btn::span<const hero_bullet_level> levels_data = hero_bullet_level::all_levels();
     bool looking_down = hero.looking_down();
@@ -161,6 +164,7 @@ void hero_bullets::_add_bullets(hero& hero)
             builder.set_horizontal_flip(looking_down);
             builder.set_vertical_flip(looking_down);
             builder.set_z_order(constants::hero_bullets_z_order);
+            builder.set_camera(camera);
             bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), bullet_delta), &level_data });
             hero.show_shoot(level_data.color);
 

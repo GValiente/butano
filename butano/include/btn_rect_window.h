@@ -2,13 +2,14 @@
 #define BTN_RECT_WINDOW_H
 
 #include "btn_fixed_fwd.h"
+#include "btn_optional_fwd.h"
 #include "btn_inside_window.h"
-#include "btn_config_camera.h"
 
 namespace btn
 {
 
 class fixed_rect;
+class camera_ptr;
 class fixed_point;
 
 class rect_window : public inside_window
@@ -61,11 +62,11 @@ public:
 
     void set_boundaries(const fixed_rect& boundaries);
 
-    #if BTN_CFG_CAMERA_ENABLED
-        [[nodiscard]] bool ignore_camera() const;
+    [[nodiscard]] const optional<camera_ptr>& camera() const;
 
-        void set_ignore_camera(bool ignore_camera);
-    #endif
+    void set_camera(optional<camera_ptr> camera);
+
+    void remove_camera();
 
 private:
     friend class window;

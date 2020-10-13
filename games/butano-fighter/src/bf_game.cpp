@@ -9,8 +9,9 @@ namespace bf::game
 {
 
 game::game(status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background) :
-    _background(status.current_stage()),
-    _hero(status),
+    _camera(btn::camera_ptr::create(0, 0)),
+    _background(status.current_stage(), _camera),
+    _hero(_camera, status),
     _intro(status.current_stage(), text_generator),
     _enemies(status.current_stage(), btn::sprite_items::flash_palette.palette_item().create_palette()),
     _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),
@@ -29,7 +30,7 @@ btn::optional<scene_type> game::update()
 
     if(! _pause.active())
     {
-        result = _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background, _butano_background);
+        result = _hero.update(_hero_bomb, _enemies, _enemy_bullets, _objects, _background, _butano_background, _camera);
 
         if(result)
         {
@@ -42,11 +43,11 @@ btn::optional<scene_type> game::update()
         }
         else
         {
-            _hero_bullets.update(_hero, _enemies, _objects);
-            _hero_bomb.update(_intro, _boss_intro, _hero, _enemies, _enemy_bullets, _background);
+            _hero_bullets.update(_camera, _hero, _enemies, _objects);
+            _hero_bomb.update(_intro, _boss_intro, _camera, _hero, _enemies, _enemy_bullets, _background);
             _background.update();
             _intro.update(_butano_background);
-            _enemies.update(_hero_bomb, _intro, _hero, _enemy_bullets, _objects, _boss_intro, _scoreboard,
+            _enemies.update(_hero_bomb, _intro, _camera, _hero, _enemy_bullets, _objects, _boss_intro, _scoreboard,
                             _background);
             _enemy_bullets.update();
             _objects.update();

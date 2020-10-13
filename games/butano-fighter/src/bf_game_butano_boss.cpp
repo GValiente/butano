@@ -27,18 +27,20 @@ namespace
     constexpr const btn::fixed scale_margin = 0.1;
     constexpr const btn::fixed x_limit = (btn::display::width() + 256) / 2;
 
-    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y)
+    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y,
+                                                                       const btn::camera_ptr& camera)
     {
         btn::sprite_builder builder(btn::sprite_items::mini_explosion);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
+        builder.set_camera(camera);
         return btn::create_sprite_animate_action_once(
                     builder.release_build(), 4, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
-butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette) :
+butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera) :
     boss(total_life, 1000, _butano_rects, damage_palette),
     _butano_position(0, -100)
 {
@@ -46,6 +48,11 @@ butano_boss::butano_boss(const btn::sprite_palette_ptr& damage_palette) :
     _sprites.push_back(btn::sprite_items::butano_big_sprite.create_sprite(0, 0, 1));
     _sprites.push_back(btn::sprite_items::butano_fire.create_sprite(0, 0));
     _sprites[2].set_z_order(constants::footprint_z_order);
+
+    for(btn::sprite_ptr& sprite : _sprites)
+    {
+        sprite.set_camera(camera);
+    }
 
     btn::color fade_color(10, 1, 8);
     btn::sprite_palette_ptr body_palette = _sprites[0].palette();
@@ -63,7 +70,7 @@ void butano_boss::play_music() const
 }
 
 void butano_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                                enemy_bullets& enemy_bullets)
+                                const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     btn::fixed x = _butano_position.x();
     btn::fixed y = _butano_position.y();
@@ -316,11 +323,11 @@ void butano_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
     if(! hero_bomb.active())
     {
-        _update_bullets(hero_position, enemy_bullets);
+        _update_bullets(hero_position, camera, enemy_bullets);
     }
 }
 
-bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
+bool butano_boss::_update_dead(const btn::fixed_point&, const btn::camera_ptr& camera, background& background)
 {
     bool done = false;
 
@@ -366,7 +373,8 @@ bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
                 btn::fixed scale = _scale;
                 btn::fixed x = (int(_random.get() % 96) - 48) * scale;
                 btn::fixed y = (int(_random.get() % 48) - 24) * scale;
-                _mini_explosions.push_back(_create_mini_explosion(_butano_position.x() + x, _butano_position.y() + y));
+                _mini_explosions.push_back(
+                            _create_mini_explosion(_butano_position.x() + x, _butano_position.y() + y, camera));
 
                 btn::sprite_ptr mini_explosion_sprite = _mini_explosions.back().sprite();
                 mini_explosion_sprite.set_scale(scale);
@@ -379,6 +387,7 @@ bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
 
             btn::rect_window external_window = btn::rect_window::external();
             external_window.set_boundaries(0, 0, 0, 0);
+            external_window.set_camera(camera);
             _move_window_top_action.emplace(external_window, -4);
             _move_window_bottom_action.emplace(external_window, 4);
 
@@ -411,6 +420,7 @@ bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
             {
                 btn::rect_window external_window = btn::rect_window::external();
                 external_window.set_boundaries(0, 0, 0, 0);
+                external_window.remove_camera();
                 _move_window_top_action.reset();
                 _move_window_bottom_action.reset();
 
@@ -455,7 +465,7 @@ bool butano_boss::_update_dead(const btn::fixed_point&, background& background)
     return done;
 }
 
-void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&)
+void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&, const btn::camera_ptr& camera)
 {
     btn::fixed x = _butano_position.x();
     btn::fixed y = _butano_position.y();
@@ -482,9 +492,9 @@ void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&)
             _bullets_index = 0;
             _bullets_counter = 120;
 
-            _mini_explosions.push_back(_create_mini_explosion(x - 16, y + 32 + 8));
-            _mini_explosions.push_back(_create_mini_explosion(x + 16, y + 32 + 16));
-            _mini_explosions.push_back(_create_mini_explosion(x, y + 32 - 8));
+            _mini_explosions.push_back(_create_mini_explosion(x - 16, y + 32 + 8, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x + 16, y + 32 + 16, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x, y + 32 - 8, camera));
             btn::sound_items::explosion_3.play();
         }
         break;
@@ -501,13 +511,13 @@ void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&)
             _delta_scale = (0.4 - _scale) / _movement_counter;
             _random = btn::random();
 
-            _mini_explosions.push_back(_create_mini_explosion(x, y));
-            _mini_explosions.push_back(_create_mini_explosion(x - 24, y - 16));
-            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 16));
-            _mini_explosions.push_back(_create_mini_explosion(x - 16, y + 48));
-            _mini_explosions.push_back(_create_mini_explosion(x + 16, y - 48));
-            _mini_explosions.push_back(_create_mini_explosion(x - 8, y + 32));
-            _mini_explosions.push_back(_create_mini_explosion(x + 8, y - 32));
+            _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x - 24, y - 16, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 16, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x - 16, y + 48, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x + 16, y - 48, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x - 8, y + 32, camera));
+            _mini_explosions.push_back(_create_mini_explosion(x + 8, y - 32, camera));
             btn::sound_items::explosion_1.play();
             btn::sound_items::explosion_3.play();
         }
@@ -588,26 +598,28 @@ btn::fixed_point butano_boss::_top_position() const
 }
 
 void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, btn::fixed delta_speed,
-                                const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+                                const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                enemy_bullets& enemy_bullets) const
 {
-    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_speed, 1));
+    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_speed, 1), camera);
 }
 
 void butano_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
-                                const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets) const
+                                const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                enemy_bullets& enemy_bullets) const
 {
-    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_position, 1));
+    enemy_bullets.add_bullet(hero_position, _top_position(), enemy_bullet_event(bullet_type, delta_position, 1), camera);
 }
 
 void butano_boss::_shoot_random_bullet(bool down_only, const btn::fixed_point& hero_position,
-                                       enemy_bullets& enemy_bullets)
+                                       const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
     btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
 
     if(_random.get() % 8 == 0)
     {
-        _shoot_bullet(bullet_type, bullet_speed, hero_position, enemy_bullets);
+        _shoot_bullet(bullet_type, bullet_speed, hero_position, camera, enemy_bullets);
     }
     else
     {
@@ -622,7 +634,7 @@ void butano_boss::_shoot_random_bullet(bool down_only, const btn::fixed_point& h
         }
 
         btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
-        _shoot_bullet(bullet_type, delta_position, hero_position, enemy_bullets);
+        _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
     }
 }
 
@@ -755,7 +767,8 @@ void butano_boss::_update_rects()
     }
 }
 
-void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets)
+void butano_boss::_update_bullets(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                                  enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
 
@@ -782,48 +795,56 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
             {
 
             case 0:
-                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, camera,
+                              enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 1:
-                _shoot_bullet(enemy_bullet_type::SMALL, 1, hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, 1, hero_position, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 2:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 3:
-                _shoot_bullet(enemy_bullet_type::BIG, 0.9, hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::BIG, 0.9, hero_position, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 4:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 5:
-                _shoot_bullet(enemy_bullet_type::HUGE, 0.8, hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::HUGE, 0.8, hero_position, camera, enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 6:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                              enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, camera,
+                              enemy_bullets);
                 ++_bullets_index;
                 break;
 
             case 7:
-                _shoot_bullet(enemy_bullet_type::HUGE, 0.8, hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::BIG, 0.8, hero_position, enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, 0.8, hero_position, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::HUGE, 0.8, hero_position, camera, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::BIG, 0.8, hero_position, camera, enemy_bullets);
+                _shoot_bullet(enemy_bullet_type::SMALL, 0.8, hero_position, camera, enemy_bullets);
                 _bullets_index = 0;
                 break;
 
@@ -842,7 +863,7 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
             case 3:
             case 4:
                 _bullets_counter = 12;
-                _shoot_random_bullet(false, hero_position, enemy_bullets);
+                _shoot_random_bullet(false, hero_position, camera, enemy_bullets);
                 break;
 
             case 2:
@@ -861,7 +882,7 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, enemy_b
 
         case 6:
             _bullets_counter = 16;
-            _shoot_random_bullet(true, hero_position, enemy_bullets);
+            _shoot_random_bullet(true, hero_position, camera, enemy_bullets);
             break;
 
         default:

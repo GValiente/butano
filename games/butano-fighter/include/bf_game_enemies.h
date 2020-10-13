@@ -24,7 +24,7 @@ public:
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
-    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius);
+    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera);
 
     [[nodiscard]] bool boss_dying() const
     {
@@ -38,8 +38,9 @@ public:
 
     [[nodiscard]] bool hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const;
 
-    void update(const hero_bomb& hero_bomb, const intro& intro, hero& hero, enemy_bullets& enemy_bullets,
-                objects& objects, boss_intro& boss_intro, scoreboard& scoreboard, background& background);
+    void update(const hero_bomb& hero_bomb, const intro& intro, const btn::camera_ptr& camera, hero& hero,
+                enemy_bullets& enemy_bullets, objects& objects, boss_intro& boss_intro, scoreboard& scoreboard,
+                background& background);
 
 private:
     const btn::span<const enemy_event>& _events;
@@ -53,9 +54,10 @@ private:
     int _new_enemy_tag = 0;
     bool _hero_bomb_check_odds = false;
 
-    bool _remove_enemies(const btn::fixed_point& hero_position, enemy_bullets& enemy_bullets);
+    bool _remove_enemies(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+                         enemy_bullets& enemy_bullets);
 
-    bool _add_enemies();
+    bool _add_enemies(const btn::camera_ptr& camera);
 
     void _enable_boss_intro(boss_intro& boss_intro);
 };

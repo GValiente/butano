@@ -26,10 +26,10 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
 
 sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                                sprite_palette_ptr palette) :
-    _tiles(move(tiles)),
-    _palette(move(palette)),
     _shape_size(shape_size),
-    _graphics_index(0)
+    _graphics_index(0),
+    _tiles(move(tiles)),
+    _palette(move(palette))
 {
     BTN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp_mode()),
                "Invalid tiles ptr size: ", _tiles->tiles_count(), " - ",

@@ -40,8 +40,8 @@ public:
         return _status == status_type::CLOSE;
     }
 
-    void update(const intro& intro, const boss_intro& boss_intro, hero& hero, enemies& enemies,
-                enemy_bullets& enemy_bullets, background& background);
+    void update(const intro& intro, const boss_intro& boss_intro, const btn::camera_ptr& camera, hero& hero,
+                enemies& enemies, enemy_bullets& enemy_bullets, background& background);
 
 private:
     enum class status_type

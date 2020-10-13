@@ -24,12 +24,12 @@ namespace
     {
         btn::vector<btn::sprite_ptr, 2> result;
         int x = -64 + 8;
+
         btn::sprite_builder builder(stage.intro_sprite_item);
         builder.set_x(x);
         builder.set_scale_x(2);
         builder.set_scale_y(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
-        builder.set_ignore_camera(true);
         builder.set_visible(false);
         result.push_back(builder.build());
 
@@ -38,7 +38,6 @@ namespace
         builder.set_scale_x(2);
         builder.set_scale_y(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
-        builder.set_ignore_camera(true);
         builder.set_visible(false);
         result.push_back(builder.build());
 
@@ -140,7 +139,6 @@ void intro::update(const butano_background& butano_background)
 
             btn::rect_window internal_window = btn::rect_window::internal();
             internal_window.set_boundaries(0, -128, 0, 128);
-            internal_window.set_ignore_camera(true);
             _window_move_top_action.emplace(internal_window, scale_frames, -64);
             _window_move_bottom_action.emplace(internal_window, scale_frames, 64);
 
@@ -322,7 +320,6 @@ void intro::update(const butano_background& butano_background)
 
             btn::rect_window internal_window = btn::rect_window::internal();
             internal_window.set_boundaries(0, 0, 0, 0);
-            internal_window.set_ignore_camera(false);
 
             _state = state::DONE;
         }

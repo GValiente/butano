@@ -24,7 +24,6 @@ namespace
         builder.set_x(x);
         builder.set_affine_mat(affine_mat);
         builder.set_bg_priority(2);
-        builder.set_ignore_camera(true);
         return builder.release_build();
     }
 

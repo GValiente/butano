@@ -1,10 +1,10 @@
 #ifndef BTN_SPRITES_MANAGER_ITEM_H
 #define BTN_SPRITES_MANAGER_ITEM_H
 
-#include "btn_camera.h"
 #include "btn_display.h"
 #include "btn_sprites.h"
 #include "btn_optional.h"
+#include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"
 #include "btn_intrusive_list.h"
 #include "btn_sprites_manager.h"
@@ -33,15 +33,13 @@ public:
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
+    optional<camera_ptr> camera;
     int8_t handles_index = -1;
     int8_t half_width;
     int8_t half_height;
     unsigned double_size_mode: 2;
     bool blending_enabled: 1;
     bool visible: 1;
-    #if BTN_CFG_CAMERA_ENABLED
-        bool ignore_camera: 1;
-    #endif
     bool remove_affine_mat_when_not_needed: 1;
     bool on_screen: 1;
     bool check_on_screen: 1;
@@ -96,34 +94,15 @@ public:
         fixed_point real_position(position.x() + (display::width() / 2) - int(half_width),
                                   position.y() + (display::height() / 2) - int(half_height));
 
-        #if BTN_CFG_CAMERA_ENABLED
-            if(! ignore_camera)
-            {
-                real_position -= camera::position();
-            }
-        #endif
+        if(camera)
+        {
+            real_position -= camera->position();
+        }
 
         hw_position = real_position;
         hw::sprites::set_x(real_position.x().integer(), handle);
         hw::sprites::set_y(real_position.y().integer(), handle);
     }
-
-    #if BTN_CFG_CAMERA_ENABLED
-        void update_hw_position(const fixed_point& camera_position)
-        {
-            fixed_point real_position(position.x() + (display::width() / 2) - int(half_width),
-                                      position.y() + (display::height() / 2) - int(half_height));
-
-            if(! ignore_camera)
-            {
-                real_position -= camera_position;
-            }
-
-            hw_position = real_position;
-            hw::sprites::set_x(real_position.x().integer(), handle);
-            hw::sprites::set_y(real_position.y().integer(), handle);
-        }
-    #endif
 };
 
 }

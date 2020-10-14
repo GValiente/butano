@@ -74,7 +74,7 @@ namespace
         {
 
         public:
-            fixed hw_y = -1;
+            int hw_y = -1;
             int affine_mode = -1;
             uint8_t shape = 0;
             uint8_t bpp_mode = 0;

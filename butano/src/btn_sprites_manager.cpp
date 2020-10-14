@@ -454,7 +454,7 @@ const fixed_point& position(id_type id)
     return item->position;
 }
 
-const fixed_point& hw_position(id_type id)
+const point& hw_position(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
     return item->hw_position;
@@ -463,21 +463,22 @@ const fixed_point& hw_position(id_type id)
 void set_x(id_type id, fixed x)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point& item_position = item->position;
-    fixed x_diff = x - item_position.x();
+    fixed old_real_x = item->position.x();
 
-    if(x_diff != 0)
+    if(old_real_x != x)
     {
-        fixed_point& item_hw_position = item->hw_position;
-        fixed hw_x = item_hw_position.x() + x_diff;
-        int hw_x_integer = hw_x.integer();
-        bool hw_changed = hw_x_integer != item_hw_position.x().integer();
-        item_position.set_x(x);
-        item_hw_position.set_x(hw_x);
+        fixed new_real_x = x;
+        item->position.set_x(x);
 
-        if(hw_changed)
+        int old_real_integer_x = old_real_x.integer();
+        int new_real_integer_x = new_real_x.integer();
+        int diff = new_real_integer_x - old_real_integer_x;
+
+        if(diff)
         {
-            hw::sprites::set_x(hw_x_integer, item->handle);
+            int hw_x = item->hw_position.x() + diff;
+            item->hw_position.set_x(hw_x);
+            hw::sprites::set_x(hw_x, item->handle);
 
             if(item->visible)
             {
@@ -491,21 +492,22 @@ void set_x(id_type id, fixed x)
 void set_y(id_type id, fixed y)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point& item_position = item->position;
-    fixed y_diff = y - item_position.y();
+    fixed old_real_y = item->position.y();
 
-    if(y_diff != 0)
+    if(old_real_y != y)
     {
-        fixed_point& item_hw_position = item->hw_position;
-        fixed hw_y = item_hw_position.y() + y_diff;
-        int hw_y_integer = hw_y.integer();
-        bool hw_changed = hw_y_integer != item_hw_position.y().integer();
-        item_position.set_y(y);
-        item_hw_position.set_y(hw_y);
+        fixed new_real_y = y;
+        item->position.set_y(y);
 
-        if(hw_changed)
+        int old_real_integer_y = old_real_y.integer();
+        int new_real_integer_y = new_real_y.integer();
+        int diff = new_real_integer_y - old_real_integer_y;
+
+        if(diff)
         {
-            hw::sprites::set_y(hw_y_integer, item->handle);
+            int hw_y = item->hw_position.y() + diff;
+            item->hw_position.set_y(hw_y);
+            hw::sprites::set_y(hw_y, item->handle);
 
             if(item->visible)
             {
@@ -519,25 +521,25 @@ void set_y(id_type id, fixed y)
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point& item_position = item->position;
-    fixed_point position_diff = position - item_position;
+    fixed_point old_real_position = item->position;
 
-    if(position_diff != fixed_point())
+    if(old_real_position != position)
     {
-        fixed_point& item_hw_position = item->hw_position;
-        fixed_point hw_position = item_hw_position + position_diff;
-        int hw_x_integer = hw_position.x().integer();
-        int hw_y_integer = hw_position.y().integer();
-        bool hw_changed = hw_x_integer != item_hw_position.x().integer() ||
-                hw_y_integer != item_hw_position.y().integer();
-        item_position = position;
-        item_hw_position = hw_position;
+        fixed_point new_real_position = position;
+        item->position = position;
 
-        if(hw_changed)
+        point old_real_integer_position(old_real_position.x().integer(), old_real_position.y().integer());
+        point new_real_integer_position(new_real_position.x().integer(), new_real_position.y().integer());
+        point diff = new_real_integer_position - old_real_integer_position;
+
+        if(diff != point())
         {
+            point hw_position = item->hw_position + diff;
+            item->hw_position = hw_position;
+
             hw::sprites::handle_type& handle = item->handle;
-            hw::sprites::set_x(hw_x_integer, handle);
-            hw::sprites::set_y(hw_y_integer, handle);
+            hw::sprites::set_x(hw_position.x(), handle);
+            hw::sprites::set_y(hw_position.y(), handle);
 
             if(item->visible)
             {
@@ -972,7 +974,7 @@ void reload_blending()
     data.rebuild_handles = true;
 }
 
-void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
     uint16_t attr1 = item->handle.attr1;
@@ -992,12 +994,12 @@ void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr1;
-            hw::sprites::set_x((hw_x + positions_ptr[index]).integer(), dest_value);
+            hw::sprites::set_x(hw_x + positions_ptr[index].integer(), dest_value);
         }
     }
 }
 
-void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
     uint16_t attr0 = item->handle.attr0;
@@ -1017,12 +1019,12 @@ void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* 
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr0;
-            hw::sprites::set_y((hw_y + positions_ptr[index]).integer(), dest_value);
+            hw::sprites::set_y(hw_y + positions_ptr[index].integer(), dest_value);
         }
     }
 }
 
-void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
@@ -1055,7 +1057,7 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
 
             if(first_attributes.visible())
             {
-                int y = (hw_y + first_attributes.y()).integer();
+                int y = hw_y + first_attributes.y().integer();
                 int dest_value = hw::sprites::first_attributes(
                             y, shape, bpp_mode, affine_mode, first_attributes.mosaic_enabled(),
                             first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
@@ -1069,7 +1071,7 @@ void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette
     }
 }
 
-void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
+void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
         const sprite_regular_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
     BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat, "Item is not regular");
@@ -1089,14 +1091,14 @@ void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, f
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = (hw_x + second_attributes.x()).integer();
+            int x = hw_x + second_attributes.x().integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
                                                                       second_attributes.vertical_flip()));
         }
     }
 }
 
-void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, fixed hw_x, sprite_size size,
+void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
         const sprite_affine_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
     BTN_ASSERT(static_cast<item_type*>(id)->affine_mat, "Item is not affine");
@@ -1115,7 +1117,7 @@ void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, fi
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = (hw_x + second_attributes.x()).integer();
+            int x = hw_x + second_attributes.x().integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
         }
     }

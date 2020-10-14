@@ -9,6 +9,7 @@ namespace btn
 {
 
 class size;
+class point;
 class camera_ptr;
 class fixed_point;
 class regular_bg_builder;
@@ -46,7 +47,7 @@ namespace bgs_manager
 
     [[nodiscard]] const fixed_point& position(id_type id);
 
-    [[nodiscard]] fixed_point hw_position(id_type id);
+    [[nodiscard]] const point& hw_position(id_type id);
 
     void set_x(id_type id, fixed x);
 
@@ -94,9 +95,9 @@ namespace bgs_manager
 
     void reload();
 
-    void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr,
                                                uint16_t* dest_ptr);

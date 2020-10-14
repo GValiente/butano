@@ -116,9 +116,9 @@ namespace btn::display_manager
 
     [[nodiscard]] const fixed_point& rect_window_bottom_right(int window);
 
-    [[nodiscard]] pair<fixed, fixed> rect_window_hw_horizontal_boundaries(int window);
+    [[nodiscard]] pair<int, int> rect_window_hw_horizontal_boundaries(int window);
 
-    [[nodiscard]] pair<fixed, fixed> rect_window_hw_vertical_boundaries(int window);
+    [[nodiscard]] pair<int, int> rect_window_hw_vertical_boundaries(int window);
 
     void set_rect_window_top_left(int window, const fixed_point& top_left);
 
@@ -131,11 +131,11 @@ namespace btn::display_manager
     void reload_rect_windows_boundaries();
 
     void fill_rect_window_hblank_effect_horizontal_boundaries(
-            pair<fixed, fixed> base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
+            const pair<int, int>& base_horizontal_boundaries, const pair<fixed, fixed>* horizontal_boundaries_ptr,
             uint16_t* dest_ptr);
 
     void fill_rect_window_hblank_effect_vertical_boundaries(
-            pair<fixed, fixed> base_vertical_boundaries, const pair<fixed, fixed>* vertical_boundaries_ptr,
+            const pair<int, int>& base_vertical_boundaries, const pair<fixed, fixed>* vertical_boundaries_ptr,
             uint16_t* dest_ptr);
 
     [[nodiscard]] bool inside_window_enabled(int window);

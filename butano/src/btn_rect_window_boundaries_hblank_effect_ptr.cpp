@@ -28,13 +28,13 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = pair<fixed, fixed>();
+            target_last_value = pair<int, int>();
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
-            pair<fixed, fixed> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
+            pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
+            pair<int, int> new_value = display_manager::rect_window_hw_horizontal_boundaries(target_id);
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -48,7 +48,7 @@ namespace
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
+            const pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
             auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(input_values_ptr);
             display_manager::fill_rect_window_hblank_effect_horizontal_boundaries(
                         last_value, fixed_pairs_ptr, output_values_ptr);
@@ -78,13 +78,13 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = pair<fixed, fixed>();
+            target_last_value = pair<int, int>();
         }
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
-            pair<fixed, fixed> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
+            pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
+            pair<int, int> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -98,7 +98,7 @@ namespace
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            const pair<fixed, fixed>& last_value = target_last_value.value<pair<fixed, fixed>>();
+            const pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
             auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(input_values_ptr);
             display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
                         last_value, fixed_pairs_ptr, output_values_ptr);

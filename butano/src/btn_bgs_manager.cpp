@@ -24,14 +24,14 @@ namespace
 
     public:
         fixed_point position;
-        fixed_point hw_position;
+        point hw_position;
         size half_dimensions;
         unsigned usages = 1;
         sort_key bg_sort_key;
         hw::bgs::handle handle;
         optional<regular_bg_map_ptr> map;
         optional<camera_ptr> camera;
-        uint8_t handles_index = -1;
+        int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
         bool update: 1;
@@ -63,17 +63,32 @@ namespace
 
         void update_hw_position()
         {
-            fixed_point real_position(-position.x() - (display::width() / 2) + half_dimensions.width(),
-                                      -position.y() - (display::height() / 2) + half_dimensions.height());
+            int real_x = position.x().integer();
+            int real_y = position.y().integer();
 
             if(camera)
             {
-                real_position += camera->position();
+                const fixed_point& camera_position = camera->position();
+                real_x -= camera_position.x().integer();
+                real_y -= camera_position.y().integer();
             }
 
-            hw_position = real_position;
-            hw::bgs::set_x(real_position.x().integer(), handle);
-            hw::bgs::set_y(real_position.y().integer(), handle);
+            update_hw_x(real_x);
+            update_hw_y(real_y);
+        }
+
+        void update_hw_x(int real_x)
+        {
+            int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
+            hw_position.set_x(hw_x);
+            hw::bgs::set_x(hw_x, handle);
+        }
+
+        void update_hw_y(int real_y)
+        {
+            int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
+            hw_position.set_y(hw_y);
+            hw::bgs::set_y(hw_y, handle);
         }
     };
 
@@ -296,7 +311,7 @@ const fixed_point& position(id_type id)
     return item->position;
 }
 
-fixed_point hw_position(id_type id)
+const point& hw_position(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
     return item->hw_position;
@@ -305,19 +320,22 @@ fixed_point hw_position(id_type id)
 void set_x(id_type id, fixed x)
 {
     auto item = static_cast<item_type*>(id);
-    fixed x_diff = x - item->position.x();
+    fixed old_real_x = item->position.x();
 
-    if(x_diff != 0)
+    if(old_real_x != x)
     {
-        fixed hw_x = item->hw_position.x() - x_diff;
-        int hw_x_integer = hw_x.integer();
-        bool hw_changed = hw_x_integer != item->hw_position.x().integer();
+        fixed new_real_x = x;
         item->position.set_x(x);
-        item->hw_position.set_x(hw_x);
 
-        if(hw_changed)
+        int old_real_integer_x = old_real_x.integer();
+        int new_real_integer_x = new_real_x.integer();
+        int diff = new_real_integer_x - old_real_integer_x;
+
+        if(diff)
         {
-            hw::bgs::set_x(item->hw_position.x().integer(), item->handle);
+            int hw_x = item->hw_position.x() - diff;
+            item->hw_position.set_x(hw_x);
+            hw::bgs::set_x(hw_x, item->handle);
             _update_item(*item);
         }
     }
@@ -326,19 +344,22 @@ void set_x(id_type id, fixed x)
 void set_y(id_type id, fixed y)
 {
     auto item = static_cast<item_type*>(id);
-    fixed y_diff = y - item->position.y();
+    fixed old_real_y = item->position.y();
 
-    if(y_diff != 0)
+    if(old_real_y != y)
     {
-        fixed hw_y = item->hw_position.y() - y_diff;
-        int hw_y_integer = hw_y.integer();
-        bool hw_changed = hw_y_integer != item->hw_position.y().integer();
+        fixed new_real_y = y;
         item->position.set_y(y);
-        item->hw_position.set_y(hw_y);
 
-        if(hw_changed)
+        int old_real_integer_y = old_real_y.integer();
+        int new_real_integer_y = new_real_y.integer();
+        int diff = new_real_integer_y - old_real_integer_y;
+
+        if(diff)
         {
-            hw::bgs::set_y(item->hw_position.y().integer(), item->handle);
+            int hw_y = item->hw_position.y() - diff;
+            item->hw_position.set_y(hw_y);
+            hw::bgs::set_y(hw_y, item->handle);
             _update_item(*item);
         }
     }
@@ -347,24 +368,25 @@ void set_y(id_type id, fixed y)
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point& item_position = item->position;
-    fixed_point position_diff = position - item_position;
+    fixed_point old_real_position = item->position;
 
-    if(position_diff != fixed_point())
+    if(old_real_position != position)
     {
-        fixed_point hw_position = item->hw_position - position_diff;
-        int hw_x_integer = hw_position.x().integer();
-        int hw_y_integer = hw_position.y().integer();
-        bool hw_changed = hw_x_integer != item->hw_position.x().integer() ||
-                hw_y_integer != item->hw_position.y().integer();
-        item_position = position;
-        item->hw_position = hw_position;
+        fixed_point new_real_position = position;
+        item->position = position;
 
-        if(hw_changed)
+        point old_real_integer_position(old_real_position.x().integer(), old_real_position.y().integer());
+        point new_real_integer_position(new_real_position.x().integer(), new_real_position.y().integer());
+        point diff = new_real_integer_position - old_real_integer_position;
+
+        if(diff != point())
         {
+            point hw_position = item->hw_position - diff;
+            item->hw_position = hw_position;
+
             hw::bgs::handle& handle = item->handle;
-            hw::bgs::set_x(item->hw_position.x().integer(), handle);
-            hw::bgs::set_y(item->hw_position.y().integer(), handle);
+            hw::bgs::set_x(hw_position.x(), handle);
+            hw::bgs::set_y(hw_position.y(), handle);
             _update_item(*item);
         }
     }
@@ -549,7 +571,7 @@ void reload()
     data.commit = true;
 }
 
-void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
@@ -562,12 +584,12 @@ void fill_hblank_effect_horizontal_positions(fixed base_position, const fixed* p
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+            dest_ptr[index] = uint16_t(base_position + positions_ptr[index].integer());
         }
     }
 }
 
-void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
@@ -580,7 +602,7 @@ void fill_hblank_effect_vertical_positions(fixed base_position, const fixed* pos
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t((base_position + positions_ptr[index]).integer());
+            dest_ptr[index] = uint16_t(base_position + positions_ptr[index].integer());
         }
     }
 }
@@ -614,7 +636,7 @@ void update()
             {
                 BTN_ASSERT(BTN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much bgs on screen");
 
-                item->handles_index = id;
+                item->handles_index = int8_t(id);
                 data.handles[id] = item->handle;
                 display_manager::set_bg_enabled(id, true);
                 display_manager::set_blending_bg_enabled(id, item->blending_enabled);

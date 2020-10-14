@@ -8,24 +8,21 @@ namespace btn::sprites_manager
 
 void _check_items_on_screen_impl()
 {
-    fixed display_width = display::width();
-    fixed display_height = display::height();
-
     for(sorted_sprites::layer* layer : sorted_sprites::layers())
     {
         for(sprites_manager_item& item : *layer)
         {
             if(item.check_on_screen)
             {
-                fixed x = item.hw_position.x();
+                int x = item.hw_position.x();
                 bool on_screen = false;
                 item.check_on_screen = false;
 
-                if(x < display_width)
+                if(x < display::width())
                 {
-                    fixed y = item.hw_position.y();
+                    int y = item.hw_position.y();
 
-                    if(y < display_height)
+                    if(y < display::height())
                     {
                         if(x + (item.half_width * 2) > 0)
                         {

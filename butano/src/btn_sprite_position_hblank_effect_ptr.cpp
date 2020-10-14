@@ -22,7 +22,7 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = fixed();
+            target_last_value = 0;
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -33,9 +33,9 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            fixed& last_value = target_last_value.value<fixed>();
+            int& last_value = target_last_value.value<int>();
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed new_value = sprites_manager::hw_position(handle).x();
+            int new_value = sprites_manager::hw_position(handle).x();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -51,7 +51,7 @@ namespace
                                  uint16_t* output_values_ptr) final
         {
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed last_value = target_last_value.value<fixed>();
+            int last_value = target_last_value.value<int>();
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             sprites_manager::fill_hblank_effect_horizontal_positions(handle, last_value, fixed_values_ptr,
                                                                      output_values_ptr);
@@ -77,7 +77,7 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = fixed();
+            target_last_value = int();
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -88,9 +88,9 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            fixed& last_value = target_last_value.value<fixed>();
+            int& last_value = target_last_value.value<int>();
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed new_value = sprites_manager::hw_position(handle).y();
+            int new_value = sprites_manager::hw_position(handle).y();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -106,7 +106,7 @@ namespace
                                  uint16_t* output_values_ptr) final
         {
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed last_value = target_last_value.value<fixed>();
+            int last_value = target_last_value.value<int>();
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             sprites_manager::fill_hblank_effect_vertical_positions(handle, last_value, fixed_values_ptr,
                                                                    output_values_ptr);

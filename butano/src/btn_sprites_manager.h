@@ -8,6 +8,7 @@ namespace btn
 {
 
 class size;
+class point;
 class camera_ptr;
 class fixed_point;
 class sprite_builder;
@@ -88,7 +89,7 @@ namespace sprites_manager
 
     [[nodiscard]] const fixed_point& position(id_type id);
 
-    [[nodiscard]] const fixed_point& hw_position(id_type id);
+    [[nodiscard]] const point& hw_position(id_type id);
 
     void set_x(id_type id, fixed x);
 
@@ -174,19 +175,19 @@ namespace sprites_manager
 
     void reload_blending();
 
-    void fill_hblank_effect_horizontal_positions(id_type id, fixed hw_x, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_vertical_positions(id_type id, fixed hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_first_attributes(fixed hw_y, sprite_shape shape, palette_bpp_mode bpp_mode,
+    void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode,
             int affine_mode, const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_second_attributes(
-            id_type id, fixed hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
+            id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
             uint16_t* dest_ptr);
 
     void fill_hblank_effect_affine_second_attributes(
-            id_type id, fixed hw_x, sprite_size size, const sprite_affine_second_attributes* second_attributes_ptr,
+            id_type id, int hw_x, sprite_size size, const sprite_affine_second_attributes* second_attributes_ptr,
             uint16_t* dest_ptr);
 
     void fill_hblank_effect_third_attributes(

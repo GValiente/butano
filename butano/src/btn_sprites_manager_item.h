@@ -27,7 +27,7 @@ public:
     sprite_affine_mat_attach_node_type affine_mat_attach_node;
     hw::sprites::handle_type handle;
     fixed_point position;
-    fixed_point hw_position;
+    point hw_position;
     unsigned usages = 1;
     sort_key sprite_sort_key;
     optional<sprite_tiles_ptr> tiles;
@@ -91,17 +91,32 @@ public:
 
     void update_hw_position()
     {
-        fixed_point real_position(position.x() + (display::width() / 2) - int(half_width),
-                                  position.y() + (display::height() / 2) - int(half_height));
+        int real_x = position.x().integer();
+        int real_y = position.y().integer();
 
         if(camera)
         {
-            real_position -= camera->position();
+            const fixed_point& camera_position = camera->position();
+            real_x -= camera_position.x().integer();
+            real_y -= camera_position.y().integer();
         }
 
-        hw_position = real_position;
-        hw::sprites::set_x(real_position.x().integer(), handle);
-        hw::sprites::set_y(real_position.y().integer(), handle);
+        update_hw_x(real_x);
+        update_hw_y(real_y);
+    }
+
+    void update_hw_x(int real_x)
+    {
+        int hw_x = real_x + (display::width() / 2) - int(half_width);
+        hw_position.set_x(hw_x);
+        hw::sprites::set_x(hw_x, handle);
+    }
+
+    void update_hw_y(int real_y)
+    {
+        int hw_y = real_y + (display::height() / 2) - int(half_height);
+        hw_position.set_y(hw_y);
+        hw::sprites::set_y(hw_y, handle);
     }
 };
 

@@ -23,7 +23,7 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = fixed();
+            target_last_value = 0;
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -34,9 +34,9 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            fixed& last_value = target_last_value.value<fixed>();
+            int& last_value = target_last_value.value<int>();
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed new_value = bgs_manager::hw_position(handle).x();
+            int new_value = bgs_manager::hw_position(handle).x();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -51,7 +51,7 @@ namespace
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            fixed last_value = target_last_value.value<fixed>();
+            int last_value = target_last_value.value<int>();
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_horizontal_positions(last_value, fixed_values_ptr, output_values_ptr);
         }
@@ -75,7 +75,7 @@ namespace
 
         void setup_target(int, iany& target_last_value) final
         {
-            target_last_value = fixed();
+            target_last_value = 0;
         }
 
         [[nodiscard]] bool target_visible(int target_id) final
@@ -86,9 +86,9 @@ namespace
 
         [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
         {
-            fixed& last_value = target_last_value.value<fixed>();
+            int& last_value = target_last_value.value<int>();
             auto handle = reinterpret_cast<void*>(target_id);
-            fixed new_value = bgs_manager::hw_position(handle).y();
+            int new_value = bgs_manager::hw_position(handle).y();
             bool updated = last_value != new_value;
             last_value = new_value;
             return updated;
@@ -103,7 +103,7 @@ namespace
         void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
                                  uint16_t* output_values_ptr) final
         {
-            fixed last_value = target_last_value.value<fixed>();
+            int last_value = target_last_value.value<int>();
             auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
             bgs_manager::fill_hblank_effect_vertical_positions(last_value, fixed_values_ptr, output_values_ptr);
         }

@@ -19,7 +19,7 @@ namespace
     {
 
     public:
-        fixed hw_x = -1;
+        int hw_x = -1;
         sprite_size size = sprite_size::SMALL;
 
         second_attributes_last_value_type() = default;

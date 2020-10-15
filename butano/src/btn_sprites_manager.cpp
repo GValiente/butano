@@ -463,28 +463,23 @@ const point& hw_position(id_type id)
 void set_x(id_type id, fixed x)
 {
     auto item = static_cast<item_type*>(id);
-    fixed old_real_x = item->position.x();
+    fixed old_x = item->position.x();
+    item->position.set_x(x);
 
-    if(old_real_x != x)
+    int old_integer_x = old_x.integer();
+    int new_integer_x = x.integer();
+    int diff = new_integer_x - old_integer_x;
+
+    if(diff)
     {
-        fixed new_real_x = x;
-        item->position.set_x(x);
+        int hw_x = item->hw_position.x() + diff;
+        item->hw_position.set_x(hw_x);
+        hw::sprites::set_x(hw_x, item->handle);
 
-        int old_real_integer_x = old_real_x.integer();
-        int new_real_integer_x = new_real_x.integer();
-        int diff = new_real_integer_x - old_real_integer_x;
-
-        if(diff)
+        if(item->visible)
         {
-            int hw_x = item->hw_position.x() + diff;
-            item->hw_position.set_x(hw_x);
-            hw::sprites::set_x(hw_x, item->handle);
-
-            if(item->visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
         }
     }
 }
@@ -492,28 +487,23 @@ void set_x(id_type id, fixed x)
 void set_y(id_type id, fixed y)
 {
     auto item = static_cast<item_type*>(id);
-    fixed old_real_y = item->position.y();
+    fixed old_y = item->position.y();
+    item->position.set_y(y);
 
-    if(old_real_y != y)
+    int old_integer_y = old_y.integer();
+    int new_integer_y = y.integer();
+    int diff = new_integer_y - old_integer_y;
+
+    if(diff)
     {
-        fixed new_real_y = y;
-        item->position.set_y(y);
+        int hw_y = item->hw_position.y() + diff;
+        item->hw_position.set_y(hw_y);
+        hw::sprites::set_y(hw_y, item->handle);
 
-        int old_real_integer_y = old_real_y.integer();
-        int new_real_integer_y = new_real_y.integer();
-        int diff = new_real_integer_y - old_real_integer_y;
-
-        if(diff)
+        if(item->visible)
         {
-            int hw_y = item->hw_position.y() + diff;
-            item->hw_position.set_y(hw_y);
-            hw::sprites::set_y(hw_y, item->handle);
-
-            if(item->visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
         }
     }
 }
@@ -521,31 +511,26 @@ void set_y(id_type id, fixed y)
 void set_position(id_type id, const fixed_point& position)
 {
     auto item = static_cast<item_type*>(id);
-    fixed_point old_real_position = item->position;
+    fixed_point old_position = item->position;
+    item->position = position;
 
-    if(old_real_position != position)
+    point old_integer_position(old_position.x().integer(), old_position.y().integer());
+    point new_integer_position(position.x().integer(), position.y().integer());
+    point diff = new_integer_position - old_integer_position;
+
+    if(diff != point())
     {
-        fixed_point new_real_position = position;
-        item->position = position;
+        point hw_position = item->hw_position + diff;
+        item->hw_position = hw_position;
 
-        point old_real_integer_position(old_real_position.x().integer(), old_real_position.y().integer());
-        point new_real_integer_position(new_real_position.x().integer(), new_real_position.y().integer());
-        point diff = new_real_integer_position - old_real_integer_position;
+        hw::sprites::handle_type& handle = item->handle;
+        hw::sprites::set_x(hw_position.x(), handle);
+        hw::sprites::set_y(hw_position.y(), handle);
 
-        if(diff != point())
+        if(item->visible)
         {
-            point hw_position = item->hw_position + diff;
-            item->hw_position = hw_position;
-
-            hw::sprites::handle_type& handle = item->handle;
-            hw::sprites::set_x(hw_position.x(), handle);
-            hw::sprites::set_y(hw_position.y(), handle);
-
-            if(item->visible)
-            {
-                item->check_on_screen = true;
-                data.check_items_on_screen = true;
-            }
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
         }
     }
 }

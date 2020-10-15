@@ -11,7 +11,6 @@ namespace
         btn::sprite_builder builder(btn::sprite_items::texture, graphics_index);
         builder.set_position(-(btn::display::width() / 2) + 32, -(btn::display::height() / 2) + 32);
         builder.set_z_order(z_order);
-        builder.set_ignore_camera(true);
         return builder.release_build();
     }
 }

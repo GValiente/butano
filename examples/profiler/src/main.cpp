@@ -4,7 +4,7 @@
 #include "btn_profiler.h"
 #include "btn_algorithm.h"
 
-#include "tonc.h"
+#include "../../butano/hw/include/btn_hw_tonc.h"
 
 int main()
 {

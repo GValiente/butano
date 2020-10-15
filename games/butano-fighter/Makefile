@@ -23,7 +23,7 @@ INCLUDES    :=  include
 DATA        :=
 GRAPHICS    :=  graphics
 AUDIO       :=  audio
-USERFLAGS   :=
+USERFLAGS   :=  -flto
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path

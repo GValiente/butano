@@ -183,7 +183,7 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
         {
             if(! _stage_done)
             {
-                butano_background.show(_weapon_sprite.position());
+                butano_background.show(_weapon_sprite.position(), camera);
                 _stage_done = true;
             }
             else if(! butano_background.silhouette_visible())
@@ -481,7 +481,7 @@ btn::optional<scene_type> hero::_animate_dead(const btn::camera_ptr& camera, bac
     }
     else if(_death_counter == 220)
     {
-        butano_background.show(_weapon_sprite.position());
+        butano_background.show(_weapon_sprite.position(), camera);
     }
     else if(_death_counter > 220 && ! butano_background.silhouette_visible())
     {

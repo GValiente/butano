@@ -23,7 +23,7 @@ INCLUDES    :=  include ../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../common/graphics
 AUDIO       :=  audio ../common/audio
-USERFLAGS   :=
+USERFLAGS   :=  -DBTN_CFG_ASSERT_ENABLED=true
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path

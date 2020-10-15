@@ -55,7 +55,7 @@ namespace
             _create_palette_hblank_effect_colors();
 }
 
-void butano_background::show(const btn::fixed_point& silhouette_position)
+void butano_background::show(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera)
 {
     _set_visible();
 
@@ -67,22 +67,24 @@ void butano_background::show(const btn::fixed_point& silhouette_position)
     builder.set_position(silhouette_position.x(), silhouette_position.y() - 63);
     builder.set_scale(2);
     builder.set_window_enabled(true);
+    builder.set_camera(camera);
 
     btn::sprite_ptr silhouette_up_sprite = builder.release_build();
     _silhouette_up_sprite_move_action.emplace(silhouette_up_sprite, show_hide_frames, silhouette_position);
-    _silhouette_up_sprite_scale_action.emplace(silhouette_up_sprite, show_hide_frames, 0.01);
+    _silhouette_up_sprite_scale_action.emplace(btn::move(silhouette_up_sprite), show_hide_frames, 0.01);
 
     builder = btn::sprite_builder(btn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position.x(), silhouette_position.y() + 63);
     builder.set_scale(2);
     builder.set_window_enabled(true);
+    builder.set_camera(camera);
 
     btn::sprite_ptr silhouette_down_sprite = builder.release_build();
     _silhouette_down_sprite_move_action.emplace(silhouette_down_sprite, show_hide_frames, silhouette_position);
-    _silhouette_down_sprite_scale_action.emplace(silhouette_down_sprite, show_hide_frames, 0.01);
+    _silhouette_down_sprite_scale_action.emplace(btn::move(silhouette_down_sprite), show_hide_frames, 0.01);
 }
 
-void butano_background::hide(const btn::fixed_point& silhouette_position)
+void butano_background::hide(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera)
 {
     _set_visible();
 
@@ -94,21 +96,23 @@ void butano_background::hide(const btn::fixed_point& silhouette_position)
     builder.set_position(silhouette_position);
     builder.set_scale(0.01);
     builder.set_window_enabled(true);
+    builder.set_camera(camera);
 
     btn::sprite_ptr silhouette_up_sprite = builder.release_build();
     _silhouette_up_sprite_move_action.emplace(silhouette_up_sprite, show_hide_frames, silhouette_position.x(),
                                               silhouette_position.y() - 63);
-    _silhouette_up_sprite_scale_action.emplace(silhouette_up_sprite, show_hide_frames, 2);
+    _silhouette_up_sprite_scale_action.emplace(btn::move(silhouette_up_sprite), show_hide_frames, 2);
 
     builder = btn::sprite_builder(btn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position);
     builder.set_scale(0.01);
     builder.set_window_enabled(true);
+    builder.set_camera(camera);
 
     btn::sprite_ptr silhouette_down_sprite = builder.release_build();
     _silhouette_down_sprite_move_action.emplace(silhouette_down_sprite, show_hide_frames, silhouette_position.x(),
                                                 silhouette_position.y() + 63);
-    _silhouette_down_sprite_scale_action.emplace(silhouette_down_sprite, show_hide_frames, 2);
+    _silhouette_down_sprite_scale_action.emplace(btn::move(silhouette_down_sprite), show_hide_frames, 2);
 }
 
 void butano_background::put_under_all()

@@ -23,9 +23,9 @@ public:
         return _silhouette_up_sprite_move_action.has_value();
     }
 
-    void show(const btn::fixed_point& silhouette_position);
+    void show(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera);
 
-    void hide(const btn::fixed_point& silhouette_position);
+    void hide(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera);
 
     void put_under_all();
 

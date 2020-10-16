@@ -272,7 +272,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
             case 2:
                 _movement_index = 0;
-                _movement_counter = (btn::abs((*_target_x - _wizard_position.x())) / btn::fixed(0.75)).integer();
+                _movement_counter = (btn::abs((*_target_x - _wizard_position.x())) / btn::fixed(0.75)).right_shift_integer();
                 _movement_counter = btn::max(_movement_counter, 1);
 
                 _delta_position = (btn::fixed_point(*_target_x, -limit_y) - _wizard_position) / _movement_counter;
@@ -603,7 +603,7 @@ void wizard_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, co
         bullet_y = 1;
     }
 
-    btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
+    btn::fixed_point delta_position = direction_vector(bullet_x, bullet_y, bullet_speed);
     _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
 }
 
@@ -703,31 +703,31 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                     {
 
                     case 0:
-                        _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position,
+                        _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, 1, 0.9), hero_position,
                                       camera, enemy_bullets);
                         _bullets_index = 1;
                         break;
 
                     case 1:
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position,
                                       camera, enemy_bullets);
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position,
                                       camera, enemy_bullets);
                         _bullets_index = 2;
                         break;
 
                     case 2:
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.25, 1, 1), hero_position,
                                       camera, enemy_bullets);
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.25, 1, 1), hero_position,
                                       camera, enemy_bullets);
                         _bullets_index = 3;
                         break;
 
                     case 3:
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position,
                                       camera, enemy_bullets);
-                        _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position,
+                        _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position,
                                       camera, enemy_bullets);
                         _bullets_index = 0;
                         break;
@@ -742,21 +742,21 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
             case 1:
                 if(_movement_counter == 1)
                 {
-                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, 1, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(1, 1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(1, 0, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::BIG, direction_vector(1, 0, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(1, -1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(1, -1, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, -1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, -1, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-1, -1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-1, -1, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(-1, 0, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::BIG, direction_vector(-1, 0, 0.9), hero_position, camera,
                                   enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-1, 1, 0.9), hero_position, camera,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9), hero_position, camera,
                                   enemy_bullets);
                 }
                 break;
@@ -782,7 +782,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 if(_movement_counter > 30 && _wizard_position.y() <= 20 && _wizard_position.y() >= 1 - limit_y)
                 {
                     _bullets_counter = 20;
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0, 1, 1), hero_position,
                                   camera, enemy_bullets);
                 }
                 break;
@@ -791,19 +791,19 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 if(_movement_counter == 1)
                 {
                     _bullets_counter = 20;
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.225, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.225, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.225, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.225, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.45, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.45, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.45, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.45, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.675, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.675, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
-                    _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.675, 1, 0.85), hero_position,
+                    _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.675, 1, 0.85), hero_position,
                                   camera, enemy_bullets);
                 }
                 break;

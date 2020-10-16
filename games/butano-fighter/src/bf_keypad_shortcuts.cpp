@@ -63,7 +63,7 @@ void keypad_shortcuts::update()
 
     if(new_brightness >= 0)
     {
-        int graphics_index = ((new_brightness * 8) / max_brightness).integer();
+        int graphics_index = ((new_brightness * 8) / max_brightness).right_shift_integer();
         _brightness_sprite.set_tiles(btn::sprite_items::brightness.tiles_item(), graphics_index);
         _brightness_sprite.set_visible(true);
         _brightness_counter = 60;

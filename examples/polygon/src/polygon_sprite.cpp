@@ -47,10 +47,10 @@ void polygon_sprite::update()
             const btn::fixed_point* vertices_data = polygon->vertices().data();
 
             btn::point vertices[] = {
-                btn::point(vertices_data[0].x().integer(), vertices_data[0].y().integer()),
-                btn::point(vertices_data[1].x().integer(), vertices_data[1].y().integer()),
-                btn::point(vertices_data[2].x().integer(), vertices_data[2].y().integer()),
-                btn::point(vertices_data[3].x().integer(), vertices_data[3].y().integer())
+                btn::point(vertices_data[0].x().right_shift_integer(), vertices_data[0].y().right_shift_integer()),
+                btn::point(vertices_data[1].x().right_shift_integer(), vertices_data[1].y().right_shift_integer()),
+                btn::point(vertices_data[2].x().right_shift_integer(), vertices_data[2].y().right_shift_integer()),
+                btn::point(vertices_data[3].x().right_shift_integer(), vertices_data[3].y().right_shift_integer())
             };
 
             int top_index = 0;

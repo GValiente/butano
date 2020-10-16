@@ -61,14 +61,14 @@ namespace
     void _update_rect_windows_hw_boundaries(int boundaries_index)
     {
         fixed_point window_boundaries = data.rect_windows_boundaries[boundaries_index];
-        int window_x = window_boundaries.x().integer();
-        int window_y = window_boundaries.y().integer();
+        int window_x = window_boundaries.x().right_shift_integer();
+        int window_y = window_boundaries.y().right_shift_integer();
 
         if(const optional<camera_ptr>& camera = data.rect_windows_camera[boundaries_index / 2])
         {
             const fixed_point& camera_position = camera->position();
-            window_x -= camera_position.x().integer();
-            window_y -= camera_position.y().integer();
+            window_x -= camera_position.x().right_shift_integer();
+            window_y -= camera_position.y().right_shift_integer();
         }
 
         point& hw_window_boundaries = data.rect_windows_hw_boundaries[boundaries_index];
@@ -496,8 +496,9 @@ void set_rect_window_top_left(int window, const fixed_point& top_left)
 {
     int index = window * 2;
     fixed_point& rect_window_top_left = data.rect_windows_boundaries[index];
-    point old_integer_top_left(rect_window_top_left.x().integer(), rect_window_top_left.y().integer());
-    point new_integer_top_left(top_left.x().integer(), top_left.y().integer());
+    point old_integer_top_left(rect_window_top_left.x().right_shift_integer(),
+                               rect_window_top_left.y().right_shift_integer());
+    point new_integer_top_left(top_left.x().right_shift_integer(), top_left.y().right_shift_integer());
     rect_window_top_left = top_left;
 
     if(old_integer_top_left != new_integer_top_left)
@@ -510,8 +511,9 @@ void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
 {
     int index = (window * 2) + 1;
     fixed_point& rect_window_bottom_right = data.rect_windows_boundaries[index];
-    point old_integer_bottom_right(rect_window_bottom_right.x().integer(), rect_window_bottom_right.y().integer());
-    point new_integer_bottom_right(bottom_right.x().integer(), bottom_right.y().integer());
+    point old_integer_bottom_right(rect_window_bottom_right.x().right_shift_integer(),
+                                   rect_window_bottom_right.y().right_shift_integer());
+    point new_integer_bottom_right(bottom_right.x().right_shift_integer(), bottom_right.y().right_shift_integer());
     rect_window_bottom_right = bottom_right;
 
     if(old_integer_bottom_right != new_integer_bottom_right)
@@ -549,8 +551,6 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
 {
     fixed base_first = base_horizontal_boundaries.first;
     fixed base_second = base_horizontal_boundaries.second;
-    fixed min = 0;
-    fixed max = display::width();
 
     if(base_first == 0 && base_second == 0)
     {
@@ -558,8 +558,8 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
         {
             fixed first_fixed = horizontal_boundaries_ptr[index].first;
             fixed second_fixed = horizontal_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::width());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::width());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -569,8 +569,8 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
         {
             fixed first_fixed = horizontal_boundaries_ptr[index].first;
             fixed second_fixed = base_second + horizontal_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::width());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::width());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -580,8 +580,8 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
         {
             fixed first_fixed = base_first + horizontal_boundaries_ptr[index].first;
             fixed second_fixed = horizontal_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::width());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::width());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -591,8 +591,8 @@ void fill_rect_window_hblank_effect_horizontal_boundaries(
         {
             fixed first_fixed = base_first + horizontal_boundaries_ptr[index].first;
             fixed second_fixed = base_second + horizontal_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::width());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::width());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -604,8 +604,6 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
 {
     fixed base_first = base_vertical_boundaries.first;
     fixed base_second = base_vertical_boundaries.second;
-    fixed min = 0;
-    fixed max = display::height();
 
     if(base_first == 0 && base_second == 0)
     {
@@ -613,8 +611,8 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
         {
             fixed first_fixed = vertical_boundaries_ptr[index].first;
             fixed second_fixed = vertical_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::height());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::height());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -624,8 +622,8 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
         {
             fixed first_fixed = vertical_boundaries_ptr[index].first;
             fixed second_fixed = base_second + vertical_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::height());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::height());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -635,8 +633,8 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
         {
             fixed first_fixed = base_first + vertical_boundaries_ptr[index].first;
             fixed second_fixed = vertical_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::height());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::height());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }
@@ -646,8 +644,8 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
         {
             fixed first_fixed = base_first + vertical_boundaries_ptr[index].first;
             fixed second_fixed = base_second + vertical_boundaries_ptr[index].second;
-            auto first_integer = int(clamp(first_fixed, min, max).unsigned_integer());
-            auto second_integer = int(clamp(second_fixed, min, max).unsigned_integer());
+            int first_integer = clamp(first_fixed.right_shift_integer(), 0, display::height());
+            int second_integer = clamp(second_fixed.right_shift_integer(), 0, display::height());
             hw::display::set_window_boundaries(first_integer, second_integer, dest_ptr[index]);
         }
     }

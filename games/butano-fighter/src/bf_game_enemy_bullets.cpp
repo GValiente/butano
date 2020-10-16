@@ -235,7 +235,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
             distance.set_y(1);
         }
 
-        btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), event.delta_speed);
+        btn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), event.delta_speed);
         bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), delta_position),
                              btn::nullopt, type });
     }

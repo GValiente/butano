@@ -46,7 +46,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
             if(hero.throw_bomb())
             {
                 const btn::fixed_point& hero_position = hero.weapon_position();
-                _center = btn::point(hero_position.x().integer(), hero_position.y().integer());
+                _center = btn::point(hero_position.x().right_shift_integer(), hero_position.y().right_shift_integer());
 
                 btn::regular_bg_builder builder(btn::regular_bg_items::hero_bomb);
                 builder.set_priority(1);
@@ -96,7 +96,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
             _move_window_bottom_action->update();
 
             btn::fixed fixed_radius = _circle_generator.radius() + 4;
-            int integer_radius = fixed_radius.integer();
+            int integer_radius = fixed_radius.right_shift_integer();
             enemies.check_hero_bomb(_center, integer_radius * integer_radius, camera);
             _circle_generator.set_radius(fixed_radius);
             _circle_generator.generate(_circle_hblank_effect_deltas);

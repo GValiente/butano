@@ -174,13 +174,13 @@ namespace
                 btn::color(31, 28, 5),  40,     2),
         hero_bullet_level(_level2_events,   btn::fixed_size(13, 14),    btn::sound_items::gun_1,            850,
                 btn::color(13, 2, 2),   80,     4),
-        hero_bullet_level(_level3_events,   btn::fixed_size(11, 15),    btn::sound_items::gun_3,            1300,
+        hero_bullet_level(_level3_events,   btn::fixed_size(11, 15),    btn::sound_items::gun_3,            1250,
                 btn::color(31, 0, 6),   80,     3),
-        hero_bullet_level(_level4_events,   btn::fixed_size(16, 16),    btn::sound_items::space_shooter_3,  2200,
+        hero_bullet_level(_level4_events,   btn::fixed_size(16, 16),    btn::sound_items::space_shooter_3,  2100,
                 btn::color(18, 25, 27), 86,     5),
-        hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3500,
+        hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3400,
                 btn::color(31, 0, 0),   97,     3),
-        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5500,
+        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5400,
                 btn::color(9, 20, 24),  101,    4),
         hero_bullet_level(_level7_events,   btn::fixed_size(10, 16),    btn::sound_items::space_shooter_5,  7400,
                 btn::color(31, 0, 0),   89,     6),
@@ -230,7 +230,7 @@ btn::span<const hero_bullet_level> hero_bullet_level::all_levels()
 
 int hero_bullet_level::gem_experience(int level, btn::fixed y)
 {
-    int height = y.integer() + constants::play_height;
+    int height = y.right_shift_integer() + constants::play_height;
     int height_level = btn::clamp(height / 16, 0, 4);
     height_level = 4 + 1 - height_level;
     return height_level * _multiplier(level);

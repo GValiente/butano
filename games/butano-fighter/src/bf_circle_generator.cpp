@@ -35,8 +35,8 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
 
     while(y >= x)
     {
-        int top = (y0 - x).integer();
-        int bottom = (y0 + x).integer();
+        int top = (y0 - x).right_shift_integer();
+        int bottom = (y0 + x).right_shift_integer();
 
         if(top >= 0 && top < values_count)
         {
@@ -50,8 +50,8 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
 
         if(d >= 0)
         {
-            top = (y0 - y).integer();
-            bottom = (y0 + y).integer();
+            top = (y0 - y).right_shift_integer();
+            bottom = (y0 + y).right_shift_integer();
 
             if(top >= 0 && top < values_count)
             {

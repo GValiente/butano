@@ -91,14 +91,14 @@ public:
 
     void update_hw_position()
     {
-        int real_x = position.x().integer();
-        int real_y = position.y().integer();
+        int real_x = position.x().right_shift_integer();
+        int real_y = position.y().right_shift_integer();
 
         if(camera)
         {
             const fixed_point& camera_position = camera->position();
-            real_x -= camera_position.x().integer();
-            real_y -= camera_position.y().integer();
+            real_x -= camera_position.x().right_shift_integer();
+            real_y -= camera_position.y().right_shift_integer();
         }
 
         update_hw_x(real_x);

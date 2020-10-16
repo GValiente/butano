@@ -369,7 +369,7 @@ btn::optional<scene_type> credits::update()
                 if(! _text_counter)
                 {
                     int text_items_count = sizeof(text_items) / sizeof(*text_items);
-                    _text_counter = (14 / text_y_inc).integer();
+                    _text_counter = (16 / text_y_inc).right_shift_integer();
 
                     if(_text_index < text_items_count)
                     {

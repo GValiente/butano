@@ -443,7 +443,7 @@ namespace
         for(int index = 0, amplitude = btn::display::height() / 2; index < amplitude; ++index)
         {
             btn::fixed red_inc = max_red_inc - ((index * max_red_inc) / amplitude);
-            btn::color color(btn::min(16 + red_inc.integer(), 31), 0, 16);
+            btn::color color(btn::min(16 + red_inc.right_shift_integer(), 31), 0, 16);
             colors[(btn::display::height() / 2) + index] = color;
             colors[(btn::display::height() / 2) - index - 1] = color;
         }
@@ -473,7 +473,7 @@ namespace
         for(int index = 0, amplitude = btn::display::height() / 2; index < amplitude; ++index)
         {
             btn::fixed green_dec = (index * max_green_dec) / amplitude;
-            btn::color color(31, 21 - green_dec.integer(), 11);
+            btn::color color(31, 21 - green_dec.right_shift_integer(), 11);
             colors[(btn::display::height() / 2) + index] = color;
             colors[(btn::display::height() / 2) - index - 1] = color;
         }

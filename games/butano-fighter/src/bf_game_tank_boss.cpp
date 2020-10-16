@@ -65,7 +65,7 @@ namespace
         btn::fixed_point bullet_position = _cannon_end_position(bullet_rotation_angle, y);
         btn::fixed_point distance = bullet_position - base_position;
         btn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
-        btn::fixed_point delta_position = aprox_direction_vector(distance.x(), distance.y(), bullet_speed);
+        btn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), bullet_speed);
         enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1),
                                  camera);
     }

@@ -29,20 +29,20 @@ void demo_polygon::update(btn::random& random)
     {
         _vertex_actions.clear();
 
-        int x = _x.integer() + int(random.get() % 32);
-        int y = _y.integer() + int(random.get() % 32);
+        int x = _x.right_shift_integer() + int(random.get() % 32);
+        int y = _y.right_shift_integer() + int(random.get() % 32);
         _vertex_actions.emplace_back(polygon_vertex(0, *this), 32, btn::fixed_point(x, y));
 
-        x = _x.integer() + 32 + int(random.get() % 32);
-        y = _y.integer() + int(random.get() % 32);
+        x = _x.right_shift_integer() + 32 + int(random.get() % 32);
+        y = _y.right_shift_integer() + int(random.get() % 32);
         _vertex_actions.emplace_back(polygon_vertex(1, *this), 32, btn::fixed_point(x, y));
 
-        x = _x.integer() + 32 + int(random.get() % 32);
-        y = _y.integer() + 32 + int(random.get() % 32);
+        x = _x.right_shift_integer() + 32 + int(random.get() % 32);
+        y = _y.right_shift_integer() + 32 + int(random.get() % 32);
         _vertex_actions.emplace_back(polygon_vertex(2, *this), 32, btn::fixed_point(x, y));
 
-        x = _x.integer() + int(random.get() % 32);
-        y = _y.integer() + 32 + int(random.get() % 32);
+        x = _x.right_shift_integer() + int(random.get() % 32);
+        y = _y.right_shift_integer() + 32 + int(random.get() % 32);
         _vertex_actions.emplace_back(polygon_vertex(3, *this), 32, btn::fixed_point(x, y));
     }
 

@@ -41,9 +41,9 @@ intro::intro(btn::sprite_text_generator& text_generator, butano_background& buta
 
     btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-    text_generator.generate(0, -20, "Made with", _text_sprites);
+    text_generator.generate(0, -16, "Made with", _text_sprites);
     text_generator.generate(0, 0, middle_text, _text_sprites);
-    text_generator.generate(0, 20, "github.com/GValiente/butano", _text_sprites);
+    text_generator.generate(0, 16, "github.com/GValiente/butano", _text_sprites);
     text_generator.set_alignment(old_alignment);
 
     for(btn::sprite_ptr& text_sprite : _text_sprites)

@@ -40,6 +40,9 @@ void stats::set_mode(mode_type mode)
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
             _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - (btn::display::height() / 2));
 
+            btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
+            _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+
             int old_bg_priority = _text_generator.bg_priority();
             _text_generator.set_bg_priority(0);
 
@@ -60,6 +63,7 @@ void stats::set_mode(mode_type mode)
             text_stream.append("B");
             _text_generator.generate(text_x, _text_position.y() + (text_height * 2), text, _static_text_sprites);
 
+            _text_generator.set_alignment(old_alignment);
             _text_generator.set_bg_priority(old_bg_priority);
         }
         break;
@@ -104,7 +108,7 @@ void stats::update()
             break;
 
         case mode_type::SIMPLE:
-            text_stream.append(max_cpu_pct.unsigned_integer());
+            text_stream.append(max_cpu_pct.right_shift_integer());
             break;
 
         case mode_type::DETAILED:
@@ -117,11 +121,15 @@ void stats::update()
             break;
         }
 
+        text_stream.append('%');
+
+        btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
         int old_bg_priority = _text_generator.bg_priority();
+        _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
         _text_generator.set_bg_priority(0);
-        text_stream.append("%");
         _text_sprites.clear();
         _text_generator.generate(_text_position, text, _text_sprites);
+        _text_generator.set_alignment(old_alignment);
         _text_generator.set_bg_priority(old_bg_priority);
 
         _max_cpu_usage = 0;

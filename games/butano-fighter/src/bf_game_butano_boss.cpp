@@ -333,8 +333,8 @@ bool butano_boss::_update_dead(const btn::fixed_point&, const btn::camera_ptr& c
 
     if(_sprites.size() > 2)
     {
-        btn::fixed x = _butano_position.x().integer();
-        btn::fixed y = _butano_position.y().integer();
+        btn::fixed x = _butano_position.x().right_shift_integer();
+        btn::fixed y = _butano_position.y().right_shift_integer();
         _movement_counter = 1;
         _sprites.pop_back();
         _butano_position.set_x(x);
@@ -633,7 +633,7 @@ void butano_boss::_shoot_random_bullet(bool down_only, const btn::fixed_point& h
             bullet_y = 1;
         }
 
-        btn::fixed_point delta_position = aprox_direction_vector(bullet_x, bullet_y, bullet_speed);
+        btn::fixed_point delta_position = direction_vector(bullet_x, bullet_y, bullet_speed);
         _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
     }
 }
@@ -795,7 +795,7 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, const b
             {
 
             case 0:
-                _shoot_bullet(enemy_bullet_type::BIG, aprox_direction_vector(0, 1, 0.9), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::BIG, direction_vector(0, 1, 0.9), hero_position, camera,
                               enemy_bullets);
                 ++_bullets_index;
                 break;
@@ -806,9 +806,9 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 break;
 
             case 2:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, camera,
                               enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, camera,
                               enemy_bullets);
                 ++_bullets_index;
                 break;
@@ -819,9 +819,9 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 break;
 
             case 4:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.25, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.25, 1, 1), hero_position, camera,
                               enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.25, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.25, 1, 1), hero_position, camera,
                               enemy_bullets);
                 ++_bullets_index;
                 break;
@@ -832,11 +832,11 @@ void butano_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 break;
 
             case 6:
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(-0.5, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(-0.5, 1, 1), hero_position, camera,
                               enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0.5, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0.5, 1, 1), hero_position, camera,
                               enemy_bullets);
-                _shoot_bullet(enemy_bullet_type::SMALL, aprox_direction_vector(0, 1, 1), hero_position, camera,
+                _shoot_bullet(enemy_bullet_type::SMALL, direction_vector(0, 1, 1), hero_position, camera,
                               enemy_bullets);
                 ++_bullets_index;
                 break;

@@ -80,9 +80,28 @@ public:
         return _data / scale();
     }
 
+    [[nodiscard]] constexpr int right_shift_integer() const
+    {
+        return _data >> Precision;
+    }
+
     [[nodiscard]] constexpr unsigned unsigned_integer() const
     {
         return _data >> Precision;
+    }
+
+    [[nodiscard]] constexpr int round_integer() const
+    {
+        int data = _data;
+
+        if(data >= 0)
+        {
+            return (data + (1 << (Precision - 1))) / scale();
+        }
+        else
+        {
+            return (data - (1 << (Precision - 1))) / scale();
+        }
     }
 
     [[nodiscard]] constexpr int fraction() const

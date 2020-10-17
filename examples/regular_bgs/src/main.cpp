@@ -415,6 +415,9 @@ namespace
             info.update();
             btn::core::update();
         }
+
+        btn::bgs_mosaic::set_stretch(0);
+        btn::blending::set_transparency_alpha(1);
     }
 }
 

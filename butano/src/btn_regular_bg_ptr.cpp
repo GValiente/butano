@@ -288,33 +288,7 @@ void regular_bg_ptr::put_above(const regular_bg_ptr& other)
         return;
     }
 
-    int this_priority = priority();
-    int other_priority = other.priority();
-
-    if(this_priority < other_priority)
-    {
-        return;
-    }
-
-    if(this_priority > other_priority)
-    {
-        set_priority(other_priority);
-    }
-
-    int this_z_order = z_order();
-    int other_z_order = other.z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        set_z_order(other_z_order);
-    }
-
-    bgs_manager::swap_order(_handle, other._handle);
+    bgs_manager::put_above(_handle, other._handle);
 }
 
 void regular_bg_ptr::put_above(const sprite_ptr& sprite_ptr)

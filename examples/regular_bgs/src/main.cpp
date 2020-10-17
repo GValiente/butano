@@ -263,9 +263,9 @@ namespace
     void regular_bgs_put_above_scene(btn::sprite_text_generator& text_generator)
     {
         constexpr const btn::string_view info_text_lines[] = {
-            "B: put green BG above red BG",
-            "A: put blue BG above red BG",
-            "L: put yellow BG above red BG",
+            "B: put blue BG above red BG",
+            "A: put yellow BG above red BG",
+            "L: put green BG above red BG",
             "R: put red BG above all",
             "",
             "START: go to next scene",
@@ -282,17 +282,17 @@ namespace
         {
             if(btn::keypad::b_pressed())
             {
-                green_bg.put_above(*red_bg);
+                blue_bg.put_above(*red_bg);
             }
 
             if(btn::keypad::a_pressed())
             {
-                blue_bg.put_above(*red_bg);
+                yellow_bg.put_above(*red_bg);
             }
 
             if(btn::keypad::l_pressed())
             {
-                yellow_bg.put_above(*red_bg);
+                green_bg.put_above(*red_bg);
             }
 
             if(btn::keypad::r_pressed())

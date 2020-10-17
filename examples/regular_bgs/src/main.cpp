@@ -3,8 +3,11 @@
 #include "btn_keypad.h"
 #include "btn_display.h"
 #include "btn_optional.h"
+#include "btn_blending.h"
+#include "btn_bgs_mosaic.h"
 #include "btn_bg_palettes.h"
 #include "btn_regular_bg_actions.h"
+#include "btn_regular_bg_builder.h"
 #include "btn_regular_bg_attributes.h"
 #include "btn_sprite_text_generator.h"
 #include "btn_regular_bg_position_hblank_effect_ptr.h"
@@ -387,6 +390,32 @@ namespace
             btn::core::update();
         }
     }
+
+    void regular_bgs_builder_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Regular BGs builder", info_text_lines, text_generator);
+
+        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        btn::bgs_mosaic::set_stretch(0.2);
+        btn::blending::set_transparency_alpha(0.6);
+
+        btn::regular_bg_builder builder(btn::regular_bg_items::blue);
+        builder.set_position(30, 10);
+        builder.set_mosaic_enabled(true);
+        builder.set_blending_enabled(true);
+
+        btn::regular_bg_ptr blue_bg = builder.build();
+
+        while(! btn::keypad::start_pressed())
+        {
+            info.update();
+            btn::core::update();
+        }
+    }
 }
 
 int main()
@@ -426,6 +455,9 @@ int main()
         btn::core::update();
 
         regular_bgs_attributes_hblank_effect_scene(text_generator);
+        btn::core::update();
+
+        regular_bgs_builder_scene(text_generator);
         btn::core::update();
     }
 }

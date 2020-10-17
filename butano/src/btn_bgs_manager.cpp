@@ -456,11 +456,9 @@ void put_above(id_type id, id_type other_id)
 {
     auto item = static_cast<item_type*>(id);
     auto other_item = static_cast<item_type*>(other_id);
-    sort_key& this_sort_key = item->bg_sort_key;
-    sort_key& other_sort_key = other_item->bg_sort_key;
-    int this_priority = this_sort_key.priority();
+    sort_key other_sort_key = other_item->bg_sort_key;
+    int this_priority = item->bg_sort_key.priority();
     int other_priority = other_sort_key.priority();
-    bool items_vector_updated = false;
 
     if(this_priority < other_priority)
     {
@@ -470,10 +468,9 @@ void put_above(id_type id, id_type other_id)
     if(this_priority > other_priority)
     {
         set_priority(id, other_priority);
-        items_vector_updated = true;
     }
 
-    int this_z_order = this_sort_key.z_order();
+    int this_z_order = item->bg_sort_key.z_order();
     int other_z_order = other_sort_key.z_order();
 
     if(this_z_order < other_z_order)
@@ -484,20 +481,19 @@ void put_above(id_type id, id_type other_id)
     if(this_z_order > other_z_order)
     {
         set_z_order(id, other_z_order);
-        items_vector_updated = true;
     }
-
-    if(! items_vector_updated)
+    else
     {
         pair<int, int> indexes = _indexes(id, other_id);
-        ivector<item_type*>& items_vector = data.items_vector;
-        auto items_vector_begin = items_vector.begin();
-        items_vector.erase(items_vector_begin + indexes.first);
-        items_vector.insert(items_vector_begin + indexes.second, item);
 
-        if(item->visible || other_item->visible)
+        if(indexes.first < indexes.second)
         {
-            data.rebuild_handles = true;
+            swap(data.items_vector[indexes.first], data.items_vector[indexes.second]);
+
+            if(item->visible || other_item->visible)
+            {
+                data.rebuild_handles = true;
+            }
         }
     }
 }

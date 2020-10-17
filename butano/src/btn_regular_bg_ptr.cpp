@@ -283,12 +283,10 @@ bool regular_bg_ptr::above(const sprite_ptr& sprite_ptr) const
 
 void regular_bg_ptr::put_above(const regular_bg_ptr& other)
 {
-    if(*this == other)
+    if(*this != other)
     {
-        return;
+        bgs_manager::put_above(_handle, other._handle);
     }
-
-    bgs_manager::put_above(_handle, other._handle);
 }
 
 void regular_bg_ptr::put_above(const sprite_ptr& sprite_ptr)

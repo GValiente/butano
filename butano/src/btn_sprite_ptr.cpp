@@ -550,33 +550,7 @@ optional<bool> sprite_ptr::above(const sprite_ptr& other) const
         return false;
     }
 
-    int this_priority = bg_priority();
-    int other_priority = other.bg_priority();
-
-    if(this_priority < other_priority)
-    {
-        return true;
-    }
-
-    if(this_priority > other_priority)
-    {
-        return false;
-    }
-
-    int this_z_order = z_order();
-    int other_z_order = other.z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return true;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        return false;
-    }
-
-    return nullopt;
+    return sprites_manager::above(_handle, other._handle);
 }
 
 bool sprite_ptr::above(const regular_bg_ptr& bg_ptr) const
@@ -586,38 +560,10 @@ bool sprite_ptr::above(const regular_bg_ptr& bg_ptr) const
 
 void sprite_ptr::put_above(const sprite_ptr& other)
 {
-    if(*this == other)
+    if(*this != other)
     {
-        return;
+        sprites_manager::put_above(_handle, other._handle);
     }
-
-    int this_priority = bg_priority();
-    int other_priority = other.bg_priority();
-
-    if(this_priority < other_priority)
-    {
-        return;
-    }
-
-    if(this_priority > other_priority)
-    {
-        set_bg_priority(other_priority);
-    }
-
-    int this_z_order = z_order();
-    int other_z_order = other.z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        set_z_order(other_z_order);
-    }
-
-    sprites_manager::put_in_front_of_sort_layer(_handle);
 }
 
 void sprite_ptr::put_above(const regular_bg_ptr& bg_ptr)

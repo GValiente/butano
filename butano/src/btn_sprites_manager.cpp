@@ -576,13 +576,74 @@ void set_z_order(id_type id, int z_order)
     }
 }
 
-void put_in_front_of_sort_layer(id_type id)
+optional<bool> above(id_type id, id_type other_id)
 {
     auto item = static_cast<item_type*>(id);
+    auto other_item = static_cast<item_type*>(other_id);
+    int this_priority = item->bg_priority();
+    int other_priority = other_item->bg_priority();
 
-    if(sorted_sprites::put_in_front_of_layer(*item))
+    if(this_priority < other_priority)
     {
-        data.rebuild_handles = true;
+        return true;
+    }
+
+    if(this_priority > other_priority)
+    {
+        return false;
+    }
+
+    int this_z_order = item->z_order();
+    int other_z_order = other_item->z_order();
+
+    if(this_z_order < other_z_order)
+    {
+        return true;
+    }
+
+    if(this_z_order > other_z_order)
+    {
+        return false;
+    }
+
+    return nullopt;
+}
+
+void put_above(id_type id, id_type other_id)
+{
+    auto item = static_cast<item_type*>(id);
+    auto other_item = static_cast<item_type*>(other_id);
+    int this_priority = item->bg_priority();
+    int other_priority = other_item->bg_priority();
+
+    if(this_priority < other_priority)
+    {
+        return;
+    }
+
+    if(this_priority > other_priority)
+    {
+        set_bg_priority(id, other_priority);
+    }
+
+    int this_z_order = item->z_order();
+    int other_z_order = other_item->z_order();
+
+    if(this_z_order < other_z_order)
+    {
+        return;
+    }
+
+    if(this_z_order > other_z_order)
+    {
+        set_z_order(id, other_z_order);
+    }
+    else
+    {
+        if(sorted_sprites::put_in_front_of_layer(*item))
+        {
+            data.rebuild_handles = true;
+        }
     }
 }
 

@@ -74,10 +74,10 @@ namespace
 
     constexpr const int _max_channels = BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BTN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
-    alignas(sizeof(int)) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[
+    alignas(int) BTN_DATA_EWRAM uint8_t maxmod_engine_buffer[
             _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
 
-    alignas(sizeof(int)) uint8_t maxmod_mixing_buffer[_mix_length()];
+    alignas(int) uint8_t maxmod_mixing_buffer[_mix_length()];
 
 
     void _check_sounds_queue()

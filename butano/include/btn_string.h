@@ -1096,7 +1096,7 @@ public:
     }
 
 private:
-    alignas(alignof(int)) char _buffer[MaxSize + 1];
+    alignas(int) char _buffer[MaxSize + 1];
 };
 
 

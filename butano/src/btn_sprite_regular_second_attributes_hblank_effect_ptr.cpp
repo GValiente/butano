@@ -15,7 +15,7 @@ namespace btn
 
 namespace
 {
-    class alignas(alignof(int)) second_attributes_last_value_type
+    class alignas(int) second_attributes_last_value_type
     {
 
     public:

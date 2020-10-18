@@ -12,7 +12,7 @@ namespace btn
 
 namespace
 {
-    struct alignas(alignof(int)) palette_target_id
+    struct alignas(int) palette_target_id
     {
         union
         {

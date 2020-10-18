@@ -196,8 +196,8 @@ private:
     };
 
     palette _palettes[hw::palettes::count()] = {};
-    alignas(alignof(int)) color _initial_colors[hw::palettes::colors()] = {};
-    alignas(alignof(int)) color _final_colors[hw::palettes::colors()] = {};
+    alignas(int) color _initial_colors[hw::palettes::colors()] = {};
+    alignas(int) color _final_colors[hw::palettes::colors()] = {};
     optional<color> _transparent_color;
     fixed _brightness;
     fixed _contrast;

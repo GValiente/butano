@@ -30,8 +30,8 @@ namespace
         int target_id = 0;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
-        alignas(alignof(int)) uint16_t output_values_a[display::height()] = {};
-        alignas(alignof(int)) uint16_t output_values_b[display::height()] = {};
+        alignas(int) uint16_t output_values_a[display::height()] = {};
+        alignas(int) uint16_t output_values_b[display::height()] = {};
         bool visible: 1 = false;
         bool update: 1 = false;
         bool on_screen: 1 = false;

@@ -416,7 +416,7 @@ public:
     }
 
 private:
-    alignas(alignof(Type)) char _storage[sizeof(Type)];
+    alignas(Type) char _storage[sizeof(Type)];
     bool _valid;
 
     [[nodiscard]] const Type& _value_impl() const

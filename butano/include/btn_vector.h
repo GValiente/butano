@@ -740,7 +740,7 @@ public:
     }
 
 private:
-    alignas(alignof(value_type)) char _storage_buffer[sizeof(value_type) * MaxSize];
+    alignas(value_type) char _storage_buffer[sizeof(value_type) * MaxSize];
 };
 
 }

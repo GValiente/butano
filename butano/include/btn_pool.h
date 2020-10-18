@@ -65,7 +65,7 @@ public:
     }
 
 private:
-    alignas(alignof(Type)) char _buffer[sizeof(typename base_type::element) * MaxSize];
+    alignas(Type) char _buffer[sizeof(typename base_type::element) * MaxSize];
 };
 
 }

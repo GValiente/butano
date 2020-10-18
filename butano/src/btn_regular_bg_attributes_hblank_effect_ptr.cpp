@@ -67,7 +67,7 @@ namespace
         }
 
     private:
-        class alignas(alignof(int)) last_value_type
+        class alignas(int) last_value_type
         {
 
         public:

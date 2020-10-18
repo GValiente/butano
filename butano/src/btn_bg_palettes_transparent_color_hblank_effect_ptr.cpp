@@ -1,80 +1,19 @@
 #include "btn_bg_palettes_transparent_color_hblank_effect_ptr.h"
 
+#include "btn_span.h"
+#include "btn_color.h"
 #include "btn_display.h"
-#include "btn_palettes_bank.h"
-#include "btn_palettes_manager.h"
-#include "btn_hblank_effect_handler.h"
+#include "btn_optional.h"
 #include "btn_hblank_effects_manager.h"
-#include "../hw/include/btn_hw_palettes.h"
 
 namespace btn
 {
-
-namespace
-{
-    class transparent_color_hblank_effect_handler : public hblank_effect_handler
-    {
-
-    public:
-        transparent_color_hblank_effect_handler() = default;
-
-        void setup_target(int, iany&) final
-        {
-        }
-
-        [[nodiscard]] bool target_visible(int) final
-        {
-            return true;
-        }
-
-        [[nodiscard]] bool target_updated(int, iany&) final
-        {
-            if(optional<palettes_bank::commit_data> commit_data =
-                    palettes_manager::bg_palettes_bank().retrieve_commit_data())
-            {
-                return commit_data->offset == 0;
-            }
-
-            return false;
-        }
-
-        [[nodiscard]] uint16_t* output_register(int) final
-        {
-            return hw::palettes::bg_transparent_color_register();
-        }
-
-        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
-        {
-            palettes_manager::bg_palettes_bank().fill_hblank_effect_colors(
-                        reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
-        }
-
-        void show(int) final
-        {
-        }
-
-        void cleanup(int) final
-        {
-            palettes_manager::bg_palettes_bank().reload(0);
-        }
-    };
-
-
-    class static_data
-    {
-
-    public:
-        transparent_color_hblank_effect_handler transparent_color_handler;
-    };
-
-    BTN_DATA_EWRAM static_data data;
-}
 
 bg_palettes_transparent_color_hblank_effect_ptr bg_palettes_transparent_color_hblank_effect_ptr::create(
         const span<const color>& colors_ref)
 {
     int id = hblank_effects_manager::create(colors_ref.data(), colors_ref.size(), 0,
-                                            data.transparent_color_handler);
+                                            hblank_effects_manager::handler_type::BG_PALETTES_TRANSPARENT_COLOR);
     return bg_palettes_transparent_color_hblank_effect_ptr(id);
 }
 
@@ -82,7 +21,7 @@ optional<bg_palettes_transparent_color_hblank_effect_ptr> bg_palettes_transparen
         const span<const color>& colors_ref)
 {
     int id = hblank_effects_manager::create_optional(colors_ref.data(), colors_ref.size(), 0,
-                                                     data.transparent_color_handler);
+                                                     hblank_effects_manager::handler_type::BG_PALETTES_TRANSPARENT_COLOR);
     optional<bg_palettes_transparent_color_hblank_effect_ptr> result;
 
     if(id >= 0)

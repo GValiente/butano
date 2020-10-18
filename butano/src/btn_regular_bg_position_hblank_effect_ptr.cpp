@@ -1,140 +1,19 @@
 #include "btn_regular_bg_position_hblank_effect_ptr.h"
 
-#include "btn_any.h"
 #include "btn_span.h"
+#include "btn_fixed.h"
 #include "btn_display.h"
 #include "btn_optional.h"
-#include "btn_fixed_point.h"
-#include "btn_bgs_manager.h"
-#include "btn_hblank_effect_handler.h"
 #include "btn_hblank_effects_manager.h"
-#include "../hw/include/btn_hw_bgs.h"
 
 namespace btn
 {
-
-namespace
-{
-    class horizontal_position_hblank_effect_handler : public hblank_effect_handler
-    {
-
-    public:
-        horizontal_position_hblank_effect_handler() = default;
-
-        void setup_target(int, iany& target_last_value) final
-        {
-            target_last_value = 0;
-        }
-
-        [[nodiscard]] bool target_visible(int target_id) final
-        {
-            auto handle = reinterpret_cast<void*>(target_id);
-            return bgs_manager::hw_id(handle).has_value();
-        }
-
-        [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
-        {
-            int& last_value = target_last_value.value<int>();
-            auto handle = reinterpret_cast<void*>(target_id);
-            int new_value = bgs_manager::hw_position(handle).x();
-            bool updated = last_value != new_value;
-            last_value = new_value;
-            return updated;
-        }
-
-        [[nodiscard]] uint16_t* output_register(int target_id) final
-        {
-            auto handle = reinterpret_cast<void*>(target_id);
-            return hw::bgs::regular_horizontal_position_register(*bgs_manager::hw_id(handle));
-        }
-
-        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
-        {
-            int last_value = target_last_value.value<int>();
-            auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
-            bgs_manager::fill_hblank_effect_horizontal_positions(last_value, fixed_values_ptr, output_values_ptr);
-        }
-
-        void show(int) final
-        {
-        }
-
-        void cleanup(int) final
-        {
-            bgs_manager::reload();
-        }
-    };
-
-
-    class vertical_position_hblank_effect_handler : public hblank_effect_handler
-    {
-
-    public:
-        vertical_position_hblank_effect_handler() = default;
-
-        void setup_target(int, iany& target_last_value) final
-        {
-            target_last_value = 0;
-        }
-
-        [[nodiscard]] bool target_visible(int target_id) final
-        {
-            auto handle = reinterpret_cast<void*>(target_id);
-            return bgs_manager::hw_id(handle).has_value();
-        }
-
-        [[nodiscard]] bool target_updated(int target_id, iany& target_last_value) final
-        {
-            int& last_value = target_last_value.value<int>();
-            auto handle = reinterpret_cast<void*>(target_id);
-            int new_value = bgs_manager::hw_position(handle).y();
-            bool updated = last_value != new_value;
-            last_value = new_value;
-            return updated;
-        }
-
-        [[nodiscard]] uint16_t* output_register(int target_id) final
-        {
-            auto handle = reinterpret_cast<void*>(target_id);
-            return hw::bgs::regular_vertical_position_register(*bgs_manager::hw_id(handle));
-        }
-
-        void write_output_values(int, const iany& target_last_value, const void* input_values_ptr,
-                                 uint16_t* output_values_ptr) final
-        {
-            int last_value = target_last_value.value<int>();
-            auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
-            bgs_manager::fill_hblank_effect_vertical_positions(last_value, fixed_values_ptr, output_values_ptr);
-        }
-
-        void show(int) final
-        {
-        }
-
-        void cleanup(int) final
-        {
-            bgs_manager::reload();
-        }
-    };
-
-
-    class static_data
-    {
-
-    public:
-        horizontal_position_hblank_effect_handler horizontal_position_handler;
-        vertical_position_hblank_effect_handler vertical_position_handler;
-    };
-
-    BTN_DATA_EWRAM static_data data;
-}
 
 regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::create_horizontal(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                                            data.horizontal_position_handler);
+                                            hblank_effects_manager::handler_type::REGULAR_BG_HORIZONTAL_POSITION);
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
@@ -142,7 +21,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                                                     data.horizontal_position_handler);
+                                                     hblank_effects_manager::handler_type::REGULAR_BG_HORIZONTAL_POSITION);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)
@@ -157,7 +36,7 @@ regular_bg_position_hblank_effect_ptr regular_bg_position_hblank_effect_ptr::cre
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                                            data.vertical_position_handler);
+                                            hblank_effects_manager::handler_type::REGULAR_BG_VERTICAL_POSITION);
     return regular_bg_position_hblank_effect_ptr(id, move(bg));
 }
 
@@ -165,7 +44,7 @@ optional<regular_bg_position_hblank_effect_ptr> regular_bg_position_hblank_effec
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                                                     data.vertical_position_handler);
+                                                     hblank_effects_manager::handler_type::REGULAR_BG_VERTICAL_POSITION);
     optional<regular_bg_position_hblank_effect_ptr> result;
 
     if(id >= 0)

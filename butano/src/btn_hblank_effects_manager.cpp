@@ -4,9 +4,31 @@
 #include "btn_vector.h"
 #include "btn_display.h"
 #include "btn_alignment.h"
-#include "btn_hblank_effect_handler.h"
 #include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
+
+#include "btn_bg_palette_color_hblank_effect_handler.h"
+#include "btn_bg_palettes_transparent_color_hblank_effect_handler.h"
+#include "btn_blending_fade_alpha_hblank_effect_handler.h"
+#include "btn_blending_transparency_attributes_hblank_effect_handler.h"
+#include "btn_green_swap_hblank_effect_handler.h"
+#include "btn_mosaic_attributes_hblank_effect_handler.h"
+#include "btn_rect_window_horizontal_boundaries_hblank_effect_handler.h"
+#include "btn_rect_window_vertical_boundaries_hblank_effect_handler.h"
+#include "btn_regular_bg_attributes_hblank_effect_handler.h"
+#include "btn_regular_bg_horizontal_position_hblank_effect_handler.h"
+#include "btn_regular_bg_vertical_position_hblank_effect_handler.h"
+#include "btn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
+#include "btn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
+#include "btn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
+#include "btn_sprite_affine_mat_pd_register_hblank_effect_handler.h"
+#include "btn_sprite_first_attributes_hblank_effect_handler.h"
+#include "btn_sprite_regular_second_attributes_hblank_effect_handler.h"
+#include "btn_sprite_affine_second_attributes_hblank_effect_handler.h"
+#include "btn_sprite_third_attributes_hblank_effect_handler.h"
+#include "btn_sprite_horizontal_position_hblank_effect_handler.h"
+#include "btn_sprite_vertical_position_hblank_effect_handler.h"
+#include "btn_sprite_palette_color_hblank_effect_handler.h"
 
 namespace btn::hblank_effects_manager
 {
@@ -25,31 +47,473 @@ namespace
 
     public:
         last_value_type target_last_value;
-        hblank_effect_handler* handler = nullptr;
         const void* values_ptr = nullptr;
         int target_id = 0;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
         alignas(int) uint16_t output_values_a[display::height()] = {};
         alignas(int) uint16_t output_values_b[display::height()] = {};
+        handler_type handler;
         bool visible: 1 = false;
         bool update: 1 = false;
         bool on_screen: 1 = false;
         bool output_values_a_active: 1 = false;
         bool output_values_written: 1 = false;
 
+        void setup_target()
+        {
+            switch(handler)
+            {
+
+            case handler_type::BG_PALETTE_COLOR:
+                bg_palette_color_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+                bg_palettes_transparent_color_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::BLENDING_FADE_ALPHA:
+                blending_fade_alpha_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+                blending_transparency_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::GREEN_SWAP:
+                green_swap_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::MOSAIC_ATTRIBUTES:
+                mosaic_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                rect_window_horizontal_boundaries_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                rect_window_vertical_boundaries_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::REGULAR_BG_ATTRIBUTES:
+                regular_bg_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+                regular_bg_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::REGULAR_BG_VERTICAL_POSITION:
+                regular_bg_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pa_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+                sprite_affine_mat_pa_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pb_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+                sprite_affine_mat_pb_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pc_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+                sprite_affine_mat_pc_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pd_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+                sprite_affine_mat_pd_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_FIRST_ATTRIBUTES:
+                sprite_first_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+                sprite_regular_second_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+                sprite_affine_second_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_THIRD_ATTRIBUTES:
+                sprite_third_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_HORIZONTAL_POSITION:
+                sprite_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_VERTICAL_POSITION:
+                sprite_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::SPRITE_PALETTE_COLOR:
+                sprite_palette_color_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            default:
+                BTN_ERROR("Unknown handler: ", int(handler));
+                break;
+            }
+        }
+
         [[nodiscard]] bool check_update()
+        {
+            switch(handler)
+            {
+
+            case handler_type::BG_PALETTE_COLOR:
+                return _check_update_impl<bg_palette_color_hblank_effect_handler>();
+
+            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+                return _check_update_impl<bg_palettes_transparent_color_hblank_effect_handler>();
+
+            case handler_type::BLENDING_FADE_ALPHA:
+                return _check_update_impl<blending_fade_alpha_hblank_effect_handler>();
+
+            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+                return _check_update_impl<blending_transparency_attributes_hblank_effect_handler>();
+
+            case handler_type::GREEN_SWAP:
+                return _check_update_impl<green_swap_hblank_effect_handler>();
+
+            case handler_type::MOSAIC_ATTRIBUTES:
+                return _check_update_impl<mosaic_attributes_hblank_effect_handler>();
+
+            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                return _check_update_impl<rect_window_horizontal_boundaries_hblank_effect_handler>();
+
+            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                return _check_update_impl<rect_window_vertical_boundaries_hblank_effect_handler>();
+
+            case handler_type::REGULAR_BG_ATTRIBUTES:
+                return _check_update_impl<regular_bg_attributes_hblank_effect_handler>();
+
+            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+                return _check_update_impl<regular_bg_horizontal_position_hblank_effect_handler>();
+
+            case handler_type::REGULAR_BG_VERTICAL_POSITION:
+                return _check_update_impl<regular_bg_vertical_position_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+                return _check_update_impl<sprite_affine_mat_pa_register_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+                return _check_update_impl<sprite_affine_mat_pa_register_values_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+                return _check_update_impl<sprite_affine_mat_pb_register_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+                return _check_update_impl<sprite_affine_mat_pb_register_values_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+                return _check_update_impl<sprite_affine_mat_pc_register_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+                return _check_update_impl<sprite_affine_mat_pc_register_values_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+                return _check_update_impl<sprite_affine_mat_pd_register_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+                return _check_update_impl<sprite_affine_mat_pd_register_values_hblank_effect_handler>();
+
+            case handler_type::SPRITE_FIRST_ATTRIBUTES:
+                return _check_update_impl<sprite_first_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+                return _check_update_impl<sprite_regular_second_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+                return _check_update_impl<sprite_affine_second_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_THIRD_ATTRIBUTES:
+                return _check_update_impl<sprite_third_attributes_hblank_effect_handler>();
+
+            case handler_type::SPRITE_HORIZONTAL_POSITION:
+                return _check_update_impl<sprite_horizontal_position_hblank_effect_handler>();
+
+            case handler_type::SPRITE_VERTICAL_POSITION:
+                return _check_update_impl<sprite_vertical_position_hblank_effect_handler>();
+
+            case handler_type::SPRITE_PALETTE_COLOR:
+                return _check_update_impl<sprite_palette_color_hblank_effect_handler>();
+
+            default:
+                BTN_ERROR("Unknown handler: ", int(handler));
+                return false;
+            }
+        }
+
+        void setup_entry(hw_entry& entry) const
+        {
+            entry.src = output_values_a_active ? output_values_a : output_values_b;
+            entry.dest = output_register;
+        }
+
+        void show()
+        {
+            switch(handler)
+            {
+
+            case handler_type::BG_PALETTE_COLOR:
+                bg_palette_color_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+                bg_palettes_transparent_color_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::BLENDING_FADE_ALPHA:
+                blending_fade_alpha_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+                blending_transparency_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::GREEN_SWAP:
+                green_swap_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::MOSAIC_ATTRIBUTES:
+                mosaic_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                rect_window_horizontal_boundaries_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                rect_window_vertical_boundaries_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_ATTRIBUTES:
+                regular_bg_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+                regular_bg_horizontal_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_VERTICAL_POSITION:
+                regular_bg_vertical_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pa_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+                sprite_affine_mat_pa_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pb_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+                sprite_affine_mat_pb_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pc_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+                sprite_affine_mat_pc_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pd_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+                sprite_affine_mat_pd_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_FIRST_ATTRIBUTES:
+                sprite_first_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+                sprite_regular_second_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+                sprite_affine_second_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_THIRD_ATTRIBUTES:
+                sprite_third_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_HORIZONTAL_POSITION:
+                sprite_horizontal_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_VERTICAL_POSITION:
+                sprite_vertical_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::SPRITE_PALETTE_COLOR:
+                sprite_palette_color_hblank_effect_handler::show(target_id);
+                break;
+
+            default:
+                BTN_ERROR("Unknown handler: ", int(handler));
+                break;
+            }
+        }
+
+        void cleanup()
+        {
+            switch(handler)
+            {
+
+            case handler_type::BG_PALETTE_COLOR:
+                bg_palette_color_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+                bg_palettes_transparent_color_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::BLENDING_FADE_ALPHA:
+                blending_fade_alpha_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+                blending_transparency_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::GREEN_SWAP:
+                green_swap_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::MOSAIC_ATTRIBUTES:
+                mosaic_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                rect_window_horizontal_boundaries_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                rect_window_vertical_boundaries_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_ATTRIBUTES:
+                regular_bg_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+                regular_bg_horizontal_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::REGULAR_BG_VERTICAL_POSITION:
+                regular_bg_vertical_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pa_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+                sprite_affine_mat_pa_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pb_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+                sprite_affine_mat_pb_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pc_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+                sprite_affine_mat_pc_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+                sprite_affine_mat_pd_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+                sprite_affine_mat_pd_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_FIRST_ATTRIBUTES:
+                sprite_first_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+                sprite_regular_second_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+                sprite_affine_second_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_THIRD_ATTRIBUTES:
+                sprite_third_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_HORIZONTAL_POSITION:
+                sprite_horizontal_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_VERTICAL_POSITION:
+                sprite_vertical_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::SPRITE_PALETTE_COLOR:
+                sprite_palette_color_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            default:
+                BTN_ERROR("Unknown handler: ", int(handler));
+                break;
+            }
+        }
+
+    private:
+        template<class Handler>
+        [[nodiscard]] bool _check_update_impl()
         {
             bool updated = update;
             update = false;
 
             bool old_on_screen = on_screen;
-            bool new_on_screen = handler->target_visible(target_id);
+            bool new_on_screen = Handler::target_visible(target_id);
             on_screen = new_on_screen;
 
             if(new_on_screen)
             {
-                updated |= handler->target_updated(target_id, target_last_value);
+                updated |= Handler::target_updated(target_id, target_last_value);
 
                 if(! output_values_written)
                 {
@@ -72,32 +536,16 @@ namespace
                         output_values_a_active = true;
                     }
 
-                    handler->write_output_values(target_id, target_last_value, values_ptr, output_values_ptr);
+                    Handler::write_output_values(target_id, target_last_value, values_ptr, output_values_ptr);
                 }
 
                 uint16_t* old_output_register = output_register;
-                output_register = handler->output_register(target_id);
+                output_register = Handler::output_register(target_id);
                 updated |= old_output_register != output_register;
             }
 
             updated |= old_on_screen != new_on_screen;
             return updated;
-        }
-
-        void setup_entry(hw_entry& entry) const
-        {
-            entry.src = output_values_a_active ? output_values_a : output_values_b;
-            entry.dest = output_register;
-        }
-
-        void show()
-        {
-            handler->show(target_id);
-        }
-
-        void cleanup()
-        {
-            handler->cleanup(target_id);
         }
     };
 
@@ -152,22 +600,22 @@ namespace
         }
     }
 
-    [[nodiscard]] int _create(const void* values_ptr, int target_id, hblank_effect_handler& handler)
+    [[nodiscard]] int _create(const void* values_ptr, int target_id, handler_type handler)
     {
         int item_index = external_data.free_item_indexes.back();
         external_data.free_item_indexes.pop_back();
 
         item_type& new_item = external_data.items[item_index];
-        new_item.handler = &handler;
         new_item.values_ptr = values_ptr;
         new_item.target_id = target_id;
         new_item.usages = 1;
         new_item.output_register = nullptr;
+        new_item.handler = handler;
         new_item.visible = true;
         new_item.update = true;
         new_item.on_screen = false;
         new_item.output_values_written = false;
-        handler.setup_target(target_id, new_item.target_last_value);
+        new_item.setup_target();
 
         _update_visible_item_index(item_index);
         external_data.update = true;
@@ -212,8 +660,7 @@ void disable()
     }
 }
 
-int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
-           hblank_effect_handler& handler)
+int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
     BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
@@ -223,8 +670,7 @@ int create(const void* values_ptr, [[maybe_unused]] int values_count, int target
     return _create(values_ptr, target_id, handler);
 }
 
-int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id,
-                    hblank_effect_handler& handler)
+int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
 {
     BTN_ASSERT(values_ptr, "Values ptr is null");
     BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");

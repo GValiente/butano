@@ -1,0 +1,70 @@
+#ifndef BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
+#define BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
+
+#include "btn_any_fwd.h"
+#include "btn_palettes_bank.h"
+#include "btn_palettes_manager.h"
+#include "btn_palette_target_id.h"
+#include "../hw/include/btn_hw_palettes.h"
+
+namespace btn
+{
+
+class sprite_palette_color_hblank_effect_handler
+{
+
+public:
+    static void setup_target(int, iany&)
+    {
+    }
+
+    [[nodiscard]] static bool target_visible(int)
+    {
+        return true;
+    }
+
+    [[nodiscard]] static bool target_updated(int target_id, iany&)
+    {
+        if(optional<palettes_bank::commit_data> commit_data =
+                palettes_manager::sprite_palettes_bank().retrieve_commit_data())
+        {
+            palette_target_id palette_target_id(target_id);
+            int target_color = palette_target_id.params.final_color_index;
+            int first_color = commit_data->offset;
+            int last_color = first_color + commit_data->count - 1;
+            return target_color >= first_color && target_color <= last_color;
+        }
+
+        return false;
+    }
+
+    [[nodiscard]] static uint16_t* output_register(int target_id)
+    {
+        palette_target_id palette_target_id(target_id);
+        return hw::palettes::sprite_color_register(palette_target_id.params.final_color_index);
+    }
+
+    static void write_output_values(int target_id, const iany&, const void* input_values_ptr,
+                                    uint16_t* output_values_ptr)
+    {
+        palette_target_id palette_target_id(target_id);
+        int palette_id = palette_target_id.params.palette_id;
+        palettes_manager::sprite_palettes_bank().fill_hblank_effect_colors(
+                    palette_id, reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
+    }
+
+    static void show(int)
+    {
+    }
+
+    static void cleanup(int target_id)
+    {
+        palette_target_id palette_target_id(target_id);
+        int palette_id = palette_target_id.params.palette_id;
+        palettes_manager::bg_palettes_bank().reload(palette_id);
+    }
+};
+
+}
+
+#endif

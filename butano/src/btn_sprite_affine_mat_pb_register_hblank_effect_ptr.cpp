@@ -1,127 +1,19 @@
 #include "btn_sprite_affine_mat_pb_register_hblank_effect_ptr.h"
 
-#include "btn_any.h"
 #include "btn_span.h"
-#include "btn_memory.h"
 #include "btn_display.h"
 #include "btn_optional.h"
-#include "btn_hblank_effect_handler.h"
+#include "btn_sprite_affine_mat_attributes.h"
 #include "btn_hblank_effects_manager.h"
-#include "btn_sprite_affine_mats_manager.h"
-#include "../hw/include/btn_hw_sprite_affine_mats.h"
 
 namespace btn
 {
-
-namespace
-{
-    class pb_attributes_hblank_effect_handler : public hblank_effect_handler
-    {
-
-    public:
-        pb_attributes_hblank_effect_handler() = default;
-
-        void setup_target(int, iany&) final
-        {
-        }
-
-        [[nodiscard]] bool target_visible(int) final
-        {
-            return true;
-        }
-
-        [[nodiscard]] bool target_updated(int, iany&) final
-        {
-            return false;
-        }
-
-        [[nodiscard]] uint16_t* output_register(int target_id) final
-        {
-            int16_t* result = hw::sprite_affine_mats::pb_register(target_id);
-            return reinterpret_cast<uint16_t*>(result);
-        }
-
-        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
-        {
-            auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
-
-            for(int index = 0; index < display::height(); ++index)
-            {
-                output_values_ptr[index] = uint16_t(attributes_ptr[index].pb_register_value());
-            }
-        }
-
-        void show(int) final
-        {
-        }
-
-        void cleanup(int target_id) final
-        {
-            sprite_affine_mats_manager::reload(target_id);
-        }
-    };
-
-
-    class pb_values_hblank_effect_handler : public hblank_effect_handler
-    {
-
-    public:
-        pb_values_hblank_effect_handler() = default;
-
-        void setup_target(int, iany&) final
-        {
-        }
-
-        [[nodiscard]] bool target_visible(int) final
-        {
-            return true;
-        }
-
-        [[nodiscard]] bool target_updated(int, iany&) final
-        {
-            return false;
-        }
-
-        [[nodiscard]] uint16_t* output_register(int target_id) final
-        {
-            int16_t* result = hw::sprite_affine_mats::pb_register(target_id);
-            return reinterpret_cast<uint16_t*>(result);
-        }
-
-        void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr) final
-        {
-            auto int_source = static_cast<const unsigned*>(input_values_ptr);
-            auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
-            memory::copy(*int_source, display::height() / 2, *int_destination);
-        }
-
-        void show(int) final
-        {
-        }
-
-        void cleanup(int target_id) final
-        {
-            sprite_affine_mats_manager::reload(target_id);
-        }
-    };
-
-
-    class static_data
-    {
-
-    public:
-        pb_attributes_hblank_effect_handler attributes_handler;
-        pb_values_hblank_effect_handler values_handler;
-    };
-
-    BTN_DATA_EWRAM static_data data;
-}
 
 sprite_affine_mat_pb_register_hblank_effect_ptr sprite_affine_mat_pb_register_hblank_effect_ptr::create(
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
-                                            data.attributes_handler);
+                                            hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES);
     return sprite_affine_mat_pb_register_hblank_effect_ptr(id, true, move(affine_mat));
 }
 
@@ -129,7 +21,7 @@ sprite_affine_mat_pb_register_hblank_effect_ptr sprite_affine_mat_pb_register_hb
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
     int id = hblank_effects_manager::create(values_ref.data(), values_ref.size(), affine_mat.id(),
-                                            data.values_handler);
+                                            hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES);
     return sprite_affine_mat_pb_register_hblank_effect_ptr(id, false, move(affine_mat));
 }
 
@@ -137,7 +29,7 @@ optional<sprite_affine_mat_pb_register_hblank_effect_ptr> sprite_affine_mat_pb_r
         sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
-                                                     data.attributes_handler);
+                                                     hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES);
     optional<sprite_affine_mat_pb_register_hblank_effect_ptr> result;
 
     if(id >= 0)
@@ -152,7 +44,7 @@ optional<sprite_affine_mat_pb_register_hblank_effect_ptr> sprite_affine_mat_pb_r
         sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref)
 {
     int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), affine_mat.id(),
-                                                     data.values_handler);
+                                                     hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES);
     optional<sprite_affine_mat_pb_register_hblank_effect_ptr> result;
 
     if(id >= 0)

@@ -16,16 +16,21 @@ class type_id_t
 {
 
 public:
+    using id_type = type_id_t();
+
     template<typename Type>
     friend type_id_t type_id();
 
     constexpr type_id_t() = default;
 
+    [[nodiscard]] constexpr id_type* id() const
+    {
+        return _id;
+    }
+
     [[nodiscard]] constexpr friend bool operator==(type_id_t a, type_id_t b) = default;
 
 protected:
-    using id_type = type_id_t();
-
     id_type* _id = nullptr;
 
     constexpr type_id_t(id_type* id) :

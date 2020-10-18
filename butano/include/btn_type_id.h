@@ -19,16 +19,16 @@ public:
     template<typename Type>
     friend type_id_t type_id();
 
-    type_id_t() = default;
+    constexpr type_id_t() = default;
 
-    [[nodiscard]] friend bool operator==(type_id_t a, type_id_t b) = default;
+    [[nodiscard]] constexpr friend bool operator==(type_id_t a, type_id_t b) = default;
 
 protected:
     using id_type = type_id_t();
 
     id_type* _id = nullptr;
 
-    type_id_t(id_type* id) :
+    constexpr type_id_t(id_type* id) :
         _id(id)
     {
     }

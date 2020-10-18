@@ -23,7 +23,7 @@ public:
 
     constexpr type_id_t() = default;
 
-    [[nodiscard]] constexpr id_type* id() const
+    [[nodiscard]] constexpr id_type* internal_id() const
     {
         return _id;
     }

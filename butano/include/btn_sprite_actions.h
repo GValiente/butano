@@ -654,6 +654,86 @@ public:
 };
 
 
+// horizontal_flip
+
+class sprite_horizontal_flip_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.horizontal_flip();
+    }
+
+    static void set(bool horizontal_flip, sprite_ptr& sprite)
+    {
+        sprite.set_horizontal_flip(horizontal_flip);
+    }
+};
+
+
+class sprite_horizontal_flip_toggle_action :
+        public bool_toggle_value_template_action<sprite_ptr, sprite_horizontal_flip_manager>
+{
+
+public:
+    sprite_horizontal_flip_toggle_action(const sprite_ptr& sprite, int duration_frames) :
+        bool_toggle_value_template_action(sprite, duration_frames)
+    {
+    }
+
+    sprite_horizontal_flip_toggle_action(sprite_ptr&& sprite, int duration_frames) :
+        bool_toggle_value_template_action(move(sprite), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
+// vertical_flip
+
+class sprite_vertical_flip_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.vertical_flip();
+    }
+
+    static void set(bool vertical_flip, sprite_ptr& sprite)
+    {
+        sprite.set_vertical_flip(vertical_flip);
+    }
+};
+
+
+class sprite_vertical_flip_toggle_action :
+        public bool_toggle_value_template_action<sprite_ptr, sprite_vertical_flip_manager>
+{
+
+public:
+    sprite_vertical_flip_toggle_action(const sprite_ptr& sprite, int duration_frames) :
+        bool_toggle_value_template_action(sprite, duration_frames)
+    {
+    }
+
+    sprite_vertical_flip_toggle_action(sprite_ptr&& sprite, int duration_frames) :
+        bool_toggle_value_template_action(move(sprite), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
 // animation
 
 template<int Size>

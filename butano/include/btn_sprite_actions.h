@@ -348,38 +348,39 @@ public:
 };
 
 
-// scale_x
+// horizontal_scale
 
-class sprite_scale_x_manager
+class sprite_horizontal_scale_manager
 {
 
 public:
     [[nodiscard]] static fixed get(const sprite_ptr& sprite)
     {
-        return sprite.scale_x();
+        return sprite.horizontal_scale();
     }
 
-    static void set(fixed scale_x, sprite_ptr& sprite)
+    static void set(fixed horizontal_scale, sprite_ptr& sprite)
     {
-        sprite.set_scale_x(scale_x);
+        sprite.set_horizontal_scale(horizontal_scale);
     }
 };
 
 
-class sprite_scale_x_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+class sprite_horizontal_scale_to_action :
+        public to_value_template_action<sprite_ptr, fixed, sprite_horizontal_scale_manager>
 {
 
 public:
-    sprite_scale_x_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_x) :
-        to_value_template_action(sprite, duration_frames, final_scale_x)
+    sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_horizontal_scale) :
+        to_value_template_action(sprite, duration_frames, final_horizontal_scale)
     {
-        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
-    sprite_scale_x_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_x) :
-        to_value_template_action(move(sprite), duration_frames, final_scale_x)
+    sprite_horizontal_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_horizontal_scale) :
+        to_value_template_action(move(sprite), duration_frames, final_horizontal_scale)
     {
-        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -387,27 +388,28 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed final_scale_x() const
+    [[nodiscard]] fixed final_horizontal_scale() const
     {
         return final_property();
     }
 };
 
 
-class sprite_scale_x_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+class sprite_horizontal_scale_loop_action :
+        public loop_value_template_action<sprite_ptr, fixed, sprite_horizontal_scale_manager>
 {
 
 public:
-    sprite_scale_x_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_x) :
-        loop_value_template_action(sprite, duration_frames, final_scale_x)
+    sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_horizontal_scale) :
+        loop_value_template_action(sprite, duration_frames, final_horizontal_scale)
     {
-        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
-    sprite_scale_x_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_x) :
-        loop_value_template_action(move(sprite), duration_frames, final_scale_x)
+    sprite_horizontal_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_horizontal_scale) :
+        loop_value_template_action(move(sprite), duration_frames, final_horizontal_scale)
     {
-        BTN_ASSERT(final_scale_x > 0, "Invalid final scale x: ", final_scale_x);
+        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -415,27 +417,28 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed final_scale_x() const
+    [[nodiscard]] fixed final_horizontal_scale() const
     {
         return final_property();
     }
 };
 
 
-class sprite_scale_x_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_scale_x_manager>
+class sprite_horizontal_scale_toggle_action :
+        public toggle_value_template_action<sprite_ptr, fixed, sprite_horizontal_scale_manager>
 {
 
 public:
-    sprite_scale_x_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale_x) :
-        toggle_value_template_action(sprite, duration_frames, new_scale_x)
+    sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_horizontal_scale) :
+        toggle_value_template_action(sprite, duration_frames, new_horizontal_scale)
     {
-        BTN_ASSERT(new_scale_x > 0, "Invalid new scale x: ", new_scale_x);
+        BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
 
-    sprite_scale_x_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale_x) :
-        toggle_value_template_action(move(sprite), duration_frames, new_scale_x)
+    sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_horizontal_scale) :
+        toggle_value_template_action(move(sprite), duration_frames, new_horizontal_scale)
     {
-        BTN_ASSERT(new_scale_x > 0, "Invalid new scale x: ", new_scale_x);
+        BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -443,45 +446,46 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed new_scale_x() const
+    [[nodiscard]] fixed new_horizontal_scale() const
     {
         return new_property();
     }
 };
 
 
-// scale_y
+// vertical_scale
 
-class sprite_scale_y_manager
+class sprite_vertical_scale_manager
 {
 
 public:
     [[nodiscard]] static fixed get(const sprite_ptr& sprite)
     {
-        return sprite.scale_y();
+        return sprite.vertical_scale();
     }
 
-    static void set(fixed scale_y, sprite_ptr& sprite)
+    static void set(fixed vertical_scale, sprite_ptr& sprite)
     {
-        sprite.set_scale_y(scale_y);
+        sprite.set_vertical_scale(vertical_scale);
     }
 };
 
 
-class sprite_scale_y_to_action : public to_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+class sprite_vertical_scale_to_action :
+        public to_value_template_action<sprite_ptr, fixed, sprite_vertical_scale_manager>
 {
 
 public:
-    sprite_scale_y_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_y) :
-        to_value_template_action(sprite, duration_frames, final_scale_y)
+    sprite_vertical_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_vertical_scale) :
+        to_value_template_action(sprite, duration_frames, final_vertical_scale)
     {
-        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
-    sprite_scale_y_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_y) :
-        to_value_template_action(move(sprite), duration_frames, final_scale_y)
+    sprite_vertical_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_vertical_scale) :
+        to_value_template_action(move(sprite), duration_frames, final_vertical_scale)
     {
-        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -489,27 +493,28 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed final_scale_y() const
+    [[nodiscard]] fixed final_vertical_scale() const
     {
         return final_property();
     }
 };
 
 
-class sprite_scale_y_loop_action : public loop_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+class sprite_vertical_scale_loop_action :
+        public loop_value_template_action<sprite_ptr, fixed, sprite_vertical_scale_manager>
 {
 
 public:
-    sprite_scale_y_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale_y) :
-        loop_value_template_action(sprite, duration_frames, final_scale_y)
+    sprite_vertical_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_vertical_scale) :
+        loop_value_template_action(sprite, duration_frames, final_vertical_scale)
     {
-        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
-    sprite_scale_y_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale_y) :
-        loop_value_template_action(move(sprite), duration_frames, final_scale_y)
+    sprite_vertical_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_vertical_scale) :
+        loop_value_template_action(move(sprite), duration_frames, final_vertical_scale)
     {
-        BTN_ASSERT(final_scale_y > 0, "Invalid final scale y: ", final_scale_y);
+        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -517,27 +522,28 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed final_scale_y() const
+    [[nodiscard]] fixed final_vertical_scale() const
     {
         return final_property();
     }
 };
 
 
-class sprite_scale_y_toggle_action : public toggle_value_template_action<sprite_ptr, fixed, sprite_scale_y_manager>
+class sprite_vertical_scale_toggle_action :
+        public toggle_value_template_action<sprite_ptr, fixed, sprite_vertical_scale_manager>
 {
 
 public:
-    sprite_scale_y_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale_y) :
-        toggle_value_template_action(sprite, duration_frames, new_scale_y)
+    sprite_vertical_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_vertical_scale) :
+        toggle_value_template_action(sprite, duration_frames, new_vertical_scale)
     {
-        BTN_ASSERT(new_scale_y > 0, "Invalid new scale y: ", new_scale_y);
+        BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
 
-    sprite_scale_y_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale_y) :
-        toggle_value_template_action(move(sprite), duration_frames, new_scale_y)
+    sprite_vertical_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_vertical_scale) :
+        toggle_value_template_action(move(sprite), duration_frames, new_vertical_scale)
     {
-        BTN_ASSERT(new_scale_y > 0, "Invalid new scale y: ", new_scale_y);
+        BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
 
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -545,7 +551,7 @@ public:
         return value();
     }
 
-    [[nodiscard]] fixed new_scale_y() const
+    [[nodiscard]] fixed new_vertical_scale() const
     {
         return new_property();
     }
@@ -560,7 +566,7 @@ class sprite_scale_manager
 public:
     [[nodiscard]] static fixed get(const sprite_ptr& sprite)
     {
-        return sprite.scale_x();
+        return sprite.horizontal_scale();
     }
 
     static void set(fixed scale, sprite_ptr& sprite)

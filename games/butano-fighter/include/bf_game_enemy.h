@@ -78,8 +78,8 @@ private:
     btn::sprite_move_by_action _move_action;
     btn::sprite_animate_action<4> _animate_action;
     btn::optional<btn::sprite_rotate_by_action> _rotate_action;
-    btn::optional<btn::sprite_scale_x_to_action> _scale_x_action;
-    btn::optional<btn::sprite_scale_y_to_action> _scale_y_action;
+    btn::optional<btn::sprite_horizontal_scale_to_action> _horizontal_scale_action;
+    btn::optional<btn::sprite_vertical_scale_to_action> _vertical_scale_action;
     btn::optional<btn::sprite_animate_action<7>> _mini_explosion;
     btn::optional<explosion> _explosion;
     btn::sprite_palette_ptr _sprite_palette;

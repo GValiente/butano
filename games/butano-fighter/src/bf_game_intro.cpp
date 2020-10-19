@@ -27,16 +27,16 @@ namespace
 
         btn::sprite_builder builder(stage.intro_sprite_item);
         builder.set_x(x);
-        builder.set_scale_x(2);
-        builder.set_scale_y(0.01);
+        builder.set_horizontal_scale(2);
+        builder.set_vertical_scale(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
         builder.set_visible(false);
         result.push_back(builder.build());
 
         builder = btn::sprite_builder(stage.intro_sprite_item, 1);
         builder.set_x(x + 128);
-        builder.set_scale_x(2);
-        builder.set_scale_y(0.01);
+        builder.set_horizontal_scale(2);
+        builder.set_vertical_scale(0.01);
         builder.set_z_order(constants::intro_sprites_z_order);
         builder.set_visible(false);
         result.push_back(builder.build());
@@ -121,7 +121,7 @@ void intro::update(const butano_background& butano_background)
                 background_sprite.set_visible(true);
                 _background_sprite_move_actions.emplace_back(background_sprite, background_move_frames,
                                                              background_sprite.x() - 16, background_sprite.y());
-                _background_sprite_scale_y_actions.emplace_back(background_sprite, scale_frames, 2);
+                _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, 2);
             }
 
             btn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
@@ -152,9 +152,9 @@ void intro::update(const butano_background& butano_background)
             background_sprite_move_action.update();
         }
 
-        for(auto& background_sprite_scale_y_action : _background_sprite_scale_y_actions)
+        for(auto& background_sprite_vertical_scale_action : _background_sprite_vertical_scale_actions)
         {
-            background_sprite_scale_y_action.update();
+            background_sprite_vertical_scale_action.update();
         }
 
         for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
@@ -165,9 +165,9 @@ void intro::update(const butano_background& butano_background)
         _window_move_top_action->update();
         _window_move_bottom_action->update();
 
-        if(_background_sprite_scale_y_actions[0].done())
+        if(_background_sprite_vertical_scale_actions[0].done())
         {
-            _background_sprite_scale_y_actions.clear();
+            _background_sprite_vertical_scale_actions.clear();
             _window_move_top_action.reset();
             _window_move_bottom_action.reset();
 
@@ -186,30 +186,30 @@ void intro::update(const butano_background& butano_background)
 
         if(_counter)
         {
-            for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
+            for(auto& text_sprite_vertical_scale_action : _text_sprite_vertical_scale_actions)
             {
-                if(! text_sprite_scale_y_action.done())
+                if(! text_sprite_vertical_scale_action.done())
                 {
-                    text_sprite_scale_y_action.update();
+                    text_sprite_vertical_scale_action.update();
                 }
             }
 
             if(_counter % 2 == 0)
             {
                 int sprites_count = _text_sprites.size();
-                int actions_count = _text_sprite_scale_y_actions.size();
+                int actions_count = _text_sprite_vertical_scale_actions.size();
 
                 if(actions_count < sprites_count)
                 {
                     btn::sprite_ptr text_sprite = _text_sprites[actions_count];
                     text_sprite.set_visible(true);
-                    _text_sprite_scale_y_actions.emplace_back(btn::move(text_sprite), scale_frames / 2, 2);
+                    _text_sprite_vertical_scale_actions.emplace_back(btn::move(text_sprite), scale_frames / 2, 2);
                 }
             }
         }
         else
         {
-            _text_sprite_scale_y_actions.clear();
+            _text_sprite_vertical_scale_actions.clear();
 
             _state = state::WAIT_3;
             _counter = wait_3_frames;
@@ -217,15 +217,15 @@ void intro::update(const butano_background& butano_background)
         break;
 
     case state::WAIT_3:
-        for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
+        for(auto& text_sprite_vertical_scale_action : _text_sprite_vertical_scale_actions)
         {
-            if(! text_sprite_scale_y_action.done())
+            if(! text_sprite_vertical_scale_action.done())
             {
-                text_sprite_scale_y_action.update();
+                text_sprite_vertical_scale_action.update();
 
-                if(text_sprite_scale_y_action.done())
+                if(text_sprite_vertical_scale_action.done())
                 {
-                    btn::sprite_ptr text_sprite = text_sprite_scale_y_action.sprite();
+                    btn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
                     text_sprite.set_visible(false);
                 }
             }
@@ -236,11 +236,11 @@ void intro::update(const butano_background& butano_background)
         if(_counter % 2 == 0)
         {
             int sprites_count = _text_sprites.size();
-            int actions_count = _text_sprite_scale_y_actions.size();
+            int actions_count = _text_sprite_vertical_scale_actions.size();
 
             if(actions_count < sprites_count)
             {
-                _text_sprite_scale_y_actions.emplace_back(_text_sprites[actions_count], scale_frames / 2, 0.01);
+                _text_sprite_vertical_scale_actions.emplace_back(_text_sprites[actions_count], scale_frames / 2, 0.01);
             }
         }
 
@@ -248,7 +248,7 @@ void intro::update(const butano_background& butano_background)
         {
             for(btn::sprite_ptr& background_sprite : _background_sprites)
             {
-                _background_sprite_scale_y_actions.emplace_back(background_sprite, scale_frames, 0.1);
+                _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, 0.1);
             }
 
             for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
@@ -276,9 +276,9 @@ void intro::update(const butano_background& butano_background)
                 background_sprite_move_action.update();
             }
 
-            for(auto& background_sprite_scale_y_action : _background_sprite_scale_y_actions)
+            for(auto& background_sprite_vertical_scale_action : _background_sprite_vertical_scale_actions)
             {
-                background_sprite_scale_y_action.update();
+                background_sprite_vertical_scale_action.update();
             }
 
             for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
@@ -286,15 +286,15 @@ void intro::update(const butano_background& butano_background)
                 background_sprite_palette_action.update();
             }
 
-            for(auto& text_sprite_scale_y_action : _text_sprite_scale_y_actions)
+            for(auto& text_sprite_vertical_scale_action : _text_sprite_vertical_scale_actions)
             {
-                if(! text_sprite_scale_y_action.done())
+                if(! text_sprite_vertical_scale_action.done())
                 {
-                    text_sprite_scale_y_action.update();
+                    text_sprite_vertical_scale_action.update();
 
-                    if(text_sprite_scale_y_action.done())
+                    if(text_sprite_vertical_scale_action.done())
                     {
-                        btn::sprite_ptr text_sprite = text_sprite_scale_y_action.sprite();
+                        btn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
                         text_sprite.set_visible(false);
                     }
                 }
@@ -306,7 +306,7 @@ void intro::update(const butano_background& butano_background)
         else
         {
             _background_sprite_move_actions.clear();
-            _background_sprite_scale_y_actions.clear();
+            _background_sprite_vertical_scale_actions.clear();
             _background_sprite_palette_actions.clear();
             _window_move_top_action.reset();
             _window_move_bottom_action.reset();
@@ -316,7 +316,7 @@ void intro::update(const butano_background& butano_background)
             _background_sprites.clear();
             _alt_palette.reset();
             _text_sprites.clear();
-            _text_sprite_scale_y_actions.clear();
+            _text_sprite_vertical_scale_actions.clear();
 
             btn::rect_window internal_window = btn::rect_window::internal();
             internal_window.set_boundaries(0, 0, 0, 0);

@@ -138,7 +138,7 @@ void butano_background::update()
 
             if(_silhouette_up_sprite_move_action->done())
             {
-                if(_silhouette_up_sprite_move_action->sprite().scale_x() > 1)
+                if(_silhouette_up_sprite_move_action->sprite().horizontal_scale() > 1)
                 {
                     _move_action.reset();
                     _palette_hblank_effect.reset();

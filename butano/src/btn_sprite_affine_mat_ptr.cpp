@@ -85,24 +85,24 @@ void sprite_affine_mat_ptr::set_rotation_angle(fixed rotation_angle)
     sprite_affine_mats_manager::set_rotation_angle(_id, rotation_angle);
 }
 
-fixed sprite_affine_mat_ptr::scale_x() const
+fixed sprite_affine_mat_ptr::horizontal_scale() const
 {
-    return sprite_affine_mats_manager::scale_x(_id);
+    return sprite_affine_mats_manager::horizontal_scale(_id);
 }
 
-void sprite_affine_mat_ptr::set_scale_x(fixed scale_x)
+void sprite_affine_mat_ptr::set_horizontal_scale(fixed horizontal_scale)
 {
-    sprite_affine_mats_manager::set_scale_x(_id, scale_x);
+    sprite_affine_mats_manager::set_horizontal_scale(_id, horizontal_scale);
 }
 
-fixed sprite_affine_mat_ptr::scale_y() const
+fixed sprite_affine_mat_ptr::vertical_scale() const
 {
-    return sprite_affine_mats_manager::scale_y(_id);
+    return sprite_affine_mats_manager::vertical_scale(_id);
 }
 
-void sprite_affine_mat_ptr::set_scale_y(fixed scale_y)
+void sprite_affine_mat_ptr::set_vertical_scale(fixed vertical_scale)
 {
-    sprite_affine_mats_manager::set_scale_y(_id, scale_y);
+    sprite_affine_mats_manager::set_vertical_scale(_id, vertical_scale);
 }
 
 void sprite_affine_mat_ptr::set_scale(fixed scale)
@@ -110,9 +110,9 @@ void sprite_affine_mat_ptr::set_scale(fixed scale)
     sprite_affine_mats_manager::set_scale(_id, scale);
 }
 
-void sprite_affine_mat_ptr::set_scale(fixed scale_x, fixed scale_y)
+void sprite_affine_mat_ptr::set_scale(fixed horizontal_scale, fixed vertical_scale)
 {
-    sprite_affine_mats_manager::set_scale(_id, scale_x, scale_y);
+    sprite_affine_mats_manager::set_scale(_id, horizontal_scale, vertical_scale);
 }
 
 bool sprite_affine_mat_ptr::horizontal_flip() const

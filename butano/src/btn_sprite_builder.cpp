@@ -54,16 +54,16 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     return *this;
 }
 
-sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
+sprite_builder& sprite_builder::set_horizontal_scale(fixed horizontal_scale)
 {
     if(_affine_mat)
     {
-        _affine_mat->set_scale_x(scale_x);
+        _affine_mat->set_horizontal_scale(horizontal_scale);
     }
-    else if(scale_x != 1)
+    else if(horizontal_scale != 1)
     {
         sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_scale_x(scale_x);
+        affine_mat_attributes.set_horizontal_scale(horizontal_scale);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
@@ -72,16 +72,16 @@ sprite_builder& sprite_builder::set_scale_x(fixed scale_x)
     return *this;
 }
 
-sprite_builder& sprite_builder::set_scale_y(fixed scale_y)
+sprite_builder& sprite_builder::set_vertical_scale(fixed vertical_scale)
 {
     if(_affine_mat)
     {
-        _affine_mat->set_scale_y(scale_y);
+        _affine_mat->set_vertical_scale(vertical_scale);
     }
-    else if(scale_y != 1)
+    else if(vertical_scale != 1)
     {
         sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_scale_y(scale_y);
+        affine_mat_attributes.set_vertical_scale(vertical_scale);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
@@ -108,16 +108,16 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
     return *this;
 }
 
-sprite_builder& sprite_builder::set_scale(fixed scale_x, fixed scale_y)
+sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical_scale)
 {
     if(_affine_mat)
     {
-        _affine_mat->set_scale(scale_x, scale_y);
+        _affine_mat->set_scale(horizontal_scale, vertical_scale);
     }
-    else if(scale_x != 1 || scale_y != 1)
+    else if(horizontal_scale != 1 || vertical_scale != 1)
     {
         sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_scale(scale_x, scale_y);
+        affine_mat_attributes.set_scale(horizontal_scale, vertical_scale);
         affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
         affine_mat_attributes.set_vertical_flip(_vertical_flip);
         _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);

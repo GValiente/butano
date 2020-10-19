@@ -242,14 +242,14 @@ void enemy::update(const btn::fixed_point& hero_position, const btn::camera_ptr&
                     _rotate_action->update();
                 }
 
-                if(_scale_x_action)
+                if(_horizontal_scale_action)
                 {
-                    _scale_x_action->update();
+                    _horizontal_scale_action->update();
                 }
 
-                if(_scale_y_action)
+                if(_vertical_scale_action)
                 {
-                    _scale_y_action->update();
+                    _vertical_scale_action->update();
                 }
 
                 if(_mini_explosion)
@@ -332,8 +332,8 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
                 _move_event_counter = 30;
                 _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
                 _move_action.update();
-                _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-                _scale_x_action->update();
+                _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _horizontal_scale_action->update();
             }
             break;
 
@@ -343,8 +343,8 @@ void enemy::_add_damage(const btn::fixed_point& enemy_position, btn::fixed attac
                 _move_event_counter = 30;
                 _move_action = btn::sprite_move_by_action(_sprite, 0, constants::background_speed);
                 _move_action.update();
-                _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-                _scale_y_action->update();
+                _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _vertical_scale_action->update();
             }
             break;
 
@@ -382,10 +382,10 @@ void enemy::_show_rotate_death(const btn::fixed_point& enemy_position, btn::fixe
         btn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
         _rotate_action.emplace(_sprite, rotation_angle);
         _rotate_action->update();
-        _scale_x_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-        _scale_x_action->update();
-        _scale_y_action.emplace(_sprite, _move_event_counter + 1, 0.1);
-        _scale_y_action->update();
+        _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _horizontal_scale_action->update();
+        _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _vertical_scale_action->update();
     }
 }
 

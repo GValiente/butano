@@ -89,30 +89,30 @@ namespace
 
         info info("Sprite affine mats scale", info_text_lines, text_generator);
 
-        affine_mat.set_scale_x(1.5);
-        affine_mat.set_scale_y(0.75);
+        affine_mat.set_horizontal_scale(1.5);
+        affine_mat.set_vertical_scale(0.75);
 
         while(! btn::keypad::start_pressed())
         {
-            btn::fixed scale_x = affine_mat.scale_x();
-            btn::fixed scale_y = affine_mat.scale_y();
+            btn::fixed horizontal_scale = affine_mat.horizontal_scale();
+            btn::fixed vertical_scale = affine_mat.vertical_scale();
 
             if(btn::keypad::left_held())
             {
-                affine_mat.set_scale_x(btn::max(scale_x - 0.01, btn::fixed(0.01)));
+                affine_mat.set_horizontal_scale(btn::max(horizontal_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::right_held())
             {
-                affine_mat.set_scale_x(btn::min(scale_x + 0.01, btn::fixed(2)));
+                affine_mat.set_horizontal_scale(btn::min(horizontal_scale + 0.01, btn::fixed(2)));
             }
 
             if(btn::keypad::down_held())
             {
-                affine_mat.set_scale_y(btn::max(scale_y - 0.01, btn::fixed(0.01)));
+                affine_mat.set_vertical_scale(btn::max(vertical_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::up_held())
             {
-                affine_mat.set_scale_y(btn::min(scale_y + 0.01, btn::fixed(2)));
+                affine_mat.set_vertical_scale(btn::min(vertical_scale + 0.01, btn::fixed(2)));
             }
 
             info.update();
@@ -224,32 +224,32 @@ namespace
         info info("Sprite affine mats attributes", info_text_lines, text_generator);
 
         affine_mat.set_rotation_angle(45);
-        affine_mat.set_scale_x(1.5);
-        affine_mat.set_scale_y(0.75);
+        affine_mat.set_horizontal_scale(1.5);
+        affine_mat.set_vertical_scale(0.75);
 
         while(! btn::keypad::start_pressed())
         {
             btn::sprite_affine_mat_attributes attributes = affine_mat.attributes();
-            btn::fixed scale_x = attributes.scale_x();
-            btn::fixed scale_y = attributes.scale_y();
+            btn::fixed horizontal_scale = attributes.horizontal_scale();
+            btn::fixed vertical_scale = attributes.vertical_scale();
             btn::fixed rotation_angle = attributes.rotation_angle();
 
             if(btn::keypad::left_held())
             {
-                attributes.set_scale_x(btn::max(scale_x - 0.01, btn::fixed(0.01)));
+                attributes.set_horizontal_scale(btn::max(horizontal_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::right_held())
             {
-                attributes.set_scale_x(btn::min(scale_x + 0.01, btn::fixed(2)));
+                attributes.set_horizontal_scale(btn::min(horizontal_scale + 0.01, btn::fixed(2)));
             }
 
             if(btn::keypad::down_held())
             {
-                attributes.set_scale_y(btn::max(scale_y - 0.01, btn::fixed(0.01)));
+                attributes.set_vertical_scale(btn::max(vertical_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::up_held())
             {
-                attributes.set_scale_y(btn::min(scale_y + 0.01, btn::fixed(2)));
+                attributes.set_vertical_scale(btn::min(vertical_scale + 0.01, btn::fixed(2)));
             }
 
             if(btn::keypad::l_held())
@@ -306,8 +306,8 @@ namespace
                 }
 
                 btn::fixed scale_inc = btn::degrees_sin(degrees_angle) / 2;
-                attributes[(btn::display::height() / 2) + index].set_scale_x(1.5 + scale_inc);
-                attributes[(btn::display::height() / 2) - index - 1].set_scale_x(1.5 + scale_inc);
+                attributes[(btn::display::height() / 2) + index].set_horizontal_scale(1.5 + scale_inc);
+                attributes[(btn::display::height() / 2) - index - 1].set_horizontal_scale(1.5 + scale_inc);
             }
 
             hblank_effect.reload_attributes_ref();

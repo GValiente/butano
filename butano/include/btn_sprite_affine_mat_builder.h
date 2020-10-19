@@ -24,25 +24,25 @@ public:
         return *this;
     }
 
-    [[nodiscard]] constexpr fixed scale_x() const
+    [[nodiscard]] constexpr fixed horizontal_scale() const
     {
-        return _attributes.scale_x();
+        return _attributes.horizontal_scale();
     }
 
-    constexpr sprite_affine_mat_builder& set_scale_x(fixed scale_x)
+    constexpr sprite_affine_mat_builder& set_horizontal_scale(fixed horizontal_scale)
     {
-        _attributes.set_scale_x(scale_x);
+        _attributes.set_horizontal_scale(horizontal_scale);
         return *this;
     }
 
-    [[nodiscard]] constexpr fixed scale_y() const
+    [[nodiscard]] constexpr fixed vertical_scale() const
     {
-        return _attributes.scale_x();
+        return _attributes.horizontal_scale();
     }
 
-    constexpr sprite_affine_mat_builder& set_scale_y(fixed scale_y)
+    constexpr sprite_affine_mat_builder& set_vertical_scale(fixed vertical_scale)
     {
-        _attributes.set_scale_y(scale_y);
+        _attributes.set_vertical_scale(vertical_scale);
         return *this;
     }
 
@@ -52,9 +52,9 @@ public:
         return *this;
     }
 
-    constexpr sprite_affine_mat_builder& set_scale(fixed scale_x, fixed scale_y)
+    constexpr sprite_affine_mat_builder& set_scale(fixed horizontal_scale, fixed vertical_scale)
     {
-        _attributes.set_scale(scale_x, scale_y);
+        _attributes.set_scale(horizontal_scale, vertical_scale);
         return *this;
     }
 

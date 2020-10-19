@@ -13,21 +13,21 @@ class sprite_affine_mat_attributes
 public:
     constexpr sprite_affine_mat_attributes() = default;
 
-    constexpr sprite_affine_mat_attributes(fixed rotation_angle, fixed scale_x, fixed scale_y, bool horizontal_flip,
-                                           bool vertical_flip) :
+    constexpr sprite_affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
+                                           bool horizontal_flip, bool vertical_flip) :
         _rotation_angle(rotation_angle),
-        _scale_x(scale_x),
-        _scale_y(scale_y),
+        _horizontal_scale(horizontal_scale),
+        _vertical_scale(vertical_scale),
         _hflip(1 - (2 * horizontal_flip)),
         _vflip(1 - (2 * vertical_flip))
     {
         BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
-        BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
-        BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
+        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
         _update_rotation_angle();
-        _update_scale_x();
-        _update_scale_y();
+        _update_horizontal_scale();
+        _update_vertical_scale();
         _update_pa();
         _update_pb();
         _update_pc();
@@ -51,32 +51,32 @@ public:
         _update_pd();
     }
 
-    [[nodiscard]] constexpr fixed scale_x() const
+    [[nodiscard]] constexpr fixed horizontal_scale() const
     {
-        return _scale_x;
+        return _horizontal_scale;
     }
 
-    constexpr void set_scale_x(fixed scale_x)
+    constexpr void set_horizontal_scale(fixed horizontal_scale)
     {
-        BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
+        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
 
-        _scale_x = scale_x;
-        _update_scale_x();
+        _horizontal_scale = horizontal_scale;
+        _update_horizontal_scale();
         _update_pa();
         _update_pb();
     }
 
-    [[nodiscard]] constexpr fixed scale_y() const
+    [[nodiscard]] constexpr fixed vertical_scale() const
     {
-        return _scale_y;
+        return _vertical_scale;
     }
 
-    constexpr void set_scale_y(fixed scale_y)
+    constexpr void set_vertical_scale(fixed vertical_scale)
     {
-        BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
-        _scale_y = scale_y;
-        _update_scale_y();
+        _vertical_scale = vertical_scale;
+        _update_vertical_scale();
         _update_pc();
         _update_pd();
     }
@@ -85,9 +85,9 @@ public:
     {
         BTN_ASSERT(scale > 0, "Invalid scale: ", scale);
 
-        _scale_x = scale;
-        _scale_y = scale;
-        _update_scale_x();
+        _horizontal_scale = scale;
+        _vertical_scale = scale;
+        _update_horizontal_scale();
         _sy = _sx;
         _update_pa();
         _update_pb();
@@ -95,15 +95,15 @@ public:
         _update_pd();
     }
 
-    constexpr void set_scale(fixed scale_x, fixed scale_y)
+    constexpr void set_scale(fixed horizontal_scale, fixed vertical_scale)
     {
-        BTN_ASSERT(scale_x > 0, "Invalid scale x: ", scale_x);
-        BTN_ASSERT(scale_y > 0, "Invalid scale y: ", scale_y);
+        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
+        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
-        _scale_x = scale_x;
-        _scale_y = scale_y;
-        _update_scale_x();
-        _update_scale_y();
+        _horizontal_scale = horizontal_scale;
+        _vertical_scale = vertical_scale;
+        _update_horizontal_scale();
+        _update_vertical_scale();
         _update_pa();
         _update_pb();
         _update_pc();
@@ -141,12 +141,12 @@ public:
 
     [[nodiscard]] constexpr bool flipped_identity() const
     {
-        return _rotation_angle == 0 && _scale_x == 1 && _scale_y == 1;
+        return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1;
     }
 
     [[nodiscard]] constexpr bool double_size() const
     {
-        fixed max_scale = max(_scale_x, _scale_y);
+        fixed max_scale = max(_horizontal_scale, _vertical_scale);
         int cos = abs(int(_cos));
         int sin = abs(int(_sin));
         int size = (cos + sin) * max_scale.data();
@@ -176,8 +176,8 @@ public:
     [[nodiscard]] constexpr friend bool operator==(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)
     {
-        return a._rotation_angle == b._rotation_angle && a._scale_x == b._scale_x && a._scale_y == b._scale_y &&
-                a._hflip == b._hflip && a._vflip == b._vflip;
+        return a._rotation_angle == b._rotation_angle && a._horizontal_scale == b._horizontal_scale &&
+                a._vertical_scale == b._vertical_scale && a._hflip == b._hflip && a._vflip == b._vflip;
     }
 
     [[nodiscard]] constexpr friend bool operator!=(const sprite_affine_mat_attributes& a,
@@ -191,8 +191,8 @@ private:
     constexpr static const btn::fixed min_scale = 1 / min_inv_scale;
 
     fixed _rotation_angle = 0;
-    fixed _scale_x = 1;
-    fixed _scale_y = 1;
+    fixed _horizontal_scale = 1;
+    fixed _vertical_scale = 1;
     int8_t _hflip = 1;
     int8_t _vflip = 1;
     int16_t _sin = 0;
@@ -242,14 +242,14 @@ private:
         }
     }
 
-    constexpr void _update_scale_x()
+    constexpr void _update_horizontal_scale()
     {
-        _sx = _output_scale(_scale_x);
+        _sx = _output_scale(_horizontal_scale);
     }
 
-    constexpr void _update_scale_y()
+    constexpr void _update_vertical_scale()
     {
-        _sy = _output_scale(_scale_y);
+        _sy = _output_scale(_vertical_scale);
     }
 
     constexpr void _update_pa()

@@ -427,7 +427,7 @@ void how_to_play::entry_type::animate()
     {
         btn::sprite_builder builder(btn::sprite_items::experience_bar);
         builder.set_position(result.sprites.back().position());
-        builder.set_scale_x(0.5);
+        builder.set_horizontal_scale(0.5);
         result.sprites.push_back(builder.release_build());
         result.palette_rotate_action.emplace(result.sprites.back().palette(), 2, 1);
     }

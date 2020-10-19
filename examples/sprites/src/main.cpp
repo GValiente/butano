@@ -248,30 +248,30 @@ namespace
         info info("Sprites scale", info_text_lines, text_generator);
 
         btn::sprite_ptr yellow_sprite = btn::sprite_items::yellow_sprite.create_sprite(0, 0);
-        yellow_sprite.set_scale_x(1.5);
-        yellow_sprite.set_scale_y(0.75);
+        yellow_sprite.set_horizontal_scale(1.5);
+        yellow_sprite.set_vertical_scale(0.75);
 
         while(! btn::keypad::start_pressed())
         {
-            btn::fixed scale_x = yellow_sprite.scale_x();
-            btn::fixed scale_y = yellow_sprite.scale_y();
+            btn::fixed horizontal_scale = yellow_sprite.horizontal_scale();
+            btn::fixed vertical_scale = yellow_sprite.vertical_scale();
 
             if(btn::keypad::left_held())
             {
-                yellow_sprite.set_scale_x(btn::max(scale_x - 0.01, btn::fixed(0.01)));
+                yellow_sprite.set_horizontal_scale(btn::max(horizontal_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::right_held())
             {
-                yellow_sprite.set_scale_x(btn::min(scale_x + 0.01, btn::fixed(2)));
+                yellow_sprite.set_horizontal_scale(btn::min(horizontal_scale + 0.01, btn::fixed(2)));
             }
 
             if(btn::keypad::down_held())
             {
-                yellow_sprite.set_scale_y(btn::max(scale_y - 0.01, btn::fixed(0.01)));
+                yellow_sprite.set_vertical_scale(btn::max(vertical_scale - 0.01, btn::fixed(0.01)));
             }
             else if(btn::keypad::up_held())
             {
-                yellow_sprite.set_scale_y(btn::min(scale_y + 0.01, btn::fixed(2)));
+                yellow_sprite.set_vertical_scale(btn::min(vertical_scale + 0.01, btn::fixed(2)));
             }
 
             info.update();

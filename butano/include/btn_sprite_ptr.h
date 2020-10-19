@@ -150,17 +150,17 @@ public:
 
     void set_rotation_angle(fixed rotation_angle);
 
-    [[nodiscard]] fixed scale_x() const;
+    [[nodiscard]] fixed horizontal_scale() const;
 
-    void set_scale_x(fixed scale_x);
+    void set_horizontal_scale(fixed horizontal_scale);
 
-    [[nodiscard]] fixed scale_y() const;
+    [[nodiscard]] fixed vertical_scale() const;
 
-    void set_scale_y(fixed scale_y);
+    void set_vertical_scale(fixed vertical_scale);
 
     void set_scale(fixed scale);
 
-    void set_scale(fixed scale_x, fixed scale_y);
+    void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     [[nodiscard]] int bg_priority() const;
 

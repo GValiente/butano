@@ -575,7 +575,7 @@ void gigabat_boss::_update_sprites(const btn::fixed_point& hero_position, bool h
         _shadow_sprite->set_visible(true);
         _shadow_sprite->set_position(_gigabat_position + btn::fixed_point(0, 40));
 
-        btn::fixed scale = _shadow_sprite->scale_x();
+        btn::fixed scale = _shadow_sprite->horizontal_scale();
 
         if(scale < 1)
         {

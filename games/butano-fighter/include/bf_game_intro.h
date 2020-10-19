@@ -56,8 +56,8 @@ private:
     btn::optional<btn::sprite_palette_ptr> _alt_palette;
     btn::vector<btn::sprite_ptr, 40> _text_sprites;
     btn::vector<btn::sprite_move_to_action, 2> _background_sprite_move_actions;
-    btn::vector<btn::sprite_scale_y_to_action, 2> _background_sprite_scale_y_actions;
-    btn::vector<btn::sprite_scale_y_to_action, 40> _text_sprite_scale_y_actions;
+    btn::vector<btn::sprite_vertical_scale_to_action, 2> _background_sprite_vertical_scale_actions;
+    btn::vector<btn::sprite_vertical_scale_to_action, 40> _text_sprite_vertical_scale_actions;
     btn::vector<btn::sprite_palette_fade_to_action, 2> _background_sprite_palette_actions;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _background_sprite_hblank_effect_attributes_1;
     btn::vector<btn::sprite_third_attributes, btn::display::height()> _background_sprite_hblank_effect_attributes_2;

@@ -49,17 +49,17 @@ namespace btn::sprite_affine_mats_manager
 
     void set_rotation_angle(int id, fixed rotation_angle);
 
-    [[nodiscard]] fixed scale_x(int id);
+    [[nodiscard]] fixed horizontal_scale(int id);
 
-    void set_scale_x(int id, fixed scale_x);
+    void set_horizontal_scale(int id, fixed horizontal_scale);
 
-    [[nodiscard]] fixed scale_y(int id);
+    [[nodiscard]] fixed vertical_scale(int id);
 
-    void set_scale_y(int id, fixed scale_y);
+    void set_vertical_scale(int id, fixed vertical_scale);
 
     void set_scale(int id, fixed scale);
 
-    void set_scale(int id, fixed scale_x, fixed scale_y);
+    void set_scale(int id, fixed horizontal_scale, fixed vertical_scale);
 
     [[nodiscard]] bool horizontal_flip(int id);
 

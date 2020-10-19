@@ -1,7 +1,7 @@
 #include "btn_sprite_affine_mat_ptr.h"
 
 #include "btn_optional.h"
-#include "btn_sprite_affine_mat_builder.h"
+#include "btn_sprite_affine_mat_attributes.h"
 #include "btn_sprite_affine_mats_manager.h"
 
 namespace btn
@@ -15,11 +15,6 @@ sprite_affine_mat_ptr sprite_affine_mat_ptr::create()
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_attributes& attributes)
 {
     return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(attributes));
-}
-
-sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_builder& builder)
-{
-    return create(builder.attributes());
 }
 
 optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional()
@@ -46,11 +41,6 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const spr
     }
 
     return result;
-}
-
-optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const sprite_affine_mat_builder& builder)
-{
-    return create_optional(builder.attributes());
 }
 
 sprite_affine_mat_ptr::sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other) :

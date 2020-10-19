@@ -9,7 +9,6 @@
 namespace btn
 {
 
-class sprite_affine_mat_builder;
 class sprite_affine_mat_attributes;
 
 class sprite_affine_mat_ptr
@@ -20,13 +19,9 @@ public:
 
     [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_attributes& attributes);
 
-    [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_builder& builder);
-
     [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional();
 
     [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional(const sprite_affine_mat_attributes& attributes);
-
-    [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional(const sprite_affine_mat_builder& builder);
 
     sprite_affine_mat_ptr(const sprite_affine_mat_ptr& other);
 

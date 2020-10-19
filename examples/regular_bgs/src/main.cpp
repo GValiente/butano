@@ -309,10 +309,10 @@ namespace
     void regular_bgs_attributes_scene(btn::sprite_text_generator& text_generator)
     {
         constexpr const btn::string_view info_text_lines[] = {
-            "B: copy green BG attribs. to red BG",
-            "A: copy blue BG attribs. to red BG",
-            "L: copy yellow BG attribs. to red BG",
-            "R: restore red BG attributes",
+            "B: copy blue attributes to red",
+            "A: copy yellow attributes to red",
+            "L: copy green attributes to red",
+            "R: restore red attributes",
             "",
             "START: go to next scene",
         };
@@ -329,17 +329,17 @@ namespace
         {
             if(btn::keypad::b_pressed())
             {
-                red_bg.set_attributes(green_bg.attributes());
+                red_bg.set_attributes(blue_bg.attributes());
             }
 
             if(btn::keypad::a_pressed())
             {
-                red_bg.set_attributes(blue_bg.attributes());
+                red_bg.set_attributes(yellow_bg.attributes());
             }
 
             if(btn::keypad::l_pressed())
             {
-                red_bg.set_attributes(yellow_bg.attributes());
+                red_bg.set_attributes(green_bg.attributes());
             }
 
             if(btn::keypad::r_pressed())
@@ -391,13 +391,13 @@ namespace
         }
     }
 
-    void regular_bgs_builder_scene(btn::sprite_text_generator& text_generator)
+    void regular_bg_builder_scene(btn::sprite_text_generator& text_generator)
     {
         constexpr const btn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
-        info info("Regular BGs builder", info_text_lines, text_generator);
+        info info("Regular BG builder", info_text_lines, text_generator);
 
         btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
         btn::bgs_mosaic::set_stretch(0.2);
@@ -460,7 +460,7 @@ int main()
         regular_bgs_attributes_hblank_effect_scene(text_generator);
         btn::core::update();
 
-        regular_bgs_builder_scene(text_generator);
+        regular_bg_builder_scene(text_generator);
         btn::core::update();
     }
 }

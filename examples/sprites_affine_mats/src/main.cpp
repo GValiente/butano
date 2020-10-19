@@ -326,19 +326,19 @@ int main()
 
     btn::sprite_affine_mat_ptr affine_mat = btn::sprite_affine_mat_ptr::create();
 
-    btn::sprite_ptr green_sprite = btn::sprite_items::green_sprite.create_sprite(-32, -32 - 8);
+    btn::sprite_ptr green_sprite = btn::sprite_items::green_sprite.create_sprite(-32, -32 - 16);
     green_sprite.set_affine_mat(affine_mat);
     green_sprite.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
 
-    btn::sprite_ptr yellow_sprite = btn::sprite_items::yellow_sprite.create_sprite(32, -32 + 8);
+    btn::sprite_ptr yellow_sprite = btn::sprite_items::yellow_sprite.create_sprite(32, -32 + 16);
     yellow_sprite.set_affine_mat(affine_mat);
     yellow_sprite.set_double_size_mode(btn::sprite_double_size_mode::DISABLED);
 
-    btn::sprite_ptr blue_sprite = btn::sprite_items::blue_sprite.create_sprite(-32, 32 - 8);
+    btn::sprite_ptr blue_sprite = btn::sprite_items::blue_sprite.create_sprite(-32, 32 - 16);
     blue_sprite.set_affine_mat(affine_mat);
     blue_sprite.set_double_size_mode(btn::sprite_double_size_mode::DISABLED);
 
-    btn::sprite_ptr red_sprite = btn::sprite_items::red_sprite.create_sprite(32, 32 + 8);
+    btn::sprite_ptr red_sprite = btn::sprite_items::red_sprite.create_sprite(32, 32 + 16);
     red_sprite.set_affine_mat(affine_mat);
     red_sprite.set_double_size_mode(btn::sprite_double_size_mode::ENABLED);
 

@@ -907,14 +907,11 @@ sprite_first_attributes first_attributes(id_type id)
 
 void set_first_attributes(id_type id, const sprite_first_attributes& first_attributes)
 {
-    auto item = static_cast<item_type*>(id);
-    hw::sprites::handle_type& handle = item->handle;
-    hw::sprites::set_mosaic_enabled(first_attributes.mosaic_enabled(), handle);
-    hw::sprites::set_blending_enabled(first_attributes.blending_enabled(), display_manager::blending_fade_enabled(),
-                                      handle);
-    hw::sprites::set_window_enabled(first_attributes.window_enabled(), handle);
+    set_y(id, first_attributes.y());
+    set_mosaic_enabled(id, first_attributes.mosaic_enabled());
+    set_blending_enabled(id, first_attributes.blending_enabled());
+    set_window_enabled(id, first_attributes.window_enabled());
     set_visible(id, first_attributes.visible());
-    set_position(id, fixed_point(item->position.x(), first_attributes.y()));
 }
 
 sprite_regular_second_attributes regular_second_attributes(id_type id)
@@ -932,10 +929,9 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(! item->affine_mat, "Item is not regular");
 
-    hw::sprites::handle_type& handle = item->handle;
-    hw::sprites::set_horizontal_flip(second_attributes.horizontal_flip(), handle);
-    hw::sprites::set_vertical_flip(second_attributes.vertical_flip(), handle);
-    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+    set_x(id, second_attributes.x());
+    set_horizontal_flip(id, second_attributes.horizontal_flip());
+    set_vertical_flip(id, second_attributes.vertical_flip());
 }
 
 sprite_affine_second_attributes affine_second_attributes(id_type id)
@@ -952,7 +948,7 @@ void set_affine_second_attributes(id_type id, const sprite_affine_second_attribu
     auto item = static_cast<item_type*>(id);
     BTN_ASSERT(item->affine_mat, "Item is not affine");
 
-    set_position(id, fixed_point(second_attributes.x(), item->position.y()));
+    set_x(id, second_attributes.x());
     set_affine_mat(id, second_attributes.affine_mat());
 }
 
@@ -964,36 +960,9 @@ sprite_third_attributes third_attributes(id_type id)
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
-    auto item = static_cast<item_type*>(id);
-    const sprite_tiles_ptr& tiles = third_attributes.tiles();
-    const sprite_palette_ptr& palette = third_attributes.palette();
-    bool different_tiles = tiles != item->tiles;
-    bool different_palette = palette != item->palette;
-
-    if(different_tiles || different_palette)
-    {
-        BTN_ASSERT(tiles.tiles_count() == shape_size(id).tiles_count(palette.bpp_mode()),
-                   "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
-                   shape_size(id).tiles_count(palette.bpp_mode()));
-
-        hw::sprites::handle_type& handle = item->handle;
-
-        if(different_tiles)
-        {
-            hw::sprites::set_tiles(tiles.id(), handle);
-            item->tiles = tiles;
-        }
-
-        if(different_palette)
-        {
-            hw::sprites::set_palette(palette.id(), handle);
-            hw::sprites::set_bpp_mode(palette.bpp_mode(), handle);
-            item->palette = palette;
-        }
-
-        data.rebuild_handles = true;
-    }
-
+    btn::sprite_tiles_ptr tiles = third_attributes.tiles();
+    btn::sprite_palette_ptr palette = third_attributes.palette();
+    set_tiles_and_palette(id, shape_size(id), move(tiles), move(palette));
     set_bg_priority(id, third_attributes.bg_priority());
 }
 

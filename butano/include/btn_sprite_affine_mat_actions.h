@@ -479,6 +479,86 @@ public:
     }
 };
 
+
+// horizontal_flip
+
+class sprite_affine_mat_horizontal_flip_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const sprite_affine_mat_ptr& affine_mat)
+    {
+        return affine_mat.horizontal_flip();
+    }
+
+    static void set(bool horizontal_flip, sprite_affine_mat_ptr& affine_mat)
+    {
+        affine_mat.set_horizontal_flip(horizontal_flip);
+    }
+};
+
+
+class sprite_affine_mat_horizontal_flip_toggle_action :
+        public bool_toggle_value_template_action<sprite_affine_mat_ptr, sprite_affine_mat_horizontal_flip_manager>
+{
+
+public:
+    sprite_affine_mat_horizontal_flip_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_frames) :
+        bool_toggle_value_template_action(affine_mat, duration_frames)
+    {
+    }
+
+    sprite_affine_mat_horizontal_flip_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_frames) :
+        bool_toggle_value_template_action(move(affine_mat), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+};
+
+
+// vertical_flip
+
+class sprite_affine_mat_vertical_flip_manager
+{
+
+public:
+    [[nodiscard]] static bool get(const sprite_affine_mat_ptr& affine_mat)
+    {
+        return affine_mat.vertical_flip();
+    }
+
+    static void set(bool vertical_flip, sprite_affine_mat_ptr& affine_mat)
+    {
+        affine_mat.set_vertical_flip(vertical_flip);
+    }
+};
+
+
+class sprite_affine_mat_vertical_flip_toggle_action :
+        public bool_toggle_value_template_action<sprite_affine_mat_ptr, sprite_affine_mat_vertical_flip_manager>
+{
+
+public:
+    sprite_affine_mat_vertical_flip_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_frames) :
+        bool_toggle_value_template_action(affine_mat, duration_frames)
+    {
+    }
+
+    sprite_affine_mat_vertical_flip_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_frames) :
+        bool_toggle_value_template_action(move(affine_mat), duration_frames)
+    {
+    }
+
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+};
+
 }
 
 #endif

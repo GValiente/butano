@@ -204,12 +204,12 @@ namespace
             }
 
             const sprite_item& item = _generator.font().item();
-            span<const tile> source_tiles_ref = item.tiles_item().graphics_tiles_ref(graphics_index);
+            const sprite_tiles_item& tiles_item = item.tiles_item();
             optional<sprite_tiles_ptr> source_tiles_ptr;
 
             if(allow_failure)
             {
-                source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(source_tiles_ref);
+                source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(tiles_item, graphics_index);
 
                 if(! source_tiles_ptr)
                 {
@@ -218,7 +218,7 @@ namespace
             }
             else
             {
-                source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
+                source_tiles_ptr = sprite_tiles_ptr::find_or_create(tiles_item, graphics_index);
             }
 
             sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);
@@ -304,12 +304,12 @@ namespace
                 }
 
                 const sprite_item& item = font.item();
-                span<const tile> source_tiles_ref = item.tiles_item().graphics_tiles_ref(graphics_index);
+                const sprite_tiles_item& tiles_item = item.tiles_item();
                 optional<sprite_tiles_ptr> source_tiles_ptr;
 
                 if(allow_failure)
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(source_tiles_ref);
+                    source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(tiles_item, graphics_index);
 
                     if(! source_tiles_ptr)
                     {
@@ -318,7 +318,7 @@ namespace
                 }
                 else
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::find_or_create(source_tiles_ref);
+                    source_tiles_ptr = sprite_tiles_ptr::find_or_create(tiles_item, graphics_index);
                 }
 
                 sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);

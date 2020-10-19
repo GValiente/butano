@@ -1,9 +1,7 @@
 #include "btn_bg_tiles_ptr.h"
 
-#include "btn_span.h"
-#include "btn_tile.h"
 #include "btn_optional.h"
-#include "btn_palette_bpp_mode.h"
+#include "btn_bg_tiles_item.h"
 #include "btn_bg_blocks_manager.h"
 
 namespace btn
@@ -22,6 +20,11 @@ optional<bg_tiles_ptr> bg_tiles_ptr::find(const span<const tile>& tiles_ref)
     return result;
 }
 
+optional<bg_tiles_ptr> bg_tiles_ptr::find(const bg_tiles_item& tiles_item)
+{
+    return find(tiles_item.tiles_ref());
+}
+
 bg_tiles_ptr bg_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
     int handle = bg_blocks_manager::create_tiles(tiles_ref);
@@ -30,12 +33,22 @@ bg_tiles_ptr bg_tiles_ptr::create(const span<const tile>& tiles_ref)
     return bg_tiles_ptr(handle);
 }
 
+bg_tiles_ptr bg_tiles_ptr::create(const bg_tiles_item& tiles_item)
+{
+    return create(tiles_item.tiles_ref());
+}
+
 bg_tiles_ptr bg_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
 {
     int handle = bg_blocks_manager::find_or_create_tiles(tiles_ref);
     BTN_ASSERT(handle >= 0, "Tiles find or create failed");
 
     return bg_tiles_ptr(handle);
+}
+
+bg_tiles_ptr bg_tiles_ptr::find_or_create(const bg_tiles_item& tiles_item)
+{
+    return find_or_create(tiles_item.tiles_ref());
 }
 
 bg_tiles_ptr bg_tiles_ptr::allocate(int tiles_count)
@@ -59,6 +72,11 @@ optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const span<const tile>& til
     return result;
 }
 
+optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const bg_tiles_item& tiles_item)
+{
+    return create_optional(tiles_item.tiles_ref());
+}
+
 optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
 {
     int handle = bg_blocks_manager::find_or_create_tiles(tiles_ref);
@@ -70,6 +88,11 @@ optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const span<const ti
     }
 
     return result;
+}
+
+optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const bg_tiles_item& tiles_item)
+{
+    return find_or_create_optional(tiles_item.tiles_ref());
 }
 
 optional<bg_tiles_ptr> bg_tiles_ptr::allocate_optional(int tiles_count)
@@ -142,6 +165,11 @@ optional<span<const tile>> bg_tiles_ptr::tiles_ref() const
 void bg_tiles_ptr::set_tiles_ref(const span<const tile>& tiles_ref)
 {
     bg_blocks_manager::set_tiles_ref(_handle, tiles_ref);
+}
+
+void bg_tiles_ptr::set_tiles_ref(const bg_tiles_item& tiles_item)
+{
+    bg_blocks_manager::set_tiles_ref(_handle, tiles_item.tiles_ref());
 }
 
 void bg_tiles_ptr::reload_tiles_ref()

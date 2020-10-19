@@ -57,6 +57,10 @@ public:
 
     [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(const fixed_point& position) const;
 
+    [[nodiscard]] regular_bg_map_ptr create_map() const;
+
+    [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional() const;
+
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_item& a, const regular_bg_item& b)
     {
         return a._tiles_item == b._tiles_item && a._map_item == b._map_item && a._palette_item == b._palette_item;

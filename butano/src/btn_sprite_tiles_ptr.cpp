@@ -1,7 +1,7 @@
 #include "btn_sprite_tiles_ptr.h"
 
-#include "btn_span.h"
 #include "btn_optional.h"
+#include "btn_sprite_tiles_item.h"
 #include "btn_sprite_tiles_manager.h"
 
 namespace btn
@@ -20,6 +20,16 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_
     return result;
 }
 
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const sprite_tiles_item& tiles_item)
+{
+    return find(tiles_item.graphics_tiles_ref());
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    return find(tiles_item.graphics_tiles_ref(graphics_index));
+}
+
 sprite_tiles_ptr sprite_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
     int handle = sprite_tiles_manager::create(tiles_ref);
@@ -28,12 +38,32 @@ sprite_tiles_ptr sprite_tiles_ptr::create(const span<const tile>& tiles_ref)
     return sprite_tiles_ptr(handle);
 }
 
+sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item)
+{
+    return create(tiles_item.graphics_tiles_ref());
+}
+
+sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    return create(tiles_item.graphics_tiles_ref(graphics_index));
+}
+
 sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
 {
     int handle = sprite_tiles_manager::find_or_create(tiles_ref);
     BTN_ASSERT(handle >= 0, "Tiles find or create failed");
 
     return sprite_tiles_ptr(handle);
+}
+
+sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const sprite_tiles_item& tiles_item)
+{
+    return find_or_create(tiles_item.graphics_tiles_ref());
+}
+
+sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    return find_or_create(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count)
@@ -57,6 +87,16 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const span<const ti
     return result;
 }
 
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_item& tiles_item)
+{
+    return create_optional(tiles_item.graphics_tiles_ref());
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    return create_optional(tiles_item.graphics_tiles_ref(graphics_index));
+}
+
 optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
 {
     int handle = sprite_tiles_manager::find_or_create(tiles_ref);
@@ -68,6 +108,16 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const span<
     }
 
     return result;
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const sprite_tiles_item& tiles_item)
+{
+    return find_or_create_optional(tiles_item.graphics_tiles_ref());
+}
+
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    return find_or_create_optional(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::allocate_optional(int tiles_count)
@@ -123,6 +173,16 @@ optional<span<const tile>> sprite_tiles_ptr::tiles_ref() const
 void sprite_tiles_ptr::set_tiles_ref(const span<const tile>& tiles_ref)
 {
     sprite_tiles_manager::set_tiles_ref(_handle, tiles_ref);
+}
+
+void sprite_tiles_ptr::set_tiles_ref(const sprite_tiles_item& tiles_item)
+{
+    sprite_tiles_manager::set_tiles_ref(_handle, tiles_item.graphics_tiles_ref());
+}
+
+void sprite_tiles_ptr::set_tiles_ref(const sprite_tiles_item& tiles_item, int graphics_index)
+{
+    sprite_tiles_manager::set_tiles_ref(_handle, tiles_item.graphics_tiles_ref(graphics_index));
 }
 
 void sprite_tiles_ptr::reload_tiles_ref()

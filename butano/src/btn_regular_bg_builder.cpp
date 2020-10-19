@@ -1,8 +1,6 @@
 #include "btn_regular_bg_builder.h"
 
 #include "btn_bgs.h"
-#include "btn_bg_tiles_ptr.h"
-#include "btn_bg_palette_ptr.h"
 #include "btn_regular_bg_ptr.h"
 
 namespace btn
@@ -48,8 +46,7 @@ regular_bg_map_ptr regular_bg_builder::map() const
 {
     if(_item)
     {
-        return _item->map_item().create_map(_item->tiles_item().create_tiles(),
-                                            _item->palette_item().create_palette());
+        return _item->create_map();
     }
 
     BTN_ASSERT(_map, "Map has been already released");
@@ -63,13 +60,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 
     if(_item)
     {
-        if(optional<bg_tiles_ptr> tiles_ptr = _item->tiles_item().create_tiles_optional())
-        {
-            if(optional<bg_palette_ptr> palette_ptr = _item->palette_item().create_palette_optional())
-            {
-                result = _item->map_item().create_map_optional(move(*tiles_ptr), move(*palette_ptr));
-            }
-        }
+        result = _item->create_map_optional();
     }
     else
     {
@@ -83,8 +74,7 @@ regular_bg_map_ptr regular_bg_builder::release_map()
 {
     if(_item)
     {
-        return _item->map_item().create_map(_item->tiles_item().create_tiles(),
-                                            _item->palette_item().create_palette());
+        return _item->create_map();
     }
 
     BTN_ASSERT(_map, "Map has been already released");
@@ -100,17 +90,15 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
 
     if(_item)
     {
-        if(optional<bg_tiles_ptr> tiles = _item->tiles_item().create_tiles_optional())
-        {
-            if(optional<bg_palette_ptr> palette = _item->palette_item().create_palette_optional())
-            {
-                result = _item->map_item().create_map_optional(move(*tiles), move(*palette));
-            }
-        }
+        result = _item->create_map_optional();
     }
     else
     {
-        result = move(_map);
+        if(_map)
+        {
+            result = move(*_map);
+            _map.reset();
+        }
     }
 
     return result;

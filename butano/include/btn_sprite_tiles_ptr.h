@@ -10,6 +10,7 @@ namespace btn
 {
 
 class tile;
+class sprite_tiles_item;
 
 class sprite_tiles_ptr
 {
@@ -17,15 +18,37 @@ class sprite_tiles_ptr
 public:
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item, int graphics_index);
+
     [[nodiscard]] static sprite_tiles_ptr create(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static sprite_tiles_ptr create(const sprite_tiles_item& tiles_item);
+
+    [[nodiscard]] static sprite_tiles_ptr create(const sprite_tiles_item& tiles_item, int graphics_index);
+
     [[nodiscard]] static sprite_tiles_ptr find_or_create(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] static sprite_tiles_ptr find_or_create(const sprite_tiles_item& tiles_item);
+
+    [[nodiscard]] static sprite_tiles_ptr find_or_create(const sprite_tiles_item& tiles_item, int graphics_index);
 
     [[nodiscard]] static sprite_tiles_ptr allocate(int tiles_count);
 
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item,
+                                                                    int graphics_index);
+
     [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const sprite_tiles_item& tiles_item);
+
+    [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const sprite_tiles_item& tiles_item,
+                                                                            int graphics_index);
 
     [[nodiscard]] static optional<sprite_tiles_ptr> allocate_optional(int tiles_count);
 
@@ -60,6 +83,10 @@ public:
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
     void set_tiles_ref(const span<const tile>& tiles_ref);
+
+    void set_tiles_ref(const sprite_tiles_item& tiles_item);
+
+    void set_tiles_ref(const sprite_tiles_item& tiles_item, int graphics_index);
 
     void reload_tiles_ref();
 

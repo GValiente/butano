@@ -10,6 +10,7 @@ namespace btn
 {
 
 class tile;
+class bg_tiles_item;
 enum class palette_bpp_mode;
 
 class bg_tiles_ptr
@@ -18,15 +19,25 @@ class bg_tiles_ptr
 public:
     [[nodiscard]] static optional<bg_tiles_ptr> find(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static optional<bg_tiles_ptr> find(const bg_tiles_item& tiles_item);
+
     [[nodiscard]] static bg_tiles_ptr create(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static bg_tiles_ptr create(const bg_tiles_item& tiles_item);
+
     [[nodiscard]] static bg_tiles_ptr find_or_create(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] static bg_tiles_ptr find_or_create(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] static bg_tiles_ptr allocate(int tiles_count);
 
     [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
+    [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const bg_tiles_item& tiles_item);
+
     [[nodiscard]] static optional<bg_tiles_ptr> find_or_create_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] static optional<bg_tiles_ptr> find_or_create_optional(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] static optional<bg_tiles_ptr> allocate_optional(int tiles_count);
 
@@ -65,6 +76,8 @@ public:
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
     void set_tiles_ref(const span<const tile>& tiles_ref);
+
+    void set_tiles_ref(const bg_tiles_item& tiles_item);
 
     void reload_tiles_ref();
 

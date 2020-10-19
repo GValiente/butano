@@ -361,7 +361,7 @@ namespace
         info info("Regular BGs attributes H-Blank effect", info_text_lines, text_generator);
 
         btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
-        btn::regular_bg_map_ptr green_map = btn::regular_bg_items::green.create_bg(0, 0).map();
+        btn::regular_bg_map_ptr green_map = btn::regular_bg_items::green.create_map();
         btn::regular_bg_attributes red_attributes = red_bg.attributes();
         btn::regular_bg_attributes green_attributes = red_attributes;
         green_attributes.set_map(green_map);

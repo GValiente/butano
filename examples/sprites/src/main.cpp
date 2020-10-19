@@ -868,7 +868,7 @@ namespace
         btn::sprite_ptr red_sprite = btn::sprite_items::red_sprite.create_sprite(0, 0);
         red_sprite.set_scale(2);
 
-        btn::sprite_palette_ptr green_palette = btn::sprite_items::green_sprite.create_sprite(0, 0).palette();
+        btn::sprite_palette_ptr green_palette = btn::sprite_items::green_sprite.palette_item().create_palette();
         btn::sprite_third_attributes red_attributes = red_sprite.third_attributes();
         btn::sprite_third_attributes green_attributes = red_attributes;
         green_attributes.set_palette(green_palette);

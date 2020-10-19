@@ -1,7 +1,7 @@
 #include "btn_sprite_palette_ptr.h"
 
+#include "btn_sprite_palette_item.h"
 #include "btn_palettes_bank.h"
-#include "btn_palette_bpp_mode.h"
 #include "btn_palettes_manager.h"
 
 namespace btn
@@ -31,6 +31,11 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
     return result;
 }
 
+optional<sprite_palette_ptr> sprite_palette_ptr::find(const sprite_palette_item& palette_item)
+{
+    return find(palette_item.colors(), palette_item.bpp_mode());
+}
+
 sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors, palette_bpp_mode bpp_mode)
 {
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
@@ -48,6 +53,11 @@ sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors, p
     BTN_ASSERT(id >= 0, "Palette create failed");
 
     return sprite_palette_ptr(id);
+}
+
+sprite_palette_ptr sprite_palette_ptr::create(const sprite_palette_item& palette_item)
+{
+    return create(palette_item.colors(), palette_item.bpp_mode());
 }
 
 sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode)
@@ -80,6 +90,11 @@ sprite_palette_ptr sprite_palette_ptr::find_or_create(const span<const color>& c
     return sprite_palette_ptr(id);
 }
 
+sprite_palette_ptr sprite_palette_ptr::find_or_create(const sprite_palette_item& palette_item)
+{
+    return find_or_create(palette_item.colors(), palette_item.bpp_mode());
+}
+
 optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const span<const color>& colors,
                                                                  palette_bpp_mode bpp_mode)
 {
@@ -103,6 +118,11 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const span<cons
     }
 
     return result;
+}
+
+optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const sprite_palette_item& palette_item)
+{
+    return create_optional(palette_item.colors(), palette_item.bpp_mode());
 }
 
 optional<sprite_palette_ptr> sprite_palette_ptr::find_or_create_optional(const span<const color>& colors,
@@ -141,6 +161,11 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find_or_create_optional(const s
     return result;
 }
 
+optional<sprite_palette_ptr> sprite_palette_ptr::find_or_create_optional(const sprite_palette_item& palette_item)
+{
+    return create_optional(palette_item.colors(), palette_item.bpp_mode());
+}
+
 sprite_palette_ptr::sprite_palette_ptr(const sprite_palette_ptr& other) :
     _id(other._id)
 {
@@ -171,6 +196,11 @@ span<const color> sprite_palette_ptr::colors() const
 void sprite_palette_ptr::set_colors(const span<const color>& colors)
 {
     palettes_manager::sprite_palettes_bank().set_colors(_id, colors);
+}
+
+void sprite_palette_ptr::set_colors(const sprite_palette_item& palette_item)
+{
+    palettes_manager::sprite_palettes_bank().set_colors(_id, palette_item.colors());
 }
 
 int sprite_palette_ptr::colors_count() const

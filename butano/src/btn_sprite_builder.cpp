@@ -296,7 +296,11 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles_optional()
     }
     else
     {
-        result = move(_tiles);
+        if(_tiles)
+        {
+            result = move(*_tiles);
+            _tiles.reset();
+        }
     }
 
     return result;
@@ -312,7 +316,11 @@ optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
     }
     else
     {
-        result = move(_palette);
+        if(_palette)
+        {
+            result = move(*_palette);
+            _palette.reset();
+        }
     }
 
     return result;

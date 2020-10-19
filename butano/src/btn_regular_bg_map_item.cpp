@@ -11,28 +11,28 @@ namespace btn
 optional<regular_bg_map_ptr> regular_bg_map_item::find_map(
         const bg_tiles_ptr& tiles, const bg_palette_ptr& palette) const
 {
-    return regular_bg_map_ptr::find(*_cells_ptr, _dimensions, tiles, palette);
+    return regular_bg_map_ptr::find(*this, tiles, palette);
 }
 
 regular_bg_map_ptr regular_bg_map_item::create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::find_or_create(*_cells_ptr, _dimensions, move(tiles), move(palette));
+    return regular_bg_map_ptr::find_or_create(*this, move(tiles), move(palette));
 }
 
 regular_bg_map_ptr regular_bg_map_item::create_new_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create(*_cells_ptr, _dimensions, move(tiles), move(palette));
+    return regular_bg_map_ptr::create(*this, move(tiles), move(palette));
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::find_or_create_optional(*_cells_ptr, _dimensions, move(tiles), move(palette));
+    return regular_bg_map_ptr::find_or_create_optional(*this, move(tiles), move(palette));
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_new_map_optional(
         bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create_optional(*_cells_ptr, _dimensions, move(tiles), move(palette));
+    return regular_bg_map_ptr::create_optional(*this, move(tiles), move(palette));
 }
 
 }

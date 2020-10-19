@@ -11,6 +11,7 @@ namespace btn
 {
 
 class color;
+class bg_palette_item;
 enum class palette_bpp_mode;
 
 class bg_palette_ptr
@@ -19,15 +20,25 @@ class bg_palette_ptr
 public:
     [[nodiscard]] static optional<bg_palette_ptr> find(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
+    [[nodiscard]] static optional<bg_palette_ptr> find(const bg_palette_item& palette_item);
+
     [[nodiscard]] static bg_palette_ptr create(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
+    [[nodiscard]] static bg_palette_ptr create(const bg_palette_item& palette_item);
+
     [[nodiscard]] static bg_palette_ptr find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode);
+
+    [[nodiscard]] static bg_palette_ptr find_or_create(const bg_palette_item& palette_item);
 
     [[nodiscard]] static optional<bg_palette_ptr> create_optional(const span<const color>& colors,
                                                                   palette_bpp_mode bpp_mode);
 
+    [[nodiscard]] static optional<bg_palette_ptr> create_optional(const bg_palette_item& palette_item);
+
     [[nodiscard]] static optional<bg_palette_ptr> find_or_create_optional(const span<const color>& colors,
                                                                           palette_bpp_mode bpp_mode);
+
+    [[nodiscard]] static optional<bg_palette_ptr> find_or_create_optional(const bg_palette_item& palette_item);
 
     bg_palette_ptr(const bg_palette_ptr& other);
 
@@ -61,6 +72,8 @@ public:
     [[nodiscard]] span<const color> colors() const;
 
     void set_colors(const span<const color>& colors);
+
+    void set_colors(const bg_palette_item& palette_item);
 
     [[nodiscard]] int colors_count() const;
 

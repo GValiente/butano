@@ -488,9 +488,10 @@ void put_above(id_type id, id_type other_id)
 
         if(indexes.first < indexes.second)
         {
-            swap(data.items_vector[indexes.first], data.items_vector[indexes.second]);
+            data.items_vector.erase(data.items_vector.begin() + indexes.first);
+            data.items_vector.push_back(item);
 
-            if(item->visible || other_item->visible)
+            if(item->visible)
             {
                 data.rebuild_handles = true;
             }

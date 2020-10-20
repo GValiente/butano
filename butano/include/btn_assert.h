@@ -1,9 +1,48 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BTN_ASSERT_H
 #define BTN_ASSERT_H
 
 #include <assert.h>
 #include "btn_type_traits.h"
 #include "btn_config_assert.h"
+
+/**
+ * @defgroup assert assert
+ *
+ * Butano's assert system.
+ *
+ * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a false.
+ */
+
+/**
+ * @def BTN_ASSERT(condition, ...)
+ *
+ * Checks if the specified \a condition is true.
+ *
+ * If it doesn't, the execution is stopped and diagnostic information is shown on the screen.
+ *
+ * More information can be shown by passing it by argument. Example:
+ *
+ *     BTN_ASSERT(integer > 0, "Invalid integer: ", integer);
+ *
+ * @ingroup assert
+ */
+
+/**
+ * @def BTN_ERROR(...)
+ *
+ * If this is called, the execution is stopped and diagnostic information is shown on the screen.
+ *
+ * More information can be shown by passing it by argument. Example:
+ *
+ *     BTN_ERROR("Invalid integer: ", integer);
+ *
+ * @ingroup assert
+ */
 
 #if BTN_CFG_ASSERT_ENABLED
     #include "btn_sstream.h"
@@ -38,6 +77,8 @@
                         __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
             } \
         } while(false)
+
+    /// \cond DO_NOT_DOCUMENT
 
     namespace _btn::assert
     {
@@ -86,6 +127,8 @@
             }
         }
     }
+
+    /// \endcond
 #else
     #define BTN_ASSERT(condition, ...) \
         do \

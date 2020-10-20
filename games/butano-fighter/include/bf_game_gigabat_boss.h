@@ -4,7 +4,7 @@
 #include "btn_deque.h"
 #include "btn_random.h"
 #include "btn_fixed_rect.h"
-#include "btn_sprite_actions.h"
+#include "btn_sprite_animate_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "bf_game_boss.h"
 #include "bf_game_explosion.h"

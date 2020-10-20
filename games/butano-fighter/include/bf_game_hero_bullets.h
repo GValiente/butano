@@ -1,8 +1,10 @@
 #ifndef BF_GAME_HERO_BULLETS_H
 #define BF_GAME_HERO_BULLETS_H
 
+#include "btn_array.h"
 #include "btn_forward_list.h"
 #include "btn_sprite_actions.h"
+#include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_ptr.h"
 #include "bf_constants.h"
 

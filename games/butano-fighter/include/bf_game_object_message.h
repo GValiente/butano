@@ -2,6 +2,7 @@
 #define BF_GAME_OBJECT_MESSAGE_H
 
 #include "btn_sprite_actions.h"
+#include "btn_sprite_animate_actions.h"
 
 namespace bf::game
 {

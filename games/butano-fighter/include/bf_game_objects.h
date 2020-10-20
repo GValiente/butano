@@ -2,6 +2,7 @@
 #define BF_GAME_OBJECTS_H
 
 #include "btn_deque.h"
+#include "btn_optional.h"
 #include "btn_forward_list.h"
 #include "bf_game_gem.h"
 #include "bf_constants.h"

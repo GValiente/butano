@@ -3,6 +3,7 @@
 
 #include "btn_sprite_actions.h"
 #include "btn_sprite_palette_ptr.h"
+#include "btn_sprite_animate_actions.h"
 #include "bf_game_explosion.h"
 
 namespace btn

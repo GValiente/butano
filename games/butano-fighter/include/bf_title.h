@@ -1,8 +1,10 @@
 #ifndef BF_TITLE_H
 #define BF_TITLE_H
 
+#include "btn_array.h"
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_optional.h"
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_blending_actions.h"

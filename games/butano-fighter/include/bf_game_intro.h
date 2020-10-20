@@ -1,7 +1,9 @@
 #ifndef BF_GAME_INTRO_H
 #define BF_GAME_INTRO_H
 
+#include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_optional.h"
 #include "btn_sprite_actions.h"
 #include "btn_rect_window_actions.h"
 #include "btn_sprite_palette_actions.h"

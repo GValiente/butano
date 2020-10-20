@@ -1,8 +1,11 @@
 #ifndef BF_GAME_ENEMY_BULLETS_H
 #define BF_GAME_ENEMY_BULLETS_H
 
+#include "btn_array.h"
+#include "btn_optional.h"
 #include "btn_forward_list.h"
 #include "btn_sprite_actions.h"
+#include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_actions.h"
 #include "bf_constants.h"
 #include "bf_game_enemy_bullet_type.h"

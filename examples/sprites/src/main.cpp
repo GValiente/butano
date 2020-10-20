@@ -10,6 +10,7 @@
 #include "btn_sprite_actions.h"
 #include "btn_sprite_builder.h"
 #include "btn_sprite_text_generator.h"
+#include "btn_sprite_animate_actions.h"
 #include "btn_sprite_first_attributes.h"
 #include "btn_sprite_third_attributes.h"
 #include "btn_sprite_affine_second_attributes.h"
@@ -20,6 +21,7 @@
 #include "btn_sprite_affine_second_attributes_hblank_effect_ptr.h"
 #include "btn_sprite_regular_second_attributes_hblank_effect_ptr.h"
 
+#include "btn_sprite_items_ninja.h"
 #include "btn_sprite_items_caveman.h"
 #include "btn_sprite_items_red_sprite.h"
 #include "btn_sprite_items_blue_sprite.h"
@@ -178,6 +180,87 @@ namespace
             }
 
             horizontal_hblank_effect.reload_deltas_ref();
+            info.update();
+            btn::core::update();
+        }
+    }
+
+    void sprites_animation_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "PAD: change sprite's direction",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Sprites animation", info_text_lines, text_generator);
+
+        btn::sprite_ptr ninja_sprite = btn::sprite_items::ninja.create_sprite(0, 0);
+
+        while(! btn::keypad::start_pressed())
+        {
+            if(btn::keypad::left_held())
+            {
+                ninja_sprite.set_tiles(btn::sprite_items::ninja.tiles_item().create_tiles(8));
+            }
+            else if(btn::keypad::right_held())
+            {
+                ninja_sprite.set_tiles(btn::sprite_items::ninja.tiles_item().create_tiles(12));
+            }
+
+            if(btn::keypad::up_held())
+            {
+                ninja_sprite.set_tiles(btn::sprite_items::ninja.tiles_item().create_tiles(4));
+            }
+            else if(btn::keypad::down_held())
+            {
+                ninja_sprite.set_tiles(btn::sprite_items::ninja.tiles_item().create_tiles(0));
+            }
+
+            info.update();
+            btn::core::update();
+        }
+    }
+
+    void sprites_animation_actions_scene(btn::sprite_text_generator& text_generator)
+    {
+        constexpr const btn::string_view info_text_lines[] = {
+            "PAD: change sprite's direction",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Sprites animation actions", info_text_lines, text_generator);
+
+        btn::sprite_ptr ninja_sprite = btn::sprite_items::ninja.create_sprite(0, 0);
+        btn::sprite_animate_action<4> action = btn::create_sprite_animate_action_forever(
+                    ninja_sprite, 16, btn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
+
+        while(! btn::keypad::start_pressed())
+        {
+            if(btn::keypad::left_pressed())
+            {
+                action = btn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, btn::sprite_items::ninja.tiles_item(), 8, 9, 10, 11);
+            }
+            else if(btn::keypad::right_pressed())
+            {
+                action = btn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, btn::sprite_items::ninja.tiles_item(), 12, 13, 14, 15);
+            }
+
+            if(btn::keypad::up_pressed())
+            {
+                action = btn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, btn::sprite_items::ninja.tiles_item(), 4, 5, 6, 7);
+            }
+            else if(btn::keypad::down_pressed())
+            {
+                action = btn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, btn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
+            }
+
+            action.update();
             info.update();
             btn::core::update();
         }
@@ -953,6 +1036,12 @@ int main()
         btn::core::update();
 
         sprites_position_hblank_effect_scene(text_generator);
+        btn::core::update();
+
+        sprites_animation_scene(text_generator);
+        btn::core::update();
+
+        sprites_animation_actions_scene(text_generator);
         btn::core::update();
 
         sprites_rotation_scene(text_generator);

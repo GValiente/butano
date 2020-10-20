@@ -26,10 +26,10 @@ enum class sprite_size
 /**
  * @brief Calculates sprite dimensions from its shape and size.
  *
- * shape\size 	00 	01 	10 	11
- * 00	8x8 	16x16 	32x32 	64x64
- * 01	16x8 	32x8 	32x16 	64x32
- * 10	8x16 	8x32 	16x32 	32x64
+ * shape \ size 00      01      10      11
+ * 00           8x8 	16x16   32x32   64x64
+ * 01           16x8 	32x8 	32x16 	64x32
+ * 10           8x16 	8x32 	16x32 	32x64
  */
 class sprite_shape_size
 {

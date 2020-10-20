@@ -4,6 +4,7 @@
 #include "btn_deque.h"
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
+#include "btn_sprite_animate_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "btn_sprite_affine_mat_actions.h"
 #include "bf_status.h"

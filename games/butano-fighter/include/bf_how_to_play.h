@@ -1,9 +1,11 @@
 #ifndef BF_HOW_TO_PLAY_H
 #define BF_HOW_TO_PLAY_H
 
+#include "btn_optional.h"
 #include "btn_music_actions.h"
 #include "btn_sprite_actions.h"
 #include "btn_blending_actions.h"
+#include "btn_sprite_animate_actions.h"
 #include "btn_sprite_palette_actions.h"
 #include "bf_scene.h"
 #include "bf_scene_type.h"

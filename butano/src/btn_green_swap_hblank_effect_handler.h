@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BTN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
 #define BTN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
 

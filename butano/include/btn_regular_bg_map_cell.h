@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BTN_REGULAR_BG_MAP_CELL_H
 #define BTN_REGULAR_BG_MAP_CELL_H
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef ANY_TESTS_H
 #define ANY_TESTS_H
 

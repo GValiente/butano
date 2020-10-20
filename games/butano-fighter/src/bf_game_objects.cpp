@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #include "bf_game_objects.h"
 
 #include "btn_fixed_rect.h"

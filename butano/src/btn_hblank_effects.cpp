@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #include "btn_hblank_effects.h"
 
 #include "btn_hblank_effects_manager.h"

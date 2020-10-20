@@ -2,6 +2,7 @@
 Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
 zlib License, see LICENSE file.
 """
+
 import shutil
 import struct
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BTN_TYPE_ID_H
 #define BTN_TYPE_ID_H
 
@@ -10,7 +15,6 @@ namespace btn
  * @brief Unique type ID without RTTI
  *
  * https://codereview.stackexchange.com/questions/48594/unique-type-id-no-rtti
- * https://github.com/JoaoBaptMG/ReboundTheGame/blob/master/Commons/type_id.hpp
  */
 class type_id_t
 {

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BF_SMALL_SPRITE_FONT_H
 #define BF_SMALL_SPRITE_FONT_H
 

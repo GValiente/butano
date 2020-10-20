@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #ifndef BTN_INTRUSIVE_FORWARD_LIST_H
 #define BTN_INTRUSIVE_FORWARD_LIST_H
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #include "../include/btn_hw_show.h"
 
 #if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED

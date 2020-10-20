@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #include "btn_bg_palettes_transparent_color_hblank_effect_ptr.h"
 
 #include "btn_span.h"

@@ -565,6 +565,35 @@ public:
         return insert_or_assign_hash(key_hash, value_type(key, move(mapped_value)));
     }
 
+    template<typename... Args>
+    iterator try_emplace(const key_type& key, Args&&... args)
+    {
+        hash_type key_hash = hasher()(key);
+        iterator it = find_hash(key_hash, key);
+
+        if(it == end())
+        {
+            it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
+            BTN_ASSERT(it != end(), "Insertion failed");
+        }
+
+        return it;
+    }
+
+    template<typename... Args>
+    iterator try_emplace_hash(hash_type key_hash, const key_type& key, Args&&... args)
+    {
+        iterator it = find_hash(key_hash, key);
+
+        if(it == end())
+        {
+            it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
+            BTN_ASSERT(it != end(), "Insertion failed");
+        }
+
+        return it;
+    }
+
     iterator erase(const const_iterator& position)
     {
         bool* allocated = _allocated;

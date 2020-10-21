@@ -18,7 +18,7 @@ namespace btn::audio_manager
 
 namespace
 {
-    static_assert(BTN_CFG_AUDIO_MAX_COMMANDS > 1, "Invalid max audio commands");
+    static_assert(BTN_CFG_AUDIO_MAX_COMMANDS > 2, "Invalid max audio commands");
 
 
     class command

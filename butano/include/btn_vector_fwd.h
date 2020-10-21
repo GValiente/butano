@@ -9,12 +9,6 @@
 
 #include "btn_common.h"
 
-/**
- * @defgroup vector vector
- *
- * A vector with the capacity defined at compile time.
- */
-
 namespace btn
 {
     /**

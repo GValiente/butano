@@ -6,10 +6,56 @@
 #ifndef BTN_DOCUMENTATION_H
 #define BTN_DOCUMENTATION_H
 
+// NAMESPACE
+
 /**
  * @namespace btn
  * @brief Modern C++ high level GBA engine
  */
+
+
+// GROUPS
+
+/**
+ * @defgroup container Containers
+ *
+ * STL like containers with the capacity defined at compile time.
+ *
+ * They don't throw exceptions. Instead, asserts are used to ensure valid usage.
+ */
+
+/**
+ * @defgroup vector Vector
+ *
+ * A vector with the capacity defined at compile time.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup sprite Sprites
+ *
+ * Small animated objects that can move freely from the background.
+ *
+ * In GBA's jargon they are called OBJs.
+ */
+
+/**
+ * @defgroup assert Asserts
+ *
+ * Butano's assert system.
+ *
+ * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a false.
+ */
+
+/**
+ * @defgroup other Other
+ *
+ * Stuff which doesn't fit anywhere else.
+ */
+
+
+// PAGES
 
 /*! \mainpage My Personal Index Page
  *

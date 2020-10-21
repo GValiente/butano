@@ -11,14 +11,6 @@
 #include "btn_config_assert.h"
 
 /**
- * @defgroup assert assert
- *
- * Butano's assert system.
- *
- * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a false.
- */
-
-/**
  * @def BTN_ASSERT(condition, ...)
  *
  * Checks if the specified \a condition is true.

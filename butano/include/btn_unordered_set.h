@@ -541,7 +541,7 @@ public:
 
     /**
      * @brief Search for a given key.
-     * @param key_hash Hash of the given key to search for.
+     * @param key Key to search for.
      * @return Iterator to the key if it exists, otherwise end().
      */
     [[nodiscard]] iterator find(const key_type& key)
@@ -663,41 +663,11 @@ public:
         return iterator(current_index, *this);
     }
 
-    iterator insert_or_assign(const value_type& value)
-    {
-        return insert_or_assign_hash(hasher()(value), value);
-    }
-
-    iterator insert_or_assign(value_type&& value)
-    {
-        return insert_or_assign_hash(hasher()(value), move(value));
-    }
-
-    iterator insert_or_assign_hash(hash_type value_hash, const value_type& value)
-    {
-        return insert_or_assign_hash(value_hash, value_type(value));
-    }
-
-    iterator insert_or_assign_hash(hash_type value_hash, value_type&& value)
-    {
-        iterator it = find_hash(value_hash, value);
-
-        if(it == end())
-        {
-            it = insert_hash(value_hash, move(value));
-            BTN_ASSERT(it != end(), "Insertion failed");
-        }
-        else
-        {
-            pointer storage = _storage;
-            size_type index = it._index;
-            storage[index].~value_type();
-            ::new(storage + index) value_type(move(value));
-        }
-
-        return it;
-    }
-
+    /**
+     * @brief Erases an element.
+     * @param position Iterator to the element to erase.
+     * @return Iterator following the erased element.
+     */
     iterator erase(const const_iterator& position)
     {
         bool* allocated = _allocated;
@@ -772,11 +742,22 @@ public:
         return iterator(index, *this);
     }
 
+    /**
+     * @brief Erases an element.
+     * @param key Key to erase.
+     * @return <b>true</b> if the elements was erased, otherwise <b>false</b>.
+     */
     bool erase(const key_type& key)
     {
         return erase_hash(hasher()(key), key);
     }
 
+    /**
+     * @brief Erases an element.
+     * @param key_hash Hash of the key to erase.
+     * @param key Key to erase.
+     * @return <b>true</b> if the elements was erased, otherwise <b>false</b>.
+     */
     bool erase_hash(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
@@ -790,12 +771,18 @@ public:
         return false;
     }
 
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param set unordered_set from which to erase.
+     * @param pred Unary predicate which returns ​true if the element should be erased.
+     * @return Number of erased elements.
+     */
     template<class Pred>
-    friend void erase_if(iunordered_set& set, const Pred& pred)
+    friend size_type erase_if(iunordered_set& set, const Pred& pred)
     {
+        size_type erased_count = 0;
         pointer storage = set._storage;
         bool* allocated = set._allocated;
-        size_type size = set._size;
         size_type first_valid_index = set.max_size();
         size_type last_valid_index = 0;
 
@@ -807,7 +794,7 @@ public:
                 {
                     storage[index].~value_type();
                     allocated[index] = false;
-                    --size;
+                    ++erased_count;
                 }
                 else
                 {
@@ -817,11 +804,15 @@ public:
             }
         }
 
-        set._size = size;
+        set._size -= erased_count;
         set._first_valid_index = first_valid_index;
         set._last_valid_index = last_valid_index;
+        return erased_count;
     }
 
+    /**
+     * @brief Moves all elements of the given unordered_set into this one, leaving it empty.
+     */
     void merge(iunordered_set&& other)
     {
         if(this != &other)
@@ -869,6 +860,9 @@ public:
         }
     }
 
+    /**
+     * @brief Removes all elements.
+     */
     void clear()
     {
         if(_size)
@@ -894,6 +888,10 @@ public:
         }
     }
 
+    /**
+     * @brief Exchanges the contents of this unordered_set with those of the other one.
+     * @param other unordered_set to exchange the contents with.
+     */
     void swap(iunordered_set& other)
     {
         if(this != &other)
@@ -942,11 +940,22 @@ public:
         }
     }
 
+    /**
+     * @brief Exchanges the contents of a unordered_set with those of another one.
+     * @param a First unordered_set to exchange the contents with.
+     * @param b Second unordered_set to exchange the contents with.
+     */
     friend void swap(iunordered_set& a, iunordered_set& b)
     {
         a.swap(b);
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator==(const iunordered_set& a, const iunordered_set& b)
     {
         size_type first_valid_index = a._first_valid_index;
@@ -978,32 +987,69 @@ public:
         return true;
     }
 
+
+    /**
+     * @brief Not equal operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator!=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is lexicographically less than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<(const iunordered_set& a, const iunordered_set& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>(const iunordered_set& a, const iunordered_set& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First unordered_set to compare.
+     * @param b Second unordered_set to compare.
+     * @return <b>true</b> if the first unordered_set is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>=(const iunordered_set& a, const iunordered_set& b)
     {
         return ! (a < b);
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     iunordered_set(reference storage, bool& allocated, size_type max_size) :
         _storage(&storage),
         _allocated(&allocated),
@@ -1012,6 +1058,8 @@ protected:
     {
         BTN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
+
+    /// @endcond
 
 private:
     pointer _storage;
@@ -1086,34 +1134,49 @@ class unordered_set : public iunordered_set<Key, KeyHash, KeyEqual>
     static_assert(power_of_two(MaxSize));
 
 public:
-    using key_type = Key;
-    using value_type = Key;
-    using size_type = int;
-    using hash_type = unsigned;
-    using hasher = KeyHash;
-    using key_equal = KeyEqual;
-    using reference = value_type&;
-    using const_reference = const value_type&;
-    using pointer = value_type*;
-    using const_pointer = const value_type*;
+    using key_type = Key; //!< Key type alias.
+    using value_type = Key; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using hash_type = unsigned; //!< Hash type alias.
+    using hasher = KeyHash; //!< Hash functor alias.
+    using key_equal = KeyEqual; //!< Equality functor alias.
+    using reference = value_type&; //!< Reference alias.
+    using const_reference = const value_type&; //!< Const reference alias.
+    using pointer = value_type*; //!< Pointer alias.
+    using const_pointer = const value_type*; //!< Const pointer alias.
 
+    /**
+     * @brief Default constructor.
+     */
     unordered_set() :
         iunordered_set<Key, KeyHash, KeyEqual>(*reinterpret_cast<pointer>(_storage_buffer), *_allocated_buffer, MaxSize)
     {
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other unordered_set to copy.
+     */
     unordered_set(const unordered_set& other) :
         unordered_set()
     {
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other unordered_set to move.
+     */
     unordered_set(unordered_set&& other) noexcept :
         unordered_set()
     {
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other Base unordered_set to copy.
+     */
     unordered_set(const iunordered_set<Key, KeyHash, KeyEqual>& other) :
         unordered_set()
     {
@@ -1122,6 +1185,10 @@ public:
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other Base unordered_set to move.
+     */
     unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
         unordered_set()
     {
@@ -1130,6 +1197,11 @@ public:
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other unordered_set to copy.
+     * @return Reference to this.
+     */
     unordered_set& operator=(const unordered_set& other)
     {
         if(this != &other)
@@ -1141,6 +1213,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other unordered_set to move.
+     * @return Reference to this.
+     */
     unordered_set& operator=(unordered_set&& other) noexcept
     {
         if(this != &other)
@@ -1152,6 +1229,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other Base unordered_set to copy.
+     * @return Reference to this.
+     */
     unordered_set& operator=(const iunordered_set<Key, KeyHash, KeyEqual>& other)
     {
         if(this != &other)
@@ -1165,6 +1247,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other Base unordered_set to move.
+     * @return Reference to this.
+     */
     unordered_set& operator=(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept
     {
         if(this != &other)
@@ -1178,6 +1265,9 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Destructor.
+     */
     ~unordered_set()
     {
         this->clear();

@@ -576,15 +576,19 @@ public:
         return erase_first;
     }
 
-    constexpr friend void erase(istring& string, value_type value)
+    constexpr friend size_type erase(istring& string, value_type value)
     {
+        size_type old_size = string.size();
         string.erase(remove(string.begin(), string.end(), value), string.end());
+        return old_size - string.size();
     }
 
     template<class Pred>
-    constexpr friend void erase_if(istring& string, const Pred& pred)
+    constexpr friend size_type erase_if(istring& string, const Pred& pred)
     {
+        size_type old_size = string.size();
         string.erase(remove_if(string.begin(), string.end(), pred), string.end());
+        return old_size - string.size();
     }
 
     constexpr size_type copy(pointer str, size_type length)

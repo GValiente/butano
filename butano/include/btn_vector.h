@@ -513,23 +513,29 @@ public:
 
     /**
      * @brief Erases all elements that are equal to the specified value.
-     * @param vector Vector from which to erase.
+     * @param vector vector from which to erase.
      * @param value Element to erase.
+     * @return Number of erased elements.
      */
-    friend void erase(ivector& vector, const_reference value)
+    friend size_type erase(ivector& vector, const_reference value)
     {
+        size_type old_size = vector.size();
         vector.erase(remove(vector.begin(), vector.end(), value), vector.end());
+        return old_size - vector.size();
     }
 
     /**
-     * @brief Erases all elements that statisfy the specified predicate.
-     * @param vector Vector from which to erase.
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param vector vector from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
+     * @return Number of erased elements.
      */
     template<class Pred>
-    friend void erase_if(ivector& vector, const Pred& pred)
+    friend size_type erase_if(ivector& vector, const Pred& pred)
     {
+        size_type old_size = vector.size();
         vector.erase(remove_if(vector.begin(), vector.end(), pred), vector.end());
+        return old_size - vector.size();
     }
 
     /**
@@ -649,8 +655,23 @@ public:
     }
 
     /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    {
+        pointer data = _data;
+
+        for(size_type index = 0, size = _size; index < size; ++index)
+        {
+            data[index].~value_type();
+        }
+
+        _size = 0;
+    }
+
+    /**
      * @brief Exchanges the contents of this vector with those of the other one.
-     * @param other Vector to exchange the contents with.
+     * @param other vector to exchange the contents with.
      */
     void swap(ivector& other)
     {
@@ -702,21 +723,6 @@ public:
     friend void swap(ivector& a, ivector& b)
     {
         a.swap(b);
-    }
-
-    /**
-     * @brief Removes all elements.
-     */
-    void clear()
-    {
-        pointer data = _data;
-
-        for(size_type index = 0, size = _size; index < size; ++index)
-        {
-            data[index].~value_type();
-        }
-
-        _size = 0;
     }
 
     /**
@@ -891,7 +897,7 @@ public:
 
     /**
      * @brief Copy constructor.
-     * @param other Vector to copy.
+     * @param other vector to copy.
      */
     vector(const vector& other) :
         vector()
@@ -901,7 +907,7 @@ public:
 
     /**
      * @brief Move constructor.
-     * @param other Vector to move.
+     * @param other vector to move.
      */
     vector(vector&& other) noexcept :
         vector()

@@ -448,8 +448,9 @@ public:
         return erase_it;
     }
 
-    friend void erase(ilist& list, const_reference value)
+    friend size_type erase(ilist& list, const_reference value)
     {
+        size_type erased_count = 0;
         iterator it = list.begin();
         iterator last = list.end();
 
@@ -461,17 +462,21 @@ public:
                 ++next;
                 list._erase(it);
                 it = next;
+                ++erased_count;
             }
             else
             {
                 ++it;
             }
         }
+
+        return erased_count;
     }
 
     template<class Pred>
-    friend void erase_if(ilist& list, const Pred& pred)
+    friend size_type erase_if(ilist& list, const Pred& pred)
     {
+        size_type erased_count = 0;
         iterator it = list.begin();
         iterator last = list.end();
 
@@ -483,12 +488,15 @@ public:
                 ++next;
                 list._erase(it);
                 it = next;
+                ++erased_count;
             }
             else
             {
                 ++it;
             }
         }
+
+        return erased_count;
     }
 
     void assign(size_type count, const_reference value)

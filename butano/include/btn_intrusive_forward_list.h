@@ -310,8 +310,9 @@ public:
         return erase_it;
     }
 
-    friend void erase(intrusive_forward_list& list, const_reference value)
+    friend size_type erase(intrusive_forward_list& list, const_reference value)
     {
+        size_type erased_count = 0;
         iterator previous_it = list.before_begin();
         iterator it = list.begin();
         iterator last = list.end();
@@ -322,6 +323,7 @@ public:
             {
                 list._erase_after(previous_it);
                 it = previous_it;
+                ++erased_count;
             }
             else
             {
@@ -330,11 +332,14 @@ public:
 
             ++it;
         }
+
+        return erased_count;
     }
 
     template<class Pred>
-    friend void erase_if(intrusive_forward_list& list, const Pred& pred)
+    friend size_type erase_if(intrusive_forward_list& list, const Pred& pred)
     {
+        size_type erased_count = 0;
         iterator previous_it = list.before_begin();
         iterator it = list.begin();
         iterator last = list.end();
@@ -345,6 +350,7 @@ public:
             {
                 list._erase_after(previous_it);
                 it = previous_it;
+                ++erased_count;
             }
             else
             {
@@ -353,6 +359,8 @@ public:
 
             ++it;
         }
+
+        return erased_count;
     }
 
     template<typename Iterator>

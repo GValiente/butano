@@ -687,11 +687,11 @@ public:
     }
 
     template<class Pred>
-    friend void erase_if(iunordered_map& map, const Pred& pred)
+    friend size_type erase_if(iunordered_map& map, const Pred& pred)
     {
+        size_type erased_count = 0;
         pointer storage = map._storage;
         bool* allocated = map._allocated;
-        size_type size = map._size;
         size_type first_valid_index = map.max_size();
         size_type last_valid_index = 0;
 
@@ -703,7 +703,7 @@ public:
                 {
                     storage[index].~value_type();
                     allocated[index] = false;
-                    --size;
+                    ++erased_count;
                 }
                 else
                 {
@@ -713,9 +713,10 @@ public:
             }
         }
 
-        map._size = size;
+        map._size -= erased_count;
         map._first_valid_index = first_valid_index;
         map._last_valid_index = last_valid_index;
+        return erased_count;
     }
 
     void merge(iunordered_map&& other) noexcept

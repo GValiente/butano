@@ -706,15 +706,19 @@ public:
         return _mutable_iterator(first);
     }
 
-    friend void erase(ideque& deque, const_reference value)
+    friend size_type erase(ideque& deque, const_reference value)
     {
+        size_type old_size = deque.size();
         deque.erase(remove(deque.begin(), deque.end(), value), deque.end());
+        return old_size - deque.size();
     }
 
     template<class Pred>
-    friend void erase_if(ideque& deque, const Pred& pred)
+    friend size_type erase_if(ideque& deque, const Pred& pred)
     {
+        size_type old_size = deque.size();
         deque.erase(remove_if(deque.begin(), deque.end(), pred), deque.end());
+        return old_size - deque.size();
     }
 
     void resize(size_type count)

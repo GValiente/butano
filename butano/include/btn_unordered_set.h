@@ -35,7 +35,7 @@ public:
     /**
      * @brief Non const iterator.
      *
-     * In contrast to std::unordered_set iterators, this one is bidirectional.
+     * In contrast to std::unordered_set::iterator, this one is bidirectional.
      */
     class iterator
     {
@@ -176,7 +176,7 @@ public:
     /**
      * @brief Const iterator.
      *
-     * In contrast to std::unordered_set iterators, this one is bidirectional.
+     * In contrast to std::unordered_set::const_iterator, this one is bidirectional.
      */
     class const_iterator
     {
@@ -312,7 +312,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base unordered_set to copy.
+     * @param other unordered_set to copy.
      * @return Reference to this.
      */
     iunordered_set& operator=(const iunordered_set& other)
@@ -330,7 +330,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Base unordered_set to move.
+     * @param other unordered_set to move.
      * @return Reference to this.
      */
     iunordered_set& operator=(iunordered_set&& other) noexcept
@@ -419,7 +419,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beggining of the unordered_set.
+     * @brief Returns a const iterator to the beginning of the unordered_set.
      */
     [[nodiscard]] const_iterator cbegin() const
     {
@@ -811,7 +811,7 @@ public:
     }
 
     /**
-     * @brief Moves all elements of the given unordered_set into this one, leaving it empty.
+     * @brief Moves all elements of the given unordered_set into this, leaving the given one empty.
      */
     void merge(iunordered_set&& other)
     {

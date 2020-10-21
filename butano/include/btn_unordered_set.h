@@ -21,33 +21,42 @@ class iunordered_set
 {
 
 public:
-    using key_type = Key;
-    using value_type = Key;
-    using size_type = int;
-    using hash_type = unsigned;
-    using hasher = KeyHash;
-    using key_equal = KeyEqual;
-    using reference = value_type&;
-    using const_reference = const value_type&;
-    using pointer = value_type*;
-    using const_pointer = const value_type*;
+    using key_type = Key; //!< Key type alias.
+    using value_type = Key; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using hash_type = unsigned; //!< Hash type alias.
+    using hasher = KeyHash; //!< Hash functor alias.
+    using key_equal = KeyEqual; //!< Equality functor alias.
+    using reference = value_type&; //!< Reference alias.
+    using const_reference = const value_type&; //!< Const reference alias.
+    using pointer = value_type*; //!< Pointer alias.
+    using const_pointer = const value_type*; //!< Const pointer alias.
 
+    /**
+     * @brief Non const iterator.
+     *
+     * In contrast to std::unordered_set iterators, this one is bidirectional.
+     */
     class iterator
     {
 
     public:
-        using key_type = iunordered_set::key_type;
-        using value_type = iunordered_set::value_type;
-        using size_type = iunordered_set::size_type;
-        using hash_type = iunordered_set::hash_type;
-        using hasher = iunordered_set::hasher;
-        using key_equal = iunordered_set::key_equal;
-        using reference = iunordered_set::reference;
-        using const_reference = iunordered_set::const_reference;
-        using pointer = iunordered_set::pointer;
-        using const_pointer = iunordered_set::const_pointer;
-        using iterator_category = bidirectional_iterator_tag;
+        using key_type = iunordered_set::key_type; //!< Key type alias.
+        using value_type = iunordered_set::value_type; //!< Value type alias.
+        using size_type = iunordered_set::size_type; //!< Size type alias.
+        using hash_type = iunordered_set::hash_type; //!< Hash type alias.
+        using hasher = iunordered_set::hasher; //!< Hash functor alias.
+        using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
+        using reference = iunordered_set::reference; //!< Reference alias.
+        using const_reference = iunordered_set::const_reference; //!< Const reference alias.
+        using pointer = iunordered_set::pointer; //!< Pointer alias.
+        using const_pointer = iunordered_set::const_pointer; //!< Const pointer alias.
+        using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         iterator& operator++()
         {
             size_type index = _index;
@@ -69,6 +78,10 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         iterator& operator--()
         {
             int index = _index;
@@ -85,6 +98,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -92,6 +108,9 @@ public:
             return _set->_storage[_index];
         }
 
+        /**
+         * @brief Returns a reference to the pointed value.
+         */
         [[nodiscard]] reference operator*()
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -99,6 +118,9 @@ public:
             return _set->_storage[_index];
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -106,6 +128,9 @@ public:
             return _set->_storage + _index;
         }
 
+        /**
+         * @brief Returns a pointer to the pointed value.
+         */
         pointer operator->()
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -113,11 +138,23 @@ public:
             return _set->_storage + _index;
         }
 
+        /**
+         * @brief Equal operator.
+         * @param a First element to compare.
+         * @param b Second element to compare.
+         * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
             return a._index == b._index;
         }
 
+        /**
+         * @brief Not equal operator.
+         * @param a First element to compare.
+         * @param b Second element to compare.
+         * @return <b>true</b> if the first element is not equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
             return ! (a == b);
@@ -136,28 +173,41 @@ public:
         }
     };
 
+    /**
+     * @brief Const iterator.
+     *
+     * In contrast to std::unordered_set iterators, this one is bidirectional.
+     */
     class const_iterator
     {
 
     public:
-        using key_type = iunordered_set::key_type;
-        using value_type = iunordered_set::value_type;
-        using size_type = iunordered_set::size_type;
-        using hash_type = iunordered_set::hash_type;
-        using hasher = iunordered_set::hasher;
-        using key_equal = iunordered_set::key_equal;
-        using reference = iunordered_set::reference;
-        using const_reference = iunordered_set::const_reference;
-        using pointer = iunordered_set::pointer;
-        using const_pointer = iunordered_set::const_pointer;
-        using iterator_category = bidirectional_iterator_tag;
+        using key_type = iunordered_set::key_type; //!< Key type alias.
+        using value_type = iunordered_set::value_type; //!< Value type alias.
+        using size_type = iunordered_set::size_type; //!< Size type alias.
+        using hash_type = iunordered_set::hash_type; //!< Hash type alias.
+        using hasher = iunordered_set::hasher; //!< Hash functor alias.
+        using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
+        using reference = iunordered_set::reference; //!< Reference alias.
+        using const_reference = iunordered_set::const_reference; //!< Const reference alias.
+        using pointer = iunordered_set::pointer; //!< Pointer alias.
+        using const_pointer = iunordered_set::const_pointer; //!< Const pointer alias.
+        using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Public constructor.
+         * @param other Non const iterator.
+         */
         const_iterator(const iterator& other) :
             _index(other._index),
             _set(other._set)
         {
         }
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         const_iterator& operator++()
         {
             size_type index = _index;
@@ -179,6 +229,10 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         const_iterator& operator--()
         {
             int index = _index;
@@ -195,6 +249,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -202,6 +259,9 @@ public:
             return _set->_storage[_index];
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
@@ -209,11 +269,23 @@ public:
             return _set->_storage + _index;
         }
 
+        /**
+         * @brief Equal operator.
+         * @param a First element to compare.
+         * @param b Second element to compare.
+         * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
             return a._index == b._index;
         }
 
+        /**
+         * @brief Not equal operator.
+         * @param a First element to compare.
+         * @param b Second element to compare.
+         * @return <b>true</b> if the first element is not equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
             return ! (a == b);
@@ -233,11 +305,16 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>;
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     iunordered_set(const iunordered_set& other) = delete;
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other Base unordered_set to copy.
+     * @return Reference to this.
+     */
     iunordered_set& operator=(const iunordered_set& other)
     {
         if(this != &other)
@@ -251,6 +328,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other Base unordered_set to move.
+     * @return Reference to this.
+     */
     iunordered_set& operator=(iunordered_set&& other) noexcept
     {
         if(this != &other)
@@ -264,91 +346,147 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Returns the current size.
+     */
     [[nodiscard]] size_type size() const
     {
         return _size;
     }
 
+    /**
+     * @brief Returns the maximum possible size.
+     */
     [[nodiscard]] size_type max_size() const
     {
         return _max_size_minus_one + 1;
     }
 
+    /**
+     * @brief Returns the remaining capacity.
+     */
     [[nodiscard]] size_type available() const
     {
         return max_size() - _size;
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any element.
+     */
     [[nodiscard]] bool empty() const
     {
         return _size == 0;
     }
 
+    /**
+     * @brief Indicates if it can't contain any more elements.
+     */
     [[nodiscard]] bool full() const
     {
         return _size == max_size();
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the unordered_set.
+     */
     [[nodiscard]] const_iterator begin() const
     {
         return const_iterator(_first_valid_index, *this);
     }
 
+    /**
+     * @brief Returns a iterator to the beginning of the unordered_set.
+     */
     [[nodiscard]] iterator begin()
     {
         return iterator(_first_valid_index, *this);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the unordered_set.
+     */
     [[nodiscard]] const_iterator end() const
     {
         return const_iterator(max_size(), *this);
     }
 
+    /**
+     * @brief Returns a iterator to the end of the unordered_set.
+     */
     [[nodiscard]] iterator end()
     {
         return iterator(max_size(), *this);
     }
 
+    /**
+     * @brief Returns a const iterator to the beggining of the unordered_set.
+     */
     [[nodiscard]] const_iterator cbegin() const
     {
         return const_iterator(_first_valid_index, *this);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the unordered_set.
+     */
     [[nodiscard]] const_iterator cend() const
     {
         return const_iterator(max_size(), *this);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the unordered_set.
+     */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the end of the unordered_set.
+     */
     [[nodiscard]] reverse_iterator rbegin()
     {
         return reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the unordered_set.
+     */
     [[nodiscard]] const_reverse_iterator rend() const
     {
         return const_reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the beginning of the unordered_set.
+     */
     [[nodiscard]] reverse_iterator rend()
     {
         return reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the unordered_set.
+     */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the unordered_set.
+     */
     [[nodiscard]] const_reverse_iterator crend() const
     {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * @brief Indicates if the specified key is contained in this unordered_set.
+     * @param key Key to search for.
+     * @return <b>true</b> if the specified key is contained in this unordered_set, otherwise <b>false</b>.
+     */
     [[nodiscard]] bool contains(const key_type& key) const
     {
         if(empty())
@@ -359,26 +497,53 @@ public:
         return contains_hash(hasher()(key), key);
     }
 
+    /**
+     * @brief Indicates if the specified key is contained in this unordered_set.
+     * @param key_hash Hash of the given key to search for.
+     * @param key Key to search for.
+     * @return <b>true</b> if the specified key is contained in this unordered_set, otherwise <b>false</b>.
+     */
     [[nodiscard]] bool contains_hash(hash_type key_hash, const key_type& key) const
     {
         return find_hash(key_hash, key) != end();
     }
 
+    /**
+     * @brief Counts the number of keys stored in this unordered_set are equal to the given one.
+     * @param key Key to search for.
+     * @return 1 if the specified key is contained in this unordered_set, otherwise 0.
+     */
     [[nodiscard]] size_type count(const key_type& key) const
     {
         return count_hash(hasher()(key), key);
     }
 
+    /**
+     * @brief Counts the number of keys stored in this unordered_set are equal to the given one.
+     * @param key_hash Hash of the given key to search for.
+     * @param key Key to search for.
+     * @return 1 if the specified key is contained in this unordered_set, otherwise 0.
+     */
     [[nodiscard]] size_type count_hash(hash_type key_hash, const key_type& key) const
     {
         return contains_hash(key_hash, key) ? 1 : 0;
     }
 
+    /**
+     * @brief Search for a given key.
+     * @param key Key to search for.
+     * @return Const iterator to the key if it exists, otherwise end().
+     */
     [[nodiscard]] const_iterator find(const key_type& key) const
     {
         return const_cast<iunordered_set&>(*this).find(key);
     }
 
+    /**
+     * @brief Search for a given key.
+     * @param key_hash Hash of the given key to search for.
+     * @return Iterator to the key if it exists, otherwise end().
+     */
     [[nodiscard]] iterator find(const key_type& key)
     {
         if(empty())
@@ -389,11 +554,23 @@ public:
         return find_hash(hasher()(key), key);
     }
 
+    /**
+     * @brief Search for a given key.
+     * @param key_hash Hash of the given key to search for.
+     * @param key Key to search for.
+     * @return Const iterator to the key if it exists, otherwise end().
+     */
     [[nodiscard]] const_iterator find_hash(hash_type key_hash, const key_type& key) const
     {
         return const_cast<iunordered_set&>(*this).find_hash(key_hash, key);
     }
 
+    /**
+     * @brief Search for a given key.
+     * @param key_hash Hash of the given key to search for.
+     * @param key Key to search for.
+     * @return Iterator to the key if it exists, otherwise end().
+     */
     [[nodiscard]] iterator find_hash(hash_type key_hash, const key_type& key)
     {
         if(empty())
@@ -422,24 +599,46 @@ public:
         return end();
     }
 
+    /**
+     * @brief Inserts a copy of the given value.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(const value_type& value)
     {
         return insert_hash(hasher()(value), value);
     }
 
+    /**
+     * @brief Inserts a moved value.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(value_type&& value)
     {
         return insert_hash(hasher()(value), move(value));
     }
 
-    iterator insert_hash(hash_type key_hash, const value_type& value)
+    /**
+     * @brief Inserts a copy of the given value.
+     * @param value_hash Hash of the value to insert.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
+    iterator insert_hash(hash_type value_hash, const value_type& value)
     {
-        return insert_hash(key_hash, value_type(value));
+        return insert_hash(value_hash, value_type(value));
     }
 
-    iterator insert_hash(hash_type key_hash, value_type&& value)
+    /**
+     * @brief Inserts a moved value.
+     * @param value_hash Hash of the value to insert.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
+    iterator insert_hash(hash_type value_hash, value_type&& value)
     {
-        size_type index = _index(key_hash);
+        size_type index = _index(value_hash);
         pointer storage = _storage;
         bool* allocated = _allocated;
         key_equal key_equal_functor;
@@ -474,18 +673,18 @@ public:
         return insert_or_assign_hash(hasher()(value), move(value));
     }
 
-    iterator insert_or_assign_hash(hash_type key_hash, const value_type& value)
+    iterator insert_or_assign_hash(hash_type value_hash, const value_type& value)
     {
-        return insert_or_assign_hash(key_hash, value_type(value));
+        return insert_or_assign_hash(value_hash, value_type(value));
     }
 
-    iterator insert_or_assign_hash(hash_type key_hash, value_type&& value)
+    iterator insert_or_assign_hash(hash_type value_hash, value_type&& value)
     {
-        iterator it = find_hash(key_hash, value);
+        iterator it = find_hash(value_hash, value);
 
         if(it == end())
         {
-            it = insert_hash(key_hash, move(value));
+            it = insert_hash(value_hash, move(value));
             BTN_ASSERT(it != end(), "Insertion failed");
         }
         else

@@ -37,8 +37,8 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Vector to copy.
-     * @return A reference to this.
+     * @param other Base vector to copy.
+     * @return Reference to this.
      */
     ivector& operator=(const ivector& other)
     {
@@ -55,8 +55,8 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Vector to move.
-     * @return A reference to this.
+     * @param other Base vector to move.
+     * @return Reference to this.
      */
     ivector& operator=(ivector&& other) noexcept
     {
@@ -104,7 +104,15 @@ public:
     }
 
     /**
-     * @brief Indicates if the vector contains no elements.
+     * @brief Returns the remaining capacity.
+     */
+    [[nodiscard]] size_type available() const
+    {
+        return _max_size - _size;
+    }
+
+    /**
+     * @brief Indicates if it doesn't contain any element.
      */
     [[nodiscard]] bool empty() const
     {
@@ -112,19 +120,11 @@ public:
     }
 
     /**
-     * @brief Indicates if the vector can't contain more elements.
+     * @brief Indicates if it can't contain any more elements.
      */
     [[nodiscard]] bool full() const
     {
         return _size == _max_size;
-    }
-
-    /**
-     * @brief Returns the remaining capacity.
-     */
-    [[nodiscard]] size_type available() const
-    {
-        return _max_size - _size;
     }
 
     /**
@@ -794,7 +794,7 @@ public:
     }
 
 protected:
-    /// \cond DO_NOT_DOCUMENT
+    /// @cond DO_NOT_DOCUMENT
 
     ivector(reference data, size_type max_size) :
         _data(&data),
@@ -855,7 +855,7 @@ protected:
         }
     }
 
-    /// \endcond
+    /// @endcond
 
 private:
     pointer _data;
@@ -960,8 +960,8 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Vector to copy.
-     * @return A reference to this.
+     * @param other vector to copy.
+     * @return Reference to this.
      */
     vector& operator=(const vector& other)
     {
@@ -976,8 +976,8 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Vector to move.
-     * @return A reference to this.
+     * @param other vector to move.
+     * @return Reference to this.
      */
     vector& operator=(vector&& other) noexcept
     {
@@ -993,7 +993,7 @@ public:
     /**
      * @brief Copy assignment operator.
      * @param other Base vector to copy.
-     * @return A reference to this.
+     * @return Reference to this.
      */
     vector& operator=(const ivector<Type>& other)
     {
@@ -1011,7 +1011,7 @@ public:
     /**
      * @brief Move assignment operator.
      * @param other Base vector to move.
-     * @return A reference to this.
+     * @return Reference to this.
      */
     vector& operator=(ivector<Type>&& other) noexcept
     {

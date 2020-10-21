@@ -11,10 +11,21 @@
 namespace btn
 {
 
+/**
+ * @brief Decodes a single UTF-8 character from a string.
+ *
+ * See https://www.coranac.com/tonc/text/tte.htm, UTF-8 section.
+ *
+ * @ingroup text
+ */
 class utf8_character
 {
 
 public:
+    /**
+     * @brief Class constructor.
+     * @param text_ptr Non null pointer to the string to decode.
+     */
     constexpr explicit utf8_character(const char* text_ptr)
     {
         BTN_ASSERT(text_ptr, "Text is null");
@@ -22,10 +33,12 @@ public:
         *this = utf8_character(*text_ptr);
     }
 
+    /**
+     * @brief Class constructor.
+     * @param text_ref Reference to the string to decode.
+     */
     constexpr explicit utf8_character(const char& text_ref)
     {
-        // https://www.coranac.com/tonc/text/tte.htm
-
         const char* src = &text_ref;
         auto ch8 = unsigned(*src);
 
@@ -75,11 +88,17 @@ public:
         _size = src - &text_ref;
     }
 
+    /**
+     * @brief Returns the decoded UTF-8 character.
+     */
     [[nodiscard]] constexpr int data() const
     {
         return _data;
     }
 
+    /**
+     * @brief Returns the size in bytes of the decoded UTF-8 character.
+     */
     [[nodiscard]] constexpr int size() const
     {
         return _size;

@@ -12,11 +12,9 @@
 namespace btn
 {
     /**
-     * @brief Base class for vectors.
+     * @brief Base class of vector.
      *
-     * Can be used as a reference type for all vectors containing a specific type.
-     *
-     * STL equivalent: std::vector
+     * Can be used as a reference type for all vector containers containing a specific type.
      *
      * @tparam Type The element type.
      *
@@ -26,9 +24,7 @@ namespace btn
     class ivector;
 
     /**
-     * @brief Vector implementation that uses a fixed size buffer.
-     *
-     * STL equivalent: std::vector
+     * @brief Implementation that uses a fixed size buffer.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

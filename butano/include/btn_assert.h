@@ -21,6 +21,8 @@
  *
  *     BTN_ASSERT(integer > 0, "Invalid integer: ", integer);
  *
+ * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ *
  * @ingroup assert
  */
 
@@ -32,6 +34,8 @@
  * More information can be shown by passing it by argument. Example:
  *
  *     BTN_ERROR("Invalid integer: ", integer);
+ *
+ * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  *
  * @ingroup assert
  */
@@ -70,7 +74,7 @@
             } \
         } while(false)
 
-    /// \cond DO_NOT_DOCUMENT
+    /// @cond DO_NOT_DOCUMENT
 
     namespace _btn::assert
     {
@@ -120,7 +124,7 @@
         }
     }
 
-    /// \endcond
+    /// @endcond
 #else
     #define BTN_ASSERT(condition, ...) \
         do \

@@ -17,6 +17,34 @@
 // GROUPS
 
 /**
+ * @defgroup sprite Sprites
+ *
+ * Small animated objects that can move freely from the background.
+ *
+ * In GBA's jargon they are called OBJs.
+ */
+
+/**
+ * @defgroup window Windows
+ *
+ * They allow to divide the screen into regions.
+ *
+ * For each one of these regions, they can show or hide sprites, backgrounds and blending between them.
+ */
+
+/**
+ * @defgroup text Text
+ *
+ * Butano's text system, based on sprites.
+ *
+ * Currently, it supports 8x8 and 8x16 fixed width AND variable width fonts.
+ *
+ * Text can be printed in one sprite per character or multiple characters per sprite.
+ *
+ * Also, UTF-8 characters are supported.
+ */
+
+/**
  * @defgroup container Containers
  *
  * STL like containers with the capacity defined at compile time.
@@ -27,17 +55,31 @@
 /**
  * @defgroup vector Vector
  *
- * A vector with the capacity defined at compile time.
+ * A std::vector like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
  * @ingroup container
  */
 
 /**
- * @defgroup sprite Sprites
+ * @defgroup unordered_map Unordered map
  *
- * Small animated objects that can move freely from the background.
+ * A std::unordered_map like container with the capacity defined at compile time.
  *
- * In GBA's jargon they are called OBJs.
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup unordered_set Unordered set
+ *
+ * A std::unordered_set like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
  */
 
 /**
@@ -45,7 +87,9 @@
  *
  * Butano's assert system.
  *
- * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a false.
+ * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
+ *
+ * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  */
 
 /**

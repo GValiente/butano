@@ -14,12 +14,19 @@ namespace btn
 /**
  * @brief Fast, deterministic random number generator.
  *
- * https://stackoverflow.com/questions/1640258/need-a-fast-random-generator-for-c
+ * Its current implementation is a Marsaglia's xorshf generator.
+ *
+ * See https://stackoverflow.com/questions/1640258/need-a-fast-random-generator-for-c
+ *
+ * @ingroup other
  */
 class random
 {
 
 public:
+    /**
+     * @brief Default constructor.
+     */
     constexpr random() :
         _x(123456789),
         _y(362436069),
@@ -27,6 +34,9 @@ public:
     {
     }
 
+    /**
+     * @brief Returns a new random unsigned integer, modifying its internal seed in the process.
+     */
     [[nodiscard]] constexpr unsigned get()
     {
         _x ^= _x << 16;

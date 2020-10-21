@@ -12,6 +12,11 @@
 namespace btn
 {
 
+/**
+ * @brief Valid sprite shapes enum.
+ *
+ * @ingroup sprite
+ */
 enum class sprite_shape
 {
     SQUARE,
@@ -19,6 +24,12 @@ enum class sprite_shape
     TALL
 };
 
+
+/**
+ * @brief Valid sprite sizes enum.
+ *
+ * @ingroup sprite
+ */
 enum class sprite_size
 {
     SMALL,
@@ -31,31 +42,50 @@ enum class sprite_size
 /**
  * @brief Calculates sprite dimensions from its shape and size.
  *
- * shape \ size 00      01      10      11
- * 00           8x8 	16x16   32x32   64x64
- * 01           16x8 	32x8 	32x16 	64x32
- * 10           8x16 	8x32 	16x32 	32x64
+ * <table>
+ * <caption> Available sprite pixel sizes </caption>
+ * <tr><th> shape / size    <th> small  <th> normal <th> big    <th> huge
+ * <tr><th> square          <td> 8x8    <td> 16x16  <td> 32x32  <td> 64x64
+ * <tr><th> wide            <td> 16x8   <td> 32x8   <td> 32x16  <td> 64x32
+ * <tr><th> tall            <td> 8x16   <td> 8x32   <td> 16x32  <td> 32x64
+ * </table>
+ *
+ * @ingroup sprite
  */
 class sprite_shape_size
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param shape sprite_shape enum.
+     * @param size sprite_size enum.
+     */
     constexpr sprite_shape_size(sprite_shape shape, sprite_size size) :
         _shape(shape),
         _size(size)
     {
     }
 
+    /**
+     * @brief Returns the sprite_shape enum.
+     */
     [[nodiscard]] constexpr sprite_shape shape() const
     {
         return _shape;
     }
 
+    /**
+     * @brief Returns the sprite_size enum.
+     */
     [[nodiscard]] constexpr sprite_size size() const
     {
         return _size;
     }
 
+    /**
+     * @brief Returns the width of the sprite in pixels.
+     */
     [[nodiscard]] constexpr int width() const
     {
         switch(_shape)
@@ -133,6 +163,9 @@ public:
         }
     }
 
+    /**
+     * @brief Returns the height of the sprite in pixels.
+     */
     [[nodiscard]] constexpr int height() const
     {
         switch(_shape)
@@ -210,16 +243,30 @@ public:
         }
     }
 
+    /**
+     * @brief Returns the area of the sprite in pixels.
+     */
     [[nodiscard]] constexpr int pixels_count() const
     {
         return width() * height();
     }
 
+    /**
+     * @brief Returns the area of the sprite in tiles.
+     * @param bpp_mode Tiles' bits per pixel mode.
+     * @return Area of the sprite in tiles.
+     */
     [[nodiscard]] constexpr int tiles_count(palette_bpp_mode bpp_mode) const
     {
         return bpp_mode == palette_bpp_mode::BPP_8 ? pixels_count() / 32 : pixels_count() / 64;
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a First element to compare.
+     * @param b Second element to compare.
+     * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator==(const sprite_shape_size& a, const sprite_shape_size& b) = default;
 
 private:

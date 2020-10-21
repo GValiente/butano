@@ -10,9 +10,30 @@
 
 namespace btn
 {
+    /**
+     * @brief Base class of unordered_set.
+     *
+     * Can be used as a reference type for all unordered_set containers containing a specific type.
+     *
+     * @tparam Key The element type.
+     * @tparam KeyHash Functor used to calculate the hash of a given key.
+     * @tparam KeyEqual Functor used for all key comparisons.
+     *
+     * @ingroup unordered_set
+     */
     template<typename Key, typename KeyHash = hash<Key>, typename KeyEqual = equal_to<Key>>
     class iunordered_set;
 
+    /**
+     * @brief Implementation that uses a fixed size buffer.
+     *
+     * @tparam Key The element type.
+     * @tparam MaxSize Maximum number of elements that can be stored.
+     * @tparam KeyHash Functor used to calculate the hash of a given key.
+     * @tparam KeyEqual Functor used for all key comparisons.
+     *
+     * @ingroup unordered_set
+     */
     template<typename Key, int MaxSize, typename KeyHash = hash<Key>, typename KeyEqual = equal_to<Key>>
     class unordered_set;
 }

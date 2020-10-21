@@ -477,12 +477,14 @@ public:
     }
 
     template<typename... Args>
-    void emplace_back(Args&&... args)
+    reference emplace_back(Args&&... args)
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        ::new(_data + _real_index(_size)) value_type(forward<Args>(args)...);
+        Type* result = _data + _real_index(_size);
+        ::new(result) value_type(forward<Args>(args)...);
         ++_size;
+        return *result;
     }
 
     void pop_back()
@@ -510,12 +512,14 @@ public:
     }
 
     template<typename... Args>
-    void emplace_front(Args&&... args)
+    reference emplace_front(Args&&... args)
     {
         BTN_ASSERT(! full(), "Deque is full");
 
-        ::new(_data + _begin) value_type(forward<Args>(args)...);
+        Type* result = _data + _begin;
+        ::new(result) value_type(forward<Args>(args)...);
         _push_front();
+        return *result;
     }
 
     void pop_front()

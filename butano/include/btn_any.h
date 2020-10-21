@@ -129,15 +129,18 @@ public:
     }
 
     template<typename Type, typename... Args>
-    void emplace(Args&&... args)
+    Type& emplace(Args&&... args)
     {
         BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
                    alignof(Type), " - ", _max_alignment);
 
         reset();
-        ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
+
+        Type* result = _value_ptr<Type>();
+        ::new(result) Type(forward<Args>(args)...);
         _create_manager<Type>();
+        return *result;
     }
 
     void reset()
@@ -455,14 +458,17 @@ public:
     }
 
     template<typename Type, typename... Args>
-    void emplace(Args&&... args)
+    Type& emplace(Args&&... args)
     {
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         reset();
-        ::new(_value_ptr<Type>()) Type(forward<Args>(args)...);
+
+        Type* result = _value_ptr<Type>();
+        ::new(result) Type(forward<Args>(args)...);
         _create_manager<Type>();
+        return *result;
     }
 
 private:

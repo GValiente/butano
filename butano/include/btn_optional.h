@@ -255,11 +255,12 @@ public:
     }
 
     template<typename... Args>
-    void emplace(Args&&... args)
+    Type& emplace(Args&&... args)
     {
         _clean();
         ::new(_storage) Type(forward<Args>(args)...);
         _valid = true;
+        return _value_impl();
     }
 
     void swap(optional& other)

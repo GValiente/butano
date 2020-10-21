@@ -294,12 +294,13 @@ public:
     }
 
     template<typename... Args>
-    void emplace_front(Args&&... args)
+    reference emplace_front(Args&&... args)
     {
         BTN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert_after(before_begin(), new_node);
+        return static_cast<value_node_type*>(&new_node)->value;
     }
 
     void pop_front()

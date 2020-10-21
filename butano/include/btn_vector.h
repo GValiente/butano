@@ -338,14 +338,17 @@ public:
     /**
      * @brief Constructs a value at the end of the vector.
      * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
      */
     template<typename... Args>
-    void emplace_back(Args&&... args)
+    reference emplace_back(Args&&... args)
     {
         BTN_ASSERT(! full(), "Vector is full");
 
-        ::new(_data + _size) value_type(forward<Args>(args)...);
+        Type* result = _data + _size;
+        ::new(result) value_type(forward<Args>(args)...);
         ++_size;
+        return *result;
     }
 
     /**
@@ -363,6 +366,7 @@ public:
      * @brief Inserts a copy of a value at the specified position.
      * @param position The value is inserted before this position.
      * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
      */
     iterator insert(const_iterator position, const_reference value)
     {
@@ -386,6 +390,7 @@ public:
      * @brief Inserts a moved value at the specified position.
      * @param position The value is inserted before this position.
      * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
      */
     iterator insert(const_iterator position, value_type&& value)
     {
@@ -409,6 +414,7 @@ public:
      * @brief Constructs a value at the specified position.
      * @param position The value is inserted before this position.
      * @param args Parameters of the value to insert.
+     * @return Iterator pointing to the new value.
      */
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)

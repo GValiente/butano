@@ -410,24 +410,24 @@ namespace btn
 
 namespace _btn::memory
 {
-    void unsafe_copy(const void* source, int bytes, void* destination);
+    void unsafe_copy_bytes(const void* source, int bytes, void* destination);
 
-    void unsafe_copy16(const void* source, int half_words, void* destination);
+    void unsafe_copy_half_words(const void* source, int half_words, void* destination);
 
-    void unsafe_copy32(const void* source, int words, void* destination);
+    void unsafe_copy_words(const void* source, int words, void* destination);
 
-    void unsafe_clear(int bytes, void* destination);
+    void unsafe_clear_bytes(int bytes, void* destination);
 
-    void unsafe_clear16(int half_words, void* destination);
+    void unsafe_clear_half_words(int half_words, void* destination);
 
-    void unsafe_clear32(int words, void* destination);
+    void unsafe_clear_words(int words, void* destination);
 }
 
 /// @endcond
 
 
 /**
- * @brief Butano's memory related stuff.
+ * @brief Butano's memory related functions.
  *
  * @ingroup memory
  */
@@ -498,15 +498,15 @@ namespace btn::memory
 
         if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_copy32(&source_ref, int(bytes / 4), &destination_ref);
+            _btn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
         }
         else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_copy16(&source_ref, int(bytes / 2), &destination_ref);
+            _btn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
         }
         else
         {
-            _btn::memory::unsafe_copy(&source_ref, int(bytes), &destination_ref);
+            _btn::memory::unsafe_copy_bytes(&source_ref, int(bytes), &destination_ref);
         }
     }
 
@@ -526,15 +526,15 @@ namespace btn::memory
 
         if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_clear32(int(bytes / 4), &destination_ref);
+            _btn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
         }
         else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_clear16(int(bytes / 2), &destination_ref);
+            _btn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
         }
         else
         {
-            _btn::memory::unsafe_clear(int(bytes), &destination_ref);
+            _btn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
         }
     }
 

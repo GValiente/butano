@@ -46,34 +46,34 @@ void operator delete[](void* ptr, [[maybe_unused]] unsigned bytes) noexcept
 namespace _btn::memory
 {
 
-void unsafe_copy(const void* source, int bytes, void* destination)
+void unsafe_copy_bytes(const void* source, int bytes, void* destination)
 {
-    btn::hw::memory::copy(source, bytes, destination);
+    btn::hw::memory::copy_bytes(source, bytes, destination);
 }
 
-void unsafe_copy16(const void* source, int half_words, void* destination)
+void unsafe_copy_half_words(const void* source, int half_words, void* destination)
 {
-    btn::hw::memory::copy16(source, half_words, destination);
+    btn::hw::memory::copy_half_words(source, half_words, destination);
 }
 
-void unsafe_copy32(const void* source, int words, void* destination)
+void unsafe_copy_words(const void* source, int words, void* destination)
 {
-    btn::hw::memory::copy32(source, words, destination);
+    btn::hw::memory::copy_words(source, words, destination);
 }
 
-void unsafe_clear(int bytes, void* destination)
+void unsafe_clear_bytes(int bytes, void* destination)
 {
-    btn::hw::memory::set(0, bytes, destination);
+    btn::hw::memory::set_bytes(0, bytes, destination);
 }
 
-void unsafe_clear16(int half_words, void* destination)
+void unsafe_clear_half_words(int half_words, void* destination)
 {
-    btn::hw::memory::set16(0, half_words, destination);
+    btn::hw::memory::set_half_words(0, half_words, destination);
 }
 
-void unsafe_clear32(int words, void* destination)
+void unsafe_clear_words(int words, void* destination)
 {
-    btn::hw::memory::set32(0, words, destination);
+    btn::hw::memory::set_words(0, words, destination);
 }
 
 }
@@ -127,7 +127,7 @@ void set_bytes(uint8_t value, int bytes, void* destination_ptr)
     BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
     BTN_ASSERT(destination_ptr, "Destination is null");
 
-    hw::memory::set(value, bytes, destination_ptr);
+    hw::memory::set_bytes(value, bytes, destination_ptr);
 }
 
 void set_half_words(uint16_t value, int half_words, void* destination_ptr)
@@ -136,7 +136,7 @@ void set_half_words(uint16_t value, int half_words, void* destination_ptr)
     BTN_ASSERT(destination_ptr, "Destination is null");
     BTN_ASSERT(aligned<2>(destination_ptr), "Destination is not aligned");
 
-    hw::memory::set16(value, half_words, destination_ptr);
+    hw::memory::set_half_words(value, half_words, destination_ptr);
 }
 
 void set_words(unsigned value, int words, void* destination_ptr)
@@ -145,7 +145,7 @@ void set_words(unsigned value, int words, void* destination_ptr)
     BTN_ASSERT(destination_ptr, "Destination is null");
     BTN_ASSERT(aligned<4>(destination_ptr), "Destination is not aligned");
 
-    hw::memory::set32(value, words, destination_ptr);
+    hw::memory::set_words(value, words, destination_ptr);
 }
 
 }

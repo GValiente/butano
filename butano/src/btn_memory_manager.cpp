@@ -117,44 +117,48 @@ void* ewram_alloc(int bytes)
 
     bytes += sizeof(items_iterator);
 
-    if(bytes <= data.free_bytes_count)
+    if(bytes > data.free_bytes_count)
     {
-        auto free_items_end = data.free_items.end();
-        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, bytes, lower_bound_comparator);
-
-        if(free_items_it != free_items_end)
-        {
-            items_iterator items_it = *free_items_it;
-            item_type& item = *items_it;
-            BTN_ASSERT(! item.used, "Item is not free: ", item.size);
-
-            item.used = true;
-
-            if(int new_item_size = item.size - bytes)
-            {
-                BTN_ASSERT(! data.items.full(), "No more items allowed");
-
-                item_type new_item;
-                new_item.data = item.data;
-                new_item.size = new_item_size;
-
-                items_iterator new_items_it = data.items.insert(items_it, new_item);
-                _insert_free_item(new_items_it, free_items_it);
-                ++free_items_it;
-                item.data += new_item_size;
-                item.size = bytes;
-            }
-
-            data.free_items.erase(free_items_it);
-
-            auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
-            *items_it_ptr = items_it;
-            data.free_bytes_count -= bytes;
-            return items_it_ptr + 1;
-        }
+        return nullptr;
     }
 
-    return nullptr;
+    auto free_items_end = data.free_items.end();
+    auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, bytes, lower_bound_comparator);
+
+    if(free_items_it == free_items_end)
+    {
+        return nullptr;
+    }
+
+    items_iterator items_it = *free_items_it;
+    item_type& item = *items_it;
+    BTN_ASSERT(! item.used, "Item is not free: ", item.size);
+
+    if(int new_item_size = item.size - bytes)
+    {
+        if(data.items.full())
+        {
+            return nullptr;
+        }
+
+        item_type new_item;
+        new_item.data = item.data;
+        new_item.size = new_item_size;
+
+        items_iterator new_items_it = data.items.insert(items_it, new_item);
+        _insert_free_item(new_items_it, free_items_it);
+        ++free_items_it;
+        item.data += new_item_size;
+        item.size = bytes;
+    }
+
+    item.used = true;
+    data.free_items.erase(free_items_it);
+
+    auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
+    *items_it_ptr = items_it;
+    data.free_bytes_count -= bytes;
+    return items_it_ptr + 1;
 }
 
 void ewram_free(void* ptr)
@@ -212,6 +216,16 @@ int used_alloc_ewram()
 int available_alloc_ewram()
 {
     return data.free_bytes_count;
+}
+
+int used_items_ewram()
+{
+    return data.items.size();
+}
+
+int available_items_ewram()
+{
+    return data.items.available();
 }
 
 }

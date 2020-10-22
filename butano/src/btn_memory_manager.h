@@ -19,6 +19,10 @@ namespace btn::memory_manager
     [[nodiscard]] int used_alloc_ewram();
 
     [[nodiscard]] int available_alloc_ewram();
+
+    [[nodiscard]] int used_items_ewram();
+
+    [[nodiscard]] int available_items_ewram();
 }
 
 #endif

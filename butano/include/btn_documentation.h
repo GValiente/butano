@@ -10,7 +10,7 @@
 
 /**
  * @namespace btn
- * @brief Modern C++ high level GBA engine
+ * @brief Main butano namespace.
  */
 
 
@@ -42,6 +42,22 @@
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
  * Also, UTF-8 characters are supported.
+ */
+
+/**
+ * @defgroup assert Asserts
+ *
+ * Butano's assert system.
+ *
+ * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
+ *
+ * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ */
+
+/**
+ * @defgroup memory Memory
+ *
+ * Memory management utilities.
  */
 
 /**
@@ -80,16 +96,6 @@
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
  * @ingroup container
- */
-
-/**
- * @defgroup assert Asserts
- *
- * Butano's assert system.
- *
- * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
- *
- * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  */
 
 /**

@@ -5,5 +5,6 @@ LINKS_NAVBAR1 = [
     ("Modules", 'modules', [])
 ]
 LINKS_NAVBAR2 = [
+    ("Namespaces", 'namespaces', []),
     ("Classes", 'annotated', [])
 ]

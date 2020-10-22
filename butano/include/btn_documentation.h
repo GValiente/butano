@@ -61,11 +61,22 @@
  */
 
 /**
+ * @defgroup std Standard library
+ *
+ * Butano's standard library replacement.
+ *
+ * The biggest difference against C++'s standard library is the usage of asserts instead of exceptions
+ * and that it avoids the heap when possible.
+ */
+
+/**
  * @defgroup container Containers
  *
  * STL like containers with the capacity defined at compile time.
  *
  * They don't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup std
  */
 
 /**
@@ -96,6 +107,14 @@
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
  * @ingroup container
+ */
+
+/**
+ * @defgroup utility Utilities
+ *
+ * Standard library utilities.
+ *
+ * @ingroup std
  */
 
 /**

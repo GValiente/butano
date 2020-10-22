@@ -122,7 +122,7 @@ int used_static_ewram()
     return hw::memory::used_static_ewram();
 }
 
-void set(uint8_t value, int bytes, void* destination_ptr)
+void set_bytes(uint8_t value, int bytes, void* destination_ptr)
 {
     BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
     BTN_ASSERT(destination_ptr, "Destination is null");
@@ -130,7 +130,7 @@ void set(uint8_t value, int bytes, void* destination_ptr)
     hw::memory::set(value, bytes, destination_ptr);
 }
 
-void set16(uint16_t value, int half_words, void* destination_ptr)
+void set_half_words(uint16_t value, int half_words, void* destination_ptr)
 {
     BTN_ASSERT(half_words >= 0, "Invalid half words: ", half_words);
     BTN_ASSERT(destination_ptr, "Destination is null");
@@ -139,7 +139,7 @@ void set16(uint16_t value, int half_words, void* destination_ptr)
     hw::memory::set16(value, half_words, destination_ptr);
 }
 
-void set32(unsigned value, int words, void* destination_ptr)
+void set_words(unsigned value, int words, void* destination_ptr)
 {
     BTN_ASSERT(words >= 0, "Invalid words: ", words);
     BTN_ASSERT(destination_ptr, "Destination is null");

@@ -548,7 +548,7 @@ namespace btn::memory
      * @param bytes Number of bytes to fill.
      * @param destination_ptr Pointer to the object to fill.
      */
-    void set(uint8_t value, int bytes, void* destination_ptr);
+    void set_bytes(uint8_t value, int bytes, void* destination_ptr);
 
     /**
      * @brief Copies the given value into each of the first half_words of the object pointed to by destination_ptr.
@@ -560,7 +560,7 @@ namespace btn::memory
      * @param half_words Number of half words to fill.
      * @param destination_ptr Pointer to the object to fill.
      */
-    void set16(uint16_t value, int half_words, void* destination_ptr);
+    void set_half_words(uint16_t value, int half_words, void* destination_ptr);
 
     /**
      * @brief Copies the given value into each of the first words of the object pointed to by destination_ptr.
@@ -572,7 +572,7 @@ namespace btn::memory
      * @param words Number of words to fill.
      * @param destination_ptr Pointer to the object to fill.
      */
-    void set32(unsigned value, int words, void* destination_ptr);
+    void set_words(unsigned value, int words, void* destination_ptr);
 }
 
 #endif

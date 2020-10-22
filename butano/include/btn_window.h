@@ -6,7 +6,7 @@
 #ifndef BTN_WINDOW_H
 #define BTN_WINDOW_H
 
-#include "btn_common.h"
+#include "btn_functional.h"
 
 namespace btn
 {
@@ -138,6 +138,24 @@ protected:
 
 private:
     int8_t _id;
+};
+
+
+/**
+ * @brief Hash support for window.
+ *
+ * @ingroup window
+ */
+template<>
+struct hash<window>
+{
+    /**
+     * @brief Returns the hash of the given window.
+     */
+    [[nodiscard]] unsigned operator()(const window& value) const
+    {
+        return make_hash(value.id());
+    }
 };
 
 }

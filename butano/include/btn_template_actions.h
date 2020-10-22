@@ -13,7 +13,7 @@ namespace btn
 {
 
 /**
- * @brief Modifies a property by a givendelta.
+ * @brief Modifies a property by a given delta.
  *
  * @tparam Property Property to modify.
  * @tparam PropertyManager Reads and writes the property to modify.

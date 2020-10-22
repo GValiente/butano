@@ -364,7 +364,7 @@ public:
 
     /**
      * @brief Inserts a copy of a value at the specified position.
-     * @param position The value is inserted before this position.
+     * @param position The given value is inserted before this position.
      * @param value Value to insert.
      * @return Iterator pointing to the inserted value.
      */
@@ -388,7 +388,7 @@ public:
 
     /**
      * @brief Inserts a moved value at the specified position.
-     * @param position The value is inserted before this position.
+     * @param position The given value is inserted before this position.
      * @param value Value to insert.
      * @return Iterator pointing to the inserted value.
      */
@@ -412,7 +412,7 @@ public:
 
     /**
      * @brief Constructs a value at the specified position.
-     * @param position The value is inserted before this position.
+     * @param position The given value is inserted before this position.
      * @param args Parameters of the value to insert.
      * @return Iterator pointing to the new value.
      */

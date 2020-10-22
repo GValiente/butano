@@ -8,18 +8,32 @@
 
 #include "btn_common.h"
 
+/**
+ * @brief Butano's current version.
+ *
+ * @ingroup other
+ */
 namespace btn::version
 {
+    /**
+     * @brief Returns the current major version.
+     */
     [[nodiscard]] constexpr int major()
     {
         return 0;
     }
 
+    /**
+     * @brief Returns the current minor version.
+     */
     [[nodiscard]] constexpr int minor()
     {
         return 0;
     }
 
+    /**
+     * @brief Returns the current patch version.
+     */
     [[nodiscard]] constexpr int patch()
     {
         return 0;

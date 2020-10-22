@@ -15,7 +15,7 @@ namespace btn
      *
      * Can be used as a reference type for all unordered_set containers containing a specific type.
      *
-     * @tparam Key The element type.
+     * @tparam Key Element type.
      * @tparam KeyHash Functor used to calculate the hash of a given key.
      * @tparam KeyEqual Functor used for all key comparisons.
      *
@@ -27,7 +27,7 @@ namespace btn
     /**
      * @brief Implementation that uses a fixed size buffer.
      *
-     * @tparam Key The element type.
+     * @tparam Key Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.
      * @tparam KeyHash Functor used to calculate the hash of a given key.
      * @tparam KeyEqual Functor used for all key comparisons.

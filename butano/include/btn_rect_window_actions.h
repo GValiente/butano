@@ -56,8 +56,8 @@ class rect_window_move_top_to_action : public to_value_template_action<rect_wind
 {
 
 public:
-    rect_window_move_top_to_action(rect_window rect_window, int duration_frames, fixed final_top) :
-        to_value_template_action(rect_window, duration_frames, final_top)
+    rect_window_move_top_to_action(rect_window rect_window, int duration_updates, fixed final_top) :
+        to_value_template_action(rect_window, duration_updates, final_top)
     {
     }
 
@@ -77,8 +77,8 @@ class rect_window_move_top_loop_action : public loop_value_template_action<rect_
 {
 
 public:
-    rect_window_move_top_loop_action(rect_window rect_window, int duration_frames, fixed final_top) :
-        loop_value_template_action(rect_window, duration_frames, final_top)
+    rect_window_move_top_loop_action(rect_window rect_window, int duration_updates, fixed final_top) :
+        loop_value_template_action(rect_window, duration_updates, final_top)
     {
     }
 
@@ -99,8 +99,8 @@ class rect_window_move_top_toggle_action :
 {
 
 public:
-    rect_window_move_top_toggle_action(rect_window rect_window, int duration_frames, fixed new_top) :
-        toggle_value_template_action(rect_window, duration_frames, new_top)
+    rect_window_move_top_toggle_action(rect_window rect_window, int duration_updates, fixed new_top) :
+        toggle_value_template_action(rect_window, duration_updates, new_top)
     {
     }
 
@@ -159,8 +159,8 @@ class rect_window_move_left_to_action : public to_value_template_action<rect_win
 {
 
 public:
-    rect_window_move_left_to_action(rect_window rect_window, int duration_frames, fixed final_left) :
-        to_value_template_action(rect_window, duration_frames, final_left)
+    rect_window_move_left_to_action(rect_window rect_window, int duration_updates, fixed final_left) :
+        to_value_template_action(rect_window, duration_updates, final_left)
     {
     }
 
@@ -181,8 +181,8 @@ class rect_window_move_left_loop_action :
 {
 
 public:
-    rect_window_move_left_loop_action(rect_window rect_window, int duration_frames, fixed final_left) :
-        loop_value_template_action(rect_window, duration_frames, final_left)
+    rect_window_move_left_loop_action(rect_window rect_window, int duration_updates, fixed final_left) :
+        loop_value_template_action(rect_window, duration_updates, final_left)
     {
     }
 
@@ -203,8 +203,8 @@ class rect_window_move_left_toggle_action :
 {
 
 public:
-    rect_window_move_left_toggle_action(rect_window rect_window, int duration_frames, fixed new_left) :
-        toggle_value_template_action(rect_window, duration_frames, new_left)
+    rect_window_move_left_toggle_action(rect_window rect_window, int duration_updates, fixed new_left) :
+        toggle_value_template_action(rect_window, duration_updates, new_left)
     {
     }
 
@@ -265,8 +265,8 @@ class rect_window_move_bottom_to_action :
 {
 
 public:
-    rect_window_move_bottom_to_action(rect_window rect_window, int duration_frames, fixed final_bottom) :
-        to_value_template_action(rect_window, duration_frames, final_bottom)
+    rect_window_move_bottom_to_action(rect_window rect_window, int duration_updates, fixed final_bottom) :
+        to_value_template_action(rect_window, duration_updates, final_bottom)
     {
     }
 
@@ -287,8 +287,8 @@ class rect_window_move_bottom_loop_action :
 {
 
 public:
-    rect_window_move_bottom_loop_action(rect_window rect_window, int duration_frames, fixed final_bottom) :
-        loop_value_template_action(rect_window, duration_frames, final_bottom)
+    rect_window_move_bottom_loop_action(rect_window rect_window, int duration_updates, fixed final_bottom) :
+        loop_value_template_action(rect_window, duration_updates, final_bottom)
     {
     }
 
@@ -309,8 +309,8 @@ class rect_window_move_bottom_toggle_action :
 {
 
 public:
-    rect_window_move_bottom_toggle_action(rect_window rect_window, int duration_frames, fixed new_bottom) :
-        toggle_value_template_action(rect_window, duration_frames, new_bottom)
+    rect_window_move_bottom_toggle_action(rect_window rect_window, int duration_updates, fixed new_bottom) :
+        toggle_value_template_action(rect_window, duration_updates, new_bottom)
     {
     }
 
@@ -371,8 +371,8 @@ class rect_window_move_right_to_action :
 {
 
 public:
-    rect_window_move_right_to_action(rect_window rect_window, int duration_frames, fixed final_right) :
-        to_value_template_action(rect_window, duration_frames, final_right)
+    rect_window_move_right_to_action(rect_window rect_window, int duration_updates, fixed final_right) :
+        to_value_template_action(rect_window, duration_updates, final_right)
     {
     }
 
@@ -393,8 +393,8 @@ class rect_window_move_right_loop_action :
 {
 
 public:
-    rect_window_move_right_loop_action(rect_window rect_window, int duration_frames, fixed final_right) :
-        loop_value_template_action(rect_window, duration_frames, final_right)
+    rect_window_move_right_loop_action(rect_window rect_window, int duration_updates, fixed final_right) :
+        loop_value_template_action(rect_window, duration_updates, final_right)
     {
     }
 
@@ -415,8 +415,8 @@ class rect_window_move_right_toggle_action :
 {
 
 public:
-    rect_window_move_right_toggle_action(rect_window rect_window, int duration_frames, fixed new_right) :
-        toggle_value_template_action(rect_window, duration_frames, new_right)
+    rect_window_move_right_toggle_action(rect_window rect_window, int duration_updates, fixed new_right) :
+        toggle_value_template_action(rect_window, duration_updates, new_right)
     {
     }
 
@@ -492,15 +492,15 @@ class rect_window_move_top_left_to_action :
 {
 
 public:
-    rect_window_move_top_left_to_action(rect_window rect_window, int duration_frames, fixed final_top,
+    rect_window_move_top_left_to_action(rect_window rect_window, int duration_updates, fixed final_top,
                                         fixed final_left) :
-        to_value_template_action(rect_window, duration_frames, fixed_point(final_left, final_top))
+        to_value_template_action(rect_window, duration_updates, fixed_point(final_left, final_top))
     {
     }
 
-    rect_window_move_top_left_to_action(rect_window rect_window, int duration_frames,
+    rect_window_move_top_left_to_action(rect_window rect_window, int duration_updates,
                                         const fixed_point& final_top_left) :
-        to_value_template_action(rect_window, duration_frames, final_top_left)
+        to_value_template_action(rect_window, duration_updates, final_top_left)
     {
     }
 
@@ -531,15 +531,15 @@ class rect_window_move_top_left_loop_action :
 {
 
 public:
-    rect_window_move_top_left_loop_action(rect_window rect_window, int duration_frames, fixed final_top,
+    rect_window_move_top_left_loop_action(rect_window rect_window, int duration_updates, fixed final_top,
                                           fixed final_left) :
-        loop_value_template_action(rect_window, duration_frames, fixed_point(final_left, final_top))
+        loop_value_template_action(rect_window, duration_updates, fixed_point(final_left, final_top))
     {
     }
 
-    rect_window_move_top_left_loop_action(rect_window rect_window, int duration_frames,
+    rect_window_move_top_left_loop_action(rect_window rect_window, int duration_updates,
                                           const fixed_point& final_top_left) :
-        loop_value_template_action(rect_window, duration_frames, final_top_left)
+        loop_value_template_action(rect_window, duration_updates, final_top_left)
     {
     }
 
@@ -570,15 +570,15 @@ class rect_window_move_top_left_toggle_action :
 {
 
 public:
-    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_frames, fixed new_top,
+    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_updates, fixed new_top,
                                             fixed new_left) :
-        toggle_value_template_action(rect_window, duration_frames, fixed_point(new_left, new_top))
+        toggle_value_template_action(rect_window, duration_updates, fixed_point(new_left, new_top))
     {
     }
 
-    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_frames,
+    rect_window_move_top_left_toggle_action(rect_window rect_window, int duration_updates,
                                             const fixed_point& new_top_left) :
-        toggle_value_template_action(rect_window, duration_frames, new_top_left)
+        toggle_value_template_action(rect_window, duration_updates, new_top_left)
     {
     }
 
@@ -664,15 +664,15 @@ class rect_window_move_bottom_right_to_action :
 {
 
 public:
-    rect_window_move_bottom_right_to_action(rect_window rect_window, int duration_frames, fixed final_bottom,
+    rect_window_move_bottom_right_to_action(rect_window rect_window, int duration_updates, fixed final_bottom,
                                             fixed final_right) :
-        to_value_template_action(rect_window, duration_frames, fixed_point(final_right, final_bottom))
+        to_value_template_action(rect_window, duration_updates, fixed_point(final_right, final_bottom))
     {
     }
 
-    rect_window_move_bottom_right_to_action(rect_window rect_window, int duration_frames,
+    rect_window_move_bottom_right_to_action(rect_window rect_window, int duration_updates,
                                             const fixed_point& final_bottom_right) :
-        to_value_template_action(rect_window, duration_frames, final_bottom_right)
+        to_value_template_action(rect_window, duration_updates, final_bottom_right)
     {
     }
 
@@ -703,15 +703,15 @@ class rect_window_move_bottom_right_loop_action :
 {
 
 public:
-    rect_window_move_bottom_right_loop_action(rect_window rect_window, int duration_frames, fixed final_bottom,
+    rect_window_move_bottom_right_loop_action(rect_window rect_window, int duration_updates, fixed final_bottom,
                                               fixed final_right) :
-        loop_value_template_action(rect_window, duration_frames, fixed_point(final_right, final_bottom))
+        loop_value_template_action(rect_window, duration_updates, fixed_point(final_right, final_bottom))
     {
     }
 
-    rect_window_move_bottom_right_loop_action(rect_window rect_window, int duration_frames,
+    rect_window_move_bottom_right_loop_action(rect_window rect_window, int duration_updates,
                                               const fixed_point& final_bottom_right) :
-        loop_value_template_action(rect_window, duration_frames, final_bottom_right)
+        loop_value_template_action(rect_window, duration_updates, final_bottom_right)
     {
     }
 
@@ -742,15 +742,15 @@ class rect_window_move_bottom_right_toggle_action :
 {
 
 public:
-    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_frames, fixed new_bottom,
+    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_updates, fixed new_bottom,
                                                 fixed new_right) :
-        toggle_value_template_action(rect_window, duration_frames, fixed_point(new_right, new_bottom))
+        toggle_value_template_action(rect_window, duration_updates, fixed_point(new_right, new_bottom))
     {
     }
 
-    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_frames,
+    rect_window_move_bottom_right_toggle_action(rect_window rect_window, int duration_updates,
                                                 const fixed_point& new_bottom_right) :
-        toggle_value_template_action(rect_window, duration_frames, new_bottom_right)
+        toggle_value_template_action(rect_window, duration_updates, new_bottom_right)
     {
     }
 

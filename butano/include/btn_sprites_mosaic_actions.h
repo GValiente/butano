@@ -36,8 +36,8 @@ class sprites_mosaic_horizontal_stretch_to_action :
 {
 
 public:
-    sprites_mosaic_horizontal_stretch_to_action(int duration_frames, fixed final_horizontal_stretch) :
-        to_template_action(duration_frames, final_horizontal_stretch)
+    sprites_mosaic_horizontal_stretch_to_action(int duration_updates, fixed final_horizontal_stretch) :
+        to_template_action(duration_updates, final_horizontal_stretch)
     {
         BTN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
                    "Invalid final horizontal stretch: ", final_horizontal_stretch);
@@ -55,8 +55,8 @@ class sprites_mosaic_horizontal_stretch_loop_action :
 {
 
 public:
-    sprites_mosaic_horizontal_stretch_loop_action(int duration_frames, fixed final_horizontal_stretch) :
-        loop_template_action(duration_frames, final_horizontal_stretch)
+    sprites_mosaic_horizontal_stretch_loop_action(int duration_updates, fixed final_horizontal_stretch) :
+        loop_template_action(duration_updates, final_horizontal_stretch)
     {
         BTN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
                    "Invalid final horizontal stretch: ", final_horizontal_stretch);
@@ -74,8 +74,8 @@ class sprites_mosaic_horizontal_stretch_toggle_action :
 {
 
 public:
-    sprites_mosaic_horizontal_stretch_toggle_action(int duration_frames, fixed new_horizontal_stretch) :
-        toggle_template_action(duration_frames, new_horizontal_stretch)
+    sprites_mosaic_horizontal_stretch_toggle_action(int duration_updates, fixed new_horizontal_stretch) :
+        toggle_template_action(duration_updates, new_horizontal_stretch)
     {
         BTN_ASSERT(new_horizontal_stretch >= 0 && new_horizontal_stretch <= 1,
                    "Invalid new horizontal stretch: ", new_horizontal_stretch);
@@ -111,8 +111,8 @@ class sprites_mosaic_vertical_stretch_to_action :
 {
 
 public:
-    sprites_mosaic_vertical_stretch_to_action(int duration_frames, fixed final_vertical_stretch) :
-        to_template_action(duration_frames, final_vertical_stretch)
+    sprites_mosaic_vertical_stretch_to_action(int duration_updates, fixed final_vertical_stretch) :
+        to_template_action(duration_updates, final_vertical_stretch)
     {
         BTN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
                    "Invalid final vertical stretch: ", final_vertical_stretch);
@@ -130,8 +130,8 @@ class sprites_mosaic_vertical_stretch_loop_action :
 {
 
 public:
-    sprites_mosaic_vertical_stretch_loop_action(int duration_frames, fixed final_vertical_stretch) :
-        loop_template_action(duration_frames, final_vertical_stretch)
+    sprites_mosaic_vertical_stretch_loop_action(int duration_updates, fixed final_vertical_stretch) :
+        loop_template_action(duration_updates, final_vertical_stretch)
     {
         BTN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
                    "Invalid final vertical stretch: ", final_vertical_stretch);
@@ -149,8 +149,8 @@ class sprites_mosaic_vertical_stretch_toggle_action :
 {
 
 public:
-    sprites_mosaic_vertical_stretch_toggle_action(int duration_frames, fixed new_vertical_stretch) :
-        toggle_template_action(duration_frames, new_vertical_stretch)
+    sprites_mosaic_vertical_stretch_toggle_action(int duration_updates, fixed new_vertical_stretch) :
+        toggle_template_action(duration_updates, new_vertical_stretch)
     {
         BTN_ASSERT(new_vertical_stretch >= 0 && new_vertical_stretch <= 1,
                    "Invalid new vertical stretch: ", new_vertical_stretch);
@@ -185,8 +185,8 @@ class sprites_mosaic_stretch_to_action : public to_template_action<fixed, sprite
 {
 
 public:
-    sprites_mosaic_stretch_to_action(int duration_frames, fixed final_stretch) :
-        to_template_action(duration_frames, final_stretch)
+    sprites_mosaic_stretch_to_action(int duration_updates, fixed final_stretch) :
+        to_template_action(duration_updates, final_stretch)
     {
         BTN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
     }
@@ -202,8 +202,8 @@ class sprites_mosaic_stretch_loop_action : public loop_template_action<fixed, sp
 {
 
 public:
-    sprites_mosaic_stretch_loop_action(int duration_frames, fixed final_stretch) :
-        loop_template_action(duration_frames, final_stretch)
+    sprites_mosaic_stretch_loop_action(int duration_updates, fixed final_stretch) :
+        loop_template_action(duration_updates, final_stretch)
     {
         BTN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
     }
@@ -219,8 +219,8 @@ class sprites_mosaic_stretch_toggle_action : public toggle_template_action<fixed
 {
 
 public:
-    sprites_mosaic_stretch_toggle_action(int duration_frames, fixed new_stretch) :
-        toggle_template_action(duration_frames, new_stretch)
+    sprites_mosaic_stretch_toggle_action(int duration_updates, fixed new_stretch) :
+        toggle_template_action(duration_updates, new_stretch)
     {
         BTN_ASSERT(new_stretch >= 0 && new_stretch <= 1, "Invalid new stretch: ", new_stretch);
     }

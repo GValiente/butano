@@ -35,8 +35,8 @@ class blending_transparency_alpha_to_action : public to_template_action<fixed, b
 {
 
 public:
-    blending_transparency_alpha_to_action(int duration_frames, fixed final_transparency_alpha) :
-        to_template_action(duration_frames, final_transparency_alpha)
+    blending_transparency_alpha_to_action(int duration_updates, fixed final_transparency_alpha) :
+        to_template_action(duration_updates, final_transparency_alpha)
     {
         BTN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
                    "Invalid final transparency alpha: ", final_transparency_alpha);
@@ -54,8 +54,8 @@ class blending_transparency_alpha_loop_action :
 {
 
 public:
-    blending_transparency_alpha_loop_action(int duration_frames, fixed final_transparency_alpha) :
-        loop_template_action(duration_frames, final_transparency_alpha)
+    blending_transparency_alpha_loop_action(int duration_updates, fixed final_transparency_alpha) :
+        loop_template_action(duration_updates, final_transparency_alpha)
     {
         BTN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
                    "Invalid final transparency alpha: ", final_transparency_alpha);
@@ -73,8 +73,8 @@ class blending_transparency_alpha_toggle_action :
 {
 
 public:
-    blending_transparency_alpha_toggle_action(int duration_frames, fixed new_transparency_alpha) :
-        toggle_template_action(duration_frames, new_transparency_alpha)
+    blending_transparency_alpha_toggle_action(int duration_updates, fixed new_transparency_alpha) :
+        toggle_template_action(duration_updates, new_transparency_alpha)
     {
         BTN_ASSERT(new_transparency_alpha >= 0 && new_transparency_alpha <= 1,
                    "Invalid new transparency alpha: ", new_transparency_alpha);
@@ -109,8 +109,8 @@ class blending_intensity_alpha_to_action : public to_template_action<fixed, blen
 {
 
 public:
-    blending_intensity_alpha_to_action(int duration_frames, fixed final_intensity_alpha) :
-        to_template_action(duration_frames, final_intensity_alpha)
+    blending_intensity_alpha_to_action(int duration_updates, fixed final_intensity_alpha) :
+        to_template_action(duration_updates, final_intensity_alpha)
     {
         BTN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
                    "Invalid final intensity alpha: ", final_intensity_alpha);
@@ -128,8 +128,8 @@ class blending_intensity_alpha_loop_action :
 {
 
 public:
-    blending_intensity_alpha_loop_action(int duration_frames, fixed final_intensity_alpha) :
-        loop_template_action(duration_frames, final_intensity_alpha)
+    blending_intensity_alpha_loop_action(int duration_updates, fixed final_intensity_alpha) :
+        loop_template_action(duration_updates, final_intensity_alpha)
     {
         BTN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
                    "Invalid final intensity alpha: ", final_intensity_alpha);
@@ -147,8 +147,8 @@ class blending_intensity_alpha_toggle_action :
 {
 
 public:
-    blending_intensity_alpha_toggle_action(int duration_frames, fixed new_intensity_alpha) :
-        toggle_template_action(duration_frames, new_intensity_alpha)
+    blending_intensity_alpha_toggle_action(int duration_updates, fixed new_intensity_alpha) :
+        toggle_template_action(duration_updates, new_intensity_alpha)
     {
         BTN_ASSERT(new_intensity_alpha >= 0 && new_intensity_alpha <= 1,
                    "Invalid new intensity alpha: ", new_intensity_alpha);
@@ -183,8 +183,8 @@ class blending_fade_alpha_to_action : public to_template_action<fixed, blending_
 {
 
 public:
-    blending_fade_alpha_to_action(int duration_frames, fixed final_fade_alpha) :
-        to_template_action(duration_frames, final_fade_alpha)
+    blending_fade_alpha_to_action(int duration_updates, fixed final_fade_alpha) :
+        to_template_action(duration_updates, final_fade_alpha)
     {
         BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
@@ -201,8 +201,8 @@ class blending_fade_alpha_loop_action :
 {
 
 public:
-    blending_fade_alpha_loop_action(int duration_frames, fixed final_fade_alpha) :
-        loop_template_action(duration_frames, final_fade_alpha)
+    blending_fade_alpha_loop_action(int duration_updates, fixed final_fade_alpha) :
+        loop_template_action(duration_updates, final_fade_alpha)
     {
         BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
@@ -219,8 +219,8 @@ class blending_fade_alpha_toggle_action :
 {
 
 public:
-    blending_fade_alpha_toggle_action(int duration_frames, fixed new_fade_alpha) :
-        toggle_template_action(duration_frames, new_fade_alpha)
+    blending_fade_alpha_toggle_action(int duration_updates, fixed new_fade_alpha) :
+        toggle_template_action(duration_updates, new_fade_alpha)
     {
         BTN_ASSERT(new_fade_alpha >= 0 && new_fade_alpha <= 1, "Invalid new fade alpha: ", new_fade_alpha);
     }

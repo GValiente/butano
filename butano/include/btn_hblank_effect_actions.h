@@ -35,13 +35,13 @@ class hblank_effect_visible_toggle_action :
 {
 
 public:
-    hblank_effect_visible_toggle_action(const hblank_effect_ptr& hblank_effect, int duration_frames) :
-        bool_toggle_value_template_action(hblank_effect, duration_frames)
+    hblank_effect_visible_toggle_action(const hblank_effect_ptr& hblank_effect, int duration_updates) :
+        bool_toggle_value_template_action(hblank_effect, duration_updates)
     {
     }
 
-    hblank_effect_visible_toggle_action(hblank_effect_ptr&& hblank_effect, int duration_frames) :
-        bool_toggle_value_template_action(move(hblank_effect), duration_frames)
+    hblank_effect_visible_toggle_action(hblank_effect_ptr&& hblank_effect, int duration_updates) :
+        bool_toggle_value_template_action(move(hblank_effect), duration_updates)
     {
     }
 

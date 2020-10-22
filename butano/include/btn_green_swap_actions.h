@@ -32,8 +32,8 @@ class green_swap_toggle_action : public bool_toggle_template_action<green_swap_m
 {
 
 public:
-    green_swap_toggle_action(int duration_frames) :
-        bool_toggle_template_action(duration_frames)
+    explicit green_swap_toggle_action(int duration_updates) :
+        bool_toggle_template_action(duration_updates)
     {
     }
 };

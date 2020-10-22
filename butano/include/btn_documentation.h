@@ -93,6 +93,14 @@
  */
 
 /**
+ * @defgroup template_action Action templates
+ *
+ * Templates used to build butano's actions.
+ *
+ * You can use them to build your own actions too.
+ */
+
+/**
  * @defgroup other Other
  *
  * Stuff which doesn't fit anywhere else.
@@ -120,9 +128,9 @@
   \section sec An example section
   This page contains the subsections \ref subsection1 and \ref subsection2.
   For more info see page \ref page2.
-  \subsection subsection1 The first subsection
+  \subsection subsection1 First subsection
   Text.
-  \subsection subsection2 The second subsection
+  \subsection subsection2 Second subsection
   More text.
 */
 

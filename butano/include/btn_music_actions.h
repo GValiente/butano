@@ -35,8 +35,8 @@ class music_volume_to_action : public to_template_action<fixed, music_volume_man
 {
 
 public:
-    music_volume_to_action(int duration_frames, fixed final_volume) :
-        to_template_action(duration_frames, final_volume)
+    music_volume_to_action(int duration_updates, fixed final_volume) :
+        to_template_action(duration_updates, final_volume)
     {
         BTN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
     }
@@ -52,8 +52,8 @@ class music_volume_loop_action : public loop_template_action<fixed, music_volume
 {
 
 public:
-    music_volume_loop_action(int duration_frames, fixed final_volume) :
-        loop_template_action(duration_frames, final_volume)
+    music_volume_loop_action(int duration_updates, fixed final_volume) :
+        loop_template_action(duration_updates, final_volume)
     {
         BTN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
     }
@@ -69,8 +69,8 @@ class music_volume_toggle_action : public toggle_template_action<fixed, music_vo
 {
 
 public:
-    music_volume_toggle_action(int duration_frames, fixed new_volume) :
-        toggle_template_action(duration_frames, new_volume)
+    music_volume_toggle_action(int duration_updates, fixed new_volume) :
+        toggle_template_action(duration_updates, new_volume)
     {
         BTN_ASSERT(new_volume >= 0 && new_volume <= 1, "Invalid new volume: ", new_volume);
     }

@@ -71,23 +71,23 @@ class camera_move_to_action : public to_value_template_action<camera_ptr, fixed_
 {
 
 public:
-    camera_move_to_action(const camera_ptr& camera, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(camera, duration_frames, fixed_point(final_x, final_y))
+    camera_move_to_action(const camera_ptr& camera, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(camera, duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    camera_move_to_action(camera_ptr&& camera, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(move(camera), duration_frames, fixed_point(final_x, final_y))
+    camera_move_to_action(camera_ptr&& camera, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(move(camera), duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    camera_move_to_action(const camera_ptr& camera, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(camera, duration_frames, final_position)
+    camera_move_to_action(const camera_ptr& camera, int duration_updates, const fixed_point& final_position) :
+        to_value_template_action(camera, duration_updates, final_position)
     {
     }
 
-    camera_move_to_action(camera_ptr&& camera, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(move(camera), duration_frames, final_position)
+    camera_move_to_action(camera_ptr&& camera, int duration_updates, const fixed_point& final_position) :
+        to_value_template_action(move(camera), duration_updates, final_position)
     {
     }
 
@@ -107,23 +107,23 @@ class camera_move_loop_action : public loop_value_template_action<camera_ptr, fi
 {
 
 public:
-    camera_move_loop_action(const camera_ptr& camera, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(camera, duration_frames, fixed_point(final_x, final_y))
+    camera_move_loop_action(const camera_ptr& camera, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(camera, duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    camera_move_loop_action(camera_ptr&& camera, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(move(camera), duration_frames, fixed_point(final_x, final_y))
+    camera_move_loop_action(camera_ptr&& camera, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(move(camera), duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    camera_move_loop_action(const camera_ptr& camera, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(camera, duration_frames, final_position)
+    camera_move_loop_action(const camera_ptr& camera, int duration_updates, const fixed_point& final_position) :
+        loop_value_template_action(camera, duration_updates, final_position)
     {
     }
 
-    camera_move_loop_action(camera_ptr&& camera, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(move(camera), duration_frames, final_position)
+    camera_move_loop_action(camera_ptr&& camera, int duration_updates, const fixed_point& final_position) :
+        loop_value_template_action(move(camera), duration_updates, final_position)
     {
     }
 
@@ -143,23 +143,23 @@ class camera_move_toggle_action : public toggle_value_template_action<camera_ptr
 {
 
 public:
-    camera_move_toggle_action(const camera_ptr& camera, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(camera, duration_frames, fixed_point(new_x, new_y))
+    camera_move_toggle_action(const camera_ptr& camera, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(camera, duration_updates, fixed_point(new_x, new_y))
     {
     }
 
-    camera_move_toggle_action(camera_ptr&& camera, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(move(camera), duration_frames, fixed_point(new_x, new_y))
+    camera_move_toggle_action(camera_ptr&& camera, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(move(camera), duration_updates, fixed_point(new_x, new_y))
     {
     }
 
-    camera_move_toggle_action(const camera_ptr& camera, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(camera, duration_frames, new_position)
+    camera_move_toggle_action(const camera_ptr& camera, int duration_updates, const fixed_point& new_position) :
+        toggle_value_template_action(camera, duration_updates, new_position)
     {
     }
 
-    camera_move_toggle_action(camera_ptr&& camera, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(move(camera), duration_frames, new_position)
+    camera_move_toggle_action(camera_ptr&& camera, int duration_updates, const fixed_point& new_position) :
+        toggle_value_template_action(move(camera), duration_updates, new_position)
     {
     }
 

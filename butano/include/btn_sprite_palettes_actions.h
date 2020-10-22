@@ -35,8 +35,8 @@ class sprite_palettes_brightness_to_action : public to_template_action<fixed, sp
 {
 
 public:
-    sprite_palettes_brightness_to_action(int duration_frames, fixed final_brightness) :
-        to_template_action(duration_frames, final_brightness)
+    sprite_palettes_brightness_to_action(int duration_updates, fixed final_brightness) :
+        to_template_action(duration_updates, final_brightness)
     {
         BTN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
     }
@@ -52,8 +52,8 @@ class sprite_palettes_brightness_loop_action : public loop_template_action<fixed
 {
 
 public:
-    sprite_palettes_brightness_loop_action(int duration_frames, fixed final_brightness) :
-        loop_template_action(duration_frames, final_brightness)
+    sprite_palettes_brightness_loop_action(int duration_updates, fixed final_brightness) :
+        loop_template_action(duration_updates, final_brightness)
     {
         BTN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
     }
@@ -65,12 +65,13 @@ public:
 };
 
 
-class sprite_palettes_brightness_toggle_action : public toggle_template_action<fixed, sprite_palettes_brightness_manager>
+class sprite_palettes_brightness_toggle_action :
+        public toggle_template_action<fixed, sprite_palettes_brightness_manager>
 {
 
 public:
-    sprite_palettes_brightness_toggle_action(int duration_frames, fixed new_brightness) :
-        toggle_template_action(duration_frames, new_brightness)
+    sprite_palettes_brightness_toggle_action(int duration_updates, fixed new_brightness) :
+        toggle_template_action(duration_updates, new_brightness)
     {
         BTN_ASSERT(new_brightness >= 0 && new_brightness <= 1, "Invalid new brightness: ", new_brightness);
     }
@@ -104,8 +105,8 @@ class sprite_palettes_contrast_to_action : public to_template_action<fixed, spri
 {
 
 public:
-    sprite_palettes_contrast_to_action(int duration_frames, fixed final_contrast) :
-        to_template_action(duration_frames, final_contrast)
+    sprite_palettes_contrast_to_action(int duration_updates, fixed final_contrast) :
+        to_template_action(duration_updates, final_contrast)
     {
         BTN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
     }
@@ -121,8 +122,8 @@ class sprite_palettes_contrast_loop_action : public loop_template_action<fixed, 
 {
 
 public:
-    sprite_palettes_contrast_loop_action(int duration_frames, fixed final_contrast) :
-        loop_template_action(duration_frames, final_contrast)
+    sprite_palettes_contrast_loop_action(int duration_updates, fixed final_contrast) :
+        loop_template_action(duration_updates, final_contrast)
     {
         BTN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
     }
@@ -138,8 +139,8 @@ class sprite_palettes_contrast_toggle_action : public toggle_template_action<fix
 {
 
 public:
-    sprite_palettes_contrast_toggle_action(int duration_frames, fixed new_contrast) :
-        toggle_template_action(duration_frames, new_contrast)
+    sprite_palettes_contrast_toggle_action(int duration_updates, fixed new_contrast) :
+        toggle_template_action(duration_updates, new_contrast)
     {
         BTN_ASSERT(new_contrast >= 0 && new_contrast <= 1, "Invalid new contrast: ", new_contrast);
     }
@@ -173,8 +174,8 @@ class sprite_palettes_intensity_to_action : public to_template_action<fixed, spr
 {
 
 public:
-    sprite_palettes_intensity_to_action(int duration_frames, fixed final_intensity) :
-        to_template_action(duration_frames, final_intensity)
+    sprite_palettes_intensity_to_action(int duration_updates, fixed final_intensity) :
+        to_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -190,8 +191,8 @@ class sprite_palettes_intensity_loop_action : public loop_template_action<fixed,
 {
 
 public:
-    sprite_palettes_intensity_loop_action(int duration_frames, fixed final_intensity) :
-        loop_template_action(duration_frames, final_intensity)
+    sprite_palettes_intensity_loop_action(int duration_updates, fixed final_intensity) :
+        loop_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -207,8 +208,8 @@ class sprite_palettes_intensity_toggle_action : public toggle_template_action<fi
 {
 
 public:
-    sprite_palettes_intensity_toggle_action(int duration_frames, fixed new_intensity) :
-        toggle_template_action(duration_frames, new_intensity)
+    sprite_palettes_intensity_toggle_action(int duration_updates, fixed new_intensity) :
+        toggle_template_action(duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -242,8 +243,8 @@ class sprite_palettes_inverted_toggle_action : public bool_toggle_template_actio
 {
 
 public:
-    sprite_palettes_inverted_toggle_action(int duration_frames) :
-        bool_toggle_template_action(duration_frames)
+    explicit sprite_palettes_inverted_toggle_action(int duration_updates) :
+        bool_toggle_template_action(duration_updates)
     {
     }
 };
@@ -271,8 +272,8 @@ class sprite_palettes_grayscale_to_action : public to_template_action<fixed, spr
 {
 
 public:
-    sprite_palettes_grayscale_to_action(int duration_frames, fixed final_intensity) :
-        to_template_action(duration_frames, final_intensity)
+    sprite_palettes_grayscale_to_action(int duration_updates, fixed final_intensity) :
+        to_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -288,8 +289,8 @@ class sprite_palettes_grayscale_loop_action : public loop_template_action<fixed,
 {
 
 public:
-    sprite_palettes_grayscale_loop_action(int duration_frames, fixed final_intensity) :
-        loop_template_action(duration_frames, final_intensity)
+    sprite_palettes_grayscale_loop_action(int duration_updates, fixed final_intensity) :
+        loop_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -305,8 +306,8 @@ class sprite_palettes_grayscale_toggle_action : public toggle_template_action<fi
 {
 
 public:
-    sprite_palettes_grayscale_toggle_action(int duration_frames, fixed new_intensity) :
-        toggle_template_action(duration_frames, new_intensity)
+    sprite_palettes_grayscale_toggle_action(int duration_updates, fixed new_intensity) :
+        toggle_template_action(duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -340,8 +341,8 @@ class sprite_palettes_fade_to_action : public to_template_action<fixed, sprite_p
 {
 
 public:
-    sprite_palettes_fade_to_action(int duration_frames, fixed final_intensity) :
-        to_template_action(duration_frames, final_intensity)
+    sprite_palettes_fade_to_action(int duration_updates, fixed final_intensity) :
+        to_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -357,8 +358,8 @@ class sprite_palettes_fade_loop_action : public loop_template_action<fixed, spri
 {
 
 public:
-    sprite_palettes_fade_loop_action(int duration_frames, fixed final_intensity) :
-        loop_template_action(duration_frames, final_intensity)
+    sprite_palettes_fade_loop_action(int duration_updates, fixed final_intensity) :
+        loop_template_action(duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -374,8 +375,8 @@ class sprite_palettes_fade_toggle_action : public toggle_template_action<fixed, 
 {
 
 public:
-    sprite_palettes_fade_toggle_action(int duration_frames, fixed new_intensity) :
-        toggle_template_action(duration_frames, new_intensity)
+    sprite_palettes_fade_toggle_action(int duration_updates, fixed new_intensity) :
+        toggle_template_action(duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }

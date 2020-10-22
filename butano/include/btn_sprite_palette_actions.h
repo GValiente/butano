@@ -37,13 +37,13 @@ class sprite_palette_inverted_toggle_action :
 {
 
 public:
-    sprite_palette_inverted_toggle_action(const sprite_palette_ptr& palette, int duration_frames) :
-        bool_toggle_value_template_action(palette, duration_frames)
+    sprite_palette_inverted_toggle_action(const sprite_palette_ptr& palette, int duration_updates) :
+        bool_toggle_value_template_action(palette, duration_updates)
     {
     }
 
-    sprite_palette_inverted_toggle_action(sprite_palette_ptr&& palette, int duration_frames) :
-        bool_toggle_value_template_action(move(palette), duration_frames)
+    sprite_palette_inverted_toggle_action(sprite_palette_ptr&& palette, int duration_updates) :
+        bool_toggle_value_template_action(move(palette), duration_updates)
     {
     }
 
@@ -77,14 +77,15 @@ class sprite_palette_grayscale_to_action :
 {
 
 public:
-    sprite_palette_grayscale_to_action(const sprite_palette_ptr& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(palette, duration_frames, final_intensity)
+    sprite_palette_grayscale_to_action(const sprite_palette_ptr& palette, int duration_updates,
+                                       fixed final_intensity) :
+        to_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
-    sprite_palette_grayscale_to_action(sprite_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(move(palette), duration_frames, final_intensity)
+    sprite_palette_grayscale_to_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        to_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -106,14 +107,15 @@ class sprite_palette_grayscale_loop_action :
 {
 
 public:
-    sprite_palette_grayscale_loop_action(const sprite_palette_ptr& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(palette, duration_frames, final_intensity)
+    sprite_palette_grayscale_loop_action(const sprite_palette_ptr& palette, int duration_updates,
+                                         fixed final_intensity) :
+        loop_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
-    sprite_palette_grayscale_loop_action(sprite_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(move(palette), duration_frames, final_intensity)
+    sprite_palette_grayscale_loop_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        loop_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -135,14 +137,15 @@ class sprite_palette_grayscale_toggle_action :
 {
 
 public:
-    sprite_palette_grayscale_toggle_action(const sprite_palette_ptr& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(palette, duration_frames, new_intensity)
+    sprite_palette_grayscale_toggle_action(const sprite_palette_ptr& palette, int duration_updates,
+                                           fixed new_intensity) :
+        toggle_value_template_action(palette, duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
-    sprite_palette_grayscale_toggle_action(sprite_palette_ptr&& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(move(palette), duration_frames, new_intensity)
+    sprite_palette_grayscale_toggle_action(sprite_palette_ptr&& palette, int duration_updates, fixed new_intensity) :
+        toggle_value_template_action(move(palette), duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -177,18 +180,19 @@ public:
 };
 
 
-class sprite_palette_fade_to_action : public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
+class sprite_palette_fade_to_action :
+        public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
 {
 
 public:
-    sprite_palette_fade_to_action(const sprite_palette_ptr& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(palette, duration_frames, final_intensity)
+    sprite_palette_fade_to_action(const sprite_palette_ptr& palette, int duration_updates, fixed final_intensity) :
+        to_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
-    sprite_palette_fade_to_action(sprite_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
-        to_value_template_action(move(palette), duration_frames, final_intensity)
+    sprite_palette_fade_to_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        to_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -205,18 +209,19 @@ public:
 };
 
 
-class sprite_palette_fade_loop_action : public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
+class sprite_palette_fade_loop_action :
+        public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_fade_manager>
 {
 
 public:
-    sprite_palette_fade_loop_action(const sprite_palette_ptr& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(palette, duration_frames, final_intensity)
+    sprite_palette_fade_loop_action(const sprite_palette_ptr& palette, int duration_updates, fixed final_intensity) :
+        loop_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
-    sprite_palette_fade_loop_action(sprite_palette_ptr&& palette, int duration_frames, fixed final_intensity) :
-        loop_value_template_action(move(palette), duration_frames, final_intensity)
+    sprite_palette_fade_loop_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        loop_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
@@ -238,14 +243,14 @@ class sprite_palette_fade_toggle_action :
 {
 
 public:
-    sprite_palette_fade_toggle_action(const sprite_palette_ptr& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(palette, duration_frames, new_intensity)
+    sprite_palette_fade_toggle_action(const sprite_palette_ptr& palette, int duration_updates, fixed new_intensity) :
+        toggle_value_template_action(palette, duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
-    sprite_palette_fade_toggle_action(sprite_palette_ptr&& palette, int duration_frames, fixed new_intensity) :
-        toggle_value_template_action(move(palette), duration_frames, new_intensity)
+    sprite_palette_fade_toggle_action(sprite_palette_ptr&& palette, int duration_updates, fixed new_intensity) :
+        toggle_value_template_action(move(palette), duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
@@ -285,14 +290,14 @@ class sprite_palette_rotate_by_action :
 {
 
 public:
-    sprite_palette_rotate_by_action(const sprite_palette_ptr& palette, int duration_frames, int delta_count) :
-        cyclic_duration_by_value_template_action(palette, duration_frames, delta_count, 0, 0)
+    sprite_palette_rotate_by_action(const sprite_palette_ptr& palette, int duration_updates, int delta_count) :
+        cyclic_duration_by_value_template_action(palette, duration_updates, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
 
-    sprite_palette_rotate_by_action(sprite_palette_ptr&& palette, int duration_frames, int delta_count) :
-        cyclic_duration_by_value_template_action(move(palette), duration_frames, delta_count, 0, 0)
+    sprite_palette_rotate_by_action(sprite_palette_ptr&& palette, int duration_updates, int delta_count) :
+        cyclic_duration_by_value_template_action(move(palette), duration_updates, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
@@ -314,15 +319,15 @@ class sprite_palette_rotate_to_action :
 {
 
 public:
-    sprite_palette_rotate_to_action(const sprite_palette_ptr& palette, int duration_frames, int final_count) :
-        to_value_template_action(palette, duration_frames, final_count)
+    sprite_palette_rotate_to_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
+        to_value_template_action(palette, duration_updates, final_count)
     {
         BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
-    sprite_palette_rotate_to_action(sprite_palette_ptr&& palette, int duration_frames, int final_count) :
-        to_value_template_action(move(palette), duration_frames, final_count)
+    sprite_palette_rotate_to_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
+        to_value_template_action(move(palette), duration_updates, final_count)
     {
         BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
@@ -345,15 +350,15 @@ class sprite_palette_rotate_loop_action :
 {
 
 public:
-    sprite_palette_rotate_loop_action(const sprite_palette_ptr& palette, int duration_frames, int final_count) :
-        loop_value_template_action(palette, duration_frames, final_count)
+    sprite_palette_rotate_loop_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
+        loop_value_template_action(palette, duration_updates, final_count)
     {
         BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
-    sprite_palette_rotate_loop_action(sprite_palette_ptr&& palette, int duration_frames, int final_count) :
-        loop_value_template_action(move(palette), duration_frames, final_count)
+    sprite_palette_rotate_loop_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
+        loop_value_template_action(move(palette), duration_updates, final_count)
     {
         BTN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
@@ -376,15 +381,15 @@ class sprite_palette_rotate_toggle_action :
 {
 
 public:
-    sprite_palette_rotate_toggle_action(const sprite_palette_ptr& palette, int duration_frames, int new_count) :
-        toggle_value_template_action(palette, duration_frames, new_count)
+    sprite_palette_rotate_toggle_action(const sprite_palette_ptr& palette, int duration_updates, int new_count) :
+        toggle_value_template_action(palette, duration_updates, new_count)
     {
         BTN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
                    "Invalid new count: ", new_count, " - ", this->palette().colors_count());
     }
 
-    sprite_palette_rotate_toggle_action(sprite_palette_ptr&& palette, int duration_frames, int new_count) :
-        toggle_value_template_action(move(palette), duration_frames, new_count)
+    sprite_palette_rotate_toggle_action(sprite_palette_ptr&& palette, int duration_updates, int new_count) :
+        toggle_value_template_action(move(palette), duration_updates, new_count)
     {
         BTN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
                    "Invalid new count: ", new_count, " - ", this->palette().colors_count());

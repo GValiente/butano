@@ -16,7 +16,7 @@ namespace btn
      *
      * Can be used as a reference type for all vector containers containing a specific type.
      *
-     * @tparam Type The element type.
+     * @tparam Type Element type.
      *
      * @ingroup vector
      */

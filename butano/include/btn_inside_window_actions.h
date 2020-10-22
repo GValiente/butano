@@ -35,8 +35,8 @@ class inside_window_visible_toggle_action :
 {
 
 public:
-    inside_window_visible_toggle_action(const inside_window& inside_window, int duration_frames) :
-        bool_toggle_value_template_action(inside_window, duration_frames)
+    inside_window_visible_toggle_action(const inside_window& inside_window, int duration_updates) :
+        bool_toggle_value_template_action(inside_window, duration_updates)
     {
     }
 

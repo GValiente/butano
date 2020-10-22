@@ -35,13 +35,13 @@ class sprite_visible_toggle_action : public bool_toggle_value_template_action<sp
 {
 
 public:
-    sprite_visible_toggle_action(const sprite_ptr& sprite, int duration_frames) :
-        bool_toggle_value_template_action(sprite, duration_frames)
+    sprite_visible_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
     {
     }
 
-    sprite_visible_toggle_action(sprite_ptr&& sprite, int duration_frames) :
-        bool_toggle_value_template_action(move(sprite), duration_frames)
+    sprite_visible_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
     {
     }
 
@@ -110,23 +110,23 @@ class sprite_move_to_action : public to_value_template_action<sprite_ptr, fixed_
 {
 
 public:
-    sprite_move_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(sprite, duration_frames, fixed_point(final_x, final_y))
+    sprite_move_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(sprite, duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        to_value_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    sprite_move_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(move(sprite), duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_to_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(sprite, duration_frames, final_position)
+    sprite_move_to_action(const sprite_ptr& sprite, int duration_updates, const fixed_point& final_position) :
+        to_value_template_action(sprite, duration_updates, final_position)
     {
     }
 
-    sprite_move_to_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& final_position) :
-        to_value_template_action(move(sprite), duration_frames, final_position)
+    sprite_move_to_action(sprite_ptr&& sprite, int duration_updates, const fixed_point& final_position) :
+        to_value_template_action(move(sprite), duration_updates, final_position)
     {
     }
 
@@ -146,23 +146,23 @@ class sprite_move_loop_action : public loop_value_template_action<sprite_ptr, fi
 {
 
 public:
-    sprite_move_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(sprite, duration_frames, fixed_point(final_x, final_y))
+    sprite_move_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(sprite, duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_x, fixed final_y) :
-        loop_value_template_action(move(sprite), duration_frames, fixed_point(final_x, final_y))
+    sprite_move_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(move(sprite), duration_updates, fixed_point(final_x, final_y))
     {
     }
 
-    sprite_move_loop_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(sprite, duration_frames, final_position)
+    sprite_move_loop_action(const sprite_ptr& sprite, int duration_updates, const fixed_point& final_position) :
+        loop_value_template_action(sprite, duration_updates, final_position)
     {
     }
 
-    sprite_move_loop_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& final_position) :
-        loop_value_template_action(move(sprite), duration_frames, final_position)
+    sprite_move_loop_action(sprite_ptr&& sprite, int duration_updates, const fixed_point& final_position) :
+        loop_value_template_action(move(sprite), duration_updates, final_position)
     {
     }
 
@@ -182,23 +182,23 @@ class sprite_move_toggle_action : public toggle_value_template_action<sprite_ptr
 {
 
 public:
-    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(sprite, duration_frames, fixed_point(new_x, new_y))
+    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(sprite, duration_updates, fixed_point(new_x, new_y))
     {
     }
 
-    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_x, fixed new_y) :
-        toggle_value_template_action(move(sprite), duration_frames, fixed_point(new_x, new_y))
+    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(move(sprite), duration_updates, fixed_point(new_x, new_y))
     {
     }
 
-    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(sprite, duration_frames, new_position)
+    sprite_move_toggle_action(const sprite_ptr& sprite, int duration_updates, const fixed_point& new_position) :
+        toggle_value_template_action(sprite, duration_updates, new_position)
     {
     }
 
-    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_frames, const fixed_point& new_position) :
-        toggle_value_template_action(move(sprite), duration_frames, new_position)
+    sprite_move_toggle_action(sprite_ptr&& sprite, int duration_updates, const fixed_point& new_position) :
+        toggle_value_template_action(move(sprite), duration_updates, new_position)
     {
     }
 
@@ -262,15 +262,15 @@ class sprite_rotate_to_action : public to_value_template_action<sprite_ptr, fixe
 {
 
 public:
-    sprite_rotate_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_rotation_angle) :
-        to_value_template_action(sprite, duration_frames, final_rotation_angle)
+    sprite_rotate_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_rotation_angle) :
+        to_value_template_action(sprite, duration_updates, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
-    sprite_rotate_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_rotation_angle) :
-        to_value_template_action(move(sprite), duration_frames, final_rotation_angle)
+    sprite_rotate_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_rotation_angle) :
+        to_value_template_action(move(sprite), duration_updates, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
@@ -292,15 +292,15 @@ class sprite_rotate_loop_action : public loop_value_template_action<sprite_ptr, 
 {
 
 public:
-    sprite_rotate_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_rotation_angle) :
-        loop_value_template_action(sprite, duration_frames, final_rotation_angle)
+    sprite_rotate_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_rotation_angle) :
+        loop_value_template_action(sprite, duration_updates, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
-    sprite_rotate_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_rotation_angle) :
-        loop_value_template_action(move(sprite), duration_frames, final_rotation_angle)
+    sprite_rotate_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_rotation_angle) :
+        loop_value_template_action(move(sprite), duration_updates, final_rotation_angle)
     {
         BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
@@ -322,15 +322,15 @@ class sprite_rotate_toggle_action : public toggle_value_template_action<sprite_p
 {
 
 public:
-    sprite_rotate_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_rotation_angle) :
-        toggle_value_template_action(sprite, duration_frames, new_rotation_angle)
+    sprite_rotate_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_rotation_angle) :
+        toggle_value_template_action(sprite, duration_updates, new_rotation_angle)
     {
         BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
                    "Invalid new rotation angle: ", new_rotation_angle);
     }
 
-    sprite_rotate_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_rotation_angle) :
-        toggle_value_template_action(move(sprite), duration_frames, new_rotation_angle)
+    sprite_rotate_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_rotation_angle) :
+        toggle_value_template_action(move(sprite), duration_updates, new_rotation_angle)
     {
         BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
                    "Invalid new rotation angle: ", new_rotation_angle);
@@ -371,14 +371,14 @@ class sprite_horizontal_scale_to_action :
 {
 
 public:
-    sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_horizontal_scale) :
-        to_value_template_action(sprite, duration_frames, final_horizontal_scale)
+    sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
+        to_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
         BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
-    sprite_horizontal_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_horizontal_scale) :
-        to_value_template_action(move(sprite), duration_frames, final_horizontal_scale)
+    sprite_horizontal_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_horizontal_scale) :
+        to_value_template_action(move(sprite), duration_updates, final_horizontal_scale)
     {
         BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
@@ -400,14 +400,14 @@ class sprite_horizontal_scale_loop_action :
 {
 
 public:
-    sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_horizontal_scale) :
-        loop_value_template_action(sprite, duration_frames, final_horizontal_scale)
+    sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
+        loop_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
         BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
-    sprite_horizontal_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_horizontal_scale) :
-        loop_value_template_action(move(sprite), duration_frames, final_horizontal_scale)
+    sprite_horizontal_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_horizontal_scale) :
+        loop_value_template_action(move(sprite), duration_updates, final_horizontal_scale)
     {
         BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
@@ -429,14 +429,14 @@ class sprite_horizontal_scale_toggle_action :
 {
 
 public:
-    sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_horizontal_scale) :
-        toggle_value_template_action(sprite, duration_frames, new_horizontal_scale)
+    sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_horizontal_scale) :
+        toggle_value_template_action(sprite, duration_updates, new_horizontal_scale)
     {
         BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
 
-    sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_horizontal_scale) :
-        toggle_value_template_action(move(sprite), duration_frames, new_horizontal_scale)
+    sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_horizontal_scale) :
+        toggle_value_template_action(move(sprite), duration_updates, new_horizontal_scale)
     {
         BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
@@ -476,14 +476,14 @@ class sprite_vertical_scale_to_action :
 {
 
 public:
-    sprite_vertical_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_vertical_scale) :
-        to_value_template_action(sprite, duration_frames, final_vertical_scale)
+    sprite_vertical_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_vertical_scale) :
+        to_value_template_action(sprite, duration_updates, final_vertical_scale)
     {
         BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
-    sprite_vertical_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_vertical_scale) :
-        to_value_template_action(move(sprite), duration_frames, final_vertical_scale)
+    sprite_vertical_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_vertical_scale) :
+        to_value_template_action(move(sprite), duration_updates, final_vertical_scale)
     {
         BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
@@ -505,14 +505,14 @@ class sprite_vertical_scale_loop_action :
 {
 
 public:
-    sprite_vertical_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_vertical_scale) :
-        loop_value_template_action(sprite, duration_frames, final_vertical_scale)
+    sprite_vertical_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_vertical_scale) :
+        loop_value_template_action(sprite, duration_updates, final_vertical_scale)
     {
         BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
-    sprite_vertical_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_vertical_scale) :
-        loop_value_template_action(move(sprite), duration_frames, final_vertical_scale)
+    sprite_vertical_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_vertical_scale) :
+        loop_value_template_action(move(sprite), duration_updates, final_vertical_scale)
     {
         BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
@@ -534,14 +534,14 @@ class sprite_vertical_scale_toggle_action :
 {
 
 public:
-    sprite_vertical_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_vertical_scale) :
-        toggle_value_template_action(sprite, duration_frames, new_vertical_scale)
+    sprite_vertical_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_vertical_scale) :
+        toggle_value_template_action(sprite, duration_updates, new_vertical_scale)
     {
         BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
 
-    sprite_vertical_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_vertical_scale) :
-        toggle_value_template_action(move(sprite), duration_frames, new_vertical_scale)
+    sprite_vertical_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_vertical_scale) :
+        toggle_value_template_action(move(sprite), duration_updates, new_vertical_scale)
     {
         BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
@@ -580,14 +580,14 @@ class sprite_scale_to_action : public to_value_template_action<sprite_ptr, fixed
 {
 
 public:
-    sprite_scale_to_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale) :
-        to_value_template_action(sprite, duration_frames, final_scale)
+    sprite_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_scale) :
+        to_value_template_action(sprite, duration_updates, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
-    sprite_scale_to_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale) :
-        to_value_template_action(move(sprite), duration_frames, final_scale)
+    sprite_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_scale) :
+        to_value_template_action(move(sprite), duration_updates, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
@@ -608,14 +608,14 @@ class sprite_scale_loop_action : public loop_value_template_action<sprite_ptr, f
 {
 
 public:
-    sprite_scale_loop_action(const sprite_ptr& sprite, int duration_frames, fixed final_scale) :
-        loop_value_template_action(sprite, duration_frames, final_scale)
+    sprite_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_scale) :
+        loop_value_template_action(sprite, duration_updates, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
-    sprite_scale_loop_action(sprite_ptr&& sprite, int duration_frames, fixed final_scale) :
-        loop_value_template_action(move(sprite), duration_frames, final_scale)
+    sprite_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_scale) :
+        loop_value_template_action(move(sprite), duration_updates, final_scale)
     {
         BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
@@ -636,14 +636,14 @@ class sprite_scale_toggle_action : public toggle_value_template_action<sprite_pt
 {
 
 public:
-    sprite_scale_toggle_action(const sprite_ptr& sprite, int duration_frames, fixed new_scale) :
-        toggle_value_template_action(sprite, duration_frames, new_scale)
+    sprite_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_scale) :
+        toggle_value_template_action(sprite, duration_updates, new_scale)
     {
         BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
     }
 
-    sprite_scale_toggle_action(sprite_ptr&& sprite, int duration_frames, fixed new_scale) :
-        toggle_value_template_action(move(sprite), duration_frames, new_scale)
+    sprite_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_scale) :
+        toggle_value_template_action(move(sprite), duration_updates, new_scale)
     {
         BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
     }
@@ -683,13 +683,13 @@ class sprite_horizontal_flip_toggle_action :
 {
 
 public:
-    sprite_horizontal_flip_toggle_action(const sprite_ptr& sprite, int duration_frames) :
-        bool_toggle_value_template_action(sprite, duration_frames)
+    sprite_horizontal_flip_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
     {
     }
 
-    sprite_horizontal_flip_toggle_action(sprite_ptr&& sprite, int duration_frames) :
-        bool_toggle_value_template_action(move(sprite), duration_frames)
+    sprite_horizontal_flip_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
     {
     }
 
@@ -723,13 +723,13 @@ class sprite_vertical_flip_toggle_action :
 {
 
 public:
-    sprite_vertical_flip_toggle_action(const sprite_ptr& sprite, int duration_frames) :
-        bool_toggle_value_template_action(sprite, duration_frames)
+    sprite_vertical_flip_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
     {
     }
 
-    sprite_vertical_flip_toggle_action(sprite_ptr&& sprite, int duration_frames) :
-        bool_toggle_value_template_action(move(sprite), duration_frames)
+    sprite_vertical_flip_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
     {
     }
 

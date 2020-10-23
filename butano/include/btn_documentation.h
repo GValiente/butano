@@ -31,6 +31,15 @@
  */
 
 /**
+ * @defgroup mosaic Mosaic
+ *
+ * It makes sprites and backgrounds look blocky.
+ *
+ * It divides a sprite or background into square blocks of pixels.
+ * The top-left pixel of each block is used to fill the rest of that block, which makes it blocky.
+ */
+
+/**
  * @defgroup window Windows
  *
  * They allow to divide the screen into regions.

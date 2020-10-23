@@ -506,7 +506,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done before changing the direction of the property.
+     * @brief Returns how much update calls have to be done before changing the direction of the property delta.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -517,7 +517,7 @@ protected:
     /**
      * @brief Constructor.
      * @param duration_updates How much update calls have to be done
-     * before changing the direction of the property.
+     * before changing the direction of the property delta.
      * @param final_property When the property is equal to this parameter,
      * it goes back to its initial state and vice versa.
      */
@@ -530,7 +530,8 @@ protected:
     }
 
     /**
-     * @brief When the property is equal to this returned parameter, it goes back to its initial state and vice versa.
+     * @brief When the property is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
      */
     [[nodiscard]] const Property& final_property() const
     {
@@ -615,7 +616,7 @@ protected:
     /**
      * @brief Constructor.
      * @param duration_updates How much update calls have to be done to change the property.
-     * @param new_property New state for the property when update is called duration_updates times.
+     * @param new_property New state for the property to set when update is called duration_updates times.
      */
     toggle_template_action(int duration_updates, const Property& new_property) :
         _initial_property(PropertyManager::get()),

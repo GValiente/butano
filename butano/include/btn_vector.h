@@ -159,7 +159,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beggining of the vector.
+     * @brief Returns a const iterator to the beginning of the vector.
      */
     [[nodiscard]] const_iterator cbegin() const
     {

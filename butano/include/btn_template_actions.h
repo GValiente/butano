@@ -68,7 +68,7 @@ private:
 
 /**
  * @brief Modifies the property by delta from a minimum to a maximum.
- * When the property is over the given maximum, it goes back to the given minimum and viceversa.
+ * When the property is over the given maximum, it goes back to the given minimum and vice versa.
  *
  * @tparam Property Property to modify.
  * @tparam PropertyManager Reads and writes the property to modify.
@@ -91,7 +91,7 @@ public:
     /**
      * @brief Adds delta_property to the property.
      *
-     * When the property reaches the maximum, it goes back to the minimum and viceversa.
+     * When the property reaches the maximum, it goes back to the minimum and vice versa.
      */
     void update()
     {
@@ -114,7 +114,7 @@ protected:
      * @brief Constructor.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_by_template_action(const Property& delta_property, const Property& min_property,
                               const Property& after_max_property) :
@@ -142,7 +142,7 @@ protected:
     }
 
     /**
-     * @brief Set the inmediate amount after the maximum property.
+     * @brief Set the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -235,7 +235,7 @@ private:
 
 /**
  * @brief Modifies the property by delta when a given amount of update calls are done.
- * When the property is over the given maximum, it goes back to the given minimum and viceversa.
+ * When the property is over the given maximum, it goes back to the given minimum and vice versa.
  *
  * @tparam Property Property to modify.
  * @tparam PropertyManager Reads and writes the property to modify.
@@ -258,7 +258,7 @@ public:
     /**
      * @brief Adds delta_property to the property when the given amount of update calls are done.
      *
-     * When the property reaches the maximum, it goes back to the minimum and viceversa.
+     * When the property reaches the maximum, it goes back to the minimum and vice versa.
      */
     void update()
     {
@@ -298,7 +298,7 @@ protected:
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_duration_by_template_action(int duration_updates, const Property& delta_property,
                                        const Property& min_property, const Property& after_max_property) :
@@ -328,7 +328,7 @@ protected:
     }
 
     /**
-     * @brief Set the inmediate amount after the maximum property.
+     * @brief Set the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -446,7 +446,7 @@ private:
 
 /**
  * @brief Modifies the property by delta from a minimum to a maximum.
- * When the property is equal to the given final state, it goes back to its initial state and viceversa.
+ * When the property is equal to the given final state, it goes back to its initial state and vice versa.
  *
  * @tparam Property Property to modify.
  * @tparam PropertyManager Reads and writes the property to modify.
@@ -471,7 +471,7 @@ public:
     /**
      * @brief Adds or subtracts ((final_property - initial_property) / duration_updates) to the property.
      *
-     * When the property is equal to final_property, it goes back to its initial state and viceversa.
+     * When the property is equal to final_property, it goes back to its initial state and vice versa.
      */
     void update()
     {
@@ -519,7 +519,7 @@ protected:
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
      * @param final_property When the property is equal to this parameter,
-     * it goes back to its initial state and viceversa.
+     * it goes back to its initial state and vice versa.
      */
     loop_template_action(int duration_updates, const Property& final_property) :
         _final_property(final_property),
@@ -530,7 +530,7 @@ protected:
     }
 
     /**
-     * @brief When the property is equal to this returned parameter, it goes back to its initial state and viceversa.
+     * @brief When the property is equal to this returned parameter, it goes back to its initial state and vice versa.
      */
     [[nodiscard]] const Property& final_property() const
     {

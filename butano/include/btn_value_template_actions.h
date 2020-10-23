@@ -93,7 +93,7 @@ private:
 
 /**
  * @brief Modifies the property of a value by delta from a minimum to a maximum.
- * When the property is over the given maximum, it goes back to the given minimum and viceversa.
+ * When the property is over the given maximum, it goes back to the given minimum and vice versa.
  *
  * @tparam Value Value to modify.
  * @tparam Property Property of the value to modify.
@@ -117,7 +117,7 @@ public:
     /**
      * @brief Adds delta_property to the property.
      *
-     * When the property reaches the maximum, it goes back to the minimum and viceversa.
+     * When the property reaches the maximum, it goes back to the minimum and vice versa.
      */
     void update()
     {
@@ -141,7 +141,7 @@ protected:
      * @param value Value to copy.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_by_value_template_action(const Value& value, const Property& delta_property, const Property& min_property,
                                     const Property& after_max_property) :
@@ -158,7 +158,7 @@ protected:
      * @param value Value to move.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_by_value_template_action(Value&& value, const Property& delta_property, const Property& min_property,
                                     const Property& after_max_property) :
@@ -195,7 +195,7 @@ protected:
     }
 
     /**
-     * @brief Set the inmediate amount after the maximum property.
+     * @brief Set the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -316,7 +316,7 @@ private:
 
 /**
  * @brief Modifies the property of a value by delta when a given amount of update calls are done.
- * When the property is over the given maximum, it goes back to the given minimum and viceversa.
+ * When the property is over the given maximum, it goes back to the given minimum and vice versa.
  *
  * @tparam Value Value to modify.
  * @tparam Property Property of the value to modify.
@@ -340,7 +340,7 @@ public:
     /**
      * @brief Adds delta_property to the property when the given amount of update calls are done.
      *
-     * When the property reaches the maximum, it goes back to the minimum and viceversa.
+     * When the property reaches the maximum, it goes back to the minimum and vice versa.
      */
     void update()
     {
@@ -381,7 +381,7 @@ protected:
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_duration_by_value_template_action(const Value& value, int duration_updates, const Property& delta_property,
                                              const Property& min_property, const Property& after_max_property) :
@@ -401,7 +401,7 @@ protected:
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
      * @param min_property Minimum property.
-     * @param after_max_property Inmediate amount after the maximum property.
+     * @param after_max_property Immediate amount after the maximum property.
      */
     cyclic_duration_by_value_template_action(Value&& value, int duration_updates, const Property& delta_property,
                                              const Property& min_property, const Property& after_max_property) :
@@ -440,7 +440,7 @@ protected:
     }
 
     /**
-     * @brief Set the inmediate amount after the maximum property.
+     * @brief Set the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -587,7 +587,7 @@ private:
 
 /**
  * @brief Modifies the property of a value by delta from a minimum to a maximum.
- * When the property is equal to the given final state, it goes back to its initial state and viceversa.
+ * When the property is equal to the given final state, it goes back to its initial state and vice versa.
  *
  * @tparam Value Value to modify.
  * @tparam Property Property of the value to modify.
@@ -613,7 +613,7 @@ public:
     /**
      * @brief Adds or subtracts ((final_property - initial_property) / duration_updates) to the property.
      *
-     * When the property is equal to final_property, it goes back to its initial state and viceversa.
+     * When the property is equal to final_property, it goes back to its initial state and vice versa.
      */
     void update()
     {
@@ -662,7 +662,7 @@ protected:
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
      * @param final_property When the property is equal to this parameter,
-     * it goes back to its initial state and viceversa.
+     * it goes back to its initial state and vice versa.
      */
     loop_value_template_action(const Value& value, int duration_updates, const Property& final_property) :
         _value(value),
@@ -679,7 +679,7 @@ protected:
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
      * @param final_property When the property is equal to this parameter,
-     * it goes back to its initial state and viceversa.
+     * it goes back to its initial state and vice versa.
      */
     loop_value_template_action(Value&& value, int duration_updates, const Property& final_property) :
         _value(move(value)),
@@ -699,7 +699,7 @@ protected:
     }
 
     /**
-     * @brief When the property is equal to this returned parameter, it goes back to its initial state and viceversa.
+     * @brief When the property is equal to this returned parameter, it goes back to its initial state and vice versa.
      */
     [[nodiscard]] const Property& final_property() const
     {

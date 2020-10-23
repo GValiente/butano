@@ -11,6 +11,11 @@
 namespace btn::hw::sram
 {
 
+static_assert(BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_4 ||
+        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_3 ||
+        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_2 ||
+        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_8);
+
 namespace
 {
     // https://forum.gbadev.org/viewtopic.php?f=4&t=2825

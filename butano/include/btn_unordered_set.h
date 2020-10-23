@@ -395,7 +395,7 @@ public:
     }
 
     /**
-     * @brief Returns a iterator to the beginning of the unordered_set.
+     * @brief Returns an iterator to the beginning of the unordered_set.
      */
     [[nodiscard]] iterator begin()
     {
@@ -411,7 +411,7 @@ public:
     }
 
     /**
-     * @brief Returns a iterator to the end of the unordered_set.
+     * @brief Returns an iterator to the end of the unordered_set.
      */
     [[nodiscard]] iterator end()
     {

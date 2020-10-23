@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2014 jwellbelove Embedded Template Library https://www.etlcpp.com
  * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
  * zlib License, see LICENSE file.
  */
@@ -8,7 +7,6 @@
 #define BTN_STRING_VIEW_H
 
 #include "btn_assert.h"
-#include "btn_limits.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"
@@ -18,48 +16,75 @@
 namespace btn
 {
 
+/**
+ * @brief Refers to a constant contiguous sequence of char values.
+ *
+ * It doesn't store the char data like a string does.
+ *
+ * @ingroup string
+ */
 class string_view
 {
 
 public:
-    using value_type = char;
-    using size_type = int;
-    using const_reference = const char&;
-    using const_pointer = const char*;
-    using pointer = char*;
-    using const_iterator = const char*;
-    using const_reverse_iterator = reverse_iterator<const_iterator>;
+    using value_type = char; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = char&; //!< Reference alias.
+    using const_reference = const char&; //!< Const reference alias.
+    using pointer = char*; //!< Pointer alias.
+    using const_pointer = const char*; //!< Const pointer alias.
+    using iterator = char*; //!< Iterator alias.
+    using const_iterator = const char*; //!< Const iterator alias.
+    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
-    constexpr static size_type npos = numeric_limits<size_type>::max();
-
+    /**
+     * @brief Default constructor.
+     */
     constexpr string_view() = default;
 
-    constexpr string_view(const istring_base& str) :
-        _begin(str.data()),
-        _end(str.data() + str.size())
+    /**
+     * @brief Constructor.
+     * @param string Base string to reference.
+     */
+    constexpr string_view(const istring_base& string) :
+        _begin(string.data()),
+        _end(string.data() + string.size())
     {
     }
 
-    constexpr string_view(const_pointer str) :
-        _begin(str),
-        _end(str)
+    /**
+     * @brief Constructor.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     */
+    constexpr string_view(const_pointer char_array_ptr) :
+        _begin(char_array_ptr),
+        _end(char_array_ptr)
     {
-        if(str)
+        if(char_array_ptr)
         {
-            while(*str++)
+            while(*char_array_ptr++)
             {
                 ++_end;
             }
         }
     }
 
-    constexpr string_view(const_pointer str, size_type size) :
-        _begin(str),
-        _end(str + size)
+    /**
+     * @brief Constructor.
+     * @param char_array_ptr Pointer to characters array.
+     * @param char_array_size Characters count of the characters array.
+     */
+    constexpr string_view(const_pointer char_array_ptr, size_type char_array_size) :
+        _begin(char_array_ptr),
+        _end(char_array_ptr + char_array_size)
     {
-        BTN_ASSERT(size >= 0, "Invalid size: ", size);
+        BTN_ASSERT(char_array_size >= 0, "Invalid char array size: ", char_array_size);
     }
 
+    /**
+     * @brief Returns a const reference to the first character.
+     */
     [[nodiscard]] constexpr const_reference front() const
     {
         BTN_ASSERT(! empty(), "String view is empty");
@@ -67,6 +92,9 @@ public:
         return *_begin;
     }
 
+    /**
+     * @brief Returns a const reference to the last character.
+     */
     [[nodiscard]] constexpr const_reference back() const
     {
         BTN_ASSERT(! empty(), "String view is empty");
@@ -74,66 +102,107 @@ public:
         return *(_end - 1);
     }
 
+    /**
+     * @brief Returns a const pointer to the first character of the internal storage.
+     */
     [[nodiscard]] constexpr const_pointer data() const
     {
         return _begin;
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the string_view.
+     */
     [[nodiscard]] constexpr const_iterator begin() const
     {
         return _begin;
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the string_view.
+     */
     [[nodiscard]] constexpr const_iterator cbegin() const
     {
         return _begin;
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the string_view.
+     */
     [[nodiscard]] constexpr const_iterator end() const
     {
         return _end;
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the string_view.
+     */
     [[nodiscard]] constexpr const_iterator cend() const
     {
         return _end;
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the string_view.
+     */
     [[nodiscard]] constexpr const_reverse_iterator rbegin() const
     {
         return const_reverse_iterator(_end);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the string_view.
+     */
     [[nodiscard]] constexpr const_reverse_iterator crbegin() const
     {
         return const_reverse_iterator(_end);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the string_view.
+     */
     [[nodiscard]] constexpr const_reverse_iterator rend() const
     {
         return const_reverse_iterator(_begin);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the string_view.
+     */
     [[nodiscard]] constexpr const_reverse_iterator crend() const
     {
         return const_reverse_iterator(_begin);
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any character.
+     */
     [[nodiscard]] constexpr bool empty() const
     {
         return _begin == _end;
     }
 
+    /**
+     * @brief Returns the number of characters in the string_view.
+     */
     [[nodiscard]] constexpr size_type size() const
     {
         return _end - _begin;
     }
 
+    /**
+     * @brief Returns the number of characters in the string_view.
+     */
     [[nodiscard]] constexpr size_type length() const
     {
         return size();
     }
 
+    /**
+     * @brief Returns a const reference to the character at the specified location.
+     * @param position Character's position index.
+     * @return Const reference to the character at the specified location.
+     */
     [[nodiscard]] constexpr const_reference operator[](size_type position) const
     {
         BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
@@ -141,6 +210,11 @@ public:
         return _begin[position];
     }
 
+    /**
+     * @brief Returns a const reference to the character at the specified location.
+     * @param position Character's position index.
+     * @return Const reference to the character at the specified location.
+     */
     [[nodiscard]] constexpr const_reference at(size_type position) const
     {
         BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
@@ -148,39 +222,17 @@ public:
         return _begin[position];
     }
 
-    constexpr size_type copy(pointer destination, size_type count) const
-    {
-        BTN_ASSERT(destination, "Destination is null");
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-
-        size_type n = min(count, size());
-        btn::copy(_begin, _begin + n, destination);
-        return n;
-    }
-
-    constexpr size_type copy(pointer destination, size_type count, size_type position) const
-    {
-        BTN_ASSERT(destination, "Destination is null");
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-
-        size_type sz = size();
-        size_type n = 0;
-
-        if(position < sz)
-        {
-            n = min(count, sz - position);
-            btn::copy(_begin + position, _begin + position + n, destination);
-        }
-
-        return n;
-    }
-
+    /**
+     * @brief Returns a copy of this.
+     */
     [[nodiscard]] constexpr string_view substr() const
     {
         return *this;
     }
 
+    /**
+     * @brief Returns a string_view of the substring [position, size() - position).
+     */
     [[nodiscard]] constexpr string_view substr(size_type position) const
     {
         BTN_ASSERT(position >= 0, "Invalid position: ", position);
@@ -196,6 +248,9 @@ public:
         return view;
     }
 
+    /**
+     * @brief Returns a string_view of the substring [position, position + count).
+     */
     [[nodiscard]] constexpr string_view substr(size_type position, size_type count) const
     {
         BTN_ASSERT(count >= 0, "Invalid count: ", count);
@@ -213,6 +268,9 @@ public:
         return view;
     }
 
+    /**
+     * @brief Shrinks the string_view by moving its start forward by n characters.
+     */
     constexpr void remove_prefix(size_type n)
     {
         BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
@@ -220,6 +278,9 @@ public:
         _begin += n;
     }
 
+    /**
+     * @brief Shrinks the string_view by moving its end backward by n characters.
+     */
     constexpr void remove_suffix(size_type n)
     {
         BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
@@ -227,56 +288,120 @@ public:
         _end -= n;
     }
 
-    [[nodiscard]] constexpr size_type compare(const string_view& other) const
-    {
-        return *this == other ?
-                    0 :
-                    *this > other ?
-                        1 : -1;
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position, size_type count, const string_view& other) const
-    {
-        return substr(position, count).compare(other);
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position1, size_type count1, const string_view& other,
-                                        size_type position2, size_type count2) const
-    {
-        return substr(position1, count1).compare(other.substr(position2, count2));
-    }
-
-    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
-    {
-        return size() >= other.size() && compare(0, other.size(), other) == 0;
-    }
-
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param value Single character.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
         return ! empty() && front() == value;
     }
 
-    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param other Another string_view.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
     {
-        return size() >= other.size() && compare(size() - other.size(), npos, other) == 0;
+        size_type other_size = other.size();
+
+        if(size() < other_size)
+        {
+            return false;
+        }
+
+        return equal(_begin, _begin + other_size, other._begin);
     }
 
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
+    {
+        if(! char_array_ptr)
+        {
+            return true;
+        }
+
+        const_pointer this_char_array_ptr = _begin;
+
+        if(this_char_array_ptr == char_array_ptr)
+        {
+            return true;
+        }
+
+        for(size_type index = 0, limit = size(); index < limit; ++index)
+        {
+            if(*this_char_array_ptr != *char_array_ptr)
+            {
+                return false;
+            }
+
+            ++this_char_array_ptr;
+            ++char_array_ptr;
+        }
+
+        return *char_array_ptr == 0;
+    }
+
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param value Single character.
+     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
         return ! empty() && back() == value;
     }
 
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param other Another string_view.
+     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
+    {
+        size_type this_size = size();
+        size_type other_size = other.size();
+
+        if(this_size < other_size)
+        {
+            return false;
+        }
+
+        return equal(_begin + this_size - other_size, _end, other._begin);
+    }
+
+    /**
+     * @brief Exchanges the contents of this string_view with those of the other one.
+     * @param other string_view to exchange the contents with.
+     */
     constexpr void swap(string_view& other)
     {
         btn::swap(_begin, other._begin);
         btn::swap(_end, other._end);
     }
 
+    /**
+     * @brief Exchanges the contents of a string_view with those of another one.
+     * @param a First string_view to exchange the contents with.
+     * @param b Second string_view to exchange the contents with.
+     */
     constexpr friend void swap(string_view& a, string_view& b)
     {
         a.swap(b);
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator==(const string_view& a, const string_view& b)
     {
         if(a.size() != b.size())
@@ -287,26 +412,60 @@ public:
         return equal(a.begin(), a.end(), b.begin());
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator!=(const string_view& a, const string_view& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is lexicographically less than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator<(const string_view& a, const string_view& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator>(const string_view& a, const string_view& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator<=(const string_view& a, const string_view& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First string_view to compare.
+     * @param b Second string_view to compare.
+     * @return <b>true</b> if the first string_view is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator>=(const string_view& a, const string_view& b)
     {
         return ! (a < b);
@@ -318,9 +477,17 @@ private:
 };
 
 
+/**
+ * @brief Hash support for string_view.
+ *
+ * @ingroup string
+ */
 template<>
 struct hash<string_view>
 {
+    /**
+     * @brief Returns the hash of the given string_view.
+     */
     [[nodiscard]] constexpr unsigned operator()(const string_view& value) const
     {
         return array_hash(value.data(), value.size());

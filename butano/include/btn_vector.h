@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2014 jwellbelove Embedded Template Library https://www.etlcpp.com
  * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
  * zlib License, see LICENSE file.
  */
@@ -31,7 +30,7 @@ public:
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
     using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Reverse const iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ivector(const ivector& other) = delete;
 
@@ -88,7 +87,7 @@ public:
     }
 
     /**
-     * @brief Returns the current size.
+     * @brief Returns the current elements count.
      */
     [[nodiscard]] size_type size() const
     {
@@ -96,7 +95,7 @@ public:
     }
 
     /**
-     * @brief Returns the maximum possible size.
+     * @brief Returns the maximum possible elements count.
      */
     [[nodiscard]] size_type max_size() const
     {
@@ -104,7 +103,7 @@ public:
     }
 
     /**
-     * @brief Returns the remaining capacity.
+     * @brief Returns the remaining element capacity.
      */
     [[nodiscard]] size_type available() const
     {
@@ -225,8 +224,6 @@ public:
 
     /**
      * @brief Returns a const reference to the value stored at the specified index.
-     * @param index Value's index.
-     * @return Const reference to the value stored at the specified index.
      */
     [[nodiscard]] const_reference operator[](size_type index) const
     {
@@ -237,8 +234,6 @@ public:
 
     /**
      * @brief Returns a reference to the value stored at the specified index.
-     * @param index Value's index.
-     * @return Reference to the value stored at the specified index.
      */
     [[nodiscard]] reference operator[](size_type index)
     {
@@ -249,8 +244,6 @@ public:
 
     /**
      * @brief Returns a const reference to the value stored at the specified index.
-     * @param index Value's index.
-     * @return Const reference to the value stored at the specified index.
      */
     [[nodiscard]] const_reference at(size_type index) const
     {
@@ -261,8 +254,6 @@ public:
 
     /**
      * @brief Returns a reference to the value stored at the specified index.
-     * @param index Value's index.
-     * @return Reference to the value stored at the specified index.
      */
     [[nodiscard]] reference at(size_type index)
     {
@@ -527,7 +518,7 @@ public:
     /**
      * @brief Erases all elements that satisfy the specified predicate.
      * @param vector vector from which to erase.
-     * @param pred Unary predicate which returns ​true if the element should be erased.
+     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
@@ -885,7 +876,7 @@ public:
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
     using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Reverse const iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     /**
      * @brief Default constructor.

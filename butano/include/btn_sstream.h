@@ -9,138 +9,247 @@
 #include "btn_cstddef.h"
 #include "btn_fixed_fwd.h"
 #include "btn_string_fwd.h"
-#include "btn_istring_base.h"
 
 namespace btn
 {
 
 class string_view;
 
+/**
+ * @brief Implements output operations on string based streams.
+ *
+ * It effectively stores an instance of istring_base and performs output operations to it.
+ *
+ * @ingroup string
+ */
 class ostringstream
 {
 
 public:
-    explicit ostringstream(istring_base& string) :
-        _string(&string)
+    /**
+     * @brief Constructor.
+     * @param string string in which to append to.
+     */
+    explicit ostringstream(istring_base& string);
+
+    /**
+     * @brief Returns a const reference to the managed string.
+     */
+    [[nodiscard]] const istring& str() const
     {
+        return *_string;
     }
 
-    [[nodiscard]] const istring& str() const;
+    /**
+     * @brief Returns a reference to the managed string.
+     */
+    [[nodiscard]] istring& str()
+    {
+        return *_string;
+    }
 
-    [[nodiscard]] istring& str();
-
-    [[nodiscard]] const istring_base* rdbuf() const
+    /**
+     * @brief Returns a const pointer to the managed string.
+     */
+    [[nodiscard]] const istring* rdbuf() const
     {
         return _string;
     }
 
-    [[nodiscard]] istring_base* rdbuf()
+    /**
+     * @brief Returns a pointer to the managed string.
+     */
+    [[nodiscard]] istring* rdbuf()
     {
         return _string;
     }
 
-    istring_base* rdbuf(istring_base* sb);
+    /**
+     * @brief Set the managed string.
+     * @param sb Pointer to new string to manage.
+     * @return Pointer to new string to manage.
+     */
+    istring* rdbuf(istring_base* sb);
 
-    void set_rdbuf(istring_base& sb)
-    {
-        _string = &sb;
-    }
+    /**
+     * @brief Set the managed string.
+     * @param sb Reference to new string to manage.
+     */
+    void set_rdbuf(istring_base& sb);
 
+    /**
+     * @brief Returns the decimal precision of fixed point operations.
+     */
     [[nodiscard]] int precision() const
     {
         return _precision;
     }
 
+    /**
+     * @brief Set the decimal precision of fixed point operations.
+     * @param new_precision New decimal precision.
+     * @return New decimal precision.
+     */
     int precision(int new_precision);
 
+    /**
+     * @brief Set the decimal precision of fixed point operations.
+     * @param precision New decimal precision.
+     */
     void set_precision(int precision);
 
+    /**
+     * @brief Returns a view over the contents of the managed string.
+     */
     [[nodiscard]] string_view view() const;
 
-    [[nodiscard]] int size() const
-    {
-        return _string->size();
-    }
+    /**
+     * @brief Returns the number of characters in the managed string.
+     */
+    [[nodiscard]] int size() const;
 
-    [[nodiscard]] int length() const
-    {
-        return _string->length();
-    }
+    /**
+     * @brief Returns the number of characters in the managed string.
+     */
+    [[nodiscard]] int length() const;
 
-    [[nodiscard]] int capacity() const
-    {
-        return _string->capacity();
-    }
+    /**
+     * @brief Returns the maximum possible number of characters in the managed string.
+     */
+    [[nodiscard]] int max_size() const;
 
-    [[nodiscard]] int max_size() const
-    {
-        return _string->max_size();
-    }
+    /**
+     * @brief Returns the remaining characters capacity in the managed string.
+     */
+    [[nodiscard]] int available() const;
 
-    [[nodiscard]] int available() const
-    {
-        return _string->available();
-    }
+    /**
+     * @brief Indicates if the managed string doesn't contain any character.
+     */
+    [[nodiscard]] bool empty() const;
 
-    [[nodiscard]] bool empty() const
-    {
-        return _string->empty();
-    }
+    /**
+     * @brief Indicates if the managed string can't contain any more characters.
+     */
+    [[nodiscard]] bool full() const;
 
-    [[nodiscard]] bool full() const
-    {
-        return _string->full();
-    }
-
+    /**
+     * @brief Appends an additional character to the managed string.
+     * @param character Character to append.
+     */
     void append(char character);
 
+    /**
+     * @brief Appends an additional character to the managed string.
+     * @param character Character to append.
+     */
     ostringstream& put(char character)
     {
         append(character);
         return *this;
     }
 
-    void append(const string_view& string_view);
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param view string_view to append.
+     */
+    void append(const string_view& view);
 
-    void append(const istring& istring);
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param string string to append.
+     */
+    void append(const istring_base& string);
 
-    void append(const char* char_array);
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     */
+    void append(const char* char_array_ptr);
 
-    void append(const char* char_array, int size);
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param char_array_ptr Pointer to characters array.
+     * @param char_array_size Characters count of the characters array.
+     */
+    void append(const char* char_array_ptr, int char_array_size);
 
-    ostringstream& write(const char* char_array, int size)
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param char_array_ptr Pointer to characters array.
+     * @param char_array_size Characters count of the characters array.
+     * @return Reference to this.
+     */
+    ostringstream& write(const char* char_array_ptr, int char_array_size)
     {
-        append(char_array, size);
+        append(char_array_ptr, char_array_size);
         return *this;
     }
 
+    /**
+     * @brief Appends additional characters to the managed string.
+     * @param char_array Non empty const characters array.
+     */
     template<int MaxSize>
     void append(char(&char_array)[MaxSize])
     {
         append(char_array, MaxSize);
     }
 
+    /**
+     * @brief Appends the character representation of the given bool value to the managed string.
+     */
     void append(bool value)
     {
         append(value ? "true" : "false");
     }
 
+    /**
+     * @brief Appends the character representation of the given int value to the managed string.
+     */
     void append(int value);
 
+    /**
+     * @brief Appends the character representation of the given long value to the managed string.
+     */
     void append(long value);
 
+    /**
+     * @brief Appends the character representation of the given int64_t value to the managed string.
+     */
     void append(int64_t value);
 
+    /**
+     * @brief Appends the character representation of the given unsigned value to the managed string.
+     */
     void append(unsigned value);
 
+    /**
+     * @brief Appends the character representation of the given unsigned long value to the managed string.
+     */
     void append(unsigned long value);
 
+    /**
+     * @brief Appends the character representation of the given uint64_t value to the managed string.
+     */
     void append(uint64_t value);
 
+    /**
+     * @brief Appends the character representation of the given pointer to the managed string.
+     */
     void append(const void* ptr);
 
-    void append(const nullptr_t& null_ptr);
+    /**
+     * @brief Appends the character representation of the given null pointer to the managed string.
+     */
+    void append([[maybe_unused]] const nullptr_t& null_ptr)
+    {
+        append("nullptr");
+    }
 
+    /**
+     * @brief Appends the character representation of the given fixed point value to the managed string.
+     */
     template<int Precision>
     void append(fixed_t<Precision> value)
     {
@@ -181,6 +290,9 @@ public:
         }
     }
 
+    /**
+     * @brief Appends the character representation of the given parameters to the managed string.
+     */
     template<typename Type, typename... Args>
     void append_args(const Type& value, const Args&... args)
     {
@@ -188,58 +300,114 @@ public:
         append_args(args...);
     }
 
+    /**
+     * @brief Appends the character representation of the given value to the managed string.
+     */
     template<typename Type>
     void append_args(const Type& value)
     {
         *this << value;
     }
 
-    void append_args()
+    /// @cond DO_NOT_DOCUMENT
+
+    static void append_args()
     {
     }
 
+    /// @endcond
+
+    /**
+     * @brief Exchanges the contents of this ostringstream with those of the other one.
+     * @param other ostringstream to exchange the contents with.
+     */
     void swap(ostringstream& other);
 
+    /**
+     * @brief Exchanges the contents of a ostringstream with those of another one.
+     * @param a First ostringstream to exchange the contents with.
+     * @param b Second ostringstream to exchange the contents with.
+     */
     friend void swap(ostringstream& a, ostringstream& b)
     {
         a.swap(b);
     }
 
 private:
-    istring_base* _string;
+    istring* _string;
     int _precision = 6;
 
     void _append_fraction(unsigned fraction_result, int fraction_digits);
 };
 
 
-using stringstream = ostringstream;
+using stringstream = ostringstream; //!< stringstream alias.
 
 
+/**
+ * @brief Appends an additional character to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param character Character to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, char character)
 {
     stream.append(character);
     return stream;
 }
 
-inline ostringstream& operator<<(ostringstream& stream, const string_view& string_view)
+/**
+ * @brief Appends additional characters to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param view string_view to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
+inline ostringstream& operator<<(ostringstream& stream, const string_view& view)
 {
-    stream.append(string_view);
+    stream.append(view);
     return stream;
 }
 
-inline ostringstream& operator<<(ostringstream& stream, const istring& string)
+/**
+ * @brief Appends additional characters to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param string string to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
+inline ostringstream& operator<<(ostringstream& stream, const istring_base& string)
 {
     stream.append(string);
     return stream;
 }
 
-inline ostringstream& operator<<(ostringstream& stream, const char* char_array)
+/**
+ * @brief Appends additional characters to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param char_array_ptr Pointer to null-terminated characters array.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
+inline ostringstream& operator<<(ostringstream& stream, const char* char_array_ptr)
 {
-    stream.append(char_array);
+    stream.append(char_array_ptr);
     return stream;
 }
 
+/**
+ * @brief Appends additional characters to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param char_array Non empty const characters array.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 template<int MaxSize>
 inline ostringstream& operator<<(ostringstream& stream, char(&char_array)[MaxSize])
 {
@@ -247,60 +415,140 @@ inline ostringstream& operator<<(ostringstream& stream, char(&char_array)[MaxSiz
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given bool value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value bool value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, bool value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given int value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value int value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, int value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given long value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value long value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, long value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given int64_t value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value int64_t value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, int64_t value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given unsigned value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value unsigned value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, unsigned value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given unsigned long value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value unsigned long value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, unsigned long value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given uint64_t value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value uint64_t value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, uint64_t value)
 {
     stream.append(value);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given pointer to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param ptr pointer to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, const void* ptr)
 {
     stream.append(ptr);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given null pointer to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param null_ptr Null pointer to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 inline ostringstream& operator<<(ostringstream& stream, const nullptr_t& null_ptr)
 {
     stream.append(null_ptr);
     return stream;
 }
 
+/**
+ * @brief Appends the character representation of the given fixed point value to the given ostringstream.
+ * @param stream ostringstream in which to append to.
+ * @param value Fixed point value to append.
+ * @return Reference to the ostringstream.
+ *
+ * @ingroup string
+ */
 template<int Precision>
 ostringstream& operator<<(ostringstream& stream, fixed_t<Precision> value)
 {

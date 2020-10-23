@@ -13,22 +13,22 @@
 namespace btn
 {
 
-const istring& ostringstream::str() const
+ostringstream::ostringstream(istring_base& string) :
+    _string(static_cast<istring*>(&string))
 {
-    return static_cast<const istring&>(*_string);
 }
 
-istring& ostringstream::str()
-{
-    return static_cast<istring&>(*_string);
-}
-
-istring_base* ostringstream::rdbuf(istring_base* sb)
+istring* ostringstream::rdbuf(istring_base* sb)
 {
     BTN_ASSERT(sb, "Sb is null");
 
-    _string = sb;
-    return sb;
+    _string = static_cast<istring*>(sb);
+    return _string;
+}
+
+void ostringstream::set_rdbuf(istring_base& sb)
+{
+    _string = static_cast<istring*>(&sb);
 }
 
 int ostringstream::precision(int new_precision)
@@ -51,71 +51,101 @@ string_view ostringstream::view() const
     return string_view(*_string);
 }
 
+int ostringstream::size() const
+{
+    return _string->size();
+}
+
+int ostringstream::length() const
+{
+    return _string->length();
+}
+
+int ostringstream::max_size() const
+{
+    return _string->max_size();
+}
+
+int ostringstream::available() const
+{
+    return _string->available();
+}
+
+bool ostringstream::empty() const
+{
+    return _string->empty();
+}
+
+bool ostringstream::full() const
+{
+    return _string->full();
+}
+
 void ostringstream::append(char character)
 {
-    str().push_back(character);
+    _string->push_back(character);
 }
 
 void ostringstream::append(const string_view& string_view)
 {
-    str().append(string_view.data(), string_view.size());
+    _string->append(string_view.data(), string_view.size());
 }
 
-void ostringstream::append(const istring& istring)
+void ostringstream::append(const istring_base& istring)
 {
-    str().append(istring);
+    _string->append(istring);
 }
 
-void ostringstream::append(const char* char_array)
+void ostringstream::append(const char* char_array_ptr)
 {
-    str().append(char_array);
+    _string->append(char_array_ptr);
 }
 
-void ostringstream::append(const char* char_array, int size)
+void ostringstream::append(const char* char_array_ptr, int char_array_size)
 {
-    str().append(char_array, size);
+    _string->append(char_array_ptr, char_array_size);
 }
 
 void ostringstream::append(int value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(long value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(int64_t value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(unsigned value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(unsigned long value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(uint64_t value)
 {
     array<char, 32> buffer;
     int size = hw::text::parse(value, buffer);
-    str().append(buffer.data(), size);
+    _string->append(buffer.data(), size);
 }
 
 void ostringstream::append(const void* ptr)
@@ -124,17 +154,12 @@ void ostringstream::append(const void* ptr)
     {
         array<char, 32> buffer;
         int size = hw::text::parse(ptr, buffer);
-        str().append(buffer.data(), size);
+        _string->append(buffer.data(), size);
     }
     else
     {
         append(nullptr);
     }
-}
-
-void ostringstream::append(const nullptr_t&)
-{
-    str().append("nullptr");
 }
 
 void ostringstream::swap(ostringstream& other)
@@ -147,7 +172,7 @@ void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digi
 {
     array<char, 32> buffer;
     int fraction_size = hw::text::parse(fraction_result, buffer);
-    istring& string = ostringstream::str();
+    istring& string = *_string;
     string.append('.');
 
     for(int index = fraction_size; index < fraction_digits; ++index)

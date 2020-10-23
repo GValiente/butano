@@ -51,7 +51,7 @@ namespace btn
         unique_ptr() = default;
 
         /**
-         * @brief Class constructor.
+         * @brief Constructor.
          * @param ptr Pointer to the object to manage.
          */
         explicit unique_ptr(pointer ptr) :

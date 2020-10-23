@@ -43,7 +43,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param delta_property How much to add to the property when update is called.
      */
     explicit by_template_action(const Property& delta_property) :
@@ -111,7 +111,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
      * @param after_max_property Inmediate amount after the maximum property.
@@ -205,7 +205,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
      */
@@ -294,7 +294,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
      * @param min_property Minimum property.
@@ -405,7 +405,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates Number of times that update has to be called
      * until the property is equal to final_property.
      * @param final_property Property when update is called duration_updates times.
@@ -515,7 +515,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
      * @param final_property When the property is equal to this parameter,
@@ -613,7 +613,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates How much update calls have to be done to change the property.
      * @param new_property New state for the property when update is called duration_updates times.
      */
@@ -698,7 +698,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param duration_updates How much update calls have to be done to toggle the property.
      */
     explicit bool_toggle_template_action(int duration_updates) :

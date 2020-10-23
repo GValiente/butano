@@ -5,7 +5,6 @@
 
 #include "btn_timer.h"
 
-#include "btn_fixed.h"
 #include "btn_limits.h"
 #include "../hw/include/btn_hw_timer.h"
 
@@ -30,11 +29,6 @@ int timer::elapsed_ticks() const
     }
 
     return int(ticks - _last_ticks);
-}
-
-fixed timer::elapsed_frames() const
-{
-    return fixed(elapsed_ticks()) / ticks_per_frame();
 }
 
 void timer::restart()

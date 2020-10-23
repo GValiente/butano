@@ -17,6 +17,12 @@
 // GROUPS
 
 /**
+ * @defgroup tile Tiles
+ *
+ * On the GBA, the pixel data of sprites and backgrounds is made of pixel tiles: 8x8 pixel matrices.
+ */
+
+/**
  * @defgroup sprite Sprites
  *
  * Small animated objects that can move freely from the background.
@@ -105,6 +111,14 @@
  * A std::unordered_set like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup string Strings
+ *
+ * Strings describe objects that can refer to a constant contiguous sequence of char values.
  *
  * @ingroup container
  */

@@ -23,7 +23,7 @@ class utf8_character
 
 public:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param text_ptr Non null pointer to the string to decode.
      */
     constexpr explicit utf8_character(const char* text_ptr)
@@ -34,7 +34,7 @@ public:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param text_ref Reference to the string to decode.
      */
     constexpr explicit utf8_character(const char& text_ref)

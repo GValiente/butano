@@ -45,7 +45,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param delta_property How much to add to the property when update is called.
      */
@@ -57,7 +57,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param delta_property How much to add to the property when update is called.
      */
@@ -137,7 +137,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
@@ -154,7 +154,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param delta_property How much to add to the property when update is called.
      * @param min_property Minimum property.
@@ -260,7 +260,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
@@ -275,7 +275,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
@@ -376,7 +376,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
@@ -396,7 +396,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates How much update calls have to be done before updating the property.
      * @param delta_property How much to add to the property when update is called duration_updates times.
@@ -519,7 +519,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates Number of times that update has to be called
      * until the property is equal to final_property.
@@ -535,7 +535,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates Number of times that update has to be called
      * until the property is equal to final_property.
@@ -657,7 +657,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
@@ -674,7 +674,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the property.
@@ -784,7 +784,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates How much update calls have to be done to change the property.
      * @param new_property New state for the property when update is called duration_updates times.
@@ -799,7 +799,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates How much update calls have to be done to change the property.
      * @param new_property New state for the property when update is called duration_updates times.
@@ -896,7 +896,7 @@ public:
 
 protected:
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to copy.
      * @param duration_updates How much update calls have to be done to toggle the property.
      */
@@ -909,7 +909,7 @@ protected:
     }
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param value Value to move.
      * @param duration_updates How much update calls have to be done to toggle the property.
      */

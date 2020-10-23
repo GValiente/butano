@@ -10,6 +10,7 @@
 
 #if BTN_CFG_LOG_ENABLED
     #include "btn_sstream.h"
+    #include "btn_istring_base.h"
 
     #define BTN_LOG(...) \
         do \

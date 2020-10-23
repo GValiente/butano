@@ -42,6 +42,7 @@
 
 #if BTN_CFG_ASSERT_ENABLED
     #include "btn_sstream.h"
+    #include "btn_istring_base.h"
 
     #define BTN_ASSERT(condition, ...) \
         do \

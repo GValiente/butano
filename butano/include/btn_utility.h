@@ -152,10 +152,10 @@ namespace btn
 
 
     /**
-     * @brief Creates a pair deducing its types from the types of arguments.
+     * @brief Creates a pair deducing its types from the types of the arguments.
      * @param x First element to construct the pair from.
      * @param y Second element to construct the pair from.
-     * @return Pair containing the given values.
+     * @return pair containing the given values.
      *
      * @ingroup utility
      */

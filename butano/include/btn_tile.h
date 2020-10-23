@@ -11,11 +11,16 @@
 namespace btn
 {
 
+/**
+ * @brief Represents a 8x8 block of 16 color pixels.
+ *
+ * @ingroup tile
+ */
 class tile
 {
 
 public:
-    uint32_t data[8];
+    uint32_t data[8]; //!< Aligned tile data.
 };
 
 }

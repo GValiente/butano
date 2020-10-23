@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2014 jwellbelove Embedded Template Library https://www.etlcpp.com
  * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
  * zlib License, see LICENSE file.
  */
@@ -7,36 +6,201 @@
 #ifndef BTN_STRING_H
 #define BTN_STRING_H
 
-#include "btn_assert.h"
-#include "btn_limits.h"
 #include "btn_sstream.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_functional.h"
+#include "btn_string_view.h"
 
 namespace btn
 {
 
+/**
+ * @brief Base class of string.
+ *
+ * Can be used as a reference type for all string containers.
+ *
+ * @ingroup string
+ */
 class istring : public istring_base
 {
 
 public:
-    using value_type = char;
-    using size_type = int;
-    using reference = char&;
-    using const_reference = const char&;
-    using pointer = char*;
-    using const_pointer = const char*;
-    using iterator = char*;
-    using const_iterator = const char*;
-    using reverse_iterator = btn::reverse_iterator<iterator>;
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
 public:
-    constexpr static size_type npos = numeric_limits<size_type>::max();
-
+    /**
+     * @brief Copy assignment operator.
+     * @param other istring to copy.
+     * @return Reference to this.
+     */
     constexpr istring& operator=(const istring& other)
+    {
+        return assign(other);
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param view string_view to copy.
+     * @return Reference to this.
+     */
+    constexpr istring& operator=(const string_view& view)
+    {
+        return assign(view);
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return Reference to this.
+     */
+    constexpr istring& operator=(const_pointer char_array_ptr)
+    {
+        return assign(char_array_ptr);
+    }
+
+    /**
+     * @brief Returns a non-modifiable string_view into the entire string.
+     *
+     * It is not ensured that the resulting string_view does not outlive the string.
+     */
+    [[nodiscard]] constexpr operator string_view() const
+    {
+        return string_view(_data, _size);
+    }
+
+    /**
+     * @brief Returns a const reverse iterator to the end of the characters data.
+     */
+    [[nodiscard]] constexpr const_reverse_iterator rbegin() const
+    {
+        return const_reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the end of the characters data.
+     */
+    [[nodiscard]] constexpr reverse_iterator rbegin()
+    {
+        return reverse_iterator(end());
+    }
+
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the characters data.
+     */
+    [[nodiscard]] constexpr const_reverse_iterator rend() const
+    {
+        return const_reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a reverse iterator to the beginning of the characters data.
+     */
+    [[nodiscard]] constexpr reverse_iterator rend()
+    {
+        return reverse_iterator(begin());
+    }
+
+    /**
+     * @brief Returns a const reverse iterator to the end of the characters data.
+     */
+    [[nodiscard]] constexpr const_reverse_iterator crbegin() const
+    {
+        return const_reverse_iterator(cend());
+    }
+
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the characters data.
+     */
+    [[nodiscard]] constexpr const_reverse_iterator crend() const
+    {
+        return const_reverse_iterator(cbegin());
+    }
+
+    /**
+     * @brief Returns a const reference to the character stored at the specified index.
+     */
+    [[nodiscard]] constexpr const_reference operator[](size_type index) const
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _data[index];
+    }
+
+    /**
+     * @brief Returns a reference to the character stored at the specified index.
+     */
+    [[nodiscard]] constexpr reference operator[](size_type index)
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _data[index];
+    }
+
+    /**
+     * @brief Returns a const reference to the character stored at the specified index.
+     */
+    [[nodiscard]] constexpr const_reference at(size_type index) const
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _data[index];
+    }
+
+    /**
+     * @brief Returns a reference to the character stored at the specified index.
+     */
+    [[nodiscard]] constexpr reference at(size_type index)
+    {
+        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+
+        return _data[index];
+    }
+
+    /**
+     * @brief Returns a const reference to the first character.
+     */
+    [[nodiscard]] constexpr const_reference front() const
+    {
+        BTN_ASSERT(! empty(), "String is empty");
+
+        return _data[0];
+    }
+
+    /**
+     * @brief Returns a reference to the first character.
+     */
+    [[nodiscard]] constexpr reference front()
+    {
+        BTN_ASSERT(! empty(), "String is empty");
+
+        return _data[0];
+    }
+
+    /**
+     * @brief Returns a const reference to the last character.
+     */
+    [[nodiscard]] constexpr const_reference back() const
+    {
+        BTN_ASSERT(! empty(), "String is empty");
+
+        return _data[_size - 1];
+    }
+
+    /**
+     * @brief Returns a reference to the last character.
+     */
+    [[nodiscard]] constexpr reference back()
+    {
+        BTN_ASSERT(! empty(), "String is empty");
+
+        return _data[_size - 1];
+    }
+
+    /**
+     * @brief Replaces the contents of the string.
+     * @param other string replacement.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const istring& other)
     {
         BTN_ASSERT(other._size <= _max_size, "Not enough space in string: ", other._size, " - ", _max_size);
 
@@ -46,167 +210,11 @@ public:
         return *this;
     }
 
-    constexpr istring& operator=(const_pointer str)
-    {
-        BTN_ASSERT(str, "Str is null");
-
-        size_type length = _strlen(str);
-        BTN_ASSERT(length <= _max_size, "Not enough space in string: ", length, " - ", _max_size);
-
-        btn::copy(str, str + length, begin());
-        _size = length;
-        _data[_size] = 0;
-        return *this;
-    }
-
-    [[nodiscard]] constexpr const_pointer c_str() const
-    {
-        return _data;
-    }
-
-    [[nodiscard]] constexpr iterator begin()
-    {
-        return _data;
-    }
-
-    [[nodiscard]] constexpr const_iterator begin() const
-    {
-        return _data;
-    }
-
-    [[nodiscard]] constexpr iterator end()
-    {
-        return _data + _size;
-    }
-
-    [[nodiscard]] constexpr const_iterator end() const
-    {
-        return _data + _size;
-    }
-
-    [[nodiscard]] constexpr const_iterator cbegin() const
-    {
-        return _data;
-    }
-
-    [[nodiscard]] constexpr const_iterator cend() const
-    {
-        return _data + _size;
-    }
-
-    [[nodiscard]] constexpr reverse_iterator rbegin()
-    {
-        return reverse_iterator(end());
-    }
-
-    [[nodiscard]] constexpr const_reverse_iterator rbegin() const
-    {
-        return const_reverse_iterator(end());
-    }
-
-    [[nodiscard]] constexpr reverse_iterator rend()
-    {
-        return reverse_iterator(begin());
-    }
-
-    [[nodiscard]] constexpr const_reverse_iterator rend() const
-    {
-        return const_reverse_iterator(begin());
-    }
-
-    [[nodiscard]] constexpr const_reverse_iterator crbegin() const
-    {
-        return const_reverse_iterator(cend());
-    }
-
-    [[nodiscard]] constexpr const_reverse_iterator crend() const
-    {
-        return const_reverse_iterator(cbegin());
-    }
-
-    [[nodiscard]] constexpr const_reference operator[](size_type index) const
-    {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
-
-        return _data[index];
-    }
-
-    [[nodiscard]] constexpr reference operator[](size_type index)
-    {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
-
-        return _data[index];
-    }
-
-    [[nodiscard]] constexpr const_reference at(size_type index) const
-    {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
-
-        return _data[index];
-    }
-
-    [[nodiscard]] constexpr reference at(size_type index)
-    {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
-
-        return _data[index];
-    }
-
-    [[nodiscard]] constexpr const_reference front() const
-    {
-        BTN_ASSERT(! empty(), "String is empty");
-
-        return _data[0];
-    }
-
-    [[nodiscard]] constexpr reference front()
-    {
-        BTN_ASSERT(! empty(), "String is empty");
-
-        return _data[0];
-    }
-
-    [[nodiscard]] constexpr const_reference back() const
-    {
-        BTN_ASSERT(! empty(), "String is empty");
-
-        return _data[_size - 1];
-    }
-
-    [[nodiscard]] constexpr reference back()
-    {
-        BTN_ASSERT(! empty(), "String is empty");
-
-        return _data[_size - 1];
-    }
-
-    constexpr void clear()
-    {
-        _data[0] = 0;
-        _size = 0;
-    }
-
-    constexpr istring& assign(const istring& other)
-    {
-        clear();
-        append(other);
-        return *this;
-    }
-
-    constexpr istring& assign(const istring& other, size_type subposition)
-    {
-        clear();
-        append(other, subposition);
-        return *this;
-    }
-
-    constexpr istring& assign(const istring& other, size_type subposition, size_type sublength)
-    {
-        clear();
-        append(other, subposition, sublength);
-        return *this;
-    }
-
+    /**
+     * @brief Replaces the contents of the string.
+     * @param value Character replacement.
+     * @return Reference to this.
+     */
     constexpr istring& assign(value_type value)
     {
         clear();
@@ -214,20 +222,36 @@ public:
         return *this;
     }
 
-    constexpr istring& assign(const_pointer str)
+    /**
+     * @brief Replaces the contents of the string.
+     * @param view string_view replacement.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const string_view& view)
     {
         clear();
-        append(str);
+        append(view);
         return *this;
     }
 
-    constexpr istring& assign(const_pointer str, size_type str_size)
+    /**
+     * @brief Replaces the contents of the string.
+     * @param char_array_ptr Pointer to null-terminated characters array replacement.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const_pointer char_array_ptr)
     {
         clear();
-        append(str, str_size);
+        append(char_array_ptr);
         return *this;
     }
 
+    /**
+     * @brief Replaces the contents of the string with count copies of character value.
+     * @param count New size.
+     * @param value Character replacement.
+     * @return Reference to this.
+     */
     constexpr istring& assign(size_type count, value_type value)
     {
         clear();
@@ -235,6 +259,12 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Replaces the contents of the string with the characters in the range [first, last).
+     * @param first First element of the range.
+     * @param last Last element of the range.
+     * @return Reference to this.
+     */
     constexpr istring& assign(const_iterator first, const_iterator last)
     {
         clear();
@@ -242,6 +272,10 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Inserts a character at the end of the string.
+     * @param value Character to insert.
+     */
     constexpr void push_back(value_type value)
     {
         BTN_ASSERT(! full(), "String is full");
@@ -252,6 +286,9 @@ public:
         ++_size;
     }
 
+    /**
+     * @brief Removes the last character of the string.
+     */
     constexpr void pop_back()
     {
         BTN_ASSERT(! empty(), "String is empty");
@@ -260,297 +297,113 @@ public:
         _data[_size] = 0;
     }
 
+    /**
+     * @brief Appends additional characters to the string.
+     * @param other string to append.
+     * @return Reference to this.
+     */
     constexpr istring& append(const istring& other)
     {
         append(other.begin(), other.end());
         return *this;
     }
 
-    constexpr istring& append(const istring& other, size_type subposition)
-    {
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-
-        size_type sublength = other._size - subposition;
-        append(other.begin() + subposition, other.begin() + subposition + sublength);
-        return *this;
-    }
-
-    constexpr istring& append(const istring& other, size_type subposition, size_type sublength)
-    {
-        BTN_ASSERT(subposition >= 0, "Invalid subposition: ", subposition);
-        BTN_ASSERT(sublength >= 0, "Invalid sublength: ", sublength);
-        BTN_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength: ",
-                   subposition, " - ", sublength, " - ", other._size);
-
-        append(other.begin() + subposition, other.begin() + subposition + sublength);
-        return *this;
-    }
-
+    /**
+     * @brief Appends an additional character to the string.
+     * @param value Character to append.
+     * @return Reference to this.
+     */
     constexpr istring& append(value_type value)
     {
         push_back(value);
         return *this;
     }
 
-    constexpr istring& append(const_pointer str)
+    /**
+     * @brief Appends additional characters to the string.
+     * @param view string_view to append.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const string_view& view)
     {
-        BTN_ASSERT(str, "Str is null");
-
-        append(str, str + _strlen(str));
+        append(view.begin(), view.end());
         return *this;
     }
 
-    constexpr istring& append(const_pointer str, size_type str_size)
+    /**
+     * @brief Appends additional characters to the string.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const_pointer char_array_ptr)
     {
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
-
-        append(str, str + str_size);
+        append(string_view(char_array_ptr));
         return *this;
     }
 
+    /**
+     * @brief Appends additional characters to the string.
+     * @param char_array_ptr Pointer to characters array.
+     * @param char_array_size Characters count of the characters array.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const_pointer char_array_ptr, size_type char_array_size)
+    {
+        append(string_view(char_array_ptr, char_array_size));
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the string.
+     * @param count Number of characters to append.
+     * @param value Character to append.
+     * @return Reference to this.
+     */
     constexpr istring& append(size_type count, value_type value)
     {
         BTN_ASSERT(count >= 0, "Invalid count: ", count);
+        BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
 
-        auto append_position = end();
-        size_type size = _size;
-        size_type to_position = size + count;
-        BTN_ASSERT(to_position <= _max_size, "Not enough space in string: ", to_position, " - ", _max_size);
-
-        if(to_position == _max_size)
-        {
-            _size = _max_size;
-            fill(append_position, end(), value);
-        }
-        else
-        {
-            _size += count;
-            copy_backward(append_position, append_position, begin() + to_position);
-            fill(append_position, append_position + count, value);
-        }
-
+        iterator append_position = end();
+        fill(append_position, append_position + count, value);
+        _size += count;
         _data[_size] = 0;
         return *this;
     }
 
+    /**
+     * @brief Appends additional characters to the string.
+     * @param first First element of the range to append.
+     * @param last Last element of the range to append.
+     * @return Reference to this.
+     */
     constexpr istring& append(const_iterator first, const_iterator last)
     {
         size_type count = last - first;
         BTN_ASSERT(count >= 0, "Invalid range");
+        BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
-        size_type size = _size;
-        size_type to_position = size + count;
-        BTN_ASSERT(to_position <= _max_size, "Not enough space in string: ", to_position, " - ", _max_size);
 
-        if(to_position == _max_size)
+        if(append_position <= first)
         {
-            _size = _max_size;
-
-            iterator end_it = end();
-
-            while(append_position != end_it)
-            {
-                *append_position++ = *first++;
-            }
+            btn::copy(first, last, append_position);
         }
         else
         {
-            _size += count;
-            copy_backward(append_position, append_position, begin() + to_position);
-
-            while(first != last)
-            {
-                *append_position++ = *first++;
-            }
+            copy_backward(first, last, append_position + count);
         }
 
+        _size += count;
         _data[_size] = 0;
         return *this;
     }
 
-    constexpr iterator insert(const_iterator position, value_type value)
-    {
-        BTN_ASSERT(! full(), "String is full");
-
-        auto insert_position = const_cast<iterator>(position);
-        iterator last = end();
-
-        if(position != last)
-        {
-            ++_size;
-
-            copy_backward(insert_position, last - 1, last);
-            *insert_position = value;
-        }
-        else
-        {
-            *insert_position = value;
-            ++_size;
-        }
-
-        _data[_size] = 0;
-        return insert_position;
-    }
-
-    constexpr void insert(const_iterator position, size_type count, value_type value)
-    {
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-
-        auto insert_position = const_cast<iterator>(position);
-        size_type start = position - begin();
-        BTN_ASSERT(start < _max_size, "Not enough space in string: ", start, " - ", _max_size);
-
-        if(start + count >= _max_size)
-        {
-            BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ",
-                       _size, " - ", count, " - ", _max_size);
-
-            _size = _max_size;
-            fill(insert_position, end(), value);
-        }
-        else
-        {
-            size_type shift_amount = count;
-            size_type to_position = start + shift_amount;
-            size_type remaining_characters = _size - start;
-            size_type max_shift_characters = _max_size - start - shift_amount;
-            size_type characters_to_shift = min(max_shift_characters, remaining_characters);
-            BTN_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string: ",
-                       start, " - ", shift_amount, " - ", remaining_characters, " - ", _max_size);
-
-            _size += shift_amount;
-            copy_backward(insert_position, insert_position + characters_to_shift,
-                          begin() + to_position + characters_to_shift);
-            fill(insert_position, insert_position + shift_amount, value);
-        }
-
-        _data[_size] = 0;
-    }
-
-    constexpr void insert(const_iterator position, const_iterator first, const_iterator last)
-    {
-        size_type count = last - first;
-        BTN_ASSERT(count >= 0, "Invalid range");
-
-        auto insert_position = const_cast<iterator>(position);
-        size_type start = position - begin();
-        BTN_ASSERT(start < _max_size, "Not enough space in string: ", start, " - ", _max_size);
-
-        if(start + count >= _max_size)
-        {
-            BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ",
-                       _size, " - ", count, " - ", _max_size);
-
-            _size = _max_size;
-
-            iterator end_it = end();
-
-            while(insert_position != end_it)
-            {
-                *insert_position++ = *first++;
-            }
-        }
-        else
-        {
-            size_type shift_amount = count;
-            size_type to_position = start + shift_amount;
-            size_type remaining_characters = _size - start;
-            size_type max_shift_characters = _max_size - start - shift_amount;
-            size_type characters_to_shift = min(max_shift_characters, remaining_characters);
-            BTN_ASSERT(start + shift_amount + remaining_characters <= _max_size, "Not enough space in string: ",
-                       start, " - ", shift_amount, " - ", remaining_characters, " - ", _max_size);
-
-            _size += shift_amount;
-            copy_backward(position, position + characters_to_shift, begin() + to_position + characters_to_shift);
-
-            while(first != last)
-            {
-                *insert_position++ = *first++;
-            }
-        }
-
-        _data[_size] = 0;
-    }
-
-    constexpr istring& insert(size_type position, const istring& other)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-
-        insert(begin() + position, other.begin(), other.end());
-        return *this;
-    }
-
-    constexpr istring& insert(size_type position, const istring& other, size_type subposition)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-
-        size_type sublength = other._size - subposition;
-        insert(begin() + position, other.begin() + subposition, other.begin() + subposition + sublength);
-        return *this;
-    }
-
-    constexpr istring& insert(size_type position, const istring& other, size_type subposition, size_type sublength)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-        BTN_ASSERT(subposition >= 0, "Invalid subposition: ", subposition);
-        BTN_ASSERT(sublength >= 0, "Invalid sublength: ", sublength);
-        BTN_ASSERT(subposition + sublength <= other._size, "Invalid subposition or sublength: ",
-                   subposition, " - ", sublength, " - ", other._size);
-
-        insert(begin() + position, other.begin() + subposition, other.begin() + subposition + sublength);
-        return *this;
-    }
-
-    constexpr istring& insert(size_type position, const_pointer str)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-        BTN_ASSERT(str, "Str is null");
-
-        insert(begin() + position, str, str + _strlen(str));
-        return *this;
-    }
-
-    constexpr istring& insert(size_type position, const_pointer str, size_type str_size)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
-
-        insert(begin() + position, str, str + str_size);
-        return *this;
-    }
-
-    constexpr istring& insert(size_type position, size_type count, value_type value)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-
-        insert(begin() + position, count, value);
-        return *this;
-    }
-
-    constexpr istring& erase(size_type position)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-
-        size_type length = _size - position;
-        erase(begin() + position, begin() + position + length);
-        return *this;
-    }
-
-    constexpr istring& erase(size_type position, size_type length)
-    {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-        BTN_ASSERT(length >= 0, "Invalid length: ", length);
-
-        erase(begin() + position, begin() + position + length);
-        return *this;
-    }
-
+    /**
+     * @brief Erases a character.
+     * @param position Iterator to the character to erase.
+     * @return Iterator following the erased character.
+     */
     constexpr iterator erase(const_iterator position)
     {
         BTN_ASSERT(! empty(), "String is empty");
@@ -562,20 +415,36 @@ public:
         return erase_position;
     }
 
+    /**
+     * @brief Erases a range of characters.
+     *
+     * The range includes all the characters between first and last, including the
+     * character pointed by first, but not the one pointed by last.
+     *
+     * @param first Iterator to the first character to erase.
+     * @param last Iterator to the last character to erase.
+     * @return Iterator following the last erased character.
+     */
     constexpr iterator erase(const_iterator first, const_iterator last)
     {
-        size_type delete_count = last - first;
-        BTN_ASSERT(delete_count <= _size, "Invalid range: ", delete_count, " - ", _size);
+        size_type count = last - first;
+        BTN_ASSERT(count >= 0, "Invalid range");
+        BTN_ASSERT(count <= _size, "Invalid range: ", count, " - ", _size);
 
         auto erase_first = const_cast<iterator>(first);
         auto erase_last = const_cast<iterator>(last);
         btn::copy(erase_last, end(), erase_first);
-
-        _size -= delete_count;
+        _size -= count;
         _data[_size] = 0;
         return erase_first;
     }
 
+    /**
+     * @brief Erases all characters that are equal to the specified one.
+     * @param string string from which to erase.
+     * @param value Character to erase.
+     * @return Number of erased characters.
+     */
     constexpr friend size_type erase(istring& string, value_type value)
     {
         size_type old_size = string.size();
@@ -583,6 +452,12 @@ public:
         return old_size - string.size();
     }
 
+    /**
+     * @brief Erases all characters that satisfy the specified predicate.
+     * @param string string from which to erase.
+     * @param pred Unary predicate which returns <b>true</b> if the character should be erased.
+     * @return Number of erased characters.
+     */
     template<class Pred>
     constexpr friend size_type erase_if(istring& string, const Pred& pred)
     {
@@ -591,260 +466,93 @@ public:
         return old_size - string.size();
     }
 
-    constexpr size_type copy(pointer str, size_type length)
-    {
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(length >= 0 && length <= _size, "Invalid length: ", length, " - ", _size);
-
-        for(size_type index = 0; index < length; ++index)
-        {
-            *str++ = _data[index];
-        }
-
-        return length;
-    }
-
-    constexpr size_type copy(pointer str, size_type length, size_type position)
-    {
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(length >= 0, "Invalid length: ", length);
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
-
-        size_type end = position + length;
-        BTN_ASSERT(end <= _size, "Invalid position or length: ", end, " - ", _size);
-
-        for(size_type index = position; index < end; ++index)
-        {
-            *str++ = _data[index];
-        }
-
-        return end - position;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, const istring& other)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-
-        erase(position, length);
-        insert(position, other);
-        return *this;
-    }
-
-    constexpr istring& replace(const_iterator first, const_iterator last, const istring& other)
-    {
-        iterator replace_first = const_cast<iterator>(first);
-        iterator replace_last = const_cast<iterator>(last);
-        erase(replace_first, replace_last);
-        insert(replace_first, other.begin(), other.end());
-        return *this;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, const istring& other, size_type subposition)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-
-        size_type sublength = other._size - subposition;
-        erase(position, length);
-        insert(position, other, subposition, sublength);
-        return *this;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, const istring& other, size_type subposition,
-                               size_type sublength)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-        BTN_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength: ",
-                   sublength, " - ", other._size, " - ", subposition);
-
-        erase(position, length);
-        insert(position, other, subposition, sublength);
-        return *this;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, const_pointer str)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(str, "Str is null");
-
-        erase(position, length);
-        insert(position, str, _strlen(str));
-        return *this;
-    }
-
-    constexpr istring& replace(const_iterator first, const_iterator last, const_pointer str)
-    {
-        BTN_ASSERT(str, "Str is null");
-
-        auto replace_first = const_cast<iterator>(first);
-        auto replace_last = const_cast<iterator>(last);
-        erase(replace_first, replace_last);
-        insert(replace_first, str, str + _strlen(str));
-        return *this;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, const_pointer str, size_type str_size)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
-
-        erase(position, length);
-        insert(position, str, str_size);
-        return *this;
-    }
-
-    constexpr istring& replace(const_iterator first, const_iterator last, const_pointer str, size_type str_size)
-    {
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
-
-        auto replace_first = const_cast<iterator>(first);
-        auto replace_last = const_cast<iterator>(last);
-        erase(replace_first, replace_last);
-        insert(replace_first, str, str + str_size);
-        return *this;
-    }
-
-    constexpr istring& replace(size_type position, size_type length, size_type count, value_type value)
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-
-        erase(position, length);
-        insert(position, count, value);
-        return *this;
-    }
-
-    constexpr istring& replace(const_iterator first, const_iterator last, size_type count, value_type value)
-    {
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-
-        auto replace_first = const_cast<iterator>(first);
-        auto replace_last = const_cast<iterator>(last);
-        erase(replace_first, replace_last);
-        insert(replace_first, count, value);
-        return *this;
-    }
-
-    constexpr istring& replace(const_iterator first, const_iterator last, const_iterator first_replace,
-                               const_iterator last_replace)
-    {
-        auto replace_first = const_cast<iterator>(first);
-        auto replace_last = const_cast<iterator>(last);
-        erase(replace_first, replace_last);
-        insert(replace_first, first_replace, last_replace);
-        return *this;
-    }
-
-    [[nodiscard]] constexpr size_type compare(const istring& other) const
-    {
-        return _compare(_data, _data + _size, other._data, other._data + other._size);
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other) const
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-
-        return _compare(_data + position, _data + position + length, other._data, other._data + other._size);
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other,
-                                              size_type subposition) const
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-
-        size_type sublength = other._size - subposition;
-        return _compare(_data + position, _data + position + length,
-                        other._data + subposition, other._data + subposition + sublength);
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const istring& other,
-                                              size_type subposition, size_type sublength) const
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(subposition >= 0 && subposition <= other._size, "Invalid subposition: ",
-                   subposition, " - ", other._size);
-        BTN_ASSERT(sublength >= 0 && sublength <= other._size - subposition, "Invalid sublength: ",
-                   sublength, " - ", other._size, " - ", subposition);
-
-        return _compare(_data + position, _data + position + length,
-                        other._data + subposition, other._data + subposition + sublength);
-    }
-
-    [[nodiscard]] constexpr size_type compare(const_pointer str) const
-    {
-        BTN_ASSERT(str, "Str is null");
-
-        return _compare(_data, _data + _size, str, str + _strlen(str));
-    }
-
-    [[nodiscard]] size_type compare(size_type position, size_type length, const_pointer str) const
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(str, "Str is null");
-
-        return _compare(_data + position, _data + position + length, str, str + _strlen(str));
-    }
-
-    [[nodiscard]] constexpr size_type compare(size_type position, size_type length, const_pointer str,
-                                              size_type str_size) const
-    {
-        BTN_ASSERT(position >= 0 && position <= _size, "Invalid position: ", position, " - ", _size);
-        BTN_ASSERT(length >= 0 && length <= _size - position, "Invalid length: ",
-                   length, " - ", _size, " - ", position);
-        BTN_ASSERT(str, "Str is null");
-        BTN_ASSERT(str_size >= 0, "Invalid str size: ", str_size);
-
-        return _compare(_data + position, _data + position + length,
-                        str, str + str_size);
-    }
-
-    [[nodiscard]] constexpr bool starts_with(const istring& other) const
-    {
-        return size() >= other.size() && compare(0, other.size(), other) == 0;
-    }
-
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param value Single character.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
-        return ! empty() && front() == value;
+        return ! empty() && _data[0] == value;
     }
 
-    [[nodiscard]] constexpr bool ends_with(const istring& other) const
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param other Another string_view.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
     {
-        return size() >= other.size() && compare(size() - other.size(), npos, other) == 0;
+        size_type other_size = other.size();
+
+        if(size() < other_size)
+        {
+            return false;
+        }
+
+        return equal(_data, _data + other_size, other.data());
     }
 
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
+    {
+        if(! char_array_ptr)
+        {
+            return true;
+        }
+
+        const_pointer this_char_array_ptr = _data;
+
+        for(size_type index = 0, limit = size(); index < limit; ++index)
+        {
+            if(*this_char_array_ptr != *char_array_ptr)
+            {
+                return false;
+            }
+
+            ++this_char_array_ptr;
+            ++char_array_ptr;
+        }
+
+        return *char_array_ptr == 0;
+    }
+
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param value Single character.
+     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
-        return ! empty() && back() == value;
+        return ! empty() && _data[_size - 1] == value;
     }
 
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param other Another string_view.
+     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
+    {
+        size_type this_size = size();
+        size_type other_size = other.size();
+
+        if(this_size < other_size)
+        {
+            return false;
+        }
+
+        return equal(_data + this_size - other_size, _data + this_size, other.data());
+    }
+
+    /**
+     * @brief Exchanges the contents of this string with those of the other one.
+     * @param other string to exchange the contents with.
+     */
     constexpr void swap(istring& other)
     {
         if(_data != other._data)
@@ -883,32 +591,71 @@ public:
             }
 
             btn::swap(_size, other._size);
+            _data[_size] = 0;
+            other._data[other._size] = 0;
         }
     }
 
+    /**
+     * @brief Exchanges the contents of a string with those of another one.
+     * @param a First string to exchange the contents with.
+     * @param b Second string to exchange the contents with.
+     */
     constexpr friend void swap(istring& a, istring& b)
     {
         a.swap(b);
     }
 
+    /**
+     * @brief Appends additional characters to the string.
+     * @param other string to append.
+     * @return Reference to this.
+     */
     constexpr istring& operator+=(const istring& other)
     {
         append(other);
         return *this;
     }
 
-    constexpr istring& operator+=(const_pointer str)
-    {
-        append(str);
-        return *this;
-    }
-
+    /**
+     * @brief Appends an additional character to the string.
+     * @param value Character to append.
+     * @return Reference to this.
+     */
     constexpr istring& operator+=(value_type value)
     {
         append(value);
         return *this;
     }
 
+    /**
+     * @brief Appends additional characters to the string.
+     * @param view string_view to append.
+     * @return Reference to this.
+     */
+    constexpr istring& operator+=(const string_view& view)
+    {
+        append(view);
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the string.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return Reference to this.
+     */
+    constexpr istring& operator+=(const_pointer char_array_ptr)
+    {
+        append(char_array_ptr);
+        return *this;
+    }
+
+    /**
+     * @brief Equal operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator==(const istring& a, const istring& b)
     {
         if(a._size != b._size)
@@ -919,80 +666,73 @@ public:
         return equal(a.begin(), a.end(), b.begin());
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator!=(const istring& a, const istring& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is lexicographically less than the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator<(const istring& a, const istring& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator>(const istring& a, const istring& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator<=(const istring& a, const istring& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First string to compare.
+     * @param b Second string to compare.
+     * @return <b>true</b> if the first string is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator>=(const istring& a, const istring& b)
     {
         return ! (a < b);
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     constexpr istring(pointer data, size_type size, size_type max_size) :
         istring_base(data, size, max_size)
     {
     }
 
-private:
-    [[nodiscard]] constexpr static size_type _strlen(const_pointer str)
-    {
-        size_type result = 0;
-
-        while(*str++)
-        {
-            ++result;
-        }
-
-        return result;
-    }
-
-    [[nodiscard]] constexpr static size_type _compare(const_pointer first1, const_pointer last1,
-                                                      const_pointer first2, const_pointer last2)
-    {
-        while(first1 != last1 && first2 != last2)
-        {
-            if(*first1 < *first2)
-            {
-                return -1;
-            }
-            else if(*first1 > *first2)
-            {
-                return 1;
-            }
-
-            ++first1;
-            ++first2;
-        }
-
-        if(first1 == last1 && first2 == last2)
-        {
-            return 0;
-        }
-
-        if(first1 == last1)
-        {
-            return -1;
-        }
-
-        return 1;
-    }
+    /// @endcond
 };
 
 
@@ -1002,88 +742,117 @@ class string : public istring
     static_assert(MaxSize > 0);
 
 public:
+    /**
+     * @brief Default constructor.
+     */
     constexpr string() :
         istring(_buffer, 0, MaxSize)
     {
         _data[0] = 0;
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other string to copy.
+     */
     constexpr string(const string& other) :
         string()
     {
         append(other);
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other Base string to copy.
+     */
     constexpr string(const istring& other) :
         string()
     {
         append(other);
     }
 
-    constexpr string(const istring& other, size_type position, size_type length) :
+    /**
+     * @brief Copy constructor.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     */
+    constexpr string(const_pointer char_array_ptr) :
         string()
     {
-        append(other, position, length);
+        append(char_array_ptr);
     }
 
-    constexpr string(const_pointer str) :
+    /**
+     * @brief Copy constructor.
+     * @param char_array_ptr Pointer to characters array.
+     * @param char_array_size Characters count of the characters array.
+     */
+    constexpr string(const_pointer char_array_ptr, size_type char_array_size) :
         string()
     {
-        append(str);
+        append(char_array_ptr, char_array_size);
     }
 
-    constexpr string(const_pointer str, size_type str_size) :
-        string()
-    {
-        append(str, str_size);
-    }
-
+    /**
+     * @brief Constructs a string with count copies of character value.
+     * @param count Number of characters to append.
+     * @param value Character to append.
+     */
     constexpr string(size_type count, value_type value) :
         string()
     {
         append(count, value);
     }
 
+    /**
+     * @brief Constructs a string with the characters in the range [first, last).
+     * @param first First element of the range.
+     * @param last Last element of the range.
+     */
     constexpr string(const_iterator first, const_iterator last) :
         string()
     {
         append(first, last);
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other string to copy.
+     * @return Reference to this.
+     */
     constexpr string& operator=(const string& other)
     {
-        btn::copy(other.begin(), other.end(), begin());
-        _size = other.size();
-        _data[_size] = 0;
+        istring::operator=(other);
         return *this;
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other Base string to copy.
+     * @return Reference to this.
+     */
     constexpr string& operator=(const istring& other)
     {
         istring::operator=(other);
         return *this;
     }
 
-    constexpr string& operator=(const_pointer str)
+    /**
+     * @brief Copy assignment operator.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return Reference to this.
+     */
+    constexpr string& operator=(const_pointer char_array_ptr)
     {
-        istring::operator=(str);
+        istring::operator=(char_array_ptr);
         return *this;
     }
 
-    [[nodiscard]] constexpr string substr(size_type position) const
-    {
-        string result;
-        result.append(_data + position, end());
-        return result;
-    }
-
-    [[nodiscard]] constexpr string substr(size_type position, size_type length) const
-    {
-        string result;
-        result.append(_data + position, _data + position + length);
-        return result;
-    }
-
+    /**
+     * @brief Concatenates two strings.
+     * @param a First string to concatenate.
+     * @param b Second string to concatenate.
+     * @return string containing characters from a followed by the characters from b.
+     */
     [[nodiscard]] constexpr friend string operator+(const string& a, const istring& b)
     {
         string result = a;
@@ -1091,14 +860,39 @@ public:
         return result;
     }
 
-    [[nodiscard]] constexpr friend string operator+=(const string& a, const_pointer b)
+    /**
+     * @brief Concatenates a string and a character.
+     * @param a First string to concatenate.
+     * @param b Second character to concatenate.
+     * @return string containing characters from a followed by b.
+     */
+    [[nodiscard]] constexpr friend string operator+(const string& a, value_type b)
     {
         string result = a;
         result.append(b);
         return result;
     }
 
-    [[nodiscard]] constexpr friend string operator+=(const string& a, value_type b)
+    /**
+     * @brief Concatenates two strings.
+     * @param a First string to concatenate.
+     * @param b Second string_view to concatenate.
+     * @return string containing characters from a followed by the characters from b.
+     */
+    [[nodiscard]] constexpr friend string operator+(const string& a, const string_view& b)
+    {
+        string result = a;
+        result.append(b);
+        return result;
+    }
+
+    /**
+     * @brief Concatenates two strings.
+     * @param a First string to concatenate.
+     * @param b Second pointer to null-terminated characters array to concatenate.
+     * @return string containing characters from a followed by the characters from b.
+     */
+    [[nodiscard]] constexpr friend string operator+(const string& a, const_pointer b)
     {
         string result = a;
         result.append(b);
@@ -1110,9 +904,17 @@ private:
 };
 
 
+/**
+ * @brief Hash support for string.
+ *
+ * @ingroup string
+ */
 template<>
 struct hash<istring>
 {
+    /**
+     * @brief Returns the hash of the given string.
+     */
     [[nodiscard]] constexpr unsigned operator()(const istring& value) const
     {
         return array_hash(value.data(), value.size());
@@ -1120,13 +922,28 @@ struct hash<istring>
 };
 
 
+/**
+ * @brief Creates a string deducing its size from the size of the argument.
+ * @param char_array Non empty const characters array.
+ * @return string containing the given char array.
+ *
+ * @ingroup string
+ */
 template<int MaxSize>
-string<MaxSize - 1> make_string(const char (&text)[MaxSize])
+string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
 {
-    return string<MaxSize - 1>(text, MaxSize - 1);
+    return string<MaxSize - 1>(char_array, MaxSize - 1);
 }
 
 
+/**
+ * @brief Converts the given value to a string.
+ * @tparam MaxSize Maximum number of characters that can be stored in the output string.
+ * @param value Value to print in the string.
+ * @return string containing the representation of the given value.
+ *
+ * @ingroup string
+ */
 template<int MaxSize, typename Type>
 string<MaxSize> to_string(const Type& value)
 {

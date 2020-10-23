@@ -8,6 +8,15 @@
 
 #include "btn_sram_wait_state.h"
 
+/**
+ * @def BTN_CFG_SRAM_WAIT_STATE
+ *
+ * Specifies SRAM access time in clock cycles.
+ *
+ * Values not specified in BTN_SRAM_WAIT_STATE_* macros are not allowed.
+ *
+ * @ingroup sram
+ */
 #ifndef BTN_CFG_SRAM_WAIT_STATE
     #define BTN_CFG_SRAM_WAIT_STATE BTN_SRAM_WAIT_STATE_8
 #endif

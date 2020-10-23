@@ -9,6 +9,8 @@
 #include "btn_assert.h"
 #include "../hw/include/btn_hw_sram_constants.h"
 
+/// @cond DO_NOT_DOCUMENT
+
 namespace _btn::sram
 {
     void unsafe_write(const void* source, int size, int offset);
@@ -16,8 +18,20 @@ namespace _btn::sram
     void unsafe_read(void* destination, int size, int offset);
 }
 
+/// @endcond
+
+
+/**
+ * @brief Butano's SRAM related functions.
+ *
+ * @ingroup sram
+ */
 namespace btn::sram
 {
+    /**
+     * @brief Copies the given value into SRAM.
+     * @param source Value to copy.
+     */
     template<typename Type>
     void write(const Type& source)
     {
@@ -27,17 +41,27 @@ namespace btn::sram
         _btn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
     }
 
+    /**
+     * @brief Copies the given value into SRAM.
+     * @param source Value to copy.
+     * @param offset The given value is copied into SRAM start address + this offset.
+     */
     template<typename Type>
     void write_offset(const Type& source, int offset)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
+        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(),
+                   "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
         _btn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
     }
 
+    /**
+     * @brief Copies SRAM data into the given value.
+     * @param destination SRAM data is copied into this value.
+     */
     template<typename Type>
     void read(Type& destination)
     {
@@ -47,13 +71,19 @@ namespace btn::sram
         _btn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }
 
+    /**
+     * @brief Copies SRAM data into the given value.
+     * @param destination SRAM data is copied into this value.
+     * @param offset Copying starts from SRAM start address + this offset.
+     */
     template<typename Type>
     void read_offset(Type& destination, int offset)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(), "Size and offset are too high: ", sizeof(Type), " - ", offset);
+        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(),
+                   "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
         _btn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);
     }

@@ -67,6 +67,20 @@
  */
 
 /**
+ * @defgroup game_pak Game Pak
+ *
+ * Each GBA game or application is stored on a plastic cartridge, officially called "Game Pak".
+ */
+
+/**
+ * @defgroup sram Game Pak SRAM
+ *
+ * Allows game or application data to be saved when the GBA is turned off.
+ *
+ * @ingroup game_pak
+ */
+
+/**
  * @defgroup std Standard library
  *
  * Butano's standard library replacement.
@@ -132,11 +146,23 @@
  */
 
 /**
+ * @defgroup action Actions
+ *
+ * Actions allow the transformation of properties in time.
+ *
+ * Some of butano's classes and namespaces can have actions performed on it.
+ *
+ * For example, you can move a sprite from its current position to another and do it over a span of time.
+ */
+
+/**
  * @defgroup template_action Action templates
  *
  * Templates used to build butano's actions.
  *
  * You can use them to build your own actions too.
+ *
+ * @ingroup action
  */
 
 /**

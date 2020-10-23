@@ -12,397 +12,399 @@
 
 namespace btn
 {
-    /**
-     * @brief Default deleter.
-     *
-     * @tparam Type Type of the object to delete.
-     *
-     * @ingroup memory
-     */
-    template<typename Type>
-    struct default_delete
+
+/**
+ * @brief Default deleter.
+ *
+ * @tparam Type Type of the object to delete.
+ *
+ * @ingroup memory
+ */
+template<typename Type>
+struct default_delete
+{
+    void operator()(Type* ptr) const
     {
-        void operator()(Type* ptr) const
-        {
-            delete ptr;
-        }
-    };
+        delete ptr;
+    }
+};
 
 
-    /**
-     * @brief Smart pointer that owns and manages another object through a pointer
-     * and disposes of that object when the unique_ptr goes out of scope.
-     *
-     * @tparam Type Type of the managed object.
-     * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
-     *
-     * @ingroup memory
-     */
-    template<typename Type, typename Deleter = default_delete<Type>>
-    class unique_ptr
-    {
+/**
+ * @brief Smart pointer that owns and manages another object through a pointer
+ * and disposes of that object when the unique_ptr goes out of scope.
+ *
+ * @tparam Type Type of the managed object.
+ * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
+ *
+ * @ingroup memory
+ */
+template<typename Type, typename Deleter = default_delete<Type>>
+class unique_ptr
+{
 
-    public:
-        using pointer = Type*; //!< Pointer to the managed object type alias.
-        using reference = Type&; //!< Reference to the managed object type alias.
-        using element_type = Type; //!< Managed object type alias.
-        using deleter_type = Deleter; //!< Deleter type alias.
+public:
+    using pointer = Type*; //!< Pointer to the managed object type alias.
+    using reference = Type&; //!< Reference to the managed object type alias.
+    using element_type = Type; //!< Managed object type alias.
+    using deleter_type = Deleter; //!< Deleter type alias.
 
-        unique_ptr() = default;
-
-        /**
-         * @brief Constructor.
-         * @param ptr Pointer to the object to manage.
-         */
-        explicit unique_ptr(pointer ptr) :
-            _ptr(ptr)
-        {
-        }
-
-        unique_ptr(const unique_ptr& other) = delete;
-
-        /**
-         * @brief Move constructor.
-         * @param other unique_ptr object to move.
-         */
-        unique_ptr(unique_ptr&& other) noexcept :
-            _ptr(other.release()),
-            _deleter(move(other._deleter))
-        {
-        }
-
-        unique_ptr& operator=(const unique_ptr& other) = delete;
-
-        /**
-         * @brief Move assignment operator.
-         * @param other unique_ptr object to move.
-         * @return Reference to this.
-         */
-        unique_ptr& operator=(unique_ptr&& other) noexcept
-        {
-            reset(other.release());
-            _deleter = move(other._deleter);
-            return *this;
-        }
-
-        /**
-         * @brief Class destructor, which disposes the managed object.
-         */
-        ~unique_ptr()
-        {
-            reset();
-        }
-
-        /**
-         * @brief Returns a const pointer to the managed object.
-         */
-        [[nodiscard]] const Type* get() const
-        {
-            return _ptr;
-        }
-
-        /**
-         * @brief Returns a pointer to the managed object.
-         */
-        [[nodiscard]] pointer get()
-        {
-            return _ptr;
-        }
-
-        /**
-         * @brief Returns a const reference to the managed object deleter.
-         */
-        [[nodiscard]] const Deleter& get_deleter() const
-        {
-            return _deleter;
-        }
-
-        /**
-         * @brief Returns a reference to the managed object deleter.
-         */
-        [[nodiscard]] Deleter& get_deleter()
-        {
-            return _deleter;
-        }
-
-        /**
-         * @brief Releases the ownership of the managed object.
-         * @return Pointer to the released object.
-         */
-        pointer release()
-        {
-            pointer result = _ptr;
-            _ptr = nullptr;
-            return result;
-        }
-
-        /**
-         * @brief Disposes the managed object.
-         */
-        void reset()
-        {
-            _deleter(_ptr);
-            _ptr = nullptr;
-        }
-
-        /**
-         * @brief Disposes the managed object and replaces it with the given one.
-         * @param ptr Pointer to the new object to manage.
-         */
-        void reset(pointer ptr)
-        {
-            if(ptr != _ptr)
-            {
-                reset();
-                _ptr = ptr;
-            }
-        }
-
-        /**
-         * @brief Checks if it constains managed object.
-         */
-        [[nodiscard]] operator bool() const
-        {
-            return _ptr != nullptr;
-        }
-
-        /**
-         * @brief Returns a const reference to the managed object.
-         */
-        [[nodiscard]] const Type& operator*() const
-        {
-            BTN_ASSERT(_ptr, "Managed pointer is null");
-
-            return *_ptr;
-        }
-
-        /**
-         * @brief Returns a reference to the managed object.
-         */
-        [[nodiscard]] reference operator*()
-        {
-            BTN_ASSERT(_ptr, "Managed pointer is null");
-
-            return *_ptr;
-        }
-
-        /**
-         * @brief Returns a const pointer to the managed object.
-         */
-        [[nodiscard]] const Type* operator->() const
-        {
-            BTN_ASSERT(_ptr, "Managed pointer is null");
-
-            return _ptr;
-        }
-
-        /**
-         * @brief Returns a pointer to the managed object.
-         */
-        [[nodiscard]] pointer operator->()
-        {
-            BTN_ASSERT(_ptr, "Managed pointer is null");
-
-            return _ptr;
-        }
-
-        /**
-         * @brief Exchanges the contents of this unique_ptr with those of the other one.
-         * @param other unique_ptr to exchange the contents with.
-         */
-        void swap(unique_ptr& other)
-        {
-            btn::swap(_ptr, other._ptr);
-            btn::swap(_deleter, other._deleter);
-        }
-
-        /**
-         * @brief Exchanges the contents of a unique_ptr with those of another one.
-         * @param a First unique_ptr to exchange the contents with.
-         * @param b Second unique_ptr to exchange the contents with.
-         */
-        friend void swap(unique_ptr& a, unique_ptr& b)
-        {
-            a.swap(b);
-        }
-
-        /**
-         * @brief Equal operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is equal to the second one, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr == b._ptr;
-        }
-
-        /**
-         * @brief Not equal operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is not equal to the second one, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator!=(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr != b._ptr;
-        }
-
-        /**
-         * @brief Less than operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is lexicographically less than the second one,
-         * otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator<(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr < b._ptr;
-        }
-
-        /**
-         * @brief Greater than operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is lexicographically greater than the second one,
-         * otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator>(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr > b._ptr;
-        }
-
-        /**
-         * @brief Less than or equal operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is lexicographically less than or equal to the second one,
-         * otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator<=(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr <= b._ptr;
-        }
-
-        /**
-         * @brief Greater than or equal operator.
-         * @param a First unique_ptr to compare.
-         * @param b Second unique_ptr to compare.
-         * @return <b>true</b> if the first managed object is lexicographically greater than or equal to the second one,
-         * otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator>=(const unique_ptr& a, const unique_ptr& b)
-        {
-            return a._ptr >= b._ptr;
-        }
-
-        /**
-         * @brief Equal operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator==(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return ! a._ptr;
-        }
-
-        /**
-         * @brief Not equal operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator!=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return a._ptr;
-        }
-
-        /**
-         * @brief Less than operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator<([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return false;
-        }
-
-        /**
-         * @brief Greater than operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator>(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return a._ptr;
-        }
-
-        /**
-         * @brief Less than or equal operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
-         */
-        [[nodiscard]] friend bool operator<=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return ! a._ptr;
-        }
-
-        /**
-         * @brief Greater than or equal than operator.
-         * @param a unique_ptr to compare.
-         * @param b Null pointer to compare.
-         * @return <b>true</b>.
-         */
-        [[nodiscard]] friend bool operator>=([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
-        {
-            return true;
-        }
-
-    private:
-        pointer _ptr = nullptr;
-        deleter_type _deleter;
-    };
-
+    unique_ptr() = default;
 
     /**
-     * @brief Constructs an object and wraps it in a unique_ptr.
-     *
-     * @tparam Type Type of the object to construct.
-     *
-     * @param args Parameters of the object to construct.
-     * @return A unique_ptr managing the new object.
-     *
-     * @ingroup memory
+     * @brief Constructor.
+     * @param ptr Pointer to the object to manage.
      */
-    template<typename Type, class... Args>
-    [[nodiscard]] unique_ptr<Type> make_unique(Args&&... args)
+    explicit unique_ptr(pointer ptr) :
+        _ptr(ptr)
     {
-        return unique_ptr<Type>(new Type(forward<Args>(args)...));
+    }
+
+    unique_ptr(const unique_ptr& other) = delete;
+
+    /**
+     * @brief Move constructor.
+     * @param other unique_ptr object to move.
+     */
+    unique_ptr(unique_ptr&& other) noexcept :
+        _ptr(other.release()),
+        _deleter(move(other._deleter))
+    {
+    }
+
+    unique_ptr& operator=(const unique_ptr& other) = delete;
+
+    /**
+     * @brief Move assignment operator.
+     * @param other unique_ptr object to move.
+     * @return Reference to this.
+     */
+    unique_ptr& operator=(unique_ptr&& other) noexcept
+    {
+        reset(other.release());
+        _deleter = move(other._deleter);
+        return *this;
     }
 
     /**
-     * @brief Hash support for unique_ptr.
-     *
-     * @tparam Type Type of the managed object.
-     * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
-     *
-     * @ingroup memory
+     * @brief Class destructor, which disposes the managed object.
      */
-    template<typename Type, typename Deleter>
-    struct hash<unique_ptr<Type, Deleter>>
+    ~unique_ptr()
     {
-        /**
-         * @brief Returns the hash of the given unique_ptr.
-         */
-        [[nodiscard]] unsigned operator()(const unique_ptr<Type, Deleter>& value) const
+        reset();
+    }
+
+    /**
+     * @brief Returns a const pointer to the managed object.
+     */
+    [[nodiscard]] const Type* get() const
+    {
+        return _ptr;
+    }
+
+    /**
+     * @brief Returns a pointer to the managed object.
+     */
+    [[nodiscard]] pointer get()
+    {
+        return _ptr;
+    }
+
+    /**
+     * @brief Returns a const reference to the managed object deleter.
+     */
+    [[nodiscard]] const Deleter& get_deleter() const
+    {
+        return _deleter;
+    }
+
+    /**
+     * @brief Returns a reference to the managed object deleter.
+     */
+    [[nodiscard]] Deleter& get_deleter()
+    {
+        return _deleter;
+    }
+
+    /**
+     * @brief Releases the ownership of the managed object.
+     * @return Pointer to the released object.
+     */
+    pointer release()
+    {
+        pointer result = _ptr;
+        _ptr = nullptr;
+        return result;
+    }
+
+    /**
+     * @brief Disposes the managed object.
+     */
+    void reset()
+    {
+        _deleter(_ptr);
+        _ptr = nullptr;
+    }
+
+    /**
+     * @brief Disposes the managed object and replaces it with the given one.
+     * @param ptr Pointer to the new object to manage.
+     */
+    void reset(pointer ptr)
+    {
+        if(ptr != _ptr)
         {
-            return make_hash(value.get());
+            reset();
+            _ptr = ptr;
         }
-    };
+    }
+
+    /**
+     * @brief Checks if it constains managed object.
+     */
+    [[nodiscard]] operator bool() const
+    {
+        return _ptr != nullptr;
+    }
+
+    /**
+     * @brief Returns a const reference to the managed object.
+     */
+    [[nodiscard]] const Type& operator*() const
+    {
+        BTN_ASSERT(_ptr, "Managed pointer is null");
+
+        return *_ptr;
+    }
+
+    /**
+     * @brief Returns a reference to the managed object.
+     */
+    [[nodiscard]] reference operator*()
+    {
+        BTN_ASSERT(_ptr, "Managed pointer is null");
+
+        return *_ptr;
+    }
+
+    /**
+     * @brief Returns a const pointer to the managed object.
+     */
+    [[nodiscard]] const Type* operator->() const
+    {
+        BTN_ASSERT(_ptr, "Managed pointer is null");
+
+        return _ptr;
+    }
+
+    /**
+     * @brief Returns a pointer to the managed object.
+     */
+    [[nodiscard]] pointer operator->()
+    {
+        BTN_ASSERT(_ptr, "Managed pointer is null");
+
+        return _ptr;
+    }
+
+    /**
+     * @brief Exchanges the contents of this unique_ptr with those of the other one.
+     * @param other unique_ptr to exchange the contents with.
+     */
+    void swap(unique_ptr& other)
+    {
+        btn::swap(_ptr, other._ptr);
+        btn::swap(_deleter, other._deleter);
+    }
+
+    /**
+     * @brief Exchanges the contents of a unique_ptr with those of another one.
+     * @param a First unique_ptr to exchange the contents with.
+     * @param b Second unique_ptr to exchange the contents with.
+     */
+    friend void swap(unique_ptr& a, unique_ptr& b)
+    {
+        a.swap(b);
+    }
+
+    /**
+     * @brief Equal operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is equal to the second one, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr == b._ptr;
+    }
+
+    /**
+     * @brief Not equal operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is not equal to the second one, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator!=(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr != b._ptr;
+    }
+
+    /**
+     * @brief Less than operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is lexicographically less than the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator<(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr < b._ptr;
+    }
+
+    /**
+     * @brief Greater than operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator>(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr > b._ptr;
+    }
+
+    /**
+     * @brief Less than or equal operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator<=(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr <= b._ptr;
+    }
+
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First unique_ptr to compare.
+     * @param b Second unique_ptr to compare.
+     * @return <b>true</b> if the first managed object is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator>=(const unique_ptr& a, const unique_ptr& b)
+    {
+        return a._ptr >= b._ptr;
+    }
+
+    /**
+     * @brief Equal operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator==(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return ! a._ptr;
+    }
+
+    /**
+     * @brief Not equal operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator!=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return a._ptr;
+    }
+
+    /**
+     * @brief Less than operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator<([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return false;
+    }
+
+    /**
+     * @brief Greater than operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator>(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return a._ptr;
+    }
+
+    /**
+     * @brief Less than or equal operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
+     */
+    [[nodiscard]] friend bool operator<=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return ! a._ptr;
+    }
+
+    /**
+     * @brief Greater than or equal than operator.
+     * @param a unique_ptr to compare.
+     * @param b Null pointer to compare.
+     * @return <b>true</b>.
+     */
+    [[nodiscard]] friend bool operator>=([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
+    {
+        return true;
+    }
+
+private:
+    pointer _ptr = nullptr;
+    deleter_type _deleter;
+};
+
+
+/**
+ * @brief Constructs an object and wraps it in a unique_ptr.
+ *
+ * @tparam Type Type of the object to construct.
+ *
+ * @param args Parameters of the object to construct.
+ * @return A unique_ptr managing the new object.
+ *
+ * @ingroup memory
+ */
+template<typename Type, class... Args>
+[[nodiscard]] unique_ptr<Type> make_unique(Args&&... args)
+{
+    return unique_ptr<Type>(new Type(forward<Args>(args)...));
+}
+
+/**
+ * @brief Hash support for unique_ptr.
+ *
+ * @tparam Type Type of the managed object.
+ * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
+ *
+ * @ingroup memory
+ */
+template<typename Type, typename Deleter>
+struct hash<unique_ptr<Type, Deleter>>
+{
+    /**
+     * @brief Returns the hash of the given unique_ptr.
+     */
+    [[nodiscard]] unsigned operator()(const unique_ptr<Type, Deleter>& value) const
+    {
+        return make_hash(value.get());
+    }
+};
+
 }
 
 

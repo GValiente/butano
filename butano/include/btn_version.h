@@ -9,7 +9,7 @@
 #include "btn_common.h"
 
 /**
- * @brief Butano's current version.
+ * @brief Current version of butano.
  *
  * @ingroup other
  */

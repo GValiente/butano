@@ -429,7 +429,7 @@ namespace _btn::memory
 
 
 /**
- * @brief Butano's memory related functions.
+ * @brief Memory related functions.
  *
  * @ingroup memory
  */

@@ -22,7 +22,7 @@ namespace _btn::sram
 
 
 /**
- * @brief Butano's SRAM related functions.
+ * @brief SRAM related functions.
  *
  * @ingroup sram
  */

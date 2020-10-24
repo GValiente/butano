@@ -289,7 +289,7 @@ public:
     }
 
     /**
-     * @brief Destructor.
+     * @brief Release the referenced sprite tiles if no more sprite_tiles_ptr objects reference to them.
      */
     ~sprite_tiles_ptr()
     {

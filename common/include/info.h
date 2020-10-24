@@ -25,6 +25,8 @@ public:
     info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
          btn::sprite_text_generator& text_generator);
 
+    void set_title(const btn::string_view& title, btn::sprite_text_generator& text_generator);
+
     [[nodiscard]] bool show_always() const
     {
         return _show_always;

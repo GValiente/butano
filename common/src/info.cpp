@@ -9,6 +9,12 @@
 #include "btn_display.h"
 #include "btn_sprite_text_generator.h"
 
+namespace
+{
+    constexpr const btn::fixed y_inc = 14;
+    constexpr const btn::fixed start_y = (-btn::display::height() / 2) + y_inc + 1;
+}
+
 info::info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator) :
     info("", text_lines, text_generator)
 {
@@ -17,8 +23,6 @@ info::info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text
 info::info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
            btn::sprite_text_generator& text_generator)
 {
-    btn::fixed y_inc = 14;
-    btn::fixed start_y = (-btn::display::height() / 2) + y_inc + 1;
     btn::fixed y = start_y;
     text_generator.set_bg_priority(0);
     text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
@@ -53,6 +57,18 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
     }
 
     _update_sprites();
+}
+
+void info::set_title(const btn::string_view& title, btn::sprite_text_generator& text_generator)
+{
+    _title_sprites.clear();
+
+    if(! title.empty())
+    {
+        text_generator.set_bg_priority(0);
+        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.generate(0, start_y, title, _title_sprites);
+    }
 }
 
 void info::set_show_always(bool show_always)

@@ -13,6 +13,7 @@
 #include "btn_profiler.h"
 #include "btn_string_view.h"
 #include "btn_bgs_manager.h"
+#include "btn_link_manager.h"
 #include "btn_audio_manager.h"
 #include "btn_keypad_manager.h"
 #include "btn_memory_manager.h"
@@ -75,15 +76,22 @@ namespace
     {
         hblank_effects_manager::enable();
         audio_manager::enable();
+        link_manager::enable();
     }
 
-    void disable()
+    void disable(bool disable_audio)
     {
-        audio_manager::disable();
+        link_manager::disable();
+
+        if(disable_audio)
+        {
+            audio_manager::disable();
+        }
+
         hblank_effects_manager::disable();
     }
 
-    void stop()
+    void stop(bool disable_audio)
     {
         audio_manager::stop();
         audio_manager::disable_vblank_handler();
@@ -94,6 +102,8 @@ namespace
         palettes_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
+
+        disable(disable_audio);
     }
 }
 
@@ -119,6 +129,9 @@ void init(const string_view& keypad_commands)
 
     // Init audio system:
     audio_manager::init();
+
+    // Init link communication system:
+    link_manager::init();
 
     // Init high level systems:
     memory_manager::init();
@@ -283,7 +296,7 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
     display_manager::sleep();
 
     // Disable irqs:
-    disable();
+    disable(true);
 
     // Enable keypad interrupt with the specified wake up keys:
     keypad_manager::set_interrupt(wake_up_keys);
@@ -315,8 +328,7 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
 void reset()
 {
-    stop();
-    disable();
+    stop(true);
     hw::core::reset();
 }
 
@@ -337,7 +349,7 @@ fixed vblank_usage()
     {
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
-            btn::core::stop();
+            btn::core::stop(false);
             btn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)
@@ -349,7 +361,7 @@ fixed vblank_usage()
         void show(const char* condition, const char* file_name, const char* function, int line,
                   const btn::istring_base& message)
         {
-            btn::core::stop();
+            btn::core::stop(false);
             btn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)
@@ -365,7 +377,7 @@ fixed vblank_usage()
     {
         void show()
         {
-            core::stop();
+            core::stop(false);
             hw::show::profiler_results();
         }
     }

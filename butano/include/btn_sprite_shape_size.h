@@ -111,7 +111,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         case sprite_shape::WIDE:
             switch(_size)
@@ -133,7 +132,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         case sprite_shape::TALL:
             switch(_size)
@@ -155,7 +153,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         default:
             BTN_ERROR("Invalid shape: ", int(_shape));
@@ -191,7 +188,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         case sprite_shape::WIDE:
             switch(_size)
@@ -213,7 +209,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         case sprite_shape::TALL:
             switch(_size)
@@ -235,7 +230,6 @@ public:
                 BTN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
-            break;
 
         default:
             BTN_ERROR("Invalid shape: ", int(_shape));

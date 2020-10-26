@@ -59,18 +59,6 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
     _update_sprites();
 }
 
-void info::set_title(const btn::string_view& title, btn::sprite_text_generator& text_generator)
-{
-    _title_sprites.clear();
-
-    if(! title.empty())
-    {
-        text_generator.set_bg_priority(0);
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
-        text_generator.generate(0, start_y, title, _title_sprites);
-    }
-}
-
 void info::set_show_always(bool show_always)
 {
     _show_always = show_always;

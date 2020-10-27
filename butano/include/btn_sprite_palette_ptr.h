@@ -168,6 +168,9 @@ public:
         return _id;
     }
 
+    /**
+     * @brief Returns the number of colors contained in this palette.
+     */
     [[nodiscard]] int colors_count() const;
 
     /**

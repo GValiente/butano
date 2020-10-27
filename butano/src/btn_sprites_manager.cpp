@@ -1111,8 +1111,6 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_b
 void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
         const sprite_regular_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
-    BTN_ASSERT(! static_cast<item_type*>(id)->affine_mat, "Item is not regular");
-
     if(hw_x == 0)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
@@ -1138,8 +1136,6 @@ void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, i
 void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, int hw_x, sprite_size size,
         const sprite_affine_second_attributes* second_attributes_ptr, uint16_t* dest_ptr)
 {
-    BTN_ASSERT(static_cast<item_type*>(id)->affine_mat, "Item is not affine");
-
     if(hw_x == 0)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)

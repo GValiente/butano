@@ -36,7 +36,7 @@ public:
     /**
      * @brief Search for a sprite_tiles_ptr which references the given tiles.
      * @param tiles_ref Reference to the tiles to search.
-     * @return sprite_tiles_ptr which references tiles_ref if it has been found; nullopt otherwise.
+     * @return sprite_tiles_ptr which references tiles_ref if it has been found; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const span<const tile>& tiles_ref);
 
@@ -44,7 +44,7 @@ public:
      * @brief Search for a sprite_tiles_ptr which references the given tiles.
      * @param tiles_item sprite_tiles_item which references the tiles to search.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * nullopt otherwise.
+     * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item);
 
@@ -53,7 +53,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to search.
      * @param graphics_index Index of the tiles set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
-     * nullopt otherwise.
+     * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item, int graphics_index);
 
@@ -151,7 +151,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_ref Reference to the tiles to handle.
-     * @return sprite_tiles_ptr which references tiles_ref if it can be allocated; nullopt otherwise.
+     * @return sprite_tiles_ptr which references tiles_ref if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
@@ -166,7 +166,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it can be allocated;
-     * nullopt otherwise.
+     * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item);
 
@@ -182,7 +182,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @param graphics_index Index of the tiles set to reference in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it can be allocated;
-     * nullopt otherwise.
+     * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item,
                                                                     int graphics_index);
@@ -195,7 +195,7 @@ public:
      *
      * @param tiles_ref Reference to the tiles to search or handle.
      * @return sprite_tiles_ptr which references tiles_ref if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; nullopt otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const span<const tile>& tiles_ref);
 
@@ -207,7 +207,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; nullopt otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const sprite_tiles_item& tiles_item);
 
@@ -220,7 +220,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @param graphics_index Index of the tiles set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; nullopt otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find_or_create_optional(const sprite_tiles_item& tiles_item,
                                                                             int graphics_index);
@@ -229,7 +229,7 @@ public:
      * @brief Creates a sprite_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
      * @param tiles_count Number of tiles to allocate.
      * @return sprite_tiles_ptr which references a chunk of VRAM tiles
-     * not visible on the screen if it can be allocated; nullopt otherwise.
+     * not visible on the screen if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> allocate_optional(int tiles_count);
 
@@ -290,12 +290,12 @@ public:
 
     /**
      * @brief Returns the referenced tiles unless it was created with allocate or allocate_optional.
-     * In that case, it returns nullopt.
+     * In that case, it returns <b>nullopt</b>.
      */
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
     /**
-     * @brief Set the tiles to handle.
+     * @brief Sets the tiles to handle.
      *
      * Remember that the sprite tiles system does not support multiple sprite_tiles_ptr items
      * referencing to the same tiles.
@@ -308,7 +308,7 @@ public:
     void set_tiles_ref(const span<const tile>& tiles_ref);
 
     /**
-     * @brief Set the tiles to handle.
+     * @brief Sets the tiles to handle.
      *
      * Remember that the sprite tiles system does not support multiple sprite_tiles_ptr items
      * referencing to the same tiles.
@@ -321,7 +321,7 @@ public:
     void set_tiles_ref(const sprite_tiles_item& tiles_item);
 
     /**
-     * @brief Set the tiles to handle.
+     * @brief Sets the tiles to handle.
      *
      * Remember that the sprite tiles system does not support multiple sprite_tiles_ptr items
      * referencing to the same tiles.
@@ -341,7 +341,7 @@ public:
 
     /**
      * @brief Returns the allocated memory in VRAM
-     * if this sprite_tiles_ptr was created with allocate or allocate_optional; nullopt otherwise.
+     * if this sprite_tiles_ptr was created with allocate or allocate_optional; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<span<tile>> vram();
 
@@ -392,7 +392,8 @@ private:
 /**
  * @brief Hash support for sprite_tiles_ptr.
  *
- * @ingroup window
+ * @ingroup sprite
+ * @ingroup tile
  */
 template<>
 struct hash<sprite_tiles_ptr>

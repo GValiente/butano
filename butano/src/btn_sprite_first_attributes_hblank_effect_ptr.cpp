@@ -37,21 +37,6 @@ optional<sprite_first_attributes_hblank_effect_ptr> sprite_first_attributes_hbla
     return result;
 }
 
-sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect_ptr(
-        sprite_first_attributes_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _sprite(move(other._sprite))
-{
-}
-
-sprite_first_attributes_hblank_effect_ptr& sprite_first_attributes_hblank_effect_ptr::operator=(
-        sprite_first_attributes_hblank_effect_ptr&& other) noexcept
-{
-    _sprite = move(other._sprite);
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const sprite_first_attributes> sprite_first_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_first_attributes*>(hblank_effects_manager::values_ref(id()));
@@ -72,7 +57,7 @@ void sprite_first_attributes_hblank_effect_ptr::reload_attributes_ref()
 void sprite_first_attributes_hblank_effect_ptr::swap(sprite_first_attributes_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_sprite, other._sprite);
+    _sprite.swap(other._sprite);
 }
 
 sprite_first_attributes_hblank_effect_ptr::sprite_first_attributes_hblank_effect_ptr(int id, sprite_ptr&& sprite) :

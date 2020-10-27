@@ -16,9 +16,9 @@ class color;
 
 namespace bg_palettes
 {
-    [[nodiscard]] int used_count();
+    [[nodiscard]] int used_colors_count();
 
-    [[nodiscard]] int available_count();
+    [[nodiscard]] int available_colors_count();
 
     [[nodiscard]] const optional<color>& transparent_color();
 
@@ -46,9 +46,9 @@ namespace bg_palettes
 
     [[nodiscard]] color fade_color();
 
-    void set_fade_color(color color);
-
     [[nodiscard]] fixed fade_intensity();
+
+    void set_fade_color(color color);
 
     void set_fade_intensity(fixed intensity);
 

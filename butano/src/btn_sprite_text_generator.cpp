@@ -874,14 +874,16 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font) :
     _font(font),
     _palette_item(font.item().palette_item())
 {
-    int utf8_character_index = sprite_font::minimum_graphics;
+    _build_utf8_characters_map();
+}
 
-    for(const string_view& utf8_character_text : font.utf8_characters())
-    {
-        utf8_character utf8_char(utf8_character_text.data());
-        _utf8_characters_map.insert(utf8_char.data(), utf8_character_index);
-        ++utf8_character_index;
-    }
+sprite_text_generator::sprite_text_generator(const sprite_font& font, const sprite_palette_item& palette_item) :
+    _font(font),
+    _palette_item(palette_item)
+{
+    BTN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+
+    _build_utf8_characters_map();
 }
 
 void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
@@ -943,6 +945,18 @@ bool sprite_text_generator::generate_optional(const fixed_point& position, const
                                               ivector<sprite_ptr>& output_sprites) const
 {
     return _generate<true>(*this, position, text, output_sprites);
+}
+
+void sprite_text_generator::_build_utf8_characters_map()
+{
+    int utf8_character_index = sprite_font::minimum_graphics;
+
+    for(const string_view& utf8_character_text : _font.utf8_characters())
+    {
+        utf8_character utf8_char(utf8_character_text.data());
+        _utf8_characters_map.insert(utf8_char.data(), utf8_character_index);
+        ++utf8_character_index;
+    }
 }
 
 }

@@ -22,14 +22,6 @@ public:
     [[nodiscard]] static optional<regular_bg_attributes_hblank_effect_ptr> create_optional(
             regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);
 
-    regular_bg_attributes_hblank_effect_ptr(const regular_bg_attributes_hblank_effect_ptr& other) = default;
-
-    regular_bg_attributes_hblank_effect_ptr& operator=(const regular_bg_attributes_hblank_effect_ptr& other) = default;
-
-    regular_bg_attributes_hblank_effect_ptr(regular_bg_attributes_hblank_effect_ptr&& other) noexcept;
-
-    regular_bg_attributes_hblank_effect_ptr& operator=(regular_bg_attributes_hblank_effect_ptr&& other) noexcept;
-
     [[nodiscard]] const regular_bg_ptr& bg() const
     {
         return _bg;

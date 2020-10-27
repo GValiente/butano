@@ -70,7 +70,7 @@ public:
     [[nodiscard]] bool show_bg(const regular_bg_ptr& regular_bg) const;
 
     /**
-     * @brief Set if the specified background must be shown in this window.
+     * @brief Sets if the specified background must be shown in this window.
      * @param regular_bg Regular BG to show or hide.
      * @param show <b>true</b> if the specified background must be shown in this window, otherwise <b>false</b>.
      */
@@ -82,7 +82,7 @@ public:
     [[nodiscard]] bool show_sprites() const;
 
     /**
-     * @brief Set if sprites must be shown in this window.
+     * @brief Sets if sprites must be shown in this window.
      * @param show <b>true</b> if sprites must be shown in this window, otherwise <b>false</b>.
      */
     void set_show_sprites(bool show);
@@ -93,7 +93,7 @@ public:
     [[nodiscard]] bool show_blending() const;
 
     /**
-     * @brief Set if blending must be shown in this window.
+     * @brief Sets if blending must be shown in this window.
      * @param show <b>true</b> if blending must be shown in this window, otherwise <b>false</b>.
      */
     void set_show_blending(bool show);
@@ -119,10 +119,7 @@ public:
     void set_show_nothing();
 
     /**
-     * @brief Equal operator.
-     * @param a First window to compare.
-     * @param b Second window to compare.
-     * @return <b>true</b> if the first window is equal to the second one, otherwise <b>false</b>.
+     * @brief Default equal operator.
      */
     [[nodiscard]] friend bool operator==(const window& a, const window& b) = default;
 

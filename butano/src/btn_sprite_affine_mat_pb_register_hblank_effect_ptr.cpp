@@ -60,23 +60,6 @@ optional<sprite_affine_mat_pb_register_hblank_effect_ptr> sprite_affine_mat_pb_r
     return result;
 }
 
-sprite_affine_mat_pb_register_hblank_effect_ptr::sprite_affine_mat_pb_register_hblank_effect_ptr(
-        sprite_affine_mat_pb_register_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _from_attributes(other._from_attributes),
-    _affine_mat(move(other._affine_mat))
-{
-}
-
-sprite_affine_mat_pb_register_hblank_effect_ptr& sprite_affine_mat_pb_register_hblank_effect_ptr::operator=(
-        sprite_affine_mat_pb_register_hblank_effect_ptr&& other) noexcept
-{
-    _from_attributes = other._from_attributes;
-    _affine_mat = move(other._affine_mat);
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const sprite_affine_mat_attributes> sprite_affine_mat_pb_register_hblank_effect_ptr::attributes_ref() const
 {
     BTN_ASSERT(_from_attributes, "Built from values");
@@ -124,7 +107,7 @@ void sprite_affine_mat_pb_register_hblank_effect_ptr::swap(
 {
     hblank_effect_ptr::swap(other);
     btn::swap(_from_attributes, other._from_attributes);
-    btn::swap(_affine_mat, other._affine_mat);
+    _affine_mat.swap(other._affine_mat);
 }
 
 sprite_affine_mat_pb_register_hblank_effect_ptr::sprite_affine_mat_pb_register_hblank_effect_ptr(

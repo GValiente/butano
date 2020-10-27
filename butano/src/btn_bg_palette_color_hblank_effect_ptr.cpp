@@ -48,23 +48,6 @@ optional<bg_palette_color_hblank_effect_ptr> bg_palette_color_hblank_effect_ptr:
     return result;
 }
 
-bg_palette_color_hblank_effect_ptr::bg_palette_color_hblank_effect_ptr(
-        bg_palette_color_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _palette(move(other._palette)),
-    _color_index(other._color_index)
-{
-}
-
-bg_palette_color_hblank_effect_ptr& bg_palette_color_hblank_effect_ptr::operator=(
-        bg_palette_color_hblank_effect_ptr&& other) noexcept
-{
-    _palette = move(other._palette);
-    _color_index = other._color_index;
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const color> bg_palette_color_hblank_effect_ptr::colors_ref() const
 {
     auto values_ptr = reinterpret_cast<const color*>(hblank_effects_manager::values_ref(id()));

@@ -132,7 +132,13 @@ public:
         return _camera;
     }
 
-    regular_bg_builder& set_camera(optional<camera_ptr> camera)
+    regular_bg_builder& set_camera(const camera_ptr& camera)
+    {
+        _camera = camera;
+        return *this;
+    }
+
+    regular_bg_builder& set_camera(camera_ptr&& camera)
     {
         _camera = move(camera);
         return *this;

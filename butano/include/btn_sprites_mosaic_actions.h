@@ -18,6 +18,7 @@ namespace btn
 /**
  * @brief Manages the horizontal stretch of the mosaic applied to the sprites.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -34,7 +35,7 @@ public:
     }
 
     /**
-     * @brief Set the horizontal stretch of the mosaic applied to the sprites.
+     * @brief Sets the horizontal stretch of the mosaic applied to the sprites.
      * @param horizontal_stretch Horizontal stretch in the range [0..1].
      */
     static void set(fixed horizontal_stretch)
@@ -47,6 +48,7 @@ public:
 /**
  * @brief Modifies the horizontal stretch of the mosaic applied to the sprites until it has a given state.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -81,9 +83,10 @@ public:
 
 
 /**
- * @brief Modifies the horizontal stretch of the mosaic applied to the sprites delta from a minimum to a maximum.
+ * @brief Modifies the horizontal stretch of the mosaic applied to the sprites from a minimum to a maximum.
  * When the horizontal stretch is equal to the given final state, it goes back to its initial state and vice versa.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -123,6 +126,7 @@ public:
  * @brief Changes the horizontal stretch of the mosaic applied to the sprites
  * when a given amount of update calls are done.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -146,7 +150,7 @@ public:
     }
 
     /**
-     * @brief Returns the new horizontal stretch to set when update is called duration_updates times.
+     * @brief Returns the horizontal stretch to set when update is called duration_updates times.
      */
     [[nodiscard]] fixed new_horizontal_stretch() const
     {
@@ -160,6 +164,7 @@ public:
 /**
  * @brief Manages the vertical stretch of the mosaic applied to the sprites.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -176,7 +181,7 @@ public:
     }
 
     /**
-     * @brief Set the vertical stretch of the mosaic applied to the sprites.
+     * @brief Sets the vertical stretch of the mosaic applied to the sprites.
      * @param vertical_stretch Vertical stretch in the range [0..1].
      */
     static void set(fixed vertical_stretch)
@@ -189,6 +194,7 @@ public:
 /**
  * @brief Modifies the vertical stretch of the mosaic applied to the sprites until it has a given state.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -223,9 +229,10 @@ public:
 
 
 /**
- * @brief Modifies the vertical stretch of the mosaic applied to the sprites delta from a minimum to a maximum.
+ * @brief Modifies the vertical stretch of the mosaic applied to the sprites from a minimum to a maximum.
  * When the vertical stretch is equal to the given final state, it goes back to its initial state and vice versa.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -265,6 +272,7 @@ public:
  * @brief Changes the vertical stretch of the mosaic applied to the sprites
  * when a given amount of update calls are done.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -288,7 +296,7 @@ public:
     }
 
     /**
-     * @brief Returns the new vertical stretch to set when update is called duration_updates times.
+     * @brief Returns the vertical stretch to set when update is called duration_updates times.
      */
     [[nodiscard]] fixed new_vertical_stretch() const
     {
@@ -302,6 +310,7 @@ public:
 /**
  * @brief Manages the stretch of the mosaic applied to the sprites.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -318,7 +327,7 @@ public:
     }
 
     /**
-     * @brief Set the stretch of the mosaic applied to the sprites.
+     * @brief Sets the stretch of the mosaic applied to the sprites.
      * @param stretch Stretch in the range [0..1].
      */
     static void set(fixed stretch)
@@ -331,6 +340,7 @@ public:
 /**
  * @brief Modifies the stretch of the mosaic applied to the sprites until it has a given state.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -363,9 +373,10 @@ public:
 
 
 /**
- * @brief Modifies the stretch of the mosaic applied to the sprites delta from a minimum to a maximum.
+ * @brief Modifies the stretch of the mosaic applied to the sprites from a minimum to a maximum.
  * When the stretch is equal to the given final state, it goes back to its initial state and vice versa.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -389,8 +400,7 @@ public:
     }
 
     /**
-     * @brief When the stretch is equal to the returned parameter,
-     * it goes back to its initial state and vice versa.
+     * @brief When the stretch is equal to the returned parameter, it goes back to its initial state and vice versa.
      */
     [[nodiscard]] fixed final_stretch() const
     {
@@ -403,6 +413,7 @@ public:
  * @brief Changes the stretch of the mosaic applied to the sprites
  * when a given amount of update calls are done.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  * @ingroup action
  */
@@ -424,7 +435,7 @@ public:
     }
 
     /**
-     * @brief Returns the new stretch to set when update is called duration_updates times.
+     * @brief Returns the stretch to set when update is called duration_updates times.
      */
     [[nodiscard]] fixed new_stretch() const
     {

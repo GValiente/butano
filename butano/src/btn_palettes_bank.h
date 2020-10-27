@@ -33,11 +33,11 @@ public:
 
     [[nodiscard]] static unsigned colors_hash(const span<const color>& colors);
 
-    [[nodiscard]] int used_count() const;
+    [[nodiscard]] int used_colors_count() const;
 
-    [[nodiscard]] int available_count() const
+    [[nodiscard]] int available_colors_count() const
     {
-        return hw::palettes::count() - used_count();
+        return hw::palettes::colors() - used_colors_count();
     }
 
     [[nodiscard]] int find_bpp_4(const span<const color>& colors, unsigned hash);

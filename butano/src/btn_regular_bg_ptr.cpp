@@ -353,14 +353,19 @@ const optional<camera_ptr>& regular_bg_ptr::camera() const
     return bgs_manager::camera(_handle);
 }
 
-void regular_bg_ptr::set_camera(optional<camera_ptr> camera)
+void regular_bg_ptr::set_camera(const camera_ptr& camera)
+{
+    bgs_manager::set_camera(_handle, camera_ptr(camera));
+}
+
+void regular_bg_ptr::set_camera(camera_ptr&& camera)
 {
     bgs_manager::set_camera(_handle, move(camera));
 }
 
 void regular_bg_ptr::remove_camera()
 {
-    bgs_manager::set_camera(_handle, nullopt);
+    bgs_manager::remove_camera(_handle);
 }
 
 regular_bg_attributes regular_bg_ptr::attributes() const

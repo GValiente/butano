@@ -23,6 +23,21 @@
  */
 
 /**
+ * @defgroup palette Color palettes
+ *
+ * On the GBA, both sprites and backgrounds have 256 colors organized in blocks of multiples of 16 colors
+ * (512 colors in total). Each one of these blocks is called color palette.
+ *
+ * There's 8 bits per pixel palettes (which can refer to all colors)
+ * and 4 bits per pixel palettes (which can access only to 16 consecutive colors).
+ *
+ * Butano's color palettes system allows to manage individual 4 bits per pixel palettes for sprites and backgrounds,
+ * but it only can be one 8 bits per pixel backgrounds palette and one 8 bits per pixel sprites palette:
+ * all 8 bits per pixel backgrounds share the same 8 bits per pixel backgrounds palette
+ * and all 8 bits per pixel sprites share the same 8 bits per pixel sprites palette.
+ */
+
+/**
  * @defgroup sprite Sprites
  *
  * Small animated objects that can move freely from the background.
@@ -52,11 +67,21 @@
  *
  * Butano's text system, based on sprites.
  *
- * Currently, it supports 8x8 and 8x16 fixed width AND variable width fonts.
+ * Currently, it supports 8x8 and 8x16 fixed width AND variable width fonts of 16 colors (4 bits per pixel).
  *
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
  * Also, UTF-8 characters are supported.
+ */
+
+/**
+ * @defgroup hblank_effect H-Blank effects
+ *
+ * They allow to change how things are drawn in each screen horizontal line,
+ * since they transfer data to the GBA during each horizontal blanking (H-Blank) period.
+ *
+ * For example, with a H-Blank effect you can change the transparent color every screen horizontal line,
+ * which is how games like Chrono Trigger fills their menus with a color gradient.
  */
 
 /**

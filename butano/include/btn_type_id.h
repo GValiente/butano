@@ -41,10 +41,7 @@ public:
     }
 
     /**
-     * @brief Equal operator.
-     * @param a First element to compare.
-     * @param b Second element to compare.
-     * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+     * @brief Default equal operator.
      */
     [[nodiscard]] constexpr friend bool operator==(type_id_t a, type_id_t b) = default;
 

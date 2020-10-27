@@ -837,13 +837,30 @@ const optional<camera_ptr>& camera(id_type id)
     return item->camera;
 }
 
-void set_camera(id_type id, optional<camera_ptr> camera)
+void set_camera(id_type id, camera_ptr&& camera)
 {
     auto item = static_cast<item_type*>(id);
 
     if(camera != item->camera)
     {
         item->camera = move(camera);
+        item->update_hw_position();
+
+        if(item->visible)
+        {
+            item->check_on_screen = true;
+            data.check_items_on_screen = true;
+        }
+    }
+}
+
+void remove_camera(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->camera)
+    {
+        item->camera.reset();
         item->update_hw_position();
 
         if(item->visible)

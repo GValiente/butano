@@ -60,21 +60,6 @@ optional<rect_window_boundaries_hblank_effect_ptr> rect_window_boundaries_hblank
     return result;
 }
 
-rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(
-        rect_window_boundaries_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _window(other._window)
-{
-}
-
-rect_window_boundaries_hblank_effect_ptr& rect_window_boundaries_hblank_effect_ptr::operator=(
-        rect_window_boundaries_hblank_effect_ptr&& other) noexcept
-{
-    _window = other._window;
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const pair<fixed, fixed>> rect_window_boundaries_hblank_effect_ptr::deltas_ref() const
 {
     auto values_ptr = reinterpret_cast<const pair<fixed, fixed>*>(hblank_effects_manager::values_ref(id()));

@@ -139,14 +139,19 @@ const optional<camera_ptr>& rect_window::camera() const
     return display_manager::rect_window_camera(id());
 }
 
-void rect_window::set_camera(optional<camera_ptr> camera)
+void rect_window::set_camera(const camera_ptr& camera)
+{
+    display_manager::set_rect_window_camera(id(), camera_ptr(camera));
+}
+
+void rect_window::set_camera(camera_ptr&& camera)
 {
     display_manager::set_rect_window_camera(id(), move(camera));
 }
 
 void rect_window::remove_camera()
 {
-    display_manager::set_rect_window_camera(id(), nullopt);
+    display_manager::remove_rect_window_camera(id());
 }
 
 }

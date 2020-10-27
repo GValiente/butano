@@ -28,18 +28,6 @@ public:
     [[nodiscard]] static optional<sprite_affine_mat_pa_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);
 
-    sprite_affine_mat_pa_register_hblank_effect_ptr(
-            const sprite_affine_mat_pa_register_hblank_effect_ptr& other) = default;
-
-    sprite_affine_mat_pa_register_hblank_effect_ptr& operator=(
-            const sprite_affine_mat_pa_register_hblank_effect_ptr& other) = default;
-
-    sprite_affine_mat_pa_register_hblank_effect_ptr(
-            sprite_affine_mat_pa_register_hblank_effect_ptr&& other) noexcept;
-
-    sprite_affine_mat_pa_register_hblank_effect_ptr& operator=(
-            sprite_affine_mat_pa_register_hblank_effect_ptr&& other) noexcept;
-
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
         return _affine_mat;

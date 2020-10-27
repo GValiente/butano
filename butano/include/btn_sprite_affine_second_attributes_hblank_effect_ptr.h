@@ -22,18 +22,6 @@ public:
     [[nodiscard]] static optional<sprite_affine_second_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref);
 
-    sprite_affine_second_attributes_hblank_effect_ptr(
-            const sprite_affine_second_attributes_hblank_effect_ptr& other) = default;
-
-    sprite_affine_second_attributes_hblank_effect_ptr& operator=(
-            const sprite_affine_second_attributes_hblank_effect_ptr& other) = default;
-
-    sprite_affine_second_attributes_hblank_effect_ptr(
-            sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept;
-
-    sprite_affine_second_attributes_hblank_effect_ptr& operator=(
-            sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept;
-
     [[nodiscard]] const sprite_ptr& sprite() const
     {
         return _sprite;

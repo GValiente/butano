@@ -187,7 +187,7 @@ protected:
     }
 
     /**
-     * @brief Set the minimum property.
+     * @brief Sets the minimum property.
      */
     void set_min_property(const Property& min_property)
     {
@@ -195,7 +195,7 @@ protected:
     }
 
     /**
-     * @brief Set the immediate amount after the maximum property.
+     * @brief Sets the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -432,7 +432,7 @@ protected:
     }
 
     /**
-     * @brief Set the minimum property.
+     * @brief Sets the minimum property.
      */
     void set_min_property(const Property& min_property)
     {
@@ -440,7 +440,7 @@ protected:
     }
 
     /**
-     * @brief Set the immediate amount after the maximum property.
+     * @brief Sets the immediate amount after the maximum property.
      */
     void set_after_max_property(const Property& after_max_property)
     {
@@ -752,7 +752,7 @@ public:
     }
 
     /**
-     * @brief Set the property to new_property or to its initial state when the given amount of update calls are done.
+     * @brief Sets the property to new_property or to its initial state when the given amount of update calls are done.
      */
     void update()
     {

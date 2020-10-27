@@ -69,7 +69,9 @@ public:
 
     [[nodiscard]] const optional<camera_ptr>& camera() const;
 
-    void set_camera(optional<camera_ptr> camera);
+    void set_camera(const camera_ptr& camera);
+
+    void set_camera(camera_ptr&& camera);
 
     void remove_camera();
 

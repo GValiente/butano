@@ -54,7 +54,7 @@ unsigned palettes_bank::colors_hash(const span<const color>& colors)
     return max(result, unsigned(1));
 }
 
-int palettes_bank::used_count() const
+int palettes_bank::used_colors_count() const
 {
     int result = 0;
 
@@ -66,7 +66,7 @@ int palettes_bank::used_count() const
         }
     }
 
-    return result;
+    return result * hw::palettes::colors_per_palette();
 }
 
 int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)

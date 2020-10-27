@@ -131,7 +131,9 @@ namespace btn::display_manager
 
     [[nodiscard]] const optional<camera_ptr>& rect_window_camera(int window);
 
-    void set_rect_window_camera(int window, optional<camera_ptr> camera);
+    void set_rect_window_camera(int window, camera_ptr&& camera);
+
+    void remove_rect_window_camera(int window);
 
     void reload_rect_windows_boundaries();
 

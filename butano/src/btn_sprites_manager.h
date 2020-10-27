@@ -148,7 +148,9 @@ namespace sprites_manager
 
     [[nodiscard]] const optional<camera_ptr>& camera(id_type id);
 
-    void set_camera(id_type id, optional<camera_ptr> camera);
+    void set_camera(id_type id, camera_ptr&& camera);
+
+    void remove_camera(id_type id);
 
     [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 

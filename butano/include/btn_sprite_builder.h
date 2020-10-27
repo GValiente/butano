@@ -190,7 +190,13 @@ public:
         return _camera;
     }
 
-    sprite_builder& set_camera(optional<camera_ptr> camera)
+    sprite_builder& set_camera(const camera_ptr& camera)
+    {
+        _camera = camera;
+        return *this;
+    }
+
+    sprite_builder& set_camera(camera_ptr&& camera)
     {
         _camera = move(camera);
         return *this;

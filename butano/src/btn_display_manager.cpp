@@ -532,11 +532,23 @@ const optional<camera_ptr>& rect_window_camera(int window)
     return data.rect_windows_camera[window];
 }
 
-void set_rect_window_camera(int window, optional<camera_ptr> camera)
+void set_rect_window_camera(int window, camera_ptr&& camera)
 {
     if(data.rect_windows_camera[window] != camera)
     {
         data.rect_windows_camera[window] = move(camera);
+
+        int index = window * 2;
+        _update_rect_windows_hw_boundaries(index);
+        _update_rect_windows_hw_boundaries(index + 1);
+    }
+}
+
+void remove_rect_window_camera(int window)
+{
+    if(data.rect_windows_camera[window])
+    {
+        data.rect_windows_camera[window].reset();
 
         int index = window * 2;
         _update_rect_windows_hw_boundaries(index);

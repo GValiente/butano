@@ -37,21 +37,6 @@ optional<regular_bg_attributes_hblank_effect_ptr> regular_bg_attributes_hblank_e
     return result;
 }
 
-regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(
-        regular_bg_attributes_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _bg(move(other._bg))
-{
-}
-
-regular_bg_attributes_hblank_effect_ptr& regular_bg_attributes_hblank_effect_ptr::operator=(
-        regular_bg_attributes_hblank_effect_ptr&& other) noexcept
-{
-    _bg = move(other._bg);
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const regular_bg_attributes> regular_bg_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const regular_bg_attributes*>(hblank_effects_manager::values_ref(id()));
@@ -72,7 +57,7 @@ void regular_bg_attributes_hblank_effect_ptr::reload_attributes_ref()
 void regular_bg_attributes_hblank_effect_ptr::swap(regular_bg_attributes_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_bg, other._bg);
+    _bg.swap(other._bg);
 }
 
 regular_bg_attributes_hblank_effect_ptr::regular_bg_attributes_hblank_effect_ptr(int id, regular_bg_ptr&& bg) :

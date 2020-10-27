@@ -24,18 +24,6 @@ public:
     [[nodiscard]] static optional<blending_transparency_attributes_hblank_effect_ptr> create_optional(
             const span<const blending_transparency_attributes>& attributes_ref);
 
-    blending_transparency_attributes_hblank_effect_ptr(
-            const blending_transparency_attributes_hblank_effect_ptr& other) = default;
-
-    blending_transparency_attributes_hblank_effect_ptr& operator=(
-            const blending_transparency_attributes_hblank_effect_ptr& other) = default;
-
-    blending_transparency_attributes_hblank_effect_ptr(
-            blending_transparency_attributes_hblank_effect_ptr&& other) = default;
-
-    blending_transparency_attributes_hblank_effect_ptr& operator=(
-            blending_transparency_attributes_hblank_effect_ptr&& other) = default;
-
     [[nodiscard]] span<const blending_transparency_attributes> attributes_ref() const;
 
     void set_attributes_ref(const span<const blending_transparency_attributes>& attributes_ref);

@@ -662,14 +662,19 @@ const optional<camera_ptr>& sprite_ptr::camera() const
     return sprites_manager::camera(_handle);
 }
 
-void sprite_ptr::set_camera(optional<camera_ptr> camera)
+void sprite_ptr::set_camera(const camera_ptr& camera)
+{
+    sprites_manager::set_camera(_handle, camera_ptr(camera));
+}
+
+void sprite_ptr::set_camera(camera_ptr&& camera)
 {
     sprites_manager::set_camera(_handle, move(camera));
 }
 
 void sprite_ptr::remove_camera()
 {
-    sprites_manager::set_camera(_handle, nullopt);
+    sprites_manager::remove_camera(_handle);
 }
 
 const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const

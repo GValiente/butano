@@ -60,21 +60,6 @@ optional<sprite_position_hblank_effect_ptr> sprite_position_hblank_effect_ptr::c
     return result;
 }
 
-sprite_position_hblank_effect_ptr::sprite_position_hblank_effect_ptr(
-        sprite_position_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _sprite(move(other._sprite))
-{
-}
-
-sprite_position_hblank_effect_ptr& sprite_position_hblank_effect_ptr::operator=(
-        sprite_position_hblank_effect_ptr&& other) noexcept
-{
-    _sprite = move(other._sprite);
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const fixed> sprite_position_hblank_effect_ptr::deltas_ref() const
 {
     auto values_ptr = reinterpret_cast<const fixed*>(hblank_effects_manager::values_ref(id()));
@@ -94,7 +79,7 @@ void sprite_position_hblank_effect_ptr::reload_deltas_ref()
 void sprite_position_hblank_effect_ptr::swap(sprite_position_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_sprite, other._sprite);
+    _sprite.swap(other._sprite);
 }
 
 sprite_position_hblank_effect_ptr::sprite_position_hblank_effect_ptr(int id, sprite_ptr&& sprite) :

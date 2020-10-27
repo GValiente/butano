@@ -21,7 +21,7 @@ namespace btn::sprites_mosaic
     [[nodiscard]] fixed horizontal_stretch();
 
     /**
-     * @brief Set the horizontal stretch of the mosaic applied to the sprites.
+     * @brief Sets the horizontal stretch of the mosaic applied to the sprites.
      * @param horizontal_stretch Horizontal stretch in the range [0..1].
      */
     void set_horizontal_stretch(fixed horizontal_stretch);
@@ -32,19 +32,19 @@ namespace btn::sprites_mosaic
     [[nodiscard]] fixed vertical_stretch();
 
     /**
-     * @brief Set the vertical stretch of the mosaic applied to the sprites.
+     * @brief Sets the vertical stretch of the mosaic applied to the sprites.
      * @param vertical_stretch Vertical stretch in the range [0..1].
      */
     void set_vertical_stretch(fixed vertical_stretch);
 
     /**
-     * @brief Set the stretch of the mosaic applied to the sprites.
+     * @brief Sets the stretch of the mosaic applied to the sprites.
      * @param stretch Stretch in the range [0..1].
      */
     void set_stretch(fixed stretch);
 
     /**
-     * @brief Set the stretch of the mosaic applied to the sprites.
+     * @brief Sets the stretch of the mosaic applied to the sprites.
      * @param horizontal_stretch Horizontal stretch in the range [0..1].
      * @param vertical_stretch Vertical stretch in the range [0..1].
      */

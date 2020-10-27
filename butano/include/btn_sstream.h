@@ -65,14 +65,14 @@ public:
     }
 
     /**
-     * @brief Set the managed string.
+     * @brief Sets the managed string.
      * @param sb Pointer to new string to manage.
      * @return Pointer to new string to manage.
      */
     istring* rdbuf(istring_base* sb);
 
     /**
-     * @brief Set the managed string.
+     * @brief Sets the managed string.
      * @param sb Reference to new string to manage.
      */
     void set_rdbuf(istring_base& sb);
@@ -86,14 +86,14 @@ public:
     }
 
     /**
-     * @brief Set the decimal precision of fixed point operations.
+     * @brief Sets the decimal precision of fixed point operations.
      * @param new_precision New decimal precision.
      * @return New decimal precision.
      */
     int precision(int new_precision);
 
     /**
-     * @brief Set the decimal precision of fixed point operations.
+     * @brief Sets the decimal precision of fixed point operations.
      * @param precision New decimal precision.
      */
     void set_precision(int precision);

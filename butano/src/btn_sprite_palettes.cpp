@@ -11,14 +11,14 @@
 namespace btn::sprite_palettes
 {
 
-int used_count()
+int used_colors_count()
 {
-    return palettes_manager::sprite_palettes_bank().used_count();
+    return palettes_manager::sprite_palettes_bank().used_colors_count();
 }
 
-int available_count()
+int available_colors_count()
 {
-    return palettes_manager::sprite_palettes_bank().available_count();
+    return palettes_manager::sprite_palettes_bank().available_colors_count();
 }
 
 fixed brightness()
@@ -76,15 +76,15 @@ color fade_color()
     return palettes_manager::sprite_palettes_bank().fade_color();
 }
 
+fixed fade_intensity()
+{
+    return palettes_manager::sprite_palettes_bank().fade_intensity();
+}
+
 void set_fade_color(color color)
 {
     palettes_bank& bank = palettes_manager::sprite_palettes_bank();
     bank.set_fade_color(color);
-}
-
-fixed fade_intensity()
-{
-    return palettes_manager::sprite_palettes_bank().fade_intensity();
 }
 
 void set_fade_intensity(fixed intensity)

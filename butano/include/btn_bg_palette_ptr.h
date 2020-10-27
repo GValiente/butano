@@ -74,13 +74,13 @@ public:
         return _id;
     }
 
+    [[nodiscard]] int colors_count() const;
+
     [[nodiscard]] span<const color> colors() const;
 
     void set_colors(const span<const color>& colors);
 
     void set_colors(const bg_palette_item& palette_item);
-
-    [[nodiscard]] int colors_count() const;
 
     [[nodiscard]] palette_bpp_mode bpp_mode() const;
 

@@ -192,6 +192,11 @@ bg_palette_ptr& bg_palette_ptr::operator=(const bg_palette_ptr& other)
     return *this;
 }
 
+int bg_palette_ptr::colors_count() const
+{
+    return palettes_manager::bg_palettes_bank().colors_count(_id);
+}
+
 span<const color> bg_palette_ptr::colors() const
 {
     return palettes_manager::bg_palettes_bank().colors(_id);
@@ -205,11 +210,6 @@ void bg_palette_ptr::set_colors(const span<const color>& colors)
 void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
 {
     palettes_manager::bg_palettes_bank().set_colors(_id, palette_item.colors());
-}
-
-int bg_palette_ptr::colors_count() const
-{
-    return palettes_manager::bg_palettes_bank().colors_count(_id);
 }
 
 palette_bpp_mode bg_palette_ptr::bpp_mode() const

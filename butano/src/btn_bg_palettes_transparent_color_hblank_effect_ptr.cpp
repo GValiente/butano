@@ -37,19 +37,6 @@ optional<bg_palettes_transparent_color_hblank_effect_ptr> bg_palettes_transparen
     return result;
 }
 
-bg_palettes_transparent_color_hblank_effect_ptr::bg_palettes_transparent_color_hblank_effect_ptr(
-        bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other))
-{
-}
-
-bg_palettes_transparent_color_hblank_effect_ptr& bg_palettes_transparent_color_hblank_effect_ptr::operator=(
-        bg_palettes_transparent_color_hblank_effect_ptr&& other) noexcept
-{
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const color> bg_palettes_transparent_color_hblank_effect_ptr::colors_ref() const
 {
     auto values_ptr = reinterpret_cast<const color*>(hblank_effects_manager::values_ref(id()));

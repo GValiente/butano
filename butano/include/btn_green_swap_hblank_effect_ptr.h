@@ -20,14 +20,6 @@ public:
 
     [[nodiscard]] static optional<green_swap_hblank_effect_ptr> create_optional(const span<const bool>& states_ref);
 
-    green_swap_hblank_effect_ptr(const green_swap_hblank_effect_ptr& other) = default;
-
-    green_swap_hblank_effect_ptr& operator=(const green_swap_hblank_effect_ptr& other) = default;
-
-    green_swap_hblank_effect_ptr(green_swap_hblank_effect_ptr&& other) = default;
-
-    green_swap_hblank_effect_ptr& operator=(green_swap_hblank_effect_ptr&& other) = default;
-
     [[nodiscard]] span<const bool> states_ref() const;
 
     void set_states_ref(const span<const bool>& states_ref);

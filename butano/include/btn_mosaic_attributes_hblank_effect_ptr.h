@@ -24,14 +24,6 @@ public:
     [[nodiscard]] static optional<mosaic_attributes_hblank_effect_ptr> create_optional(
             const span<const mosaic_attributes>& attributes_ref);
 
-    mosaic_attributes_hblank_effect_ptr(const mosaic_attributes_hblank_effect_ptr& other) = default;
-
-    mosaic_attributes_hblank_effect_ptr& operator=(const mosaic_attributes_hblank_effect_ptr& other) = default;
-
-    mosaic_attributes_hblank_effect_ptr(mosaic_attributes_hblank_effect_ptr&& other) = default;
-
-    mosaic_attributes_hblank_effect_ptr& operator=(mosaic_attributes_hblank_effect_ptr&& other) = default;
-
     [[nodiscard]] span<const mosaic_attributes> attributes_ref() const;
 
     void set_attributes_ref(const span<const mosaic_attributes>& attributes_ref);

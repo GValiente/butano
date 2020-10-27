@@ -32,6 +32,8 @@ public:
 
     [[nodiscard]] static bool target_updated(int target_id, iany& target_last_value)
     {
+        BTN_ASSERT(sprites_manager::affine_mat(reinterpret_cast<void*>(target_id)), "Sprite is not affine");
+
         sprite_second_attributes_last_value& last_value = target_last_value.value<sprite_second_attributes_last_value>();
         sprite_second_attributes_last_value new_value(target_id);
         bool updated = last_value != new_value;

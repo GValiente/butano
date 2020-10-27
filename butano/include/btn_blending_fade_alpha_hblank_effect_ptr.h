@@ -24,14 +24,6 @@ public:
     [[nodiscard]] static optional<blending_fade_alpha_hblank_effect_ptr> create_optional(
             const span<const blending_fade_alpha>& values_ref);
 
-    blending_fade_alpha_hblank_effect_ptr(const blending_fade_alpha_hblank_effect_ptr& other) = default;
-
-    blending_fade_alpha_hblank_effect_ptr& operator=(const blending_fade_alpha_hblank_effect_ptr& other) = default;
-
-    blending_fade_alpha_hblank_effect_ptr(blending_fade_alpha_hblank_effect_ptr&& other) = default;
-
-    blending_fade_alpha_hblank_effect_ptr& operator=(blending_fade_alpha_hblank_effect_ptr&& other) = default;
-
     [[nodiscard]] span<const blending_fade_alpha> values_ref() const;
 
     void set_values_ref(const span<const blending_fade_alpha>& values_ref);

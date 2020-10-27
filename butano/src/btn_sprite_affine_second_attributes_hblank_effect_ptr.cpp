@@ -37,21 +37,6 @@ optional<sprite_affine_second_attributes_hblank_effect_ptr> sprite_affine_second
     return result;
 }
 
-sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attributes_hblank_effect_ptr(
-        sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept :
-    hblank_effect_ptr(move(other)),
-    _sprite(move(other._sprite))
-{
-}
-
-sprite_affine_second_attributes_hblank_effect_ptr& sprite_affine_second_attributes_hblank_effect_ptr::operator=(
-        sprite_affine_second_attributes_hblank_effect_ptr&& other) noexcept
-{
-    _sprite = move(other._sprite);
-    hblank_effect_ptr::operator=(move(other));
-    return *this;
-}
-
 span<const sprite_affine_second_attributes> sprite_affine_second_attributes_hblank_effect_ptr::attributes_ref() const
 {
     auto values_ptr = reinterpret_cast<const sprite_affine_second_attributes*>(hblank_effects_manager::values_ref(id()));
@@ -73,7 +58,7 @@ void sprite_affine_second_attributes_hblank_effect_ptr::swap(
         sprite_affine_second_attributes_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_sprite, other._sprite);
+    _sprite.swap(other._sprite);
 }
 
 sprite_affine_second_attributes_hblank_effect_ptr::sprite_affine_second_attributes_hblank_effect_ptr(

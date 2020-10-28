@@ -51,7 +51,7 @@ public:
     /**
      * @brief Search for a sprite_tiles_ptr which references the given tiles.
      * @param tiles_item sprite_tiles_item which references the tiles to search.
-     * @param graphics_index Index of the tiles set to search in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
      * <b>nullopt</b> otherwise.
      */
@@ -92,7 +92,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @param graphics_index Index of the tiles set to reference in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index).
      */
     [[nodiscard]] static sprite_tiles_ptr create(const sprite_tiles_item& tiles_item, int graphics_index);
@@ -128,7 +128,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
-     * @param graphics_index Index of the tiles set to search in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
      * otherwise it returns a sprite_tiles_ptr which references them.
      */
@@ -180,7 +180,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @param graphics_index Index of the tiles set to reference in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it can be allocated;
      * <b>nullopt</b> otherwise.
      */
@@ -218,7 +218,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
-     * @param graphics_index Index of the tiles set to search in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
      * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
      */
@@ -330,7 +330,7 @@ public:
      * so they should outlive sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @param graphics_index Index of the tiles set to reference in sprite_tiles_item.
+     * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
      */
     void set_tiles_ref(const sprite_tiles_item& tiles_item, int graphics_index);
 

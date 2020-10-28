@@ -23,7 +23,7 @@ class sprite_third_attributes
 public:
     /**
      * @brief Constructor.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      * @param bg_priority Drawing priority relative to backgrounds in the range [0..3].
      *
@@ -33,7 +33,7 @@ public:
     sprite_third_attributes(sprite_tiles_ptr tiles, sprite_palette_ptr palette, int bg_priority);
 
     /**
-     * @brief Returns the smart pointer to a sprite tiles set.
+     * @brief Returns the smart pointer to a sprite tile set.
      */
     [[nodiscard]] const sprite_tiles_ptr& tiles() const
     {
@@ -41,7 +41,7 @@ public:
     }
 
     /**
-     * @brief Sets the smart pointer to a sprite tiles set.
+     * @brief Sets the smart pointer to a sprite tile set.
      * @param tiles Smart pointer to copy.
      */
     void set_tiles(const sprite_tiles_ptr& tiles)
@@ -50,7 +50,7 @@ public:
     }
 
     /**
-     * @brief Sets the smart pointer to a sprite tiles set.
+     * @brief Sets the smart pointer to a sprite tile set.
      * @param tiles Smart pointer to move.
      */
     void set_tiles(sprite_tiles_ptr&& tiles)

@@ -354,8 +354,8 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                     try:
                         with open(json_file_path) as json_file:
                             info = json.load(json_file)
-                    except Exception as ex:
-                        raise ValueError(json_file_path + ' graphics json file parse failed: ' + str(ex))
+                    except Exception as exception:
+                        raise ValueError(json_file_path + ' graphics json file parse failed: ' + str(exception))
 
                     try:
                         graphics_type = str(info['type'])

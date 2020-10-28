@@ -38,8 +38,8 @@ namespace
         info info("Palette swap", info_text_lines, text_generator);
 
         btn::sprite_ptr cavegirl_sprite = btn::sprite_items::cavegirl.create_sprite(0, 0);
-        btn::span<const btn::color> cavegirl_colors = btn::sprite_items::cavegirl.palette_item().colors();
-        btn::span<const btn::color> cavegirl_alt_colors = btn::sprite_items::cavegirl_alt.palette_item().colors();
+        btn::span<const btn::color> cavegirl_colors = btn::sprite_items::cavegirl.palette_item().colors_ref();
+        btn::span<const btn::color> cavegirl_alt_colors = btn::sprite_items::cavegirl_alt.palette_item().colors_ref();
         btn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
         cavegirl_palette.set_colors(cavegirl_alt_colors);
 

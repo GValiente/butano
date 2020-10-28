@@ -59,7 +59,7 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @param graphics_index Index of the tiles set to reference in item.tiles_item().
+     * @param graphics_index Index of the tile set to reference in item.tiles_item().
      * @return The requested sprite_ptr.
      */
     [[nodiscard]] static sprite_ptr create(fixed x, fixed y, const sprite_item& item, int graphics_index);
@@ -76,7 +76,7 @@ public:
      * @brief Creates a sprite_ptr from the given sprite_item.
      * @param position Position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @param graphics_index Index of the tiles set to reference in item.tiles_item().
+     * @param graphics_index Index of the tile set to reference in item.tiles_item().
      * @return The requested sprite_ptr.
      */
     [[nodiscard]] static sprite_ptr create(const fixed_point& position, const sprite_item& item, int graphics_index);
@@ -86,7 +86,7 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      * @return The requested sprite_ptr.
      */
@@ -97,7 +97,7 @@ public:
      * @brief Creates a sprite_ptr.
      * @param position Position of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      * @return The requested sprite_ptr.
      */
@@ -132,7 +132,7 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @param graphics_index Index of the tiles set to reference in item.tiles_item().
+     * @param graphics_index Index of the tile set to reference in item.tiles_item().
      * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(fixed x, fixed y, const sprite_item& item,
@@ -150,7 +150,7 @@ public:
      * @brief Creates a sprite_ptr from the given sprite_item.
      * @param position Position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @param graphics_index Index of the tiles set to reference in item.tiles_item().
+     * @param graphics_index Index of the tile set to reference in item.tiles_item().
      * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(const fixed_point& position, const sprite_item& item,
@@ -161,7 +161,7 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
@@ -172,7 +172,7 @@ public:
      * @brief Creates a sprite_ptr.
      * @param position Position of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
@@ -256,7 +256,7 @@ public:
 
     /**
      * @brief Sets the tiles used by this sprite.
-     * @param tiles Smart pointer to a sprite tiles set to copy.
+     * @param tiles Smart pointer to a sprite tile set to copy.
      *
      * It must be compatible with the current color palette, shape and size of the sprite.
      */
@@ -264,7 +264,7 @@ public:
 
     /**
      * @brief Sets the tiles used by this sprite.
-     * @param tiles Smart pointer to a sprite tiles set to move.
+     * @param tiles Smart pointer to a sprite tile set to move.
      *
      * It must be compatible with the current color palette, shape and size of the sprite.
      */
@@ -273,7 +273,7 @@ public:
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
      * @param shape_size New shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set to copy.
+     * @param tiles Smart pointer to a sprite tile set to copy.
      *
      * It must be compatible with the current color palette of the sprite.
      */
@@ -282,16 +282,16 @@ public:
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
      * @param shape_size New shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set to move.
+     * @param tiles Smart pointer to a sprite tile set to move.
      *
      * It must be compatible with the current color palette of the sprite.
      */
     void set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles);
 
     /**
-     * @brief Replaces the tiles used by this sprite with a new tiles set created with the given sprite_tiles_item.
+     * @brief Replaces the tiles used by this sprite with a new tile set created with the given sprite_tiles_item.
      *
-     * Before creating a new sprite tiles set, the sprite_tiles_ptr used by this sprite is removed,
+     * Before creating a new sprite tile set, the sprite_tiles_ptr used by this sprite is removed,
      * so VRAM usage is reduced.
      *
      * The new sprite tiles must be compatible with the current color palette, shape and size of the sprite.
@@ -301,23 +301,23 @@ public:
     void set_tiles(const sprite_tiles_item& tiles_item);
 
     /**
-     * @brief Replaces the tiles used by this sprite with a new tiles set created with the given sprite_tiles_item.
+     * @brief Replaces the tiles used by this sprite with a new tile set created with the given sprite_tiles_item.
      *
-     * Before creating a new sprite tiles set, the sprite_tiles_ptr used by this sprite is removed,
+     * Before creating a new sprite tile set, the sprite_tiles_ptr used by this sprite is removed,
      * so VRAM usage is reduced.
      *
      * The new sprite tiles must be compatible with the current color palette, shape and size of the sprite.
      *
      * @param tiles_item It creates the new sprite tiles to use by this sprite.
-     * @param graphics_index Index of the tiles set to reference in tiles_item.
+     * @param graphics_index Index of the tile set to reference in tiles_item.
      */
     void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index);
 
     /**
-     * @brief Replaces the tiles used by this sprite with a new tiles set created with the given sprite_tiles_item,
+     * @brief Replaces the tiles used by this sprite with a new tile set created with the given sprite_tiles_item,
      * changing also the shape and size of the sprite.
      *
-     * Before creating a new sprite tiles set, the sprite_tiles_ptr used by this sprite is removed,
+     * Before creating a new sprite tile set, the sprite_tiles_ptr used by this sprite is removed,
      * so VRAM usage is reduced.
      *
      * The new sprite tiles must be compatible with the current color palette of the sprite.
@@ -328,17 +328,17 @@ public:
     void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size);
 
     /**
-     * @brief Replaces the tiles used by this sprite with a new tiles set created with the given sprite_tiles_item,
+     * @brief Replaces the tiles used by this sprite with a new tile set created with the given sprite_tiles_item,
      * changing also the shape and size of the sprite.
      *
-     * Before creating a new sprite tiles set, the sprite_tiles_ptr used by this sprite is removed,
+     * Before creating a new sprite tile set, the sprite_tiles_ptr used by this sprite is removed,
      * so VRAM usage is reduced.
      *
      * The new sprite tiles must be compatible with the current color palette of the sprite.
      *
      * @param tiles_item It creates the new sprite tiles to use by this sprite.
      * @param shape_size New shape and size of the sprite.
-     * @param graphics_index Index of the tiles set to reference in tiles_item.
+     * @param graphics_index Index of the tile set to reference in tiles_item.
      */
     void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index);
 
@@ -380,7 +380,7 @@ public:
      *
      * The given parameters must be compatible with the current shape and size of the sprite.
      *
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      */
     void set_tiles_and_palette(sprite_tiles_ptr tiles, sprite_palette_ptr palette);
@@ -388,7 +388,7 @@ public:
     /**
      * @brief Sets the tiles, the color palette, the shape and size to use by this sprite.
      * @param shape_size New shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tiles set.
+     * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      */
     void set_tiles_and_palette(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
@@ -410,7 +410,7 @@ public:
      * Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.
      *
      * @param item It creates the new resources to use by this sprite.
-     * @param graphics_index Index of the tiles set to reference in item.tiles_item().
+     * @param graphics_index Index of the tile set to reference in item.tiles_item().
      */
     void set_item(const sprite_item& item, int graphics_index);
 
@@ -531,6 +531,9 @@ public:
      * @brief Returns the priority relative to other sprites.
      *
      * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     *
+     * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
+     * please use as less unique z orders as possible.
      */
     [[nodiscard]] int z_order() const;
 
@@ -538,6 +541,9 @@ public:
      * @brief Sets the priority relative to other sprites.
      *
      * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     *
+     * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
+     * please use as less unique z orders as possible.
      *
      * @param z_order Priority relative to other sprites in the range [-32767..32767].
      */

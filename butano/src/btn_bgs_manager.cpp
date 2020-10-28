@@ -427,30 +427,15 @@ bool above(id_type id, id_type other_id)
     auto other_item = static_cast<const item_type*>(other_id);
     sort_key this_sort_key = item->bg_sort_key;
     sort_key other_sort_key = other_item->bg_sort_key;
-    int this_priority = this_sort_key.priority();
-    int other_priority = other_sort_key.priority();
 
-    if(this_priority < other_priority)
-    {
-        return false;
-    }
-
-    if(this_priority > other_priority)
+    if(this_sort_key < other_sort_key)
     {
         return true;
     }
 
-    int this_z_order = this_sort_key.z_order();
-    int other_z_order = other_sort_key.z_order();
-
-    if(this_z_order < other_z_order)
+    if(this_sort_key > other_sort_key)
     {
         return false;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        return true;
     }
 
     pair<int, int> indexes = _indexes(id, other_id);
@@ -461,33 +446,10 @@ void put_above(id_type id, id_type other_id)
 {
     auto item = static_cast<item_type*>(id);
     auto other_item = static_cast<item_type*>(other_id);
+    sort_key this_sort_key = item->bg_sort_key;
     sort_key other_sort_key = other_item->bg_sort_key;
-    int this_priority = item->bg_sort_key.priority();
-    int other_priority = other_sort_key.priority();
 
-    if(this_priority < other_priority)
-    {
-        return;
-    }
-
-    if(this_priority > other_priority)
-    {
-        set_priority(id, other_priority);
-    }
-
-    int this_z_order = item->bg_sort_key.z_order();
-    int other_z_order = other_sort_key.z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        set_z_order(id, other_z_order);
-    }
-    else
+    if(this_sort_key == other_sort_key)
     {
         pair<int, int> indexes = _indexes(id, other_id);
 
@@ -500,6 +462,16 @@ void put_above(id_type id, id_type other_id)
             {
                 data.rebuild_handles = true;
             }
+        }
+    }
+    else if(this_sort_key > other_sort_key)
+    {
+        int other_z_order = other_sort_key.z_order();
+        set_priority(id, other_sort_key.priority());
+
+        if(this_sort_key.z_order() > other_z_order)
+        {
+            set_z_order(id, other_z_order);
         }
     }
 }

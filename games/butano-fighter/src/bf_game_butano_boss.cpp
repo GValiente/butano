@@ -540,13 +540,13 @@ void butano_boss::_show_damage_palette(const btn::sprite_palette_ptr&, const btn
     }
 
     btn::sprite_palette_ptr body_palette = _sprites[0].palette();
-    body_palette.set_colors(btn::sprite_items::butano_flash_palette.palette_item().colors());
+    body_palette.set_colors(btn::sprite_items::butano_flash_palette.palette_item().colors_ref());
 }
 
 void butano_boss::_hide_damage_palette()
 {
     btn::sprite_palette_ptr body_palette = _sprites[0].palette();
-    body_palette.set_colors(btn::sprite_items::butano_big_sprite.palette_item().colors());
+    body_palette.set_colors(btn::sprite_items::butano_big_sprite.palette_item().colors_ref());
 }
 
 bool butano_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_position, bool hero_is_looking_down) const

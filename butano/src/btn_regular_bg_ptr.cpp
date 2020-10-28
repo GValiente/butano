@@ -273,12 +273,12 @@ void regular_bg_ptr::set_z_order(int z_order)
 
 bool regular_bg_ptr::above(const regular_bg_ptr& other) const
 {
-    if(*this == other)
+    if(*this != other)
     {
-        return false;
+        return bgs_manager::above(_handle, other._handle);
     }
 
-    return bgs_manager::above(_handle, other._handle);
+    return false;
 }
 
 bool regular_bg_ptr::above(const sprite_ptr& sprite_ptr) const

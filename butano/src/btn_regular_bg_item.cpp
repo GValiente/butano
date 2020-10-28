@@ -33,12 +33,27 @@ optional<regular_bg_ptr> regular_bg_item::create_bg_optional(const fixed_point& 
     return regular_bg_ptr::create_optional(position, *this);
 }
 
+optional<regular_bg_map_ptr> regular_bg_item::find_map() const
+{
+    return regular_bg_map_ptr::find(*this);
+}
+
 regular_bg_map_ptr regular_bg_item::create_map() const
+{
+    return regular_bg_map_ptr::find_or_create(*this);
+}
+
+regular_bg_map_ptr regular_bg_item::create_new_map() const
 {
     return regular_bg_map_ptr::create(*this);
 }
 
 optional<regular_bg_map_ptr> regular_bg_item::create_map_optional() const
+{
+    return regular_bg_map_ptr::find_or_create_optional(*this);
+}
+
+optional<regular_bg_map_ptr> regular_bg_item::create_new_map_optional() const
 {
     return regular_bg_map_ptr::create_optional(*this);
 }

@@ -33,20 +33,20 @@ class sprite_palette_item
 public:
     /**
      * @brief Constructor.
-     * @param colors Reference to an array of multiples of 16 colors.
+     * @param colors_ref Reference to an array of multiples of 16 colors.
      *
      * The colors are not copied but referenced, so they should outlive sprite_palette_item to avoid dangling references.
      *
      * @param bpp_mode Bits per pixel of the color palettes to create.
      */
-    constexpr sprite_palette_item(const span<const color>& colors, palette_bpp_mode bpp_mode) :
-        _colors(colors),
+    constexpr sprite_palette_item(const span<const color>& colors_ref, palette_bpp_mode bpp_mode) :
+        _colors_ref(colors_ref),
         _bpp_mode(bpp_mode)
     {
-        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && _colors.size() == 16) ||
-                   (bpp_mode == palette_bpp_mode::BPP_8 && _colors.size() >= 16 && _colors.size() <= 256 &&
-                            _colors.size() % 16 == 0),
-                   "Invalid colors count: ", _colors.size());
+        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_ref.size() == 16) ||
+                   (bpp_mode == palette_bpp_mode::BPP_8 && colors_ref.size() >= 16 && colors_ref.size() <= 256 &&
+                            colors_ref.size() % 16 == 0),
+                   "Invalid colors count: ", colors_ref.size());
     }
 
     /**
@@ -54,9 +54,9 @@ public:
      *
      * The colors are not copied but referenced, so they should outlive sprite_palette_item to avoid dangling references.
      */
-    [[nodiscard]] constexpr const span<const color>& colors() const
+    [[nodiscard]] constexpr const span<const color>& colors_ref() const
     {
-        return _colors;
+        return _colors_ref;
     }
 
     /**
@@ -111,7 +111,7 @@ public:
                                                    const sprite_palette_item& b) = default;
 
 private:
-    span<const color> _colors;
+    span<const color> _colors_ref;
     palette_bpp_mode _bpp_mode;
 };
 

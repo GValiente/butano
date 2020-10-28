@@ -550,11 +550,6 @@ void sprite_ptr::set_z_order(int z_order)
 
 optional<bool> sprite_ptr::above(const sprite_ptr& other) const
 {
-    if(*this == other)
-    {
-        return false;
-    }
-
     return sprites_manager::above(_handle, other._handle);
 }
 

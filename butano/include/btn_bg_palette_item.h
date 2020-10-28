@@ -20,17 +20,17 @@ class bg_palette_item
 {
 
 public:
-    constexpr bg_palette_item(const span<const color>& colors, palette_bpp_mode bpp_mode) :
-        _colors(colors),
+    constexpr bg_palette_item(const span<const color>& colors_ref, palette_bpp_mode bpp_mode) :
+        _colors_ref(colors_ref),
         _bpp_mode(bpp_mode)
     {
-        BTN_ASSERT(_colors.size() >= 16 && _colors.size() <= 256 && _colors.size() % 16 == 0,
-                   "Invalid colors count: ", _colors.size());
+        BTN_ASSERT(colors_ref.size() >= 16 && colors_ref.size() <= 256 && colors_ref.size() % 16 == 0,
+                   "Invalid colors count: ", colors_ref.size());
     }
 
-    [[nodiscard]] constexpr const span<const color>& colors() const
+    [[nodiscard]] constexpr const span<const color>& colors_ref() const
     {
-        return _colors;
+        return _colors_ref;
     }
 
     [[nodiscard]] constexpr palette_bpp_mode bpp_mode() const
@@ -51,7 +51,7 @@ public:
     [[nodiscard]] constexpr friend bool operator==(const bg_palette_item& a, const bg_palette_item& b) = default;
 
 private:
-    span<const color> _colors;
+    span<const color> _colors_ref;
     palette_bpp_mode _bpp_mode;
 };
 

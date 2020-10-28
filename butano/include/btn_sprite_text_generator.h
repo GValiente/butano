@@ -22,7 +22,7 @@ class fixed_point;
 /**
  * @brief Generates sprites containing text from a given sprite_font.
  *
- * Currently, it only generates 16 colors (4 bits per pixel) sprites.
+ * Currently, it supports 8x8 and 8x16 characters of 16 colors (4 bits per pixel).
  *
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
@@ -35,8 +35,6 @@ class sprite_text_generator
 {
 
 public:
-    using utf8_characters_map_type = unordered_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS>;  //!< UTF-8 characters map type alias.
-
     /**
      * @brief Constructor.
      * @param font Sprite font for drawing text.
@@ -148,14 +146,6 @@ public:
     }
 
     /**
-     * @brief Returns the map from UTF-8 characters to sprite tiles graphic indexes.
-     */
-    [[nodiscard]] const utf8_characters_map_type& utf8_characters_map() const
-    {
-        return _utf8_characters_map;
-    }
-
-    /**
      * @brief Returns the width in pixels of the given text.
      */
     [[nodiscard]] int width(const string_view& text) const;
@@ -242,7 +232,7 @@ public:
 private:
     sprite_font _font;
     sprite_palette_item _palette_item;
-    utf8_characters_map_type _utf8_characters_map;
+    unordered_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
     horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
     int _bg_priority = 3;
     int _z_order = 0;

@@ -548,12 +548,12 @@ int bg_priority(id_type id)
 
 void set_bg_priority(id_type id, int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
-
     auto item = static_cast<item_type*>(id);
 
     if(bg_priority != item->bg_priority())
     {
+        BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+
         hw::sprites::set_bg_priority(bg_priority, item->handle);
         sorted_sprites::erase(*item);
         item->set_bg_priority(bg_priority);
@@ -585,28 +585,15 @@ optional<bool> above(id_type id, id_type other_id)
 {
     auto item = static_cast<item_type*>(id);
     auto other_item = static_cast<item_type*>(other_id);
-    int this_priority = item->bg_priority();
-    int other_priority = other_item->bg_priority();
+    sort_key this_sort_key = item->sprite_sort_key;
+    sort_key other_sort_key = other_item->sprite_sort_key;
 
-    if(this_priority < other_priority)
+    if(this_sort_key < other_sort_key)
     {
         return true;
     }
 
-    if(this_priority > other_priority)
-    {
-        return false;
-    }
-
-    int this_z_order = item->z_order();
-    int other_z_order = other_item->z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return true;
-    }
-
-    if(this_z_order > other_z_order)
+    if(this_sort_key > other_sort_key)
     {
         return false;
     }
@@ -618,36 +605,24 @@ void put_above(id_type id, id_type other_id)
 {
     auto item = static_cast<item_type*>(id);
     auto other_item = static_cast<item_type*>(other_id);
-    int this_priority = item->bg_priority();
-    int other_priority = other_item->bg_priority();
+    sort_key this_sort_key = item->sprite_sort_key;
+    sort_key other_sort_key = other_item->sprite_sort_key;
 
-    if(this_priority < other_priority)
-    {
-        return;
-    }
-
-    if(this_priority > other_priority)
-    {
-        set_bg_priority(id, other_priority);
-    }
-
-    int this_z_order = item->z_order();
-    int other_z_order = other_item->z_order();
-
-    if(this_z_order < other_z_order)
-    {
-        return;
-    }
-
-    if(this_z_order > other_z_order)
-    {
-        set_z_order(id, other_z_order);
-    }
-    else
+    if(this_sort_key == other_sort_key)
     {
         if(sorted_sprites::put_in_front_of_layer(*item))
         {
             data.rebuild_handles = true;
+        }
+    }
+    else if(this_sort_key > other_sort_key)
+    {
+        int other_z_order = other_sort_key.z_order();
+        set_bg_priority(id, other_sort_key.priority());
+
+        if(this_sort_key.z_order() > other_z_order)
+        {
+            set_z_order(id, other_z_order);
         }
     }
 }

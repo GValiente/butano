@@ -35,6 +35,8 @@ public:
     [[nodiscard]] static optional<regular_bg_map_ptr> find(
             const regular_bg_map_item& map_item, const bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
 
+    [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_item& item);
+
     [[nodiscard]] static regular_bg_map_ptr create(
             const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
@@ -48,6 +50,8 @@ public:
 
     [[nodiscard]] static regular_bg_map_ptr find_or_create(
             const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+
+    [[nodiscard]] static regular_bg_map_ptr find_or_create(const regular_bg_item& item);
 
     [[nodiscard]] static regular_bg_map_ptr allocate(
             const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -65,6 +69,8 @@ public:
 
     [[nodiscard]] static optional<regular_bg_map_ptr> find_or_create_optional(
             const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+
+    [[nodiscard]] static optional<regular_bg_map_ptr> find_or_create_optional(const regular_bg_item& item);
 
     [[nodiscard]] static optional<regular_bg_map_ptr> allocate_optional(
             const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);

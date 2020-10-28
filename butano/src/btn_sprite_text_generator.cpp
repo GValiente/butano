@@ -121,7 +121,7 @@ namespace
 
     public:
         explicit variable_width_painter(const sprite_text_generator& generator) :
-            _generator(generator)
+            _character_widths(generator.font().character_widths_ref().data())
         {
         }
 
@@ -132,22 +132,22 @@ namespace
 
         void paint_space()
         {
-            _width += _generator.font().character_widths_ref()[0];
+            _width += _character_widths[0];
         }
 
         void paint_tab()
         {
-            _width += _generator.font().character_widths_ref()[0] * 4;
+            _width += _character_widths[0] * 4;
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            _width += _generator.font().character_widths_ref()[graphics_index + 1];
+            _width += _character_widths[graphics_index + 1];
             return true;
         }
 
     private:
-        const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
         int _width = 0;
     };
 
@@ -237,6 +237,7 @@ namespace
 
     private:
         const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
@@ -252,6 +253,7 @@ namespace
                 const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr, const fixed_point& position,
                 ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
+            _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (fixed_character_width / 2), position.y())
@@ -260,19 +262,17 @@ namespace
 
         void paint_space()
         {
-            _current_position.set_x(_current_position.x() + _generator.font().character_widths_ref()[0]);
+            _current_position.set_x(_current_position.x() + _character_widths[0]);
         }
 
         void paint_tab()
         {
-            _current_position.set_x(_current_position.x() + (_generator.font().character_widths_ref()[0] * 4));
+            _current_position.set_x(_current_position.x() + (_character_widths[0] * 4));
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            const sprite_font& font = _generator.font();
-
-            if(int character_width = font.character_widths_ref()[graphics_index + 1])
+            if(int character_width = _character_widths[graphics_index + 1])
             {
                 if(allow_failure)
                 {
@@ -286,7 +286,7 @@ namespace
                     BTN_ASSERT(! _output_sprites.full(), "No more output sprites available");
                 }
 
-                const sprite_item& item = font.item();
+                const sprite_item& item = _generator.font().item();
                 const sprite_tiles_item& tiles_item = item.tiles_item();
                 optional<sprite_tiles_ptr> source_tiles_ptr;
 
@@ -334,6 +334,7 @@ namespace
 
     private:
         const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
@@ -431,6 +432,7 @@ namespace
         variable_8x8_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
                              const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
+            _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
@@ -439,23 +441,21 @@ namespace
 
         void paint_space()
         {
-            int width = _generator.font().character_widths_ref()[0];
+            int width = _character_widths[0];
             _sprite_column += width;
             _current_position.set_x(_current_position.x() + width);
         }
 
         void paint_tab()
         {
-            int width = _generator.font().character_widths_ref()[0] * 4;
+            int width = _character_widths[0] * 4;
             _sprite_column += width;
             _current_position.set_x(_current_position.x() + width);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            const sprite_font& font = _generator.font();
-
-            if(int width = font.character_widths_ref()[graphics_index + 1])
+            if(int width = _character_widths[graphics_index + 1])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -471,7 +471,7 @@ namespace
                     _sprite_column = 0;
                 }
 
-                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
                 const tile* source_tiles_data = tiles_item.tiles_ref().data();
                 int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
@@ -489,6 +489,7 @@ namespace
         static constexpr const int _tiles = 4;
 
         const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
@@ -597,6 +598,7 @@ namespace
         variable_8x16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette_ptr,
                               const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
+            _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette_ptr(move(palette_ptr)),
             _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
@@ -605,23 +607,21 @@ namespace
 
         void paint_space()
         {
-            int width = _generator.font().character_widths_ref()[0];
+            int width = _character_widths[0];
             _sprite_column += width;
             _current_position.set_x(_current_position.x() + width);
         }
 
         void paint_tab()
         {
-            int width = _generator.font().character_widths_ref()[0] * 4;
+            int width = _character_widths[0] * 4;
             _sprite_column += width;
             _current_position.set_x(_current_position.x() + width);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            const sprite_font& font = _generator.font();
-
-            if(int width = font.character_widths_ref()[graphics_index + 1])
+            if(int width = _character_widths[graphics_index + 1])
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
@@ -637,7 +637,7 @@ namespace
                     _sprite_column = 0;
                 }
 
-                const sprite_tiles_item& tiles_item = font.item().tiles_item();
+                const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
                 const tile* source_tiles_data = tiles_item.tiles_ref().data();
                 int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
@@ -659,6 +659,7 @@ namespace
         static constexpr const int _tiles = 8;
 
         const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;

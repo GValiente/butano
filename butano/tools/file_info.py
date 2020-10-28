@@ -15,7 +15,7 @@ class FileInfo:
             return False
 
         if file_name[0] not in string.ascii_lowercase:
-            raise ValueError('Invalid file name: ' + file_name + ' (invalid character: ' + file_name[0] + ')')
+            raise ValueError('Invalid file name: ' + file_name + ' (invalid character: \'' + file_name[0] + '\')')
 
         if len(file_name.split('.')) != 2:
             raise ValueError('Invalid file name: ' + file_name + ' (one and only one dot required)')
@@ -25,7 +25,7 @@ class FileInfo:
         for file_name_character in file_name:
             if file_name_character not in valid_characters:
                 raise ValueError('Invalid file name: ' + file_name +
-                                 ' (invalid character: ' + file_name_character + ')')
+                                 ' (invalid character: \'' + file_name_character + '\')')
 
         return True
 

@@ -408,7 +408,6 @@ if __name__ == "__main__":
         args = parser.parse_args()
         process(args.graphics, args.build)
     except Exception as ex:
-        print('Error: ' + str(ex), file=sys.stderr)
-        print('Stack trace: ', file=sys.stderr)
-        traceback.print_tb(ex.__traceback__)
+        sys.stderr.write('Error: ' + str(ex) + '\n')
+        traceback.print_exc()
         exit(-1)

@@ -8,7 +8,7 @@
 
 #include "btn_common.h"
 
-namespace btn::display
+namespace btn::hw::display
 {
     [[nodiscard]] constexpr int width()
     {

@@ -10,6 +10,7 @@
 #include "btn_timer.h"
 #include "btn_string.h"
 #include "btn_keypad.h"
+#include "btn_timers.h"
 #include "btn_profiler.h"
 #include "btn_string_view.h"
 #include "btn_bgs_manager.h"
@@ -334,12 +335,12 @@ void reset()
 
 fixed cpu_usage()
 {
-    return fixed(data.cpu_usage_ticks) / timer::ticks_per_frame();
+    return fixed(data.cpu_usage_ticks) / timers::ticks_per_frame();
 }
 
 fixed vblank_usage()
 {
-    return fixed(data.vblank_usage_ticks) / timer::ticks_per_vblank();
+    return fixed(data.vblank_usage_ticks) / timers::ticks_per_vblank();
 }
 
 }

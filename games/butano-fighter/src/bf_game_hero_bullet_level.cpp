@@ -183,13 +183,13 @@ namespace
                 btn::color(31, 0, 6),   80,     3),
         hero_bullet_level(_level4_events,   btn::fixed_size(16, 16),    btn::sound_items::space_shooter_3,  2100,
                 btn::color(18, 25, 27), 86,     5),
-        hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3400,
+        hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3300,
                 btn::color(31, 0, 0),   97,     3),
-        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5400,
+        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5300,
                 btn::color(9, 20, 24),  101,    4),
-        hero_bullet_level(_level7_events,   btn::fixed_size(10, 16),    btn::sound_items::space_shooter_5,  7300,
+        hero_bullet_level(_level7_events,   btn::fixed_size(10, 16),    btn::sound_items::space_shooter_5,  7200,
                 btn::color(31, 0, 0),   89,     6),
-        hero_bullet_level(_level8_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_1,            8900,
+        hero_bullet_level(_level8_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_1,            8800,
                 btn::color(9, 20, 24),  73,     8),
     };
 

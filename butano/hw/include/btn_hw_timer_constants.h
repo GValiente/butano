@@ -8,7 +8,7 @@
 
 #include "btn_common.h"
 
-namespace btn::timers
+namespace btn::hw::timers
 {
     [[nodiscard]] constexpr int divisor()
     {

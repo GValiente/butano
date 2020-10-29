@@ -518,7 +518,7 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
             _delta_position = (btn::fixed_point(0, -32) - _wizard_position) / _movement_counter;
             _target_x = constants::play_width;
             _wizard_rects.clear();
-            _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(50, 56));
+            _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(50, 38));
 
             _sprites.shrink(1);
             _animate_actions.clear();

@@ -8,7 +8,7 @@
 
 #include "btn_tile.h"
 
-namespace btn::bg_maps
+namespace btn::hw::bg_maps
 {
     [[nodiscard]] constexpr int blocks_count()
     {
@@ -21,7 +21,7 @@ namespace btn::bg_maps
     }
 }
 
-namespace btn::bg_tiles
+namespace btn::hw::bg_tiles
 {
     [[nodiscard]] constexpr int blocks_count()
     {

@@ -10,9 +10,19 @@
 
 namespace btn::bg_maps
 {
+    [[nodiscard]] constexpr int cells_count()
+    {
+        return hw::bg_maps::cells_count();
+    }
+
     [[nodiscard]] int used_cells_count();
 
     [[nodiscard]] int available_cells_count();
+
+    [[nodiscard]] constexpr int blocks_count()
+    {
+        return hw::bg_maps::blocks_count();
+    }
 
     [[nodiscard]] int used_blocks_count();
 

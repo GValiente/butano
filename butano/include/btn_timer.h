@@ -6,7 +6,7 @@
 #ifndef BTN_TIMER_H
 #define BTN_TIMER_H
 
-#include "../hw/include/btn_hw_timer_constants.h"
+#include "btn_common.h"
 
 namespace btn
 {
@@ -22,22 +22,6 @@ class timer
 {
 
 public:
-    /**
-     * @brief Returns the number of ticks elapsed in a screen refresh (V-Draw + V-Blank).
-     */
-    [[nodiscard]] constexpr static int ticks_per_frame()
-    {
-        return timers::ticks_per_frame();
-    }
-
-    /**
-     * @brief Returns the number of ticks elapsed in a V-Blank period.
-     */
-    [[nodiscard]] constexpr static int ticks_per_vblank()
-    {
-        return timers::ticks_per_vblank();
-    }
-
     /**
      * @brief Constructor.
      */

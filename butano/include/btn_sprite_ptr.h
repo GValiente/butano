@@ -452,16 +452,16 @@ public:
     void set_position(const fixed_point& position);
 
     /**
-     * @brief Returns the rotation angle of the sprite in degrees.
+     * @brief Returns the rotation angle in degrees of the sprite.
      */
     [[nodiscard]] fixed rotation_angle() const;
 
     /**
-     * @brief Sets the rotation angle of the sprite in degrees.
+     * @brief Sets the rotation angle in degrees of the sprite.
      * @param rotation_angle New rotation angle in degrees, in the range [0..360].
      *
-     * If the rotation angle is != 0 and the sprite doesn't have an attached affine mat,
-     * a new one with the given rotation angle it attached to the sprite.
+     * If the rotation angle is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given rotation angle is attached to it.
      */
     void set_rotation_angle(fixed rotation_angle);
 
@@ -473,8 +473,8 @@ public:
     /**
      * @brief Sets the horizontal scale of the sprite.
      *
-     * If the horizontal scale is != 1 and the sprite doesn't have an attached affine mat,
-     * a new one with the given horizontal scale it attached to the sprite.
+     * If the horizontal scale is != 1 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given horizontal scale is attached to it.
      */
     void set_horizontal_scale(fixed horizontal_scale);
 
@@ -486,16 +486,16 @@ public:
     /**
      * @brief Sets the vertical scale of the sprite.
      *
-     * If the vertical scale is != 1 and the sprite doesn't have an attached affine mat,
-     * a new one with the given vertical scale it attached to the sprite.
+     * If the vertical scale is != 1 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given vertical scale is attached to it.
      */
     void set_vertical_scale(fixed vertical_scale);
 
     /**
      * @brief Sets the scale of the sprite.
      *
-     * If the scale is != 1 and the sprite doesn't have an attached affine mat,
-     * a new one with the given scale it attached to the sprite.
+     * If the scale is != 1 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given scale is attached to it.
      */
     void set_scale(fixed scale);
 
@@ -504,8 +504,8 @@ public:
      * @param horizontal_scale New horizontal scale.
      * @param vertical_scale New vertical scale.
      *
-     * If the scale is != 1 and the sprite doesn't have an attached affine mat,
-     * a new one with the given scale it attached to the sprite.
+     * If the scale is != 1 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given scale is attached to it.
      */
     void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
@@ -602,6 +602,8 @@ public:
 
     /**
      * @brief Indicates if blending must be applied to this sprite or not.
+     *
+     * Keep in mind that blending and window attributes can't be enabled at the same time.
      */
     [[nodiscard]] bool blending_enabled() const;
 
@@ -614,6 +616,8 @@ public:
 
     /**
      * @brief Indicates if this sprite must be part of the silhouette of the sprite window or not.
+     *
+     * Keep in mind that blending and window attributes can't be enabled at the same time.
      */
     [[nodiscard]] bool window_enabled() const;
 
@@ -631,14 +635,12 @@ public:
     [[nodiscard]] bool double_size() const;
 
     /**
-     * @brief Returns the way this sprite is drawn when its affine mat (if any)
-     * requires more pixels than the area specified by the shape and size of the sprite.
+     * @brief Returns the area this sprite uses to be drawn when it has an attached sprite_affine_mat_ptr.
      */
     [[nodiscard]] sprite_double_size_mode double_size_mode() const;
 
     /**
-     * @brief Specifies the way this sprite is drawn when its affine mat (if any)
-     * requires more pixels than the area specified by the shape and size of the sprite.
+     * @brief Specifies the area this sprite uses to be drawn when it has an attached sprite_affine_mat_ptr.
      */
     void set_double_size_mode(sprite_double_size_mode double_size_mode);
 
@@ -653,68 +655,68 @@ public:
     void set_visible(bool visible);
 
     /**
-     * @brief Returns the camera attached to this sprite (if any).
+     * @brief Returns the camera_ptr attached to this sprite (if any).
      */
     [[nodiscard]] const optional<camera_ptr>& camera() const;
 
     /**
-     * @brief Sets the camera attached to this sprite.
-     * @param camera Camera to copy to this sprite.
+     * @brief Sets the camera_ptr attached to this sprite.
+     * @param camera camera_ptr to copy to this sprite.
      */
     void set_camera(const camera_ptr& camera);
 
     /**
-     * @brief Sets the camera attached to this sprite.
-     * @param camera Camera to move to this sprite.
+     * @brief Sets the camera_ptr attached to this sprite.
+     * @param camera camera_ptr to move to this sprite.
      */
     void set_camera(camera_ptr&& camera);
 
     /**
-     * @brief Remove the camera attached to this sprite (if any).
+     * @brief Removes the camera_ptr attached to this sprite (if any).
      */
     void remove_camera();
 
     /**
-     * @brief Returns the affine mat attached to this sprite (if any).
+     * @brief Returns the sprite_affine_mat_ptr attached to this sprite (if any).
      */
     [[nodiscard]] const optional<sprite_affine_mat_ptr>& affine_mat() const;
 
     /**
-     * @brief Sets the affine mat attached to this sprite.
+     * @brief Sets the sprite_affine_mat_ptr attached to this sprite.
      *
      * This method calls set_remove_affine_mat_when_not_needed(false).
      *
-     * @param affine_mat Affine mat to copy to this sprite.
+     * @param affine_mat Sprite_affine_mat_ptr to copy to this sprite.
      */
     void set_affine_mat(const sprite_affine_mat_ptr& affine_mat);
 
     /**
-     * @brief Sets the affine mat attached to this sprite.
+     * @brief Sets the sprite_affine_mat_ptr attached to this sprite.
      *
      * This method calls set_remove_affine_mat_when_not_needed(false).
      *
-     * @param affine_mat Affine mat to move to this sprite.
+     * @param affine_mat Sprite_affine_mat_ptr to move to this sprite.
      */
     void set_affine_mat(sprite_affine_mat_ptr&& affine_mat);
 
     /**
-     * @brief Remove the affine mat attached to this sprite (if any).
+     * @brief Removes the sprite_affine_mat_ptr attached to this sprite (if any).
      */
     void remove_affine_mat();
 
     /**
-     * @brief Indicates if the affine mat attached to this sprite (if any) must be removed
+     * @brief Indicates if the sprite_affine_mat_ptr attached to this sprite (if any) must be removed
      * when it is not needed anymore.
      *
-     * A sprite does not need an affine mat when its flipped_identity() method returns <b>true</b>.
+     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns <b>true</b>.
      */
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const;
 
     /**
-     * @brief Sets if the affine mat attached to this sprite (if any) must be removed
+     * @brief Sets if the sprite_affine_mat_ptr attached to this sprite (if any) must be removed
      * when it is not needed anymore.
      *
-     * A sprite does not need an affine mat when its flipped_identity() method returns <b>true</b>.
+     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns <b>true</b>.
      */
     void set_remove_affine_mat_when_not_needed(bool remove_when_not_needed);
 
@@ -730,25 +732,25 @@ public:
 
     /**
      * @brief Returns the attributes to commit to the second GBA register of this sprite when it is regular
-     * (it does not have an attached affine mat).
+     * (it does not have an attached sprite_affine_mat_ptr).
      */
     [[nodiscard]] sprite_regular_second_attributes regular_second_attributes() const;
 
     /**
      * @brief Sets the attributes to commit to the second GBA register of this sprite when it is regular
-     * (it does not have an attached affine mat).
+     * (it does not have an attached sprite_affine_mat_ptr).
      */
     void set_regular_second_attributes(const sprite_regular_second_attributes& second_attributes);
 
     /**
      * @brief Returns the attributes to commit to the second GBA register of this sprite when it is affine
-     * (it hash an attached affine mat).
+     * (it hash an attached sprite_affine_mat_ptr).
      */
     [[nodiscard]] sprite_affine_second_attributes affine_second_attributes() const;
 
     /**
      * @brief Sets the attributes to commit to the second GBA register of this sprite when it is affine
-     * (it hash an attached affine mat).
+     * (it hash an attached sprite_affine_mat_ptr).
      */
     void set_affine_second_attributes(const sprite_affine_second_attributes& second_attributes);
 

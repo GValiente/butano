@@ -8,9 +8,9 @@
 
 #include "btn_common.h"
 
-namespace btn::sram
+namespace btn::hw::sram
 {
-    [[nodiscard]] constexpr int max_size()
+    [[nodiscard]] constexpr int size()
     {
         return 32 * 1024;
     }

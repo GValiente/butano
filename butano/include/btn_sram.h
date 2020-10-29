@@ -29,6 +29,14 @@ namespace _btn::sram
 namespace btn::sram
 {
     /**
+     * @brief Returns the total SRAM size in bytes.
+     */
+    [[nodiscard]] constexpr int size()
+    {
+        return hw::sram::size();
+    }
+
+    /**
      * @brief Copies the given value into SRAM.
      * @param source Value to copy.
      */
@@ -36,7 +44,7 @@ namespace btn::sram
     void write(const Type& source)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
+        static_assert(int(sizeof(Type)) <= size(), "Size is too high");
 
         _btn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
     }
@@ -50,9 +58,9 @@ namespace btn::sram
     void write_offset(const Type& source, int offset)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
+        static_assert(int(sizeof(Type)) <= size(), "Size is too high");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(),
+        BTN_ASSERT(int(sizeof(Type)) + offset <= size(),
                    "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
         _btn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
@@ -66,7 +74,7 @@ namespace btn::sram
     void read(Type& destination)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
+        static_assert(int(sizeof(Type)) <= size(), "Size is too high");
 
         _btn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }
@@ -80,9 +88,9 @@ namespace btn::sram
     void read_offset(Type& destination, int offset)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= max_size(), "Size is too high");
+        static_assert(int(sizeof(Type)) <= size(), "Size is too high");
         BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= max_size(),
+        BTN_ASSERT(int(sizeof(Type)) + offset <= size(),
                    "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
         _btn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);

@@ -8,7 +8,7 @@
 
 #include "btn_common.h"
 
-namespace btn::sprite_affine_mats
+namespace btn::hw::sprite_affine_mats
 {
     [[nodiscard]] constexpr int count()
     {

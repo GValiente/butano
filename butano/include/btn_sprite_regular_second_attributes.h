@@ -12,7 +12,8 @@ namespace btn
 {
 
 /**
- * @brief Manages the attributes to commit to the second GBA register of a regular sprite (without affine mat).
+ * @brief Manages the attributes to commit to the second GBA register of a regular sprite
+ * (without an attached sprite_affine_mat_ptr).
  *
  * @ingroup sprite
  */

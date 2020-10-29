@@ -38,6 +38,12 @@
  */
 
 /**
+ * @defgroup affine_mat Affine transformation matrices
+ *
+ * Used to apply 2D geometric transformations like rotating and/or scaling to sprites and backgrounds.
+ */
+
+/**
  * @defgroup sprite Sprites
  *
  * Small animated objects that can move freely from the background.

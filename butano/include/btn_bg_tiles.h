@@ -10,9 +10,19 @@
 
 namespace btn::bg_tiles
 {
+    [[nodiscard]] constexpr int tiles_count()
+    {
+        return hw::bg_tiles::tiles_count();
+    }
+
     [[nodiscard]] int used_tiles_count();
 
     [[nodiscard]] int available_tiles_count();
+
+    [[nodiscard]] constexpr int blocks_count()
+    {
+        return hw::bg_tiles::blocks_count();
+    }
 
     [[nodiscard]] int used_blocks_count();
 

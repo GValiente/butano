@@ -30,7 +30,7 @@ namespace btn::bg_blocks_manager
 
 namespace
 {
-    static_assert(BTN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BTN_CFG_BG_BLOCKS_MAX_ITEMS <= bg_tiles::blocks_count());
+    static_assert(BTN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BTN_CFG_BG_BLOCKS_MAX_ITEMS <= hw::bg_tiles::blocks_count());
     static_assert(power_of_two(BTN_CFG_BG_BLOCKS_MAX_ITEMS));
 
     [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
@@ -801,7 +801,7 @@ void init()
     BTN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
-    new_item.blocks_count = bg_tiles::blocks_count();
+    new_item.blocks_count = hw::bg_tiles::blocks_count();
     data.items.init();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;

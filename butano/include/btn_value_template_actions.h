@@ -502,7 +502,7 @@ public:
     }
 
     /**
-     * @brief Indicates if update has been called duration_updates times.
+     * @brief Indicates if the action must not be updated anymore.
      */
     [[nodiscard]] bool done() const
     {

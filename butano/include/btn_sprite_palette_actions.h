@@ -17,7 +17,7 @@ namespace btn
 // inverted
 
 /**
- * @brief Manages if the colors of a sprite color palette must be inverted or not.
+ * @brief Manages if the colors of a sprite_palette_ptr must be inverted or not.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -28,7 +28,7 @@ class sprite_palette_inverted_manager
 
 public:
     /**
-     * @brief Indicates if the colors of the given sprite color palette are inverted or not.
+     * @brief Indicates if the colors of the given sprite_palette_ptr are inverted or not.
      */
     [[nodiscard]] static bool get(const sprite_palette_ptr& palette)
     {
@@ -36,7 +36,7 @@ public:
     }
 
     /**
-     * @brief Sets if the colors of the given sprite color palette must be inverted or not.
+     * @brief Sets if the colors of the given sprite_palette_ptr must be inverted or not.
      */
     static void set(bool inverted, sprite_palette_ptr& palette)
     {
@@ -46,7 +46,7 @@ public:
 
 
 /**
- * @brief Toggles if the colors of a sprite color palette must be inverted or not
+ * @brief Toggles if the colors of a sprite_palette_ptr must be inverted or not
  * when a given amount of update calls are done.
  *
  * @ingroup sprite
@@ -60,9 +60,9 @@ class sprite_palette_inverted_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done to toggle
-     * if the colors of the given sprite color palette must be inverted or not.
+     * if the colors of the given sprite_palette_ptr must be inverted or not.
      */
     sprite_palette_inverted_toggle_action(const sprite_palette_ptr& palette, int duration_updates) :
         bool_toggle_value_template_action(palette, duration_updates)
@@ -71,9 +71,9 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done to toggle
-     * if the colors of the given sprite color palette must be inverted or not.
+     * if the colors of the given sprite_palette_ptr must be inverted or not.
      */
     sprite_palette_inverted_toggle_action(sprite_palette_ptr&& palette, int duration_updates) :
         bool_toggle_value_template_action(move(palette), duration_updates)
@@ -81,7 +81,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -93,7 +93,7 @@ public:
 // grayscale
 
 /**
- * @brief Manages the intensity of the grayscale effect applied to a sprite color palette.
+ * @brief Manages the intensity of the grayscale effect applied to a sprite_palette_ptr.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -104,7 +104,7 @@ class sprite_palette_grayscale_manager
 
 public:
     /**
-     * @brief Returns the intensity of the grayscale effect applied to the given sprite color palette.
+     * @brief Returns the intensity of the grayscale effect applied to the given sprite_palette_ptr.
      */
     [[nodiscard]] static fixed get(const sprite_palette_ptr& palette)
     {
@@ -112,9 +112,9 @@ public:
     }
 
     /**
-     * @brief Sets the intensity of the grayscale effect applied to the given sprite color palette.
+     * @brief Sets the intensity of the grayscale effect applied to the given sprite_palette_ptr.
      * @param intensity New intensity in the range [0..1].
-     * @param palette Sprite color palette to modify.
+     * @param palette sprite_palette_ptr to modify.
      */
     static void set(fixed intensity, sprite_palette_ptr& palette)
     {
@@ -124,7 +124,7 @@ public:
 
 
 /**
- * @brief Modifies the intensity of the grayscale effect applied to a sprite color palette
+ * @brief Modifies the intensity of the grayscale effect applied to a sprite_palette_ptr
  * until it has a given state.
  *
  * @ingroup sprite
@@ -138,7 +138,7 @@ class sprite_palette_grayscale_to_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates Number of times that update has to be called
      * until the intensity is equal to final_intensity.
      * @param final_intensity Intensity when update is called duration_updates times.
@@ -154,7 +154,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates Number of times that update has to be called
      * until the intensity is equal to final_intensity.
      * @param final_intensity Intensity when update is called duration_updates times.
@@ -168,7 +168,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -186,7 +186,7 @@ public:
 
 
 /**
- * @brief Modifies the intensity of the grayscale effect applied to a sprite color palette
+ * @brief Modifies the intensity of the grayscale effect applied to a sprite_palette_ptr
  * from a minimum to a maximum. When the intensity is equal to the given final state,
  * it goes back to its initial state and vice versa.
  *
@@ -201,7 +201,7 @@ class sprite_palette_grayscale_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
@@ -218,7 +218,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
@@ -233,7 +233,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -251,7 +251,7 @@ public:
 
 
 /**
- * @brief Changes the intensity of the grayscale effect applied to a sprite color palette
+ * @brief Changes the intensity of the grayscale effect applied to a sprite_palette_ptr
  * when a given amount of update calls are done.
  *
  * @ingroup sprite
@@ -265,7 +265,7 @@ class sprite_palette_grayscale_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done to change the intensity.
      * @param new_intensity New intensity when update is called duration_updates times.
      *
@@ -280,7 +280,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done to change the intensity.
      * @param new_intensity New intensity when update is called duration_updates times.
      *
@@ -293,7 +293,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -313,7 +313,7 @@ public:
 // fade
 
 /**
- * @brief Manages the intensity of the fade effect applied to a sprite color palette.
+ * @brief Manages the intensity of the fade effect applied to a sprite_palette_ptr.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -324,7 +324,7 @@ class sprite_palette_fade_manager
 
 public:
     /**
-     * @brief Returns the intensity of the fade effect applied to the given sprite color palette.
+     * @brief Returns the intensity of the fade effect applied to the given sprite_palette_ptr.
      */
     [[nodiscard]] static fixed get(const sprite_palette_ptr& palette)
     {
@@ -332,9 +332,9 @@ public:
     }
 
     /**
-     * @brief Sets the intensity of the fade effect applied to the given sprite color palette.
+     * @brief Sets the intensity of the fade effect applied to the given sprite_palette_ptr.
      * @param intensity New intensity in the range [0..1].
-     * @param palette Sprite color palette to modify.
+     * @param palette sprite_palette_ptr to modify.
      */
     static void set(fixed intensity, sprite_palette_ptr& palette)
     {
@@ -344,7 +344,7 @@ public:
 
 
 /**
- * @brief Modifies the intensity of the fade effect applied to a sprite color palette
+ * @brief Modifies the intensity of the fade effect applied to a sprite_palette_ptr
  * until it has a given state.
  *
  * @ingroup sprite
@@ -358,7 +358,7 @@ class sprite_palette_fade_to_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates Number of times that update has to be called
      * until the intensity is equal to final_intensity.
      * @param final_intensity Intensity when update is called duration_updates times.
@@ -373,7 +373,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates Number of times that update has to be called
      * until the intensity is equal to final_intensity.
      * @param final_intensity Intensity when update is called duration_updates times.
@@ -387,7 +387,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -405,7 +405,7 @@ public:
 
 
 /**
- * @brief Modifies the intensity of the fade effect applied to a sprite color palette
+ * @brief Modifies the intensity of the fade effect applied to a sprite_palette_ptr
  * from a minimum to a maximum. When the intensity is equal to the given final state,
  * it goes back to its initial state and vice versa.
  *
@@ -420,7 +420,7 @@ class sprite_palette_fade_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
@@ -436,7 +436,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
@@ -451,7 +451,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -469,7 +469,7 @@ public:
 
 
 /**
- * @brief Changes the intensity of the fade effect applied to a sprite color palette
+ * @brief Changes the intensity of the fade effect applied to a sprite_palette_ptr
  * when a given amount of update calls are done.
  *
  * @ingroup sprite
@@ -483,7 +483,7 @@ class sprite_palette_fade_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done to change the intensity.
      * @param new_intensity New intensity when update is called duration_updates times.
      *
@@ -497,7 +497,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done to change the intensity.
      * @param new_intensity New intensity when update is called duration_updates times.
      *
@@ -510,7 +510,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -530,7 +530,7 @@ public:
 // rotate
 
 /**
- * @brief Manages the number of colors to rotate to the right in a sprite color palette.
+ * @brief Manages the number of colors to rotate to the right in a sprite_palette_ptr.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -541,7 +541,7 @@ class sprite_palette_rotate_manager
 
 public:
     /**
-     * @brief Returns the number of colors to rotate to the right in the given sprite color palette.
+     * @brief Returns the number of colors to rotate to the right in the given sprite_palette_ptr.
      */
     [[nodiscard]] static int get(const sprite_palette_ptr& palette)
     {
@@ -549,9 +549,9 @@ public:
     }
 
     /**
-     * @brief Sets the number of colors to rotate to the right in the given sprite color palette.
+     * @brief Sets the number of colors to rotate to the right in the given sprite_palette_ptr.
      * @param count Number of colors to rotate to the right in the range [1 - colors_count() .. colors_count() - 1].
-     * @param palette Sprite color palette to modify.
+     * @param palette sprite_palette_ptr to modify.
      */
     static void set(int count, sprite_palette_ptr& palette)
     {
@@ -561,7 +561,7 @@ public:
 
 
 /**
- * @brief Modifies the number of colors to rotate to the right in a sprite color palette by delta_count
+ * @brief Modifies the number of colors to rotate to the right in a sprite_palette_ptr by delta_count
  * when a given amount of update calls are done. When the property is over the given maximum,
  * it goes back to the given minimum and vice versa.
  *
@@ -576,7 +576,7 @@ class sprite_palette_rotate_by_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done before updating the number of colors to rotate.
      * @param delta_count How much colors to add to the number of colors to rotate to the right
      * when update is called duration_updates times.
@@ -589,7 +589,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done before updating the number of colors to rotate.
      * @param delta_count How much colors to add to the number of colors to rotate to the right
      * when update is called duration_updates times.
@@ -601,7 +601,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -620,7 +620,7 @@ public:
 
 
 /**
- * @brief Modifies the number of colors to rotate to the right in a sprite color palette until it has a given state.
+ * @brief Modifies the number of colors to rotate to the right in a sprite_palette_ptr until it has a given state.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -633,7 +633,7 @@ class sprite_palette_rotate_to_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates Number of times that update has to be called
      * until the number of colors to rotate to the right is equal to final_count.
      * @param final_count Number of colors to rotate to the right when update is called duration_updates times.
@@ -649,7 +649,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates Number of times that update has to be called
      * until the number of colors to rotate to the right is equal to final_count.
      * @param final_count Number of colors to rotate to the right when update is called duration_updates times.
@@ -664,7 +664,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -682,7 +682,7 @@ public:
 
 
 /**
- * @brief Modifies the number of colors to rotate to the right in a sprite color palette
+ * @brief Modifies the number of colors to rotate to the right in a sprite_palette_ptr
  * from a minimum to a maximum. When the number of colors to rotate to the right is equal to the given final state,
  * it goes back to its initial state and vice versa.
  *
@@ -697,7 +697,7 @@ class sprite_palette_rotate_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the number of colors to rotate delta.
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
@@ -714,7 +714,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done
      * before changing the direction of the number of colors to rotate delta.
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
@@ -730,7 +730,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {
@@ -749,7 +749,7 @@ public:
 
 
 /**
- * @brief Changes the number of colors to rotate to the right in a sprite color palette
+ * @brief Changes the number of colors to rotate to the right in a sprite_palette_ptr
  * when a given amount of update calls are done.
  *
  * @ingroup sprite
@@ -763,7 +763,7 @@ class sprite_palette_rotate_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much update calls have to be done to change
      * the number of colors to rotate to the right.
      * @param new_count New number of colors to rotate to the right when update is called duration_updates times.
@@ -779,7 +779,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param palette Sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much update calls have to be done to change
      * the number of colors to rotate to the right.
      * @param new_count New number of colors to rotate to the right when update is called duration_updates times.
@@ -794,7 +794,7 @@ public:
     }
 
     /**
-     * @brief Returns the sprite color palette to modify.
+     * @brief Returns the sprite_palette_ptr to modify.
      */
     [[nodiscard]] const sprite_palette_ptr& palette() const
     {

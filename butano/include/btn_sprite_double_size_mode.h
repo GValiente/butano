@@ -11,11 +11,17 @@
 namespace btn
 {
 
+/**
+ * @brief Specifies the area a sprite uses to be drawn when it has an attached sprite_affine_mat_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ */
 enum class sprite_double_size_mode
 {
-    AUTO,
-    ENABLED,
-    DISABLED
+    AUTO, //!< The sprite uses 2x the area specified by its shape and size only when its sprite_affine_mat_ptr requires it.
+    ENABLED, //!< The sprite always uses 2x the area specified by its shape and size.
+    DISABLED //!< The sprite never uses more pixels than the area specified by its shape and size.
 };
 
 }

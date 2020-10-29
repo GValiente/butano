@@ -14,7 +14,8 @@ namespace btn
 
 /**
  * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes the attributes to commit
- * to the second GBA register of a regular sprite (without affine mat) in each screen horizontal line.
+ * to the second GBA register of a regular sprite (without an attached sprite_affine_mat_ptr)
+ * in each screen horizontal line.
  *
  * @ingroup sprite
  * @ingroup hblank_effect
@@ -26,7 +27,7 @@ public:
     /**
      * @brief Creates a sprite_regular_second_attributes_hblank_effect_ptr which changes the attributes to commit
      * to the second GBA register of a regular sprite in each screen horizontal line.
-     * @param sprite Regular sprite (without affine mat) to be modified.
+     * @param sprite Regular sprite (without an attached sprite_affine_mat_ptr) to be modified.
      * @param attributes_ref Reference to an array of 160 sprite_regular_second_attributes objects
      * with the attributes to commit to the second GBA register of the given regular sprite
      * in each screen horizontal line.
@@ -45,7 +46,7 @@ public:
     /**
      * @brief Creates a sprite_regular_second_attributes_hblank_effect_ptr which changes the attributes to commit
      * to the second GBA register of a regular sprite in each screen horizontal line.
-     * @param sprite Regular sprite (without affine mat) to be modified.
+     * @param sprite Regular sprite (without an attached sprite_affine_mat_ptr) to be modified.
      * @param attributes_ref Reference to an array of 160 sprite_regular_second_attributes objects
      * with the attributes to commit to the second GBA register of the given regular sprite
      * in each screen horizontal line.

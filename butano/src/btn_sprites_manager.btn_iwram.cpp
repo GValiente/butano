@@ -7,6 +7,7 @@
 
 #include "btn_vector.h"
 #include "btn_sorted_sprites.h"
+#include "../hw/include/btn_hw_sprites.h"
 
 namespace btn::sprites_manager
 {
@@ -56,8 +57,8 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
         {
             if(item.on_screen)
             {
-                BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= sprites::sprites_count() ||
-                           visible_items_count <= sprites::sprites_count(), "Too much sprites on screen");
+                BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
+                           visible_items_count <= hw::sprites::count(), "Too much sprites on screen");
 
                 hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
                 item.handles_index = int8_t(visible_items_count);

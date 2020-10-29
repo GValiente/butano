@@ -33,9 +33,9 @@ namespace
 
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
-        hw::sprites::handle_type handles[sprites::sprites_count()];
+        hw::sprites::handle_type handles[hw::sprites::count()];
         int first_index_to_commit = 0;
-        int last_index_to_commit = sprites::sprites_count() - 1;
+        int last_index_to_commit = hw::sprites::count() - 1;
         int last_visible_items_count = 0;
         bool check_items_on_screen = false;
         bool rebuild_handles = false;
@@ -1195,18 +1195,18 @@ void commit()
 
     if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = sprites::sprites_count() / sprite_affine_mats::count();
+        int multiplier = hw::sprites::count() / sprite_affine_mats::count();
         int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);
         last_index_to_commit = max(last_index_to_commit, last_mat_index_to_commit);
     }
 
-    if(first_index_to_commit < sprites::sprites_count())
+    if(first_index_to_commit < hw::sprites::count())
     {
         int commit_items_count = last_index_to_commit - first_index_to_commit + 1;
         hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count);
-        data.first_index_to_commit = sprites::sprites_count();
+        data.first_index_to_commit = hw::sprites::count();
         data.last_index_to_commit = 0;
     }
 }

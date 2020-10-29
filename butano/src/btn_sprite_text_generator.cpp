@@ -23,25 +23,18 @@ namespace
     constexpr const int fixed_max_characters_per_sprite = max_columns_per_sprite / fixed_character_width;
 
     template<sprite_size size, int max_tiles_per_sprite, bool allow_failure>
-    [[nodiscard]] tile* build_sprite(const sprite_text_generator& generator, const sprite_palette_ptr& palette_ptr,
-                                     const fixed_point& current_position, ivector<sprite_ptr>& output_sprites)
+    [[nodiscard]] tile* _build_sprite(const sprite_text_generator& generator, const sprite_palette_ptr& palette_ptr,
+                                      const fixed_point& current_position, ivector<sprite_ptr>& output_sprites)
     {
+        optional<sprite_tiles_ptr> tiles_ptr;
+
         if(allow_failure)
         {
             if(output_sprites.full())
             {
                 return nullptr;
             }
-        }
-        else
-        {
-            BTN_ASSERT(! output_sprites.full(), "No more output sprites available");
-        }
 
-        optional<sprite_tiles_ptr> tiles_ptr;
-
-        if(allow_failure)
-        {
             tiles_ptr = sprite_tiles_ptr::allocate_optional(max_tiles_per_sprite);
 
             if(! tiles_ptr)
@@ -51,13 +44,16 @@ namespace
         }
         else
         {
+            BTN_ASSERT(! output_sprites.full(), "No more output sprites available");
+
             tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite);
         }
 
-        optional<span<tile>> tiles_vram = tiles_ptr->vram();
+        sprite_tiles_ptr& tiles_ptr_ref = *tiles_ptr;
+        optional<span<tile>> tiles_vram = tiles_ptr_ref.vram();
         BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
-        sprite_builder builder(sprite_shape_size(sprite_shape::WIDE, size), move(*tiles_ptr), palette_ptr);
+        sprite_builder builder(sprite_shape_size(sprite_shape::WIDE, size), move(tiles_ptr_ref), palette_ptr);
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
@@ -237,7 +233,6 @@ namespace
 
     private:
         const sprite_text_generator& _generator;
-        const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette_ptr;
         fixed_point _current_position;
@@ -381,7 +376,7 @@ namespace
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
-                _tiles_vram = build_sprite<sprite_size::NORMAL, fixed_max_characters_per_sprite, allow_failure>(
+                _tiles_vram = _build_sprite<sprite_size::NORMAL, fixed_max_characters_per_sprite, allow_failure>(
                             _generator, _palette_ptr, _current_position, _output_sprites);
 
                 if(allow_failure && ! _tiles_vram)
@@ -459,7 +454,7 @@ namespace
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
-                    _tiles_vram = build_sprite<sprite_size::NORMAL, _tiles, allow_failure>(
+                    _tiles_vram = _build_sprite<sprite_size::NORMAL, _tiles, allow_failure>(
                                 _generator, _palette_ptr, _current_position, _output_sprites);
 
                     if(allow_failure && ! _tiles_vram)
@@ -538,7 +533,7 @@ namespace
         {
             if(_sprite_character_index == fixed_max_characters_per_sprite)
             {
-                _tiles_vram = build_sprite<sprite_size::BIG, fixed_max_characters_per_sprite * 2, allow_failure>(
+                _tiles_vram = _build_sprite<sprite_size::BIG, fixed_max_characters_per_sprite * 2, allow_failure>(
                             _generator, _palette_ptr, _current_position, _output_sprites);
 
                 if(allow_failure && ! _tiles_vram)
@@ -625,7 +620,7 @@ namespace
             {
                 if(_sprite_column + width > max_columns_per_sprite)
                 {
-                    _tiles_vram = build_sprite<sprite_size::BIG, _tiles, allow_failure>(
+                    _tiles_vram = _build_sprite<sprite_size::BIG, _tiles, allow_failure>(
                                 _generator, _palette_ptr, _current_position, _output_sprites);
 
                     if(allow_failure && ! _tiles_vram)

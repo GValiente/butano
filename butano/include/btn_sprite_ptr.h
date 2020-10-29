@@ -272,7 +272,7 @@ public:
 
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
-     * @param shape_size New shape and size of the sprite.
+     * @param shape_size Shape and size of the sprite.
      * @param tiles Smart pointer to a sprite tile set to copy.
      *
      * It must be compatible with the current color palette of the sprite.
@@ -281,7 +281,7 @@ public:
 
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
-     * @param shape_size New shape and size of the sprite.
+     * @param shape_size Shape and size of the sprite.
      * @param tiles Smart pointer to a sprite tile set to move.
      *
      * It must be compatible with the current color palette of the sprite.
@@ -308,7 +308,7 @@ public:
      *
      * The new sprite tiles must be compatible with the current color palette, shape and size of the sprite.
      *
-     * @param tiles_item It creates the new sprite tiles to use by this sprite.
+     * @param tiles_item It creates the sprite tiles to use by this sprite.
      * @param graphics_index Index of the tile set to reference in tiles_item.
      */
     void set_tiles(const sprite_tiles_item& tiles_item, int graphics_index);
@@ -322,8 +322,8 @@ public:
      *
      * The new sprite tiles must be compatible with the current color palette of the sprite.
      *
-     * @param tiles_item It creates the new sprite tiles to use by this sprite.
-     * @param shape_size New shape and size of the sprite.
+     * @param tiles_item It creates the sprite tiles to use by this sprite.
+     * @param shape_size Shape and size of the sprite.
      */
     void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size);
 
@@ -336,8 +336,8 @@ public:
      *
      * The new sprite tiles must be compatible with the current color palette of the sprite.
      *
-     * @param tiles_item It creates the new sprite tiles to use by this sprite.
-     * @param shape_size New shape and size of the sprite.
+     * @param tiles_item It creates the sprite tiles to use by this sprite.
+     * @param shape_size Shape and size of the sprite.
      * @param graphics_index Index of the tile set to reference in tiles_item.
      */
     void set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size, int graphics_index);
@@ -371,7 +371,7 @@ public:
      *
      * The new color palette must be compatible with the current tiles of the sprite.
      *
-     * @param palette_item It creates the new color palette to use by this sprite.
+     * @param palette_item It creates the color palette to use by this sprite.
      */
     void set_palette(const sprite_palette_item& palette_item);
 
@@ -387,7 +387,7 @@ public:
 
     /**
      * @brief Sets the tiles, the color palette, the shape and size to use by this sprite.
-     * @param shape_size New shape and size of the sprite.
+     * @param shape_size Shape and size of the sprite.
      * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
      */
@@ -399,7 +399,7 @@ public:
      *
      * Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.
      *
-     * @param item It creates the new resources to use by this sprite.
+     * @param item It creates the resources to use by this sprite.
      */
     void set_item(const sprite_item& item);
 
@@ -409,7 +409,7 @@ public:
      *
      * Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.
      *
-     * @param item It creates the new resources to use by this sprite.
+     * @param item It creates the resources to use by this sprite.
      * @param graphics_index Index of the tile set to reference in item.tiles_item().
      */
     void set_item(const sprite_item& item, int graphics_index);
@@ -458,7 +458,7 @@ public:
 
     /**
      * @brief Sets the rotation angle in degrees of the sprite.
-     * @param rotation_angle New rotation angle in degrees, in the range [0..360].
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
      *
      * If the rotation angle is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
      * a new one with the given rotation angle is attached to it.
@@ -501,8 +501,8 @@ public:
 
     /**
      * @brief Sets the scale of the sprite.
-     * @param horizontal_scale New horizontal scale.
-     * @param vertical_scale New vertical scale.
+     * @param horizontal_scale Horizontal scale.
+     * @param vertical_scale Vertical scale.
      *
      * If the scale is != 1 and the sprite doesn't have an attached sprite_affine_mat_ptr,
      * a new one with the given scale is attached to it.

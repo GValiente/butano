@@ -12,12 +12,30 @@
 namespace btn
 {
 
+/**
+ * @brief Contains the attributes which define a sprite affine transformation matrix
+ * (created with sprite_affine_mat_ptr static constructors).
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ */
 class sprite_affine_mat_attributes
 {
 
 public:
+    /**
+     * @brief Identity constructor.
+     */
     constexpr sprite_affine_mat_attributes() = default;
 
+    /**
+     * @brief Constructor.
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
+     * @param horizontal_scale Horizontal scale.
+     * @param vertical_scale Vertical scale.
+     * @param horizontal_flip Indicates if this matrix is flipped in the horizontal axis or not.
+     * @param vertical_flip Indicates if this matrix is flipped in the vertical axis or not.
+     */
     constexpr sprite_affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
                                            bool horizontal_flip, bool vertical_flip) :
         _rotation_angle(rotation_angle),
@@ -39,11 +57,18 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Returns the rotation angle in degrees.
+     */
     [[nodiscard]] constexpr fixed rotation_angle() const
     {
         return _rotation_angle;
     }
 
+    /**
+     * @brief Sets the rotation angle in degrees.
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
+     */
     constexpr void set_rotation_angle(fixed rotation_angle)
     {
         BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
@@ -56,11 +81,17 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Returns the horizontal scale.
+     */
     [[nodiscard]] constexpr fixed horizontal_scale() const
     {
         return _horizontal_scale;
     }
 
+    /**
+     * @brief Sets the horizontal scale.
+     */
     constexpr void set_horizontal_scale(fixed horizontal_scale)
     {
         BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
@@ -71,11 +102,17 @@ public:
         _update_pb();
     }
 
+    /**
+     * @brief Returns the vertical scale.
+     */
     [[nodiscard]] constexpr fixed vertical_scale() const
     {
         return _vertical_scale;
     }
 
+    /**
+     * @brief Sets the vertical scale.
+     */
     constexpr void set_vertical_scale(fixed vertical_scale)
     {
         BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
@@ -86,6 +123,9 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Sets the scale.
+     */
     constexpr void set_scale(fixed scale)
     {
         BTN_ASSERT(scale > 0, "Invalid scale: ", scale);
@@ -100,6 +140,11 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Sets the scale.
+     * @param horizontal_scale Horizontal scale.
+     * @param vertical_scale Vertical scale.
+     */
     constexpr void set_scale(fixed horizontal_scale, fixed vertical_scale)
     {
         BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
@@ -115,11 +160,17 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Indicates if this matrix is flipped in the horizontal axis or not.
+     */
     [[nodiscard]] constexpr bool horizontal_flip() const
     {
         return _hflip == -1;
     }
 
+    /**
+     * @brief Sets if this matrix is flipped in the horizontal axis or not.
+     */
     constexpr void set_horizontal_flip(bool horizontal_flip)
     {
         _hflip = 1 - (2 * horizontal_flip);
@@ -127,11 +178,17 @@ public:
         _update_pb();
     }
 
+    /**
+     * @brief Indicates if this matrix is flipped in the vertical axis or not.
+     */
     [[nodiscard]] constexpr bool vertical_flip() const
     {
         return _vflip == -1;
     }
 
+    /**
+     * @brief Sets if this matrix is flipped in the vertical axis or not.
+     */
     constexpr void set_vertical_flip(bool vertical_flip)
     {
         _vflip = 1 - (2 * vertical_flip);
@@ -139,16 +196,26 @@ public:
         _update_pd();
     }
 
+    /**
+     * @brief Indicates if this matrix is equal to the identity matrix or not.
+     */
     [[nodiscard]] constexpr bool identity() const
     {
         return flipped_identity() && _hflip == 1 && _vflip == 1;
     }
 
+    /**
+     * @brief Indicates if this matrix is equal to the identity matrix or not, ignoring flip attributes.
+     */
     [[nodiscard]] constexpr bool flipped_identity() const
     {
         return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1;
     }
 
+    /**
+     * @brief Indicates if a sprite_ptr attached to a sprite_affine_mat_ptr with these attributes
+     * needs more pixels than the area specified by its shape and size to be drawn without clipping issues.
+     */
     [[nodiscard]] constexpr bool double_size() const
     {
         fixed max_scale = max(_horizontal_scale, _vertical_scale);
@@ -158,26 +225,45 @@ public:
         return size > 256 << 16;
     }
 
+    /**
+     * @brief Returns the value to commit to the first GBA register of a sprite_affine_mat_ptr with these attributes.
+     */
     [[nodiscard]] constexpr int pa_register_value() const
     {
         return _pa;
     }
 
+    /**
+     * @brief Returns the value to commit to the second GBA register of a sprite_affine_mat_ptr with these attributes.
+     */
     [[nodiscard]] constexpr int pb_register_value() const
     {
         return _pb;
     }
 
+    /**
+     * @brief Returns the value to commit to the third GBA register of a sprite_affine_mat_ptr with these attributes.
+     */
     [[nodiscard]] constexpr int pc_register_value() const
     {
         return _pc;
     }
 
+    /**
+     * @brief Returns the value to commit to the fourth GBA register of a sprite_affine_mat_ptr with these attributes.
+     */
     [[nodiscard]] constexpr int pd_register_value() const
     {
         return _pd;
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a First sprite_affine_mat_attributes to compare.
+     * @param b Second sprite_affine_mat_attributes to compare.
+     * @return <b>true</b> if the first sprite_affine_mat_attributes is equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator==(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)
     {
@@ -185,6 +271,13 @@ public:
                 a._vertical_scale == b._vertical_scale && a._hflip == b._hflip && a._vflip == b._vflip;
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First sprite_affine_mat_attributes to compare.
+     * @param b Second sprite_affine_mat_attributes to compare.
+     * @return <b>true</b> if the first sprite_affine_mat_attributes is not equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] constexpr friend bool operator!=(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)
     {

@@ -47,7 +47,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param delta_property How much to add to the property when update is called.
+     * @param delta_property How much to add to the property when the action is updated.
      */
     by_value_template_action(const Value& value, const Property& delta_property) :
         _value(value),
@@ -59,7 +59,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param delta_property How much to add to the property when update is called.
+     * @param delta_property How much to add to the property when the action is updated.
      */
     by_value_template_action(Value&& value, const Property& delta_property) :
         _value(move(value)),
@@ -77,7 +77,7 @@ protected:
     }
 
     /**
-     * @brief Returns how much to add to the property when update is called.
+     * @brief Returns how much to add to the property when the action is updated.
      */
     [[nodiscard]] const Property& delta_property() const
     {
@@ -139,7 +139,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param delta_property How much to add to the property when update is called.
+     * @param delta_property How much to add to the property when the action is updated.
      * @param min_property Minimum property.
      * @param after_max_property Immediate amount after the maximum property.
      */
@@ -156,7 +156,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param delta_property How much to add to the property when update is called.
+     * @param delta_property How much to add to the property when the action is updated.
      * @param min_property Minimum property.
      * @param after_max_property Immediate amount after the maximum property.
      */
@@ -179,7 +179,7 @@ protected:
     }
 
     /**
-     * @brief Returns how much to add to the property when update is called.
+     * @brief Returns how much to add to the property when the action is updated.
      */
     [[nodiscard]] const Property& delta_property() const
     {
@@ -212,7 +212,7 @@ private:
 
 
 /**
- * @brief Modifies the property of a value by delta when a given amount of update calls are done.
+ * @brief Modifies the property of a value by delta when the action is updated a given number of times.
  *
  * @tparam Value Value to modify.
  * @tparam Property Property of the value to modify.
@@ -251,7 +251,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done before updating the property.
+     * @brief Returns how much times the action has to be updated before updating the property.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -262,8 +262,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates How much update calls have to be done before updating the property.
-     * @param delta_property How much to add to the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated before updating the property.
+     * @param delta_property How much to add to the property when the action is updated duration_updates times.
      */
     duration_by_value_template_action(const Value& value, int duration_updates, const Property& delta_property) :
         _value(value),
@@ -277,8 +277,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates How much update calls have to be done before updating the property.
-     * @param delta_property How much to add to the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated before updating the property.
+     * @param delta_property How much to add to the property when the action is updated duration_updates times.
      */
     duration_by_value_template_action(Value&& value, int duration_updates, const Property& delta_property) :
         _value(move(value)),
@@ -298,7 +298,7 @@ protected:
     }
 
     /**
-     * @brief Returns how much to add to the property when update is called duration_updates times.
+     * @brief Returns how much to add to the property when the action is updated the given number of times.
      */
     [[nodiscard]] const Property& delta_property() const
     {
@@ -315,7 +315,7 @@ private:
 
 
 /**
- * @brief Modifies the property of a value by delta when a given amount of update calls are done.
+ * @brief Modifies the property of a value by delta when the action is updated a given number of times.
  * When the property is over the given maximum, it goes back to the given minimum and vice versa.
  *
  * @tparam Value Value to modify.
@@ -367,7 +367,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done before updating the property.
+     * @brief Returns how much times the action has to be updated before updating the property.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -378,8 +378,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates How much update calls have to be done before updating the property.
-     * @param delta_property How much to add to the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated before updating the property.
+     * @param delta_property How much to add to the property when the action is updated duration_updates times.
      * @param min_property Minimum property.
      * @param after_max_property Immediate amount after the maximum property.
      */
@@ -398,8 +398,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates How much update calls have to be done before updating the property.
-     * @param delta_property How much to add to the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated before updating the property.
+     * @param delta_property How much to add to the property when the action is updated duration_updates times.
      * @param min_property Minimum property.
      * @param after_max_property Immediate amount after the maximum property.
      */
@@ -424,7 +424,7 @@ protected:
     }
 
     /**
-     * @brief Returns how much to add to the property when update is called duration_updates times.
+     * @brief Returns how much to add to the property when the action is updated the given number of times.
      */
     [[nodiscard]] const Property& delta_property() const
     {
@@ -510,7 +510,8 @@ public:
     }
 
     /**
-     * @brief Returns the number of times that update has to be called until the property is equal to final_property.
+     * @brief Returns the number of times that the action must be updated
+     * until the property is equal to final_property.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -521,9 +522,9 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates Number of times that update has to be called
+     * @param duration_updates Number of times that the action must be updated
      * until the property is equal to final_property.
-     * @param final_property Property when update is called duration_updates times.
+     * @param final_property Property when the action is updated duration_updates times.
      */
     to_value_template_action(const Value& value, int duration_updates, const Property& final_property) :
         _value(value),
@@ -537,9 +538,9 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates Number of times that update has to be called
+     * @param duration_updates Number of times that the action must be updated
      * until the property is equal to final_property.
-     * @param final_property Property when update is called duration_updates times.
+     * @param final_property Property when the action is updated duration_updates times.
      */
     to_value_template_action(Value&& value, int duration_updates, const Property& final_property) :
         _value(move(value)),
@@ -559,7 +560,7 @@ protected:
     }
 
     /**
-     * @brief Returns the state of property when update is called duration_updates times.
+     * @brief Returns the state of property when the action is updated the given number of times.
      */
     [[nodiscard]] const Property& final_property() const
     {
@@ -648,7 +649,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done before changing the direction of the property delta.
+     * @brief Returns how much times the action has to be updated before changing the direction of the property delta.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -659,7 +660,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates How much update calls have to be done
+     * @param duration_updates How much times the action has to be updated
      * before changing the direction of the property delta.
      * @param final_property When the property is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -676,7 +677,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates How much update calls have to be done
+     * @param duration_updates How much times the action has to be updated
      * before changing the direction of the property delta.
      * @param final_property When the property is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -728,7 +729,7 @@ private:
 
 
 /**
- * @brief Changes the property of a value when a given amount of update calls are done.
+ * @brief Changes the property of a value when the action is updated a given number of times.
  *
  * @tparam Value Value to modify.
  * @tparam Property Property of the value to modify.
@@ -776,7 +777,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done to change the property.
+     * @brief Returns how much times the action has to be updated to change the property.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -787,8 +788,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates How much update calls have to be done to change the property.
-     * @param new_property New state for the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated to change the property.
+     * @param new_property New state for the property when the action is updated duration_updates times.
      */
     toggle_value_template_action(const Value& value, int duration_updates, const Property& new_property) :
         _value(value),
@@ -802,8 +803,8 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates How much update calls have to be done to change the property.
-     * @param new_property New state for the property when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated to change the property.
+     * @param new_property New state for the property when the action is updated duration_updates times.
      */
     toggle_value_template_action(Value&& value, int duration_updates, const Property& new_property) :
         _value(move(value)),
@@ -823,7 +824,7 @@ protected:
     }
 
     /**
-     * @brief Returns the new state for the property when update is called duration_updates times.
+     * @brief Returns the new state for the property when the action is updated the given number of times.
      */
     [[nodiscard]] const Property& new_property() const
     {
@@ -841,7 +842,7 @@ private:
 
 
 /**
- * @brief Toggles a boolean property of a value when a given amount of update calls are done.
+ * @brief Toggles a boolean property of a value when the action is updated a given number of times.
  *
  * @tparam Value Value to modify.
  * @tparam PropertyManager Reads and writes the property of the value to modify.
@@ -888,7 +889,7 @@ public:
     }
 
     /**
-     * @brief Returns how much update calls have to be done to toggle the property.
+     * @brief Returns how much times the action has to be updated to toggle the property.
      */
     [[nodiscard]] int duration_updates() const
     {
@@ -899,7 +900,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to copy.
-     * @param duration_updates How much update calls have to be done to toggle the property.
+     * @param duration_updates How much times the action has to be updated to toggle the property.
      */
     bool_toggle_value_template_action(const Value& value, int duration_updates) :
         _initial_property(PropertyManager::get(value)),
@@ -912,7 +913,7 @@ protected:
     /**
      * @brief Constructor.
      * @param value Value to move.
-     * @param duration_updates How much update calls have to be done to toggle the property.
+     * @param duration_updates How much times the action has to be updated to toggle the property.
      */
     bool_toggle_value_template_action(Value&& value, int duration_updates) :
         _initial_property(PropertyManager::get(value)),

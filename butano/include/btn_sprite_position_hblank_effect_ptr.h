@@ -30,7 +30,7 @@ public:
      * @param deltas_ref Reference to an array of 160 deltas to add to the horizontal position of the given sprite
      * in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_position_hblank_effect_ptr.
@@ -45,7 +45,7 @@ public:
      * @param deltas_ref Reference to an array of 160 deltas to add to the horizontal position of the given sprite
      * in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_position_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
@@ -60,7 +60,7 @@ public:
      * @param deltas_ref Reference to an array of 160 deltas to add to the vertical position of the given sprite
      * in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_position_hblank_effect_ptr.
@@ -75,7 +75,7 @@ public:
      * @param deltas_ref Reference to an array of 160 deltas to add to the vertical position of the given sprite
      * in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_position_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
@@ -95,7 +95,7 @@ public:
      * @brief Returns the reference to an array of 160 deltas to add to the horizontal or vertical position
      * of the managed sprite in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      */
     [[nodiscard]] span<const fixed> deltas_ref() const;
@@ -104,7 +104,7 @@ public:
      * @brief Sets the reference to an array of 160 deltas to add to the horizontal or vertical position
      * of the managed sprite in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      */
     void set_deltas_ref(const span<const fixed>& deltas_ref);
@@ -113,7 +113,7 @@ public:
      * @brief Rereads the content of the referenced deltas to add to the horizontal or vertical position
      * of the managed sprite in each screen horizontal line.
      *
-     * The deltas are not copied but referenced, so they should outlive sprite_position_hblank_effect_ptr
+     * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      */
     void reload_deltas_ref();

@@ -78,6 +78,9 @@ public:
      */
     void set_visible(bool visible);
 
+    /**
+     * @brief Returns the sprite_affine_mat_ptr modified by this H-Blank effect.
+     */
     [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
     {
         return _pa_hblank_effect_ptr.affine_mat();

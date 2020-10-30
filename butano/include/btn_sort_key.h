@@ -12,6 +12,8 @@
 namespace btn
 {
 
+/// @cond DO_NOT_DOCUMENT
+
 class sort_key
 {
 
@@ -105,6 +107,8 @@ private:
        unsigned _data = 0;
     };
 };
+
+/// @endcond
 
 }
 

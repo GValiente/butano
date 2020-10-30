@@ -19,7 +19,7 @@ namespace btn
 // animation
 
 /**
- * @brief Changes the tile set of a sprite_ptr when a given amount of update calls are done.
+ * @brief Changes the tile set of a sprite_ptr when the action is updated a given number of times.
  *
  * Each time the tile set of a sprite_ptr must be changed, it is searched for and created if it has not been found,
  * so the tile sets are not cached.
@@ -245,8 +245,6 @@ private:
  * @return The requested sprite_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
@@ -267,8 +265,6 @@ template<typename ...Args>
  * @return The requested sprite_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_once(
@@ -289,8 +285,6 @@ template<typename ...Args>
  * @return The requested sprite_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_forever(
@@ -311,8 +305,6 @@ template<typename ...Args>
  * @return The requested sprite_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_animate_action_forever(
@@ -328,7 +320,7 @@ template<typename ...Args>
 
 
 /**
- * @brief Changes the tile set of a sprite_ptr when a given amount of update calls are done.
+ * @brief Changes the tile set of a sprite_ptr when the action is updated a given number of times.
  *
  * This action differs from sprite_animate_action in that in this action all sprite tile sets to use are cached,
  * so it is faster but takes way more VRAM.
@@ -618,8 +610,6 @@ private:
  * @return The requested sprite_cached_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
@@ -640,8 +630,6 @@ template<typename ...Args>
  * @return The requested sprite_cached_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_once(
@@ -662,8 +650,6 @@ template<typename ...Args>
  * @return The requested sprite_cached_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
@@ -684,8 +670,6 @@ template<typename ...Args>
  * @return The requested sprite_cached_animate_action.
  *
  * @ingroup sprite
- * @ingroup tile
- * @ingroup action
  */
 template<typename ...Args>
 [[nodiscard]] inline auto create_sprite_cached_animate_action_forever(

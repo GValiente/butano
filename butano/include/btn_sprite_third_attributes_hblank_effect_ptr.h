@@ -30,7 +30,7 @@ public:
      * @param attributes_ref Reference to an array of 160 sprite_third_attributes objects
      * with the attributes to commit to the third GBA register of the given sprite in each screen horizontal line.
      *
-     * The attributes are not copied but referenced, so they should outlive sprite_third_attributes_hblank_effect_ptr
+     * The attributes are not copied but referenced, so they should outlive the sprite_third_attributes_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_third_attributes_hblank_effect_ptr.
@@ -45,7 +45,7 @@ public:
      * @param attributes_ref Reference to an array of 160 sprite_third_attributes objects
      * with the attributes to commit to the third GBA register of the given sprite in each screen horizontal line.
      *
-     * The attributes are not copied but referenced, so they should outlive sprite_third_attributes_hblank_effect_ptr
+     * The attributes are not copied but referenced, so they should outlive the sprite_third_attributes_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_third_attributes_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
@@ -65,7 +65,7 @@ public:
      * @brief Returns the reference to an array of 160 sprite_third_attributes objects
      * with the attributes to commit to the third GBA register of the managed sprite in each screen horizontal line.
      *
-     * The attributes are not copied but referenced, so they should outlive sprite_third_attributes_hblank_effect_ptr
+     * The attributes are not copied but referenced, so they should outlive the sprite_third_attributes_hblank_effect_ptr
      * to avoid dangling references.
      */
     [[nodiscard]] span<const sprite_third_attributes> attributes_ref() const;
@@ -74,7 +74,7 @@ public:
      * @brief Sets the reference to an array of 160 sprite_third_attributes objects
      * with the attributes to commit to the third GBA register of the managed sprite in each screen horizontal line.
      *
-     * The attributes are not copied but referenced, so they should outlive sprite_third_attributes_hblank_effect_ptr
+     * The attributes are not copied but referenced, so they should outlive the sprite_third_attributes_hblank_effect_ptr
      * to avoid dangling references.
      */
     void set_attributes_ref(const span<const sprite_third_attributes>& attributes_ref);
@@ -83,7 +83,7 @@ public:
      * @brief Rereads the content of the referenced attributes to commit to the third GBA register
      * of the managed sprite in each screen horizontal line.
      *
-     * The attributes are not copied but referenced, so they should outlive sprite_third_attributes_hblank_effect_ptr
+     * The attributes are not copied but referenced, so they should outlive the sprite_third_attributes_hblank_effect_ptr
      * to avoid dangling references.
      */
     void reload_attributes_ref();

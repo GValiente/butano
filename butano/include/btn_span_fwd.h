@@ -10,6 +10,15 @@
 
 namespace btn
 {
+    /**
+     * @brief Refers to a contiguous sequence of elements with the first element of the sequence at position zero.
+     *
+     * The elements are not copied but referenced, so they should outlive the span to avoid dangling references.
+     *
+     * @tparam Type Element type.
+     *
+     * @ingroup span
+     */
     template<typename Type>
     class span;
 }

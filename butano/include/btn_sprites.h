@@ -52,16 +52,25 @@ namespace btn::sprites
         return hw::sprites::min_bg_priority();
     }
 
+    /**
+     * @return Returns the maximum priority of a sprite relative to backgrounds.
+     */
     [[nodiscard]] constexpr int max_bg_priority()
     {
         return hw::sprites::max_bg_priority();
     }
 
+    /**
+     * @return Returns the minimum priority of a sprite relative to other sprites.
+     */
     [[nodiscard]] constexpr int min_z_order()
     {
         return sort_key::min_z_order();
     }
 
+    /**
+     * @return Returns the maximum priority of a sprite relative to other sprites.
+     */
     [[nodiscard]] constexpr int max_z_order()
     {
         return sort_key::max_z_order();

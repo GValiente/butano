@@ -59,9 +59,9 @@ class sprites_mosaic_horizontal_stretch_to_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates Number of times that update has to be called
+     * @param duration_updates Number of times that the action must be updated
      * until the horizontal stretch is equal to final_horizontal_stretch.
-     * @param final_horizontal_stretch Horizontal stretch when update is called duration_updates times.
+     * @param final_horizontal_stretch Horizontal stretch when the action is updated duration_updates times.
      *
      * This horizontal stretch must be in the range [0..1].
      */
@@ -73,7 +73,7 @@ public:
     }
 
     /**
-     * @brief Returns the horizontal stretch when update is called duration_updates times.
+     * @brief Returns the horizontal stretch when the action is updated the given number of times.
      */
     [[nodiscard]] fixed final_horizontal_stretch() const
     {
@@ -97,7 +97,7 @@ class sprites_mosaic_horizontal_stretch_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done
+     * @param duration_updates How much times the action has to be updated
      * before changing the direction of the horizontal stretch delta.
      * @param final_horizontal_stretch When the horizontal stretch is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -124,7 +124,7 @@ public:
 
 /**
  * @brief Changes the horizontal stretch of the mosaic applied to the sprites
- * when a given amount of update calls are done.
+ * when the action is updated a given number of times.
  *
  * @ingroup sprite
  * @ingroup mosaic
@@ -137,8 +137,8 @@ class sprites_mosaic_horizontal_stretch_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done to change the horizontal stretch.
-     * @param new_horizontal_stretch New horizontal stretch to set when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated to change the horizontal stretch.
+     * @param new_horizontal_stretch New horizontal stretch to set when the action is updated duration_updates times.
      *
      * This horizontal stretch must be in the range [0..1].
      */
@@ -150,7 +150,7 @@ public:
     }
 
     /**
-     * @brief Returns the horizontal stretch to set when update is called duration_updates times.
+     * @brief Returns the horizontal stretch to set when the action is updated the given number of times.
      */
     [[nodiscard]] fixed new_horizontal_stretch() const
     {
@@ -205,9 +205,9 @@ class sprites_mosaic_vertical_stretch_to_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates Number of times that update has to be called
+     * @param duration_updates Number of times that the action must be updated
      * until the vertical stretch is equal to final_vertical_stretch.
-     * @param final_vertical_stretch Vertical stretch when update is called duration_updates times.
+     * @param final_vertical_stretch Vertical stretch when the action is updated duration_updates times.
      *
      * This vertical stretch must be in the range [0..1].
      */
@@ -219,7 +219,7 @@ public:
     }
 
     /**
-     * @brief Returns the vertical stretch when update is called duration_updates times.
+     * @brief Returns the vertical stretch when the action is updated the given number of times.
      */
     [[nodiscard]] fixed final_vertical_stretch() const
     {
@@ -243,7 +243,7 @@ class sprites_mosaic_vertical_stretch_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done
+     * @param duration_updates How much times the action has to be updated
      * before changing the direction of the vertical stretch delta.
      * @param final_vertical_stretch When the vertical stretch is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -270,7 +270,7 @@ public:
 
 /**
  * @brief Changes the vertical stretch of the mosaic applied to the sprites
- * when a given amount of update calls are done.
+ * when the action is updated a given number of times.
  *
  * @ingroup sprite
  * @ingroup mosaic
@@ -283,8 +283,8 @@ class sprites_mosaic_vertical_stretch_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done to change the vertical stretch.
-     * @param new_vertical_stretch New vertical stretch to set when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated to change the vertical stretch.
+     * @param new_vertical_stretch New vertical stretch to set when the action is updated duration_updates times.
      *
      * This vertical stretch must be in the range [0..1].
      */
@@ -296,7 +296,7 @@ public:
     }
 
     /**
-     * @brief Returns the vertical stretch to set when update is called duration_updates times.
+     * @brief Returns the vertical stretch to set when the action is updated the given number of times.
      */
     [[nodiscard]] fixed new_vertical_stretch() const
     {
@@ -350,9 +350,9 @@ class sprites_mosaic_stretch_to_action : public to_template_action<fixed, sprite
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates Number of times that update has to be called
+     * @param duration_updates Number of times that the action must be updated
      * until the stretch is equal to final_stretch.
-     * @param final_stretch Stretch when update is called duration_updates times.
+     * @param final_stretch Stretch when the action is updated duration_updates times.
      *
      * This stretch must be in the range [0..1].
      */
@@ -363,7 +363,7 @@ public:
     }
 
     /**
-     * @brief Returns the stretch when update is called duration_updates times.
+     * @brief Returns the stretch when the action is updated the given number of times.
      */
     [[nodiscard]] fixed final_stretch() const
     {
@@ -386,7 +386,7 @@ class sprites_mosaic_stretch_loop_action : public loop_template_action<fixed, sp
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done
+     * @param duration_updates How much times the action has to be updated
      * before changing the direction of the stretch delta.
      * @param final_stretch When the stretch is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -411,7 +411,7 @@ public:
 
 /**
  * @brief Changes the stretch of the mosaic applied to the sprites
- * when a given amount of update calls are done.
+ * when the action is updated a given number of times.
  *
  * @ingroup sprite
  * @ingroup mosaic
@@ -423,8 +423,8 @@ class sprites_mosaic_stretch_toggle_action : public toggle_template_action<fixed
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much update calls have to be done to change the stretch.
-     * @param new_stretch New stretch to set when update is called duration_updates times.
+     * @param duration_updates How much times the action has to be updated to change the stretch.
+     * @param new_stretch New stretch to set when the action is updated duration_updates times.
      *
      * This stretch must be in the range [0..1].
      */
@@ -435,7 +435,7 @@ public:
     }
 
     /**
-     * @brief Returns the stretch to set when update is called duration_updates times.
+     * @brief Returns the stretch to set when the action is updated the given number of times.
      */
     [[nodiscard]] fixed new_stretch() const
     {

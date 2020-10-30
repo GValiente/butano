@@ -236,7 +236,7 @@ public:
     /**
      * @brief Returns the priority of the sprites to generate relative to backgrounds.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     [[nodiscard]] int bg_priority() const
@@ -247,7 +247,7 @@ public:
     /**
      * @brief Sets the priority of the sprites to generate relative to backgrounds.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      *
      * @param bg_priority Priority relative to backgrounds in the range [0..3].
@@ -258,7 +258,7 @@ public:
     /**
      * @brief Returns the priority of the sprites to generate relative to other ones.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
      * please use as less unique z orders as possible.
@@ -271,7 +271,7 @@ public:
     /**
      * @brief Sets the priority of the sprites to generate relative to other ones.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * @param z_order Priority relative to other sprites in the range [-32767..32767].
      * @return Reference to this.

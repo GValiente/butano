@@ -383,24 +383,24 @@ fixed sprite_ptr::x() const
     return position().x();
 }
 
-fixed sprite_ptr::y() const
-{
-    return position().y();
-}
-
-const fixed_point& sprite_ptr::position() const
-{
-    return sprites_manager::position(_handle);
-}
-
 void sprite_ptr::set_x(fixed x)
 {
     sprites_manager::set_x(_handle, x);
 }
 
+fixed sprite_ptr::y() const
+{
+    return position().y();
+}
+
 void sprite_ptr::set_y(fixed y)
 {
     sprites_manager::set_y(_handle, y);
+}
+
+const fixed_point& sprite_ptr::position() const
+{
+    return sprites_manager::position(_handle);
 }
 
 void sprite_ptr::set_position(fixed x, fixed y)

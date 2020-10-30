@@ -22,7 +22,7 @@ namespace btn
  * Also, UTF-8 characters are supported.
  *
  * UTF-8 characters and character widths are not copied but referenced,
- * so they should outlive sprite_font to avoid dangling references.
+ * so they should outlive the sprite_font to avoid dangling references.
  *
  * @ingroup sprite
  * @ingroup text
@@ -40,7 +40,7 @@ public:
      *
      * They should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive sprite_font to avoid dangling references.
+     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font to avoid dangling references.
      */
     constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters_ref) :
         sprite_font(item, utf8_characters_ref, span<const int8_t>())
@@ -54,11 +54,11 @@ public:
      *
      * They should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive sprite_font to avoid dangling references.
+     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font to avoid dangling references.
      *
      * @param character_widths_ref Reference to the width in pixels of each supported character.
      *
-     * Characters width are not copied but referenced, so they should outlive sprite_font to avoid dangling references.
+     * Characters width are not copied but referenced, so they should outlive the sprite_font to avoid dangling references.
      */
     constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters_ref,
                           const span<const int8_t>& character_widths_ref) :
@@ -97,7 +97,7 @@ public:
      *
      * They should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive sprite_font to avoid dangling references.
+     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font to avoid dangling references.
      */
     [[nodiscard]] constexpr const span<const string_view>& utf8_characters_ref() const
     {
@@ -107,7 +107,7 @@ public:
     /**
      * @brief Returns the reference to the width in pixels of each supported character.
      *
-     * Characters width are not copied but referenced, so they should outlive sprite_font to avoid dangling references.
+     * Characters width are not copied but referenced, so they should outlive the sprite_font to avoid dangling references.
      */
     [[nodiscard]] constexpr const span<const int8_t>& character_widths_ref() const
     {

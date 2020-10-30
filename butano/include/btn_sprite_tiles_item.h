@@ -20,7 +20,7 @@ class sprite_tiles_ptr;
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file.
  *
- * The tiles are not copied but referenced, so they should outlive sprite_tiles_item to avoid dangling references.
+ * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item to avoid dangling references.
  *
  * @ingroup sprite
  * @ingroup tile
@@ -34,7 +34,7 @@ public:
      * @brief Constructor.
      * @param tiles_ref Reference to one or more sprite tile sets.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_item to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item to avoid dangling references.
      *
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.
      */
@@ -72,7 +72,7 @@ public:
     /**
      * @brief Returns the reference to one or more sprite tile sets.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_item to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item to avoid dangling references.
      */
     [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
     {
@@ -118,7 +118,7 @@ public:
      * @brief Search for a sprite_tiles_ptr which references the first sprite tile set.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;
      * otherwise it returns a sprite_tiles_ptr which references it.
@@ -129,7 +129,7 @@ public:
      * @brief Search for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param graphics_index Index of the tile set to search or handle.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index if it has been found;
@@ -143,7 +143,7 @@ public:
      * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
      * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set.
      */
@@ -155,7 +155,7 @@ public:
      * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
      * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param graphics_index Index of the tile set to reference.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
@@ -166,7 +166,7 @@ public:
      * @brief Search for a sprite_tiles_ptr which references the first sprite tile set.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;
      * otherwise it returns a new sprite_tiles_ptr which references it if it can be allocated; <b>nullopt</b> otherwise.
@@ -177,7 +177,7 @@ public:
      * @brief Search for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param graphics_index Index of the tile set to search or handle.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index if it has been found;
@@ -191,7 +191,7 @@ public:
      * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
      * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it can be allocated; <b>nullopt</b> otherwise.
      */
@@ -203,7 +203,7 @@ public:
      * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
      * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_tiles_ptr to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param graphics_index Index of the tile set to reference.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index

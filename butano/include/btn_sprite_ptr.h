@@ -256,7 +256,7 @@ public:
 
     /**
      * @brief Sets the tiles used by this sprite.
-     * @param tiles Smart pointer to a sprite tile set to copy.
+     * @param tiles sprite_tiles_ptr to copy.
      *
      * It must be compatible with the current color palette, shape and size of the sprite.
      */
@@ -264,7 +264,7 @@ public:
 
     /**
      * @brief Sets the tiles used by this sprite.
-     * @param tiles Smart pointer to a sprite tile set to move.
+     * @param tiles sprite_tiles_ptr to move.
      *
      * It must be compatible with the current color palette, shape and size of the sprite.
      */
@@ -273,7 +273,7 @@ public:
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tile set to copy.
+     * @param tiles sprite_tiles_ptr to copy.
      *
      * It must be compatible with the current color palette of the sprite.
      */
@@ -282,7 +282,7 @@ public:
     /**
      * @brief Sets the tiles, the shape and size of the sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tile set to move.
+     * @param tiles sprite_tiles_ptr to move.
      *
      * It must be compatible with the current color palette of the sprite.
      */
@@ -349,7 +349,7 @@ public:
 
     /**
      * @brief Sets the color palette to use by this sprite.
-     * @param palette Smart pointer to a sprite color palette to copy.
+     * @param palette sprite_palette_ptr to copy.
      *
      * It must be compatible with the current tiles of the sprite.
      */
@@ -357,14 +357,15 @@ public:
 
     /**
      * @brief Sets the color palette to use by this sprite.
-     * @param palette Smart pointer to a sprite color palette to move.
+     * @param palette sprite_palette_ptr to move.
      *
      * It must be compatible with the current tiles of the sprite.
      */
     void set_palette(sprite_palette_ptr&& palette);
 
     /**
-     * @brief Replaces the color palette used by this sprite with a new one created with the given sprite_palette_item.
+     * @brief Replaces the color palette used by this sprite
+     * with a new one created with the given sprite_palette_item.
      *
      * Before creating a new color palette, the sprite_palette_ptr used by this sprite is removed,
      * so VRAM usage is reduced.
@@ -380,22 +381,23 @@ public:
      *
      * The given parameters must be compatible with the current shape and size of the sprite.
      *
-     * @param tiles Smart pointer to a sprite tile set.
-     * @param palette Smart pointer to a sprite color palette.
+     * @param tiles sprite_tiles_ptr to set.
+     * @param palette sprite_palette_ptr to set.
      */
     void set_tiles_and_palette(sprite_tiles_ptr tiles, sprite_palette_ptr palette);
 
     /**
      * @brief Sets the tiles, the color palette, the shape and size to use by this sprite.
      * @param shape_size Shape and size of the sprite.
-     * @param tiles Smart pointer to a sprite tile set.
-     * @param palette Smart pointer to a sprite color palette.
+     * @param tiles sprite_tiles_ptr to set.
+     * @param palette sprite_palette_ptr to set.
      */
-    void set_tiles_and_palette(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
+    void set_tiles_and_palette(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
+                               sprite_palette_ptr palette);
 
     /**
-     * @brief Replaces the tiles, the color palette, the shape and size used by this sprite with
-     * the created with the given sprite_item.
+     * @brief Replaces the tiles, the color palette, the shape and size used by this sprite
+     * with the created with the given sprite_item.
      *
      * Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.
      *
@@ -404,8 +406,8 @@ public:
     void set_item(const sprite_item& item);
 
     /**
-     * @brief Replaces the tiles, the color palette, the shape and size used by this sprite with
-     * the created with the given sprite_item.
+     * @brief Replaces the tiles, the color palette, the shape and size used by this sprite
+     * with the created with the given sprite_item.
      *
      * Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.
      *
@@ -420,24 +422,24 @@ public:
     [[nodiscard]] fixed x() const;
 
     /**
-     * @brief Returns the vertical position of the sprite (relative to its camera, if it has one).
-     */
-    [[nodiscard]] fixed y() const;
-
-    /**
-     * @brief Returns the position of the sprite (relative to its camera, if it has one).
-     */
-    [[nodiscard]] const fixed_point& position() const;
-
-    /**
      * @brief Sets the horizontal position of the sprite (relative to its camera, if it has one).
      */
     void set_x(fixed x);
 
     /**
+     * @brief Returns the vertical position of the sprite (relative to its camera, if it has one).
+     */
+    [[nodiscard]] fixed y() const;
+
+    /**
      * @brief Sets the vertical position of the sprite (relative to its camera, if it has one).
      */
     void set_y(fixed y);
+
+    /**
+     * @brief Returns the position of the sprite (relative to its camera, if it has one).
+     */
+    [[nodiscard]] const fixed_point& position() const;
 
     /**
      * @brief Sets the position of the sprite (relative to its camera, if it has one).
@@ -512,7 +514,7 @@ public:
     /**
      * @brief Returns the priority relative to backgrounds.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     [[nodiscard]] int bg_priority() const;
@@ -520,7 +522,7 @@ public:
     /**
      * @brief Sets the priority relative to backgrounds.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      *
      * @param bg_priority Priority relative to backgrounds in the range [0..3].
@@ -530,7 +532,7 @@ public:
     /**
      * @brief Returns the priority relative to other sprites.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
      * please use as less unique z orders as possible.
@@ -540,7 +542,7 @@ public:
     /**
      * @brief Sets the priority relative to other sprites.
      *
-     * Higher priorities are drawn first (and therefore can be covered by later sprites).
+     * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
      * please use as less unique z orders as possible.
@@ -556,7 +558,7 @@ public:
     [[nodiscard]] optional<bool> above(const sprite_ptr& other) const;
 
     /**
-     * @brief Indicates if this sprite is drawn above the given regular background.
+     * @brief Indicates if this sprite is drawn above the given regular background or not.
      */
     [[nodiscard]] bool above(const regular_bg_ptr& bg_ptr) const;
 

@@ -34,7 +34,7 @@ public:
      * @param colors_ref Reference to an array of 160 colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_palette_color_hblank_effect_ptr
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_palette_color_hblank_effect_ptr.
@@ -50,7 +50,7 @@ public:
      * @param colors_ref Reference to an array of 160 colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_palette_color_hblank_effect_ptr
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      *
      * @return The requested sprite_palette_color_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
@@ -78,7 +78,7 @@ public:
      * @brief Returns the reference to an array of 160 colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_palette_color_hblank_effect_ptr
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      */
     [[nodiscard]] span<const color> colors_ref() const;
@@ -87,7 +87,7 @@ public:
      * @brief Sets the reference to an array of 160 colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_palette_color_hblank_effect_ptr
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      */
     void set_colors_ref(const span<const color>& colors_ref);
@@ -96,7 +96,7 @@ public:
      * @brief Rereads the content of the referenced colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_palette_color_hblank_effect_ptr
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      */
     void reload_colors_ref();

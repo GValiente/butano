@@ -15,7 +15,6 @@ namespace btn
  * @brief Specifies the area a sprite uses to be drawn when it has an attached sprite_affine_mat_ptr.
  *
  * @ingroup sprite
- * @ingroup affine_mat
  */
 enum class sprite_double_size_mode
 {

@@ -22,7 +22,7 @@ class fixed_point;
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file.
  *
- * Tiles and colors are not copied but referenced, so they should outlive sprite_item to avoid dangling references.
+ * Tiles and colors are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
  *
  * @ingroup sprite
  * @ingroup tool
@@ -36,11 +36,11 @@ public:
      * @param shape_size Shape and size of output sprites.
      * @param tiles_ref Reference to one or more sprite tile sets.
      *
-     * The tiles are not copied but referenced, so they should outlive sprite_item to avoid dangling references.
+     * The tiles are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
      *
      * @param colors_ref Reference to an array of multiples of 16 colors.
      *
-     * The colors are not copied but referenced, so they should outlive sprite_item to avoid dangling references.
+     * The colors are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
      *
      * @param bpp_mode Bits per pixel of output sprites.
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.

@@ -15,6 +15,8 @@ namespace btn
  * @brief A 514 long sin LUT of 16bit values in 4.12 format.
  *
  * From Tonc's sin_lut.s
+ *
+ * @ingroup affine_mat
  */
 constexpr const int16_t sin_lut[514] = {
     int16_t(0x0000), int16_t(0x0032), int16_t(0x0064), int16_t(0x0096), int16_t(0x00C8), int16_t(0x00FB), int16_t(0x012D), int16_t(0x015F),

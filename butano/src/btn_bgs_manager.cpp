@@ -167,19 +167,6 @@ namespace
 
         return make_pair(index, other_index);
     }
-
-    void _set_regular_attributes([[maybe_unused]] const regular_bg_map_ptr& current_map,
-                                 const regular_bg_attributes& attributes, uint16_t& bg_cnt)
-    {
-        const regular_bg_map_ptr& attributes_map = attributes.map();
-        BTN_ASSERT(current_map.dimensions() == attributes_map.dimensions(), "Map dimensions mismatch");
-
-        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), bg_cnt);
-        hw::bgs::set_map_sbb(attributes_map.id(), bg_cnt);
-        hw::bgs::set_bpp_mode(attributes_map.bpp_mode(), bg_cnt);
-        hw::bgs::set_priority(attributes.priority(), bg_cnt);
-        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), bg_cnt);
-    }
 }
 
 int used_count()
@@ -496,11 +483,9 @@ regular_bg_attributes regular_attributes(id_type id)
 
 void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
 {
-    auto item = static_cast<item_type*>(id);
+    set_map(id, attributes.map());
     set_priority(id, attributes.priority());
-    _set_regular_attributes(*item->map, attributes, item->handle.cnt);
-    item->map = attributes.map();
-    _update_item(*item);
+    set_mosaic_enabled(id, attributes.mosaic_enabled());
 }
 
 bool blending_enabled(id_type id)
@@ -647,15 +632,22 @@ void fill_hblank_effect_vertical_positions(int base_position, const fixed* posit
 void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    const regular_bg_map_ptr& map = *item->map;
+    [[maybe_unused]] btn::size current_dimensions = item->map->dimensions();
     uint16_t bg_cnt = item->handle.cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         const regular_bg_attributes& attributes = attributes_ptr[index];
-        uint16_t& dest_cnt = dest_ptr[index];
-        dest_cnt = bg_cnt;
-        _set_regular_attributes(map, attributes, dest_cnt);
+        const regular_bg_map_ptr& attributes_map = attributes.map();
+        BTN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+
+        uint16_t dest_cnt = bg_cnt;
+        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
+        hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
+        hw::bgs::set_bpp_mode(attributes_map.bpp_mode(), dest_cnt);
+        hw::bgs::set_priority(attributes.priority(), dest_cnt);
+        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
+        dest_ptr[index] = dest_cnt;
     }
 }
 

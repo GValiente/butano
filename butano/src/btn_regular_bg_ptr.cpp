@@ -204,16 +204,24 @@ void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
     }
     else
     {
+        bg_tiles_ptr tiles_copy(current_tiles);
+        bg_palette_ptr palette_copy(current_palette);
         bgs_manager::remove_map(_handle);
-        bgs_manager::set_map(_handle,
-                             map_item.create_new_map(bg_tiles_ptr(current_tiles), bg_palette_ptr(current_palette)));
+        bgs_manager::set_map(_handle, map_item.create_new_map(move(tiles_copy), move(palette_copy)));
     }
 }
 
 void regular_bg_ptr::set_item(const regular_bg_item& item)
 {
-    set_map(item.map_item());
-    set_tiles_and_palette(item.tiles_item(), item.palette_item());
+    if(optional<regular_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
+    {
+        bgs_manager::set_map(_handle, move(*map));
+    }
+    else
+    {
+        bgs_manager::remove_map(_handle);
+        bgs_manager::set_map(_handle, item.create_new_map());
+    }
 }
 
 fixed regular_bg_ptr::x() const
@@ -221,24 +229,24 @@ fixed regular_bg_ptr::x() const
     return position().x();
 }
 
-fixed regular_bg_ptr::y() const
-{
-    return position().y();
-}
-
-const fixed_point& regular_bg_ptr::position() const
-{
-    return bgs_manager::position(_handle);
-}
-
 void regular_bg_ptr::set_x(fixed x)
 {
     bgs_manager::set_x(_handle, x);
 }
 
+fixed regular_bg_ptr::y() const
+{
+    return position().y();
+}
+
 void regular_bg_ptr::set_y(fixed y)
 {
     bgs_manager::set_y(_handle, y);
+}
+
+const fixed_point& regular_bg_ptr::position() const
+{
+    return bgs_manager::position(_handle);
 }
 
 void regular_bg_ptr::set_position(fixed x, fixed y)

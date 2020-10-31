@@ -58,10 +58,12 @@ namespace
         {
             const regular_bg_map_ptr& map_ref = *map;
             size map_dimensions = map_ref.dimensions();
-            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), handle);
-            hw::bgs::set_map_sbb(map_ref.id(), handle);
-            hw::bgs::set_bpp_mode(map_ref.bpp_mode(), handle);
-            hw::bgs::set_map_dimensions(map_dimensions, handle);
+            hw::bgs::handle new_handle = handle;
+            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_handle);
+            hw::bgs::set_map_sbb(map_ref.id(), new_handle);
+            hw::bgs::set_bpp_mode(map_ref.bpp_mode(), new_handle);
+            hw::bgs::set_map_dimensions(map_dimensions, new_handle);
+            handle = new_handle;
             half_dimensions = map_dimensions * 4;
             update_hw_position();
         }

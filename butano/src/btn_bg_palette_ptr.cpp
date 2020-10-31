@@ -48,14 +48,25 @@ bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors, palette_b
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
+        unsigned hash = palettes_bank::colors_hash(colors);
+        id = bg_palettes_bank.find_bpp_4(colors, hash);
+
+        if(id < 0)
+        {
+            id = bg_palettes_bank.create_bpp_4(colors, hash);
+            BTN_ASSERT(id >= 0, "Palette create failed");
+        }
     }
     else
     {
-        id = bg_palettes_bank.create_bpp_8(colors);
-    }
+        id = bg_palettes_bank.find_bpp_8(colors);
 
-    BTN_ASSERT(id >= 0, "Palette create failed");
+        if(id < 0)
+        {
+            id = bg_palettes_bank.create_bpp_8(colors);
+            BTN_ASSERT(id >= 0, "Palette create failed");
+        }
+    }
 
     return bg_palette_ptr(id);
 }
@@ -65,7 +76,31 @@ bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
     return create(palette_item.colors_ref(), palette_item.bpp_mode());
 }
 
-bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode)
+bg_palette_ptr bg_palette_ptr::create_new(const span<const color>& colors, palette_bpp_mode bpp_mode)
+{
+    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+    int id;
+
+    if(bpp_mode == palette_bpp_mode::BPP_4)
+    {
+        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
+    }
+    else
+    {
+        id = bg_palettes_bank.create_bpp_8(colors);
+    }
+
+    BTN_ASSERT(id >= 0, "Palette create new failed");
+
+    return bg_palette_ptr(id);
+}
+
+bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
+{
+    return create_new(palette_item.colors_ref(), palette_item.bpp_mode());
+}
+
+optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>& colors, palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
@@ -78,7 +113,6 @@ bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors, p
         if(id < 0)
         {
             id = bg_palettes_bank.create_bpp_4(colors, hash);
-            BTN_ASSERT(id >= 0, "Palette find or create failed");
         }
     }
     else
@@ -88,30 +122,7 @@ bg_palette_ptr bg_palette_ptr::find_or_create(const span<const color>& colors, p
         if(id < 0)
         {
             id = bg_palettes_bank.create_bpp_8(colors);
-            BTN_ASSERT(id >= 0, "Palette find or create failed");
         }
-    }
-
-    return bg_palette_ptr(id);
-}
-
-bg_palette_ptr bg_palette_ptr::find_or_create(const bg_palette_item& palette_item)
-{
-    return find_or_create(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
-    int id;
-
-    if(bpp_mode == palette_bpp_mode::BPP_4)
-    {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
-    }
-    else
-    {
-        id = bg_palettes_bank.create_bpp_8(colors);
     }
 
     optional<bg_palette_ptr> result;
@@ -129,30 +140,19 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& 
     return create_optional(palette_item.colors_ref(), palette_item.bpp_mode());
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::find_or_create_optional(const span<const color>& colors,
-                                                                 palette_bpp_mode bpp_mode)
+optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const span<const color>& colors,
+                                                             palette_bpp_mode bpp_mode)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_hash(colors);
-        id = bg_palettes_bank.find_bpp_4(colors, hash);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_4(colors, hash);
-        }
+        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
     else
     {
-        id = bg_palettes_bank.find_bpp_8(colors);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_8(colors);
-        }
+        id = bg_palettes_bank.create_bpp_8(colors);
     }
 
     optional<bg_palette_ptr> result;
@@ -165,9 +165,9 @@ optional<bg_palette_ptr> bg_palette_ptr::find_or_create_optional(const span<cons
     return result;
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::find_or_create_optional(const bg_palette_item& palette_item)
+optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_item& palette_item)
 {
-    return find_or_create_optional(palette_item.colors_ref(), palette_item.bpp_mode());
+    return create_new_optional(palette_item.colors_ref(), palette_item.bpp_mode());
 }
 
 bg_palette_ptr::bg_palette_ptr(const bg_palette_ptr& other) :

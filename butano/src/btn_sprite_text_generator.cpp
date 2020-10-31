@@ -193,7 +193,7 @@ namespace
 
             if(allow_failure)
             {
-                source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(tiles_item, graphics_index);
+                source_tiles_ptr = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
 
                 if(! source_tiles_ptr)
                 {
@@ -202,7 +202,7 @@ namespace
             }
             else
             {
-                source_tiles_ptr = sprite_tiles_ptr::find_or_create(tiles_item, graphics_index);
+                source_tiles_ptr = sprite_tiles_ptr::create(tiles_item, graphics_index);
             }
 
             sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);
@@ -287,7 +287,7 @@ namespace
 
                 if(allow_failure)
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::find_or_create_optional(tiles_item, graphics_index);
+                    source_tiles_ptr = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
 
                     if(! source_tiles_ptr)
                     {
@@ -296,7 +296,7 @@ namespace
                 }
                 else
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::find_or_create(tiles_item, graphics_index);
+                    source_tiles_ptr = sprite_tiles_ptr::create(tiles_item, graphics_index);
                 }
 
                 sprite_shape_size shape_size(item.shape_size().shape(), sprite_size::SMALL);

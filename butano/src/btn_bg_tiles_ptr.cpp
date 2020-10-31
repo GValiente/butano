@@ -43,17 +43,17 @@ bg_tiles_ptr bg_tiles_ptr::create(const bg_tiles_item& tiles_item)
     return create(tiles_item.tiles_ref());
 }
 
-bg_tiles_ptr bg_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
+bg_tiles_ptr bg_tiles_ptr::create_new(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::find_or_create_tiles(tiles_ref);
-    BTN_ASSERT(handle >= 0, "Tiles find or create failed");
+    int handle = bg_blocks_manager::create_new_tiles(tiles_ref);
+    BTN_ASSERT(handle >= 0, "Tiles create new failed");
 
     return bg_tiles_ptr(handle);
 }
 
-bg_tiles_ptr bg_tiles_ptr::find_or_create(const bg_tiles_item& tiles_item)
+bg_tiles_ptr bg_tiles_ptr::create_new(const bg_tiles_item& tiles_item)
 {
-    return find_or_create(tiles_item.tiles_ref());
+    return create_new(tiles_item.tiles_ref());
 }
 
 bg_tiles_ptr bg_tiles_ptr::allocate(int tiles_count)
@@ -82,9 +82,9 @@ optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const bg_tiles_item& tiles_
     return create_optional(tiles_item.tiles_ref());
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
+optional<bg_tiles_ptr> bg_tiles_ptr::create_new_optional(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::find_or_create_tiles(tiles_ref);
+    int handle = bg_blocks_manager::create_new_tiles(tiles_ref);
     optional<bg_tiles_ptr> result;
 
     if(handle >= 0)
@@ -95,9 +95,9 @@ optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const span<const ti
     return result;
 }
 
-optional<bg_tiles_ptr> bg_tiles_ptr::find_or_create_optional(const bg_tiles_item& tiles_item)
+optional<bg_tiles_ptr> bg_tiles_ptr::create_new_optional(const bg_tiles_item& tiles_item)
 {
-    return find_or_create_optional(tiles_item.tiles_ref());
+    return create_new_optional(tiles_item.tiles_ref());
 }
 
 optional<bg_tiles_ptr> bg_tiles_ptr::allocate_optional(int tiles_count)

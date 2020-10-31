@@ -80,32 +80,32 @@ regular_bg_map_ptr regular_bg_map_ptr::create(const regular_bg_item& item)
     return regular_bg_map_ptr(handle);
 }
 
-regular_bg_map_ptr regular_bg_map_ptr::find_or_create(
+regular_bg_map_ptr regular_bg_map_ptr::create_new(
         const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::find_or_create_regular_map(cells_ref, dimensions, move(tiles), move(palette));
-    BTN_ASSERT(handle >= 0, "Regular map find or create failed");
+    int handle = bg_blocks_manager::create_new_regular_map(cells_ref, dimensions, move(tiles), move(palette));
+    BTN_ASSERT(handle >= 0, "Regular map create new failed");
 
     return regular_bg_map_ptr(handle);
 }
 
-regular_bg_map_ptr regular_bg_map_ptr::find_or_create(
+regular_bg_map_ptr regular_bg_map_ptr::create_new(
         const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::find_or_create_regular_map(
+    int handle = bg_blocks_manager::create_new_regular_map(
                 map_item.cells_ref(), map_item.dimensions(), move(tiles), move(palette));
-    BTN_ASSERT(handle >= 0, "Regular map find or create failed");
+    BTN_ASSERT(handle >= 0, "Regular map create new failed");
 
     return regular_bg_map_ptr(handle);
 }
 
-regular_bg_map_ptr regular_bg_map_ptr::find_or_create(const regular_bg_item& item)
+regular_bg_map_ptr regular_bg_map_ptr::create_new(const regular_bg_item& item)
 {
     const regular_bg_map_item& map_item = item.map_item();
-    int handle = bg_blocks_manager::find_or_create_regular_map(
+    int handle = bg_blocks_manager::create_new_regular_map(
                 map_item.cells_ref(), map_item.dimensions(), item.tiles_item().create_tiles(),
                 item.palette_item().create_palette());
-    BTN_ASSERT(handle >= 0, "Regular map find or create failed");
+    BTN_ASSERT(handle >= 0, "Regular map create new failed");
 
     return regular_bg_map_ptr(handle);
 }
@@ -170,10 +170,10 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(const regular_b
     return result;
 }
 
-optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(
+optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(
         const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::find_or_create_regular_map(cells_ref, dimensions, move(tiles), move(palette));
+    int handle = bg_blocks_manager::create_new_regular_map(cells_ref, dimensions, move(tiles), move(palette));
     optional<regular_bg_map_ptr> result;
 
     if(handle >= 0)
@@ -184,10 +184,10 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(
     return result;
 }
 
-optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(
+optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(
         const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::find_or_create_regular_map(
+    int handle = bg_blocks_manager::create_new_regular_map(
                 map_item.cells_ref(), map_item.dimensions(), move(tiles), move(palette));
     optional<regular_bg_map_ptr> result;
 
@@ -199,7 +199,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(
     return result;
 }
 
-optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(const regular_bg_item& item)
+optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(const regular_bg_item& item)
 {
     optional<regular_bg_map_ptr> result;
 
@@ -208,7 +208,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::find_or_create_optional(const r
         if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
         {
             const regular_bg_map_item& map_item = item.map_item();
-            int handle = bg_blocks_manager::find_or_create_regular_map(
+            int handle = bg_blocks_manager::create_new_regular_map(
                         map_item.cells_ref(), map_item.dimensions(), move(*tiles), move(*palette));
 
             if(handle >= 0)
@@ -272,7 +272,7 @@ palette_bpp_mode regular_bg_map_ptr::bpp_mode() const
     return palette().bpp_mode();
 }
 
-const regular_bg_map_cell* regular_bg_map_ptr::cells_ref() const
+optional<span<const regular_bg_map_cell>> regular_bg_map_ptr::cells_ref() const
 {
     return bg_blocks_manager::regular_map_cells_ref(_handle);
 }

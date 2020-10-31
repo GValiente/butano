@@ -677,11 +677,16 @@ int create(const span<const tile>& tiles_ref)
 
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_data, " - ", tiles_count);
 
-    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
-    BTN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-               "Multiple copies of the same tiles data not supported");
+    int result = _find_impl(tiles_data, tiles_count);
 
-    int result = _create_impl(tiles_data, tiles_count);
+    if(result != -1)
+    {
+        return result;
+    }
+
+    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
+
+    result = _create_impl(tiles_data, tiles_count);
 
     if(result != -1)
     {
@@ -698,23 +703,18 @@ int create(const span<const tile>& tiles_ref)
     return result;
 }
 
-int find_or_create(const span<const tile>& tiles_ref)
+int create_new(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND OR CREATE: ", tiles_data, " - ", tiles_count);
-
-    int result = _find_impl(tiles_data, tiles_count);
-
-    if(result != -1)
-    {
-        return result;
-    }
+    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count);
 
     BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
+    BTN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
+               "Multiple copies of the same tiles data not supported");
 
-    result = _create_impl(tiles_data, tiles_count);
+    int result = _create_impl(tiles_data, tiles_count);
 
     if(result != -1)
     {

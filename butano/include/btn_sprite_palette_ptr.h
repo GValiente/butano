@@ -34,7 +34,7 @@ class sprite_palette_ptr
 
 public:
     /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * @param colors Colors to search.
      * @param bpp_mode Bits per pixel of the palette to search.
      * @return sprite_palette_ptr which contains the given colors if it has been found; <b>nullopt</b> otherwise.
@@ -42,7 +42,7 @@ public:
     [[nodiscard]] static optional<sprite_palette_ptr> find(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors to search.
      * @return sprite_palette_ptr which contains the referenced colors by palette_item if it has been found;
      * <b>nullopt</b> otherwise.
@@ -50,36 +50,54 @@ public:
     [[nodiscard]] static optional<sprite_palette_ptr> find(const sprite_palette_item& palette_item);
 
     /**
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
+     * If it is not found, it creates a sprite_palette_ptr which contains them.
+     * @param colors Colors of the palette to search or create.
+     * @param bpp_mode Bits per pixel of the palette to search or create.
+     * @return The requested sprite_palette_ptr.
+     */
+    [[nodiscard]] static sprite_palette_ptr create(const span<const color>& colors, palette_bpp_mode bpp_mode);
+
+    /**
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
+     * If it is not found, it creates a sprite_palette_ptr which contains them.
+     * @param palette_item sprite_palette_item which references the colors of the palette to search or create.
+     * @return The requested sprite_palette_ptr.
+     */
+    [[nodiscard]] static sprite_palette_ptr create(const sprite_palette_item& palette_item);
+
+    /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param colors Colors to search.
      * @param bpp_mode Bits per pixel of the new palette.
      * @return The requested sprite_palette_ptr.
      */
-    [[nodiscard]] static sprite_palette_ptr create(const span<const color>& colors, palette_bpp_mode bpp_mode);
+    [[nodiscard]] static sprite_palette_ptr create_new(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
     /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors of the new palette.
      * @return The requested sprite_palette_ptr.
      */
-    [[nodiscard]] static sprite_palette_ptr create(const sprite_palette_item& palette_item);
+    [[nodiscard]] static sprite_palette_ptr create_new(const sprite_palette_item& palette_item);
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @param colors Colors of the palette to search or create.
      * @param bpp_mode Bits per pixel of the palette to search or create.
-     * @return The requested sprite_palette_ptr.
+     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
-    [[nodiscard]] static sprite_palette_ptr find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode);
+    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors,
+                                                                      palette_bpp_mode bpp_mode);
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
+     * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @param palette_item sprite_palette_item which references the colors of the palette to search or create.
-     * @return The requested sprite_palette_ptr.
+     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
-    [[nodiscard]] static sprite_palette_ptr find_or_create(const sprite_palette_item& palette_item);
+    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const sprite_palette_item& palette_item);
 
     /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
@@ -87,33 +105,15 @@ public:
      * @param bpp_mode Bits per pixel of the new palette.
      * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
-    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors,
-                                                                      palette_bpp_mode bpp_mode);
+    [[nodiscard]] static optional<sprite_palette_ptr> create_new_optional(const span<const color>& colors,
+                                                                          palette_bpp_mode bpp_mode);
 
     /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors of the new palette.
      * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
      */
-    [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const sprite_palette_item& palette_item);
-
-    /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
-     * If it is not found, it creates a sprite_palette_ptr which contains them.
-     * @param colors Colors of the palette to search or create.
-     * @param bpp_mode Bits per pixel of the palette to search or create.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
-     */
-    [[nodiscard]] static optional<sprite_palette_ptr> find_or_create_optional(const span<const color>& colors,
-                                                                              palette_bpp_mode bpp_mode);
-
-    /**
-     * @brief Search for a sprite_palette_ptr which contains the given colors.
-     * If it is not found, it creates a sprite_palette_ptr which contains them.
-     * @param palette_item sprite_palette_item which references the colors of the palette to search or create.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
-     */
-    [[nodiscard]] static optional<sprite_palette_ptr> find_or_create_optional(const sprite_palette_item& palette_item);
+    [[nodiscard]] static optional<sprite_palette_ptr> create_new_optional(const sprite_palette_item& palette_item);
 
     /**
      * @brief Copy constructor.

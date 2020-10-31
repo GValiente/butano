@@ -40,22 +40,22 @@ optional<regular_bg_map_ptr> regular_bg_item::find_map() const
 
 regular_bg_map_ptr regular_bg_item::create_map() const
 {
-    return regular_bg_map_ptr::find_or_create(*this);
+    return regular_bg_map_ptr::create(*this);
 }
 
 regular_bg_map_ptr regular_bg_item::create_new_map() const
 {
-    return regular_bg_map_ptr::create(*this);
+    return regular_bg_map_ptr::create_new(*this);
 }
 
 optional<regular_bg_map_ptr> regular_bg_item::create_map_optional() const
 {
-    return regular_bg_map_ptr::find_or_create_optional(*this);
+    return regular_bg_map_ptr::create_optional(*this);
 }
 
 optional<regular_bg_map_ptr> regular_bg_item::create_new_map_optional() const
 {
-    return regular_bg_map_ptr::create_optional(*this);
+    return regular_bg_map_ptr::create_new_optional(*this);
 }
 
 }

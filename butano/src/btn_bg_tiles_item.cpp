@@ -18,22 +18,22 @@ optional<bg_tiles_ptr> bg_tiles_item::find_tiles() const
 
 bg_tiles_ptr bg_tiles_item::create_tiles() const
 {
-    return bg_tiles_ptr::find_or_create(*this);
+    return bg_tiles_ptr::create(*this);
 }
 
 bg_tiles_ptr bg_tiles_item::create_new_tiles() const
 {
-    return bg_tiles_ptr::create(*this);
+    return bg_tiles_ptr::create_new(*this);
 }
 
 optional<bg_tiles_ptr> bg_tiles_item::create_tiles_optional() const
 {
-    return bg_tiles_ptr::find_or_create_optional(*this);
+    return bg_tiles_ptr::create_optional(*this);
 }
 
 optional<bg_tiles_ptr> bg_tiles_item::create_new_tiles_optional() const
 {
-    return bg_tiles_ptr::create_optional(*this);
+    return bg_tiles_ptr::create_new_optional(*this);
 }
 
 }

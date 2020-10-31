@@ -30,9 +30,9 @@ public:
 
     [[nodiscard]] static bg_tiles_ptr create(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] static bg_tiles_ptr find_or_create(const span<const tile>& tiles_ref);
+    [[nodiscard]] static bg_tiles_ptr create_new(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static bg_tiles_ptr find_or_create(const bg_tiles_item& tiles_item);
+    [[nodiscard]] static bg_tiles_ptr create_new(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] static bg_tiles_ptr allocate(int tiles_count);
 
@@ -40,9 +40,9 @@ public:
 
     [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] static optional<bg_tiles_ptr> find_or_create_optional(const span<const tile>& tiles_ref);
+    [[nodiscard]] static optional<bg_tiles_ptr> create_new_optional(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] static optional<bg_tiles_ptr> find_or_create_optional(const bg_tiles_item& tiles_item);
+    [[nodiscard]] static optional<bg_tiles_ptr> create_new_optional(const bg_tiles_item& tiles_item);
 
     [[nodiscard]] static optional<bg_tiles_ptr> allocate_optional(int tiles_count);
 

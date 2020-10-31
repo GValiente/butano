@@ -101,13 +101,13 @@ public:
     }
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the first sprite tile set.
+     * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> find_tiles() const;
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
+     * @brief Searches for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * @param graphics_index Index of the tile set to search.
      * @return sprite_tiles_ptr which references the indicated sprite tile set if it has been found;
      * <b>nullopt</b> otherwise.
@@ -115,7 +115,7 @@ public:
     [[nodiscard]] optional<sprite_tiles_ptr> find_tiles(int graphics_index) const;
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the first sprite tile set.
+     * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
@@ -126,7 +126,7 @@ public:
     [[nodiscard]] sprite_tiles_ptr create_tiles() const;
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
+     * @brief Searches for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
@@ -163,7 +163,7 @@ public:
     [[nodiscard]] sprite_tiles_ptr create_new_tiles(int graphics_index) const;
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the first sprite tile set.
+     * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.
@@ -174,7 +174,7 @@ public:
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional() const;
 
     /**
-     * @brief Search for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
+     * @brief Searches for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * If it is not found, it creates a sprite_tiles_ptr which references it.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr to avoid dangling references.

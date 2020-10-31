@@ -53,22 +53,22 @@ sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item, i
     return create(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
-sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const span<const tile>& tiles_ref)
+sprite_tiles_ptr sprite_tiles_ptr::create_new(const span<const tile>& tiles_ref)
 {
-    int handle = sprite_tiles_manager::find_or_create(tiles_ref);
-    BTN_ASSERT(handle >= 0, "Tiles find or create failed");
+    int handle = sprite_tiles_manager::create_new(tiles_ref);
+    BTN_ASSERT(handle >= 0, "Tiles create new failed");
 
     return sprite_tiles_ptr(handle);
 }
 
-sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const sprite_tiles_item& tiles_item)
+sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_item)
 {
-    return find_or_create(tiles_item.graphics_tiles_ref());
+    return create_new(tiles_item.graphics_tiles_ref());
 }
 
-sprite_tiles_ptr sprite_tiles_ptr::find_or_create(const sprite_tiles_item& tiles_item, int graphics_index)
+sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    return find_or_create(tiles_item.graphics_tiles_ref(graphics_index));
+    return create_new(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count)
@@ -102,9 +102,9 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_
     return create_optional(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const span<const tile>& tiles_ref)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const span<const tile>& tiles_ref)
 {
-    int handle = sprite_tiles_manager::find_or_create(tiles_ref);
+    int handle = sprite_tiles_manager::create_new(tiles_ref);
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)
@@ -115,14 +115,15 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const span<
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const sprite_tiles_item& tiles_item)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const sprite_tiles_item& tiles_item)
 {
-    return find_or_create_optional(tiles_item.graphics_tiles_ref());
+    return create_new_optional(tiles_item.graphics_tiles_ref());
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::find_or_create_optional(const sprite_tiles_item& tiles_item, int graphics_index)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const sprite_tiles_item& tiles_item,
+                                                                 int graphics_index)
 {
-    return find_or_create_optional(tiles_item.graphics_tiles_ref(graphics_index));
+    return create_new_optional(tiles_item.graphics_tiles_ref(graphics_index));
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::allocate_optional(int tiles_count)

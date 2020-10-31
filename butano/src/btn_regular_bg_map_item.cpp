@@ -21,23 +21,23 @@ optional<regular_bg_map_ptr> regular_bg_map_item::find_map(
 
 regular_bg_map_ptr regular_bg_map_item::create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::find_or_create(*this, move(tiles), move(palette));
+    return regular_bg_map_ptr::create(*this, move(tiles), move(palette));
 }
 
 regular_bg_map_ptr regular_bg_map_item::create_new_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create(*this, move(tiles), move(palette));
+    return regular_bg_map_ptr::create_new(*this, move(tiles), move(palette));
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::find_or_create_optional(*this, move(tiles), move(palette));
+    return regular_bg_map_ptr::create_optional(*this, move(tiles), move(palette));
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_new_map_optional(
         bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create_optional(*this, move(tiles), move(palette));
+    return regular_bg_map_ptr::create_new_optional(*this, move(tiles), move(palette));
 }
 
 }

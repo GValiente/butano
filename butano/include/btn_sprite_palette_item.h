@@ -68,14 +68,14 @@ public:
     }
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the colors referenced by this item.
+     * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> find_palette() const;
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the colors referenced by this item.
+     * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
      * otherwise it returns a new sprite_palette_ptr which contains them.
@@ -89,7 +89,7 @@ public:
     [[nodiscard]] sprite_palette_ptr create_new_palette() const;
 
     /**
-     * @brief Search for a sprite_palette_ptr which contains the colors referenced by this item.
+     * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
      * otherwise it returns a new sprite_palette_ptr which contains them it if it can be allocated;

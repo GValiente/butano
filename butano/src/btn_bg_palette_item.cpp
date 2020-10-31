@@ -18,22 +18,22 @@ optional<bg_palette_ptr> bg_palette_item::find_palette() const
 
 bg_palette_ptr bg_palette_item::create_palette() const
 {
-    return bg_palette_ptr::find_or_create(*this);
+    return bg_palette_ptr::create(*this);
 }
 
 bg_palette_ptr bg_palette_item::create_new_palette() const
 {
-    return bg_palette_ptr::create(*this);
+    return bg_palette_ptr::create_new(*this);
 }
 
 optional<bg_palette_ptr> bg_palette_item::create_palette_optional() const
 {
-    return bg_palette_ptr::find_or_create_optional(*this);
+    return bg_palette_ptr::create_optional(*this);
 }
 
 optional<bg_palette_ptr> bg_palette_item::create_new_palette_optional() const
 {
-    return bg_palette_ptr::create_optional(*this);
+    return bg_palette_ptr::create_new_optional(*this);
 }
 
 }

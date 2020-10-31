@@ -31,19 +31,19 @@ public:
 
     [[nodiscard]] static bg_palette_ptr create(const bg_palette_item& palette_item);
 
-    [[nodiscard]] static bg_palette_ptr find_or_create(const span<const color>& colors, palette_bpp_mode bpp_mode);
+    [[nodiscard]] static bg_palette_ptr create_new(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static bg_palette_ptr find_or_create(const bg_palette_item& palette_item);
+    [[nodiscard]] static bg_palette_ptr create_new(const bg_palette_item& palette_item);
 
     [[nodiscard]] static optional<bg_palette_ptr> create_optional(const span<const color>& colors,
                                                                   palette_bpp_mode bpp_mode);
 
     [[nodiscard]] static optional<bg_palette_ptr> create_optional(const bg_palette_item& palette_item);
 
-    [[nodiscard]] static optional<bg_palette_ptr> find_or_create_optional(const span<const color>& colors,
-                                                                          palette_bpp_mode bpp_mode);
+    [[nodiscard]] static optional<bg_palette_ptr> create_new_optional(const span<const color>& colors,
+                                                                      palette_bpp_mode bpp_mode);
 
-    [[nodiscard]] static optional<bg_palette_ptr> find_or_create_optional(const bg_palette_item& palette_item);
+    [[nodiscard]] static optional<bg_palette_ptr> create_new_optional(const bg_palette_item& palette_item);
 
     bg_palette_ptr(const bg_palette_ptr& other);
 

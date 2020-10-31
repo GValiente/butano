@@ -533,7 +533,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key Key to search for.
      * @return Const iterator to the (Key, Value) pair if it exists, otherwise end().
      */
@@ -543,7 +543,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key Key to search for.
      * @return Iterator to the (Key, Value) pair if it exists, otherwise end().
      */
@@ -558,7 +558,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
      * @return Const iterator to the (Key, Value) pair if it exists, otherwise end().
@@ -569,7 +569,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
      * @return Iterator to the (Key, Value) pair if it exists, otherwise end().
@@ -603,7 +603,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key Key to search for.
      * @return Const reference to the value stored with the specified key.
      */
@@ -613,7 +613,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key Key to search for.
      * @return Reference to the value stored with the specified key.
      */
@@ -623,7 +623,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
      * @return Const reference to the value stored with the specified key.
@@ -634,7 +634,7 @@ public:
     }
 
     /**
-     * @brief Search for a given key.
+     * @brief Searches for a given key.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
      * @return Reference to the value stored with the specified key.

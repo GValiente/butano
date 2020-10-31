@@ -20,7 +20,8 @@ class fixed_point;
 /**
  * @brief Contains the required information to generate sprites.
  *
- * The assets conversion tools generate an object of this type in the build folder for each *.bmp file.
+ * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
+ * with <b>"sprite"</b> type.
  *
  * Tiles and colors are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
  *

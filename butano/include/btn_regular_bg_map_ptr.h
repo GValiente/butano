@@ -32,7 +32,7 @@ enum class palette_bpp_mode;
  * The regular background map is released when the last remaining regular_bg_map_ptr owning it is destroyed.
  *
  * @ingroup regular_bg
- * @ingroup map
+ * @ingroup bg_map
  */
 class regular_bg_map_ptr
 {
@@ -362,8 +362,6 @@ public:
      * @brief Sets the map cells to handle.
      *
      * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
      *
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
@@ -517,7 +515,7 @@ private:
  * @brief Hash support for regular_bg_map_ptr.
  *
  * @ingroup regular_bg
- * @ingroup map
+ * @ingroup bg_map
  */
 template<>
 struct hash<regular_bg_map_ptr>

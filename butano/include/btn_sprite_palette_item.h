@@ -19,7 +19,8 @@ class sprite_palette_ptr;
 /**
  * @brief Contains the required information to generate sprite color palettes.
  *
- * The assets conversion tools generate an object of this type in the build folder for each *.bmp file.
+ * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
+ * with <b>"sprite"</b> type.
  *
  * The colors are not copied but referenced, so they should outlive the sprite_palette_item to avoid dangling references.
  *

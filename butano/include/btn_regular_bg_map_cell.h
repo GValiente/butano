@@ -11,7 +11,7 @@
 namespace btn
 {
 
-using regular_bg_map_cell = uint16_t;
+using regular_bg_map_cell = uint16_t; //!< Regular background map cell type alias.
 
 }
 

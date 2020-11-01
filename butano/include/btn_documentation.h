@@ -149,19 +149,15 @@
  */
 
 /**
- * @defgroup assert Asserts
- *
- * Butano's assert system.
- *
- * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
- *
- * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
- */
-
-/**
  * @defgroup memory Memory
  *
  * Memory management utilities.
+ */
+
+/**
+ * @defgroup timer Timers
+ *
+ * They allow to measure elapsed times with high precision.
  */
 
 /**
@@ -176,6 +172,16 @@
  * Allows game or application data to be saved when the GBA is turned off.
  *
  * @ingroup game_pak
+ */
+
+/**
+ * @defgroup assert Asserts
+ *
+ * Butano's assert system.
+ *
+ * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
+ *
+ * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  */
 
 /**

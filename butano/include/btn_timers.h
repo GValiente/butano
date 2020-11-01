@@ -9,9 +9,9 @@
 #include "../hw/include/btn_hw_timer_constants.h"
 
 /**
- * @brief Timers related functions.
+ * @brief Timing related functions.
  *
- * @ingroup other
+ * @ingroup timer
  */
 namespace btn::timers
 {

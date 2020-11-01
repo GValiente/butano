@@ -16,7 +16,7 @@ namespace btn
  *
  * One timer tick is equivalent to 64 CPU clock cycles.
  *
- * @ingroup other
+ * @ingroup timer
  */
 class timer
 {

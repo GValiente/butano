@@ -255,10 +255,10 @@ class RegularBgItem:
             header_file.write('{' + '\n')
             header_file.write('    constexpr const regular_bg_item ' + name + '(' +
                               'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                              name + '_btn_graphicsMap[0], size(' + str(self.__width) + ', ' + str(self.__height) + '),'
-                              '\n            ' +
                               'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
-                              bpp_mode_label + ');' + '\n')
+                              bpp_mode_label + ', ' + '\n            ' +
+                              name + '_btn_graphicsMap[0], ' +
+                              'size(' + str(self.__width) + ', ' + str(self.__height) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')

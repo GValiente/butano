@@ -34,7 +34,7 @@ class sprite_item
 public:
     /**
      * @brief Constructor.
-     * @param shape_size Shape and size of output sprites.
+     * @param shape_size Shape and size of the output sprites.
      * @param tiles_ref Reference to one or more sprite tile sets.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
@@ -43,7 +43,7 @@ public:
      *
      * The colors are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
      *
-     * @param bpp_mode Bits per pixel of output sprites.
+     * @param bpp_mode Bits per pixel of the output sprites.
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.
      */
     constexpr sprite_item(const sprite_shape_size& shape_size, const span<const tile>& tiles_ref,
@@ -55,9 +55,9 @@ public:
 
     /**
      * @brief Constructor.
-     * @param shape_size Shape and size of output sprites.
-     * @param tiles_item It creates the tiles of output sprites.
-     * @param palette_item It creates the color palette of output sprites.
+     * @param shape_size Shape and size of the output sprites.
+     * @param tiles_item It creates the tiles of the output sprites.
+     * @param palette_item It creates the color palette of the output sprites.
      */
     constexpr sprite_item(const sprite_shape_size& shape_size, const sprite_tiles_item& tiles_item,
                           const sprite_palette_item& palette_item) :
@@ -71,7 +71,7 @@ public:
     }
 
     /**
-     * @brief Returns the shape and size of output sprites.
+     * @brief Returns the shape and size of the output sprites.
      */
     [[nodiscard]] constexpr const sprite_shape_size& shape_size() const
     {
@@ -79,7 +79,7 @@ public:
     }
 
     /**
-     * @brief Returns the item used to create the tiles of output sprites.
+     * @brief Returns the item used to create the tiles of the output sprites.
      */
     [[nodiscard]] constexpr const sprite_tiles_item& tiles_item() const
     {
@@ -87,7 +87,7 @@ public:
     }
 
     /**
-     * @brief Returns the item used to create the color palette of output sprites.
+     * @brief Returns the item used to create the color palette of the output sprites.
      */
     [[nodiscard]] constexpr const sprite_palette_item& palette_item() const
     {

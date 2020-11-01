@@ -39,6 +39,12 @@ void init()
 bool tick(int data_to_send, int& current_player_id, vector<link_player, 3>& other_players)
 {
     hw::link::state new_state = hw::link::tick(data_to_send);
+
+    if(! new_state.isConnected())
+    {
+        return false;
+    }
+
     auto this_player_id = int(new_state.currentPlayerId);
 
     for(int player_id = 0; player_id < 4; ++player_id)
@@ -56,10 +62,7 @@ bool tick(int data_to_send, int& current_player_id, vector<link_player, 3>& othe
         }
     }
 
-    if(other_players.empty())
-    {
-        return false;
-    }
+    BTN_ASSERT(other_players.size() == int(new_state.playerCount) - 1, "Invalid players data");
 
     current_player_id = this_player_id;
     return true;

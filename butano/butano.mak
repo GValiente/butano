@@ -9,7 +9,7 @@ endif
 include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom IWRAM and EWRAM base rules without flto
+# Butano custom IWRAM and EWRAM base rules without flto:
 #---------------------------------------------------------------------------------------------------------------------
 %.btn_iwram.o: %.btn_iwram.cpp
 	$(SILENTMSG) $(notdir $<)
@@ -28,7 +28,7 @@ include $(DEVKITARM)/gba_rules
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_ewram.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
-# Options for code generation
+# Options for code generation:
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork
 CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wmisleading-indentation \
@@ -46,17 +46,17 @@ ASFLAGS     :=	-g $(ARCH)
 LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 #---------------------------------------------------------------------------------------------------------------------
-# Any extra libraries we wish to link with the project
+# Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
 LIBS        := -lmm
 
 #---------------------------------------------------------------------------------------------------------------------
-# List of directories containing libraries, this must be the top level containing include and lib directories
+# List of directories containing libraries, this must be the top level containing include and lib directories:
 #---------------------------------------------------------------------------------------------------------------------
 LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA)
 
 #---------------------------------------------------------------------------------------------------------------------
-# List of directories containing all butano source files
+# List of directories containing all butano source files:
 #---------------------------------------------------------------------------------------------------------------------
 BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/libtonc/asm $(LIBBUTANOABS)/hw/3rd_party/libtonc/src \
@@ -64,7 +64,7 @@ BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/posprintf/src $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
 
 #---------------------------------------------------------------------------------------------------------------------
-# Don't remove intermediary files (avoid rebuilding graphics files more than once)
+# Don't remove intermediary files (avoid rebuilding graphics files more than once):
 #---------------------------------------------------------------------------------------------------------------------
 .SECONDARY:
 
@@ -95,7 +95,7 @@ BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
 #---------------------------------------------------------------------------------------------------------------------
-# Use CXX for linking C++ projects, CC for standard C
+# Use CXX for linking C++ projects, CC for standard C:
 #---------------------------------------------------------------------------------------------------------------------
 ifeq ($(strip $(CPPFILES)),)
 #---------------------------------------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 export OFILES           :=  $(OFILES_BIN) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
 
 #---------------------------------------------------------------------------------------------------------------------
-# Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated)
+# Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated):
 #---------------------------------------------------------------------------------------------------------------------
 export HFILES           :=  $(filter-out _btn_audio_soundbank_bin.h,$(addsuffix .h,$(subst .,_,$(BINFILES))))
 
@@ -145,7 +145,7 @@ clean:
 else
  
 #---------------------------------------------------------------------------------------------------------------------
-# Main targets
+# Main targets:
 #---------------------------------------------------------------------------------------------------------------------
 
 $(OUTPUT).gba       :   $(OUTPUT).elfbin
@@ -161,11 +161,11 @@ $(OUTPUT).elf       :	$(OFILES)
 $(OFILES_SOURCES)   :   $(HFILES)
 
 #---------------------------------------------------------------------------------------------------------------------
-# The bin2o rule should be copied and modified for each extension used in the data directories
+# The bin2o rule should be copied and modified for each extension used in the data directories:
 #---------------------------------------------------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------------------------------------------------
-# This rule links in binary data with the .bin extension
+# This rule links in binary data with the .bin extension:
 #---------------------------------------------------------------------------------------------------------------------
 %.bin.o	%_bin.h : %.bin
 #---------------------------------------------------------------------------------------------------------------------

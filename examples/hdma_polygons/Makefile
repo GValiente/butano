@@ -26,9 +26,9 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO CAMRA
+ROMTITLE    :=  BUTANO HDMAP
 ROMCODE     :=  SBTP
-USERFLAGS   :=
+USERFLAGS   :=  -flto
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

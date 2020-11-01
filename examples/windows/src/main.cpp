@@ -22,7 +22,7 @@
 
 namespace
 {
-    void window_scene(btn::regular_bg_ptr& clouds_bg, btn::sprite_text_generator& text_generator)
+    void window_visibility_scene(btn::regular_bg_ptr& clouds_bg, btn::sprite_text_generator& text_generator)
     {
         constexpr const btn::string_view info_text_lines[] = {
             "A: toggle window visibility",
@@ -235,7 +235,7 @@ int main()
 
     while(true)
     {
-        window_scene(clouds_bg, text_generator);
+        window_visibility_scene(clouds_bg, text_generator);
         btn::core::update();
 
         window_boundaries_scene(text_generator);

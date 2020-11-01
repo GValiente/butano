@@ -29,7 +29,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Camera", info_text_lines, text_generator);
+        info info("Camera position", info_text_lines, text_generator);
 
         while(! btn::keypad::start_pressed())
         {

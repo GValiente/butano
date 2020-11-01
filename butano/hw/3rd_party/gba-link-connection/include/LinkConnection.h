@@ -52,7 +52,7 @@ struct LinkState {
     u32 _lastIRQTick = 0;
     volatile u16 _IRQData[4];
     volatile u32 _IRQTick = 0;
-    volatile bool _IRQDataUpdated = false;
+    volatile s32 _IRQDataUpdates = 0;
 
     bool isConnected() {
         return playerCount > 1;
@@ -63,8 +63,8 @@ struct LinkState {
     }
 
     bool _isOutOfSync() {
-        while(_IRQDataUpdated) {
-            _IRQDataUpdated = false;
+        while(_IRQDataUpdates > 0) {
+            _IRQDataUpdates = _IRQDataUpdates - 1;
 
             playerCount = 0;
             _lastIRQTick = _IRQTick;
@@ -94,7 +94,7 @@ struct LinkState {
 
     void _sync() {
         _IRQTick = _tick;
-        _IRQDataUpdated = true;
+        _IRQDataUpdates = _IRQDataUpdates + 1;
     }
 
     void _reset() {
@@ -106,7 +106,7 @@ struct LinkState {
         }
         _tick = 0;
         _lastIRQTick = 0;
-        _IRQDataUpdated = false;
+        _IRQDataUpdates = 0;
     }
 };
 

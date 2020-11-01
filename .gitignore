@@ -1,6 +1,7 @@
 build/
 .vscode/
 *.gba
+*.elfbin
 *.elf
 *.sav
 *.creator

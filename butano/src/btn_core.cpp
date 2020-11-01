@@ -14,7 +14,6 @@
 #include "btn_profiler.h"
 #include "btn_string_view.h"
 #include "btn_bgs_manager.h"
-#include "btn_link_manager.h"
 #include "btn_audio_manager.h"
 #include "btn_keypad_manager.h"
 #include "btn_memory_manager.h"
@@ -77,13 +76,10 @@ namespace
     {
         hblank_effects_manager::enable();
         audio_manager::enable();
-        link_manager::enable();
     }
 
     void disable(bool disable_audio)
     {
-        link_manager::disable();
-
         if(disable_audio)
         {
             audio_manager::disable();
@@ -130,9 +126,6 @@ void init(const string_view& keypad_commands)
 
     // Init audio system:
     audio_manager::init();
-
-    // Init link communication system:
-    link_manager::init();
 
     // Init high level systems:
     memory_manager::init();

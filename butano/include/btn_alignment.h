@@ -17,6 +17,15 @@ namespace btn
 
         return uintptr_t(pointer) % unsigned(Bytes) == 0;
     }
+
+    template<int Bytes, typename Type>
+    [[nodiscard]] bool aligned(const Type& reference)
+    {
+        static_assert(Bytes > 0);
+
+        return alignof(Type) % unsigned(Bytes) == 0 ||
+                uintptr_t(&reference) % unsigned(Bytes) == 0;
+    }
 }
 
 #endif

@@ -5,7 +5,6 @@
 
 #include "btn_memory.h"
 
-#include "btn_alignment.h"
 #include "btn_memory_manager.h"
 #include "../hw/include/btn_hw_memory.h"
 

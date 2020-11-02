@@ -8,7 +8,6 @@
 #include "btn_any.h"
 #include "btn_vector.h"
 #include "btn_display.h"
-#include "btn_alignment.h"
 #include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
 

@@ -8,6 +8,7 @@
 
 #include "btn_assert.h"
 #include "btn_utility.h"
+#include "btn_alignment.h"
 #include "btn_functional.h"
 
 namespace btn
@@ -498,11 +499,11 @@ namespace btn::memory
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
+        if(aligned<4>(source_ref) && aligned<4>(destination_ref) && bytes % 4 == 0)
         {
             _btn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
         }
-        else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
+        else if(aligned<2>(source_ref) && aligned<2>(destination_ref) && bytes % 2 == 0)
         {
             _btn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
         }
@@ -526,11 +527,11 @@ namespace btn::memory
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(alignof(Type) % 4 == 0 && bytes % 4 == 0)
+        if(aligned<4>(destination_ref) && bytes % 4 == 0)
         {
             _btn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
         }
-        else if(alignof(Type) % 2 == 0 && bytes % 2 == 0)
+        else if(aligned<2>(destination_ref) && bytes % 2 == 0)
         {
             _btn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
         }

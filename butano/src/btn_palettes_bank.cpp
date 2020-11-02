@@ -11,7 +11,6 @@
 #include "btn_memory.h"
 #include "btn_display.h"
 #include "btn_algorithm.h"
-#include "btn_alignment.h"
 #include "btn_palette_bpp_mode.h"
 
 namespace btn

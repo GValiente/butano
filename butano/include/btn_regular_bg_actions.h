@@ -131,8 +131,10 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param delta_x How much to add to the horizontal position of the given regular_bg_ptr when the action is updated.
-     * @param delta_y How much to add to the horizontal position of the given regular_bg_ptr when the action is updated.
+     * @param delta_x How much to add to the horizontal position of the given regular_bg_ptr
+     * when the action is updated.
+     * @param delta_y How much to add to the horizontal position of the given regular_bg_ptr
+     * when the action is updated.
      */
     regular_bg_move_by_action(const regular_bg_ptr& bg, fixed delta_x, fixed delta_y) :
         by_value_template_action(bg, fixed_point(delta_x, delta_y))
@@ -142,8 +144,10 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param delta_x How much to add to the horizontal position of the given regular_bg_ptr when the action is updated.
-     * @param delta_y How much to add to the horizontal position of the given regular_bg_ptr when the action is updated.
+     * @param delta_x How much to add to the horizontal position of the given regular_bg_ptr
+     * when the action is updated.
+     * @param delta_y How much to add to the horizontal position of the given regular_bg_ptr
+     * when the action is updated.
      */
     regular_bg_move_by_action(regular_bg_ptr&& bg, fixed delta_x, fixed delta_y) :
         by_value_template_action(move(bg), fixed_point(delta_x, delta_y))
@@ -203,8 +207,10 @@ public:
      * @param bg regular_bg_ptr to copy.
      * @param duration_updates Number of times that the action must be updated
      * until the position of the given regular_bg_ptr is equal to (final_x, final_y).
-     * @param final_x Horizontal position of the given regular_bg_ptr when the action is updated duration_updates times.
-     * @param final_y Vertical position of the given regular_bg_ptr when the action is updated duration_updates times.
+     * @param final_x Horizontal position of the given regular_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_y Vertical position of the given regular_bg_ptr
+     * when the action is updated duration_updates times.
      */
     regular_bg_move_to_action(const regular_bg_ptr& bg, int duration_updates, fixed final_x, fixed final_y) :
         to_value_template_action(bg, duration_updates, fixed_point(final_x, final_y))
@@ -216,8 +222,10 @@ public:
      * @param bg regular_bg_ptr to move.
      * @param duration_updates Number of times that the action must be updated
      * until the position of the given regular_bg_ptr is equal to (final_x, final_y).
-     * @param final_x Horizontal position of the given regular_bg_ptr when the action is updated duration_updates times.
-     * @param final_y Vertical position of the given regular_bg_ptr when the action is updated duration_updates times.
+     * @param final_x Horizontal position of the given regular_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_y Vertical position of the given regular_bg_ptr
+     * when the action is updated duration_updates times.
      */
     regular_bg_move_to_action(regular_bg_ptr&& bg, int duration_updates, fixed final_x, fixed final_y) :
         to_value_template_action(move(bg), duration_updates, fixed_point(final_x, final_y))
@@ -229,7 +237,8 @@ public:
      * @param bg regular_bg_ptr to copy.
      * @param duration_updates Number of times that the action must be updated
      * until the position of the given regular_bg_ptr is equal to final_position.
-     * @param final_position Position of the given regular_bg_ptr when the action is updated duration_updates times.
+     * @param final_position Position of the given regular_bg_ptr
+     * when the action is updated duration_updates times.
      */
     regular_bg_move_to_action(const regular_bg_ptr& bg, int duration_updates, const fixed_point& final_position) :
         to_value_template_action(bg, duration_updates, final_position)

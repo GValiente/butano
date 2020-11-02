@@ -16,8 +16,7 @@ namespace btn
 // visible
 
 /**
- * @brief Toggles if a sprite_ptr must be committed to the GBA or not
- * when the action is updated a given number of times.
+ * @brief Manages if a sprite_ptr must be committed to the GBA or not.
  *
  * @ingroup sprite
  * @ingroup action
@@ -1440,6 +1439,229 @@ public:
      * if the given sprite_ptr must be flipped in the vertical axis or not.
      */
     sprite_vertical_flip_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_ptr to modify.
+     */
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
+// mosaic
+
+/**
+ * @brief Manages if the mosaic effect must be applied to a sprite_ptr or not.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_mosaic_manager
+{
+
+public:
+    /**
+     * @brief Indicates if the mosaic effect is applied to the given sprite_ptr or not.
+     */
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.mosaic_enabled();
+    }
+
+    /**
+     * @brief Sets if the mosaic effect must be applied to the given sprite_ptr or not.
+     */
+    static void set(bool mosaic_enabled, sprite_ptr& sprite)
+    {
+        sprite.set_mosaic_enabled(mosaic_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if the mosaic effect must be applied to a sprite_ptr or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_mosaic_toggle_action : public bool_toggle_value_template_action<sprite_ptr, sprite_mosaic_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the mosaic effect must be applied or not.
+     */
+    sprite_mosaic_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the mosaic effect must be applied or not.
+     */
+    sprite_mosaic_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_ptr to modify.
+     */
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
+// blending
+
+/**
+ * @brief Manages if blending must be applied to a sprite_ptr or not.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_blending_manager
+{
+
+public:
+    /**
+     * @brief Indicates if blending is applied to the given sprite_ptr or not.
+     */
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.blending_enabled();
+    }
+
+    /**
+     * @brief Sets if blending must be applied to the given sprite_ptr or not.
+     *
+     * Keep in mind that blending and window attributes can't be enabled on a sprite_ptr at the same time.
+     */
+    static void set(bool blending_enabled, sprite_ptr& sprite)
+    {
+        sprite.set_blending_enabled(blending_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if blending must be applied to a sprite_ptr or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_blending_toggle_action : public bool_toggle_value_template_action<sprite_ptr, sprite_blending_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if blending must be applied or not.
+     */
+    sprite_blending_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if blending must be applied or not.
+     */
+    sprite_blending_toggle_action(sprite_ptr&& sprite, int duration_updates) :
+        bool_toggle_value_template_action(move(sprite), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_ptr to modify.
+     */
+    [[nodiscard]] const sprite_ptr& sprite() const
+    {
+        return value();
+    }
+};
+
+
+// window
+
+/**
+ * @brief Manages if a sprite_ptr must be part of the silhouette of the sprite window or not.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_window_manager
+{
+
+public:
+    /**
+     * @brief Indicates if the given sprite_ptr must be part of the silhouette of the sprite window or not.
+     */
+    [[nodiscard]] static bool get(const sprite_ptr& sprite)
+    {
+        return sprite.window_enabled();
+    }
+
+    /**
+     * @brief Sets if the given sprite_ptr must be part of the silhouette of the sprite window or not.
+     *
+     * Keep in mind that blending and window attributes can't be enabled on a sprite_ptr at the same time.
+     */
+    static void set(bool window_enabled, sprite_ptr& sprite)
+    {
+        sprite.set_window_enabled(window_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if a sprite_ptr must be part of the silhouette of the sprite window or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+class sprite_window_toggle_action : public bool_toggle_value_template_action<sprite_ptr, sprite_window_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given sprite_ptr must be part of the silhouette of the sprite window or not.
+     */
+    sprite_window_toggle_action(const sprite_ptr& sprite, int duration_updates) :
+        bool_toggle_value_template_action(sprite, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param sprite sprite_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given sprite_ptr must be part of the silhouette of the sprite window or not.
+     */
+    sprite_window_toggle_action(sprite_ptr&& sprite, int duration_updates) :
         bool_toggle_value_template_action(move(sprite), duration_updates)
     {
     }

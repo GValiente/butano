@@ -11,8 +11,13 @@
 namespace btn
 {
 
+/**
+ * @brief Indicates if the given value is a power of two or not.
+ *
+ * @ingroup math
+ */
 template<typename Type>
-[[nodiscard]] inline constexpr bool power_of_two(Type value)
+[[nodiscard]] constexpr bool power_of_two(Type value)
 {
     if(value > 0)
     {

@@ -11,10 +11,20 @@
 #if BTN_CFG_PROFILER_ENABLED
     #include "btn_unordered_map_fwd.h"
 
+    /**
+     * @brief Profiler related functions.
+     *
+     * @ingroup profiler
+     */
     namespace btn::profiler
     {
+        /**
+         * @brief Stops the execution and shows the profiling results on the screen.
+         */
         [[noreturn]] void show();
     }
+
+    /// @cond DO_NOT_DOCUMENT
 
     namespace _btn::profiler
     {
@@ -31,12 +41,37 @@
         void reset();
     }
 
+    /// @endcond
+
+    /**
+     * @def BTN_PROFILER_START
+     *
+     * Defines the start of a code block in which elapsed time is going to be measured.
+     *
+     * @param id Small text string which identifies the code block.
+     *
+     * @ingroup profiler
+     */
     #define BTN_PROFILER_START(id) \
         _btn::profiler::start(id, btn::hash<const char*>()(id))
 
+    /**
+     * @def BTN_PROFILER_STOP
+     *
+     * Defines the end of a code block in which elapsed time is going to be measured.
+     *
+     * @ingroup profiler
+     */
     #define BTN_PROFILER_STOP() \
         _btn::profiler::stop()
 
+    /**
+     * @def BTN_PROFILER_RESET
+     *
+     * Forgets all elapsed time measures.
+     *
+     * @ingroup profiler
+     */
     #define BTN_PROFILER_RESET() \
         _btn::profiler::reset()
 #else

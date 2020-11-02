@@ -179,9 +179,19 @@
  *
  * Butano's assert system.
  *
- * It can be disabled by defining \a BTN_CFG_ASSERT_ENABLED as \a <b>false</b>.
+ * It can be enabled or disabled by overloading the definition of \a BTN_CFG_ASSERT_ENABLED \a .
  *
  * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ */
+
+/**
+ * @defgroup profiler Profiler
+ *
+ * Butano's profiling system.
+ *
+ * It allows to measure elapsed time between code blocks defined by the user.
+ *
+ * It can be enabled or disabled by overloading the definition of \a BTN_CFG_PROFILER_ENABLED \a .
  */
 
 /**

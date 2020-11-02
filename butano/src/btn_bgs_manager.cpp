@@ -9,6 +9,7 @@
 #include "btn_pool.h"
 #include "btn_vector.h"
 #include "btn_display.h"
+#include "btn_sort_key.h"
 #include "btn_algorithm.h"
 #include "btn_camera_ptr.h"
 #include "btn_config_bgs.h"

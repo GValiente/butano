@@ -6,7 +6,6 @@
 #ifndef BTN_SPRITES_H
 #define BTN_SPRITES_H
 
-#include "btn_sort_key.h"
 #include "btn_config_sprites.h"
 #include "../hw/include/btn_hw_sprites_constants.h"
 
@@ -65,7 +64,7 @@ namespace btn::sprites
      */
     [[nodiscard]] constexpr int min_z_order()
     {
-        return sort_key::min_z_order();
+        return -32767;
     }
 
     /**
@@ -73,7 +72,7 @@ namespace btn::sprites
      */
     [[nodiscard]] constexpr int max_z_order()
     {
-        return sort_key::max_z_order();
+        return 32767;
     }
 }
 

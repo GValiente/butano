@@ -6,7 +6,6 @@
 #ifndef BTN_BGS_H
 #define BTN_BGS_H
 
-#include "btn_sort_key.h"
 #include "../hw/include/btn_hw_bgs_constants.h"
 
 namespace btn::bgs
@@ -23,12 +22,12 @@ namespace btn::bgs
 
     [[nodiscard]] constexpr int min_z_order()
     {
-        return sort_key::min_z_order();
+        return -32767;
     }
 
     [[nodiscard]] constexpr int max_z_order()
     {
-        return sort_key::max_z_order();
+        return 32767;
     }
 
     [[nodiscard]] int used_count();

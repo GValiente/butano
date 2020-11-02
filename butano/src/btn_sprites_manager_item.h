@@ -9,6 +9,7 @@
 #include "btn_display.h"
 #include "btn_sprites.h"
 #include "btn_optional.h"
+#include "btn_sort_key.h"
 #include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"
 #include "btn_intrusive_list.h"

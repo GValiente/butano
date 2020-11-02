@@ -5,9 +5,9 @@
 
 #include "btn_cstdlib.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
-void* malloc(size_t bytes)
+void* malloc(std::size_t bytes)
 {
     return btn::malloc(bytes);
 }

@@ -6,7 +6,7 @@
 #ifndef BTN_ASSERT_H
 #define BTN_ASSERT_H
 
-#include <assert.h>
+#include <cassert>
 #include "btn_type_traits.h"
 #include "btn_config_assert.h"
 

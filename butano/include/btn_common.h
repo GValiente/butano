@@ -6,7 +6,7 @@
 #ifndef BTN_COMMON_H
 #define BTN_COMMON_H
 
-#include <stdint.h>
+#include <cstdint>
 #include "../hw/include/btn_hw_common.h"
 
 /*!

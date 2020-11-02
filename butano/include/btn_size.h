@@ -121,7 +121,7 @@ public:
 
     /**
      * @brief Divides both the width and height by the given divisor.
-     * @param value Divisor.
+     * @param value Valid divisor (> 0).
      * @return Reference to this.
      */
     constexpr size& operator/=(int value)

@@ -12,6 +12,32 @@
     #include "btn_sstream.h"
     #include "btn_istring_base.h"
 
+    /**
+     * @def BTN_LOG(...)
+     *
+     * Prints in one line of text the representation of the given parameters.
+     *
+     * Example:
+     *
+     * @code{.cpp}
+     * BTN_LOG("Invalid integer: ", integer);
+     * @endcode
+     *
+     * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+     *
+     * Example:
+     *
+     * @code{.cpp}
+     * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+     * {
+     *     stream.append("custom_type: ");
+     *     stream.append(custom_value.data);
+     *     return stream;
+     * }
+     * @endcode
+     *
+     * @ingroup log
+     */
     #define BTN_LOG(...) \
         do \
         { \
@@ -24,6 +50,11 @@
 
     namespace btn
     {
+        /**
+         * @brief Prints in one line of text the given message.
+         *
+         * @ingroup log
+         */
         void log(const istring_base& message);
     }
 #else

@@ -9,8 +9,12 @@
 #include <cstdint>
 #include "../hw/include/btn_hw_common.h"
 
-/*!
- * @brief If control flow reaches the point of this macro, the program is undefined.
+/**
+ * @def BTN_UNREACHABLE
+ *
+ * If control flow reaches the point of this macro, the program is undefined.
+ *
+ * @ingroup other
  */
 #define BTN_UNREACHABLE __builtin_unreachable
 

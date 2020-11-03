@@ -179,9 +179,22 @@
  *
  * Butano's assert system.
  *
- * It can be enabled or disabled by overloading the definition of \a BTN_CFG_ASSERT_ENABLED \a .
+ * It can be enabled or disabled by overloading the definition of @a BTN_CFG_ASSERT_ENABLED @a .
  *
  * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ */
+
+/**
+ * @defgroup log Logging
+ *
+ * Butano's logging system.
+ *
+ * It allows to print information on the console of multiple emulators.
+ *
+ * It can be enabled or disabled by overloading the definition of @a BTN_CFG_LOG_ENABLED @a .
+ *
+ * It only supports printing on one emulator at once.
+ * The supported emulator can be changed by overloading the definition of @a BTN_CFG_LOG_BACKEND @a .
  */
 
 /**
@@ -191,7 +204,7 @@
  *
  * It allows to measure elapsed time between code blocks defined by the user.
  *
- * It can be enabled or disabled by overloading the definition of \a BTN_CFG_PROFILER_ENABLED \a .
+ * It can be enabled or disabled by overloading the definition of @a BTN_CFG_PROFILER_ENABLED @a .
  */
 
 /**
@@ -342,33 +355,36 @@
 
 // PAGES
 
-/*! \mainpage My Personal Index Page
+/**
+ * @mainpage My Personal Index Page
  *
- * \section intro_sec Introduction
+ * @section intro_sec Introduction
  *
  * This is the introduction.
  *
- * \section install_sec Installation
+ * @section install_sec Installation
  *
- * \subsection step1 Step 1: Opening the box
+ * @subsection step1 Step 1: Opening the box
  *
  * etc...
  */
 
-/*! \page page1 A documentation page
-  \tableofcontents
-  Leading text.
-  \section sec An example section
-  This page contains the subsections \ref subsection1 and \ref subsection2.
-  For more info see page \ref page2.
-  \subsection subsection1 First subsection
-  Text.
-  \subsection subsection2 Second subsection
-  More text.
-*/
+/**
+ * @page page1 A documentation page
+ * @tableofcontents
+ * Leading text.
+ * @section sec An example section
+ * This page contains the subsections @ref subsection1 and @ref subsection2.
+ * For more info see page @ref page2.
+ * @subsection subsection1 First subsection
+ * Text.
+ * @subsection subsection2 Second subsection
+ * More text.
+ */
 
-/*! \page page2 Another page
-  Even more info.
-*/
+/**
+ * @page page2 Another page
+ * Even more info.
+ */
 
 #endif

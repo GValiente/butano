@@ -17,9 +17,26 @@
  *
  * If it doesn't, the execution is stopped and diagnostic information is shown on the screen.
  *
- * More information can be shown by passing it by argument. Example:
+ * More information can be shown by passing it by argument.
  *
- *     BTN_ASSERT(integer > 0, "Invalid integer: ", integer);
+ * Example:
+ *
+ * @code{.cpp}
+ * BTN_ASSERT(integer > 0, "Invalid integer: ", integer);
+ * @endcode
+ *
+ * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+ *
+ * Example:
+ *
+ * @code{.cpp}
+ * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+ * {
+ *     stream.append("custom_type: ");
+ *     stream.append(custom_value.data);
+ *     return stream;
+ * }
+ * @endcode
  *
  * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  *
@@ -31,9 +48,26 @@
  *
  * If this is called, the execution is stopped and diagnostic information is shown on the screen.
  *
- * More information can be shown by passing it by argument. Example:
+ * More information can be shown by passing it by argument.
  *
- *     BTN_ERROR("Invalid integer: ", integer);
+ * Example:
+ *
+ * @code{.cpp}
+ * BTN_ERROR("Invalid integer: ", integer);
+ * @endcode
+ *
+ * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+ *
+ * Example:
+ *
+ * @code{.cpp}
+ * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+ * {
+ *     stream.append("custom_type: ");
+ *     stream.append(custom_value.data);
+ *     return stream;
+ * }
+ * @endcode
  *
  * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
  *

@@ -8,21 +8,33 @@
 
 #include "btn_common.h"
 
-/*!
- * @brief VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log backend.
+/**
+ * @def BTN_LOG_BACKEND_MGBA
  *
- * It crashes on hardware and on other emulators!
+ * mGBA emulator (https://mgba.io) log backend.
+ *
+ * @ingroup log
  */
-#define BTN_LOG_BACKEND_VBA         0
+#define BTN_LOG_BACKEND_MGBA        0
 
-/*!
- * @brief No$gba emulator (https://problemkaputt.de/gba.htm) log backend.
+/**
+ * @def BTN_LOG_BACKEND_NOCASHGBA
+ *
+ * No$gba emulator (https://problemkaputt.de/gba.htm) log backend.
+ *
+ * @ingroup log
  */
 #define BTN_LOG_BACKEND_NOCASHGBA   1
 
-/*!
- * @brief mGBA emulator (https://mgba.io) log backend.
+/**
+ * @def BTN_LOG_BACKEND_VBA
+ *
+ * VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log backend.
+ *
+ * It crashes on hardware and on other emulators!
+ *
+ * @ingroup log
  */
-#define BTN_LOG_BACKEND_MGBA        2
+#define BTN_LOG_BACKEND_VBA         2
 
 #endif

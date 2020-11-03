@@ -25,6 +25,10 @@ void commit_entries_ptr(entry* entries_ptr)
     data.entries_ptr = entries_ptr;
 }
 
+void _intr_0()
+{
+}
+
 void _intr_1()
 {
     unsigned vcount = REG_VCOUNT;

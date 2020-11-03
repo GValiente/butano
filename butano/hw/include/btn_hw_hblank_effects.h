@@ -21,6 +21,8 @@ namespace btn::hw::hblank_effects
 
     BTN_CODE_IWRAM void commit_entries_ptr(entry* entries_ptr);
 
+    BTN_CODE_IWRAM void _intr_0();
+
     BTN_CODE_IWRAM void _intr_1();
 
     #if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
@@ -53,7 +55,7 @@ namespace btn::hw::hblank_effects
 
     inline void init()
     {
-        irq::replace_or_push_back(irq::id::HBLANK, _intr_1);
+        irq::replace_or_push_back(irq::id::HBLANK, _intr_0);
         irq::disable(irq::id::HBLANK);
     }
 

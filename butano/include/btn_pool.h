@@ -18,19 +18,31 @@ class ipool : public igeneric_pool<sizeof(generic_pool_element<sizeof(Type), ali
 {
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     using element = generic_pool_element<sizeof(Type), alignof(Type)>;
+
+    /// @endcond
 
 private:
     using base_type = igeneric_pool<sizeof(element)>;
 
 public:
-    using size_type = typename base_type::size_type;
+    using size_type = typename base_type::size_type; //!< Size type alias.
 
+    /**
+     * @brief Indicates if the given object belongs to the pool or not.
+     */
     [[nodiscard]] bool contains(const Type& value) const
     {
         return base_type::_contains(value);
     }
 
+    /**
+     * @brief Constructs a value inside of the pool.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the inserted value.
+     */
     template<typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
@@ -41,6 +53,9 @@ public:
         return *result;
     }
 
+    /**
+     * @brief Destroys the value previously allocated with create method.
+     */
     void destroy(Type& value)
     {
         BTN_ASSERT(contains(value), "Pool does not contain this value");
@@ -50,10 +65,14 @@ public:
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     ipool(char* buffer, size_type max_size) :
         base_type(reinterpret_cast<char*>(&buffer[0]), max_size)
     {
     }
+
+    /// @endcond
 };
 
 
@@ -65,6 +84,9 @@ private:
     using base_type = ipool<Type>;
 
 public:
+    /**
+     * @brief Default constructor.
+     */
     pool() :
         base_type(reinterpret_cast<char*>(&_buffer[0]), MaxSize)
     {

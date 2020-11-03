@@ -262,6 +262,16 @@
  */
 
 /**
+ * @defgroup pool Pool
+ *
+ * A fixed capacity object pool, where allocation and release are O(1) operations.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup utility Utilities
  *
  * Standard library utilities.

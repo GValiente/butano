@@ -11,9 +11,26 @@
 
 namespace btn
 {
+    /**
+     * @brief Base class of pool.
+     *
+     * Can be used as a reference type for all pool containers containing a specific type.
+     *
+     * @tparam Type Element type.
+     *
+     * @ingroup pool
+     */
     template<typename Type>
     class ipool;
 
+    /**
+     * @brief Implementation that uses a fixed size buffer.
+     *
+     * @tparam Type Element type.
+     * @tparam MaxSize Maximum number of elements that can be stored.
+     *
+     * @ingroup pool
+     */
     template<typename Type, int MaxSize>
     class pool;
 }

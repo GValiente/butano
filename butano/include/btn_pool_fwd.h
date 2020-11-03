@@ -24,7 +24,7 @@ namespace btn
     class ipool;
 
     /**
-     * @brief Implementation that uses a fixed size buffer.
+     * @brief Pool implementation that uses a fixed size buffer.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

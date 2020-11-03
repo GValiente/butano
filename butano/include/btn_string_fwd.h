@@ -29,7 +29,7 @@ namespace btn
     class istring;
 
     /**
-     * @brief Implementation that uses a fixed size buffer.
+     * @brief String implementation that uses a fixed size buffer.
      *
      * @tparam MaxSize Maximum number of characters that can be stored.
      *

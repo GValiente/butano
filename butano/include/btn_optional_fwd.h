@@ -10,6 +10,13 @@
 
 namespace btn
 {
+    /**
+     * @brief Manages an optional contained value (a value that may or may not be present).
+     *
+     * @tparam Type Element type.
+     *
+     * @ingroup optional
+     */
     template<typename Type>
     class optional;
 }

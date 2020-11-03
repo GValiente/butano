@@ -19,12 +19,12 @@ namespace btn
  *
  * @tparam Type Type of the object to delete.
  *
- * @ingroup memory
+ * @ingroup unique_ptr
  */
 template<typename Type>
 struct default_delete
 {
-    void operator()(Type* ptr) const
+    void operator()(Type* ptr) const noexcept
     {
         delete ptr;
     }
@@ -38,7 +38,7 @@ struct default_delete
  * @tparam Type Type of the managed object.
  * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
  *
- * @ingroup memory
+ * @ingroup unique_ptr
  */
 template<typename Type, typename Deleter = default_delete<Type>>
 class unique_ptr
@@ -96,6 +96,14 @@ public:
     }
 
     /**
+     * @brief Indicates if it contains a managed object or not.
+     */
+    [[nodiscard]] operator bool() const
+    {
+        return _ptr != nullptr;
+    }
+
+    /**
      * @brief Returns a const pointer to the managed object.
      */
     [[nodiscard]] const Type* get() const
@@ -125,47 +133,6 @@ public:
     [[nodiscard]] Deleter& get_deleter()
     {
         return _deleter;
-    }
-
-    /**
-     * @brief Releases the ownership of the managed object.
-     * @return Pointer to the released object.
-     */
-    pointer release()
-    {
-        pointer result = _ptr;
-        _ptr = nullptr;
-        return result;
-    }
-
-    /**
-     * @brief Disposes the managed object.
-     */
-    void reset()
-    {
-        _deleter(_ptr);
-        _ptr = nullptr;
-    }
-
-    /**
-     * @brief Disposes the managed object and replaces it with the given one.
-     * @param ptr Pointer to the new object to manage.
-     */
-    void reset(pointer ptr)
-    {
-        if(ptr != _ptr)
-        {
-            reset();
-            _ptr = ptr;
-        }
-    }
-
-    /**
-     * @brief Checks if it constains managed object.
-     */
-    [[nodiscard]] operator bool() const
-    {
-        return _ptr != nullptr;
     }
 
     /**
@@ -206,6 +173,39 @@ public:
         BTN_ASSERT(_ptr, "Managed pointer is null");
 
         return _ptr;
+    }
+
+    /**
+     * @brief Releases the ownership of the managed object.
+     * @return Pointer to the released object.
+     */
+    pointer release()
+    {
+        pointer result = _ptr;
+        _ptr = nullptr;
+        return result;
+    }
+
+    /**
+     * @brief Disposes the managed object.
+     */
+    void reset()
+    {
+        _deleter(_ptr);
+        _ptr = nullptr;
+    }
+
+    /**
+     * @brief Disposes the managed object and replaces it with the given one.
+     * @param ptr Pointer to the new object to manage.
+     */
+    void reset(pointer ptr)
+    {
+        if(ptr != _ptr)
+        {
+            reset();
+            _ptr = ptr;
+        }
     }
 
     /**
@@ -374,11 +374,12 @@ private:
  * @brief Constructs an object and wraps it in a unique_ptr.
  *
  * @tparam Type Type of the object to construct.
+ * @tparam Args Type of the arguments of the object to construct.
  *
  * @param args Parameters of the object to construct.
  * @return A unique_ptr managing the new object.
  *
- * @ingroup memory
+ * @ingroup unique_ptr
  */
 template<typename Type, class... Args>
 [[nodiscard]] unique_ptr<Type> make_unique(Args&&... args)
@@ -392,7 +393,7 @@ template<typename Type, class... Args>
  * @tparam Type Type of the managed object.
  * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
  *
- * @ingroup memory
+ * @ingroup unique_ptr
  */
 template<typename Type, typename Deleter>
 struct hash<unique_ptr<Type, Deleter>>

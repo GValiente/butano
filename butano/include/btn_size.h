@@ -134,7 +134,7 @@ public:
     }
 
     /**
-     * @brief Returns the sum of a and b; each component is added separately.
+     * @brief Returns the sum of a and b.
      */
     [[nodiscard]] constexpr friend size operator+(const size& a, const size& b)
     {
@@ -142,7 +142,7 @@ public:
     }
 
     /**
-     * @brief Returns b subtracted from a; each component is subtracted separately.
+     * @brief Returns b subtracted from a.
      */
     [[nodiscard]] constexpr friend size operator-(const size& a, const size& b)
     {

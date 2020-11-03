@@ -26,7 +26,7 @@ namespace btn
     class iunordered_map;
 
     /**
-     * @brief Implementation that uses a fixed size buffer.
+     * @brief Unordered map implementation that uses a fixed size buffer.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.

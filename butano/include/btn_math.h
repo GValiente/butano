@@ -10,6 +10,8 @@
 #include "btn_sin_lut.h"
 #include "btn_rule_of_three_approximation.h"
 
+/// @cond DO_NOT_DOCUMENT
+
 namespace _btn
 {
     template<typename Type>
@@ -40,8 +42,16 @@ namespace _btn
     [[nodiscard]] int sqrt_impl(int value);
 }
 
+/// @endcond
+
+
 namespace btn
 {
+    /**
+     * @brief Returns the absolute value of the given value.
+     *
+     * @ingroup math
+     */
     template<typename Type>
     [[nodiscard]] constexpr Type abs(Type value)
     {
@@ -49,7 +59,9 @@ namespace btn
     }
 
     /**
-     * @brief Integer square root.
+     * @brief Returns the integer square root of the given value.
+     *
+     * @ingroup math
      */
     [[nodiscard]] constexpr int sqrt(int value)
     {
@@ -66,11 +78,13 @@ namespace btn
     }
 
     /**
-     * @brief Fixed point square root.
+     * @brief Returns the fixed point square root of the given value.
      *
-     * https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp
+     * See https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp
+     *
+     * @ingroup math
      */
-    template<int Precision = 12>
+    template<int Precision>
     [[nodiscard]] constexpr fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
     {
         if constexpr(Precision % 2)
@@ -83,6 +97,13 @@ namespace btn
         }
     }
 
+    /**
+     * @brief Returns the square root of the given value using the Newton–Raphson method.
+     *
+     * See https://en.wikipedia.org/wiki/Newton%27s_method#Square_root
+     *
+     * @ingroup math
+     */
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)
     {
@@ -92,9 +113,11 @@ namespace btn
     }
 
     /**
-     * @brief Sine value of an angle in degrees.
+     * @brief Calculates the sine value of an angle in degrees.
      * @param degrees_angle Angle in the range [0, 360].
      * @return Sine value in the range [-1, 1].
+     *
+     * @ingroup math
      */
     [[nodiscard]] constexpr fixed degrees_sin(fixed degrees_angle)
     {
@@ -106,9 +129,11 @@ namespace btn
     }
 
     /**
-     * @brief Sine value of a s16 angle.
+     * @brief Calculates the sine value of an angle using a LUT.
      * @param lut_angle Angle in the range [0, 512].
      * @return Sine value in the range [-1, 1].
+     *
+     * @ingroup math
      */
     [[nodiscard]] constexpr fixed lut_sin(int lut_angle)
     {
@@ -118,9 +143,11 @@ namespace btn
     }
 
     /**
-     * @brief Cosine value of an angle in degrees.
+     * @brief Calculates the cosine value of an angle in degrees.
      * @param degrees_angle Angle in the range [0, 360].
      * @return Cosine value in the range [-1, 1].
+     *
+     * @ingroup math
      */
     [[nodiscard]] constexpr fixed degrees_cos(fixed degrees_angle)
     {
@@ -132,9 +159,11 @@ namespace btn
     }
 
     /**
-     * @brief Cosine value of a s16 angle.
+     * @brief Calculates the cosine value of an angle using a LUT.
      * @param lut_angle Angle in the range [0, 512].
      * @return Cosine value in the range [-1, 1].
+     *
+     * @ingroup math
      */
     [[nodiscard]] constexpr fixed lut_cos(int lut_angle)
     {

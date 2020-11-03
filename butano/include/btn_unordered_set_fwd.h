@@ -25,7 +25,7 @@ namespace btn
     class iunordered_set;
 
     /**
-     * @brief Implementation that uses a fixed size buffer.
+     * @brief Unordered set implementation that uses a fixed size buffer.
      *
      * @tparam Key Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

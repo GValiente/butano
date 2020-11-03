@@ -262,9 +262,31 @@
  */
 
 /**
+ * @defgroup optional Optional
+ *
+ * A std::optional like container.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup unique_ptr Unique pointer
+ *
+ * A std::unique_ptr like container.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup pool Pool
  *
  * A fixed capacity object pool, where allocation and release are O(1) operations.
+ *
+ * A pool doesn't destroy its elements in its destructor, they must be destroyed manually.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *

@@ -327,7 +327,7 @@ public:
     }
 
     /**
-     * @brief Constructs a value at the end of the vector.
+     * @brief Constructs and inserts a value at the end of the vector.
      * @param args Parameters of the value to insert.
      * @return Reference to the new value.
      */
@@ -402,7 +402,7 @@ public:
     }
 
     /**
-     * @brief Constructs a value at the specified position.
+     * @brief Constructs and inserts a value at the specified position.
      * @param position The given value is inserted before this position.
      * @param args Parameters of the value to insert.
      * @return Iterator pointing to the new value.

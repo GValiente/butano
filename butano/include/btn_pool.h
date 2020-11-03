@@ -14,13 +14,13 @@ namespace btn
 {
 
 template<typename Type>
-class ipool : public igeneric_pool<sizeof(generic_pool_element<sizeof(Type), alignof(Type)>)>
+class ipool : public igeneric_pool<sizeof(generic_pool_element<sizeof(Type)>)>
 {
 
 protected:
     /// @cond DO_NOT_DOCUMENT
 
-    using element = generic_pool_element<sizeof(Type), alignof(Type)>;
+    using element = generic_pool_element<sizeof(Type)>;
 
     /// @endcond
 
@@ -31,7 +31,7 @@ public:
     using size_type = typename base_type::size_type; //!< Size type alias.
 
     /**
-     * @brief Indicates if the given object belongs to the pool or not.
+     * @brief Indicates if the given value belongs to the pool or not.
      */
     [[nodiscard]] bool contains(const Type& value) const
     {
@@ -40,8 +40,8 @@ public:
 
     /**
      * @brief Constructs a value inside of the pool.
-     * @param args Parameters of the value to insert.
-     * @return Reference to the inserted value.
+     * @param args Parameters of the value to construct.
+     * @return Reference to the new value.
      */
     template<typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
@@ -54,7 +54,7 @@ public:
     }
 
     /**
-     * @brief Destroys the value previously allocated with create method.
+     * @brief Destroys the given value, previously allocated with the create method.
      */
     void destroy(Type& value)
     {

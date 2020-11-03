@@ -11,10 +11,27 @@
 
 namespace btn
 {
-    template<int TypeSize>
+    /**
+     * @brief Base class of generic_pool.
+     *
+     * Can be used as a reference type for all generic_pool containers containing a specific maximum size.
+     *
+     * @tparam MaxElementSize Maximum element size in bytes.
+     *
+     * @ingroup pool
+     */
+    template<int MaxElementSize>
     class igeneric_pool;
 
-    template<int TypeSize, int TypeAlignment, int MaxSize>
+    /**
+     * @brief Generic pool implementation that uses a fixed size buffer.
+     *
+     * @tparam MaxElementSize Element size.
+     * @tparam MaxSize Maximum number of elements that can be stored.
+     *
+     * @ingroup pool
+     */
+    template<int MaxElementSize, int MaxSize>
     class generic_pool;
 }
 

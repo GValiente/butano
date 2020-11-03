@@ -11,10 +11,15 @@
 namespace btn
 {
 
+/**
+ * @brief Specifies the available bits per pixel modes.
+ *
+ * @ingroup palette
+ */
 enum class palette_bpp_mode
 {
-    BPP_4,
-    BPP_8
+    BPP_4, //!< 4 bits per pixel (16 colors).
+    BPP_8 //!< 8 bits per pixel (256 colors).
 };
 
 }

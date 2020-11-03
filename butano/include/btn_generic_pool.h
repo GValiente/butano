@@ -14,51 +14,78 @@
 namespace btn
 {
 
-template<int TypeSize>
+template<int MaxElementSize>
 class igeneric_pool
 {
 
 public:
-    using size_type = int;
+    using size_type = int; //!< Size type alias.
 
     igeneric_pool(const igeneric_pool&) = delete;
 
     igeneric_pool& operator=(const igeneric_pool&) = delete;
 
+    /**
+     * @brief Destructor.
+     *
+     * It doesn't destroy its elements, they must be destroyed manually.
+     */
     ~igeneric_pool()
     {
         BTN_ASSERT(empty(), "Pool is not empty");
     }
 
+    /**
+     * @brief Returns the current elements count.
+     */
     [[nodiscard]] size_type size() const
     {
         return _allocated_items_count;
     }
 
+    /**
+     * @brief Returns the maximum possible elements count.
+     */
     [[nodiscard]] size_type max_size() const
     {
         return _max_size;
     }
 
+    /**
+     * @brief Returns the remaining element capacity.
+     */
     [[nodiscard]] size_type available() const
     {
         return _max_size - _allocated_items_count;
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any element.
+     */
     [[nodiscard]] bool empty() const
     {
         return _allocated_items_count == 0;
     }
 
+    /**
+     * @brief Indicates if it can't contain any more elements.
+     */
     [[nodiscard]] bool full() const
     {
         return _allocated_items_count == _max_size;
     }
 
+    /**
+     * @brief Constructs a value inside of the pool.
+     * @tparam Type Type of the value to construct.
+     * @tparam Args Type of the arguments of the value to construct.
+     * @param args Parameters of the value to construct.
+     * @return Reference to the new value.
+     */
     template<typename Type, typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
-        static_assert(sizeof(Type) <= TypeSize);
+        static_assert(sizeof(Type) <= MaxElementSize);
         BTN_ASSERT(! full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(_allocate());
@@ -66,10 +93,13 @@ public:
         return *result;
     }
 
+    /**
+     * @brief Destroys the given value, previously allocated with the create method.
+     */
     template<typename Type>
     void destroy(Type& value)
     {
-        static_assert(sizeof(Type) <= TypeSize);
+        static_assert(sizeof(Type) <= MaxElementSize);
         BTN_ASSERT(_contains(value), "Pool does not contain this value");
 
         value.~Type();
@@ -77,6 +107,8 @@ public:
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     igeneric_pool(char* buffer, size_type max_size) :
         _buffer(buffer),
         _next_ptr(buffer),
@@ -91,15 +123,15 @@ protected:
     {
         auto ptr = reinterpret_cast<const char*>(&value);
         size_type index = ptr - _buffer;
-        return index >= 0 && index <= (TypeSize * _max_size) - TypeSize;
+        return index >= 0 && index <= (MaxElementSize * _max_size) - MaxElementSize;
     }
 
     [[nodiscard]] char* _allocate()
     {
         if(_initialised_items_count < _max_size)
         {
-            char* ptr = _buffer + (_initialised_items_count * TypeSize);
-            char* next_ptr = ptr + TypeSize;
+            char* ptr = _buffer + (_initialised_items_count * MaxElementSize);
+            char* next_ptr = ptr + MaxElementSize;
             *reinterpret_cast<char**>(ptr) = next_ptr;
             ++_initialised_items_count;
         }
@@ -136,6 +168,8 @@ protected:
         --_allocated_items_count;
     }
 
+    /// @endcond
+
 private:
     char* _buffer;
     char* _next_ptr;
@@ -145,54 +179,67 @@ private:
 };
 
 
-template<int TypeSize, int TypeAlignment>
-union alignas(TypeAlignment) generic_pool_element
-{
-    static_assert(TypeAlignment >= alignof(char*));
+/// @cond DO_NOT_DOCUMENT
 
+template<int MaxElementSize>
+union generic_pool_element
+{
     char* next;
-    char value[TypeSize];
+    char buffer[MaxElementSize];
 };
 
+/// @endcond
 
-template<int TypeSize, int TypeAlignment, int MaxSize>
-class generic_pool : public igeneric_pool<sizeof(generic_pool_element<TypeSize, TypeAlignment>)>
+
+template<int MaxElementSize, int MaxSize>
+class generic_pool : public igeneric_pool<sizeof(generic_pool_element<MaxElementSize>)>
 {
 
 private:
-    using element = generic_pool_element<TypeSize, TypeAlignment>;
+    using element = generic_pool_element<MaxElementSize>;
     using base_type = igeneric_pool<sizeof(element)>;
 
 public:
-    using size_type = typename base_type::size_type;
+    using size_type = typename base_type::size_type; //!< Size type alias.
 
+    /**
+     * @brief Default constructor.
+     */
     generic_pool() :
         base_type(reinterpret_cast<char*>(&_buffer[0]), MaxSize)
     {
     }
 
+    /**
+     * @brief Indicates if the given value belongs to the pool or not.
+     */
     template<typename Type>
     [[nodiscard]] bool contains(const Type& value) const
     {
-        static_assert(alignof(Type) == TypeAlignment);
-
         return base_type::_contains(value);
     }
 
+    /**
+     * @brief Constructs a value inside of the pool.
+     * @tparam Type Type of the value to construct.
+     * @tparam Args Type of the arguments of the value to construct.
+     * @param args Parameters of the value to construct.
+     * @return Reference to the new value.
+     */
     template<typename Type, typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
-        static_assert(alignof(Type) == TypeAlignment);
-
         auto result = reinterpret_cast<Type*>(base_type::_allocate());
         ::new(result) Type(forward<Args>(args)...);
         return *result;
     }
 
+    /**
+     * @brief Destroys the given value, previously allocated with the create method.
+     */
     template<typename Type>
     void destroy(Type& value)
     {
-        static_assert(alignof(Type) == TypeAlignment);
         BTN_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
@@ -200,7 +247,7 @@ public:
     }
 
 private:
-    alignas(TypeAlignment) char _buffer[sizeof(element) * MaxSize];
+    alignas(element) char _buffer[sizeof(element) * MaxSize];
 };
 
 }

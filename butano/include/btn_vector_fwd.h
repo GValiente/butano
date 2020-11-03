@@ -23,7 +23,7 @@ namespace btn
     class ivector;
 
     /**
-     * @brief Implementation that uses a fixed size buffer.
+     * @brief Vector implementation that uses a fixed size buffer.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

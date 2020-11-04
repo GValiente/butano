@@ -13,7 +13,7 @@ namespace btn
 {
 
 /**
- * @brief Defines a two-dimensional rectangle using integer point precision.
+ * @brief Defines a two-dimensional rectangle using integer precision.
  *
  * @ingroup math
  */
@@ -255,8 +255,8 @@ public:
     }
 
     /**
-     * @brief Multiplies both the width and height of the rectangle by the given factor.
-     * @param value Multiplication factor.
+     * @brief Multiplies both width and height of the rectangle by the given factor.
+     * @param value Integer multiplication factor.
      * @return Reference to this.
      */
     constexpr rect& operator*=(int value)
@@ -266,8 +266,19 @@ public:
     }
 
     /**
-     * @brief Divides both the width and height of the rectangle by the given divisor.
-     * @param value Valid divisor (> 0).
+     * @brief Multiplies both width and height of the rectangle by the given factor.
+     * @param value Unsigned integer multiplication factor.
+     * @return Reference to this.
+     */
+    constexpr rect& operator*=(unsigned value)
+    {
+        _dimensions *= value;
+        return *this;
+    }
+
+    /**
+     * @brief Divides both width and height of the rectangle by the given divisor.
+     * @param value Valid integer divisor (> 0).
      * @return Reference to this.
      */
     constexpr rect& operator/=(int value)
@@ -277,7 +288,18 @@ public:
     }
 
     /**
-     * @brief Returns a multiplied by the b.
+     * @brief Divides both width and height of the rectangle by the given divisor.
+     * @param value Valid unsigned integer divisor (> 0).
+     * @return Reference to this.
+     */
+    constexpr rect& operator/=(unsigned value)
+    {
+        _dimensions /= value;
+        return *this;
+    }
+
+    /**
+     * @brief Returns a multiplied by b.
      */
     [[nodiscard]] constexpr friend rect operator*(const rect& a, int b)
     {
@@ -285,9 +307,25 @@ public:
     }
 
     /**
-     * @brief Returns a divided by the b.
+     * @brief Returns a multiplied by b.
+     */
+    [[nodiscard]] constexpr friend rect operator*(const rect& a, unsigned b)
+    {
+        return rect(a._position, a._dimensions * b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend rect operator/(const rect& a, int b)
+    {
+        return rect(a._position, a._dimensions / b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
+    [[nodiscard]] constexpr friend rect operator/(const rect& a, unsigned b)
     {
         return rect(a._position, a._dimensions / b);
     }
@@ -307,6 +345,7 @@ private:
  * @brief Hash support for rect.
  *
  * @ingroup math
+ * @ingroup functional
  */
 template<>
 struct hash<rect>

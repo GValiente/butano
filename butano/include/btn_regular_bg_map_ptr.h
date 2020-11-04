@@ -516,6 +516,7 @@ private:
  *
  * @ingroup regular_bg
  * @ingroup bg_map
+ * @ingroup functional
  */
 template<>
 struct hash<regular_bg_map_ptr>

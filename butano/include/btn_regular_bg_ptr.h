@@ -497,6 +497,7 @@ private:
  * @brief Hash support for regular_bg_ptr.
  *
  * @ingroup regular_bg
+ * @ingroup functional
  */
 template<>
 struct hash<regular_bg_ptr>

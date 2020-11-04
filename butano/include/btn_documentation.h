@@ -17,9 +17,17 @@
 // GROUPS
 
 /**
+ * @defgroup display Display
+ *
+ * That square window of 240x160 pixels capable of displaying 32768 colors (15 bits).
+ */
+
+/**
  * @defgroup tile Tiles
  *
  * On the GBA, the pixel data of sprites and backgrounds is made of pixel tiles: 8x8 pixel matrices.
+ *
+ * @ingroup display
  */
 
 /**
@@ -35,12 +43,16 @@
  * but it only can be one 8 bits per pixel backgrounds palette and one 8 bits per pixel sprites palette:
  * all 8 bits per pixel backgrounds share the same 8 bits per pixel backgrounds palette
  * and all 8 bits per pixel sprites share the same 8 bits per pixel sprites palette.
+ *
+ * @ingroup display
  */
 
 /**
  * @defgroup affine_mat Affine transformation matrices
  *
  * Used to apply two-dimensional geometric transformations like rotating and/or scaling to sprites and backgrounds.
+ *
+ * @ingroup display
  */
 
 /**
@@ -49,6 +61,8 @@
  * Big graphics layers.
  *
  * Depending of their type, the GBA offers up to 4 of them.
+ *
+ * @ingroup display
  */
 
 /**
@@ -85,6 +99,8 @@
  * Small animated objects that can move freely from the background(s).
  *
  * In GBA's jargon they are called OBJs.
+ *
+ * @ingroup display
  */
 
 /**
@@ -94,6 +110,8 @@
  *
  * It divides a sprite or background into square blocks of pixels.
  * The top-left pixel of each block is used to fill the rest of that block, which makes it blocky.
+ *
+ * @ingroup display
  */
 
 /**
@@ -102,6 +120,8 @@
  * They allow to divide the screen into regions.
  *
  * For each one of these regions, they can show or hide sprites, backgrounds and blending between them.
+ *
+ * @ingroup display
  */
 
 /**
@@ -162,6 +182,8 @@
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
  * Also, UTF-8 characters are supported.
+ *
+ * @ingroup display
  */
 
 /**
@@ -170,6 +192,8 @@
  * When it is enabled, green intensity of each two screen pixels are exchanged.
  *
  * It produces an interesting dirt effect.
+ *
+ * @ingroup display
  */
 
 /**
@@ -180,6 +204,8 @@
  *
  * For example, with a H-Blank effect you can change the transparent color every screen horizontal line,
  * which is how games like Chrono Trigger fills their menus with a color gradient.
+ *
+ * @ingroup display
  */
 
 /**
@@ -293,6 +319,16 @@
  */
 
 /**
+ * @defgroup forward_list Forward list
+ *
+ * A std::forward_list like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup intrusive_forward_list Intrusive forward list
  *
  * A std::forward_list like container that doesn't contain values, it just references them.
@@ -378,6 +414,16 @@
  * @defgroup utility Utilities
  *
  * Standard library utilities.
+ *
+ * @ingroup std
+ */
+
+/**
+ * @defgroup functional Functional
+ *
+ * Part of the standard function objects library.
+ *
+ * It provides the standard hash function.
  *
  * @ingroup std
  */

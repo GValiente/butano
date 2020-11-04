@@ -481,6 +481,7 @@ private:
  * @brief Hash support for string_view.
  *
  * @ingroup string
+ * @ingroup functional
  */
 template<>
 struct hash<string_view>

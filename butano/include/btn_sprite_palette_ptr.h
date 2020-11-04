@@ -296,6 +296,7 @@ private:
  *
  * @ingroup sprite
  * @ingroup palette
+ * @ingroup functional
  */
 template<>
 struct hash<sprite_palette_ptr>

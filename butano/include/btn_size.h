@@ -13,7 +13,7 @@ namespace btn
 {
 
 /**
- * @brief Defines the size of a two-dimensional object using integer point precision.
+ * @brief Defines the size of a two-dimensional object using integer precision.
  *
  * @ingroup math
  */
@@ -106,8 +106,8 @@ public:
     }
 
     /**
-     * @brief Multiplies both the width and height by the given factor.
-     * @param value Multiplication factor.
+     * @brief Multiplies both width and height by the given factor.
+     * @param value Valid integer multiplication factor (>= 0).
      * @return Reference to this.
      */
     constexpr size& operator*=(int value)
@@ -120,11 +120,37 @@ public:
     }
 
     /**
-     * @brief Divides both the width and height by the given divisor.
-     * @param value Valid divisor (> 0).
+     * @brief Multiplies both width and height by the given factor.
+     * @param value Unsigned integer multiplication factor.
+     * @return Reference to this.
+     */
+    constexpr size& operator*=(unsigned value)
+    {
+        _width *= value;
+        _height *= value;
+        return *this;
+    }
+
+    /**
+     * @brief Divides both width and height by the given divisor.
+     * @param value Valid integer divisor (> 0).
      * @return Reference to this.
      */
     constexpr size& operator/=(int value)
+    {
+        BTN_ASSERT(value > 0, "Invalid value: ", value);
+
+        _width /= value;
+        _height /= value;
+        return *this;
+    }
+
+    /**
+     * @brief Divides both width and height by the given divisor.
+     * @param value Valid unsigned integer divisor (> 0).
+     * @return Reference to this.
+     */
+    constexpr size& operator/=(unsigned value)
     {
         BTN_ASSERT(value > 0, "Invalid value: ", value);
 
@@ -150,7 +176,7 @@ public:
     }
 
     /**
-     * @brief Returns a multiplied by the b.
+     * @brief Returns a multiplied by b.
      */
     [[nodiscard]] constexpr friend size operator*(const size& a, int b)
     {
@@ -160,9 +186,27 @@ public:
     }
 
     /**
-     * @brief Returns a divided by the b.
+     * @brief Returns a multiplied by b.
+     */
+    [[nodiscard]] constexpr friend size operator*(const size& a, unsigned b)
+    {
+        return size(a._width * b, a._height * b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend size operator/(const size& a, int b)
+    {
+        BTN_ASSERT(b > 0, "Invalid value: ", b);
+
+        return size(a._width / b, a._height / b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
+    [[nodiscard]] constexpr friend size operator/(const size& a, unsigned b)
     {
         BTN_ASSERT(b > 0, "Invalid value: ", b);
 
@@ -184,6 +228,7 @@ private:
  * @brief Hash support for size.
  *
  * @ingroup math
+ * @ingroup functional
  */
 template<>
 struct hash<size>

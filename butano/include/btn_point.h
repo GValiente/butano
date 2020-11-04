@@ -13,7 +13,7 @@ namespace btn
 {
 
 /**
- * @brief Defines a two-dimensional point using integer point precision.
+ * @brief Defines a two-dimensional point using integer precision.
  *
  * @ingroup math
  */
@@ -103,7 +103,7 @@ public:
 
     /**
      * @brief Multiplies both coordinates by the given factor.
-     * @param value Multiplication factor.
+     * @param value Integer multiplication factor.
      * @return Reference to this.
      */
     constexpr point& operator*=(int value)
@@ -114,11 +114,37 @@ public:
     }
 
     /**
-     * @brief Divides both the coordinates by the given divisor.
-     * @param value Valid divisor (!= 0).
+     * @brief Multiplies both coordinates by the given factor.
+     * @param value Unsigned integer multiplication factor.
+     * @return Reference to this.
+     */
+    constexpr point& operator*=(unsigned value)
+    {
+        _x *= value;
+        _y *= value;
+        return *this;
+    }
+
+    /**
+     * @brief Divides both coordinates by the given divisor.
+     * @param value Valid integer divisor (!= 0).
      * @return Reference to this.
      */
     constexpr point& operator/=(int value)
+    {
+        BTN_ASSERT(value != 0, "Invalid value: ", value);
+
+        _x /= value;
+        _y /= value;
+        return *this;
+    }
+
+    /**
+     * @brief Divides both coordinates by the given divisor.
+     * @param value Valid unsigned integer divisor (!= 0).
+     * @return Reference to this.
+     */
+    constexpr point& operator/=(unsigned value)
     {
         BTN_ASSERT(value != 0, "Invalid value: ", value);
 
@@ -144,7 +170,7 @@ public:
     }
 
     /**
-     * @brief Returns a multiplied by the b.
+     * @brief Returns a multiplied by b.
      */
     [[nodiscard]] constexpr friend point operator*(const point& a, int b)
     {
@@ -152,9 +178,27 @@ public:
     }
 
     /**
-     * @brief Returns a divided by the b.
+     * @brief Returns a multiplied by b.
+     */
+    [[nodiscard]] constexpr friend point operator*(const point& a, unsigned b)
+    {
+        return point(a._x * b, a._y * b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend point operator/(const point& a, int b)
+    {
+        BTN_ASSERT(b != 0, "Invalid value: ", b);
+
+        return point(a._x / b, a._y / b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
+    [[nodiscard]] constexpr friend point operator/(const point& a, unsigned b)
     {
         BTN_ASSERT(b != 0, "Invalid value: ", b);
 
@@ -176,6 +220,7 @@ private:
  * @brief Hash support for point.
  *
  * @ingroup math
+ * @ingroup functional
  */
 template<>
 struct hash<point>

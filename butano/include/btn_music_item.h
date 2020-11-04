@@ -77,6 +77,7 @@ private:
  * @brief Hash support for music_item.
  *
  * @ingroup music
+ * @ingroup functional
  */
 template<>
 struct hash<music_item>

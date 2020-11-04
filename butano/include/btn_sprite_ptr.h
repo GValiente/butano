@@ -816,6 +816,7 @@ private:
  * @brief Hash support for sprite_ptr.
  *
  * @ingroup sprite
+ * @ingroup functional
  */
 template<>
 struct hash<sprite_ptr>

@@ -394,6 +394,7 @@ template<typename Type, class... Args>
  * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
  *
  * @ingroup unique_ptr
+ * @ingroup functional
  */
 template<typename Type, typename Deleter>
 struct hash<unique_ptr<Type, Deleter>>

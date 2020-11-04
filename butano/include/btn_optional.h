@@ -638,6 +638,7 @@ template<typename Type, class... Args>
  * @tparam Type Type of the contained value.
  *
  * @ingroup optional
+ * @ingroup functional
  */
 template<typename Type>
 struct hash<optional<Type>>

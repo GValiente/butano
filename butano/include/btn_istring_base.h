@@ -274,6 +274,7 @@ protected:
  * @brief Hash support for istring_base.
  *
  * @ingroup string
+ * @ingroup functional
  */
 template<>
 struct hash<istring_base>

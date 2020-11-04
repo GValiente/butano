@@ -11,10 +11,19 @@
 namespace btn
 {
 
+/**
+ * @brief Poor man's float.
+ *
+ * It fakes numbers with decimal points with integers.
+ *
+ * @tparam Precision Number of bits used for the fractional part.
+ *
+ * @ingroup math
+ */
 template<int Precision>
 class fixed_t;
 
-using fixed = fixed_t<12>;
+using fixed = fixed_t<12>; //!< Default precision fixed_t alias.
 
 }
 

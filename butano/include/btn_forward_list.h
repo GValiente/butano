@@ -19,6 +19,8 @@ class iforward_list
 {
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     class node_type
     {
 
@@ -39,26 +41,32 @@ protected:
         }
     };
 
+    /// @endcond
+
 public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
 
     class iterator
     {
 
     public:
-        using value_type = iforward_list::value_type;
-        using size_type = iforward_list::size_type;
-        using reference = iforward_list::reference;
-        using const_reference = iforward_list::const_reference;
-        using pointer = iforward_list::pointer;
-        using const_pointer = iforward_list::const_pointer;
-        using iterator_category = forward_iterator_tag;
+        using value_type = iforward_list::value_type; //!< Value type alias.
+        using size_type = iforward_list::size_type; //!< Size type alias.
+        using reference = iforward_list::reference; //!< Reference alias.
+        using const_reference = iforward_list::const_reference; //!< Const reference alias.
+        using pointer = iforward_list::pointer; //!< Pointer alias.
+        using const_pointer = iforward_list::const_pointer; //!< Const pointer alias.
+        using iterator_category = forward_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -67,6 +75,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -74,6 +85,9 @@ public:
             return static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a reference to the pointed value.
+         */
         [[nodiscard]] reference operator*()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -81,6 +95,9 @@ public:
             return static_cast<value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -88,6 +105,9 @@ public:
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a pointer to the pointed value.
+         */
         pointer operator->()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -95,6 +115,9 @@ public:
             return &static_cast<value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Default equal operator.
+         */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b) = default;
 
     private:
@@ -111,23 +134,34 @@ public:
         }
     };
 
+    /**
+     * @brief Const iterator.
+     */
     class const_iterator
     {
 
     public:
-        using value_type = iforward_list::value_type;
-        using size_type = iforward_list::size_type;
-        using reference = iforward_list::reference;
-        using const_reference = iforward_list::const_reference;
-        using pointer = iforward_list::pointer;
-        using const_pointer = iforward_list::const_pointer;
-        using iterator_category = forward_iterator_tag;
+        using value_type = iforward_list::value_type; //!< Value type alias.
+        using size_type = iforward_list::size_type; //!< Size type alias.
+        using reference = iforward_list::reference; //!< Reference alias.
+        using const_reference = iforward_list::const_reference; //!< Const reference alias.
+        using pointer = iforward_list::pointer; //!< Pointer alias.
+        using const_pointer = iforward_list::const_pointer; //!< Const pointer alias.
+        using iterator_category = forward_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Public constructor.
+         * @param it Non const iterator.
+         */
         const_iterator(iterator it) :
             _node(it._node)
         {
         }
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         const_iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -136,6 +170,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -143,6 +180,9 @@ public:
             return static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -150,6 +190,9 @@ public:
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Default equal operator.
+         */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b) = default;
 
     private:
@@ -167,6 +210,11 @@ public:
 
     iforward_list(const iforward_list& other) = delete;
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other iforward_list to copy.
+     * @return Reference to this.
+     */
     iforward_list& operator=(const iforward_list& other)
     {
         if(this != &other)
@@ -180,6 +228,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other iforward_list to move.
+     * @return Reference to this.
+     */
     iforward_list& operator=(iforward_list&& other) noexcept
     {
         if(this != &other)
@@ -193,76 +246,121 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Returns the current size.
+     */
     [[nodiscard]] size_type size() const
     {
         return _ipool->size();
     }
 
+    /**
+     * @brief Returns the maximum possible size.
+     */
     [[nodiscard]] size_type max_size() const
     {
         return _ipool->max_size();
     }
 
-    [[nodiscard]] bool empty() const
-    {
-        return _ipool->empty();
-    }
-
-    [[nodiscard]] bool full() const
-    {
-        return _ipool->full();
-    }
-
+    /**
+     * @brief Returns the remaining capacity.
+     */
     [[nodiscard]] size_type available() const
     {
         return _ipool->available();
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any element.
+     */
+    [[nodiscard]] bool empty() const
+    {
+        return _ipool->empty();
+    }
+
+    /**
+     * @brief Indicates if it can't contain any more elements.
+     */
+    [[nodiscard]] bool full() const
+    {
+        return _ipool->full();
+    }
+
+    /**
+     * @brief Returns a const iterator to the position before the beginning of the iforward_list.
+     */
     [[nodiscard]] const_iterator before_begin() const
     {
         return const_iterator(&_first_node);
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the iforward_list.
+     */
     [[nodiscard]] iterator before_begin()
     {
         return iterator(&_first_node);
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the iforward_list.
+     */
     [[nodiscard]] const_iterator begin() const
     {
         return const_iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns an iterator to the beginning of the iforward_list.
+     */
     [[nodiscard]] iterator begin()
     {
         return iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the iforward_list.
+     */
     [[nodiscard]] const_iterator end() const
     {
         return const_iterator();
     }
 
+    /**
+     * @brief Returns an iterator to the end of the iforward_list.
+     */
     [[nodiscard]] iterator end()
     {
         return iterator();
     }
 
+    /**
+     * @brief Returns a const iterator to the position before the beginning of the iforward_list.
+     */
     [[nodiscard]] const_iterator cbefore_begin() const
     {
         return const_iterator(&_first_node);
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the iforward_list.
+     */
     [[nodiscard]] const_iterator cbegin() const
     {
         return const_iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the iforward_list.
+     */
     [[nodiscard]] const_iterator cend() const
     {
         return const_iterator();
     }
 
+    /**
+     * @brief Returns a const reference to the first element.
+     */
     [[nodiscard]] const_reference front() const
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -270,6 +368,9 @@ public:
         return static_cast<const value_node_type*>(_first_node.next)->value;
     }
 
+    /**
+     * @brief Returns a reference to the first element.
+     */
     [[nodiscard]] reference front()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -277,6 +378,10 @@ public:
         return static_cast<value_node_type*>(_first_node.next)->value;
     }
 
+    /**
+     * @brief Inserts a copy of a value at the beginning of the iforward_list.
+     * @param value Value to insert.
+     */
     void push_front(const_reference value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -285,6 +390,10 @@ public:
         _insert_after(before_begin(), new_node);
     }
 
+    /**
+     * @brief Inserts a moved value at the beginning of the iforward_list.
+     * @param value Value to insert.
+     */
     void push_front(value_type&& value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -293,6 +402,11 @@ public:
         _insert_after(before_begin(), new_node);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the beginning of the iforward_list.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
+     */
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
@@ -303,6 +417,9 @@ public:
         return static_cast<value_node_type*>(&new_node)->value;
     }
 
+    /**
+     * @brief Removes the first element of the iforward_list.
+     */
     void pop_front()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -310,6 +427,12 @@ public:
         _erase_after(before_begin());
     }
 
+    /**
+     * @brief Inserts a copy of a value at the specified position.
+     * @param position The given value is inserted after this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert_after(const_iterator position, const_reference value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -319,6 +442,12 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Inserts a moved value at the specified position.
+     * @param position The given value is inserted after this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert_after(const_iterator position, value_type&& value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -328,6 +457,12 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the specified position.
+     * @param position The new value is inserted after this position.
+     * @param args Parameters of the value to insert.
+     * @return Iterator pointing to the new value.
+     */
     template<typename... Args>
     iterator emplace_after(const_iterator position, Args&&... args)
     {
@@ -338,6 +473,11 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Erases an element.
+     * @param position Iterator to the previous element to the one to erase.
+     * @return Iterator following the erased element.
+     */
     iterator erase_after(const_iterator position)
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -348,6 +488,16 @@ public:
         return non_const_position;
     }
 
+    /**
+     * @brief Erases a range of elements.
+     *
+     * The range includes all the elements between first and last, including the
+     * element pointed by last, but not the one pointed by first.
+     *
+     * @param first Iterator to the first element to erase.
+     * @param last Iterator to the last element to erase.
+     * @return Iterator following the last erased element.
+     */
     iterator erase_after(const_iterator first, const_iterator last)
     {
         iterator erase_first = _mutable_iterator(first);
@@ -365,6 +515,12 @@ public:
         return erase_it;
     }
 
+    /**
+     * @brief Erases all elements that are equal to the specified value.
+     * @param list iforward_list from which to erase.
+     * @param value Element to erase.
+     * @return Number of erased elements.
+     */
     friend size_type erase(iforward_list& list, const_reference value)
     {
         size_type erased_count = 0;
@@ -391,6 +547,12 @@ public:
         return erased_count;
     }
 
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param list iforward_list from which to erase.
+     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @return Number of erased elements.
+     */
     template<class Pred>
     friend size_type erase_if(iforward_list& list, const Pred& pred)
     {
@@ -418,6 +580,11 @@ public:
         return erased_count;
     }
 
+    /**
+     * @brief Assigns values to the iforward_list, removing the previous ones.
+     * @param count Number of elements to insert.
+     * @param value Value to fill new elements with.
+     */
     void assign(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
@@ -432,6 +599,11 @@ public:
         }
     }
 
+    /**
+     * @brief Assigns values to the iforward_list, removing the previous ones.
+     * @param first Iterator to the first element to insert.
+     * @param last Iterator following to the last element to insert.
+     */
     template<typename Iterator>
     void assign(const Iterator& first, const Iterator& last)
     {
@@ -448,6 +620,28 @@ public:
         }
     }
 
+    /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    {
+        iterator it = begin();
+        iterator last = end();
+
+        while(it != last)
+        {
+            node_type* node = it._node;
+            ++it;
+            _ipool->destroy(static_cast<value_node_type&>(*node));
+        }
+
+        _first_node.next = nullptr;
+    }
+
+    /**
+     * @brief Exchanges the contents of this iforward_list with those of the other one.
+     * @param other iforward_list to exchange the contents with.
+     */
     void swap(iforward_list& other)
     {
         if(this != &other)
@@ -498,26 +692,22 @@ public:
         }
     }
 
+    /**
+     * @brief Exchanges the contents of a iforward_list with those of another one.
+     * @param a First iforward_list to exchange the contents with.
+     * @param b Second iforward_list to exchange the contents with.
+     */
     friend void swap(iforward_list& a, iforward_list& b)
     {
         a.swap(b);
     }
 
-    void clear()
-    {
-        iterator it = begin();
-        iterator last = end();
-
-        while(it != last)
-        {
-            node_type* node = it._node;
-            ++it;
-            _ipool->destroy(static_cast<value_node_type&>(*node));
-        }
-
-        _first_node.next = nullptr;
-    }
-
+    /**
+     * @brief Equal operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator==(const iforward_list& a, const iforward_list& b)
     {
         if(a.size() != b.size())
@@ -528,32 +718,67 @@ public:
         return equal(a.begin(), a.end(), b.begin());
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator!=(const iforward_list& a, const iforward_list& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is lexicographically less than the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<(const iforward_list& a, const iforward_list& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>(const iforward_list& a, const iforward_list& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<=(const iforward_list& a, const iforward_list& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First iforward_list to compare.
+     * @param b Second iforward_list to compare.
+     * @return <b>true</b> if the first iforward_list is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>=(const iforward_list& a, const iforward_list& b)
     {
         return ! (a < b);
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     explicit iforward_list(ipool<value_node_type>& ipool) :
         _ipool(&ipool)
     {
@@ -584,6 +809,8 @@ protected:
 
         other.clear();
     }
+
+    /// @endcond
 
 private:
     ipool<value_node_type>* _ipool;
@@ -619,32 +846,47 @@ class forward_list : public iforward_list<Type>
     static_assert(MaxSize > 0);
 
 public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
-    using iterator = typename iforward_list<Type>::iterator;
-    using const_iterator = typename iforward_list<Type>::const_iterator;
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
+    using iterator = typename iforward_list<Type>::iterator; //!< Iterator alias.
+    using const_iterator = typename iforward_list<Type>::const_iterator; //!< Const iterator alias.
 
+    /**
+     * @brief Default constructor.
+     */
     forward_list() :
         iforward_list<Type>(_pool)
     {
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other forward_list to copy.
+     */
     forward_list(const forward_list& other) :
         forward_list()
     {
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other forward_list to move.
+     */
     forward_list(forward_list&& other) noexcept :
         forward_list()
     {
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other iforward_list to copy.
+     */
     forward_list(const iforward_list<Type>& other) :
         forward_list()
     {
@@ -653,6 +895,10 @@ public:
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other iforward_list to move.
+     */
     forward_list(iforward_list<Type>&& other) noexcept :
         forward_list()
     {
@@ -682,6 +928,11 @@ public:
         this->assign(count, value);
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other forward_list to copy.
+     * @return Reference to this.
+     */
     forward_list& operator=(const forward_list& other)
     {
         if(this != &other)
@@ -693,6 +944,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other forward_list to move.
+     * @return Reference to this.
+     */
     forward_list& operator=(forward_list&& other) noexcept
     {
         if(this != &other)
@@ -704,6 +960,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other iforward_list to copy.
+     * @return Reference to this.
+     */
     forward_list& operator=(const iforward_list<Type>& other)
     {
         if(this != &other)
@@ -717,6 +978,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other iforward_list to move.
+     * @return Reference to this.
+     */
     forward_list& operator=(iforward_list<Type>&& other) noexcept
     {
         if(this != &other)
@@ -730,6 +996,9 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Destructor.
+     */
     ~forward_list()
     {
         this->clear();

@@ -409,6 +409,7 @@ private:
  *
  * @ingroup sprite
  * @ingroup tile
+ * @ingroup functional
  */
 template<>
 struct hash<sprite_tiles_ptr>

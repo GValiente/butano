@@ -112,6 +112,7 @@ private:
  * @brief Hash support for sound_item.
  *
  * @ingroup sound
+ * @ingroup functional
  */
 template<>
 struct hash<sound_item>

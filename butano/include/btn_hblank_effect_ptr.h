@@ -107,6 +107,7 @@ private:
  * @brief Hash support for hblank_effect_ptr.
  *
  * @ingroup hblank_effect
+ * @ingroup functional
  */
 template<>
 struct hash<hblank_effect_ptr>

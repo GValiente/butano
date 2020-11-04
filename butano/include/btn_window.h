@@ -142,6 +142,7 @@ private:
  * @brief Hash support for window.
  *
  * @ingroup window
+ * @ingroup functional
  */
 template<>
 struct hash<window>

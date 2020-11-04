@@ -178,6 +178,7 @@ private:
  * @ingroup sprite
  * @ingroup affine_mat
  * @ingroup hblank_effect
+ * @ingroup functional
  */
 template<>
 struct hash<sprite_affine_mat_attributes_hblank_effect_ptr>

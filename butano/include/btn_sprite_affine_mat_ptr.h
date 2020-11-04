@@ -235,6 +235,7 @@ private:
  *
  * @ingroup sprite
  * @ingroup affine_mat
+ * @ingroup functional
  */
 template<>
 struct hash<sprite_affine_mat_ptr>

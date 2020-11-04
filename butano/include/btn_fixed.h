@@ -9,6 +9,7 @@
 #include "btn_assert.h"
 #include "btn_limits.h"
 #include "btn_compare.h"
+#include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 
 namespace btn
@@ -20,6 +21,11 @@ class fixed_t
     static_assert(Precision > 0 && Precision < 31, "Invalid precision");
 
 public:
+    /**
+     * @brief Returns a fixed_t with the given internal data.
+     *
+     * If you want to convert an integer value to fixed_t, you should use its constructor.
+     */
     [[nodiscard]] static constexpr fixed_t from_data(int data)
     {
         fixed_t result;
@@ -27,16 +33,25 @@ public:
         return result;
     }
 
+    /**
+     * @brief Returns the number of bits used for the fractional part.
+     */
     [[nodiscard]] static constexpr int precision()
     {
         return Precision;
     }
 
+    /**
+     * @brief Returns the internal data of fixed_t<Precision>(1);
+     */
     [[nodiscard]] static constexpr int scale()
     {
         return 1 << Precision;
     }
 
+    /**
+     * @brief Returns the internal data of fixed_t<Precision / 2>(1);
+     */
     [[nodiscard]] static constexpr int half_scale()
     {
         static_assert(Precision % 2 == 0, "Invalid precision");
@@ -44,29 +59,51 @@ public:
         return 1 << (Precision / 2);
     }
 
+    /**
+     * @brief Default constructor.
+     */
     constexpr fixed_t() = default;
 
-    constexpr fixed_t(int integer) :
-        _data(integer * scale())
+    /**
+     * @brief Constructor.
+     * @param value Integer value.
+     */
+    constexpr fixed_t(int value) :
+        _data(value * scale())
     {
     }
 
-    constexpr fixed_t(int integer, int fraction) :
-        _data((integer * scale()) + fraction)
+    /**
+     * @brief Constructor.
+     * @param value Unsigned integer value.
+     */
+    constexpr fixed_t(unsigned value) :
+        _data(value << Precision)
     {
-        BTN_ASSERT(fraction >= 0, "Fraction is negative");
     }
 
+    /**
+     * @brief Constructor.
+     * @param value Single precision floating point value.
+     */
     constexpr fixed_t(float value) :
         _data(int(value * scale()))
     {
     }
 
+    /**
+     * @brief Constructor.
+     * @param value Double precision floating point value.
+     */
     constexpr fixed_t(double value) :
         _data(int(value * scale()))
     {
     }
 
+    /**
+     * @brief Constructor.
+     * @param other Fixed point value.
+     */
     template<int OtherPrecision>
     constexpr fixed_t(fixed_t<OtherPrecision> other) :
         _data(Precision < OtherPrecision ?
@@ -75,26 +112,41 @@ public:
     {
     }
 
+    /**
+     * @brief Returns the internal data.
+     */
     [[nodiscard]] constexpr int data() const
     {
         return _data;
     }
 
+    /**
+     * @brief Returns the integer part using a division.
+     */
     [[nodiscard]] constexpr int integer() const
     {
         return _data / scale();
     }
 
+    /**
+     * @brief Returns the integer part using a right shift.
+     */
     [[nodiscard]] constexpr int right_shift_integer() const
     {
         return _data >> Precision;
     }
 
+    /**
+     * @brief Returns the integer part, assuming that it is >= 0.
+     */
     [[nodiscard]] constexpr unsigned unsigned_integer() const
     {
         return _data >> Precision;
     }
 
+    /**
+     * @brief Returns the nearest integer value.
+     */
     [[nodiscard]] constexpr int round_integer() const
     {
         int data = _data;
@@ -109,21 +161,50 @@ public:
         }
     }
 
+    /**
+     * @brief Returns the fractional part.
+     */
     [[nodiscard]] constexpr int fraction() const
     {
         return _data & (scale() - 1);
     }
 
+    /**
+     * @brief Returns the nearest single precision floating point value.
+     */
     [[nodiscard]] constexpr float to_float() const
     {
         return float(_data) / scale();
     }
 
+    /**
+     * @brief Returns the nearest double precision floating point value.
+     */
     [[nodiscard]] constexpr double to_double() const
     {
         return double(_data) / scale();
     }
 
+    /**
+     * @brief Returns the multiplication of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t multiplication(int value) const
+    {
+        return from_data(_data * value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t multiplication(unsigned value) const
+    {
+        return from_data(_data * value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t multiplication(fixed_t other) const
     {
         if constexpr(Precision % 2 == 0)
@@ -136,26 +217,80 @@ public:
         return safe_multiplication(other);
     }
 
-    [[nodiscard]] constexpr fixed_t multiplication(int integer) const
+    /**
+     * @brief Returns the multiplication of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t safe_multiplication(int value) const
     {
-        return from_data(_data * integer);
+        return multiplication(value);
     }
 
+    /**
+     * @brief Returns the multiplication of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t safe_multiplication(unsigned value) const
+    {
+        return multiplication(value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t safe_multiplication(fixed_t other) const
     {
         return from_data(int((int64_t(_data) * other._data) / scale()));
     }
 
+    /**
+     * @brief Returns the multiplication of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_multiplication(int value) const
+    {
+        return multiplication(value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_multiplication(unsigned value) const
+    {
+        return multiplication(value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given fixed point value
+     * without trying to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t unsafe_multiplication(fixed_t other) const
     {
         return from_data((_data * other._data) / scale());
     }
 
-    [[nodiscard]] constexpr fixed_t unsafe_multiplication(int integer) const
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t division(int value) const
     {
-        return multiplication(integer);
+        BTN_ASSERT(value, "Integer is zero");
+
+        return from_data(_data / value);
     }
 
+    /**
+     * @brief Returns the division of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t division(unsigned value) const
+    {
+        BTN_ASSERT(value, "Integer is zero");
+
+        return from_data(_data / value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t division(fixed_t other) const
     {
         if constexpr(Precision % 2 == 0)
@@ -170,13 +305,26 @@ public:
         return safe_division(other);
     }
 
-    [[nodiscard]] constexpr fixed_t division(int integer) const
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t safe_division(int value) const
     {
-        BTN_ASSERT(integer, "Integer is zero");
-
-        return from_data(_data / integer);
+        return division(value);
     }
 
+    /**
+     * @brief Returns the division of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t safe_division(unsigned value) const
+    {
+        return division(value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t safe_division(fixed_t other) const
     {
         BTN_ASSERT(other._data, "Other's internal data is zero");
@@ -184,6 +332,25 @@ public:
         return from_data(int((int64_t(_data) * scale()) / other._data));
     }
 
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_division(int value) const
+    {
+        return division(value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given unsigned integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_division(unsigned value) const
+    {
+        return division(value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given fixed point value without trying to avoid overflow.
+     */
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const
     {
         BTN_ASSERT(other._data, "Other's internal data is zero");
@@ -191,95 +358,191 @@ public:
         return from_data((_data * scale()) / other._data);
     }
 
-    [[nodiscard]] constexpr fixed_t unsafe_division(int integer) const
-    {
-        BTN_ASSERT(integer, "Integer is zero");
-
-        return division(integer);
-    }
-
+    /**
+     * @brief Returns a fixed_t that is formed by changing the sign of this one.
+     */
     [[nodiscard]] constexpr fixed_t operator-() const
     {
         return from_data(-_data);
     }
 
+    /**
+     * @brief Adds the given fixed_t to this one.
+     * @param other fixed_t to add.
+     * @return Reference to this.
+     */
     constexpr fixed_t& operator+=(fixed_t other)
     {
         _data += other._data;
         return *this;
     }
 
+    /**
+     * @brief Subtracts the given fixed_t to this one.
+     * @param other fixed_t to subtract.
+     * @return Reference to this.
+     */
     constexpr fixed_t& operator-=(fixed_t other)
     {
         _data -= other._data;
         return *this;
     }
 
+    /**
+     * @brief Multiplies this fixed_t by the given factor.
+     * @param value Integer multiplication factor.
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator*=(int value)
+    {
+        *this = multiplication(value);
+        return *this;
+    }
+
+    /**
+     * @brief Multiplies this fixed_t by the given factor.
+     * @param value Unsigned integer multiplication factor.
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator*=(unsigned value)
+    {
+        *this = multiplication(value);
+        return *this;
+    }
+
+    /**
+     * @brief Multiplies this fixed_t by the given factor.
+     * @param other Fixed point multiplication factor.
+     * @return Reference to this.
+     */
     constexpr fixed_t& operator*=(fixed_t other)
     {
         *this = multiplication(other);
         return *this;
     }
 
-    constexpr fixed_t& operator*=(int integer)
+    /**
+     * @brief Divides this fixed_t by the given divisor.
+     * @param value Valid integer divisor (!= 0).
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator/=(int value)
     {
-        *this = multiplication(integer);
+        *this = division(value);
         return *this;
     }
 
+    /**
+     * @brief Divides this fixed_t by the given divisor.
+     * @param value Valid unsigned integer divisor (!= 0).
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator/=(unsigned value)
+    {
+        *this = division(value);
+        return *this;
+    }
+
+    /**
+     * @brief Divides this fixed_t by the given divisor.
+     * @param other Valid fixed point divisor (!= 0).
+     * @return Reference to this.
+     */
     constexpr fixed_t& operator/=(fixed_t other)
     {
         *this = division(other);
         return *this;
     }
 
-    constexpr fixed_t& operator/=(int integer)
-    {
-        *this = division(integer);
-        return *this;
-    }
-
+    /**
+     * @brief Returns the sum of a and b.
+     */
     [[nodiscard]] constexpr friend fixed_t operator+(fixed_t a, fixed_t b)
     {
         return from_data(a._data + b._data);
     }
 
+    /**
+     * @brief Returns b subtracted from a.
+     */
     [[nodiscard]] constexpr friend fixed_t operator-(fixed_t a, fixed_t b)
     {
         return from_data(a._data - b._data);
     }
 
-    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, fixed_t b)
-    {
-        return a.multiplication(b);
-    }
-
+    /**
+     * @brief Returns a multiplied by b.
+     */
     [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, int b)
     {
         return a.multiplication(b);
     }
 
-    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, fixed_t b)
+    /**
+     * @brief Returns a multiplied by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, unsigned b)
     {
-        return a.division(b);
+        return a.multiplication(b);
     }
 
+    /**
+     * @brief Returns a multiplied by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, fixed_t b)
+    {
+        return a.multiplication(b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
     [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, int b)
     {
         return a.division(b);
     }
 
+    /**
+     * @brief Returns a divided by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, unsigned b)
+    {
+        return a.division(b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, fixed_t b)
+    {
+        return a.division(b);
+    }
+
+    /**
+     * @brief Default three-way comparison operator.
+     */
     [[nodiscard]] constexpr friend auto operator<=>(fixed_t a, fixed_t b) = default;
 
 private:
     int _data = 0;
 };
 
-using fixed = fixed_t<12>;
 
+using fixed = fixed_t<12>; //!< Default precision fixed_t alias.
+
+
+/**
+ * @brief Hash support for fixed_t.
+ *
+ * @ingroup math
+ * @ingroup functional
+ */
 template<int Precision>
 struct hash<fixed_t<Precision>>
 {
+    /**
+     * @brief Returns the hash of the given fixed_t.
+     */
     [[nodiscard]] constexpr unsigned operator()(fixed_t<Precision> value) const
     {
         return make_hash(value.data());

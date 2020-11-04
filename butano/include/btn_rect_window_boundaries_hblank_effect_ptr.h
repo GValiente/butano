@@ -17,7 +17,7 @@ namespace btn
  * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes the boundaries
  * of a rect window in each screen horizontal line.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup hblank_effect
  */
 class rect_window_boundaries_hblank_effect_ptr : public hblank_effect_ptr

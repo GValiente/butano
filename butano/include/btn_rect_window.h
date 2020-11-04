@@ -20,7 +20,7 @@ class fixed_point;
 /**
  * @brief Rectangular window.
  *
- * @ingroup window
+ * @ingroup rect_window
  */
 class rect_window : public inside_window
 {

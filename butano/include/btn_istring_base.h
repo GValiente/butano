@@ -6,6 +6,8 @@
 #ifndef BTN_ISTRING_BASE_H
 #define BTN_ISTRING_BASE_H
 
+#include "btn_algorithm.h"
+#include "btn_functional.h"
 #include "btn_string_fwd.h"
 
 namespace btn
@@ -14,7 +16,7 @@ namespace btn
 /**
  * @brief Base class of istring.
  *
- * It avoids circular references when including istring's header.
+ * It avoids circular references when including istring header.
  *
  * @ingroup string
  */
@@ -47,7 +49,7 @@ public:
     }
 
     /**
-     * @brief Returns the number of characters in the string.
+     * @brief Returns the number of characters in the istring_base.
      */
     [[nodiscard]] constexpr size_type size() const
     {
@@ -55,7 +57,7 @@ public:
     }
 
     /**
-     * @brief Returns the number of characters in the string.
+     * @brief Returns the number of characters in the istring_base.
      */
     [[nodiscard]] constexpr size_type length() const
     {
@@ -63,7 +65,7 @@ public:
     }
 
     /**
-     * @brief Returns the maximum possible number of characters in the string.
+     * @brief Returns the maximum possible number of characters in the istring_base.
      */
     [[nodiscard]] constexpr size_type max_size() const
     {
@@ -175,6 +177,81 @@ public:
         _size = 0;
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is equal to the second one, otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const istring_base& b)
+    {
+        if(a._size != b._size)
+        {
+            return false;
+        }
+
+        return equal(a.begin(), a.end(), b.begin());
+    }
+
+    /**
+     * @brief Not equal operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is not equal to the second one, otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator!=(const istring_base& a, const istring_base& b)
+    {
+        return ! (a == b);
+    }
+
+    /**
+     * @brief Less than operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is lexicographically less than the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator<(const istring_base& a, const istring_base& b)
+    {
+        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
+    }
+
+    /**
+     * @brief Greater than operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator>(const istring_base& a, const istring_base& b)
+    {
+        return b < a;
+    }
+
+    /**
+     * @brief Less than or equal operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator<=(const istring_base& a, const istring_base& b)
+    {
+        return ! (a > b);
+    }
+
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First istring_base to compare.
+     * @param b Second istring_base to compare.
+     * @return <b>true</b> if the first istring_base is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
+    [[nodiscard]] constexpr friend bool operator>=(const istring_base& a, const istring_base& b)
+    {
+        return ! (a < b);
+    }
+
 protected:
     /// @cond DO_NOT_DOCUMENT
 
@@ -190,6 +267,24 @@ protected:
     }
 
     /// @endcond
+};
+
+
+/**
+ * @brief Hash support for istring_base.
+ *
+ * @ingroup string
+ */
+template<>
+struct hash<istring_base>
+{
+    /**
+     * @brief Returns the hash of the given istring_base.
+     */
+    [[nodiscard]] constexpr unsigned operator()(const istring_base& value) const
+    {
+        return array_hash(value.data(), value.size());
+    }
 };
 
 }

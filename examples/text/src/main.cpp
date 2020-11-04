@@ -29,7 +29,7 @@ namespace
     void text_scene()
     {
         btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
         text_generator.generate(0, -text_y_limit, "Text", text_sprites);
@@ -44,16 +44,16 @@ namespace
     void text_fonts_scene()
     {
         btn::sprite_text_generator small_fixed_text_generator(fixed_8x8_sprite_font);
-        small_fixed_text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        small_fixed_text_generator.set_center_alignment();
 
         btn::sprite_text_generator small_variable_text_generator(variable_8x8_sprite_font);
-        small_variable_text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        small_variable_text_generator.set_center_alignment();
 
         btn::sprite_text_generator big_fixed_text_generator(fixed_8x16_sprite_font);
-        big_fixed_text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        big_fixed_text_generator.set_center_alignment();
 
         btn::sprite_text_generator big_variable_text_generator(variable_8x16_sprite_font);
-        big_variable_text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        big_variable_text_generator.set_center_alignment();
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
         big_variable_text_generator.generate(0, -text_y_limit, "Text fonts", text_sprites);
@@ -83,19 +83,19 @@ namespace
         btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
         text_generator.generate(0, -text_y_limit, "Text alignment", text_sprites);
 
-        text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+        text_generator.set_left_alignment();
         text_generator.generate(0, -text_y_inc, "Left", text_sprites);
 
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
         text_generator.generate(0, 0, "Center", text_sprites);
 
-        text_generator.set_alignment(btn::horizontal_alignment_type::RIGHT);
+        text_generator.set_right_alignment();
         text_generator.generate(0, text_y_inc, "Right", text_sprites);
 
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
         text_generator.generate(0, text_y_limit, "START: go to next scene", text_sprites);
 
         while(! btn::keypad::start_pressed())
@@ -108,7 +108,7 @@ namespace
     {
         btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
         btn::sprite_palette_item original_palette_item = text_generator.palette_item();
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
         text_generator.generate(0, -text_y_limit, "Text colors", text_sprites);
@@ -134,7 +134,7 @@ namespace
     void sprite_per_character_text_scene()
     {
         btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
         text_generator.generate(0, -text_y_limit, "Sprite per character text", text_sprites);
@@ -179,7 +179,7 @@ namespace
     void utf8_text_scene()
     {
         btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-        text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        text_generator.set_center_alignment();
 
         btn::vector<btn::sprite_ptr, 32> text_sprites;
         text_generator.generate(0, -text_y_limit, "UTF-8 text", text_sprites);

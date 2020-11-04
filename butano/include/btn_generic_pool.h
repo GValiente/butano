@@ -76,7 +76,7 @@ public:
     }
 
     /**
-     * @brief Constructs a value inside of the pool.
+     * @brief Constructs a value inside of the igeneric_pool.
      * @tparam Type Type of the value to construct.
      * @tparam Args Type of the arguments of the value to construct.
      * @param args Parameters of the value to construct.
@@ -211,7 +211,7 @@ public:
     }
 
     /**
-     * @brief Indicates if the given value belongs to the pool or not.
+     * @brief Indicates if the given value belongs to the generic_pool or not.
      */
     template<typename Type>
     [[nodiscard]] bool contains(const Type& value) const
@@ -220,7 +220,7 @@ public:
     }
 
     /**
-     * @brief Constructs a value inside of the pool.
+     * @brief Constructs a value inside of the generic_pool.
      * @tparam Type Type of the value to construct.
      * @tparam Args Type of the arguments of the value to construct.
      * @param args Parameters of the value to construct.

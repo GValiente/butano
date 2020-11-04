@@ -31,7 +31,7 @@ public:
     using size_type = typename base_type::size_type; //!< Size type alias.
 
     /**
-     * @brief Indicates if the given value belongs to the pool or not.
+     * @brief Indicates if the given value belongs to the ipool or not.
      */
     [[nodiscard]] bool contains(const Type& value) const
     {
@@ -39,7 +39,7 @@ public:
     }
 
     /**
-     * @brief Constructs a value inside of the pool.
+     * @brief Constructs a value inside of the ipool.
      * @param args Parameters of the value to construct.
      * @return Reference to the new value.
      */

@@ -8,10 +8,24 @@
 
 #include "btn_common.h"
 
+
+/**
+ * @brief When it is enabled, green intensity of each two screen pixels are exchanged.
+ *
+ * It produces an interesting dirt effect.
+ *
+ * @ingroup green_swap
+ */
 namespace btn::green_swap
 {
+    /**
+     * @brief Indicates if green swap is enabled or not.
+     */
     [[nodiscard]] bool enabled();
 
+    /**
+     * @brief Sets if green swap must be enabled or not.
+     */
     void set_enabled(bool enabled);
 }
 

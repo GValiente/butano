@@ -28,7 +28,7 @@ int main()
     btn::core::init();
 
     btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    text_generator.set_center_alignment();
 
     auto text = text_generator.generate<8>(0, 0, "Running tests...");
     btn::bg_palettes::set_transparent_color(btn::colors::gray);

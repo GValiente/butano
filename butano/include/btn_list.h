@@ -19,6 +19,8 @@ class ilist
 {
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     class node_type
     {
 
@@ -40,26 +42,35 @@ protected:
         }
     };
 
-public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
+    /// @endcond
 
+public:
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
+
+    /**
+     * @brief Non const iterator.
+     */
     class iterator
     {
 
     public:
-        using value_type = ilist::value_type;
-        using size_type = ilist::size_type;
-        using reference = ilist::reference;
-        using const_reference = ilist::const_reference;
-        using pointer = ilist::pointer;
-        using const_pointer = ilist::const_pointer;
-        using iterator_category = bidirectional_iterator_tag;
+        using value_type = ilist::value_type; //!< Value type alias.
+        using size_type = ilist::size_type; //!< Size type alias.
+        using reference = ilist::reference; //!< Reference alias.
+        using const_reference = ilist::const_reference; //!< Const reference alias.
+        using pointer = ilist::pointer; //!< Pointer alias.
+        using const_pointer = ilist::const_pointer; //!< Const pointer alias.
+        using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -68,6 +79,10 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         iterator& operator--()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -76,6 +91,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -83,6 +101,9 @@ public:
             return static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a reference to the pointed value.
+         */
         [[nodiscard]] reference operator*()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -90,6 +111,9 @@ public:
             return static_cast<value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -97,6 +121,9 @@ public:
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a pointer to the pointed value.
+         */
         pointer operator->()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -104,6 +131,9 @@ public:
             return &static_cast<value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Default equal operator.
+         */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b) = default;
 
     private:
@@ -118,23 +148,34 @@ public:
         }
     };
 
+    /**
+     * @brief Const iterator.
+     */
     class const_iterator
     {
 
     public:
-        using value_type = ilist::value_type;
-        using size_type = ilist::size_type;
-        using reference = ilist::reference;
-        using const_reference = ilist::const_reference;
-        using pointer = ilist::pointer;
-        using const_pointer = ilist::const_pointer;
-        using iterator_category = bidirectional_iterator_tag;
+        using value_type = ilist::value_type; //!< Value type alias.
+        using size_type = ilist::size_type; //!< Size type alias.
+        using reference = ilist::reference; //!< Reference type alias.
+        using const_reference = ilist::const_reference; //!< Const reference alias.
+        using pointer = ilist::pointer; //!< Pointer alias.
+        using const_pointer = ilist::const_pointer; //!< Const pointer alias.
+        using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Public constructor.
+         * @param it Non const iterator.
+         */
         const_iterator(iterator it) :
             _node(it._node)
         {
         }
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         const_iterator& operator++()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -143,6 +184,10 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         const_iterator& operator--()
         {
             BTN_ASSERT(_node, "Node is null");
@@ -151,6 +196,9 @@ public:
             return *this;
         }
 
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -158,6 +206,9 @@ public:
             return static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             BTN_ASSERT(_node, "Node is null");
@@ -165,6 +216,9 @@ public:
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
+        /**
+         * @brief Default equal operator.
+         */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b) = default;
 
     private:
@@ -178,11 +232,16 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>;
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ilist(const ilist& other) = delete;
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other ilist to copy.
+     * @return Reference to this.
+     */
     ilist& operator=(const ilist& other)
     {
         if(this != &other)
@@ -196,6 +255,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other ilist to move.
+     * @return Reference to this.
+     */
     ilist& operator=(ilist&& other) noexcept
     {
         if(this != &other)
@@ -209,91 +273,145 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Returns the current size.
+     */
     [[nodiscard]] size_type size() const
     {
         return _ipool->size();
     }
 
+    /**
+     * @brief Returns the maximum possible size.
+     */
     [[nodiscard]] size_type max_size() const
     {
         return _ipool->max_size();
     }
 
-    [[nodiscard]] bool empty() const
-    {
-        return _ipool->empty();
-    }
-
-    [[nodiscard]] bool full() const
-    {
-        return _ipool->full();
-    }
-
+    /**
+     * @brief Returns the remaining capacity.
+     */
     [[nodiscard]] size_type available() const
     {
         return _ipool->available();
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any element.
+     */
+    [[nodiscard]] bool empty() const
+    {
+        return _ipool->empty();
+    }
+
+    /**
+     * @brief Indicates if it can't contain any more elements.
+     */
+    [[nodiscard]] bool full() const
+    {
+        return _ipool->full();
+    }
+
+    /**
+     * @brief Returns a const iterator to the beginning of the ilist.
+     */
     [[nodiscard]] const_iterator begin() const
     {
         return const_iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns an iterator to the beginning of the ilist.
+     */
     [[nodiscard]] iterator begin()
     {
         return iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the ilist.
+     */
     [[nodiscard]] const_iterator end() const
     {
         return const_iterator(&_last_node);
     }
 
+    /**
+     * @brief Returns an iterator to the end of the ilist.
+     */
     [[nodiscard]] iterator end()
     {
         return iterator(&_last_node);
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the ilist.
+     */
     [[nodiscard]] const_iterator cbegin() const
     {
         return const_iterator(_first_node.next);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the ilist.
+     */
     [[nodiscard]] const_iterator cend() const
     {
         return const_iterator(&_last_node);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the ilist.
+     */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the end of the ilist.
+     */
     [[nodiscard]] reverse_iterator rbegin()
     {
         return reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the ilist.
+     */
     [[nodiscard]] const_reverse_iterator rend() const
     {
         return const_reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the beginning of the ilist.
+     */
     [[nodiscard]] reverse_iterator rend()
     {
         return reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the ilist.
+     */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the ilist.
+     */
     [[nodiscard]] const_reverse_iterator crend() const
     {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * @brief Returns a const reference to the first element.
+     */
     [[nodiscard]] const_reference front() const
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -301,6 +419,9 @@ public:
         return static_cast<const value_node_type*>(_first_node.next)->value;
     }
 
+    /**
+     * @brief Returns a reference to the first element.
+     */
     [[nodiscard]] reference front()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -308,6 +429,9 @@ public:
         return static_cast<value_node_type*>(_first_node.next)->value;
     }
 
+    /**
+     * @brief Returns a const reference to the last element.
+     */
     [[nodiscard]] const_reference back() const
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -315,6 +439,9 @@ public:
         return static_cast<const value_node_type*>(_last_node.prev)->value;
     }
 
+    /**
+     * @brief Returns a reference to the last element.
+     */
     [[nodiscard]] reference back()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -322,6 +449,10 @@ public:
         return static_cast<value_node_type*>(_last_node.prev)->value;
     }
 
+    /**
+     * @brief Inserts a copy of a value at the beginning of the ilist.
+     * @param value Value to insert.
+     */
     void push_front(const_reference value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -330,6 +461,10 @@ public:
         _insert(begin(), new_node);
     }
 
+    /**
+     * @brief Inserts a moved value at the beginning of the ilist.
+     * @param value Value to insert.
+     */
     void push_front(value_type&& value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -338,6 +473,11 @@ public:
         _insert(begin(), new_node);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the beginning of the ilist.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
+     */
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
@@ -348,6 +488,10 @@ public:
         return static_cast<value_node_type*>(&new_node)->value;
     }
 
+    /**
+     * @brief Inserts a copy of a value at the end of the ilist.
+     * @param value Value to insert.
+     */
     void push_back(const_reference value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -356,6 +500,10 @@ public:
         _insert(end(), new_node);
     }
 
+    /**
+     * @brief Inserts a moved value at the end of the ilist.
+     * @param value Value to insert.
+     */
     void push_back(value_type&& value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -364,6 +512,11 @@ public:
         _insert(end(), new_node);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the end of the ilist.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
+     */
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
@@ -374,6 +527,9 @@ public:
         return static_cast<value_node_type*>(&new_node)->value;
     }
 
+    /**
+     * @brief Removes the first element of the ilist.
+     */
     void pop_front()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -381,6 +537,9 @@ public:
         _erase(begin());
     }
 
+    /**
+     * @brief Removes the last element of the ilist.
+     */
     void pop_back()
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -390,6 +549,12 @@ public:
         _erase(it);
     }
 
+    /**
+     * @brief Inserts a copy of a value at the specified position.
+     * @param position The given value is inserted before this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(const_iterator position, const_reference value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -399,6 +564,12 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Inserts a moved value at the specified position.
+     * @param position The given value is inserted before this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(const_iterator position, value_type&& value)
     {
         BTN_ASSERT(! full(), "List is full");
@@ -408,6 +579,12 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the specified position.
+     * @param position The new value is inserted before this position.
+     * @param args Parameters of the value to insert.
+     * @return Iterator pointing to the new value.
+     */
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
@@ -418,6 +595,11 @@ public:
         return iterator(&new_node);
     }
 
+    /**
+     * @brief Erases an element.
+     * @param position Iterator to the element to erase.
+     * @return Iterator following the erased element.
+     */
     iterator erase(const_iterator position)
     {
         BTN_ASSERT(! empty(), "List is empty");
@@ -429,6 +611,16 @@ public:
         return next;
     }
 
+    /**
+     * @brief Erases a range of elements.
+     *
+     * The range includes all the elements between first and last, including the
+     * element pointed by first, but not the one pointed by last.
+     *
+     * @param first Iterator to the first element to erase.
+     * @param last Iterator to the last element to erase.
+     * @return Iterator following the last erased element.
+     */
     iterator erase(const_iterator first, const_iterator last)
     {
         iterator erase_first = _mutable_iterator(first);
@@ -448,6 +640,12 @@ public:
         return erase_it;
     }
 
+    /**
+     * @brief Erases all elements that are equal to the specified value.
+     * @param list ilist from which to erase.
+     * @param value Element to erase.
+     * @return Number of erased elements.
+     */
     friend size_type erase(ilist& list, const_reference value)
     {
         size_type erased_count = 0;
@@ -473,6 +671,12 @@ public:
         return erased_count;
     }
 
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param list ilist from which to erase.
+     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @return Number of erased elements.
+     */
     template<class Pred>
     friend size_type erase_if(ilist& list, const Pred& pred)
     {
@@ -499,6 +703,11 @@ public:
         return erased_count;
     }
 
+    /**
+     * @brief Assigns values to the ilist, removing the previous ones.
+     * @param count Number of elements to insert.
+     * @param value Value to fill new elements with.
+     */
     void assign(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
@@ -513,6 +722,11 @@ public:
         }
     }
 
+    /**
+     * @brief Assigns values to the ilist, removing the previous ones.
+     * @param first Iterator to the first element to insert.
+     * @param last Iterator following to the last element to insert.
+     */
     template<typename Iterator>
     void assign(const Iterator& first, const Iterator& last)
     {
@@ -528,6 +742,29 @@ public:
         }
     }
 
+    /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    {
+        iterator it = begin();
+        iterator last = end();
+
+        while(it != last)
+        {
+            node_type* node = it._node;
+            ++it;
+            _ipool->destroy(static_cast<value_node_type&>(*node));
+        }
+
+        _first_node.next = &_last_node;
+        _last_node.prev = &_first_node;
+    }
+
+    /**
+     * @brief Exchanges the contents of this ilist with those of the other one.
+     * @param other ilist to exchange the contents with.
+     */
     void swap(ilist& other)
     {
         if(this != &other)
@@ -574,27 +811,22 @@ public:
         }
     }
 
+    /**
+     * @brief Exchanges the contents of a ilist with those of another one.
+     * @param a First ilist to exchange the contents with.
+     * @param b Second ilist to exchange the contents with.
+     */
     friend void swap(ilist& a, ilist& b)
     {
         a.swap(b);
     }
 
-    void clear()
-    {
-        iterator it = begin();
-        iterator last = end();
-
-        while(it != last)
-        {
-            node_type* node = it._node;
-            ++it;
-            _ipool->destroy(static_cast<value_node_type&>(*node));
-        }
-
-        _first_node.next = &_last_node;
-        _last_node.prev = &_first_node;
-    }
-
+    /**
+     * @brief Equal operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator==(const ilist& a, const ilist& b)
     {
         if(a.size() != b.size())
@@ -605,32 +837,67 @@ public:
         return equal(a.begin(), a.end(), b.begin());
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator!=(const ilist& a, const ilist& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is lexicographically less than the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<(const ilist& a, const ilist& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>(const ilist& a, const ilist& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<=(const ilist& a, const ilist& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First ilist to compare.
+     * @param b Second ilist to compare.
+     * @return <b>true</b> if the first ilist is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>=(const ilist& a, const ilist& b)
     {
         return ! (a < b);
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     explicit ilist(ipool<value_node_type>& ipool) :
         _ipool(&ipool)
     {
@@ -661,6 +928,8 @@ protected:
 
         other.clear();
     }
+
+    /// @endcond
 
 private:
     ipool<value_node_type>* _ipool;
@@ -700,34 +969,49 @@ class list : public ilist<Type>
     static_assert(MaxSize > 0);
 
 public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
-    using iterator = typename ilist<Type>::iterator;
-    using const_iterator = typename ilist<Type>::const_iterator;
-    using reverse_iterator = typename ilist<Type>::reverse_iterator;
-    using const_reverse_iterator = typename ilist<Type>::const_reverse_iterator;
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
+    using iterator = typename ilist<Type>::iterator; //!< Iterator alias.
+    using const_iterator = typename ilist<Type>::const_iterator; //!< Const iterator alias.
+    using reverse_iterator = typename ilist<Type>::reverse_iterator; //!< Reverse iterator alias.
+    using const_reverse_iterator = typename ilist<Type>::const_reverse_iterator; //!< Const reverse iterator alias.
 
+    /**
+     * @brief Default constructor.
+     */
     list() :
         ilist<Type>(_pool)
     {
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other list to copy.
+     */
     list(const list& other) :
         list()
     {
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other list to move.
+     */
     list(list&& other) noexcept :
         list()
     {
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other ilist to copy.
+     */
     list(const ilist<Type>& other) :
         list()
     {
@@ -736,6 +1020,10 @@ public:
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other ilist to move.
+     */
     list(ilist<Type>&& other) noexcept :
         list()
     {
@@ -744,6 +1032,32 @@ public:
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the list.
+     */
+    list(size_type count) :
+        list()
+    {
+        this->assign(count, Type());
+    }
+
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the list.
+     * @param value Value to fill the list with.
+     */
+    list(size_type count, const_reference value) :
+        list()
+    {
+        this->assign(count, value);
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param other list to copy.
+     * @return Reference to this.
+     */
     list& operator=(const list& other)
     {
         if(this != &other)
@@ -755,6 +1069,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other list to move.
+     * @return Reference to this.
+     */
     list& operator=(list&& other) noexcept
     {
         if(this != &other)
@@ -766,6 +1085,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other ilist to copy.
+     * @return Reference to this.
+     */
     list& operator=(const ilist<Type>& other)
     {
         if(this != &other)
@@ -779,6 +1103,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other ilist to move.
+     * @return Reference to this.
+     */
     list& operator=(ilist<Type>&& other) noexcept
     {
         if(this != &other)
@@ -792,6 +1121,9 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Destructor.
+     */
     ~list()
     {
         this->clear();

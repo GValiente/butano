@@ -147,7 +147,7 @@ public:
     }
 
     /**
-     * @brief Returns a iterator to the beginning of the span.
+     * @brief Returns an iterator to the beginning of the span.
      */
     [[nodiscard]] constexpr iterator begin()
     {
@@ -171,7 +171,7 @@ public:
     }
 
     /**
-     * @brief Returns a iterator to the end of the span.
+     * @brief Returns an iterator to the end of the span.
      */
     [[nodiscard]] constexpr iterator end()
     {

@@ -73,16 +73,14 @@ intro::intro(const stage& stage, btn::sprite_text_generator& text_generator) :
     _background_sprites(_create_background_sprites(stage)),
     _alt_palette(stage.intro_alt_sprite_item.palette_item().create_palette())
 {
-    btn::horizontal_alignment_type old_alignment = text_generator.alignment();
     int old_bg_priority = text_generator.bg_priority();
     int old_z_order = text_generator.z_order();
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    text_generator.set_center_alignment();
     text_generator.set_bg_priority(3);
     text_generator.set_z_order(constants::intro_sprites_z_order);
     text_generator.set_one_sprite_per_character(true);
     text_generator.generate(0, -16, stage.intro_top_label, _text_sprites);
     text_generator.generate(0, 16, stage.intro_bottom_label, _text_sprites);
-    text_generator.set_alignment(old_alignment);
     text_generator.set_bg_priority(old_bg_priority);
     text_generator.set_z_order(old_z_order);
     text_generator.set_one_sprite_per_character(false);

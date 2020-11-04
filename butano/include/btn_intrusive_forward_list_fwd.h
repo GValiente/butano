@@ -10,8 +10,20 @@
 
 namespace btn
 {
+    /**
+     * @brief To be part of a intrusive_forward_list, values must inherit this class.
+     *
+     * @ingroup intrusive_forward_list
+     */
     class intrusive_forward_list_node_type;
 
+    /**
+     * @brief Intrusive forward list implementation.
+     *
+     * @tparam Type Element type (it must inherit intrusive_forward_list_node_type class).
+     *
+     * @ingroup intrusive_forward_list
+     */
     template<typename Type>
     class intrusive_forward_list;
 }

@@ -29,10 +29,10 @@ public:
 public:
     /**
      * @brief Copy assignment operator.
-     * @param other istring to copy.
+     * @param other istring_base to copy.
      * @return Reference to this.
      */
-    constexpr istring& operator=(const istring& other)
+    constexpr istring& operator=(const istring_base& other)
     {
         return assign(other);
     }
@@ -58,9 +58,9 @@ public:
     }
 
     /**
-     * @brief Returns a non-modifiable string_view into the entire string.
+     * @brief Returns a non-modifiable string_view of this istring.
      *
-     * It is not ensured that the resulting string_view does not outlive the string.
+     * It is not ensured that the resulting string_view does not outlive the contents of this istring.
      */
     [[nodiscard]] constexpr operator string_view() const
     {
@@ -196,22 +196,22 @@ public:
     }
 
     /**
-     * @brief Replaces the contents of the string.
-     * @param other string replacement.
+     * @brief Replaces the contents of the istring.
+     * @param other istring_base replacement.
      * @return Reference to this.
      */
-    constexpr istring& assign(const istring& other)
+    constexpr istring& assign(const istring_base& other)
     {
-        BTN_ASSERT(other._size <= _max_size, "Not enough space in string: ", other._size, " - ", _max_size);
+        BTN_ASSERT(other.size() <= _max_size, "Not enough space in string: ", other.size(), " - ", _max_size);
 
         btn::copy(other.begin(), other.end(), begin());
-        _size = other._size;
+        _size = other.size();
         _data[_size] = 0;
         return *this;
     }
 
     /**
-     * @brief Replaces the contents of the string.
+     * @brief Replaces the contents of the istring.
      * @param value Character replacement.
      * @return Reference to this.
      */
@@ -223,7 +223,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents of the string.
+     * @brief Replaces the contents of the istring.
      * @param view string_view replacement.
      * @return Reference to this.
      */
@@ -235,7 +235,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents of the string.
+     * @brief Replaces the contents of the istring.
      * @param char_array_ptr Pointer to null-terminated characters array replacement.
      * @return Reference to this.
      */
@@ -247,7 +247,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents of the string with count copies of character value.
+     * @brief Replaces the contents of the istring with count copies of character value.
      * @param count New size.
      * @param value Character replacement.
      * @return Reference to this.
@@ -260,7 +260,7 @@ public:
     }
 
     /**
-     * @brief Replaces the contents of the string with the characters in the range [first, last).
+     * @brief Replaces the contents of the istring with the characters in the range [first, last).
      * @param first First element of the range.
      * @param last Last element of the range.
      * @return Reference to this.
@@ -273,7 +273,7 @@ public:
     }
 
     /**
-     * @brief Inserts a character at the end of the string.
+     * @brief Inserts a character at the end of the istring.
      * @param value Character to insert.
      */
     constexpr void push_back(value_type value)
@@ -287,7 +287,7 @@ public:
     }
 
     /**
-     * @brief Removes the last character of the string.
+     * @brief Removes the last character of the istring.
      */
     constexpr void pop_back()
     {
@@ -298,18 +298,18 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
-     * @param other string to append.
+     * @brief Appends additional characters to the istring.
+     * @param other istring_base to append.
      * @return Reference to this.
      */
-    constexpr istring& append(const istring& other)
+    constexpr istring& append(const istring_base& other)
     {
         append(other.begin(), other.end());
         return *this;
     }
 
     /**
-     * @brief Appends an additional character to the string.
+     * @brief Appends an additional character to the istring.
      * @param value Character to append.
      * @return Reference to this.
      */
@@ -320,7 +320,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param view string_view to append.
      * @return Reference to this.
      */
@@ -331,7 +331,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param char_array_ptr Pointer to null-terminated characters array.
      * @return Reference to this.
      */
@@ -342,7 +342,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param char_array_ptr Pointer to characters array.
      * @param char_array_size Characters count of the characters array.
      * @return Reference to this.
@@ -354,7 +354,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param count Number of characters to append.
      * @param value Character to append.
      * @return Reference to this.
@@ -372,7 +372,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param first First element of the range to append.
      * @param last Last element of the range to append.
      * @return Reference to this.
@@ -441,7 +441,7 @@ public:
 
     /**
      * @brief Erases all characters that are equal to the specified one.
-     * @param string string from which to erase.
+     * @param string istring from which to erase.
      * @param value Character to erase.
      * @return Number of erased characters.
      */
@@ -454,7 +454,7 @@ public:
 
     /**
      * @brief Erases all characters that satisfy the specified predicate.
-     * @param string string from which to erase.
+     * @param string istring from which to erase.
      * @param pred Unary predicate which returns <b>true</b> if the character should be erased.
      * @return Number of erased characters.
      */
@@ -550,8 +550,8 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of this string with those of the other one.
-     * @param other string to exchange the contents with.
+     * @brief Exchanges the contents of this istring with those of the other one.
+     * @param other istring to exchange the contents with.
      */
     constexpr void swap(istring& other)
     {
@@ -597,9 +597,9 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of a string with those of another one.
-     * @param a First string to exchange the contents with.
-     * @param b Second string to exchange the contents with.
+     * @brief Exchanges the contents of a istring with those of another one.
+     * @param a First istring to exchange the contents with.
+     * @param b Second istring to exchange the contents with.
      */
     constexpr friend void swap(istring& a, istring& b)
     {
@@ -607,18 +607,18 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
-     * @param other string to append.
+     * @brief Appends additional characters to the istring.
+     * @param other istring_base to append.
      * @return Reference to this.
      */
-    constexpr istring& operator+=(const istring& other)
+    constexpr istring& operator+=(const istring_base& other)
     {
         append(other);
         return *this;
     }
 
     /**
-     * @brief Appends an additional character to the string.
+     * @brief Appends an additional character to the istring.
      * @param value Character to append.
      * @return Reference to this.
      */
@@ -629,7 +629,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param view string_view to append.
      * @return Reference to this.
      */
@@ -640,7 +640,7 @@ public:
     }
 
     /**
-     * @brief Appends additional characters to the string.
+     * @brief Appends additional characters to the istring.
      * @param char_array_ptr Pointer to null-terminated characters array.
      * @return Reference to this.
      */
@@ -648,80 +648,6 @@ public:
     {
         append(char_array_ptr);
         return *this;
-    }
-
-    /**
-     * @brief Equal operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is equal to the second one, otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator==(const istring& a, const istring& b)
-    {
-        if(a._size != b._size)
-        {
-            return false;
-        }
-
-        return equal(a.begin(), a.end(), b.begin());
-    }
-
-    /**
-     * @brief Not equal operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is not equal to the second one, otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const istring& a, const istring& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
-     * @brief Less than operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is lexicographically less than the second one, otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator<(const istring& a, const istring& b)
-    {
-        return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
-    }
-
-    /**
-     * @brief Greater than operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator>(const istring& a, const istring& b)
-    {
-        return b < a;
-    }
-
-    /**
-     * @brief Less than or equal operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator<=(const istring& a, const istring& b)
-    {
-        return ! (a > b);
-    }
-
-    /**
-     * @brief Greater than or equal operator.
-     * @param a First string to compare.
-     * @param b Second string to compare.
-     * @return <b>true</b> if the first string is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
-     */
-    [[nodiscard]] constexpr friend bool operator>=(const istring& a, const istring& b)
-    {
-        return ! (a < b);
     }
 
 protected:
@@ -763,9 +689,9 @@ public:
 
     /**
      * @brief Copy constructor.
-     * @param other Base string to copy.
+     * @param other istring_base to copy.
      */
-    constexpr string(const istring& other) :
+    constexpr string(const istring_base& other) :
         string()
     {
         append(other);
@@ -827,10 +753,10 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base string to copy.
+     * @param other istring_base to copy.
      * @return Reference to this.
      */
-    constexpr string& operator=(const istring& other)
+    constexpr string& operator=(const istring_base& other)
     {
         istring::operator=(other);
         return *this;
@@ -848,12 +774,12 @@ public:
     }
 
     /**
-     * @brief Concatenates two strings.
+     * @brief Concatenates a string and a istring_base.
      * @param a First string to concatenate.
-     * @param b Second string to concatenate.
+     * @param b Second istring_base to concatenate.
      * @return string containing characters from a followed by the characters from b.
      */
-    [[nodiscard]] constexpr friend string operator+(const string& a, const istring& b)
+    [[nodiscard]] constexpr friend string operator+(const string& a, const istring_base& b)
     {
         string result = a;
         result.append(b);
@@ -901,24 +827,6 @@ public:
 
 private:
     alignas(int) char _buffer[MaxSize + 1];
-};
-
-
-/**
- * @brief Hash support for string.
- *
- * @ingroup string
- */
-template<>
-struct hash<istring>
-{
-    /**
-     * @brief Returns the hash of the given string.
-     */
-    [[nodiscard]] constexpr unsigned operator()(const istring& value) const
-    {
-        return array_hash(value.data(), value.size());
-    }
 };
 
 

@@ -36,7 +36,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base vector to copy.
+     * @param other ivector to copy.
      * @return Reference to this.
      */
     ivector& operator=(const ivector& other)
@@ -54,7 +54,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Base vector to move.
+     * @param other ivector to move.
      * @return Reference to this.
      */
     ivector& operator=(ivector&& other) noexcept
@@ -71,7 +71,7 @@ public:
     }
 
     /**
-     * @brief Returns a const pointer to the beginning of the vector data.
+     * @brief Returns a const pointer to the beginning of the ivector data.
      */
     [[nodiscard]] const_pointer data() const
     {
@@ -79,7 +79,7 @@ public:
     }
 
     /**
-     * @brief Returns a pointer to the beginning of the vector data.
+     * @brief Returns a pointer to the beginning of the ivector data.
      */
     [[nodiscard]] pointer data()
     {
@@ -127,7 +127,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the vector.
+     * @brief Returns a const iterator to the beginning of the ivector.
      */
     [[nodiscard]] const_iterator begin() const
     {
@@ -135,7 +135,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the beginning of the vector.
+     * @brief Returns an iterator to the beginning of the ivector.
      */
     [[nodiscard]] iterator begin()
     {
@@ -143,7 +143,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the vector.
+     * @brief Returns a const iterator to the end of the ivector.
      */
     [[nodiscard]] const_iterator end() const
     {
@@ -151,7 +151,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the end of the vector.
+     * @brief Returns an iterator to the end of the ivector.
      */
     [[nodiscard]] iterator end()
     {
@@ -159,7 +159,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the vector.
+     * @brief Returns a const iterator to the beginning of the ivector.
      */
     [[nodiscard]] const_iterator cbegin() const
     {
@@ -167,7 +167,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the vector.
+     * @brief Returns a const iterator to the end of the ivector.
      */
     [[nodiscard]] const_iterator cend() const
     {
@@ -175,7 +175,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the vector.
+     * @brief Returns a const reverse iterator to the end of the ivector.
      */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
@@ -183,7 +183,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the end of the vector.
+     * @brief Returns a reverse iterator to the end of the ivector.
      */
     [[nodiscard]] reverse_iterator rbegin()
     {
@@ -191,7 +191,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the vector.
+     * @brief Returns a const reverse iterator to the beginning of the ivector.
      */
     [[nodiscard]] const_reverse_iterator rend() const
     {
@@ -199,7 +199,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the beginning of the vector.
+     * @brief Returns a reverse iterator to the beginning of the ivector.
      */
     [[nodiscard]] reverse_iterator rend()
     {
@@ -207,7 +207,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the vector.
+     * @brief Returns a const reverse iterator to the end of the ivector.
      */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
@@ -215,7 +215,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the vector.
+     * @brief Returns a const reverse iterator to the beginning of the ivector.
      */
     [[nodiscard]] const_reverse_iterator crend() const
     {
@@ -303,7 +303,7 @@ public:
     }
 
     /**
-     * @brief Inserts a copy of a value at the end of the vector.
+     * @brief Inserts a copy of a value at the end of the ivector.
      * @param value Value to insert.
      */
     void push_back(const_reference value)
@@ -315,7 +315,7 @@ public:
     }
 
     /**
-     * @brief Inserts a moved value at the end of the vector.
+     * @brief Inserts a moved value at the end of the ivector.
      * @param value Value to insert.
      */
     void push_back(value_type&& value)
@@ -327,7 +327,7 @@ public:
     }
 
     /**
-     * @brief Constructs and inserts a value at the end of the vector.
+     * @brief Constructs and inserts a value at the end of the ivector.
      * @param args Parameters of the value to insert.
      * @return Reference to the new value.
      */
@@ -343,7 +343,7 @@ public:
     }
 
     /**
-     * @brief Removes the last element of the vector.
+     * @brief Removes the last element of the ivector.
      */
     void pop_back()
     {
@@ -403,7 +403,7 @@ public:
 
     /**
      * @brief Constructs and inserts a value at the specified position.
-     * @param position The given value is inserted before this position.
+     * @param position The new value is inserted before this position.
      * @param args Parameters of the value to insert.
      * @return Iterator pointing to the new value.
      */
@@ -504,7 +504,7 @@ public:
 
     /**
      * @brief Erases all elements that are equal to the specified value.
-     * @param vector vector from which to erase.
+     * @param vector ivector from which to erase.
      * @param value Element to erase.
      * @return Number of erased elements.
      */
@@ -517,7 +517,7 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
-     * @param vector vector from which to erase.
+     * @param vector ivector from which to erase.
      * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
      * @return Number of erased elements.
      */
@@ -530,7 +530,7 @@ public:
     }
 
     /**
-     * @brief Resizes the vector.
+     * @brief Resizes the ivector.
      * @param count New size.
      */
     void resize(size_type count)
@@ -558,7 +558,7 @@ public:
     }
 
     /**
-     * @brief Resizes the vector.
+     * @brief Resizes the ivector.
      * @param count New size.
      * @param value Value to fill new elements with.
      */
@@ -587,7 +587,7 @@ public:
     }
 
     /**
-     * @brief Resizes the vector to a size less or equal than the previous one.
+     * @brief Resizes the ivector to a size less or equal than the previous one.
      * @param count New size.
      */
     void shrink(size_type count)
@@ -605,7 +605,7 @@ public:
     }
 
     /**
-     * @brief Assigns values to the vector.
+     * @brief Assigns values to the ivector, removing the previous ones.
      * @param count Number of elements to insert.
      * @param value Value to fill new elements with.
      */
@@ -624,7 +624,7 @@ public:
     }
 
     /**
-     * @brief Assigns values to the vector.
+     * @brief Assigns values to the ivector, removing the previous ones.
      * @param first Iterator to the first element to insert.
      * @param last Iterator following to the last element to insert.
      */
@@ -661,8 +661,8 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of this vector with those of the other one.
-     * @param other vector to exchange the contents with.
+     * @brief Exchanges the contents of this ivector with those of the other one.
+     * @param other ivector to exchange the contents with.
      */
     void swap(ivector& other)
     {
@@ -707,9 +707,9 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of a vector with those of another one.
-     * @param a First vector to exchange the contents with.
-     * @param b Second vector to exchange the contents with.
+     * @brief Exchanges the contents of a ivector with those of another one.
+     * @param a First ivector to exchange the contents with.
+     * @param b Second ivector to exchange the contents with.
      */
     friend void swap(ivector& a, ivector& b)
     {
@@ -718,9 +718,9 @@ public:
 
     /**
      * @brief Equal operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is equal to the second one, otherwise <b>false</b>.
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator==(const ivector& a, const ivector& b)
     {
@@ -734,9 +734,9 @@ public:
 
     /**
      * @brief Not equal operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is not equal to the second one, otherwise <b>false</b>.
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is not equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator!=(const ivector& a, const ivector& b)
     {
@@ -745,9 +745,9 @@ public:
 
     /**
      * @brief Less than operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is lexicographically less than the second one, otherwise <b>false</b>.
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is lexicographically less than the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<(const ivector& a, const ivector& b)
     {
@@ -756,9 +756,9 @@ public:
 
     /**
      * @brief Greater than operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is lexicographically greater than the second one,
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is lexicographically greater than the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>(const ivector& a, const ivector& b)
@@ -768,9 +768,9 @@ public:
 
     /**
      * @brief Less than or equal operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is lexicographically less than or equal to the second one,
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is lexicographically less than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<=(const ivector& a, const ivector& b)
@@ -780,9 +780,9 @@ public:
 
     /**
      * @brief Greater than or equal operator.
-     * @param a First vector to compare.
-     * @param b Second vector to compare.
-     * @return <b>true</b> if the first vector is lexicographically greater than or equal to the second one,
+     * @param a First ivector to compare.
+     * @param b Second ivector to compare.
+     * @return <b>true</b> if the first ivector is lexicographically greater than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>=(const ivector& a, const ivector& b)
@@ -908,7 +908,7 @@ public:
 
     /**
      * @brief Copy constructor.
-     * @param other Base vector to copy.
+     * @param other ivector to copy.
      */
     vector(const ivector<Type>& other) :
         vector()
@@ -920,7 +920,7 @@ public:
 
     /**
      * @brief Move constructor.
-     * @param other Base vector to move.
+     * @param other ivector to move.
      */
     vector(ivector<Type>&& other) noexcept :
         vector()
@@ -989,7 +989,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base vector to copy.
+     * @param other ivector to copy.
      * @return Reference to this.
      */
     vector& operator=(const ivector<Type>& other)
@@ -1007,7 +1007,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Base vector to move.
+     * @param other ivector to move.
      * @return Reference to this.
      */
     vector& operator=(ivector<Type>&& other) noexcept

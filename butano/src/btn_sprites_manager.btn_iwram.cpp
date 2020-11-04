@@ -7,6 +7,7 @@
 
 #include "btn_vector.h"
 #include "btn_sorted_sprites.h"
+#include "btn_config_sprites.h"
 #include "../hw/include/btn_hw_sprites.h"
 
 namespace btn::sprites_manager

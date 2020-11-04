@@ -661,6 +661,27 @@ public:
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the forward_list.
+     */
+    forward_list(size_type count) :
+        forward_list()
+    {
+        this->assign(count, Type());
+    }
+
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the forward_list.
+     * @param value Value to fill the forward_list with.
+     */
+    forward_list(size_type count, const_reference value) :
+        forward_list()
+    {
+        this->assign(count, value);
+    }
+
     forward_list& operator=(const forward_list& other)
     {
         if(this != &other)

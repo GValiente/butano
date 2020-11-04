@@ -199,11 +199,11 @@ public:
 
         /**
          * @brief Public constructor.
-         * @param other Non const iterator.
+         * @param it Non const iterator.
          */
-        const_iterator(const iterator& other) :
-            _index(other._index),
-            _map(other._map)
+        const_iterator(const iterator& it) :
+            _index(it._index),
+            _map(it._map)
         {
         }
 
@@ -315,7 +315,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other unordered_map to copy.
+     * @param other iunordered_map to copy.
      * @return Reference to this.
      */
     iunordered_map& operator=(const iunordered_map& other)
@@ -333,7 +333,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other unordered_map to move.
+     * @param other iunordered_map to move.
      * @return Reference to this.
      */
     iunordered_map& operator=(iunordered_map&& other) noexcept
@@ -390,7 +390,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the unordered_map.
+     * @brief Returns a const iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] const_iterator begin() const
     {
@@ -398,7 +398,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the beginning of the unordered_map.
+     * @brief Returns an iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] iterator begin()
     {
@@ -406,7 +406,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the unordered_map.
+     * @brief Returns a const iterator to the end of the iunordered_map.
      */
     [[nodiscard]] const_iterator end() const
     {
@@ -414,7 +414,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the end of the unordered_map.
+     * @brief Returns an iterator to the end of the iunordered_map.
      */
     [[nodiscard]] iterator end()
     {
@@ -422,7 +422,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the unordered_map.
+     * @brief Returns a const iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] const_iterator cbegin() const
     {
@@ -430,7 +430,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the unordered_map.
+     * @brief Returns a const iterator to the end of the iunordered_map.
      */
     [[nodiscard]] const_iterator cend() const
     {
@@ -438,7 +438,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the unordered_map.
+     * @brief Returns a const reverse iterator to the end of the iunordered_map.
      */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
@@ -446,7 +446,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the end of the unordered_map.
+     * @brief Returns a reverse iterator to the end of the iunordered_map.
      */
     [[nodiscard]] reverse_iterator rbegin()
     {
@@ -454,7 +454,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the unordered_map.
+     * @brief Returns a const reverse iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] const_reverse_iterator rend() const
     {
@@ -462,7 +462,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the beginning of the unordered_map.
+     * @brief Returns a reverse iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] reverse_iterator rend()
     {
@@ -470,7 +470,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the unordered_map.
+     * @brief Returns a const reverse iterator to the end of the iunordered_map.
      */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
@@ -478,7 +478,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the unordered_map.
+     * @brief Returns a const reverse iterator to the beginning of the iunordered_map.
      */
     [[nodiscard]] const_reverse_iterator crend() const
     {
@@ -486,9 +486,9 @@ public:
     }
 
     /**
-     * @brief Indicates if the specified key is contained in this unordered_map.
+     * @brief Indicates if the specified key is contained in this iunordered_map.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this unordered_map, otherwise <b>false</b>.
+     * @return <b>true</b> if the specified key is contained in this iunordered_map, otherwise <b>false</b>.
      */
     [[nodiscard]] bool contains(const key_type& key) const
     {
@@ -501,10 +501,10 @@ public:
     }
 
     /**
-     * @brief Indicates if the specified key is contained in this unordered_map.
+     * @brief Indicates if the specified key is contained in this iunordered_map.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this unordered_map, otherwise <b>false</b>.
+     * @return <b>true</b> if the specified key is contained in this iunordered_map, otherwise <b>false</b>.
      */
     [[nodiscard]] bool contains_hash(hash_type key_hash, const key_type& key) const
     {
@@ -512,9 +512,9 @@ public:
     }
 
     /**
-     * @brief Counts the number of keys stored in this unordered_map are equal to the given one.
+     * @brief Counts the number of keys stored in this iunordered_map are equal to the given one.
      * @param key Key to search for.
-     * @return 1 if the specified key is contained in this unordered_map, otherwise 0.
+     * @return 1 if the specified key is contained in this iunordered_map, otherwise 0.
      */
     [[nodiscard]] size_type count(const key_type& key) const
     {
@@ -522,10 +522,10 @@ public:
     }
 
     /**
-     * @brief Counts the number of keys stored in this unordered_map are equal to the given one.
+     * @brief Counts the number of keys stored in this iunordered_map are equal to the given one.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
-     * @return 1 if the specified key is contained in this unordered_map, otherwise 0.
+     * @return 1 if the specified key is contained in this iunordered_map, otherwise 0.
      */
     [[nodiscard]] size_type count_hash(hash_type key_hash, const key_type& key) const
     {
@@ -1020,7 +1020,7 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
-     * @param map unordered_map from which to erase.
+     * @param map iunordered_map from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
      * @return Number of erased elements.
      */
@@ -1058,7 +1058,7 @@ public:
     }
 
     /**
-     * @brief Moves all elements of the given unordered_map into this, leaving the given one empty.
+     * @brief Moves all elements of the given iunordered_map into this one, leaving the first one empty.
      */
     void merge(iunordered_map&& other) noexcept
     {
@@ -1178,8 +1178,8 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of this unordered_map with those of the other one.
-     * @param other unordered_map to exchange the contents with.
+     * @brief Exchanges the contents of this iunordered_map with those of the other one.
+     * @param other iunordered_map to exchange the contents with.
      */
     void swap(iunordered_map& other)
     {
@@ -1230,9 +1230,9 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of a unordered_map with those of another one.
-     * @param a First unordered_map to exchange the contents with.
-     * @param b Second unordered_map to exchange the contents with.
+     * @brief Exchanges the contents of a iunordered_map with those of another one.
+     * @param a First iunordered_map to exchange the contents with.
+     * @param b Second iunordered_map to exchange the contents with.
      */
     friend void swap(iunordered_map& a, iunordered_map& b)
     {
@@ -1241,9 +1241,9 @@ public:
 
     /**
      * @brief Equal operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is equal to the second one, otherwise <b>false</b>.
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator==(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1278,9 +1278,9 @@ public:
 
     /**
      * @brief Not equal operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is not equal to the second one, otherwise <b>false</b>.
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is not equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] bool friend operator!=(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1289,9 +1289,9 @@ public:
 
     /**
      * @brief Less than operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is lexicographically less than the second one,
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is lexicographically less than the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<(const iunordered_map& a, const iunordered_map& b)
@@ -1301,9 +1301,9 @@ public:
 
     /**
      * @brief Greater than operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is lexicographically greater than the second one,
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is lexicographically greater than the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>(const iunordered_map& a, const iunordered_map& b)
@@ -1313,9 +1313,9 @@ public:
 
     /**
      * @brief Less than or equal operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is lexicographically less than or equal to the second one,
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is lexicographically less than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<=(const iunordered_map& a, const iunordered_map& b)
@@ -1325,9 +1325,9 @@ public:
 
     /**
      * @brief Greater than or equal operator.
-     * @param a First unordered_map to compare.
-     * @param b Second unordered_map to compare.
-     * @return <b>true</b> if the first unordered_map is lexicographically greater than or equal to the second one,
+     * @param a First iunordered_map to compare.
+     * @param b Second iunordered_map to compare.
+     * @return <b>true</b> if the first iunordered_map is lexicographically greater than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>=(const iunordered_map& a, const iunordered_map& b)
@@ -1465,7 +1465,7 @@ public:
 
     /**
      * @brief Copy constructor.
-     * @param other Base unordered_map to copy.
+     * @param other iunordered_map to copy.
      */
     unordered_map(const iunordered_map<Key, Value, KeyHash, KeyEqual>& other) :
         unordered_map()
@@ -1477,7 +1477,7 @@ public:
 
     /**
      * @brief Move constructor.
-     * @param other Base unordered_map to move.
+     * @param other iunordered_map to move.
      */
     unordered_map(iunordered_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept :
         unordered_map()
@@ -1521,7 +1521,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base unordered_map to copy.
+     * @param other iunordered_map to copy.
      * @return Reference to this.
      */
     unordered_map& operator=(const iunordered_map<Key, Value, KeyHash, KeyEqual>& other)
@@ -1539,7 +1539,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Base unordered_map to move.
+     * @param other iunordered_map to move.
      * @return Reference to this.
      */
     unordered_map& operator=(iunordered_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept

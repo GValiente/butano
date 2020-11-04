@@ -745,14 +745,14 @@ namespace
         switch(generator.alignment())
         {
 
-        case horizontal_alignment_type::LEFT:
+        case sprite_text_generator::alignment_type::LEFT:
             break;
 
-        case horizontal_alignment_type::CENTER:
+        case sprite_text_generator::alignment_type::CENTER:
             aligned_position.set_x(aligned_position.x() - (generator.width(text) / 2));
             break;
 
-        case horizontal_alignment_type::RIGHT:
+        case sprite_text_generator::alignment_type::RIGHT:
             aligned_position.set_x(aligned_position.x() - generator.width(text));
             break;
 

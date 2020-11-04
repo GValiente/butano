@@ -384,10 +384,8 @@ btn::optional<scene_type> credits::update()
                         text_entry entry;
                         entry.y = text_y_limit;
 
-                        btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
-                        _text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+                        _text_generator.set_center_alignment();
                         _text_generator.generate(0, text_y_limit, text_item, entry.sprites);
-                        _text_generator.set_alignment(old_alignment);
 
                         _text_entries.push_back(btn::move(entry));
                     }

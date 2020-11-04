@@ -105,6 +105,22 @@
  */
 
 /**
+ * @defgroup inside_window Inside windows
+ *
+ * Windows which region can be covered by other windows.
+ *
+ * @ingroup window
+ */
+
+/**
+ * @defgroup rect_window Rectangle windows
+ *
+ * Rectangular windows.
+ *
+ * @ingroup window
+ */
+
+/**
  * @defgroup audio Audio
  *
  * Music for your ears, provided by maxmod (https://maxmod.devkitpro.org/).
@@ -127,6 +143,16 @@
  */
 
 /**
+ * @defgroup keypad Keypad
+ *
+ * GBA keys handling.
+ *
+ * Keypad logging can be enabled or disabled by overloading the definition of @a BTN_CFG_KEYPAD_LOG_ENABLED @a .
+ *
+ * Recorded key presses can be replayed later by passing the log to @a btn::core::init() @a .
+ */
+
+/**
  * @defgroup text Text
  *
  * Butano's text system, based on sprites.
@@ -136,6 +162,14 @@
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
  * Also, UTF-8 characters are supported.
+ */
+
+/**
+ * @defgroup green_swap Green swap
+ *
+ * When it is enabled, green intensity of each two screen pixels are exchanged.
+ *
+ * It produces an interesting dirt effect.
  */
 
 /**
@@ -193,7 +227,7 @@
  *
  * It can be enabled or disabled by overloading the definition of @a BTN_CFG_LOG_ENABLED @a .
  *
- * It only supports printing on one emulator at once.
+ * It supports printing on only one emulator at once.
  * The supported emulator can be changed by overloading the definition of @a BTN_CFG_LOG_BACKEND @a .
  */
 
@@ -230,6 +264,40 @@
  * @defgroup vector Vector
  *
  * A std::vector like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup list List
+ *
+ * A std::list like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup intrusive_list Intrusive list
+ *
+ * A std::list like container that doesn't contain values, it just references them.
+ *
+ * To be part of an intrusive list, values must inherit @a btn::intrusive_list_node_type @a class.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup intrusive_forward_list Intrusive forward list
+ *
+ * A std::forward_list like container that doesn't contain values, it just references them.
+ *
+ * To be part of an intrusive forward list, values must inherit @a btn::intrusive_forward_list_node_type @a class.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *

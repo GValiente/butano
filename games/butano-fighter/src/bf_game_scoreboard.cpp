@@ -40,7 +40,7 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
     _text_generator(text_generator),
     _bombs_affine_mat(btn::sprite_affine_mat_ptr::create())
 {
-    _text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    _text_generator.set_center_alignment();
     _text_generator.generate(level_text_x, level_text_y - 12, "LVL", _level_label_sprites);
     _text_generator.generate(experience_text_x, experience_text_y - 12, "EXP", _experience_label_sprites);
 
@@ -134,7 +134,7 @@ void scoreboard::update(const hero& hero)
         }
 
         _level_number_sprites.clear();
-        _text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        _text_generator.set_center_alignment();
         _text_generator.generate(level_text_x, level_text_y, text, _level_number_sprites);
         _set_visible(visible, _level_number_sprites);
     }
@@ -163,7 +163,7 @@ void scoreboard::update(const hero& hero)
 
         btn::string<8> text = btn::to_string<8>(experience);
         _experience_number_sprites.clear();
-        _text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+        _text_generator.set_center_alignment();
         _text_generator.generate(experience_text_x, experience_text_y, text, _experience_number_sprites);
         _set_visible(visible, _experience_number_sprites);
     }

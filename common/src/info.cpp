@@ -25,7 +25,7 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
 {
     btn::fixed y = start_y;
     text_generator.set_bg_priority(0);
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    text_generator.set_alignment(btn::sprite_text_generator::alignment_type::CENTER);
 
     if(! title.empty())
     {

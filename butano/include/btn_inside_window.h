@@ -14,7 +14,7 @@ namespace btn
 /**
  * @brief Window which region can be covered by other window.
  *
- * @ingroup window
+ * @ingroup inside_window
  */
 class inside_window : public window
 {

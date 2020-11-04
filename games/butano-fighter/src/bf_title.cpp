@@ -123,14 +123,12 @@ title::title(const status& status, btn::sprite_text_generator& text_generator, b
     btn::string<20> high_experience_text("HIGH EXP: ");
     high_experience_text.append(btn::to_string<8>(status.high_experience()));
 
-    btn::horizontal_alignment_type old_alignment = text_generator.alignment();
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    text_generator.set_center_alignment();
     text_generator.generate(0, 12 - (btn::display::height() / 2), high_experience_text, _high_experience_text_sprites);
-    text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+    text_generator.set_left_alignment();
     text_generator.generate(-28, 42, "START", _start_text_sprites);
     text_generator.generate(-28, 42 + 12, "HOW TO PLAY", _how_to_play_sprites);
     text_generator.generate(-28, 42 + 12 + 12, "CREDITS", _credits_text_sprites);
-    text_generator.set_alignment(old_alignment);
     _cursor_sprite.set_position(_how_to_play_sprites[0].x() - 28, _start_text_sprites[0].y());
     _cursor_sprite.set_visible(false);
 

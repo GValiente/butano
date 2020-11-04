@@ -45,8 +45,8 @@ void stats::set_mode(mode_type mode)
             btn::fixed cpu_label_width = _text_generator.width(cpu_label);
             _text_position = btn::fixed_point(text_x + cpu_label_width, text_height - (btn::display::height() / 2));
 
-            btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
-            _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+            btn::sprite_text_generator::alignment_type old_alignment = _text_generator.alignment();
+            _text_generator.set_alignment(btn::sprite_text_generator::alignment_type::LEFT);
 
             int old_bg_priority = _text_generator.bg_priority();
             _text_generator.set_bg_priority(0);
@@ -128,9 +128,9 @@ void stats::update()
 
         text_stream.append('%');
 
-        btn::horizontal_alignment_type old_alignment = _text_generator.alignment();
+        btn::sprite_text_generator::alignment_type old_alignment = _text_generator.alignment();
         int old_bg_priority = _text_generator.bg_priority();
-        _text_generator.set_alignment(btn::horizontal_alignment_type::LEFT);
+        _text_generator.set_alignment(btn::sprite_text_generator::alignment_type::LEFT);
         _text_generator.set_bg_priority(0);
         _text_sprites.clear();
         _text_generator.generate(_text_position, text, _text_sprites);

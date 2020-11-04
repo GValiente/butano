@@ -53,7 +53,7 @@ public:
             return *this;
         }
 
-        iterator& operator+=(iterator other)
+        iterator& operator+=(const iterator& other)
         {
             _index += other._index;
             return *this;
@@ -71,7 +71,7 @@ public:
             return *this;
         }
 
-        iterator& operator-=(iterator other)
+        iterator& operator-=(const iterator& other)
         {
             _index -= other._index;
             return *this;
@@ -173,7 +173,7 @@ public:
         using const_pointer = ideque::const_pointer;
         using iterator_category = random_access_iterator_tag;
 
-        const_iterator(iterator it) :
+        const_iterator(const iterator& it) :
             _deque(it._deque),
             _index(it._index)
         {

@@ -11,7 +11,6 @@
 #include "btn_sprite_font.h"
 #include "btn_unordered_map.h"
 #include "btn_config_sprite_text.h"
-#include "btn_horizontal_alignment_type.h"
 
 namespace btn
 {
@@ -35,6 +34,16 @@ class sprite_text_generator
 {
 
 public:
+    /**
+     * @brief Horizontal alignment available types:
+     */
+    enum class alignment_type
+    {
+        LEFT, //!< Aligns with the left text edge.
+        CENTER, //!< Aligns with the middle of the text.
+        RIGHT //!< Aligns with the right text edge.
+    };
+
     /**
      * @brief Constructor.
      * @param font Sprite font for drawing text.
@@ -74,7 +83,7 @@ public:
     /**
      * @brief Returns the horizontal alignment of the output text sprites.
      */
-    [[nodiscard]] horizontal_alignment_type alignment() const
+    [[nodiscard]] alignment_type alignment() const
     {
         return _alignment;
     }
@@ -82,9 +91,33 @@ public:
     /**
      * @brief Sets the horizontal alignment of the output text sprites.
      */
-    void set_alignment(horizontal_alignment_type alignment)
+    void set_alignment(alignment_type alignment)
     {
         _alignment = alignment;
+    }
+
+    /**
+     * @brief Sets the horizontal alignment of the output text sprites to the left.
+     */
+    void set_left_alignment()
+    {
+        _alignment = alignment_type::LEFT;
+    }
+
+    /**
+     * @brief Sets the horizontal alignment of the output text sprites to the center.
+     */
+    void set_center_alignment()
+    {
+        _alignment = alignment_type::CENTER;
+    }
+
+    /**
+     * @brief Sets the horizontal alignment of the output text sprites to the right.
+     */
+    void set_right_alignment()
+    {
+        _alignment = alignment_type::RIGHT;
     }
 
     /**
@@ -233,7 +266,7 @@ private:
     sprite_font _font;
     sprite_palette_item _palette_item;
     unordered_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
-    horizontal_alignment_type _alignment = horizontal_alignment_type::LEFT;
+    alignment_type _alignment = alignment_type::LEFT;
     int _bg_priority = 3;
     int _z_order = 0;
     bool _one_sprite_per_character = false;

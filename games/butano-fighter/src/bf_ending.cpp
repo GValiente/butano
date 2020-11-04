@@ -30,13 +30,11 @@ ending::ending(btn::sprite_text_generator& text_generator, butano_background& bu
     _bg.set_priority(2);
     _bg.set_blending_enabled(true);
 
-    btn::horizontal_alignment_type old_alignment = text_generator.alignment();
-    text_generator.set_alignment(btn::horizontal_alignment_type::CENTER);
+    text_generator.set_center_alignment();
     text_generator.generate(0, -32, "YOU DID IT!", _text_sprites);
     text_generator.generate(0, 0, "Now make your own", _text_sprites);
     text_generator.generate(0, 16, "GBA games with BUTANO", _text_sprites);
     text_generator.generate(0, 32, "github.com/GValiente/butano", _text_sprites);
-    text_generator.set_alignment(old_alignment);
 
     for(btn::sprite_ptr& text_sprite : _text_sprites)
     {

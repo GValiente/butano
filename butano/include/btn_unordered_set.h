@@ -196,11 +196,11 @@ public:
 
         /**
          * @brief Public constructor.
-         * @param other Non const iterator.
+         * @param it Non const iterator.
          */
-        const_iterator(const iterator& other) :
-            _index(other._index),
-            _set(other._set)
+        const_iterator(const iterator& it) :
+            _index(it._index),
+            _set(it._set)
         {
         }
 
@@ -312,7 +312,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other unordered_set to copy.
+     * @param other iunordered_set to copy.
      * @return Reference to this.
      */
     iunordered_set& operator=(const iunordered_set& other)
@@ -330,7 +330,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other unordered_set to move.
+     * @param other iunordered_set to move.
      * @return Reference to this.
      */
     iunordered_set& operator=(iunordered_set&& other) noexcept
@@ -387,7 +387,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the unordered_set.
+     * @brief Returns a const iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] const_iterator begin() const
     {
@@ -395,7 +395,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the beginning of the unordered_set.
+     * @brief Returns an iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] iterator begin()
     {
@@ -403,7 +403,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the unordered_set.
+     * @brief Returns a const iterator to the end of the iunordered_set.
      */
     [[nodiscard]] const_iterator end() const
     {
@@ -411,7 +411,7 @@ public:
     }
 
     /**
-     * @brief Returns an iterator to the end of the unordered_set.
+     * @brief Returns an iterator to the end of the iunordered_set.
      */
     [[nodiscard]] iterator end()
     {
@@ -419,7 +419,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the beginning of the unordered_set.
+     * @brief Returns a const iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] const_iterator cbegin() const
     {
@@ -427,7 +427,7 @@ public:
     }
 
     /**
-     * @brief Returns a const iterator to the end of the unordered_set.
+     * @brief Returns a const iterator to the end of the iunordered_set.
      */
     [[nodiscard]] const_iterator cend() const
     {
@@ -435,7 +435,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the unordered_set.
+     * @brief Returns a const reverse iterator to the end of the iunordered_set.
      */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
@@ -443,7 +443,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the end of the unordered_set.
+     * @brief Returns a reverse iterator to the end of the iunordered_set.
      */
     [[nodiscard]] reverse_iterator rbegin()
     {
@@ -451,7 +451,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the unordered_set.
+     * @brief Returns a const reverse iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] const_reverse_iterator rend() const
     {
@@ -459,7 +459,7 @@ public:
     }
 
     /**
-     * @brief Returns a reverse iterator to the beginning of the unordered_set.
+     * @brief Returns a reverse iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] reverse_iterator rend()
     {
@@ -467,7 +467,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the end of the unordered_set.
+     * @brief Returns a const reverse iterator to the end of the iunordered_set.
      */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
@@ -475,7 +475,7 @@ public:
     }
 
     /**
-     * @brief Returns a const reverse iterator to the beginning of the unordered_set.
+     * @brief Returns a const reverse iterator to the beginning of the iunordered_set.
      */
     [[nodiscard]] const_reverse_iterator crend() const
     {
@@ -483,9 +483,9 @@ public:
     }
 
     /**
-     * @brief Indicates if the specified key is contained in this unordered_set.
+     * @brief Indicates if the specified key is contained in this iunordered_set.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this unordered_set, otherwise <b>false</b>.
+     * @return <b>true</b> if the specified key is contained in this iunordered_set, otherwise <b>false</b>.
      */
     [[nodiscard]] bool contains(const key_type& key) const
     {
@@ -498,10 +498,10 @@ public:
     }
 
     /**
-     * @brief Indicates if the specified key is contained in this unordered_set.
+     * @brief Indicates if the specified key is contained in this iunordered_set.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this unordered_set, otherwise <b>false</b>.
+     * @return <b>true</b> if the specified key is contained in this iunordered_set, otherwise <b>false</b>.
      */
     [[nodiscard]] bool contains_hash(hash_type key_hash, const key_type& key) const
     {
@@ -509,9 +509,9 @@ public:
     }
 
     /**
-     * @brief Counts the number of keys stored in this unordered_set are equal to the given one.
+     * @brief Counts the number of keys stored in this iunordered_set are equal to the given one.
      * @param key Key to search for.
-     * @return 1 if the specified key is contained in this unordered_set, otherwise 0.
+     * @return 1 if the specified key is contained in this iunordered_set, otherwise 0.
      */
     [[nodiscard]] size_type count(const key_type& key) const
     {
@@ -519,10 +519,10 @@ public:
     }
 
     /**
-     * @brief Counts the number of keys stored in this unordered_set are equal to the given one.
+     * @brief Counts the number of keys stored in this iunordered_set are equal to the given one.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
-     * @return 1 if the specified key is contained in this unordered_set, otherwise 0.
+     * @return 1 if the specified key is contained in this iunordered_set, otherwise 0.
      */
     [[nodiscard]] size_type count_hash(hash_type key_hash, const key_type& key) const
     {
@@ -773,7 +773,7 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
-     * @param set unordered_set from which to erase.
+     * @param set iunordered_set from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
      * @return Number of erased elements.
      */
@@ -811,7 +811,7 @@ public:
     }
 
     /**
-     * @brief Moves all elements of the given unordered_set into this, leaving the given one empty.
+     * @brief Moves all elements of the given iunordered_set into this one, leaving the first one empty.
      */
     void merge(iunordered_set&& other)
     {
@@ -889,8 +889,8 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of this unordered_set with those of the other one.
-     * @param other unordered_set to exchange the contents with.
+     * @brief Exchanges the contents of this iunordered_set with those of the other one.
+     * @param other iunordered_set to exchange the contents with.
      */
     void swap(iunordered_set& other)
     {
@@ -941,9 +941,9 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of a unordered_set with those of another one.
-     * @param a First unordered_set to exchange the contents with.
-     * @param b Second unordered_set to exchange the contents with.
+     * @brief Exchanges the contents of a iunordered_set with those of another one.
+     * @param a First iunordered_set to exchange the contents with.
+     * @param b Second iunordered_set to exchange the contents with.
      */
     friend void swap(iunordered_set& a, iunordered_set& b)
     {
@@ -952,9 +952,9 @@ public:
 
     /**
      * @brief Equal operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is equal to the second one, otherwise <b>false</b>.
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator==(const iunordered_set& a, const iunordered_set& b)
     {
@@ -990,9 +990,9 @@ public:
 
     /**
      * @brief Not equal operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is not equal to the second one, otherwise <b>false</b>.
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is not equal to the second one, otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator!=(const iunordered_set& a, const iunordered_set& b)
     {
@@ -1001,9 +1001,9 @@ public:
 
     /**
      * @brief Less than operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is lexicographically less than the second one,
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is lexicographically less than the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<(const iunordered_set& a, const iunordered_set& b)
@@ -1013,9 +1013,9 @@ public:
 
     /**
      * @brief Greater than operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is lexicographically greater than the second one,
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is lexicographically greater than the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>(const iunordered_set& a, const iunordered_set& b)
@@ -1025,9 +1025,9 @@ public:
 
     /**
      * @brief Less than or equal operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is lexicographically less than or equal to the second one,
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is lexicographically less than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator<=(const iunordered_set& a, const iunordered_set& b)
@@ -1037,9 +1037,9 @@ public:
 
     /**
      * @brief Greater than or equal operator.
-     * @param a First unordered_set to compare.
-     * @param b Second unordered_set to compare.
-     * @return <b>true</b> if the first unordered_set is lexicographically greater than or equal to the second one,
+     * @param a First iunordered_set to compare.
+     * @param b Second iunordered_set to compare.
+     * @return <b>true</b> if the first iunordered_set is lexicographically greater than or equal to the second one,
      * otherwise <b>false</b>.
      */
     [[nodiscard]] friend bool operator>=(const iunordered_set& a, const iunordered_set& b)
@@ -1175,7 +1175,7 @@ public:
 
     /**
      * @brief Copy constructor.
-     * @param other Base unordered_set to copy.
+     * @param other iunordered_set to copy.
      */
     unordered_set(const iunordered_set<Key, KeyHash, KeyEqual>& other) :
         unordered_set()
@@ -1187,7 +1187,7 @@ public:
 
     /**
      * @brief Move constructor.
-     * @param other Base unordered_set to move.
+     * @param other iunordered_set to move.
      */
     unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
         unordered_set()
@@ -1231,7 +1231,7 @@ public:
 
     /**
      * @brief Copy assignment operator.
-     * @param other Base unordered_set to copy.
+     * @param other iunordered_set to copy.
      * @return Reference to this.
      */
     unordered_set& operator=(const iunordered_set<Key, KeyHash, KeyEqual>& other)
@@ -1249,7 +1249,7 @@ public:
 
     /**
      * @brief Move assignment operator.
-     * @param other Base unordered_set to move.
+     * @param other iunordered_set to move.
      * @return Reference to this.
      */
     unordered_set& operator=(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept

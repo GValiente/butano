@@ -18,7 +18,7 @@ namespace btn
 /**
  * @brief Manages the position of the top boundary of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_top_manager
@@ -46,7 +46,7 @@ public:
 /**
  * @brief Modifies the position of the top boundary of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_by_action : public by_value_template_action<rect_window, fixed, rect_window_top_manager>
@@ -86,7 +86,7 @@ public:
 /**
  * @brief Modifies the position of the top boundary of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_to_action : public to_value_template_action<rect_window, fixed, rect_window_top_manager>
@@ -129,7 +129,7 @@ public:
  * @brief Modifies the position of the top boundary of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_loop_action :
@@ -173,7 +173,7 @@ public:
  * @brief Changes the position of the top boundary of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_toggle_action :
@@ -218,7 +218,7 @@ public:
 /**
  * @brief Manages the position of the left boundary of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_left_manager
@@ -246,7 +246,7 @@ public:
 /**
  * @brief Modifies the position of the left boundary of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_left_by_action : public by_value_template_action<rect_window, fixed, rect_window_left_manager>
@@ -286,7 +286,7 @@ public:
 /**
  * @brief Modifies the position of the left boundary of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_left_to_action : public to_value_template_action<rect_window, fixed, rect_window_left_manager>
@@ -329,7 +329,7 @@ public:
  * @brief Modifies the position of the left boundary of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_left_loop_action :
@@ -373,7 +373,7 @@ public:
  * @brief Changes the position of the left boundary of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_left_toggle_action :
@@ -418,7 +418,7 @@ public:
 /**
  * @brief Manages the position of the bottom boundary of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_bottom_manager
@@ -446,7 +446,7 @@ public:
 /**
  * @brief Modifies the position of the bottom boundary of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_by_action :
@@ -487,7 +487,7 @@ public:
 /**
  * @brief Modifies the position of the bottom boundary of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_to_action :
@@ -531,7 +531,7 @@ public:
  * @brief Modifies the position of the bottom boundary of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_loop_action :
@@ -575,7 +575,7 @@ public:
  * @brief Changes the position of the bottom boundary of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_toggle_action :
@@ -620,7 +620,7 @@ public:
 /**
  * @brief Manages the position of the right boundary of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_right_manager
@@ -648,7 +648,7 @@ public:
 /**
  * @brief Modifies the position of the right boundary of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_right_by_action :
@@ -689,7 +689,7 @@ public:
 /**
  * @brief Modifies the position of the right boundary of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_right_to_action :
@@ -733,7 +733,7 @@ public:
  * @brief Modifies the position of the right boundary of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_right_loop_action :
@@ -777,7 +777,7 @@ public:
  * @brief Changes the position of the right boundary of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_right_toggle_action :
@@ -822,7 +822,7 @@ public:
 /**
  * @brief Manages the position of the top-left corner of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_top_left_manager
@@ -850,7 +850,7 @@ public:
 /**
  * @brief Modifies the position of the top-left corner of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_left_by_action :
@@ -904,7 +904,7 @@ public:
 /**
  * @brief Modifies the position of the top-left corner of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_left_to_action :
@@ -963,7 +963,7 @@ public:
  * @brief Modifies the position of the top-left corner of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_left_loop_action :
@@ -1024,7 +1024,7 @@ public:
  * @brief Changes the position of the top-left corner of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_top_left_toggle_action :
@@ -1085,7 +1085,7 @@ public:
 /**
  * @brief Manages the position of the bottom-right corner of a rect_window.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_bottom_right_manager
@@ -1113,7 +1113,7 @@ public:
 /**
  * @brief Modifies the position of the bottom-right corner of a rect_window by a given delta.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_right_by_action :
@@ -1167,7 +1167,7 @@ public:
 /**
  * @brief Modifies the position of the bottom-right corner of a rect_window until it has a given state.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_right_to_action :
@@ -1228,7 +1228,7 @@ public:
  * @brief Modifies the position of the bottom-right corner of a rect_window from a minimum to a maximum.
  * When the position is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_right_loop_action :
@@ -1289,7 +1289,7 @@ public:
  * @brief Changes the position of the bottom-right corner of a rect_window
  * when the action is updated a given number of times.
  *
- * @ingroup window
+ * @ingroup rect_window
  * @ingroup action
  */
 class rect_window_move_bottom_right_toggle_action :

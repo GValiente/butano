@@ -11,6 +11,7 @@
 #include "btn_optional.h"
 #include "btn_sprite_tiles.h"
 #include "btn_unordered_map.h"
+#include "btn_config_sprite_tiles.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED

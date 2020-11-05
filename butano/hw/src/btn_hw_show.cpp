@@ -129,7 +129,7 @@ namespace
                 int64_t ticks;
             };
 
-            vector<entry, BTN_CFG_PROFILER_MAX_ENTRIES> entries;
+            vector<entry, BTN_CFG_PROFILER_MAX_ENTRIES * 2> entries;
 
             for(const auto& ticks_per_entry_pair : ticks_per_entry)
             {

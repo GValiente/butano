@@ -49,7 +49,7 @@ public:
      * The deltas are not copied but referenced, so they should outlive the rect_window_boundaries_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested rect_window_boundaries_hblank_effect_ptr if it can be allocated;
+     * @return The requested rect_window_boundaries_hblank_effect_ptr if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_horizontal_optional(
@@ -80,7 +80,7 @@ public:
      * The deltas are not copied but referenced, so they should outlive the rect_window_boundaries_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested rect_window_boundaries_hblank_effect_ptr if it can be allocated;
+     * @return The requested rect_window_boundaries_hblank_effect_ptr if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_vertical_optional(

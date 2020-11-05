@@ -28,7 +28,7 @@
 
     namespace _btn::profiler
     {
-        using ticks_map = btn::unordered_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES>;
+        using ticks_map = btn::unordered_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES * 2>;
 
         void start(const char* id, unsigned id_hash);
 

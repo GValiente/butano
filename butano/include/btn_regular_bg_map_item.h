@@ -117,7 +117,7 @@ public:
      * @param tiles Referenced tiles of the map to search or handle.
      * @param palette Referenced color palette of the map to search or handle.
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it can be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 

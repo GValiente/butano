@@ -46,14 +46,14 @@ public:
 
     /**
      * @brief Creates an identity affine transformation matrix.
-     * @return The requested sprite_affine_mat_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_affine_mat_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional();
 
     /**
      * @brief Creates an affine transformation matrix with the specified attributes.
      * @param attributes sprite_affine_mat_attributes of the output matrix.
-     * @return The requested sprite_affine_mat_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_affine_mat_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional(const sprite_affine_mat_attributes& attributes);
 

@@ -8,6 +8,13 @@
 
 #include "btn_common.h"
 
+/**
+ * @def BTN_CFG_KEYPAD_LOG_ENABLED
+ *
+ * Specifies if keypad logging is enabled or not.
+ *
+ * @ingroup keypad
+ */
 #ifndef BTN_CFG_KEYPAD_LOG_ENABLED
     #define BTN_CFG_KEYPAD_LOG_ENABLED false
 #endif

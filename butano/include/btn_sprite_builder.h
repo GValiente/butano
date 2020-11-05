@@ -260,8 +260,8 @@ public:
      *
      * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
-     * Sprites are grouped in layers depending of their z order, so to reduce memory usage and improve performance,
-     * please use as less unique z orders as possible.
+     * Sprites are grouped in layers depending of their background priority and z order,
+     * so to reduce memory usage and improve performance, please use as less unique z orders as possible.
      */
     [[nodiscard]] int z_order() const
     {
@@ -272,6 +272,9 @@ public:
      * @brief Sets the priority of the sprites to generate relative to other ones.
      *
      * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
+     *
+     * Sprites are grouped in layers depending of their background priority and z order,
+     * so to reduce memory usage and improve performance, please use as less unique z orders as possible.
      *
      * @param z_order Priority relative to other sprites in the range [-32767..32767].
      * @return Reference to this.
@@ -470,13 +473,13 @@ public:
     [[nodiscard]] sprite_ptr release_build();
 
     /**
-     * @brief Generates and returns a sprite_ptr without releasing the acquired resources if it can be allocated;
+     * @brief Generates and returns a sprite_ptr without releasing the acquired resources if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> build_optional() const;
 
     /**
-     * @brief Generates and returns a sprite_ptr releasing the acquired resources if it can be allocated;
+     * @brief Generates and returns a sprite_ptr releasing the acquired resources if it could be allocated;
      * <b>nullopt</b> otherwise.
      *
      * This method must be called once at most.
@@ -495,13 +498,13 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr without releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> tiles_optional() const;
 
     /**
      * @brief Generates and returns a sprite_palette_ptr without releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> palette_optional() const;
 
@@ -521,7 +524,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      *
      * This method must be called once at most.
      */
@@ -529,7 +532,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_palette_ptr releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      *
      * This method must be called once at most.
      */

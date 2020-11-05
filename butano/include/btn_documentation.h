@@ -17,6 +17,14 @@
 // GROUPS
 
 /**
+ * @defgroup core Core
+ *
+ * It coordinates all of the other modules.
+ *
+ * It is needed to start the engine and to update it each frame, among other things.
+ */
+
+/**
  * @defgroup display Display
  *
  * That square window of 240x160 pixels capable of displaying 32768 colors (15 bits).
@@ -235,6 +243,12 @@
  */
 
 /**
+ * @defgroup camera Cameras
+ *
+ * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
+ */
+
+/**
  * @defgroup assert Asserts
  *
  * Butano's assert system.
@@ -290,6 +304,16 @@
  * @defgroup vector Vector
  *
  * A std::vector like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
+ * @defgroup deque Deque
+ *
+ * A std::deque like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *

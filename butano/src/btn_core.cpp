@@ -242,16 +242,6 @@ void update()
     BTN_PROFILER_ENGINE_STOP();
 }
 
-void update(int frames)
-{
-    BTN_ASSERT(frames > 0, "Invalid frames: ", frames);
-
-    while(frames--)
-    {
-        update();
-    }
-}
-
 void sleep(keypad::key_type wake_up_key)
 {
     const keypad::key_type wake_up_keys[] = { wake_up_key };

@@ -86,7 +86,7 @@ public:
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @param colors Colors of the palette to search or create.
      * @param bpp_mode Bits per pixel of the palette to search or create.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const span<const color>& colors,
                                                                       palette_bpp_mode bpp_mode);
@@ -95,7 +95,7 @@ public:
      * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @param palette_item sprite_palette_item which references the colors of the palette to search or create.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const sprite_palette_item& palette_item);
 
@@ -103,7 +103,7 @@ public:
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param colors Colors of the new palette.
      * @param bpp_mode Bits per pixel of the new palette.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_new_optional(const span<const color>& colors,
                                                                           palette_bpp_mode bpp_mode);
@@ -111,7 +111,7 @@ public:
     /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors of the new palette.
-     * @return The requested sprite_palette_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_new_optional(const sprite_palette_item& palette_item);
 

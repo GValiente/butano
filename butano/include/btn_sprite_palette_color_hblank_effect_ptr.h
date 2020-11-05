@@ -53,7 +53,7 @@ public:
      * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested sprite_palette_color_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_color_hblank_effect_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_color_hblank_effect_ptr> create_optional(
             sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);

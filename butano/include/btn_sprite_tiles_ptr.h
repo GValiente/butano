@@ -159,7 +159,7 @@ public:
      *
      * @param tiles_ref Reference to the tiles to search or handle.
      * @return sprite_tiles_ptr which references tiles_ref if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
@@ -172,7 +172,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item);
 
@@ -186,7 +186,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it can be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item,
                                                                     int graphics_index);
@@ -202,7 +202,7 @@ public:
      * so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_ref Reference to the tiles to handle.
-     * @return sprite_tiles_ptr which references tiles_ref if it can be allocated; <b>nullopt</b> otherwise.
+     * @return sprite_tiles_ptr which references tiles_ref if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const span<const tile>& tiles_ref);
 
@@ -217,7 +217,7 @@ public:
      * so they should outlive the sprite_tiles_ptr to avoid dangling references.
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it can be allocated;
+     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item);
@@ -234,7 +234,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it can be allocated;
+     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item,
@@ -244,7 +244,7 @@ public:
      * @brief Creates a sprite_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
      * @param tiles_count Number of tiles to allocate.
      * @return sprite_tiles_ptr which references a chunk of VRAM tiles
-     * not visible on the screen if it can be allocated; <b>nullopt</b> otherwise.
+     * not visible on the screen if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> allocate_optional(int tiles_count);
 

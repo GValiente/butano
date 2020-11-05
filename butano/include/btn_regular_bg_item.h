@@ -120,14 +120,14 @@ public:
      * @brief Creates a regular_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the regular background.
      * @param y Vertical position of the regular background.
-     * @return The requested regular_bg_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(fixed x, fixed y) const;
 
     /**
      * @brief Creates a regular_bg_ptr using the information contained in this item.
      * @param position Position of the regular background.
-     * @return The requested regular_bg_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(const fixed_point& position) const;
 
@@ -172,7 +172,7 @@ public:
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it can be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional() const;
 

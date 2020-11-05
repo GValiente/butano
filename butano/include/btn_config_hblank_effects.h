@@ -8,6 +8,13 @@
 
 #include "btn_common.h"
 
+/**
+ * @def BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS
+ *
+ * Specifies the maximum number of active H-Blank effects.
+ *
+ * @ingroup hblank_effect
+ */
 #ifndef BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS
     #define BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS 8
 #endif

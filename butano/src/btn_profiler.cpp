@@ -14,9 +14,6 @@
     {
         namespace
         {
-            static_assert(BTN_CFG_PROFILER_TICKS_DIVISOR > 0);
-            static_assert(btn::power_of_two(BTN_CFG_PROFILER_TICKS_DIVISOR));
-
             static_assert(BTN_CFG_PROFILER_MAX_ENTRIES > 0);
             static_assert(btn::power_of_two(BTN_CFG_PROFILER_MAX_ENTRIES));
 
@@ -49,7 +46,7 @@
             BTN_ASSERT(data.current_id, "There's no active id");
 
             int timer_ticks = data.current_timer->elapsed_ticks();
-            auto profiler_ticks = int64_t(timer_ticks / BTN_CFG_PROFILER_TICKS_DIVISOR);
+            auto profiler_ticks = int64_t(timer_ticks);
             data.ticks_per_entry(data.current_id_hash, data.current_id) += profiler_ticks;
             data.total_ticks += profiler_ticks;
             data.current_id = nullptr;

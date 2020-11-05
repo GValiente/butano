@@ -48,7 +48,7 @@ public:
      * The attributes are not copied but referenced, so they should outlive
      * the mosaic_attributes_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested mosaic_attributes_hblank_effect_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested mosaic_attributes_hblank_effect_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<mosaic_attributes_hblank_effect_ptr> create_optional(
             const span<const mosaic_attributes>& attributes_ref);

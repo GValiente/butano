@@ -303,13 +303,13 @@ public:
     [[nodiscard]] regular_bg_ptr release_build();
 
     /**
-     * @brief Generates and returns a regular_bg_ptr without releasing the acquired resources if it can be allocated;
+     * @brief Generates and returns a regular_bg_ptr without releasing the acquired resources if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> build_optional() const;
 
     /**
-     * @brief Generates and returns a regular_bg_ptr releasing the acquired resources if it can be allocated;
+     * @brief Generates and returns a regular_bg_ptr releasing the acquired resources if it could be allocated;
      * <b>nullopt</b> otherwise.
      *
      * This method must be called once at most.
@@ -323,7 +323,7 @@ public:
 
     /**
      * @brief Generates and returns a regular_bg_map_ptr without releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> map_optional() const;
 
@@ -336,7 +336,7 @@ public:
 
     /**
      * @brief Generates and returns a regular_bg_map_ptr releasing the acquired resources
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      *
      * This method must be called once at most.
      */

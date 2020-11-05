@@ -934,7 +934,7 @@ public:
      * @brief Size constructor.
      * @param count Initial size of the vector.
      */
-    vector(size_type count) :
+    explicit vector(size_type count) :
         vector()
     {
         BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);

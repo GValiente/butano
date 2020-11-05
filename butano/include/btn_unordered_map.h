@@ -142,9 +142,9 @@ public:
 
         /**
          * @brief Equal operator.
-         * @param a First element to compare.
-         * @param b Second element to compare.
-         * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is equal to the second one, otherwise <b>false</b>.
          */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
@@ -153,9 +153,9 @@ public:
 
         /**
          * @brief Not equal operator.
-         * @param a First element to compare.
-         * @param b Second element to compare.
-         * @return <b>true</b> if the first element is not equal to the second one, otherwise <b>false</b>.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is not equal to the second one, otherwise <b>false</b>.
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
@@ -274,9 +274,9 @@ public:
 
         /**
          * @brief Equal operator.
-         * @param a First element to compare.
-         * @param b Second element to compare.
-         * @return <b>true</b> if the first element is equal to the second one, otherwise <b>false</b>.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is equal to the second one, otherwise <b>false</b>.
          */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
@@ -285,9 +285,9 @@ public:
 
         /**
          * @brief Not equal operator.
-         * @param a First element to compare.
-         * @param b Second element to compare.
-         * @return <b>true</b> if the first element is not equal to the second one, otherwise <b>false</b>.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is not equal to the second one, otherwise <b>false</b>.
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {

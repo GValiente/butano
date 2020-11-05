@@ -35,12 +35,12 @@ namespace btn::sprite_tiles
     [[nodiscard]] int available_tiles_count();
 
     /**
-     * @brief Returns the number of used sprite tiles items created with sprite_tiles_ptr static constructors.
+     * @brief Returns the number of used sprite tile sets created with sprite_tiles_ptr static constructors.
      */
     [[nodiscard]] int used_items_count();
 
     /**
-     * @brief Returns the number of available sprite tiles items
+     * @brief Returns the number of available sprite tile sets
      * that can be created with sprite_tiles_ptr static constructors.
      */
     [[nodiscard]] int available_items_count();

@@ -48,7 +48,7 @@ public:
      * The attributes are not copied but referenced, so they should outlive
      * the sprite_first_attributes_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested sprite_first_attributes_hblank_effect_ptr if it can be allocated;
+     * @return The requested sprite_first_attributes_hblank_effect_ptr if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_first_attributes_hblank_effect_ptr> create_optional(

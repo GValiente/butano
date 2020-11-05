@@ -178,7 +178,7 @@ public:
      * to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;
-     * otherwise it returns a new sprite_tiles_ptr which references it if it can be allocated;
+     * otherwise it returns a new sprite_tiles_ptr which references it if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional() const;
@@ -192,7 +192,7 @@ public:
      *
      * @param graphics_index Index of the tile set to search or handle.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index if it has been found;
-     * otherwise it returns a new sprite_tiles_ptr which references it if it can be allocated;
+     * otherwise it returns a new sprite_tiles_ptr which references it if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional(int graphics_index) const;
@@ -206,7 +206,7 @@ public:
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr
      * to avoid dangling references.
      *
-     * @return sprite_tiles_ptr which references the first sprite tile set if it can be allocated;
+     * @return sprite_tiles_ptr which references the first sprite tile set if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional() const;
@@ -222,7 +222,7 @@ public:
      *
      * @param graphics_index Index of the tile set to reference.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index
-     * if it can be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional(int graphics_index) const;
 

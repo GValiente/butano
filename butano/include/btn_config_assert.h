@@ -11,7 +11,7 @@
 /**
  * @def BTN_CFG_ASSERT_ENABLED
  *
- * Indicates if the asserts are enabled or not.
+ * Specifies if asserts must be enabled or not.
  *
  * @ingroup assert
  */

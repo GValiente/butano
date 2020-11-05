@@ -22,126 +22,199 @@ class ideque
 {
 
 public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
 
+    /**
+     * @brief Non const iterator.
+     */
     class iterator
     {
 
     public:
-        using value_type = ideque::value_type;
-        using size_type = ideque::size_type;
-        using reference = ideque::reference;
-        using const_reference = ideque::const_reference;
-        using pointer = ideque::pointer;
-        using const_pointer = ideque::const_pointer;
-        using iterator_category = random_access_iterator_tag;
+        using value_type = ideque::value_type; //!< Value type alias.
+        using size_type = ideque::size_type; //!< Size type alias.
+        using reference = ideque::reference; //!< Reference alias.
+        using const_reference = ideque::const_reference; //!< Const reference alias.
+        using pointer = ideque::pointer; //!< Pointer alias.
+        using const_pointer = ideque::const_pointer; //!< Const pointer alias.
+        using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         iterator& operator++()
         {
             ++_index;
             return *this;
         }
 
+        /**
+         * @brief Increments the position the given number of times.
+         * @param value Number of positions to increment.
+         * @return Reference to this.
+         */
         iterator& operator+=(size_type value)
         {
             _index += value;
             return *this;
         }
 
-        iterator& operator+=(const iterator& other)
-        {
-            _index += other._index;
-            return *this;
-        }
-
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         iterator& operator--()
         {
             --_index;
             return *this;
         }
 
+        /**
+         * @brief Decrements the position the given number of times.
+         * @param value Number of positions to decrement.
+         * @return Reference to this.
+         */
         iterator& operator-=(size_type value)
         {
             _index -= value;
             return *this;
         }
 
-        iterator& operator-=(const iterator& other)
-        {
-            _index -= other._index;
-            return *this;
-        }
-
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             return _deque->at(_index);
         }
 
+        /**
+         * @brief Returns a reference to the pointed value.
+         */
         [[nodiscard]] reference operator*()
         {
             return _deque->at(_index);
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             return &_deque->at(_index);
         }
 
+        /**
+         * @brief Returns a pointer to the pointed value.
+         */
         pointer operator->()
         {
             return &_deque->at(_index);
         }
 
+        /**
+         * @brief Returns a incremented b times.
+         */
         [[nodiscard]] friend iterator operator+(const iterator& a, size_type b)
         {
             return iterator(&a._deque, a._index + b);
         }
 
-        [[nodiscard]] friend iterator operator+(const iterator& a, const iterator& b)
-        {
-            return iterator(&a._deque, a._index + b._index);
-        }
-
+        /**
+         * @brief Returns a decremented b times.
+         */
         [[nodiscard]] friend iterator operator-(const iterator& a, size_type b)
         {
             return iterator(&a._deque, a._index - b);
         }
 
-        [[nodiscard]] friend iterator operator-(const iterator& a, const iterator& b)
+        /**
+         * @brief Returns the sum of a and b.
+         */
+        [[nodiscard]] friend size_type operator+(const iterator& a, const iterator& b)
         {
-            return iterator(&a._deque, a._index - b._index);
+            return a._index + b._index;
         }
 
+        /**
+         * @brief Returns b subtracted from a.
+         */
+        [[nodiscard]] friend size_type operator-(const iterator& a, const iterator& b)
+        {
+            return a._index - b._index;
+        }
+
+        /**
+         * @brief Equal operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
             return a._index == b._index;
         }
 
+        /**
+         * @brief Not equal operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is not equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
             return ! (a == b);
         }
 
+        /**
+         * @brief Less than operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is lexicographically less than the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator<(const iterator& a, const iterator& b)
         {
             return a._index < b._index;
         }
 
+        /**
+         * @brief Greater than operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is lexicographically greater than the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator>(const iterator& a, const iterator& b)
         {
             return b < a;
         }
 
+        /**
+         * @brief Less than or equal operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is lexicographically less than or equal to the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator<=(const iterator& a, const iterator& b)
         {
             return ! (a > b);
         }
 
+        /**
+         * @brief Greater than or equal operator.
+         * @param a First iterator to compare.
+         * @param b Second iterator to compare.
+         * @return <b>true</b> if the first iterator is lexicographically greater than or equal to the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator>=(const iterator& a, const iterator& b)
         {
             return ! (a < b);
@@ -161,115 +234,186 @@ public:
         }
     };
 
+    /**
+     * @brief Const iterator.
+     */
     class const_iterator
     {
 
     public:
-        using value_type = ideque::value_type;
-        using size_type = ideque::size_type;
-        using reference = ideque::reference;
-        using const_reference = ideque::const_reference;
-        using pointer = ideque::pointer;
-        using const_pointer = ideque::const_pointer;
-        using iterator_category = random_access_iterator_tag;
+        using value_type = ideque::value_type; //!< Value type alias.
+        using size_type = ideque::size_type; //!< Size type alias.
+        using reference = ideque::reference; //!< Reference alias.
+        using const_reference = ideque::const_reference; //!< Const reference alias.
+        using pointer = ideque::pointer; //!< Pointer alias.
+        using const_pointer = ideque::const_pointer; //!< Const pointer alias.
+        using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
+        /**
+         * @brief Public constructor.
+         * @param it Non const iterator.
+         */
         const_iterator(const iterator& it) :
             _deque(it._deque),
             _index(it._index)
         {
         }
 
+        /**
+         * @brief Increments the position.
+         * @return Reference to this.
+         */
         const_iterator& operator++()
         {
             ++_index;
             return *this;
         }
 
+        /**
+         * @brief Increments the position the given number of times.
+         * @param value Number of positions to increment.
+         * @return Reference to this.
+         */
         const_iterator& operator+=(size_type value)
         {
             _index += value;
             return *this;
         }
 
-        const_iterator& operator+=(const const_iterator& other)
-        {
-            _index += other._index;
-            return *this;
-        }
-
+        /**
+         * @brief Decrements the position.
+         * @return Reference to this.
+         */
         const_iterator& operator--()
         {
             --_index;
             return *this;
         }
 
+        /**
+         * @brief Decrements the position the given number of times.
+         * @param value Number of positions to decrement.
+         * @return Reference to this.
+         */
         const_iterator& operator-=(size_type value)
         {
             _index -= value;
             return *this;
         }
 
-        const_iterator& operator-=(const const_iterator& other)
-        {
-            _index -= other._index;
-            return *this;
-        }
-
+        /**
+         * @brief Returns a const reference to the pointed value.
+         */
         [[nodiscard]] const_reference operator*() const
         {
             return _deque->at(_index);
         }
 
+        /**
+         * @brief Returns a const pointer to the pointed value.
+         */
         const_pointer operator->() const
         {
             return &_deque->at(_index);
         }
 
+        /**
+         * @brief Returns a incremented b times.
+         */
         [[nodiscard]] friend const_iterator operator+(const const_iterator& a, size_type b)
         {
             return const_iterator(&a._deque, a._index + b);
         }
 
-        [[nodiscard]] friend const_iterator operator+(const const_iterator& a, const const_iterator& b)
-        {
-            return const_iterator(&a._deque, a._index + b._index);
-        }
-
+        /**
+         * @brief Returns a decremented b times.
+         */
         [[nodiscard]] friend const_iterator operator-(const const_iterator& a, size_type b)
         {
             return const_iterator(&a._deque, a._index - b);
         }
 
-        [[nodiscard]] friend const_iterator operator-(const const_iterator& a, const const_iterator& b)
+        /**
+         * @brief Returns the sum of a and b.
+         */
+        [[nodiscard]] friend size_type operator+(const const_iterator& a, const const_iterator& b)
         {
-            return const_iterator(&a._deque, a._index - b._index);
+            return a._index + b._index;
         }
 
+        /**
+         * @brief Returns b subtracted from a.
+         */
+        [[nodiscard]] friend size_type operator-(const const_iterator& a, const const_iterator& b)
+        {
+            return a._index - b._index;
+        }
+
+        /**
+         * @brief Equal operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
             return a._index == b._index;
         }
 
+        /**
+         * @brief Not equal operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is not equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
             return ! (a == b);
         }
 
+        /**
+         * @brief Less than operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is lexicographically less than the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator<(const const_iterator& a, const const_iterator& b)
         {
             return a._index < b._index;
         }
 
+        /**
+         * @brief Greater than operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is lexicographically greater than the second one,
+         * otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator>(const const_iterator& a, const const_iterator& b)
         {
             return b < a;
         }
 
+        /**
+         * @brief Less than or equal operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is
+         * lexicographically less than or equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator<=(const const_iterator& a, const const_iterator& b)
         {
             return ! (a > b);
         }
 
+        /**
+         * @brief Greater than or equal operator.
+         * @param a First const_iterator to compare.
+         * @param b Second const_iterator to compare.
+         * @return <b>true</b> if the first const_iterator is
+         * lexicographically greater than or equal to the second one, otherwise <b>false</b>.
+         */
         [[nodiscard]] friend bool operator>=(const const_iterator& a, const const_iterator& b)
         {
             return ! (a < b);
@@ -288,11 +432,16 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>;
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>;
+    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ideque(const ideque& other) = delete;
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other ideque to copy.
+     * @return Reference to this.
+     */
     ideque& operator=(const ideque& other)
     {
         if(this != &other)
@@ -306,6 +455,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other ideque to move.
+     * @return Reference to this.
+     */
     ideque& operator=(ideque&& other) noexcept
     {
         if(this != &other)
@@ -319,91 +473,145 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Returns the current elements count.
+     */
     [[nodiscard]] size_type size() const
     {
         return _size;
     }
 
+    /**
+     * @brief Returns the maximum possible elements count.
+     */
     [[nodiscard]] size_type max_size() const
     {
         return _max_size_minus_one + 1;
     }
 
-    [[nodiscard]] bool empty() const
-    {
-        return _size == 0;
-    }
-
-    [[nodiscard]] bool full() const
-    {
-        return _size == max_size();
-    }
-
+    /**
+     * @brief Returns the remaining element capacity.
+     */
     [[nodiscard]] size_type available() const
     {
         return max_size() - _size;
     }
 
+    /**
+     * @brief Indicates if it doesn't contain any element.
+     */
+    [[nodiscard]] bool empty() const
+    {
+        return _size == 0;
+    }
+
+    /**
+     * @brief Indicates if it can't contain any more elements.
+     */
+    [[nodiscard]] bool full() const
+    {
+        return _size == max_size();
+    }
+
+    /**
+     * @brief Returns a const iterator to the beginning of the ideque.
+     */
     [[nodiscard]] const_iterator begin() const
     {
         return const_iterator(*this, 0);
     }
 
+    /**
+     * @brief Returns an iterator to the beginning of the ideque.
+     */
     [[nodiscard]] iterator begin()
     {
         return iterator(*this, 0);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the ideque.
+     */
     [[nodiscard]] const_iterator end() const
     {
         return const_iterator(*this, _size);
     }
 
+    /**
+     * @brief Returns an iterator to the end of the ideque.
+     */
     [[nodiscard]] iterator end()
     {
         return iterator(*this, _size);
     }
 
+    /**
+     * @brief Returns a const iterator to the beginning of the ideque.
+     */
     [[nodiscard]] const_iterator cbegin() const
     {
         return const_iterator(*this, 0);
     }
 
+    /**
+     * @brief Returns a const iterator to the end of the ideque.
+     */
     [[nodiscard]] const_iterator cend() const
     {
         return const_iterator(*this, _size);
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the ideque.
+     */
     [[nodiscard]] const_reverse_iterator rbegin() const
     {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the end of the ideque.
+     */
     [[nodiscard]] reverse_iterator rbegin()
     {
         return reverse_iterator(end());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the ideque.
+     */
     [[nodiscard]] const_reverse_iterator rend() const
     {
         return const_reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a reverse iterator to the beginning of the ideque.
+     */
     [[nodiscard]] reverse_iterator rend()
     {
         return reverse_iterator(begin());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the end of the ideque.
+     */
     [[nodiscard]] const_reverse_iterator crbegin() const
     {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * @brief Returns a const reverse iterator to the beginning of the ideque.
+     */
     [[nodiscard]] const_reverse_iterator crend() const
     {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * @brief Returns a const reference to the value stored at the specified index.
+     */
     [[nodiscard]] const_reference operator[](size_type index) const
     {
         BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
@@ -411,6 +619,9 @@ public:
         return _value(index);
     }
 
+    /**
+     * @brief Returns a reference to the value stored at the specified index.
+     */
     [[nodiscard]] reference operator[](size_type index)
     {
         BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
@@ -418,6 +629,9 @@ public:
         return _value(index);
     }
 
+    /**
+     * @brief Returns a const reference to the value stored at the specified index.
+     */
     [[nodiscard]] const_reference at(size_type index) const
     {
         BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
@@ -425,6 +639,9 @@ public:
         return _value(index);
     }
 
+    /**
+     * @brief Returns a reference to the value stored at the specified index.
+     */
     [[nodiscard]] reference at(size_type index)
     {
         BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
@@ -432,6 +649,9 @@ public:
         return _value(index);
     }
 
+    /**
+     * @brief Returns a const reference to the first element.
+     */
     [[nodiscard]] const_reference front() const
     {
         BTN_ASSERT(_size, "Deque is empty");
@@ -439,6 +659,9 @@ public:
         return _data[_begin];
     }
 
+    /**
+     * @brief Returns a reference to the first element.
+     */
     [[nodiscard]] reference front()
     {
         BTN_ASSERT(_size, "Deque is empty");
@@ -446,6 +669,9 @@ public:
         return _data[_begin];
     }
 
+    /**
+     * @brief Returns a const reference to the last element.
+     */
     [[nodiscard]] const_reference back() const
     {
         BTN_ASSERT(_size, "Deque is empty");
@@ -453,6 +679,9 @@ public:
         return _value(_size - 1);
     }
 
+    /**
+     * @brief Returns a reference to the last element.
+     */
     [[nodiscard]] reference back()
     {
         BTN_ASSERT(_size, "Deque is empty");
@@ -460,41 +689,10 @@ public:
         return _value(_size - 1);
     }
 
-    void push_back(const_reference value)
-    {
-        BTN_ASSERT(! full(), "Deque is full");
-
-        ::new(_data + _real_index(_size)) value_type(value);
-        ++_size;
-    }
-
-    void push_back(value_type&& value)
-    {
-        BTN_ASSERT(! full(), "Deque is full");
-
-        ::new(_data + _real_index(_size)) value_type(move(value));
-        ++_size;
-    }
-
-    template<typename... Args>
-    reference emplace_back(Args&&... args)
-    {
-        BTN_ASSERT(! full(), "Deque is full");
-
-        Type* result = _data + _real_index(_size);
-        ::new(result) value_type(forward<Args>(args)...);
-        ++_size;
-        return *result;
-    }
-
-    void pop_back()
-    {
-        BTN_ASSERT(_size, "Deque is empty");
-
-        --_size;
-        _value(_size).~value_type();
-    }
-
+    /**
+     * @brief Inserts a copy of a value at the beginning of the ideque.
+     * @param value Value to insert.
+     */
     void push_front(const_reference value)
     {
         BTN_ASSERT(! full(), "Deque is full");
@@ -503,6 +701,10 @@ public:
         _push_front();
     }
 
+    /**
+     * @brief Inserts a moved value at the beginning of the ideque.
+     * @param value Value to insert.
+     */
     void push_front(value_type&& value)
     {
         BTN_ASSERT(! full(), "Deque is full");
@@ -511,6 +713,11 @@ public:
         _push_front();
     }
 
+    /**
+     * @brief Constructs and inserts a value at the beginning of the ideque.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
+     */
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
@@ -522,6 +729,49 @@ public:
         return *result;
     }
 
+    /**
+     * @brief Inserts a copy of a value at the end of the ideque.
+     * @param value Value to insert.
+     */
+    void push_back(const_reference value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        ::new(_data + _real_index(_size)) value_type(value);
+        ++_size;
+    }
+
+    /**
+     * @brief Inserts a moved value at the end of the ideque.
+     * @param value Value to insert.
+     */
+    void push_back(value_type&& value)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        ::new(_data + _real_index(_size)) value_type(move(value));
+        ++_size;
+    }
+
+    /**
+     * @brief Constructs and inserts a value at the end of the ideque.
+     * @param args Parameters of the value to insert.
+     * @return Reference to the new value.
+     */
+    template<typename... Args>
+    reference emplace_back(Args&&... args)
+    {
+        BTN_ASSERT(! full(), "Deque is full");
+
+        Type* result = _data + _real_index(_size);
+        ::new(result) value_type(forward<Args>(args)...);
+        ++_size;
+        return *result;
+    }
+
+    /**
+     * @brief Removes the first element of the ideque.
+     */
     void pop_front()
     {
         BTN_ASSERT(_size, "Deque is empty");
@@ -529,6 +779,23 @@ public:
         _pop_front();
     }
 
+    /**
+     * @brief Removes the last element of the ideque.
+     */
+    void pop_back()
+    {
+        BTN_ASSERT(_size, "Deque is empty");
+
+        --_size;
+        _value(_size).~value_type();
+    }
+
+    /**
+     * @brief Inserts a copy of a value at the specified position.
+     * @param position The given value is inserted before this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(const const_iterator& position, const_reference value)
     {
         size_type index = position._index;
@@ -560,6 +827,12 @@ public:
         return _mutable_iterator(position);
     }
 
+    /**
+     * @brief Inserts a moved value at the specified position.
+     * @param position The given value is inserted before this position.
+     * @param value Value to insert.
+     * @return Iterator pointing to the inserted value.
+     */
     iterator insert(const const_iterator& position, value_type&& value)
     {
         size_type index = position._index;
@@ -591,6 +864,12 @@ public:
         return _mutable_iterator(position);
     }
 
+    /**
+     * @brief Constructs and inserts a value at the specified position.
+     * @param position The new value is inserted before this position.
+     * @param args Parameters of the value to insert.
+     * @return Iterator pointing to the new value.
+     */
     template<typename... Args>
     iterator emplace(const const_iterator& position, Args&&... args)
     {
@@ -623,6 +902,11 @@ public:
         return _mutable_iterator(position);
     }
 
+    /**
+     * @brief Erases an element.
+     * @param position Iterator to the element to erase.
+     * @return Iterator following the erased element.
+     */
     iterator erase(const const_iterator& position)
     {
         size_type index = position._index;
@@ -654,6 +938,16 @@ public:
         return _mutable_iterator(position);
     }
 
+    /**
+     * @brief Erases a range of elements.
+     *
+     * The range includes all the elements between first and last, including the
+     * element pointed by first, but not the one pointed by last.
+     *
+     * @param first Iterator to the first element to erase.
+     * @param last Iterator to the last element to erase.
+     * @return Iterator following the last erased element.
+     */
     iterator erase(const const_iterator& first, const const_iterator& last)
     {
         size_type first_index = first._index;
@@ -706,6 +1000,12 @@ public:
         return _mutable_iterator(first);
     }
 
+    /**
+     * @brief Erases all elements that are equal to the specified value.
+     * @param deque ideque from which to erase.
+     * @param value Element to erase.
+     * @return Number of erased elements.
+     */
     friend size_type erase(ideque& deque, const_reference value)
     {
         size_type old_size = deque.size();
@@ -713,6 +1013,12 @@ public:
         return old_size - deque.size();
     }
 
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param deque ideque from which to erase.
+     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @return Number of erased elements.
+     */
     template<class Pred>
     friend size_type erase_if(ideque& deque, const Pred& pred)
     {
@@ -721,6 +1027,10 @@ public:
         return old_size - deque.size();
     }
 
+    /**
+     * @brief Resizes the ideque.
+     * @param count New size.
+     */
     void resize(size_type count)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
@@ -745,6 +1055,11 @@ public:
         }
     }
 
+    /**
+     * @brief Resizes the ideque.
+     * @param count New size.
+     * @param value Value to fill new elements with.
+     */
     void resize(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
@@ -769,6 +1084,10 @@ public:
         }
     }
 
+    /**
+     * @brief Resizes the ideque to a size less or equal than the previous one.
+     * @param count New size.
+     */
     void shrink(size_type count)
     {
         BTN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
@@ -783,6 +1102,11 @@ public:
         _size = count;
     }
 
+    /**
+     * @brief Assigns values to the ideque, removing the previous ones.
+     * @param count Number of elements to insert.
+     * @param value Value to fill new elements with.
+     */
     void assign(size_type count, const_reference value)
     {
         BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
@@ -797,6 +1121,11 @@ public:
         }
     }
 
+    /**
+     * @brief Assigns values to the ideque, removing the previous ones.
+     * @param first Iterator to the first element to insert.
+     * @param last Iterator following to the last element to insert.
+     */
     template<typename Iterator>
     void assign(const Iterator& first, const Iterator& last)
     {
@@ -814,6 +1143,26 @@ public:
         }
     }
 
+    /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    {
+        pointer data = _data;
+
+        for(size_type index = 0, size = _size; index < size; ++index)
+        {
+            data[_real_index(index)].~value_type();
+        }
+
+        _size = 0;
+        _begin = 0;
+    }
+
+    /**
+     * @brief Exchanges the contents of this ideque with those of the other one.
+     * @param other ideque to exchange the contents with.
+     */
     void swap(ideque& other)
     {
         if(_data != other._data)
@@ -856,24 +1205,22 @@ public:
         }
     }
 
+    /**
+     * @brief Exchanges the contents of a ideque with those of another one.
+     * @param a First ideque to exchange the contents with.
+     * @param b Second ideque to exchange the contents with.
+     */
     friend void swap(ideque& a, ideque& b)
     {
         a.swap(b);
     }
 
-    void clear()
-    {
-        pointer data = _data;
-
-        for(size_type index = 0, size = _size; index < size; ++index)
-        {
-            data[_real_index(index)].~value_type();
-        }
-
-        _size = 0;
-        _begin = 0;
-    }
-
+    /**
+     * @brief Equal operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator==(const ideque& a, const ideque& b)
     {
         if(a.size() != b.size())
@@ -884,32 +1231,67 @@ public:
         return equal(a.begin(), a.end(), b.begin());
     }
 
+    /**
+     * @brief Not equal operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is not equal to the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator!=(const ideque& a, const ideque& b)
     {
         return ! (a == b);
     }
 
+    /**
+     * @brief Less than operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is lexicographically less than the second one, otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<(const ideque& a, const ideque& b)
     {
         return lexicographical_compare(a.begin(), a.end(), b.begin(), b.end());
     }
 
+    /**
+     * @brief Greater than operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is lexicographically greater than the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>(const ideque& a, const ideque& b)
     {
         return b < a;
     }
 
+    /**
+     * @brief Less than or equal operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is lexicographically less than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator<=(const ideque& a, const ideque& b)
     {
         return ! (a > b);
     }
 
+    /**
+     * @brief Greater than or equal operator.
+     * @param a First ideque to compare.
+     * @param b Second ideque to compare.
+     * @return <b>true</b> if the first ideque is lexicographically greater than or equal to the second one,
+     * otherwise <b>false</b>.
+     */
     [[nodiscard]] friend bool operator>=(const ideque& a, const ideque& b)
     {
         return ! (a < b);
     }
 
 protected:
+    /// @cond DO_NOT_DOCUMENT
+
     ideque(reference data, size_type max_size) :
         _data(&data),
         _size(0),
@@ -972,6 +1354,8 @@ protected:
         }
     }
 
+    /// @endcond
+
 private:
     pointer _data;
     size_type _size;
@@ -1019,34 +1403,49 @@ class deque : public ideque<Type>
     static_assert(power_of_two(MaxSize));
 
 public:
-    using value_type = Type;
-    using size_type = int;
-    using reference = Type&;
-    using const_reference = const Type&;
-    using pointer = Type*;
-    using const_pointer = const Type*;
-    using iterator = typename ideque<Type>::iterator;
-    using const_iterator = typename ideque<Type>::const_iterator;
-    using reverse_iterator = typename ideque<Type>::reverse_iterator;
-    using const_reverse_iterator = typename ideque<Type>::const_reverse_iterator;
+    using value_type = Type; //!< Value type alias.
+    using size_type = int; //!< Size type alias.
+    using reference = Type&; //!< Reference alias.
+    using const_reference = const Type&; //!< Const reference alias.
+    using pointer = Type*; //!< Pointer alias.
+    using const_pointer = const Type*; //!< Const pointer alias.
+    using iterator = typename ideque<Type>::iterator; //!< Iterator alias.
+    using const_iterator = typename ideque<Type>::const_iterator; //!< Const iterator alias.
+    using reverse_iterator = typename ideque<Type>::reverse_iterator; //!< Reverse iterator alias.
+    using const_reverse_iterator = typename ideque<Type>::const_reverse_iterator; //!< Const reverse iterator alias.
 
+    /**
+     * @brief Default constructor.
+     */
     deque() :
         ideque<Type>(*reinterpret_cast<pointer>(_storage_buffer), MaxSize)
     {
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other deque to copy.
+     */
     deque(const deque& other) :
         deque()
     {
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other deque to move.
+     */
     deque(deque&& other) noexcept :
         deque()
     {
         this->_assign(move(other));
     }
 
+    /**
+     * @brief Copy constructor.
+     * @param other ideque to copy.
+     */
     deque(const ideque<Type>& other) :
         deque()
     {
@@ -1055,6 +1454,10 @@ public:
         this->_assign(other);
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other ideque to move.
+     */
     deque(ideque<Type>&& other) noexcept :
         deque()
     {
@@ -1063,7 +1466,11 @@ public:
         this->_assign(move(other));
     }
 
-    deque(size_type count) :
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the deque.
+     */
+    explicit deque(size_type count) :
         deque()
     {
         BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
@@ -1071,6 +1478,11 @@ public:
         this->_assign(count);
     }
 
+    /**
+     * @brief Size constructor.
+     * @param count Initial size of the deque.
+     * @param value Value to fill the deque with.
+     */
     deque(size_type count, const_reference value) :
         deque()
     {
@@ -1079,6 +1491,11 @@ public:
         this->_assign(count, value);
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other deque to copy.
+     * @return Reference to this.
+     */
     deque& operator=(const deque& other)
     {
         if(this != &other)
@@ -1090,6 +1507,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other deque to move.
+     * @return Reference to this.
+     */
     deque& operator=(deque&& other) noexcept
     {
         if(this != &other)
@@ -1101,6 +1523,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * @param other ideque to copy.
+     * @return Reference to this.
+     */
     deque& operator=(const ideque<Type>& other)
     {
         if(this != &other)
@@ -1114,6 +1541,11 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Move assignment operator.
+     * @param other ideque to move.
+     * @return Reference to this.
+     */
     deque& operator=(ideque<Type>&& other) noexcept
     {
         if(this != &other)
@@ -1127,6 +1559,9 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Destructor.
+     */
     ~deque()
     {
         this->clear();

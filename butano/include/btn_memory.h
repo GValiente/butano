@@ -24,6 +24,9 @@ namespace btn
 template<typename Type>
 struct default_delete
 {
+    /**
+     * @brief Deletes the object pointed by the given pointer.
+     */
     void operator()(Type* ptr) const noexcept
     {
         delete ptr;

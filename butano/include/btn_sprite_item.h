@@ -130,7 +130,7 @@ public:
      * @brief Creates a sprite_ptr using the information contained in this item.
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
-     * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> create_sprite_optional(fixed x, fixed y) const;
 
@@ -139,14 +139,14 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param graphics_index Index of the tile set to reference in tiles_item().
-     * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> create_sprite_optional(fixed x, fixed y, int graphics_index) const;
 
     /**
      * @brief Creates a sprite_ptr using the information contained in this item.
      * @param position Position of the sprite.
-     * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> create_sprite_optional(const fixed_point& position) const;
 
@@ -154,7 +154,7 @@ public:
      * @brief Creates a sprite_ptr using the information contained in this item.
      * @param position Position of the sprite.
      * @param graphics_index Index of the tile set to reference in tiles_item().
-     * @return The requested sprite_ptr if it can be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_ptr if it could be allocated; <b>nullopt</b> otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> create_sprite_optional(const fixed_point& position, int graphics_index) const;
 

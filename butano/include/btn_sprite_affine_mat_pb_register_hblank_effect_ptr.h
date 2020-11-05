@@ -67,7 +67,7 @@ public:
      * The attributes are not copied but referenced, so they should outlive
      * sprite_affine_mat_pb_register_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested sprite_affine_mat_pb_register_hblank_effect_ptr if it can be allocated;
+     * @return The requested sprite_affine_mat_pb_register_hblank_effect_ptr if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_pb_register_hblank_effect_ptr> create_optional(
@@ -83,7 +83,7 @@ public:
      * The values are not copied but referenced, so they should outlive
      * sprite_affine_mat_pb_register_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested sprite_affine_mat_pb_register_hblank_effect_ptr if it can be allocated;
+     * @return The requested sprite_affine_mat_pb_register_hblank_effect_ptr if it could be allocated;
      * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_pb_register_hblank_effect_ptr> create_optional(

@@ -525,4 +525,18 @@
  * Even more info.
  */
 
+#ifdef BTN_DOXYGEN
+    #ifndef BTN_CFG_ASSERT_ENABLED
+        #define BTN_CFG_ASSERT_ENABLED true
+    #endif
+
+    #ifndef BTN_CFG_LOG_ENABLED
+        #define BTN_CFG_LOG_ENABLED true
+    #endif
+
+    #ifndef BTN_CFG_PROFILER_ENABLED
+        #define BTN_CFG_PROFILER_ENABLED true
+    #endif
+#endif
+
 #endif

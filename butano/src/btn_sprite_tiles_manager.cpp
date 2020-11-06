@@ -13,6 +13,7 @@
 #include "btn_unordered_map.h"
 #include "btn_config_sprite_tiles.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
+#include "../hw/include/btn_hw_sprite_tiles_constants.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
     #include "btn_log.h"
@@ -27,7 +28,7 @@ namespace btn::sprite_tiles_manager
 namespace
 {
     static_assert(BTN_CFG_SPRITE_TILES_MAX_ITEMS > 0 &&
-                  BTN_CFG_SPRITE_TILES_MAX_ITEMS <= sprite_tiles::tiles_count());
+                  BTN_CFG_SPRITE_TILES_MAX_ITEMS <= hw::sprite_tiles::tiles_count());
     static_assert(power_of_two(BTN_CFG_SPRITE_TILES_MAX_ITEMS));
 
 
@@ -632,7 +633,7 @@ void init()
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 
     item_type new_item;
-    new_item.tiles_count = sprite_tiles::tiles_count();
+    new_item.tiles_count = hw::sprite_tiles::tiles_count();
     data.items.init();
     data.items.push_front(new_item);
     data.free_items.push_back(data.items.begin().id());
@@ -643,7 +644,7 @@ void init()
 
 int used_tiles_count()
 {
-    return sprite_tiles::tiles_count() - data.free_tiles_count;
+    return hw::sprite_tiles::tiles_count() - data.free_tiles_count;
 }
 
 int available_tiles_count()

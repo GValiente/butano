@@ -39,6 +39,14 @@
  */
 
 /**
+ * @defgroup color Colors
+ *
+ * GBA displays 15 bits colors: 5 bits for the blue component, 5 for the green one and 5 for the red one.
+ *
+ * @ingroup display
+ */
+
+/**
  * @defgroup palette Color palettes
  *
  * On the GBA, both sprites and backgrounds have 256 colors organized in blocks of multiples of 16 colors

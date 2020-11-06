@@ -17,6 +17,7 @@
 #include "btn_sorted_sprites.h"
 #include "btn_display_manager.h"
 #include "btn_sprite_affine_mats_manager.h"
+#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
 
 namespace btn::sprites_manager
 {
@@ -1195,7 +1196,7 @@ void commit()
 
     if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = hw::sprites::count() / sprite_affine_mats::count();
+        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
         int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);

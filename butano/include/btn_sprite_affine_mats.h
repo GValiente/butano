@@ -6,7 +6,7 @@
 #ifndef BTN_SPRITE_AFFINE_MATS_H
 #define BTN_SPRITE_AFFINE_MATS_H
 
-#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
+#include "btn_common.h"
 
 /**
  * @brief Sprite affine transformation matrices related functions.
@@ -16,15 +16,6 @@
  */
 namespace btn::sprite_affine_mats
 {
-    /**
-     * @brief Returns the maximum number of sprite affine transformation matrices
-     * that can be managed with sprite_affine_mat_ptr objects.
-     */
-    [[nodiscard]] constexpr int count()
-    {
-        return hw::sprite_affine_mats::count();
-    }
-
     /**
      * @brief Returns the number of used sprite affine transformation matrices
      * managed with sprite_affine_mat_ptr objects.

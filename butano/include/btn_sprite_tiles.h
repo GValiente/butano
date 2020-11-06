@@ -6,7 +6,7 @@
 #ifndef BTN_SPRITE_TILES_H
 #define BTN_SPRITE_TILES_H
 
-#include "../hw/include/btn_hw_sprite_tiles_constants.h"
+#include "btn_common.h"
 
 /**
  * @brief Sprite tiles related functions.
@@ -16,14 +16,6 @@
  */
 namespace btn::sprite_tiles
 {
-    /**
-     * @brief Returns the total number of sprite tiles that can be managed with sprite_tiles_ptr objects.
-     */
-    [[nodiscard]] constexpr int tiles_count()
-    {
-        return hw::sprite_tiles::tiles_count();
-    }
-
     /**
      * @brief Returns the number of used sprite tiles managed with sprite_tiles_ptr objects.
      */

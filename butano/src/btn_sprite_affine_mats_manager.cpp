@@ -13,13 +13,14 @@
 #include "btn_sprites_manager_item.h"
 #include "btn_sprite_affine_mat_attributes.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
+#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
 
 namespace btn::sprite_affine_mats_manager
 {
 
 namespace
 {
-    constexpr const int max_items = sprite_affine_mats::count();
+    constexpr const int max_items = hw::sprite_affine_mats::count();
 
     static_assert(max_items <= numeric_limits<int8_t>::max());
 

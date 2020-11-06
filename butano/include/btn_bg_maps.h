@@ -6,23 +6,13 @@
 #ifndef BTN_BG_MAPS_H
 #define BTN_BG_MAPS_H
 
-#include "../hw/include/btn_hw_bg_blocks_constants.h"
+#include "btn_common.h"
 
 namespace btn::bg_maps
 {
-    [[nodiscard]] constexpr int cells_count()
-    {
-        return hw::bg_maps::cells_count();
-    }
-
     [[nodiscard]] int used_cells_count();
 
     [[nodiscard]] int available_cells_count();
-
-    [[nodiscard]] constexpr int blocks_count()
-    {
-        return hw::bg_maps::blocks_count();
-    }
 
     [[nodiscard]] int used_blocks_count();
 

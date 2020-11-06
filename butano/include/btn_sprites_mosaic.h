@@ -11,6 +11,7 @@
 /**
  * @brief Functions related with the mosaic applied to the sprites.
  *
+ * @ingroup sprite
  * @ingroup mosaic
  */
 namespace btn::sprites_mosaic

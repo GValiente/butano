@@ -10,12 +10,12 @@
 namespace btn::bgs
 {
 
-int used_count()
+int used_items_count()
 {
     return bgs_manager::used_count();
 }
 
-int available_count()
+int available_items_count()
 {
     return bgs_manager::available_count();
 }

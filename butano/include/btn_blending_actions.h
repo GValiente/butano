@@ -15,15 +15,33 @@ namespace btn
 
 // transparency_alpha
 
+/**
+ * @brief Manages the weight of the transparency blending.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_transparency_alpha_manager
 {
 
 public:
+    /**
+     * @brief Returns the weight of the transparency blending,
+     * with 0 being fully transparent and 1 being fully visible.
+     */
     [[nodiscard]] static fixed get()
     {
         return blending::transparency_alpha();
     }
 
+    /**
+     * @brief Sets the weight of the transparency blending,
+     * with 0 being fully transparent and 1 being fully visible.
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     *
+     * @param transparency_alpha Transparency weight in the range [0..1].
+     */
     static void set(fixed transparency_alpha)
     {
         blending::set_transparency_alpha(transparency_alpha);
@@ -31,10 +49,27 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the transparency blending until it has a given state.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_transparency_alpha_to_action : public to_template_action<fixed, blending_transparency_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates Number of times that the action must be updated
+     * until the weight of the transparency blending is equal to final_transparency_alpha.
+     * @param final_transparency_alpha Weight of the transparency blending
+     * when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     */
     blending_transparency_alpha_to_action(int duration_updates, fixed final_transparency_alpha) :
         to_template_action(duration_updates, final_transparency_alpha)
     {
@@ -42,6 +77,9 @@ public:
                    "Invalid final transparency alpha: ", final_transparency_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the transparency blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed final_transparency_alpha() const
     {
         return final_property();
@@ -49,11 +87,29 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the transparency blending from a minimum to a maximum.
+ * When the weight is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_transparency_alpha_loop_action :
         public loop_template_action<fixed, blending_transparency_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the weight delta.
+     * @param final_transparency_alpha When the weight of the transparency blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     */
     blending_transparency_alpha_loop_action(int duration_updates, fixed final_transparency_alpha) :
         loop_template_action(duration_updates, final_transparency_alpha)
     {
@@ -61,6 +117,10 @@ public:
                    "Invalid final transparency alpha: ", final_transparency_alpha);
     }
 
+    /**
+     * @brief When the weight of the transparency blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] fixed final_transparency_alpha() const
     {
         return final_property();
@@ -68,11 +128,28 @@ public:
 };
 
 
+/**
+ * @brief Changes the weight of the transparency blending when the action is updated a given number of times.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_transparency_alpha_toggle_action :
         public toggle_template_action<fixed, blending_transparency_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * to change the weight of the transparency blending.
+     * @param new_transparency_alpha New weight of the transparency blending
+     * when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     */
     blending_transparency_alpha_toggle_action(int duration_updates, fixed new_transparency_alpha) :
         toggle_template_action(duration_updates, new_transparency_alpha)
     {
@@ -80,6 +157,9 @@ public:
                    "Invalid new transparency alpha: ", new_transparency_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the transparency blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed new_transparency_alpha() const
     {
         return new_property();
@@ -89,15 +169,31 @@ public:
 
 // intensity_alpha
 
+/**
+ * @brief Manages the weight of the intensity blending.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_intensity_alpha_manager
 {
 
 public:
+    /**
+     * @brief Returns the weight of the intensity blending, with 0 being disabled and 1 being fully applied.
+     */
     [[nodiscard]] static fixed get()
     {
         return blending::intensity_alpha();
     }
 
+    /**
+     * @brief Sets the weight of the intensity blending, with 0 being disabled and 1 being fully applied.
+     *
+     * Keep in mind that intensity and fade blendings can't be enabled at the same time.
+     *
+     * @param intensity_alpha Intensity weight in the range [0..1].
+     */
     static void set(fixed intensity_alpha)
     {
         blending::set_intensity_alpha(intensity_alpha);
@@ -105,10 +201,27 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the intensity blending until it has a given state.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_intensity_alpha_to_action : public to_template_action<fixed, blending_intensity_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates Number of times that the action must be updated
+     * until the weight of the intensity blending is equal to final_intensity_alpha.
+     * @param final_intensity_alpha Weight of the intensity blending
+     * when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that intensity and fade blendings can't be enabled at the same time.
+     */
     blending_intensity_alpha_to_action(int duration_updates, fixed final_intensity_alpha) :
         to_template_action(duration_updates, final_intensity_alpha)
     {
@@ -116,6 +229,9 @@ public:
                    "Invalid final intensity alpha: ", final_intensity_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the intensity blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed final_intensity_alpha() const
     {
         return final_property();
@@ -123,11 +239,29 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the intensity blending from a minimum to a maximum.
+ * When the weight is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_intensity_alpha_loop_action :
         public loop_template_action<fixed, blending_intensity_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the weight delta.
+     * @param final_intensity_alpha When the weight of the intensity blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that intensity and fade blendings can't be enabled at the same time.
+     */
     blending_intensity_alpha_loop_action(int duration_updates, fixed final_intensity_alpha) :
         loop_template_action(duration_updates, final_intensity_alpha)
     {
@@ -135,6 +269,10 @@ public:
                    "Invalid final intensity alpha: ", final_intensity_alpha);
     }
 
+    /**
+     * @brief When the weight of the intensity blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] fixed final_intensity_alpha() const
     {
         return final_property();
@@ -142,11 +280,28 @@ public:
 };
 
 
+/**
+ * @brief Changes the weight of the intensity blending when the action is updated a given number of times.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_intensity_alpha_toggle_action :
         public toggle_template_action<fixed, blending_intensity_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * to change the weight of the intensity blending.
+     * @param new_intensity_alpha New weight of the intensity blending
+     * when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that intensity and fade blendings can't be enabled at the same time.
+     */
     blending_intensity_alpha_toggle_action(int duration_updates, fixed new_intensity_alpha) :
         toggle_template_action(duration_updates, new_intensity_alpha)
     {
@@ -154,6 +309,9 @@ public:
                    "Invalid new intensity alpha: ", new_intensity_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the intensity blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed new_intensity_alpha() const
     {
         return new_property();
@@ -163,15 +321,31 @@ public:
 
 // fade_alpha
 
+/**
+ * @brief Manages the weight of the fade blending.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_fade_alpha_manager
 {
 
 public:
+    /**
+     * @brief Returns the weight of the fade blending, with 0 being disabled and 1 being fully applied.
+     */
     [[nodiscard]] static fixed get()
     {
         return blending::fade_alpha();
     }
 
+    /**
+     * @brief Sets the weight of the fade blending, with 0 being disabled and 1 being fully applied.
+     *
+     * Keep in mind that fade blending and other blendings can't be enabled at the same time.
+     *
+     * @param fade_alpha Fade weight in the range [0..1].
+     */
     static void set(fixed fade_alpha)
     {
         blending::set_fade_alpha(fade_alpha);
@@ -179,16 +353,35 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the fade blending until it has a given state.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_fade_alpha_to_action : public to_template_action<fixed, blending_fade_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates Number of times that the action must be updated
+     * until the weight of the fade blending is equal to final_fade_alpha.
+     * @param final_fade_alpha Weight of the fade blending when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that fade blending and other blendings can't be enabled at the same time.
+     */
     blending_fade_alpha_to_action(int duration_updates, fixed final_fade_alpha) :
         to_template_action(duration_updates, final_fade_alpha)
     {
         BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the fade blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed final_fade_alpha() const
     {
         return final_property();
@@ -196,17 +389,39 @@ public:
 };
 
 
+/**
+ * @brief Modifies the weight of the fade blending from a minimum to a maximum.
+ * When the weight is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_fade_alpha_loop_action :
         public loop_template_action<fixed, blending_fade_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the weight delta.
+     * @param final_fade_alpha When the weight of the fade blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that fade blending and other blendings can't be enabled at the same time.
+     */
     blending_fade_alpha_loop_action(int duration_updates, fixed final_fade_alpha) :
         loop_template_action(duration_updates, final_fade_alpha)
     {
         BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
 
+    /**
+     * @brief When the weight of the fade blending is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] fixed final_fade_alpha() const
     {
         return final_property();
@@ -214,17 +429,36 @@ public:
 };
 
 
+/**
+ * @brief Changes the weight of the fade blending when the action is updated a given number of times.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
 class blending_fade_alpha_toggle_action :
         public toggle_template_action<fixed, blending_fade_alpha_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * to change the weight of the fade blending.
+     * @param new_fade_alpha New weight of the fade blending when the action is updated duration_updates times.
+     *
+     * This weight must be in the range [0..1].
+     *
+     * Keep in mind that fade blending and other blendings can't be enabled at the same time.
+     */
     blending_fade_alpha_toggle_action(int duration_updates, fixed new_fade_alpha) :
         toggle_template_action(duration_updates, new_fade_alpha)
     {
         BTN_ASSERT(new_fade_alpha >= 0 && new_fade_alpha <= 1, "Invalid new fade alpha: ", new_fade_alpha);
     }
 
+    /**
+     * @brief Returns the weight of the fade blending when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed new_fade_alpha() const
     {
         return new_property();

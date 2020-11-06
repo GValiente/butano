@@ -30,7 +30,7 @@ public:
     [[nodiscard]] static bool target_updated(int, iany&)
     {
         BTN_ASSERT(! display_manager::blending_fade_enabled(),
-                   "Blending transparency and fade can't be enabled at the same time");
+                   "Transparency and fade blendings can't be enabled at the same time");
 
         return false;
     }

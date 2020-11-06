@@ -131,6 +131,14 @@
  */
 
 /**
+ * @defgroup blending Blending
+ *
+ * Allows transparency and fade effects for sprites and backgrounds.
+ *
+ * @ingroup display
+ */
+
+/**
  * @defgroup window Windows
  *
  * They allow to divide the screen into regions.

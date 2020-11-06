@@ -35,7 +35,7 @@ class sprite_text_generator
 
 public:
     /**
-     * @brief Horizontal alignment available types:
+     * @brief Available horizontal alignment types.
      */
     enum class alignment_type
     {

@@ -225,6 +225,14 @@
  */
 
 /**
+ * @defgroup camera Cameras
+ *
+ * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
+ *
+ * @ingroup display
+ */
+
+/**
  * @defgroup memory Memory
  *
  * Memory management utilities.
@@ -248,12 +256,6 @@
  * Allows game or application data to be saved when the GBA is turned off.
  *
  * @ingroup game_pak
- */
-
-/**
- * @defgroup camera Cameras
- *
- * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
  */
 
 /**

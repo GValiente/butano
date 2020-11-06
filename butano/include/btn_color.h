@@ -140,6 +140,9 @@ public:
         _data = uint16_t((_data & 0x001F) + (_data & 0x03E0) + (blue << 10));
     }
 
+    /**
+     * @brief Default equal operator.
+     */
     [[nodiscard]] constexpr friend bool operator==(color a, color b) = default;
 
 private:

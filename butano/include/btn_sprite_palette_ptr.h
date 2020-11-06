@@ -150,7 +150,7 @@ public:
     }
 
     /**
-     * @brief Release the referenced sprite color palette if no more sprite_palette_ptr objects reference to it.
+     * @brief Releases the referenced sprite color palette if no more sprite_palette_ptr objects reference to it.
      */
     ~sprite_palette_ptr()
     {

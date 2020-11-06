@@ -92,7 +92,7 @@ public:
     }
 
     /**
-     * @brief Release the referenced sprite affine transformation matrix
+     * @brief Releases the referenced sprite affine transformation matrix
      * if no more sprite_affine_mat_ptr objects reference to it.
      */
     ~sprite_affine_mat_ptr()

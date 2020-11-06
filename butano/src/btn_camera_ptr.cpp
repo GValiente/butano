@@ -75,24 +75,24 @@ fixed camera_ptr::x() const
     return position().x();
 }
 
-fixed camera_ptr::y() const
-{
-    return position().y();
-}
-
-const fixed_point& camera_ptr::position() const
-{
-    return cameras_manager::position(_id);
-}
-
 void camera_ptr::set_x(fixed x)
 {
     cameras_manager::set_x(_id, x);
 }
 
+fixed camera_ptr::y() const
+{
+    return position().y();
+}
+
 void camera_ptr::set_y(fixed y)
 {
     cameras_manager::set_y(_id, y);
+}
+
+const fixed_point& camera_ptr::position() const
+{
+    return cameras_manager::position(_id);
 }
 
 void camera_ptr::set_position(fixed x, fixed y)

@@ -229,7 +229,7 @@ public:
     }
 
     /**
-     * @brief Release the referenced sprite if no more sprite_ptr objects reference to it.
+     * @brief Releases the referenced sprite if no more sprite_ptr objects reference to it.
      */
     ~sprite_ptr()
     {

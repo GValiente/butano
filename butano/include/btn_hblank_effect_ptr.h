@@ -27,7 +27,7 @@ class hblank_effect_ptr
 
 public:
     /**
-     * @brief Release the referenced H-Blank effect if no more hblank_effect_ptr objects reference to it.
+     * @brief Releases the referenced H-Blank effect if no more hblank_effect_ptr objects reference to it.
      */
     ~hblank_effect_ptr()
     {

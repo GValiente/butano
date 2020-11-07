@@ -450,9 +450,9 @@ namespace
         enemy_event(small_red_meteor, btn::fixed_point(-50, start_y_small), small_red_meteor_moves, no_bullets, 40, enemy_drop_type::NONE),
         enemy_event(small_red_meteor, btn::fixed_point(-30, start_y_small), small_red_meteor_moves, no_bullets, 60, enemy_drop_type::NONE),
 
-        enemy_event(small_brown_meteor, btn::fixed_point(55, start_y_small), small_brown_meteor_flipped_moves, no_bullets, 20, enemy_drop_type::NONE),
-        enemy_event(small_brown_meteor, btn::fixed_point(25, start_y_small), small_brown_meteor_flipped_moves, no_bullets, 10, enemy_drop_type::NONE),
-        enemy_event(big_brown_meteor, btn::fixed_point(40, start_y_big), big_brown_meteor_flipped_moves, no_bullets, 60, enemy_drop_type::NONE),
+        enemy_event(small_brown_meteor, btn::fixed_point(55, start_y_small), small_brown_meteor_flipped_moves, no_bullets, 30, enemy_drop_type::NONE),
+        enemy_event(small_brown_meteor, btn::fixed_point(25, start_y_small), small_brown_meteor_flipped_moves, no_bullets, 20, enemy_drop_type::NONE),
+        enemy_event(big_brown_meteor, btn::fixed_point(40, start_y_big), big_brown_meteor_flipped_moves, no_bullets, 70, enemy_drop_type::NONE),
 
         enemy_event(white_astronaut, btn::fixed_point(-55, start_y_small), white_astronaut_moves, white_astronaut_bullets, 40, enemy_drop_type::NONE),
         enemy_event(white_astronaut, btn::fixed_point(-25, start_y_small), white_astronaut_moves, white_astronaut_bullets, 40, enemy_drop_type::NONE),

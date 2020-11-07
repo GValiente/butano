@@ -12,6 +12,11 @@
 namespace btn
 {
 
+/**
+ * @brief Returns the LUT used to invert scale values in an affine transformation matrix.
+ *
+ * @ingroup affine_mat
+ */
 [[nodiscard]] constexpr array<uint16_t, 1025> create_affine_mat_scale_lut()
 {
     array<uint16_t, 1025> result = {};
@@ -25,6 +30,11 @@ namespace btn
     return result;
 }
 
+/**
+ * @brief LUT used to invert scale values in an affine transformation matrix.
+ *
+ * @ingroup affine_mat
+ */
 constexpr const array<uint16_t, 1025> affine_mat_scale_lut = create_affine_mat_scale_lut();
 
 }

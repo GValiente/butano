@@ -305,7 +305,7 @@ public:
 
     /**
      * @brief Returns a copy of the contained value if this optional has one;
-     * otherwise it returns a copy of the given default value.
+     * otherwise it returns a moved copy of the given default value.
      */
     [[nodiscard]] Type value_or(Type&& default_value) const
     {
@@ -353,6 +353,20 @@ public:
     }
 
     /**
+     * @brief Constructs the contained value in-place.
+     * @param args Parameters of the value to construct.
+     * @return Reference to the constructed value.
+     */
+    template<typename... Args>
+    Type& emplace(Args&&... args)
+    {
+        _clean();
+        ::new(_storage) Type(forward<Args>(args)...);
+        _valid = true;
+        return _value_impl();
+    }
+
+    /**
      * @brief Disposes the contained value.
      */
     void reset()
@@ -362,20 +376,6 @@ public:
             _value_impl().~Type();
             _valid = false;
         }
-    }
-
-    /**
-     * @brief Constructs the contained value in-place.
-     * @param args Parameters of the value to construct.
-     * @return Reference to the contained value.
-     */
-    template<typename... Args>
-    Type& emplace(Args&&... args)
-    {
-        _clean();
-        ::new(_storage) Type(forward<Args>(args)...);
-        _valid = true;
-        return _value_impl();
     }
 
     /**

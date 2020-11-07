@@ -441,6 +441,16 @@
  */
 
 /**
+ * @defgroup any Any
+ *
+ * A std::any like container with the capacity defined at compile time.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup unique_ptr Unique pointer
  *
  * A std::unique_ptr like container.

@@ -10,6 +10,11 @@
 
 namespace btn
 {
+    /**
+     * @brief Indicates if the given pointer is aligned to the given Bytes.
+     *
+     * @ingroup memory
+     */
     template<int Bytes>
     [[nodiscard]] bool aligned(const void* pointer)
     {
@@ -18,6 +23,11 @@ namespace btn
         return uintptr_t(pointer) % unsigned(Bytes) == 0;
     }
 
+    /**
+     * @brief Indicates if the given reference to a Type object is aligned to the given Bytes.
+     *
+     * @ingroup memory
+     */
     template<int Bytes, typename Type>
     [[nodiscard]] bool aligned(const Type& reference)
     {

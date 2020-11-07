@@ -51,6 +51,9 @@ public:
     using pointer = Type*; //!< Pointer alias.
     using const_pointer = const Type*; //!< Const pointer alias.
 
+    /**
+     * @brief Non const iterator.
+     */
     class iterator
     {
 

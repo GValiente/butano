@@ -10,6 +10,14 @@
 
 namespace btn
 {
+    /**
+     * @brief Container that encapsulates fixed size arrays.
+     *
+     * @tparam Type Element type.
+     * @tparam Size Number of stored elements.
+     *
+     * @ingroup array
+     */
     template<typename Type, int Size>
     class array;
 }

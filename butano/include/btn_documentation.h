@@ -411,6 +411,16 @@
  */
 
 /**
+ * @defgroup array Array
+ *
+ * A std::array like container.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup span Span
  *
  * A std::span like container.

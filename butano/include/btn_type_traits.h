@@ -44,6 +44,9 @@ namespace btn
     using std::decay;
     using std::decay_t;
 
+    using std::remove_cv;
+    using std::remove_cv_t;
+
     using std::is_constant_evaluated;
 }
 

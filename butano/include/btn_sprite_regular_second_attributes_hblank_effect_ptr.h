@@ -72,7 +72,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 sprite_regular_second_attributes objects
+     * @brief Returns the referenced array of 160 sprite_regular_second_attributes objects
      * with the attributes to commit to the second GBA register of the given regular sprite
      * in each screen horizontal line.
      *

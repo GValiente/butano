@@ -16,15 +16,28 @@ namespace btn
 
 // inverted
 
+/**
+ * @brief Manages if the colors of a bg_palette_ptr must be inverted or not.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_inverted_manager
 {
 
 public:
+    /**
+     * @brief Indicates if the colors of the given bg_palette_ptr are inverted or not.
+     */
     [[nodiscard]] static bool get(const bg_palette_ptr& palette)
     {
         return palette.inverted();
     }
 
+    /**
+     * @brief Sets if the colors of the given bg_palette_ptr must be inverted or not.
+     */
     static void set(bool inverted, bg_palette_ptr& palette)
     {
         palette.set_inverted(inverted);
@@ -32,21 +45,44 @@ public:
 };
 
 
+/**
+ * @brief Toggles if the colors of a bg_palette_ptr must be inverted or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_inverted_toggle_action :
         public bool_toggle_value_template_action<bg_palette_ptr, bg_palette_inverted_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the colors of the given bg_palette_ptr must be inverted or not.
+     */
     bg_palette_inverted_toggle_action(const bg_palette_ptr& palette, int duration_updates) :
         bool_toggle_value_template_action(palette, duration_updates)
     {
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the colors of the given bg_palette_ptr must be inverted or not.
+     */
     bg_palette_inverted_toggle_action(bg_palette_ptr&& palette, int duration_updates) :
         bool_toggle_value_template_action(move(palette), duration_updates)
     {
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
@@ -56,15 +92,30 @@ public:
 
 // grayscale
 
+/**
+ * @brief Manages the intensity of the grayscale effect applied to a bg_palette_ptr.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_grayscale_manager
 {
 
 public:
+    /**
+     * @brief Returns the intensity of the grayscale effect applied to the given bg_palette_ptr.
+     */
     [[nodiscard]] static fixed get(const bg_palette_ptr& palette)
     {
         return palette.grayscale_intensity();
     }
 
+    /**
+     * @brief Sets the intensity of the grayscale effect applied to the given bg_palette_ptr.
+     * @param intensity New intensity in the range [0..1].
+     * @param palette bg_palette_ptr to modify.
+     */
     static void set(fixed intensity, bg_palette_ptr& palette)
     {
         palette.set_grayscale_intensity(intensity);
@@ -72,28 +123,60 @@ public:
 };
 
 
+/**
+ * @brief Modifies the intensity of the grayscale effect applied to a bg_palette_ptr
+ * until it has a given state.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_grayscale_to_action :
         public to_value_template_action<bg_palette_ptr, fixed, bg_palette_grayscale_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_to_action(const bg_palette_ptr& palette, int duration_updates, fixed final_intensity) :
         to_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_to_action(bg_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
         to_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed final_intensity() const
     {
         return final_property();
@@ -101,28 +184,64 @@ public:
 };
 
 
+/**
+ * @brief Modifies the intensity of the grayscale effect applied to a bg_palette_ptr
+ * from a minimum to a maximum. When the intensity is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_grayscale_loop_action :
         public loop_value_template_action<bg_palette_ptr, fixed, bg_palette_grayscale_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_loop_action(const bg_palette_ptr& palette, int duration_updates, fixed final_intensity) :
         loop_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_loop_action(bg_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
         loop_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief When the intensity is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] fixed final_intensity() const
     {
         return final_property();
@@ -130,28 +249,58 @@ public:
 };
 
 
+/**
+ * @brief Changes the intensity of the grayscale effect applied to a bg_palette_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_grayscale_toggle_action :
         public toggle_value_template_action<bg_palette_ptr, fixed, bg_palette_grayscale_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_toggle_action(const bg_palette_ptr& palette, int duration_updates, fixed new_intensity) :
         toggle_value_template_action(palette, duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_grayscale_toggle_action(bg_palette_ptr&& palette, int duration_updates, fixed new_intensity) :
         toggle_value_template_action(move(palette), duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed new_intensity() const
     {
         return new_property();
@@ -161,15 +310,30 @@ public:
 
 // fade
 
+/**
+ * @brief Manages the intensity of the fade effect applied to a bg_palette_ptr.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_fade_manager
 {
 
 public:
+    /**
+     * @brief Returns the intensity of the fade effect applied to the given bg_palette_ptr.
+     */
     [[nodiscard]] static fixed get(const bg_palette_ptr& palette)
     {
         return palette.fade_intensity();
     }
 
+    /**
+     * @brief Sets the intensity of the fade effect applied to the given bg_palette_ptr.
+     * @param intensity New intensity in the range [0..1].
+     * @param palette bg_palette_ptr to modify.
+     */
     static void set(fixed intensity, bg_palette_ptr& palette)
     {
         palette.set_fade_intensity(intensity);
@@ -177,27 +341,59 @@ public:
 };
 
 
+/**
+ * @brief Modifies the intensity of the fade effect applied to a bg_palette_ptr
+ * until it has a given state.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_fade_to_action : public to_value_template_action<bg_palette_ptr, fixed, bg_palette_fade_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_to_action(const bg_palette_ptr& palette, int duration_updates, fixed final_intensity) :
         to_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_to_action(bg_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
         to_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed final_intensity() const
     {
         return final_property();
@@ -205,27 +401,64 @@ public:
 };
 
 
-class bg_palette_fade_loop_action : public loop_value_template_action<bg_palette_ptr, fixed, bg_palette_fade_manager>
+/**
+ * @brief Modifies the intensity of the fade effect applied to a bg_palette_ptr
+ * from a minimum to a maximum. When the intensity is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
+class bg_palette_fade_loop_action :
+        public loop_value_template_action<bg_palette_ptr, fixed, bg_palette_fade_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_loop_action(const bg_palette_ptr& palette, int duration_updates, fixed final_intensity) :
         loop_value_template_action(palette, duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_loop_action(bg_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
         loop_value_template_action(move(palette), duration_updates, final_intensity)
     {
         BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief When the intensity is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] fixed final_intensity() const
     {
         return final_property();
@@ -233,28 +466,58 @@ public:
 };
 
 
+/**
+ * @brief Changes the intensity of the fade effect applied to a bg_palette_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_fade_toggle_action :
         public toggle_value_template_action<bg_palette_ptr, fixed, bg_palette_fade_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_toggle_action(const bg_palette_ptr& palette, int duration_updates, fixed new_intensity) :
         toggle_value_template_action(palette, duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
     bg_palette_fade_toggle_action(bg_palette_ptr&& palette, int duration_updates, fixed new_intensity) :
         toggle_value_template_action(move(palette), duration_updates, new_intensity)
     {
         BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
     [[nodiscard]] fixed new_intensity() const
     {
         return new_property();
@@ -264,15 +527,30 @@ public:
 
 // rotate
 
+/**
+ * @brief Manages the number of colors to rotate to the right in a bg_palette_ptr.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_rotate_manager
 {
 
 public:
+    /**
+     * @brief Returns the number of colors to rotate to the right in the given bg_palette_ptr.
+     */
     [[nodiscard]] static int get(const bg_palette_ptr& palette)
     {
         return palette.rotate_count();
     }
 
+    /**
+     * @brief Sets the number of colors to rotate to the right in the given bg_palette_ptr.
+     * @param count Number of colors to rotate to the right in the range [1 - colors_count() .. colors_count() - 1].
+     * @param palette bg_palette_ptr to modify.
+     */
     static void set(int count, bg_palette_ptr& palette)
     {
         palette.set_rotate_count(count);
@@ -280,28 +558,60 @@ public:
 };
 
 
+/**
+ * @brief Modifies the number of colors to rotate to the right in a bg_palette_ptr by delta_count
+ * when the action is updated a given number of times. When the property is over the given maximum,
+ * it goes back to the given minimum and vice versa.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_rotate_by_action :
         public cyclic_duration_by_value_template_action<bg_palette_ptr, int, bg_palette_rotate_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
+     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     */
     bg_palette_rotate_by_action(const bg_palette_ptr& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(palette, duration_updates, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
+     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     */
     bg_palette_rotate_by_action(bg_palette_ptr&& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(move(palette), duration_updates, delta_count, 0, 0)
     {
         set_after_max_property(this->palette().colors_count() - 1);
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns how much colors to add to the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
     [[nodiscard]] int delta_count() const
     {
         return delta_property();
@@ -309,10 +619,27 @@ public:
 };
 
 
+/**
+ * @brief Modifies the number of colors to rotate to the right in a bg_palette_ptr until it has a given state.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_rotate_to_action : public to_value_template_action<bg_palette_ptr, int, bg_palette_rotate_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the number of colors to rotate to the right is equal to final_count.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_to_action(const bg_palette_ptr& palette, int duration_updates, int final_count) :
         to_value_template_action(palette, duration_updates, final_count)
     {
@@ -320,6 +647,16 @@ public:
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the number of colors to rotate to the right is equal to final_count.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_to_action(bg_palette_ptr&& palette, int duration_updates, int final_count) :
         to_value_template_action(move(palette), duration_updates, final_count)
     {
@@ -327,11 +664,18 @@ public:
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
     [[nodiscard]] int final_count() const
     {
         return final_property();
@@ -339,10 +683,30 @@ public:
 };
 
 
-class bg_palette_rotate_loop_action : public loop_value_template_action<bg_palette_ptr, int, bg_palette_rotate_manager>
+/**
+ * @brief Modifies the number of colors to rotate to the right in a bg_palette_ptrç from a minimum to a maximum.
+ * When the number of colors to rotate to the right is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
+class bg_palette_rotate_loop_action :
+        public loop_value_template_action<bg_palette_ptr, int, bg_palette_rotate_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the number of colors to rotate delta.
+     * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_loop_action(const bg_palette_ptr& palette, int duration_updates, int final_count) :
         loop_value_template_action(palette, duration_updates, final_count)
     {
@@ -350,6 +714,16 @@ public:
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the number of colors to rotate delta.
+     * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_loop_action(bg_palette_ptr&& palette, int duration_updates, int final_count) :
         loop_value_template_action(move(palette), duration_updates, final_count)
     {
@@ -357,11 +731,18 @@ public:
                    "Invalid final count: ", final_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief When the number of colors to rotate to the right is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
     [[nodiscard]] int final_count() const
     {
         return final_property();
@@ -369,11 +750,29 @@ public:
 };
 
 
+/**
+ * @brief Changes the number of colors to rotate to the right in a bg_palette_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
 class bg_palette_rotate_toggle_action :
         public toggle_value_template_action<bg_palette_ptr, int, bg_palette_rotate_manager>
 {
 
 public:
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change
+     * the number of colors to rotate to the right.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_toggle_action(const bg_palette_ptr& palette, int duration_updates, int new_count) :
         toggle_value_template_action(palette, duration_updates, new_count)
     {
@@ -381,6 +780,16 @@ public:
                    "Invalid new count: ", new_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Constructor.
+     * @param palette bg_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change
+     * the number of colors to rotate to the right.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     */
     bg_palette_rotate_toggle_action(bg_palette_ptr&& palette, int duration_updates, int new_count) :
         toggle_value_template_action(move(palette), duration_updates, new_count)
     {
@@ -388,11 +797,18 @@ public:
                    "Invalid new count: ", new_count, " - ", this->palette().colors_count());
     }
 
+    /**
+     * @brief Returns the bg_palette_ptr to modify.
+     */
     [[nodiscard]] const bg_palette_ptr& palette() const
     {
         return value();
     }
 
+    /**
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
     [[nodiscard]] int new_count() const
     {
         return new_property();

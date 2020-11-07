@@ -92,7 +92,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 deltas to add to the horizontal or vertical position
+     * @brief Returns the referenced array of 160 deltas to add to the horizontal or vertical position
      * of the managed regular background in each screen horizontal line.
      *
      * The deltas are not copied but referenced, so they should outlive the regular_bg_position_hblank_effect_ptr

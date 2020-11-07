@@ -95,7 +95,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 deltas to add to the horizontal or vertical boundaries
+     * @brief Returns the referenced array of 160 deltas to add to the horizontal or vertical boundaries
      * of the managed rect window in each screen horizontal line.
      *
      * The deltas are not copied but referenced, so they should outlive the rect_window_boundaries_hblank_effect_ptr

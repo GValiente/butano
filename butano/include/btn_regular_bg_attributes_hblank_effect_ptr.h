@@ -64,7 +64,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 regular_bg_attributes objects
+     * @brief Returns the referenced array of 160 regular_bg_attributes objects
      * with the attributes to commit to the GBA register of the managed regular background
      * in each screen horizontal line.
      *

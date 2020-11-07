@@ -87,7 +87,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 sprite_affine_mat_attributes objects
+     * @brief Returns the referenced array of 160 sprite_affine_mat_attributes objects
      * to set to the given sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive

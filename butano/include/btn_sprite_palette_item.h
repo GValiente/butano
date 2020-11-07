@@ -22,7 +22,8 @@ class sprite_palette_ptr;
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
  * with <b>"sprite"</b> type.
  *
- * The colors are not copied but referenced, so they should outlive the sprite_palette_item to avoid dangling references.
+ * The colors are not copied but referenced, so they should outlive the sprite_palette_item
+ * to avoid dangling references.
  *
  * @ingroup sprite
  * @ingroup palette
@@ -36,7 +37,8 @@ public:
      * @brief Constructor.
      * @param colors_ref Reference to an array of multiples of 16 colors.
      *
-     * The colors are not copied but referenced, so they should outlive the sprite_palette_item to avoid dangling references.
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_item
+     * to avoid dangling references.
      *
      * @param bpp_mode Bits per pixel of the color palettes to create.
      */
@@ -51,9 +53,10 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of multiples of 16 colors.
+     * @brief Returns the referenced array of multiples of 16 colors.
      *
-     * The colors are not copied but referenced, so they should outlive the sprite_palette_item to avoid dangling references.
+     * The colors are not copied but referenced, so they should outlive the sprite_palette_item
+     * to avoid dangling references.
      */
     [[nodiscard]] constexpr const span<const color>& colors_ref() const
     {

@@ -63,7 +63,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 sprite_third_attributes objects
+     * @brief Returns the referenced array of 160 sprite_third_attributes objects
      * with the attributes to commit to the third GBA register of the managed sprite in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive

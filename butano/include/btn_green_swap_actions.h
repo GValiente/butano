@@ -9,15 +9,15 @@
 #include "btn_green_swap.h"
 #include "btn_template_actions.h"
 
+namespace btn
+{
+
 /**
  * @brief Manages if green swap must be enabled or not.
  *
  * @ingroup green_swap
  * @ingroup action
  */
-namespace btn
-{
-
 class green_swap_manager
 {
 

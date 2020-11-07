@@ -170,7 +170,7 @@ void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, her
                     objects.spawn_hero_weapon_without_sound(enemy_position, hero.level() + 1, camera);
                 }
 
-                btn::bg_palettes::set_transparent_color(_transparent_color);
+                btn::bg_palettes::set_transparent_color(*_transparent_color);
                 btn::sprite_palettes::set_fade_intensity(0);
                 btn::green_swap::set_enabled(false);
                 scoreboard.set_visible(true);

@@ -50,7 +50,7 @@ public:
     [[nodiscard]] static optional<green_swap_hblank_effect_ptr> create_optional(const span<const bool>& states_ref);
 
     /**
-     * @brief Returns the reference to an array of 160 bool values which indicate the state of green swap
+     * @brief Returns the referenced array of 160 bool values which indicate the state of green swap
      * in each screen horizontal line.
      *
      * The states are not copied but referenced, so they should outlive

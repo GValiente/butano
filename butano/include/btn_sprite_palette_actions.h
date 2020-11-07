@@ -241,7 +241,8 @@ public:
     }
 
     /**
-     * @brief When the intensity is equal to the returned parameter, it goes back to its initial state and vice versa.
+     * @brief When the intensity is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
      */
     [[nodiscard]] fixed final_intensity() const
     {
@@ -459,7 +460,8 @@ public:
     }
 
     /**
-     * @brief When the intensity is equal to the returned parameter, it goes back to its initial state and vice versa.
+     * @brief When the intensity is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
      */
     [[nodiscard]] fixed final_intensity() const
     {
@@ -577,7 +579,8 @@ public:
     /**
      * @brief Constructor.
      * @param palette sprite_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated before updating the number of colors to rotate.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
      * @param delta_count How much colors to add to the number of colors to rotate to the right
      * when the action is updated duration_updates times.
      */
@@ -590,7 +593,8 @@ public:
     /**
      * @brief Constructor.
      * @param palette sprite_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated before updating the number of colors to rotate.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
      * @param delta_count How much colors to add to the number of colors to rotate to the right
      * when the action is updated duration_updates times.
      */
@@ -636,7 +640,8 @@ public:
      * @param palette sprite_palette_ptr to copy.
      * @param duration_updates Number of times that the action must be updated
      * until the number of colors to rotate to the right is equal to final_count.
-     * @param final_count Number of colors to rotate to the right when the action is updated duration_updates times.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
      *
      * This count must be in the range [1 - colors_count() .. colors_count() - 1].
      */
@@ -652,7 +657,8 @@ public:
      * @param palette sprite_palette_ptr to move.
      * @param duration_updates Number of times that the action must be updated
      * until the number of colors to rotate to the right is equal to final_count.
-     * @param final_count Number of colors to rotate to the right when the action is updated duration_updates times.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
      *
      * This count must be in the range [1 - colors_count() .. colors_count() - 1].
      */
@@ -672,7 +678,8 @@ public:
     }
 
     /**
-     * @brief Returns the number of colors to rotate to the right when the action is updated the given number of times.
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
      */
     [[nodiscard]] int final_count() const
     {
@@ -766,7 +773,8 @@ public:
      * @param palette sprite_palette_ptr to copy.
      * @param duration_updates How much times the action has to be updated to change
      * the number of colors to rotate to the right.
-     * @param new_count New number of colors to rotate to the right when the action is updated duration_updates times.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
      *
      * This count must be in the range [1 - colors_count() .. colors_count() - 1].
      */
@@ -782,7 +790,8 @@ public:
      * @param palette sprite_palette_ptr to move.
      * @param duration_updates How much times the action has to be updated to change
      * the number of colors to rotate to the right.
-     * @param new_count New number of colors to rotate to the right when the action is updated duration_updates times.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
      *
      * This count must be in the range [1 - colors_count() .. colors_count() - 1].
      */
@@ -802,7 +811,8 @@ public:
     }
 
     /**
-     * @brief Returns the number of colors to rotate to the right when the action is updated the given number of times.
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
      */
     [[nodiscard]] int new_count() const
     {

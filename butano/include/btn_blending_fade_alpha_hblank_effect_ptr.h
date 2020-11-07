@@ -57,7 +57,7 @@ public:
             const span<const blending_fade_alpha>& alphas_ref);
 
     /**
-     * @brief Returns the reference to an array of 160 blending_fade_alpha objects
+     * @brief Returns the referenced array of 160 blending_fade_alpha objects
      * which indicate the weight of the fade blending in each screen horizontal line.
      *
      * The alphas are not copied but referenced, so they should outlive

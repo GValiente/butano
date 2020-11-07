@@ -27,7 +27,7 @@ class sprite_palette_color_hblank_effect_ptr : public hblank_effect_ptr
 
 public:
     /**
-     * @brief create Creates a sprite_palette_color_hblank_effect_ptr which changes
+     * @brief Creates a sprite_palette_color_hblank_effect_ptr which changes
      * the color of a sprite color palette in each screen horizontal line.
      * @param palette Sprite color palette to be modified.
      * @param color_index Index of the color of the given sprite color palette to be modified.
@@ -43,7 +43,7 @@ public:
             sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);
 
     /**
-     * @brief create Creates a sprite_palette_color_hblank_effect_ptr which changes
+     * @brief Creates a sprite_palette_color_hblank_effect_ptr which changes
      * the color of a sprite color palette in each screen horizontal line.
      * @param palette Sprite color palette to be modified.
      * @param color_index Index of the color of the given sprite color palette to be modified.
@@ -53,7 +53,8 @@ public:
      * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested sprite_palette_color_hblank_effect_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_palette_color_hblank_effect_ptr if it could be allocated;
+     * <b>nullopt</b> otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_color_hblank_effect_ptr> create_optional(
             sprite_palette_ptr palette, int color_index, const span<const color>& colors_ref);
@@ -75,7 +76,7 @@ public:
     }
 
     /**
-     * @brief Returns the reference to an array of 160 colors to set to the color of a sprite color palette
+     * @brief Returns the referenced array of 160 colors to set to the color of a sprite color palette
      * in each screen horizontal line.
      *
      * The colors are not copied but referenced, so they should outlive the sprite_palette_color_hblank_effect_ptr

@@ -57,7 +57,7 @@ public:
             const span<const blending_transparency_attributes>& attributes_ref);
 
     /**
-     * @brief Returns the reference to an array of 160 blending_transparency_attributes objects
+     * @brief Returns the referenced array of 160 blending_transparency_attributes objects
      * which indicate the weights of the transparency and intensity blendings in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive

@@ -54,7 +54,7 @@ public:
             const span<const mosaic_attributes>& attributes_ref);
 
     /**
-     * @brief Returns the reference to an array of 160 mosaic_attributes objects
+     * @brief Returns the referenced array of 160 mosaic_attributes objects
      * with the attributes to commit to the GBA mosaic register in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive

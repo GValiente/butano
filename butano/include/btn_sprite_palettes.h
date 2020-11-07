@@ -10,8 +10,8 @@
 
 namespace btn
 {
-
-class color;
+    class color;
+}
 
 /**
  * @brief Sprite color palettes related functions.
@@ -19,7 +19,7 @@ class color;
  * @ingroup sprite
  * @ingroup palette
  */
-namespace sprite_palettes
+namespace btn::sprite_palettes
 {
     /**
      * @brief Returns the number of used sprite colors.
@@ -112,7 +112,6 @@ namespace sprite_palettes
      * @param intensity New intensity in the range [0..1].
      */
     void set_fade(color color, fixed intensity);
-}
 }
 
 #endif

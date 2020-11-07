@@ -350,7 +350,7 @@ public:
     void set_tiles_ref(const sprite_tiles_item& tiles_item, int graphics_index);
 
     /**
-     * @brief Upload the referenced tiles to VRAM again to make visible the possible changes in them.
+     * @brief Uploads the referenced tiles to VRAM again to make visible the possible changes in them.
      */
     void reload_tiles_ref();
 

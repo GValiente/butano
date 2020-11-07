@@ -373,7 +373,7 @@ public:
     void set_cells_ref(const regular_bg_map_cell& cells_ref, const size& dimensions);
 
     /**
-     * @brief Upload the referenced map cells to VRAM again to make visible the possible changes in them.
+     * @brief Uploads the referenced map cells to VRAM again to make visible the possible changes in them.
      */
     void reload_cells_ref();
 

@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::sprite_builder class | butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>sprite_builder <span class="m-thin">class</span>
+        </h1>
+        <p>Creates <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> objects with custom attributes.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>If some of the attributes of the sprite to create differs from the default ones, using this class improves performance.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6b02f5452ed8191e2202d7553c48e498" class="m-doc">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a113223e5dde7f9bbb352586bcacf8652" class="m-doc">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aa835a07f1c556278a1b3ae27577e2e59" class="m-doc">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a584578b3ea21e0e52cc0de831566b270">
+              <span class="m-doc-wrap-bumper">auto <a href="#a584578b3ea21e0e52cc0de831566b270" class="m-doc-self">item</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate sprites if it has one; <strong>nullopt</strong> otherwise.</dd>
+            <dt id="a2e50617646209fc330ec01fbb49a6b60">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2e50617646209fc330ec01fbb49a6b60" class="m-doc-self">graphics_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Index of the tile set to reference in item.tiles_item() to generate sprites.</dd>
+            <dt id="aca1bddce6c851e30e6e5315164eacf22">
+              <span class="m-doc-wrap-bumper">auto <a href="#aca1bddce6c851e30e6e5315164eacf22" class="m-doc-self">shape_size</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp;</span>
+            </dt>
+            <dd>Returns the shape and size of the sprites to generate.</dd>
+            <dt id="a19f00c3c4069b91e1f5b7b46efc9314e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a19f00c3c4069b91e1f5b7b46efc9314e" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1be60f3ebebe59015064893c82683daa" class="m-doc">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the horizontal position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt id="a0c8669455e5fd00d73c9980d71a3f4f9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0c8669455e5fd00d73c9980d71a3f4f9" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a095159714d2826efb1c3bee6671b944c" class="m-doc">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the vertical position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt id="af60f93840d1ceecfe14f6de1f6e5eeea">
+              <span class="m-doc-wrap-bumper">auto <a href="#af60f93840d1ceecfe14f6de1f6e5eeea" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a650089385e27d92113f398f977473854" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aefd4d11afe1991b2ff68981aa2c47dfb" class="m-doc">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the position of the sprites to generate (relative to their camera, if they are going to have one).</dd>
+            <dt id="a75f059435242af5031967fd27b18828e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a75f059435242af5031967fd27b18828e" class="m-doc-self">rotation_angle</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the rotation angle in degrees of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3cb26f9d037646c84167e30551ed7e64" class="m-doc">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> rotation_angle) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the sprites to generate.</dd>
+            <dt id="a27ea5b91165ca48c2ed47ade516ff76a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a27ea5b91165ca48c2ed47ade516ff76a" class="m-doc-self">horizontal_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal scale of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af87dee397b3d040ae108d2e70543c9a4" class="m-doc">set_horizontal_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> horizontal_scale) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the horizontal scale of the sprites to generate.</dd>
+            <dt id="a1dc7583b47549dc9d81e302da2bd38a9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1dc7583b47549dc9d81e302da2bd38a9" class="m-doc-self">vertical_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical scale of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9dba080e8bc8211cb9f45af9006e9add" class="m-doc">set_vertical_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> vertical_scale) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the vertical scale of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5878d065bd20f41bf860e93f4b65b873" class="m-doc">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> scale) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the scale of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6dca42b0dabf8f2920f065482ad2aa7c" class="m-doc">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> vertical_scale) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the scale of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a61030949fdf2cb8610bbd2ab7e79d0ba" class="m-doc">bg_priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the sprites to generate relative to backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a996bf214b8273b8a0e7636457299b611" class="m-doc">set_bg_priority</a>(</span><span class="m-doc-wrap">int bg_priority) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the priority of the sprites to generate relative to backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2adab1c2fcea950eccc9dd16efc6f2af" class="m-doc">z_order</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the sprites to generate relative to other ones.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a773c6c41f77c3fe47c68e40aafb9d82b" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the priority of the sprites to generate relative to other ones.</dd>
+            <dt id="ab91126df51398dd1e2e77ad02005b9cb">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab91126df51398dd1e2e77ad02005b9cb" class="m-doc-self">horizontal_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the sprites to generate are flipped in the horizontal axis or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2a9f5c77dac6471904784c50cea8bb3b" class="m-doc">set_horizontal_flip</a>(</span><span class="m-doc-wrap">bool horizontal_flip) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the sprites to generate must be flipped in the horizontal axis or not.</dd>
+            <dt id="a2b4a3b644444b8a56d5f392f8abae380">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2b4a3b644444b8a56d5f392f8abae380" class="m-doc-self">vertical_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the sprites to generate are flipped in the vertical axis or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa98df607701a3a8d7c0db0c65281a59f" class="m-doc">set_vertical_flip</a>(</span><span class="m-doc-wrap">bool vertical_flip) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the sprites to generate must be flipped in the vertical axis or not.</dd>
+            <dt id="abe89798ab68a3e025d4044c1f66ba465">
+              <span class="m-doc-wrap-bumper">auto <a href="#abe89798ab68a3e025d4044c1f66ba465" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to the sprites to generate or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a96dc997786cd5e22288a9e579ccbd859" class="m-doc">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to the sprites to generate or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5a6fb06a7a3a556063ca4ce5dbfd0462" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to the sprites to generate or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3dca377bae9929746b69f9591771e1c4" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if blending must be applied to the sprites to generate or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa512d913d92f8d35f21c7579112bee2e" class="m-doc">window_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the sprites to generate must be part of the silhouette of the sprite window or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3152f2f1a761dd7c5d91e91de31c3709" class="m-doc">set_window_enabled</a>(</span><span class="m-doc-wrap">bool window_enabled) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the sprites to generate must be part of the silhouette of the sprite window or not.</dd>
+            <dt id="aed32c0a35000ea9180b3a0dfd9f6f886">
+              <span class="m-doc-wrap-bumper">auto <a href="#aed32c0a35000ea9180b3a0dfd9f6f886" class="m-doc-self">double_size_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__sprite.html#ga79d13f71c0c9a22edb6e64b400ac798c" class="m-doc">sprite_<wbr />double_<wbr />size_<wbr />mode</a></span>
+            </dt>
+            <dd>Returns the area the sprites to generate use to be drawn when they have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d02b8aa9e0f751dd27e9ed05aaba33b" class="m-doc">set_double_size_mode</a>(</span><span class="m-doc-wrap"><a href="group__sprite.html#ga79d13f71c0c9a22edb6e64b400ac798c" class="m-doc">sprite_<wbr />double_<wbr />size_<wbr />mode</a> double_size_mode) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Specifies the area the sprites to generate use to be drawn when they have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
+            <dt id="af2317dd580a9e2e1702d736ef93165ec">
+              <span class="m-doc-wrap-bumper">auto <a href="#af2317dd580a9e2e1702d736ef93165ec" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the sprites to generate must be committed to the GBA or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab6d8ea20f34bf2ce837588a3d44c0c6b" class="m-doc">set_visible</a>(</span><span class="m-doc-wrap">bool visible) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the sprites to generate must be committed to the GBA or not.</dd>
+            <dt id="abf89c3e04cd7df432025c140e3fb7efa">
+              <span class="m-doc-wrap-bumper">auto <a href="#abf89c3e04cd7df432025c140e3fb7efa" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a758317773e5e1263372135e8f6eacee2" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af485c4008a7b5ff1d28c601d1bec5cb9" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4cd5eedd769729bffe9f582a3af99998" class="m-doc">remove_camera</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Removes the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt id="a8f6aee4a2e30a98a5016f0e563ac7dc0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8f6aee4a2e30a98a5016f0e563ac7dc0" class="m-doc-self">release_camera</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Releases and returns the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate (if any).</dd>
+            <dt id="a4fd535db65a6f39bf2348a48fb4251f8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4fd535db65a6f39bf2348a48fb4251f8" class="m-doc-self">build</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> without releasing the acquired resources.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a08fbf632eb78216467bfc8624ead7e23" class="m-doc">release_build</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> releasing the acquired resources.</dd>
+            <dt id="a3ce0fb80438fe28ea48503fd0a48f80d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3ce0fb80438fe28ea48503fd0a48f80d" class="m-doc-self">build_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> without releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a246ec05201b532a1aad9c561fab2a34d" class="m-doc">release_build_optional</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt id="ab102d388c116060cfc9dc22996ed0905">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab102d388c116060cfc9dc22996ed0905" class="m-doc-self">tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> without releasing the acquired resources.</dd>
+            <dt id="a053b45d8813e3493707bc7d376b42010">
+              <span class="m-doc-wrap-bumper">auto <a href="#a053b45d8813e3493707bc7d376b42010" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> without releasing the acquired resources.</dd>
+            <dt id="a9a5f1c9fcf7d991602878c6e96267b30">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9a5f1c9fcf7d991602878c6e96267b30" class="m-doc-self">tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> without releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt id="a2eacde00e49e2595074cbd723290b9f2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2eacde00e49e2595074cbd723290b9f2" class="m-doc-self">palette_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> without releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaecaa555a90caea83ef6fa4e025d6f61" class="m-doc">release_tiles</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> releasing the acquired resources.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aca3bf547a60a12d0fe8d035ed6fa64d9" class="m-doc">release_palette</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> releasing the acquired resources.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a399df23baf1aa0c95d19cda291f6eed0" class="m-doc">release_tiles_optional</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a12acfe77feb3e1ac75350082abc764ec" class="m-doc">release_palette_optional</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</dd>
+            <dt id="acc52b40d79e4f7ce96491fae600b238a">
+              <span class="m-doc-wrap-bumper">auto <a href="#acc52b40d79e4f7ce96491fae600b238a" class="m-doc-self">affine_mat</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3052b3620efe1369214c9149ca025160" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp; affine_mat) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a07a26ee16375c4d685d57803088e0bfa" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp;&amp; affine_mat) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac0a2adff6c87496f13e17a956662a0c1" class="m-doc">remove_affine_mat</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Removes the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</dd>
+            <dt id="a3fe1c25cc5c06692d16a2eb03c3b0d07">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3fe1c25cc5c06692d16a2eb03c3b0d07" class="m-doc-self">release_affine_mat</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Releases and returns the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4d17acce56f483f1d85479a0321e296" class="m-doc">remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to the sprites to generate (if any) must be removed when it is not needed anymore.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aca188188830278a39b02af1235e96087" class="m-doc">set_remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">bool remove_when_not_needed) -&gt; <a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to the sprites to generate (if any) must be removed when it is not needed anymore.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a6b02f5452ed8191e2202d7553c48e498"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6b02f5452ed8191e2202d7553c48e498" class="m-doc-self">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td><a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate sprites.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a113223e5dde7f9bbb352586bcacf8652"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a113223e5dde7f9bbb352586bcacf8652" class="m-doc-self">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td><a href="classbtn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate sprites.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item() to generate sprites.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa835a07f1c556278a1b3ae27577e2e59"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa835a07f1c556278a1b3ae27577e2e59" class="m-doc-self">sprite_builder</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">shape_size</td>
+                  <td>Shape and size of the sprites to generate.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td>Smart pointer to the sprite tile set used to generate sprites.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Smart pointer to the sprite color palette used to generate sprites.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1be60f3ebebe59015064893c82683daa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1be60f3ebebe59015064893c82683daa" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x)</span></span>
+            </h3>
+            <p>Sets the horizontal position of the sprites to generate (relative to their camera, if they are going to have one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a095159714d2826efb1c3bee6671b944c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a095159714d2826efb1c3bee6671b944c" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the vertical position of the sprites to generate (relative to their camera, if they are going to have one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">y</td>
+                  <td>Vertical position of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a650089385e27d92113f398f977473854"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a650089385e27d92113f398f977473854" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the position of the sprites to generate (relative to their camera, if they are going to have one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprites to generate.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aefd4d11afe1991b2ff68981aa2c47dfb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aefd4d11afe1991b2ff68981aa2c47dfb" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span></span>
+            </h3>
+            <p>Sets the position of the sprites to generate (relative to their camera, if they are going to have one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3cb26f9d037646c84167e30551ed7e64"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3cb26f9d037646c84167e30551ed7e64" class="m-doc-self">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the rotation angle is != 0 and the builder doesn&#x27;t have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given rotation angle is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="af87dee397b3d040ae108d2e70543c9a4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af87dee397b3d040ae108d2e70543c9a4" class="m-doc-self">set_horizontal_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> horizontal_scale)</span></span>
+            </h3>
+            <p>Sets the horizontal scale of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_scale</td>
+                  <td>Horizontal scale of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the horizontal scale is != 1 and the builder doesn&#x27;t have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given horizontal scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9dba080e8bc8211cb9f45af9006e9add"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9dba080e8bc8211cb9f45af9006e9add" class="m-doc-self">set_vertical_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> vertical_scale)</span></span>
+            </h3>
+            <p>Sets the vertical scale of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vertical_scale</td>
+                  <td>Vertical scale of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the vertical scale is != 1 and the builder doesn&#x27;t have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given vertical scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5878d065bd20f41bf860e93f4b65b873"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5878d065bd20f41bf860e93f4b65b873" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> scale)</span></span>
+            </h3>
+            <p>Sets the scale of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">scale</td>
+                  <td>Scale of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the scale is != 1 and the builder doesn&#x27;t have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given vertical scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6dca42b0dabf8f2920f065482ad2aa7c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6dca42b0dabf8f2920f065482ad2aa7c" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> vertical_scale)</span></span>
+            </h3>
+            <p>Sets the scale of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_scale</td>
+                  <td>Horizontal scale of the sprites to generate.</td>
+                </tr>
+                <tr>
+                  <td>vertical_scale</td>
+                  <td>Vertical scale of the sprites to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the horizontal or the vertical scale is != 1 and the builder doesn&#x27;t have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given vertical scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a61030949fdf2cb8610bbd2ab7e79d0ba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a61030949fdf2cb8610bbd2ab7e79d0ba" class="m-doc-self">bg_priority</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the sprites to generate relative to backgrounds.</p>
+<p>Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds). Sprites cover backgrounds of the same priority.</p>
+          </div></section>
+          <section class="m-doc-details" id="a996bf214b8273b8a0e7636457299b611"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a996bf214b8273b8a0e7636457299b611" class="m-doc-self">set_bg_priority</a>(</span><span class="m-doc-wrap">int bg_priority)</span></span>
+            </h3>
+            <p>Sets the priority of the sprites to generate relative to backgrounds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bg_priority</td>
+                  <td>Priority relative to backgrounds in the range [0..3].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds). Sprites cover backgrounds of the same priority.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2adab1c2fcea950eccc9dd16efc6f2af"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2adab1c2fcea950eccc9dd16efc6f2af" class="m-doc-self">z_order</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the sprites to generate relative to other ones.</p>
+<p>Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).</p><p>Sprites are grouped in layers depending of their background priority and z order, so to reduce memory usage and improve performance, please use as less unique z orders as possible.</p>
+          </div></section>
+          <section class="m-doc-details" id="a773c6c41f77c3fe47c68e40aafb9d82b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a773c6c41f77c3fe47c68e40aafb9d82b" class="m-doc-self">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span></span>
+            </h3>
+            <p>Sets the priority of the sprites to generate relative to other ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">z_order</td>
+                  <td>Priority relative to other sprites in the range [-32767..32767].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).</p><p>Sprites are grouped in layers depending of their background priority and z order, so to reduce memory usage and improve performance, please use as less unique z orders as possible.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2a9f5c77dac6471904784c50cea8bb3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2a9f5c77dac6471904784c50cea8bb3b" class="m-doc-self">set_horizontal_flip</a>(</span><span class="m-doc-wrap">bool horizontal_flip)</span></span>
+            </h3>
+            <p>Sets if the sprites to generate must be flipped in the horizontal axis or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_flip</td>
+                  <td><strong>true</strong> if the sprites must be flipped in the horizontal axis; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa98df607701a3a8d7c0db0c65281a59f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa98df607701a3a8d7c0db0c65281a59f" class="m-doc-self">set_vertical_flip</a>(</span><span class="m-doc-wrap">bool vertical_flip)</span></span>
+            </h3>
+            <p>Sets if the sprites to generate must be flipped in the vertical axis or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vertical_flip</td>
+                  <td><strong>true</strong> if the sprites must be flipped in the vertical axis; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a96dc997786cd5e22288a9e579ccbd859"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a96dc997786cd5e22288a9e579ccbd859" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span></span>
+            </h3>
+            <p>Sets if the mosaic effect must be applied to the sprites to generate or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mosaic_enabled</td>
+                  <td><strong>true</strong> if the mosaic effect must be applied; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5a6fb06a7a3a556063ca4ce5dbfd0462"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5a6fb06a7a3a556063ca4ce5dbfd0462" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to the sprites to generate or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled on a sprite at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3dca377bae9929746b69f9591771e1c4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3dca377bae9929746b69f9591771e1c4" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
+            </h3>
+            <p>Sets if blending must be applied to the sprites to generate or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blending_enabled</td>
+                  <td><strong>true</strong> if blending must be applied; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled on a sprite at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa512d913d92f8d35f21c7579112bee2e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa512d913d92f8d35f21c7579112bee2e" class="m-doc-self">window_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if the sprites to generate must be part of the silhouette of the sprite window or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled on a sprite at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3152f2f1a761dd7c5d91e91de31c3709"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3152f2f1a761dd7c5d91e91de31c3709" class="m-doc-self">set_window_enabled</a>(</span><span class="m-doc-wrap">bool window_enabled)</span></span>
+            </h3>
+            <p>Sets if the sprites to generate must be part of the silhouette of the sprite window or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">window_enabled</td>
+                  <td><strong>true</strong> if the sprites must be part of the silhouette of the sprite window; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled on a sprite at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9d02b8aa9e0f751dd27e9ed05aaba33b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9d02b8aa9e0f751dd27e9ed05aaba33b" class="m-doc-self">set_double_size_mode</a>(</span><span class="m-doc-wrap"><a href="group__sprite.html#ga79d13f71c0c9a22edb6e64b400ac798c" class="m-doc">sprite_<wbr />double_<wbr />size_<wbr />mode</a> double_size_mode)</span></span>
+            </h3>
+            <p>Specifies the area the sprites to generate use to be drawn when they have an attached <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">double_size_mode</td>
+                  <td>sprite_double_size_mode enum value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab6d8ea20f34bf2ce837588a3d44c0c6b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab6d8ea20f34bf2ce837588a3d44c0c6b" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span></span>
+            </h3>
+            <p>Sets if the sprites to generate must be committed to the GBA or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">visible</td>
+                  <td><strong>true</strong> if the sprites must be committed to the GBA; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a758317773e5e1263372135e8f6eacee2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a758317773e5e1263372135e8f6eacee2" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to the builder.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af485c4008a7b5ff1d28c601d1bec5cb9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af485c4008a7b5ff1d28c601d1bec5cb9" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to the builder.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4cd5eedd769729bffe9f582a3af99998"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4cd5eedd769729bffe9f582a3af99998" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Removes the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a08fbf632eb78216467bfc8624ead7e23"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a08fbf632eb78216467bfc8624ead7e23" class="m-doc-self">release_build</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> releasing the acquired resources.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="a246ec05201b532a1aad9c561fab2a34d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a246ec05201b532a1aad9c561fab2a34d" class="m-doc-self">release_build_optional</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaecaa555a90caea83ef6fa4e025d6f61"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaecaa555a90caea83ef6fa4e025d6f61" class="m-doc-self">release_tiles</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> releasing the acquired resources.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="aca3bf547a60a12d0fe8d035ed6fa64d9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca3bf547a60a12d0fe8d035ed6fa64d9" class="m-doc-self">release_palette</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> releasing the acquired resources.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="a399df23baf1aa0c95d19cda291f6eed0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a399df23baf1aa0c95d19cda291f6eed0" class="m-doc-self">release_tiles_optional</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="a12acfe77feb3e1ac75350082abc764ec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a12acfe77feb3e1ac75350082abc764ec" class="m-doc-self">release_palette_optional</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Generates and returns a <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> releasing the acquired resources if it could be allocated; <strong>nullopt</strong> otherwise.</p>
+<p>This method must be called once at most.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3052b3620efe1369214c9149ca025160"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3052b3620efe1369214c9149ca025160" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td><a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to copy to the builder.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false).</p>
+          </div></section>
+          <section class="m-doc-details" id="a07a26ee16375c4d685d57803088e0bfa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a07a26ee16375c4d685d57803088e0bfa" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp;&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td><a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to move to the builder.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false).</p>
+          </div></section>
+          <section class="m-doc-details" id="ac0a2adff6c87496f13e17a956662a0c1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac0a2adff6c87496f13e17a956662a0c1" class="m-doc-self">remove_affine_mat</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Removes the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to attach to the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab4d17acce56f483f1d85479a0321e296"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4d17acce56f483f1d85479a0321e296" class="m-doc-self">remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to the sprites to generate (if any) must be removed when it is not needed anymore.</p>
+<p>A sprite does not need an <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> when its flipped_identity() method returns <strong>true</strong>.</p>
+          </div></section>
+          <section class="m-doc-details" id="aca188188830278a39b02af1235e96087"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; btn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca188188830278a39b02af1235e96087" class="m-doc-self">set_remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">bool remove_when_not_needed)</span></span>
+            </h3>
+            <p>Sets if the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to the sprites to generate (if any) must be removed when it is not needed anymore.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">remove_when_not_needed</td>
+                  <td><strong>true</strong> if the <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> must be removed when it is not needed anymore; <strong>false</strong> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>A sprite does not need an <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> when its flipped_identity() method returns <strong>true</strong>.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::optional class | butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename Type&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>optional <span class="m-thin">class</span>
+        </h1>
+        <p>Manages an optional contained value (a value that may or may not be present).</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a0abe865f278bc90958e13f54e2f157d9">
+              <span class="m-doc-wrap-bumper"><a href="#a0abe865f278bc90958e13f54e2f157d9" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt id="a206406ab9affbb5467e5b7faca3d20fc">
+              <span class="m-doc-wrap-bumper"><a href="#a206406ab9affbb5467e5b7faca3d20fc" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>)</span>
+            </dt>
+            <dd>Null constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a61a217bf7a9a86f0f9b0af9c9055e643" class="m-doc">optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a29bb9b97e21481e07e92c95cc1815544" class="m-doc">optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#ac66dbeb7ebd4665d7dc36b6719061f5d" class="m-doc">optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#afaa3057f8277e45cad8967626bd5539b" class="m-doc">optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a094baaa2cf3ce951cd6dc38c63fd28b4" class="m-doc">optional</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a639a26b6d3dcf5b4a9608ed4d0dbfc41" class="m-doc">optional</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt id="a281e9cfd6324363fa06b9b3be44f1b45">
+              <span class="m-doc-wrap-bumper"><a href="#a281e9cfd6324363fa06b9b3be44f1b45" class="m-doc-self">~optional</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Destructor.</dd>
+            <dt id="a331c143ad699c4a2d20e37397515252c">
+              <span class="m-doc-wrap-bumper"><a href="#a331c143ad699c4a2d20e37397515252c" class="m-doc-self">operator bool</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Indicates if it contains a value or not.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6832d20c3d33b94427ae89eeb3fc3444" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;</span>
+            </dt>
+            <dd>Null assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae453f9cb0faa901bdc6be228373f67e2" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aad468a45131187d1bd469ef10d41bffc" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af9b258741408ab495f3c39111a086ce2" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp; other) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a13d81953c1d5b925bfe76f2b168e9835" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp;&amp; other) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3be4f4d1a48bc2294e072d60caf7aecc" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;</span>
+            </dt>
+            <dd>Assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a386061e52b6dd26070ad97b6f3d3bd41" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;</span>
+            </dt>
+            <dd>Assignment operator.</dd>
+            <dt id="a4dd9518f8d5e7d321d857e5aebfa086d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4dd9518f8d5e7d321d857e5aebfa086d" class="m-doc-self">has_value</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it contains a value or not.</dd>
+            <dt id="ab4d2496cd52b5d906d23b2e6bdd35035">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4d2496cd52b5d906d23b2e6bdd35035" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp;</span>
+            </dt>
+            <dd>Returns a const reference to the contained value.</dd>
+            <dt id="a4b36863c3848d9a578b346fd64bb7a95">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b36863c3848d9a578b346fd64bb7a95" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">) -&gt; Type&amp;</span>
+            </dt>
+            <dd>Returns a reference to the contained value.</dd>
+            <dt id="a5bff56b87b4fcfe60cfcfb50b7982c0f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5bff56b87b4fcfe60cfcfb50b7982c0f" class="m-doc-self">value_or</a>(</span><span class="m-doc-wrap">const Type&amp; default_value) const -&gt; Type</span>
+            </dt>
+            <dd>Returns a copy of the contained value if this optional has one; otherwise it returns a copy of the given default value.</dd>
+            <dt id="a258ff1e59de024a1a79c6c7249b1271f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a258ff1e59de024a1a79c6c7249b1271f" class="m-doc-self">value_or</a>(</span><span class="m-doc-wrap">Type&amp;&amp; default_value) const -&gt; Type</span>
+            </dt>
+            <dd>Returns a copy of the contained value if this optional has one; otherwise it returns a moved copy of the given default value.</dd>
+            <dt id="a79277ecbb083e2aff70eb7c067e891f4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a79277ecbb083e2aff70eb7c067e891f4" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; const Type*</span>
+            </dt>
+            <dd>Returns a const pointer to the contained value.</dd>
+            <dt id="aa28eb8c75b504a6e174b89f443a8b643">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa28eb8c75b504a6e174b89f443a8b643" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) -&gt; Type*</span>
+            </dt>
+            <dd>Returns a pointer to the contained value.</dd>
+            <dt id="a8549104a763d102dc5dba2cbe890ee12">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8549104a763d102dc5dba2cbe890ee12" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp;</span>
+            </dt>
+            <dd>Returns a const reference to the contained value.</dd>
+            <dt id="af859d19d1a6a648f6302921e8c245eb4">
+              <span class="m-doc-wrap-bumper">auto <a href="#af859d19d1a6a648f6302921e8c245eb4" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; Type&amp;</span>
+            </dt>
+            <dd>Returns a reference to the contained value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a30048c7e8bb213298445a73e33b45227" class="m-doc">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; Type&amp;</span>
+            </dt>
+            <dd>Constructs the contained value in-place.</dd>
+            <dt id="a218226307ff3948117ab2574af736654">
+              <span class="m-doc-wrap-bumper">void <a href="#a218226307ff3948117ab2574af736654" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Disposes the contained value.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2bfde381a63daf5bd73d791cd32da2ee" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this optional with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8fa1fb76a41146f9c4fea30c571c9f6f" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a optional with those of another one.</dd>
+            <dt id="a4478e97f2fe67bce1e7f78541f8b8498">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4478e97f2fe67bce1e7f78541f8b8498" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt id="a25ff6ca261e2ef57d2f06c3516a51128">
+              <span class="m-doc-wrap-bumper">auto <a href="#a25ff6ca261e2ef57d2f06c3516a51128" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt id="a05f23f6f2cced7e17ba7e50308ab09f4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a05f23f6f2cced7e17ba7e50308ab09f4" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt id="aa4436e72d5f9138f8ccba8594b202271">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa4436e72d5f9138f8ccba8594b202271" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt id="add7d59736181986977060149dfdc86d6">
+              <span class="m-doc-wrap-bumper">auto <a href="#add7d59736181986977060149dfdc86d6" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt id="ae453262070f67a299cb001572edebd90">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae453262070f67a299cb001572edebd90" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+            <dt id="a4f6c3d4b6bb1f4332b69b81dc15948d0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4f6c3d4b6bb1f4332b69b81dc15948d0" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt id="a14b0e5b56f7448b128c82d8aace5a803">
+              <span class="m-doc-wrap-bumper">auto <a href="#a14b0e5b56f7448b128c82d8aace5a803" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt id="af0d60558798146f245a942bf7081ef35">
+              <span class="m-doc-wrap-bumper">auto <a href="#af0d60558798146f245a942bf7081ef35" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt id="aec1fc689ecddf3ffe5546eddeb94141a">
+              <span class="m-doc-wrap-bumper">auto <a href="#aec1fc689ecddf3ffe5546eddeb94141a" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt id="a99bda08f821472dc9a6d7ae10e4e2cd4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a99bda08f821472dc9a6d7ae10e4e2cd4" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt id="a6bad9f1ab122776fd185e2bf7b843384">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6bad9f1ab122776fd185e2bf7b843384" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;,
+              <a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+            <dt id="ac791d4fde01069fce2117ccea0375429">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac791d4fde01069fce2117ccea0375429" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt id="a1d600bfcd687ecfc999ca63712bcc7c2">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1d600bfcd687ecfc999ca63712bcc7c2" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt id="a488c7c7d88b1ec2a823a95b9da669473">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a488c7c7d88b1ec2a823a95b9da669473" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt id="aa1a6eac1c086cbbc9e70000b1570429f">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa1a6eac1c086cbbc9e70000b1570429f" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt id="a58b7c677020326c127476067ad9de4db">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58b7c677020326c127476067ad9de4db" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt id="a277bc61139eec072ea139f70ab7a2a66">
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a277bc61139eec072ea139f70ab7a2a66" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              const OtherType&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a61a217bf7a9a86f0f9b0af9c9055e643"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a61a217bf7a9a86f0f9b0af9c9055e643" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>optional to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a29bb9b97e21481e07e92c95cc1815544"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a29bb9b97e21481e07e92c95cc1815544" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>optional to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac66dbeb7ebd4665d7dc36b6719061f5d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename OtherType&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac66dbeb7ebd4665d7dc36b6719061f5d" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Different type optional to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afaa3057f8277e45cad8967626bd5539b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename OtherType&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afaa3057f8277e45cad8967626bd5539b" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Different type optional to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a094baaa2cf3ce951cd6dc38c63fd28b4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a094baaa2cf3ce951cd6dc38c63fd28b4" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a639a26b6d3dcf5b4a9608ed4d0dbfc41"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a639a26b6d3dcf5b4a9608ed4d0dbfc41" class="m-doc-self">optional</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6832d20c3d33b94427ae89eeb3fc3444"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6832d20c3d33b94427ae89eeb3fc3444" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a>)</span></span>
+            </h3>
+            <p>Null assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae453f9cb0faa901bdc6be228373f67e2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae453f9cb0faa901bdc6be228373f67e2" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>optional to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aad468a45131187d1bd469ef10d41bffc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aad468a45131187d1bd469ef10d41bffc" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>optional to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af9b258741408ab495f3c39111a086ce2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename OtherType&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9b258741408ab495f3c39111a086ce2" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Different type optional to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a13d81953c1d5b925bfe76f2b168e9835"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename OtherType&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a13d81953c1d5b925bfe76f2b168e9835" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;OtherType&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Different type optional to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3be4f4d1a48bc2294e072d60caf7aecc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3be4f4d1a48bc2294e072d60caf7aecc" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span></span>
+            </h3>
+            <p>Assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a386061e52b6dd26070ad97b6f3d3bd41"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a386061e52b6dd26070ad97b6f3d3bd41" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value)</span></span>
+            </h3>
+            <p>Assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a30048c7e8bb213298445a73e33b45227"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">Type&amp; btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a30048c7e8bb213298445a73e33b45227" class="m-doc-self">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs the contained value in-place.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to construct.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the constructed value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2bfde381a63daf5bd73d791cd32da2ee"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />optional&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2bfde381a63daf5bd73d791cd32da2ee" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this optional with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>optional to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8fa1fb76a41146f9c4fea30c571c9f6f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8fa1fb76a41146f9c4fea30c571c9f6f" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; a,
+              <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a optional with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First optional to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second optional to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

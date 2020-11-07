@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::sound_item class | butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>sound_item <span class="m-thin">class</span>
+        </h1>
+        <p>Contains the required information to play sound effects.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>The assets conversion tools generate an object of this type in the build folder for each *.wav file.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a29ff4d2fedc2f17551ddec1120fa34c2" class="m-doc">sound_item</a>(</span><span class="m-doc-wrap">int id) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a9c7f4749dffccc47a0a56eaf239e8e3b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9c7f4749dffccc47a0a56eaf239e8e3b" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the internal ID.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7df9080d26d56138c7ea9f0e2c688ccb" class="m-doc">play</a>(</span><span class="m-doc-wrap">) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item with default settings.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a760e5840937ee78f52200b76bfe75501" class="m-doc">play</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acc792f1ecb5cbabd6e05d31d17246c81" class="m-doc">play</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> speed,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> panning) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0dc5f3d14885c31c46787baf314640e2" class="m-doc">play_with_priority</a>(</span><span class="m-doc-wrap">int priority) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item with default settings and the given priority.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2c45aa995c31ba00e281e04898adb0d2" class="m-doc">play_with_priority</a>(</span><span class="m-doc-wrap">int priority,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item with the given priority.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abc6925126ef6116d28a707349c08c5dd" class="m-doc">play_with_priority</a>(</span><span class="m-doc-wrap">int priority,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> speed,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> panning) const</span>
+            </dt>
+            <dd>Plays the sound effect specified by this item with the given priority.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a642664b8690ecf46c9ecc429327e75ac">
+              <span class="m-doc-wrap-bumper">auto <a href="#a642664b8690ecf46c9ecc429327e75ac" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sound__item.html" class="m-doc">sound_<wbr />item</a> a,
+              <a href="classbtn_1_1sound__item.html" class="m-doc">sound_<wbr />item</a> b) -&gt; friend bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a29ff4d2fedc2f17551ddec1120fa34c2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a29ff4d2fedc2f17551ddec1120fa34c2" class="m-doc-self">sound_item</a>(</span><span class="m-doc-wrap">int id) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">id</td>
+                  <td>Internal ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7df9080d26d56138c7ea9f0e2c688ccb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7df9080d26d56138c7ea9f0e2c688ccb" class="m-doc-self">play</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item with default settings.</p>
+<p>Default settings are volume = 1, speed = 1 and panning = 0.</p>
+          </div></section>
+          <section class="m-doc-details" id="a760e5840937ee78f52200b76bfe75501"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a760e5840937ee78f52200b76bfe75501" class="m-doc-self">play</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">volume</td>
+                  <td>Volume level, in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acc792f1ecb5cbabd6e05d31d17246c81"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acc792f1ecb5cbabd6e05d31d17246c81" class="m-doc-self">play</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> speed,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> panning) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">volume</td>
+                  <td>Volume level, in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>speed</td>
+                  <td>Playback rate, in the range [0..64].</td>
+                </tr>
+                <tr>
+                  <td>panning</td>
+                  <td>Panning level, in the range [-1..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0dc5f3d14885c31c46787baf314640e2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0dc5f3d14885c31c46787baf314640e2" class="m-doc-self">play_with_priority</a>(</span><span class="m-doc-wrap">int priority) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item with default settings and the given priority.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority relative to backgrounds in the range [-32767..32767].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If there&#x27;s playing too much sound effects at the same time, sound effects with higher priorities are discarded later.</p><p>Default settings are volume = 1, speed = 1 and panning = 0.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2c45aa995c31ba00e281e04898adb0d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2c45aa995c31ba00e281e04898adb0d2" class="m-doc-self">play_with_priority</a>(</span><span class="m-doc-wrap">int priority,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item with the given priority.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority relative to backgrounds in the range [-32767..32767].</td>
+                </tr>
+                <tr>
+                  <td>volume</td>
+                  <td>Volume level, in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If there&#x27;s playing too much sound effects at the same time, sound effects with higher priorities are discarded later.</p>
+          </div></section>
+          <section class="m-doc-details" id="abc6925126ef6116d28a707349c08c5dd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />sound_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abc6925126ef6116d28a707349c08c5dd" class="m-doc-self">play_with_priority</a>(</span><span class="m-doc-wrap">int priority,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> volume,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> speed,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> panning) const</span></span>
+            </h3>
+            <p>Plays the sound effect specified by this item with the given priority.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority relative to backgrounds in the range [-32767..32767].</td>
+                </tr>
+                <tr>
+                  <td>volume</td>
+                  <td>Volume level, in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>speed</td>
+                  <td>Playback rate, in the range [0..64].</td>
+                </tr>
+                <tr>
+                  <td>panning</td>
+                  <td>Panning level, in the range [-1..1].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If there&#x27;s playing too much sound effects at the same time, sound effects with higher priorities are discarded later.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

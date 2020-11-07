@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standard library &raquo; Containers &raquo; Strings module | butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__std.html">Standard library</a> &raquo;</span>
+          <span class="m-breadcrumb"><a href="group__container.html">Containers</a> &raquo;</span>
+          Strings <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Strings describe objects that can refer to a constant contiguous sequence of char values.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classbtn_1_1istring__base.html" class="m-doc">btn::istring_base</a>
+            </dt>
+            <dd>Base class of istring.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01istring__base_01_4.html" class="m-doc">btn::hash&lt;istring_base&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>.</dd>
+            <dt>
+              class <a href="classbtn_1_1ostringstream.html" class="m-doc">btn::ostringstream</a>
+            </dt>
+            <dd>Implements output operations on string based streams.</dd>
+            <dt>
+              class <a href="classbtn_1_1istring.html" class="m-doc">btn::istring</a>
+            </dt>
+            <dd>Base class of string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              class <a href="classbtn_1_1string.html" class="m-doc">btn::string</a>
+            </dt>
+            <dd>String implementation that uses a fixed size buffer.</dd>
+            <dt>
+              class <a href="classbtn_1_1string__view.html" class="m-doc">btn::string_view</a>
+            </dt>
+            <dd>Refers to a constant contiguous sequence of char values.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01string__view_01_4.html" class="m-doc">btn::hash&lt;string_view&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga2d14e109d10ec580a4d1f38d16f9d26b" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              char character) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends an additional character to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gafe0bdaf0615e08fcb263573c77405611" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const string_view&amp; view) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends additional characters to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaade711c39a90532b54f970e19f0f6016" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const istring_base&amp; string) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends additional characters to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gab52a7bebe37ba2ef43dd8606d73a7c19" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const char* char_array_ptr) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends additional characters to the given ostringstream.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaab6389d52fe4ba89099a7d53487eb0fa" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              char(&amp;char_array)[MaxSize]) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends additional characters to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga34680559658a45381514dd3e4ac5235e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              bool value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given bool value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gadd9e78e44d13a36ee8b043d34295479e" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              int value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given int value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga7d0ee17df732f476402a63fbdbb0cc49" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              long value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given long value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga340ed7930d1d0c1527d0803423a37b7c" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              int64_t value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given int64_t value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga9831d26ab5f8d6b82f055db0ce73c8dd" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              unsigned value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given unsigned value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gafc7d664b606698c6934473a67f0af7cc" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              unsigned long value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given unsigned long value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga230af849d06edaee75f2a15f699114d0" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              uint64_t value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given uint64_t value to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gac560861e7325a49d46fa92894718e706" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const void* ptr) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given pointer to the given ostringstream.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga79b868c0ac47db89ea06dec884e00731" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const nullptr_t&amp; null_ptr) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given null pointer to the given ostringstream.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int Precision&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gad454c52c89a9e905068767eaa1ab3550" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              fixed_t&lt;Precision&gt; value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given fixed point value to the given ostringstream.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga7e558203e164100039e6cccca84a6c76" class="m-doc">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) -&gt; string&lt;MaxSize - 1&gt;</span>
+            </dt>
+            <dd>Creates a string deducing its size from the size of the argument.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize, typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga9d05c938931728d6de3dd48cf60e368a" class="m-doc">to_string</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; string&lt;MaxSize&gt;</span>
+            </dt>
+            <dd>Converts the given value to a string.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga2d14e109d10ec580a4d1f38d16f9d26b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2d14e109d10ec580a4d1f38d16f9d26b" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              char character)</span></span>
+            </h3>
+            <p>Appends an additional character to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>character</td>
+                  <td>Character to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gafe0bdaf0615e08fcb263573c77405611"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafe0bdaf0615e08fcb263573c77405611" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const string_view&amp; view)</span></span>
+            </h3>
+            <p>Appends additional characters to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>view</td>
+                  <td><a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaade711c39a90532b54f970e19f0f6016"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaade711c39a90532b54f970e19f0f6016" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const istring_base&amp; string)</span></span>
+            </h3>
+            <p>Appends additional characters to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>string</td>
+                  <td>string to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gab52a7bebe37ba2ef43dd8606d73a7c19"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab52a7bebe37ba2ef43dd8606d73a7c19" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const char* char_array_ptr)</span></span>
+            </h3>
+            <p>Appends additional characters to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>char_array_ptr</td>
+                  <td>Pointer to null-terminated characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaab6389d52fe4ba89099a7d53487eb0fa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaab6389d52fe4ba89099a7d53487eb0fa" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              char(&amp;char_array)[MaxSize])</span></span>
+            </h3>
+            <p>Appends additional characters to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>char_array</td>
+                  <td>Non empty const characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga34680559658a45381514dd3e4ac5235e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga34680559658a45381514dd3e4ac5235e" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              bool value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given bool value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>bool value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gadd9e78e44d13a36ee8b043d34295479e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadd9e78e44d13a36ee8b043d34295479e" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              int value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given int value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>int value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7d0ee17df732f476402a63fbdbb0cc49"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7d0ee17df732f476402a63fbdbb0cc49" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              long value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given long value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>long value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga340ed7930d1d0c1527d0803423a37b7c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga340ed7930d1d0c1527d0803423a37b7c" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              int64_t value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given int64_t value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>int64_t value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9831d26ab5f8d6b82f055db0ce73c8dd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9831d26ab5f8d6b82f055db0ce73c8dd" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              unsigned value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given unsigned value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>unsigned value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gafc7d664b606698c6934473a67f0af7cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafc7d664b606698c6934473a67f0af7cc" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              unsigned long value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given unsigned long value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>unsigned long value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga230af849d06edaee75f2a15f699114d0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga230af849d06edaee75f2a15f699114d0" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              uint64_t value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given uint64_t value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>uint64_t value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac560861e7325a49d46fa92894718e706"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac560861e7325a49d46fa92894718e706" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const void* ptr)</span></span>
+            </h3>
+            <p>Appends the character representation of the given pointer to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>ptr</td>
+                  <td>pointer to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga79b868c0ac47db89ea06dec884e00731"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga79b868c0ac47db89ea06dec884e00731" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const nullptr_t&amp; null_ptr)</span></span>
+            </h3>
+            <p>Appends the character representation of the given null pointer to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>null_ptr</td>
+                  <td>Null pointer to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gad454c52c89a9e905068767eaa1ab3550"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gad454c52c89a9e905068767eaa1ab3550" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              fixed_t&lt;Precision&gt; value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given fixed point value to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">stream</td>
+                  <td>ostringstream in which to append to.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Fixed point value to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the ostringstream.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7e558203e164100039e6cccca84a6c76"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">string&lt;MaxSize - 1&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7e558203e164100039e6cccca84a6c76" class="m-doc-self">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize])</span></span>
+            </h3>
+            <p>Creates a string deducing its size from the size of the argument.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array</td>
+                  <td>Non empty const characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>string containing the given char array.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga9d05c938931728d6de3dd48cf60e368a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize, typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">string&lt;MaxSize&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga9d05c938931728d6de3dd48cf60e368a" class="m-doc-self">to_string</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span></span>
+            </h3>
+            <p>Converts the given value to a string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">MaxSize</td>
+                  <td>Maximum number of characters that can be stored in the output string.</td>
+                </tr>
+                <tr>
+                  <td>Type</td>
+                  <td></td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>value</td>
+                  <td>Value to print in the string.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>string containing the representation of the given value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

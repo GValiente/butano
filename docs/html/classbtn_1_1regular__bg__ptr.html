@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::regular_bg_ptr class | butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>regular_bg_ptr <span class="m-thin">class</span>
+        </h1>
+        <p>Smart pointer that retains shared ownership of a regular background.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Several <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> objects may own the same regular background.</p><p>The regular background is released when the last remaining <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a896bbc9bf195ef6e35987eaae9c2f70c" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a2e80edbc48f903b3b1bdfb9a0ae0884e" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#af418b7d86eaf938be45013aa5e4bea88" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a139046e6b3f428a4e9b4faa9a6da1d9d" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ada901ca7483a37c6f3b030ff528ab0f3" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a3fd161e629b37eed203927406fe36fe2" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#acc92227b6fafeda4541c26e809ce8a3e" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a81cf49879ebea17321b02dea84efe4c6" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a38beb784da9db079ccbf1a6c38d7768b" class="m-doc">regular_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab3ddf57b21f0dcd0f17b6275970eadde" class="m-doc">regular_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="ac1059907dcddbaff7345df4ecffb4fa4">
+              <span class="m-doc-wrap-bumper"><a href="#ac1059907dcddbaff7345df4ecffb4fa4" class="m-doc-self">~regular_bg_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced regular background if no more <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a86aaf815f179d3e3416a120f397e44c0" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aeaff73677cd5c688cf3d1544665ae7d2" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="ab59942d004b1b9c132e629651b0e0c4d">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab59942d004b1b9c132e629651b0e0c4d" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1size.html" class="m-doc">size</a></span>
+            </dt>
+            <dd>Returns the size in pixels of the regular background.</dd>
+            <dt id="acfdb421172d0e959ed176daf1c790615">
+              <span class="m-doc-wrap-bumper">auto <a href="#acfdb421172d0e959ed176daf1c790615" class="m-doc-self">tiles</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the tiles used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5ce42843afd2ae3f1586444edffde9ef" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4284463b73a53831952974088a3218cc" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a756f720ff1c29e3569989d240e2d9146" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span>
+            </dt>
+            <dd>Replaces the tiles used by this regular background with a new tile set created with the given <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>.</dd>
+            <dt id="ae0628243e7bcda34714d894fda21ccfb">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae0628243e7bcda34714d894fda21ccfb" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the color palette used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a3e35342ed2178efe8e73cb951bcc4340" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette)</span>
+            </dt>
+            <dd>Sets the color palette to use by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a6486c50fbf2ab8e03f5fe3805b6aaa4d" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span>
+            </dt>
+            <dd>Sets the color palette to use by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7723da65593ac2fa1a15a89db496ca82" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Replaces the color palette used by this regular background with a new one created with the given <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae34f7b1272e4cb44e63137ddcadbd00e" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette)</span>
+            </dt>
+            <dd>Sets the tiles and the color palette to use by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af98808733669c82b83894a7f9e5e785d" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Replaces the tiles and the color palette used by this regular background with the created with the given <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a> and <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</dd>
+            <dt id="a2bf46efd658911211e52902ab9350c67">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2bf46efd658911211e52902ab9350c67" class="m-doc-self">map</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the map used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad6aef340cf119d994f8978c5cd535319" class="m-doc">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map)</span>
+            </dt>
+            <dd>Sets the map used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a3fcfe8ce699ca6190c1c18a60034076a" class="m-doc">set_map</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map)</span>
+            </dt>
+            <dd>Sets the map used by this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1639f367d34ce16c866a8b16f6cae6cf" class="m-doc">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a>&amp; map_item)</span>
+            </dt>
+            <dd>Replaces the map used by this regular background with a new map created with the given <a href="classbtn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a973b95a50d03ff269a0f5b033dce00c6" class="m-doc">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Replaces the tiles, the color palette and the map used by this regular background with the created with the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</dd>
+            <dt id="a81e9645eb3b17e3d65b5b97b727f6c8f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a81e9645eb3b17e3d65b5b97b727f6c8f" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the regular background (relative to its camera, if it has one).</dd>
+            <dt id="a2aa8ed59138857e2fe6e06b6ea9eb9b1">
+              <span class="m-doc-wrap-bumper">void <a href="#a2aa8ed59138857e2fe6e06b6ea9eb9b1" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the regular background (relative to its camera, if it has one).</dd>
+            <dt id="aeeeecc1a7776e83f01badeae3a9a47ec">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeeeecc1a7776e83f01badeae3a9a47ec" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the regular background (relative to its camera, if it has one).</dd>
+            <dt id="a620f6bf4dcee874edb9f99226b8a663a">
+              <span class="m-doc-wrap-bumper">void <a href="#a620f6bf4dcee874edb9f99226b8a663a" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the vertical position of the regular background (relative to its camera, if it has one).</dd>
+            <dt id="ad958acfd27a86d83d406e65f0ae097b2">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad958acfd27a86d83d406e65f0ae097b2" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the regular background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a88c2bab5d9157a748504baf0b54f833a" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the position of the regular background (relative to its camera, if it has one).</dd>
+            <dt id="a18c9460ca0671ff480793eefdd6685fe">
+              <span class="m-doc-wrap-bumper">void <a href="#a18c9460ca0671ff480793eefdd6685fe" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            </dt>
+            <dd>Sets the position of the regular background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abba46294e4c96b39b1a5f8fdd823073e" class="m-doc">priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the regular background relative to sprites and other backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0c724da21f3deab45c6d8a08d4dee41f" class="m-doc">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span>
+            </dt>
+            <dd>Sets the priority of the regular background relative to sprites and other backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a56e055aa20e79752aaaa1de558efacd5" class="m-doc">z_order</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the regular background relative to other backgrounds, excluding sprites.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aac8fdb07d551707dd21bf9fcb75338f1" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span>
+            </dt>
+            <dd>Sets the priority of the regular background relative to other backgrounds, excluding sprites.</dd>
+            <dt id="aadd5357d3c7fe1123b53e75f01a87ab4">
+              <span class="m-doc-wrap-bumper">auto <a href="#aadd5357d3c7fe1123b53e75f01a87ab4" class="m-doc-self">above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background is drawn above the given one or not.</dd>
+            <dt id="a2526108695602b4fb63c359f9100b253">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2526108695602b4fb63c359f9100b253" class="m-doc-self">above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite_ptr) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background is drawn above the given sprite or not.</dd>
+            <dt id="aecd9422ca20fe5bf816025886eb66b9a">
+              <span class="m-doc-wrap-bumper">void <a href="#aecd9422ca20fe5bf816025886eb66b9a" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Modify this regular background to be drawn above the given one.</dd>
+            <dt id="acb02f356d11a0de941921189cc1004b3">
+              <span class="m-doc-wrap-bumper">void <a href="#acb02f356d11a0de941921189cc1004b3" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite_ptr)</span>
+            </dt>
+            <dd>Modify this regular background to be drawn above the given sprite.</dd>
+            <dt id="a47261c3d63873a8d3d90b28af42284c2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a47261c3d63873a8d3d90b28af42284c2" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to this regular background or not.</dd>
+            <dt id="acdc80cf642f70f24facee1c8e806f6c9">
+              <span class="m-doc-wrap-bumper">void <a href="#acdc80cf642f70f24facee1c8e806f6c9" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to this regular background or not.</dd>
+            <dt id="a83d22044f7932ab00f2770694a4ef567">
+              <span class="m-doc-wrap-bumper">auto <a href="#a83d22044f7932ab00f2770694a4ef567" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to this regular background or not.</dd>
+            <dt id="a43a60c69ce2aeb5110a88b057cf5f2af">
+              <span class="m-doc-wrap-bumper">void <a href="#a43a60c69ce2aeb5110a88b057cf5f2af" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            </dt>
+            <dd>Sets if blending must be applied to this regular background or not.</dd>
+            <dt id="ae591fcd0a0c56c80f4c2a2b46da6fcc8">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae591fcd0a0c56c80f4c2a2b46da6fcc8" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background must be committed to the GBA or not.</dd>
+            <dt id="a4f9d0d2a17ee88cf2fff192876faeb0f">
+              <span class="m-doc-wrap-bumper">void <a href="#a4f9d0d2a17ee88cf2fff192876faeb0f" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if this regular background must be committed to the GBA or not.</dd>
+            <dt id="abdf8acfacb98d33888ce781a50e74fed">
+              <span class="m-doc-wrap-bumper">auto <a href="#abdf8acfacb98d33888ce781a50e74fed" class="m-doc-self">visible_in_window</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1window.html" class="m-doc">window</a>&amp; window) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background is visible in the given window or not.</dd>
+            <dt id="a068cfba1509e4813fba15573f34c21a3">
+              <span class="m-doc-wrap-bumper">void <a href="#a068cfba1509e4813fba15573f34c21a3" class="m-doc-self">set_visible_in_window</a>(</span><span class="m-doc-wrap">bool visible,
+              <a href="classbtn_1_1window.html" class="m-doc">window</a>&amp; window)</span>
+            </dt>
+            <dd>Sets if this regular background must be visible in the given window or not.</dd>
+            <dt id="a198b57a9ecb2a45e98b58795132b1995">
+              <span class="m-doc-wrap-bumper">auto <a href="#a198b57a9ecb2a45e98b58795132b1995" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a24bcc62d85e76303e596bc51e69e394e" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a296445bf5abe79101754c1c7a70745f9" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background.</dd>
+            <dt id="a0a6226dc3fafee3de004a015ef4f71bd">
+              <span class="m-doc-wrap-bumper">void <a href="#a0a6226dc3fafee3de004a015ef4f71bd" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background (if any).</dd>
+            <dt id="a8e73bce778c4a25343e7d23789d53949">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8e73bce778c4a25343e7d23789d53949" class="m-doc-self">attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1regular__bg__attributes.html" class="m-doc">regular_<wbr />bg_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the GBA for this regular background.</dd>
+            <dt id="ad83aa8fdd503d7809aa38c703872e451">
+              <span class="m-doc-wrap-bumper">void <a href="#ad83aa8fdd503d7809aa38c703872e451" class="m-doc-self">set_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__attributes.html" class="m-doc">regular_<wbr />bg_<wbr />attributes</a>&amp; attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the GBA for this regular background.</dd>
+            <dt id="a9b88c7bae97a682e0d5dfbee63c5292d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9b88c7bae97a682e0d5dfbee63c5292d" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
+            </dt>
+            <dd>Returns the internal handle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae6fba6dc1a7d651d132eb587baf17278" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1fdb33265abb47d632617817aac82183" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a32b4d939d5f201ed98d2c1fa8da0270b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a32b4d939d5f201ed98d2c1fa8da0270b" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; a,
+              const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a896bbc9bf195ef6e35987eaae9c2f70c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a896bbc9bf195ef6e35987eaae9c2f70c" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a> containing the required information to generate the regular background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2e80edbc48f903b3b1bdfb9a0ae0884e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e80edbc48f903b3b1bdfb9a0ae0884e" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a> containing the required information to generate the regular background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af418b7d86eaf938be45013aa5e4bea88"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af418b7d86eaf938be45013aa5e4bea88" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a139046e6b3f428a4e9b4faa9a6da1d9d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a139046e6b3f428a4e9b4faa9a6da1d9d" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ada901ca7483a37c6f3b030ff528ab0f3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ada901ca7483a37c6f3b030ff528ab0f3" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a> containing the required information to generate the regular background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3fd161e629b37eed203927406fe36fe2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3fd161e629b37eed203927406fe36fe2" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the regular background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a> containing the required information to generate the regular background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acc92227b6fafeda4541c26e809ce8a3e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acc92227b6fafeda4541c26e809ce8a3e" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a81cf49879ebea17321b02dea84efe4c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a81cf49879ebea17321b02dea84efe4c6" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbtn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a38beb784da9db079ccbf1a6c38d7768b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a38beb784da9db079ccbf1a6c38d7768b" class="m-doc-self">regular_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab3ddf57b21f0dcd0f17b6275970eadde"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab3ddf57b21f0dcd0f17b6275970eadde" class="m-doc-self">regular_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a86aaf815f179d3e3416a120f397e44c0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a86aaf815f179d3e3416a120f397e44c0" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aeaff73677cd5c688cf3d1544665ae7d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeaff73677cd5c688cf3d1544665ae7d2" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5ce42843afd2ae3f1586444edffde9ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ce42843afd2ae3f1586444edffde9ef" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4284463b73a53831952974088a3218cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4284463b73a53831952974088a3218cc" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a756f720ff1c29e3569989d240e2d9146"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a756f720ff1c29e3569989d240e2d9146" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this regular background with a new tile set created with the given <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new background tiles to use by this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new background tile set, the <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> used by this regular background is removed, so VRAM usage is reduced.</p><p>The new background tiles must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3e35342ed2178efe8e73cb951bcc4340"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3e35342ed2178efe8e73cb951bcc4340" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette)</span></span>
+            </h3>
+            <p>Sets the color palette to use by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6486c50fbf2ab8e03f5fe3805b6aaa4d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6486c50fbf2ab8e03f5fe3805b6aaa4d" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span></span>
+            </h3>
+            <p>Sets the color palette to use by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7723da65593ac2fa1a15a89db496ca82"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7723da65593ac2fa1a15a89db496ca82" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Replaces the color palette used by this regular background with a new one created with the given <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td>It creates the color palette to use by this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new color palette, the <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> used by this regular background is removed, so VRAM usage is reduced.</p><p>The new color palette must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae34f7b1272e4cb44e63137ddcadbd00e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae34f7b1272e4cb44e63137ddcadbd00e" class="m-doc-self">set_tiles_and_palette</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Sets the tiles and the color palette to use by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to set.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The given parameters must be compatible with the current map of the regular background.</p>
+          </div></section>
+          <section class="m-doc-details" id="af98808733669c82b83894a7f9e5e785d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af98808733669c82b83894a7f9e5e785d" class="m-doc-self">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Replaces the tiles and the color palette used by this regular background with the created with the given <a href="classbtn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a> and <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new background tiles to use by this regular background.</td>
+                </tr>
+                <tr>
+                  <td>palette_item</td>
+                  <td>It creates the color palette to use by this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources used by this regular background are removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad6aef340cf119d994f8978c5cd535319"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad6aef340cf119d994f8978c5cd535319" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map)</span></span>
+            </h3>
+            <p>Sets the map used by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3fcfe8ce699ca6190c1c18a60034076a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3fcfe8ce699ca6190c1c18a60034076a" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map)</span></span>
+            </h3>
+            <p>Sets the map used by this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1639f367d34ce16c866a8b16f6cae6cf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1639f367d34ce16c866a8b16f6cae6cf" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a>&amp; map_item)</span></span>
+            </h3>
+            <p>Replaces the map used by this regular background with a new map created with the given <a href="classbtn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_item</td>
+                  <td>It creates the new map to use by this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new map, the <a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a> used by this regular background is removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a973b95a50d03ff269a0f5b033dce00c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a973b95a50d03ff269a0f5b033dce00c6" class="m-doc-self">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Replaces the tiles, the color palette and the map used by this regular background with the created with the given <a href="classbtn_1_1regular__bg__item.html" class="m-doc">regular_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td>It creates the resources to use by this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources used by this regular background are removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a88c2bab5d9157a748504baf0b54f833a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a88c2bab5d9157a748504baf0b54f833a" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the position of the regular background (relative to its camera, if it has one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the regular background (relative to its camera, if it has one).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the regular background (relative to its camera, if it has one).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abba46294e4c96b39b1a5f8fdd823073e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abba46294e4c96b39b1a5f8fdd823073e" class="m-doc-self">priority</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the regular background relative to sprites and other backgrounds.</p>
+<p>Backgrounds with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a0c724da21f3deab45c6d8a08d4dee41f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0c724da21f3deab45c6d8a08d4dee41f" class="m-doc-self">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span></span>
+            </h3>
+            <p>Sets the priority of the regular background relative to sprites and other backgrounds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority in the range [0..3].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a56e055aa20e79752aaaa1de558efacd5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56e055aa20e79752aaaa1de558efacd5" class="m-doc-self">z_order</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the regular background relative to other backgrounds, excluding sprites.</p>
+<p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="aac8fdb07d551707dd21bf9fcb75338f1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aac8fdb07d551707dd21bf9fcb75338f1" class="m-doc-self">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span></span>
+            </h3>
+            <p>Sets the priority of the regular background relative to other backgrounds, excluding sprites.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">z_order</td>
+                  <td>Priority relative to other backgrounds, excluding sprites, in the range [-32767..32767].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a24bcc62d85e76303e596bc51e69e394e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a24bcc62d85e76303e596bc51e69e394e" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a296445bf5abe79101754c1c7a70745f9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a296445bf5abe79101754c1c7a70745f9" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this regular background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this regular background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae6fba6dc1a7d651d132eb587baf17278"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae6fba6dc1a7d651d132eb587baf17278" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1fdb33265abb47d632617817aac82183"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1fdb33265abb47d632617817aac82183" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

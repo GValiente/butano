@@ -25,6 +25,7 @@ public:
     using mapped_type = Value; //!< Value type alias.
     using value_type = pair<const key_type, mapped_type>; //!< (Key, Value) pair type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using hash_type = unsigned; //!< Hash type alias.
     using hasher = KeyHash; //!< Hash functor alias.
     using key_equal = KeyEqual; //!< Equality functor alias.
@@ -46,6 +47,7 @@ public:
         using mapped_type = iunordered_map::mapped_type; //!< Value type alias.
         using value_type = iunordered_map::value_type; //!< (Key, Value) pair type alias.
         using size_type = iunordered_map::size_type; //!< Size type alias.
+        using difference_type = iunordered_map::difference_type; //!< Difference type alias.
         using hash_type = iunordered_map::hash_type; //!< Hash type alias.
         using hasher = iunordered_map::hasher; //!< Hash functor alias.
         using key_equal = iunordered_map::key_equal; //!< Equality functor alias.
@@ -188,6 +190,7 @@ public:
         using mapped_type = iunordered_map::mapped_type; //!< Value type alias.
         using value_type = iunordered_map::value_type; //!< (Key, Value) pair type alias.
         using size_type = iunordered_map::size_type; //!< Size type alias.
+        using difference_type = iunordered_map::difference_type; //!< Difference type alias.
         using hash_type = iunordered_map::hash_type; //!< Hash type alias.
         using hasher = iunordered_map::hasher; //!< Hash functor alias.
         using key_equal = iunordered_map::key_equal; //!< Equality functor alias.
@@ -1426,6 +1429,7 @@ public:
     using mapped_type = Value; //!< Value type alias.
     using value_type = pair<const key_type, mapped_type>; //!< (Key, Value) pair type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using hash_type = unsigned; //!< Hash type alias.
     using hasher = KeyHash; //!< Hash functor alias.
     using key_equal = KeyEqual; //!< Equality functor alias.

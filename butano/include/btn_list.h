@@ -47,6 +47,7 @@ protected:
 public:
     using value_type = Type; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = Type&; //!< Reference alias.
     using const_reference = const Type&; //!< Const reference alias.
     using pointer = Type*; //!< Pointer alias.
@@ -61,6 +62,7 @@ public:
     public:
         using value_type = ilist::value_type; //!< Value type alias.
         using size_type = ilist::size_type; //!< Size type alias.
+        using difference_type = ilist::difference_type; //!< Difference type alias.
         using reference = ilist::reference; //!< Reference alias.
         using const_reference = ilist::const_reference; //!< Const reference alias.
         using pointer = ilist::pointer; //!< Pointer alias.
@@ -156,7 +158,9 @@ public:
 
     public:
         using value_type = ilist::value_type; //!< Value type alias.
+
         using size_type = ilist::size_type; //!< Size type alias.
+        using difference_type = ilist::difference_type; //!< Difference type alias.
         using reference = ilist::reference; //!< Reference type alias.
         using const_reference = ilist::const_reference; //!< Const reference alias.
         using pointer = ilist::pointer; //!< Pointer alias.
@@ -971,6 +975,7 @@ class list : public ilist<Type>
 public:
     using value_type = Type; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = Type&; //!< Reference alias.
     using const_reference = const Type&; //!< Const reference alias.
     using pointer = Type*; //!< Pointer alias.

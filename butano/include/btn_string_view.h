@@ -29,6 +29,7 @@ class string_view
 public:
     using value_type = char; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = char&; //!< Reference alias.
     using const_reference = const char&; //!< Const reference alias.
     using pointer = char*; //!< Pointer alias.

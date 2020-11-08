@@ -24,6 +24,7 @@ public:
     using key_type = Key; //!< Key type alias.
     using value_type = Key; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using hash_type = unsigned; //!< Hash type alias.
     using hasher = KeyHash; //!< Hash functor alias.
     using key_equal = KeyEqual; //!< Equality functor alias.
@@ -44,6 +45,7 @@ public:
         using key_type = iunordered_set::key_type; //!< Key type alias.
         using value_type = iunordered_set::value_type; //!< Value type alias.
         using size_type = iunordered_set::size_type; //!< Size type alias.
+        using difference_type = iunordered_set::difference_type; //!< Difference type alias.
         using hash_type = iunordered_set::hash_type; //!< Hash type alias.
         using hasher = iunordered_set::hasher; //!< Hash functor alias.
         using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
@@ -185,6 +187,7 @@ public:
         using key_type = iunordered_set::key_type; //!< Key type alias.
         using value_type = iunordered_set::value_type; //!< Value type alias.
         using size_type = iunordered_set::size_type; //!< Size type alias.
+        using difference_type = iunordered_set::difference_type; //!< Difference type alias.
         using hash_type = iunordered_set::hash_type; //!< Hash type alias.
         using hasher = iunordered_set::hasher; //!< Hash functor alias.
         using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
@@ -1137,6 +1140,7 @@ public:
     using key_type = Key; //!< Key type alias.
     using value_type = Key; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using hash_type = unsigned; //!< Hash type alias.
     using hasher = KeyHash; //!< Hash functor alias.
     using key_equal = KeyEqual; //!< Equality functor alias.

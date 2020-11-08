@@ -44,6 +44,7 @@ private:
 public:
     using value_type = Type; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = Type&; //!< Reference alias.
     using const_reference = const Type&; //!< Const reference alias.
     using pointer = Type*; //!< Pointer alias.
@@ -58,6 +59,7 @@ public:
     public:
         using value_type = intrusive_list::value_type; //!< Value type alias.
         using size_type = intrusive_list::size_type; //!< Size type alias.
+        using difference_type = intrusive_list::difference_type; //!< Difference type alias.
         using reference = intrusive_list::reference; //!< Reference alias.
         using const_reference = intrusive_list::const_reference; //!< Const reference alias.
         using pointer = intrusive_list::pointer; //!< Pointer alias.
@@ -154,6 +156,7 @@ public:
     public:
         using value_type = intrusive_list::value_type; //!< Value type alias.
         using size_type = intrusive_list::size_type; //!< Size type alias.
+        using difference_type = intrusive_list::difference_type; //!< Difference type alias.
         using reference = intrusive_list::reference; //!< Reference type alias.
         using const_reference = intrusive_list::const_reference; //!< Const reference alias.
         using pointer = intrusive_list::pointer; //!< Pointer alias.

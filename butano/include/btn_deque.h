@@ -24,6 +24,7 @@ class ideque
 public:
     using value_type = Type; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = Type&; //!< Reference alias.
     using const_reference = const Type&; //!< Const reference alias.
     using pointer = Type*; //!< Pointer alias.
@@ -38,6 +39,7 @@ public:
     public:
         using value_type = ideque::value_type; //!< Value type alias.
         using size_type = ideque::size_type; //!< Size type alias.
+        using difference_type = ideque::difference_type; //!< Difference type alias.
         using reference = ideque::reference; //!< Reference alias.
         using const_reference = ideque::const_reference; //!< Const reference alias.
         using pointer = ideque::pointer; //!< Pointer alias.
@@ -243,6 +245,7 @@ public:
     public:
         using value_type = ideque::value_type; //!< Value type alias.
         using size_type = ideque::size_type; //!< Size type alias.
+        using difference_type = ideque::difference_type; //!< Difference type alias.
         using reference = ideque::reference; //!< Reference alias.
         using const_reference = ideque::const_reference; //!< Const reference alias.
         using pointer = ideque::pointer; //!< Pointer alias.
@@ -1405,6 +1408,7 @@ class deque : public ideque<Type>
 public:
     using value_type = Type; //!< Value type alias.
     using size_type = int; //!< Size type alias.
+    using difference_type = int; //!< Difference type alias.
     using reference = Type&; //!< Reference alias.
     using const_reference = const Type&; //!< Const reference alias.
     using pointer = Type*; //!< Pointer alias.

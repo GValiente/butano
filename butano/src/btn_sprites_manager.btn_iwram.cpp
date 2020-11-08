@@ -15,9 +15,9 @@ namespace btn::sprites_manager
 
 void _check_items_on_screen_impl()
 {
-    for(sorted_sprites::layer* layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : sorted_sprites::layers())
     {
-        for(sprites_manager_item& item : *layer)
+        for(sprites_manager_item& item : layer.items())
         {
             if(item.check_on_screen)
             {
@@ -52,9 +52,9 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
     auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
     int visible_items_count = 0;
 
-    for(sorted_sprites::layer* layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : sorted_sprites::layers())
     {
-        for(sprites_manager_item& item : *layer)
+        for(sprites_manager_item& item : layer.items())
         {
             if(item.on_screen)
             {
@@ -84,7 +84,7 @@ bool _update_cameras_impl(sorted_sprites::layer& layer)
 {
     bool check_items_on_screen = false;
 
-    for(sprites_manager_item& item : layer)
+    for(sprites_manager_item& item : layer.items())
     {
         if(item.camera)
         {

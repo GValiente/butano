@@ -976,9 +976,9 @@ void reload_blending()
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
 
-    for(sorted_sprites::layer* layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : sorted_sprites::layers())
     {
-        for(item_type& item : *layer)
+        for(item_type& item : layer.items())
         {
             hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
         }
@@ -1153,9 +1153,9 @@ void update_cameras()
 {
     bool check_items_on_screen = false;
 
-    for(sorted_sprites::layer* layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : sorted_sprites::layers())
     {
-        check_items_on_screen |= _update_cameras_impl(*layer);
+        check_items_on_screen |= _update_cameras_impl(layer);
     }
 
     data.check_items_on_screen |= check_items_on_screen;

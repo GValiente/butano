@@ -21,10 +21,18 @@
 
 namespace btn
 {
+    class sprite_builder;
 
-class sprite_builder;
+    using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
+}
 
-using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
+namespace btn::sorted_sprites
+{
+    class layer;
+}
+
+namespace btn
+{
 
 class sprites_manager_item : public intrusive_list_node_type
 {
@@ -36,6 +44,7 @@ public:
     point hw_position;
     unsigned usages = 1;
     sort_key sprite_sort_key;
+    btn::sorted_sprites::layer* sort_layer_ptr;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;

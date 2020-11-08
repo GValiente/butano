@@ -582,49 +582,13 @@ void set_z_order(id_type id, int z_order)
     }
 }
 
-optional<bool> above(id_type id, id_type other_id)
+void put_above(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    auto other_item = static_cast<item_type*>(other_id);
-    sort_key this_sort_key = item->sprite_sort_key;
-    sort_key other_sort_key = other_item->sprite_sort_key;
 
-    if(this_sort_key < other_sort_key)
+    if(sorted_sprites::put_in_front_of_layer(*item))
     {
-        return true;
-    }
-
-    if(this_sort_key > other_sort_key)
-    {
-        return false;
-    }
-
-    return nullopt;
-}
-
-void put_above(id_type id, id_type other_id)
-{
-    auto item = static_cast<item_type*>(id);
-    auto other_item = static_cast<item_type*>(other_id);
-    sort_key this_sort_key = item->sprite_sort_key;
-    sort_key other_sort_key = other_item->sprite_sort_key;
-
-    if(this_sort_key == other_sort_key)
-    {
-        if(sorted_sprites::put_in_front_of_layer(*item))
-        {
-            data.rebuild_handles = true;
-        }
-    }
-    else if(this_sort_key > other_sort_key)
-    {
-        int other_z_order = other_sort_key.z_order();
-        set_bg_priority(id, other_sort_key.priority());
-
-        if(this_sort_key.z_order() > other_z_order)
-        {
-            set_z_order(id, other_z_order);
-        }
+        data.rebuild_handles = true;
     }
 }
 

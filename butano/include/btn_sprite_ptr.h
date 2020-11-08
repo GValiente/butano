@@ -19,7 +19,6 @@ class camera_ptr;
 class fixed_point;
 class sprite_item;
 class sprite_builder;
-class regular_bg_ptr;
 class sprite_tiles_ptr;
 class sprite_shape_size;
 class sprite_tiles_item;
@@ -552,25 +551,9 @@ public:
     void set_z_order(int z_order);
 
     /**
-     * @brief Indicates if this sprite is drawn above the given one if they differ in their bg_priority or z_order.
-     * Otherwise, it returns <b>nullopt</b>.
+     * @brief Modify this sprite to be drawn above all of the other sprites with the same priorities.
      */
-    [[nodiscard]] optional<bool> above(const sprite_ptr& other) const;
-
-    /**
-     * @brief Indicates if this sprite is drawn above the given regular background or not.
-     */
-    [[nodiscard]] bool above(const regular_bg_ptr& bg_ptr) const;
-
-    /**
-     * @brief Modify this sprite to be drawn above the given one.
-     */
-    void put_above(const sprite_ptr& other);
-
-    /**
-     * @brief Modify this sprite to be drawn above the given regular background.
-     */
-    void put_above(const regular_bg_ptr& bg_ptr);
+    void put_above();
 
     /**
      * @brief Indicates if this sprite is flipped in the horizontal axis or not.

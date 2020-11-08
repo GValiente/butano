@@ -7,7 +7,6 @@
 
 #include "btn_size.h"
 #include "btn_window.h"
-#include "btn_sprite_ptr.h"
 #include "btn_bgs_manager.h"
 #include "btn_bg_tiles_ptr.h"
 #include "btn_bg_palette_ptr.h"
@@ -279,41 +278,9 @@ void regular_bg_ptr::set_z_order(int z_order)
     bgs_manager::set_z_order(_handle, z_order);
 }
 
-bool regular_bg_ptr::above(const regular_bg_ptr& other) const
+void regular_bg_ptr::put_above()
 {
-    if(*this != other)
-    {
-        return bgs_manager::above(_handle, other._handle);
-    }
-
-    return false;
-}
-
-bool regular_bg_ptr::above(const sprite_ptr& sprite_ptr) const
-{
-    return priority() < sprite_ptr.bg_priority();
-}
-
-void regular_bg_ptr::put_above(const regular_bg_ptr& other)
-{
-    if(*this != other)
-    {
-        bgs_manager::put_above(_handle, other._handle);
-    }
-}
-
-void regular_bg_ptr::put_above(const sprite_ptr& sprite_ptr)
-{
-    int this_priority = priority();
-    int sprite_priority = sprite_ptr.bg_priority();
-
-    if(this_priority >= sprite_priority)
-    {
-        if(sprite_priority > 0)
-        {
-            set_priority(sprite_priority - 1);
-        }
-    }
+    bgs_manager::put_above(_handle);
 }
 
 bool regular_bg_ptr::mosaic_enabled() const

@@ -146,30 +146,6 @@ namespace
             data.commit = true;
         }
     }
-
-    pair<int, int> _indexes(id_type id, id_type other_id)
-    {
-        auto item = static_cast<const item_type*>(id);
-        auto other_item = static_cast<const item_type*>(other_id);
-        int index = -1;
-        int other_index = -1;
-
-        for(int current_index = 0, limit = data.items_vector.size(); current_index < limit; ++current_index)
-        {
-            const item_type* current_item = data.items_vector[current_index];
-
-            if(current_item == item)
-            {
-                index = current_index;
-            }
-            else if(current_item == other_item)
-            {
-                other_index = current_index;
-            }
-        }
-
-        return make_pair(index, other_index);
-    }
 }
 
 int used_count()
@@ -411,58 +387,35 @@ void set_z_order(id_type id, int z_order)
     }
 }
 
-bool above(id_type id, id_type other_id)
-{
-    auto item = static_cast<const item_type*>(id);
-    auto other_item = static_cast<const item_type*>(other_id);
-    sort_key this_sort_key = item->bg_sort_key;
-    sort_key other_sort_key = other_item->bg_sort_key;
-
-    if(this_sort_key < other_sort_key)
-    {
-        return true;
-    }
-
-    if(this_sort_key > other_sort_key)
-    {
-        return false;
-    }
-
-    pair<int, int> indexes = _indexes(id, other_id);
-    return indexes.first > indexes.second;
-}
-
-void put_above(id_type id, id_type other_id)
+void put_above(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    auto other_item = static_cast<item_type*>(other_id);
     sort_key this_sort_key = item->bg_sort_key;
-    sort_key other_sort_key = other_item->bg_sort_key;
+    bool order_modified = false;
 
-    if(this_sort_key == other_sort_key)
+    for(int index = 0, limit = data.items_vector.size() - 1; index < limit; ++index)
     {
-        pair<int, int> indexes = _indexes(id, other_id);
+        item_type*& current_item_ptr = data.items_vector[index];
 
-        if(indexes.first < indexes.second)
+        if(current_item_ptr == item)
         {
-            data.items_vector.erase(data.items_vector.begin() + indexes.first);
-            data.items_vector.push_back(item);
+            item_type*& next_item_ptr = data.items_vector[index + 1];
 
-            if(item->visible)
+            if(next_item_ptr->bg_sort_key == this_sort_key)
             {
-                data.rebuild_handles = true;
+                swap(current_item_ptr, next_item_ptr);
+                order_modified = true;
+            }
+            else
+            {
+                break;
             }
         }
     }
-    else if(this_sort_key > other_sort_key)
-    {
-        int other_z_order = other_sort_key.z_order();
-        set_priority(id, other_sort_key.priority());
 
-        if(this_sort_key.z_order() > other_z_order)
-        {
-            set_z_order(id, other_z_order);
-        }
+    if(order_modified && item->visible)
+    {
+        data.rebuild_handles = true;
     }
 }
 

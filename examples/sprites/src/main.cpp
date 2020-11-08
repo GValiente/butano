@@ -7,7 +7,6 @@
 #include "btn_math.h"
 #include "btn_keypad.h"
 #include "btn_display.h"
-#include "btn_optional.h"
 #include "btn_blending.h"
 #include "btn_bg_palettes.h"
 #include "btn_regular_bg_ptr.h"
@@ -589,29 +588,28 @@ namespace
         btn::sprite_ptr green_sprite = btn::sprite_items::green_sprite.create_sprite(-32, -32);
         btn::sprite_ptr blue_sprite = btn::sprite_items::blue_sprite.create_sprite(-32, 32);
         btn::sprite_ptr yellow_sprite = btn::sprite_items::yellow_sprite.create_sprite(32, 32);
-        btn::optional<btn::sprite_ptr> red_sprite = btn::sprite_items::red_sprite.create_sprite(0, 0);
+        btn::sprite_ptr red_sprite = btn::sprite_items::red_sprite.create_sprite(0, 0);
 
         while(! btn::keypad::start_pressed())
         {
             if(btn::keypad::b_pressed())
             {
-                blue_sprite.put_above(*red_sprite);
+                blue_sprite.put_above();
             }
 
             if(btn::keypad::a_pressed())
             {
-                yellow_sprite.put_above(*red_sprite);
+                yellow_sprite.put_above();
             }
 
             if(btn::keypad::l_pressed())
             {
-                green_sprite.put_above(*red_sprite);
+                green_sprite.put_above();
             }
 
             if(btn::keypad::r_pressed())
             {
-                red_sprite.reset();
-                red_sprite = btn::sprite_items::red_sprite.create_sprite(0, 0);
+                red_sprite.put_above();
             }
 
             info.update();

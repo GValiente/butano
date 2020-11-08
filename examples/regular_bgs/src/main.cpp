@@ -7,7 +7,6 @@
 #include "btn_math.h"
 #include "btn_keypad.h"
 #include "btn_display.h"
-#include "btn_optional.h"
 #include "btn_blending.h"
 #include "btn_bgs_mosaic.h"
 #include "btn_bg_palettes.h"
@@ -281,29 +280,28 @@ namespace
         btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(-64, -64);
         btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(-64, 64);
         btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(64, 64);
-        btn::optional<btn::regular_bg_ptr> red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
 
         while(! btn::keypad::start_pressed())
         {
             if(btn::keypad::b_pressed())
             {
-                blue_bg.put_above(*red_bg);
+                blue_bg.put_above();
             }
 
             if(btn::keypad::a_pressed())
             {
-                yellow_bg.put_above(*red_bg);
+                yellow_bg.put_above();
             }
 
             if(btn::keypad::l_pressed())
             {
-                green_bg.put_above(*red_bg);
+                green_bg.put_above();
             }
 
             if(btn::keypad::r_pressed())
             {
-                red_bg.reset();
-                red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+                red_bg.put_above();
             }
 
             info.update();

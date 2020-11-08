@@ -16,7 +16,6 @@ namespace btn
 
 class size;
 class window;
-class sprite_ptr;
 class camera_ptr;
 class fixed_point;
 class bg_tiles_ptr;
@@ -356,24 +355,9 @@ public:
     void set_z_order(int z_order);
 
     /**
-     * @brief Indicates if this regular background is drawn above the given one or not.
+     * @brief Modify this regular background to be drawn above all of the other backgrounds with the same priorities.
      */
-    [[nodiscard]] bool above(const regular_bg_ptr& other) const;
-
-    /**
-     * @brief Indicates if this regular background is drawn above the given sprite or not.
-     */
-    [[nodiscard]] bool above(const sprite_ptr& sprite_ptr) const;
-
-    /**
-     * @brief Modify this regular background to be drawn above the given one.
-     */
-    void put_above(const regular_bg_ptr& other);
-
-    /**
-     * @brief Modify this regular background to be drawn above the given sprite.
-     */
-    void put_above(const sprite_ptr& sprite_ptr);
+    void put_above();
 
     /**
      * @brief Indicates if the mosaic effect must be applied to this regular background or not.

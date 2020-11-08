@@ -70,7 +70,7 @@ namespace bgs_manager
 
     [[nodiscard]] bool above(id_type id, id_type other_id);
 
-    void put_above(id_type id, id_type other_id);
+    void put_above(id_type id);
 
     [[nodiscard]] bool mosaic_enabled(id_type id);
 

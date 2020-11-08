@@ -110,9 +110,7 @@ namespace sprites_manager
 
     void set_z_order(id_type id, int z_order);
 
-    optional<bool> above(id_type id, id_type other_id);
-
-    void put_above(id_type id, id_type other_id);
+    void put_above(id_type id);
 
     [[nodiscard]] bool horizontal_flip(id_type id);
 

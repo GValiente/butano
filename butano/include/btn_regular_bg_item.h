@@ -21,7 +21,7 @@ class regular_bg_ptr;
  * @brief Contains the required information to generate regular backgrounds and their maps.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with <b>"regular_bg"</b> type.
+ * with `regular_bg` type.
  *
  * Tiles, colors and map cells are not copied but referenced,
  * so they should outlive the regular_bg_item to avoid dangling references.
@@ -120,21 +120,21 @@ public:
      * @brief Creates a regular_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the regular background.
      * @param y Vertical position of the regular background.
-     * @return The requested regular_bg_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(fixed x, fixed y) const;
 
     /**
      * @brief Creates a regular_bg_ptr using the information contained in this item.
      * @param position Position of the regular background.
-     * @return The requested regular_bg_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(const fixed_point& position) const;
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the information provided by this item.
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> find_map() const;
 
@@ -172,7 +172,7 @@ public:
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional() const;
 
@@ -187,7 +187,7 @@ public:
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
      * @return regular_bg_map_ptr which references the information provided by this item
-     * if the regular_bg_map_ptr can be allocated; <b>nullopt</b> otherwise.
+     * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional() const;
 

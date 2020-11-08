@@ -519,7 +519,7 @@ public:
     /**
      * @brief Erases all elements that satisfy the specified predicate.
      * @param vector ivector from which to erase.
-     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @param pred Unary predicate which returns `true` if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
@@ -721,7 +721,7 @@ public:
      * @brief Equal operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first ivector is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const ivector& a, const ivector& b)
     {
@@ -737,7 +737,7 @@ public:
      * @brief Not equal operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first ivector is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const ivector& a, const ivector& b)
     {
@@ -748,7 +748,7 @@ public:
      * @brief Less than operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is lexicographically less than the second one, otherwise <b>false</b>.
+     * @return `true` if the first ivector is lexicographically less than the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator<(const ivector& a, const ivector& b)
     {
@@ -759,8 +759,8 @@ public:
      * @brief Greater than operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ivector is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const ivector& a, const ivector& b)
     {
@@ -771,8 +771,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ivector is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const ivector& a, const ivector& b)
     {
@@ -783,8 +783,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.
-     * @return <b>true</b> if the first ivector is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ivector is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>=(const ivector& a, const ivector& b)
     {

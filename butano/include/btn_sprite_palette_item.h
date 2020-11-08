@@ -20,7 +20,7 @@ class sprite_palette_ptr;
  * @brief Contains the required information to generate sprite color palettes.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with <b>"sprite"</b> type.
+ * with `sprite` type.
  *
  * The colors are not copied but referenced, so they should outlive the sprite_palette_item
  * to avoid dangling references.
@@ -74,7 +74,7 @@ public:
     /**
      * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> find_palette() const;
 
@@ -97,14 +97,14 @@ public:
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
      * otherwise it returns a new sprite_palette_ptr which contains them it if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> create_palette_optional() const;
 
     /**
      * @brief Creates a new sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item it if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> create_new_palette_optional() const;
 

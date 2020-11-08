@@ -33,7 +33,7 @@ namespace btn::bg_palettes
     [[nodiscard]] int available_colors_count();
 
     /**
-     * @brief Returns the overridden transparent color of the backgrounds if any, <b>nullopt</b> otherwise.
+     * @brief Returns the overridden transparent color of the backgrounds if any, `nullopt` otherwise.
      */
     [[nodiscard]] const optional<color>& transparent_color();
 

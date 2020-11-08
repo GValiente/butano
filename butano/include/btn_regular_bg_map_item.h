@@ -21,7 +21,7 @@ class regular_bg_map_ptr;
  * @brief Contains the required information to generate regular background maps.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with <b>"regular_bg"</b> type.
+ * with `regular_bg` type.
  *
  * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
  * to avoid dangling references.
@@ -72,7 +72,7 @@ public:
      * @param tiles Referenced tiles of the map to search.
      * @param palette Referenced color palette of the map to search.
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> find_map(const bg_tiles_ptr& tiles,
                                                         const bg_palette_ptr& palette) const;
@@ -117,7 +117,7 @@ public:
      * @param tiles Referenced tiles of the map to search or handle.
      * @param palette Referenced color palette of the map to search or handle.
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
@@ -134,7 +134,7 @@ public:
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
      * @return regular_bg_map_ptr which references the information provided by this item
-     * if the regular_bg_map_ptr can be allocated; <b>nullopt</b> otherwise.
+     * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional(bg_tiles_ptr tiles,
                                                                        bg_palette_ptr palette) const;

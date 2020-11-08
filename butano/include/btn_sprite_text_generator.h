@@ -244,7 +244,7 @@ public:
      *
      * Keep in mind that this vector is not cleared before generating text.
      *
-     * @return <b>true</b> if the text generation finished successfully, otherwise <b>false</b>.
+     * @return `true` if the text generation finished successfully, otherwise `false`.
      */
     [[nodiscard]] bool generate_optional(fixed x, fixed y, const string_view& text,
                                          ivector<sprite_ptr>& output_sprites) const;
@@ -257,7 +257,7 @@ public:
      *
      * Keep in mind that this vector is not cleared before generating text.
      *
-     * @return <b>true</b> if the text generation finished successfully, otherwise <b>false</b>.
+     * @return `true` if the text generation finished successfully, otherwise `false`.
      */
     [[nodiscard]] bool generate_optional(const fixed_point& position, const string_view& text,
                                          ivector<sprite_ptr>& output_sprites) const;

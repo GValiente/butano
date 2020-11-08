@@ -273,7 +273,7 @@
  *
  * It can be enabled or disabled by overloading the definition of @a BTN_CFG_ASSERT_ENABLED @a .
  *
- * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns `true`).
  */
 
 /**
@@ -552,7 +552,9 @@
  *
  * The best way to get started is to read the
  * \ref getting_started "guide to download, build, install and start using Butano".
- * After that, there are various \ref examples "examples" explaining most aspects of the library.
+ * After that, there are various \ref examples "examples" explaining most aspects of the engine.
+ * At last, check how to \ref import "import" your own assets in a game and
+ * take a look at the <a href="modules.html">modules page</a>.
  *
  *
  * @section main_contact_support Contact and support
@@ -587,9 +589,75 @@
 
 /**
  * @page getting_started Getting started
+ *
+ * Downloading, building and making your own games with Butano is easy and doesn't take too much time, pinky promise.
+ *
  * @tableofcontents
- * @section getting_started_0_1_0 0.1.0
- * First release.
+ *
+ * @section getting_started_emulator GBA emulator
+ *
+ * Before anything, it is convenient to have a GBA emulator at hand,
+ * so you don't have to test in real hardware each change you make in your project.
+ *
+ * For developing GBA games, I recommend <a href="https://mgba.io/">mGBA</a>
+ * and the debug version of <a href="https://problemkaputt.de/gba.htm">No$gba</a>.
+ *
+ *
+ * @section getting_started_devkitARM devkitARM
+ *
+ * The next step is to download and install devkitARM
+ * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>.
+ *
+ * Install the `GBA development` component and make sure that you are able to build and run
+ * some of the examples located in `path/to/devkitpro/examples/gba`.
+ *
+ * @image html devkitpro.png
+ *
+ *
+ * @section getting_started_python Python
+ *
+ * To execute some of the tools needed to include image and audio files in your project,
+ * you are going to need <a href="https://www.python.org/">Python</a>.
+ *
+ * Both Python 2 and Python 3 are supported for now, but Python 2 support is not going to be maintained for too long.
+ * Make sure you can execute Python from the command line.
+ *
+ * @image html python.png
+ *
+ *
+ * @section getting_started_butano Butano
+ *
+ * Download or clone the latest Butano release from <a href="https://github.com/GValiente/butano">GitHub</a>
+ * and put it in a path without spaces or anything weird like that, please.
+ *
+ *
+ * @section getting_started_examples Butano examples
+ *
+ * Butano contains multiple \ref examples "examples" explaining most aspects of the engine.
+ *
+ * Make sure that you are able to build and run some of them. They are located in `path/to/butano/examples/`.
+ * To build an example, open the console, `cd` to the folder of the example you want to build and type
+ * `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
+ *
+ * When trying to build the `sprites` example, if everything went as expected,
+ * a `sprites.gba` file should have been generated in the `sprites` folder,
+ * and the console should show something like this:
+ *
+ * @image html example_build.png
+ *
+ *
+ * @section getting_started_template Make your own GBA game!
+ *
+ * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
+ * To do that:
+ * * Copy the template project located in `path/to/butano/template/` to a path without spaces nor weird characters.
+ * * Change the ROM title, the path in which Butano is located and more in the `Makefile` file.
+ * * `cd` to the folder of your game.
+ * * Type `make -j#cpu_cores#` again.
+ *
+ * If again everything went as expected, a `*.gba` file should have been generated in the project folder!
+ * Now learn how to \ref import "import your assets" in the game and
+ * also take a look at the <a href="modules.html">modules page</a>.
  */
 
 
@@ -602,30 +670,20 @@
 
 
 /**
+ * @page import Importing assets
+ * @tableofcontents
+ * @section import_0_1_0 0.1.0
+ * First release.
+ */
+
+
+/**
  * @page changelog Changelog
  * @tableofcontents
  * @section changelog_0_1_0 0.1.0
  * First release.
  */
 
-
-/**
- * @page page1 A documentation page
- * @tableofcontents
- * Leading text.
- * @section sec An example section
- * This page contains the subsections @ref subsection1 and @ref subsection2.
- * For more info see page @ref page2.
- * @subsection subsection1 First subsection
- * Text.
- * @subsection subsection2 Second subsection
- * More text.
- */
-
-/**
- * @page page2 Another page
- * Even more info.
- */
 
 #ifdef BTN_DOXYGEN
     #ifndef BTN_CFG_ASSERT_ENABLED

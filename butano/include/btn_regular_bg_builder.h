@@ -58,7 +58,7 @@ public:
 
     /**
      * @brief Returns the regular_bg_item containing the required information to generate regular backgrounds
-     * if it has one; <b>nullopt</b> otherwise.
+     * if it has one; `nullopt` otherwise.
      */
     [[nodiscard]] const optional<regular_bg_item>& item() const
     {
@@ -195,7 +195,7 @@ public:
 
     /**
      * @brief Sets if the mosaic effect must be applied to the regular backgrounds to generate or not.
-     * @param mosaic_enabled <b>true</b> if the mosaic effect must be applied; <b>false</b> otherwise.
+     * @param mosaic_enabled `true` if the mosaic effect must be applied; `false` otherwise.
      * @return Reference to this.
      */
     regular_bg_builder& set_mosaic_enabled(bool mosaic_enabled)
@@ -214,7 +214,7 @@ public:
 
     /**
      * @brief Sets if blending must be applied to the regular backgrounds to generate or not.
-     * @param blending_enabled <b>true</b> if blending must be applied; <b>false</b> otherwise.
+     * @param blending_enabled `true` if blending must be applied; `false` otherwise.
      * @return Reference to this.
      */
     regular_bg_builder& set_blending_enabled(bool blending_enabled)
@@ -233,7 +233,7 @@ public:
 
     /**
      * @brief Sets if the regular backgrounds to generate must be committed to the GBA or not.
-     * @param visible <b>true</b> if the regular backgrounds must be committed to the GBA; <b>false</b> otherwise.
+     * @param visible `true` if the regular backgrounds must be committed to the GBA; `false` otherwise.
      * @return Reference to this.
      */
     regular_bg_builder& set_visible(bool visible)
@@ -304,13 +304,13 @@ public:
 
     /**
      * @brief Generates and returns a regular_bg_ptr without releasing the acquired resources if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> build_optional() const;
 
     /**
      * @brief Generates and returns a regular_bg_ptr releasing the acquired resources if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      *
      * This method must be called once at most.
      */
@@ -323,7 +323,7 @@ public:
 
     /**
      * @brief Generates and returns a regular_bg_map_ptr without releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> map_optional() const;
 
@@ -336,7 +336,7 @@ public:
 
     /**
      * @brief Generates and returns a regular_bg_map_ptr releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      *
      * This method must be called once at most.
      */

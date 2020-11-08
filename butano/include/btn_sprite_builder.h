@@ -56,7 +56,7 @@ public:
 
     /**
      * @brief Returns the sprite_item containing the required information to generate sprites if it has one;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] const optional<sprite_item>& item() const
     {
@@ -291,8 +291,8 @@ public:
 
     /**
      * @brief Sets if the sprites to generate must be flipped in the horizontal axis or not.
-     * @param horizontal_flip <b>true</b> if the sprites must be flipped in the horizontal axis;
-     * <b>false</b> otherwise.
+     * @param horizontal_flip `true` if the sprites must be flipped in the horizontal axis;
+     * `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_horizontal_flip(bool horizontal_flip);
@@ -307,7 +307,7 @@ public:
 
     /**
      * @brief Sets if the sprites to generate must be flipped in the vertical axis or not.
-     * @param vertical_flip <b>true</b> if the sprites must be flipped in the vertical axis; <b>false</b> otherwise.
+     * @param vertical_flip `true` if the sprites must be flipped in the vertical axis; `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_vertical_flip(bool vertical_flip);
@@ -322,7 +322,7 @@ public:
 
     /**
      * @brief Sets if the mosaic effect must be applied to the sprites to generate or not.
-     * @param mosaic_enabled <b>true</b> if the mosaic effect must be applied; <b>false</b> otherwise.
+     * @param mosaic_enabled `true` if the mosaic effect must be applied; `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_mosaic_enabled(bool mosaic_enabled)
@@ -346,7 +346,7 @@ public:
      *
      * Keep in mind that blending and window attributes can't be enabled on a sprite at the same time.
      *
-     * @param blending_enabled <b>true</b> if blending must be applied; <b>false</b> otherwise.
+     * @param blending_enabled `true` if blending must be applied; `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_blending_enabled(bool blending_enabled);
@@ -366,8 +366,8 @@ public:
      *
      * Keep in mind that blending and window attributes can't be enabled on a sprite at the same time.
      *
-     * @param window_enabled <b>true</b> if the sprites must be part of the silhouette of the sprite window;
-     * <b>false</b> otherwise.
+     * @param window_enabled `true` if the sprites must be part of the silhouette of the sprite window;
+     * `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_window_enabled(bool window_enabled);
@@ -403,7 +403,7 @@ public:
 
     /**
      * @brief Sets if the sprites to generate must be committed to the GBA or not.
-     * @param visible <b>true</b> if the sprites must be committed to the GBA; <b>false</b> otherwise.
+     * @param visible `true` if the sprites must be committed to the GBA; `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_visible(bool visible)
@@ -474,13 +474,13 @@ public:
 
     /**
      * @brief Generates and returns a sprite_ptr without releasing the acquired resources if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> build_optional() const;
 
     /**
      * @brief Generates and returns a sprite_ptr releasing the acquired resources if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      *
      * This method must be called once at most.
      */
@@ -498,13 +498,13 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr without releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> tiles_optional() const;
 
     /**
      * @brief Generates and returns a sprite_palette_ptr without releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> palette_optional() const;
 
@@ -524,7 +524,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      *
      * This method must be called once at most.
      */
@@ -532,7 +532,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_palette_ptr releasing the acquired resources
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      *
      * This method must be called once at most.
      */
@@ -588,7 +588,7 @@ public:
      * @brief Indicates if the sprite_affine_mat_ptr attached to the sprites to generate (if any) must be removed
      * when it is not needed anymore.
      *
-     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns <b>true</b>.
+     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns `true`.
      */
     [[nodiscard]] bool remove_affine_mat_when_not_needed() const
     {
@@ -599,9 +599,9 @@ public:
      * @brief Sets if the sprite_affine_mat_ptr attached to the sprites to generate (if any) must be removed
      * when it is not needed anymore.
      *
-     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns <b>true</b>.
-     * @param remove_when_not_needed <b>true</b> if the sprite_affine_mat_ptr must be removed
-     * when it is not needed anymore; <b>false</b> otherwise.
+     * A sprite does not need an sprite_affine_mat_ptr when its flipped_identity() method returns `true`.
+     * @param remove_when_not_needed `true` if the sprite_affine_mat_ptr must be removed
+     * when it is not needed anymore; `false` otherwise.
      * @return Reference to this.
      */
     sprite_builder& set_remove_affine_mat_when_not_needed(bool remove_when_not_needed)

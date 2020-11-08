@@ -38,7 +38,7 @@
  * }
  * @endcode
  *
- * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
  *
  * @ingroup assert
  */
@@ -69,7 +69,7 @@
  * }
  * @endcode
  *
- * Note that it can be used in constexpr contexts (is_constant_evaluated() returns <b>true</b>).
+ * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
  *
  * @ingroup assert
  */

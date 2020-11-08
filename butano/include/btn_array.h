@@ -294,7 +294,7 @@ public:
      * @brief Equal operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first array is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const array& a, const array& b)
     {
@@ -310,7 +310,7 @@ public:
      * @brief Not equal operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first array is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const array& a, const array& b)
     {
@@ -321,7 +321,7 @@ public:
      * @brief Less than operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is lexicographically less than the second one, otherwise <b>false</b>.
+     * @return `true` if the first array is lexicographically less than the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<(const array& a, const array& b)
     {
@@ -332,8 +332,8 @@ public:
      * @brief Greater than operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first array is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>(const array& a, const array& b)
     {
@@ -344,8 +344,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first array is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<=(const array& a, const array& b)
     {
@@ -356,8 +356,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First array to compare.
      * @param b Second array to compare.
-     * @return <b>true</b> if the first array is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first array is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>=(const array& a, const array& b)
     {

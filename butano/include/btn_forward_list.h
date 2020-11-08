@@ -556,7 +556,7 @@ public:
     /**
      * @brief Erases all elements that satisfy the specified predicate.
      * @param list iforward_list from which to erase.
-     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @param pred Unary predicate which returns `true` if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
@@ -712,7 +712,7 @@ public:
      * @brief Equal operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const iforward_list& a, const iforward_list& b)
     {
@@ -728,7 +728,7 @@ public:
      * @brief Not equal operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const iforward_list& a, const iforward_list& b)
     {
@@ -739,7 +739,7 @@ public:
      * @brief Less than operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is lexicographically less than the second one, otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is lexicographically less than the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator<(const iforward_list& a, const iforward_list& b)
     {
@@ -750,8 +750,8 @@ public:
      * @brief Greater than operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const iforward_list& a, const iforward_list& b)
     {
@@ -762,8 +762,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const iforward_list& a, const iforward_list& b)
     {
@@ -774,8 +774,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.
-     * @return <b>true</b> if the first iforward_list is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iforward_list is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>=(const iforward_list& a, const iforward_list& b)
     {

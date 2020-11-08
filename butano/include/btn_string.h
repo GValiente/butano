@@ -455,7 +455,7 @@ public:
     /**
      * @brief Erases all characters that satisfy the specified predicate.
      * @param string istring from which to erase.
-     * @param pred Unary predicate which returns <b>true</b> if the character should be erased.
+     * @param pred Unary predicate which returns `true` if the character should be erased.
      * @return Number of erased characters.
      */
     template<class Pred>
@@ -469,7 +469,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param value Single character.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
@@ -479,7 +479,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param other Another string_view.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const string_view& other) const
     {
@@ -496,7 +496,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param char_array_ptr Pointer to null-terminated characters array.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
     {
@@ -524,7 +524,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param value Single character.
-     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
@@ -534,7 +534,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param other Another string_view.
-     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(const string_view& other) const
     {

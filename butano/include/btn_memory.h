@@ -235,7 +235,7 @@ public:
      * @brief Equal operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first managed object is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const unique_ptr& a, const unique_ptr& b)
     {
@@ -246,7 +246,7 @@ public:
      * @brief Not equal operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first managed object is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const unique_ptr& a, const unique_ptr& b)
     {
@@ -257,8 +257,8 @@ public:
      * @brief Less than operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is lexicographically less than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first managed object is lexicographically less than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<(const unique_ptr& a, const unique_ptr& b)
     {
@@ -269,8 +269,8 @@ public:
      * @brief Greater than operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first managed object is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const unique_ptr& a, const unique_ptr& b)
     {
@@ -281,8 +281,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first managed object is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const unique_ptr& a, const unique_ptr& b)
     {
@@ -293,8 +293,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First unique_ptr to compare.
      * @param b Second unique_ptr to compare.
-     * @return <b>true</b> if the first managed object is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first managed object is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>=(const unique_ptr& a, const unique_ptr& b)
     {
@@ -305,7 +305,7 @@ public:
      * @brief Equal operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
+     * @return `true` if the unique_ptr does not have a managed object, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {
@@ -316,7 +316,7 @@ public:
      * @brief Not equal operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
+     * @return `true` if the unique_ptr has a managed object, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {
@@ -327,7 +327,7 @@ public:
      * @brief Less than operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>false</b>.
+     * @return `false`.
      */
     [[nodiscard]] friend bool operator<([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {
@@ -338,7 +338,7 @@ public:
      * @brief Greater than operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>true</b> if the unique_ptr has a managed object, otherwise <b>false</b>.
+     * @return `true` if the unique_ptr has a managed object, otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {
@@ -349,7 +349,7 @@ public:
      * @brief Less than or equal operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>true</b> if the unique_ptr does not have a managed object, otherwise <b>false</b>.
+     * @return `true` if the unique_ptr does not have a managed object, otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {
@@ -360,7 +360,7 @@ public:
      * @brief Greater than or equal than operator.
      * @param a unique_ptr to compare.
      * @param b Null pointer to compare.
-     * @return <b>true</b>.
+     * @return `true`.
      */
     [[nodiscard]] friend bool operator>=([[maybe_unused]] const unique_ptr& a, [[maybe_unused]] nullptr_t b)
     {

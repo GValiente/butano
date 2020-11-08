@@ -37,7 +37,7 @@ public:
     /**
      * @brief Searches for a bg_tiles_ptr which references the given tiles.
      * @param tiles_ref Reference to the tiles to search.
-     * @return bg_tiles_ptr which references tiles_ref if it has been found; <b>nullopt</b> otherwise.
+     * @return bg_tiles_ptr which references tiles_ref if it has been found; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> find(const span<const tile>& tiles_ref);
 
@@ -45,7 +45,7 @@ public:
      * @brief Searches for a bg_tiles_ptr which references the given tiles.
      * @param tiles_item bg_tiles_item which references the tiles to search.
      * @return bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> find(const bg_tiles_item& tiles_item);
 
@@ -121,7 +121,7 @@ public:
      *
      * @param tiles_ref Reference to the tiles to search or handle.
      * @return bg_tiles_ptr which references tiles_ref if it has been found;
-     * otherwise it returns a bg_tiles_ptr which references them if it could be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a bg_tiles_ptr which references them if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const span<const tile>& tiles_ref);
 
@@ -134,7 +134,7 @@ public:
      *
      * @param tiles_item bg_tiles_item which references the tiles to search or handle.
      * @return bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * otherwise it returns a bg_tiles_ptr which references them if it could be allocated; <b>nullopt</b> otherwise.
+     * otherwise it returns a bg_tiles_ptr which references them if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> create_optional(const bg_tiles_item& tiles_item);
 
@@ -149,7 +149,7 @@ public:
      * so they should outlive the bg_tiles_ptr to avoid dangling references.
      *
      * @param tiles_ref Reference to the tiles to handle.
-     * @return bg_tiles_ptr which references tiles_ref if it could be allocated; <b>nullopt</b> otherwise.
+     * @return bg_tiles_ptr which references tiles_ref if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> create_new_optional(const span<const tile>& tiles_ref);
 
@@ -165,7 +165,7 @@ public:
      *
      * @param tiles_item bg_tiles_item which references the tiles to handle.
      * @return bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> create_new_optional(const bg_tiles_item& tiles_item);
 
@@ -173,7 +173,7 @@ public:
      * @brief Creates a bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
      * @param tiles_count Number of tiles to allocate.
      * @return bg_tiles_ptr which references a chunk of VRAM tiles
-     * not visible on the screen if it could be allocated; <b>nullopt</b> otherwise.
+     * not visible on the screen if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_tiles_ptr> allocate_optional(int tiles_count);
 
@@ -244,7 +244,7 @@ public:
 
     /**
      * @brief Returns the referenced tiles unless it was created with allocate or allocate_optional.
-     * In that case, it returns <b>nullopt</b>.
+     * In that case, it returns `nullopt`.
      */
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
@@ -281,7 +281,7 @@ public:
 
     /**
      * @brief Returns the allocated memory in VRAM
-     * if this bg_tiles_ptr was created with allocate or allocate_optional; <b>nullopt</b> otherwise.
+     * if this bg_tiles_ptr was created with allocate or allocate_optional; `nullopt` otherwise.
      */
     [[nodiscard]] optional<span<tile>> vram();
 

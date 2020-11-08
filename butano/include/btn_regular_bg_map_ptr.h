@@ -45,7 +45,7 @@ public:
      * @param tiles Referenced tiles of the map to search.
      * @param palette Referenced color palette of the map to search.
      * @return regular_bg_map_ptr which references the given information if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(
             const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_tiles_ptr& tiles,
@@ -57,7 +57,7 @@ public:
      * @param tiles Referenced tiles of the map to search.
      * @param palette Referenced color palette of the map to search.
      * @return regular_bg_map_ptr which references the given information if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(
             const regular_bg_map_item& map_item, const bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
@@ -66,7 +66,7 @@ public:
      * @brief Searches for a regular_bg_map_ptr which references the given information.
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to search.
      * @return regular_bg_map_ptr which references the given information if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_item& item);
 
@@ -191,7 +191,7 @@ public:
      * @param palette Referenced color palette of the map to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
             const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -208,7 +208,7 @@ public:
      * @param palette Referenced color palette of the map to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it if the regular_bg_map_ptr can be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
             const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -223,7 +223,7 @@ public:
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it if the regular_bg_map_ptr can be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(const regular_bg_item& item);
 
@@ -242,7 +242,7 @@ public:
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
      * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
             const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -261,7 +261,7 @@ public:
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
      * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
             const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -278,7 +278,7 @@ public:
      *
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
      * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(const regular_bg_item& item);
 
@@ -288,7 +288,7 @@ public:
      * @param tiles Referenced tiles of the map to allocate.
      * @param palette Referenced color palette of the map to allocate.
      * @return regular_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen
-     * if the regular_bg_map_ptr can be allocated; <b>nullopt</b> otherwise.
+     * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> allocate_optional(
             const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -355,7 +355,7 @@ public:
 
     /**
      * @brief Returns the referenced map cells unless it was created with allocate or allocate_optional.
-     * In that case, it returns <b>nullopt</b>.
+     * In that case, it returns `nullopt`.
      */
     [[nodiscard]] optional<span<const regular_bg_map_cell>> cells_ref() const;
 
@@ -464,7 +464,7 @@ public:
 
     /**
      * @brief Returns the allocated memory in VRAM
-     * if this regular_bg_map_cell was created with allocate or allocate_optional; <b>nullopt</b> otherwise.
+     * if this regular_bg_map_cell was created with allocate or allocate_optional; `nullopt` otherwise.
      */
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 

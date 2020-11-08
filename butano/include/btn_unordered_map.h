@@ -146,7 +146,7 @@ public:
          * @brief Equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first iterator is equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
@@ -157,7 +157,7 @@ public:
          * @brief Not equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is not equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first iterator is not equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
@@ -279,7 +279,7 @@ public:
          * @brief Equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
@@ -290,7 +290,7 @@ public:
          * @brief Not equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is not equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is not equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
@@ -491,7 +491,7 @@ public:
     /**
      * @brief Indicates if the specified key is contained in this iunordered_map.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this iunordered_map, otherwise <b>false</b>.
+     * @return `true` if the specified key is contained in this iunordered_map, otherwise `false`.
      */
     [[nodiscard]] bool contains(const key_type& key) const
     {
@@ -507,7 +507,7 @@ public:
      * @brief Indicates if the specified key is contained in this iunordered_map.
      * @param key_hash Hash of the given key to search for.
      * @param key Key to search for.
-     * @return <b>true</b> if the specified key is contained in this iunordered_map, otherwise <b>false</b>.
+     * @return `true` if the specified key is contained in this iunordered_map, otherwise `false`.
      */
     [[nodiscard]] bool contains_hash(hash_type key_hash, const key_type& key) const
     {
@@ -995,7 +995,7 @@ public:
     /**
      * @brief Erases an element.
      * @param key Key to erase.
-     * @return <b>true</b> if the elements was erased, otherwise <b>false</b>.
+     * @return `true` if the elements was erased, otherwise `false`.
      */
     bool erase(const key_type& key)
     {
@@ -1006,7 +1006,7 @@ public:
      * @brief Erases an element.
      * @param key_hash Hash of the key to erase.
      * @param key Key to erase.
-     * @return <b>true</b> if the elements was erased, otherwise <b>false</b>.
+     * @return `true` if the elements was erased, otherwise `false`.
      */
     bool erase_hash(hash_type key_hash, const key_type& key)
     {
@@ -1246,7 +1246,7 @@ public:
      * @brief Equal operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1283,7 +1283,7 @@ public:
      * @brief Not equal operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] bool friend operator!=(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1294,8 +1294,8 @@ public:
      * @brief Less than operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is lexicographically less than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is lexicographically less than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1306,8 +1306,8 @@ public:
      * @brief Greater than operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1318,8 +1318,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const iunordered_map& a, const iunordered_map& b)
     {
@@ -1330,8 +1330,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First iunordered_map to compare.
      * @param b Second iunordered_map to compare.
-     * @return <b>true</b> if the first iunordered_map is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first iunordered_map is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>=(const iunordered_map& a, const iunordered_map& b)
     {

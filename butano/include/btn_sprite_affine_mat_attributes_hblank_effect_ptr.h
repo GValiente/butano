@@ -52,7 +52,7 @@ public:
      * sprite_affine_mat_attributes_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_attributes_hblank_effect_ptr if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> create_optional(
             const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
@@ -136,8 +136,8 @@ public:
      * @brief Equal operator.
      * @param a First sprite_affine_mat_attributes_hblank_effect_ptr to compare.
      * @param b Second sprite_affine_mat_attributes_hblank_effect_ptr to compare.
-     * @return <b>true</b> if the first sprite_affine_mat_attributes_hblank_effect_ptr is equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first sprite_affine_mat_attributes_hblank_effect_ptr is equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const sprite_affine_mat_attributes_hblank_effect_ptr& a,
                                          const sprite_affine_mat_attributes_hblank_effect_ptr& b)
@@ -149,8 +149,8 @@ public:
      * @brief Not equal operator.
      * @param a First sprite_affine_mat_attributes_hblank_effect_ptr to compare.
      * @param b Second sprite_affine_mat_attributes_hblank_effect_ptr to compare.
-     * @return <b>true</b> if the first sprite_affine_mat_attributes_hblank_effect_ptr is not equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first sprite_affine_mat_attributes_hblank_effect_ptr is not equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const sprite_affine_mat_attributes_hblank_effect_ptr& a,
                                          const sprite_affine_mat_attributes_hblank_effect_ptr& b)

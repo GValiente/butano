@@ -382,7 +382,7 @@ public:
      * @brief Equal operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first span is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const span& a, const span& b)
     {
@@ -398,7 +398,7 @@ public:
      * @brief Not equal operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first span is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const span& a, const span& b)
     {
@@ -409,8 +409,8 @@ public:
      * @brief Less than operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is lexicographically less than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first span is lexicographically less than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<(const span& a, const span& b)
     {
@@ -421,8 +421,8 @@ public:
      * @brief Greater than operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first span is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>(const span& a, const span& b)
     {
@@ -433,8 +433,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first span is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<=(const span& a, const span& b)
     {
@@ -445,8 +445,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First span to compare.
      * @param b Second span to compare.
-     * @return <b>true</b> if the first span is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first span is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>=(const span& a, const span& b)
     {

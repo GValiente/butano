@@ -629,7 +629,7 @@ private:
  * @param any Target iany object.
  * @return If the given iany pointer is not null,
  * and the type_id_t of the requested Type matches the type_id_t of the given iany,
- * a const pointer to the value contained by operand; otherwise <b>nullptr</b>.
+ * a const pointer to the value contained by operand; otherwise `nullptr`.
  *
  * @ingroup any
  */
@@ -650,7 +650,7 @@ template<typename Type>
  * @param any Target iany object.
  * @return If the given iany pointer is not null,
  * and the type_id_t of the requested Type matches the type_id_t of the given iany,
- * a pointer to the value contained by operand; otherwise <b>nullptr</b>.
+ * a pointer to the value contained by operand; otherwise `nullptr`.
  *
  * @ingroup any
  */

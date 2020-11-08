@@ -230,7 +230,7 @@ public:
     /**
      * @brief Indicates if the given point is inside the rectangle or not.
      *
-     * If the point is in the edge of the rectangle, it returns <b>false</b>.
+     * If the point is in the edge of the rectangle, it returns `false`.
      */
     [[nodiscard]] constexpr bool contains(const fixed_point& point) const
     {

@@ -13,7 +13,7 @@ namespace btn
     /**
      * @brief Allocates size bytes of uninitialized storage in the EWRAM.
      * @param bytes Number of bytes to allocate.
-     * @return The pointer to the beginning of the allocated memory if it could be allocated; <b>nullptr</b> otherwise.
+     * @return The pointer to the beginning of the allocated memory if it could be allocated; `nullptr` otherwise.
      *
      * @ingroup std
      */

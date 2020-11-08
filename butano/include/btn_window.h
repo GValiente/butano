@@ -65,14 +65,14 @@ public:
     /**
      * @brief Indicates if the specified background is shown in this window.
      * @param regular_bg Regular BG to ask for.
-     * @return <b>true</b> if the specified background is shown in this window, otherwise <b>false</b>.
+     * @return `true` if the specified background is shown in this window, otherwise `false`.
      */
     [[nodiscard]] bool show_bg(const regular_bg_ptr& regular_bg) const;
 
     /**
      * @brief Sets if the specified background must be shown in this window.
      * @param regular_bg Regular BG to show or hide.
-     * @param show <b>true</b> if the specified background must be shown in this window, otherwise <b>false</b>.
+     * @param show `true` if the specified background must be shown in this window, otherwise `false`.
      */
     void set_show_bg(const regular_bg_ptr& regular_bg, bool show);
 
@@ -83,7 +83,7 @@ public:
 
     /**
      * @brief Sets if sprites must be shown in this window.
-     * @param show <b>true</b> if sprites must be shown in this window, otherwise <b>false</b>.
+     * @param show `true` if sprites must be shown in this window, otherwise `false`.
      */
     void set_show_sprites(bool show);
 
@@ -94,7 +94,7 @@ public:
 
     /**
      * @brief Sets if blending must be shown in this window.
-     * @param show <b>true</b> if blending must be shown in this window, otherwise <b>false</b>.
+     * @param show `true` if blending must be shown in this window, otherwise `false`.
      */
     void set_show_blending(bool show);
 

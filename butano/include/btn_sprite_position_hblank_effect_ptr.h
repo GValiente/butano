@@ -48,7 +48,7 @@ public:
      * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested sprite_position_hblank_effect_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_position_hblank_effect_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<sprite_position_hblank_effect_ptr> create_horizontal_optional(
             sprite_ptr sprite, const span<const fixed>& deltas_ref);
@@ -78,7 +78,7 @@ public:
      * The deltas are not copied but referenced, so they should outlive the sprite_position_hblank_effect_ptr
      * to avoid dangling references.
      *
-     * @return The requested sprite_position_hblank_effect_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested sprite_position_hblank_effect_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<sprite_position_hblank_effect_ptr> create_vertical_optional(
             sprite_ptr sprite, const span<const fixed>& deltas_ref);

@@ -182,7 +182,7 @@ public:
      * @brief Equal operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first istring_base is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const istring_base& b)
     {
@@ -198,7 +198,7 @@ public:
      * @brief Not equal operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first istring_base is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const istring_base& a, const istring_base& b)
     {
@@ -209,8 +209,8 @@ public:
      * @brief Less than operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is lexicographically less than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first istring_base is lexicographically less than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<(const istring_base& a, const istring_base& b)
     {
@@ -221,8 +221,8 @@ public:
      * @brief Greater than operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first istring_base is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>(const istring_base& a, const istring_base& b)
     {
@@ -233,8 +233,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first istring_base is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<=(const istring_base& a, const istring_base& b)
     {
@@ -245,8 +245,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.
-     * @return <b>true</b> if the first istring_base is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first istring_base is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>=(const istring_base& a, const istring_base& b)
     {

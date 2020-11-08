@@ -48,14 +48,14 @@ public:
      * @brief Creates a camera_ptr.
      * @param x Horizontal position of the camera.
      * @param y Vertical position of the camera.
-     * @return The requested camera_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested camera_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<camera_ptr> create_optional(fixed x, fixed y);
 
     /**
      * @brief Creates a camera_ptr.
      * @param position Position of the camera.
-     * @return The requested camera_ptr if it could be allocated; <b>nullopt</b> otherwise.
+     * @return The requested camera_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<camera_ptr> create_optional(const fixed_point& position);
 

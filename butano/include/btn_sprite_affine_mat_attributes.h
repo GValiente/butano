@@ -261,8 +261,8 @@ public:
      * @brief Equal operator.
      * @param a First sprite_affine_mat_attributes to compare.
      * @param b Second sprite_affine_mat_attributes to compare.
-     * @return <b>true</b> if the first sprite_affine_mat_attributes is equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first sprite_affine_mat_attributes is equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)
@@ -275,8 +275,8 @@ public:
      * @brief Not equal operator.
      * @param a First sprite_affine_mat_attributes to compare.
      * @param b Second sprite_affine_mat_attributes to compare.
-     * @return <b>true</b> if the first sprite_affine_mat_attributes is not equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first sprite_affine_mat_attributes is not equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const sprite_affine_mat_attributes& a,
                                                    const sprite_affine_mat_attributes& b)

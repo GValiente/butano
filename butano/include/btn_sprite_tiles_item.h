@@ -19,7 +19,7 @@ class sprite_tiles_ptr;
  * @brief Contains the required information to generate sprite tiles.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with <b>"sprite"</b> type.
+ * with `sprite` type.
  *
  * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item to avoid dangling references.
  *
@@ -106,7 +106,7 @@ public:
     /**
      * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> find_tiles() const;
 
@@ -114,7 +114,7 @@ public:
      * @brief Searches for a sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
      * @param graphics_index Index of the tile set to search.
      * @return sprite_tiles_ptr which references the indicated sprite tile set if it has been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> find_tiles(int graphics_index) const;
 
@@ -179,7 +179,7 @@ public:
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;
      * otherwise it returns a new sprite_tiles_ptr which references it if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional() const;
 
@@ -193,7 +193,7 @@ public:
      * @param graphics_index Index of the tile set to search or handle.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index if it has been found;
      * otherwise it returns a new sprite_tiles_ptr which references it if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional(int graphics_index) const;
 
@@ -207,7 +207,7 @@ public:
      * to avoid dangling references.
      *
      * @return sprite_tiles_ptr which references the first sprite tile set if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional() const;
 
@@ -222,7 +222,7 @@ public:
      *
      * @param graphics_index Index of the tile set to reference.
      * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index
-     * if it could be allocated; <b>nullopt</b> otherwise.
+     * if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional(int graphics_index) const;
 
@@ -230,7 +230,7 @@ public:
      * @brief Equal operator.
      * @param a First sprite_tiles_item to compare.
      * @param b Second sprite_tiles_item to compare.
-     * @return <b>true</b> if the first sprite_tiles_item is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first sprite_tiles_item is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {
@@ -242,7 +242,7 @@ public:
      * @brief Not equal operator.
      * @param a First sprite_tiles_item to compare.
      * @param b Second sprite_tiles_item to compare.
-     * @return <b>true</b> if the first sprite_tiles_item is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first sprite_tiles_item is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const sprite_tiles_item& a, const sprite_tiles_item& b)
     {

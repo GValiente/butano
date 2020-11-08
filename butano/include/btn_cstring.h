@@ -31,7 +31,7 @@ namespace btn
     void memset(void* destination, uint8_t value, int bytes);
 
     /**
-     * @brief Copies the value <b>0</b> into each of the first given bytes of the object pointed to by destination.
+     * @brief Copies the value `0` into each of the first given bytes of the object pointed to by destination.
      * @param destination Pointer to the object to clear.
      * @param bytes Number of bytes to clear.
      *

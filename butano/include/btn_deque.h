@@ -156,7 +156,7 @@ public:
          * @brief Equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first iterator is equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
@@ -167,7 +167,7 @@ public:
          * @brief Not equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is not equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first iterator is not equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
@@ -178,8 +178,8 @@ public:
          * @brief Less than operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is lexicographically less than the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first iterator is lexicographically less than the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator<(const iterator& a, const iterator& b)
         {
@@ -190,8 +190,8 @@ public:
          * @brief Greater than operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is lexicographically greater than the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first iterator is lexicographically greater than the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator>(const iterator& a, const iterator& b)
         {
@@ -202,8 +202,8 @@ public:
          * @brief Less than or equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is lexicographically less than or equal to the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first iterator is lexicographically less than or equal to the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator<=(const iterator& a, const iterator& b)
         {
@@ -214,8 +214,8 @@ public:
          * @brief Greater than or equal operator.
          * @param a First iterator to compare.
          * @param b Second iterator to compare.
-         * @return <b>true</b> if the first iterator is lexicographically greater than or equal to the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first iterator is lexicographically greater than or equal to the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator>=(const iterator& a, const iterator& b)
         {
@@ -356,7 +356,7 @@ public:
          * @brief Equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
@@ -367,7 +367,7 @@ public:
          * @brief Not equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is not equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is not equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
@@ -378,8 +378,8 @@ public:
          * @brief Less than operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is lexicographically less than the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is lexicographically less than the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator<(const const_iterator& a, const const_iterator& b)
         {
@@ -390,8 +390,8 @@ public:
          * @brief Greater than operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is lexicographically greater than the second one,
-         * otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is lexicographically greater than the second one,
+         * otherwise `false`.
          */
         [[nodiscard]] friend bool operator>(const const_iterator& a, const const_iterator& b)
         {
@@ -402,8 +402,8 @@ public:
          * @brief Less than or equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is
-         * lexicographically less than or equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is
+         * lexicographically less than or equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator<=(const const_iterator& a, const const_iterator& b)
         {
@@ -414,8 +414,8 @@ public:
          * @brief Greater than or equal operator.
          * @param a First const_iterator to compare.
          * @param b Second const_iterator to compare.
-         * @return <b>true</b> if the first const_iterator is
-         * lexicographically greater than or equal to the second one, otherwise <b>false</b>.
+         * @return `true` if the first const_iterator is
+         * lexicographically greater than or equal to the second one, otherwise `false`.
          */
         [[nodiscard]] friend bool operator>=(const const_iterator& a, const const_iterator& b)
         {
@@ -1019,7 +1019,7 @@ public:
     /**
      * @brief Erases all elements that satisfy the specified predicate.
      * @param deque ideque from which to erase.
-     * @param pred Unary predicate which returns <b>true</b> if the element should be erased.
+     * @param pred Unary predicate which returns `true` if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
@@ -1222,7 +1222,7 @@ public:
      * @brief Equal operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first ideque is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(const ideque& a, const ideque& b)
     {
@@ -1238,7 +1238,7 @@ public:
      * @brief Not equal operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first ideque is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(const ideque& a, const ideque& b)
     {
@@ -1249,7 +1249,7 @@ public:
      * @brief Less than operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is lexicographically less than the second one, otherwise <b>false</b>.
+     * @return `true` if the first ideque is lexicographically less than the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator<(const ideque& a, const ideque& b)
     {
@@ -1260,8 +1260,8 @@ public:
      * @brief Greater than operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ideque is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>(const ideque& a, const ideque& b)
     {
@@ -1272,8 +1272,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ideque is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator<=(const ideque& a, const ideque& b)
     {
@@ -1284,8 +1284,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First ideque to compare.
      * @param b Second ideque to compare.
-     * @return <b>true</b> if the first ideque is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first ideque is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] friend bool operator>=(const ideque& a, const ideque& b)
     {

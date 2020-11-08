@@ -20,7 +20,7 @@ class bg_tiles_ptr;
  * @brief Contains the required information to generate background tiles.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with <b>"regular_bg"</b> type.
+ * with `regular_bg` type.
  *
  * The tiles are not copied but referenced, so they should outlive the bg_tiles_item to avoid dangling references.
  *
@@ -75,7 +75,7 @@ public:
     /**
      * @brief Searches for a bg_tiles_ptr which reference the background tiles.
      * @return bg_tiles_ptr which reference the background tiles if they have been found;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<bg_tiles_ptr> find_tiles() const;
 
@@ -113,7 +113,7 @@ public:
      *
      * @return bg_tiles_ptr which reference the background tiles if they have been found;
      * otherwise it returns a new bg_tiles_ptr which reference them if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<bg_tiles_ptr> create_tiles_optional() const;
 
@@ -127,7 +127,7 @@ public:
      * to avoid dangling references.
      *
      * @return bg_tiles_ptr which reference the background tiles if it could be allocated;
-     * <b>nullopt</b> otherwise.
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<bg_tiles_ptr> create_new_tiles_optional() const;
 
@@ -135,7 +135,7 @@ public:
      * @brief Equal operator.
      * @param a First bg_tiles_item to compare.
      * @param b Second bg_tiles_item to compare.
-     * @return <b>true</b> if the first bg_tiles_item is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first bg_tiles_item is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const bg_tiles_item& a, const bg_tiles_item& b)
     {
@@ -146,7 +146,7 @@ public:
      * @brief Not equal operator.
      * @param a First bg_tiles_item to compare.
      * @param b Second bg_tiles_item to compare.
-     * @return <b>true</b> if the first bg_tiles_item is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first bg_tiles_item is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const bg_tiles_item& a, const bg_tiles_item& b)
     {

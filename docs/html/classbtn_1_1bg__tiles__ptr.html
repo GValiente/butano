@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>btn::bg_tiles_ptr class | butano Modern C++ high level GBA engine</title>
+  <title>btn::bg_tiles_ptr class | Butano Modern C++ high level GBA engine</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -14,7 +14,7 @@
   <div class="m-container">
     <div class="m-row">
       <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
-        <a href="https://github.com/GValiente/butano">butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
       </span>
       <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
         <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
@@ -164,7 +164,7 @@
             <dt id="afbff9c952c8d02802ee95cebb896487c">
               <span class="m-doc-wrap-bumper">auto <a href="#afbff9c952c8d02802ee95cebb896487c" class="m-doc-self">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1tile.html" class="m-doc">tile</a>&gt;&gt;</span>
             </dt>
-            <dd>Returns the referenced tiles unless it was created with allocate or allocate_optional. In that case, it returns <strong>nullopt</strong>.</dd>
+            <dd>Returns the referenced tiles unless it was created with allocate or allocate_optional. In that case, it returns <code>nullopt</code>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a3b19d3d85e9ac16fea5d5bdb36ce2480" class="m-doc">set_tiles_ref</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span>
             </dt>
@@ -180,7 +180,7 @@
             <dt id="a86933d9c0b15c722021c5ef5e9bf6741">
               <span class="m-doc-wrap-bumper">auto <a href="#a86933d9c0b15c722021c5ef5e9bf6741" class="m-doc-self">vram</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1tile.html" class="m-doc">tile</a>&gt;&gt;</span>
             </dt>
-            <dd>Returns the allocated memory in VRAM if this <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> was created with allocate or allocate_optional; <strong>nullopt</strong> otherwise.</dd>
+            <dd>Returns the allocated memory in VRAM if this <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> was created with allocate or allocate_optional; <code>nullopt</code> otherwise.</dd>
             <dt id="a204fbd11aa8b665a7a8ba6f19b6c91a4">
               <span class="m-doc-wrap-bumper">auto <a href="#a204fbd11aa8b665a7a8ba6f19b6c91a4" class="m-doc-self">hash</a>(</span><span class="m-doc-wrap">) const -&gt; unsigned</span>
             </dt>
@@ -226,7 +226,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -249,7 +249,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -391,7 +391,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; otherwise it returns a <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; otherwise it returns a <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -415,7 +415,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; otherwise it returns a <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; otherwise it returns a <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -439,7 +439,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it could be allocated; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -463,7 +463,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it could be allocated; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -487,7 +487,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen if it could be allocated; <strong>nullopt</strong> otherwise.</td>
+                  <td><a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen if it could be allocated; <code>nullopt</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -692,7 +692,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

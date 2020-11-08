@@ -292,7 +292,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param value Single character.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
@@ -302,7 +302,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param other Another string_view.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const string_view& other) const
     {
@@ -319,7 +319,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param char_array_ptr Pointer to null-terminated characters array.
-     * @return <b>true</b> if the referenced string begins with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
     {
@@ -352,7 +352,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param value Single character.
-     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
@@ -362,7 +362,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param other Another string_view.
-     * @return <b>true</b> if the referenced string ends with the given prefix, <b>false</b> otherwise.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(const string_view& other) const
     {
@@ -401,7 +401,7 @@ public:
      * @brief Equal operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first string_view is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator==(const string_view& a, const string_view& b)
     {
@@ -417,7 +417,7 @@ public:
      * @brief Not equal operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is not equal to the second one, otherwise <b>false</b>.
+     * @return `true` if the first string_view is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator!=(const string_view& a, const string_view& b)
     {
@@ -428,8 +428,8 @@ public:
      * @brief Less than operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is lexicographically less than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first string_view is lexicographically less than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<(const string_view& a, const string_view& b)
     {
@@ -440,8 +440,8 @@ public:
      * @brief Greater than operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is lexicographically greater than the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first string_view is lexicographically greater than the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>(const string_view& a, const string_view& b)
     {
@@ -452,8 +452,8 @@ public:
      * @brief Less than or equal operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is lexicographically less than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first string_view is lexicographically less than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator<=(const string_view& a, const string_view& b)
     {
@@ -464,8 +464,8 @@ public:
      * @brief Greater than or equal operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.
-     * @return <b>true</b> if the first string_view is lexicographically greater than or equal to the second one,
-     * otherwise <b>false</b>.
+     * @return `true` if the first string_view is lexicographically greater than or equal to the second one,
+     * otherwise `false`.
      */
     [[nodiscard]] constexpr friend bool operator>=(const string_view& a, const string_view& b)
     {

@@ -551,7 +551,7 @@
  * @section main_getting_started Getting started
  *
  * The best way to get started is to read the
- * \ref getting_started "guide to download, build, install and start using Butano".
+ * \ref getting_started "guide to download, install and start using Butano".
  * After that, there are various \ref examples "examples" explaining most aspects of the engine.
  * At last, check how to \ref import "import" your own assets in a game and
  * take a look at the <a href="modules.html">modules page</a>.
@@ -599,8 +599,8 @@
  * Before anything, it is convenient to have a GBA emulator at hand,
  * so you don't have to test in real hardware each change you make in your project.
  *
- * For developing GBA games, I recommend <a href="https://mgba.io/">mGBA</a>
- * and the debug version of <a href="https://problemkaputt.de/gba.htm">No$gba</a>.
+ * For developing GBA games, <a href="https://mgba.io/">mGBA</a>
+ * and the debug version of <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
  *
  *
  * @section getting_started_devkitARM devkitARM
@@ -608,7 +608,7 @@
  * The next step is to download and install devkitARM
  * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>.
  *
- * Install the `GBA development` component and make sure that you are able to build and run
+ * Install the `GBA Development` component and make sure that you are able to build and run
  * some of the examples located in `path/to/devkitpro/examples/gba`.
  *
  * @image html devkitpro.png
@@ -619,7 +619,7 @@
  * To execute some of the tools needed to include image and audio files in your project,
  * you are going to need <a href="https://www.python.org/">Python</a>.
  *
- * Both Python 2 and Python 3 are supported for now, but Python 2 support is not going to be maintained for too long.
+ * Both Python 2 and Python 3 are supported for now, but Python 2 is not going to be supported for too long.
  * Make sure you can execute Python from the command line.
  *
  * @image html python.png
@@ -652,10 +652,10 @@
  * To do that:
  * * Copy the template project located in `path/to/butano/template/` to a path without spaces nor weird characters.
  * * Change the ROM title, the path in which Butano is located and more in the `Makefile` file.
- * * `cd` to the folder of your game.
+ * * `cd` to the new folder.
  * * Type `make -j#cpu_cores#` again.
  *
- * If again everything went as expected, a `*.gba` file should have been generated in the project folder!
+ * If everything went as expected, a `*.gba` file should have been generated in the project folder!
  * Now learn how to \ref import "import your assets" in the game and
  * also take a look at the <a href="modules.html">modules page</a>.
  */

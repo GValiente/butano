@@ -31,12 +31,16 @@ public:
         btn::any<16> empty_any;
         BTN_ASSERT(! empty_any.has_value());
         BTN_ASSERT(empty_any.type() == btn::type_id_t());
+        BTN_ASSERT(btn::any_cast<int>(&empty_any) == nullptr);
 
         btn::any<sizeof(int)> int_any(1);
         BTN_ASSERT(int_any.has_value());
         BTN_ASSERT(int_any.type() == btn::type_id<int>());
         BTN_ASSERT(int_any.value<int>() == 1);
-        BTN_ASSERT(btn::any_cast<int>(int_any) == 1);
+
+        int* any_cast_ptr = btn::any_cast<int>(&int_any);
+        BTN_ASSERT(any_cast_ptr != nullptr);
+        BTN_ASSERT(*any_cast_ptr == 1);
 
         int_any = 2;
         BTN_ASSERT(int_any.has_value());

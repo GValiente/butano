@@ -532,18 +532,82 @@
 // PAGES
 
 /**
- * @mainpage My Personal Index Page
+ * @mainpage Butano
  *
- * @section intro_sec Introduction
+ * Modern C++ high level GBA engine.
  *
- * This is the introduction.
+ * This is the documentation for the Butano engine. To see a high-level overview,
+ * go to the <a href="https://github.com/GValiente/butano">GitHub main page</a>.
  *
- * @section install_sec Installation
+ * Thanks to the <a href="https://magnum.graphics/">Magnum Project</a> for its awesome documentation!
+ * This documentation is heavily based on it.
  *
- * @subsection step1 Step 1: Opening the box
  *
- * etc...
+ * @section main_whats_new What's new?
+ *
+ * Check out the \ref changelog "changelog".
+ *
+ *
+ * @section main_getting_started Getting started
+ *
+ * The best way to get started is to read the
+ * \ref getting_started "guide to download, build, install and start using Butano".
+ * After that, there are various \ref examples "examples" explaining most aspects of the library.
+ *
+ *
+ * @section main_contact_support Contact and support
+ *
+ * If you spotted a bug, need a feature or have an awesome idea,
+ * the best you can do for now is to head over to <a href="https://github.com/GValiente/butano">GitHub</a>.
+ *
+ *
+ * @section main_license License
+ *
+ * Butano is licensed under the zlib license:
+ *
+ * > (C) 2020 Gustavo Valiente (gustavo.valiente@prontonmail.com)
+ * >
+ * > This software is provided 'as-is', without any express or implied warranty.
+ * > In no event will the authors be held liable for any damages arising from the use of this software.
+ * >
+ * > Permission is granted to anyone to use this software for any purpose, including commercial applications,
+ * > and to alter it and redistribute it freely, subject to the following restrictions:
+ * >
+ * > 1. The origin of this software must not be misrepresented;
+ * >    you must not claim that you wrote the original software.
+ * >    If you use this software in a product, an acknowledgment in the product documentation would be
+ * >    appreciated but is not required.
+ * >
+ * > 2. Altered source versions must be plainly marked as such,
+ * >    and must not be misrepresented as being the original software.
+ * >
+ * > 3. This notice may not be removed or altered from any source distribution.
  */
+
+
+/**
+ * @page getting_started Getting started
+ * @tableofcontents
+ * @section getting_started_0_1_0 0.1.0
+ * First release.
+ */
+
+
+/**
+ * @page examples Examples
+ * @tableofcontents
+ * @section examples_0_1_0 0.1.0
+ * First release.
+ */
+
+
+/**
+ * @page changelog Changelog
+ * @tableofcontents
+ * @section changelog_0_1_0 0.1.0
+ * First release.
+ */
+
 
 /**
  * @page page1 A documentation page

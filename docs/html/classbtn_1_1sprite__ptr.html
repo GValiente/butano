@@ -355,22 +355,10 @@
               <span class="m-doc-wrap-bumper">void <a href="#a6f03b6579a4b2a1e9645f89c8f69d481" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span>
             </dt>
             <dd>Sets the priority relative to other sprites.</dd>
-            <dt id="a9c5daacbabc1ccb781b9e0fccd0171de">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9c5daacbabc1ccb781b9e0fccd0171de" class="m-doc-self">above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other) const -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;bool&gt;</span>
+            <dt id="a095087035827885460ae560ab5ea1801">
+              <span class="m-doc-wrap-bumper">void <a href="#a095087035827885460ae560ab5ea1801" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Indicates if this sprite is drawn above the given one if they differ in their bg_priority or z_order. Otherwise, it returns <strong>nullopt</strong>.</dd>
-            <dt id="a5d978586d988965a96679867bcf18d64">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5d978586d988965a96679867bcf18d64" class="m-doc-self">above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg_ptr) const -&gt; bool</span>
-            </dt>
-            <dd>Indicates if this sprite is drawn above the given regular background or not.</dd>
-            <dt id="a88acc33f34b75d80f016817fc973cee8">
-              <span class="m-doc-wrap-bumper">void <a href="#a88acc33f34b75d80f016817fc973cee8" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span>
-            </dt>
-            <dd>Modify this sprite to be drawn above the given one.</dd>
-            <dt id="a777e48e7b6b857a62d3e0d6bc6a9c100">
-              <span class="m-doc-wrap-bumper">void <a href="#a777e48e7b6b857a62d3e0d6bc6a9c100" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg_ptr)</span>
-            </dt>
-            <dd>Modify this sprite to be drawn above the given regular background.</dd>
+            <dd>Modify this sprite to be drawn above all of the other sprites with the same priorities.</dd>
             <dt id="a12102771404f17a44d07ccd4e0112267">
               <span class="m-doc-wrap-bumper">auto <a href="#a12102771404f17a44d07ccd4e0112267" class="m-doc-self">horizontal_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>

@@ -51,7 +51,7 @@ This is Butano Fighter!
 
 Stay alive while you shoot at everything that moves!
 
-The full source code and the creative commons assets of this fun game come with Butano.
+The full source code and the creative commons assets of this fun game are in [its folder](games/butano-fighter).
 
 Get the latest Butano Fighter ROM from the [releases page](https://github.com/GValiente/butano/releases).
 

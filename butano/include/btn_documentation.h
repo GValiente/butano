@@ -173,7 +173,7 @@
 /**
  * @defgroup music Music
  *
- * Module files (files with *.mod, *.xm, *.s3m and *.it extensions) music.
+ * Module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions) music.
  *
  * @ingroup audio
  */
@@ -181,7 +181,7 @@
 /**
  * @defgroup sound Sound effects
  *
- * Waveform audio files (files with *.wav extension) sound effects.
+ * Waveform audio files (files with `*.wav` extension) sound effects.
  *
  * @ingroup audio
  */
@@ -791,9 +791,176 @@
 
 /**
  * @page import Importing assets
+ *
+ * @brief Importing your graphic and audio files into a GBA game can be annoying,
+ * but with Butano and this guide you will be good to go.
+ *
+ *
  * @tableofcontents
- * @section import_0_1_0 0.1.0
- * First release.
+ *
+ * GBA ROMs by themselves don't include a file system, so you can't put a couple of `*.bmp` files into a folder
+ * and expect to read them directly from the GBA side.
+ *
+ * This means that all the game's data has to be added directly to the binary.
+ * Don't worry, because Butano build system does this for you.
+ * When you drop a file into an assets folder, Butano:
+ * * Generates a GBA-friendly version of it.
+ * * Inserts it into the ROM.
+ * * Creates a C++ header into the `build` folder containing the required information to use the assets with ease.
+ *
+ * Let's see how to import image and audio files.
+ *
+ *
+ * @section import_image Images
+ *
+ * By default image files go into the `graphics` folder of your project.
+ *
+ * Butano for now is a little finicky about the images it likes, sorry.
+ *
+ * The required image format is the following:
+ * * BMP without compression nor color space information.
+ * * 16 or 256 colors only.
+ * * The first color in the color palette is the transparent one, so in most cases it will not be shown on screen.
+ *
+ * If you are using <a href="https://www.gimp.org/">GIMP</a> for your images,
+ * remember to disable color space information:
+ *
+ * @image html import_gimp.png
+ *
+ * However, the recommended tool to ensure that your images are compatible
+ * with Butano is <a href="https://www.coranac.com/projects/usenti/">Usenti</a>:
+ *
+ * @image html import_usenti.png
+ *
+ * Usenti is a simple bitmap editor for paletted images,
+ * it is like the good old Paint but with various palette/color manipulation tools.
+ *
+ * If you are not going to use Usenti for your images, at least remember to check them with it
+ * when they are not displayed as expected.
+ *
+ * A single `*.bmp` file is not enough to display graphics on the GBA.
+ * You must accompany it with a `*.json` file with the same name specifying if it is a sprite or a background
+ * and some more info.
+ *
+ * Let's see how to do it.
+ *
+ *
+ * @subsection import_sprite Sprites
+ *
+ * An image file can contain multiple sprite images.
+ * If it only contains one sprite image, its size must be one of the specified by @ref btn::sprite_shape_size.
+ *
+ * Multiple sprite images are allowed by layering them down on the vertical axis:
+ *
+ * @image html import_sprite.png
+ *
+ * An example of the `*.json` files required for sprites is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "sprite",
+ *     "height": 64
+ * }
+ * @endcode
+ *
+ * The fields for sprite images are the following:
+ * * `"type"`: must be `"sprite"` for sprites.
+ * * `"height"`: height of each sprite image in pixels.
+ * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
+ *
+ * If the conversion process has finished successfully,
+ * a btn::sprite_item should have been generated in the `build` folder.
+ * You can use this item to create a sprite with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * btn::sprite_ptr sprite = btn::sprite_items::image.create_sprite(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection import_regular_bg Regular backgrounds
+ *
+ * An image file can contain only one regular background.
+ * Its size must be 256x256, 256x512, 512x256 or 512x512 pixels.
+ *
+ * An example of the `*.json` files required for regular backgrounds is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "regular_bg",
+ *     "bpp_mode": "bpp_8"
+ * }
+ * @endcode
+ *
+ * The fields for regular background images are the following:
+ * * `"type"`: must be `"regular_bg"` for regular backgrounds.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background:
+ *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
+ * Butano tries to quantize the image to fit the color palette into the required one.
+ *   * `"bpp_4_manual"`: up to 16 colors per @ref tile "tile".
+ * Butano expects that the image color palette is already valid for this mode.
+ *
+ * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
+ *
+ * If the conversion process has finished successfully,
+ * a btn::regular_bg_item should have been generated in the `build` folder.
+ * You can use this item to create a regular background with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * btn::regular_bg_ptr regular_bg = btn::regular_bg_items::image.create_bg(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection import_affine_bg Affine backgrounds
+ *
+ * Soon?
+ *
+ *
+ * @section import_audio Audio
+ *
+ * By default audio files go into the `audio` folder of your project.
+ *
+ * Audio stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
+ * so if you have an issue with music or sound effects, well, you know.
+ *
+ * A really nice application for editing audio files
+ * before importing them into your game is <a href="https://openmpt.org/">OpenMPT</a>.
+ *
+ *
+ * @subsection import_music Music
+ *
+ * The required format for music are module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions).
+ *
+ * By default Butano supports up to 16 music channels,
+ * but this limit can be increased by overloading the definition of @ref BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS.
+ *
+ * However, if it is possible don't do this, don't make the poor GBA suffer.
+ *
+ * If the conversion process has finished successfully,
+ * a bunch of btn::music_item objects under the `btn::music_items` namespace
+ * should have been generated in the `build` folder for all music files.
+ * You can use these items to play music with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * btn::music_items::song.play();
+ * @endcode
+ *
+ *
+ * @subsection import_sound Sound effects
+ *
+ * The required format for sound effects is waveform audio files (files with `*.wav` extension)
+ * without compression or anything weird. Besides, *I think* stereo files are not allowed.
+ *
+ * The recommended quality for sound effects is 8-bits 22050 Hz.
+ *
+ * If the conversion process has finished successfully,
+ * a bunch of btn::sound_item objects under the `btn::sound_items` namespace
+ * should have been generated in the `build` folder for all sound files.
+ * You can use these items to play sound effects with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * btn::sound_items::sfx.play();
+ * @endcode
  */
 
 

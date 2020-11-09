@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::ivector class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename Type&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>ivector <span class="m-thin">class</span>
+        </h1>
+        <p>Base class of vector.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Can be used as a reference type for all vector containers containing a specific type.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
+              class <a href="classbtn_1_1vector.html" class="m-doc">vector</a>
+            </dt>
+            <dd>Vector implementation that uses a fixed size buffer.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="ac5b8aa678dd6afb4a6615274f3633f34">
+              using <a href="#ac5b8aa678dd6afb4a6615274f3633f34" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="aafa3f854278d00037ec5e52c54553032">
+              using <a href="#aafa3f854278d00037ec5e52c54553032" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a380a4ad72f66dec34cd917fc30ca371f">
+              using <a href="#a380a4ad72f66dec34cd917fc30ca371f" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="aac7180359c7d1819334cb5ec35d554ed">
+              using <a href="#aac7180359c7d1819334cb5ec35d554ed" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="aa4c8404c48773048a43e7064893f058e">
+              using <a href="#aa4c8404c48773048a43e7064893f058e" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="aac1298b654b270b5f98558d0a253c0ac">
+              using <a href="#aac1298b654b270b5f98558d0a253c0ac" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a5e8b8f11e6271c597b8affd4c758a3fa">
+              using <a href="#a5e8b8f11e6271c597b8affd4c758a3fa" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="ada2c9085d6bc9d954378e9e6bfe5d4f0">
+              using <a href="#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc-self">iterator</a> = Type*
+            </dt>
+            <dd>Iterator alias.</dd>
+            <dt id="adace8b881cb8521fa0b4a83689d8f841">
+              using <a href="#adace8b881cb8521fa0b4a83689d8f841" class="m-doc-self">const_iterator</a> = const Type*
+            </dt>
+            <dd>Const iterator alias.</dd>
+            <dt id="ae9f96c50e4966ee3e49e4748977726da">
+              using <a href="#ae9f96c50e4966ee3e49e4748977726da" class="m-doc-self">reverse_iterator</a> = btn::reverse_iterator&lt;<a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a>&gt;
+            </dt>
+            <dd>Reverse iterator alias.</dd>
+            <dt id="acdab9e9c5352f8539233817d54483373">
+              using <a href="#acdab9e9c5352f8539233817d54483373" class="m-doc-self">const_reverse_iterator</a> = btn::reverse_iterator&lt;<a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a>&gt;
+            </dt>
+            <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab82ea7fb9d7b6e72191e36172ab59a92" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; other) -&gt; <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a33ba44a441e949ceb3e1587873f096a2" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a1db436c80ca6bf4e7ae55630e24e04a0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1db436c80ca6bf4e7ae55630e24e04a0" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#a5e8b8f11e6271c597b8affd4c758a3fa" class="m-doc">const_<wbr />pointer</a></span>
+            </dt>
+            <dd>Returns a const pointer to the beginning of the ivector data.</dd>
+            <dt id="a314844ba2f889294c62ffb4df888e5bd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a314844ba2f889294c62ffb4df888e5bd" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#aac1298b654b270b5f98558d0a253c0ac" class="m-doc">pointer</a></span>
+            </dt>
+            <dd>Returns a pointer to the beginning of the ivector data.</dd>
+            <dt id="ac2017e00736e4dd25050df4d8d686afe">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2017e00736e4dd25050df4d8d686afe" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the current elements count.</dd>
+            <dt id="acc0f1253cf3e0e16bb104374f3587823">
+              <span class="m-doc-wrap-bumper">auto <a href="#acc0f1253cf3e0e16bb104374f3587823" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the maximum possible elements count.</dd>
+            <dt id="a1abcb13d0a40846c2d2ddda8cdbc38d2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1abcb13d0a40846c2d2ddda8cdbc38d2" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the remaining element capacity.</dd>
+            <dt id="a4829d3f95affeb9ea366bc24dc117f91">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4829d3f95affeb9ea366bc24dc117f91" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it doesn&#x27;t contain any element.</dd>
+            <dt id="a43cded9ca5647d995244b8b86d305f85">
+              <span class="m-doc-wrap-bumper">auto <a href="#a43cded9ca5647d995244b8b86d305f85" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it can&#x27;t contain any more elements.</dd>
+            <dt id="a814255455835f82947a4c2d9c9adc5f7">
+              <span class="m-doc-wrap-bumper">auto <a href="#a814255455835f82947a4c2d9c9adc5f7" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the ivector.</dd>
+            <dt id="a9d9edc1df6185c6bbe7b0fa3bd55a006">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d9edc1df6185c6bbe7b0fa3bd55a006" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the beginning of the ivector.</dd>
+            <dt id="a8bfbc1561d257cbeccda2e346f29466c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8bfbc1561d257cbeccda2e346f29466c" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the ivector.</dd>
+            <dt id="afb38e834970db2cf1574354611ef11eb">
+              <span class="m-doc-wrap-bumper">auto <a href="#afb38e834970db2cf1574354611ef11eb" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the end of the ivector.</dd>
+            <dt id="ad665e165df19c6b288945c03d5ce8735">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad665e165df19c6b288945c03d5ce8735" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the ivector.</dd>
+            <dt id="aa93261538982595f15b076a6f6beabef">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa93261538982595f15b076a6f6beabef" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the ivector.</dd>
+            <dt id="a7a9ced44b4dfb0c08a7bd7cf630403e8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a9ced44b4dfb0c08a7bd7cf630403e8" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#acdab9e9c5352f8539233817d54483373" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the ivector.</dd>
+            <dt id="af486af82f3ce42dd6849eb060911b80d">
+              <span class="m-doc-wrap-bumper">auto <a href="#af486af82f3ce42dd6849eb060911b80d" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#ae9f96c50e4966ee3e49e4748977726da" class="m-doc">reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a reverse iterator to the end of the ivector.</dd>
+            <dt id="a0ee5adebf8e475482505ec2d43b69be7">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ee5adebf8e475482505ec2d43b69be7" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#acdab9e9c5352f8539233817d54483373" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the ivector.</dd>
+            <dt id="a7371defa116a070d06e9fda2e1e8c9a3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7371defa116a070d06e9fda2e1e8c9a3" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#ae9f96c50e4966ee3e49e4748977726da" class="m-doc">reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a reverse iterator to the beginning of the ivector.</dd>
+            <dt id="a56c3d61abbf8892f57f62ac85237972e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a56c3d61abbf8892f57f62ac85237972e" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#acdab9e9c5352f8539233817d54483373" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the ivector.</dd>
+            <dt id="a12782d20b5b9e97fb14408a4a076457b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a12782d20b5b9e97fb14408a4a076457b" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#acdab9e9c5352f8539233817d54483373" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the ivector.</dd>
+            <dt id="a044e238e089794bc90d1083f724a16ff">
+              <span class="m-doc-wrap-bumper">auto <a href="#a044e238e089794bc90d1083f724a16ff" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="a8d060d17ef2c07b26362eed4c19ab712">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d060d17ef2c07b26362eed4c19ab712" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="ab40c09c0b64cad36a6399c4d46951167">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab40c09c0b64cad36a6399c4d46951167" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="a7d1306eca51574caae97c02043b83826">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7d1306eca51574caae97c02043b83826" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="a829e7b7e1dde480106f9dc57503d6797">
+              <span class="m-doc-wrap-bumper">auto <a href="#a829e7b7e1dde480106f9dc57503d6797" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the first element.</dd>
+            <dt id="ac2a47fc0a7662c4d0b0c86d8a76341e6">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2a47fc0a7662c4d0b0c86d8a76341e6" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the first element.</dd>
+            <dt id="a5f46bcfd3327a7dca4901d6e670aaeba">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5f46bcfd3327a7dca4901d6e670aaeba" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the last element.</dd>
+            <dt id="a440ec68747af511a0eff44273481956e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a440ec68747af511a0eff44273481956e" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the last element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac9da3495a9cfe3d18dabc705224852f8" class="m-doc">push_back</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Inserts a copy of a value at the end of the ivector.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abd1da5197dd3e8857a8aac6dec78e1b3" class="m-doc">push_back</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#ac5b8aa678dd6afb4a6615274f3633f34" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span>
+            </dt>
+            <dd>Inserts a moved value at the end of the ivector.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#afddbf97ce0c19dcc4191e8ed2dac4254" class="m-doc">emplace_back</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the end of the ivector.</dd>
+            <dt id="a84495c3998fcae3d1544e18b05a7727a">
+              <span class="m-doc-wrap-bumper">void <a href="#a84495c3998fcae3d1544e18b05a7727a" class="m-doc-self">pop_back</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the last element of the ivector.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a041dfab217f43c6cfd0649c52a72a099" class="m-doc">insert</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a copy of a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ce8061e58153a3b167f5c5faf370010" class="m-doc">insert</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1ivector.html#ac5b8aa678dd6afb4a6615274f3633f34" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a moved value at the specified position.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#adaad16de18b9b336da8c82f8e9879c8b" class="m-doc">emplace</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              Args &amp;&amp; ... args) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acb4704a6091e0e0bc26fd5fd706a3b4f" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases an element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abe460445d3fede3f4b8340e3f7e089b7" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> first,
+              <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> last) -&gt; <a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases a range of elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a71f705c45a3f4b4e96595bd57253cfcd" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count)</span>
+            </dt>
+            <dd>Resizes the ivector.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a82aa8273544f520a715728529b2e8240" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Resizes the ivector.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aef335448baeddb50c81ae6d1895f84e4" class="m-doc">shrink</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count)</span>
+            </dt>
+            <dd>Resizes the ivector to a size less or equal than the previous one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7d02b4bd6d2b2fc8d44dc87b5506b7f3" class="m-doc">assign</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Assigns values to the ivector, removing the previous ones.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Iterator&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#af391a70a99cd9c51d631246ce4a20a02" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span>
+            </dt>
+            <dd>Assigns values to the ivector, removing the previous ones.</dd>
+            <dt id="a9c3a42576d4e9abcf212d7c4ff36bab0">
+              <span class="m-doc-wrap-bumper">void <a href="#a9c3a42576d4e9abcf212d7c4ff36bab0" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes all elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1029f5f23532b871a3d73ed56243ad7f" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this ivector with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a57c947b1de47f33e9eb47bd73f274057" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; vector,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a19e083e7e41fbf4bb3926f2a3a353bcb" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; vector,
+              const Pred&amp; pred) -&gt; <a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aafcb8656830d9b2bcacf872a3918e7a1" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a ivector with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e63d77604a26730ab90c99cb168b59a" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6fba252731811704e5028dcd920d483" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a806593089a37193bf4395eaa0f563a04" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad9f0a6507810aab0e74c5a113d2d796d" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a555b63cdcd7c1e073918065786c9c009" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab20a65132ec2eb4dd52dbf70e0f5209a" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab82ea7fb9d7b6e72191e36172ab59a92"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab82ea7fb9d7b6e72191e36172ab59a92" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a33ba44a441e949ceb3e1587873f096a2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a33ba44a441e949ceb3e1587873f096a2" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac9da3495a9cfe3d18dabc705224852f8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac9da3495a9cfe3d18dabc705224852f8" class="m-doc-self">push_back</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the end of the ivector.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abd1da5197dd3e8857a8aac6dec78e1b3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abd1da5197dd3e8857a8aac6dec78e1b3" class="m-doc-self">push_back</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#ac5b8aa678dd6afb4a6615274f3633f34" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the end of the ivector.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afddbf97ce0c19dcc4191e8ed2dac4254"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#aac7180359c7d1819334cb5ec35d554ed" class="m-doc">reference</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afddbf97ce0c19dcc4191e8ed2dac4254" class="m-doc-self">emplace_back</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the end of the ivector.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a041dfab217f43c6cfd0649c52a72a099"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a041dfab217f43c6cfd0649c52a72a099" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0ce8061e58153a3b167f5c5faf370010"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0ce8061e58153a3b167f5c5faf370010" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1ivector.html#ac5b8aa678dd6afb4a6615274f3633f34" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adaad16de18b9b336da8c82f8e9879c8b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adaad16de18b9b336da8c82f8e9879c8b" class="m-doc-self">emplace</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position,
+              Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The new value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acb4704a6091e0e0bc26fd5fd706a3b4f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acb4704a6091e0e0bc26fd5fd706a3b4f" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> position)</span></span>
+            </h3>
+            <p>Erases an element.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Iterator to the element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abe460445d3fede3f4b8340e3f7e089b7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#ada2c9085d6bc9d954378e9e6bfe5d4f0" class="m-doc">iterator</a> btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abe460445d3fede3f4b8340e3f7e089b7" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> first,
+              <a href="classbtn_1_1ivector.html#adace8b881cb8521fa0b4a83689d8f841" class="m-doc">const_<wbr />iterator</a> last)</span></span>
+            </h3>
+            <p>Erases a range of elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to erase.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator to the last element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the last erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The range includes all the elements between first and last, including the element pointed by first, but not the one pointed by last.</p>
+          </div></section>
+          <section class="m-doc-details" id="a71f705c45a3f4b4e96595bd57253cfcd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a71f705c45a3f4b4e96595bd57253cfcd" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count)</span></span>
+            </h3>
+            <p>Resizes the ivector.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a82aa8273544f520a715728529b2e8240"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a82aa8273544f520a715728529b2e8240" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Resizes the ivector.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill new elements with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aef335448baeddb50c81ae6d1895f84e4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aef335448baeddb50c81ae6d1895f84e4" class="m-doc-self">shrink</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count)</span></span>
+            </h3>
+            <p>Resizes the ivector to a size less or equal than the previous one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7d02b4bd6d2b2fc8d44dc87b5506b7f3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7d02b4bd6d2b2fc8d44dc87b5506b7f3" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Assigns values to the ivector, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Number of elements to insert.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill new elements with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af391a70a99cd9c51d631246ce4a20a02"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename Iterator&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af391a70a99cd9c51d631246ce4a20a02" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span></span>
+            </h3>
+            <p>Assigns values to the ivector, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to insert.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator following to the last element to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1029f5f23532b871a3d73ed56243ad7f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ivector&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1029f5f23532b871a3d73ed56243ad7f" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this ivector with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a57c947b1de47f33e9eb47bd73f274057"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a57c947b1de47f33e9eb47bd73f274057" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; vector,
+              <a href="classbtn_1_1ivector.html#aa4c8404c48773048a43e7064893f058e" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Erases all elements that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vector</td>
+                  <td>ivector from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a19e083e7e41fbf4bb3926f2a3a353bcb"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ivector.html#aafa3f854278d00037ec5e52c54553032" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a19e083e7e41fbf4bb3926f2a3a353bcb" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; vector,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vector</td>
+                  <td>ivector from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aafcb8656830d9b2bcacf872a3918e7a1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aafcb8656830d9b2bcacf872a3918e7a1" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a ivector with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7e63d77604a26730ab90c99cb168b59a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e63d77604a26730ab90c99cb168b59a" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac6fba252731811704e5028dcd920d483"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6fba252731811704e5028dcd920d483" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a806593089a37193bf4395eaa0f563a04"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a806593089a37193bf4395eaa0f563a04" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is lexicographically less than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad9f0a6507810aab0e74c5a113d2d796d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad9f0a6507810aab0e74c5a113d2d796d" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is lexicographically greater than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a555b63cdcd7c1e073918065786c9c009"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a555b63cdcd7c1e073918065786c9c009" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is lexicographically less than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab20a65132ec2eb4dd52dbf70e0f5209a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab20a65132ec2eb4dd52dbf70e0f5209a" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; a,
+              const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ivector to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ivector to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ivector is lexicographically greater than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::list class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>list <span class="m-thin">class</span>
+        </h1>
+        <p>List implementation that uses a fixed size buffer.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+            <tr>
+              <td>MaxSize</td>
+              <td>Maximum number of elements that can be stored.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              class <a href="classbtn_1_1ilist.html" class="m-doc">ilist&lt;Type&gt;</a>
+            </dt>
+            <dd>Base class of list.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="ad8d100aef641b0809a9b23376837fdaa">
+              using <a href="#ad8d100aef641b0809a9b23376837fdaa" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="ac9e3c8f7f28e12fff7139b2a59578173">
+              using <a href="#ac9e3c8f7f28e12fff7139b2a59578173" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a45a26978e67371109319e12d3d46459d">
+              using <a href="#a45a26978e67371109319e12d3d46459d" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="af867b5e6cfacbb76a02f2326ab065c3b">
+              using <a href="#af867b5e6cfacbb76a02f2326ab065c3b" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a6d82312cb8a4a8d1b4c20a45df85bf08">
+              using <a href="#a6d82312cb8a4a8d1b4c20a45df85bf08" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="a4c8c955b66da9785f7d88170ce855f93">
+              using <a href="#a4c8c955b66da9785f7d88170ce855f93" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a794ff69352a435e0f312cc79852e1e22">
+              using <a href="#a794ff69352a435e0f312cc79852e1e22" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="aef0e79a72984986a748e66b942109d2f">
+              using <a href="#aef0e79a72984986a748e66b942109d2f" class="m-doc-self">iterator</a> = typename <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::<a href="classbtn_1_1list.html#aef0e79a72984986a748e66b942109d2f" class="m-doc">iterator</a>
+            </dt>
+            <dd>Iterator alias.</dd>
+            <dt id="ae974fa39bb09cf4655708538dc1684bf">
+              using <a href="#ae974fa39bb09cf4655708538dc1684bf" class="m-doc-self">const_iterator</a> = typename <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::<a href="classbtn_1_1list.html#ae974fa39bb09cf4655708538dc1684bf" class="m-doc">const_<wbr />iterator</a>
+            </dt>
+            <dd>Const iterator alias.</dd>
+            <dt id="a4e0c2d2d5312b637de39efb20cec032b">
+              using <a href="#a4e0c2d2d5312b637de39efb20cec032b" class="m-doc-self">reverse_iterator</a> = typename <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::<a href="classbtn_1_1ilist.html#a685396580d465e93bf474d6fd746726c" class="m-doc">reverse_<wbr />iterator</a>
+            </dt>
+            <dd>Reverse iterator alias.</dd>
+            <dt id="a683158a137caa42b7b8514be560d0623">
+              using <a href="#a683158a137caa42b7b8514be560d0623" class="m-doc-self">const_reverse_iterator</a> = typename <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::<a href="classbtn_1_1ilist.html#a55910c1a8e944fbcbc75977cbaf46fa1" class="m-doc">const_<wbr />reverse_<wbr />iterator</a>
+            </dt>
+            <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a158df17acbe0e4d0ee08e235e29cc0d2">
+              <span class="m-doc-wrap-bumper"><a href="#a158df17acbe0e4d0ee08e235e29cc0d2" class="m-doc-self">list</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a5dc7348ef0485866b3007d2cda55a602" class="m-doc">list</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a01437e9545daffb18d0bf311305b47e4" class="m-doc">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a23f0df044c65f565fa466de7355d1002" class="m-doc">list</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#afe0b762485ab880092f75fa6cc185edc" class="m-doc">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a3c9dec9ee752c9ae48b02a591696dafa" class="m-doc">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html#a42ea44520bfe57b0fd8906af539fd32f" class="m-doc">size_<wbr />type</a> count)</span>
+            </dt>
+            <dd>Size constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a9ce3b37b8c578f2f3726181189a72dcd" class="m-doc">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html#a42ea44520bfe57b0fd8906af539fd32f" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ilist.html#ab3f1ae6ca70f280102c58b1fc6858a86" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Size constructor.</dd>
+            <dt id="ad462d0455e9d4770c3952bf47704097f">
+              <span class="m-doc-wrap-bumper"><a href="#ad462d0455e9d4770c3952bf47704097f" class="m-doc-self">~list</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Destructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6f0b26ce924548b8e47c78b32018a40c" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; other) -&gt; <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e21c92715792f43a2135398d55c3ede" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4567d0980a267ed37087f113cb80cf90" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; other) -&gt; <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac064d6081c0ae85bbaf4f7c6380dd2bd" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp;&amp; other) -&gt; <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5dc7348ef0485866b3007d2cda55a602"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5dc7348ef0485866b3007d2cda55a602" class="m-doc-self">list</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>list to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01437e9545daffb18d0bf311305b47e4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01437e9545daffb18d0bf311305b47e4" class="m-doc-self">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>list to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a23f0df044c65f565fa466de7355d1002"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a23f0df044c65f565fa466de7355d1002" class="m-doc-self">list</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ilist to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afe0b762485ab880092f75fa6cc185edc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe0b762485ab880092f75fa6cc185edc" class="m-doc-self">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ilist to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3c9dec9ee752c9ae48b02a591696dafa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c9dec9ee752c9ae48b02a591696dafa" class="m-doc-self">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html#a42ea44520bfe57b0fd8906af539fd32f" class="m-doc">size_<wbr />type</a> count)</span></span>
+            </h3>
+            <p>Size constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Initial size of the list.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9ce3b37b8c578f2f3726181189a72dcd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9ce3b37b8c578f2f3726181189a72dcd" class="m-doc-self">list</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html#a42ea44520bfe57b0fd8906af539fd32f" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1ilist.html#ab3f1ae6ca70f280102c58b1fc6858a86" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Size constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Initial size of the list.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill the list with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6f0b26ce924548b8e47c78b32018a40c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6f0b26ce924548b8e47c78b32018a40c" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>list to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7e21c92715792f43a2135398d55c3ede"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e21c92715792f43a2135398d55c3ede" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>list to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4567d0980a267ed37087f113cb80cf90"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4567d0980a267ed37087f113cb80cf90" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ilist to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac064d6081c0ae85bbaf4f7c6380dd2bd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1list.html" class="m-doc">list</a>&amp; btn::<wbr />list&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac064d6081c0ae85bbaf4f7c6380dd2bd" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ilist to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

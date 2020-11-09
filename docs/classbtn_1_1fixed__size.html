@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::fixed_size class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>fixed_size <span class="m-thin">class</span>
+        </h1>
+        <p>Defines the size of a two-dimensional object using fixed point precision.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="ae29f2be616c696d1b387e3d1323bb2ac">
+              <span class="m-doc-wrap-bumper"><a href="#ae29f2be616c696d1b387e3d1323bb2ac" class="m-doc-self">fixed_size</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a0c5ac668fabcf7fcd1f271e7c0c56e86" class="m-doc">fixed_size</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a9ff22cf255d7562d35d652779de7debb" class="m-doc">fixed_size</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1size.html" class="m-doc">size</a>&amp; size) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a320f259f87d5a8db2fb56f78fa0e922e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a320f259f87d5a8db2fb56f78fa0e922e" class="m-doc-self">width</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the width.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a65d913ac692c14873c305640a7749130" class="m-doc">set_width</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the width.</dd>
+            <dt id="ac43587c176f75ce6c0c5b1eb2e3f4d0f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac43587c176f75ce6c0c5b1eb2e3f4d0f" class="m-doc-self">height</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the height.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aadd46ff1660a2e0bb1db8e97297d9e82" class="m-doc">set_height</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the height.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0716d2089735beaf652e37b8a8a00011" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; other) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Adds the given <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to this one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5ebe8fbdd633ede981b6a75178c35314" class="m-doc">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; other) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Subtracts the given <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to this one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a00af1884b1a781f09a3315a90fbed5ef" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad526a13bc9457b176dc4df4cea352f13" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afd6fb151f7cbdf7eb895cf550a5ffe57" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afea1e11e77b43b953dc4a529b6e42b26" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7c4d7af41534c2ab5c1991b85e829723" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1e39f40f108cd2ae739d2679ac09f647" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) -&gt; <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height by the given divisor.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a10e04ed820ccb1753f2e60b8930cabb6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a10e04ed820ccb1753f2e60b8930cabb6" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the sum of a and b.</dd>
+            <dt id="a6334094c1ff0a4c0bdfca98827805f08">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6334094c1ff0a4c0bdfca98827805f08" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns b subtracted from a.</dd>
+            <dt id="a054167b88174bdc1e719962011af5b89">
+              <span class="m-doc-wrap-bumper">auto <a href="#a054167b88174bdc1e719962011af5b89" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              int b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="a051fd6dcac525eff92d82e3ab4cfde28">
+              <span class="m-doc-wrap-bumper">auto <a href="#a051fd6dcac525eff92d82e3ab4cfde28" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              unsigned b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="a40a1e77c869944c37b7b9893a6a0128b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a40a1e77c869944c37b7b9893a6a0128b" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="a4b3bc3ab4f6df25f19a282b0b807dcb3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b3bc3ab4f6df25f19a282b0b807dcb3" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              int b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="a4b1d914ffde4ea7f78473ded68663179">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b1d914ffde4ea7f78473ded68663179" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              unsigned b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="a5ba8cd6485a3e5e197fbf7ca957de592">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5ba8cd6485a3e5e197fbf7ca957de592" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> b) -&gt; friend <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="ae3f42e3361ef2c1116412d0e44d95a6f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae3f42e3361ef2c1116412d0e44d95a6f" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; a,
+              const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a0c5ac668fabcf7fcd1f271e7c0c56e86"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0c5ac668fabcf7fcd1f271e7c0c56e86" class="m-doc-self">fixed_size</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width (&gt;= 0).</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Valid height (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9ff22cf255d7562d35d652779de7debb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9ff22cf255d7562d35d652779de7debb" class="m-doc-self">fixed_size</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1size.html" class="m-doc">size</a>&amp; size) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">size</td>
+                  <td>Integer size.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65d913ac692c14873c305640a7749130"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65d913ac692c14873c305640a7749130" class="m-doc-self">set_width</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the width.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aadd46ff1660a2e0bb1db8e97297d9e82"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aadd46ff1660a2e0bb1db8e97297d9e82" class="m-doc-self">set_height</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the height.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">height</td>
+                  <td>Valid height (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0716d2089735beaf652e37b8a8a00011"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0716d2089735beaf652e37b8a8a00011" class="m-doc-self">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Adds the given <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to this one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to add.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5ebe8fbdd633ede981b6a75178c35314"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ebe8fbdd633ede981b6a75178c35314" class="m-doc-self">operator-=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Subtracts the given <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to this one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> to subtract.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a00af1884b1a781f09a3315a90fbed5ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a00af1884b1a781f09a3315a90fbed5ef" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid integer multiplication factor (&gt;= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad526a13bc9457b176dc4df4cea352f13"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad526a13bc9457b176dc4df4cea352f13" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid unsigned integer multiplication factor (&gt;= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afd6fb151f7cbdf7eb895cf550a5ffe57"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afd6fb151f7cbdf7eb895cf550a5ffe57" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid fixed point multiplication factor (&gt;= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afea1e11e77b43b953dc4a529b6e42b26"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afea1e11e77b43b953dc4a529b6e42b26" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid integer divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7c4d7af41534c2ab5c1991b85e829723"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c4d7af41534c2ab5c1991b85e829723" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid unsigned integer divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1e39f40f108cd2ae739d2679ac09f647"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; btn::<wbr />fixed_size::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e39f40f108cd2ae739d2679ac09f647" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid fixed point divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::iforward_list class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;typename Type&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>iforward_list <span class="m-thin">class</span>
+        </h1>
+        <p>Base class of <a href="classbtn_1_1forward__list.html" class="m-doc">forward_<wbr />list</a>.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Can be used as a reference type for all <a href="classbtn_1_1forward__list.html" class="m-doc">forward_<wbr />list</a> containers containing a specific type.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
+              class <a href="classbtn_1_1forward__list.html" class="m-doc">forward_list</a>
+            </dt>
+            <dd>Forward list implementation that uses a fixed size buffer.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_iterator</a>
+            </dt>
+            <dd>Const iterator.</dd>
+            <dt>
+              class <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a>
+            </dt>
+            <dd>Non const iterator.</dd>
+            <dt id="af7fc4390723c140826b6eab53bffe475">
+              using <a href="#af7fc4390723c140826b6eab53bffe475" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="af1cbc76bb303d93bcf1dacda198d8526">
+              using <a href="#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a93d9fe77bdd4d200f88a421e97000ac6">
+              using <a href="#a93d9fe77bdd4d200f88a421e97000ac6" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="a3a327e7ddc907657de5dc66dd409f151">
+              using <a href="#a3a327e7ddc907657de5dc66dd409f151" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a9ec4c66f7d47e494e6d1b87187a53452">
+              using <a href="#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="a93be5891a2d5f08883a5ea5b3adffefe">
+              using <a href="#a93be5891a2d5f08883a5ea5b3adffefe" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a93856d9caffeea390a6baf82048d1195">
+              using <a href="#a93856d9caffeea390a6baf82048d1195" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab6e404895c4040f026319791d0e64c8d" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; other) -&gt; <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6f8a91935367e0238d7ce8a89549d6e8" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a64e511e4e71f84a955809be5e47aba26">
+              <span class="m-doc-wrap-bumper">auto <a href="#a64e511e4e71f84a955809be5e47aba26" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the current size.</dd>
+            <dt id="aec6b67d2d4d39eae247d5489fcb34d1d">
+              <span class="m-doc-wrap-bumper">auto <a href="#aec6b67d2d4d39eae247d5489fcb34d1d" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the maximum possible size.</dd>
+            <dt id="a237573379efe60236a90ff29e6578f0c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a237573379efe60236a90ff29e6578f0c" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the remaining capacity.</dd>
+            <dt id="aa64a6767bab61c4f8c70463cd8151aff">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa64a6767bab61c4f8c70463cd8151aff" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it doesn&#x27;t contain any element.</dd>
+            <dt id="a5ca682ca2af8a427472ab6f60b93216a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5ca682ca2af8a427472ab6f60b93216a" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it can&#x27;t contain any more elements.</dd>
+            <dt id="a6926a0702f45dfb45645b0b4671a4922">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6926a0702f45dfb45645b0b4671a4922" class="m-doc-self">before_begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the position before the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="ab917fdd6e935fd0dd4ccd7199e0e9c41">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab917fdd6e935fd0dd4ccd7199e0e9c41" class="m-doc-self">before_begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="adc55f01f694e38988e4117577a80e5ea">
+              <span class="m-doc-wrap-bumper">auto <a href="#adc55f01f694e38988e4117577a80e5ea" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="a8a31197203d96e3c8a5df9a1494c7bde">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8a31197203d96e3c8a5df9a1494c7bde" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="a0ae45070ecfc9a4dcea15e38e7e49b93">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ae45070ecfc9a4dcea15e38e7e49b93" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="a962f2adc25130766c0d69ab4369b29d4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a962f2adc25130766c0d69ab4369b29d4" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the end of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="afc5404492b3112ec95f1dcaa6ab9a35c">
+              <span class="m-doc-wrap-bumper">auto <a href="#afc5404492b3112ec95f1dcaa6ab9a35c" class="m-doc-self">cbefore_begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the position before the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="a940f9d43f3e4092cb483d8ed5ce97f2a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a940f9d43f3e4092cb483d8ed5ce97f2a" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="af584a609eee8900b8bc437b953c1abfd">
+              <span class="m-doc-wrap-bumper">auto <a href="#af584a609eee8900b8bc437b953c1abfd" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="ac83f8d145bc5939c38a5dcf34d5a7a13">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac83f8d145bc5939c38a5dcf34d5a7a13" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the first element.</dd>
+            <dt id="ac3e44368e2dcfe579721d088915cb930">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac3e44368e2dcfe579721d088915cb930" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1iforward__list.html#a3a327e7ddc907657de5dc66dd409f151" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the first element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a987d80f6366a42002508d6b717a064d9" class="m-doc">push_front</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Inserts a copy of a value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a62aa75e0760ba93a2d60e82e44302a87" class="m-doc">push_front</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#af7fc4390723c140826b6eab53bffe475" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span>
+            </dt>
+            <dd>Inserts a moved value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a83f71270c06bba3fc5d46207e590862e" class="m-doc">emplace_front</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbtn_1_1iforward__list.html#a3a327e7ddc907657de5dc66dd409f151" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt id="a379e2014bcaa66ade47a54306276f728">
+              <span class="m-doc-wrap-bumper">void <a href="#a379e2014bcaa66ade47a54306276f728" class="m-doc-self">pop_front</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the first element of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7f4e081adc223d81178befd572e349df" class="m-doc">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a copy of a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acfe1ae7d536892b8edd4f90b25f3d3e8" class="m-doc">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1iforward__list.html#af7fc4390723c140826b6eab53bffe475" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a moved value at the specified position.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aac10b353309e5d54e52dcd5ef38faa71" class="m-doc">emplace_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              Args &amp;&amp; ... args) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a73e4650c745288a902554b49fd063e4f" class="m-doc">erase_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases an element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a29d145aaccd7668e8ddc10fe5377b8" class="m-doc">erase_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> first,
+              <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> last) -&gt; <a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases a range of elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a585613241765524519ffb9a70f82e728" class="m-doc">assign</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Assigns values to the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>, removing the previous ones.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Iterator&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a01538253c4e606cda1a9507e0a086bcc" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span>
+            </dt>
+            <dd>Assigns values to the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>, removing the previous ones.</dd>
+            <dt id="a63cc1536ed1d78317a25732954347792">
+              <span class="m-doc-wrap-bumper">void <a href="#a63cc1536ed1d78317a25732954347792" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes all elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa197d4278f7f4a8b565378ef3e58674f" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9a4b5337786e486ed66c8885c79f0ae7" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; list,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab8dfe8668119994738d064881cce7a83" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; list,
+              const Pred&amp; pred) -&gt; <a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7b530250f452e374796f43709797ba06" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a86fd13b56a46b1f91a077727e3686819" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ded8620cd48e3f3204174b4c37ee015" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8debe6192184a60e976a066311f6192d" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac564efe3aa13ff2dbc81b14789691bf1" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a886700eb0f851600f3d213308c242f67" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae7b924c9011de4be52e9b838d5b9e3e3" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab6e404895c4040f026319791d0e64c8d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab6e404895c4040f026319791d0e64c8d" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6f8a91935367e0238d7ce8a89549d6e8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6f8a91935367e0238d7ce8a89549d6e8" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a987d80f6366a42002508d6b717a064d9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a987d80f6366a42002508d6b717a064d9" class="m-doc-self">push_front</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a62aa75e0760ba93a2d60e82e44302a87"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62aa75e0760ba93a2d60e82e44302a87" class="m-doc-self">push_front</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#af7fc4390723c140826b6eab53bffe475" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a83f71270c06bba3fc5d46207e590862e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list.html#a3a327e7ddc907657de5dc66dd409f151" class="m-doc">reference</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a83f71270c06bba3fc5d46207e590862e" class="m-doc-self">emplace_front</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the beginning of the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7f4e081adc223d81178befd572e349df"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7f4e081adc223d81178befd572e349df" class="m-doc-self">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted after this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acfe1ae7d536892b8edd4f90b25f3d3e8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acfe1ae7d536892b8edd4f90b25f3d3e8" class="m-doc-self">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="classbtn_1_1iforward__list.html#af7fc4390723c140826b6eab53bffe475" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted after this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aac10b353309e5d54e52dcd5ef38faa71"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aac10b353309e5d54e52dcd5ef38faa71" class="m-doc-self">emplace_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The new value is inserted after this position.</td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a73e4650c745288a902554b49fd063e4f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a73e4650c745288a902554b49fd063e4f" class="m-doc-self">erase_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position)</span></span>
+            </h3>
+            <p>Erases an element.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Iterator to the previous element to the one to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0a29d145aaccd7668e8ddc10fe5377b8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0a29d145aaccd7668e8ddc10fe5377b8" class="m-doc-self">erase_after</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> first,
+              <a href="classbtn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> last)</span></span>
+            </h3>
+            <p>Erases a range of elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to erase.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator to the last element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the last erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The range includes all the elements between first and last, including the element pointed by last, but not the one pointed by first.</p>
+          </div></section>
+          <section class="m-doc-details" id="a585613241765524519ffb9a70f82e728"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a585613241765524519ffb9a70f82e728" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Assigns values to the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Number of elements to insert.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill new elements with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01538253c4e606cda1a9507e0a086bcc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename Iterator&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01538253c4e606cda1a9507e0a086bcc" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span></span>
+            </h3>
+            <p>Assigns values to the <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to insert.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator following to the last element to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa197d4278f7f4a8b565378ef3e58674f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa197d4278f7f4a8b565378ef3e58674f" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9a4b5337786e486ed66c8885c79f0ae7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9a4b5337786e486ed66c8885c79f0ae7" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; list,
+              <a href="classbtn_1_1iforward__list.html#a9ec4c66f7d47e494e6d1b87187a53452" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Erases all elements that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab8dfe8668119994738d064881cce7a83"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1iforward__list.html#af1cbc76bb303d93bcf1dacda198d8526" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab8dfe8668119994738d064881cce7a83" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; list,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7b530250f452e374796f43709797ba06"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7b530250f452e374796f43709797ba06" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a86fd13b56a46b1f91a077727e3686819"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a86fd13b56a46b1f91a077727e3686819" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2ded8620cd48e3f3204174b4c37ee015"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ded8620cd48e3f3204174b4c37ee015" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8debe6192184a60e976a066311f6192d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8debe6192184a60e976a066311f6192d" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is lexicographically less than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac564efe3aa13ff2dbc81b14789691bf1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac564efe3aa13ff2dbc81b14789691bf1" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is lexicographically greater than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a886700eb0f851600f3d213308c242f67"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a886700eb0f851600f3d213308c242f67" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is lexicographically less than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae7b924c9011de4be52e9b838d5b9e3e3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae7b924c9011de4be52e9b838d5b9e3e3" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; a,
+              const <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbtn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> is lexicographically greater than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

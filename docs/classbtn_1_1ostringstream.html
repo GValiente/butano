@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::ostringstream class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>ostringstream <span class="m-thin">class</span>
+        </h1>
+        <p>Implements output operations on string based streams.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>It effectively stores an instance of <a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> and performs output operations to it.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a65bbb71ed81dfe92fd00e9747f3d590a" class="m-doc">ostringstream</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; string) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a5c5f8534bee4272a5ded2afd53c2a625">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5c5f8534bee4272a5ded2afd53c2a625" class="m-doc-self">str</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1istring.html" class="m-doc">istring</a>&amp;</span>
+            </dt>
+            <dd>Returns a const reference to the managed string.</dd>
+            <dt id="a6c6763979cef84d6ae94c68806725aaa">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6c6763979cef84d6ae94c68806725aaa" class="m-doc-self">str</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1istring.html" class="m-doc">istring</a>&amp;</span>
+            </dt>
+            <dd>Returns a reference to the managed string.</dd>
+            <dt id="a8468cd90dc1178b6a1aadba0cf9c5ced">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8468cd90dc1178b6a1aadba0cf9c5ced" class="m-doc-self">rdbuf</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1istring.html" class="m-doc">istring</a>*</span>
+            </dt>
+            <dd>Returns a const pointer to the managed string.</dd>
+            <dt id="aa84e7b71950d634bb20f75196c9bf6c6">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa84e7b71950d634bb20f75196c9bf6c6" class="m-doc-self">rdbuf</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbtn_1_1istring.html" class="m-doc">istring</a>*</span>
+            </dt>
+            <dd>Returns a pointer to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9abab640ebb9d7dea42c2ab5d1642cd3" class="m-doc">rdbuf</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>* sb) -&gt; <a href="classbtn_1_1istring.html" class="m-doc">istring</a>*</span>
+            </dt>
+            <dd>Sets the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a83635f5e957ed13ecabd0e1739ad9ab4" class="m-doc">set_rdbuf</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; sb)</span>
+            </dt>
+            <dd>Sets the managed string.</dd>
+            <dt id="a7bd8abe566a823e68b252f9749b584cd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7bd8abe566a823e68b252f9749b584cd" class="m-doc-self">precision</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the decimal precision of fixed point operations.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a06497ea13a685186ea5bdb272443ce7a" class="m-doc">precision</a>(</span><span class="m-doc-wrap">int new_precision) -&gt; int</span>
+            </dt>
+            <dd>Sets the decimal precision of fixed point operations.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1f6f4a3840bcc1d09ae38b86b6a3a6d1" class="m-doc">set_precision</a>(</span><span class="m-doc-wrap">int precision)</span>
+            </dt>
+            <dd>Sets the decimal precision of fixed point operations.</dd>
+            <dt id="ad99b979ee3e443bfd7cf5b711a93f504">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad99b979ee3e443bfd7cf5b711a93f504" class="m-doc-self">view</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a></span>
+            </dt>
+            <dd>Returns a view over the contents of the managed string.</dd>
+            <dt id="a50a26781b432696b3a144dfdbde6fdb3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a50a26781b432696b3a144dfdbde6fdb3" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of characters in the managed string.</dd>
+            <dt id="acbff313ab1d2c373f9adb9eef906b760">
+              <span class="m-doc-wrap-bumper">auto <a href="#acbff313ab1d2c373f9adb9eef906b760" class="m-doc-self">length</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of characters in the managed string.</dd>
+            <dt id="ac32279c776ca13132b8320be11c20ec9">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac32279c776ca13132b8320be11c20ec9" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the maximum possible number of characters in the managed string.</dd>
+            <dt id="a44b14a461de6d94f113268eb36f5684a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a44b14a461de6d94f113268eb36f5684a" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the remaining characters capacity in the managed string.</dd>
+            <dt id="a194e73d2973df3a30bba8be3eb7ce893">
+              <span class="m-doc-wrap-bumper">auto <a href="#a194e73d2973df3a30bba8be3eb7ce893" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the managed string doesn&#x27;t contain any character.</dd>
+            <dt id="adf4ba6bb856320919db14e774d3f129f">
+              <span class="m-doc-wrap-bumper">auto <a href="#adf4ba6bb856320919db14e774d3f129f" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the managed string can&#x27;t contain any more characters.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1d4a44c38765800dc244fd90575fa57f" class="m-doc">append</a>(</span><span class="m-doc-wrap">char character)</span>
+            </dt>
+            <dd>Appends an additional character to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae6d5119d880c0034428f6794ebd43fa3" class="m-doc">put</a>(</span><span class="m-doc-wrap">char character) -&gt; <a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp;</span>
+            </dt>
+            <dd>Appends an additional character to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a47118a46f047b66649a0d3ca11b2ad98" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view)</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a74bf8dda727aa8c0d9d1a9e097ee9ee6" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; string)</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a3efe38bcafa9d98d61ff071be14f944c" class="m-doc">append</a>(</span><span class="m-doc-wrap">const char* char_array_ptr)</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aea0b88df050b90ffcbef08eb26c74556" class="m-doc">append</a>(</span><span class="m-doc-wrap">const char* char_array_ptr,
+              int char_array_size)</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4ae55b68c5dda349c49801e4c54ec72c" class="m-doc">write</a>(</span><span class="m-doc-wrap">const char* char_array_ptr,
+              int char_array_size) -&gt; <a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp;</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#aae44f7766a63c081c74d1350cb5d2492" class="m-doc">append</a>(</span><span class="m-doc-wrap">char(&amp;char_array)[MaxSize])</span>
+            </dt>
+            <dd>Appends additional characters to the managed string.</dd>
+            <dt id="afc8e56138602ba0230f5705f232a1630">
+              <span class="m-doc-wrap-bumper">void <a href="#afc8e56138602ba0230f5705f232a1630" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">bool value)</span>
+            </dt>
+            <dd>Appends the character representation of the given bool value to the managed string.</dd>
+            <dt id="aecfb627ddbae421123e6067219cdd52e">
+              <span class="m-doc-wrap-bumper">void <a href="#aecfb627ddbae421123e6067219cdd52e" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">int value)</span>
+            </dt>
+            <dd>Appends the character representation of the given int value to the managed string.</dd>
+            <dt id="a49123c490b8b22dfb09e2b7f6d00e88c">
+              <span class="m-doc-wrap-bumper">void <a href="#a49123c490b8b22dfb09e2b7f6d00e88c" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">long value)</span>
+            </dt>
+            <dd>Appends the character representation of the given long value to the managed string.</dd>
+            <dt id="ab826f340b4cb99af7161b650118c5c87">
+              <span class="m-doc-wrap-bumper">void <a href="#ab826f340b4cb99af7161b650118c5c87" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">int64_t value)</span>
+            </dt>
+            <dd>Appends the character representation of the given int64_t value to the managed string.</dd>
+            <dt id="a44607e57fdc23e66113c8f0b81a6e6ad">
+              <span class="m-doc-wrap-bumper">void <a href="#a44607e57fdc23e66113c8f0b81a6e6ad" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">unsigned value)</span>
+            </dt>
+            <dd>Appends the character representation of the given unsigned value to the managed string.</dd>
+            <dt id="a2d28315f9797450d4b6363b1f45878be">
+              <span class="m-doc-wrap-bumper">void <a href="#a2d28315f9797450d4b6363b1f45878be" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">unsigned long value)</span>
+            </dt>
+            <dd>Appends the character representation of the given unsigned long value to the managed string.</dd>
+            <dt id="a6c654174d4af9136baad5def32a31866">
+              <span class="m-doc-wrap-bumper">void <a href="#a6c654174d4af9136baad5def32a31866" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">uint64_t value)</span>
+            </dt>
+            <dd>Appends the character representation of the given uint64_t value to the managed string.</dd>
+            <dt id="a6e28cd6e9c59d2ab0cd2c8d615cc59d1">
+              <span class="m-doc-wrap-bumper">void <a href="#a6e28cd6e9c59d2ab0cd2c8d615cc59d1" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const void* ptr)</span>
+            </dt>
+            <dd>Appends the character representation of the given pointer to the managed string.</dd>
+            <dt id="adf17ff636ce3b3ae086847850f849559">
+              <span class="m-doc-wrap-bumper">void <a href="#adf17ff636ce3b3ae086847850f849559" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">] const nullptr_t&amp; null_ptr)</span>
+            </dt>
+            <dd>Appends the character representation of the given null pointer to the managed string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int Precision&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a4b2b4e2aea92017109eea35a5c0e58a1" class="m-doc">append</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; value)</span>
+            </dt>
+            <dd>Appends the character representation of the given fixed point value to the managed string.</dd>
+            <dt id="afa74cf777f074b3e67f6c3a233beeba3">
+              <div class="m-doc-template">template&lt;typename Type, typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#afa74cf777f074b3e67f6c3a233beeba3" class="m-doc-self">append_args</a>(</span><span class="m-doc-wrap">const Type&amp; value,
+              const Args&amp;... args)</span>
+            </dt>
+            <dd>Appends the character representation of the given parameters to the managed string.</dd>
+            <dt id="a318307775e34086774aee4932f0110cd">
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a318307775e34086774aee4932f0110cd" class="m-doc-self">append_args</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span>
+            </dt>
+            <dd>Appends the character representation of the given value to the managed string.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a13a1061516cc8463cb6a8bd9dc8a1766" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this ostringstream with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae9311e1d0a03f4125b88476f3b363cf2" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; a,
+              <a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a ostringstream with those of another one.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a65bbb71ed81dfe92fd00e9747f3d590a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65bbb71ed81dfe92fd00e9747f3d590a" class="m-doc-self">ostringstream</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; string) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>string in which to append to.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9abab640ebb9d7dea42c2ab5d1642cd3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1istring.html" class="m-doc">istring</a>* btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9abab640ebb9d7dea42c2ab5d1642cd3" class="m-doc-self">rdbuf</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>* sb)</span></span>
+            </h3>
+            <p>Sets the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sb</td>
+                  <td>Pointer to new string to manage.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Pointer to new string to manage.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a83635f5e957ed13ecabd0e1739ad9ab4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a83635f5e957ed13ecabd0e1739ad9ab4" class="m-doc-self">set_rdbuf</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; sb)</span></span>
+            </h3>
+            <p>Sets the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sb</td>
+                  <td>Reference to new string to manage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a06497ea13a685186ea5bdb272443ce7a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a06497ea13a685186ea5bdb272443ce7a" class="m-doc-self">precision</a>(</span><span class="m-doc-wrap">int new_precision)</span></span>
+            </h3>
+            <p>Sets the decimal precision of fixed point operations.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">new_precision</td>
+                  <td>New decimal precision.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>New decimal precision.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1f6f4a3840bcc1d09ae38b86b6a3a6d1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1f6f4a3840bcc1d09ae38b86b6a3a6d1" class="m-doc-self">set_precision</a>(</span><span class="m-doc-wrap">int precision)</span></span>
+            </h3>
+            <p>Sets the decimal precision of fixed point operations.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">precision</td>
+                  <td>New decimal precision.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1d4a44c38765800dc244fd90575fa57f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1d4a44c38765800dc244fd90575fa57f" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">char character)</span></span>
+            </h3>
+            <p>Appends an additional character to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">character</td>
+                  <td>Character to append.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae6d5119d880c0034428f6794ebd43fa3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae6d5119d880c0034428f6794ebd43fa3" class="m-doc-self">put</a>(</span><span class="m-doc-wrap">char character)</span></span>
+            </h3>
+            <p>Appends an additional character to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">character</td>
+                  <td>Character to append.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a47118a46f047b66649a0d3ca11b2ad98"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a47118a46f047b66649a0d3ca11b2ad98" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view)</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to append.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a74bf8dda727aa8c0d9d1a9e097ee9ee6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a74bf8dda727aa8c0d9d1a9e097ee9ee6" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; string)</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>string to append.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3efe38bcafa9d98d61ff071be14f944c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3efe38bcafa9d98d61ff071be14f944c" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const char* char_array_ptr)</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to null-terminated characters array.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aea0b88df050b90ffcbef08eb26c74556"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aea0b88df050b90ffcbef08eb26c74556" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const char* char_array_ptr,
+              int char_array_size)</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to characters array.</td>
+                </tr>
+                <tr>
+                  <td>char_array_size</td>
+                  <td>Characters count of the characters array.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4ae55b68c5dda349c49801e4c54ec72c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4ae55b68c5dda349c49801e4c54ec72c" class="m-doc-self">write</a>(</span><span class="m-doc-wrap">const char* char_array_ptr,
+              int char_array_size)</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to characters array.</td>
+                </tr>
+                <tr>
+                  <td>char_array_size</td>
+                  <td>Characters count of the characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aae44f7766a63c081c74d1350cb5d2492"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae44f7766a63c081c74d1350cb5d2492" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">char(&amp;char_array)[MaxSize])</span></span>
+            </h3>
+            <p>Appends additional characters to the managed string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array</td>
+                  <td>Non empty const characters array.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4b2b4e2aea92017109eea35a5c0e58a1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b2b4e2aea92017109eea35a5c0e58a1" class="m-doc-self">append</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given fixed point value to the managed string.</p>
+<p>See <a href="https://stackoverflow.com/questions/57452174/how-to-correctly-print-a-2-30-fixed-point-variable">https:/<wbr />/<wbr />stackoverflow.com/<wbr />questions/<wbr />57452174/<wbr />how-to-correctly-print-a-2-30-fixed-point-variable</a></p>
+          </div></section>
+          <section class="m-doc-details" id="a13a1061516cc8463cb6a8bd9dc8a1766"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />ostringstream::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a13a1061516cc8463cb6a8bd9dc8a1766" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this ostringstream with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ostringstream to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae9311e1d0a03f4125b88476f3b363cf2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae9311e1d0a03f4125b88476f3b363cf2" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; a,
+              <a href="classbtn_1_1ostringstream.html" class="m-doc">ostringstream</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a ostringstream with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ostringstream to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ostringstream to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

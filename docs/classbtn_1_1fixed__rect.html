@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::fixed_rect class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>fixed_rect <span class="m-thin">class</span>
+        </h1>
+        <p>Defines a two-dimensional rectangle using fixed point precision.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="ae4cf7c09422db26189102783685dae2f">
+              <span class="m-doc-wrap-bumper"><a href="#ae4cf7c09422db26189102783685dae2f" class="m-doc-self">fixed_rect</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a5d44315829f68d02914c7a68d80b960e" class="m-doc">fixed_rect</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ad7395f345404580e766c610956be5848" class="m-doc">fixed_rect</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#adf532898bc526a98598db8066fc74ad9" class="m-doc">fixed_rect</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1rect.html" class="m-doc">rect</a>&amp; rect) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a73c9f88d1d4c0dae6a413fa79d63139c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a73c9f88d1d4c0dae6a413fa79d63139c" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the center point of the rectangle.</dd>
+            <dt id="a123de4060ffea15ee1856900b0fdce26">
+              <span class="m-doc-wrap-bumper">void <a href="#a123de4060ffea15ee1856900b0fdce26" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the position of the center point of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a28e85e5f9d717b6ccc4fe2ffbada2ebd" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the position of the center point of the rectangle.</dd>
+            <dt id="a3e42c3f8bc8f873a7c7ebda769f22e8a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e42c3f8bc8f873a7c7ebda769f22e8a" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the size of the rectangle.</dd>
+            <dt id="ad442803f078df1049dfc0e4d82a257a7">
+              <span class="m-doc-wrap-bumper">void <a href="#ad442803f078df1049dfc0e4d82a257a7" class="m-doc-self">set_dimensions</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the size of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a37fb9c95c69541f928fba4760bdcb0cb" class="m-doc">set_dimensions</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the size of the rectangle.</dd>
+            <dt id="ad97c668b5da423b66ac756422e196c41">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad97c668b5da423b66ac756422e196c41" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal position of the center point of the rectangle.</dd>
+            <dt id="a43231c9c7dfe5afea49a76fa6543c92e">
+              <span class="m-doc-wrap-bumper">void <a href="#a43231c9c7dfe5afea49a76fa6543c92e" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the horizontal position of the center point of the rectangle.</dd>
+            <dt id="a2afd031945caff369a09dc50923aeb4d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2afd031945caff369a09dc50923aeb4d" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the vertical position of the center point of the rectangle.</dd>
+            <dt id="aebda6dd3a3dd02c9ecb4dddbc7583729">
+              <span class="m-doc-wrap-bumper">void <a href="#aebda6dd3a3dd02c9ecb4dddbc7583729" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the vertical position of the center point of the rectangle.</dd>
+            <dt id="add22f10876d4eacd22a36238750b981b">
+              <span class="m-doc-wrap-bumper">auto <a href="#add22f10876d4eacd22a36238750b981b" class="m-doc-self">width</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the width of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8820c5a3090df31f6e85c1c6333509fc" class="m-doc">set_width</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the width of the rectangle.</dd>
+            <dt id="a10a3dde6e368e090843bc375d02c224e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a10a3dde6e368e090843bc375d02c224e" class="m-doc-self">height</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the height of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae1ca3d28cca6d07018f435827889ffa4" class="m-doc">set_height</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the height of the rectangle.</dd>
+            <dt id="a12fdd1217f3c18699fed08dd5f95b4cd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a12fdd1217f3c18699fed08dd5f95b4cd" class="m-doc-self">top</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top boundary of the rectangle.</dd>
+            <dt id="a50c65acd0d442259dbdcfbab5648f90e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a50c65acd0d442259dbdcfbab5648f90e" class="m-doc-self">left</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the left boundary of the rectangle.</dd>
+            <dt id="a8d881b7db65226a9ffc461fe628be0c9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d881b7db65226a9ffc461fe628be0c9" class="m-doc-self">top_left</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top-left of the rectangle.</dd>
+            <dt id="ae5ad0adfc2d04d3c1885af668532a73f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5ad0adfc2d04d3c1885af668532a73f" class="m-doc-self">bottom</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the bottom boundary of the rectangle.</dd>
+            <dt id="a544e06447a0a4589738ace279c7a4912">
+              <span class="m-doc-wrap-bumper">auto <a href="#a544e06447a0a4589738ace279c7a4912" class="m-doc-self">right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the right boundary of the rectangle.</dd>
+            <dt id="a2a5f3731a7cc70555e996b24f29799bd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2a5f3731a7cc70555e996b24f29799bd" class="m-doc-self">bottom_right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the bottom-right of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af81dc9374da251e915cb6518df4e079c" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; point) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the given point is inside the rectangle or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac1667703359d3a782d6e1fc77f83bb78" class="m-doc">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if this rectangle intersects with the given one or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac75c2aa91740447dd1425fba880397ed" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height of the rectangle by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab26bf59df674c626eea1c6fb83253de3" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height of the rectangle by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a30dbf8f4118cb87dbc6dfefd058589c8" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Multiplies both width and height of the rectangle by the given factor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad427302e6d72ab76ca8480c133d5d0d3" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height of the rectangle by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af351978bdb5c97f60708eff745569e9e" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height of the rectangle by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a09246fcb913bc637890c8dcd863e960b" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) -&gt; <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Divides both width and height of the rectangle by the given divisor.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="aecf64dcfb7665ec4444123a2ad7474a9">
+              <span class="m-doc-wrap-bumper">auto <a href="#aecf64dcfb7665ec4444123a2ad7474a9" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              int b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="a43da9693c5f0bc482460531cbca7b83a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a43da9693c5f0bc482460531cbca7b83a" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              unsigned b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="a502220bdc1305e1b0fde073784b3ca01">
+              <span class="m-doc-wrap-bumper">auto <a href="#a502220bdc1305e1b0fde073784b3ca01" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
+            <dt id="adf970ebd00be98a3740f84b16bc64175">
+              <span class="m-doc-wrap-bumper">auto <a href="#adf970ebd00be98a3740f84b16bc64175" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              int b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="aba0115338085403fccd8b56313b33151">
+              <span class="m-doc-wrap-bumper">auto <a href="#aba0115338085403fccd8b56313b33151" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              unsigned b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="a74dfb13cfadac5fd56c00d0fcc07a761">
+              <span class="m-doc-wrap-bumper">auto <a href="#a74dfb13cfadac5fd56c00d0fcc07a761" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> b) -&gt; friend <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="a8d825cb16c0cebacd9b2a8029fd4d0f9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d825cb16c0cebacd9b2a8029fd4d0f9" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; a,
+              const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5d44315829f68d02914c7a68d80b960e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5d44315829f68d02914c7a68d80b960e" class="m-doc-self">fixed_rect</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; dimensions) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the center point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size of the rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad7395f345404580e766c610956be5848"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad7395f345404580e766c610956be5848" class="m-doc-self">fixed_rect</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the center point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the center point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>width</td>
+                  <td>Valid width of the rectangle (&gt;= 0).</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Valid height of the rectangle (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adf532898bc526a98598db8066fc74ad9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adf532898bc526a98598db8066fc74ad9" class="m-doc-self">fixed_rect</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1rect.html" class="m-doc">rect</a>&amp; rect) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rect</td>
+                  <td>Integer rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a28e85e5f9d717b6ccc4fe2ffbada2ebd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28e85e5f9d717b6ccc4fe2ffbada2ebd" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> x,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> y) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the position of the center point of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the center point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the center point of the rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a37fb9c95c69541f928fba4760bdcb0cb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a37fb9c95c69541f928fba4760bdcb0cb" class="m-doc-self">set_dimensions</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the size of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width of the rectangle (&gt;= 0).</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Valid height of the rectangle (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8820c5a3090df31f6e85c1c6333509fc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8820c5a3090df31f6e85c1c6333509fc" class="m-doc-self">set_width</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> width) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the width of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae1ca3d28cca6d07018f435827889ffa4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1ca3d28cca6d07018f435827889ffa4" class="m-doc-self">set_height</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the height of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">height</td>
+                  <td>Valid height (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af81dc9374da251e915cb6518df4e079c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af81dc9374da251e915cb6518df4e079c" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; point) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if the given point is inside the rectangle or not.</p>
+<p>If the point is in the edge of the rectangle, it returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac1667703359d3a782d6e1fc77f83bb78"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac1667703359d3a782d6e1fc77f83bb78" class="m-doc-self">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if this rectangle intersects with the given one or not.</p>
+<p>Two rectangles intersect if there is at least one point that is within both rectangles.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac75c2aa91740447dd1425fba880397ed"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac75c2aa91740447dd1425fba880397ed" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height of the rectangle by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid integer multiplication factor (&gt;= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab26bf59df674c626eea1c6fb83253de3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab26bf59df674c626eea1c6fb83253de3" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height of the rectangle by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Unsigned integer multiplication factor.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a30dbf8f4118cb87dbc6dfefd058589c8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a30dbf8f4118cb87dbc6dfefd058589c8" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Multiplies both width and height of the rectangle by the given factor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid fixed point multiplication factor (&gt;= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad427302e6d72ab76ca8480c133d5d0d3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad427302e6d72ab76ca8480c133d5d0d3" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height of the rectangle by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid integer divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af351978bdb5c97f60708eff745569e9e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af351978bdb5c97f60708eff745569e9e" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height of the rectangle by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid unsigned integer divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a09246fcb913bc637890c8dcd863e960b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>&amp; btn::<wbr />fixed_rect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a09246fcb913bc637890c8dcd863e960b" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> value) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Divides both width and height of the rectangle by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Valid fixed point divisor (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

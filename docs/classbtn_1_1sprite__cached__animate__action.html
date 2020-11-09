@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::sprite_cached_animate_action class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>sprite_cached_animate_action <span class="m-thin">class</span>
+        </h1>
+        <p>Changes the tile set of a <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> when the action is updated a given number of times.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">MaxSize</td>
+              <td>Maximum number of sprite tile sets to store.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>This action differs from <a href="classbtn_1_1sprite__animate__action.html" class="m-doc">sprite_<wbr />animate_<wbr />action</a> in that in this action all sprite tile sets to use are cached, so it is faster but takes way more VRAM.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aa77d1602cefc4ce8f3057070cef2e61e" class="m-doc">once</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a371a03f9affb82d60f3a3db29f309bb8" class="m-doc">once</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a90fae28996f40204600d2de82015fd02" class="m-doc">once</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a2275fa776e16443a3dac3655409a2b0b" class="m-doc">once</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a147cda18b34a958472b8869081cf8053" class="m-doc">forever</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a669b97f98a50e66f3af8893fcd0a451a" class="m-doc">forever</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a63d9a9a69a4bc8afa6e7a83bee8f1e63" class="m-doc">forever</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a9c4bede496a4663f09d5212d5469858d" class="m-doc">forever</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list) -&gt; <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a></span>
+            </dt>
+            <dd>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="ad2ccd90286fb04aed9735e5336cdde09">
+              <span class="m-doc-wrap-bumper">void <a href="#ad2ccd90286fb04aed9735e5336cdde09" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Changes the tile set of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> when the given amount of update calls are done.</dd>
+            <dt id="a6a3b10eb95971a2013d1175b028468d1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6a3b10eb95971a2013d1175b028468d1" class="m-doc-self">done</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the action must not be updated anymore.</dd>
+            <dt id="ad0b690a589d5064b616ca8b1043fc3b4">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad0b690a589d5064b616ca8b1043fc3b4" class="m-doc-self">sprite</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to modify.</dd>
+            <dt id="a8abdf9fab7fd61e021e1c69c886a590c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8abdf9fab7fd61e021e1c69c886a590c" class="m-doc-self">wait_updates</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt id="ae63e0921a5efa1ddf66f9f0be9eb7b0c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae63e0921a5efa1ddf66f9f0be9eb7b0c" class="m-doc-self">tiles_list</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbtn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the tile sets to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt id="a6b6c19da2c1beb6865536767178fa4d5">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6b6c19da2c1beb6865536767178fa4d5" class="m-doc-self">update_forever</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the action can be updated forever or not.</dd>
+            <dt id="a53e6b9d005551abd157c269ce63edbdb">
+              <span class="m-doc-wrap-bumper">auto <a href="#a53e6b9d005551abd157c269ce63edbdb" class="m-doc-self">current_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the current index of the given tile sets.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="aa77d1602cefc4ce8f3057070cef2e61e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa77d1602cefc4ce8f3057070cef2e61e" class="m-doc-self">once</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_item</td>
+                  <td>It creates the new sprite tiles to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>graphics_indexes</td>
+                  <td>Indexes of the tile sets to reference in tiles_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a371a03f9affb82d60f3a3db29f309bb8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a371a03f9affb82d60f3a3db29f309bb8" class="m-doc-self">once</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_item</td>
+                  <td>It creates the new sprite tiles to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>graphics_indexes</td>
+                  <td>Indexes of the tile sets to reference in the given <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a90fae28996f40204600d2de82015fd02"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a90fae28996f40204600d2de82015fd02" class="m-doc-self">once</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_list</td>
+                  <td>List of tile sets to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2275fa776e16443a3dac3655409a2b0b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2275fa776e16443a3dac3655409a2b0b" class="m-doc-self">once</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_list</td>
+                  <td>List of tile sets to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a147cda18b34a958472b8869081cf8053"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a147cda18b34a958472b8869081cf8053" class="m-doc-self">forever</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_item</td>
+                  <td>It creates the new sprite tiles to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>graphics_indexes</td>
+                  <td>Indexes of the tile sets to reference in tiles_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a669b97f98a50e66f3af8893fcd0a451a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a669b97f98a50e66f3af8893fcd0a451a" class="m-doc-self">forever</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              const <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const uint16_t&gt;&amp; graphics_indexes)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_item</td>
+                  <td>It creates the new sprite tiles to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>graphics_indexes</td>
+                  <td>Indexes of the tile sets to reference in the given <a href="classbtn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a63d9a9a69a4bc8afa6e7a83bee8f1e63"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a63d9a9a69a4bc8afa6e7a83bee8f1e63" class="m-doc-self">forever</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_list</td>
+                  <td>List of tile sets to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9c4bede496a4663f09d5212d5469858d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> btn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9c4bede496a4663f09d5212d5469858d" class="m-doc-self">forever</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; sprite,
+              int wait_updates,
+              <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; tiles_list)</span></span>
+            </h3>
+            <p>Generates a <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sprite</td>
+                  <td><a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the tiles of the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>tiles_list</td>
+                  <td>Tile sets to use by the given <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>btn::bg_palette_ptr class | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>bg_palette_ptr <span class="m-thin">class</span>
+        </h1>
+        <p>Smart pointer that retains shared ownership of a background color palette.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Several <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> objects may own the same background color palette.</p><p>The background color palette is released when the last remaining <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a3661fbfd0122d35b3445e0e0a76f28ed" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ad1cd4f1adc6b197fb3b35a2094974a8f" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a727f40ceccd82a41b2bbb33387445942" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#afae91616821859d280e3fe1183538e21" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#af34c14a2f303fac0f713a36df3fe5d18" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ab794d77f2979cd246776f2d8e4e4092b" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#afae12b27efba5b3631193c32dda22950" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a6892ca02b614ca32fd4e66410e9f60bc" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a55ae21165f125a590a0f411eacd04db7" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a96072a613fde0a4b39b1e1cdc7829d1e" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a14a22b9bce7f9c0264729c69a141d966" class="m-doc">bg_palette_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6725119956a6f708e2fb9c5ff0251c63" class="m-doc">bg_palette_ptr</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="a0edaf79423fe98dac52bbae577195799">
+              <span class="m-doc-wrap-bumper"><a href="#a0edaf79423fe98dac52bbae577195799" class="m-doc-self">~bg_palette_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced background color palette if no more <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a966e724f38eb54f8a61c61e53125b187" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8170b3dca2fe50a928e2aab7175385ec" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a68a6dda5244ab1da18ca90578d414700">
+              <span class="m-doc-wrap-bumper">auto <a href="#a68a6dda5244ab1da18ca90578d414700" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the internal id.</dd>
+            <dt id="a08c243edf1bd2f5fd82cac95f230d710">
+              <span class="m-doc-wrap-bumper">auto <a href="#a08c243edf1bd2f5fd82cac95f230d710" class="m-doc-self">colors_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of colors contained in this palette.</dd>
+            <dt id="a1b6977a46b8309511a274fd44c5be35f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1b6977a46b8309511a274fd44c5be35f" class="m-doc-self">colors</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns the colors contained in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad52ed532328f0b0d907075193d2ba40d" class="m-doc">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors)</span>
+            </dt>
+            <dd>Sets the colors contained in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9500dec9f22efa6cbeb113201d69b0e5" class="m-doc">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Sets the colors contained in this palette.</dd>
+            <dt id="aac722b4ab376db979479d3e619a29c6c">
+              <span class="m-doc-wrap-bumper">auto <a href="#aac722b4ab376db979479d3e619a29c6c" class="m-doc-self">bpp_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a></span>
+            </dt>
+            <dd>Returns the bits per pixel of this palette.</dd>
+            <dt id="a0b3fd473414a8453fcec37ffc26366a1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0b3fd473414a8453fcec37ffc26366a1" class="m-doc-self">inverted</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the colors of this palette are inverted or not.</dd>
+            <dt id="a0e4db2aa8704c39b2a3cbc0a631bf38b">
+              <span class="m-doc-wrap-bumper">void <a href="#a0e4db2aa8704c39b2a3cbc0a631bf38b" class="m-doc-self">set_inverted</a>(</span><span class="m-doc-wrap">bool inverted)</span>
+            </dt>
+            <dd>Sets if the colors of this palette must be inverted or not.</dd>
+            <dt id="ab18416d36711904e946d936b584bdcf3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab18416d36711904e946d936b584bdcf3" class="m-doc-self">grayscale_intensity</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the intensity of the grayscale effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a314f7f5860a3f7e30e658bc1157a8f92" class="m-doc">set_grayscale_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the intensity of the grayscale effect applied to the colors of this palette.</dd>
+            <dt id="a99adcd9904f54cf437428cc6dcd6f9da">
+              <span class="m-doc-wrap-bumper">auto <a href="#a99adcd9904f54cf437428cc6dcd6f9da" class="m-doc-self">fade_color</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbtn_1_1color.html" class="m-doc">color</a></span>
+            </dt>
+            <dd>Returns the color of the fade effect applied to the colors of this palette.</dd>
+            <dt id="a0db803ada5371590be54ef661ca50717">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0db803ada5371590be54ef661ca50717" class="m-doc-self">fade_intensity</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt id="a8cd2e92cbc4eeb694f7f7411f84c9999">
+              <span class="m-doc-wrap-bumper">void <a href="#a8cd2e92cbc4eeb694f7f7411f84c9999" class="m-doc-self">set_fade_color</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Sets the color of the fade effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2422a106d1caad91b72babd51b6de5a0" class="m-doc">set_fade_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a24f402979280011c7cdd19b961647bdb" class="m-doc">set_fade</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1color.html" class="m-doc">color</a> color,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the color and the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt id="a8e706cede1cdfb062c2637c027f65443">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8e706cede1cdfb062c2637c027f65443" class="m-doc-self">rotate_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of colors to rotate to the right in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a889985018e95ad7366a25148ea95b8e9" class="m-doc">set_rotate_count</a>(</span><span class="m-doc-wrap">int count)</span>
+            </dt>
+            <dd>Sets the number of colors to rotate to the right in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5e8b0a0310fdc0d35c768466c6dcd6ea" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a242ae4213f451b92c64f628e5590cdb4" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; a,
+              <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a96f79f3088577ae86d50c8eeb203a691">
+              <span class="m-doc-wrap-bumper">auto <a href="#a96f79f3088577ae86d50c8eeb203a691" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; a,
+              const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a3661fbfd0122d35b3445e0e0a76f28ed"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3661fbfd0122d35b3445e0e0a76f28ed" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to search.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors if it has been found; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad1cd4f1adc6b197fb3b35a2094974a8f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad1cd4f1adc6b197fb3b35a2094974a8f" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors to search.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the referenced colors by palette_item if it has been found; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a727f40ceccd82a41b2bbb33387445942"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a727f40ceccd82a41b2bbb33387445942" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the palette to search or create.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afae91616821859d280e3fe1183538e21"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afae91616821859d280e3fe1183538e21" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af34c14a2f303fac0f713a36df3fe5d18"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af34c14a2f303fac0f713a36df3fe5d18" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to search.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab794d77f2979cd246776f2d8e4e4092b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab794d77f2979cd246776f2d8e4e4092b" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afae12b27efba5b3631193c32dda22950"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afae12b27efba5b3631193c32dda22950" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the palette to search or create.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6892ca02b614ca32fd4e66410e9f60bc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6892ca02b614ca32fd4e66410e9f60bc" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a55ae21165f125a590a0f411eacd04db7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a55ae21165f125a590a0f411eacd04db7" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#ga239b012b82ec44b6cbfa31a87055531a" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the new palette.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a96072a613fde0a4b39b1e1cdc7829d1e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbtn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a96072a613fde0a4b39b1e1cdc7829d1e" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a14a22b9bce7f9c0264729c69a141d966"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a14a22b9bce7f9c0264729c69a141d966" class="m-doc-self">bg_palette_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6725119956a6f708e2fb9c5ff0251c63"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6725119956a6f708e2fb9c5ff0251c63" class="m-doc-self">bg_palette_ptr</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a966e724f38eb54f8a61c61e53125b187"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a966e724f38eb54f8a61c61e53125b187" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8170b3dca2fe50a928e2aab7175385ec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8170b3dca2fe50a928e2aab7175385ec" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad52ed532328f0b0d907075193d2ba40d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad52ed532328f0b0d907075193d2ba40d" class="m-doc-self">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbtn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors)</span></span>
+            </h3>
+            <p>Sets the colors contained in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to copy to this palette.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9500dec9f22efa6cbeb113201d69b0e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9500dec9f22efa6cbeb113201d69b0e5" class="m-doc-self">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Sets the colors contained in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbtn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> which references the colors to copy to this palette.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a314f7f5860a3f7e30e658bc1157a8f92"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a314f7f5860a3f7e30e658bc1157a8f92" class="m-doc-self">set_grayscale_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the intensity of the grayscale effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2422a106d1caad91b72babd51b6de5a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2422a106d1caad91b72babd51b6de5a0" class="m-doc-self">set_fade_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the intensity of the fade effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a24f402979280011c7cdd19b961647bdb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a24f402979280011c7cdd19b961647bdb" class="m-doc-self">set_fade</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1color.html" class="m-doc">color</a> color,
+              <a href="namespacebtn.html#afddbea25cfde94c2bbe879653da28a35" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the color and the intensity of the fade effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">color</td>
+                  <td>New color.</td>
+                </tr>
+                <tr>
+                  <td>intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a889985018e95ad7366a25148ea95b8e9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a889985018e95ad7366a25148ea95b8e9" class="m-doc-self">set_rotate_count</a>(</span><span class="m-doc-wrap">int count)</span></span>
+            </h3>
+            <p>Sets the number of colors to rotate to the right in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Number of colors to rotate to the right in the range [1 - <a href="classbtn_1_1bg__palette__ptr.html#a08c243edf1bd2f5fd82cac95f230d710" class="m-doc">colors_<wbr />count()</a> .. <a href="classbtn_1_1bg__palette__ptr.html#a08c243edf1bd2f5fd82cac95f230d710" class="m-doc">colors_<wbr />count()</a> - 1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5e8b0a0310fdc0d35c768466c6dcd6ea"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void btn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e8b0a0310fdc0d35c768466c6dcd6ea" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a242ae4213f451b92c64f628e5590cdb4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a242ae4213f451b92c64f628e5590cdb4" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; a,
+              <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

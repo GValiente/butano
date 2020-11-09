@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standard library &raquo; Functional module | Butano Modern C++ high level GBA engine</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Modern C++ high level GBA engine</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="group__std.html">Standard library</a> &raquo;</span>
+          Functional <span class="m-thin">module</span></h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Part of the standard function objects library.</p><p>It provides the standard hash function.</p>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01bg__palette__ptr_01_4.html" class="m-doc">btn::hash&lt;bg_palette_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01bg__tiles__ptr_01_4.html" class="m-doc">btn::hash&lt;bg_tiles_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01camera__ptr_01_4.html" class="m-doc">btn::hash&lt;camera_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01color_01_4.html" class="m-doc">btn::hash&lt;color&gt;</a>
+            </dt>
+            <dd>Hash support for color.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int Precision&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01fixed__t_3_01_precision_01_4_01_4.html" class="m-doc">btn::hash&lt;fixed_t&lt;Precision&gt;&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01fixed__point_01_4.html" class="m-doc">btn::hash&lt;fixed_point&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01fixed__rect_01_4.html" class="m-doc">btn::hash&lt;fixed_rect&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1fixed__rect.html" class="m-doc">fixed_<wbr />rect</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01fixed__size_01_4.html" class="m-doc">btn::hash&lt;fixed_size&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              class <a href="classbtn_1_1equal__to.html" class="m-doc">btn::equal_to</a>
+            </dt>
+            <dd>Function object for performing comparisons using the equal operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              class <a href="classbtn_1_1less.html" class="m-doc">btn::less</a>
+            </dt>
+            <dd>Function object for performing comparisons using the less than operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              struct <a href="structbtn_1_1hash.html" class="m-doc">btn::hash</a>
+            </dt>
+            <dd>Hash function object.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01unsigned_01_4.html" class="m-doc">btn::hash&lt;unsigned&gt;</a>
+            </dt>
+            <dd>Hash support for unsigned.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01bool_01_4.html" class="m-doc">btn::hash&lt;bool&gt;</a>
+            </dt>
+            <dd>Hash support for bool.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01char_01_4.html" class="m-doc">btn::hash&lt;char&gt;</a>
+            </dt>
+            <dd>Hash support for char.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01int8__t_01_4.html" class="m-doc">btn::hash&lt;int8_t&gt;</a>
+            </dt>
+            <dd>Hash support for int8_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01uint8__t_01_4.html" class="m-doc">btn::hash&lt;uint8_t&gt;</a>
+            </dt>
+            <dd>Hash support for uint8_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01int16__t_01_4.html" class="m-doc">btn::hash&lt;int16_t&gt;</a>
+            </dt>
+            <dd>Hash support for int16_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01uint16__t_01_4.html" class="m-doc">btn::hash&lt;uint16_t&gt;</a>
+            </dt>
+            <dd>Hash support for uint16_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01int_01_4.html" class="m-doc">btn::hash&lt;int&gt;</a>
+            </dt>
+            <dd>Hash support for int.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01_type_01_5_01_4.html" class="m-doc">btn::hash&lt;Type*&gt;</a>
+            </dt>
+            <dd>Hash support for pointers.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01int64__t_01_4.html" class="m-doc">btn::hash&lt;int64_t&gt;</a>
+            </dt>
+            <dd>Hash support for int64_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01uint64__t_01_4.html" class="m-doc">btn::hash&lt;uint64_t&gt;</a>
+            </dt>
+            <dd>Hash support for uint64_t.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01float_01_4.html" class="m-doc">btn::hash&lt;float&gt;</a>
+            </dt>
+            <dd>Hash support for float.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01double_01_4.html" class="m-doc">btn::hash&lt;double&gt;</a>
+            </dt>
+            <dd>Hash support for double.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01long_01double_01_4.html" class="m-doc">btn::hash&lt;long double&gt;</a>
+            </dt>
+            <dd>Hash support for long double.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01hblank__effect__ptr_01_4.html" class="m-doc">btn::hash&lt;hblank_effect_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1hblank__effect__ptr.html" class="m-doc">hblank_<wbr />effect_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01istring__base_01_4.html" class="m-doc">btn::hash&lt;istring_base&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01unique__ptr_3_01_type_00_01_deleter_01_4_01_4.html" class="m-doc">btn::hash&lt;unique_ptr&lt;Type, Deleter&gt;&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01music__item_01_4.html" class="m-doc">btn::hash&lt;music_item&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01optional_3_01_type_01_4_01_4.html" class="m-doc">btn::hash&lt;optional&lt;Type&gt;&gt;</a>
+            </dt>
+            <dd>Hash support for optional.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01point_01_4.html" class="m-doc">btn::hash&lt;point&gt;</a>
+            </dt>
+            <dd>Hash support for point.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01rect_01_4.html" class="m-doc">btn::hash&lt;rect&gt;</a>
+            </dt>
+            <dd>Hash support for rect.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01regular__bg__map__ptr_01_4.html" class="m-doc">btn::hash&lt;regular_bg_map_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01regular__bg__ptr_01_4.html" class="m-doc">btn::hash&lt;regular_bg_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01size_01_4.html" class="m-doc">btn::hash&lt;size&gt;</a>
+            </dt>
+            <dd>Hash support for size.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sound__item_01_4.html" class="m-doc">btn::hash&lt;sound_item&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sound__item.html" class="m-doc">sound_<wbr />item</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sprite__affine__mat__attributes__hblank__effect__ptr_01_4.html" class="m-doc">btn::hash&lt;sprite_affine_mat_attributes_hblank_effect_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sprite__affine__mat__attributes__hblank__effect__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />attributes_<wbr />hblank_<wbr />effect_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sprite__affine__mat__ptr_01_4.html" class="m-doc">btn::hash&lt;sprite_affine_mat_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sprite__palette__ptr_01_4.html" class="m-doc">btn::hash&lt;sprite_palette_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sprite__ptr_01_4.html" class="m-doc">btn::hash&lt;sprite_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01sprite__tiles__ptr_01_4.html" class="m-doc">btn::hash&lt;sprite_tiles_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01string__view_01_4.html" class="m-doc">btn::hash&lt;string_view&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbtn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbtn_1_1hash_3_01window_01_4.html" class="m-doc">btn::hash&lt;window&gt;</a>
+            </dt>
+            <dd>Hash support for window.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#ga87cf0a10e26cf60ce5031df3b3ca6442" class="m-doc">hash_combine</a>(</span><span class="m-doc-wrap">const Type&amp; value,
+              unsigned&amp; result) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Combines the hash of the given value with another hash.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga3d618d80bbf8c97d08b417f15a67b124" class="m-doc">array_hash</a>(</span><span class="m-doc-wrap">const void* ptr,
+              int size) -&gt; unsigned <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the hash of the given plain data array.</dd>
+            <dt id="ga30abab2e79fa77ea8b9b3ea6b79d2d20">
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga30abab2e79fa77ea8b9b3ea6b79d2d20" class="m-doc-self">make_hash</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; unsigned <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the hash of the given value.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga87cf0a10e26cf60ce5031df3b3ca6442"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga87cf0a10e26cf60ce5031df3b3ca6442" class="m-doc-self">hash_combine</a>(</span><span class="m-doc-wrap">const Type&amp; value,
+              unsigned&amp; result) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Combines the hash of the given value with another hash.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>result hash is combined with the hash of this value.</td>
+                </tr>
+                <tr>
+                  <td>result</td>
+                  <td>The hash of the given value is combined with this hash, and stored in it.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3d618d80bbf8c97d08b417f15a67b124"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">unsigned </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3d618d80bbf8c97d08b417f15a67b124" class="m-doc-self">array_hash</a>(</span><span class="m-doc-wrap">const void* ptr,
+              int size) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Calculates the hash of the given plain data array.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Start position of the plain data array.</td>
+                </tr>
+                <tr>
+                  <td>size</td>
+                  <td>Size in bytes of the plain data array.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Modern C++ high level GBA engine. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -21,7 +21,7 @@ namespace btn::hw::memory
 
     inline void copy_bytes(const void* source, int bytes, void* destination)
     {
-        std::memcpy(destination, source, bytes);
+        std::memcpy(destination, source, std::size_t(bytes));
     }
 
     inline void copy_half_words(const void* source, int half_words, void* destination)
@@ -36,7 +36,7 @@ namespace btn::hw::memory
 
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
-        std::memset(destination, value, bytes);
+        std::memset(destination, value, std::size_t(bytes));
     }
 
     inline void set_half_words(uint16_t value, int half_words, void* destination)

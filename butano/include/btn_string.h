@@ -229,8 +229,11 @@ public:
      */
     constexpr istring& assign(const string_view& view)
     {
-        clear();
-        append(view);
+        BTN_ASSERT(view.size() <= _max_size, "Not enough space in string: ", view.size(), " - ", _max_size);
+
+        btn::copy(view.begin(), view.end(), begin());
+        _size = view.size();
+        _data[_size] = 0;
         return *this;
     }
 
@@ -241,9 +244,7 @@ public:
      */
     constexpr istring& assign(const_pointer char_array_ptr)
     {
-        clear();
-        append(char_array_ptr);
-        return *this;
+        return assign(string_view(char_array_ptr));
     }
 
     /**
@@ -267,9 +268,7 @@ public:
      */
     constexpr istring& assign(const_iterator first, const_iterator last)
     {
-        clear();
-        append(first, last);
-        return *this;
+        return assign(string_view(first, last - first));
     }
 
     /**
@@ -747,7 +746,7 @@ public:
      */
     constexpr string& operator=(const string& other)
     {
-        istring::operator=(other);
+        assign(other);
         return *this;
     }
 
@@ -758,7 +757,7 @@ public:
      */
     constexpr string& operator=(const istring_base& other)
     {
-        istring::operator=(other);
+        assign(other);
         return *this;
     }
 
@@ -769,7 +768,7 @@ public:
      */
     constexpr string& operator=(const_pointer char_array_ptr)
     {
-        istring::operator=(char_array_ptr);
+        assign(char_array_ptr);
         return *this;
     }
 

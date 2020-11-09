@@ -560,7 +560,8 @@
  * @section main_contact_support Contact and support
  *
  * If you spotted a bug, need a feature or have an awesome idea,
- * the best you can do for now is to head over to <a href="https://github.com/GValiente/butano">GitHub</a>.
+ * the best you can do is to head over to <a href="https://github.com/GValiente/butano">GitHub</a>
+ * and to the <a href="https://discord.gg/2WS7bpJ">gbadev Discord server</a>.
  *
  *
  * @section main_license License

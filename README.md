@@ -67,6 +67,13 @@ Get the latest Butano Fighter ROM from the [releases page](https://github.com/GV
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
 
 
+## Contact and support
+
+If you spotted a bug, need a feature or have an awesome idea,
+the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues) 
+and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
+
+
 ## License
 
 Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.

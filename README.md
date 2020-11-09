@@ -40,9 +40,8 @@ This project would have not been possible without these libraries:
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern).
 
- 
-#butano-fighter-heading
-## Butano Fighter
+
+## [Butano Fighter](#butano-fighter-heading)
 
 Bla
 

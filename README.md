@@ -28,7 +28,7 @@ Curious about what was added or improved recently? Check out the changelog page 
 
 ## Getting started
 
-The best way to get started is to read the thorough download, install and start using Butano in your project.
+The best way to get started is to read the download, install and start using Butano guide in your project.
 
 
 ## Third party libraries
@@ -43,7 +43,17 @@ This project would have not been possible without these libraries:
 
 ## Butano Fighter
 
-Bla
+This is Butano Fighter!
+
+Stay alive while you shoot at everything that moves!
+
+The full source code and the creative commons assets of this fun game come with Butano.
+
+![](docs/images/bf_title.gif)
+
+![](docs/images/bf_intro.gif)
+
+![](docs/images/bf_bomb.gif)
 
 
 ## Related projects

@@ -53,6 +53,8 @@ Stay alive while you shoot at everything that moves!
 
 The full source code and the creative commons assets of this fun game come with Butano.
 
+Get the latest Butano Fighter ROM from the releases page of this repository.
+
 ![](docs_tools/images/bf_title.gif)
 
 ![](docs_tools/images/bf_intro.gif)

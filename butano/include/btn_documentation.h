@@ -633,7 +633,7 @@
  *
  * @section getting_started_examples Butano examples
  *
- * Butano contains multiple \ref examples "examples" explaining most aspects of the engine.
+ * Butano contains multiple \ref examples "examples" of most aspects of the engine.
  *
  * Make sure that you are able to build and run some of them. They are located in `/path/to/butano/examples/`.
  * To build an example, open the console, `cd` to the folder of the example you want to build and type
@@ -676,7 +676,7 @@
  * As always, to understand how the little machine works, <a href="https://www.coranac.com/tonc/text/toc.htm">Tonc</a>
  * and <a href="http://problemkaputt.de/gbatek.htm">GBATEK</a> are your friends.
  *
- * Butano brings multiple examples explaining most aspects of the engine in `/path/to/butano/examples/`.
+ * Butano brings multiple examples of most aspects of the engine in `/path/to/butano/examples/`.
  * Each example project contains multiple mini examples showcasing how easy is to work with Butano.
  *
  * The included example projects are the following:
@@ -792,11 +792,10 @@
 /**
  * @page import Importing assets
  *
- * @brief Importing your graphic and audio files into a GBA game can be annoying,
- * but with Butano and this guide you will be good to go.
- *
- *
  * @tableofcontents
+ *
+ * Importing your graphic and audio files into a GBA game can be annoying,
+ * but with Butano and this guide you will be good to go.
  *
  * GBA ROMs by themselves don't include a file system, so you can't put a couple of `*.bmp` files into a folder
  * and expect to read them directly from the GBA side.

@@ -12,7 +12,7 @@ Modern C++ high level GBA engine
 * Based on modern C++ concepts like shared ownership and RAII.
 * Detailed documentation.
 * Multiple examples explaining most aspects of the engine.
-* The source code of a full game ([Butano Fighter](butano-fighter-heading)) is provided with this project.
+* The source code of a full game ([Butano Fighter](#butano-fighter)) is provided with this project.
 
 
 ## Supported platforms
@@ -41,7 +41,7 @@ This project would have not been possible without these libraries:
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern).
 
 
-## [Butano Fighter](#butano-fighter-heading)
+## Butano Fighter
 
 Bla
 

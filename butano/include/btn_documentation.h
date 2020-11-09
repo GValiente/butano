@@ -609,7 +609,7 @@
  * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>.
  *
  * Install the `GBA Development` component and make sure that you are able to build and run
- * some of the examples located in `path/to/devkitpro/examples/gba`.
+ * some of the examples located in `/path/to/devkitpro/examples/gba`.
  *
  * @image html devkitpro.png
  *
@@ -635,7 +635,7 @@
  *
  * Butano contains multiple \ref examples "examples" explaining most aspects of the engine.
  *
- * Make sure that you are able to build and run some of them. They are located in `path/to/butano/examples/`.
+ * Make sure that you are able to build and run some of them. They are located in `/path/to/butano/examples/`.
  * To build an example, open the console, `cd` to the folder of the example you want to build and type
  * `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *
@@ -650,7 +650,7 @@
  *
  * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
  * To do that:
- * * Copy the template project located in `path/to/butano/template/` to a path without spaces nor weird characters.
+ * * Copy the template project located in `/path/to/butano/template/` to a path without spaces nor weird characters.
  * * Change the ROM title, the path in which Butano is located and more in the `Makefile` file.
  * * `cd` to the new folder.
  * * Type `make -j#cpu_cores#` again.
@@ -663,9 +663,129 @@
 
 /**
  * @page examples Examples
- * @tableofcontents
- * @section examples_0_1_0 0.1.0
- * First release.
+ *
+ * Learn by example to get quickly up to speed.
+ *
+ * The examples assume that you have at least basic knowledge about:
+ * * Modern C++ (Butano is based on modern C++ concepts like shared ownership, RAII, standard containers...).
+ * * Old school 2D graphics (what are sprites, backgrounds, color palettes...).
+ * * Basics of retro game development (at least to know that floating point usage is a no-no and things like that).
+ *
+ * Deep knowledge of GBA hardware is not required, as Butano wraps most of the functionality in its own classes.
+ *
+ * As always, to understand how the little machine works, <a href="https://www.coranac.com/tonc/text/toc.htm">Tonc</a>
+ * and <a href="http://problemkaputt.de/gbatek.htm">GBATEK</a> are your friends.
+ *
+ * Butano brings multiple examples explaining most aspects of the engine in `/path/to/butano/examples/`.
+ * Each example project contains multiple mini examples showcasing how easy is to work with Butano.
+ *
+ * The included example projects are the following:
+ *
+ * <table>
+ *
+ * <tr><td> @ref audio
+ *
+ * @image html examples_audio.png
+ *
+ * Shows how to play music and sound effects with Butano.
+ *
+ * <td> @ref blending
+ *
+ * @image html examples_blending.png
+ *
+ * Demonstrates usage of transparency, intensity and fade blending.
+ *
+ * <td> @ref camera
+ *
+ * @image html examples_cameras.png
+ *
+ * Shows how a camera affects the displayed elements.
+ *
+ * <tr><td> @ref core
+ *
+ * @image html examples_core.png
+ *
+ * Shows how to sleep and reset the GBA among other things.
+ *
+ * <td> @ref green_swap
+ *
+ * @image html examples_green_swap.png
+ *
+ * See how it looks this undocumented graphic effect.
+ *
+ * <td> @ref keypad
+ *
+ * @image html examples_keypad.png
+ *
+ * Simple keypad status demo.
+ *
+ * <tr><td> @ref log
+ *
+ * @image html examples_log.png
+ *
+ * Integration of emulator logging into Butano.
+ *
+ * <td> @ref mosaic
+ *
+ * @image html examples_mosaic.png
+ *
+ * Sprites and backgrounds mosaic effects.
+ *
+ * <td> @ref palette
+ *
+ * @image html examples_palettes.png
+ *
+ * Showcases multiple color palette effects.
+ *
+ * <tr><td> **Polygons**
+ *
+ * @image html examples_polygons.png
+ *
+ * Showcases polygon drawing with sprites.
+ *
+ * <td> @ref profiler
+ *
+ * @image html examples_profiler.png
+ *
+ * Basic code blocks profiling.
+ *
+ * <td> @ref regular_bg
+ *
+ * @image html examples_regular_bgs.png
+ *
+ * Shows how to use regular backgrounds with Butano.
+ *
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
+ *
+ * @image html examples_sprite_affine_mats.png
+ *
+ * Demonstrates usage of one affine matrix for multiple sprites.
+ *
+ * <td> @ref sprite
+ *
+ * @image html examples_sprites.png
+ *
+ * Simple sprites examples.
+ *
+ * <td> @ref sram
+ *
+ * @image html examples_sram.png
+ *
+ * SRAM reads and writes with Butano.
+ *
+ * <tr><td> @ref text
+ *
+ * @image html examples_text.png
+ *
+ * Showcase of Butano sprite text rendering.
+ *
+ * <td> @ref window
+ *
+ * @image html examples_windows.png
+ *
+ * Demonstrates usage of rectangle and sprite windows.
+ *
+ * </table>
  */
 
 

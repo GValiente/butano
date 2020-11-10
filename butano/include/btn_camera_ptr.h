@@ -6,6 +6,13 @@
 #ifndef BTN_CAMERA_PTR_H
 #define BTN_CAMERA_PTR_H
 
+/**
+ * @file
+ * btn::camera_ptr header file.
+ *
+ * @ingroup camera
+ */
+
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"

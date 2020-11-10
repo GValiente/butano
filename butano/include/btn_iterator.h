@@ -6,6 +6,13 @@
 #ifndef BTN_ITERATOR_H
 #define BTN_ITERATOR_H
 
+/**
+ * @file
+ * Standard library iterator aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include <iterator>
 #include "btn_common.h"
 

@@ -32,6 +32,7 @@
           <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="namespaces.html">Namespaces</a></li>
             <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -54,6 +55,7 @@
               Reference
               <ul>
                 <li><a href="#groups">Modules</a></li>
+                <li><a href="#files">Files</a></li>
                 <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
@@ -68,6 +70,27 @@
             <dt>module <a href="group__utility.html" class="m-doc">Utilities</a></dt>
             <dd></dd>
             <dt>module <a href="group__functional.html" class="m-doc">Functional</a></dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="files">
+          <h2><a href="#files">Files</a></h2>
+          <dl class="m-doc">
+            <dt>file <a href="btn__algorithm_8h.html" class="m-doc">btn_algorithm.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__compare_8h.html" class="m-doc">btn_compare.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__cstddef_8h.html" class="m-doc">btn_cstddef.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__cstdlib_8h.html" class="m-doc">btn_cstdlib.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__cstring_8h.html" class="m-doc">btn_cstring.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__iterator_8h.html" class="m-doc">btn_iterator.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__limits_8h.html" class="m-doc">btn_limits.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__type__traits_8h.html" class="m-doc">btn_type_traits.h</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -106,6 +129,7 @@
           <section class="m-doc-details" id="ga0b38e4199b91bb4e01f88b90c14dea6c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0b38e4199b91bb4e01f88b90c14dea6c" class="m-doc-self">malloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__cstdlib_8h.html">&lt;btn_cstdlib.h&gt;</a></div>
             </h3>
             <p>Allocates size bytes of uninitialized storage in the EWRAM.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -129,6 +153,7 @@
           <section class="m-doc-details" id="ga08de2afc4dbb0ab86add29579a009358"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga08de2afc4dbb0ab86add29579a009358" class="m-doc-self">free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__cstdlib_8h.html">&lt;btn_cstdlib.h&gt;</a></div>
             </h3>
             <p>Deallocates the space previously allocated in the EWRAM by <a href="group__std.html#ga0b38e4199b91bb4e01f88b90c14dea6c" class="m-doc">btn::<wbr />malloc</a>.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -149,6 +174,7 @@
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf66970444ea96242e48d771e98dcfd20" class="m-doc-self">memcpy</a>(</span><span class="m-doc-wrap">void* destination,
               const void* source,
               int bytes)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__cstring_8h.html">&lt;btn_cstring.h&gt;</a></div>
             </h3>
             <p>Copies the given bytes from the object pointed to by source to the object pointed to by destination.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -176,6 +202,7 @@
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafb67354d0c436685d641ea14aad2b596" class="m-doc-self">memset</a>(</span><span class="m-doc-wrap">void* destination,
               uint8_t value,
               int bytes)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__cstring_8h.html">&lt;btn_cstring.h&gt;</a></div>
             </h3>
             <p>Copies the given value into each of the first given bytes of the object pointed to by destination.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -202,6 +229,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3dab9fa8123144aa7d8cad1343b583bf" class="m-doc-self">memclear</a>(</span><span class="m-doc-wrap">void* destination,
               int bytes)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__cstring_8h.html">&lt;btn_cstring.h&gt;</a></div>
             </h3>
             <p>Copies the value <code>0</code> into each of the first given bytes of the object pointed to by destination.</p>
             <table class="m-table m-fullwidth m-flat">

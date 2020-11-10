@@ -6,6 +6,13 @@
 #ifndef BTN_FIXED_H
 #define BTN_FIXED_H
 
+/**
+ * @file
+ * btn::fixed_t and btn::fixed implementation header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_assert.h"
 #include "btn_limits.h"
 #include "btn_compare.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_VERSION_H
 #define BTN_VERSION_H
 
+/**
+ * @file
+ * btn::version header file.
+ *
+ * @ingroup other
+ */
+
 #include "btn_common.h"
 
 /**

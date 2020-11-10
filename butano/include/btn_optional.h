@@ -6,6 +6,13 @@
 #ifndef BTN_OPTIONAL_H
 #define BTN_OPTIONAL_H
 
+/**
+ * @file
+ * btn::optional implementation header file.
+ *
+ * @ingroup optional
+ */
+
 #include <new>
 #include "btn_assert.h"
 #include "btn_utility.h"

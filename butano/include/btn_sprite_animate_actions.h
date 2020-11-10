@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_ANIMATE_ACTIONS_H
 #define BTN_SPRITE_ANIMATE_ACTIONS_H
 
+/**
+ * @file
+ * btn::sprite_ptr animate actions header file.
+ *
+ * @ingroup sprite
+ * @ingroup tile
+ * @ingroup action
+ */
+
 #include "btn_array.h"
 #include "btn_vector.h"
 #include "btn_limits.h"

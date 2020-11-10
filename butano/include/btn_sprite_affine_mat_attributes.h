@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
 #define BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::sprite_affine_mat_attributes header file.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ */
+
 #include "btn_math.h"
 #include "btn_affine_mat_scale_lut.h"
 

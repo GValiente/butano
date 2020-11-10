@@ -6,6 +6,13 @@
 #ifndef BTN_HBLANK_EFFECTS_H
 #define BTN_HBLANK_EFFECTS_H
 
+/**
+ * @file
+ * btn::hblank_effects header file.
+ *
+ * @ingroup hblank_effect
+ */
+
 #include "btn_common.h"
 
 /**

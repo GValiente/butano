@@ -6,6 +6,13 @@
 #ifndef BTN_TYPE_ID_H
 #define BTN_TYPE_ID_H
 
+/**
+ * @file
+ * btn::type_id_t header file.
+ *
+ * @ingroup other
+ */
+
 #include "btn_common.h"
 
 namespace btn

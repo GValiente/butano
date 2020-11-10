@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_BGS_H
 #define BTN_CONFIG_BGS_H
 
+/**
+ * @file
+ * Backgrounds configuration header file.
+ *
+ * @ingroup bg
+ */
+
 #include "btn_common.h"
 
 /**

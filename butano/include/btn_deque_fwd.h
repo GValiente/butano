@@ -6,6 +6,13 @@
 #ifndef BTN_DEQUE_FWD_H
 #define BTN_DEQUE_FWD_H
 
+/**
+ * @file
+ * btn::ideque and btn::deque declaration header file.
+ *
+ * @ingroup deque
+ */
+
 #include "btn_common.h"
 
 namespace btn

@@ -6,6 +6,13 @@
 #ifndef BTN_RULE_OF_THREE_APPROXIMATION_H
 #define BTN_RULE_OF_THREE_APPROXIMATION_H
 
+/**
+ * @file
+ * btn::rule_of_three_approximation header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_assert.h"
 #include "btn_fixed_fwd.h"
 

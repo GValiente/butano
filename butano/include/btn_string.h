@@ -6,6 +6,13 @@
 #ifndef BTN_STRING_H
 #define BTN_STRING_H
 
+/**
+ * @file
+ * btn::istring and btn::string implementation header file.
+ *
+ * @ingroup string
+ */
+
 #include "btn_sstream.h"
 #include "btn_string_view.h"
 

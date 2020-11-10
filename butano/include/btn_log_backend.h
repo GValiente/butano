@@ -6,6 +6,13 @@
 #ifndef BTN_LOG_BACKEND_H
 #define BTN_LOG_BACKEND_H
 
+/**
+ * @file
+ * Available log backends header file.
+ *
+ * @ingroup log
+ */
+
 #include "btn_common.h"
 
 /**

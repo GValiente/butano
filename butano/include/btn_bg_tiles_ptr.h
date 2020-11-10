@@ -6,6 +6,14 @@
 #ifndef BTN_BG_TILES_PTR_H
 #define BTN_BG_TILES_PTR_H
 
+/**
+ * @file
+ * btn::bg_tiles_ptr header file.
+ *
+ * @ingroup bg
+ * @ingroup tile
+ */
+
 #include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_functional.h"

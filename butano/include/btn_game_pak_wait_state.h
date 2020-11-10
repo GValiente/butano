@@ -6,6 +6,13 @@
 #ifndef BTN_GAME_PAK_WAIT_STATE_H
 #define BTN_GAME_PAK_WAIT_STATE_H
 
+/**
+ * @file
+ * Available Game Pak wait states header file.
+ *
+ * @ingroup game_pak
+ */
+
 #include "btn_common.h"
 
 /**

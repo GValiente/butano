@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_MEMORY_H
 #define BTN_CONFIG_MEMORY_H
 
+/**
+ * @file
+ * Memory configuration header file.
+ *
+ * @ingroup memory
+ */
+
 #include "btn_common.h"
 
 /**

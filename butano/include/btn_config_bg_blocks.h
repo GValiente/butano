@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_BG_BLOCKS_H
 #define BTN_CONFIG_BG_BLOCKS_H
 
+/**
+ * @file
+ * Background memory blocks configuration header file.
+ *
+ * @ingroup bg
+ */
+
 #include "btn_common.h"
 
 /**

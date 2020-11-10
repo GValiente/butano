@@ -6,6 +6,13 @@
 #ifndef BTN_PALETTE_BPP_MODE_H
 #define BTN_PALETTE_BPP_MODE_H
 
+/**
+ * @file
+ * btn::palette_bpp_mode header file.
+ *
+ * @ingroup palette
+ */
+
 #include "btn_common.h"
 
 namespace btn

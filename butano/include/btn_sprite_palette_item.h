@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_PALETTE_ITEM_H
 #define BTN_SPRITE_PALETTE_ITEM_H
 
+/**
+ * @file
+ * btn::sprite_palette_item header file.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup tool
+ */
+
 #include "btn_span.h"
 #include "btn_color.h"
 #include "btn_optional_fwd.h"

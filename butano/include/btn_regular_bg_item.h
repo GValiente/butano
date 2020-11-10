@@ -6,6 +6,14 @@
 #ifndef BTN_REGULAR_BG_ITEM_H
 #define BTN_REGULAR_BG_ITEM_H
 
+/**
+ * @file
+ * btn::regular_bg_item header file.
+ *
+ * @ingroup regular_bg
+ * @ingroup tool
+ */
+
 #include "btn_fixed_fwd.h"
 #include "btn_bg_tiles_item.h"
 #include "btn_bg_palette_item.h"

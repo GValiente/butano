@@ -6,6 +6,14 @@
 #ifndef BTN_MEMORY_H
 #define BTN_MEMORY_H
 
+/**
+ * @file
+ * btn::unique_ptr and memory functions header file.
+ *
+ * @ingroup unique_ptr
+ * @ingroup memory
+ */
+
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_alignment.h"

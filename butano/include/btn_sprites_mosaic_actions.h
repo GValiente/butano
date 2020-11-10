@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITES_MOSAIC_ACTIONS_H
 #define BTN_SPRITES_MOSAIC_ACTIONS_H
 
+/**
+ * @file
+ * btn::sprites_mosaic actions header file.
+ *
+ * @ingroup sprite
+ * @ingroup mosaic
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_sprites_mosaic.h"
 #include "btn_template_actions.h"

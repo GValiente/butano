@@ -6,6 +6,15 @@
 #ifndef BTN_REGULAR_BG_MAP_ITEM_H
 #define BTN_REGULAR_BG_MAP_ITEM_H
 
+/**
+ * @file
+ * btn::regular_bg_map_item header file.
+ *
+ * @ingroup regular_bg
+ * @ingroup bg_map
+ * @ingroup tool
+ */
+
 #include "btn_size.h"
 #include "btn_optional_fwd.h"
 #include "btn_regular_bg_map_cell.h"

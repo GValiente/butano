@@ -6,6 +6,13 @@
 #ifndef BTN_COMMON_H
 #define BTN_COMMON_H
 
+/**
+ * @file
+ * Common header file.
+ *
+ * @ingroup other
+ */
+
 #include <cstdint>
 #include "../hw/include/btn_hw_common.h"
 

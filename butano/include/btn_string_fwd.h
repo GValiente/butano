@@ -6,6 +6,13 @@
 #ifndef BTN_STRING_FWD_H
 #define BTN_STRING_FWD_H
 
+/**
+ * @file
+ * btn::istring and btn::string declaration header file.
+ *
+ * @ingroup string
+ */
+
 #include "btn_common.h"
 
 namespace btn

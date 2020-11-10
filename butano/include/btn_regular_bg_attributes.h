@@ -6,6 +6,13 @@
 #ifndef BTN_REGULAR_BG_ATTRIBUTES_H
 #define BTN_REGULAR_BG_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::regular_bg_attributes header file.
+ *
+ * @ingroup regular_bg
+ */
+
 #include "btn_regular_bg_map_ptr.h"
 
 namespace btn

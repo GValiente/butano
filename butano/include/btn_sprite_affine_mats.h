@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_AFFINE_MATS_H
 #define BTN_SPRITE_AFFINE_MATS_H
 
+/**
+ * @file
+ * btn::sprite_affine_mats header file.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ */
+
 #include "btn_common.h"
 
 /**

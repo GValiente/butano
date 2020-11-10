@@ -6,6 +6,13 @@
 #ifndef BTN_FIXED_POINT_H
 #define BTN_FIXED_POINT_H
 
+/**
+ * @file
+ * btn::fixed_point header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_fixed.h"
 #include "btn_point.h"
 

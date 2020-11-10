@@ -6,6 +6,14 @@
 #ifndef BTN_BLENDING_ACTIONS_H
 #define BTN_BLENDING_ACTIONS_H
 
+/**
+ * @file
+ * btn::blending actions header file.
+ *
+ * @ingroup blending
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_blending.h"
 #include "btn_template_actions.h"

@@ -6,6 +6,15 @@
 #ifndef BTN_BG_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 #define BTN_BG_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::bg_palette_color_hblank_effect_ptr header file.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup hblank_effect
+ */
+
 #include "btn_bg_palette_ptr.h"
 #include "btn_hblank_effect_ptr.h"
 

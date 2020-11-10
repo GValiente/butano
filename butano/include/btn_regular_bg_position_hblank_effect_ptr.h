@@ -6,6 +6,14 @@
 #ifndef BTN_REGULAR_BG_POSITION_HBLANK_EFFECT_PTR_H
 #define BTN_REGULAR_BG_POSITION_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::regular_bg_position_hblank_effect_ptr header file.
+ *
+ * @ingroup regular_bg
+ * @ingroup hblank_effect
+ */
+
 #include "btn_regular_bg_ptr.h"
 #include "btn_hblank_effect_ptr.h"
 

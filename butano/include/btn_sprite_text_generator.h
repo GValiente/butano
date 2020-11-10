@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_TEXT_GENERATOR_H
 #define BTN_SPRITE_TEXT_GENERATOR_H
 
+/**
+ * @file
+ * btn::sprite_text_generator header file.
+ *
+ * @ingroup sprite
+ * @ingroup text
+ */
+
 #include "btn_fixed.h"
 #include "btn_vector.h"
 #include "btn_sprite_font.h"

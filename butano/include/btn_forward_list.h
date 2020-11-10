@@ -6,6 +6,13 @@
 #ifndef BTN_FORWARD_LIST_H
 #define BTN_FORWARD_LIST_H
 
+/**
+ * @file
+ * btn::iforward_list and btn::forward_list implementation header file.
+ *
+ * @ingroup forward_list
+ */
+
 #include "btn_pool.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_POINT_H
 #define BTN_POINT_H
 
+/**
+ * @file
+ * btn::point header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_assert.h"
 #include "btn_functional.h"
 

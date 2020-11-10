@@ -32,6 +32,7 @@
           <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="namespaces.html">Namespaces</a></li>
             <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -54,6 +55,7 @@
               Reference
               <ul>
                 <li><a href="#groups">Modules</a></li>
+                <li><a href="#files">Files</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
@@ -64,6 +66,15 @@
           <h2><a href="#groups">Modules</a></h2>
           <dl class="m-doc">
             <dt>module <a href="group__sram.html" class="m-doc">Game Pak SRAM</a></dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="files">
+          <h2><a href="#files">Files</a></h2>
+          <dl class="m-doc">
+            <dt>file <a href="btn__config__game__pak_8h.html" class="m-doc">btn_config_game_pak.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__game__pak__wait__state_8h.html" class="m-doc">btn_game_pak_wait_state.h</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -113,54 +124,63 @@
           <section class="m-doc-details" id="gad11710dedec2f969b5aee9acd8b92a19"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gad11710dedec2f969b5aee9acd8b92a19" class="m-doc-self">BTN_CFG_GAME_PAK_PREFETCH_ENABLED</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__game__pak_8h.html">&lt;btn_config_game_pak.h&gt;</a></div>
             </h3>
 <p>Specifies if Game Pak prefetch is enabled or not.</p><p>When Game Pak prefetch is enabled, the GBA attempts to read opcodes from the Game Pak when the CPU is not using the bus (if any).</p>
           </div></section>
           <section class="m-doc-details" id="ga06ca210119be128145cb2f8ab7dbf8c6"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga06ca210119be128145cb2f8ab7dbf8c6" class="m-doc-self">BTN_CFG_GAME_PAK_WAIT_STATE_FIRST</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__game__pak_8h.html">&lt;btn_config_game_pak.h&gt;</a></div>
             </h3>
 <p>Specifies Game Pak access time in clock cycles for non-sequential accesses.</p><p>Values not specified in BTN_GAME_PAK_WAIT_STATE_FIRST_* macros are not allowed.</p>
           </div></section>
           <section class="m-doc-details" id="ga7cd21002e985f1cedc58d66f8812a478"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7cd21002e985f1cedc58d66f8812a478" class="m-doc-self">BTN_CFG_GAME_PAK_WAIT_STATE_SECOND</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__game__pak_8h.html">&lt;btn_config_game_pak.h&gt;</a></div>
             </h3>
 <p>Specifies Game Pak access time in clock cycles for sequential accesses.</p><p>Values not specified in BTN_GAME_PAK_WAIT_STATE_SECOND_* macros are not allowed.</p>
           </div></section>
           <section class="m-doc-details" id="ga7a5c2d25f94fac3443858f50a950cd12"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga7a5c2d25f94fac3443858f50a950cd12" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_FIRST_4</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 4+1 clock cycles for non-sequential accesses.</p>
           </div></section>
           <section class="m-doc-details" id="ga54a0ecf3b0d13eb842d769777c423cca"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga54a0ecf3b0d13eb842d769777c423cca" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_FIRST_3</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 3+1 clock cycles for non-sequential accesses.</p><p>This wait state is not supported by older flash carts like the SuperCard SD.</p>
           </div></section>
           <section class="m-doc-details" id="gabdc3b032902aa7ab8896bcebc4f91b30"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gabdc3b032902aa7ab8896bcebc4f91b30" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_FIRST_2</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 2+1 clock cycles for non-sequential accesses.</p><p>This wait state is not supported by the Nintendo 3DS nor by older flash carts like the SuperCard SD.</p>
           </div></section>
           <section class="m-doc-details" id="ga2fdfc59ee7094764bb079e23a3b1dfda"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga2fdfc59ee7094764bb079e23a3b1dfda" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_FIRST_8</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 8+1 clock cycles for non-sequential accesses.</p>
           </div></section>
           <section class="m-doc-details" id="gaa9c67259d3c76a159cc9789c9aa625fc"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaa9c67259d3c76a159cc9789c9aa625fc" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_SECOND_2</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 2+1 clock cycles for sequential accesses.</p>
           </div></section>
           <section class="m-doc-details" id="gab553c73d64c6b9533342efb370c746e3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gab553c73d64c6b9533342efb370c746e3" class="m-doc-self">BTN_GAME_PAK_WAIT_STATE_SECOND_1</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__game__pak__wait__state_8h.html">&lt;btn_game_pak_wait_state.h&gt;</a></div>
             </h3>
 <p>Game Pak access time is 1+1 clock cycles for sequential accesses.</p><p>This wait state is not supported by older flash carts like the SuperCard SD.</p>
           </div></section>

@@ -6,6 +6,13 @@
 #ifndef BTN_KEYPAD_H
 #define BTN_KEYPAD_H
 
+/**
+ * @file
+ * btn::keypad header file.
+ *
+ * @ingroup keypad
+ */
+
 #include "btn_common.h"
 
 /**

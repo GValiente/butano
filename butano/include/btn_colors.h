@@ -6,6 +6,13 @@
 #ifndef BTN_COLORS_H
 #define BTN_COLORS_H
 
+/**
+ * @file
+ * btn::colors header file.
+ *
+ * @ingroup color
+ */
+
 #include "btn_color.h"
 
 /**

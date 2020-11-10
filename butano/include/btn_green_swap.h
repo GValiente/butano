@@ -6,6 +6,13 @@
 #ifndef BTN_GREEN_SWAP_H
 #define BTN_GREEN_SWAP_H
 
+/**
+ * @file
+ * btn::green_swap header file.
+ *
+ * @ingroup green_swap
+ */
+
 #include "btn_common.h"
 
 

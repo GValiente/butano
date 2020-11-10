@@ -6,6 +6,13 @@
 #ifndef BTN_OPTIONAL_FWD_H
 #define BTN_OPTIONAL_FWD_H
 
+/**
+ * @file
+ * btn::optional declaration header file.
+ *
+ * @ingroup optional
+ */
+
 #include "btn_common.h"
 
 namespace btn

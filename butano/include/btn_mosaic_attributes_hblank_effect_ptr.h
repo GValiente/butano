@@ -6,6 +6,14 @@
 #ifndef BTN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 #define BTN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::mosaic_attributes_hblank_effect_ptr header file.
+ *
+ * @ingroup mosaic
+ * @ingroup hblank_effect
+ */
+
 #include "btn_optional_fwd.h"
 #include "btn_hblank_effect_ptr.h"
 

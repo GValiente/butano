@@ -6,6 +6,13 @@
 #ifndef BTN_HBLANK_EFFECT_PTR_H
 #define BTN_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::hblank_effect_ptr header file.
+ *
+ * @ingroup hblank_effect
+ */
+
 #include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_functional.h"

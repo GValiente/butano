@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_PALETTES_ACTIONS_H
 #define BTN_SPRITE_PALETTES_ACTIONS_H
 
+/**
+ * @file
+ * btn::sprite_palettes actions header file.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_sprite_palettes.h"
 #include "btn_template_actions.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_LIST_FWD_H
 #define BTN_LIST_FWD_H
 
+/**
+ * @file
+ * btn::ilist and btn::list declaration header file.
+ *
+ * @ingroup list
+ */
+
 #include "btn_common.h"
 
 namespace btn

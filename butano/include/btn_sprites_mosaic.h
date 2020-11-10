@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITES_MOSAIC_H
 #define BTN_SPRITES_MOSAIC_H
 
+/**
+ * @file
+ * btn::sprites_mosaic header file.
+ *
+ * @ingroup sprite
+ * @ingroup mosaic
+ */
+
 #include "btn_fixed_fwd.h"
 
 /**

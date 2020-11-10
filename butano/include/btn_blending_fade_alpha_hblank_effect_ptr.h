@@ -6,6 +6,14 @@
 #ifndef BTN_BLENDING_FADE_ALPHA_HBLANK_EFFECT_PTR_H
 #define BTN_BLENDING_FADE_ALPHA_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::blending_fade_alpha_hblank_effect_ptr header file.
+ *
+ * @ingroup blending
+ * @ingroup hblank_effect
+ */
+
 #include "btn_optional_fwd.h"
 #include "btn_hblank_effect_ptr.h"
 

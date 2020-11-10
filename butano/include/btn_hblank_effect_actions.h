@@ -6,6 +6,14 @@
 #ifndef BTN_HBLANK_EFFECT_ACTIONS_H
 #define BTN_HBLANK_EFFECT_ACTIONS_H
 
+/**
+ * @file
+ * btn::hblank_effect_ptr actions header file.
+ *
+ * @ingroup hblank_effect
+ * @ingroup action
+ */
+
 #include "btn_hblank_effect_ptr.h"
 #include "btn_value_template_actions.h"
 

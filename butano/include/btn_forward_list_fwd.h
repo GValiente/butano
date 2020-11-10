@@ -6,6 +6,13 @@
 #ifndef BTN_FORWARD_LIST_FWD_H
 #define BTN_FORWARD_LIST_FWD_H
 
+/**
+ * @file
+ * btn::iforward_list and btn::forward_list declaration header file.
+ *
+ * @ingroup forward_list
+ */
+
 #include "btn_common.h"
 
 namespace btn

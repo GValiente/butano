@@ -6,6 +6,13 @@
 #ifndef BTN_MOSAIC_ATTRIBUTES_H
 #define BTN_MOSAIC_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::mosaic_attributes header file.
+ *
+ * @ingroup mosaic
+ */
+
 #include "btn_fixed.h"
 
 namespace btn

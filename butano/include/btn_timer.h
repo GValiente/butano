@@ -6,6 +6,13 @@
 #ifndef BTN_TIMER_H
 #define BTN_TIMER_H
 
+/**
+ * @file
+ * btn::timer header file.
+ *
+ * @ingroup timer
+ */
+
 #include "btn_common.h"
 
 namespace btn

@@ -6,6 +6,13 @@
 #ifndef BTN_INSIDE_WINDOW_H
 #define BTN_INSIDE_WINDOW_H
 
+/**
+ * @file
+ * btn::inside_window header file.
+ *
+ * @ingroup inside_window
+ */
+
 #include "btn_window.h"
 
 namespace btn

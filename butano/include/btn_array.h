@@ -6,6 +6,13 @@
 #ifndef BTN_ARRAY_H
 #define BTN_ARRAY_H
 
+/**
+ * @file
+ * btn::array implementation header file.
+ *
+ * @ingroup array
+ */
+
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"

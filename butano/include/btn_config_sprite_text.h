@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_SPRITE_TEXT_H
 #define BTN_CONFIG_SPRITE_TEXT_H
 
+/**
+ * @file
+ * Sprite text configuration header file.
+ *
+ * @ingroup text
+ */
+
 #include "btn_common.h"
 
 /**

@@ -6,6 +6,13 @@
 #ifndef BTN_BG_PALETTE_ACTIONS_H
 #define BTN_BG_PALETTE_ACTIONS_H
 
+/**
+ * @file
+ * btn::bg_palette_ptr actions header file.
+ *
+ * @ingroup bg_map
+ */
+
 #include "btn_fixed.h"
 #include "btn_algorithm.h"
 #include "btn_bg_palette_ptr.h"

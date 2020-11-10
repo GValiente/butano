@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_SPRITES_H
 #define BTN_CONFIG_SPRITES_H
 
+/**
+ * @file
+ * Sprites configuration header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_common.h"
 
 /**

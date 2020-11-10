@@ -6,6 +6,13 @@
 #ifndef BTN_ANY_FWD_H
 #define BTN_ANY_FWD_H
 
+/**
+ * @file
+ * btn::iany and btn::any declaration header file.
+ *
+ * @ingroup any
+ */
+
 #include "btn_common.h"
 
 namespace btn

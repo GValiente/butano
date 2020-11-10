@@ -6,6 +6,13 @@
 #ifndef BTN_SRAM_H
 #define BTN_SRAM_H
 
+/**
+ * @file
+ * btn::sram header file.
+ *
+ * @ingroup sram
+ */
+
 #include "btn_assert.h"
 #include "../hw/include/btn_hw_sram_constants.h"
 

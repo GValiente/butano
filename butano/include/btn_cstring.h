@@ -6,6 +6,13 @@
 #ifndef BTN_CSTRING_H
 #define BTN_CSTRING_H
 
+/**
+ * @file
+ * Standard library cstring aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include "btn_common.h"
 
 namespace btn

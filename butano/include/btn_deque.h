@@ -6,6 +6,13 @@
 #ifndef BTN_DEQUE_H
 #define BTN_DEQUE_H
 
+/**
+ * @file
+ * btn::ideque and btn::deque implementation header file.
+ *
+ * @ingroup deque
+ */
+
 #include <new>
 #include "btn_assert.h"
 #include "btn_utility.h"

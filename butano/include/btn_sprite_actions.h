@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_ACTIONS_H
 #define BTN_SPRITE_ACTIONS_H
 
+/**
+ * @file
+ * btn::sprite_ptr actions header file.
+ *
+ * @ingroup sprite
+ * @ingroup action
+ */
+
 #include "btn_sprite_ptr.h"
 #include "btn_fixed_point.h"
 #include "btn_value_template_actions.h"

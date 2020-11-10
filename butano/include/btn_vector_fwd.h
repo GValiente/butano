@@ -6,6 +6,13 @@
 #ifndef BTN_VECTOR_FWD_H
 #define BTN_VECTOR_FWD_H
 
+/**
+ * @file
+ * btn::ivector and btn::vector declaration header file.
+ *
+ * @ingroup vector
+ */
+
 #include "btn_common.h"
 
 namespace btn

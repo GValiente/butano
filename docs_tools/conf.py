@@ -6,5 +6,6 @@ LINKS_NAVBAR1 = [
 ]
 LINKS_NAVBAR2 = [
     ("Namespaces", 'namespaces', []),
-    ("Classes", 'annotated', [])
+    ("Classes", 'annotated', []),
+    ("Files", 'files', [])
 ]

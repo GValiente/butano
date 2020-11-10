@@ -151,7 +151,8 @@ else
 $(OUTPUT).gba       :   $(OUTPUT).elfbin
 	@echo Fixing $(notdir $(OUTPUT).elfbin) ...
 	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $(OUTPUT).elfbin
-	$(SILENTCMD)@cp $(OUTPUT).elfbin $(OUTPUT).gba 
+	$(SILENTCMD)@cp $(OUTPUT).elfbin $(OUTPUT).gba
+	@echo Output file: $(notdir $(OUTPUT).gba)
 	
 $(OUTPUT).elfbin    :   $(OUTPUT).elf
 	$(SILENTCMD)$(OBJCOPY) -O binary $< $@

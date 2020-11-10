@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_AFFINE_MAT_ACTIONS_H
 #define BTN_SPRITE_AFFINE_MAT_ACTIONS_H
 
+/**
+ * @file
+ * btn::sprite_affine_mat_ptr actions header file.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_sprite_affine_mat_ptr.h"
 #include "btn_value_template_actions.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_TILE_H
 #define BTN_TILE_H
 
+/**
+ * @file
+ * btn::tile header file.
+ *
+ * @ingroup tile
+ */
+
 #include "btn_common.h"
 
 namespace btn

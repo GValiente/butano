@@ -6,6 +6,13 @@
 #ifndef BTN_COLOR_H
 #define BTN_COLOR_H
 
+/**
+ * @file
+ * btn::color header file.
+ *
+ * @ingroup color
+ */
+
 #include "btn_assert.h"
 #include "btn_functional.h"
 

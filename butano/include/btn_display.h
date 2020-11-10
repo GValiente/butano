@@ -6,6 +6,13 @@
 #ifndef BTN_DISPLAY_H
 #define BTN_DISPLAY_H
 
+/**
+ * @file
+ * btn::display header file.
+ *
+ * @ingroup display
+ */
+
 #include "../hw/include/btn_hw_display_constants.h"
 
 /**

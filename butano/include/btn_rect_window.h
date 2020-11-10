@@ -6,6 +6,13 @@
 #ifndef BTN_RECT_WINDOW_H
 #define BTN_RECT_WINDOW_H
 
+/**
+ * @file
+ * btn::rect_window header file.
+ *
+ * @ingroup rect_window
+ */
+
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
 #include "btn_inside_window.h"

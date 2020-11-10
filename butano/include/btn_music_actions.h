@@ -6,6 +6,14 @@
 #ifndef BTN_MUSIC_ACTIONS_H
 #define BTN_MUSIC_ACTIONS_H
 
+/**
+ * @file
+ * btn::music actions header file.
+ *
+ * @ingroup music
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_music.h"
 #include "btn_template_actions.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_SIZE_H
 #define BTN_SIZE_H
 
+/**
+ * @file
+ * btn::size header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_assert.h"
 #include "btn_functional.h"
 

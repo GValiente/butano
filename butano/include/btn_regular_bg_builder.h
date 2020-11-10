@@ -6,6 +6,13 @@
 #ifndef BTN_REGULAR_BG_BUILDER_H
 #define BTN_REGULAR_BG_BUILDER_H
 
+/**
+ * @file
+ * btn::regular_bg_builder header file.
+ *
+ * @ingroup regular_bg
+ */
+
 #include "btn_optional.h"
 #include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"

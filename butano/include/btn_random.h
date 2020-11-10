@@ -6,6 +6,13 @@
 #ifndef BTN_RANDOM_H
 #define BTN_RANDOM_H
 
+/**
+ * @file
+ * btn::random header file.
+ *
+ * @ingroup other
+ */
+
 #include "btn_common.h"
 
 namespace btn

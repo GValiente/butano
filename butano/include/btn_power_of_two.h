@@ -6,6 +6,13 @@
 #ifndef BTN_POWER_OF_TWO_H
 #define BTN_POWER_OF_TWO_H
 
+/**
+ * @file
+ * btn::power_of_two header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_common.h"
 
 namespace btn

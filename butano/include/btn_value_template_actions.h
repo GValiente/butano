@@ -6,6 +6,13 @@
 #ifndef BTN_VALUE_TEMPLATE_ACTIONS_H
 #define BTN_VALUE_TEMPLATE_ACTIONS_H
 
+/**
+ * @file
+ * Value template actions header file.
+ *
+ * @ingroup template_action
+ */
+
 #include "btn_assert.h"
 #include "btn_limits.h"
 #include "btn_utility.h"

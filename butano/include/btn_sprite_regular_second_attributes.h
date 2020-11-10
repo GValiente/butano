@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
 #define BTN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::sprite_regular_second_attributes header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_fixed.h"
 
 namespace btn

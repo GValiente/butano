@@ -6,6 +6,13 @@
 #ifndef BTN_FUNCTIONAL_H
 #define BTN_FUNCTIONAL_H
 
+/**
+ * @file
+ * Standard library functional aliases header file.
+ *
+ * @ingroup functional
+ */
+
 #include "btn_common.h"
 
 namespace btn

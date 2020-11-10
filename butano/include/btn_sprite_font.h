@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_FONT_H
 #define BTN_SPRITE_FONT_H
 
+/**
+ * @file
+ * btn::sprite_font header file.
+ *
+ * @ingroup sprite
+ * @ingroup text
+ */
+
 #include "btn_string_view.h"
 #include "btn_sprite_item.h"
 #include "btn_utf8_character.h"

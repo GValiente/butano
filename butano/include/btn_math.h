@@ -6,6 +6,13 @@
 #ifndef BTN_MATH_H
 #define BTN_MATH_H
 
+/**
+ * @file
+ * Math functions header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_fixed.h"
 #include "btn_sin_lut.h"
 #include "btn_rule_of_three_approximation.h"

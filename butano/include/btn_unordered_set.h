@@ -6,6 +6,13 @@
 #ifndef BTN_UNORDERED_SET_H
 #define BTN_UNORDERED_SET_H
 
+/**
+ * @file
+ * btn::iunordered_set and btn::unordered_set implementation header file.
+ *
+ * @ingroup unordered_set
+ */
+
 #include <new>
 #include "btn_memory.h"
 #include "btn_iterator.h"

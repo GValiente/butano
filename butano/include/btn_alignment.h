@@ -6,6 +6,13 @@
 #ifndef BTN_ALIGNMENT_H
 #define BTN_ALIGNMENT_H
 
+/**
+ * @file
+ * Alignment functions header file.
+ *
+ * @ingroup memory
+ */
+
 #include "btn_common.h"
 
 namespace btn

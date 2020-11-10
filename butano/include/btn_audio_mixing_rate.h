@@ -6,6 +6,13 @@
 #ifndef BTN_AUDIO_MIXING_RATE_H
 #define BTN_AUDIO_MIXING_RATE_H
 
+/**
+ * @file
+ * Available audio mixing rates header file.
+ *
+ * @ingroup audio
+ */
+
 #include "btn_common.h"
 
 /**

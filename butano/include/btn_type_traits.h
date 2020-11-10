@@ -6,6 +6,13 @@
 #ifndef BTN_TYPE_TRAITS_H
 #define BTN_TYPE_TRAITS_H
 
+/**
+ * @file
+ * Standard library type_traits aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include <type_traits>
 #include "btn_common.h"
 

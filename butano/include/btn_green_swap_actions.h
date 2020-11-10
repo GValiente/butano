@@ -6,6 +6,14 @@
 #ifndef BTN_GREEN_SWAP_ACTIONS_H
 #define BTN_GREEN_SWAP_ACTIONS_H
 
+/**
+ * @file
+ * btn::green_swap actions header file.
+ *
+ * @ingroup green_swap
+ * @ingroup action
+ */
+
 #include "btn_green_swap.h"
 #include "btn_template_actions.h"
 

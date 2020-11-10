@@ -6,6 +6,13 @@
 #ifndef BTN_COMPARE_H
 #define BTN_COMPARE_H
 
+/**
+ * @file
+ * Standard library compare aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include <compare>
 #include "btn_common.h"
 

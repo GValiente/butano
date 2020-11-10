@@ -6,6 +6,14 @@
 #ifndef BTN_RECT_WINDOW_ACTIONS_H
 #define BTN_RECT_WINDOW_ACTIONS_H
 
+/**
+ * @file
+ * btn::rect_window actions header file.
+ *
+ * @ingroup rect_window
+ * @ingroup action
+ */
+
 #include "btn_fixed_point.h"
 #include "btn_rect_window.h"
 #include "btn_value_template_actions.h"

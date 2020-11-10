@@ -6,6 +6,13 @@
 #ifndef BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
 #define BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::blending_transparency_attributes header file.
+ *
+ * @ingroup blending
+ */
+
 #include "btn_fixed.h"
 
 namespace btn

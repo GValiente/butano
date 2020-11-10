@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_ASSERT_H
 #define BTN_CONFIG_ASSERT_H
 
+/**
+ * @file
+ * Asserts configuration header file.
+ *
+ * @ingroup assert
+ */
+
 #include "btn_common.h"
 
 /**

@@ -6,6 +6,13 @@
 #ifndef BTN_SSTREAM_H
 #define BTN_SSTREAM_H
 
+/**
+ * @file
+ * btn::ostringstream and btn::stringstream header file.
+ *
+ * @ingroup string
+ */
+
 #include "btn_cstddef.h"
 #include "btn_fixed_fwd.h"
 #include "btn_string_fwd.h"

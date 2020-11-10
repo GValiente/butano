@@ -6,6 +6,13 @@
 #ifndef BTN_INTRUSIVE_LIST_FWD_H
 #define BTN_INTRUSIVE_LIST_FWD_H
 
+/**
+ * @file
+ * btn::intrusive_list declaration header file.
+ *
+ * @ingroup intrusive_list
+ */
+
 #include "btn_common.h"
 
 namespace btn

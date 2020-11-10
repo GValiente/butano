@@ -6,6 +6,14 @@
 #ifndef BTN_BG_PALETTES_H
 #define BTN_BG_PALETTES_H
 
+/**
+ * @file
+ * btn::bg_palettes header file.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ */
+
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
 

@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_AFFINE_MAT_PA_REGISTER_HBLANK_EFFECT_PTR_H
 #define BTN_SPRITE_AFFINE_MAT_PA_REGISTER_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::sprite_affine_mat_pa_register_hblank_effect_ptr header file.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup hblank_effect
+ */
+
 #include "btn_hblank_effect_ptr.h"
 #include "btn_sprite_affine_mat_ptr.h"
 

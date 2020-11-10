@@ -6,6 +6,13 @@
 #ifndef BTN_FIXED_FWD_H
 #define BTN_FIXED_FWD_H
 
+/**
+ * @file
+ * btn::fixed_t and btn::fixed declaration header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_common.h"
 
 namespace btn

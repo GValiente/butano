@@ -6,6 +6,13 @@
 #ifndef BTN_AFFINE_MAT_SCALE_LUT_H
 #define BTN_AFFINE_MAT_SCALE_LUT_H
 
+/**
+ * @file
+ * btn::affine_mat_scale_lut header file.
+ *
+ * @ingroup affine_mat
+ */
+
 #include "btn_array.h"
 #include "btn_fixed.h"
 

@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_PALETTES_H
 #define BTN_SPRITE_PALETTES_H
 
+/**
+ * @file
+ * btn::sprite_palettes header file.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ */
+
 #include "btn_fixed_fwd.h"
 
 namespace btn

@@ -6,6 +6,13 @@
 #ifndef BTN_REGULAR_BG_PTR_H
 #define BTN_REGULAR_BG_PTR_H
 
+/**
+ * @file
+ * btn::regular_bg_ptr header file.
+ *
+ * @ingroup regular_bg
+ */
+
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"

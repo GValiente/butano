@@ -6,6 +6,13 @@
 #ifndef BTN_SIN_LUT_H
 #define BTN_SIN_LUT_H
 
+/**
+ * @file
+ * btn::sin_lut header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_common.h"
 
 namespace btn
@@ -16,7 +23,7 @@ namespace btn
  *
  * From Tonc's sin_lut.s
  *
- * @ingroup affine_mat
+ * @ingroup math
  */
 constexpr const int16_t sin_lut[514] = {
     int16_t(0x0000), int16_t(0x0032), int16_t(0x0064), int16_t(0x0096), int16_t(0x00C8), int16_t(0x00FB), int16_t(0x012D), int16_t(0x015F),

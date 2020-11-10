@@ -6,6 +6,14 @@
 #ifndef BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
 #define BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::rect_window_boundaries_hblank_effect_ptr header file.
+ *
+ * @ingroup rect_window
+ * @ingroup hblank_effect
+ */
+
 #include "btn_rect_window.h"
 #include "btn_optional_fwd.h"
 #include "btn_hblank_effect_ptr.h"

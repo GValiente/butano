@@ -6,6 +6,13 @@
 #ifndef BTN_STRING_VIEW_H
 #define BTN_STRING_VIEW_H
 
+/**
+ * @file
+ * btn::string_view header file.
+ *
+ * @ingroup string
+ */
+
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"

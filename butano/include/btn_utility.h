@@ -6,6 +6,13 @@
 #ifndef BTN_UTILITY_H
 #define BTN_UTILITY_H
 
+/**
+ * @file
+ * Standard library utility aliases header file.
+ *
+ * @ingroup utility
+ */
+
 #include <utility>
 #include "btn_compare.h"
 #include "btn_type_traits.h"

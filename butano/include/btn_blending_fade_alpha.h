@@ -6,6 +6,13 @@
 #ifndef BTN_BLENDING_FADE_ALPHA_H
 #define BTN_BLENDING_FADE_ALPHA_H
 
+/**
+ * @file
+ * btn::blending_fade_alpha header file.
+ *
+ * @ingroup blending
+ */
+
 #include "btn_fixed.h"
 
 namespace btn

@@ -6,6 +6,13 @@
 #ifndef BTN_CORE_H
 #define BTN_CORE_H
 
+/**
+ * @file
+ * btn::core header file.
+ *
+ * @ingroup core
+ */
+
 #include "btn_span_fwd.h"
 #include "btn_fixed_fwd.h"
 

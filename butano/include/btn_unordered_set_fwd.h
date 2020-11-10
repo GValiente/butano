@@ -6,6 +6,13 @@
 #ifndef BTN_UNORDERED_SET_FWD_H
 #define BTN_UNORDERED_SET_FWD_H
 
+/**
+ * @file
+ * btn::iunordered_set and btn::unordered_set declaration header file.
+ *
+ * @ingroup unordered_set
+ */
+
 #include "btn_functional.h"
 
 namespace btn

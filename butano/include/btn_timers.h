@@ -6,6 +6,13 @@
 #ifndef BTN_TIMERS_H
 #define BTN_TIMERS_H
 
+/**
+ * @file
+ * btn::timers header file.
+ *
+ * @ingroup timer
+ */
+
 #include "../hw/include/btn_hw_timer_constants.h"
 
 /**

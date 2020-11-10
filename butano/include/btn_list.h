@@ -6,6 +6,13 @@
 #ifndef BTN_LIST_H
 #define BTN_LIST_H
 
+/**
+ * @file
+ * btn::ilist and btn::list implementation header file.
+ *
+ * @ingroup list
+ */
+
 #include "btn_pool.h"
 #include "btn_iterator.h"
 #include "btn_algorithm.h"

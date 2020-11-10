@@ -6,6 +6,13 @@
 #ifndef BTN_BGS_H
 #define BTN_BGS_H
 
+/**
+ * @file
+ * btn::bgs header file.
+ *
+ * @ingroup bg
+ */
+
 #include "../hw/include/btn_hw_bgs_constants.h"
 
 /**

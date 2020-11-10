@@ -6,6 +6,14 @@
 #ifndef BTN_REGULAR_BG_MAP_PTR_H
 #define BTN_REGULAR_BG_MAP_PTR_H
 
+/**
+ * @file
+ * btn::regular_bg_map_ptr header file.
+ *
+ * @ingroup regular_bg
+ * @ingroup bg_map
+ */
+
 #include "btn_utility.h"
 #include "btn_span_fwd.h"
 #include "btn_functional.h"

@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_DOUBLE_SIZE_MODE_H
 #define BTN_SPRITE_DOUBLE_SIZE_MODE_H
 
+/**
+ * @file
+ * btn::sprite_double_size_mode header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_common.h"
 
 namespace btn

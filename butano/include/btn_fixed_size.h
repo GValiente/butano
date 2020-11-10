@@ -6,6 +6,13 @@
 #ifndef BTN_FIXED_SIZE_H
 #define BTN_FIXED_SIZE_H
 
+/**
+ * @file
+ * btn::fixed_size header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_size.h"
 #include "btn_fixed.h"
 

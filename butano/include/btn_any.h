@@ -6,6 +6,13 @@
 #ifndef BTN_ANY_H
 #define BTN_ANY_H
 
+/**
+ * @file
+ * btn::iany and btn::any implementation header file.
+ *
+ * @ingroup any
+ */
+
 #include <new>
 #include "btn_assert.h"
 #include "btn_limits.h"

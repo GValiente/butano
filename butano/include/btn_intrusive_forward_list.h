@@ -6,6 +6,13 @@
 #ifndef BTN_INTRUSIVE_FORWARD_LIST_H
 #define BTN_INTRUSIVE_FORWARD_LIST_H
 
+/**
+ * @file
+ * btn::intrusive_forward_list implementation header file.
+ *
+ * @ingroup intrusive_forward_list
+ */
+
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_iterator.h"

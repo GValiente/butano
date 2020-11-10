@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_FIRST_ATTRIBUTES_H
 #define BTN_SPRITE_FIRST_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::sprite_first_attributes header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_fixed.h"
 
 namespace btn

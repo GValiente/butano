@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_THIRD_ATTRIBUTES_H
 #define BTN_SPRITE_THIRD_ATTRIBUTES_H
 
+/**
+ * @file
+ * btn::sprite_third_attributes header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_sprite_tiles_ptr.h"
 #include "btn_sprite_palette_ptr.h"
 

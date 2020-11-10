@@ -6,6 +6,13 @@
 #ifndef BTN_SOUND_H
 #define BTN_SOUND_H
 
+/**
+ * @file
+ * btn::sound header file.
+ *
+ * @ingroup sound
+ */
+
 #include "btn_fixed_fwd.h"
 
 namespace btn

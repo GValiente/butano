@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_TILES_H
 #define BTN_SPRITE_TILES_H
 
+/**
+ * @file
+ * btn::sprite_tiles header file.
+ *
+ * @ingroup sprite
+ * @ingroup tile
+ */
+
 #include "btn_common.h"
 
 /**

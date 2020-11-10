@@ -6,6 +6,13 @@
 #ifndef BTN_BG_MAPS_H
 #define BTN_BG_MAPS_H
 
+/**
+ * @file
+ * btn::bg_maps header file.
+ *
+ * @ingroup bg_map
+ */
+
 #include "btn_common.h"
 
 /**

@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_AUDIO_H
 #define BTN_CONFIG_AUDIO_H
 
+/**
+ * @file
+ * Audio configuration header file.
+ *
+ * @ingroup audio
+ */
+
 #include "btn_audio_mixing_rate.h"
 
 /**

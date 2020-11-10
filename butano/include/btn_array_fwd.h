@@ -6,6 +6,13 @@
 #ifndef BTN_ARRAY_FWD_H
 #define BTN_ARRAY_FWD_H
 
+/**
+ * @file
+ * btn::array declaration header file.
+ *
+ * @ingroup array
+ */
+
 #include "btn_common.h"
 
 namespace btn

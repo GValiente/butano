@@ -6,6 +6,13 @@
 #ifndef BTN_RECT_H
 #define BTN_RECT_H
 
+/**
+ * @file
+ * btn::rect header file.
+ *
+ * @ingroup math
+ */
+
 #include "btn_size.h"
 #include "btn_point.h"
 

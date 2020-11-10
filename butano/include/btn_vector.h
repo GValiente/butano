@@ -6,6 +6,13 @@
 #ifndef BTN_VECTOR_H
 #define BTN_VECTOR_H
 
+/**
+ * @file
+ * btn::ivector and btn::vector implementation header file.
+ *
+ * @ingroup vector
+ */
+
 #include <new>
 #include "btn_assert.h"
 #include "btn_utility.h"

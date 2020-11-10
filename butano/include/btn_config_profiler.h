@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_PROFILER_H
 #define BTN_CONFIG_PROFILER_H
 
+/**
+ * @file
+ * Profiler configuration header file.
+ *
+ * @ingroup profiler
+ */
+
 #include "btn_common.h"
 
 /**

@@ -32,6 +32,7 @@
           <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="namespaces.html">Namespaces</a></li>
             <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -53,12 +54,22 @@
             <li>
               Reference
               <ul>
+                <li><a href="#files">Files</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </div>
 <p>Butano&#x27;s assert system.</p><p>It can be enabled or disabled by overloading the definition of <em>BTN_CFG_ASSERT_ENABLED</em> .</p><p>Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns <code>true</code>).</p>
+        <section id="files">
+          <h2><a href="#files">Files</a></h2>
+          <dl class="m-doc">
+            <dt>file <a href="btn__assert_8h.html" class="m-doc">btn_assert.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__config__assert_8h.html" class="m-doc">btn_config_assert.h</a></dt>
+            <dd></dd>
+          </dl>
+        </section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
@@ -87,6 +98,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga41943a6244a688d81fef19815abe2c3f" class="m-doc-self">BTN_ASSERT</a>(</span><span class="m-doc-wrap">condition,
               ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__assert_8h.html">&lt;btn_assert.h&gt;</a></div>
             </h3>
 <p>Checks if the specified <em>condition</em> is true.</p><p>If it doesn&#x27;t, the execution is stopped and diagnostic information is shown on the screen.</p><p>More information can be shown by passing it by argument.</p><p>Example:</p><pre class="m-code"><span class="n">BTN_ASSERT</span><span class="p">(</span><span class="n">integer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span> <span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading btn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">btn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">btn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="n">custom_type</span><span class="o">&amp;</span> <span class="n">custom_value</span><span class="p">)</span>
 <span class="p">{</span>
@@ -98,6 +110,7 @@
           <section class="m-doc-details" id="ga67828aab6ce7d464ab7465ea09786558"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga67828aab6ce7d464ab7465ea09786558" class="m-doc-self">BTN_ERROR</a>(</span><span class="m-doc-wrap">...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__assert_8h.html">&lt;btn_assert.h&gt;</a></div>
             </h3>
 <p>If this is called, the execution is stopped and diagnostic information is shown on the screen.</p><p>More information can be shown by passing it by argument.</p><p>Example:</p><pre class="m-code"><span class="n">BTN_ERROR</span><span class="p">(</span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span> <span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading btn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">btn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">btn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="n">custom_type</span><span class="o">&amp;</span> <span class="n">custom_value</span><span class="p">)</span>
 <span class="p">{</span>
@@ -109,12 +122,14 @@
           <section class="m-doc-details" id="gaac59c1153d46c89375d39dd96567d465"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaac59c1153d46c89375d39dd96567d465" class="m-doc-self">BTN_CFG_ASSERT_ENABLED</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__assert_8h.html">&lt;btn_config_assert.h&gt;</a></div>
             </h3>
 <p>Specifies if asserts must be enabled or not.</p>
           </div></section>
           <section class="m-doc-details" id="gaba9208e82a10818d9540bcede206861e"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaba9208e82a10818d9540bcede206861e" class="m-doc-self">BTN_CFG_ASSERT_BUFFER_SIZE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__assert_8h.html">&lt;btn_config_assert.h&gt;</a></div>
             </h3>
 <p>Specifies the maximum size of the messages that can be displayed by an assert.</p>
           </div></section>

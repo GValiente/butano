@@ -7,6 +7,13 @@
 #ifndef BTN_POOL_FWD_H
 #define BTN_POOL_FWD_H
 
+/**
+ * @file
+ * btn::ipool and btn::pool declaration header file.
+ *
+ * @ingroup pool
+ */
+
 #include "btn_common.h"
 
 namespace btn

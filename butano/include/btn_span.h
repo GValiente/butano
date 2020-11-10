@@ -6,6 +6,13 @@
 #ifndef BTN_SPAN_H
 #define BTN_SPAN_H
 
+/**
+ * @file
+ * btn::span implementation header file.
+ *
+ * @ingroup span
+ */
+
 #include "btn_array.h"
 #include "btn_span_fwd.h"
 

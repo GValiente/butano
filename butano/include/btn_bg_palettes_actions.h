@@ -6,6 +6,15 @@
 #ifndef BTN_BG_PALETTES_ACTIONS_H
 #define BTN_BG_PALETTES_ACTIONS_H
 
+/**
+ * @file
+ * btn::bg_palettes actions header file.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_bg_palettes.h"
 #include "btn_template_actions.h"

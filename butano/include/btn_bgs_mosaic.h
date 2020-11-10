@@ -6,6 +6,14 @@
 #ifndef BTN_BGS_MOSAIC_H
 #define BTN_BGS_MOSAIC_H
 
+/**
+ * @file
+ * btn::bgs_mosaic header file.
+ *
+ * @ingroup bg
+ * @ingroup mosaic
+ */
+
 #include "btn_fixed_fwd.h"
 
 /**

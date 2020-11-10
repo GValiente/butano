@@ -6,6 +6,15 @@
 #ifndef BTN_BGS_MOSAIC_ACTIONS_H
 #define BTN_BGS_MOSAIC_ACTIONS_H
 
+/**
+ * @file
+ * btn::bgs_mosaic actions header file.
+ *
+ * @ingroup bg
+ * @ingroup mosaic
+ * @ingroup action
+ */
+
 #include "btn_fixed.h"
 #include "btn_bgs_mosaic.h"
 #include "btn_template_actions.h"

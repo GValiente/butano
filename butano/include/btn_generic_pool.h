@@ -7,6 +7,13 @@
 #ifndef BTN_GENERIC_POOL_H
 #define BTN_GENERIC_POOL_H
 
+/**
+ * @file
+ * btn::igeneric_pool and btn::generic_pool implementation header file.
+ *
+ * @ingroup pool
+ */
+
 #include "btn_assert.h"
 #include "btn_utility.h"
 #include "btn_generic_pool_fwd.h"

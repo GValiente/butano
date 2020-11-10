@@ -6,6 +6,13 @@
 #ifndef BTN_UNORDERED_MAP_H
 #define BTN_UNORDERED_MAP_H
 
+/**
+ * @file
+ * btn::iunordered_map and btn::unordered_map implementation header file.
+ *
+ * @ingroup unordered_map
+ */
+
 #include <new>
 #include "btn_memory.h"
 #include "btn_iterator.h"

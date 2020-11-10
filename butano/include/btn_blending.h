@@ -6,6 +6,13 @@
 #ifndef BTN_BLENDING_H
 #define BTN_BLENDING_H
 
+/**
+ * @file
+ * btn::blending header file.
+ *
+ * @ingroup blending
+ */
+
 #include "btn_fixed_fwd.h"
 
 namespace btn

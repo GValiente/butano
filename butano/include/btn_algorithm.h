@@ -6,6 +6,13 @@
 #ifndef BTN_ALGORITHM_H
 #define BTN_ALGORITHM_H
 
+/**
+ * @file
+ * Standard library algorithm aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include <algorithm>
 #include "btn_common.h"
 

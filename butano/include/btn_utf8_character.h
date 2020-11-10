@@ -6,6 +6,13 @@
 #ifndef BTN_UTF8_CHARACTER_H
 #define BTN_UTF8_CHARACTER_H
 
+/**
+ * @file
+ * btn::utf8_character header file.
+ *
+ * @ingroup text
+ */
+
 #include "btn_assert.h"
 
 namespace btn

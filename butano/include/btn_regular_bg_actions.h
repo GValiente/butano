@@ -6,6 +6,14 @@
 #ifndef BTN_REGULAR_BG_ACTIONS_H
 #define BTN_REGULAR_BG_ACTIONS_H
 
+/**
+ * @file
+ * btn::regular_bg_ptr actions header file.
+ *
+ * @ingroup regular_bg
+ * @ingroup action
+ */
+
 #include "btn_fixed_point.h"
 #include "btn_regular_bg_ptr.h"
 #include "btn_value_template_actions.h"

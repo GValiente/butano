@@ -6,6 +6,14 @@
 #ifndef BTN_BG_TILES_H
 #define BTN_BG_TILES_H
 
+/**
+ * @file
+ * btn::bg_tiles header file.
+ *
+ * @ingroup bg
+ * @ingroup tile
+ */
+
 #include "btn_common.h"
 
 /**

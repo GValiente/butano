@@ -6,6 +6,14 @@
 #ifndef BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 #define BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::sprite_affine_second_attributes_hblank_effect_ptr header file.
+ *
+ * @ingroup sprite
+ * @ingroup hblank_effect
+ */
+
 #include "btn_sprite_ptr.h"
 #include "btn_hblank_effect_ptr.h"
 

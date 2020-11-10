@@ -6,6 +6,15 @@
 #ifndef BTN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
 #define BTN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::bg_palettes_transparent_color_hblank_effect_ptr header file.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup hblank_effect
+ */
+
 #include "btn_optional_fwd.h"
 #include "btn_hblank_effect_ptr.h"
 

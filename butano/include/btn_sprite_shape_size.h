@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_SHAPE_SIZE_H
 #define BTN_SPRITE_SHAPE_SIZE_H
 
+/**
+ * @file
+ * btn::sprite_shape header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_assert.h"
 #include "btn_palette_bpp_mode.h"
 

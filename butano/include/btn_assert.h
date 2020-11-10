@@ -6,6 +6,13 @@
 #ifndef BTN_ASSERT_H
 #define BTN_ASSERT_H
 
+/**
+ * @file
+ * BTN_ASSERT and BTN_ERROR header file.
+ *
+ * @ingroup assert
+ */
+
 #include <cassert>
 #include "btn_type_traits.h"
 #include "btn_config_assert.h"

@@ -6,6 +6,15 @@
 #ifndef BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 #define BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 
+/**
+ * @file
+ * btn::sprite_palette_color_hblank_effect_ptr header file.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup hblank_effect
+ */
+
 #include "btn_hblank_effect_ptr.h"
 #include "btn_sprite_palette_ptr.h"
 

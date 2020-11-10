@@ -32,6 +32,7 @@
           <ol class="m-col-t-6 m-col-m-none" start="3">
             <li><a href="namespaces.html">Namespaces</a></li>
             <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
             <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
               <use href="#m-doc-search-icon-path" />
             </svg></a></li>
@@ -53,12 +54,22 @@
             <li>
               Reference
               <ul>
+                <li><a href="#files">Files</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </div>
 <p>Butano&#x27;s profiling system.</p><p>It allows to measure elapsed time between code blocks defined by the user.</p><p>It can be enabled or disabled by overloading the definition of <em>BTN_CFG_PROFILER_ENABLED</em> .</p>
+        <section id="files">
+          <h2><a href="#files">Files</a></h2>
+          <dl class="m-doc">
+            <dt>file <a href="btn__config__profiler_8h.html" class="m-doc">btn_config_profiler.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="btn__profiler_8h.html" class="m-doc">btn_profiler.h</a></dt>
+            <dd></dd>
+          </dl>
+        </section>
         <section id="define-members">
           <h2><a href="#define-members">Defines</a></h2>
           <dl class="m-doc">
@@ -74,6 +85,18 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gaaf2b1dfb21ab538d075db9fa66df2dff" class="m-doc">BTN_CFG_PROFILER_MAX_ENTRIES</a></span>
             </dt>
             <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4df187324ceb7b46aa819976fa3b2a47" class="m-doc">BTN_PROFILER_START</a>(</span><span class="m-doc-wrap">id)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae8d8430b6b87ec2d4cb407c09b428901" class="m-doc">BTN_PROFILER_STOP</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga98d68dbd7914090a10a8d1ba2a7710f8" class="m-doc">BTN_PROFILER_RESET</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section>
@@ -81,20 +104,55 @@
           <section class="m-doc-details" id="ga94f9846590c8ee99ad1d7036a47af551"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga94f9846590c8ee99ad1d7036a47af551" class="m-doc-self">BTN_CFG_PROFILER_ENABLED</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__profiler_8h.html">&lt;btn_config_profiler.h&gt;</a></div>
             </h3>
 <p>Specifies if the profiler is enabled or not.</p>
           </div></section>
           <section class="m-doc-details" id="ga89cf1914a9cd8981c67a33f4b9f148d7"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#ga89cf1914a9cd8981c67a33f4b9f148d7" class="m-doc-self">BTN_CFG_PROFILER_LOG_ENGINE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__profiler_8h.html">&lt;btn_config_profiler.h&gt;</a></div>
             </h3>
 <p>Specifies if butano subsystems must be profiled or not.</p>
           </div></section>
           <section class="m-doc-details" id="gaaf2b1dfb21ab538d075db9fa66df2dff"><div>
             <h3>
               <span class="m-doc-wrap-bumper">#define <a href="#gaaf2b1dfb21ab538d075db9fa66df2dff" class="m-doc-self">BTN_CFG_PROFILER_MAX_ENTRIES</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__config__profiler_8h.html">&lt;btn_config_profiler.h&gt;</a></div>
             </h3>
 <p>Specifies the maximum number of code blocks that can be profiled without too much performance issues.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga4df187324ceb7b46aa819976fa3b2a47"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga4df187324ceb7b46aa819976fa3b2a47" class="m-doc-self">BTN_PROFILER_START</a>(</span><span class="m-doc-wrap">id)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__profiler_8h.html">&lt;btn_profiler.h&gt;</a></div>
+            </h3>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">id</td>
+                  <td>Small text string which identifies the code block.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Defines the start of a code block in which elapsed time is going to be measured.</p>
+          </div></section>
+          <section class="m-doc-details" id="gae8d8430b6b87ec2d4cb407c09b428901"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gae8d8430b6b87ec2d4cb407c09b428901" class="m-doc-self">BTN_PROFILER_STOP</a>(</span><span class="m-doc-wrap">)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__profiler_8h.html">&lt;btn_profiler.h&gt;</a></div>
+            </h3>
+<p>Defines the end of a code block in which elapsed time is going to be measured.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga98d68dbd7914090a10a8d1ba2a7710f8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga98d68dbd7914090a10a8d1ba2a7710f8" class="m-doc-self">BTN_PROFILER_RESET</a>(</span><span class="m-doc-wrap">)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__profiler_8h.html">&lt;btn_profiler.h&gt;</a></div>
+            </h3>
+<p>Forgets all elapsed time measures.</p>
           </div></section>
         </section>
       </div>

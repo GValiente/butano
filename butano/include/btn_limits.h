@@ -6,6 +6,13 @@
 #ifndef BTN_LIMITS_H
 #define BTN_LIMITS_H
 
+/**
+ * @file
+ * Standard library limits aliases header file.
+ *
+ * @ingroup std
+ */
+
 #include <limits>
 #include "btn_common.h"
 

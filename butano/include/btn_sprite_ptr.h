@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_PTR_H
 #define BTN_SPRITE_PTR_H
 
+/**
+ * @file
+ * btn::sprite_ptr header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_utility.h"
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"

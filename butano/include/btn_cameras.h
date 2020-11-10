@@ -6,6 +6,13 @@
 #ifndef BTN_CAMERAS_H
 #define BTN_CAMERAS_H
 
+/**
+ * @file
+ * btn::cameras header file.
+ *
+ * @ingroup camera
+ */
+
 #include "btn_common.h"
 
 /**

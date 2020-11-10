@@ -6,6 +6,14 @@
 #ifndef BTN_CAMERA_ACTIONS_H
 #define BTN_CAMERA_ACTIONS_H
 
+/**
+ * @file
+ * btn::camera_ptr actions header file.
+ *
+ * @ingroup camera
+ * @ingroup action
+ */
+
 #include "btn_camera_ptr.h"
 #include "btn_fixed_point.h"
 #include "btn_value_template_actions.h"

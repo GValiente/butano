@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_SRAM_H
 #define BTN_CONFIG_SRAM_H
 
+/**
+ * @file
+ * SRAM configuration header file.
+ *
+ * @ingroup sram
+ */
+
 #include "btn_sram_wait_state.h"
 
 /**

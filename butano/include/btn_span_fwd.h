@@ -6,6 +6,13 @@
 #ifndef BTN_SPAN_FWD_H
 #define BTN_SPAN_FWD_H
 
+/**
+ * @file
+ * btn::span declaration header file.
+ *
+ * @ingroup span
+ */
+
 #include "btn_common.h"
 
 namespace btn

@@ -6,6 +6,15 @@
 #ifndef BTN_BG_PALETTE_ITEM_H
 #define BTN_BG_PALETTE_ITEM_H
 
+/**
+ * @file
+ * btn::bg_palette_item header file.
+ *
+ * @ingroup bg
+ * @ingroup palette
+ * @ingroup tool
+ */
+
 #include "btn_span.h"
 #include "btn_color.h"
 #include "btn_optional_fwd.h"

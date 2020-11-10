@@ -6,6 +6,13 @@
 #ifndef BTN_CONFIG_LOG_H
 #define BTN_CONFIG_LOG_H
 
+/**
+ * @file
+ * Logging configuration header file.
+ *
+ * @ingroup log
+ */
+
 #include "btn_log_backend.h"
 
 /**

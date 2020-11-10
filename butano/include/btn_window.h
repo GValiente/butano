@@ -6,6 +6,13 @@
 #ifndef BTN_WINDOW_H
 #define BTN_WINDOW_H
 
+/**
+ * @file
+ * btn::window header file.
+ *
+ * @ingroup window
+ */
+
 #include "btn_functional.h"
 
 namespace btn

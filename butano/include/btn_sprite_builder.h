@@ -6,6 +6,13 @@
 #ifndef BTN_SPRITE_BUILDER_H
 #define BTN_SPRITE_BUILDER_H
 
+/**
+ * @file
+ * btn::sprite_builder header file.
+ *
+ * @ingroup sprite
+ */
+
 #include "btn_optional.h"
 #include "btn_camera_ptr.h"
 #include "btn_sprite_item.h"

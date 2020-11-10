@@ -6,6 +6,14 @@
 #ifndef BTN_MUSIC_ITEM_H
 #define BTN_MUSIC_ITEM_H
 
+/**
+ * @file
+ * btn::music_item header file.
+ *
+ * @ingroup music
+ * @ingroup tool
+ */
+
 #include "btn_fixed_fwd.h"
 #include "btn_functional.h"
 

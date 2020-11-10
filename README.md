@@ -7,7 +7,7 @@ Modern C++ high level GBA engine
 
 * Create and display sprites, backgrounds, text, raster effects and more with only one line of C++ code.
 * Custom standard library without heap allocations nor exceptions, based on [ETL](https://www.etlcpp.com/).
-* Ìmport and use your own assets [with ease](https://gvaliente.github.io/butano/import.html).
+* Import and use your own assets [with ease](https://gvaliente.github.io/butano/import.html).
 * Multiple development tools like [asserts](https://gvaliente.github.io/butano/group__assert.html), 
 [emulator logging](https://gvaliente.github.io/butano/group__log.html) and 
 [code profiling](https://gvaliente.github.io/butano/group__profiler.html).

@@ -970,6 +970,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_0_3_0 0.3.0
+ *
+ * Assets tools print output binaries size.
+ *
+ *
  * @section changelog_0_2_0 0.2.0
  *
  * * Performance improved up to 12% in Butano Fighter without `-flto` thanks to using less build translation units.

@@ -120,6 +120,11 @@ class SpriteItem:
             grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::color')
 
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+                    break
+
         remove_file(grit_file_path)
 
         if self.__bpp_8:
@@ -148,7 +153,9 @@ class SpriteItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
+        print('    Graphics size: ' + str(total_size) + ' bytes')
         print('    sprite_item file written in ' + header_file_path)
+        return total_size
 
     def process(self):
         command = ['grit', self.__file_path, '-gt']
@@ -236,6 +243,11 @@ class RegularBgItem:
             grit_data = grit_data.replace('unsigned short', 'btn::regular_bg_map_cell', 1)
             grit_data = grit_data.replace('unsigned short', 'btn::color', 1)
 
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+                    break
+
         remove_file(grit_file_path)
 
         if self.__bpp_8:
@@ -264,7 +276,9 @@ class RegularBgItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
+        print('    Graphics size: ' + str(total_size) + ' bytes')
         print('    regular_bg_item file written in ' + header_file_path)
+        return total_size
 
     def process(self):
         command = ['grit', self.__file_path]
@@ -323,9 +337,10 @@ class GraphicsFileInfo:
             item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
 
         item.process()
-        item.write_header()
+        file_size = item.write_header()
         self.__new_file_info.write(self.__file_info_path)
         self.__new_json_file_info.write(self.__json_file_info_path)
+        return file_size
 
 
 def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
@@ -395,8 +410,13 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 def process(graphics_folder_paths, build_folder_path):
     graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
 
-    for graphics_file_info in graphics_file_infos:
-        graphics_file_info.process(build_folder_path)
+    if len(graphics_file_infos) > 0:
+        total_size = 0
+
+        for graphics_file_info in graphics_file_infos:
+            total_size += graphics_file_info.process(build_folder_path)
+
+        print('    ' + 'Processed graphics size: ' + str(total_size) + ' bytes')
 
 
 if __name__ == "__main__":

@@ -57,6 +57,8 @@ def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_p
     except subprocess.CalledProcessError as e:
         raise ValueError('mmutil call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
+    return os.path.getsize(soundbank_bin_path)
+
 
 def write_output_file(items, include_guard, include_file, namespace, item_class, output_file_path):
     if len(items) > 0:
@@ -135,8 +137,9 @@ def process(audio_folder_paths, build_folder_path):
 
     soundbank_bin_path = build_folder_path + '/_btn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/_btn_audio_soundbank.h'
-    process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)
+    total_size = process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)
     write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path)
+    print('    Processed audio size: ' + str(total_size) + ' bytes')
     os.remove(soundbank_header_path)
     new_file_info.write(file_info_path)
 

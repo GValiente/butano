@@ -5,15 +5,15 @@
 
 #include "btn_sprite_tiles_manager.h"
 
-#include "btn_span.h"
-#include "btn_tile.h"
 #include "btn_vector.h"
-#include "btn_optional.h"
-#include "btn_sprite_tiles.h"
 #include "btn_unordered_map.h"
 #include "btn_config_sprite_tiles.h"
 #include "../hw/include/btn_hw_sprite_tiles.h"
 #include "../hw/include/btn_hw_sprite_tiles_constants.h"
+
+#include "btn_sprite_tiles.cpp.h"
+#include "btn_sprite_tiles_ptr.cpp.h"
+#include "btn_sprite_tiles_item.cpp.h"
 
 #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
     #include "btn_log.h"

@@ -7,15 +7,19 @@
 
 #include "btn_vector.h"
 #include "btn_display.h"
-#include "btn_camera_ptr.h"
-#include "btn_fixed_point.h"
 #include "btn_mosaic_attributes.h"
-#include "btn_blending_fade_alpha.h"
-#include "btn_blending_transparency_attributes.h"
 #include "btn_bgs_manager.h"
 #include "btn_sprites_manager.h"
 #include "../hw/include/btn_hw_bgs.h"
 #include "../hw/include/btn_hw_display.h"
+
+#include "btn_window.cpp.h"
+#include "btn_blending.cpp.h"
+#include "btn_bgs_mosaic.cpp.h"
+#include "btn_green_swap.cpp.h"
+#include "btn_rect_window.cpp.h"
+#include "btn_inside_window.cpp.h"
+#include "btn_sprites_mosaic.cpp.h"
 
 namespace btn::display_manager
 {

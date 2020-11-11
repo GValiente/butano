@@ -5,13 +5,14 @@
 
 #include "btn_audio_manager.h"
 
-#include "btn_fixed.h"
 #include "btn_vector.h"
-#include "btn_algorithm.h"
-#include "btn_music_item.h"
-#include "btn_sound_item.h"
 #include "btn_config_audio.h"
 #include "../hw/include/btn_hw_audio.h"
+
+#include "btn_music.cpp.h"
+#include "btn_sound.cpp.h"
+#include "btn_music_item.cpp.h"
+#include "btn_sound_item.cpp.h"
 
 namespace btn::audio_manager
 {

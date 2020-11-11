@@ -5,10 +5,7 @@
 
 #include "btn_hblank_effects_manager.h"
 
-#include "btn_any.h"
 #include "btn_vector.h"
-#include "btn_display.h"
-#include "btn_config_hblank_effects.h"
 #include "../hw/include/btn_hw_hblank_effects.h"
 
 #include "btn_bg_palette_color_hblank_effect_handler.h"
@@ -33,6 +30,29 @@
 #include "btn_sprite_horizontal_position_hblank_effect_handler.h"
 #include "btn_sprite_vertical_position_hblank_effect_handler.h"
 #include "btn_sprite_palette_color_hblank_effect_handler.h"
+
+#include "btn_hblank_effects.cpp.h"
+#include "btn_hblank_effect_ptr.cpp.h"
+#include "btn_bg_palette_color_hblank_effect_ptr.cpp.h"
+#include "btn_bg_palettes_transparent_color_hblank_effect_ptr.cpp.h"
+#include "btn_blending_fade_alpha_hblank_effect_ptr.cpp.h"
+#include "btn_blending_transparency_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_green_swap_hblank_effect_ptr.cpp.h"
+#include "btn_mosaic_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_rect_window_boundaries_hblank_effect_ptr.cpp.h"
+#include "btn_regular_bg_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_regular_bg_position_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_mat_pc_register_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_mat_pd_register_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_affine_second_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_first_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_palette_color_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_position_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_regular_second_attributes_hblank_effect_ptr.cpp.h"
+#include "btn_sprite_third_attributes_hblank_effect_ptr.cpp.h"
 
 namespace btn::hblank_effects_manager
 {

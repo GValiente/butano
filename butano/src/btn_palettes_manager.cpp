@@ -5,7 +5,13 @@
 
 #include "btn_palettes_manager.h"
 
-#include "btn_palettes_bank.h"
+#include "btn_bg_palettes.cpp.h"
+#include "btn_bg_palette_ptr.cpp.h"
+#include "btn_bg_palette_item.cpp.h"
+#include "btn_sprite_palettes.cpp.h"
+#include "btn_sprite_palette_ptr.cpp.h"
+#include "btn_sprite_palette_item.cpp.h"
+#include "btn_palettes_bank.cpp.h"
 
 namespace btn::palettes_manager
 {

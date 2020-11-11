@@ -5,19 +5,18 @@
 
 #include "btn_sprites_manager.h"
 
-#include "btn_size.h"
-#include "btn_pool.h"
 #include "btn_vector.h"
-#include "btn_config_sprites.h"
-#include "btn_sprite_affine_mats.h"
 #include "btn_sprite_first_attributes.h"
-#include "btn_sprite_third_attributes.h"
-#include "btn_sprite_affine_second_attributes.h"
 #include "btn_sprite_regular_second_attributes.h"
 #include "btn_sorted_sprites.h"
-#include "btn_display_manager.h"
-#include "btn_sprite_affine_mats_manager.h"
 #include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
+
+#include "btn_sprites.cpp.h"
+#include "btn_sprite_ptr.cpp.h"
+#include "btn_sprite_item.cpp.h"
+#include "btn_sprite_builder.cpp.h"
+#include "btn_sprite_third_attributes.cpp.h"
+#include "btn_sprite_affine_second_attributes.cpp.h"
 
 namespace btn::sprites_manager
 {
@@ -35,6 +34,7 @@ namespace
     public:
         pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
         hw::sprites::handle_type handles[hw::sprites::count()];
+        sorted_sprites::sorter sorter;
         int first_index_to_commit = 0;
         int last_index_to_commit = hw::sprites::count() - 1;
         int last_visible_items_count = 0;
@@ -107,7 +107,7 @@ namespace
         {
             hw::sprites::handle_type* handles = data.handles;
             int last_visible_items_count = data.last_visible_items_count;
-            int visible_items_count = _rebuild_handles_impl(last_visible_items_count, handles);
+            int visible_items_count = _rebuild_handles_impl(last_visible_items_count, handles, data.sorter.layers());
             int to_commit_items_count = max(visible_items_count, last_visible_items_count);
             data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
@@ -126,7 +126,7 @@ namespace
         {
             data.check_items_on_screen = false;
             data.rebuild_handles = true;
-            _check_items_on_screen_impl();
+            _check_items_on_screen_impl(data.sorter.layers());
         }
     }
 }
@@ -157,7 +157,7 @@ id_type create(const fixed_point& position, const sprite_shape_size& shape_size,
     BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
     item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
-    sorted_sprites::insert(new_item);
+    data.sorter.insert(new_item);
     data.check_items_on_screen = true;
     return &new_item;
 }
@@ -171,7 +171,7 @@ id_type create_optional(const fixed_point& position, const sprite_shape_size& sh
     }
 
     item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
-    sorted_sprites::insert(new_item);
+    data.sorter.insert(new_item);
     data.check_items_on_screen = true;
     return &new_item;
 }
@@ -183,7 +183,7 @@ id_type create(sprite_builder&& builder)
     sprite_tiles_ptr tiles = builder.release_tiles();
     sprite_palette_ptr palette = builder.release_palette();
     item_type& new_item = data.items_pool.create(move(builder), move(tiles), move(palette));
-    sorted_sprites::insert(new_item);
+    data.sorter.insert(new_item);
     data.check_items_on_screen |= new_item.visible;
     return &new_item;
 }
@@ -210,7 +210,7 @@ id_type create_optional(sprite_builder&& builder)
     }
 
     item_type& new_item = data.items_pool.create(move(builder), move(*tiles), move(*palette));
-    sorted_sprites::insert(new_item);
+    data.sorter.insert(new_item);
     data.check_items_on_screen |= new_item.visible;
     return &new_item;
 }
@@ -228,7 +228,7 @@ void decrease_usages(id_type id)
 
     if(! item->usages)
     {
-        sorted_sprites::erase(*item);
+        data.sorter.erase(*item);
 
         if(item->affine_mat)
         {
@@ -556,9 +556,9 @@ void set_bg_priority(id_type id, int bg_priority)
         BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
         hw::sprites::set_bg_priority(bg_priority, item->handle);
-        sorted_sprites::erase(*item);
+        data.sorter.erase(*item);
         item->set_bg_priority(bg_priority);
-        sorted_sprites::insert(*item);
+        data.sorter.insert(*item);
         data.rebuild_handles = true;
     }
 }
@@ -575,9 +575,9 @@ void set_z_order(id_type id, int z_order)
 
     if(z_order != item->z_order())
     {
-        sorted_sprites::erase(*item);
+        data.sorter.erase(*item);
         item->set_z_order(z_order);
-        sorted_sprites::insert(*item);
+        data.sorter.insert(*item);
         data.rebuild_handles = true;
     }
 }
@@ -586,7 +586,7 @@ void put_above(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(sorted_sprites::put_in_front_of_layer(*item))
+    if(sorted_sprites::sorter::put_in_front_of_layer(*item))
     {
         data.rebuild_handles = true;
     }
@@ -940,7 +940,7 @@ void reload_blending()
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
 
-    for(sorted_sprites::layer& layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : data.sorter.layers())
     {
         for(item_type& item : layer.items())
         {
@@ -1117,7 +1117,7 @@ void update_cameras()
 {
     bool check_items_on_screen = false;
 
-    for(sorted_sprites::layer& layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : data.sorter.layers())
     {
         check_items_on_screen |= _update_cameras_impl(layer);
     }

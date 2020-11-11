@@ -5,17 +5,14 @@
 
 #include "btn_sprites_manager.h"
 
-#include "btn_vector.h"
 #include "btn_sorted_sprites.h"
-#include "btn_config_sprites.h"
-#include "../hw/include/btn_hw_sprites.h"
 
 namespace btn::sprites_manager
 {
 
-void _check_items_on_screen_impl()
+void _check_items_on_screen_impl(intrusive_list<sorted_sprites::layer>& layers)
 {
-    for(sorted_sprites::layer& layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : layers)
     {
         for(sprites_manager_item& item : layer.items())
         {
@@ -47,12 +44,13 @@ void _check_items_on_screen_impl()
     }
 }
 
-int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles)
+int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
+                          intrusive_list<sorted_sprites::layer>& layers)
 {
     auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
     int visible_items_count = 0;
 
-    for(sorted_sprites::layer& layer : sorted_sprites::layers())
+    for(sorted_sprites::layer& layer : layers)
     {
         for(sprites_manager_item& item : layer.items())
         {

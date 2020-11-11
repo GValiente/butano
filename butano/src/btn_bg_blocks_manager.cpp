@@ -5,19 +5,18 @@
 
 #include "btn_bg_blocks_manager.h"
 
-#include "btn_size.h"
-#include "btn_span.h"
-#include "btn_tile.h"
 #include "btn_vector.h"
-#include "btn_limits.h"
-#include "btn_optional.h"
 #include "btn_bgs_manager.h"
-#include "btn_bg_tiles_ptr.h"
 #include "btn_unordered_map.h"
-#include "btn_bg_palette_ptr.h"
-#include "btn_palette_bpp_mode.h"
 #include "btn_config_bg_blocks.h"
 #include "../hw/include/btn_hw_bg_blocks.h"
+
+#include "btn_bg_maps.cpp.h"
+#include "btn_bg_tiles.cpp.h"
+#include "btn_bg_tiles_ptr.cpp.h"
+#include "btn_bg_tiles_item.cpp.h"
+#include "btn_regular_bg_map_ptr.cpp.h"
+#include "btn_regular_bg_map_item.cpp.h"
 
 #if BTN_CFG_BG_BLOCKS_LOG_ENABLED
     #include "btn_log.h"

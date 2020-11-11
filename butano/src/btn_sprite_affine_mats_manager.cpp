@@ -6,14 +6,12 @@
 #include "btn_sprite_affine_mats_manager.h"
 
 #include "btn_vector.h"
-#include "btn_optional.h"
-#include "btn_config_sprites.h"
-#include "btn_sprites_manager.h"
-#include "btn_sprite_affine_mats.h"
 #include "btn_sprites_manager_item.h"
-#include "btn_sprite_affine_mat_attributes.h"
 #include "../hw/include/btn_hw_sprite_affine_mats.h"
 #include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
+
+#include "btn_sprite_affine_mats.cpp.h"
+#include "btn_sprite_affine_mat_ptr.cpp.h"
 
 namespace btn::sprite_affine_mats_manager
 {

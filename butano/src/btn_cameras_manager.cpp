@@ -6,11 +6,13 @@
 #include "btn_cameras_manager.h"
 
 #include "btn_vector.h"
-#include "btn_fixed_point.h"
 #include "btn_config_cameras.h"
 #include "btn_bgs_manager.h"
 #include "btn_sprites_manager.h"
 #include "btn_display_manager.h"
+
+#include "btn_cameras.cpp.h"
+#include "btn_camera_ptr.cpp.h"
 
 namespace btn::cameras_manager
 {

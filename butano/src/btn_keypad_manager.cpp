@@ -9,6 +9,8 @@
 #include "btn_config_keypad.h"
 #include "../hw/include/btn_hw_keypad.h"
 
+#include "btn_keypad.cpp.h"
+
 #if BTN_CFG_KEYPAD_LOG_ENABLED
     #include "btn_log.h"
     #include "btn_string.h"

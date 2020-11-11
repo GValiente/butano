@@ -966,8 +966,18 @@
 
 /**
  * @page changelog Changelog
+ *
  * @tableofcontents
+ *
+ *
+ * @section changelog_0_2_0 0.2.0 (next release)
+ *
+ * * Performance improved up to 12% in Butano Fighter without `-flto` thanks to using less build translation units.
+ * * Documentation improved.
+ *
+ *
  * @section changelog_0_1_0 0.1.0
+ *
  * First release.
  */
 

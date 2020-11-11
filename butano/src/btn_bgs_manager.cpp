@@ -5,18 +5,19 @@
 
 #include "btn_bgs_manager.h"
 
-#include "btn_bgs.h"
 #include "btn_pool.h"
 #include "btn_vector.h"
 #include "btn_display.h"
 #include "btn_sort_key.h"
-#include "btn_algorithm.h"
-#include "btn_camera_ptr.h"
 #include "btn_config_bgs.h"
-#include "btn_bg_tiles_ptr.h"
 #include "btn_display_manager.h"
-#include "btn_regular_bg_attributes.h"
 #include "../hw/include/btn_hw_bgs.h"
+
+#include "btn_bgs.cpp.h"
+#include "btn_regular_bg_ptr.cpp.h"
+#include "btn_regular_bg_item.cpp.h"
+#include "btn_regular_bg_builder.cpp.h"
+#include "btn_regular_bg_attributes.cpp.h"
 
 namespace btn::bgs_manager
 {

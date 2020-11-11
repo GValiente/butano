@@ -10,6 +10,10 @@
 #include "btn_config_memory.h"
 #include "../hw/include/btn_hw_memory.h"
 
+#include "btn_memory.cpp.h"
+#include "btn_cstdlib.cpp.h"
+#include "btn_cstring.cpp.h"
+
 namespace btn::memory_manager
 {
 

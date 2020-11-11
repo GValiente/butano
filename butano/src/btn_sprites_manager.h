@@ -8,6 +8,7 @@
 
 #include "btn_fixed_fwd.h"
 #include "btn_optional_fwd.h"
+#include "btn_intrusive_list_fwd.h"
 
 namespace btn
 {
@@ -210,9 +211,10 @@ namespace sprites_manager
 
     void commit();
 
-    BTN_CODE_IWRAM void _check_items_on_screen_impl();
+    BTN_CODE_IWRAM void _check_items_on_screen_impl(intrusive_list<sorted_sprites::layer>& layers);
 
-    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles);
+    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
+                                                           intrusive_list<sorted_sprites::layer>& layers);
 
     [[nodiscard]] BTN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
 }

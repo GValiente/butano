@@ -61,13 +61,17 @@
 
     namespace _btn::profiler
     {
-        using ticks_map = btn::unordered_map<const char*, int64_t, BTN_CFG_PROFILER_MAX_ENTRIES * 2>;
+        struct ticks
+        {
+            int64_t total = 0;
+            int max = 0;
+        };
+
+        using ticks_map = btn::unordered_map<const char*, ticks, BTN_CFG_PROFILER_MAX_ENTRIES * 2>;
 
         void start(const char* id, unsigned id_hash);
 
         void stop();
-
-        [[nodiscard]] int64_t total_ticks();
 
         [[nodiscard]] const ticks_map& ticks_per_entry();
 

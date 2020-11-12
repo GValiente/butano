@@ -22,7 +22,6 @@
 
             public:
                 ticks_map ticks_per_entry;
-                int64_t total_ticks = 0;
                 btn::optional<btn::timer> current_timer;
                 const char* current_id = nullptr;
                 unsigned current_id_hash;
@@ -46,17 +45,11 @@
             BTN_ASSERT(data.current_id, "There's no active id");
 
             int timer_ticks = data.current_timer->elapsed_ticks();
-            auto profiler_ticks = int64_t(timer_ticks);
-            data.ticks_per_entry(data.current_id_hash, data.current_id) += profiler_ticks;
-            data.total_ticks += profiler_ticks;
+            auto timer_ticks_64 = int64_t(timer_ticks);
+            ticks& ticks = data.ticks_per_entry(data.current_id_hash, data.current_id);
+            ticks.total += timer_ticks_64;
+            ticks.max = btn::max(ticks.max, timer_ticks);
             data.current_id = nullptr;
-        }
-
-        int64_t total_ticks()
-        {
-            BTN_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
-
-            return data.total_ticks;
         }
 
         const ticks_map& ticks_per_entry()
@@ -71,7 +64,6 @@
             BTN_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
 
             data.ticks_per_entry.clear();
-            data.total_ticks = 0;
         }
     }
 #endif

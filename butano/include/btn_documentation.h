@@ -609,8 +609,8 @@
  * The next step is to download and install devkitARM
  * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>.
  *
- * Install the `GBA Development` component and make sure that you are able to build and run
- * some of the examples located in `/path/to/devkitpro/examples/gba`.
+ * Install the `GBA Development` component and **make sure that you are able to build and run
+ * some of the examples** located in `/path/to/devkitpro/examples/gba`.
  *
  * @image html devkitpro.png
  *
@@ -970,9 +970,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_0_3_0 0.3.0
+ * @section changelog_0_3_0 0.3.0 (next release)
  *
- * Assets tools print output binaries size.
+ * * Profiler can show the maximum measured ticks per entry.
+ * * Assets tools print output binaries size.
  *
  *
  * @section changelog_0_2_0 0.2.0

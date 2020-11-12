@@ -122,25 +122,29 @@ namespace
         }
         else
         {
-            // Sort entries by ticks (higher to lower):
+            // Collect entries:
             struct entry
             {
                 string_view id;
-                int64_t ticks;
+                int64_t total_ticks;
+                int max_ticks;
             };
 
             vector<entry, BTN_CFG_PROFILER_MAX_ENTRIES * 2> entries;
+            int64_t total_ticks = 0;
+            int64_t max_ticks = 0;
+            bool show_total = true;
+            bool rebuild = true;
 
             for(const auto& ticks_per_entry_pair : ticks_per_entry)
             {
-                entries.push_back({ ticks_per_entry_pair.first, ticks_per_entry_pair.second });
+                auto& ticks_entry = ticks_per_entry_pair.second;
+                entries.push_back({ ticks_per_entry_pair.first, ticks_entry.total, ticks_entry.max });
+                total_ticks += ticks_entry.total;
+                max_ticks = btn::max(max_ticks, int64_t(ticks_entry.max));
             }
 
-            sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
-                return a.ticks > b.ticks;
-            });
-
-            // Retrieve max width for indexes,  labels and ticks:
+            // Retrieve max width for indexes, labels and ticks:
             string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
             ostringstream buffer_stream(buffer);
             int num_entries = entries.size();
@@ -148,44 +152,84 @@ namespace
             int max_id_width = 0;
             int max_ticks_width = 0;
 
-            for(int index = 0; index < num_entries; ++index)
-            {
-                const entry& entry = entries[index];
-                buffer.clear();
-                buffer_stream << index + 1 << '.';
-                max_index_width = max(max_index_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
-
-                buffer.clear();
-                buffer_stream << entry.id;
-                max_id_width = max(max_id_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
-
-                buffer.clear();
-                buffer_stream << entry.ticks;
-                max_ticks_width = max(max_ticks_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
-            }
-
-            // Print entries:
             constexpr const int margin = 8;
             constexpr const int index_margin = 4;
-            constexpr const int max_visible_entries = 9;
-            int64_t total_ticks = _btn::profiler::total_ticks();
+            constexpr const int max_visible_entries = 8;
             int current_index = 0;
             int init_x, init_y;
             tte_get_pos(&init_x, &init_y);
 
             while(true)
             {
+                if(rebuild)
+                {
+                    max_index_width = 0;
+                    max_id_width = 0;
+                    max_ticks_width = 0;
+                    current_index = 0;
+
+                    // Sort entries by ticks (higher to lower):
+                    if(show_total)
+                    {
+                        sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
+                            return a.total_ticks > b.total_ticks;
+                        });
+                    }
+                    else
+                    {
+                        sort(entries.begin(), entries.end(), [](const entry& a, const entry& b) {
+                            return a.max_ticks > b.max_ticks;
+                        });
+                    }
+
+                    // Calculate columns width:
+                    for(int index = 0; index < num_entries; ++index)
+                    {
+                        const entry& entry = entries[index];
+                        buffer.clear();
+                        buffer_stream << index + 1 << '.';
+                        max_index_width = max(max_index_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
+
+                        buffer.clear();
+                        buffer_stream << entry.id;
+                        max_id_width = max(max_id_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
+
+                        buffer.clear();
+                        buffer_stream << (show_total ? entry.total_ticks : entry.max_ticks);
+                        max_ticks_width = max(max_ticks_width, int(tte_get_text_size(buffer_stream.str().c_str()).x));
+                    }
+
+                    rebuild = false;
+                }
+
+                // Print title:
+                int64_t global_var;
                 tte_set_pos(init_x, init_y);
                 tte_set_ink(colors::green.data());
-                tte_write("PROFILER results");
+
+                if(show_total)
+                {
+                    tte_write("PROFILER results - TOTAL ticks");
+                    global_var = total_ticks;
+                }
+                else
+                {
+                    tte_write("PROFILER results - MAX ticks");
+                    global_var = max_ticks;
+                }
 
                 if(num_entries > max_visible_entries)
                 {
-                    tte_write(" (UP and DOWN to scroll)");
+                    tte_write("\n(UP and DOWN to scroll, A to switch mode)");
+                }
+                else
+                {
+                    tte_write("\n(A to switch mode)");
                 }
 
                 tte_write("\n\n");
 
+                // Print entries:
                 for(int index = current_index, limit = min(current_index + max_visible_entries, num_entries);
                     index < limit; ++index)
                 {
@@ -209,14 +253,15 @@ namespace
                     tte_set_pos(x + max_id_width + margin, y);
                     tte_get_pos(&x, &y);
 
+                    int64_t entry_var = show_total ? entry.total_ticks : entry.max_ticks;
                     buffer.clear();
-                    buffer_stream << entry.ticks;
+                    buffer_stream << entry_var;
                     tte_set_ink(colors::yellow.data());
                     tte_write(buffer.c_str());
 
-                    if(total_ticks)
+                    if(global_var)
                     {
-                        auto pct = int((entry.ticks * 100) / total_ticks);
+                        auto pct = int((entry_var * 100) / global_var);
                         buffer.clear();
                         buffer_stream << pct << '%';
                         tte_set_pos(x + max_ticks_width + margin, y);
@@ -232,7 +277,14 @@ namespace
                 {
                     core::update();
 
-                    if(current_index && keypad::up_pressed())
+                    if(keypad::a_pressed())
+                    {
+                        show_total = ! show_total;
+                        rebuild = true;
+                        tte_erase_screen();
+                        break;
+                    }
+                    else if(current_index && keypad::up_pressed())
                     {
                         --current_index;
                         tte_erase_screen();

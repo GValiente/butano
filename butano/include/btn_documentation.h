@@ -973,7 +973,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_0_3_0 0.3.0 (next release)
+ * @section changelog_0_3_0 0.3.0
  *
  * * Sprites update performance improved up to 30% in Butano Fighter
  *   thanks to avoid rebuilding sprites list as much as possible.

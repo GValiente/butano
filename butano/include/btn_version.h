@@ -35,7 +35,7 @@ namespace btn::version
      */
     [[nodiscard]] constexpr int minor()
     {
-        return 2;
+        return 3;
     }
 
     /**

@@ -10,8 +10,13 @@
 namespace btn::sprites_manager
 {
 
-void _check_items_on_screen_impl(intrusive_list<sorted_sprites::layer>& layers)
+bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites::layer>& layers,
+                                 bool rebuild_handles, int& first_index_to_commit, int& last_index_to_commit)
 {
+    auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
+    int first_index = first_index_to_commit;
+    int last_index = last_index_to_commit;
+
     for(sorted_sprites::layer& layer : layers)
     {
         for(sprites_manager_item& item : layer.items())
@@ -38,10 +43,57 @@ void _check_items_on_screen_impl(intrusive_list<sorted_sprites::layer>& layers)
                     }
                 }
 
-                item.on_screen = on_screen;
+                if(item.on_screen != on_screen)
+                {
+                    item.on_screen = on_screen;
+
+                    if(on_screen)
+                    {
+                        if(item.affine_mat)
+                        {
+                            hw::sprites::show_affine(item.double_size, item.handle);
+                        }
+                        else
+                        {
+                            hw::sprites::show_regular(item.handle);
+                        }
+                    }
+                    else
+                    {
+                        hw::sprites::hide(item.handle);
+                    }
+                }
+
+                if(! rebuild_handles)
+                {
+                    int handles_index = item.handles_index;
+
+                    if(handles_index != -1)
+                    {
+                        hw::sprites::copy_handle(item.handle, handles[handles_index]);
+
+                        if(handles_index < first_index)
+                        {
+                            first_index = handles_index;
+                        }
+
+                        if(handles_index > last_index)
+                        {
+                            last_index = handles_index;
+                        }
+                    }
+                    else
+                    {
+                        rebuild_handles = true;
+                    }
+                }
             }
         }
     }
+
+    first_index_to_commit = first_index;
+    last_index_to_commit = last_index;
+    return rebuild_handles;
 }
 
 int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,

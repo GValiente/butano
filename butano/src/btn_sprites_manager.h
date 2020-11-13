@@ -133,7 +133,7 @@ namespace sprites_manager
 
     void set_window_enabled(id_type id, bool window_enabled);
 
-    [[nodiscard]] int affine_mode(id_type id);
+    [[nodiscard]] int view_mode(id_type id);
 
     [[nodiscard]] bool double_size(id_type id);
 
@@ -188,7 +188,7 @@ namespace sprites_manager
     void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode,
-            int affine_mode, const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
+            int view_mode, const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_second_attributes(
             id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,
@@ -205,16 +205,18 @@ namespace sprites_manager
 
     void remove_identity_affine_mat_if_not_needed(id_type id);
 
-    void update_affine_mat(id_type id, int affine_mat_id, bool double_size);
+    void update_affine_mat_double_size(id_type id, bool new_double_size);
 
     void update();
 
     void commit();
 
-    BTN_CODE_IWRAM void _check_items_on_screen_impl(intrusive_list<sorted_sprites::layer>& layers);
+    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(
+            void* hw_handles, intrusive_list<sorted_sprites::layer>& layers, bool rebuild_handles,
+            int& first_index_to_commit, int& last_index_to_commit);
 
-    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
-                                                           intrusive_list<sorted_sprites::layer>& layers);
+    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(
+            int last_visible_items_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers);
 
     [[nodiscard]] BTN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
 }

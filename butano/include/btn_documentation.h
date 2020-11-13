@@ -167,7 +167,7 @@
 /**
  * @defgroup audio Audio
  *
- * Music for your ears, provided by maxmod (https://maxmod.devkitpro.org/).
+ * Music for your ears, provided by Maxmod (https://maxmod.devkitpro.org/).
  */
 
 /**
@@ -607,10 +607,13 @@
  * @section getting_started_devkitARM devkitARM
  *
  * The next step is to download and install devkitARM
- * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>.
- *
- * Install the `GBA Development` component and **make sure that you are able to build and run
- * some of the examples** located in `/path/to/devkitpro/examples/gba`.
+ * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>:
+ * * Install the `GBA Development` component.
+ * * Install **all members** in the `gba-dev` group if the installer asks for which members to install.
+ * * Make sure that **with the console** you are able to build and run some of the examples
+ *   located in `/path/to/devkitpro/examples/gba`.
+ * * In particular, you should build and run the Maxmod example located in
+ *   `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
  *
  * @image html devkitpro.png
  *
@@ -972,6 +975,8 @@
  *
  * @section changelog_0_3_0 0.3.0 (next release)
  *
+ * * Sprites update performance improved up to 30% in Butano Fighter
+ *   thanks to avoid rebuilding sprites list as much as possible.
  * * Profiler can show the maximum measured ticks per entry.
  * * Assets tools print output binaries size.
  *

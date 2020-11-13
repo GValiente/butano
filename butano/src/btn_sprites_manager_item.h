@@ -55,6 +55,7 @@ public:
     int8_t half_width;
     int8_t half_height;
     unsigned double_size_mode: 2;
+    bool double_size: 1;
     bool blending_enabled: 1;
     bool visible: 1;
     bool remove_affine_mat_when_not_needed: 1;
@@ -78,16 +79,17 @@ public:
         tiles(move(_tiles)),
         palette(move(_palette)),
         double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
+        double_size(false),
         blending_enabled(false),
-        remove_affine_mat_when_not_needed(true)
+        visible(true),
+        remove_affine_mat_when_not_needed(true),
+        on_screen(false),
+        check_on_screen(true)
     {
         const sprite_palette_ptr& palette_ref = *palette;
         hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
                                    display_manager::blending_fade_enabled(), handle);
         update_half_dimensions();
-        on_screen = false;
-        visible = true;
-        check_on_screen = true;
     }
 
     sprites_manager_item(sprite_builder&& builder, sprite_tiles_ptr&& _tiles, sprite_palette_ptr&& _palette) :
@@ -98,8 +100,12 @@ public:
         affine_mat(builder.release_affine_mat()),
         camera(builder.release_camera()),
         double_size_mode(unsigned(builder.double_size_mode())),
+        double_size(false),
         blending_enabled(builder.blending_enabled()),
-        remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed())
+        visible(builder.visible()),
+        remove_affine_mat_when_not_needed(builder.remove_affine_mat_when_not_needed()),
+        on_screen(false),
+        check_on_screen(builder.visible())
     {
         const sprite_palette_ptr& palette_ref = *palette;
 
@@ -117,9 +123,11 @@ public:
             else
             {
                 int affine_mat_id = affine_mat_ref.id();
+                double_size = new_double_size();
                 hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
                                           display_manager::blending_fade_enabled(), handle);
-                hw::sprites::set_affine_mat(affine_mat_id, double_size(), handle);
+                hw::sprites::set_affine_mat(affine_mat_id, handle);
+                hw::sprites::show_affine(double_size, handle);
                 sprite_affine_mats_manager::attach_sprite(affine_mat_id, affine_mat_attach_node);
             }
         }
@@ -130,21 +138,9 @@ public:
         }
 
         update_half_dimensions();
-        on_screen = false;
-
-        if(builder.visible())
-        {
-            visible = true;
-            check_on_screen = true;
-        }
-        else
-        {
-            visible = false;
-            check_on_screen = false;
-        }
     }
 
-    [[nodiscard]] bool double_size() const
+    [[nodiscard]] bool new_double_size() const
     {
         switch(sprite_double_size_mode(double_size_mode))
         {
@@ -186,7 +182,7 @@ public:
 
     void update_half_dimensions()
     {
-        pair<int, int> dimensions = hw::sprites::dimensions(handle);
+        pair<int, int> dimensions = hw::sprites::dimensions(handle, double_size);
         half_width = int8_t(dimensions.first / 2);
         half_height = int8_t(dimensions.second / 2);
         update_hw_position();

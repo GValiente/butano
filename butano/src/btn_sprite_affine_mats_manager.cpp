@@ -145,7 +145,7 @@ namespace
             for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
             {
                 sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-                sprites_manager::update_affine_mat(&sprite_item, index, new_double_size);
+                sprites_manager::update_affine_mat_double_size(&sprite_item, new_double_size);
             }
         }
     }

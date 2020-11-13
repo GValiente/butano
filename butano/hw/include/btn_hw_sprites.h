@@ -29,7 +29,7 @@ namespace btn::hw::sprites
         }
     }
 
-    [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, palette_bpp_mode bpp_mode, int affine_mode,
+    [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, palette_bpp_mode bpp_mode, int view_mode,
                                               bool mosaic_enabled, bool blending_enabled, bool window_enabled,
                                               bool fade_enabled)
     {
@@ -38,8 +38,9 @@ namespace btn::hw::sprites
             blending_enabled = ! blending_enabled;
         }
 
-        int result = ATTR0_BUILD(y, int(shape), 0, affine_mode, mosaic_enabled, blending_enabled, window_enabled);
+        int result = ATTR0_BUILD(y, int(shape), 0, 0, mosaic_enabled, blending_enabled, window_enabled);
         result |= unsigned(bpp_mode) * ATTR0_8BPP;
+        BFN_SET2(result, view_mode, ATTR0_MODE);
         return result;
     }
 
@@ -61,7 +62,8 @@ namespace btn::hw::sprites
     inline void setup_regular(const sprite_shape_size& shape_size, int tiles_id, int palette_id,
                               palette_bpp_mode bpp_mode, bool fade_enabled, handle_type& sprite)
     {
-        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false, fade_enabled));
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false,
+                                                 fade_enabled));
         sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), false, false));
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, 3));
     }
@@ -97,14 +99,29 @@ namespace btn::hw::sprites
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
     }
 
-    [[nodiscard]] inline int affine_mode(const handle_type& sprite)
+    [[nodiscard]] inline int view_mode(const handle_type& sprite)
     {
-        return BFN_GET(sprite.attr0, ATTR0_MODE);
+        return BFN_GET2(sprite.attr0, ATTR0_MODE);
     }
 
-    [[nodiscard]] inline bool double_size(const handle_type& sprite)
+    inline void show_regular(handle_type& sprite)
     {
-        return sprite.attr0 & ATTR0_AFF_DBL_BIT;
+        BFN_SET2(sprite.attr0, ATTR0_REG, ATTR0_MODE);
+    }
+
+    inline void show_affine(bool double_size, handle_type& sprite)
+    {
+        BFN_SET2(sprite.attr0, double_size ? ATTR0_AFF_DBL : ATTR0_AFF, ATTR0_MODE);
+    }
+
+    inline void hide(uint16_t& attr0)
+    {
+        BFN_SET2(attr0, ATTR0_HIDE, ATTR0_MODE);
+    }
+
+    inline void hide(handle_type& sprite)
+    {
+        hide(sprite.attr0);
     }
 
     [[nodiscard]] inline sprite_shape shape(const handle_type& sprite)
@@ -122,12 +139,12 @@ namespace btn::hw::sprites
         return sprite_shape_size(shape(sprite), size(sprite));
     }
 
-    [[nodiscard]] inline pair<int, int> dimensions(const handle_type& sprite)
+    [[nodiscard]] inline pair<int, int> dimensions(const handle_type& sprite, bool double_size)
     {
         const uint8_t* obj_size = obj_get_size(&sprite);
         pair<int, int> result(obj_size[0], obj_size[1]);
 
-        if(double_size(sprite))
+        if(double_size)
         {
             result.first *= 2;
             result.second *= 2;
@@ -164,15 +181,8 @@ namespace btn::hw::sprites
         }
     }
 
-    inline void remove_affine_mat(handle_type& sprite)
+    inline void set_affine_mat(int affine_mat_id, handle_type& sprite)
     {
-        sprite.attr0 &= ~ATTR0_AFF_DBL;
-    }
-
-    inline void set_affine_mat(int affine_mat_id, bool double_size, handle_type& sprite)
-    {
-        remove_affine_mat(sprite);
-        sprite.attr0 |= double_size ? ATTR0_AFF_DBL : ATTR0_AFF;
         BFN_SET(sprite.attr1, affine_mat_id, ATTR1_AFF_ID);
     }
 
@@ -284,16 +294,6 @@ namespace btn::hw::sprites
         {
             sprite.attr0 &= ~ATTR0_WINDOW;
         }
-    }
-
-    inline void hide(uint16_t& attr0)
-    {
-        attr0 = ATTR0_HIDE;
-    }
-
-    inline void hide(handle_type& sprite)
-    {
-        hide(sprite.attr0);
     }
 
     inline void commit(const handle_type& sprites_ref, int offset, int count)

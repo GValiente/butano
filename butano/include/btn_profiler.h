@@ -13,6 +13,7 @@
  * @ingroup profiler
  */
 
+#include "btn_config_doxygen.h"
 #include "btn_config_profiler.h"
 
 /**
@@ -41,7 +42,7 @@
  * @ingroup profiler
  */
 
-#if BTN_CFG_PROFILER_ENABLED
+#if BTN_CFG_PROFILER_ENABLED || BTN_DOXYGEN
     #include "btn_unordered_map_fwd.h"
 
     /**

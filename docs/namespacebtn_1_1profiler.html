@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Changelog | Butano Documentation</title>
+  <title>btn::profiler namespace | Butano Documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,18 +47,30 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          Changelog
+          <span class="m-breadcrumb"><a href="namespacebtn.html">btn</a>::<wbr/></span>profiler <span class="m-thin">namespace</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="btn__profiler_8h.html">&lt;btn_profiler.h&gt;</a></div>
         </h1>
+        <p>Profiler related functions.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
-            <li><a href="#changelog_0_4_0">0.4.0 (next release)</a></li>
-            <li><a href="#changelog_0_3_0">0.3.0</a></li>
-            <li><a href="#changelog_0_2_0">0.2.0</a></li>
-            <li><a href="#changelog_0_1_0">0.1.0</a></li>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
-<section id="changelog_0_4_0"><h2><a href="#changelog_0_4_0">0.4.0 (next release)</a></h2><ul><li>Sprite tiles manager status can be printed in the log with <a href="namespacebtn_1_1sprite__tiles.html#a3949239f1500a9adc34364da03233d05" class="m-doc">btn::<wbr />sprite_tiles::<wbr />log_status()</a>. This is done automatically when a non-optional sprite tiles allocation fails too.</li><li>Optional components documentation fixed.</li></ul></section><section id="changelog_0_3_0"><h2><a href="#changelog_0_3_0">0.3.0</a></h2><ul><li>Sprites update performance improved up to 30% in Butano Fighter thanks to avoid rebuilding sprites list as much as possible.</li><li>Profiler can show the maximum measured ticks per entry.</li><li>Assets tools print output binaries size.</li></ul></section><section id="changelog_0_2_0"><h2><a href="#changelog_0_2_0">0.2.0</a></h2><ul><li>Performance improved up to 12% in Butano Fighter without <code>-flto</code> thanks to using less build translation units.</li><li>Documentation improved.</li></ul></section><section id="changelog_0_1_0"><h2><a href="#changelog_0_1_0">0.1.0</a></h2><p>First release.</p></section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a208a35e86c8b72292c035e16d735b533">
+              <span class="m-doc-wrap-bumper">void <a href="#a208a35e86c8b72292c035e16d735b533" class="m-doc-self">show</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Stops the execution and shows the profiling results on the screen.</dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>

@@ -14,7 +14,8 @@
  * @ingroup tile
  */
 
-#include "btn_common.h"
+#include "btn_config_log.h"
+#include "btn_config_doxygen.h"
 
 /**
  * @brief Sprite tiles related functions.
@@ -44,6 +45,13 @@ namespace btn::sprite_tiles
      * that can be created with sprite_tiles_ptr static constructors.
      */
     [[nodiscard]] int available_items_count();
+
+    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+        /**
+         * @brief Logs the current status of the sprite tiles manager.
+         */
+        void log_status();
+    #endif
 }
 
 #endif

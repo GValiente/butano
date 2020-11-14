@@ -14,6 +14,7 @@
  */
 
 #include "btn_config_log.h"
+#include "btn_config_doxygen.h"
 
 /**
  * @def BTN_LOG(...)
@@ -42,7 +43,7 @@
  * @ingroup log
  */
 
-#if BTN_CFG_LOG_ENABLED
+#if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
     #include "btn_sstream.h"
     #include "btn_istring_base.h"
 

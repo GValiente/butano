@@ -16,6 +16,7 @@
 #include <cassert>
 #include "btn_type_traits.h"
 #include "btn_config_assert.h"
+#include "btn_config_doxygen.h"
 
 /**
  * @def BTN_ASSERT(condition, ...)
@@ -81,7 +82,7 @@
  * @ingroup assert
  */
 
-#if BTN_CFG_ASSERT_ENABLED
+#if BTN_CFG_ASSERT_ENABLED || BTN_DOXYGEN
     #include "btn_sstream.h"
     #include "btn_istring_base.h"
 

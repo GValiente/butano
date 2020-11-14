@@ -7,6 +7,7 @@
 #define BTN_SPRITE_TILES_MANAGER_H
 
 #include "btn_span_fwd.h"
+#include "btn_config_log.h"
 #include "btn_optional_fwd.h"
 
 namespace btn
@@ -26,6 +27,10 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] int available_items_count();
 
+    #if BTN_CFG_LOG_ENABLED
+        void log_status();
+    #endif
+
     [[nodiscard]] int find(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int create(const span<const tile>& tiles_ref);
@@ -33,6 +38,12 @@ namespace btn::sprite_tiles_manager
     [[nodiscard]] int create_new(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int allocate(int tiles_count);
+
+    [[nodiscard]] int create_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] int create_new_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] int allocate_optional(int tiles_count);
 
     void increase_usages(int id);
 

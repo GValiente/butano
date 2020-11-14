@@ -973,6 +973,13 @@
  * @tableofcontents
  *
  *
+ * @section changelog_0_4_0 0.4.0 (next release)
+ *
+ * * Sprite tiles manager status can be printed in the log with btn::sprite_tiles::log_status().
+ *   This is done automatically when a non-optional sprite tiles allocation fails too.
+ * * Optional components documentation fixed.
+ *
+ *
  * @section changelog_0_3_0 0.3.0
  *
  * * Sprites update performance improved up to 30% in Butano Fighter

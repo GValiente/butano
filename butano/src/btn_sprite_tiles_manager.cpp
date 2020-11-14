@@ -20,6 +20,9 @@
     #include "btn_tile.h"
 
     static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
+
+#elif BTN_CFG_LOG_ENABLED
+    #include "btn_log.h"
 #endif
 
 namespace btn::sprite_tiles_manager
@@ -662,6 +665,34 @@ int available_items_count()
     return data.items.available();
 }
 
+#if BTN_CFG_LOG_ENABLED
+    void log_status()
+    {
+        #if BTN_CFG_SPRITE_TILES_LOG_ENABLED
+            BTN_SPRITE_TILES_LOG_STATUS();
+        #else
+            BTN_LOG("items: ", data.items.size());
+            BTN_LOG('[');
+
+            for(const item_type& item : data.items)
+            {
+                BTN_LOG("    ",
+                        (item.status() == status_type::FREE ? "free" :
+                                item.status() == status_type::USED ? "used" : "to_remove"),
+                        " - data: ", item.data,
+                        " - start_tile: ", item.start_tile,
+                        " - tiles_count: ", item.tiles_count,
+                        " - usages: ", item.usages);
+            }
+
+            BTN_LOG(']');
+
+            BTN_LOG("free_tiles_count: ", data.free_tiles_count);
+            BTN_LOG("to_remove_tiles_count: ", data.to_remove_tiles_count);
+        #endif
+    }
+#endif
+
 int find(const span<const tile>& tiles_ref)
 {
     const tile* tiles_data = tiles_ref.data();
@@ -700,6 +731,17 @@ int create(const span<const tile>& tiles_ref)
     else
     {
         BTN_SPRITE_TILES_LOG("NOT CREATED");
+
+        #if BTN_CFG_LOG_ENABLED
+            log_status();
+
+            BTN_ERROR("Sprite tiles create failed:",
+                      "\n\tTiles data: ", tiles_data,
+                      "\n\tTiles count: ", tiles_count,
+                      "\n\nSprite tiles manager status has been logged.");
+        #else
+            BTN_ERROR("Sprite tiles create failed. Tiles count: ", tiles_count);
+        #endif
     }
 
     return result;
@@ -728,6 +770,17 @@ int create_new(const span<const tile>& tiles_ref)
     else
     {
         BTN_SPRITE_TILES_LOG("NOT CREATED");
+
+        #if BTN_CFG_LOG_ENABLED
+            log_status();
+
+            BTN_ERROR("Sprite tiles create new failed:",
+                      "\n\tTiles data: ", tiles_data,
+                      "\n\tTiles count: ", tiles_count,
+                      "\n\nSprite tiles manager status has been logged.");
+        #else
+            BTN_ERROR("Sprite tiles create new failed. Tiles count: ", tiles_count);
+        #endif
     }
 
     return result;
@@ -736,6 +789,97 @@ int create_new(const span<const tile>& tiles_ref)
 int allocate(int tiles_count)
 {
     BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count);
+
+    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
+
+    int result = _allocate_impl(tiles_count);
+
+    if(result >= 0)
+    {
+        BTN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data.items.item(result).start_tile);
+        BTN_SPRITE_TILES_LOG_STATUS();
+    }
+    else
+    {
+        BTN_SPRITE_TILES_LOG("NOT ALLOCATED");
+
+        #if BTN_CFG_LOG_ENABLED
+            log_status();
+
+            BTN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count,
+                      "\n\nSprite tiles manager status has been logged.");
+        #else
+            BTN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count);
+        #endif
+    }
+
+    return result;
+}
+
+int create_optional(const span<const tile>& tiles_ref)
+{
+    const tile* tiles_data = tiles_ref.data();
+    int tiles_count = tiles_ref.size();
+
+    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE OPTIONAL: ", tiles_data, " - ", tiles_count);
+
+    int result = _find_impl(tiles_data, tiles_count);
+
+    if(result != -1)
+    {
+        return result;
+    }
+
+    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
+
+    result = _create_impl(tiles_data, tiles_count);
+
+    if(result != -1)
+    {
+        data.items_map.insert(tiles_data, result);
+
+        BTN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
+        BTN_SPRITE_TILES_LOG_STATUS();
+    }
+    else
+    {
+        BTN_SPRITE_TILES_LOG("NOT CREATED");
+    }
+
+    return result;
+}
+
+int create_new_optional(const span<const tile>& tiles_ref)
+{
+    const tile* tiles_data = tiles_ref.data();
+    int tiles_count = tiles_ref.size();
+
+    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count);
+
+    BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
+    BTN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
+               "Multiple copies of the same tiles data not supported");
+
+    int result = _create_impl(tiles_data, tiles_count);
+
+    if(result != -1)
+    {
+        data.items_map.insert(tiles_data, result);
+
+        BTN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
+        BTN_SPRITE_TILES_LOG_STATUS();
+    }
+    else
+    {
+        BTN_SPRITE_TILES_LOG("NOT CREATED");
+    }
+
+    return result;
+}
+
+int allocate_optional(int tiles_count)
+{
+    BTN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE OPTIONAL: ", tiles_count);
 
     BTN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 

@@ -21,7 +21,7 @@ namespace btn
 {
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect
  * which changes the position of a regular background in each screen horizontal line.
  *
  * @ingroup regular_bg

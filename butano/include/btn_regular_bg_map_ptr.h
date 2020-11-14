@@ -33,7 +33,7 @@ class regular_bg_map_item;
 enum class palette_bpp_mode;
 
 /**
- * @brief Smart pointer that retains shared ownership of a regular background map.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a regular background map.
  *
  * Several regular_bg_map_ptr objects may own the same regular background.
  *

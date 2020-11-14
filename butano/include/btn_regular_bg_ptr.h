@@ -36,7 +36,7 @@ class regular_bg_map_item;
 class regular_bg_attributes;
 
 /**
- * @brief Smart pointer that retains shared ownership of a regular background.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a regular background.
  *
  * Several regular_bg_ptr objects may own the same regular background.
  *

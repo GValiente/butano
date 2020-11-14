@@ -22,7 +22,7 @@ namespace btn
 {
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes the boundaries
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the boundaries
  * of a rect window in each screen horizontal line.
  *
  * @ingroup rect_window

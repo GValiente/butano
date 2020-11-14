@@ -24,7 +24,7 @@ namespace btn
 {
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes
  * the attributes of a sprite_affine_mat_ptr in each screen horizontal line.
  *
  * @ingroup sprite

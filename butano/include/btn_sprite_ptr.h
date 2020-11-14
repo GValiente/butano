@@ -39,7 +39,7 @@ class sprite_regular_second_attributes;
 enum class sprite_double_size_mode;
 
 /**
- * @brief Smart pointer that retains shared ownership of a sprite.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a sprite.
  *
  * Several sprite_ptr objects may own the same sprite.
  *

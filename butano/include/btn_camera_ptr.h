@@ -24,7 +24,7 @@ namespace btn
 class fixed_point;
 
 /**
- * @brief Smart pointer that retains shared ownership of a camera.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a camera.
  *
  * Several camera_ptr objects may own the same camera.
  *

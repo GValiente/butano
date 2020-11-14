@@ -26,7 +26,7 @@ class tile;
 class sprite_tiles_item;
 
 /**
- * @brief Smart pointer that retains shared ownership of the tiles of a sprite.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of the tiles of a sprite.
  *
  * Several sprite_tiles_ptr objects may own the same sprite tiles.
  *

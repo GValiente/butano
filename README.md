@@ -47,8 +47,6 @@ Butano would have not been possible without these libraries:
 
 ## Butano Fighter
 
-This is Butano Fighter!
-
 Stay alive while you shoot at everything that moves!
 
 The full source code and the creative commons assets of this game are in [its project folder](games/butano-fighter).

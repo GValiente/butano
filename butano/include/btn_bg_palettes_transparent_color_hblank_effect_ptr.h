@@ -24,7 +24,7 @@ namespace btn
 class color;
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes
  * the transparent color of the backgrounds in each screen horizontal line.
  *
  * @ingroup bg

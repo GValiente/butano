@@ -21,7 +21,7 @@ namespace btn
 {
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes the attributes to commit
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes to commit
  * to the second GBA register of an affine sprite (with an attached sprite_affine_mat_ptr)
  * in each screen horizontal line.
  *

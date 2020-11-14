@@ -27,7 +27,7 @@ class bg_tiles_item;
 enum class palette_bpp_mode;
 
 /**
- * @brief Smart pointer that retains shared ownership of the tiles of a background.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of the tiles of a background.
  *
  * Several bg_tiles_ptr objects may own the same background tiles.
  *

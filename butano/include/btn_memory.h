@@ -43,7 +43,7 @@ struct default_delete
 
 
 /**
- * @brief Smart pointer that owns and manages another object through a pointer
+ * @brief std::shared_ptr like smart pointer that owns and manages another object through a pointer
  * and disposes of that object when the unique_ptr goes out of scope.
  *
  * @tparam Type Type of the managed object.

@@ -21,7 +21,7 @@ namespace btn
 {
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect.
  *
  * Several hblank_effect_ptr objects may own the same H-Blank effect.
  *

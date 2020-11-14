@@ -25,7 +25,7 @@ namespace btn
 class sprite_affine_mat_attributes;
 
 /**
- * @brief Smart pointer that retains shared ownership of a sprite affine transformation matrix.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a sprite affine transformation matrix.
  *
  * Several sprite_affine_mat_ptr objects may own the same sprite affine transformation matrix.
  *

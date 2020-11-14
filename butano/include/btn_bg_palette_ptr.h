@@ -36,7 +36,7 @@ class bg_palette_item;
 enum class palette_bpp_mode;
 
 /**
- * @brief Smart pointer that retains shared ownership of a background color palette.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a background color palette.
  *
  * Several bg_palette_ptr objects may own the same background color palette.
  *

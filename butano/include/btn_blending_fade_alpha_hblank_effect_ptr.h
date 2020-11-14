@@ -23,7 +23,7 @@ namespace btn
 class blending_fade_alpha;
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes
  * the weight of the fade blending in each screen horizontal line.
  *
  * Keep in mind that fade blending and other blendings can't be enabled at the same time.

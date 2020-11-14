@@ -23,7 +23,7 @@ namespace btn
 class mosaic_attributes;
 
 /**
- * @brief Smart pointer that retains shared ownership of a H-Blank effect which changes the attributes
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes
  * to commit to the GBA mosaic register in each screen horizontal line.
  *
  * @ingroup mosaic

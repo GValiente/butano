@@ -345,4 +345,34 @@ sprite_builder& sprite_builder::set_affine_mat(sprite_affine_mat_ptr&& affine_ma
     return *this;
 }
 
+sprite_builder& sprite_builder::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
+{
+    if(affine_mat)
+    {
+        _affine_mat = affine_mat;
+        _remove_affine_mat_when_not_needed = false;
+    }
+    else
+    {
+        _affine_mat.reset();
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
+{
+    if(affine_mat)
+    {
+        _affine_mat = move(affine_mat);
+        _remove_affine_mat_when_not_needed = false;
+    }
+    else
+    {
+        _affine_mat.reset();
+    }
+
+    return *this;
+}
+
 }

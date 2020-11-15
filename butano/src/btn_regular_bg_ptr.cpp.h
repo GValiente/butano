@@ -338,6 +338,30 @@ void regular_bg_ptr::set_camera(camera_ptr&& camera)
     bgs_manager::set_camera(_handle, move(camera));
 }
 
+void regular_bg_ptr::set_camera(const optional<camera_ptr>& camera)
+{
+    if(camera)
+    {
+        bgs_manager::set_camera(_handle, camera_ptr(*camera));
+    }
+    else
+    {
+        bgs_manager::remove_camera(_handle);
+    }
+}
+
+void regular_bg_ptr::set_camera(optional<camera_ptr>&& camera)
+{
+    if(camera)
+    {
+        bgs_manager::set_camera(_handle, move(*camera));
+    }
+    else
+    {
+        bgs_manager::remove_camera(_handle);
+    }
+}
+
 void regular_bg_ptr::remove_camera()
 {
     bgs_manager::remove_camera(_handle);

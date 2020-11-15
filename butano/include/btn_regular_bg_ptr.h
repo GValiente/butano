@@ -424,6 +424,18 @@ public:
     void set_camera(camera_ptr&& camera);
 
     /**
+     * @brief Sets or removes the camera_ptr attached to this regular background.
+     * @param camera Optional camera_ptr to copy to this regular background.
+     */
+    void set_camera(const optional<camera_ptr>& camera);
+
+    /**
+     * @brief Sets or removes the camera_ptr attached to this regular background.
+     * @param camera Optional camera_ptr to move to this regular background.
+     */
+    void set_camera(optional<camera_ptr>&& camera);
+
+    /**
      * @brief Removes the camera_ptr attached to this regular background (if any).
      */
     void remove_camera();

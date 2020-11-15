@@ -642,6 +642,30 @@ void sprite_ptr::set_camera(camera_ptr&& camera)
     sprites_manager::set_camera(_handle, move(camera));
 }
 
+void sprite_ptr::set_camera(const optional<camera_ptr>& camera)
+{
+    if(camera)
+    {
+        sprites_manager::set_camera(_handle, camera_ptr(*camera));
+    }
+    else
+    {
+        sprites_manager::remove_camera(_handle);
+    }
+}
+
+void sprite_ptr::set_camera(optional<camera_ptr>&& camera)
+{
+    if(camera)
+    {
+        sprites_manager::set_camera(_handle, move(*camera));
+    }
+    else
+    {
+        sprites_manager::remove_camera(_handle);
+    }
+}
+
 void sprite_ptr::remove_camera()
 {
     sprites_manager::remove_camera(_handle);
@@ -662,6 +686,32 @@ void sprite_ptr::set_affine_mat(sprite_affine_mat_ptr&& affine_mat)
 {
     sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
     sprites_manager::set_affine_mat(_handle, move(affine_mat));
+}
+
+void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
+{
+    if(affine_mat)
+    {
+        sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
+        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr(*affine_mat));
+    }
+    else
+    {
+        sprites_manager::remove_affine_mat(_handle);
+    }
+}
+
+void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
+{
+    if(affine_mat)
+    {
+        sprites_manager::set_remove_affine_mat_when_not_needed(_handle, false);
+        sprites_manager::set_affine_mat(_handle, move(*affine_mat));
+    }
+    else
+    {
+        sprites_manager::remove_affine_mat(_handle);
+    }
 }
 
 void sprite_ptr::remove_affine_mat()

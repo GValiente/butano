@@ -149,6 +149,30 @@ void rect_window::set_camera(camera_ptr&& camera)
     display_manager::set_rect_window_camera(id(), move(camera));
 }
 
+void rect_window::set_camera(const optional<camera_ptr>& camera)
+{
+    if(camera)
+    {
+        display_manager::set_rect_window_camera(id(), camera_ptr(*camera));
+    }
+    else
+    {
+        display_manager::remove_rect_window_camera(id());
+    }
+}
+
+void rect_window::set_camera(optional<camera_ptr>&& camera)
+{
+    if(camera)
+    {
+        display_manager::set_rect_window_camera(id(), move(*camera));
+    }
+    else
+    {
+        display_manager::remove_rect_window_camera(id());
+    }
+}
+
 void rect_window::remove_camera()
 {
     display_manager::remove_rect_window_camera(id());

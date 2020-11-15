@@ -450,6 +450,28 @@ public:
     }
 
     /**
+     * @brief Sets or removes the camera_ptr to attach to the sprites to generate.
+     * @param camera Optional camera_ptr to copy to the builder.
+     * @return Reference to this.
+     */
+    sprite_builder& set_camera(const optional<camera_ptr>& camera)
+    {
+        _camera = camera;
+        return *this;
+    }
+
+    /**
+     * @brief Sets or removes the camera_ptr to attach to the sprites to generate.
+     * @param camera Optional camera_ptr to move to the builder.
+     * @return Reference to this.
+     */
+    sprite_builder& set_camera(optional<camera_ptr>&& camera)
+    {
+        _camera = move(camera);
+        return *this;
+    }
+
+    /**
      * @brief Removes the camera_ptr to attach to the sprites to generate.
      * @return Reference to this.
      */
@@ -572,6 +594,28 @@ public:
      * @return Reference to this.
      */
     sprite_builder& set_affine_mat(sprite_affine_mat_ptr&& affine_mat);
+
+    /**
+     * @brief Sets or removes the sprite_affine_mat_ptr to attach to the sprites to generate.
+     *
+     * This method calls set_remove_affine_mat_when_not_needed(false)
+     * if the given sprite_affine_mat_ptr is not null.
+     *
+     * @param affine_mat Optional sprite_affine_mat_ptr to copy to the builder.
+     * @return Reference to this.
+     */
+    sprite_builder& set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat);
+
+    /**
+     * @brief Sets or removes the sprite_affine_mat_ptr to attach to the sprites to generate.
+     *
+     * This method calls set_remove_affine_mat_when_not_needed(false)
+     * if the given sprite_affine_mat_ptr is not null.
+     *
+     * @param affine_mat Optional sprite_affine_mat_ptr to move to the builder.
+     * @return Reference to this.
+     */
+    sprite_builder& set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat);
 
     /**
      * @brief Removes the sprite_affine_mat_ptr to attach to the sprites to generate.

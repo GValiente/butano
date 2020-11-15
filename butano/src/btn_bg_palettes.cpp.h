@@ -31,6 +31,11 @@ void set_transparent_color(color transparent_color)
     palettes_manager::bg_palettes_bank().set_transparent_color(transparent_color);
 }
 
+void set_transparent_color(const optional<color>& transparent_color)
+{
+    palettes_manager::bg_palettes_bank().set_transparent_color(transparent_color);
+}
+
 void remove_transparent_color()
 {
     palettes_manager::bg_palettes_bank().set_transparent_color(nullopt);

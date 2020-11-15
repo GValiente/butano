@@ -280,6 +280,28 @@ public:
     }
 
     /**
+     * @brief Sets or removes the camera_ptr to attach to the regular backgrounds to generate.
+     * @param camera Optional camera_ptr to copy to the builder.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_camera(const optional<camera_ptr>& camera)
+    {
+        _camera = camera;
+        return *this;
+    }
+
+    /**
+     * @brief Sets or removes the camera_ptr to attach to the regular backgrounds to generate.
+     * @param camera Optional camera_ptr to move to the builder.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_camera(optional<camera_ptr>&& camera)
+    {
+        _camera = move(camera);
+        return *this;
+    }
+
+    /**
      * @brief Removes the camera_ptr to attach to the regular backgrounds to generate.
      * @return Reference to this.
      */

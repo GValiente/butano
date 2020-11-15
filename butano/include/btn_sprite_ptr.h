@@ -664,6 +664,18 @@ public:
     void set_camera(camera_ptr&& camera);
 
     /**
+     * @brief Sets or removes the camera_ptr attached to this sprite.
+     * @param camera Optional camera_ptr to copy to this sprite.
+     */
+    void set_camera(const optional<camera_ptr>& camera);
+
+    /**
+     * @brief Sets or removes the camera_ptr attached to this sprite.
+     * @param camera Optional camera_ptr to move to this sprite.
+     */
+    void set_camera(optional<camera_ptr>&& camera);
+
+    /**
      * @brief Removes the camera_ptr attached to this sprite (if any).
      */
     void remove_camera();
@@ -678,7 +690,7 @@ public:
      *
      * This method calls set_remove_affine_mat_when_not_needed(false).
      *
-     * @param affine_mat Sprite_affine_mat_ptr to copy to this sprite.
+     * @param affine_mat sprite_affine_mat_ptr to copy to this sprite.
      */
     void set_affine_mat(const sprite_affine_mat_ptr& affine_mat);
 
@@ -687,9 +699,29 @@ public:
      *
      * This method calls set_remove_affine_mat_when_not_needed(false).
      *
-     * @param affine_mat Sprite_affine_mat_ptr to move to this sprite.
+     * @param affine_mat sprite_affine_mat_ptr to move to this sprite.
      */
     void set_affine_mat(sprite_affine_mat_ptr&& affine_mat);
+
+    /**
+     * @brief Sets or removes the sprite_affine_mat_ptr attached to this sprite.
+     *
+     * This method calls set_remove_affine_mat_when_not_needed(false)
+     * if the given sprite_affine_mat_ptr is not null.
+     *
+     * @param affine_mat Optional sprite_affine_mat_ptr to copy to this sprite.
+     */
+    void set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat);
+
+    /**
+     * @brief Sets or removes the sprite_affine_mat_ptr attached to this sprite.
+     *
+     * This method calls set_remove_affine_mat_when_not_needed(false)
+     * if the given sprite_affine_mat_ptr is not null.
+     *
+     * @param affine_mat Optional sprite_affine_mat_ptr to move to this sprite.
+     */
+    void set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat);
 
     /**
      * @brief Removes the sprite_affine_mat_ptr attached to this sprite (if any).

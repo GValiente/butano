@@ -51,6 +51,11 @@ namespace btn::bg_palettes
     void set_transparent_color(color transparent_color);
 
     /**
+     * @brief Sets or removes the overridden transparent color of the backgrounds.
+     */
+    void set_transparent_color(const optional<color>& transparent_color);
+
+    /**
      * @brief Removes the overridden transparent color of the backgrounds, if any.
      */
     void remove_transparent_color();

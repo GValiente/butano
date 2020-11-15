@@ -32,41 +32,32 @@ optional<bg_tiles_ptr> bg_tiles_ptr::find(const bg_tiles_item& tiles_item)
 
 bg_tiles_ptr bg_tiles_ptr::create(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::create_tiles(tiles_ref);
-    BTN_ASSERT(handle >= 0, "Tiles create failed");
-
-    return bg_tiles_ptr(handle);
+    return bg_tiles_ptr(bg_blocks_manager::create_tiles(tiles_ref));
 }
 
 bg_tiles_ptr bg_tiles_ptr::create(const bg_tiles_item& tiles_item)
 {
-    return create(tiles_item.tiles_ref());
+    return bg_tiles_ptr(bg_blocks_manager::create_tiles(tiles_item.tiles_ref()));
 }
 
 bg_tiles_ptr bg_tiles_ptr::create_new(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::create_new_tiles(tiles_ref);
-    BTN_ASSERT(handle >= 0, "Tiles create new failed");
-
-    return bg_tiles_ptr(handle);
+    return bg_tiles_ptr(bg_blocks_manager::create_new_tiles(tiles_ref));
 }
 
 bg_tiles_ptr bg_tiles_ptr::create_new(const bg_tiles_item& tiles_item)
 {
-    return create_new(tiles_item.tiles_ref());
+    return bg_tiles_ptr(bg_blocks_manager::create_new_tiles(tiles_item.tiles_ref()));
 }
 
 bg_tiles_ptr bg_tiles_ptr::allocate(int tiles_count)
 {
-    int handle = bg_blocks_manager::allocate_tiles(tiles_count);
-    BTN_ASSERT(handle >= 0, "Tiles allocate failed");
-
-    return bg_tiles_ptr(handle);
+    return bg_tiles_ptr(bg_blocks_manager::allocate_tiles(tiles_count));
 }
 
 optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::create_tiles(tiles_ref);
+    int handle = bg_blocks_manager::create_tiles_optional(tiles_ref);
     optional<bg_tiles_ptr> result;
 
     if(handle >= 0)
@@ -84,7 +75,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::create_optional(const bg_tiles_item& tiles_
 
 optional<bg_tiles_ptr> bg_tiles_ptr::create_new_optional(const span<const tile>& tiles_ref)
 {
-    int handle = bg_blocks_manager::create_new_tiles(tiles_ref);
+    int handle = bg_blocks_manager::create_new_tiles_optional(tiles_ref);
     optional<bg_tiles_ptr> result;
 
     if(handle >= 0)
@@ -102,7 +93,7 @@ optional<bg_tiles_ptr> bg_tiles_ptr::create_new_optional(const bg_tiles_item& ti
 
 optional<bg_tiles_ptr> bg_tiles_ptr::allocate_optional(int tiles_count)
 {
-    int handle = bg_blocks_manager::allocate_tiles(tiles_count);
+    int handle = bg_blocks_manager::allocate_tiles_optional(tiles_count);
     optional<bg_tiles_ptr> result;
 
     if(handle >= 0)

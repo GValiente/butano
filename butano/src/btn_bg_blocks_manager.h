@@ -7,6 +7,7 @@
 #define BTN_BG_BLOCKS_MANAGER_H
 
 #include "btn_span_fwd.h"
+#include "btn_config_log.h"
 #include "btn_optional_fwd.h"
 #include "btn_regular_bg_map_cell.h"
 
@@ -38,6 +39,10 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] int available_map_blocks_count();
 
+    #if BTN_CFG_LOG_ENABLED
+        void log_status();
+    #endif
+
     [[nodiscard]] int find_tiles(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int find_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
@@ -57,6 +62,22 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles,
                                            bg_palette_ptr&& palette);
+
+    [[nodiscard]] int create_tiles_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] int create_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+                                                  bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
+
+    [[nodiscard]] int create_new_tiles_optional(const span<const tile>& tiles_ref);
+
+    [[nodiscard]] int create_new_regular_map_optional(const regular_bg_map_cell& map_cells_ref,
+                                                      const size& map_dimensions, bg_tiles_ptr&& tiles,
+                                                      bg_palette_ptr&& palette);
+
+    [[nodiscard]] int allocate_tiles_optional(int tiles_count);
+
+    [[nodiscard]] int allocate_regular_map_optional(const size& map_dimensions, bg_tiles_ptr&& tiles,
+                                                    bg_palette_ptr&& palette);
 
     void increase_usages(int id);
 

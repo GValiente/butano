@@ -975,6 +975,10 @@
  *
  * @section changelog_0_4_0 0.4.0 (next release)
  *
+ * * Background tiles manager status can be printed in the log with btn::bg_tiles::log_status().
+ *   This is done automatically when a non-optional background tiles allocation fails too.
+ * * Background regular maps manager status can be printed in the log with btn::bg_maps::log_status().
+ *   This is done automatically when a non-optional regular background map allocation fails too.
  * * Sprite tiles manager status can be printed in the log with btn::sprite_tiles::log_status().
  *   This is done automatically when a non-optional sprite tiles allocation fails too.
  * * Setters with an optional parameter added to some classes.

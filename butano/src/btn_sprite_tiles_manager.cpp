@@ -20,7 +20,6 @@
     #include "btn_tile.h"
 
     static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
-
 #elif BTN_CFG_LOG_ENABLED
     #include "btn_log.h"
 #endif

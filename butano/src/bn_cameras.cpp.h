@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_cameras.h"
+#include "bn_cameras.h"
 
-#include "btn_cameras_manager.h"
+#include "bn_cameras_manager.h"
 
-namespace btn::cameras
+namespace bn::cameras
 {
 
 int used_items_count()

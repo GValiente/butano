@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
-#define BTN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
+#ifndef BN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
+#define BN_RECT_WINDOW_BOUNDARIES_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::rect_window_boundaries_hblank_effect_ptr header file.
+ * bn::rect_window_boundaries_hblank_effect_ptr header file.
  *
  * @ingroup rect_window
  * @ingroup hblank_effect
  */
 
-#include "btn_rect_window.h"
-#include "btn_optional_fwd.h"
-#include "btn_hblank_effect_ptr.h"
+#include "bn_rect_window.h"
+#include "bn_optional_fwd.h"
+#include "bn_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

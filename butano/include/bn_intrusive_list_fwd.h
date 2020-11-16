@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_INTRUSIVE_LIST_FWD_H
-#define BTN_INTRUSIVE_LIST_FWD_H
+#ifndef BN_INTRUSIVE_LIST_FWD_H
+#define BN_INTRUSIVE_LIST_FWD_H
 
 /**
  * @file
- * btn::intrusive_list declaration header file.
+ * bn::intrusive_list declaration header file.
  *
  * @ingroup intrusive_list
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief To be part of a intrusive_list, values must inherit this class.

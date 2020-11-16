@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_text.h"
+#include "../include/bn_hw_text.h"
 
-#include "btn_math.h"
-#include "btn_array.h"
-#include "btn_memory.h"
-#include "btn_string_view.h"
+#include "bn_math.h"
+#include "bn_array.h"
+#include "bn_memory.h"
+#include "bn_string_view.h"
 
 extern "C"
 {
     #include "../3rd_party/posprintf/include/posprintf.h"
 }
 
-namespace btn::hw::text
+namespace bn::hw::text
 {
 
 namespace
@@ -58,13 +58,13 @@ int parse(int value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", value);
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -84,13 +84,13 @@ int parse(long value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", value);
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -110,13 +110,13 @@ int parse(int64_t value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -135,13 +135,13 @@ int parse(unsigned value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -160,13 +160,13 @@ int parse(unsigned long value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -185,13 +185,13 @@ int parse(uint64_t value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BTN_ASSERT(size > 0, "posprintf call failed");
+        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -207,7 +207,7 @@ int parse(const void* ptr, array<char, 32>& output)
     posprintf(output_data, "0x%x", ptr);
 
     int size = string_view(output_data).size();
-    BTN_ASSERT(size > 0, "posprintf call failed");
+    BN_ASSERT(size > 0, "posprintf call failed");
 
     return size;
 }

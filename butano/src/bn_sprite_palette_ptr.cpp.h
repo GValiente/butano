@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_palette_ptr.h"
+#include "bn_sprite_palette_ptr.h"
 
-#include "btn_sprite_palette_item.h"
-#include "btn_palettes_bank.h"
-#include "btn_palettes_manager.h"
+#include "bn_sprite_palette_item.h"
+#include "bn_palettes_bank.h"
+#include "bn_palettes_manager.h"
 
-namespace btn
+namespace bn
 {
 
 optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& colors, palette_bpp_mode bpp_mode)

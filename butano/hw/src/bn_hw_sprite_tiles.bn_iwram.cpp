@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_sprite_tiles.h"
+#include "../include/bn_hw_sprite_tiles.h"
 
-#include "btn_tile.h"
-#include "btn_memory.h"
+#include "bn_tile.h"
+#include "bn_memory.h"
 
-namespace btn::hw::sprite_tiles
+namespace bn::hw::sprite_tiles
 {
 
 void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y, int destination_y,

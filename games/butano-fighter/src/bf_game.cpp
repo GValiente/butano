@@ -5,21 +5,21 @@
 
 #include "bf_game.h"
 
-#include "btn_music_items.h"
-#include "btn_sprite_items_flash_palette.h"
+#include "bn_music_items.h"
+#include "bn_sprite_items_flash_palette.h"
 #include "bf_status.h"
 #include "bf_butano_background.h"
 
 namespace bf::game
 {
 
-game::game(status& status, btn::sprite_text_generator& text_generator, butano_background& butano_background) :
-    _camera(btn::camera_ptr::create(0, 0)),
+game::game(status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background) :
+    _camera(bn::camera_ptr::create(0, 0)),
     _background(status.current_stage(), _camera),
     _hero(_camera, status),
     _intro(status.current_stage(), text_generator),
-    _enemies(status.current_stage(), btn::sprite_items::flash_palette.palette_item().create_palette()),
-    _objects(btn::sprite_items::flash_palette.palette_item().create_palette()),
+    _enemies(status.current_stage(), bn::sprite_items::flash_palette.palette_item().create_palette()),
+    _objects(bn::sprite_items::flash_palette.palette_item().create_palette()),
     _scoreboard(text_generator),
     _butano_background(butano_background)
 {
@@ -28,9 +28,9 @@ game::game(status& status, btn::sprite_text_generator& text_generator, butano_ba
     current_stage.music_item.play(current_stage.music_volume);
 }
 
-btn::optional<scene_type> game::update()
+bn::optional<scene_type> game::update()
 {
-    btn::optional<scene_type> result;
+    bn::optional<scene_type> result;
     _pause.update(_butano_background);
 
     if(! _pause.active())
@@ -41,9 +41,9 @@ btn::optional<scene_type> game::update()
         {
             _background.reset();
 
-            if(btn::music::playing())
+            if(bn::music::playing())
             {
-                btn::music::stop();
+                bn::music::stop();
             }
         }
         else

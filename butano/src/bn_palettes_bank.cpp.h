@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_palettes_bank.h"
+#include "bn_palettes_bank.h"
 
-#include "btn_math.h"
-#include "btn_span.h"
-#include "btn_limits.h"
-#include "btn_memory.h"
-#include "btn_display.h"
-#include "btn_algorithm.h"
-#include "btn_palette_bpp_mode.h"
+#include "bn_math.h"
+#include "bn_span.h"
+#include "bn_limits.h"
+#include "bn_memory.h"
+#include "bn_display.h"
+#include "bn_algorithm.h"
+#include "bn_palette_bpp_mode.h"
 
-#if BTN_CFG_LOG_ENABLED
-    #include "btn_log.h"
+#if BN_CFG_LOG_ENABLED
+    #include "bn_log.h"
 #endif
 
-namespace btn
+namespace bn
 {
 
 namespace
@@ -41,8 +41,8 @@ namespace
 unsigned palettes_bank::colors_hash(const span<const color>& colors)
 {
     int colors_count = colors.size();
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
+    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
     auto result = unsigned(colors_count);
@@ -72,23 +72,23 @@ int palettes_bank::used_colors_count() const
     return result * hw::palettes::colors_per_palette();
 }
 
-#if BTN_CFG_LOG_ENABLED
+#if BN_CFG_LOG_ENABLED
     void palettes_bank::log_status() const
     {
-        BTN_LOG("palettes: ", used_colors_count() / hw::palettes::colors_per_palette());
-        BTN_LOG('[');
+        BN_LOG("palettes: ", used_colors_count() / hw::palettes::colors_per_palette());
+        BN_LOG('[');
 
         for(const palette& pal : _palettes)
         {
             if(pal.usages)
             {
-                BTN_LOG(pal.bpp_8 ? "bpp_8" : "bpp_4",
+                BN_LOG(pal.bpp_8 ? "bpp_8" : "bpp_4",
                         " - slots_count: ", pal.slots_count,
                         " - usages: ", pal.usages);
             }
         }
 
-        BTN_LOG(']');
+        BN_LOG(']');
     }
 #endif
 
@@ -126,8 +126,8 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 int palettes_bank::find_bpp_8(const span<const color>& colors)
 {
     int colors_count = colors.size();
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
+    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     int bpp_8_slots_count = _bpp_8_slots_count();
     int slots_count = colors_count / hw::palettes::colors_per_palette();
@@ -180,13 +180,13 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, 
 
     if(required)
     {
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("BPP4 palette create failed. Colors count: ", colors_count,
+            BN_ERROR("BPP4 palette create failed. Colors count: ", colors_count,
                       "\n\nPalettes manager status has been logged.");
         #else
-            BTN_ERROR("BPP4 palette create failed. Colors count: ", colors_count);
+            BN_ERROR("BPP4 palette create failed. Colors count: ", colors_count);
         #endif
     }
 
@@ -196,8 +196,8 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, 
 int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
 {
     int colors_count = colors.size();
-    BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
+    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
 
     palette& first_pal = _palettes[0];
     int required_slots_count = colors_count / hw::palettes::colors_per_palette();
@@ -237,13 +237,13 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
 
     if(required)
     {
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("BPP8 palette create failed. Colors count: ", colors_count,
+            BN_ERROR("BPP8 palette create failed. Colors count: ", colors_count,
                       "\n\nPalettes manager status has been logged.");
         #else
-            BTN_ERROR("BPP8 palette create failed. Colors count: ", colors_count);
+            BN_ERROR("BPP8 palette create failed. Colors count: ", colors_count);
         #endif
     }
 
@@ -292,13 +292,13 @@ span<const color> palettes_bank::colors(int id) const
 
 void palettes_bank::set_colors(int id, const span<const color>& colors)
 {
-    BTN_ASSERT(colors.size() == colors_count(id), "Colors count mismatch: ", colors.size(), " - ", colors_count(id));
+    BN_ASSERT(colors.size() == colors_count(id), "Colors count mismatch: ", colors.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[id];
 
     if(pal.bpp_8)
     {
-        BTN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
+        BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
     }
     else
     {
@@ -331,7 +331,7 @@ void palettes_bank::set_inverted(int id, bool inverted)
 
 void palettes_bank::set_grayscale_intensity(int id, fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     palette& pal = _palettes[id];
     bool update = fixed_t<5>(pal.grayscale_intensity) != fixed_t<5>(intensity);
@@ -359,7 +359,7 @@ void palettes_bank::set_fade_color(int id, color color)
 
 void palettes_bank::set_fade_intensity(int id, fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     palette& pal = _palettes[id];
     bool update = fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
@@ -374,7 +374,7 @@ void palettes_bank::set_fade_intensity(int id, fixed intensity)
 
 void palettes_bank::set_fade(int id, color color, fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     palette& pal = _palettes[id];
     bool update = pal.fade_color != color || fixed_t<5>(pal.fade_intensity) != fixed_t<5>(intensity);
@@ -390,7 +390,7 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
 
 void palettes_bank::set_rotate_count(int id, int count)
 {
-    BTN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
+    BN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
 
     palette& pal = _palettes[id];
     bool update = pal.rotate_count != count;
@@ -426,7 +426,7 @@ void palettes_bank::set_transparent_color(const optional<color>& transparent_col
 
 void palettes_bank::set_brightness(fixed brightness)
 {
-    BTN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
+    BN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
 
     fixed_t<8> output_brightness(brightness);
     bool update = fixed_t<8>(_brightness) != output_brightness;
@@ -450,7 +450,7 @@ void palettes_bank::set_brightness(fixed brightness)
 
 void palettes_bank::set_contrast(fixed contrast)
 {
-    BTN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
+    BN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
 
     fixed_t<8> output_contrast(contrast);
     bool update = fixed_t<8>(_contrast) != output_contrast;
@@ -474,7 +474,7 @@ void palettes_bank::set_contrast(fixed contrast)
 
 void palettes_bank::set_intensity(fixed intensity)
 {
-    BTN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
 
     fixed_t<8> output_intensity(intensity);
     bool update = fixed_t<8>(_intensity) != output_intensity;
@@ -519,7 +519,7 @@ void palettes_bank::set_inverted(bool inverted)
 
 void palettes_bank::set_grayscale_intensity(fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     fixed_t<5> output_intensity(intensity);
     bool update = fixed_t<5>(_grayscale_intensity) != output_intensity;
@@ -555,7 +555,7 @@ void palettes_bank::set_fade_color(color color)
 
 void palettes_bank::set_fade_intensity(fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     fixed_t<5> output_intensity(intensity);
     bool update = fixed_t<5>(_fade_intensity) != output_intensity;
@@ -579,7 +579,7 @@ void palettes_bank::set_fade_intensity(fixed intensity)
 
 void palettes_bank::set_fade(color color, fixed intensity)
 {
-    BTN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
     fixed_t<5> output_intensity(intensity);
     bool update = _fade_color != color || fixed_t<5>(_fade_intensity) != output_intensity;
@@ -686,8 +686,8 @@ void palettes_bank::reset_commit_data()
 
 void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
-    BTN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
-    BTN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
+    BN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
+    BN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
 
     const palette& pal = _palettes[id];
     int dest_colors_count = display::height();
@@ -703,8 +703,8 @@ void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors
 
 void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
-    BTN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
-    BTN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
+    BN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
+    BN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
 
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);

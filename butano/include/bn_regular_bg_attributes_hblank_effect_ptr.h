@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_PTR_H
-#define BTN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#ifndef BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#define BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::regular_bg_attributes_hblank_effect_ptr header file.
+ * bn::regular_bg_attributes_hblank_effect_ptr header file.
  *
  * @ingroup regular_bg
  * @ingroup hblank_effect
  */
 
-#include "btn_regular_bg_ptr.h"
-#include "btn_hblank_effect_ptr.h"
+#include "bn_regular_bg_ptr.h"
+#include "bn_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

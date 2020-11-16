@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FIXED_RECT_H
-#define BTN_FIXED_RECT_H
+#ifndef BN_FIXED_RECT_H
+#define BN_FIXED_RECT_H
 
 /**
  * @file
- * btn::fixed_rect header file.
+ * bn::fixed_rect header file.
  *
  * @ingroup math
  */
 
-#include "btn_rect.h"
-#include "btn_fixed_size.h"
-#include "btn_fixed_point.h"
+#include "bn_rect.h"
+#include "bn_fixed_size.h"
+#include "bn_fixed_point.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -91,7 +91,7 @@ public:
      */
     constexpr void set_position(fixed x, fixed y)
     {
-        _position = btn::fixed_point(x, y);
+        _position = bn::fixed_point(x, y);
     }
 
     /**
@@ -117,7 +117,7 @@ public:
      */
     constexpr void set_dimensions(fixed width, fixed height)
     {
-        _dimensions = btn::fixed_size(width, height);
+        _dimensions = bn::fixed_size(width, height);
     }
 
     /**

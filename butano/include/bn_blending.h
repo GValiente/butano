@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_H
-#define BTN_BLENDING_H
+#ifndef BN_BLENDING_H
+#define BN_BLENDING_H
 
 /**
  * @file
- * btn::blending header file.
+ * bn::blending header file.
  *
  * @ingroup blending
  */
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
     class blending_fade_alpha;
     class blending_transparency_attributes;
@@ -26,7 +26,7 @@ namespace btn
  *
  * @ingroup blending
  */
-namespace btn::blending
+namespace bn::blending
 {
     /**
      * @brief Available fade colors.

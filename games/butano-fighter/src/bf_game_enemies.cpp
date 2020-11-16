@@ -13,14 +13,14 @@
 namespace bf::game
 {
 
-enemies::enemies(const stage& stage, const btn::sprite_palette_ptr& damage_palette) :
+enemies::enemies(const stage& stage, const bn::sprite_palette_ptr& damage_palette) :
     _events(stage.enemy_events),
     _boss_type(stage.boss_type),
     _damage_palette(damage_palette)
 {
 }
 
-bool enemies::check_hero(const btn::fixed_rect& hero_rect) const
+bool enemies::check_hero(const bn::fixed_rect& hero_rect) const
 {
     if(_boss)
     {
@@ -40,7 +40,7 @@ bool enemies::check_hero_bullet(const check_hero_bullet_data& data)
     return _grid.check_hero_bullet(data);
 }
 
-void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera)
+void enemies::check_hero_bomb(const bn::point& bomb_center, int bomb_squared_radius, const bn::camera_ptr& camera)
 {
     if(! _boss)
     {
@@ -67,7 +67,7 @@ void enemies::check_hero_bomb(const btn::point& bomb_center, int bomb_squared_ra
     }
 }
 
-bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+bool enemies::hero_should_look_down(const bn::fixed_point& hero_position, bool hero_is_looking_down) const
 {
     if(_boss)
     {
@@ -77,7 +77,7 @@ bool enemies::hero_should_look_down(const btn::fixed_point& hero_position, bool 
     return false;
 }
 
-void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const btn::camera_ptr& camera, hero& hero,
+void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const bn::camera_ptr& camera, hero& hero,
                      enemy_bullets& enemy_bullets, objects& objects, boss_intro& boss_intro, scoreboard& scoreboard,
                      background& background)
 {
@@ -87,7 +87,7 @@ void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const btn::
     }
     else
     {
-        const btn::fixed_point& hero_position = hero.body_position();
+        const bn::fixed_point& hero_position = hero.body_position();
 
         #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
             bool grid_updated = _remove_enemies(hero_position, camera, enemy_bullets);
@@ -120,7 +120,7 @@ void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const btn::
     }
 }
 
-bool enemies::_remove_enemies(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+bool enemies::_remove_enemies(const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
                               enemy_bullets& enemy_bullets)
 {
     auto before_it = _enemies.before_begin();
@@ -150,7 +150,7 @@ bool enemies::_remove_enemies(const btn::fixed_point& hero_position, const btn::
     return grid_updated;
 }
 
-bool enemies::_add_enemies(const btn::camera_ptr& camera)
+bool enemies::_add_enemies(const bn::camera_ptr& camera)
 {
     int events_count = _events.size();
 
@@ -183,9 +183,9 @@ bool enemies::_add_enemies(const btn::camera_ptr& camera)
         return false;
     }
 
-    BTN_ASSERT(! _enemies.full(), "Enemies list is full");
+    BN_ASSERT(! _enemies.full(), "Enemies list is full");
 
-    auto new_enemy_tag = btn::max(int8_t(0), int8_t(_new_enemy_tag));
+    auto new_enemy_tag = bn::max(int8_t(0), int8_t(_new_enemy_tag));
     ++_new_enemy_tag;
 
     const enemy_event& event = _events[_event_index];

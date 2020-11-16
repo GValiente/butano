@@ -6,9 +6,9 @@
 #ifndef SRAM_TESTS_H
 #define SRAM_TESTS_H
 
-#include "btn_sram.h"
-#include "btn_array.h"
-#include "btn_memory.h"
+#include "bn_sram.h"
+#include "bn_array.h"
+#include "bn_memory.h"
 #include "tests.h"
 
 class sram_tests : public tests
@@ -20,30 +20,30 @@ public:
     {
         struct test_data
         {
-            btn::array<char, 32> begin = {};
-            btn::array<char, 31 * 1024> fill = {};
-            btn::array<char, 32> end = {};
+            bn::array<char, 32> begin = {};
+            bn::array<char, 31 * 1024> fill = {};
+            bn::array<char, 32> end = {};
         };
 
-        btn::unique_ptr<test_data> loaded = btn::make_unique<test_data>();
-        btn::sram::read(*loaded);
+        bn::unique_ptr<test_data> loaded = bn::make_unique<test_data>();
+        bn::sram::read(*loaded);
 
-        btn::unique_ptr<test_data> expected = btn::make_unique<test_data>();
-        btn::istring_base begin_istring(expected->begin._data);
-        btn::ostringstream begin_stream(begin_istring);
+        bn::unique_ptr<test_data> expected = bn::make_unique<test_data>();
+        bn::istring_base begin_istring(expected->begin._data);
+        bn::ostringstream begin_stream(begin_istring);
         begin_stream.append("butano SRAM test");
 
-        btn::istring_base end_istring(expected->end._data);
-        btn::ostringstream end_stream(end_istring);
+        bn::istring_base end_istring(expected->end._data);
+        bn::ostringstream end_stream(end_istring);
         end_stream.append("32KB!");
 
         if(loaded->begin == expected->begin)
         {
-            BTN_ASSERT(loaded->end == expected->end, "SRAM end array read failed");
+            BN_ASSERT(loaded->end == expected->end, "SRAM end array read failed");
         }
         else
         {
-            btn::sram::write(*expected);
+            bn::sram::write(*expected);
             _again = true;
         }
     }

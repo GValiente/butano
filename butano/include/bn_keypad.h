@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_KEYPAD_H
-#define BTN_KEYPAD_H
+#ifndef BN_KEYPAD_H
+#define BN_KEYPAD_H
 
 /**
  * @file
- * btn::keypad header file.
+ * bn::keypad header file.
  *
  * @ingroup keypad
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
  * @brief Keypad related functions.
  *
  * @ingroup keypad
  */
-namespace btn::keypad
+namespace bn::keypad
 {
     /**
      * @brief Available key types.

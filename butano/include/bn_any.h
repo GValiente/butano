@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ANY_H
-#define BTN_ANY_H
+#ifndef BN_ANY_H
+#define BN_ANY_H
 
 /**
  * @file
- * btn::iany and btn::any implementation header file.
+ * bn::iany and bn::any implementation header file.
  *
  * @ingroup any
  */
 
 #include <new>
-#include "btn_assert.h"
-#include "btn_limits.h"
-#include "btn_type_id.h"
-#include "btn_utility.h"
-#include "btn_any_fwd.h"
+#include "bn_assert.h"
+#include "bn_limits.h"
+#include "bn_type_id.h"
+#include "bn_utility.h"
+#include "bn_any_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -83,8 +83,8 @@ public:
     template<typename Type>
     iany& operator=(const Type& value)
     {
-        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
-        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+        BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
                    alignof(Type), " - ", _max_alignment);
 
         reset();
@@ -100,8 +100,8 @@ public:
     template<typename Type>
     iany& operator=(Type&& value) noexcept
     {
-        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
-        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+        BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
                    alignof(Type), " - ", _max_alignment);
 
         reset();
@@ -157,7 +157,7 @@ public:
     template<typename Type>
     [[nodiscard]] const Type& value() const
     {
-        BTN_ASSERT(type() == type_id<Type>(), "Invalid value type");
+        BN_ASSERT(type() == type_id<Type>(), "Invalid value type");
 
         return *_value_ptr<Type>();
     }
@@ -168,7 +168,7 @@ public:
     template<typename Type>
     [[nodiscard]] Type& value()
     {
-        BTN_ASSERT(type() == type_id<Type>(), "Invalid value type");
+        BN_ASSERT(type() == type_id<Type>(), "Invalid value type");
 
         return *_value_ptr<Type>();
     }
@@ -205,8 +205,8 @@ public:
     template<typename Type, typename... Args>
     Type& emplace(Args&&... args)
     {
-        BTN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
-        BTN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+        BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
                    alignof(Type), " - ", _max_alignment);
 
         reset();
@@ -242,7 +242,7 @@ public:
             if(other.has_value())
             {
                 base_manager* manager = _manager_ptr();
-                BTN_ASSERT(manager->type() == other._manager_ptr()->type(), "Value type mismatch");
+                BN_ASSERT(manager->type() == other._manager_ptr()->type(), "Value type mismatch");
 
                 manager->swap(*this, other);
             }
@@ -299,9 +299,9 @@ protected:
 
         void copy_to(const iany& this_any, iany& other_any) const final
         {
-            BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
+            BN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
                        sizeof(Type), " - ", other_any.max_size());
-            BTN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
+            BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
                        alignof(Type), " - ", other_any.max_alignment());
 
             if(is_copy_constructible_v<Type>)
@@ -312,15 +312,15 @@ protected:
             }
             else
             {
-                BTN_ERROR("This type can't be copied");
+                BN_ERROR("This type can't be copied");
             }
         }
 
         void move_to(iany& this_any, iany& other_any) const final
         {
-            BTN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
+            BN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
                        sizeof(Type), " - ", other_any.max_size());
-            BTN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
+            BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
                        alignof(Type), " - ", other_any.max_alignment());
 
             if(is_move_constructible_v<Type>)
@@ -332,7 +332,7 @@ protected:
             }
             else
             {
-                BTN_ERROR("This type can't be moved");
+                BN_ERROR("This type can't be moved");
             }
         }
 
@@ -340,11 +340,11 @@ protected:
         {
             if(is_swappable_v<Type>)
             {
-                btn::swap(*this_any._value_ptr<Type>(), *other_any._value_ptr<Type>());
+                bn::swap(*this_any._value_ptr<Type>(), *other_any._value_ptr<Type>());
             }
             else
             {
-                BTN_ERROR("This type can't be swapped");
+                BN_ERROR("This type can't be swapped");
             }
         }
 

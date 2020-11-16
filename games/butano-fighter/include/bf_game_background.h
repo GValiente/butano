@@ -6,14 +6,14 @@
 #ifndef BF_GAME_BACKGROUND_H
 #define BF_GAME_BACKGROUND_H
 
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_blending_actions.h"
-#include "btn_regular_bg_actions.h"
-#include "btn_bg_palette_actions.h"
-#include "btn_bgs_mosaic_actions.h"
-#include "btn_green_swap_actions.h"
-#include "btn_regular_bg_position_hblank_effect_ptr.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_blending_actions.h"
+#include "bn_regular_bg_actions.h"
+#include "bn_bg_palette_actions.h"
+#include "bn_bgs_mosaic_actions.h"
+#include "bn_green_swap_actions.h"
+#include "bn_regular_bg_position_hblank_effect_ptr.h"
 
 namespace bf::game
 {
@@ -24,7 +24,7 @@ class background
 {
 
 public:
-    background(const stage& stage, const btn::camera_ptr& camera);
+    background(const stage& stage, const bn::camera_ptr& camera);
 
     background(const background& other) = delete;
 
@@ -55,18 +55,18 @@ public:
     void update();
 
 private:
-    btn::regular_bg_move_by_action _bottom_move_action;
-    btn::regular_bg_move_by_action _top_move_action;
-    btn::optional<btn::bgs_mosaic_stretch_loop_action> _mosaic_action;
-    btn::optional<btn::blending_transparency_alpha_to_action> _blending_action;
-    btn::fixed _hblank_effect_deltas[btn::display::height()];
-    btn::regular_bg_position_hblank_effect_ptr _hblank_effect;
-    btn::optional<btn::bg_palette_fade_to_action> _bottom_palette_fade_action;
-    btn::optional<btn::bg_palette_fade_to_action> _top_palette_fade_action;
-    btn::optional<btn::bg_palette_grayscale_to_action> _bottom_palette_grayscale_action;
-    btn::optional<btn::bg_palette_inverted_toggle_action> _bottom_palette_inverted_action;
-    btn::optional<btn::bg_palette_inverted_toggle_action> _top_palette_inverted_action;
-    btn::optional<btn::green_swap_toggle_action> _green_swap_action;
+    bn::regular_bg_move_by_action _bottom_move_action;
+    bn::regular_bg_move_by_action _top_move_action;
+    bn::optional<bn::bgs_mosaic_stretch_loop_action> _mosaic_action;
+    bn::optional<bn::blending_transparency_alpha_to_action> _blending_action;
+    bn::fixed _hblank_effect_deltas[bn::display::height()];
+    bn::regular_bg_position_hblank_effect_ptr _hblank_effect;
+    bn::optional<bn::bg_palette_fade_to_action> _bottom_palette_fade_action;
+    bn::optional<bn::bg_palette_fade_to_action> _top_palette_fade_action;
+    bn::optional<bn::bg_palette_grayscale_to_action> _bottom_palette_grayscale_action;
+    bn::optional<bn::bg_palette_inverted_toggle_action> _bottom_palette_inverted_action;
+    bn::optional<bn::bg_palette_inverted_toggle_action> _top_palette_inverted_action;
+    bn::optional<bn::green_swap_toggle_action> _green_swap_action;
     int _fade_frames = 0;
 };
 

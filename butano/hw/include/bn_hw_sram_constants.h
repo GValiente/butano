@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SRAM_CONSTANTS_H
-#define BTN_HW_SRAM_CONSTANTS_H
+#ifndef BN_HW_SRAM_CONSTANTS_H
+#define BN_HW_SRAM_CONSTANTS_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::sram
+namespace bn::hw::sram
 {
     [[nodiscard]] constexpr int size()
     {

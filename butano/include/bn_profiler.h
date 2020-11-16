@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_PROFILER_H
-#define BTN_PROFILER_H
+#ifndef BN_PROFILER_H
+#define BN_PROFILER_H
 
 /**
  * @file
@@ -13,11 +13,11 @@
  * @ingroup profiler
  */
 
-#include "btn_config_doxygen.h"
-#include "btn_config_profiler.h"
+#include "bn_config_doxygen.h"
+#include "bn_config_profiler.h"
 
 /**
- * @def BTN_PROFILER_START
+ * @def BN_PROFILER_START
  *
  * Defines the start of a code block in which elapsed time is going to be measured.
  *
@@ -27,7 +27,7 @@
  */
 
 /**
- * @def BTN_PROFILER_STOP
+ * @def BN_PROFILER_STOP
  *
  * Defines the end of a code block in which elapsed time is going to be measured.
  *
@@ -35,22 +35,22 @@
  */
 
 /**
- * @def BTN_PROFILER_RESET
+ * @def BN_PROFILER_RESET
  *
  * Forgets all elapsed time measures.
  *
  * @ingroup profiler
  */
 
-#if BTN_CFG_PROFILER_ENABLED || BTN_DOXYGEN
-    #include "btn_unordered_map_fwd.h"
+#if BN_CFG_PROFILER_ENABLED || BN_DOXYGEN
+    #include "bn_unordered_map_fwd.h"
 
     /**
      * @brief Profiler related functions.
      *
      * @ingroup profiler
      */
-    namespace btn::profiler
+    namespace bn::profiler
     {
         /**
          * @brief Stops the execution and shows the profiling results on the screen.
@@ -60,7 +60,7 @@
 
     /// @cond DO_NOT_DOCUMENT
 
-    namespace _btn::profiler
+    namespace _bn::profiler
     {
         struct ticks
         {
@@ -68,7 +68,7 @@
             int max = 0;
         };
 
-        using ticks_map = btn::unordered_map<const char*, ticks, BTN_CFG_PROFILER_MAX_ENTRIES * 2>;
+        using ticks_map = bn::unordered_map<const char*, ticks, BN_CFG_PROFILER_MAX_ENTRIES * 2>;
 
         void start(const char* id, unsigned id_hash);
 
@@ -81,26 +81,26 @@
 
     /// @endcond
 
-    #define BTN_PROFILER_START(id) \
-        _btn::profiler::start(id, btn::hash<const char*>()(id))
+    #define BN_PROFILER_START(id) \
+        _bn::profiler::start(id, bn::hash<const char*>()(id))
 
-    #define BTN_PROFILER_STOP() \
-        _btn::profiler::stop()
+    #define BN_PROFILER_STOP() \
+        _bn::profiler::stop()
 
-    #define BTN_PROFILER_RESET() \
-        _btn::profiler::reset()
+    #define BN_PROFILER_RESET() \
+        _bn::profiler::reset()
 #else
-    #define BTN_PROFILER_START(id) \
+    #define BN_PROFILER_START(id) \
         do \
         { \
         } while(false)
 
-    #define BTN_PROFILER_STOP() \
+    #define BN_PROFILER_STOP() \
         do \
         { \
         } while(false)
 
-    #define BTN_PROFILER_RESET() \
+    #define BN_PROFILER_RESET() \
         do \
         { \
         } while(false)

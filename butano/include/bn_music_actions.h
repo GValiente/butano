@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MUSIC_ACTIONS_H
-#define BTN_MUSIC_ACTIONS_H
+#ifndef BN_MUSIC_ACTIONS_H
+#define BN_MUSIC_ACTIONS_H
 
 /**
  * @file
- * btn::music actions header file.
+ * bn::music actions header file.
  *
  * @ingroup music
  * @ingroup action
  */
 
-#include "btn_fixed.h"
-#include "btn_music.h"
-#include "btn_template_actions.h"
+#include "bn_fixed.h"
+#include "bn_music.h"
+#include "bn_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // volume
@@ -73,7 +73,7 @@ public:
     music_volume_to_action(int duration_updates, fixed final_volume) :
         to_template_action(duration_updates, final_volume)
     {
-        BTN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
+        BN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
     }
 
     /**
@@ -109,7 +109,7 @@ public:
     music_volume_loop_action(int duration_updates, fixed final_volume) :
         loop_template_action(duration_updates, final_volume)
     {
-        BTN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
+        BN_ASSERT(final_volume >= 0 && final_volume <= 1, "Invalid final volume: ", final_volume);
     }
 
     /**
@@ -142,7 +142,7 @@ public:
     music_volume_toggle_action(int duration_updates, fixed new_volume) :
         toggle_template_action(duration_updates, new_volume)
     {
-        BTN_ASSERT(new_volume >= 0 && new_volume <= 1, "Invalid new volume: ", new_volume);
+        BN_ASSERT(new_volume >= 0 && new_volume <= 1, "Invalid new volume: ", new_volume);
     }
 
     /**

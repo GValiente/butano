@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_PTR_H
-#define BTN_REGULAR_BG_PTR_H
+#ifndef BN_REGULAR_BG_PTR_H
+#define BN_REGULAR_BG_PTR_H
 
 /**
  * @file
- * btn::regular_bg_ptr header file.
+ * bn::regular_bg_ptr header file.
  *
  * @ingroup regular_bg
  */
 
-#include "btn_utility.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class size;
@@ -141,7 +141,7 @@ public:
      */
     regular_bg_ptr& operator=(regular_bg_ptr&& other) noexcept
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -464,7 +464,7 @@ public:
      */
     void swap(regular_bg_ptr& other)
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
     }
 
     /**
@@ -474,7 +474,7 @@ public:
      */
     friend void swap(regular_bg_ptr& a, regular_bg_ptr& b)
     {
-        btn::swap(a._handle, b._handle);
+        bn::swap(a._handle, b._handle);
     }
 
     /**

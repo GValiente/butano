@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_FIRST_ATTRIBUTES_H
-#define BTN_SPRITE_FIRST_ATTRIBUTES_H
+#ifndef BN_SPRITE_FIRST_ATTRIBUTES_H
+#define BN_SPRITE_FIRST_ATTRIBUTES_H
 
 /**
  * @file
- * btn::sprite_first_attributes header file.
+ * bn::sprite_first_attributes header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_fixed.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -48,7 +48,7 @@ public:
         _window_enabled(window_enabled),
         _visible(visible)
     {
-        BTN_ASSERT(! blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
+        BN_ASSERT(! blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
     }
 
     /**
@@ -98,7 +98,7 @@ public:
      */
     constexpr void set_blending_enabled(bool blending_enabled)
     {
-        BTN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
+        BN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
 
         _blending_enabled = blending_enabled;
     }
@@ -118,7 +118,7 @@ public:
      */
     constexpr void set_window_enabled(bool window_enabled)
     {
-        BTN_ASSERT(! _blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
+        BN_ASSERT(! _blending_enabled || ! window_enabled, "Blending and window can't be enabled at the same time");
 
         _window_enabled = window_enabled;
     }

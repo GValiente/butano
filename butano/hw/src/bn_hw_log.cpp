@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_log.h"
+#include "../include/bn_hw_log.h"
 
-#if BTN_CFG_LOG_ENABLED
-    #include "btn_istring_base.h"
+#if BN_CFG_LOG_ENABLED
+    #include "bn_istring_base.h"
 
-    #if BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_NOCASHGBA
-        #include "../include/btn_hw_tonc.h"
-    #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_MGBA
-        #include "btn_memory.h"
-        #include "btn_algorithm.h"
+    #if BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_NOCASHGBA
+        #include "../include/bn_hw_tonc.h"
+    #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_MGBA
+        #include "bn_memory.h"
+        #include "bn_algorithm.h"
     #else
     #endif
 
-    namespace btn::hw
+    namespace bn::hw
     {
-        #if BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_MGBA
+        #if BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_MGBA
             void log(const istring_base& message)
             {
                 // https://github.com/mgba-emu/mgba/blob/master/opt/libgba/mgba.c
@@ -35,19 +35,19 @@
                 {
                     volatile uint16_t& reg_debug_flags = *reinterpret_cast<uint16_t*>(0x4FFF700);
 
-                    int characters_to_write = btn::min(characters_left, max_characters_per_line);
+                    int characters_to_write = bn::min(characters_left, max_characters_per_line);
                     memory::copy(*message_data, characters_to_write, reg_debug_string);
                     reg_debug_flags = 2 | 0x100;
                     message_data += characters_to_write;
                     characters_left -= characters_to_write;
                 }
             }
-        #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_NOCASHGBA
+        #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_NOCASHGBA
             void log(const istring_base& message)
             {
                 nocash_puts(message.data());
             }
-        #elif BTN_CFG_LOG_BACKEND == BTN_LOG_BACKEND_VBA
+        #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_VBA
             void log(const istring_base& message)
             {
                 asm volatile

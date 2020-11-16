@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_DOUBLE_SIZE_MODE_H
-#define BTN_SPRITE_DOUBLE_SIZE_MODE_H
+#ifndef BN_SPRITE_DOUBLE_SIZE_MODE_H
+#define BN_SPRITE_DOUBLE_SIZE_MODE_H
 
 /**
  * @file
- * btn::sprite_double_size_mode header file.
+ * bn::sprite_double_size_mode header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

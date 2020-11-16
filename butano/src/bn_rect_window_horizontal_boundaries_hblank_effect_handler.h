@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RECT_WINDOW_HORIZONTAL_BOUNDARIES_HBLANK_EFFECT_HANDLER_H
-#define BTN_RECT_WINDOW_HORIZONTAL_BOUNDARIES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_RECT_WINDOW_HORIZONTAL_BOUNDARIES_HBLANK_EFFECT_HANDLER_H
+#define BN_RECT_WINDOW_HORIZONTAL_BOUNDARIES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any.h"
-#include "btn_fixed.h"
-#include "btn_display_manager.h"
-#include "../hw/include/btn_hw_display.h"
+#include "bn_any.h"
+#include "bn_fixed.h"
+#include "bn_display_manager.h"
+#include "../hw/include/bn_hw_display.h"
 
-namespace btn
+namespace bn
 {
 
 class rect_window_horizontal_boundaries_hblank_effect_handler

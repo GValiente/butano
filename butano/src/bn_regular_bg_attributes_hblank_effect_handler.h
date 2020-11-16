@@ -3,16 +3,16 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
-#define BTN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#define BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any.h"
-#include "btn_bg_tiles_ptr.h"
-#include "btn_regular_bg_attributes.h"
-#include "btn_bgs_manager.h"
-#include "../hw/include/btn_hw_bgs.h"
+#include "bn_any.h"
+#include "bn_bg_tiles_ptr.h"
+#include "bn_regular_bg_attributes.h"
+#include "bn_bgs_manager.h"
+#include "../hw/include/bn_hw_bgs.h"
 
-namespace btn
+namespace bn
 {
 
 class regular_bg_attributes_hblank_effect_handler

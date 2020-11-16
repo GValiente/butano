@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GREEN_SWAP_H
-#define BTN_GREEN_SWAP_H
+#ifndef BN_GREEN_SWAP_H
+#define BN_GREEN_SWAP_H
 
 /**
  * @file
- * btn::green_swap header file.
+ * bn::green_swap header file.
  *
  * @ingroup green_swap
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 
 /**
@@ -23,7 +23,7 @@
  *
  * @ingroup green_swap
  */
-namespace btn::green_swap
+namespace bn::green_swap
 {
     /**
      * @brief Indicates if green swap is enabled or not.

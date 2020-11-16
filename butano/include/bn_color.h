@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_COLOR_H
-#define BTN_COLOR_H
+#ifndef BN_COLOR_H
+#define BN_COLOR_H
 
 /**
  * @file
- * btn::color header file.
+ * bn::color header file.
  *
  * @ingroup color
  */
 
-#include "btn_assert.h"
-#include "btn_functional.h"
+#include "bn_assert.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -40,7 +40,7 @@ public:
     constexpr explicit color(int data) :
         _data(uint16_t(data))
     {
-        BTN_ASSERT(data >= 0 && data <= 0x7FFF, "Invalid data: ", data);
+        BN_ASSERT(data >= 0 && data <= 0x7FFF, "Invalid data: ", data);
     }
 
     /**
@@ -52,9 +52,9 @@ public:
     constexpr color(int red, int green, int blue) :
         _data(uint16_t(red + (green << 5) + (blue << 10)))
     {
-        BTN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
-        BTN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
-        BTN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
+        BN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
+        BN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
+        BN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
     }
 
     /**
@@ -70,7 +70,7 @@ public:
      */
     constexpr void set_data(int data)
     {
-        BTN_ASSERT(data >= 0 && data <= 0x7FFF, "Invalid data: ", data);
+        BN_ASSERT(data >= 0 && data <= 0x7FFF, "Invalid data: ", data);
 
         _data = uint16_t(data);
     }
@@ -83,9 +83,9 @@ public:
      */
     constexpr void set_components(int red, int green, int blue)
     {
-        BTN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
-        BTN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
-        BTN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
+        BN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
+        BN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
+        BN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
 
         _data = uint16_t(red + (green << 5) + (blue << 10));
     }
@@ -104,7 +104,7 @@ public:
      */
     constexpr void set_red(int red)
     {
-        BTN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
+        BN_ASSERT(red >= 0 && red <= 31, "Invalid red: ", red);
 
         _data = uint16_t(red + (_data & 0x03E0) + (_data & 0x7C00));
     }
@@ -123,7 +123,7 @@ public:
      */
     constexpr void set_green(int green)
     {
-        BTN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
+        BN_ASSERT(green >= 0 && green <= 31, "Invalid green: ", green);
 
         _data = uint16_t((_data & 0x001F) + (green << 5) + (_data & 0x7C00));
     }
@@ -142,7 +142,7 @@ public:
      */
     constexpr void set_blue(int blue)
     {
-        BTN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
+        BN_ASSERT(blue >= 0 && blue <= 31, "Invalid blue: ", blue);
 
         _data = uint16_t((_data & 0x001F) + (_data & 0x03E0) + (blue << 10));
     }

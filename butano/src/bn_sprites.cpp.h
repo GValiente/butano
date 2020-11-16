@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprites.h"
+#include "bn_sprites.h"
 
-#include "btn_sprites_manager.h"
+#include "bn_sprites_manager.h"
 
-namespace btn::sprites
+namespace bn::sprites
 {
 
 int used_items_count()

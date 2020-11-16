@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprites_manager.h"
+#include "bn_sprites_manager.h"
 
-#include "btn_sorted_sprites.h"
+#include "bn_sorted_sprites.h"
 
-namespace btn::sprites_manager
+namespace bn::sprites_manager
 {
 
 bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites::layer>& layers,
@@ -108,7 +108,7 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
         {
             if(item.on_screen)
             {
-                BTN_ASSERT(BTN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
+                BN_ASSERT(BN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
                            visible_items_count <= hw::sprites::count(), "Too much sprites on screen");
 
                 hw::sprites::copy_handle(item.handle, handles[visible_items_count]);

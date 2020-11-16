@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_PALETTES_H
-#define BTN_HW_PALETTES_H
+#ifndef BN_HW_PALETTES_H
+#define BN_HW_PALETTES_H
 
-#include "btn_color.h"
-#include "btn_memory.h"
-#include "btn_hw_tonc.h"
+#include "bn_color.h"
+#include "bn_memory.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::palettes
+namespace bn::hw::palettes
 {
     [[nodiscard]] constexpr int count()
     {

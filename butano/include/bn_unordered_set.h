@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_UNORDERED_SET_H
-#define BTN_UNORDERED_SET_H
+#ifndef BN_UNORDERED_SET_H
+#define BN_UNORDERED_SET_H
 
 /**
  * @file
- * btn::iunordered_set and btn::unordered_set implementation header file.
+ * bn::iunordered_set and bn::unordered_set implementation header file.
  *
  * @ingroup unordered_set
  */
 
 #include <new>
-#include "btn_memory.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_power_of_two.h"
-#include "btn_unordered_set_fwd.h"
+#include "bn_memory.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_power_of_two.h"
+#include "bn_unordered_set_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Key, typename KeyHash, typename KeyEqual>
@@ -112,7 +112,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage[_index];
         }
@@ -122,7 +122,7 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage[_index];
         }
@@ -132,7 +132,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage + _index;
         }
@@ -142,7 +142,7 @@ public:
          */
         pointer operator->()
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage + _index;
         }
@@ -264,7 +264,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage[_index];
         }
@@ -274,7 +274,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_set->_allocated[_index], "Index is not allocated: ", _index);
 
             return _set->_storage + _index;
         }
@@ -315,8 +315,8 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     iunordered_set(const iunordered_set& other) = delete;
 
@@ -329,7 +329,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -347,7 +347,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -662,7 +662,7 @@ public:
             }
 
             current_index = _index(current_index + 1);
-            BTN_ASSERT(current_index != index, "All indices are allocated");
+            BN_ASSERT(current_index != index, "All indices are allocated");
         }
 
         ::new(storage + current_index) value_type(move(value));
@@ -682,7 +682,7 @@ public:
     {
         bool* allocated = _allocated;
         size_type index = position._index;
-        BTN_ASSERT(allocated[index], "Index is not allocated: ", index);
+        BN_ASSERT(allocated[index], "Index is not allocated: ", index);
 
         pointer storage = _storage;
         storage[index].~value_type();
@@ -827,7 +827,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+            BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
                        "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
@@ -906,7 +906,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+            BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
                        "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
@@ -922,7 +922,7 @@ public:
                 {
                     if(allocated[index])
                     {
-                        btn::swap(storage[index], other_storage[index]);
+                        bn::swap(storage[index], other_storage[index]);
                     }
                     else
                     {
@@ -944,9 +944,9 @@ public:
                 }
             }
 
-            btn::swap(_size, other._size);
-            btn::swap(_first_valid_index, other._first_valid_index);
-            btn::swap(_last_valid_index, other._last_valid_index);
+            bn::swap(_size, other._size);
+            bn::swap(_first_valid_index, other._first_valid_index);
+            bn::swap(_last_valid_index, other._last_valid_index);
         }
     }
 
@@ -1066,7 +1066,7 @@ protected:
         _max_size_minus_one(max_size - 1),
         _first_valid_index(max_size)
     {
-        BTN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
+        BN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
 
     /// @endcond
@@ -1191,7 +1191,7 @@ public:
     unordered_set(const iunordered_set<Key, KeyHash, KeyEqual>& other) :
         unordered_set()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -1203,7 +1203,7 @@ public:
     unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
         unordered_set()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -1249,7 +1249,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1267,7 +1267,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

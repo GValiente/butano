@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_KEYPAD_MANAGER_H
-#define BTN_KEYPAD_MANAGER_H
+#ifndef BN_KEYPAD_MANAGER_H
+#define BN_KEYPAD_MANAGER_H
 
-#include "btn_keypad.h"
-#include "btn_span_fwd.h"
+#include "bn_keypad.h"
+#include "bn_span_fwd.h"
 
-namespace btn
+namespace bn
 {
     class string_view;
 }
 
-namespace btn::keypad_manager
+namespace bn::keypad_manager
 {
     using key_type = keypad::key_type;
 

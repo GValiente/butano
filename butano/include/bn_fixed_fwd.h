@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FIXED_FWD_H
-#define BTN_FIXED_FWD_H
+#ifndef BN_FIXED_FWD_H
+#define BN_FIXED_FWD_H
 
 /**
  * @file
- * btn::fixed_t and btn::fixed declaration header file.
+ * bn::fixed_t and bn::fixed declaration header file.
  *
  * @ingroup math
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

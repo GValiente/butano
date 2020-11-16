@@ -3,60 +3,60 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_core.h"
+#include "bn_core.h"
 
-#include "btn_span.h"
-#include "btn_fixed.h"
-#include "btn_timer.h"
-#include "btn_string.h"
-#include "btn_keypad.h"
-#include "btn_timers.h"
-#include "btn_profiler.h"
-#include "btn_string_view.h"
-#include "btn_bgs_manager.h"
-#include "btn_audio_manager.h"
-#include "btn_keypad_manager.h"
-#include "btn_memory_manager.h"
-#include "btn_display_manager.h"
-#include "btn_sprites_manager.h"
-#include "btn_cameras_manager.h"
-#include "btn_palettes_manager.h"
-#include "btn_bg_blocks_manager.h"
-#include "btn_sprite_tiles_manager.h"
-#include "btn_hblank_effects_manager.h"
-#include "../hw/include/btn_hw_irq.h"
-#include "../hw/include/btn_hw_core.h"
-#include "../hw/include/btn_hw_sram.h"
-#include "../hw/include/btn_hw_timer.h"
-#include "../hw/include/btn_hw_game_pak.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
+#include "bn_timer.h"
+#include "bn_string.h"
+#include "bn_keypad.h"
+#include "bn_timers.h"
+#include "bn_profiler.h"
+#include "bn_string_view.h"
+#include "bn_bgs_manager.h"
+#include "bn_audio_manager.h"
+#include "bn_keypad_manager.h"
+#include "bn_memory_manager.h"
+#include "bn_display_manager.h"
+#include "bn_sprites_manager.h"
+#include "bn_cameras_manager.h"
+#include "bn_palettes_manager.h"
+#include "bn_bg_blocks_manager.h"
+#include "bn_sprite_tiles_manager.h"
+#include "bn_hblank_effects_manager.h"
+#include "../hw/include/bn_hw_irq.h"
+#include "../hw/include/bn_hw_core.h"
+#include "../hw/include/bn_hw_sram.h"
+#include "../hw/include/bn_hw_timer.h"
+#include "../hw/include/bn_hw_game_pak.h"
 
-#if BTN_CFG_ASSERT_ENABLED
-    #include "btn_string_view.h"
+#if BN_CFG_ASSERT_ENABLED
+    #include "bn_string_view.h"
 #endif
 
-#if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
-    #include "../hw/include/btn_hw_show.h"
+#if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
+    #include "../hw/include/bn_hw_show.h"
 #endif
 
-#if BTN_CFG_PROFILER_ENABLED && BTN_CFG_PROFILER_LOG_ENGINE
-    #define BTN_PROFILER_ENGINE_START(id) \
-        BTN_PROFILER_START(id)
+#if BN_CFG_PROFILER_ENABLED && BN_CFG_PROFILER_LOG_ENGINE
+    #define BN_PROFILER_ENGINE_START(id) \
+        BN_PROFILER_START(id)
 
-    #define BTN_PROFILER_ENGINE_STOP() \
-        BTN_PROFILER_STOP()
+    #define BN_PROFILER_ENGINE_STOP() \
+        BN_PROFILER_STOP()
 #else
-    #define BTN_PROFILER_ENGINE_START(id) \
+    #define BN_PROFILER_ENGINE_START(id) \
         do \
         { \
         } while(false)
 
-    #define BTN_PROFILER_ENGINE_STOP() \
+    #define BN_PROFILER_ENGINE_STOP() \
         do \
         { \
         } while(false)
 #endif
 
-namespace btn::core
+namespace bn::core
 {
 
 namespace
@@ -70,7 +70,7 @@ namespace
         int vblank_usage_ticks = 0;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
     void enable()
     {
@@ -151,95 +151,95 @@ void init(const string_view& keypad_commands)
     keypad_manager::update();
 
     // Reset profiler:
-    BTN_PROFILER_RESET();
+    BN_PROFILER_RESET();
 }
 
 void update()
 {
-    BTN_PROFILER_ENGINE_START("eng_cameras_update");
+    BN_PROFILER_ENGINE_START("eng_cameras_update");
     cameras_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprites_update");
+    BN_PROFILER_ENGINE_START("eng_sprites_update");
     sprites_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_spr_tiles_update");
+    BN_PROFILER_ENGINE_START("eng_spr_tiles_update");
     sprite_tiles_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_bgs_update");
+    BN_PROFILER_ENGINE_START("eng_bgs_update");
     bgs_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_bg_blocks_update");
+    BN_PROFILER_ENGINE_START("eng_bg_blocks_update");
     bg_blocks_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_palettes_update");
+    BN_PROFILER_ENGINE_START("eng_palettes_update");
     palettes_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_display_update");
+    BN_PROFILER_ENGINE_START("eng_display_update");
     display_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_hblank_fx_update");
+    BN_PROFILER_ENGINE_START("eng_hblank_fx_update");
     hblank_effects_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    BN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
     audio_manager::disable_vblank_handler();
     hw::core::wait_for_vblank();
 
-    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    BN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage_timer.restart();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
+    BN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
     hblank_effects_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_display_commit");
+    BN_PROFILER_ENGINE_START("eng_display_commit");
     display_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_sprites_commit");
+    BN_PROFILER_ENGINE_START("eng_sprites_commit");
     sprites_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_bgs_commit");
+    BN_PROFILER_ENGINE_START("eng_bgs_commit");
     bgs_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_palettes_commit");
+    BN_PROFILER_ENGINE_START("eng_palettes_commit");
     palettes_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
+    BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
     sprite_tiles_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
+    BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
     bg_blocks_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    BN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
-    BTN_PROFILER_ENGINE_START("eng_audio_commit");
+    BN_PROFILER_ENGINE_START("eng_audio_commit");
     audio_manager::commit();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
     audio_manager::enable_vblank_handler();
 
-    BTN_PROFILER_ENGINE_START("eng_keypad");
+    BN_PROFILER_ENGINE_START("eng_keypad");
     keypad_manager::update();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 }
 
 void sleep(keypad::key_type wake_up_key)
@@ -250,7 +250,7 @@ void sleep(keypad::key_type wake_up_key)
 
 void sleep(const span<const keypad::key_type>& wake_up_keys)
 {
-    BTN_ASSERT(! wake_up_keys.empty(), "There's no wake up keys");
+    BN_ASSERT(! wake_up_keys.empty(), "There's no wake up keys");
 
     // Wait until a wake up key is not pressed:
     while(true)
@@ -302,9 +302,9 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
     hw::core::wait_for_vblank();
 
     // Restart CPU usage timer:
-    BTN_PROFILER_ENGINE_START("eng_cpu_usage");
+    BN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage_timer.restart();
-    BTN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_STOP();
 
     // Wake up display:
     display_manager::wake_up();
@@ -328,36 +328,36 @@ fixed vblank_usage()
 
 }
 
-#if BTN_CFG_ASSERT_ENABLED
-    namespace _btn::assert
+#if BN_CFG_ASSERT_ENABLED
+    namespace _bn::assert
     {
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
-            btn::core::stop(false);
-            btn::hw::show::error(condition, file_name, function, line, message);
+            bn::core::stop(false);
+            bn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)
             {
-                btn::hw::core::wait_for_vblank();
+                bn::hw::core::wait_for_vblank();
             }
         }
 
         void show(const char* condition, const char* file_name, const char* function, int line,
-                  const btn::istring_base& message)
+                  const bn::istring_base& message)
         {
-            btn::core::stop(false);
-            btn::hw::show::error(condition, file_name, function, line, message);
+            bn::core::stop(false);
+            bn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)
             {
-                btn::hw::core::wait_for_vblank();
+                bn::hw::core::wait_for_vblank();
             }
         }
     }
 #endif
 
-#if BTN_CFG_PROFILER_ENABLED
-    namespace btn::profiler
+#if BN_CFG_PROFILER_ENABLED
+    namespace bn::profiler
     {
         void show()
         {

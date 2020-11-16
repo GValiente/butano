@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_MEMORY_H
-#define BTN_CONFIG_MEMORY_H
+#ifndef BN_CONFIG_MEMORY_H
+#define BN_CONFIG_MEMORY_H
 
 /**
  * @file
@@ -13,18 +13,18 @@
  * @ingroup memory
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
+ * @def BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
  *
  * Specifies the maximum number of memory blocks that can be allocated in EWRAM with
- * btn::malloc, btn::memory::ewram_alloc and the new operator.
+ * bn::malloc, bn::memory::ewram_alloc and the new operator.
  *
  * @ingroup memory
  */
-#ifndef BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
-    #define BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS 16
+#ifndef BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
+    #define BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS 16
 #endif
 
 #endif

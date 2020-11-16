@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bg_palettes_transparent_color_hblank_effect_ptr.h"
+#include "bn_bg_palettes_transparent_color_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_color.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_color.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 bg_palettes_transparent_color_hblank_effect_ptr bg_palettes_transparent_color_hblank_effect_ptr::create(

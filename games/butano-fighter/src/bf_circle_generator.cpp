@@ -5,21 +5,21 @@
 
 #include "bf_circle_generator.h"
 
-#include "btn_span.h"
-#include "btn_cstring.h"
-#include "btn_display.h"
+#include "bn_span.h"
+#include "bn_cstring.h"
+#include "bn_display.h"
 
 namespace bf
 {
 
-void circle_generator::set_radius(btn::fixed radius)
+void circle_generator::set_radius(bn::fixed radius)
 {
-    BTN_ASSERT(radius >= 0, "Invalid radius: ", radius);
+    BN_ASSERT(radius >= 0, "Invalid radius: ", radius);
 
     _radius = radius;
 }
 
-void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> values) const
+void circle_generator::generate(bn::span<bn::pair<bn::fixed, bn::fixed>> values) const
 {
     // https://www.coranac.com/tonc/text/dma.htm#sec-demo
 
@@ -30,13 +30,13 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
         return;
     }
 
-    btn::fixed y0 = (btn::display::height() / 2) + _origin_y;
-    btn::fixed x = 0;
-    btn::fixed y = _radius;
-    btn::fixed d = 1 - _radius;
+    bn::fixed y0 = (bn::display::height() / 2) + _origin_y;
+    bn::fixed x = 0;
+    bn::fixed y = _radius;
+    bn::fixed d = 1 - _radius;
 
-    btn::pair<btn::fixed, btn::fixed>* values_data = values.data();
-    btn::memclear(values_data, unsigned(values_count) * sizeof(btn::pair<btn::fixed, btn::fixed>));
+    bn::pair<bn::fixed, bn::fixed>* values_data = values.data();
+    bn::memclear(values_data, unsigned(values_count) * sizeof(bn::pair<bn::fixed, bn::fixed>));
 
     while(y >= x)
     {
@@ -45,12 +45,12 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
 
         if(top >= 0 && top < values_count)
         {
-            values_data[top] = btn::make_pair(-y, y);
+            values_data[top] = bn::make_pair(-y, y);
         }
 
         if(bottom >= 0 && bottom < values_count)
         {
-            values_data[bottom] = btn::make_pair(-y, y);
+            values_data[bottom] = bn::make_pair(-y, y);
         }
 
         if(d >= 0)
@@ -60,12 +60,12 @@ void circle_generator::generate(btn::span<btn::pair<btn::fixed, btn::fixed>> val
 
             if(top >= 0 && top < values_count)
             {
-                values_data[top] = btn::make_pair(-x, x);
+                values_data[top] = bn::make_pair(-x, x);
             }
 
             if(bottom >= 0 && bottom < values_count)
             {
-                values_data[bottom] = btn::make_pair(-x, x);
+                values_data[bottom] = bn::make_pair(-x, x);
             }
 
             y -= 1;

@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_TIMER_H
-#define BTN_HW_TIMER_H
+#ifndef BN_HW_TIMER_H
+#define BN_HW_TIMER_H
 
-#include "btn_hw_tonc.h"
-#include "btn_hw_timer_constants.h"
+#include "bn_hw_tonc.h"
+#include "bn_hw_timer_constants.h"
 
-namespace btn::hw::timer
+namespace bn::hw::timer
 {
     inline void init()
     {
@@ -25,7 +25,7 @@ namespace btn::hw::timer
 
     [[nodiscard]] inline unsigned ticks()
     {
-        BTN_BARRIER;
+        BN_BARRIER;
 
         return (unsigned(REG_TM3D) << 16) | REG_TM2D;
     }

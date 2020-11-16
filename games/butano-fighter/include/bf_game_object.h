@@ -6,12 +6,12 @@
 #ifndef BF_GAME_OBJECT_H
 #define BF_GAME_OBJECT_H
 
-#include "btn_sprite_ptr.h"
-#include "btn_fixed_size.h"
-#include "btn_fixed_point.h"
-#include "btn_sprite_palette_ptr.h"
+#include "bn_sprite_ptr.h"
+#include "bn_fixed_size.h"
+#include "bn_fixed_point.h"
+#include "bn_sprite_palette_ptr.h"
 
-namespace btn
+namespace bn
 {
     class fixed_rect;
 }
@@ -24,35 +24,35 @@ class object
 
 public:
     [[nodiscard]] static object create_hero_weapon(
-            const btn::fixed_point& position, int hero_level, const btn::sprite_palette_ptr& flash_palette,
-            const btn::camera_ptr& camera);
+            const bn::fixed_point& position, int hero_level, const bn::sprite_palette_ptr& flash_palette,
+            const bn::camera_ptr& camera);
 
     [[nodiscard]] static object create_hero_bomb(
-            const btn::fixed_point& position, const btn::sprite_palette_ptr& flash_palette,
-            const btn::camera_ptr& camera);
+            const bn::fixed_point& position, const bn::sprite_palette_ptr& flash_palette,
+            const bn::camera_ptr& camera);
 
-    [[nodiscard]] const btn::fixed_point& position() const
+    [[nodiscard]] const bn::fixed_point& position() const
     {
         return _position;
     }
 
-    [[nodiscard]] bool intersects_hero(const btn::fixed_rect& hero_rect) const;
+    [[nodiscard]] bool intersects_hero(const bn::fixed_rect& hero_rect) const;
 
     [[nodiscard]] int experience(int hero_level) const;
 
     void update();
 
 private:
-    btn::fixed_point _position;
-    btn::fixed_size _dimensions;
-    btn::fixed_point _delta_position;
-    btn::sprite_ptr _sprite;
-    btn::sprite_palette_ptr _sprite_palette;
-    btn::sprite_palette_ptr _flash_palette;
+    bn::fixed_point _position;
+    bn::fixed_size _dimensions;
+    bn::fixed_point _delta_position;
+    bn::sprite_ptr _sprite;
+    bn::sprite_palette_ptr _sprite_palette;
+    bn::sprite_palette_ptr _flash_palette;
     int _flash_palette_counter;
 
-    object(btn::sprite_ptr&& sprite, const btn::fixed_point& position, const btn::fixed_size& dimensions,
-           const btn::fixed_point& delta_position, const btn::sprite_palette_ptr& flash_palette);
+    object(bn::sprite_ptr&& sprite, const bn::fixed_point& position, const bn::fixed_size& dimensions,
+           const bn::fixed_point& delta_position, const bn::sprite_palette_ptr& flash_palette);
 };
 
 }

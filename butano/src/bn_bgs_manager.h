@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BGS_MANAGER_H
-#define BTN_BGS_MANAGER_H
+#ifndef BN_BGS_MANAGER_H
+#define BN_BGS_MANAGER_H
 
-#include "btn_limits.h"
-#include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
+#include "bn_limits.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class size;

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_POWER_OF_TWO_H
-#define BTN_POWER_OF_TWO_H
+#ifndef BN_POWER_OF_TWO_H
+#define BN_POWER_OF_TWO_H
 
 /**
  * @file
- * btn::power_of_two header file.
+ * bn::power_of_two header file.
  *
  * @ingroup math
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

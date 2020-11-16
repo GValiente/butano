@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_SECOND_ATTRIBUTES_LAST_VALUE_H
-#define BTN_SPRITE_SECOND_ATTRIBUTES_LAST_VALUE_H
+#ifndef BN_SPRITE_SECOND_ATTRIBUTES_LAST_VALUE_H
+#define BN_SPRITE_SECOND_ATTRIBUTES_LAST_VALUE_H
 
-#include "btn_point.h"
-#include "btn_sprite_shape_size.h"
-#include "btn_sprites_manager.h"
+#include "bn_point.h"
+#include "bn_sprite_shape_size.h"
+#include "bn_sprites_manager.h"
 
-namespace btn
+namespace bn
 {
 
 class alignas(int) sprite_second_attributes_last_value

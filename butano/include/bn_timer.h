@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TIMER_H
-#define BTN_TIMER_H
+#ifndef BN_TIMER_H
+#define BN_TIMER_H
 
 /**
  * @file
- * btn::timer header file.
+ * bn::timer header file.
  *
  * @ingroup timer
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

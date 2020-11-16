@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MATH_H
-#define BTN_MATH_H
+#ifndef BN_MATH_H
+#define BN_MATH_H
 
 /**
  * @file
@@ -13,13 +13,13 @@
  * @ingroup math
  */
 
-#include "btn_fixed.h"
-#include "btn_sin_lut.h"
-#include "btn_rule_of_three_approximation.h"
+#include "bn_fixed.h"
+#include "bn_sin_lut.h"
+#include "bn_rule_of_three_approximation.h"
 
 /// @cond DO_NOT_DOCUMENT
 
-namespace _btn
+namespace _bn
 {
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt_impl(Type value, Type current_result, Type previous_result)
@@ -34,15 +34,15 @@ namespace _btn
     }
 
     template<>
-    [[nodiscard]] constexpr btn::fixed newton_raphson_sqrt_impl(btn::fixed value, btn::fixed current_result,
-                                                                btn::fixed previous_result)
+    [[nodiscard]] constexpr bn::fixed newton_raphson_sqrt_impl(bn::fixed value, bn::fixed current_result,
+                                                                bn::fixed previous_result)
     {
         if(current_result == previous_result)
         {
             return current_result;
         }
 
-        btn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
+        bn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
         return newton_raphson_sqrt_impl(value, new_result, current_result);
     }
 
@@ -52,7 +52,7 @@ namespace _btn
 /// @endcond
 
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Returns the absolute value of the given value.
@@ -72,15 +72,15 @@ namespace btn
      */
     [[nodiscard]] constexpr int sqrt(int value)
     {
-        BTN_ASSERT(value >= 0, "Invalid value: ", value);
+        BN_ASSERT(value >= 0, "Invalid value: ", value);
 
         if(is_constant_evaluated())
         {
-            return _btn::newton_raphson_sqrt_impl(value, value, 0);
+            return _bn::newton_raphson_sqrt_impl(value, value, 0);
         }
         else
         {
-            return _btn::sqrt_impl(value);
+            return _bn::sqrt_impl(value);
         }
     }
 
@@ -114,9 +114,9 @@ namespace btn
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)
     {
-        BTN_ASSERT(value >= 0, "Invalid value: ", value);
+        BN_ASSERT(value >= 0, "Invalid value: ", value);
 
-        return _btn::newton_raphson_sqrt_impl(value, value, Type(0));
+        return _bn::newton_raphson_sqrt_impl(value, value, Type(0));
     }
 
     /**
@@ -128,7 +128,7 @@ namespace btn
      */
     [[nodiscard]] constexpr fixed degrees_sin(fixed degrees_angle)
     {
-        BTN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]: ", degrees_angle);
+        BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]: ", degrees_angle);
 
         constexpr rule_of_three_approximation rule_of_three(360, 512);
         fixed lut_angle = rule_of_three.calculate(degrees_angle);
@@ -144,7 +144,7 @@ namespace btn
      */
     [[nodiscard]] constexpr fixed lut_sin(int lut_angle)
     {
-        BTN_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]: ", lut_angle);
+        BN_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]: ", lut_angle);
 
         return fixed::from_data(sin_lut[lut_angle]);
     }
@@ -158,7 +158,7 @@ namespace btn
      */
     [[nodiscard]] constexpr fixed degrees_cos(fixed degrees_angle)
     {
-        BTN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]: ", degrees_angle);
+        BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]: ", degrees_angle);
 
         constexpr rule_of_three_approximation rule_of_three(360, 512);
         fixed lut_angle = rule_of_three.calculate(degrees_angle);
@@ -174,7 +174,7 @@ namespace btn
      */
     [[nodiscard]] constexpr fixed lut_cos(int lut_angle)
     {
-        BTN_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]: ", lut_angle);
+        BN_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]: ", lut_angle);
 
         return fixed::from_data(sin_lut[(lut_angle + 128) & 0x1FF]);
     }

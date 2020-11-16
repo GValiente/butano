@@ -6,8 +6,8 @@ void polygon_sprite::_draw_not_horizontal_line(bool left, int x0, int y0, int x1
 
     if(y0 > y1)
     {
-        btn::swap(x0, x1);
-        btn::swap(y0, y1);
+        bn::swap(x0, x1);
+        bn::swap(y0, y1);
     }
 
     hline* current_hline = hlines + y0;
@@ -251,11 +251,11 @@ void polygon_sprite::_draw_right_line_octant_1(int x0, int y0, int delta_x, int 
     }
 }
 
-void polygon_sprite::_setup_attributes(const hline* hlines, btn::fixed* vertical_values, btn::fixed* horizontal_values)
+void polygon_sprite::_setup_attributes(const hline* hlines, bn::fixed* vertical_values, bn::fixed* horizontal_values)
 {
-    btn::fixed invalid_y = btn::display::height();
+    bn::fixed invalid_y = bn::display::height();
 
-    for(int index = 0; index < btn::display::height(); ++index)
+    for(int index = 0; index < bn::display::height(); ++index)
     {
         const hline& hline = hlines[index];
         int ixl = hline.ixl;

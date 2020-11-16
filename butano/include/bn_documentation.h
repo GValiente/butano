@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_DOCUMENTATION_H
-#define BTN_DOCUMENTATION_H
+#ifndef BN_DOCUMENTATION_H
+#define BN_DOCUMENTATION_H
 
 // NAMESPACE
 
 /**
- * @namespace btn
+ * @namespace bn
  * @brief Main butano namespace.
  */
 
@@ -191,9 +191,9 @@
  *
  * GBA keys handling.
  *
- * Keypad logging can be enabled or disabled by overloading the definition of @a BTN_CFG_KEYPAD_LOG_ENABLED @a .
+ * Keypad logging can be enabled or disabled by overloading the definition of @a BN_CFG_KEYPAD_LOG_ENABLED @a .
  *
- * Recorded key presses can be replayed later by passing the log to @a btn::core::init() @a .
+ * Recorded key presses can be replayed later by passing the log to @a bn::core::init() @a .
  */
 
 /**
@@ -271,7 +271,7 @@
  *
  * Butano's assert system.
  *
- * It can be enabled or disabled by overloading the definition of @a BTN_CFG_ASSERT_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @a BN_CFG_ASSERT_ENABLED @a .
  *
  * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns `true`).
  */
@@ -283,10 +283,10 @@
  *
  * It allows to print information on the console of multiple emulators.
  *
- * It can be enabled or disabled by overloading the definition of @a BTN_CFG_LOG_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @a BN_CFG_LOG_ENABLED @a .
  *
  * It supports printing on only one emulator at once.
- * The supported emulator can be changed by overloading the definition of @a BTN_CFG_LOG_BACKEND @a .
+ * The supported emulator can be changed by overloading the definition of @a BN_CFG_LOG_BACKEND @a .
  */
 
 /**
@@ -296,7 +296,7 @@
  *
  * It allows to measure elapsed time between code blocks defined by the user.
  *
- * It can be enabled or disabled by overloading the definition of @a BTN_CFG_PROFILER_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @a BN_CFG_PROFILER_ENABLED @a .
  */
 
 /**
@@ -353,7 +353,7 @@
  *
  * A std::list like container that doesn't contain values, it just references them.
  *
- * To be part of an intrusive list, values must inherit @a btn::intrusive_list_node_type @a class.
+ * To be part of an intrusive list, values must inherit @a bn::intrusive_list_node_type @a class.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -375,7 +375,7 @@
  *
  * A std::forward_list like container that doesn't contain values, it just references them.
  *
- * To be part of an intrusive forward list, values must inherit @a btn::intrusive_forward_list_node_type @a class.
+ * To be part of an intrusive forward list, values must inherit @a bn::intrusive_forward_list_node_type @a class.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -851,7 +851,7 @@
  * @subsection import_sprite Sprites
  *
  * An image file can contain multiple sprite images.
- * If it only contains one sprite image, its size must be one of the specified by @ref btn::sprite_shape_size.
+ * If it only contains one sprite image, its size must be one of the specified by @ref bn::sprite_shape_size.
  *
  * Multiple sprite images are allowed by layering them down on the vertical axis:
  *
@@ -872,11 +872,11 @@
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
  *
  * If the conversion process has finished successfully,
- * a btn::sprite_item should have been generated in the `build` folder.
+ * a bn::sprite_item should have been generated in the `build` folder.
  * You can use this item to create a sprite with only one line of C++ code:
  *
  * @code{.cpp}
- * btn::sprite_ptr sprite = btn::sprite_items::image.create_sprite(0, 0);
+ * bn::sprite_ptr sprite = bn::sprite_items::image.create_sprite(0, 0);
  * @endcode
  *
  *
@@ -906,11 +906,11 @@
  * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
  *
  * If the conversion process has finished successfully,
- * a btn::regular_bg_item should have been generated in the `build` folder.
+ * a bn::regular_bg_item should have been generated in the `build` folder.
  * You can use this item to create a regular background with only one line of C++ code:
  *
  * @code{.cpp}
- * btn::regular_bg_ptr regular_bg = btn::regular_bg_items::image.create_bg(0, 0);
+ * bn::regular_bg_ptr regular_bg = bn::regular_bg_items::image.create_bg(0, 0);
  * @endcode
  *
  *
@@ -935,17 +935,17 @@
  * The required format for music are module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions).
  *
  * By default Butano supports up to 16 music channels,
- * but this limit can be increased by overloading the definition of @ref BTN_CFG_AUDIO_MAX_MUSIC_CHANNELS.
+ * but this limit can be increased by overloading the definition of @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS.
  *
  * However, if it is possible don't do this, don't make the poor GBA suffer.
  *
  * If the conversion process has finished successfully,
- * a bunch of btn::music_item objects under the `btn::music_items` namespace
+ * a bunch of bn::music_item objects under the `bn::music_items` namespace
  * should have been generated in the `build` folder for all music files.
  * You can use these items to play music with only one line of C++ code:
  *
  * @code{.cpp}
- * btn::music_items::song.play();
+ * bn::music_items::song.play();
  * @endcode
  *
  *
@@ -957,12 +957,12 @@
  * The recommended quality for sound effects is 8-bits 22050 Hz.
  *
  * If the conversion process has finished successfully,
- * a bunch of btn::sound_item objects under the `btn::sound_items` namespace
+ * a bunch of bn::sound_item objects under the `bn::sound_items` namespace
  * should have been generated in the `build` folder for all sound files.
  * You can use these items to play sound effects with only one line of C++ code:
  *
  * @code{.cpp}
- * btn::sound_items::sfx.play();
+ * bn::sound_items::sfx.play();
  * @endcode
  */
 
@@ -975,14 +975,15 @@
  *
  * @section changelog_0_4_0 0.4.0 (next release)
  *
- * * Background tiles manager status can be printed in the log with btn::bg_tiles::log_status().
+ * * `btn` renamed to `bn`. No more API breaks will be made between minor releases after 1.0.0, promise.
+ * * Background tiles manager status can be printed in the log with bn::bg_tiles::log_status().
  *   This is done automatically when a non-optional background tiles allocation fails too.
- * * Background regular maps manager status can be printed in the log with btn::bg_maps::log_status().
+ * * Background regular maps manager status can be printed in the log with bn::bg_maps::log_status().
  *   This is done automatically when a non-optional regular background map allocation fails too.
- * * Sprite tiles manager status can be printed in the log with btn::sprite_tiles::log_status().
+ * * Sprite tiles manager status can be printed in the log with bn::sprite_tiles::log_status().
  *   This is done automatically when a non-optional sprite tiles allocation fails too.
  * * Color palettes managers status can be printed in the log with
- *   btn::bg_palettes::log_status() and btn::sprite_palettes::log_status().
+ *   bn::bg_palettes::log_status() and bn::sprite_palettes::log_status().
  *   This is done automatically when a non-optional color palette allocation fails too.
  * * Setters with an optional parameter added to some classes.
  * * Optional components documentation fixed.
@@ -1009,17 +1010,17 @@
  */
 
 
-#ifdef BTN_DOXYGEN
-    #ifndef BTN_CFG_ASSERT_ENABLED
-        #define BTN_CFG_ASSERT_ENABLED true
+#ifdef BN_DOXYGEN
+    #ifndef BN_CFG_ASSERT_ENABLED
+        #define BN_CFG_ASSERT_ENABLED true
     #endif
 
-    #ifndef BTN_CFG_LOG_ENABLED
-        #define BTN_CFG_LOG_ENABLED true
+    #ifndef BN_CFG_LOG_ENABLED
+        #define BN_CFG_LOG_ENABLED true
     #endif
 
-    #ifndef BTN_CFG_PROFILER_ENABLED
-        #define BTN_CFG_PROFILER_ENABLED true
+    #ifndef BN_CFG_PROFILER_ENABLED
+        #define BN_CFG_PROFILER_ENABLED true
     #endif
 #endif
 

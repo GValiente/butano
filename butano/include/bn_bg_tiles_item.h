@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_TILES_ITEM_H
-#define BTN_BG_TILES_ITEM_H
+#ifndef BN_BG_TILES_ITEM_H
+#define BN_BG_TILES_ITEM_H
 
 /**
  * @file
- * btn::bg_tiles_item header file.
+ * bn::bg_tiles_item header file.
  *
  * @ingroup bg
  * @ingroup tile
  * @ingroup tool
  */
 
-#include "btn_span.h"
-#include "btn_tile.h"
-#include "btn_optional_fwd.h"
-#include "btn_palette_bpp_mode.h"
+#include "bn_span.h"
+#include "bn_tile.h"
+#include "bn_optional_fwd.h"
+#include "bn_palette_bpp_mode.h"
 
-namespace btn
+namespace bn
 {
 
 class bg_tiles_ptr;
@@ -51,7 +51,7 @@ public:
     constexpr explicit bg_tiles_item(const span<const tile>& tiles_ref) :
         _tiles_ref(tiles_ref)
     {
-        BTN_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
+        BN_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
                    "Invalid tiles count: ", _tiles_ref.size());
     }
 

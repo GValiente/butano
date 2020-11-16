@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::sprite_ptr class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>sprite_ptr <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sprite__ptr_8h.html">&lt;bn_sprite_ptr.h&gt;</a></div>
+        </h1>
+        <p>std::shared_ptr like smart pointer that retains shared ownership of a sprite.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Several <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> objects may own the same sprite.</p><p>The sprite is released when the last remaining <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a312139955c45f38f913cd582ca8fb69d" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a6a4f00ec6e340e6051ea832615107886" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ad2d03d4395db5e69875c24f9d1bbfe64" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a17aeb9fc7669541ef0d491b2a0fc2a5a" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a003d1858c80af5d05079e690e3781488" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a70cf5986bfdad3aed6bd139d71de3c75" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a57495e0425385156cdcdcce00ea5a6ff" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#af651b3a75af13decfaeec02f204bb1b4" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a moved <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a48286702f02e282b29417f36d54db09c" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a7839179ea4ab9c16d2054337febbc987" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aa9a6431cabb766a0e7ab082b8514fe05" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#afbf677006eb113bc6e433f71451bab5a" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a544825f43157bf61ee487b001fcdcf2f" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a1900ab2ad3712cb9b9d0497d2d3899a5" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a65b7157c62f67ae8ecd1384373c22a6d" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#adfb7a212e4e5551d076bfb8fcf04bfc6" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a moved <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aedf236521a0fa5f587eb3c5dcff85113" class="m-doc">sprite_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a41c25ab0dd5fcd351aa1af15dfbe85fa" class="m-doc">sprite_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="a628ee39575e3b5a21e2309849c8171af">
+              <span class="m-doc-wrap-bumper"><a href="#a628ee39575e3b5a21e2309849c8171af" class="m-doc-self">~sprite_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced sprite if no more <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aded226692165fd13ed9f8b0eacf358e8" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a704a1608e84dbe71466d949b1280fa18" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a4dd1a72f4f5b2c4de3c58183b3188277">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4dd1a72f4f5b2c4de3c58183b3188277" class="m-doc-self">shape_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a></span>
+            </dt>
+            <dd>Returns the shape and size of the sprite.</dd>
+            <dt id="aa80ad238ae1a229067cfc21e622fdf57">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa80ad238ae1a229067cfc21e622fdf57" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1size.html" class="m-doc">size</a></span>
+            </dt>
+            <dd>Returns the size in pixels of the sprite.</dd>
+            <dt id="a949e401912ad1e89527409b3673e6359">
+              <span class="m-doc-wrap-bumper">auto <a href="#a949e401912ad1e89527409b3673e6359" class="m-doc-self">tiles</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the tiles used by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acbc738b66f5dcd82c9359767bc47f14d" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a80cf47f01e57a4f3338cac0bec2c1c2f" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a090e96294e34f1d4ed1994dd4c572e3d" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              const <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles, the shape and size of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aee5146b503dff1c3603e42768182b995" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles, the shape and size of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa6ec08754784a18ea828a1b546465407" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span>
+            </dt>
+            <dd>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaa14807676f2339db29549dac325993b" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              int graphics_index)</span>
+            </dt>
+            <dd>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a400f62f80447882d60d178c94a96fbf4" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size)</span>
+            </dt>
+            <dd>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>, changing also the shape and size of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a11234c316d88d3090c10f3f7e3a0b244" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              int graphics_index)</span>
+            </dt>
+            <dd>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>, changing also the shape and size of the sprite.</dd>
+            <dt id="a1e92747faa73277b18d97ebdda723293">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1e92747faa73277b18d97ebdda723293" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the color palette used by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a31eaed6c4c3b9219e7aebb255135cf87" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; palette)</span>
+            </dt>
+            <dd>Sets the color palette to use by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0b9134f352cb9c884a9cdce53f7d1d15" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span>
+            </dt>
+            <dd>Sets the color palette to use by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7c6d3fd1f0128657653a743d594b5bd1" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Replaces the color palette used by this sprite with a new one created with the given <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a92fc2010872fbf5a6fefeb543e5e4e5e" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span>
+            </dt>
+            <dd>Sets the tiles and the color palette to use by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1e457a48c67b1b3bf58e64caec6d5f0e" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span>
+            </dt>
+            <dd>Sets the tiles, the color palette, the shape and size to use by this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a6ca71e372a914a59b8cf242ca49c6243" class="m-doc">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Replaces the tiles, the color palette, the shape and size used by this sprite with the created with the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a680841ba4e40707cd7443aa8da411b44" class="m-doc">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span>
+            </dt>
+            <dd>Replaces the tiles, the color palette, the shape and size used by this sprite with the created with the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</dd>
+            <dt id="a9502c494172deca2ccc62f402db0dfa8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9502c494172deca2ccc62f402db0dfa8" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="ae31b69121a25c6b96f8084af7a403149">
+              <span class="m-doc-wrap-bumper">void <a href="#ae31b69121a25c6b96f8084af7a403149" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="aa274bef275758fc47722aa6f9bc7880d">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa274bef275758fc47722aa6f9bc7880d" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="a0742d98caf1c700fe451e165442e6f34">
+              <span class="m-doc-wrap-bumper">void <a href="#a0742d98caf1c700fe451e165442e6f34" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the vertical position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="a4713d05b4b06929367a02cfe54be42a1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4713d05b4b06929367a02cfe54be42a1" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the sprite (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a074fe464274fd63dac68cdcf3e011e2f" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="a16860be890139dfdb734dbf04355ec0e">
+              <span class="m-doc-wrap-bumper">void <a href="#a16860be890139dfdb734dbf04355ec0e" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            </dt>
+            <dd>Sets the position of the sprite (relative to its camera, if it has one).</dd>
+            <dt id="aee24cf2c6bdd6f79745ca89428388527">
+              <span class="m-doc-wrap-bumper">auto <a href="#aee24cf2c6bdd6f79745ca89428388527" class="m-doc-self">rotation_angle</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the rotation angle in degrees of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa3f914035f5ee82b39ac21dec6354a09" class="m-doc">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle)</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the sprite.</dd>
+            <dt id="a147ed5c241add73293f7541abcac2dc2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a147ed5c241add73293f7541abcac2dc2" class="m-doc-self">horizontal_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal scale of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af1dba1c56ab1fcf7b6a79262660a39bb" class="m-doc">set_horizontal_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale)</span>
+            </dt>
+            <dd>Sets the horizontal scale of the sprite.</dd>
+            <dt id="ac4dd666f02b31c78d1e581f433394cd8">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac4dd666f02b31c78d1e581f433394cd8" class="m-doc-self">vertical_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical scale of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae039df7f3cfdd07358019e6d248a1f8c" class="m-doc">set_vertical_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale)</span>
+            </dt>
+            <dd>Sets the vertical scale of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5715938f53512d6d41449e88af92cde3" class="m-doc">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> scale)</span>
+            </dt>
+            <dd>Sets the scale of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5a2892e3bc17900c1cad950c549eb1bd" class="m-doc">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale)</span>
+            </dt>
+            <dd>Sets the scale of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa0c0773bca4cebe5a82080a72a8d19a6" class="m-doc">bg_priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority relative to backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8028e8eab46483b2d7462da977003e35" class="m-doc">set_bg_priority</a>(</span><span class="m-doc-wrap">int bg_priority)</span>
+            </dt>
+            <dd>Sets the priority relative to backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afb7255703fa93e862398d9ffd2a874ba" class="m-doc">z_order</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority relative to other sprites.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acd50d1b0bd4d65f7551c303520ab7741" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span>
+            </dt>
+            <dd>Sets the priority relative to other sprites.</dd>
+            <dt id="a0c53f35c60abcdf9ed8daba46c0acd25">
+              <span class="m-doc-wrap-bumper">void <a href="#a0c53f35c60abcdf9ed8daba46c0acd25" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Modify this sprite to be drawn above all of the other sprites with the same priorities.</dd>
+            <dt id="a9cec430161ff0221b92205c1cdce4143">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9cec430161ff0221b92205c1cdce4143" class="m-doc-self">horizontal_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this sprite is flipped in the horizontal axis or not.</dd>
+            <dt id="a2ba96c9ad8580239fc5024d4bb2ff7ce">
+              <span class="m-doc-wrap-bumper">void <a href="#a2ba96c9ad8580239fc5024d4bb2ff7ce" class="m-doc-self">set_horizontal_flip</a>(</span><span class="m-doc-wrap">bool horizontal_flip)</span>
+            </dt>
+            <dd>Sets if this sprite is flipped in the horizontal axis or not.</dd>
+            <dt id="ac6bac7c48b53bfdf987977a714a50e35">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6bac7c48b53bfdf987977a714a50e35" class="m-doc-self">vertical_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this sprite is flipped in the vertical axis or not.</dd>
+            <dt id="a155f4853962d09d9e1d562ba1ffc8fb1">
+              <span class="m-doc-wrap-bumper">void <a href="#a155f4853962d09d9e1d562ba1ffc8fb1" class="m-doc-self">set_vertical_flip</a>(</span><span class="m-doc-wrap">bool vertical_flip)</span>
+            </dt>
+            <dd>Sets if this sprite is flipped in the vertical axis or not.</dd>
+            <dt id="afab4160547b819bf14ba31c5fe496334">
+              <span class="m-doc-wrap-bumper">auto <a href="#afab4160547b819bf14ba31c5fe496334" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to this sprite or not.</dd>
+            <dt id="aa6c7107aced061c7c68de5feaec988bf">
+              <span class="m-doc-wrap-bumper">void <a href="#aa6c7107aced061c7c68de5feaec988bf" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to this sprite or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a145df7bf2279ef9717ca0009ca256204" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to this sprite or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a421656469c5c3a0135d0ef38560a4cd9" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            </dt>
+            <dd>Sets if blending must be applied to this sprite or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acb5b5edfb9fab206bd6b828914dcb8a9" class="m-doc">window_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this sprite must be part of the silhouette of the sprite window or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a16ea5683c884564dbd5bf2fef78ff159" class="m-doc">set_window_enabled</a>(</span><span class="m-doc-wrap">bool window_enabled)</span>
+            </dt>
+            <dd>Sets if this sprite must be part of the silhouette of the sprite window or not.</dd>
+            <dt id="a06df49f8cde33f38d158e325dcf7b978">
+              <span class="m-doc-wrap-bumper">auto <a href="#a06df49f8cde33f38d158e325dcf7b978" class="m-doc-self">double_size</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this sprite is being drawn using more pixels than the area specified by its shape and size or not.</dd>
+            <dt id="ab964ed7e8e20ddcdd7911df6970426b8">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab964ed7e8e20ddcdd7911df6970426b8" class="m-doc-self">double_size_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__sprite.html#ga4a0d5a717825e296a1a9be6c07873b4d" class="m-doc">sprite_<wbr />double_<wbr />size_<wbr />mode</a></span>
+            </dt>
+            <dd>Returns the area this sprite uses to be drawn when it has an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
+            <dt id="abe91900f27be023eed94a19cb1eda515">
+              <span class="m-doc-wrap-bumper">void <a href="#abe91900f27be023eed94a19cb1eda515" class="m-doc-self">set_double_size_mode</a>(</span><span class="m-doc-wrap"><a href="group__sprite.html#ga4a0d5a717825e296a1a9be6c07873b4d" class="m-doc">sprite_<wbr />double_<wbr />size_<wbr />mode</a> double_size_mode)</span>
+            </dt>
+            <dd>Specifies the area this sprite uses to be drawn when it has an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
+            <dt id="afe484a09564c2c8c68b2d2e529c9ee19">
+              <span class="m-doc-wrap-bumper">auto <a href="#afe484a09564c2c8c68b2d2e529c9ee19" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this sprite must be committed to the GBA or not.</dd>
+            <dt id="a62d9cb9eeb1c1b09ebf0a2bf1a62fc65">
+              <span class="m-doc-wrap-bumper">void <a href="#a62d9cb9eeb1c1b09ebf0a2bf1a62fc65" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if this sprite must be committed to the GBA or not.</dd>
+            <dt id="ac20c4c248ae7165bceeeca967c5eab6f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac20c4c248ae7165bceeeca967c5eab6f" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7c1d5d0f3b03085ce20fc10ee729dcab" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8cedd338dc61c7a225c88a0a137c989f" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae68a1fe9d3bff603e8d547f17d487330" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a553fa3b6b57e56e32a274b1c629ca6a1" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt id="abc89664e02a0087cec6885623ec4469a">
+              <span class="m-doc-wrap-bumper">void <a href="#abc89664e02a0087cec6885623ec4469a" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite (if any).</dd>
+            <dt id="a95a100cec2b4c71421ca1aefb88f7205">
+              <span class="m-doc-wrap-bumper">auto <a href="#a95a100cec2b4c71421ca1aefb88f7205" class="m-doc-self">affine_mat</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a427b5646be4bae647ebc113e097a3bc5" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp; affine_mat)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8d67393ee03d1d69fa8207eb8fa1e0b5" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp;&amp; affine_mat)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a64a41b922ef5cd0adc0d572553fdd5ef" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp; affine_mat)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa8bea04e6b4d86d0d0e2819760802b11" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp;&amp; affine_mat)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</dd>
+            <dt id="a03e355d52c9d4d74f75028fe2c436819">
+              <span class="m-doc-wrap-bumper">void <a href="#a03e355d52c9d4d74f75028fe2c436819" class="m-doc-self">remove_affine_mat</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a005b094f22ba1ef5268c811c3955286b" class="m-doc">remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any) must be removed when it is not needed anymore.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1ac0303322c09c5caeafd9987fae7001" class="m-doc">set_remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">bool remove_when_not_needed)</span>
+            </dt>
+            <dd>Sets if the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any) must be removed when it is not needed anymore.</dd>
+            <dt id="a50eea42caf20b274e330b0b92b818f06">
+              <span class="m-doc-wrap-bumper">auto <a href="#a50eea42caf20b274e330b0b92b818f06" class="m-doc-self">first_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__first__attributes.html" class="m-doc">sprite_<wbr />first_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the first GBA register of this sprite.</dd>
+            <dt id="a9b0477a72ccb395d323043874fc609db">
+              <span class="m-doc-wrap-bumper">void <a href="#a9b0477a72ccb395d323043874fc609db" class="m-doc-self">set_first_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__first__attributes.html" class="m-doc">sprite_<wbr />first_<wbr />attributes</a>&amp; first_attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the first GBA register of this sprite.</dd>
+            <dt id="aeb01ffbebf8dc04db8b328d00971c1e8">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeb01ffbebf8dc04db8b328d00971c1e8" class="m-doc-self">regular_second_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__regular__second__attributes.html" class="m-doc">sprite_<wbr />regular_<wbr />second_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the second GBA register of this sprite when it is regular (it does not have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>).</dd>
+            <dt id="aee846579703d1bf4d82a91b126060d75">
+              <span class="m-doc-wrap-bumper">void <a href="#aee846579703d1bf4d82a91b126060d75" class="m-doc-self">set_regular_second_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__regular__second__attributes.html" class="m-doc">sprite_<wbr />regular_<wbr />second_<wbr />attributes</a>&amp; second_attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the second GBA register of this sprite when it is regular (it does not have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>).</dd>
+            <dt id="a519f939ca37d33f913066513cc679e7b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a519f939ca37d33f913066513cc679e7b" class="m-doc-self">affine_second_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__affine__second__attributes.html" class="m-doc">sprite_<wbr />affine_<wbr />second_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the second GBA register of this sprite when it is affine (it hash an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>).</dd>
+            <dt id="acbdd25efe313e6bedfa82c9e1505c3be">
+              <span class="m-doc-wrap-bumper">void <a href="#acbdd25efe313e6bedfa82c9e1505c3be" class="m-doc-self">set_affine_second_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__affine__second__attributes.html" class="m-doc">sprite_<wbr />affine_<wbr />second_<wbr />attributes</a>&amp; second_attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the second GBA register of this sprite when it is affine (it hash an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>).</dd>
+            <dt id="ae4396e0a2a83f7fb233b90a6db76b4bf">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae4396e0a2a83f7fb233b90a6db76b4bf" class="m-doc-self">third_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__third__attributes.html" class="m-doc">sprite_<wbr />third_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the third GBA register of this sprite.</dd>
+            <dt id="a7157d1686a0eb26bc26303709d42f14f">
+              <span class="m-doc-wrap-bumper">void <a href="#a7157d1686a0eb26bc26303709d42f14f" class="m-doc-self">set_third_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__third__attributes.html" class="m-doc">sprite_<wbr />third_<wbr />attributes</a>&amp; third_attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the third GBA register of this sprite.</dd>
+            <dt id="aa1fc807a50053cf6dc82add2fc486744">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa1fc807a50053cf6dc82add2fc486744" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
+            </dt>
+            <dd>Returns the internal handle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#afdffb677e03f6bf1875d4059e41e50ad" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a76bfa787894faa95193aa77518a6006f" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a299a3bcb6f39654236c537f723d6c747">
+              <span class="m-doc-wrap-bumper">auto <a href="#a299a3bcb6f39654236c537f723d6c747" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a312139955c45f38f913cd582ca8fb69d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a312139955c45f38f913cd582ca8fb69d" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6a4f00ec6e340e6051ea832615107886"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6a4f00ec6e340e6051ea832615107886" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item().</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad2d03d4395db5e69875c24f9d1bbfe64"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2d03d4395db5e69875c24f9d1bbfe64" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a17aeb9fc7669541ef0d491b2a0fc2a5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a17aeb9fc7669541ef0d491b2a0fc2a5a" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item().</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a003d1858c80af5d05079e690e3781488"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a003d1858c80af5d05079e690e3781488" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td>Smart pointer to a sprite tile set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Smart pointer to a sprite color palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a70cf5986bfdad3aed6bd139d71de3c75"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a70cf5986bfdad3aed6bd139d71de3c75" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td>Smart pointer to a sprite tile set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Smart pointer to a sprite color palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a57495e0425385156cdcdcce00ea5a6ff"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a57495e0425385156cdcdcce00ea5a6ff" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af651b3a75af13decfaeec02f204bb1b4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af651b3a75af13decfaeec02f204bb1b4" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a moved <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a48286702f02e282b29417f36d54db09c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a48286702f02e282b29417f36d54db09c" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7839179ea4ab9c16d2054337febbc987"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7839179ea4ab9c16d2054337febbc987" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item().</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa9a6431cabb766a0e7ab082b8514fe05"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa9a6431cabb766a0e7ab082b8514fe05" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afbf677006eb113bc6e433f71451bab5a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afbf677006eb113bc6e433f71451bab5a" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> containing the required information to generate the sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item().</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a544825f43157bf61ee487b001fcdcf2f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a544825f43157bf61ee487b001fcdcf2f" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td>Smart pointer to a sprite tile set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Smart pointer to a sprite color palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1900ab2ad3712cb9b9d0497d2d3899a5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1900ab2ad3712cb9b9d0497d2d3899a5" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td>Smart pointer to a sprite tile set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Smart pointer to a sprite color palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65b7157c62f67ae8ecd1384373c22a6d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65b7157c62f67ae8ecd1384373c22a6d" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adfb7a212e4e5551d076bfb8fcf04bfc6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adfb7a212e4e5551d076bfb8fcf04bfc6" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> from a moved <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aedf236521a0fa5f587eb3c5dcff85113"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aedf236521a0fa5f587eb3c5dcff85113" class="m-doc-self">sprite_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a41c25ab0dd5fcd351aa1af15dfbe85fa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a41c25ab0dd5fcd351aa1af15dfbe85fa" class="m-doc-self">sprite_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aded226692165fd13ed9f8b0eacf358e8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aded226692165fd13ed9f8b0eacf358e8" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a704a1608e84dbe71466d949b1280fa18"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a704a1608e84dbe71466d949b1280fa18" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acbc738b66f5dcd82c9359767bc47f14d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acbc738b66f5dcd82c9359767bc47f14d" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current color palette, shape and size of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a80cf47f01e57a4f3338cac0bec2c1c2f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80cf47f01e57a4f3338cac0bec2c1c2f" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current color palette, shape and size of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a090e96294e34f1d4ed1994dd4c572e3d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a090e96294e34f1d4ed1994dd4c572e3d" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              const <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles, the shape and size of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current color palette of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="aee5146b503dff1c3603e42768182b995"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aee5146b503dff1c3603e42768182b995" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles, the shape and size of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current color palette of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa6ec08754784a18ea828a1b546465407"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa6ec08754784a18ea828a1b546465407" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new sprite tiles to use by this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new sprite tile set, the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> used by this sprite is removed, so VRAM usage is reduced.</p><p>The new sprite tiles must be compatible with the current color palette, shape and size of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaa14807676f2339db29549dac325993b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa14807676f2339db29549dac325993b" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the sprite tiles to use by this sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in tiles_item.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new sprite tile set, the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> used by this sprite is removed, so VRAM usage is reduced.</p><p>The new sprite tiles must be compatible with the current color palette, shape and size of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a400f62f80447882d60d178c94a96fbf4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a400f62f80447882d60d178c94a96fbf4" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>, changing also the shape and size of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the sprite tiles to use by this sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new sprite tile set, the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> used by this sprite is removed, so VRAM usage is reduced.</p><p>The new sprite tiles must be compatible with the current color palette of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a11234c316d88d3090c10f3f7e3a0b244"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11234c316d88d3090c10f3f7e3a0b244" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this sprite with a new tile set created with the given <a href="classbn_1_1sprite__tiles__item.html" class="m-doc">sprite_<wbr />tiles_<wbr />item</a>, changing also the shape and size of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the sprite tiles to use by this sprite.</td>
+                </tr>
+                <tr>
+                  <td>shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in tiles_item.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new sprite tile set, the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> used by this sprite is removed, so VRAM usage is reduced.</p><p>The new sprite tiles must be compatible with the current color palette of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a31eaed6c4c3b9219e7aebb255135cf87"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a31eaed6c4c3b9219e7aebb255135cf87" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; palette)</span></span>
+            </h3>
+            <p>Sets the color palette to use by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current tiles of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0b9134f352cb9c884a9cdce53f7d1d15"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0b9134f352cb9c884a9cdce53f7d1d15" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span></span>
+            </h3>
+            <p>Sets the color palette to use by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current tiles of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7c6d3fd1f0128657653a743d594b5bd1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c6d3fd1f0128657653a743d594b5bd1" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Replaces the color palette used by this sprite with a new one created with the given <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td>It creates the color palette to use by this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new color palette, the <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> used by this sprite is removed, so VRAM usage is reduced.</p><p>The new color palette must be compatible with the current tiles of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a92fc2010872fbf5a6fefeb543e5e4e5e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92fc2010872fbf5a6fefeb543e5e4e5e" class="m-doc-self">set_tiles_and_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Sets the tiles and the color palette to use by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to set.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The given parameters must be compatible with the current shape and size of the sprite.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1e457a48c67b1b3bf58e64caec6d5f0e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e457a48c67b1b3bf58e64caec6d5f0e" class="m-doc-self">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__shape__size.html" class="m-doc">sprite_<wbr />shape_<wbr />size</a>&amp; shape_size,
+              <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> palette)</span></span>
+            </h3>
+            <p>Sets the tiles, the color palette, the shape and size to use by this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">shape_size</td>
+                  <td>Shape and size of the sprite.</td>
+                </tr>
+                <tr>
+                  <td>tiles</td>
+                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to set.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to set.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6ca71e372a914a59b8cf242ca49c6243"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6ca71e372a914a59b8cf242ca49c6243" class="m-doc-self">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Replaces the tiles, the color palette, the shape and size used by this sprite with the created with the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td>It creates the resources to use by this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a680841ba4e40707cd7443aa8da411b44"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a680841ba4e40707cd7443aa8da411b44" class="m-doc-self">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              int graphics_index)</span></span>
+            </h3>
+            <p>Replaces the tiles, the color palette, the shape and size used by this sprite with the created with the given <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td>It creates the resources to use by this sprite.</td>
+                </tr>
+                <tr>
+                  <td>graphics_index</td>
+                  <td>Index of the tile set to reference in item.tiles_item().</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources used by this sprite are removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a074fe464274fd63dac68cdcf3e011e2f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a074fe464274fd63dac68cdcf3e011e2f" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the position of the sprite (relative to its camera, if it has one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the sprite (relative to its camera, if it has one).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the sprite (relative to its camera, if it has one).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa3f914035f5ee82b39ac21dec6354a09"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa3f914035f5ee82b39ac21dec6354a09" class="m-doc-self">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the rotation angle is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given rotation angle is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="af1dba1c56ab1fcf7b6a79262660a39bb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af1dba1c56ab1fcf7b6a79262660a39bb" class="m-doc-self">set_horizontal_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale)</span></span>
+            </h3>
+            <p>Sets the horizontal scale of the sprite.</p>
+<p>If the horizontal scale is != 1 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given horizontal scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae039df7f3cfdd07358019e6d248a1f8c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae039df7f3cfdd07358019e6d248a1f8c" class="m-doc-self">set_vertical_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale)</span></span>
+            </h3>
+            <p>Sets the vertical scale of the sprite.</p>
+<p>If the vertical scale is != 1 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given vertical scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5715938f53512d6d41449e88af92cde3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5715938f53512d6d41449e88af92cde3" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> scale)</span></span>
+            </h3>
+            <p>Sets the scale of the sprite.</p>
+<p>If the scale is != 1 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a5a2892e3bc17900c1cad950c549eb1bd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5a2892e3bc17900c1cad950c549eb1bd" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale)</span></span>
+            </h3>
+            <p>Sets the scale of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_scale</td>
+                  <td>Horizontal scale.</td>
+                </tr>
+                <tr>
+                  <td>vertical_scale</td>
+                  <td>Vertical scale.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the scale is != 1 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa0c0773bca4cebe5a82080a72a8d19a6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa0c0773bca4cebe5a82080a72a8d19a6" class="m-doc-self">bg_priority</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority relative to backgrounds.</p>
+<p>Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds). Sprites cover backgrounds of the same priority.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8028e8eab46483b2d7462da977003e35"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8028e8eab46483b2d7462da977003e35" class="m-doc-self">set_bg_priority</a>(</span><span class="m-doc-wrap">int bg_priority)</span></span>
+            </h3>
+            <p>Sets the priority relative to backgrounds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bg_priority</td>
+                  <td>Priority relative to backgrounds in the range [0..3].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds). Sprites cover backgrounds of the same priority.</p>
+          </div></section>
+          <section class="m-doc-details" id="afb7255703fa93e862398d9ffd2a874ba"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afb7255703fa93e862398d9ffd2a874ba" class="m-doc-self">z_order</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority relative to other sprites.</p>
+<p>Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).</p><p>Sprites are grouped in layers depending of their background priority and z order, so to reduce memory usage and improve performance, please use as less unique z orders as possible.</p>
+          </div></section>
+          <section class="m-doc-details" id="acd50d1b0bd4d65f7551c303520ab7741"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd50d1b0bd4d65f7551c303520ab7741" class="m-doc-self">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span></span>
+            </h3>
+            <p>Sets the priority relative to other sprites.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">z_order</td>
+                  <td>Priority relative to other sprites in the range [-32767..32767].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).</p><p>Sprites are grouped in layers depending of their background priority and z order, so to reduce memory usage and improve performance, please use as less unique z orders as possible.</p>
+          </div></section>
+          <section class="m-doc-details" id="a145df7bf2279ef9717ca0009ca256204"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a145df7bf2279ef9717ca0009ca256204" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to this sprite or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a421656469c5c3a0135d0ef38560a4cd9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a421656469c5c3a0135d0ef38560a4cd9" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
+            </h3>
+            <p>Sets if blending must be applied to this sprite or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="acb5b5edfb9fab206bd6b828914dcb8a9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acb5b5edfb9fab206bd6b828914dcb8a9" class="m-doc-self">window_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if this sprite must be part of the silhouette of the sprite window or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a16ea5683c884564dbd5bf2fef78ff159"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16ea5683c884564dbd5bf2fef78ff159" class="m-doc-self">set_window_enabled</a>(</span><span class="m-doc-wrap">bool window_enabled)</span></span>
+            </h3>
+            <p>Sets if this sprite must be part of the silhouette of the sprite window or not.</p>
+<p>Keep in mind that blending and window attributes can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7c1d5d0f3b03085ce20fc10ee729dcab"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7c1d5d0f3b03085ce20fc10ee729dcab" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8cedd338dc61c7a225c88a0a137c989f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cedd338dc61c7a225c88a0a137c989f" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae68a1fe9d3bff603e8d547f17d487330"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae68a1fe9d3bff603e8d547f17d487330" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a553fa3b6b57e56e32a274b1c629ca6a1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a553fa3b6b57e56e32a274b1c629ca6a1" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a427b5646be4bae647ebc113e097a3bc5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a427b5646be4bae647ebc113e097a3bc5" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td><a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to copy to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false).</p>
+          </div></section>
+          <section class="m-doc-details" id="a8d67393ee03d1d69fa8207eb8fa1e0b5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d67393ee03d1d69fa8207eb8fa1e0b5" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&amp;&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td><a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to move to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false).</p>
+          </div></section>
+          <section class="m-doc-details" id="a64a41b922ef5cd0adc0d572553fdd5ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a64a41b922ef5cd0adc0d572553fdd5ef" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td>Optional <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to copy to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false) if the given <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> is not null.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa8bea04e6b4d86d0d0e2819760802b11"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa8bea04e6b4d86d0d0e2819760802b11" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>&gt;&amp;&amp; affine_mat)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_mat</td>
+                  <td>Optional <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> to move to this sprite.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This method calls set_remove_affine_mat_when_not_needed(false) if the given <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> is not null.</p>
+          </div></section>
+          <section class="m-doc-details" id="a005b094f22ba1ef5268c811c3955286b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a005b094f22ba1ef5268c811c3955286b" class="m-doc-self">remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any) must be removed when it is not needed anymore.</p>
+<p>A sprite does not need an <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> when its flipped_identity() method returns <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1ac0303322c09c5caeafd9987fae7001"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1ac0303322c09c5caeafd9987fae7001" class="m-doc-self">set_remove_affine_mat_when_not_needed</a>(</span><span class="m-doc-wrap">bool remove_when_not_needed)</span></span>
+            </h3>
+            <p>Sets if the <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> attached to this sprite (if any) must be removed when it is not needed anymore.</p>
+<p>A sprite does not need an <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> when its flipped_identity() method returns <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="afdffb677e03f6bf1875d4059e41e50ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afdffb677e03f6bf1875d4059e41e50ad" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a76bfa787894faa95193aa77518a6006f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a76bfa787894faa95193aa77518a6006f" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

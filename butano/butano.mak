@@ -11,21 +11,21 @@ include $(DEVKITARM)/gba_rules
 #---------------------------------------------------------------------------------------------------------------------
 # Butano custom IWRAM and EWRAM base rules without flto:
 #---------------------------------------------------------------------------------------------------------------------
-%.btn_iwram.o: %.btn_iwram.cpp
+%.bn_iwram.o: %.bn_iwram.cpp
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_iwram.d $(CXXFLAGS) -fno-lto -marm -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.bn_iwram.d $(CXXFLAGS) -fno-lto -marm -c $< -o $@ $(ERROR_FILTER)
 
-%.btn_iwram.o: %.btn_iwram.c
+%.bn_iwram.o: %.bn_iwram.c
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_iwram.d $(CFLAGS) -fno-lto -marm -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_iwram.d $(CFLAGS) -fno-lto -marm -c $< -o $@ $(ERROR_FILTER)
 	
-%.btn_ewram.o: %.btn_ewram.cpp
+%.bn_ewram.o: %.bn_ewram.cpp
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.btn_ewram.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.bn_ewram.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
-%.btn_ewram.o: %.btn_ewram.c
+%.bn_ewram.o: %.bn_ewram.c
 	$(SILENTMSG) $(notdir $<)
-	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.btn_ewram.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_ewram.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:
@@ -58,7 +58,7 @@ LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA)
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files:
 #---------------------------------------------------------------------------------------------------------------------
-BTNSOURCES  :=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
+BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/libtonc/asm $(LIBBUTANOABS)/hw/3rd_party/libtonc/src \
 				$(LIBBUTANOABS)/hw/3rd_party/libtonc/src/font $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
 				$(LIBBUTANOABS)/hw/3rd_party/posprintf/src $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
@@ -74,23 +74,23 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
  
 export VPATH	:=  $(foreach dir,	$(SOURCES),	$(CURDIR)/$(dir)) \
-                        $(foreach dir,	$(BTNSOURCES),	$(dir)) \
+                        $(foreach dir,	$(BNSOURCES),	$(dir)) \
                         $(foreach dir,	$(DATA),	$(CURDIR)/$(dir)) \
                         $(foreach dir,	$(GRAPHICS),	$(CURDIR)/$(dir))
 
 export DEPSDIR	:=  $(CURDIR)/$(BUILD)
 
 CFILES          :=  $(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.c))) \
-						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.c)))
+						$(foreach dir,	$(BNSOURCES),	$(notdir $(wildcard $(dir)/*.c)))
 						
 CPPFILES        :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.cpp))) \
-						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.cpp)))
+						$(foreach dir,	$(BNSOURCES),	$(notdir $(wildcard $(dir)/*.cpp)))
 						
 SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) \
-						$(foreach dir,	$(BTNSOURCES),	$(notdir $(wildcard $(dir)/*.s)))
+						$(foreach dir,	$(BNSOURCES),	$(notdir $(wildcard $(dir)/*.s)))
 						
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
-						_btn_audio_soundbank.bin
+						_bn_audio_soundbank.bin
 						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
@@ -110,7 +110,7 @@ endif
 
 export OFILES_BIN       :=  $(addsuffix .o,$(BINFILES))
 
-export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_btn_graphics.o)
+export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_graphics.o)
 
 export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
@@ -119,7 +119,7 @@ export OFILES           :=  $(OFILES_BIN) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
 #---------------------------------------------------------------------------------------------------------------------
 # Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated):
 #---------------------------------------------------------------------------------------------------------------------
-export HFILES           :=  $(filter-out _btn_audio_soundbank_bin.h,$(addsuffix .h,$(subst .,_,$(BINFILES))))
+export HFILES           :=  $(filter-out _bn_audio_soundbank_bin.h,$(addsuffix .h,$(subst .,_,$(BINFILES))))
 
 export INCLUDE          :=  $(foreach dir,$(INCLUDES),-iquote $(CURDIR)/$(dir)) \
                                 $(foreach dir,$(LIBDIRS),-I$(dir)/include) \

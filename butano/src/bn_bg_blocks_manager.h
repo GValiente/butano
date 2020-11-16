@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_BLOCKS_MANAGER_H
-#define BTN_BG_BLOCKS_MANAGER_H
+#ifndef BN_BG_BLOCKS_MANAGER_H
+#define BN_BG_BLOCKS_MANAGER_H
 
-#include "btn_span_fwd.h"
-#include "btn_config_log.h"
-#include "btn_optional_fwd.h"
-#include "btn_regular_bg_map_cell.h"
+#include "bn_span_fwd.h"
+#include "bn_config_log.h"
+#include "bn_optional_fwd.h"
+#include "bn_regular_bg_map_cell.h"
 
-namespace btn
+namespace bn
 {
     class size;
     class tile;
@@ -19,7 +19,7 @@ namespace btn
     class bg_palette_ptr;
 }
 
-namespace btn::bg_blocks_manager
+namespace bn::bg_blocks_manager
 {
     void init();
 
@@ -39,7 +39,7 @@ namespace btn::bg_blocks_manager
 
     [[nodiscard]] int available_map_blocks_count();
 
-    #if BTN_CFG_LOG_ENABLED
+    #if BN_CFG_LOG_ENABLED
         void log_status();
     #endif
 

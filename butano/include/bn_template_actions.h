@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TEMPLATE_ACTIONS_H
-#define BTN_TEMPLATE_ACTIONS_H
+#ifndef BN_TEMPLATE_ACTIONS_H
+#define BN_TEMPLATE_ACTIONS_H
 
 /**
  * @file
@@ -13,10 +13,10 @@
  * @ingroup template_action
  */
 
-#include "btn_assert.h"
-#include "btn_limits.h"
+#include "bn_assert.h"
+#include "bn_limits.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -221,7 +221,7 @@ protected:
         _initial_property(PropertyManager::get()),
         _duration_updates(duration_updates)
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
     }
 
     /**
@@ -315,7 +315,7 @@ protected:
         _initial_property(PropertyManager::get()),
         _duration_updates(duration_updates)
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
     }
 
     /**
@@ -380,7 +380,7 @@ public:
      */
     void update()
     {
-        BTN_ASSERT(! done(), "Action is done");
+        BN_ASSERT(! done(), "Action is done");
 
         ++_current_update;
 
@@ -443,8 +443,8 @@ private:
 
     [[nodiscard]] Property _calculate_delta_property(int duration_updates) const
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
-        BTN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
                    "Too much duration updates: ", duration_updates);
 
         return (_final_property - _initial_property) / duration_updates;
@@ -556,8 +556,8 @@ private:
 
     [[nodiscard]] Property _calculate_delta_property(int duration_updates) const
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
-        BTN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
                    "Too much duration updates: ", duration_updates);
 
         return (_final_property - _initial_property) / duration_updates;
@@ -631,7 +631,7 @@ protected:
         _new_property(new_property),
         _duration_updates(duration_updates)
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
     }
 
     /**
@@ -714,7 +714,7 @@ protected:
         _initial_property(PropertyManager::get()),
         _duration_updates(duration_updates)
     {
-        BTN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
+        BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
     }
 
 private:

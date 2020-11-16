@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RECT_H
-#define BTN_RECT_H
+#ifndef BN_RECT_H
+#define BN_RECT_H
 
 /**
  * @file
- * btn::rect header file.
+ * bn::rect header file.
  *
  * @ingroup math
  */
 
-#include "btn_size.h"
-#include "btn_point.h"
+#include "bn_size.h"
+#include "bn_point.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -80,7 +80,7 @@ public:
      */
     constexpr void set_position(int x, int y)
     {
-        _position = btn::point(x, y);
+        _position = bn::point(x, y);
     }
 
     /**
@@ -106,7 +106,7 @@ public:
      */
     constexpr void set_dimensions(int width, int height)
     {
-        _dimensions = btn::size(width, height);
+        _dimensions = bn::size(width, height);
     }
 
     /**

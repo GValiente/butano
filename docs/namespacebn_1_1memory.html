@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::memory namespace | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>memory <span class="m-thin">namespace</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__memory_8h.html">&lt;bn_memory.h&gt;</a></div>
+        </h1>
+        <p>Memory related functions.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">ewram_alloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates uninitialized storage in EWRAM.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc">ewram_free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
+            </dt>
+            <dd>Deallocates the space previously allocated by ewram_alloc.</dd>
+            <dt id="a39be6f4fc5b0043846b3839d197686f3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a39be6f4fc5b0043846b3839d197686f3" class="m-doc-self">used_alloc_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the bytes of all allocated items in EWRAM with ewram_alloc.</dd>
+            <dt id="a51471d0a930a0ff5461aca26c7dd3211">
+              <span class="m-doc-wrap-bumper">auto <a href="#a51471d0a930a0ff5461aca26c7dd3211" class="m-doc-self">available_alloc_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the bytes that still can be allocated in EWRAM with ewram_alloc.</dd>
+            <dt id="a0d8b7f2c440409eb066a053253eec435">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0d8b7f2c440409eb066a053253eec435" class="m-doc-self">used_items_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the items allocated in EWRAM with ewram_alloc.</dd>
+            <dt id="a09aeb85857e1dc7f8324da39b6e53955">
+              <span class="m-doc-wrap-bumper">auto <a href="#a09aeb85857e1dc7f8324da39b6e53955" class="m-doc-self">available_items_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the items that still can be allocated in EWRAM with ewram_alloc.</dd>
+            <dt id="a84365d5194745caf934d0b42ebd0b775">
+              <span class="m-doc-wrap-bumper">auto <a href="#a84365d5194745caf934d0b42ebd0b775" class="m-doc-self">used_static_iwram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the bytes of all static objects in IWRAM.</dd>
+            <dt id="af04b62be1d94b6ce43002d439d596da3">
+              <span class="m-doc-wrap-bumper">auto <a href="#af04b62be1d94b6ce43002d439d596da3" class="m-doc-self">used_static_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the bytes of all static objects in EWRAM.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a6b84181b5e8e1eca783b61f1b0c782ea" class="m-doc">copy</a>(</span><span class="m-doc-wrap">const Type&amp; source_ref,
+              int elements,
+              Type&amp; destination_ref)</span>
+            </dt>
+            <dd>Copies the given amount of elements from the object referenced by source_ref to the object referenced to by destination_ref.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a035feaf6d2f14313185724e54f168424" class="m-doc">clear</a>(</span><span class="m-doc-wrap">int elements,
+              Type&amp; destination_ref)</span>
+            </dt>
+            <dd>Clears (set to zero) the memory of the given amount of elements from the object referenced to by destination_ref.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a34aa79c1304c93263598983351264f80" class="m-doc">set_bytes</a>(</span><span class="m-doc-wrap">uint8_t value,
+              int bytes,
+              void* destination_ptr)</span>
+            </dt>
+            <dd>Copies the given value into each of the first bytes of the object pointed to by destination_ptr.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a2ae43ccd6f1ca4ce245ba1243a29dc44" class="m-doc">set_half_words</a>(</span><span class="m-doc-wrap">uint16_t value,
+              int half_words,
+              void* destination_ptr)</span>
+            </dt>
+            <dd>Copies the given value into each of the first half_words of the object pointed to by destination_ptr.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4bb411e03f9b85ebd1cfa81f019eea2f" class="m-doc">set_words</a>(</span><span class="m-doc-wrap">unsigned value,
+              int words,
+              void* destination_ptr)</span>
+            </dt>
+            <dd>Copies the given value into each of the first words of the object pointed to by destination_ptr.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a0e15ce0e3a49a5bf788a03df92c03b39"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc-self">ewram_alloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
+            </h3>
+            <p>Allocates uninitialized storage in EWRAM.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bytes</td>
+                  <td>Bytes to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. To avoid a memory leak, the returned pointer must be deallocated with ewram_free. On failure, returns a null pointer.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2af655e2dbf61b4d1b894fc7120ebaf0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc-self">ewram_free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+            </h3>
+            <p>Deallocates the space previously allocated by ewram_alloc.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the memory to deallocate (it can be null).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6b84181b5e8e1eca783b61f1b0c782ea"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6b84181b5e8e1eca783b61f1b0c782ea" class="m-doc-self">copy</a>(</span><span class="m-doc-wrap">const Type&amp; source_ref,
+              int elements,
+              Type&amp; destination_ref)</span></span>
+            </h3>
+            <p>Copies the given amount of elements from the object referenced by source_ref to the object referenced to by destination_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_ref</td>
+                  <td>Const reference to the memory location to copy from.</td>
+                </tr>
+                <tr>
+                  <td>elements</td>
+                  <td>Number of elements to copy (not bytes).</td>
+                </tr>
+                <tr>
+                  <td>destination_ref</td>
+                  <td>Reference to the memory location to copy to.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the objects overlap, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="a035feaf6d2f14313185724e54f168424"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a035feaf6d2f14313185724e54f168424" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">int elements,
+              Type&amp; destination_ref)</span></span>
+            </h3>
+            <p>Clears (set to zero) the memory of the given amount of elements from the object referenced to by destination_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">elements</td>
+                  <td>Number of elements to clear (not bytes).</td>
+                </tr>
+                <tr>
+                  <td>destination_ref</td>
+                  <td>Reference to the memory location to clear.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a34aa79c1304c93263598983351264f80"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a34aa79c1304c93263598983351264f80" class="m-doc-self">set_bytes</a>(</span><span class="m-doc-wrap">uint8_t value,
+              int bytes,
+              void* destination_ptr)</span></span>
+            </h3>
+            <p>Copies the given value into each of the first bytes of the object pointed to by destination_ptr.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to copy.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Number of bytes to fill.</td>
+                </tr>
+                <tr>
+                  <td>destination_ptr</td>
+                  <td>Pointer to the object to fill.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2ae43ccd6f1ca4ce245ba1243a29dc44"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2ae43ccd6f1ca4ce245ba1243a29dc44" class="m-doc-self">set_half_words</a>(</span><span class="m-doc-wrap">uint16_t value,
+              int half_words,
+              void* destination_ptr)</span></span>
+            </h3>
+            <p>Copies the given value into each of the first half_words of the object pointed to by destination_ptr.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to copy.</td>
+                </tr>
+                <tr>
+                  <td>half_words</td>
+                  <td>Number of half words to fill.</td>
+                </tr>
+                <tr>
+                  <td>destination_ptr</td>
+                  <td>Pointer to the object to fill.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4bb411e03f9b85ebd1cfa81f019eea2f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4bb411e03f9b85ebd1cfa81f019eea2f" class="m-doc-self">set_words</a>(</span><span class="m-doc-wrap">unsigned value,
+              int words,
+              void* destination_ptr)</span></span>
+            </h3>
+            <p>Copies the given value into each of the first words of the object pointed to by destination_ptr.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to copy.</td>
+                </tr>
+                <tr>
+                  <td>words</td>
+                  <td>Number of words to fill.</td>
+                </tr>
+                <tr>
+                  <td>destination_ptr</td>
+                  <td>Pointer to the object to fill.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial, the behavior is undefined.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

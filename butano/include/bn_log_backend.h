@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_LOG_BACKEND_H
-#define BTN_LOG_BACKEND_H
+#ifndef BN_LOG_BACKEND_H
+#define BN_LOG_BACKEND_H
 
 /**
  * @file
@@ -13,28 +13,28 @@
  * @ingroup log
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_LOG_BACKEND_MGBA
+ * @def BN_LOG_BACKEND_MGBA
  *
  * mGBA emulator (https://mgba.io) log backend.
  *
  * @ingroup log
  */
-#define BTN_LOG_BACKEND_MGBA        0
+#define BN_LOG_BACKEND_MGBA        0
 
 /**
- * @def BTN_LOG_BACKEND_NOCASHGBA
+ * @def BN_LOG_BACKEND_NOCASHGBA
  *
  * No$gba emulator (https://problemkaputt.de/gba.htm) log backend.
  *
  * @ingroup log
  */
-#define BTN_LOG_BACKEND_NOCASHGBA   1
+#define BN_LOG_BACKEND_NOCASHGBA   1
 
 /**
- * @def BTN_LOG_BACKEND_VBA
+ * @def BN_LOG_BACKEND_VBA
  *
  * VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log backend.
  *
@@ -42,6 +42,6 @@
  *
  * @ingroup log
  */
-#define BTN_LOG_BACKEND_VBA         2
+#define BN_LOG_BACKEND_VBA         2
 
 #endif

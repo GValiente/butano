@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITE_AFFINE_MATS_CONSTANTS_H
-#define BTN_HW_SPRITE_AFFINE_MATS_CONSTANTS_H
+#ifndef BN_HW_SPRITE_AFFINE_MATS_CONSTANTS_H
+#define BN_HW_SPRITE_AFFINE_MATS_CONSTANTS_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::sprite_affine_mats
+namespace bn::hw::sprite_affine_mats
 {
     [[nodiscard]] constexpr int count()
     {

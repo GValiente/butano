@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RECT_WINDOW_ACTIONS_H
-#define BTN_RECT_WINDOW_ACTIONS_H
+#ifndef BN_RECT_WINDOW_ACTIONS_H
+#define BN_RECT_WINDOW_ACTIONS_H
 
 /**
  * @file
- * btn::rect_window actions header file.
+ * bn::rect_window actions header file.
  *
  * @ingroup rect_window
  * @ingroup action
  */
 
-#include "btn_fixed_point.h"
-#include "btn_rect_window.h"
-#include "btn_value_template_actions.h"
+#include "bn_fixed_point.h"
+#include "bn_rect_window.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // top

@@ -4,19 +4,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GENERIC_POOL_FWD_H
-#define BTN_GENERIC_POOL_FWD_H
+#ifndef BN_GENERIC_POOL_FWD_H
+#define BN_GENERIC_POOL_FWD_H
 
 /**
  * @file
- * btn::igeneric_pool and btn::generic_pool declaration header file.
+ * bn::igeneric_pool and bn::generic_pool declaration header file.
  *
  * @ingroup pool
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of generic_pool.

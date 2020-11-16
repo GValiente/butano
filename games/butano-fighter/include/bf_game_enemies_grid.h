@@ -6,11 +6,11 @@
 #ifndef BF_GAME_ENEMIES_GRID_H
 #define BF_GAME_ENEMIES_GRID_H
 
-#include "btn_pool.h"
-#include "btn_intrusive_forward_list.h"
+#include "bn_pool.h"
+#include "bn_intrusive_forward_list.h"
 #include "bf_constants.h"
 
-namespace btn
+namespace bn
 {
     class fixed_rect;
     class fixed_point;
@@ -34,7 +34,7 @@ public:
 
     [[nodiscard]] bool update_enemy(enemy& enemy);
 
-    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
+    [[nodiscard]] bool check_hero(const bn::fixed_rect& hero_rect) const;
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
@@ -47,7 +47,7 @@ private:
     static constexpr int columns = ((constants::view_width * 2) / constants::enemies_grid_size) + (max_cell_increment * 2);
     static constexpr int rows = ((constants::view_height * 2) / constants::enemies_grid_size) + (max_cell_increment * 2);
 
-    class enemies_list_node_type : public btn::intrusive_forward_list_node_type
+    class enemies_list_node_type : public bn::intrusive_forward_list_node_type
     {
 
     public:
@@ -59,8 +59,8 @@ private:
         }
     };
 
-    using enemies_list = btn::intrusive_forward_list<enemies_list_node_type>;
-    using enemies_pool = btn::pool<enemies_list_node_type, constants::max_enemies_in_grid>;
+    using enemies_list = bn::intrusive_forward_list<enemies_list_node_type>;
+    using enemies_pool = bn::pool<enemies_list_node_type, constants::max_enemies_in_grid>;
 
     class cell_type
     {
@@ -89,13 +89,13 @@ private:
     cell_type _cells[columns * rows];
     enemies_pool _pool;
 
-    [[nodiscard]] static int _column(const btn::fixed_point& top_left);
+    [[nodiscard]] static int _column(const bn::fixed_point& top_left);
 
-    [[nodiscard]] static int _row(const btn::fixed_point& top_left);
+    [[nodiscard]] static int _row(const bn::fixed_point& top_left);
 
-    [[nodiscard]] static int _safe_column(const btn::fixed_point& top_left);
+    [[nodiscard]] static int _safe_column(const bn::fixed_point& top_left);
 
-    [[nodiscard]] static int _safe_row(const btn::fixed_point& top_left);
+    [[nodiscard]] static int _safe_row(const bn::fixed_point& top_left);
 
     [[nodiscard]] const cell_type* _cells_row(int row) const
     {

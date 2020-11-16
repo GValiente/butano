@@ -1,15 +1,15 @@
 #include "polygon_sprite.h"
 
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_texture.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_texture.h"
 #include "polygon.h"
 
 namespace
 {
-    [[nodiscard]] btn::sprite_ptr _create_sprite(int graphics_index, int z_order)
+    [[nodiscard]] bn::sprite_ptr _create_sprite(int graphics_index, int z_order)
     {
-        btn::sprite_builder builder(btn::sprite_items::texture, graphics_index);
-        builder.set_position(-(btn::display::width() / 2) + 32, -(btn::display::height() / 2) + 32);
+        bn::sprite_builder builder(bn::sprite_items::texture, graphics_index);
+        builder.set_position(-(bn::display::width() / 2) + 32, -(bn::display::height() / 2) + 32);
         builder.set_z_order(z_order);
         return builder.release_build();
     }
@@ -18,15 +18,15 @@ namespace
 polygon_sprite::polygon_sprite(const polygon& polygon, int graphics_index, int z_order) :
     _polygons(1, &polygon),
     _sprite(_create_sprite(graphics_index, z_order)),
-    _vertical_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
-    _horizontal_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
+    _vertical_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
+    _horizontal_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
 {
 }
 
-polygon_sprite::polygon_sprite(const btn::span<const polygon*>& polygons, int graphics_index, int z_order) :
+polygon_sprite::polygon_sprite(const bn::span<const polygon*>& polygons, int graphics_index, int z_order) :
     _sprite(_create_sprite(graphics_index, z_order)),
-    _vertical_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
-    _horizontal_hblank_effect(btn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
+    _vertical_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
+    _horizontal_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
 {
     for(const polygon* polygon : polygons)
     {
@@ -38,19 +38,19 @@ void polygon_sprite::update()
 {
     if(_update)
     {
-        btn::array<hline, btn::display::height()> hlines;
+        bn::array<hline, bn::display::height()> hlines;
         hline* hlines_data = hlines.data();
         _update = false;
 
         for(const polygon* polygon : _polygons)
         {
-            const btn::fixed_point* vertices_data = polygon->vertices().data();
+            const bn::fixed_point* vertices_data = polygon->vertices().data();
 
-            btn::point vertices[] = {
-                btn::point(vertices_data[0].x().right_shift_integer(), vertices_data[0].y().right_shift_integer()),
-                btn::point(vertices_data[1].x().right_shift_integer(), vertices_data[1].y().right_shift_integer()),
-                btn::point(vertices_data[2].x().right_shift_integer(), vertices_data[2].y().right_shift_integer()),
-                btn::point(vertices_data[3].x().right_shift_integer(), vertices_data[3].y().right_shift_integer())
+            bn::point vertices[] = {
+                bn::point(vertices_data[0].x().right_shift_integer(), vertices_data[0].y().right_shift_integer()),
+                bn::point(vertices_data[1].x().right_shift_integer(), vertices_data[1].y().right_shift_integer()),
+                bn::point(vertices_data[2].x().right_shift_integer(), vertices_data[2].y().right_shift_integer()),
+                bn::point(vertices_data[3].x().right_shift_integer(), vertices_data[3].y().right_shift_integer())
             };
 
             int top_index = 0;
@@ -82,10 +82,10 @@ void polygon_sprite::update()
                 bottom_index = (top_index + 2) % 4;
             }
 
-            const btn::point& top_vertex = vertices[top_index];
-            const btn::point& left_vertex = vertices[left_index];
-            const btn::point& right_vertex = vertices[right_index];
-            const btn::point& bottom_vertex = vertices[bottom_index];
+            const bn::point& top_vertex = vertices[top_index];
+            const bn::point& left_vertex = vertices[left_index];
+            const bn::point& right_vertex = vertices[right_index];
+            const bn::point& bottom_vertex = vertices[bottom_index];
             bool tlh = top_vertex.y() == left_vertex.y();
             bool trh = top_vertex.y() == right_vertex.y();
             bool lbh = left_vertex.y() == bottom_vertex.y();

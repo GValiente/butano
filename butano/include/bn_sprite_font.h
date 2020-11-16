@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_FONT_H
-#define BTN_SPRITE_FONT_H
+#ifndef BN_SPRITE_FONT_H
+#define BN_SPRITE_FONT_H
 
 /**
  * @file
- * btn::sprite_font header file.
+ * bn::sprite_font header file.
  *
  * @ingroup sprite
  * @ingroup text
  */
 
-#include "btn_string_view.h"
-#include "btn_sprite_item.h"
-#include "btn_utf8_character.h"
-#include "btn_config_sprite_text.h"
+#include "bn_string_view.h"
+#include "bn_sprite_item.h"
+#include "bn_utf8_character.h"
+#include "bn_config_sprite_text.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -74,22 +74,22 @@ public:
         _utf8_characters_ref(utf8_characters_ref),
         _character_widths_ref(character_widths_ref)
     {
-        BTN_ASSERT(item.shape_size() == sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL) ||
+        BN_ASSERT(item.shape_size() == sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL) ||
                    item.shape_size() == sprite_shape_size(sprite_shape::TALL, sprite_size::SMALL),
                    "Invalid shape size");
-        BTN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters_ref.size(),
+        BN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters_ref.size(),
                    "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
-        BTN_ASSERT(item.palette_item().bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
-        BTN_ASSERT(utf8_characters_ref.size() <= BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
+        BN_ASSERT(item.palette_item().bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+        BN_ASSERT(utf8_characters_ref.size() <= BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
                    "Invalid UTF-8 characters count: ", utf8_characters_ref.size());
-        BTN_ASSERT(_validate_utf8_characters(utf8_characters_ref), "UTF-8 characters validation failed");
-        BTN_ASSERT(! _duplicated_utf8_characters(utf8_characters_ref), "There's duplicated UTF-8 characters");
-        BTN_ASSERT(character_widths_ref.empty() ||
+        BN_ASSERT(_validate_utf8_characters(utf8_characters_ref), "UTF-8 characters validation failed");
+        BN_ASSERT(! _duplicated_utf8_characters(utf8_characters_ref), "There's duplicated UTF-8 characters");
+        BN_ASSERT(character_widths_ref.empty() ||
                    character_widths_ref.size() == 1 + minimum_graphics + utf8_characters_ref.size(),
                    "Invalid characters width count: ", character_widths_ref.size(), " - ",
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
-        BTN_ASSERT(_validate_character_widths(character_widths_ref), "Character widths validation failed");
+        BN_ASSERT(_validate_character_widths(character_widths_ref), "Character widths validation failed");
     }
 
     /**

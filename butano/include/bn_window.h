@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_WINDOW_H
-#define BTN_WINDOW_H
+#ifndef BN_WINDOW_H
+#define BN_WINDOW_H
 
 /**
  * @file
- * btn::window header file.
+ * bn::window header file.
  *
  * @ingroup window
  */
 
-#include "btn_functional.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 class regular_bg_ptr;

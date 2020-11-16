@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HBLANK_EFFECTS_H
-#define BTN_HBLANK_EFFECTS_H
+#ifndef BN_HBLANK_EFFECTS_H
+#define BN_HBLANK_EFFECTS_H
 
 /**
  * @file
- * btn::hblank_effects header file.
+ * bn::hblank_effects header file.
  *
  * @ingroup hblank_effect
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
  * @brief H-Blank effects related functions.
  *
  * @ingroup hblank_effect
  */
-namespace btn::hblank_effects
+namespace bn::hblank_effects
 {
     /**
      * @brief Returns the number of active H-Blank effects.

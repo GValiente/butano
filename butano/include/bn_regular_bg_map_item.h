@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_MAP_ITEM_H
-#define BTN_REGULAR_BG_MAP_ITEM_H
+#ifndef BN_REGULAR_BG_MAP_ITEM_H
+#define BN_REGULAR_BG_MAP_ITEM_H
 
 /**
  * @file
- * btn::regular_bg_map_item header file.
+ * bn::regular_bg_map_item header file.
  *
  * @ingroup regular_bg
  * @ingroup bg_map
  * @ingroup tool
  */
 
-#include "btn_size.h"
-#include "btn_optional_fwd.h"
-#include "btn_regular_bg_map_cell.h"
+#include "bn_size.h"
+#include "bn_optional_fwd.h"
+#include "bn_regular_bg_map_cell.h"
 
-namespace btn
+namespace bn
 {
 
 class bg_tiles_ptr;
@@ -56,8 +56,8 @@ public:
         _cells_ptr(&cells_ref),
         _dimensions(dimensions)
     {
-        BTN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
-        BTN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
+        BN_ASSERT(dimensions.width() == 32 || dimensions.width() == 64, "Invalid width: ", dimensions.width());
+        BN_ASSERT(dimensions.height() == 32 || dimensions.height() == 64, "Invalid height: ", dimensions.height());
     }
 
     /**

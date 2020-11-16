@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_OPTIONAL_FWD_H
-#define BTN_OPTIONAL_FWD_H
+#ifndef BN_OPTIONAL_FWD_H
+#define BN_OPTIONAL_FWD_H
 
 /**
  * @file
- * btn::optional declaration header file.
+ * bn::optional declaration header file.
  *
  * @ingroup optional
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Manages an optional contained value (a value that may or may not be present).

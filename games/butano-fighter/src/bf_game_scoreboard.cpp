@@ -5,14 +5,14 @@
 
 #include "bf_game_scoreboard.h"
 
-#include "btn_string.h"
-#include "btn_display.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_text_generator.h"
-#include "btn_sprite_items_experience_bar.h"
-#include "btn_sprite_items_experience_frame_back.h"
-#include "btn_sprite_items_experience_frame_front.h"
-#include "btn_sprite_items_hero_bomb_icon.h"
+#include "bn_string.h"
+#include "bn_display.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_text_generator.h"
+#include "bn_sprite_items_experience_bar.h"
+#include "bn_sprite_items_experience_frame_back.h"
+#include "bn_sprite_items_experience_frame_front.h"
+#include "bn_sprite_items_hero_bomb_icon.h"
 #include "bf_game_hero.h"
 
 namespace bf::game
@@ -20,40 +20,40 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int level_text_x = 19 - (btn::display::width() / 2);
-    constexpr const int level_text_y = (btn::display::height() / 2) - 12;
-    constexpr const int experience_bar_x = (btn::display::width() / 2) - 22;
-    constexpr const int experience_bar_y = (btn::display::height() / 2) - 16;
+    constexpr const int level_text_x = 19 - (bn::display::width() / 2);
+    constexpr const int level_text_y = (bn::display::height() / 2) - 12;
+    constexpr const int experience_bar_x = (bn::display::width() / 2) - 22;
+    constexpr const int experience_bar_y = (bn::display::height() / 2) - 16;
     constexpr const int experience_text_x = experience_bar_x - 8;
-    constexpr const int experience_text_y = (btn::display::height() / 2) - 32;
+    constexpr const int experience_text_y = (bn::display::height() / 2) - 32;
 
-    void _set_visible(bool visible, btn::ivector<btn::sprite_ptr>& sprites)
+    void _set_visible(bool visible, bn::ivector<bn::sprite_ptr>& sprites)
     {
-        for(btn::sprite_ptr& sprite : sprites)
+        for(bn::sprite_ptr& sprite : sprites)
         {
             sprite.set_visible(visible);
         }
     }
 }
 
-scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
+scoreboard::scoreboard(bn::sprite_text_generator& text_generator) :
     _text_generator(text_generator),
-    _bombs_affine_mat(btn::sprite_affine_mat_ptr::create())
+    _bombs_affine_mat(bn::sprite_affine_mat_ptr::create())
 {
     _text_generator.set_center_alignment();
     _text_generator.generate(level_text_x, level_text_y - 12, "LVL", _level_label_sprites);
     _text_generator.generate(experience_text_x, experience_text_y - 12, "EXP", _experience_label_sprites);
 
     {
-        btn::sprite_builder builder(btn::sprite_items::experience_frame_back);
-        builder.set_position(btn::fixed_point(experience_bar_x - 8, experience_bar_y));
+        bn::sprite_builder builder(bn::sprite_items::experience_frame_back);
+        builder.set_position(bn::fixed_point(experience_bar_x - 8, experience_bar_y));
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_z_order(_text_generator.z_order());
         _experience_bar_sprites.push_back(builder.release_build());
     }
 
     {
-        btn::sprite_builder builder(btn::sprite_items::experience_bar);
+        bn::sprite_builder builder(bn::sprite_items::experience_bar);
         builder.set_position(_experience_bar_sprites[0].position());
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_horizontal_scale(0.5);
@@ -62,14 +62,14 @@ scoreboard::scoreboard(btn::sprite_text_generator& text_generator) :
     }
 
     {
-        btn::sprite_builder builder(btn::sprite_items::experience_frame_front);
-        builder.set_position(btn::fixed_point(experience_bar_x - 2, experience_bar_y));
+        bn::sprite_builder builder(bn::sprite_items::experience_frame_front);
+        builder.set_position(bn::fixed_point(experience_bar_x - 2, experience_bar_y));
         builder.set_bg_priority(_text_generator.bg_priority());
         builder.set_z_order(_text_generator.z_order());
         builder.set_horizontal_flip(true);
         _experience_bar_sprites.push_back(builder.build());
 
-        builder.set_position(btn::fixed_point(experience_bar_x - 13, experience_bar_y));
+        builder.set_position(bn::fixed_point(experience_bar_x - 13, experience_bar_y));
         builder.set_horizontal_flip(false);
         _experience_bar_sprites.push_back(builder.release_build());
     }
@@ -109,7 +109,7 @@ void scoreboard::update(const hero& hero)
             }
             else
             {
-                for(btn::sprite_ptr& bomb_sprite : _bomb_sprites)
+                for(bn::sprite_ptr& bomb_sprite : _bomb_sprites)
                 {
                     bomb_sprite.remove_affine_mat();
                 }
@@ -122,11 +122,11 @@ void scoreboard::update(const hero& hero)
         _last_level = level;
         _last_experience = -1;
 
-        btn::string<4> text;
+        bn::string<4> text;
 
         if(level < constants::hero_bullet_levels - 1)
         {
-            text = btn::to_string<4>(level + 1);
+            text = bn::to_string<4>(level + 1);
         }
         else
         {
@@ -143,12 +143,12 @@ void scoreboard::update(const hero& hero)
     {
         _last_experience = experience;
 
-        btn::sprite_ptr& experience_bar_sprite = _experience_bar_sprites[1];
-        btn::fixed next_level_experience_ratio = hero.next_level_experience_ratio();
+        bn::sprite_ptr& experience_bar_sprite = _experience_bar_sprites[1];
+        bn::fixed next_level_experience_ratio = hero.next_level_experience_ratio();
 
         if(next_level_experience_ratio < 1)
         {
-            next_level_experience_ratio *= btn::fixed(0.935);
+            next_level_experience_ratio *= bn::fixed(0.935);
         }
 
         if(next_level_experience_ratio == 0)
@@ -161,7 +161,7 @@ void scoreboard::update(const hero& hero)
             experience_bar_sprite.set_visible(true);
         }
 
-        btn::string<8> text = btn::to_string<8>(experience);
+        bn::string<8> text = bn::to_string<8>(experience);
         _experience_number_sprites.clear();
         _text_generator.set_center_alignment();
         _text_generator.generate(experience_text_x, experience_text_y, text, _experience_number_sprites);
@@ -174,11 +174,11 @@ void scoreboard::update(const hero& hero)
         _last_bombs_count = bombs_count;
         _bomb_sprites.clear();
 
-        for(int index = 0, limit = btn::max(bombs_count, last_bombs_count); index < limit; ++index)
+        for(int index = 0, limit = bn::max(bombs_count, last_bombs_count); index < limit; ++index)
         {
-            btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
-            builder.set_x((btn::display::width() / 2) - ((index + 1) * 16) + 1);
-            builder.set_y(16 - (btn::display::height() / 2));
+            bn::sprite_builder builder(bn::sprite_items::hero_bomb_icon);
+            builder.set_x((bn::display::width() / 2) - ((index + 1) * 16) + 1);
+            builder.set_y(16 - (bn::display::height() / 2));
             builder.set_bg_priority(_text_generator.bg_priority());
             builder.set_z_order(_text_generator.z_order());
             builder.set_visible(visible);

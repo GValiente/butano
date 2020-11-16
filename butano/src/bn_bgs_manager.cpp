@@ -3,28 +3,28 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bgs_manager.h"
+#include "bn_bgs_manager.h"
 
-#include "btn_pool.h"
-#include "btn_vector.h"
-#include "btn_display.h"
-#include "btn_sort_key.h"
-#include "btn_config_bgs.h"
-#include "btn_display_manager.h"
-#include "../hw/include/btn_hw_bgs.h"
+#include "bn_pool.h"
+#include "bn_vector.h"
+#include "bn_display.h"
+#include "bn_sort_key.h"
+#include "bn_config_bgs.h"
+#include "bn_display_manager.h"
+#include "../hw/include/bn_hw_bgs.h"
 
-#include "btn_bgs.cpp.h"
-#include "btn_regular_bg_ptr.cpp.h"
-#include "btn_regular_bg_item.cpp.h"
-#include "btn_regular_bg_builder.cpp.h"
-#include "btn_regular_bg_attributes.cpp.h"
+#include "bn_bgs.cpp.h"
+#include "bn_regular_bg_ptr.cpp.h"
+#include "bn_regular_bg_item.cpp.h"
+#include "bn_regular_bg_builder.cpp.h"
+#include "bn_regular_bg_attributes.cpp.h"
 
-namespace btn::bgs_manager
+namespace bn::bgs_manager
 {
 
 namespace
 {
-    static_assert(BTN_CFG_BGS_MAX_ITEMS > 0);
+    static_assert(BN_CFG_BGS_MAX_ITEMS > 0);
 
     class item_type
     {
@@ -106,14 +106,14 @@ namespace
     {
 
     public:
-        pool<item_type, BTN_CFG_BGS_MAX_ITEMS> items_pool;
-        vector<item_type*, BTN_CFG_BGS_MAX_ITEMS> items_vector;
+        pool<item_type, BN_CFG_BGS_MAX_ITEMS> items_pool;
+        vector<item_type*, BN_CFG_BGS_MAX_ITEMS> items_vector;
         hw::bgs::handle handles[hw::bgs::count()];
         bool rebuild_handles = false;
         bool commit = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
 
     void _insert_item(item_type& new_item)
@@ -161,7 +161,7 @@ int available_count()
 
 id_type create(regular_bg_builder&& builder)
 {
-    BTN_ASSERT(! data.items_vector.full(), "No more available bgs");
+    BN_ASSERT(! data.items_vector.full(), "No more available bgs");
 
     regular_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
@@ -357,7 +357,7 @@ int priority(id_type id)
 
 void set_priority(id_type id, int priority)
 {
-    BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
+    BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
     auto item = static_cast<item_type*>(id);
 
@@ -589,14 +589,14 @@ void fill_hblank_effect_vertical_positions(int base_position, const fixed* posit
 void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);
-    [[maybe_unused]] btn::size current_dimensions = item->map->dimensions();
+    [[maybe_unused]] bn::size current_dimensions = item->map->dimensions();
     uint16_t bg_cnt = item->handle.cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
         const regular_bg_attributes& attributes = attributes_ptr[index];
         const regular_bg_map_ptr& attributes_map = attributes.map();
-        BTN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+        BN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
 
         uint16_t dest_cnt = bg_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
@@ -620,7 +620,7 @@ void update()
         {
             if(item->visible)
             {
-                BTN_ASSERT(BTN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much bgs on screen");
+                BN_ASSERT(BN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much bgs on screen");
 
                 item->handles_index = int8_t(id);
                 data.handles[id] = item->handle;

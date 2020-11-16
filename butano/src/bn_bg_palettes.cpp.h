@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bg_palettes.h"
+#include "bn_bg_palettes.h"
 
-#include "btn_palettes_bank.h"
-#include "btn_palettes_manager.h"
+#include "bn_palettes_bank.h"
+#include "bn_palettes_manager.h"
 
-namespace btn::bg_palettes
+namespace bn::bg_palettes
 {
 
 int used_colors_count()
@@ -118,7 +118,7 @@ void set_fade(color color, fixed intensity)
     palettes_manager::bg_palettes_bank().set_fade(color, intensity);
 }
 
-#if BTN_CFG_LOG_ENABLED
+#if BN_CFG_LOG_ENABLED
     void log_status()
     {
         palettes_manager::bg_palettes_bank().log_status();

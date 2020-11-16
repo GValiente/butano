@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_TILES_H
-#define BTN_SPRITE_TILES_H
+#ifndef BN_SPRITE_TILES_H
+#define BN_SPRITE_TILES_H
 
 /**
  * @file
- * btn::sprite_tiles header file.
+ * bn::sprite_tiles header file.
  *
  * @ingroup sprite
  * @ingroup tile
  */
 
-#include "btn_config_log.h"
-#include "btn_config_doxygen.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 /**
  * @brief Sprite tiles related functions.
@@ -23,7 +23,7 @@
  * @ingroup sprite
  * @ingroup tile
  */
-namespace btn::sprite_tiles
+namespace bn::sprite_tiles
 {
     /**
      * @brief Returns the number of used sprite tiles managed with sprite_tiles_ptr objects.
@@ -46,7 +46,7 @@ namespace btn::sprite_tiles
      */
     [[nodiscard]] int available_items_count();
 
-    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**
          * @brief Logs the current status of the sprite tiles manager.
          */

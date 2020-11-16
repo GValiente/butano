@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_sram.h"
+#include "../include/bn_hw_sram.h"
 
-#include "btn_config_sram.h"
-#include "../include/btn_hw_tonc.h"
+#include "bn_config_sram.h"
+#include "../include/bn_hw_tonc.h"
 
-namespace btn::hw::sram
+namespace bn::hw::sram
 {
 
-static_assert(BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_4 ||
-        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_3 ||
-        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_2 ||
-        BTN_CFG_SRAM_WAIT_STATE == BTN_SRAM_WAIT_STATE_8);
+static_assert(BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_4 ||
+        BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_3 ||
+        BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_2 ||
+        BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_8);
 
 namespace
 {
@@ -24,7 +24,7 @@ namespace
 
 void init()
 {
-    BIT_SET(REG_WAITCNT_NV, BTN_CFG_SRAM_WAIT_STATE);
+    BIT_SET(REG_WAITCNT_NV, BN_CFG_SRAM_WAIT_STATE);
 }
 
 }

@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PTR_H
-#define BTN_SPRITE_PTR_H
+#ifndef BN_SPRITE_PTR_H
+#define BN_SPRITE_PTR_H
 
 /**
  * @file
- * btn::sprite_ptr header file.
+ * bn::sprite_ptr header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_utility.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class size;
@@ -230,7 +230,7 @@ public:
      */
     sprite_ptr& operator=(sprite_ptr&& other) noexcept
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -802,7 +802,7 @@ public:
      */
     void swap(sprite_ptr& other)
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
     }
 
     /**
@@ -812,7 +812,7 @@ public:
      */
     friend void swap(sprite_ptr& a, sprite_ptr& b)
     {
-        btn::swap(a._handle, b._handle);
+        bn::swap(a._handle, b._handle);
     }
 
     /**

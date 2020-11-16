@@ -5,17 +5,17 @@
 
 #include "bf_game_hero.h"
 
-#include "btn_keypad.h"
-#include "btn_colors.h"
-#include "btn_fixed_rect.h"
-#include "btn_sound_items.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_hero_death.h"
-#include "btn_sprite_items_hero_shield.h"
-#include "btn_sprite_items_hero_weapons.h"
-#include "btn_sprite_items_hero_bomb_icon.h"
-#include "btn_sprite_items_hero_body_flying.h"
-#include "btn_sprite_items_hero_body_walking.h"
+#include "bn_keypad.h"
+#include "bn_colors.h"
+#include "bn_fixed_rect.h"
+#include "bn_sound_items.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_hero_death.h"
+#include "bn_sprite_items_hero_shield.h"
+#include "bn_sprite_items_hero_weapons.h"
+#include "bn_sprite_items_hero_bomb_icon.h"
+#include "bn_sprite_items_hero_body_flying.h"
+#include "bn_sprite_items_hero_body_walking.h"
 #include "bf_scene_type.h"
 #include "bf_game_enemies.h"
 #include "bf_game_objects.h"
@@ -37,16 +37,16 @@ namespace
     constexpr const int scale_weapon_frames = 30;
     constexpr const int scale_weapon_half_frames = scale_weapon_frames / 2;
     constexpr const int body_shadows_multiplier = 4;
-    constexpr const btn::fixed_size dimensions(12, 12);
+    constexpr const bn::fixed_size dimensions(12, 12);
 
-    btn::vector<btn::sprite_ptr, 3> _create_body_shadows(const btn::sprite_item& body_sprite_item,
-                                                         const btn::camera_ptr& camera)
+    bn::vector<bn::sprite_ptr, 3> _create_body_shadows(const bn::sprite_item& body_sprite_item,
+                                                         const bn::camera_ptr& camera)
     {
-        btn::vector<btn::sprite_ptr, 3> result;
+        bn::vector<bn::sprite_ptr, 3> result;
 
         for(int index = 0; index < 3; ++index)
         {
-            btn::sprite_builder builder(body_sprite_item);
+            bn::sprite_builder builder(body_sprite_item);
             builder.set_z_order(constants::hero_shadows_z_order);
             builder.set_camera(camera);
             result.push_back(builder.release_build());
@@ -55,28 +55,28 @@ namespace
         return result;
     }
 
-    btn::sprite_cached_animate_action<2> _create_body_sprite_animate_action(const btn::sprite_item& body_sprite_item,
-                                                                            const btn::camera_ptr& camera)
+    bn::sprite_cached_animate_action<2> _create_body_sprite_animate_action(const bn::sprite_item& body_sprite_item,
+                                                                            const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(body_sprite_item);
+        bn::sprite_builder builder(body_sprite_item);
         builder.set_position(0, body_delta_y);
         builder.set_camera(camera);
 
-        return btn::create_sprite_cached_animate_action_forever(builder.release_build(), 16,
+        return bn::create_sprite_cached_animate_action_forever(builder.release_build(), 16,
                                                                 body_sprite_item.tiles_item(), 0, 1);
     }
 
-    btn::sprite_ptr _create_weapon_sprite(int level, const btn::fixed_point& position, const btn::camera_ptr& camera)
+    bn::sprite_ptr _create_weapon_sprite(int level, const bn::fixed_point& position, const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::hero_weapons, level);
+        bn::sprite_builder builder(bn::sprite_items::hero_weapons, level);
         builder.set_position(position);
         builder.set_camera(camera);
         return builder.release_build();
     }
 
-    btn::sprite_ptr _create_shield_sprite(const btn::camera_ptr& camera)
+    bn::sprite_ptr _create_shield_sprite(const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::hero_shield);
+        bn::sprite_builder builder(bn::sprite_items::hero_shield);
         builder.set_z_order(constants::hero_shield_z_order);
         builder.set_camera(camera);
         builder.set_visible(false);
@@ -84,10 +84,10 @@ namespace
     }
 }
 
-hero::hero(const btn::camera_ptr& camera, status& status) :
+hero::hero(const bn::camera_ptr& camera, status& status) :
     _status(status),
     _body_sprite_item(status.current_stage().in_air ?
-                          btn::sprite_items::hero_body_flying : btn::sprite_items::hero_body_walking),
+                          bn::sprite_items::hero_body_flying : bn::sprite_items::hero_body_walking),
     _body_shadows(_create_body_shadows(_body_sprite_item, camera)),
     _body_sprite_animate_action(_create_body_sprite_animate_action(_body_sprite_item, camera)),
     _body_snapshots(body_snapshots_count, body_snapshot_type{ _body_sprite_animate_action.sprite().position(), 0 }),
@@ -95,19 +95,19 @@ hero::hero(const btn::camera_ptr& camera, status& status) :
     _weapon_position(weapon_delta_x, body_delta_y + weapon_delta_y),
     _weapon_sprite(_create_weapon_sprite(status.level(), _weapon_position, camera)),
     _shield_sprite(_create_shield_sprite(camera)),
-    _bomb_sprites_affine_mat(btn::sprite_affine_mat_ptr::create())
+    _bomb_sprites_affine_mat(bn::sprite_affine_mat_ptr::create())
 {
 }
 
-void hero::show_shoot(btn::color fade_color)
+void hero::show_shoot(bn::color fade_color)
 {
-    btn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
+    bn::sprite_palette_ptr body_palette = _body_sprite_animate_action.sprite().palette();
     body_palette.set_fade(fade_color, 0.5);
-    _body_palette_fade_action.emplace(btn::move(body_palette), shoot_frames, 0);
+    _body_palette_fade_action.emplace(bn::move(body_palette), shoot_frames, 0);
 
-    btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+    bn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
     weapon_palette.set_fade(fade_color, 0.75);
-    _weapon_palette_fade_action.emplace(btn::move(weapon_palette), shoot_frames, 0);
+    _weapon_palette_fade_action.emplace(bn::move(weapon_palette), shoot_frames, 0);
 
     if(! _show_shoot_counter)
     {
@@ -115,29 +115,29 @@ void hero::show_shoot(btn::color fade_color)
     }
 }
 
-btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
+bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
                                        enemy_bullets& enemy_bullets, objects& objects, background& background,
-                                       butano_background& butano_background, btn::camera_ptr& camera)
+                                       butano_background& butano_background, bn::camera_ptr& camera)
 {
-    btn::optional<scene_type> result;
+    bn::optional<scene_type> result;
 
     if(alive())
     {
-        btn::fixed_point old_body_position = _body_position;
+        bn::fixed_point old_body_position = _body_position;
         bool looking_down = _looking_down;
         _looking_down = enemies.hero_should_look_down(old_body_position, looking_down);
         _move(camera);
 
-        btn::fixed_rect new_body_rect(_body_position, dimensions);
+        bn::fixed_rect new_body_rect(_body_position, dimensions);
         _animate_alive(old_body_position);
 
         if(objects.check_hero_weapon(new_body_rect, camera))
         {
             [[maybe_unused]] bool level_added = _status.add_level();
-            BTN_ASSERT(level_added, "Level add failed");
+            BN_ASSERT(level_added, "Level add failed");
 
             _scale_weapon_counter = scale_weapon_frames;
-            _weapon_sprite.set_item(btn::sprite_items::hero_weapons, _status.level());
+            _weapon_sprite.set_item(bn::sprite_items::hero_weapons, _status.level());
             _weapon_sprite.set_scale(2);
         }
 
@@ -150,14 +150,14 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
         if(bomb_check_result.add_bomb)
         {
             [[maybe_unused]] bool bomb_added = _status.add_bomb();
-            BTN_ASSERT(bomb_added, "Bomb add failed");
+            BN_ASSERT(bomb_added, "Bomb add failed");
         }
 
         int experience_to_add = bomb_check_result.experience_to_add + objects.check_gem(new_body_rect, level, camera);
 
         if(experience_to_add && add_experience(experience_to_add))
         {
-            objects.spawn_hero_weapon_with_sound(btn::fixed_point(0, -constants::view_height), level + 1, camera);
+            objects.spawn_hero_weapon_with_sound(bn::fixed_point(0, -constants::view_height), level + 1, camera);
         }
 
         if(_shield_counter)
@@ -215,43 +215,43 @@ btn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies
     return result;
 }
 
-void hero::_move(btn::camera_ptr& camera)
+void hero::_move(bn::camera_ptr& camera)
 {
-    btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
-    btn::fixed speed = _shooting ? 1 : 2;
+    bn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
+    bn::fixed speed = _shooting ? 1 : 2;
 
-    if(btn::keypad::left_held())
+    if(bn::keypad::left_held())
     {
-        btn::fixed sprite_x = btn::max(_body_position.x() - speed, btn::fixed(-constants::play_width));
+        bn::fixed sprite_x = bn::max(_body_position.x() - speed, bn::fixed(-constants::play_width));
         body_sprite.set_x(sprite_x);
         _body_position.set_x(sprite_x);
 
         if(sprite_x < constants::camera_width)
         {
-            camera.set_x(btn::max(camera.x() - speed, btn::fixed(-constants::camera_width)));
+            camera.set_x(bn::max(camera.x() - speed, bn::fixed(-constants::camera_width)));
         }
     }
-    else if(btn::keypad::right_held())
+    else if(bn::keypad::right_held())
     {
-        btn::fixed sprite_x = btn::min(_body_position.x() + speed, btn::fixed(constants::play_width));
+        bn::fixed sprite_x = bn::min(_body_position.x() + speed, bn::fixed(constants::play_width));
         body_sprite.set_x(sprite_x);
         _body_position.set_x(sprite_x);
 
         if(sprite_x > -constants::camera_width)
         {
-            camera.set_x(btn::min(camera.x() + speed, btn::fixed(constants::camera_width)));
+            camera.set_x(bn::min(camera.x() + speed, bn::fixed(constants::camera_width)));
         }
     }
 
-    if(btn::keypad::up_held())
+    if(bn::keypad::up_held())
     {
-        btn::fixed sprite_y = btn::max(_body_position.y() - speed, btn::fixed(-constants::play_height));
+        bn::fixed sprite_y = bn::max(_body_position.y() - speed, bn::fixed(-constants::play_height));
         body_sprite.set_y(sprite_y);
         _body_position.set_y(sprite_y);
     }
-    else if(btn::keypad::down_held())
+    else if(bn::keypad::down_held())
     {
-        btn::fixed sprite_y = btn::min(_body_position.y() + speed, btn::fixed(constants::play_height));
+        bn::fixed sprite_y = bn::min(_body_position.y() + speed, bn::fixed(constants::play_height));
         body_sprite.set_y(sprite_y);
         _body_position.set_y(sprite_y);
     }
@@ -261,7 +261,7 @@ void hero::_move(btn::camera_ptr& camera)
     body_sprite.set_vertical_flip(looking_down);
 }
 
-void hero::_animate_alive(const btn::fixed_point& old_body_position)
+void hero::_animate_alive(const bn::fixed_point& old_body_position)
 {
     int weapon_shift_y = 0;
 
@@ -275,19 +275,19 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
         --_show_shoot_counter;
     }
 
-    const btn::fixed_point& new_body_position = _body_position;
+    const bn::fixed_point& new_body_position = _body_position;
     bool looking_down = _looking_down;
 
     if(looking_down)
     {
-        _weapon_position = new_body_position + btn::fixed_point(-weapon_delta_x, -weapon_delta_y);
+        _weapon_position = new_body_position + bn::fixed_point(-weapon_delta_x, -weapon_delta_y);
     }
     else
     {
-        _weapon_position = new_body_position + btn::fixed_point(weapon_delta_x, weapon_delta_y);
+        _weapon_position = new_body_position + bn::fixed_point(weapon_delta_x, weapon_delta_y);
     }
 
-    _weapon_sprite.set_position(_weapon_position + btn::fixed_point(0, weapon_shift_y));
+    _weapon_sprite.set_position(_weapon_position + bn::fixed_point(0, weapon_shift_y));
     _weapon_sprite.set_horizontal_flip(looking_down);
     _weapon_sprite.set_vertical_flip(looking_down);
 
@@ -318,7 +318,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
         {
             if(_scale_weapon_counter <= scale_weapon_half_frames)
             {
-                _weapon_sprite.set_scale(1 + (btn::fixed(_scale_weapon_counter) / scale_weapon_half_frames));
+                _weapon_sprite.set_scale(1 + (bn::fixed(_scale_weapon_counter) / scale_weapon_half_frames));
             }
         }
         else
@@ -334,20 +334,20 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
 
     if(_shooting)
     {
-        _body_shadows_counter = btn::max(_body_shadows_counter - 1, 0);
+        _body_shadows_counter = bn::max(_body_shadows_counter - 1, 0);
     }
     else
     {
-        _body_shadows_counter = btn::min(_body_shadows_counter + 1, shadows_count * body_shadows_multiplier);
+        _body_shadows_counter = bn::min(_body_shadows_counter + 1, shadows_count * body_shadows_multiplier);
     }
 
-    const btn::sprite_tiles_item& body_tiles_item = _body_sprite_item.tiles_item();
+    const bn::sprite_tiles_item& body_tiles_item = _body_sprite_item.tiles_item();
     int visible_shadows_count = _body_shadows_counter / body_shadows_multiplier;
 
     for(int index = 0, limit = _body_shadows.size(); index < limit; ++index)
     {
         const body_snapshot_type& body_snapshot = _body_snapshots[(index + 1) * body_shadows_multiplier];
-        btn::sprite_ptr& body_shadow = _body_shadows[shadows_count - index - 1];
+        bn::sprite_ptr& body_shadow = _body_shadows[shadows_count - index - 1];
 
         if(index >= visible_shadows_count || body_snapshot.position == new_body_position)
         {
@@ -365,7 +365,7 @@ void hero::_animate_alive(const btn::fixed_point& old_body_position)
     }
 }
 
-void hero::_show_shield(int old_bombs_count, const btn::camera_ptr& camera, background& background)
+void hero::_show_shield(int old_bombs_count, const bn::camera_ptr& camera, background& background)
 {
     bool looking_down = _looking_down;
     _shield_toggle_action.emplace(_shield_sprite, 1);
@@ -374,9 +374,9 @@ void hero::_show_shield(int old_bombs_count, const btn::camera_ptr& camera, back
 
     for(int index = 0; index < old_bombs_count; ++index)
     {
-        btn::fixed x = (index % 2) ? btn::fixed(0.5) : btn::fixed(-0.5);
-        btn::fixed y = (index / 2) ? btn::fixed(-0.5) : btn::fixed(0.5);
-        btn::sprite_builder builder(btn::sprite_items::hero_bomb_icon);
+        bn::fixed x = (index % 2) ? bn::fixed(0.5) : bn::fixed(-0.5);
+        bn::fixed y = (index / 2) ? bn::fixed(-0.5) : bn::fixed(0.5);
+        bn::sprite_builder builder(bn::sprite_items::hero_bomb_icon);
         builder.set_position(_body_position);
         builder.set_z_order(constants::hero_shield_z_order);
         builder.set_affine_mat(_bomb_sprites_affine_mat);
@@ -396,7 +396,7 @@ void hero::_show_shield(int old_bombs_count, const btn::camera_ptr& camera, back
     _bomb_sprites_affine_mat.set_scale(1);
     _bomb_sprites_rotate_action.emplace(_bomb_sprites_affine_mat, 4);
     background.show_hero_dying();
-    btn::sound_items::explosion_2.play();
+    bn::sound_items::explosion_2.play();
 }
 
 void hero::_animate_shield(background& background)
@@ -413,7 +413,7 @@ void hero::_animate_shield(background& background)
         {
             _bomb_sprites_rotate_action->update();
 
-            for(btn::sprite_move_by_action& bomb_sprite_move_action : _bomb_sprite_move_actions)
+            for(bn::sprite_move_by_action& bomb_sprite_move_action : _bomb_sprite_move_actions)
             {
                 bomb_sprite_move_action.update();
             }
@@ -422,7 +422,7 @@ void hero::_animate_shield(background& background)
 
             if(scale_counter < 30)
             {
-                _bomb_sprites_affine_mat.set_scale(scale_counter * btn::fixed(1.0 / 30));
+                _bomb_sprites_affine_mat.set_scale(scale_counter * bn::fixed(1.0 / 30));
             }
         }
         else if(shield_counter == 150)
@@ -433,12 +433,12 @@ void hero::_animate_shield(background& background)
         }
         else if(shield_counter < 60)
         {
-            _shield_sprite.set_scale(shield_counter * btn::fixed(1.0 / 60));
+            _shield_sprite.set_scale(shield_counter * bn::fixed(1.0 / 60));
         }
 
         if(shield_counter % 16 == 0)
         {
-            btn::sound_items::flame_thrower.play();
+            bn::sound_items::flame_thrower.play();
         }
     }
     else
@@ -450,39 +450,39 @@ void hero::_animate_shield(background& background)
     }
 }
 
-btn::optional<scene_type> hero::_animate_dead(const btn::camera_ptr& camera, background& background,
+bn::optional<scene_type> hero::_animate_dead(const bn::camera_ptr& camera, background& background,
                                               butano_background& butano_background)
 {
-    btn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
-    btn::optional<scene_type> result;
+    bn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
+    bn::optional<scene_type> result;
 
     if(_death_counter == 1)
     {
-        btn::sprite_palette_ptr body_palette = body_sprite.palette();
-        body_palette.set_fade(btn::colors::yellow, 0.75);
-        _body_palette_fade_action.emplace(btn::move(body_palette), 30, 0);
+        bn::sprite_palette_ptr body_palette = body_sprite.palette();
+        body_palette.set_fade(bn::colors::yellow, 0.75);
+        _body_palette_fade_action.emplace(bn::move(body_palette), 30, 0);
         _body_rotate_action.emplace(body_sprite, 0.5);
 
-        btn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
-        weapon_palette.set_fade(btn::colors::yellow, 0.75);
-        _weapon_palette_fade_action.emplace(btn::move(weapon_palette), 30, 0);
+        bn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
+        weapon_palette.set_fade(bn::colors::yellow, 0.75);
+        _weapon_palette_fade_action.emplace(bn::move(weapon_palette), 30, 0);
         _weapon_sprite.set_scale(1);
-        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(10, -10));
+        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + bn::fixed_point(10, -10));
         _weapon_rotate_action.emplace(_weapon_sprite, -10);
 
         _body_shadows.clear();
         background.show_hero_dying();
         _music_volume_action.emplace(50, 0);
-        btn::sound_items::boss_shoot.play();
+        bn::sound_items::boss_shoot.play();
     }
     else if(_death_counter == 70)
     {
-        btn::fixed_point explosion_position = body_sprite.position() + btn::fixed_point(2, 4);
-        _death_explosion.emplace(btn::sprite_items::hero_death, explosion_position, 4, 0, false, camera);
-        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + btn::fixed_point(5, -5));
+        bn::fixed_point explosion_position = body_sprite.position() + bn::fixed_point(2, 4);
+        _death_explosion.emplace(bn::sprite_items::hero_death, explosion_position, 4, 0, false, camera);
+        _weapon_move_action.emplace(_weapon_sprite, 70, _weapon_sprite.position() + bn::fixed_point(5, -5));
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
         background.show_hero_dead();
-        btn::sound_items::death.play();
+        bn::sound_items::death.play();
     }
     else if(_death_counter == 220)
     {
@@ -531,7 +531,7 @@ btn::optional<scene_type> hero::_animate_dead(const btn::camera_ptr& camera, bac
     }
     else
     {
-        btn::fixed weapon_y = _weapon_sprite.y();
+        bn::fixed weapon_y = _weapon_sprite.y();
 
         if(weapon_y < constants::view_height)
         {

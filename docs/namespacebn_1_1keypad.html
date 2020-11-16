@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::keypad namespace | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>keypad <span class="m-thin">namespace</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__keypad_8h.html">&lt;bn_keypad.h&gt;</a></div>
+        </h1>
+        <p>Keypad related functions.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#enum-members">Enums</a></li>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum class <a href="#af029f6f747fc58a67886bfe5332415f6" class="m-doc">key_type</a> { </span><span class="m-doc-wrap"><a href="#af029f6f747fc58a67886bfe5332415f6a7fc56270e7a70fa81a5935b72eacbe29" class="m-doc">A</a> =         0x0001,
+              <a href="#af029f6f747fc58a67886bfe5332415f6a9d5ed678fe57bcca610140957afab571" class="m-doc">B</a> =         0x0002,
+              <a href="#af029f6f747fc58a67886bfe5332415f6a63225f19fccb18e7c709f1fa11bc738e" class="m-doc">SELECT</a> =    0x0004,
+              <a href="#af029f6f747fc58a67886bfe5332415f6ab078ffd28db767c502ac367053f6e0ac" class="m-doc">START</a> =     0x0008,
+              <a href="#af029f6f747fc58a67886bfe5332415f6a21507b40c80068eda19865706fdc2403" class="m-doc">RIGHT</a> =     0x0010,
+              <a href="#af029f6f747fc58a67886bfe5332415f6a684d325a7303f52e64011467ff5c5758" class="m-doc">LEFT</a> =      0x0020,
+              <a href="#af029f6f747fc58a67886bfe5332415f6afbaedde498cdead4f2780217646e9ba1" class="m-doc">UP</a> =        0x0040,
+              <a href="#af029f6f747fc58a67886bfe5332415f6ac4e0e4e3118472beeb2ae75827450f1f" class="m-doc">DOWN</a> =      0x0080,
+              <a href="#af029f6f747fc58a67886bfe5332415f6ae1e1d3d40573127e9ee0480caf1283d6" class="m-doc">R</a> =         0x0100,
+              <a href="#af029f6f747fc58a67886bfe5332415f6ad20caec3b48a1eef164cb4ca81ba2587" class="m-doc">L</a> =         0x0200 }</span>
+            </dt>
+            <dd>Available key types.</dd>
+          </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a5a4f4358fcc2aa74ff7027c5e66f55db">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5a4f4358fcc2aa74ff7027c5e66f55db" class="m-doc-self">held</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#af029f6f747fc58a67886bfe5332415f6" class="m-doc">key_<wbr />type</a> key) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the given key is held or not.</dd>
+            <dt id="a7a1c560202c84d9875497d6f4a90760b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a1c560202c84d9875497d6f4a90760b" class="m-doc-self">pressed</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#af029f6f747fc58a67886bfe5332415f6" class="m-doc">key_<wbr />type</a> key) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the given key has been pressed in the current frame or not.</dd>
+            <dt id="a1e13c5488da8d2f28cdbe1c71bcabb94">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1e13c5488da8d2f28cdbe1c71bcabb94" class="m-doc-self">released</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#af029f6f747fc58a67886bfe5332415f6" class="m-doc">key_<wbr />type</a> key) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the given key has been released in the current frame or not.</dd>
+            <dt id="a32861b22fe8e5910f83baa75e20f2e70">
+              <span class="m-doc-wrap-bumper">auto <a href="#a32861b22fe8e5910f83baa75e20f2e70" class="m-doc-self">a_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>A</code> key is held or not.</dd>
+            <dt id="a1fad90a286ee5862e4569e23ee970aff">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1fad90a286ee5862e4569e23ee970aff" class="m-doc-self">a_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>A</code> key has been pressed in the current frame or not.</dd>
+            <dt id="a1652199ec4911c981f8a50f26862b492">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1652199ec4911c981f8a50f26862b492" class="m-doc-self">a_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>A</code> key has been released in the current frame or not.</dd>
+            <dt id="abe8ba1bc65729eacb676adf6022086b1">
+              <span class="m-doc-wrap-bumper">auto <a href="#abe8ba1bc65729eacb676adf6022086b1" class="m-doc-self">b_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>B</code> key is held or not.</dd>
+            <dt id="a06e2c0758fb80ca91b9bc5456aacb42b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a06e2c0758fb80ca91b9bc5456aacb42b" class="m-doc-self">b_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>B</code> key has been pressed in the current frame or not.</dd>
+            <dt id="a99444c6de8cef57d0d31f5ab28e3e5dd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a99444c6de8cef57d0d31f5ab28e3e5dd" class="m-doc-self">b_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>B</code> key has been released in the current frame or not.</dd>
+            <dt id="a0065f3277b7e26e494b9f4cf45fc34dc">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0065f3277b7e26e494b9f4cf45fc34dc" class="m-doc-self">select_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Select</code> key is held or not.</dd>
+            <dt id="ae0b446a7ff79ca55d60b504eccd5a725">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae0b446a7ff79ca55d60b504eccd5a725" class="m-doc-self">select_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Select</code> key has been pressed in the current frame or not.</dd>
+            <dt id="a19ca78bdb6903dc35d8bca7c2bfac40f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a19ca78bdb6903dc35d8bca7c2bfac40f" class="m-doc-self">select_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Select</code> key has been released in the current frame or not.</dd>
+            <dt id="ae2ad3685c6130cd9a639093527eab464">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae2ad3685c6130cd9a639093527eab464" class="m-doc-self">start_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Start</code> key is held or not.</dd>
+            <dt id="af274c5ef2e7c2582e8bba33aea6e53e4">
+              <span class="m-doc-wrap-bumper">auto <a href="#af274c5ef2e7c2582e8bba33aea6e53e4" class="m-doc-self">start_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Start</code> key has been pressed in the current frame or not.</dd>
+            <dt id="aa9ef9b3bf850c4112104167227df8e88">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa9ef9b3bf850c4112104167227df8e88" class="m-doc-self">start_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Start</code> key has been released in the current frame or not.</dd>
+            <dt id="adcaf6be59e103be69cf5aec6dc5cccbe">
+              <span class="m-doc-wrap-bumper">auto <a href="#adcaf6be59e103be69cf5aec6dc5cccbe" class="m-doc-self">right_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Right</code> key is held or not.</dd>
+            <dt id="aab19fb9bf5f6f2c6aaed7429515afd72">
+              <span class="m-doc-wrap-bumper">auto <a href="#aab19fb9bf5f6f2c6aaed7429515afd72" class="m-doc-self">right_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Right</code> key has been pressed in the current frame or not.</dd>
+            <dt id="a4c9d3b22fcda62bf94d4d8a830cd5bfb">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4c9d3b22fcda62bf94d4d8a830cd5bfb" class="m-doc-self">right_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Right</code> key has been released in the current frame or not.</dd>
+            <dt id="a1311bbf6d89a0902d048798255b5d65e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1311bbf6d89a0902d048798255b5d65e" class="m-doc-self">left_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Left</code> key is held or not.</dd>
+            <dt id="abb7c264c6a2058a40618f8741b294389">
+              <span class="m-doc-wrap-bumper">auto <a href="#abb7c264c6a2058a40618f8741b294389" class="m-doc-self">left_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Left</code> key has been pressed in the current frame or not.</dd>
+            <dt id="a271c92e7976633ec8569eb030b518ff8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a271c92e7976633ec8569eb030b518ff8" class="m-doc-self">left_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Left</code> key has been released in the current frame or not.</dd>
+            <dt id="a7a412d785bd37aff74c1b0fc53d611e3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a412d785bd37aff74c1b0fc53d611e3" class="m-doc-self">up_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Up</code> key is held or not.</dd>
+            <dt id="ac3d02b841b4fbe901a6da838bcfc0c45">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac3d02b841b4fbe901a6da838bcfc0c45" class="m-doc-self">up_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Up</code> key has been pressed in the current frame or not.</dd>
+            <dt id="acdb6459bb7ec9710158107568bd8c8b1">
+              <span class="m-doc-wrap-bumper">auto <a href="#acdb6459bb7ec9710158107568bd8c8b1" class="m-doc-self">up_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Up</code> key has been released in the current frame or not.</dd>
+            <dt id="ad4ee657716d15cf6a24dadfc49e8355d">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad4ee657716d15cf6a24dadfc49e8355d" class="m-doc-self">down_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Down</code> key is held or not.</dd>
+            <dt id="a931d0d52a3b700c2166bcd19b8764536">
+              <span class="m-doc-wrap-bumper">auto <a href="#a931d0d52a3b700c2166bcd19b8764536" class="m-doc-self">down_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Down</code> key has been pressed in the current frame or not.</dd>
+            <dt id="afd3a3eb94efeb940d399566a35efe980">
+              <span class="m-doc-wrap-bumper">auto <a href="#afd3a3eb94efeb940d399566a35efe980" class="m-doc-self">down_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>Down</code> key has been released in the current frame or not.</dd>
+            <dt id="a285d45a34cac78127f08f1d098b30525">
+              <span class="m-doc-wrap-bumper">auto <a href="#a285d45a34cac78127f08f1d098b30525" class="m-doc-self">r_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>R</code> key is held or not.</dd>
+            <dt id="a548c0b1ad1fecfd6d2745931446d8eea">
+              <span class="m-doc-wrap-bumper">auto <a href="#a548c0b1ad1fecfd6d2745931446d8eea" class="m-doc-self">r_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>R</code> key has been pressed in the current frame or not.</dd>
+            <dt id="aeb4bdaae415da326174210abafd004d8">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeb4bdaae415da326174210abafd004d8" class="m-doc-self">r_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>R</code> key has been released in the current frame or not.</dd>
+            <dt id="a32de0a619cd4b5916480a219130d13e9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a32de0a619cd4b5916480a219130d13e9" class="m-doc-self">l_held</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>L</code> key is held or not.</dd>
+            <dt id="afa7dd54531ecb175bcea6ad27274801f">
+              <span class="m-doc-wrap-bumper">auto <a href="#afa7dd54531ecb175bcea6ad27274801f" class="m-doc-self">l_pressed</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>L</code> key has been pressed in the current frame or not.</dd>
+            <dt id="aace2013fb88b91346236cf5b1dd90cbd">
+              <span class="m-doc-wrap-bumper">auto <a href="#aace2013fb88b91346236cf5b1dd90cbd" class="m-doc-self">l_released</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the <code>L</code> key has been released in the current frame or not.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="af029f6f747fc58a67886bfe5332415f6"><div>
+            <h3>
+              enum class bn::<wbr />keypad::<wbr /><a href="#af029f6f747fc58a67886bfe5332415f6" class="m-doc-self">key_type</a>
+            </h3>
+            <p>Available key types.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6a7fc56270e7a70fa81a5935b72eacbe29" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6a7fc56270e7a70fa81a5935b72eacbe29">A</a></td>
+                  <td>
+                  <p><code>A</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6a9d5ed678fe57bcca610140957afab571" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6a9d5ed678fe57bcca610140957afab571">B</a></td>
+                  <td>
+                  <p><code>B</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6a63225f19fccb18e7c709f1fa11bc738e" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6a63225f19fccb18e7c709f1fa11bc738e">SELECT</a></td>
+                  <td>
+                  <p><code>Select</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6ab078ffd28db767c502ac367053f6e0ac" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6ab078ffd28db767c502ac367053f6e0ac">START</a></td>
+                  <td>
+                  <p><code>Start</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6a21507b40c80068eda19865706fdc2403" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6a21507b40c80068eda19865706fdc2403">RIGHT</a></td>
+                  <td>
+                  <p><code>Right</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6a684d325a7303f52e64011467ff5c5758" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6a684d325a7303f52e64011467ff5c5758">LEFT</a></td>
+                  <td>
+                  <p><code>Left</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6afbaedde498cdead4f2780217646e9ba1" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6afbaedde498cdead4f2780217646e9ba1">UP</a></td>
+                  <td>
+                  <p><code>Up</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6ac4e0e4e3118472beeb2ae75827450f1f" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6ac4e0e4e3118472beeb2ae75827450f1f">DOWN</a></td>
+                  <td>
+                  <p><code>Down</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6ae1e1d3d40573127e9ee0480caf1283d6" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6ae1e1d3d40573127e9ee0480caf1283d6">R</a></td>
+                  <td>
+                  <p><code>R</code> key.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#af029f6f747fc58a67886bfe5332415f6ad20caec3b48a1eef164cb4ca81ba2587" class="m-doc-self" id="af029f6f747fc58a67886bfe5332415f6ad20caec3b48a1eef164cb4ca81ba2587">L</a></td>
+                  <td>
+                  <p><code>L</code> key.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

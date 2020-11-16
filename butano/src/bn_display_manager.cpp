@@ -3,25 +3,25 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_display_manager.h"
+#include "bn_display_manager.h"
 
-#include "btn_vector.h"
-#include "btn_display.h"
-#include "btn_mosaic_attributes.h"
-#include "btn_bgs_manager.h"
-#include "btn_sprites_manager.h"
-#include "../hw/include/btn_hw_bgs.h"
-#include "../hw/include/btn_hw_display.h"
+#include "bn_vector.h"
+#include "bn_display.h"
+#include "bn_mosaic_attributes.h"
+#include "bn_bgs_manager.h"
+#include "bn_sprites_manager.h"
+#include "../hw/include/bn_hw_bgs.h"
+#include "../hw/include/bn_hw_display.h"
 
-#include "btn_window.cpp.h"
-#include "btn_blending.cpp.h"
-#include "btn_bgs_mosaic.cpp.h"
-#include "btn_green_swap.cpp.h"
-#include "btn_rect_window.cpp.h"
-#include "btn_inside_window.cpp.h"
-#include "btn_sprites_mosaic.cpp.h"
+#include "bn_window.cpp.h"
+#include "bn_blending.cpp.h"
+#include "bn_bgs_mosaic.cpp.h"
+#include "bn_green_swap.cpp.h"
+#include "bn_rect_window.cpp.h"
+#include "bn_inside_window.cpp.h"
+#include "bn_sprites_mosaic.cpp.h"
 
-namespace btn::display_manager
+namespace bn::display_manager
 {
 
 namespace
@@ -65,7 +65,7 @@ namespace
         bool commit_green_swap = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
     void _update_rect_windows_hw_boundaries(int boundaries_index)
     {

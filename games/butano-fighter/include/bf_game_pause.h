@@ -6,9 +6,9 @@
 #ifndef BF_GAME_PAUSE_H
 #define BF_GAME_PAUSE_H
 
-#include "btn_fixed.h"
-#include "btn_optional.h"
-#include "btn_regular_bg_ptr.h"
+#include "bn_fixed.h"
+#include "bn_optional.h"
+#include "bn_regular_bg_ptr.h"
 
 namespace bf
 {
@@ -30,9 +30,9 @@ public:
     void update(const butano_background& butano_background);
 
 private:
-    btn::optional<btn::regular_bg_ptr> _bg;
-    btn::fixed _contrast;
-    btn::fixed _fade_intensity;
+    bn::optional<bn::regular_bg_ptr> _bg;
+    bn::fixed _contrast;
+    bn::fixed _fade_intensity;
     bool _active = false;
     bool _green_swap = false;
 };

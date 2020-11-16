@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_rect_window.h"
+#include "bn_rect_window.h"
 
-#include "btn_optional.h"
-#include "btn_fixed_rect.h"
-#include "btn_camera_ptr.h"
-#include "btn_display_manager.h"
+#include "bn_optional.h"
+#include "bn_fixed_rect.h"
+#include "bn_camera_ptr.h"
+#include "bn_display_manager.h"
 
-namespace btn
+namespace bn
 {
 
 fixed rect_window::top() const
@@ -20,7 +20,7 @@ fixed rect_window::top() const
 
 void rect_window::set_top(fixed top)
 {
-    BTN_ASSERT(top <= bottom_right().y(), "Invalid top: ", top, " - ", bottom_right().y());
+    BN_ASSERT(top <= bottom_right().y(), "Invalid top: ", top, " - ", bottom_right().y());
 
     fixed_point tl = top_left();
     tl.set_y(top);
@@ -34,7 +34,7 @@ fixed rect_window::left() const
 
 void rect_window::set_left(fixed left)
 {
-    BTN_ASSERT(left <= bottom_right().x(), "Invalid left: ", left, " - ", bottom_right().x());
+    BN_ASSERT(left <= bottom_right().x(), "Invalid left: ", left, " - ", bottom_right().x());
 
     fixed_point tl = top_left();
     tl.set_x(left);
@@ -53,8 +53,8 @@ void rect_window::set_top_left(fixed top, fixed left)
 
 void rect_window::set_top_left(const fixed_point& top_left)
 {
-    BTN_ASSERT(top_left.y() <= bottom_right().y(), "Invalid top: ", top_left.y(), " - ", bottom_right().y());
-    BTN_ASSERT(top_left.x() <= bottom_right().x(), "Invalid left: ", top_left.x(), " - ", bottom_right().x());
+    BN_ASSERT(top_left.y() <= bottom_right().y(), "Invalid top: ", top_left.y(), " - ", bottom_right().y());
+    BN_ASSERT(top_left.x() <= bottom_right().x(), "Invalid left: ", top_left.x(), " - ", bottom_right().x());
 
     display_manager::set_rect_window_top_left(id(), top_left);
 }
@@ -66,7 +66,7 @@ fixed rect_window::bottom() const
 
 void rect_window::set_bottom(fixed bottom)
 {
-    BTN_ASSERT(bottom >= top_left().y(), "Invalid bottom: ", bottom, " - ", top_left().y());
+    BN_ASSERT(bottom >= top_left().y(), "Invalid bottom: ", bottom, " - ", top_left().y());
 
     fixed_point br = bottom_right();
     br.set_y(bottom);
@@ -80,7 +80,7 @@ fixed rect_window::right() const
 
 void rect_window::set_right(fixed right)
 {
-    BTN_ASSERT(right >= top_left().x(), "Invalid right: ", right, " - ", top_left().x());
+    BN_ASSERT(right >= top_left().x(), "Invalid right: ", right, " - ", top_left().x());
 
     fixed_point br = bottom_right();
     br.set_x(right);
@@ -99,8 +99,8 @@ void rect_window::set_bottom_right(fixed bottom, fixed right)
 
 void rect_window::set_bottom_right(const fixed_point& bottom_right)
 {
-    BTN_ASSERT(bottom_right.y() >= top_left().y(), "Invalid bottom: ", bottom_right.y(), " - ", top_left().y());
-    BTN_ASSERT(bottom_right.x() >= top_left().x(), "Invalid right: ", bottom_right.x(), " - ", top_left().x());
+    BN_ASSERT(bottom_right.y() >= top_left().y(), "Invalid bottom: ", bottom_right.y(), " - ", top_left().y());
+    BN_ASSERT(bottom_right.x() >= top_left().x(), "Invalid right: ", bottom_right.x(), " - ", top_left().x());
 
     display_manager::set_rect_window_bottom_right(id(), bottom_right);
 }
@@ -120,8 +120,8 @@ void rect_window::set_boundaries(fixed top, fixed left, fixed bottom, fixed righ
 
 void rect_window::set_boundaries(const fixed_point& top_left, const fixed_point& bottom_right)
 {
-    BTN_ASSERT(top_left.y() <= bottom_right.y(), "Invalid top or bottom: ", top_left.y(), " - ", bottom_right.y());
-    BTN_ASSERT(top_left.x() <= bottom_right.x(), "Invalid left or right: ", top_left.x(), " - ", bottom_right.x());
+    BN_ASSERT(top_left.y() <= bottom_right.y(), "Invalid top or bottom: ", top_left.y(), " - ", bottom_right.y());
+    BN_ASSERT(top_left.x() <= bottom_right.x(), "Invalid left or right: ", top_left.x(), " - ", bottom_right.x());
 
     display_manager::set_rect_window_top_left(id(), top_left);
     display_manager::set_rect_window_bottom_right(id(), bottom_right);

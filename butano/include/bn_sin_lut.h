@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SIN_LUT_H
-#define BTN_SIN_LUT_H
+#ifndef BN_SIN_LUT_H
+#define BN_SIN_LUT_H
 
 /**
  * @file
- * btn::sin_lut header file.
+ * bn::sin_lut header file.
  *
  * @ingroup math
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

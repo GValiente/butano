@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_tiles_ptr.h"
+#include "bn_sprite_tiles_ptr.h"
 
-#include "btn_optional.h"
-#include "btn_sprite_tiles_item.h"
-#include "btn_sprite_tiles_manager.h"
+#include "bn_optional.h"
+#include "bn_sprite_tiles_item.h"
+#include "bn_sprite_tiles_manager.h"
 
-namespace btn
+namespace bn
 {
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_ref)

@@ -3,26 +3,26 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_ANIMATE_ACTIONS_H
-#define BTN_SPRITE_ANIMATE_ACTIONS_H
+#ifndef BN_SPRITE_ANIMATE_ACTIONS_H
+#define BN_SPRITE_ANIMATE_ACTIONS_H
 
 /**
  * @file
- * btn::sprite_ptr animate actions header file.
+ * bn::sprite_ptr animate actions header file.
  *
  * @ingroup sprite
  * @ingroup tile
  * @ingroup action
  */
 
-#include "btn_array.h"
-#include "btn_vector.h"
-#include "btn_limits.h"
-#include "btn_sprite_ptr.h"
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_tiles_item.h"
+#include "bn_array.h"
+#include "bn_vector.h"
+#include "bn_limits.h"
+#include "bn_sprite_ptr.h"
+#include "bn_sprite_tiles_ptr.h"
+#include "bn_sprite_tiles_item.h"
 
-namespace btn
+namespace bn
 {
 
 // animation
@@ -110,7 +110,7 @@ public:
      */
     void update()
     {
-        BTN_ASSERT(! done(), "Action is done");
+        BN_ASSERT(! done(), "Action is done");
 
         if(_current_wait_updates)
         {
@@ -212,10 +212,10 @@ private:
         _sprite(sprite),
         _tiles_item(tiles_item)
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
+        BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
         for(int graphics_index : graphics_indexes)
@@ -231,10 +231,10 @@ private:
         _sprite(move(sprite)),
         _tiles_item(tiles_item)
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
+        BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
         for(int graphics_index : graphics_indexes)
@@ -463,7 +463,7 @@ public:
      */
     void update()
     {
-        BTN_ASSERT(! done(), "Action is done");
+        BN_ASSERT(! done(), "Action is done");
 
         if(_current_wait_updates)
         {
@@ -544,10 +544,10 @@ private:
         _wait_updates(uint16_t(wait_updates)),
         _sprite(sprite)
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
+        BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
         for(int graphics_index : graphics_indexes)
@@ -562,10 +562,10 @@ private:
         _wait_updates(uint16_t(wait_updates)),
         _sprite(move(sprite))
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
+        BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
         for(int graphics_index : graphics_indexes)
@@ -580,10 +580,10 @@ private:
         _wait_updates(uint16_t(wait_updates)),
         _sprite(sprite)
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
+        BN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
 
         for(sprite_tiles_ptr& tiles : tiles_list)
         {
@@ -597,10 +597,10 @@ private:
         _wait_updates(uint16_t(wait_updates)),
         _sprite(move(sprite))
     {
-        BTN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BTN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
                    "Too much wait updates: ", wait_updates);
-        BTN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
+        BN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
 
         for(sprite_tiles_ptr& tiles : tiles_list)
         {

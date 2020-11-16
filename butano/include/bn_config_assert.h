@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_ASSERT_H
-#define BTN_CONFIG_ASSERT_H
+#ifndef BN_CONFIG_ASSERT_H
+#define BN_CONFIG_ASSERT_H
 
 /**
  * @file
@@ -13,28 +13,28 @@
  * @ingroup assert
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_ASSERT_ENABLED
+ * @def BN_CFG_ASSERT_ENABLED
  *
  * Specifies if asserts must be enabled or not.
  *
  * @ingroup assert
  */
-#ifndef BTN_CFG_ASSERT_ENABLED
-    #define BTN_CFG_ASSERT_ENABLED true
+#ifndef BN_CFG_ASSERT_ENABLED
+    #define BN_CFG_ASSERT_ENABLED true
 #endif
 
 /**
- * @def BTN_CFG_ASSERT_BUFFER_SIZE
+ * @def BN_CFG_ASSERT_BUFFER_SIZE
  *
  * Specifies the maximum size of the messages that can be displayed by an assert.
  *
  * @ingroup assert
  */
-#ifndef BTN_CFG_ASSERT_BUFFER_SIZE
-    #define BTN_CFG_ASSERT_BUFFER_SIZE 512
+#ifndef BN_CFG_ASSERT_BUFFER_SIZE
+    #define BN_CFG_ASSERT_BUFFER_SIZE 512
 #endif
 
 #endif

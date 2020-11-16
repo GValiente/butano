@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_DISPLAY_MANAGER_H
-#define BTN_DISPLAY_MANAGER_H
+#ifndef BN_DISPLAY_MANAGER_H
+#define BN_DISPLAY_MANAGER_H
 
-#include "btn_utility.h"
-#include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
     class camera_ptr;
     class fixed_point;
@@ -19,7 +19,7 @@ namespace btn
     class blending_transparency_attributes;
 }
 
-namespace btn::display_manager
+namespace bn::display_manager
 {
     using bg_handle_type = void*;
 

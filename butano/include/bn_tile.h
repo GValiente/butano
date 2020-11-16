@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TILE_H
-#define BTN_TILE_H
+#ifndef BN_TILE_H
+#define BN_TILE_H
 
 /**
  * @file
- * btn::tile header file.
+ * bn::tile header file.
  *
  * @ingroup tile
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

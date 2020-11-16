@@ -3,16 +3,16 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_FIRST_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
-#define BTN_SPRITE_FIRST_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_SPRITE_FIRST_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#define BN_SPRITE_FIRST_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any.h"
-#include "btn_sprite_first_attributes.h"
-#include "btn_sprites_manager.h"
-#include "btn_display_manager.h"
-#include "../hw/include/btn_hw_sprites.h"
+#include "bn_any.h"
+#include "bn_sprite_first_attributes.h"
+#include "bn_sprites_manager.h"
+#include "bn_display_manager.h"
+#include "../hw/include/bn_hw_sprites.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_first_attributes_hblank_effect_handler
@@ -51,8 +51,8 @@ public:
         const last_value_type& last_value = target_last_value.value<last_value_type>();
         auto sprite_first_attributes_ptr = reinterpret_cast<const sprite_first_attributes*>(input_values_ptr);
         sprites_manager::fill_hblank_effect_first_attributes(
-                    last_value.hw_y, btn::sprite_shape(last_value.shape),
-                    btn::palette_bpp_mode(last_value.bpp_mode), last_value.view_mode,
+                    last_value.hw_y, bn::sprite_shape(last_value.shape),
+                    bn::palette_bpp_mode(last_value.bpp_mode), last_value.view_mode,
                     sprite_first_attributes_ptr, output_values_ptr);
     }
 

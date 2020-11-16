@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FIXED_SIZE_H
-#define BTN_FIXED_SIZE_H
+#ifndef BN_FIXED_SIZE_H
+#define BN_FIXED_SIZE_H
 
 /**
  * @file
- * btn::fixed_size header file.
+ * bn::fixed_size header file.
  *
  * @ingroup math
  */
 
-#include "btn_size.h"
-#include "btn_fixed.h"
+#include "bn_size.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -42,8 +42,8 @@ public:
         _width(width),
         _height(height)
     {
-        BTN_ASSERT(width >= 0, "Invalid width: ", width);
-        BTN_ASSERT(height >= 0, "Invalid height: ", height);
+        BN_ASSERT(width >= 0, "Invalid width: ", width);
+        BN_ASSERT(height >= 0, "Invalid height: ", height);
     }
 
     /**
@@ -70,7 +70,7 @@ public:
      */
     constexpr void set_width(fixed width)
     {
-        BTN_ASSERT(width >= 0, "Invalid width: ", width);
+        BN_ASSERT(width >= 0, "Invalid width: ", width);
 
         _width = width;
     }
@@ -89,7 +89,7 @@ public:
      */
     constexpr void set_height(fixed height)
     {
-        BTN_ASSERT(height >= 0, "Invalid height: ", height);
+        BN_ASSERT(height >= 0, "Invalid height: ", height);
 
         _height = height;
     }
@@ -114,10 +114,10 @@ public:
     constexpr fixed_size& operator-=(const fixed_size& other)
     {
         _width -= other._width;
-        BTN_ASSERT(_width >= 0, "Invalid width: ", _width);
+        BN_ASSERT(_width >= 0, "Invalid width: ", _width);
 
         _height -= other._height;
-        BTN_ASSERT(_height >= 0, "Invalid height: ", _height);
+        BN_ASSERT(_height >= 0, "Invalid height: ", _height);
 
         return *this;
     }
@@ -129,7 +129,7 @@ public:
      */
     constexpr fixed_size& operator*=(int value)
     {
-        BTN_ASSERT(value >= 0, "Invalid value: ", value);
+        BN_ASSERT(value >= 0, "Invalid value: ", value);
 
         _width *= value;
         _height *= value;
@@ -155,7 +155,7 @@ public:
      */
     constexpr fixed_size& operator*=(fixed value)
     {
-        BTN_ASSERT(value >= 0, "Invalid value: ", value);
+        BN_ASSERT(value >= 0, "Invalid value: ", value);
 
         _width *= value;
         _height *= value;
@@ -169,7 +169,7 @@ public:
      */
     constexpr fixed_size& operator/=(int value)
     {
-        BTN_ASSERT(value > 0, "Invalid value: ", value);
+        BN_ASSERT(value > 0, "Invalid value: ", value);
 
         _width /= value;
         _height /= value;
@@ -183,7 +183,7 @@ public:
      */
     constexpr fixed_size& operator/=(unsigned value)
     {
-        BTN_ASSERT(value > 0, "Invalid value: ", value);
+        BN_ASSERT(value > 0, "Invalid value: ", value);
 
         _width /= value;
         _height /= value;
@@ -197,7 +197,7 @@ public:
      */
     constexpr fixed_size& operator/=(fixed value)
     {
-        BTN_ASSERT(value > 0, "Invalid value: ", value);
+        BN_ASSERT(value > 0, "Invalid value: ", value);
 
         _width /= value;
         _height /= value;
@@ -225,7 +225,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, int b)
     {
-        BTN_ASSERT(b >= 0, "Invalid value: ", b);
+        BN_ASSERT(b >= 0, "Invalid value: ", b);
 
         return fixed_size(a._width * b, a._height * b);
     }
@@ -243,7 +243,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, fixed b)
     {
-        BTN_ASSERT(b >= 0, "Invalid value: ", b);
+        BN_ASSERT(b >= 0, "Invalid value: ", b);
 
         return fixed_size(a._width * b, a._height * b);
     }
@@ -253,7 +253,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, int b)
     {
-        BTN_ASSERT(b > 0, "Invalid value: ", b);
+        BN_ASSERT(b > 0, "Invalid value: ", b);
 
         return fixed_size(a._width / b, a._height / b);
     }
@@ -263,7 +263,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, unsigned b)
     {
-        BTN_ASSERT(b > 0, "Invalid value: ", b);
+        BN_ASSERT(b > 0, "Invalid value: ", b);
 
         return fixed_size(a._width / b, a._height / b);
     }
@@ -273,7 +273,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, fixed b)
     {
-        BTN_ASSERT(b > 0, "Invalid value: ", b);
+        BN_ASSERT(b > 0, "Invalid value: ", b);
 
         return fixed_size(a._width / b, a._height / b);
     }

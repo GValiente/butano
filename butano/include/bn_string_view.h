@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_STRING_VIEW_H
-#define BTN_STRING_VIEW_H
+#ifndef BN_STRING_VIEW_H
+#define BN_STRING_VIEW_H
 
 /**
  * @file
- * btn::string_view header file.
+ * bn::string_view header file.
  *
  * @ingroup string
  */
 
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_functional.h"
-#include "btn_istring_base.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_functional.h"
+#include "bn_istring_base.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -43,8 +43,8 @@ public:
     using const_pointer = const char*; //!< Const pointer alias.
     using iterator = char*; //!< Iterator alias.
     using const_iterator = const char*; //!< Const iterator alias.
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     /**
      * @brief Default constructor.
@@ -87,7 +87,7 @@ public:
         _begin(char_array_ptr),
         _end(char_array_ptr + char_array_size)
     {
-        BTN_ASSERT(char_array_size >= 0, "Invalid char array size: ", char_array_size);
+        BN_ASSERT(char_array_size >= 0, "Invalid char array size: ", char_array_size);
     }
 
     /**
@@ -95,7 +95,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BTN_ASSERT(! empty(), "String view is empty");
+        BN_ASSERT(! empty(), "String view is empty");
 
         return *_begin;
     }
@@ -105,7 +105,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BTN_ASSERT(! empty(), "String view is empty");
+        BN_ASSERT(! empty(), "String view is empty");
 
         return *(_end - 1);
     }
@@ -213,7 +213,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference operator[](size_type position) const
     {
-        BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
+        BN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
 
         return _begin[position];
     }
@@ -225,7 +225,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference at(size_type position) const
     {
-        BTN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
+        BN_ASSERT(position >= 0 && position < size(), "Invalid position: ", position, " - ", size());
 
         return _begin[position];
     }
@@ -243,7 +243,7 @@ public:
      */
     [[nodiscard]] constexpr string_view substr(size_type position) const
     {
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type sz = size();
         string_view view;
@@ -261,8 +261,8 @@ public:
      */
     [[nodiscard]] constexpr string_view substr(size_type position, size_type count) const
     {
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-        BTN_ASSERT(position >= 0, "Invalid position: ", position);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
+        BN_ASSERT(position >= 0, "Invalid position: ", position);
 
         size_type sz = size();
         string_view view;
@@ -281,7 +281,7 @@ public:
      */
     constexpr void remove_prefix(size_type n)
     {
-        BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
+        BN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
 
         _begin += n;
     }
@@ -291,7 +291,7 @@ public:
      */
     constexpr void remove_suffix(size_type n)
     {
-        BTN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
+        BN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
 
         _end -= n;
     }
@@ -390,8 +390,8 @@ public:
      */
     constexpr void swap(string_view& other)
     {
-        btn::swap(_begin, other._begin);
-        btn::swap(_end, other._end);
+        bn::swap(_begin, other._begin);
+        bn::swap(_end, other._end);
     }
 
     /**

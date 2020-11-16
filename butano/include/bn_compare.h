@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_COMPARE_H
-#define BTN_COMPARE_H
+#ifndef BN_COMPARE_H
+#define BN_COMPARE_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <compare>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::strong_ordering;
 

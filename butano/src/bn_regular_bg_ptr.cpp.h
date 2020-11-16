@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_regular_bg_ptr.h"
+#include "bn_regular_bg_ptr.h"
 
-#include "btn_size.h"
-#include "btn_window.h"
-#include "btn_bgs_manager.h"
-#include "btn_bg_tiles_ptr.h"
-#include "btn_bg_palette_ptr.h"
-#include "btn_regular_bg_builder.h"
-#include "btn_regular_bg_attributes.h"
+#include "bn_size.h"
+#include "bn_window.h"
+#include "bn_bgs_manager.h"
+#include "bn_bg_tiles_ptr.h"
+#include "bn_bg_palette_ptr.h"
+#include "bn_regular_bg_builder.h"
+#include "bn_regular_bg_attributes.h"
 
-namespace btn
+namespace bn
 {
 
 regular_bg_ptr regular_bg_ptr::create(fixed x, fixed y, const regular_bg_item& item)

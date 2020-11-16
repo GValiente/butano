@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_PALETTE_BPP_MODE_H
-#define BTN_PALETTE_BPP_MODE_H
+#ifndef BN_PALETTE_BPP_MODE_H
+#define BN_PALETTE_BPP_MODE_H
 
 /**
  * @file
- * btn::palette_bpp_mode header file.
+ * bn::palette_bpp_mode header file.
  *
  * @ingroup palette
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

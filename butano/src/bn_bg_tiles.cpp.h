@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bg_tiles.h"
+#include "bn_bg_tiles.h"
 
-#include "btn_bg_blocks_manager.h"
+#include "bn_bg_blocks_manager.h"
 
-namespace btn::bg_tiles
+namespace bn::bg_tiles
 {
 
 int used_tiles_count()
@@ -30,7 +30,7 @@ int available_blocks_count()
     return bg_blocks_manager::available_tile_blocks_count();
 }
 
-#if BTN_CFG_LOG_ENABLED
+#if BN_CFG_LOG_ENABLED
     void log_status()
     {
         bg_blocks_manager::log_status();

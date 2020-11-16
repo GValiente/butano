@@ -5,12 +5,12 @@
 
 #include "bf_game_boss.h"
 
-#include "btn_colors.h"
-#include "btn_green_swap.h"
-#include "btn_music_items.h"
-#include "btn_sound_items.h"
-#include "btn_bg_palettes.h"
-#include "btn_sprite_palettes.h"
+#include "bn_colors.h"
+#include "bn_green_swap.h"
+#include "bn_music_items.h"
+#include "bn_sound_items.h"
+#include "bn_bg_palettes.h"
+#include "bn_sprite_palettes.h"
 #include "bf_game_hero.h"
 #include "bf_game_objects.h"
 #include "bf_game_hero_bomb.h"
@@ -33,10 +33,10 @@ namespace
     constexpr const int death_flash_frames = 50;
 }
 
-btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_position,
-                                   const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
+bn::unique_ptr<boss> boss::create(type type, const bn::fixed_point& hero_position,
+                                   const bn::sprite_palette_ptr& damage_palette, const bn::camera_ptr& camera)
 {
-    btn::unique_ptr<boss> result;
+    bn::unique_ptr<boss> result;
 
     switch(type)
     {
@@ -58,7 +58,7 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
         break;
 
     default:
-        BTN_ERROR("Invalid type: ", int(type));
+        BN_ERROR("Invalid type: ", int(type));
         break;
     }
 
@@ -67,14 +67,14 @@ btn::unique_ptr<boss> boss::create(type type, const btn::fixed_point& hero_posit
 
 void boss::play_music() const
 {
-    btn::music_items::minor_boss_r.play(0.4);
+    bn::music_items::minor_boss_r.play(0.4);
 }
 
-bool boss::check_hero(const btn::fixed_rect& hero_rect) const
+bool boss::check_hero(const bn::fixed_rect& hero_rect) const
 {
     if(_life)
     {
-        for(const btn::fixed_rect& rect : _rects)
+        for(const bn::fixed_rect& rect : _rects)
         {
             if(rect.intersects(hero_rect))
             {
@@ -90,9 +90,9 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
 {
     if(_life && ! _ignore_hero_bullet_counter)
     {
-        const btn::fixed_rect& bullet_rect = data.bullet_rect;
+        const bn::fixed_rect& bullet_rect = data.bullet_rect;
 
-        for(const btn::fixed_rect& rect : _rects)
+        for(const bn::fixed_rect& rect : _rects)
         {
             if(rect.intersects(bullet_rect))
             {
@@ -121,10 +121,10 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
     return false;
 }
 
-void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
+void boss::update(const hero_bomb& hero_bomb, const bn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
                   objects& objects, scoreboard& scoreboard, background& background)
 {
-    const btn::fixed_point& hero_position = hero.body_position();
+    const bn::fixed_point& hero_position = hero.body_position();
 
     if(_life)
     {
@@ -143,22 +143,22 @@ void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, her
         {
             if(_death_flash_counter == death_flash_frames)
             {
-                _transparent_color = btn::bg_palettes::transparent_color();
-                btn::bg_palettes::set_transparent_color(btn::colors::white);
-                btn::sprite_palettes::set_fade(btn::colors::black, 1);
-                btn::green_swap::set_enabled(true);
-                btn::sound_items::glass_breaking_2.play();
+                _transparent_color = bn::bg_palettes::transparent_color();
+                bn::bg_palettes::set_transparent_color(bn::colors::white);
+                bn::sprite_palettes::set_fade(bn::colors::black, 1);
+                bn::green_swap::set_enabled(true);
+                bn::sound_items::glass_breaking_2.play();
                 scoreboard.set_visible(false);
                 background.set_visible(false);
                 enemy_bullets.clear();
-                btn::music::stop();
+                bn::music::stop();
             }
 
             --_death_flash_counter;
 
             if(! _death_flash_counter)
             {
-                btn::fixed_point enemy_position = _position();
+                bn::fixed_point enemy_position = _position();
 
                 if(_throw_bomb())
                 {
@@ -172,15 +172,15 @@ void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, her
 
                 if(_transparent_color)
                 {
-                    btn::bg_palettes::set_transparent_color(*_transparent_color);
+                    bn::bg_palettes::set_transparent_color(*_transparent_color);
                 }
                 else
                 {
-                    btn::bg_palettes::remove_transparent_color();
+                    bn::bg_palettes::remove_transparent_color();
                 }
 
-                btn::sprite_palettes::set_fade_intensity(0);
-                btn::green_swap::set_enabled(false);
+                bn::sprite_palettes::set_fade_intensity(0);
+                bn::green_swap::set_enabled(false);
                 scoreboard.set_visible(true);
                 background.set_visible(true);
             }
@@ -206,8 +206,8 @@ void boss::update(const hero_bomb& hero_bomb, const btn::camera_ptr& camera, her
     }
 }
 
-boss::boss(int life, int experience, const btn::ivector<btn::fixed_rect>& rects,
-           const btn::sprite_palette_ptr& damage_palette) :
+boss::boss(int life, int experience, const bn::ivector<bn::fixed_rect>& rects,
+           const bn::sprite_palette_ptr& damage_palette) :
     _rects(rects),
     _damage_palette(damage_palette),
     _life(life),

@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_cstdlib.h"
+#include "bn_cstdlib.h"
 
-#include "btn_memory_manager.h"
+#include "bn_memory_manager.h"
 
-namespace btn
+namespace bn
 {
 
 void* malloc(int bytes)

@@ -6,10 +6,10 @@
 #ifndef BF_BUTANO_BACKGROUND_H
 #define BF_BUTANO_BACKGROUND_H
 
-#include "btn_optional.h"
-#include "btn_sprite_actions.h"
-#include "btn_regular_bg_actions.h"
-#include "btn_bg_palette_color_hblank_effect_ptr.h"
+#include "bn_optional.h"
+#include "bn_sprite_actions.h"
+#include "bn_regular_bg_actions.h"
+#include "bn_bg_palette_color_hblank_effect_ptr.h"
 
 namespace bf
 {
@@ -28,21 +28,21 @@ public:
         return _silhouette_up_sprite_move_action.has_value();
     }
 
-    void show(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera);
+    void show(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera);
 
-    void hide(const btn::fixed_point& silhouette_position, const btn::camera_ptr& camera);
+    void hide(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera);
 
     void put_under_all();
 
     void update();
 
 private:
-    btn::optional<btn::regular_bg_move_by_action> _move_action;
-    btn::optional<btn::bg_palette_color_hblank_effect_ptr> _palette_hblank_effect;
-    btn::optional<btn::sprite_move_to_action> _silhouette_up_sprite_move_action;
-    btn::optional<btn::sprite_move_to_action> _silhouette_down_sprite_move_action;
-    btn::optional<btn::sprite_scale_to_action> _silhouette_up_sprite_scale_action;
-    btn::optional<btn::sprite_scale_to_action> _silhouette_down_sprite_scale_action;
+    bn::optional<bn::regular_bg_move_by_action> _move_action;
+    bn::optional<bn::bg_palette_color_hblank_effect_ptr> _palette_hblank_effect;
+    bn::optional<bn::sprite_move_to_action> _silhouette_up_sprite_move_action;
+    bn::optional<bn::sprite_move_to_action> _silhouette_down_sprite_move_action;
+    bn::optional<bn::sprite_scale_to_action> _silhouette_up_sprite_scale_action;
+    bn::optional<bn::sprite_scale_to_action> _silhouette_down_sprite_scale_action;
 
     void _set_visible();
 };

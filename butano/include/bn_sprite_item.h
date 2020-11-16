@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_ITEM_H
-#define BTN_SPRITE_ITEM_H
+#ifndef BN_SPRITE_ITEM_H
+#define BN_SPRITE_ITEM_H
 
 /**
  * @file
- * btn::sprite_item header file.
+ * bn::sprite_item header file.
  *
  * @ingroup sprite
  * @ingroup tool
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_sprite_shape_size.h"
-#include "btn_sprite_tiles_item.h"
-#include "btn_sprite_palette_item.h"
+#include "bn_fixed_fwd.h"
+#include "bn_sprite_shape_size.h"
+#include "bn_sprite_tiles_item.h"
+#include "bn_sprite_palette_item.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_ptr;
@@ -73,7 +73,7 @@ public:
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
-        BTN_ASSERT(tiles_item.tiles_ref().size() ==
+        BN_ASSERT(tiles_item.tiles_ref().size() ==
                    _shape_size.tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
                    "Invalid shape or size");
     }

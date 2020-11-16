@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_SPRITE_TEXT_H
-#define BTN_CONFIG_SPRITE_TEXT_H
+#ifndef BN_CONFIG_SPRITE_TEXT_H
+#define BN_CONFIG_SPRITE_TEXT_H
 
 /**
  * @file
@@ -13,17 +13,17 @@
  * @ingroup text
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS
+ * @def BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS
  *
- * Specifies the maximum number of UTF-8 characters that are supported by a btn::sprite_font.
+ * Specifies the maximum number of UTF-8 characters that are supported by a bn::sprite_font.
  *
  * @ingroup text
  */
-#ifndef BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS
-    #define BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS 64
+#ifndef BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS
+    #define BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS 64
 #endif
 
 #endif

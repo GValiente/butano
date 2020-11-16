@@ -4,20 +4,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_POOL_H
-#define BTN_POOL_H
+#ifndef BN_POOL_H
+#define BN_POOL_H
 
 /**
  * @file
- * btn::ipool and btn::pool implementation header file.
+ * bn::ipool and bn::pool implementation header file.
  *
  * @ingroup pool
  */
 
-#include "btn_pool_fwd.h"
-#include "btn_generic_pool.h"
+#include "bn_pool_fwd.h"
+#include "bn_generic_pool.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type>
@@ -53,7 +53,7 @@ public:
     template<typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
-        BTN_ASSERT(! base_type::full(), "Pool is full");
+        BN_ASSERT(! base_type::full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(base_type::_allocate());
         ::new(result) Type(forward<Args>(args)...);
@@ -65,7 +65,7 @@ public:
      */
     void destroy(Type& value)
     {
-        BTN_ASSERT(contains(value), "Pool does not contain this value");
+        BN_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
         base_type::_free(reinterpret_cast<char*>(&value));

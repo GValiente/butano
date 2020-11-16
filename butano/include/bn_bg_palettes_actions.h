@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_PALETTES_ACTIONS_H
-#define BTN_BG_PALETTES_ACTIONS_H
+#ifndef BN_BG_PALETTES_ACTIONS_H
+#define BN_BG_PALETTES_ACTIONS_H
 
 /**
  * @file
- * btn::bg_palettes actions header file.
+ * bn::bg_palettes actions header file.
  *
  * @ingroup bg
  * @ingroup palette
  * @ingroup action
  */
 
-#include "btn_fixed.h"
-#include "btn_bg_palettes.h"
-#include "btn_template_actions.h"
+#include "bn_fixed.h"
+#include "bn_bg_palettes.h"
+#include "bn_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // brightness
@@ -76,7 +76,7 @@ public:
     bg_palettes_brightness_to_action(int duration_updates, fixed final_brightness) :
         to_template_action(duration_updates, final_brightness)
     {
-        BTN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
+        BN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
     }
 
     /**
@@ -113,7 +113,7 @@ public:
     bg_palettes_brightness_loop_action(int duration_updates, fixed final_brightness) :
         loop_template_action(duration_updates, final_brightness)
     {
-        BTN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
+        BN_ASSERT(final_brightness >= 0 && final_brightness <= 1, "Invalid final brightness: ", final_brightness);
     }
 
     /**
@@ -149,7 +149,7 @@ public:
     bg_palettes_brightness_toggle_action(int duration_updates, fixed new_brightness) :
         toggle_template_action(duration_updates, new_brightness)
     {
-        BTN_ASSERT(new_brightness >= 0 && new_brightness <= 1, "Invalid new brightness: ", new_brightness);
+        BN_ASSERT(new_brightness >= 0 && new_brightness <= 1, "Invalid new brightness: ", new_brightness);
     }
 
     /**
@@ -216,7 +216,7 @@ public:
     bg_palettes_contrast_to_action(int duration_updates, fixed final_contrast) :
         to_template_action(duration_updates, final_contrast)
     {
-        BTN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
+        BN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
     }
 
     /**
@@ -253,7 +253,7 @@ public:
     bg_palettes_contrast_loop_action(int duration_updates, fixed final_contrast) :
         loop_template_action(duration_updates, final_contrast)
     {
-        BTN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
+        BN_ASSERT(final_contrast >= 0 && final_contrast <= 1, "Invalid final contrast: ", final_contrast);
     }
 
     /**
@@ -289,7 +289,7 @@ public:
     bg_palettes_contrast_toggle_action(int duration_updates, fixed new_contrast) :
         toggle_template_action(duration_updates, new_contrast)
     {
-        BTN_ASSERT(new_contrast >= 0 && new_contrast <= 1, "Invalid new contrast: ", new_contrast);
+        BN_ASSERT(new_contrast >= 0 && new_contrast <= 1, "Invalid new contrast: ", new_contrast);
     }
 
     /**
@@ -356,7 +356,7 @@ public:
     bg_palettes_intensity_to_action(int duration_updates, fixed final_intensity) :
         to_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -393,7 +393,7 @@ public:
     bg_palettes_intensity_loop_action(int duration_updates, fixed final_intensity) :
         loop_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -429,7 +429,7 @@ public:
     bg_palettes_intensity_toggle_action(int duration_updates, fixed new_intensity) :
         toggle_template_action(duration_updates, new_intensity)
     {
-        BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
     /**
@@ -552,7 +552,7 @@ public:
     bg_palettes_grayscale_to_action(int duration_updates, fixed final_intensity) :
         to_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -590,7 +590,7 @@ public:
     bg_palettes_grayscale_loop_action(int duration_updates, fixed final_intensity) :
         loop_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -626,7 +626,7 @@ public:
     bg_palettes_grayscale_toggle_action(int duration_updates, fixed new_intensity) :
         toggle_template_action(duration_updates, new_intensity)
     {
-        BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
     /**
@@ -694,7 +694,7 @@ public:
     bg_palettes_fade_to_action(int duration_updates, fixed final_intensity) :
         to_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -732,7 +732,7 @@ public:
     bg_palettes_fade_loop_action(int duration_updates, fixed final_intensity) :
         loop_template_action(duration_updates, final_intensity)
     {
-        BTN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
     }
 
     /**
@@ -768,7 +768,7 @@ public:
     bg_palettes_fade_toggle_action(int duration_updates, fixed new_intensity) :
         toggle_template_action(duration_updates, new_intensity)
     {
-        BTN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
     }
 
     /**

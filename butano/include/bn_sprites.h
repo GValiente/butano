@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITES_H
-#define BTN_SPRITES_H
+#ifndef BN_SPRITES_H
+#define BN_SPRITES_H
 
 /**
  * @file
- * btn::sprites header file.
+ * bn::sprites header file.
  *
  * @ingroup sprite
  */
 
-#include "../hw/include/btn_hw_sprites_constants.h"
+#include "../hw/include/bn_hw_sprites_constants.h"
 
 /**
  * @brief Sprites related functions.
  *
  * @ingroup sprite
  */
-namespace btn::sprites
+namespace bn::sprites
 {
     /**
      * @brief Returns the number of used sprite items created with sprite_ptr static constructors.

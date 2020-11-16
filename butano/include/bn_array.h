@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ARRAY_H
-#define BTN_ARRAY_H
+#ifndef BN_ARRAY_H
+#define BN_ARRAY_H
 
 /**
  * @file
- * btn::array implementation header file.
+ * bn::array implementation header file.
  *
  * @ingroup array
  */
 
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_array_fwd.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_array_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type, int Size>
@@ -37,8 +37,8 @@ public:
     using const_pointer = const Type*; //!< Const pointer alias.
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     /**
      * @brief Returns a const pointer to the beginning of the array.
@@ -197,7 +197,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
@@ -207,7 +207,7 @@ public:
      */
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
@@ -217,7 +217,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference at(size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
@@ -227,7 +227,7 @@ public:
      */
     [[nodiscard]] constexpr reference at(size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < Size, "Invalid index: ", index);
 
         return _data[index];
     }
@@ -269,7 +269,7 @@ public:
      */
     constexpr void fill(const_reference value)
     {
-        btn::fill(begin(), end(), value);
+        bn::fill(begin(), end(), value);
     }
 
     /**
@@ -283,7 +283,7 @@ public:
 
         for(size_type index = 0; index < Size; ++index)
         {
-            btn::swap(data[index], other_data[index]);
+            bn::swap(data[index], other_data[index]);
         }
     }
 
@@ -376,7 +376,7 @@ public:
 
 
 /**
- * @brief Creates a btn::array object from the given built-in array.
+ * @brief Creates a bn::array object from the given built-in array.
  *
  * @ingroup array
  */

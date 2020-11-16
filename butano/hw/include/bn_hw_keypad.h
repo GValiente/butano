@@ -3,25 +3,25 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_KEYPAD_H
-#define BTN_HW_KEYPAD_H
+#ifndef BN_HW_KEYPAD_H
+#define BN_HW_KEYPAD_H
 
-#include "btn_span.h"
-#include "btn_keypad.h"
-#include "btn_hw_tonc.h"
+#include "bn_span.h"
+#include "bn_keypad.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::keypad
+namespace bn::hw::keypad
 {
     [[nodiscard]] inline unsigned get()
     {
         return ~REG_KEYINPUT & KEY_MASK;
     }
 
-    inline void set_interrupt(const span<const btn::keypad::key_type>& keys)
+    inline void set_interrupt(const span<const bn::keypad::key_type>& keys)
     {
         unsigned p1_cnt = BIT(14) | BIT(15);
 
-        for(btn::keypad::key_type key : keys)
+        for(bn::keypad::key_type key : keys)
         {
             p1_cnt |= unsigned(key);
         }

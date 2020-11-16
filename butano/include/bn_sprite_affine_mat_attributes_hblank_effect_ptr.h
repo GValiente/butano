@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_HBLANK_EFFECT_PTR_H
-#define BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#ifndef BN_SPRITE_AFFINE_MAT_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#define BN_SPRITE_AFFINE_MAT_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::sprite_affine_mat_attributes_hblank_effect_ptr header file.
+ * bn::sprite_affine_mat_attributes_hblank_effect_ptr header file.
  *
  * @ingroup sprite
  * @ingroup affine_mat
  * @ingroup hblank_effect
  */
 
-#include "btn_sprite_affine_mat_pa_register_hblank_effect_ptr.h"
-#include "btn_sprite_affine_mat_pb_register_hblank_effect_ptr.h"
-#include "btn_sprite_affine_mat_pc_register_hblank_effect_ptr.h"
-#include "btn_sprite_affine_mat_pd_register_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_pc_register_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_pd_register_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

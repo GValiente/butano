@@ -3,16 +3,16 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
-#define BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#define BN_SPRITE_AFFINE_SECOND_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any.h"
-#include "btn_sprite_affine_second_attributes.h"
-#include "btn_sprites_manager.h"
-#include "btn_sprite_second_attributes_last_value.h"
-#include "../hw/include/btn_hw_sprites.h"
+#include "bn_any.h"
+#include "bn_sprite_affine_second_attributes.h"
+#include "bn_sprites_manager.h"
+#include "bn_sprite_second_attributes_last_value.h"
+#include "../hw/include/bn_hw_sprites.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_affine_second_attributes_hblank_effect_handler
@@ -32,7 +32,7 @@ public:
 
     [[nodiscard]] static bool target_updated(int target_id, iany& target_last_value)
     {
-        BTN_ASSERT(sprites_manager::affine_mat(reinterpret_cast<void*>(target_id)), "Sprite is not affine");
+        BN_ASSERT(sprites_manager::affine_mat(reinterpret_cast<void*>(target_id)), "Sprite is not affine");
 
         sprite_second_attributes_last_value& last_value = target_last_value.value<sprite_second_attributes_last_value>();
         sprite_second_attributes_last_value new_value(target_id);

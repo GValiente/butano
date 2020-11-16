@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CAMERA_ACTIONS_H
-#define BTN_CAMERA_ACTIONS_H
+#ifndef BN_CAMERA_ACTIONS_H
+#define BN_CAMERA_ACTIONS_H
 
 /**
  * @file
- * btn::camera_ptr actions header file.
+ * bn::camera_ptr actions header file.
  *
  * @ingroup camera
  * @ingroup action
  */
 
-#include "btn_camera_ptr.h"
-#include "btn_fixed_point.h"
-#include "btn_value_template_actions.h"
+#include "bn_camera_ptr.h"
+#include "bn_fixed_point.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // position

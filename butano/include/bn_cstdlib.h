@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CSTDLIB_H
-#define BTN_CSTDLIB_H
+#ifndef BN_CSTDLIB_H
+#define BN_CSTDLIB_H
 
 /**
  * @file
@@ -13,9 +13,9 @@
  * @ingroup std
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Allocates size bytes of uninitialized storage in the EWRAM.
@@ -27,7 +27,7 @@ namespace btn
     [[nodiscard]] void* malloc(int bytes);
 
     /**
-     * @brief Deallocates the space previously allocated in the EWRAM by btn::malloc.
+     * @brief Deallocates the space previously allocated in the EWRAM by bn::malloc.
      * @param ptr Pointer to the memory to deallocate.
      *
      * If ptr is a null pointer, the function does nothing.

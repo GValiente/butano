@@ -6,12 +6,12 @@
 #ifndef BF_GAME_ENEMY_H
 #define BF_GAME_ENEMY_H
 
-#include "btn_sprite_actions.h"
-#include "btn_sprite_palette_ptr.h"
-#include "btn_sprite_animate_actions.h"
+#include "bn_sprite_actions.h"
+#include "bn_sprite_palette_ptr.h"
+#include "bn_sprite_animate_actions.h"
 #include "bf_game_explosion.h"
 
-namespace btn
+namespace bn
 {
     class fixed_rect;
 }
@@ -28,10 +28,10 @@ class enemy
 {
 
 public:
-    enemy(const enemy_event& event, const btn::sprite_palette_ptr& damage_palette, int8_t tag,
-          const btn::camera_ptr& camera);
+    enemy(const enemy_event& event, const bn::sprite_palette_ptr& damage_palette, int8_t tag,
+          const bn::camera_ptr& camera);
 
-    [[nodiscard]] btn::fixed_point top_left() const;
+    [[nodiscard]] bn::fixed_point top_left() const;
 
     [[nodiscard]] int grid_columns() const
     {
@@ -68,28 +68,28 @@ public:
         return _tag;
     }
 
-    [[nodiscard]] bool check_hero(const btn::fixed_rect& hero_rect) const;
+    [[nodiscard]] bool check_hero(const bn::fixed_rect& hero_rect) const;
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);
 
-    void check_hero_bomb(const btn::point& bomb_center, int bomb_squared_radius, const btn::camera_ptr& camera);
+    void check_hero_bomb(const bn::point& bomb_center, int bomb_squared_radius, const bn::camera_ptr& camera);
 
     [[nodiscard]] bool done() const;
 
-    void update(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, enemy_bullets& enemy_bullets);
+    void update(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, enemy_bullets& enemy_bullets);
 
 private:
     const enemy_event* _event;
-    btn::sprite_ptr _sprite;
-    btn::sprite_move_by_action _move_action;
-    btn::sprite_animate_action<4> _animate_action;
-    btn::optional<btn::sprite_rotate_by_action> _rotate_action;
-    btn::optional<btn::sprite_horizontal_scale_to_action> _horizontal_scale_action;
-    btn::optional<btn::sprite_vertical_scale_to_action> _vertical_scale_action;
-    btn::optional<btn::sprite_animate_action<7>> _mini_explosion;
-    btn::optional<explosion> _explosion;
-    btn::sprite_palette_ptr _sprite_palette;
-    btn::sprite_palette_ptr _damage_palette;
+    bn::sprite_ptr _sprite;
+    bn::sprite_move_by_action _move_action;
+    bn::sprite_animate_action<4> _animate_action;
+    bn::optional<bn::sprite_rotate_by_action> _rotate_action;
+    bn::optional<bn::sprite_horizontal_scale_to_action> _horizontal_scale_action;
+    bn::optional<bn::sprite_vertical_scale_to_action> _vertical_scale_action;
+    bn::optional<bn::sprite_animate_action<7>> _mini_explosion;
+    bn::optional<explosion> _explosion;
+    bn::sprite_palette_ptr _sprite_palette;
+    bn::sprite_palette_ptr _damage_palette;
     int16_t _life;
     int16_t _move_event_counter;
     int16_t _bullet_event_counter;
@@ -105,10 +105,10 @@ private:
 
     [[nodiscard]] bool _is_outside() const;
 
-    void _add_damage(const btn::fixed_point& enemy_position, btn::fixed attack_x, int damage,
-                     const btn::camera_ptr& camera);
+    void _add_damage(const bn::fixed_point& enemy_position, bn::fixed attack_x, int damage,
+                     const bn::camera_ptr& camera);
 
-    void _show_rotate_death(const btn::fixed_point& enemy_position, btn::fixed attack_x);
+    void _show_rotate_death(const bn::fixed_point& enemy_position, bn::fixed attack_x);
 };
 
 }

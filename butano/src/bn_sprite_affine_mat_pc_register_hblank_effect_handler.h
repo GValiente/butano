@@ -3,16 +3,16 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_MAT_PC_REGISTER_HBLANK_EFFECT_HANDLER_H
-#define BTN_SPRITE_AFFINE_MAT_PC_REGISTER_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_SPRITE_AFFINE_MAT_PC_REGISTER_HBLANK_EFFECT_HANDLER_H
+#define BN_SPRITE_AFFINE_MAT_PC_REGISTER_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_memory.h"
-#include "btn_display.h"
-#include "btn_any_fwd.h"
-#include "btn_sprite_affine_mats_manager.h"
-#include "../hw/include/btn_hw_sprite_affine_mats.h"
+#include "bn_memory.h"
+#include "bn_display.h"
+#include "bn_any_fwd.h"
+#include "bn_sprite_affine_mats_manager.h"
+#include "../hw/include/bn_hw_sprite_affine_mats.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_affine_mat_pc_register_attributes_hblank_effect_handler

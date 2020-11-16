@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_VECTOR_FWD_H
-#define BTN_VECTOR_FWD_H
+#ifndef BN_VECTOR_FWD_H
+#define BN_VECTOR_FWD_H
 
 /**
  * @file
- * btn::ivector and btn::vector declaration header file.
+ * bn::ivector and bn::vector declaration header file.
  *
  * @ingroup vector
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of vector.

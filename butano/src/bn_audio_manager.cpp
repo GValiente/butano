@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_audio_manager.h"
+#include "bn_audio_manager.h"
 
-#include "btn_vector.h"
-#include "btn_config_audio.h"
-#include "../hw/include/btn_hw_audio.h"
+#include "bn_vector.h"
+#include "bn_config_audio.h"
+#include "../hw/include/bn_hw_audio.h"
 
-#include "btn_music.cpp.h"
-#include "btn_sound.cpp.h"
-#include "btn_music_item.cpp.h"
-#include "btn_sound_item.cpp.h"
+#include "bn_music.cpp.h"
+#include "bn_sound.cpp.h"
+#include "bn_music_item.cpp.h"
+#include "bn_sound_item.cpp.h"
 
-namespace btn::audio_manager
+namespace bn::audio_manager
 {
 
 namespace
 {
-    static_assert(BTN_CFG_AUDIO_MAX_COMMANDS > 2, "Invalid max audio commands");
+    static_assert(BN_CFG_AUDIO_MAX_COMMANDS > 2, "Invalid max audio commands");
 
 
     class command
@@ -113,7 +113,7 @@ namespace
                 return;
 
             default:
-                BTN_ERROR("Invalid type: ", int(_type));
+                BN_ERROR("Invalid type: ", int(_type));
                 return;
             }
         }
@@ -158,14 +158,14 @@ namespace
     {
 
     public:
-        vector<command, BTN_CFG_AUDIO_MAX_COMMANDS> commands;
+        vector<command, BN_CFG_AUDIO_MAX_COMMANDS> commands;
         fixed music_volume;
         int music_position = 0;
         bool music_playing = false;
         bool music_paused = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
 
     int _hw_music_volume(fixed volume)
@@ -211,8 +211,8 @@ bool music_playing()
 
 void play_music(music_item item, fixed volume, bool loop)
 {
-    BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_play(item, loop, _hw_music_volume(volume)));
     data.music_volume = volume;
@@ -222,8 +222,8 @@ void play_music(music_item item, fixed volume, bool loop)
 
 void stop_music()
 {
-    BTN_ASSERT(data.music_playing, "There's no music playing");
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_stop());
     data.music_playing = false;
@@ -237,9 +237,9 @@ bool music_paused()
 
 void pause_music()
 {
-    BTN_ASSERT(data.music_playing, "There's no music playing");
-    BTN_ASSERT(! data.music_paused, "Music was already paused");
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(! data.music_paused, "Music was already paused");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_pause());
     data.music_paused = true;
@@ -247,8 +247,8 @@ void pause_music()
 
 void resume_music()
 {
-    BTN_ASSERT(data.music_paused, "Music was not paused");
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(data.music_paused, "Music was not paused");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_resume());
     data.music_paused = false;
@@ -256,16 +256,16 @@ void resume_music()
 
 int music_position()
 {
-    BTN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
 
     return data.music_position;
 }
 
 void set_music_position(int position)
 {
-    BTN_ASSERT(position >= 0, "Invalid position: ", position);
-    BTN_ASSERT(data.music_playing, "There's no music playing");
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(position >= 0, "Invalid position: ", position);
+    BN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_set_position(position));
     data.music_position = position;
@@ -273,16 +273,16 @@ void set_music_position(int position)
 
 fixed music_volume()
 {
-    BTN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
 
     return data.music_volume;
 }
 
 void set_music_volume(fixed volume)
 {
-    BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
-    BTN_ASSERT(data.music_playing, "There's no music playing");
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_ASSERT(data.music_playing, "There's no music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_set_volume(_hw_music_volume(volume)));
     data.music_volume = volume;
@@ -290,19 +290,19 @@ void set_music_volume(fixed volume)
 
 void play_sound(int priority, sound_item item)
 {
-    BTN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::sound_play(priority, item));
 }
 
 void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning)
 {
-    BTN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
-    BTN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
-    BTN_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0..64]: ", speed);
-    BTN_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1..1]: ", panning);
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0..64]: ", speed);
+    BN_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1..1]: ", panning);
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::sound_play(priority, item, _hw_sound_volume(volume), _hw_sound_speed(speed),
                                                 _hw_sound_panning(panning)));
@@ -310,7 +310,7 @@ void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed 
 
 void stop_all_sounds()
 {
-    BTN_ASSERT(! data.commands.full(), "No more audio commands available");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::sound_stop_all());
 }

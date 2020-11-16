@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_TILES_PTR_H
-#define BTN_BG_TILES_PTR_H
+#ifndef BN_BG_TILES_PTR_H
+#define BN_BG_TILES_PTR_H
 
 /**
  * @file
- * btn::bg_tiles_ptr header file.
+ * bn::bg_tiles_ptr header file.
  *
  * @ingroup bg
  * @ingroup tile
  */
 
-#include "btn_utility.h"
-#include "btn_span_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_span_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class tile;
@@ -215,7 +215,7 @@ public:
      */
     bg_tiles_ptr& operator=(bg_tiles_ptr&& other) noexcept
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
         return *this;
     }
 
@@ -307,7 +307,7 @@ public:
      */
     void swap(bg_tiles_ptr& other)
     {
-        btn::swap(_handle, other._handle);
+        bn::swap(_handle, other._handle);
     }
 
     /**
@@ -317,7 +317,7 @@ public:
      */
     friend void swap(bg_tiles_ptr& a, bg_tiles_ptr& b)
     {
-        btn::swap(a._handle, b._handle);
+        bn::swap(a._handle, b._handle);
     }
 
     /**

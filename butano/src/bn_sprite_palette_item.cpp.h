@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_palette_item.h"
+#include "bn_sprite_palette_item.h"
 
-#include "btn_optional.h"
-#include "btn_sprite_palette_ptr.h"
+#include "bn_optional.h"
+#include "bn_sprite_palette_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 optional<sprite_palette_ptr> sprite_palette_item::find_palette() const

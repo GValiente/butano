@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_TILES_H
-#define BTN_BG_TILES_H
+#ifndef BN_BG_TILES_H
+#define BN_BG_TILES_H
 
 /**
  * @file
- * btn::bg_tiles header file.
+ * bn::bg_tiles header file.
  *
  * @ingroup bg
  * @ingroup tile
  */
 
-#include "btn_config_log.h"
-#include "btn_config_doxygen.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 /**
  * @brief Background tiles related functions.
@@ -23,7 +23,7 @@
  * @ingroup bg
  * @ingroup tile
  */
-namespace btn::bg_tiles
+namespace bn::bg_tiles
 {
     /**
      * @brief Returns the number of used background tiles managed with bg_tiles_ptr objects.
@@ -46,7 +46,7 @@ namespace btn::bg_tiles
      */
     [[nodiscard]] int available_blocks_count();
 
-    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**
          * @brief Logs the current status of the background blocks manager.
          */

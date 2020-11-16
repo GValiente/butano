@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_HBLANK_EFFECTS_H
-#define BTN_CONFIG_HBLANK_EFFECTS_H
+#ifndef BN_CONFIG_HBLANK_EFFECTS_H
+#define BN_CONFIG_HBLANK_EFFECTS_H
 
 /**
  * @file
@@ -13,17 +13,17 @@
  * @ingroup hblank_effect
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS
+ * @def BN_CFG_HBLANK_EFFECTS_MAX_ITEMS
  *
  * Specifies the maximum number of active H-Blank effects.
  *
  * @ingroup hblank_effect
  */
-#ifndef BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS
-    #define BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS 8
+#ifndef BN_CFG_HBLANK_EFFECTS_MAX_ITEMS
+    #define BN_CFG_HBLANK_EFFECTS_MAX_ITEMS 8
 #endif
 
 #endif

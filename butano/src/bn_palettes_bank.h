@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_PALETTES_BANK_H
-#define BTN_PALETTES_BANK_H
+#ifndef BN_PALETTES_BANK_H
+#define BN_PALETTES_BANK_H
 
-#include "btn_span.h"
-#include "btn_fixed.h"
-#include "btn_color.h"
-#include "btn_optional.h"
-#include "btn_config_log.h"
-#include "btn_unordered_map.h"
-#include "../hw/include/btn_hw_palettes.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
+#include "bn_color.h"
+#include "bn_optional.h"
+#include "bn_config_log.h"
+#include "bn_unordered_map.h"
+#include "../hw/include/bn_hw_palettes.h"
 
-namespace btn
+namespace bn
 {
 
 enum class palette_bpp_mode;
@@ -41,7 +41,7 @@ public:
         return hw::palettes::colors() - used_colors_count();
     }
 
-    #if BTN_CFG_LOG_ENABLED
+    #if BN_CFG_LOG_ENABLED
         void log_status() const;
     #endif
 

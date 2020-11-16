@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_STRING_H
-#define BTN_STRING_H
+#ifndef BN_STRING_H
+#define BN_STRING_H
 
 /**
  * @file
- * btn::istring and btn::string implementation header file.
+ * bn::istring and bn::string implementation header file.
  *
  * @ingroup string
  */
 
-#include "btn_sstream.h"
-#include "btn_string_view.h"
+#include "bn_sstream.h"
+#include "bn_string_view.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -30,8 +30,8 @@ class istring : public istring_base
 {
 
 public:
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
 public:
     /**
@@ -127,7 +127,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -137,7 +137,7 @@ public:
      */
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -147,7 +147,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference at(size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -157,7 +157,7 @@ public:
      */
     [[nodiscard]] constexpr reference at(size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -167,7 +167,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
@@ -177,7 +177,7 @@ public:
      */
     [[nodiscard]] constexpr reference front()
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
@@ -187,7 +187,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
@@ -197,7 +197,7 @@ public:
      */
     [[nodiscard]] constexpr reference back()
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
@@ -209,9 +209,9 @@ public:
      */
     constexpr istring& assign(const istring_base& other)
     {
-        BTN_ASSERT(other.size() <= _max_size, "Not enough space in string: ", other.size(), " - ", _max_size);
+        BN_ASSERT(other.size() <= _max_size, "Not enough space in string: ", other.size(), " - ", _max_size);
 
-        btn::copy(other.begin(), other.end(), begin());
+        bn::copy(other.begin(), other.end(), begin());
         _size = other.size();
         _data[_size] = 0;
         return *this;
@@ -236,9 +236,9 @@ public:
      */
     constexpr istring& assign(const string_view& view)
     {
-        BTN_ASSERT(view.size() <= _max_size, "Not enough space in string: ", view.size(), " - ", _max_size);
+        BN_ASSERT(view.size() <= _max_size, "Not enough space in string: ", view.size(), " - ", _max_size);
 
-        btn::copy(view.begin(), view.end(), begin());
+        bn::copy(view.begin(), view.end(), begin());
         _size = view.size();
         _data[_size] = 0;
         return *this;
@@ -284,7 +284,7 @@ public:
      */
     constexpr void push_back(value_type value)
     {
-        BTN_ASSERT(! full(), "String is full");
+        BN_ASSERT(! full(), "String is full");
 
         pointer data = _data + _size;
         data[0] = value;
@@ -297,7 +297,7 @@ public:
      */
     constexpr void pop_back()
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         --_size;
         _data[_size] = 0;
@@ -367,8 +367,8 @@ public:
      */
     constexpr istring& append(size_type count, value_type value)
     {
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-        BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
+        BN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
         fill(append_position, append_position + count, value);
@@ -386,14 +386,14 @@ public:
     constexpr istring& append(const_iterator first, const_iterator last)
     {
         size_type count = last - first;
-        BTN_ASSERT(count >= 0, "Invalid range");
-        BTN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
+        BN_ASSERT(count >= 0, "Invalid range");
+        BN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
 
         if(append_position <= first)
         {
-            btn::copy(first, last, append_position);
+            bn::copy(first, last, append_position);
         }
         else
         {
@@ -412,10 +412,10 @@ public:
      */
     constexpr iterator erase(const_iterator position)
     {
-        BTN_ASSERT(! empty(), "String is empty");
+        BN_ASSERT(! empty(), "String is empty");
 
         auto erase_position = const_cast<iterator>(position);
-        btn::copy(erase_position + 1, end(), erase_position);
+        bn::copy(erase_position + 1, end(), erase_position);
         --_size;
         _data[_size] = 0;
         return erase_position;
@@ -434,12 +434,12 @@ public:
     constexpr iterator erase(const_iterator first, const_iterator last)
     {
         size_type count = last - first;
-        BTN_ASSERT(count >= 0, "Invalid range");
-        BTN_ASSERT(count <= _size, "Invalid range: ", count, " - ", _size);
+        BN_ASSERT(count >= 0, "Invalid range");
+        BN_ASSERT(count <= _size, "Invalid range: ", count, " - ", _size);
 
         auto erase_first = const_cast<iterator>(first);
         auto erase_last = const_cast<iterator>(last);
-        btn::copy(erase_last, end(), erase_first);
+        bn::copy(erase_last, end(), erase_first);
         _size -= count;
         _data[_size] = 0;
         return erase_first;
@@ -563,8 +563,8 @@ public:
     {
         if(_data != other._data)
         {
-            BTN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
-            BTN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
+            BN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
+            BN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
 
             pointer min_data = nullptr;
             pointer max_data = nullptr;
@@ -588,7 +588,7 @@ public:
 
             for(size_type index = 0; index < min_size; ++index)
             {
-                btn::swap(min_data[index], max_data[index]);
+                bn::swap(min_data[index], max_data[index]);
             }
 
             for(size_type index = min_size; index < max_size; ++index)
@@ -596,7 +596,7 @@ public:
                 min_data[index] = max_data[index];
             }
 
-            btn::swap(_size, other._size);
+            bn::swap(_size, other._size);
             _data[_size] = 0;
             other._data[other._size] = 0;
         }

@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_green_swap.h"
+#include "bn_green_swap.h"
 
-#include "btn_display_manager.h"
+#include "bn_display_manager.h"
 
-namespace btn::green_swap
+namespace bn::green_swap
 {
 
 bool enabled()

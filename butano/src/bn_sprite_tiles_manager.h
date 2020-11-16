@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_TILES_MANAGER_H
-#define BTN_SPRITE_TILES_MANAGER_H
+#ifndef BN_SPRITE_TILES_MANAGER_H
+#define BN_SPRITE_TILES_MANAGER_H
 
-#include "btn_span_fwd.h"
-#include "btn_config_log.h"
-#include "btn_optional_fwd.h"
+#include "bn_span_fwd.h"
+#include "bn_config_log.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
     class tile;
 }
 
-namespace btn::sprite_tiles_manager
+namespace bn::sprite_tiles_manager
 {
     void init();
 
@@ -27,7 +27,7 @@ namespace btn::sprite_tiles_manager
 
     [[nodiscard]] int available_items_count();
 
-    #if BTN_CFG_LOG_ENABLED
+    #if BN_CFG_LOG_ENABLED
         void log_status();
     #endif
 

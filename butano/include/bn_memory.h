@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MEMORY_H
-#define BTN_MEMORY_H
+#ifndef BN_MEMORY_H
+#define BN_MEMORY_H
 
 /**
  * @file
- * btn::unique_ptr and memory functions header file.
+ * bn::unique_ptr and memory functions header file.
  *
  * @ingroup unique_ptr
  * @ingroup memory
  */
 
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_alignment.h"
-#include "btn_functional.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_alignment.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -151,7 +151,7 @@ public:
      */
     [[nodiscard]] const Type& operator*() const
     {
-        BTN_ASSERT(_ptr, "Managed pointer is null");
+        BN_ASSERT(_ptr, "Managed pointer is null");
 
         return *_ptr;
     }
@@ -161,7 +161,7 @@ public:
      */
     [[nodiscard]] reference operator*()
     {
-        BTN_ASSERT(_ptr, "Managed pointer is null");
+        BN_ASSERT(_ptr, "Managed pointer is null");
 
         return *_ptr;
     }
@@ -171,7 +171,7 @@ public:
      */
     [[nodiscard]] const Type* operator->() const
     {
-        BTN_ASSERT(_ptr, "Managed pointer is null");
+        BN_ASSERT(_ptr, "Managed pointer is null");
 
         return _ptr;
     }
@@ -181,7 +181,7 @@ public:
      */
     [[nodiscard]] pointer operator->()
     {
-        BTN_ASSERT(_ptr, "Managed pointer is null");
+        BN_ASSERT(_ptr, "Managed pointer is null");
 
         return _ptr;
     }
@@ -225,8 +225,8 @@ public:
      */
     void swap(unique_ptr& other)
     {
-        btn::swap(_ptr, other._ptr);
-        btn::swap(_deleter, other._deleter);
+        bn::swap(_ptr, other._ptr);
+        bn::swap(_deleter, other._deleter);
     }
 
     /**
@@ -424,7 +424,7 @@ struct hash<unique_ptr<Type, Deleter>>
 
 /// @cond DO_NOT_DOCUMENT
 
-namespace _btn::memory
+namespace _bn::memory
 {
     void unsafe_copy_bytes(const void* source, int bytes, void* destination);
 
@@ -447,7 +447,7 @@ namespace _btn::memory
  *
  * @ingroup memory
  */
-namespace btn::memory
+namespace bn::memory
 {
     /**
      * @brief Allocates uninitialized storage in EWRAM.
@@ -508,21 +508,21 @@ namespace btn::memory
     void copy(const Type& source_ref, int elements, Type& destination_ref)
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
-        BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
+        BN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
         if(aligned<4>(source_ref) && aligned<4>(destination_ref) && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
+            _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
         }
         else if(aligned<2>(source_ref) && aligned<2>(destination_ref) && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
+            _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
         }
         else
         {
-            _btn::memory::unsafe_copy_bytes(&source_ref, int(bytes), &destination_ref);
+            _bn::memory::unsafe_copy_bytes(&source_ref, int(bytes), &destination_ref);
         }
     }
 
@@ -536,21 +536,21 @@ namespace btn::memory
     void clear(int elements, Type& destination_ref)
     {
         static_assert(is_trivial<Type>(), "Type is not trivial");
-        BTN_ASSERT(elements >= 0, "Invalid elements: ", elements);
+        BN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
         if(aligned<4>(destination_ref) && bytes % 4 == 0)
         {
-            _btn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
+            _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
         }
         else if(aligned<2>(destination_ref) && bytes % 2 == 0)
         {
-            _btn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
+            _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
         }
         else
         {
-            _btn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
+            _bn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
         }
     }
 

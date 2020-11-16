@@ -5,27 +5,27 @@
 
 #include "info.h"
 
-#include "btn_keypad.h"
-#include "btn_display.h"
-#include "btn_sprite_text_generator.h"
+#include "bn_keypad.h"
+#include "bn_display.h"
+#include "bn_sprite_text_generator.h"
 
 namespace
 {
-    constexpr const btn::fixed y_inc = 14;
-    constexpr const btn::fixed start_y = (-btn::display::height() / 2) + y_inc + 1;
+    constexpr const bn::fixed y_inc = 14;
+    constexpr const bn::fixed start_y = (-bn::display::height() / 2) + y_inc + 1;
 }
 
-info::info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator) :
+info::info(const bn::span<const bn::string_view>& text_lines, bn::sprite_text_generator& text_generator) :
     info("", text_lines, text_generator)
 {
 }
 
-info::info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
-           btn::sprite_text_generator& text_generator)
+info::info(const bn::string_view& title, const bn::span<const bn::string_view>& text_lines,
+           bn::sprite_text_generator& text_generator)
 {
-    btn::fixed y = start_y;
+    bn::fixed y = start_y;
     text_generator.set_bg_priority(0);
-    text_generator.set_alignment(btn::sprite_text_generator::alignment_type::CENTER);
+    text_generator.set_alignment(bn::sprite_text_generator::alignment_type::CENTER);
 
     if(! title.empty())
     {
@@ -35,7 +35,7 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
 
     if(! text_lines.empty())
     {
-        btn::fixed info_y = start_y + (y_inc * 9);
+        bn::fixed info_y = start_y + (y_inc * 9);
 
         if(text_lines.size() == 1)
         {
@@ -45,7 +45,7 @@ info::info(const btn::string_view& title, const btn::span<const btn::string_view
         }
         else
         {
-            for(const btn::string_view& text_line : text_lines)
+            for(const bn::string_view& text_line : text_lines)
             {
                 text_generator.generate(0, y, text_line, _text_sprites);
                 y += y_inc;
@@ -72,7 +72,7 @@ void info::set_show_always(bool show_always)
 
 void info::update()
 {
-    if(! _show_always && btn::keypad::select_pressed())
+    if(! _show_always && bn::keypad::select_pressed())
     {
         _enabled = ! _enabled;
         _update_sprites();
@@ -104,17 +104,17 @@ void info::_update_sprites()
         }
     }
 
-    for(btn::sprite_ptr& sprite : _show_info_sprites)
+    for(bn::sprite_ptr& sprite : _show_info_sprites)
     {
         sprite.set_visible(show_show_info_sprites);
     }
 
-    for(btn::sprite_ptr& sprite : _hide_info_sprites)
+    for(bn::sprite_ptr& sprite : _hide_info_sprites)
     {
         sprite.set_visible(show_hide_info_sprites);
     }
 
-    for(btn::sprite_ptr& sprite : _text_sprites)
+    for(bn::sprite_ptr& sprite : _text_sprites)
     {
         sprite.set_visible(enabled);
     }

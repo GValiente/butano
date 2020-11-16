@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_THIRD_ATTRIBUTES_H
-#define BTN_SPRITE_THIRD_ATTRIBUTES_H
+#ifndef BN_SPRITE_THIRD_ATTRIBUTES_H
+#define BN_SPRITE_THIRD_ATTRIBUTES_H
 
 /**
  * @file
- * btn::sprite_third_attributes header file.
+ * bn::sprite_third_attributes header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_palette_ptr.h"
+#include "bn_sprite_tiles_ptr.h"
+#include "bn_sprite_palette_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

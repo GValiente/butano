@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_DEQUE_FWD_H
-#define BTN_DEQUE_FWD_H
+#ifndef BN_DEQUE_FWD_H
+#define BN_DEQUE_FWD_H
 
 /**
  * @file
- * btn::ideque and btn::deque declaration header file.
+ * bn::ideque and bn::deque declaration header file.
  *
  * @ingroup deque
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of deque.

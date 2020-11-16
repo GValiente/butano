@@ -6,11 +6,11 @@
 #ifndef INFO_H
 #define INFO_H
 
-#include "btn_vector.h"
-#include "btn_span_fwd.h"
-#include "btn_sprite_ptr.h"
+#include "bn_vector.h"
+#include "bn_span_fwd.h"
+#include "bn_sprite_ptr.h"
 
-namespace btn
+namespace bn
 {
     class string_view;
     class sprite_text_generator;
@@ -20,10 +20,10 @@ class info
 {
 
 public:
-    info(const btn::span<const btn::string_view>& text_lines, btn::sprite_text_generator& text_generator);
+    info(const bn::span<const bn::string_view>& text_lines, bn::sprite_text_generator& text_generator);
 
-    info(const btn::string_view& title, const btn::span<const btn::string_view>& text_lines,
-         btn::sprite_text_generator& text_generator);
+    info(const bn::string_view& title, const bn::span<const bn::string_view>& text_lines,
+         bn::sprite_text_generator& text_generator);
 
     [[nodiscard]] bool show_always() const
     {
@@ -35,10 +35,10 @@ public:
     void update();
 
 private:
-    btn::vector<btn::sprite_ptr, 8> _title_sprites;
-    btn::vector<btn::sprite_ptr, 48> _text_sprites;
-    btn::vector<btn::sprite_ptr, 4> _hide_info_sprites;
-    btn::vector<btn::sprite_ptr, 4> _show_info_sprites;
+    bn::vector<bn::sprite_ptr, 8> _title_sprites;
+    bn::vector<bn::sprite_ptr, 48> _text_sprites;
+    bn::vector<bn::sprite_ptr, 4> _hide_info_sprites;
+    bn::vector<bn::sprite_ptr, 4> _show_info_sprites;
     bool _show_always = false;
     bool _enabled = false;
 

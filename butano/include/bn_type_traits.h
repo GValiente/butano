@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TYPE_TRAITS_H
-#define BTN_TYPE_TRAITS_H
+#ifndef BN_TYPE_TRAITS_H
+#define BN_TYPE_TRAITS_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <type_traits>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::remove_reference;
     using std::remove_reference_t;

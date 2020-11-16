@@ -1,6 +1,6 @@
 #include "polygon_sprite.h"
 
-#include "../../butano/hw/include/btn_hw_sprites.h"
+#include "../../butano/hw/include/bn_hw_sprites.h"
 
 void polygon_sprite::_draw_not_horizontal_line(bool left, int x0, int y0, int x1, int y1, hline* hlines)
 {
@@ -8,8 +8,8 @@ void polygon_sprite::_draw_not_horizontal_line(bool left, int x0, int y0, int x1
 
     if(y0 > y1)
     {
-        btn::swap(x0, x1);
-        btn::swap(y0, y1);
+        bn::swap(x0, x1);
+        bn::swap(y0, y1);
     }
 
     hline* current_hline = hlines + y0;
@@ -256,8 +256,8 @@ void polygon_sprite::_draw_right_line_octant_1(int x0, int y0, int delta_x, int 
 void polygon_sprite::_setup_attributes(const void* base_sprite_handle_ptr, const hline* hlines, int z_order,
                                        int max_polygon_sprites, int minimum_y, int maximum_y, uint16_t* hdma_source)
 {
-    auto typed_base_sprite_handle_ptr = static_cast<const btn::hw::sprites::handle_type*>(base_sprite_handle_ptr);
-    btn::hw::sprites::handle_type base_sprite_handle = *typed_base_sprite_handle_ptr;
+    auto typed_base_sprite_handle_ptr = static_cast<const bn::hw::sprites::handle_type*>(base_sprite_handle_ptr);
+    bn::hw::sprites::handle_type base_sprite_handle = *typed_base_sprite_handle_ptr;
     uint16_t* sprite_hdma_source = hdma_source + (z_order * 4);
     sprite_hdma_source += minimum_y * max_polygon_sprites * 4;
 
@@ -270,14 +270,14 @@ void polygon_sprite::_setup_attributes(const void* base_sprite_handle_ptr, const
         if(length > 0)
         {
             sprite_hdma_source[0] = base_sprite_handle.attr0;
-            btn::hw::sprites::set_y(index - length + 1, sprite_hdma_source[0]);
+            bn::hw::sprites::set_y(index - length + 1, sprite_hdma_source[0]);
             sprite_hdma_source[1] = base_sprite_handle.attr1;
-            btn::hw::sprites::set_x(ixl, sprite_hdma_source[1]);
+            bn::hw::sprites::set_x(ixl, sprite_hdma_source[1]);
             sprite_hdma_source[2] = base_sprite_handle.attr2;
         }
         else
         {
-            btn::hw::sprites::hide(sprite_hdma_source[0]);
+            bn::hw::sprites::hide(sprite_hdma_source[0]);
         }
 
         sprite_hdma_source += max_polygon_sprites * 4;

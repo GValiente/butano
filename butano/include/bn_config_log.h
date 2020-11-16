@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_LOG_H
-#define BTN_CONFIG_LOG_H
+#ifndef BN_CONFIG_LOG_H
+#define BN_CONFIG_LOG_H
 
 /**
  * @file
@@ -13,41 +13,41 @@
  * @ingroup log
  */
 
-#include "btn_log_backend.h"
+#include "bn_log_backend.h"
 
 /**
- * @def BTN_CFG_LOG_ENABLED
+ * @def BN_CFG_LOG_ENABLED
  *
  * Specifies if logging is enabled or not.
  *
  * @ingroup log
  */
-#ifndef BTN_CFG_LOG_ENABLED
-    #define BTN_CFG_LOG_ENABLED true
+#ifndef BN_CFG_LOG_ENABLED
+    #define BN_CFG_LOG_ENABLED true
 #endif
 
 /**
- * @def BTN_CFG_LOG_BACKEND
+ * @def BN_CFG_LOG_BACKEND
  *
  * Specifies if emulator logging is enabled or not.
  *
- * Values not specified in BTN_LOG_BACKEND_* macros are not allowed.
+ * Values not specified in BN_LOG_BACKEND_* macros are not allowed.
  *
  * @ingroup log
  */
-#ifndef BTN_CFG_LOG_BACKEND
-    #define BTN_CFG_LOG_BACKEND BTN_LOG_BACKEND_MGBA
+#ifndef BN_CFG_LOG_BACKEND
+    #define BN_CFG_LOG_BACKEND BN_LOG_BACKEND_MGBA
 #endif
 
 /**
- * @def BTN_CFG_LOG_MAX_SIZE
+ * @def BN_CFG_LOG_MAX_SIZE
  *
- * Specifies the maximum number of characters that can be logged with one BTN_LOG call.
+ * Specifies the maximum number of characters that can be logged with one BN_LOG call.
  *
  * @ingroup log
  */
-#ifndef BTN_CFG_LOG_MAX_SIZE
-    #define BTN_CFG_LOG_MAX_SIZE 0x100
+#ifndef BN_CFG_LOG_MAX_SIZE
+    #define BN_CFG_LOG_MAX_SIZE 0x100
 #endif
 
 #endif

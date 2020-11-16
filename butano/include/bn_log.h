@@ -3,36 +3,36 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_LOG_H
-#define BTN_LOG_H
+#ifndef BN_LOG_H
+#define BN_LOG_H
 
 /**
  * @file
- * BTN_LOG header file.
+ * BN_LOG header file.
  *
  * @ingroup log
  */
 
-#include "btn_config_log.h"
-#include "btn_config_doxygen.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 /**
- * @def BTN_LOG(...)
+ * @def BN_LOG(...)
  *
  * Prints in one line of text the representation of the given parameters.
  *
  * Example:
  *
  * @code{.cpp}
- * BTN_LOG("Invalid integer: ", integer);
+ * BN_LOG("Invalid integer: ", integer);
  * @endcode
  *
- * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+ * Custom parameter types are supported by overloading bn::ostringstream::operator<<.
  *
  * Example:
  *
  * @code{.cpp}
- * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+ * bn::ostringstream& operator<<(bn::ostringstream& stream, const custom_type& custom_value)
  * {
  *     stream.append("custom_type: ");
  *     stream.append(custom_value.data);
@@ -43,21 +43,21 @@
  * @ingroup log
  */
 
-#if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
-    #include "btn_sstream.h"
-    #include "btn_istring_base.h"
+#if BN_CFG_LOG_ENABLED || BN_DOXYGEN
+    #include "bn_sstream.h"
+    #include "bn_istring_base.h"
 
-    #define BTN_LOG(...) \
+    #define BN_LOG(...) \
         do \
         { \
-            char _btn_string[BTN_CFG_LOG_MAX_SIZE]; \
-            btn::istring_base _btn_istring(_btn_string); \
-            btn::ostringstream _btn_string_stream(_btn_istring); \
-            _btn_string_stream.append_args(__VA_ARGS__); \
-            btn::log(_btn_istring); \
+            char _bn_string[BN_CFG_LOG_MAX_SIZE]; \
+            bn::istring_base _bn_istring(_bn_string); \
+            bn::ostringstream _bn_string_stream(_bn_istring); \
+            _bn_string_stream.append_args(__VA_ARGS__); \
+            bn::log(_bn_istring); \
         } while(false)
 
-    namespace btn
+    namespace bn
     {
         /**
          * @brief Prints in one line of text the given message.
@@ -67,7 +67,7 @@
         void log(const istring_base& message);
     }
 #else
-    #define BTN_LOG(...) \
+    #define BN_LOG(...) \
         do \
         { \
         } while(false)

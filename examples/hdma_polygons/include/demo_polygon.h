@@ -3,7 +3,7 @@
 
 #include "polygon_actions.h"
 
-namespace btn
+namespace bn
 {
     class random;
 }
@@ -12,14 +12,14 @@ class demo_polygon : public polygon
 {
 
 public:
-    demo_polygon(btn::fixed x, btn::fixed y);
+    demo_polygon(bn::fixed x, bn::fixed y);
 
-    void update(btn::random& random);
+    void update(bn::random& random);
 
 private:
-    btn::vector<polygon_vertex_move_to_action, 4> _vertex_actions;
-    btn::fixed _x;
-    btn::fixed _y;
+    bn::vector<polygon_vertex_move_to_action, 4> _vertex_actions;
+    bn::fixed _x;
+    bn::fixed _y;
 };
 
 #endif

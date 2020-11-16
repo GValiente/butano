@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_log.h"
+#include "bn_log.h"
 
-#if BTN_CFG_LOG_ENABLED
-    #include "../hw/include/btn_hw_log.h"
+#if BN_CFG_LOG_ENABLED
+    #include "../hw/include/bn_hw_log.h"
 
-    namespace btn
+    namespace bn
     {
-        static_assert(BTN_CFG_LOG_MAX_SIZE >= 16);
+        static_assert(BN_CFG_LOG_MAX_SIZE >= 16);
 
         void log(const istring_base& message)
         {

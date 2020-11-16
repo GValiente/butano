@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ITERATOR_H
-#define BTN_ITERATOR_H
+#ifndef BN_ITERATOR_H
+#define BN_ITERATOR_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <iterator>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::forward_iterator_tag;
 

@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_DISPLAY_H
-#define BTN_DISPLAY_H
+#ifndef BN_DISPLAY_H
+#define BN_DISPLAY_H
 
 /**
  * @file
- * btn::display header file.
+ * bn::display header file.
  *
  * @ingroup display
  */
 
-#include "../hw/include/btn_hw_display_constants.h"
+#include "../hw/include/bn_hw_display_constants.h"
 
 /**
  * @brief Display related functions.
  *
  * @ingroup display
  */
-namespace btn::display
+namespace bn::display
 {
     /**
      * @brief Returns the screen width in pixels (240).

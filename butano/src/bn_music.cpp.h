@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_music.h"
+#include "bn_music.h"
 
-#include "btn_fixed.h"
-#include "btn_music_item.h"
-#include "btn_audio_manager.h"
+#include "bn_fixed.h"
+#include "bn_music_item.h"
+#include "bn_audio_manager.h"
 
-namespace btn::music
+namespace bn::music
 {
 
 bool playing()

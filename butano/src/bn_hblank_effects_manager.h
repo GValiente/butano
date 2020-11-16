@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HBLANK_EFFECTS_MANAGER_H
-#define BTN_HBLANK_EFFECTS_MANAGER_H
+#ifndef BN_HBLANK_EFFECTS_MANAGER_H
+#define BN_HBLANK_EFFECTS_MANAGER_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hblank_effects_manager
+namespace bn::hblank_effects_manager
 {
     enum class handler_type : uint8_t
     {

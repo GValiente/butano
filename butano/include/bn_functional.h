@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FUNCTIONAL_H
-#define BTN_FUNCTIONAL_H
+#ifndef BN_FUNCTIONAL_H
+#define BN_FUNCTIONAL_H
 
 /**
  * @file
@@ -13,9 +13,9 @@
  * @ingroup functional
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

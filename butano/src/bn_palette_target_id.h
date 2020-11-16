@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_PALETTE_TARGET_ID_H
-#define BTN_PALETTE_TARGET_ID_H
+#ifndef BN_PALETTE_TARGET_ID_H
+#define BN_PALETTE_TARGET_ID_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 struct palette_target_id

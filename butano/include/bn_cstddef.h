@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CSTDDEF_H
-#define BTN_CSTDDEF_H
+#ifndef BN_CSTDDEF_H
+#define BN_CSTDDEF_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <cstddef>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::nullptr_t;
 }

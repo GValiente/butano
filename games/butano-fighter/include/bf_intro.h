@@ -6,14 +6,14 @@
 #ifndef BF_INTRO_H
 #define BF_INTRO_H
 
-#include "btn_vector.h"
-#include "btn_sprite_ptr.h"
-#include "btn_blending_actions.h"
-#include "btn_bg_palettes_actions.h"
-#include "btn_sprite_palettes_actions.h"
+#include "bn_vector.h"
+#include "bn_sprite_ptr.h"
+#include "bn_blending_actions.h"
+#include "bn_bg_palettes_actions.h"
+#include "bn_sprite_palettes_actions.h"
 #include "bf_scene.h"
 
-namespace btn
+namespace bn
 {
     class sprite_text_generator;
 }
@@ -27,15 +27,15 @@ class intro : public scene
 {
 
 public:
-    intro(btn::sprite_text_generator& text_generator, butano_background& butano_background);
+    intro(bn::sprite_text_generator& text_generator, butano_background& butano_background);
 
-    [[nodiscard]] btn::optional<scene_type> update() final;
+    [[nodiscard]] bn::optional<scene_type> update() final;
 
 private:
-    btn::bg_palettes_fade_to_action _bg_fade_action;
-    btn::sprite_palettes_fade_to_action _sprite_fade_action;
-    btn::blending_transparency_alpha_to_action _blending_action;
-    btn::vector<btn::sprite_ptr, 20> _text_sprites;
+    bn::bg_palettes_fade_to_action _bg_fade_action;
+    bn::sprite_palettes_fade_to_action _sprite_fade_action;
+    bn::blending_transparency_alpha_to_action _blending_action;
+    bn::vector<bn::sprite_ptr, 20> _text_sprites;
     int _counter = 60 * 4;
 };
 

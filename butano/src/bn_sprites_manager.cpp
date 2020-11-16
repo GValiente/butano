@@ -3,36 +3,36 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprites_manager.h"
+#include "bn_sprites_manager.h"
 
-#include "btn_vector.h"
-#include "btn_sprite_first_attributes.h"
-#include "btn_sprite_regular_second_attributes.h"
-#include "btn_sorted_sprites.h"
-#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
+#include "bn_vector.h"
+#include "bn_sprite_first_attributes.h"
+#include "bn_sprite_regular_second_attributes.h"
+#include "bn_sorted_sprites.h"
+#include "../hw/include/bn_hw_sprite_affine_mats_constants.h"
 
-#include "btn_sprites.cpp.h"
-#include "btn_sprite_ptr.cpp.h"
-#include "btn_sprite_item.cpp.h"
-#include "btn_sprite_builder.cpp.h"
-#include "btn_sprite_third_attributes.cpp.h"
-#include "btn_sprite_affine_second_attributes.cpp.h"
+#include "bn_sprites.cpp.h"
+#include "bn_sprite_ptr.cpp.h"
+#include "bn_sprite_item.cpp.h"
+#include "bn_sprite_builder.cpp.h"
+#include "bn_sprite_third_attributes.cpp.h"
+#include "bn_sprite_affine_second_attributes.cpp.h"
 
-namespace btn::sprites_manager
+namespace bn::sprites_manager
 {
 
 namespace
 {
-    static_assert(BTN_CFG_SPRITES_MAX_ITEMS > 0);
+    static_assert(BN_CFG_SPRITES_MAX_ITEMS > 0);
 
     using item_type = sprites_manager_item;
-    using sorted_items_type = vector<item_type*, BTN_CFG_SPRITES_MAX_ITEMS>;
+    using sorted_items_type = vector<item_type*, BN_CFG_SPRITES_MAX_ITEMS>;
 
     class static_data
     {
 
     public:
-        pool<item_type, BTN_CFG_SPRITES_MAX_ITEMS> items_pool;
+        pool<item_type, BN_CFG_SPRITES_MAX_ITEMS> items_pool;
         hw::sprites::handle_type handles[hw::sprites::count()];
         sorted_sprites::sorter sorter;
         int first_index_to_commit = 0;
@@ -42,7 +42,7 @@ namespace
         bool rebuild_handles = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
     void _update_indexes_to_commit(const item_type& item)
     {
@@ -178,7 +178,7 @@ int available_items_count()
 id_type create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                sprite_palette_ptr&& palette)
 {
-    BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
     item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
     data.sorter.insert(new_item);
@@ -204,7 +204,7 @@ id_type create_optional(const fixed_point& position, const sprite_shape_size& sh
 
 id_type create(sprite_builder&& builder)
 {
-    BTN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
     sprite_tiles_ptr tiles = builder.release_tiles();
     sprite_palette_ptr palette = builder.release_palette();
@@ -315,10 +315,10 @@ sprite_shape_size shape_size(id_type id)
     return hw::sprites::shape_size(item->handle);
 }
 
-btn::size dimensions(id_type id)
+bn::size dimensions(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return btn::size(item->half_width * 2, item->half_height * 2);
+    return bn::size(item->half_width * 2, item->half_height * 2);
 }
 
 const sprite_tiles_ptr& tiles(id_type id)
@@ -333,7 +333,7 @@ void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
+        BN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
                    "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
@@ -348,7 +348,7 @@ void set_tiles(id_type id, sprite_tiles_ptr&& tiles)
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
+        BN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
                    "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
 
         hw::sprites::set_tiles(tiles.id(), item->handle);
@@ -363,7 +363,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(item->palette->bpp_mode()));
 
@@ -395,7 +395,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 
     if(tiles != item->tiles)
     {
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
                    "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(item->palette->bpp_mode()));
 
@@ -427,7 +427,7 @@ void set_palette(id_type id, const sprite_palette_ptr& palette)
 
     if(palette != item->palette)
     {
-        BTN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
+        BN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
                    "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
@@ -442,7 +442,7 @@ void set_palette(id_type id, sprite_palette_ptr&& palette)
 
     if(palette != item->palette)
     {
-        BTN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
+        BN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
                    "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
@@ -468,7 +468,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
     if(different_shape_size || different_tiles || different_palette)
     {
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                    "Invalid tiles, palette or shape size: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(palette.bpp_mode()));
 
@@ -596,7 +596,7 @@ void set_bg_priority(id_type id, int bg_priority)
 
     if(bg_priority != item->bg_priority())
     {
-        BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+        BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
         hw::sprites::set_bg_priority(bg_priority, item->handle);
         data.sorter.erase(*item);
@@ -730,7 +730,7 @@ void set_blending_enabled(id_type id, bool blending_enabled)
     if(blending_enabled != item->blending_enabled)
     {
         hw::sprites::handle_type& handle = item->handle;
-        BTN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
+        BN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
                    "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_blending_enabled(blending_enabled, display_manager::blending_fade_enabled(), handle);
@@ -752,7 +752,7 @@ void set_window_enabled(id_type id, bool window_enabled)
 
     if(window_enabled != hw::sprites::window_enabled(handle))
     {
-        BTN_ASSERT(! window_enabled || ! item->blending_enabled,
+        BN_ASSERT(! window_enabled || ! item->blending_enabled,
                    "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_window_enabled(window_enabled, handle);
@@ -933,7 +933,7 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
 sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    BTN_ASSERT(! item->affine_mat, "Item is not regular");
+    BN_ASSERT(! item->affine_mat, "Item is not regular");
 
     const hw::sprites::handle_type& handle = item->handle;
     return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
@@ -943,7 +943,7 @@ sprite_regular_second_attributes regular_second_attributes(id_type id)
 void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(! item->affine_mat, "Item is not regular");
+    BN_ASSERT(! item->affine_mat, "Item is not regular");
 
     set_x(id, second_attributes.x());
     set_horizontal_flip(id, second_attributes.horizontal_flip());
@@ -954,7 +954,7 @@ sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
     const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat;
-    BTN_ASSERT(affine_mat, "Item is not affine");
+    BN_ASSERT(affine_mat, "Item is not affine");
 
     return sprite_affine_second_attributes(item->position.x(), *affine_mat);
 }
@@ -962,7 +962,7 @@ sprite_affine_second_attributes affine_second_attributes(id_type id)
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BTN_ASSERT(item->affine_mat, "Item is not affine");
+    BN_ASSERT(item->affine_mat, "Item is not affine");
 
     set_x(id, second_attributes.x());
     set_affine_mat(id, second_attributes.affine_mat());
@@ -976,8 +976,8 @@ sprite_third_attributes third_attributes(id_type id)
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
-    btn::sprite_tiles_ptr tiles = third_attributes.tiles();
-    btn::sprite_palette_ptr palette = third_attributes.palette();
+    bn::sprite_tiles_ptr tiles = third_attributes.tiles();
+    bn::sprite_palette_ptr palette = third_attributes.palette();
     set_tiles_and_palette(id, shape_size(id), move(tiles), move(palette));
     set_bg_priority(id, third_attributes.bg_priority());
 }
@@ -1155,7 +1155,7 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
         const sprite_third_attributes& third_attributes = third_attributes_ptr[index];
         const sprite_tiles_ptr& tiles = third_attributes.tiles();
         const sprite_palette_ptr& palette = third_attributes.palette();
-        BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                    "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
                    shape_size.tiles_count(palette.bpp_mode()));
 

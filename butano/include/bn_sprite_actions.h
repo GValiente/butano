@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_ACTIONS_H
-#define BTN_SPRITE_ACTIONS_H
+#ifndef BN_SPRITE_ACTIONS_H
+#define BN_SPRITE_ACTIONS_H
 
 /**
  * @file
- * btn::sprite_ptr actions header file.
+ * bn::sprite_ptr actions header file.
  *
  * @ingroup sprite
  * @ingroup action
  */
 
-#include "btn_sprite_ptr.h"
-#include "btn_fixed_point.h"
-#include "btn_value_template_actions.h"
+#include "bn_sprite_ptr.h"
+#include "bn_fixed_point.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // visible
@@ -546,7 +546,7 @@ public:
     sprite_rotate_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_rotation_angle) :
         to_value_template_action(sprite, duration_updates, final_rotation_angle)
     {
-        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+        BN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
@@ -562,7 +562,7 @@ public:
     sprite_rotate_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_rotation_angle) :
         to_value_template_action(move(sprite), duration_updates, final_rotation_angle)
     {
-        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+        BN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
@@ -609,7 +609,7 @@ public:
     sprite_rotate_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_rotation_angle) :
         loop_value_template_action(sprite, duration_updates, final_rotation_angle)
     {
-        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+        BN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
@@ -626,7 +626,7 @@ public:
     sprite_rotate_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_rotation_angle) :
         loop_value_template_action(move(sprite), duration_updates, final_rotation_angle)
     {
-        BTN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
+        BN_ASSERT(final_rotation_angle >= 0 && final_rotation_angle <= 360,
                    "Invalid final rotation angle: ", final_rotation_angle);
     }
 
@@ -671,7 +671,7 @@ public:
     sprite_rotate_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_rotation_angle) :
         toggle_value_template_action(sprite, duration_updates, new_rotation_angle)
     {
-        BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
+        BN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
                    "Invalid new rotation angle: ", new_rotation_angle);
     }
 
@@ -687,7 +687,7 @@ public:
     sprite_rotate_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_rotation_angle) :
         toggle_value_template_action(move(sprite), duration_updates, new_rotation_angle)
     {
-        BTN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
+        BN_ASSERT(new_rotation_angle >= 0 && new_rotation_angle <= 360,
                    "Invalid new rotation angle: ", new_rotation_angle);
     }
 
@@ -761,7 +761,7 @@ public:
     sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
         to_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
-        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
+        BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     /**
@@ -774,7 +774,7 @@ public:
     sprite_horizontal_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_horizontal_scale) :
         to_value_template_action(move(sprite), duration_updates, final_horizontal_scale)
     {
-        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
+        BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     /**
@@ -819,7 +819,7 @@ public:
     sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
         loop_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
-        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
+        BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     /**
@@ -833,7 +833,7 @@ public:
     sprite_horizontal_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_horizontal_scale) :
         loop_value_template_action(move(sprite), duration_updates, final_horizontal_scale)
     {
-        BTN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
+        BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
     }
 
     /**
@@ -877,7 +877,7 @@ public:
     sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_horizontal_scale) :
         toggle_value_template_action(sprite, duration_updates, new_horizontal_scale)
     {
-        BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
+        BN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
 
     /**
@@ -890,7 +890,7 @@ public:
     sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_horizontal_scale) :
         toggle_value_template_action(move(sprite), duration_updates, new_horizontal_scale)
     {
-        BTN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
+        BN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
     }
 
     /**
@@ -963,7 +963,7 @@ public:
     sprite_vertical_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_vertical_scale) :
         to_value_template_action(sprite, duration_updates, final_vertical_scale)
     {
-        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
+        BN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     /**
@@ -976,7 +976,7 @@ public:
     sprite_vertical_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_vertical_scale) :
         to_value_template_action(move(sprite), duration_updates, final_vertical_scale)
     {
-        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
+        BN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     /**
@@ -1021,7 +1021,7 @@ public:
     sprite_vertical_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_vertical_scale) :
         loop_value_template_action(sprite, duration_updates, final_vertical_scale)
     {
-        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
+        BN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     /**
@@ -1035,7 +1035,7 @@ public:
     sprite_vertical_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_vertical_scale) :
         loop_value_template_action(move(sprite), duration_updates, final_vertical_scale)
     {
-        BTN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
+        BN_ASSERT(final_vertical_scale > 0, "Invalid final vertical scale: ", final_vertical_scale);
     }
 
     /**
@@ -1079,7 +1079,7 @@ public:
     sprite_vertical_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_vertical_scale) :
         toggle_value_template_action(sprite, duration_updates, new_vertical_scale)
     {
-        BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
+        BN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
 
     /**
@@ -1092,7 +1092,7 @@ public:
     sprite_vertical_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_vertical_scale) :
         toggle_value_template_action(move(sprite), duration_updates, new_vertical_scale)
     {
-        BTN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
+        BN_ASSERT(new_vertical_scale > 0, "Invalid new vertical scale: ", new_vertical_scale);
     }
 
     /**
@@ -1164,7 +1164,7 @@ public:
     sprite_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_scale) :
         to_value_template_action(sprite, duration_updates, final_scale)
     {
-        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+        BN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
     /**
@@ -1177,7 +1177,7 @@ public:
     sprite_scale_to_action(sprite_ptr&& sprite, int duration_updates, fixed final_scale) :
         to_value_template_action(move(sprite), duration_updates, final_scale)
     {
-        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+        BN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
     /**
@@ -1221,7 +1221,7 @@ public:
     sprite_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_scale) :
         loop_value_template_action(sprite, duration_updates, final_scale)
     {
-        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+        BN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
     /**
@@ -1235,7 +1235,7 @@ public:
     sprite_scale_loop_action(sprite_ptr&& sprite, int duration_updates, fixed final_scale) :
         loop_value_template_action(move(sprite), duration_updates, final_scale)
     {
-        BTN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
+        BN_ASSERT(final_scale > 0, "Invalid final scale: ", final_scale);
     }
 
     /**
@@ -1278,7 +1278,7 @@ public:
     sprite_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_scale) :
         toggle_value_template_action(sprite, duration_updates, new_scale)
     {
-        BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
+        BN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
     }
 
     /**
@@ -1291,7 +1291,7 @@ public:
     sprite_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_scale) :
         toggle_value_template_action(move(sprite), duration_updates, new_scale)
     {
-        BTN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
+        BN_ASSERT(new_scale > 0, "Invalid new scale: ", new_scale);
     }
 
     /**

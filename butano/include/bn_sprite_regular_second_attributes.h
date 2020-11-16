@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
-#define BTN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
+#ifndef BN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
+#define BN_SPRITE_REGULAR_SECOND_ATTRIBUTES_H
 
 /**
  * @file
- * btn::sprite_regular_second_attributes header file.
+ * bn::sprite_regular_second_attributes header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_fixed.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**

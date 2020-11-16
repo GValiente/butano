@@ -3,34 +3,34 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_core.h"
-#include "btn_math.h"
-#include "btn_keypad.h"
-#include "btn_display.h"
-#include "btn_blending.h"
-#include "btn_bgs_mosaic.h"
-#include "btn_bg_palettes.h"
-#include "btn_regular_bg_actions.h"
-#include "btn_regular_bg_builder.h"
-#include "btn_regular_bg_attributes.h"
-#include "btn_sprite_text_generator.h"
-#include "btn_regular_bg_position_hblank_effect_ptr.h"
-#include "btn_regular_bg_attributes_hblank_effect_ptr.h"
+#include "bn_core.h"
+#include "bn_math.h"
+#include "bn_keypad.h"
+#include "bn_display.h"
+#include "bn_blending.h"
+#include "bn_bgs_mosaic.h"
+#include "bn_bg_palettes.h"
+#include "bn_regular_bg_actions.h"
+#include "bn_regular_bg_builder.h"
+#include "bn_regular_bg_attributes.h"
+#include "bn_sprite_text_generator.h"
+#include "bn_regular_bg_position_hblank_effect_ptr.h"
+#include "bn_regular_bg_attributes_hblank_effect_ptr.h"
 
-#include "btn_sprite_items_turtle.h"
-#include "btn_regular_bg_items_red.h"
-#include "btn_regular_bg_items_blue.h"
-#include "btn_regular_bg_items_green.h"
-#include "btn_regular_bg_items_yellow.h"
+#include "bn_sprite_items_turtle.h"
+#include "bn_regular_bg_items_red.h"
+#include "bn_regular_bg_items_blue.h"
+#include "bn_regular_bg_items_green.h"
+#include "bn_regular_bg_items_yellow.h"
 
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
 namespace
 {
-    void regular_bgs_visibility_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_visibility_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "A: hide/show BG",
             "",
             "START: go to next scene",
@@ -38,42 +38,42 @@ namespace
 
         info info("Regular BGs visibility", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
-            if(btn::keypad::a_pressed())
+            if(bn::keypad::a_pressed())
             {
                 red_bg.set_visible(! red_bg.visible());
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_visibility_actions_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_visibility_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
         info info("Regular BGs visibility actions", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(0, 0);
-        btn::regular_bg_visible_toggle_action action(green_bg, 60);
+        bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(0, 0);
+        bn::regular_bg_visible_toggle_action action(green_bg, 60);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             action.update();
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_position_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_position_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "PAD: move BG",
             "",
             "START: go to next scene",
@@ -81,71 +81,71 @@ namespace
 
         info info("Regular BGs position", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(0, 0);
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(0, 0);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
-            if(btn::keypad::left_held())
+            if(bn::keypad::left_held())
             {
                 blue_bg.set_x(blue_bg.x() - 1);
             }
-            else if(btn::keypad::right_held())
+            else if(bn::keypad::right_held())
             {
                 blue_bg.set_x(blue_bg.x() + 1);
             }
 
-            if(btn::keypad::up_held())
+            if(bn::keypad::up_held())
             {
                 blue_bg.set_y(blue_bg.y() - 1);
             }
-            else if(btn::keypad::down_held())
+            else if(bn::keypad::down_held())
             {
                 blue_bg.set_y(blue_bg.y() + 1);
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_position_actions_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
         info info("Regular BGs position actions", info_text_lines, text_generator);
 
-        btn::fixed amplitude = 30;
-        btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(-amplitude, -amplitude);
-        btn::regular_bg_move_loop_action action(yellow_bg, 120, amplitude, amplitude);
+        bn::fixed amplitude = 30;
+        bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(-amplitude, -amplitude);
+        bn::regular_bg_move_loop_action action(yellow_bg, 120, amplitude, amplitude);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             action.update();
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_position_hblank_effect_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
         info info("Regular BGs position H-Blank effect", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
-        btn::array<btn::fixed, btn::display::height()> horizontal_deltas;
+        bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
 
-        btn::regular_bg_position_hblank_effect_ptr horizontal_hblank_effect =
-                btn::regular_bg_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
+        bn::regular_bg_position_hblank_effect_ptr horizontal_hblank_effect =
+                bn::regular_bg_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
 
-        btn::fixed base_degrees_angle;
+        bn::fixed base_degrees_angle;
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             base_degrees_angle += 4;
 
@@ -154,9 +154,9 @@ namespace
                 base_degrees_angle -= 360;
             }
 
-            btn::fixed degrees_angle = base_degrees_angle;
+            bn::fixed degrees_angle = base_degrees_angle;
 
-            for(int index = 0, limit = btn::display::height() / 2; index < limit; ++index)
+            for(int index = 0, limit = bn::display::height() / 2; index < limit; ++index)
             {
                 degrees_angle += 16;
 
@@ -165,20 +165,20 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                btn::fixed desp = btn::degrees_sin(degrees_angle) * 8;
-                horizontal_deltas[(btn::display::height() / 2) + index] = desp;
-                horizontal_deltas[(btn::display::height() / 2) - index - 1] = desp;
+                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+                horizontal_deltas[(bn::display::height() / 2) + index] = desp;
+                horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }
 
             horizontal_hblank_effect.reload_deltas_ref();
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_priority_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_priority_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG priority",
             "RIGHT: increase red BG priority",
             "",
@@ -187,42 +187,42 @@ namespace
 
         info info("Regular BGs priority", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(-64, -64);
+        bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         green_bg.set_priority(0);
 
-        btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(-64, 64);
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
         blue_bg.set_priority(1);
 
-        btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(64, 64);
+        bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(64, 64);
         yellow_bg.set_priority(2);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
         red_bg.set_priority(2);
 
-        btn::sprite_ptr turtle_sprite = btn::sprite_items::turtle.create_sprite(64, -32);
+        bn::sprite_ptr turtle_sprite = bn::sprite_items::turtle.create_sprite(64, -32);
         turtle_sprite.set_bg_priority(2);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             int priority = red_bg.priority();
 
-            if(btn::keypad::left_pressed())
+            if(bn::keypad::left_pressed())
             {
-                red_bg.set_priority(btn::max(priority - 1, 0));
+                red_bg.set_priority(bn::max(priority - 1, 0));
             }
-            else if(btn::keypad::right_pressed())
+            else if(bn::keypad::right_pressed())
             {
-                red_bg.set_priority(btn::min(priority + 1, 3));
+                red_bg.set_priority(bn::min(priority + 1, 3));
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_z_order_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_z_order_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG Z order",
             "RIGHT: increase red BG Z order",
             "",
@@ -231,42 +231,42 @@ namespace
 
         info info("Regular BGs Z order", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(-64, -64);
+        bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         green_bg.set_z_order(0);
 
-        btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(-64, 64);
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
         blue_bg.set_z_order(1);
 
-        btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(64, 64);
+        bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(64, 64);
         yellow_bg.set_z_order(2);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
         red_bg.set_z_order(2);
 
-        btn::sprite_ptr turtle_sprite = btn::sprite_items::turtle.create_sprite(64, -32);
+        bn::sprite_ptr turtle_sprite = bn::sprite_items::turtle.create_sprite(64, -32);
         turtle_sprite.set_bg_priority(2);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             int z_order = red_bg.z_order();
 
-            if(btn::keypad::left_pressed())
+            if(bn::keypad::left_pressed())
             {
-                red_bg.set_z_order(btn::max(z_order - 1, 0));
+                red_bg.set_z_order(bn::max(z_order - 1, 0));
             }
-            else if(btn::keypad::right_pressed())
+            else if(bn::keypad::right_pressed())
             {
-                red_bg.set_z_order(btn::min(z_order + 1, 3));
+                red_bg.set_z_order(bn::min(z_order + 1, 3));
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_put_above_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_put_above_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "B: put blue BG above red BG",
             "A: put yellow BG above red BG",
             "L: put green BG above red BG",
@@ -277,41 +277,41 @@ namespace
 
         info info("Regular BGs put above", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(-64, -64);
-        btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(-64, 64);
-        btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(64, 64);
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
+        bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(64, 64);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
-            if(btn::keypad::b_pressed())
+            if(bn::keypad::b_pressed())
             {
                 blue_bg.put_above();
             }
 
-            if(btn::keypad::a_pressed())
+            if(bn::keypad::a_pressed())
             {
                 yellow_bg.put_above();
             }
 
-            if(btn::keypad::l_pressed())
+            if(bn::keypad::l_pressed())
             {
                 green_bg.put_above();
             }
 
-            if(btn::keypad::r_pressed())
+            if(bn::keypad::r_pressed())
             {
                 red_bg.put_above();
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_attributes_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -322,56 +322,56 @@ namespace
 
         info info("Regular BGs attributes", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr green_bg = btn::regular_bg_items::green.create_bg(-64, -64);
-        btn::regular_bg_ptr blue_bg = btn::regular_bg_items::blue.create_bg(-64, 64);
-        btn::regular_bg_ptr yellow_bg = btn::regular_bg_items::yellow.create_bg(64, 64);
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
-        btn::regular_bg_attributes red_bg_attributes = red_bg.attributes();
+        bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
+        bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(64, 64);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_attributes red_bg_attributes = red_bg.attributes();
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
-            if(btn::keypad::b_pressed())
+            if(bn::keypad::b_pressed())
             {
                 red_bg.set_attributes(blue_bg.attributes());
             }
 
-            if(btn::keypad::a_pressed())
+            if(bn::keypad::a_pressed())
             {
                 red_bg.set_attributes(yellow_bg.attributes());
             }
 
-            if(btn::keypad::l_pressed())
+            if(bn::keypad::l_pressed())
             {
                 red_bg.set_attributes(green_bg.attributes());
             }
 
-            if(btn::keypad::r_pressed())
+            if(bn::keypad::r_pressed())
             {
                 red_bg.set_attributes(red_bg_attributes);
             }
 
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bgs_attributes_hblank_effect_scene(btn::sprite_text_generator& text_generator)
+    void regular_bgs_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
         info info("Regular BGs attributes H-Blank effect", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
-        btn::regular_bg_map_ptr green_map = btn::regular_bg_items::green.create_map();
-        btn::regular_bg_attributes red_attributes = red_bg.attributes();
-        btn::regular_bg_attributes green_attributes = red_attributes;
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
+        bn::regular_bg_map_ptr green_map = bn::regular_bg_items::green.create_map();
+        bn::regular_bg_attributes red_attributes = red_bg.attributes();
+        bn::regular_bg_attributes green_attributes = red_attributes;
         green_attributes.set_map(green_map);
 
-        btn::vector<btn::regular_bg_attributes, btn::display::height()> attributes;
+        bn::vector<bn::regular_bg_attributes, bn::display::height()> attributes;
 
-        for(int index = 0; index < btn::display::height(); ++index)
+        for(int index = 0; index < bn::display::height(); ++index)
         {
             if(index % 2)
             {
@@ -383,87 +383,87 @@ namespace
             }
         }
 
-        btn::span<const btn::regular_bg_attributes> attributes_ref(attributes.data(), attributes.size());
-        btn::regular_bg_attributes_hblank_effect_ptr hblank_effect =
-                btn::regular_bg_attributes_hblank_effect_ptr::create(red_bg, attributes_ref);
+        bn::span<const bn::regular_bg_attributes> attributes_ref(attributes.data(), attributes.size());
+        bn::regular_bg_attributes_hblank_effect_ptr hblank_effect =
+                bn::regular_bg_attributes_hblank_effect_ptr::create(red_bg, attributes_ref);
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
     }
 
-    void regular_bg_builder_scene(btn::sprite_text_generator& text_generator)
+    void regular_bg_builder_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const btn::string_view info_text_lines[] = {
+        constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
         info info("Regular BG builder", info_text_lines, text_generator);
 
-        btn::regular_bg_ptr red_bg = btn::regular_bg_items::red.create_bg(0, 0);
-        btn::bgs_mosaic::set_stretch(0.2);
-        btn::blending::set_transparency_alpha(0.6);
+        bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
+        bn::bgs_mosaic::set_stretch(0.2);
+        bn::blending::set_transparency_alpha(0.6);
 
-        btn::regular_bg_builder builder(btn::regular_bg_items::blue);
+        bn::regular_bg_builder builder(bn::regular_bg_items::blue);
         builder.set_position(30, 10);
         builder.set_mosaic_enabled(true);
         builder.set_blending_enabled(true);
 
-        btn::regular_bg_ptr blue_bg = builder.build();
+        bn::regular_bg_ptr blue_bg = builder.build();
 
-        while(! btn::keypad::start_pressed())
+        while(! bn::keypad::start_pressed())
         {
             info.update();
-            btn::core::update();
+            bn::core::update();
         }
 
-        btn::bgs_mosaic::set_stretch(0);
-        btn::blending::set_transparency_alpha(1);
+        bn::bgs_mosaic::set_stretch(0);
+        bn::blending::set_transparency_alpha(1);
     }
 }
 
 int main()
 {
-    btn::core::init();
+    bn::core::init();
 
-    btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-    btn::bg_palettes::set_transparent_color(btn::color(16, 16, 16));
+    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)
     {
         regular_bgs_visibility_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_visibility_actions_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_position_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_position_actions_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_position_hblank_effect_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_priority_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_z_order_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_put_above_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_attributes_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bgs_attributes_hblank_effect_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
 
         regular_bg_builder_scene(text_generator);
-        btn::core::update();
+        bn::core::update();
     }
 }

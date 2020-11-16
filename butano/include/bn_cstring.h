@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CSTRING_H
-#define BTN_CSTRING_H
+#ifndef BN_CSTRING_H
+#define BN_CSTRING_H
 
 /**
  * @file
@@ -13,9 +13,9 @@
  * @ingroup std
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Copies the given bytes from the object pointed to by source to the object pointed to by destination.

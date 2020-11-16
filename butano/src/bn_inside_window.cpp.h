@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_inside_window.h"
+#include "bn_inside_window.h"
 
-#include "btn_display_manager.h"
+#include "bn_display_manager.h"
 
-namespace btn
+namespace bn
 {
 
 bool inside_window::visible() const

@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_sram.h"
+#include "../include/bn_hw_sram.h"
 
-#include "../include/btn_hw_tonc.h"
+#include "../include/bn_hw_tonc.h"
 
-namespace btn::hw::sram
+namespace bn::hw::sram
 {
 
 void write(const void* source, int size, int offset)

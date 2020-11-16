@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_H
-#define BTN_SPRITE_AFFINE_SECOND_ATTRIBUTES_H
+#ifndef BN_SPRITE_AFFINE_SECOND_ATTRIBUTES_H
+#define BN_SPRITE_AFFINE_SECOND_ATTRIBUTES_H
 
 /**
  * @file
- * btn::sprite_affine_second_attributes header file.
+ * bn::sprite_affine_second_attributes header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_fixed.h"
-#include "btn_sprite_affine_mat_ptr.h"
+#include "bn_fixed.h"
+#include "bn_sprite_affine_mat_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

@@ -3,27 +3,27 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_BUILDER_H
-#define BTN_SPRITE_BUILDER_H
+#ifndef BN_SPRITE_BUILDER_H
+#define BN_SPRITE_BUILDER_H
 
 /**
  * @file
- * btn::sprite_builder header file.
+ * bn::sprite_builder header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_optional.h"
-#include "btn_camera_ptr.h"
-#include "btn_sprite_item.h"
-#include "btn_fixed_point.h"
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_shape_size.h"
-#include "btn_sprite_palette_ptr.h"
-#include "btn_sprite_affine_mat_ptr.h"
-#include "btn_sprite_double_size_mode.h"
+#include "bn_optional.h"
+#include "bn_camera_ptr.h"
+#include "bn_sprite_item.h"
+#include "bn_fixed_point.h"
+#include "bn_sprite_tiles_ptr.h"
+#include "bn_sprite_shape_size.h"
+#include "bn_sprite_palette_ptr.h"
+#include "bn_sprite_affine_mat_ptr.h"
+#include "bn_sprite_double_size_mode.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_ptr;

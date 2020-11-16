@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FORWARD_LIST_FWD_H
-#define BTN_FORWARD_LIST_FWD_H
+#ifndef BN_FORWARD_LIST_FWD_H
+#define BN_FORWARD_LIST_FWD_H
 
 /**
  * @file
- * btn::iforward_list and btn::forward_list declaration header file.
+ * bn::iforward_list and bn::forward_list declaration header file.
  *
  * @ingroup forward_list
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of forward_list.

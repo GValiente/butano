@@ -5,16 +5,16 @@
 
 #include "bf_game_tank_boss.h"
 
-#include "btn_math.h"
-#include "btn_colors.h"
-#include "btn_sound_items.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_tank_base.h"
-#include "btn_sprite_items_tank_jelly.h"
-#include "btn_sprite_items_tank_cannon.h"
-#include "btn_sprite_items_tank_extras.h"
-#include "btn_sprite_items_mini_explosion.h"
-#include "btn_sprite_items_enemy_explosion.h"
+#include "bn_math.h"
+#include "bn_colors.h"
+#include "bn_sound_items.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_tank_base.h"
+#include "bn_sprite_items_tank_jelly.h"
+#include "bn_sprite_items_tank_cannon.h"
+#include "bn_sprite_items_tank_extras.h"
+#include "bn_sprite_items_mini_explosion.h"
+#include "bn_sprite_items_enemy_explosion.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
@@ -35,7 +35,7 @@ namespace
     constexpr const int state_4_5_life = 190;   // 13 seconds
     constexpr const int total_life = state_0_1_life + state_2_life + state_3_4_life + state_4_5_life;
 
-    [[nodiscard]] btn::fixed _fix_rotation_angle(btn::fixed rotation_angle)
+    [[nodiscard]] bn::fixed _fix_rotation_angle(bn::fixed rotation_angle)
     {
         if(rotation_angle < 0)
         {
@@ -49,65 +49,65 @@ namespace
         return rotation_angle;
     }
 
-    [[nodiscard]] btn::fixed_point _cannon_end_position(btn::fixed rotation_angle, btn::fixed y)
+    [[nodiscard]] bn::fixed_point _cannon_end_position(bn::fixed rotation_angle, bn::fixed y)
     {
-        return btn::fixed_point(btn::degrees_sin(rotation_angle) * -32, (btn::degrees_cos(rotation_angle) * -32) + y);
+        return bn::fixed_point(bn::degrees_sin(rotation_angle) * -32, (bn::degrees_cos(rotation_angle) * -32) + y);
     }
 
-    [[nodiscard]] btn::fixed _squared_distance(const btn::fixed_point& a, const btn::fixed_point& b)
+    [[nodiscard]] bn::fixed _squared_distance(const bn::fixed_point& a, const bn::fixed_point& b)
     {
-        btn::fixed distance_x = a.x() - b.x();
-        btn::fixed distance_y = a.y() - b.y();
+        bn::fixed distance_x = a.x() - b.x();
+        bn::fixed distance_y = a.y() - b.y();
         return (distance_x * distance_x) + (distance_y * distance_y);
     }
 
-    void _shoot_bullet(btn::fixed bullet_rotation_angle, enemy_bullet_type bullet_type,
-                       btn::fixed cannon_rotation_angle, const btn::fixed_point& hero_position, btn::fixed y,
-                       const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
+    void _shoot_bullet(bn::fixed bullet_rotation_angle, enemy_bullet_type bullet_type,
+                       bn::fixed cannon_rotation_angle, const bn::fixed_point& hero_position, bn::fixed y,
+                       const bn::camera_ptr& camera, enemy_bullets& enemy_bullets)
     {
-        btn::fixed_point base_position(0, y);
-        btn::fixed_point cannon_position = _cannon_end_position(cannon_rotation_angle, y);
-        btn::fixed_point bullet_position = _cannon_end_position(bullet_rotation_angle, y);
-        btn::fixed_point distance = bullet_position - base_position;
-        btn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
-        btn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), bullet_speed);
+        bn::fixed_point base_position(0, y);
+        bn::fixed_point cannon_position = _cannon_end_position(cannon_rotation_angle, y);
+        bn::fixed_point bullet_position = _cannon_end_position(bullet_rotation_angle, y);
+        bn::fixed_point distance = bullet_position - base_position;
+        bn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
+        bn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), bullet_speed);
         enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1),
                                  camera);
     }
 
-    [[nodiscard]] btn::sprite_animate_action<7> _create_mini_explosion(btn::fixed x, btn::fixed y,
-                                                                       const btn::camera_ptr& camera)
+    [[nodiscard]] bn::sprite_animate_action<7> _create_mini_explosion(bn::fixed x, bn::fixed y,
+                                                                       const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::mini_explosion);
+        bn::sprite_builder builder(bn::sprite_items::mini_explosion);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
         builder.set_camera(camera);
-        return btn::create_sprite_animate_action_once(
-                    builder.release_build(), 6, btn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
+        return bn::create_sprite_animate_action_once(
+                    builder.release_build(), 6, bn::sprite_items::mini_explosion.tiles_item(), 0, 1, 2, 3, 4, 5, 6);
     }
 }
 
-tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette,
-                     const btn::camera_ptr& camera) :
+tank_boss::tank_boss(const bn::fixed_point& hero_position, const bn::sprite_palette_ptr& damage_palette,
+                     const bn::camera_ptr& camera) :
     boss(total_life, 300, _tank_rects, damage_palette),
-    _base_palette(btn::sprite_items::tank_base.palette_item().create_palette()),
-    _jelly_palette(btn::sprite_items::tank_jelly.palette_item().create_palette()),
-    _cannon_palette(btn::sprite_items::tank_cannon.palette_item().create_palette()),
+    _base_palette(bn::sprite_items::tank_base.palette_item().create_palette()),
+    _jelly_palette(bn::sprite_items::tank_jelly.palette_item().create_palette()),
+    _cannon_palette(bn::sprite_items::tank_cannon.palette_item().create_palette()),
     _y(-125),
     _y_inc(1.1)
 {
-    btn::fixed footprint_y = 16 - (btn::display::height() / 2);
+    bn::fixed footprint_y = 16 - (bn::display::height() / 2);
 
     for(int index = 0; index < 5; ++index)
     {
-        btn::sprite_builder builder(btn::sprite_items::tank_extras);
+        bn::sprite_builder builder(bn::sprite_items::tank_extras);
         builder.set_position(-32, footprint_y + (index * 32));
         builder.set_z_order(constants::footprint_z_order);
         builder.set_camera(camera);
         _footprint_sprites.push_back(builder.release_build());
 
-        builder = btn::sprite_builder(btn::sprite_items::tank_extras);
+        builder = bn::sprite_builder(bn::sprite_items::tank_extras);
         builder.set_position(32, footprint_y + (index * 32));
         builder.set_horizontal_flip(true);
         builder.set_z_order(constants::footprint_z_order);
@@ -117,46 +117,46 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
 
     for(int index = 0; index < 9; index += 3)
     {
-        btn::sprite_builder builder(btn::sprite_items::tank_base, index);
+        bn::sprite_builder builder(bn::sprite_items::tank_base, index);
         builder.set_x(-32);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
 
-        builder = btn::sprite_builder(btn::sprite_items::tank_base, index + 1);
+        builder = bn::sprite_builder(bn::sprite_items::tank_base, index + 1);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
 
-        builder = btn::sprite_builder(btn::sprite_items::tank_base, index + 2);
+        builder = bn::sprite_builder(bn::sprite_items::tank_base, index + 2);
         builder.set_x(32);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_camera(camera);
         _base_sprites.push_back(builder.release_build());
     }
 
-    btn::sprite_builder builder(btn::sprite_items::tank_jelly);
+    bn::sprite_builder builder(bn::sprite_items::tank_jelly);
     builder.set_x(jelly_x);
     builder.set_z_order(constants::enemies_z_order);
     builder.set_camera(camera);
     _jelly_sprite = builder.release_build();
 
-    builder = btn::sprite_builder(btn::sprite_items::tank_cannon);
+    builder = bn::sprite_builder(bn::sprite_items::tank_cannon);
     builder.set_rotation_angle(180);
     builder.set_z_order(constants::enemies_z_order);
     builder.set_camera(camera);
     _cannon_sprite = builder.release_build();
 
-    builder = btn::sprite_builder(btn::sprite_items::tank_extras, 4);
+    builder = bn::sprite_builder(bn::sprite_items::tank_extras, 4);
     builder.set_z_order(constants::footprint_z_order);
     builder.set_visible(false);
     builder.set_camera(camera);
     _arrow_sprite = builder.release_build();
 
-    _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(84, 58));
-    _tank_rects.emplace_back(btn::fixed_point(), btn::fixed_size(76, 74));
+    _tank_rects.emplace_back(bn::fixed_point(), bn::fixed_size(84, 58));
+    _tank_rects.emplace_back(bn::fixed_point(), bn::fixed_size(76, 74));
 
-    btn::fixed y = _calculate_y_alive();
+    bn::fixed y = _calculate_y_alive();
     _update_footprint_sprites(y);
     _update_base_sprites(y);
     _update_jelly_sprite(y, hero_position);
@@ -164,8 +164,8 @@ tank_boss::tank_boss(const btn::fixed_point& hero_position, const btn::sprite_pa
     _update_rects(y);
 }
 
-void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                              const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
+void tank_boss::_update_alive(const bn::fixed_point& hero_position, const hero_bomb& hero_bomb,
+                              const bn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     switch(_state_index)
     {
@@ -256,13 +256,13 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_
         break;
 
     default:
-        BTN_ERROR("Invalid state index: ", _state_index);
+        BN_ERROR("Invalid state index: ", _state_index);
         break;
     }
 
     _y += _y_inc;
 
-    btn::fixed y = _calculate_y_alive();
+    bn::fixed y = _calculate_y_alive();
     _update_footprint_sprites(y);
     _update_base_sprites(y);
     _update_jelly_sprite(y, hero_position);
@@ -276,7 +276,7 @@ void tank_boss::_update_alive(const btn::fixed_point& hero_position, const hero_
     }
 }
 
-bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, background&)
+bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&)
 {
     bool done = false;
     _y += constants::background_speed;
@@ -285,15 +285,15 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::c
     {
         _cannon_sprite.reset();
 
-        for(btn::sprite_ptr& sprite : _base_sprites)
+        for(bn::sprite_ptr& sprite : _base_sprites)
         {
             sprite.set_z_order(constants::intro_sprites_z_order);
         }
 
         _jelly_sprite->set_z_order(constants::intro_sprites_z_order);
-        _base_palette.set_fade(btn::colors::red, 0);
+        _base_palette.set_fade(bn::colors::red, 0);
         _base_palette_action.emplace(_base_palette, 15, 0.5);
-        _cannon_palette.set_fade(btn::colors::red, 0);
+        _cannon_palette.set_fade(bn::colors::red, 0);
         _cannon_palette_action.emplace(_cannon_palette, 15, 0.5);
     }
 
@@ -313,10 +313,10 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::c
                 ++_state_index;
                 _bullets_index = 16;
 
-                btn::fixed x = int(_random.get() % 48) - 24;
-                btn::fixed y = int(_random.get() % 48) - 24 + _y;
+                bn::fixed x = int(_random.get() % 48) - 24;
+                bn::fixed y = int(_random.get() % 48) - 24 + _y;
                 _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
-                btn::sound_items::explosion_1.play();
+                bn::sound_items::explosion_1.play();
             }
         }
         else if(_state_index == 15)
@@ -325,9 +325,9 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::c
             {
                 ++_state_index;
 
-                _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, btn::display::height() / 2),
+                _explosion.emplace(bn::sprite_items::enemy_explosion, bn::fixed_point(0, bn::display::height() / 2),
                                    6, constants::enemy_explosions_z_order, true, camera);
-                btn::sound_items::explosion_2.play();
+                bn::sound_items::explosion_2.play();
             }
         }
         else if(_state_index == 16)
@@ -349,7 +349,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::c
         }
     }
 
-    btn::fixed y = _calculate_y_dead();
+    bn::fixed y = _calculate_y_dead();
     _update_footprint_sprites(y);
 
     if(_jelly_sprite)
@@ -362,7 +362,7 @@ bool tank_boss::_update_dead(const btn::fixed_point& hero_position, const btn::c
     return done;
 }
 
-void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
+void tank_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_palette, const bn::camera_ptr& camera)
 {
     int current_life = life();
     _jelly_damage_counter = jelly_damage_frames;
@@ -379,11 +379,11 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
 
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
-            _base_palette.set_fade(btn::colors::red, 0);
+            _base_palette.set_fade(bn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 30, 0.2);
-            _cannon_palette.set_fade(btn::colors::red, 0);
+            _cannon_palette.set_fade(bn::colors::red, 0);
             _cannon_palette_action.emplace(_cannon_palette, 30, 0.2);
-            btn::sound_items::explosion_3.play();
+            bn::sound_items::explosion_3.play();
         }
         break;
 
@@ -394,16 +394,16 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_index = 0;
             _bullets_counter = 80;
 
-            _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
+            _explosion.emplace(bn::sprite_items::enemy_explosion, bn::fixed_point(0, _y), 6,
                                constants::enemy_explosions_z_order, false, camera);
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 24, camera));
-            _base_palette.set_fade(btn::colors::red, 0);
+            _base_palette.set_fade(bn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 25, 0.3);
-            _cannon_palette.set_fade(btn::colors::red, 0);
+            _cannon_palette.set_fade(bn::colors::red, 0);
             _cannon_palette_action.emplace(_cannon_palette, 25, 0.3);
-            btn::sound_items::explosion_1.play();
-            btn::sound_items::explosion_3.play();
+            bn::sound_items::explosion_1.play();
+            bn::sound_items::explosion_3.play();
         }
         break;
 
@@ -417,17 +417,17 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
             _bullets_index = 0;
             _bullets_counter = 80;
 
-            _explosion.emplace(btn::sprite_items::enemy_explosion, btn::fixed_point(0, _y), 6,
+            _explosion.emplace(bn::sprite_items::enemy_explosion, bn::fixed_point(0, _y), 6,
                                constants::enemy_explosions_z_order, false, camera);
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
-            _base_palette.set_fade(btn::colors::red, 0);
+            _base_palette.set_fade(bn::colors::red, 0);
             _base_palette_action.emplace(_base_palette, 20, 0.4);
-            _cannon_palette.set_fade(btn::colors::red, 0);
+            _cannon_palette.set_fade(bn::colors::red, 0);
             _cannon_palette_action.emplace(_cannon_palette, 20, 0.4);
             _arrow_sprite->set_visible(false);
-            btn::sound_items::explosion_1.play();
-            btn::sound_items::explosion_3.play();
+            bn::sound_items::explosion_1.play();
+            bn::sound_items::explosion_3.play();
         }
         break;
 
@@ -438,11 +438,11 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
         break;
 
     default:
-        BTN_ERROR("Invalid state index: ", _state_index);
+        BN_ERROR("Invalid state index: ", _state_index);
         break;
     }
 
-    for(btn::sprite_ptr& sprite : _base_sprites)
+    for(bn::sprite_ptr& sprite : _base_sprites)
     {
         sprite.set_palette(damage_palette);
     }
@@ -453,7 +453,7 @@ void tank_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palet
 
 void tank_boss::_hide_damage_palette()
 {
-    for(btn::sprite_ptr& sprite : _base_sprites)
+    for(bn::sprite_ptr& sprite : _base_sprites)
     {
         sprite.set_palette(_base_palette);
     }
@@ -466,7 +466,7 @@ void tank_boss::_hide_damage_palette()
     }
 }
 
-bool tank_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+bool tank_boss::_hero_should_look_down_impl(const bn::fixed_point& hero_position, bool hero_is_looking_down) const
 {
     if(! _jelly_sprite)
     {
@@ -486,7 +486,7 @@ bool tank_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_positio
     return hero_is_looking_down;
 }
 
-btn::fixed tank_boss::_calculate_y_alive()
+bn::fixed tank_boss::_calculate_y_alive()
 {
     --_vibration_counter;
 
@@ -495,7 +495,7 @@ btn::fixed tank_boss::_calculate_y_alive()
         _vibration_counter = vibration_frames * 2;
     }
 
-    btn::fixed result = _y;
+    bn::fixed result = _y;
 
     if(_vibration_counter > vibration_frames)
     {
@@ -505,7 +505,7 @@ btn::fixed tank_boss::_calculate_y_alive()
     return result;
 }
 
-btn::fixed tank_boss::_calculate_y_dead()
+bn::fixed tank_boss::_calculate_y_dead()
 {
     --_vibration_counter;
 
@@ -514,7 +514,7 @@ btn::fixed tank_boss::_calculate_y_dead()
         _vibration_counter = 6;
     }
 
-    btn::fixed result = _y;
+    bn::fixed result = _y;
 
     if(_vibration_counter > 3)
     {
@@ -524,7 +524,7 @@ btn::fixed tank_boss::_calculate_y_dead()
     return result;
 }
 
-btn::fixed tank_boss::_cannon_rotation_angle_inc() const
+bn::fixed tank_boss::_cannon_rotation_angle_inc() const
 {
     switch(_state_index)
     {
@@ -540,12 +540,12 @@ btn::fixed tank_boss::_cannon_rotation_angle_inc() const
         return 0.5;
 
     default:
-        BTN_ERROR("Invalid state index: ", _state_index);
+        BN_ERROR("Invalid state index: ", _state_index);
         return 0;
     }
 }
 
-void tank_boss::_update_footprint_sprites(btn::fixed y)
+void tank_boss::_update_footprint_sprites(bn::fixed y)
 {
     --_footprint_counter;
 
@@ -554,16 +554,16 @@ void tank_boss::_update_footprint_sprites(btn::fixed y)
         _footprint_graphics_index = (_footprint_graphics_index + 1) % 4;
         _footprint_counter = 2;
 
-        btn::sprite_tiles_ptr tiles = _footprint_sprites[0].tiles();
-        tiles.set_tiles_ref(btn::sprite_items::tank_extras.tiles_item().graphics_tiles_ref(_footprint_graphics_index));
+        bn::sprite_tiles_ptr tiles = _footprint_sprites[0].tiles();
+        tiles.set_tiles_ref(bn::sprite_items::tank_extras.tiles_item().graphics_tiles_ref(_footprint_graphics_index));
     }
 
-    btn::fixed hidden_y = -44;
+    bn::fixed hidden_y = -44;
 
     for(int index = 0; index < 5; ++index)
     {
-        btn::sprite_ptr& left_sprite = _footprint_sprites[index * 2];
-        btn::sprite_ptr& right_sprite = _footprint_sprites[(index * 2) + 1];
+        bn::sprite_ptr& left_sprite = _footprint_sprites[index * 2];
+        bn::sprite_ptr& right_sprite = _footprint_sprites[(index * 2) + 1];
         bool visible = y >= hidden_y;
         left_sprite.set_visible(visible);
         right_sprite.set_visible(visible);
@@ -571,7 +571,7 @@ void tank_boss::_update_footprint_sprites(btn::fixed y)
     }
 }
 
-void tank_boss::_update_base_sprites(btn::fixed y)
+void tank_boss::_update_base_sprites(bn::fixed y)
 {
     _base_sprites[0].set_y(y - 32);
     _base_sprites[1].set_y(y - 32);
@@ -586,7 +586,7 @@ void tank_boss::_update_base_sprites(btn::fixed y)
     for(int index = 0; index < 3; ++index)
     {
         int sprite_index = index * 3;
-        btn::fixed base_y = y - 32 + (index * 32);
+        bn::fixed base_y = y - 32 + (index * 32);
         _base_sprites[sprite_index + 0].set_y(base_y);
         _base_sprites[sprite_index + 1].set_y(base_y);
         _base_sprites[sprite_index + 2].set_y(base_y);
@@ -607,7 +607,7 @@ void tank_boss::_update_base_sprites(btn::fixed y)
         }
         else
         {
-            _arrow_sprite->set_y(btn::display::height());
+            _arrow_sprite->set_y(bn::display::height());
         }
     }
 
@@ -617,9 +617,9 @@ void tank_boss::_update_base_sprites(btn::fixed y)
     }
 }
 
-void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_position)
+void tank_boss::_update_jelly_sprite(bn::fixed y, const bn::fixed_point& hero_position)
 {
-    btn::sprite_ptr& jelly_sprite = *_jelly_sprite;
+    bn::sprite_ptr& jelly_sprite = *_jelly_sprite;
 
     if(_jelly_damage_counter)
     {
@@ -629,8 +629,8 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
         {
             if(! _jelly_crying)
             {
-                _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
-                            jelly_sprite, 16, btn::sprite_items::tank_jelly.tiles_item(), 2, 3);
+                _jelly_animate_action = bn::create_sprite_cached_animate_action_forever(
+                            jelly_sprite, 16, bn::sprite_items::tank_jelly.tiles_item(), 2, 3);
                 _jelly_crying = true;
             }
         }
@@ -638,8 +638,8 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
         {
             if(life())
             {
-                _jelly_animate_action = btn::create_sprite_cached_animate_action_forever(
-                            jelly_sprite, 16, btn::sprite_items::tank_jelly.tiles_item(), 0, 1);
+                _jelly_animate_action = bn::create_sprite_cached_animate_action_forever(
+                            jelly_sprite, 16, bn::sprite_items::tank_jelly.tiles_item(), 0, 1);
                 _jelly_crying = false;
             }
         }
@@ -650,7 +650,7 @@ void tank_boss::_update_jelly_sprite(btn::fixed y, const btn::fixed_point& hero_
     _jelly_animate_action->update();
 }
 
-void tank_boss::_update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero_position)
+void tank_boss::_update_cannon_sprite(bn::fixed y, const bn::fixed_point& hero_position)
 {
     _cannon_sprite->set_y(y);
 
@@ -659,15 +659,15 @@ void tank_boss::_update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero
         _cannon_palette_action->update();
     }
 
-    btn::fixed current_rotation_angle = _cannon_sprite->rotation_angle();
-    btn::fixed previous_rotation_angle = _fix_rotation_angle(current_rotation_angle - 1);
-    btn::fixed next_rotation_angle = _fix_rotation_angle(current_rotation_angle + 1);
-    btn::fixed_point current_end_position = _cannon_end_position(current_rotation_angle, y);
-    btn::fixed_point previous_end_position = _cannon_end_position(previous_rotation_angle, y);
-    btn::fixed_point next_end_position = _cannon_end_position(next_rotation_angle, y);
-    btn::fixed current_hero_distance = _squared_distance(current_end_position, hero_position);
-    btn::fixed previous_hero_distance = _squared_distance(previous_end_position, hero_position);
-    btn::fixed next_hero_distance = _squared_distance(next_end_position, hero_position);
+    bn::fixed current_rotation_angle = _cannon_sprite->rotation_angle();
+    bn::fixed previous_rotation_angle = _fix_rotation_angle(current_rotation_angle - 1);
+    bn::fixed next_rotation_angle = _fix_rotation_angle(current_rotation_angle + 1);
+    bn::fixed_point current_end_position = _cannon_end_position(current_rotation_angle, y);
+    bn::fixed_point previous_end_position = _cannon_end_position(previous_rotation_angle, y);
+    bn::fixed_point next_end_position = _cannon_end_position(next_rotation_angle, y);
+    bn::fixed current_hero_distance = _squared_distance(current_end_position, hero_position);
+    bn::fixed previous_hero_distance = _squared_distance(previous_end_position, hero_position);
+    bn::fixed next_hero_distance = _squared_distance(next_end_position, hero_position);
 
     if(previous_hero_distance < current_hero_distance && previous_hero_distance < next_hero_distance)
     {
@@ -681,20 +681,20 @@ void tank_boss::_update_cannon_sprite(btn::fixed y, const btn::fixed_point& hero
     }
 }
 
-void tank_boss::_update_rects(btn::fixed y)
+void tank_boss::_update_rects(bn::fixed y)
 {
     _tank_rects[0].set_y(y - 2);
     _tank_rects[1].set_y(y);
 }
 
-void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixed y, const btn::camera_ptr& camera,
+void tank_boss::_update_bullets(const bn::fixed_point& hero_position, bn::fixed y, const bn::camera_ptr& camera,
                                 enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
 
     if(! _bullets_counter && _cannon_sprite)
     {
-        btn::fixed cannon_rotation_angle = _cannon_sprite->rotation_angle();
+        bn::fixed cannon_rotation_angle = _cannon_sprite->rotation_angle();
 
         switch(_state_index)
         {
@@ -720,7 +720,7 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
                 break;
 
             default:
-                BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                BN_ERROR("Invalid bullets index: ", _bullets_index);
                 break;
             }
             break;
@@ -808,13 +808,13 @@ void tank_boss::_update_bullets(const btn::fixed_point& hero_position, btn::fixe
                 break;
 
             default:
-                BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                BN_ERROR("Invalid bullets index: ", _bullets_index);
                 break;
             }
             break;
 
         default:
-            BTN_ERROR("Invalid state index: ", _state_index);
+            BN_ERROR("Invalid state index: ", _state_index);
             break;
         }
     }
@@ -824,7 +824,7 @@ void tank_boss::_update_explosions()
 {
     for(auto it = _mini_explosions.begin(), end = _mini_explosions.end(); it != end; )
     {
-        btn::sprite_animate_action<7>& mini_explosions = *it;
+        bn::sprite_animate_action<7>& mini_explosions = *it;
         mini_explosions.update();
 
         if(mini_explosions.done())

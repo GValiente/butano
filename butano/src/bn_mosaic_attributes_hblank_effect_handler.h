@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
-#define BTN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#define BN_MOSAIC_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any_fwd.h"
-#include "btn_display_manager.h"
-#include "btn_mosaic_attributes.h"
-#include "../hw/include/btn_hw_display.h"
+#include "bn_any_fwd.h"
+#include "bn_display_manager.h"
+#include "bn_mosaic_attributes.h"
+#include "../hw/include/bn_hw_display.h"
 
-namespace btn
+namespace bn
 {
 
 class mosaic_attributes_hblank_effect_handler

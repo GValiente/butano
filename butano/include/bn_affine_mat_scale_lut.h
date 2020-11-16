@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_AFFINE_MAT_SCALE_LUT_H
-#define BTN_AFFINE_MAT_SCALE_LUT_H
+#ifndef BN_AFFINE_MAT_SCALE_LUT_H
+#define BN_AFFINE_MAT_SCALE_LUT_H
 
 /**
  * @file
- * btn::affine_mat_scale_lut header file.
+ * bn::affine_mat_scale_lut header file.
  *
  * @ingroup affine_mat
  */
 
-#include "btn_array.h"
-#include "btn_fixed.h"
+#include "bn_array.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**

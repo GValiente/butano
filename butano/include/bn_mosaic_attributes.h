@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MOSAIC_ATTRIBUTES_H
-#define BTN_MOSAIC_ATTRIBUTES_H
+#ifndef BN_MOSAIC_ATTRIBUTES_H
+#define BN_MOSAIC_ATTRIBUTES_H
 
 /**
  * @file
- * btn::mosaic_attributes header file.
+ * bn::mosaic_attributes header file.
  *
  * @ingroup mosaic
  */
 
-#include "btn_fixed.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -46,13 +46,13 @@ public:
         _bgs_horizontal_stretch(bgs_horizontal_stretch),
         _bgs_vertical_stretch(bgs_vertical_stretch)
     {
-        BTN_ASSERT(sprites_horizontal_stretch >= 0 && sprites_horizontal_stretch <= 1,
+        BN_ASSERT(sprites_horizontal_stretch >= 0 && sprites_horizontal_stretch <= 1,
                    "Invalid sprites horizontal stretch: ", sprites_horizontal_stretch);
-        BTN_ASSERT(sprites_vertical_stretch >= 0 && sprites_vertical_stretch <= 1,
+        BN_ASSERT(sprites_vertical_stretch >= 0 && sprites_vertical_stretch <= 1,
                    "Invalid sprites vertical stretch: ", sprites_vertical_stretch);
-        BTN_ASSERT(bgs_horizontal_stretch >= 0 && bgs_horizontal_stretch <= 1,
+        BN_ASSERT(bgs_horizontal_stretch >= 0 && bgs_horizontal_stretch <= 1,
                    "Invalid bgs horizontal stretch: ", bgs_horizontal_stretch);
-        BTN_ASSERT(bgs_vertical_stretch >= 0 && bgs_vertical_stretch <= 1,
+        BN_ASSERT(bgs_vertical_stretch >= 0 && bgs_vertical_stretch <= 1,
                    "Invalid bgs vertical stretch: ", bgs_vertical_stretch);
     }
 
@@ -70,7 +70,7 @@ public:
      */
     constexpr void set_sprites_horizontal_stretch(fixed horizontal_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
 
         _sprites_horizontal_stretch = horizontal_stretch;
@@ -90,7 +90,7 @@ public:
      */
     constexpr void set_sprites_vertical_stretch(fixed vertical_stretch)
     {
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _sprites_vertical_stretch = vertical_stretch;
     }
@@ -101,7 +101,7 @@ public:
      */
     constexpr void set_sprites_stretch(fixed stretch)
     {
-        BTN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
+        BN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
 
         _sprites_horizontal_stretch = stretch;
         _sprites_vertical_stretch = stretch;
@@ -114,9 +114,9 @@ public:
      */
     constexpr void set_sprites_stretch(fixed horizontal_stretch, fixed vertical_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _sprites_horizontal_stretch = horizontal_stretch;
         _sprites_vertical_stretch = vertical_stretch;
@@ -136,7 +136,7 @@ public:
      */
     constexpr void set_bgs_horizontal_stretch(fixed horizontal_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
 
         _bgs_horizontal_stretch = horizontal_stretch;
@@ -156,7 +156,7 @@ public:
      */
     constexpr void set_bgs_vertical_stretch(fixed vertical_stretch)
     {
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _bgs_vertical_stretch = vertical_stretch;
     }
@@ -167,7 +167,7 @@ public:
      */
     constexpr void set_bgs_stretch(fixed stretch)
     {
-        BTN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
+        BN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
 
         _bgs_horizontal_stretch = stretch;
         _bgs_vertical_stretch = stretch;
@@ -180,9 +180,9 @@ public:
      */
     constexpr void set_bgs_stretch(fixed horizontal_stretch, fixed vertical_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _bgs_horizontal_stretch = horizontal_stretch;
         _bgs_vertical_stretch = vertical_stretch;
@@ -194,7 +194,7 @@ public:
      */
     constexpr void set_horizontal_stretch(fixed horizontal_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
 
         _sprites_horizontal_stretch = horizontal_stretch;
@@ -207,7 +207,7 @@ public:
      */
     constexpr void set_vertical_stretch(fixed vertical_stretch)
     {
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _sprites_vertical_stretch = vertical_stretch;
         _bgs_vertical_stretch = vertical_stretch;
@@ -219,7 +219,7 @@ public:
      */
     constexpr void set_stretch(fixed stretch)
     {
-        BTN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
+        BN_ASSERT(stretch >= 0 && stretch <= 1, "Invalid stretch: ", stretch);
 
         _sprites_horizontal_stretch = stretch;
         _sprites_vertical_stretch = stretch;
@@ -234,9 +234,9 @@ public:
      */
     constexpr void set_stretch(fixed horizontal_stretch, fixed vertical_stretch)
     {
-        BTN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
+        BN_ASSERT(horizontal_stretch >= 0 && horizontal_stretch <= 1,
                    "Invalid horizontal stretch: ", horizontal_stretch);
-        BTN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
+        BN_ASSERT(vertical_stretch >= 0 && vertical_stretch <= 1, "Invalid vertical stretch: ", vertical_stretch);
 
         _sprites_horizontal_stretch = horizontal_stretch;
         _sprites_vertical_stretch = vertical_stretch;

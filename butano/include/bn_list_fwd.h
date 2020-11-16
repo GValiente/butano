@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_LIST_FWD_H
-#define BTN_LIST_FWD_H
+#ifndef BN_LIST_FWD_H
+#define BN_LIST_FWD_H
 
 /**
  * @file
- * btn::ilist and btn::list declaration header file.
+ * bn::ilist and bn::list declaration header file.
  *
  * @ingroup list
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of list.

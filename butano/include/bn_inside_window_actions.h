@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_INSIDE_WINDOW_ACTIONS_H
-#define BTN_INSIDE_WINDOW_ACTIONS_H
+#ifndef BN_INSIDE_WINDOW_ACTIONS_H
+#define BN_INSIDE_WINDOW_ACTIONS_H
 
 /**
  * @file
- * btn::inside_window actions header file.
+ * bn::inside_window actions header file.
  *
  * @ingroup inside_window
  * @ingroup action
  */
 
-#include "btn_inside_window.h"
-#include "btn_value_template_actions.h"
+#include "bn_inside_window.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // visible

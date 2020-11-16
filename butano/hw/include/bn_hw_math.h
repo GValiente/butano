@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_MATH_H
-#define BTN_HW_MATH_H
+#ifndef BN_HW_MATH_H
+#define BN_HW_MATH_H
 
 #include "../3rd_party/gba-modern/include/gba-modern.h"
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw
+namespace bn::hw
 {
     [[nodiscard]] inline int sqrt(int value)
     {

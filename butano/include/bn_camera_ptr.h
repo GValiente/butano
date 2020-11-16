@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CAMERA_PTR_H
-#define BTN_CAMERA_PTR_H
+#ifndef BN_CAMERA_PTR_H
+#define BN_CAMERA_PTR_H
 
 /**
  * @file
- * btn::camera_ptr header file.
+ * bn::camera_ptr header file.
  *
  * @ingroup camera
  */
 
-#include "btn_utility.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class fixed_point;
@@ -96,7 +96,7 @@ public:
      */
     camera_ptr& operator=(camera_ptr&& other) noexcept
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
         return *this;
     }
 
@@ -162,7 +162,7 @@ public:
      */
     void swap(camera_ptr& other)
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
     }
 
     /**
@@ -172,7 +172,7 @@ public:
      */
     friend void swap(camera_ptr& a, camera_ptr& b)
     {
-        btn::swap(a._id, b._id);
+        bn::swap(a._id, b._id);
     }
 
     /**

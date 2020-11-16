@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_GAME_PAK_H
-#define BTN_CONFIG_GAME_PAK_H
+#ifndef BN_CONFIG_GAME_PAK_H
+#define BN_CONFIG_GAME_PAK_H
 
 /**
  * @file
@@ -13,10 +13,10 @@
  * @ingroup game_pak
  */
 
-#include "btn_game_pak_wait_state.h"
+#include "bn_game_pak_wait_state.h"
 
 /**
- * @def BTN_CFG_GAME_PAK_PREFETCH_ENABLED
+ * @def BN_CFG_GAME_PAK_PREFETCH_ENABLED
  *
  * Specifies if Game Pak prefetch is enabled or not.
  *
@@ -25,34 +25,34 @@
  *
  * @ingroup game_pak
  */
-#ifndef BTN_CFG_GAME_PAK_PREFETCH_ENABLED
-    #define BTN_CFG_GAME_PAK_PREFETCH_ENABLED true
+#ifndef BN_CFG_GAME_PAK_PREFETCH_ENABLED
+    #define BN_CFG_GAME_PAK_PREFETCH_ENABLED true
 #endif
 
 /**
- * @def BTN_CFG_GAME_PAK_WAIT_STATE_FIRST
+ * @def BN_CFG_GAME_PAK_WAIT_STATE_FIRST
  *
  * Specifies Game Pak access time in clock cycles for non-sequential accesses.
  *
- * Values not specified in BTN_GAME_PAK_WAIT_STATE_FIRST_* macros are not allowed.
+ * Values not specified in BN_GAME_PAK_WAIT_STATE_FIRST_* macros are not allowed.
  *
  * @ingroup game_pak
  */
-#ifndef BTN_CFG_GAME_PAK_WAIT_STATE_FIRST
-    #define BTN_CFG_GAME_PAK_WAIT_STATE_FIRST BTN_GAME_PAK_WAIT_STATE_FIRST_4
+#ifndef BN_CFG_GAME_PAK_WAIT_STATE_FIRST
+    #define BN_CFG_GAME_PAK_WAIT_STATE_FIRST BN_GAME_PAK_WAIT_STATE_FIRST_4
 #endif
 
 /**
- * @def BTN_CFG_GAME_PAK_WAIT_STATE_SECOND
+ * @def BN_CFG_GAME_PAK_WAIT_STATE_SECOND
  *
  * Specifies Game Pak access time in clock cycles for sequential accesses.
  *
- * Values not specified in BTN_GAME_PAK_WAIT_STATE_SECOND_* macros are not allowed.
+ * Values not specified in BN_GAME_PAK_WAIT_STATE_SECOND_* macros are not allowed.
  *
  * @ingroup game_pak
  */
-#ifndef BTN_CFG_GAME_PAK_WAIT_STATE_SECOND
-    #define BTN_CFG_GAME_PAK_WAIT_STATE_SECOND BTN_GAME_PAK_WAIT_STATE_SECOND_2
+#ifndef BN_CFG_GAME_PAK_WAIT_STATE_SECOND
+    #define BN_CFG_GAME_PAK_WAIT_STATE_SECOND BN_GAME_PAK_WAIT_STATE_SECOND_2
 #endif
 
 #endif

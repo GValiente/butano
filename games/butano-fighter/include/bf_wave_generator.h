@@ -6,9 +6,9 @@
 #ifndef BF_WAVE_GENERATOR_H
 #define BF_WAVE_GENERATOR_H
 
-#include "btn_math.h"
-#include "btn_span.h"
-#include "btn_fixed.h"
+#include "bn_math.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
 
 namespace bf
 {
@@ -24,7 +24,7 @@ public:
 
     constexpr void set_speed(int speed)
     {
-        BTN_ASSERT(speed >= 0, "Invalid speed: ", speed);
+        BN_ASSERT(speed >= 0, "Invalid speed: ", speed);
 
         _speed = speed;
     }
@@ -36,12 +36,12 @@ public:
 
     constexpr void set_amplitude(int amplitude)
     {
-        BTN_ASSERT(amplitude >= 1 && amplitude <= 4, "Invalid amplitude: ", amplitude);
+        BN_ASSERT(amplitude >= 1 && amplitude <= 4, "Invalid amplitude: ", amplitude);
 
         _amplitude = amplitude;
     }
 
-    constexpr void generate(btn::span<btn::fixed> values) const
+    constexpr void generate(bn::span<bn::fixed> values) const
     {
         switch(_amplitude)
         {
@@ -63,7 +63,7 @@ public:
             break;
 
         default:
-            BTN_ERROR("Invalid amplitude: ", _amplitude);
+            BN_ERROR("Invalid amplitude: ", _amplitude);
             break;
         }
     }
@@ -73,16 +73,16 @@ private:
     int _amplitude = 4;
 
     template<int Amplitude>
-    constexpr static void _generate_impl(int speed, btn::span<btn::fixed>& values)
+    constexpr static void _generate_impl(int speed, bn::span<bn::fixed>& values)
     {
         int a = (4096 / (1 << Amplitude));
         int b = (1 << (Amplitude - 1));
-        btn::fixed* values_data = values.data();
+        bn::fixed* values_data = values.data();
 
         for(int index = 0, limit = values.size(); index < limit; ++index)
         {
             int lut_angle = int(uint16_t(index * speed)) >> 7;
-            int sin = btn::lut_sin(lut_angle).data();
+            int sin = bn::lut_sin(lut_angle).data();
             values_data[index] = (sin / a) - b;
         }
     }

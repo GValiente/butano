@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_AUDIO_MANAGER_H
-#define BTN_AUDIO_MANAGER_H
+#ifndef BN_AUDIO_MANAGER_H
+#define BN_AUDIO_MANAGER_H
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
     class music_item;
     class sound_item;
 }
 
-namespace btn::audio_manager
+namespace bn::audio_manager
 {
     void init();
 

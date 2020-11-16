@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FIXED_POINT_H
-#define BTN_FIXED_POINT_H
+#ifndef BN_FIXED_POINT_H
+#define BN_FIXED_POINT_H
 
 /**
  * @file
- * btn::fixed_point header file.
+ * bn::fixed_point header file.
  *
  * @ingroup math
  */
 
-#include "btn_fixed.h"
-#include "btn_point.h"
+#include "bn_fixed.h"
+#include "bn_point.h"
 
-namespace btn
+namespace bn
 {
 
 /**

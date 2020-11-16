@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SORTED_SPRITES_H
-#define BTN_SORTED_SPRITES_H
+#ifndef BN_SORTED_SPRITES_H
+#define BN_SORTED_SPRITES_H
 
-#include "btn_pool.h"
-#include "btn_config_sprites.h"
-#include "btn_sprites_manager_item.h"
+#include "bn_pool.h"
+#include "bn_config_sprites.h"
+#include "bn_sprites_manager_item.h"
 
-namespace btn::sorted_sprites
+namespace bn::sorted_sprites
 {
     class layer : public intrusive_list_node_type
     {
@@ -66,14 +66,14 @@ namespace btn::sorted_sprites
 
             if(layers_it == layers_end)
             {
-                BTN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
+                BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
                 layers_it = layers.insert(layers_end, pool_layer);
             }
             else if(item_sort_key != layers_it->layer_sort_key())
             {
-                BTN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
+                BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
                 layers_it = layers.insert(layers_it, pool_layer);
@@ -113,7 +113,7 @@ namespace btn::sorted_sprites
         }
 
     private:
-        pool<layer, BTN_CFG_SPRITES_MAX_SORT_LAYERS> _layer_pool;
+        pool<layer, BN_CFG_SPRITES_MAX_SORT_LAYERS> _layer_pool;
         layers_type _layer_ptrs;
     };
 }

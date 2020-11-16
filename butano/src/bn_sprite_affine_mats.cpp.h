@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_affine_mats.h"
+#include "bn_sprite_affine_mats.h"
 
-#include "btn_sprite_affine_mats_manager.h"
+#include "bn_sprite_affine_mats_manager.h"
 
-namespace btn::sprite_affine_mats
+namespace bn::sprite_affine_mats
 {
 
 int used_count()

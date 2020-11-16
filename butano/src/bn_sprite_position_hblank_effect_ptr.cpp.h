@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_position_hblank_effect_ptr.h"
+#include "bn_sprite_position_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_fixed.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_position_hblank_effect_ptr sprite_position_hblank_effect_ptr::create_horizontal(

@@ -9,10 +9,10 @@
 #include "bf_game_check_hero_bullet_data.h"
 
 #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
-    #include "btn_log.h"
-    #include "btn_string.h"
+    #include "bn_log.h"
+    #include "bn_string.h"
 
-    static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
+    static_assert(BN_CFG_LOG_ENABLED, "Log is not enabled");
 #endif
 
 namespace bf::game
@@ -28,7 +28,7 @@ enemies_grid::~enemies_grid()
 
 void enemies_grid::add_enemy(enemy& enemy)
 {
-    btn::fixed_point enemy_top_left = enemy.top_left();
+    bn::fixed_point enemy_top_left = enemy.top_left();
     int row = _row(enemy_top_left);
     int column = _column(enemy_top_left);
     int enemy_rows = enemy.grid_rows();
@@ -43,7 +43,7 @@ void enemies_grid::add_enemy(enemy& enemy)
 
 void enemies_grid::remove_enemy(enemy& enemy)
 {
-    btn::fixed_point enemy_top_left = enemy.top_left();
+    bn::fixed_point enemy_top_left = enemy.top_left();
     int row = _row(enemy_top_left);
     int column = _column(enemy_top_left);
     int enemy_rows = enemy.grid_rows();
@@ -56,7 +56,7 @@ void enemies_grid::remove_enemy(enemy& enemy)
 
 bool enemies_grid::update_enemy(enemy& enemy)
 {
-    btn::fixed_point enemy_top_left = enemy.top_left();
+    bn::fixed_point enemy_top_left = enemy.top_left();
     int old_row = enemy.last_grid_row();
     int old_column = enemy.last_grid_column();
     int new_row = _row(enemy_top_left);
@@ -65,7 +65,7 @@ bool enemies_grid::update_enemy(enemy& enemy)
 
     if(old_row < new_row)
     {
-        BTN_ASSERT(old_row == new_row - 1, "Enemy is too fast: ", old_row, " - ", new_row);
+        BN_ASSERT(old_row == new_row - 1, "Enemy is too fast: ", old_row, " - ", new_row);
 
         enemy.set_last_grid_row(new_row);
         _remove_enemy_row(old_row - 1, old_column, enemy);
@@ -74,7 +74,7 @@ bool enemies_grid::update_enemy(enemy& enemy)
     }
     else if(old_row > new_row)
     {
-        BTN_ASSERT(old_row == new_row + 1, "Enemy is too fast: ", old_row, " - ", new_row);
+        BN_ASSERT(old_row == new_row + 1, "Enemy is too fast: ", old_row, " - ", new_row);
 
         enemy.set_last_grid_row(new_row);
         _remove_enemy_row(old_row + enemy.grid_rows(), old_column, enemy);
@@ -84,7 +84,7 @@ bool enemies_grid::update_enemy(enemy& enemy)
 
     if(old_column < new_column)
     {
-        BTN_ASSERT(old_column == new_column - 1, "Enemy is too fast: ", old_column, " - ", new_column);
+        BN_ASSERT(old_column == new_column - 1, "Enemy is too fast: ", old_column, " - ", new_column);
 
         enemy.set_last_grid_column(new_column);
         _remove_enemy_column(new_row, old_column - 1, enemy);
@@ -93,7 +93,7 @@ bool enemies_grid::update_enemy(enemy& enemy)
     }
     else if(old_column > new_column)
     {
-        BTN_ASSERT(old_column == new_column + 1, "Enemy is too fast: ", old_column, " - ", new_column);
+        BN_ASSERT(old_column == new_column + 1, "Enemy is too fast: ", old_column, " - ", new_column);
 
         enemy.set_last_grid_column(new_column);
         _remove_enemy_column(new_row, old_column + enemy.grid_columns(), enemy);
@@ -104,9 +104,9 @@ bool enemies_grid::update_enemy(enemy& enemy)
     return updated;
 }
 
-bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
+bool enemies_grid::check_hero(const bn::fixed_rect& hero_rect) const
 {
-    btn::fixed_point hero_top_left = hero_rect.top_left();
+    bn::fixed_point hero_top_left = hero_rect.top_left();
     int row = _safe_row(hero_top_left);
     int column = _safe_column(hero_top_left);
 
@@ -123,7 +123,7 @@ bool enemies_grid::check_hero(const btn::fixed_rect& hero_rect) const
 
 bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 {
-    btn::fixed_point bullet_top_left = data.bullet_rect.top_left();
+    bn::fixed_point bullet_top_left = data.bullet_rect.top_left();
     int row = _safe_row(bullet_top_left);
     int column = _safe_column(bullet_top_left);
 
@@ -141,13 +141,13 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 #if BF_CFG_ENEMIES_GRID_LOG_ENABLED
     void enemies_grid::log() const
     {
-        BTN_LOG("grid: [");
+        BN_LOG("grid: [");
 
         for(int r = 0; r < rows; ++r)
         {
             const cell* cells_row = _cells_row(r);
-            btn::string<BTN_CFG_LOG_MAX_SIZE> string;
-            btn::ostringstream stream(string);
+            bn::string<BN_CFG_LOG_MAX_SIZE> string;
+            bn::ostringstream stream(string);
             stream.append("\t[");
 
             for(int c = 0; c < columns; ++c)
@@ -172,41 +172,41 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
             }
 
             stream.append(']');
-            BTN_LOG(stream.string());
+            BN_LOG(stream.string());
         }
 
-        BTN_LOG("]");
+        BN_LOG("]");
     }
 #endif
 
-int enemies_grid::_column(const btn::fixed_point& top_left)
+int enemies_grid::_column(const bn::fixed_point& top_left)
 {
     int column = (top_left.x().right_shift_integer() / constants::enemies_grid_size) + (columns / 2);
-    BTN_ASSERT(column >= 1 && column < columns - max_cell_increment,
+    BN_ASSERT(column >= 1 && column < columns - max_cell_increment,
                "Invalid column: ", column, " - ", top_left.x().right_shift_integer());
 
     return column;
 }
 
-int enemies_grid::_row(const btn::fixed_point& top_left)
+int enemies_grid::_row(const bn::fixed_point& top_left)
 {
     int row = (top_left.y().right_shift_integer() / constants::enemies_grid_size) + (rows / 2);
-    BTN_ASSERT(row >= 1 && row < rows - max_cell_increment,
+    BN_ASSERT(row >= 1 && row < rows - max_cell_increment,
                "Invalid row: ", row, " - ", top_left.y().right_shift_integer());
 
     return row;
 }
 
-int enemies_grid::_safe_column(const btn::fixed_point& top_left)
+int enemies_grid::_safe_column(const bn::fixed_point& top_left)
 {
     int column = (top_left.x().right_shift_integer() / constants::enemies_grid_size) + (columns / 2);
-    return btn::clamp(column, 0, columns - 1);
+    return bn::clamp(column, 0, columns - 1);
 }
 
-int enemies_grid::_safe_row(const btn::fixed_point& top_left)
+int enemies_grid::_safe_row(const bn::fixed_point& top_left)
 {
     int row = (top_left.y().right_shift_integer() / constants::enemies_grid_size) + (rows / 2);
-    return btn::clamp(row, 0, rows - 1);
+    return bn::clamp(row, 0, rows - 1);
 }
 
 void enemies_grid::_add_enemy_row(int row, int column, enemy& enemy)
@@ -261,7 +261,7 @@ void enemies_grid::cell_type::add_enemy(enemy& enemy, enemies_pool& enemies_pool
         }
     }
 
-    BTN_ASSERT(! enemies_pool.full(), "No more available enemies in grid");
+    BN_ASSERT(! enemies_pool.full(), "No more available enemies in grid");
 
     enemies_list_node_type& enemies_node = enemies_pool.create(enemy);
     _enemies.push_front(enemies_node);

@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_UTILITY_H
-#define BTN_UTILITY_H
+#ifndef BN_UTILITY_H
+#define BN_UTILITY_H
 
 /**
  * @file
@@ -14,10 +14,10 @@
  */
 
 #include <utility>
-#include "btn_compare.h"
-#include "btn_type_traits.h"
+#include "bn_compare.h"
+#include "bn_type_traits.h"
 
-namespace btn
+namespace bn
 {
     using std::move;
 
@@ -137,8 +137,8 @@ namespace btn
          */
         constexpr void swap(pair& other)
         {
-            btn::swap(first, other.first);
-            btn::swap(second, other.second);
+            bn::swap(first, other.first);
+            bn::swap(second, other.second);
         }
 
         /**

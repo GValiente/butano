@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_tiles.h"
+#include "bn_sprite_tiles.h"
 
-#include "btn_sprite_tiles_manager.h"
+#include "bn_sprite_tiles_manager.h"
 
-namespace btn::sprite_tiles
+namespace bn::sprite_tiles
 {
 
 int used_tiles_count()
@@ -30,7 +30,7 @@ int available_items_count()
     return sprite_tiles_manager::available_items_count();
 }
 
-#if BTN_CFG_LOG_ENABLED
+#if BN_CFG_LOG_ENABLED
     void log_status()
     {
         sprite_tiles_manager::log_status();

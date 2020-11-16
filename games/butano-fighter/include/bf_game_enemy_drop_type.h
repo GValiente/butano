@@ -6,7 +6,7 @@
 #ifndef BF_GAME_ENEMY_DROP_TYPE_H
 #define BF_GAME_ENEMY_DROP_TYPE_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 namespace bf::game
 {

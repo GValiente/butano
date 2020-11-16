@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_optional.h"
+#include "bn_span.h"
+#include "bn_optional.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hblank_effect_ptr::create(

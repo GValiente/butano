@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITES_CONSTANTS_H
-#define BTN_HW_SPRITES_CONSTANTS_H
+#ifndef BN_HW_SPRITES_CONSTANTS_H
+#define BN_HW_SPRITES_CONSTANTS_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::sprites
+namespace bn::hw::sprites
 {
     [[nodiscard]] constexpr int count()
     {

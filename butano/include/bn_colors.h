@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_COLORS_H
-#define BTN_COLORS_H
+#ifndef BN_COLORS_H
+#define BN_COLORS_H
 
 /**
  * @file
- * btn::colors header file.
+ * bn::colors header file.
  *
  * @ingroup color
  */
 
-#include "btn_color.h"
+#include "bn_color.h"
 
 /**
  * @brief Some constant colors from TONC.
  *
  * @ingroup color
  */
-namespace btn::colors
+namespace bn::colors
 {
     constexpr const color black(0x0000); //!< Black color.
     constexpr const color gray(0x4210); //!< Gray color.

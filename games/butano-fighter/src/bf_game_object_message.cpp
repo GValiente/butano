@@ -5,8 +5,8 @@
 
 #include "bf_game_object_message.h"
 
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_object_messages.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_object_messages.h"
 #include "bf_constants.h"
 
 namespace bf::game
@@ -17,14 +17,14 @@ namespace
     constexpr const int wait_frames = 180;
     constexpr const int move_y = -wait_frames / 4;
 
-    [[nodiscard]] btn::sprite_move_to_action _create_move_action(const btn::fixed_point& position, int graphics_index,
-                                                                 const btn::camera_ptr& camera)
+    [[nodiscard]] bn::sprite_move_to_action _create_move_action(const bn::fixed_point& position, int graphics_index,
+                                                                 const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::object_messages, graphics_index);
+        bn::sprite_builder builder(bn::sprite_items::object_messages, graphics_index);
         builder.set_position(position);
         builder.set_z_order(constants::object_messages_z_order);
         builder.set_camera(camera);
-        return btn::sprite_move_to_action(builder.release_build(), wait_frames, position.x(), position.y() + move_y);
+        return bn::sprite_move_to_action(builder.release_build(), wait_frames, position.x(), position.y() + move_y);
     }
 
     [[nodiscard]] int _graphics_index(int experience)
@@ -117,14 +117,14 @@ namespace
             return 58;
 
         default:
-            BTN_ERROR("Invalid experience: ", experience);
+            BN_ERROR("Invalid experience: ", experience);
             return 0;
         }
     }
 }
 
-object_message object_message::create_experience(const btn::fixed_point& position, int experience,
-                                                 const btn::camera_ptr& camera)
+object_message object_message::create_experience(const bn::fixed_point& position, int experience,
+                                                 const bn::camera_ptr& camera)
 {
     return object_message(position, _graphics_index(experience), camera);
 }
@@ -135,10 +135,10 @@ void object_message::update()
     _animate_action.update();
 }
 
-object_message::object_message(const btn::fixed_point& position, int graphics_index, const btn::camera_ptr& camera) :
+object_message::object_message(const bn::fixed_point& position, int graphics_index, const bn::camera_ptr& camera) :
     _move_action(_create_move_action(position, graphics_index, camera)),
-    _animate_action(btn::create_sprite_cached_animate_action_forever(
-                        _move_action.sprite(), 16, btn::sprite_items::object_messages.tiles_item(),
+    _animate_action(bn::create_sprite_cached_animate_action_forever(
+                        _move_action.sprite(), 16, bn::sprite_items::object_messages.tiles_item(),
                         graphics_index, graphics_index + 1))
 {
 }

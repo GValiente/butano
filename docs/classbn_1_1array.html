@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::array class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__array_8h.html">&lt;bn_array.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Type, int Size&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>array <span class="m-thin">class</span>
+        </h1>
+        <p>Container that encapsulates fixed size arrays.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+            <tr>
+              <td>Size</td>
+              <td>Number of stored elements.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#pub-attribs">Public variables</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a0fe88d360b1cdfbb47ec8d3514a37b74">
+              using <a href="#a0fe88d360b1cdfbb47ec8d3514a37b74" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="aafb62627b59990f2d5d8c159bc71a15c">
+              using <a href="#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a8f74c737f418e3a29d7723bc34af4f51">
+              using <a href="#a8f74c737f418e3a29d7723bc34af4f51" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="a2e5e466f6d7ecfb2521c345b82178ffc">
+              using <a href="#a2e5e466f6d7ecfb2521c345b82178ffc" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a2c9cf20783c4c4760632a644b381bc38">
+              using <a href="#a2c9cf20783c4c4760632a644b381bc38" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="aa9ca8da3081310e81a02c58af1000745">
+              using <a href="#aa9ca8da3081310e81a02c58af1000745" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a61c4dbf8d90dd7e877fc8ad871408911">
+              using <a href="#a61c4dbf8d90dd7e877fc8ad871408911" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="a1cb863df488d671eb65f1be276e3869c">
+              using <a href="#a1cb863df488d671eb65f1be276e3869c" class="m-doc-self">iterator</a> = Type*
+            </dt>
+            <dd>Iterator alias.</dd>
+            <dt id="a2860f318ba7881e1f3ef23611fa7fd85">
+              using <a href="#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc-self">const_iterator</a> = const Type*
+            </dt>
+            <dd>Const iterator alias.</dd>
+            <dt id="a63a2c8c9dda391f2ae42a35fa1fbd80a">
+              using <a href="#a63a2c8c9dda391f2ae42a35fa1fbd80a" class="m-doc-self">reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1array.html#a1cb863df488d671eb65f1be276e3869c" class="m-doc">iterator</a>&gt;
+            </dt>
+            <dd>Reverse iterator alias.</dd>
+            <dt id="a18d18c75e130d4fcc2dd07babe855c7c">
+              using <a href="#a18d18c75e130d4fcc2dd07babe855c7c" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1array.html#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc">const_<wbr />iterator</a>&gt;
+            </dt>
+            <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a6d1e18a7bc33f96d0d1aa245982dd673">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6d1e18a7bc33f96d0d1aa245982dd673" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a61c4dbf8d90dd7e877fc8ad871408911" class="m-doc">const_<wbr />pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const pointer to the beginning of the array.</dd>
+            <dt id="afcccb13261d5026fd1f699a618faefc4">
+              <span class="m-doc-wrap-bumper">auto <a href="#afcccb13261d5026fd1f699a618faefc4" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#aa9ca8da3081310e81a02c58af1000745" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a pointer to the beginning of the array.</dd>
+            <dt id="a8de07e763db2341ff526676b6b990968">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8de07e763db2341ff526676b6b990968" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the current elements count.</dd>
+            <dt id="a3cc916b4101e9389eba6e36d7b86b261">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3cc916b4101e9389eba6e36d7b86b261" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the maximum possible elements count.</dd>
+            <dt id="ae53006041017c4e71fbf9b639da83586">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae53006041017c4e71fbf9b639da83586" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the remaining element capacity.</dd>
+            <dt id="a0ba186a2cc29f3a8e94ace16a05d092e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0ba186a2cc29f3a8e94ace16a05d092e" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if it doesn&#x27;t contain any element.</dd>
+            <dt id="a572f1e88dc7ff599fea0cd44c9e52cf1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a572f1e88dc7ff599fea0cd44c9e52cf1" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if it can&#x27;t contain any more elements.</dd>
+            <dt id="a838ce04a5cdd0bd288b7209cc2190593">
+              <span class="m-doc-wrap-bumper">auto <a href="#a838ce04a5cdd0bd288b7209cc2190593" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the array.</dd>
+            <dt id="a8201029f6b7c69fcdb496e706c214d72">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8201029f6b7c69fcdb496e706c214d72" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a1cb863df488d671eb65f1be276e3869c" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns an iterator to the beginning of the array.</dd>
+            <dt id="a46dce418cd589cb35be8b8fc055b0d6b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a46dce418cd589cb35be8b8fc055b0d6b" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the array.</dd>
+            <dt id="a7e9dde74d7bdf5b4b65806600cd834d3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e9dde74d7bdf5b4b65806600cd834d3" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a1cb863df488d671eb65f1be276e3869c" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns an iterator to the end of the array.</dd>
+            <dt id="ad06aada98d4373f6fbbca8af7fa028b8">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad06aada98d4373f6fbbca8af7fa028b8" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the array.</dd>
+            <dt id="a3535585da655dc33da321c2d6f15e4a5">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3535585da655dc33da321c2d6f15e4a5" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2860f318ba7881e1f3ef23611fa7fd85" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the array.</dd>
+            <dt id="ac7d87e3119f9f7772b778849d3f061d3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac7d87e3119f9f7772b778849d3f061d3" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a18d18c75e130d4fcc2dd07babe855c7c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the array.</dd>
+            <dt id="a598243900e780d4cc8349cf394a09823">
+              <span class="m-doc-wrap-bumper">auto <a href="#a598243900e780d4cc8349cf394a09823" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a63a2c8c9dda391f2ae42a35fa1fbd80a" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reverse iterator to the end of the array.</dd>
+            <dt id="a183c0940419c84efa2d4745c08114124">
+              <span class="m-doc-wrap-bumper">auto <a href="#a183c0940419c84efa2d4745c08114124" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a18d18c75e130d4fcc2dd07babe855c7c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the array.</dd>
+            <dt id="ab1c6b8816a324f5aac1650ae782a6098">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab1c6b8816a324f5aac1650ae782a6098" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a63a2c8c9dda391f2ae42a35fa1fbd80a" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reverse iterator to the beginning of the array.</dd>
+            <dt id="afd25f05e63839b8ef5f27941ba5f5ff0">
+              <span class="m-doc-wrap-bumper">auto <a href="#afd25f05e63839b8ef5f27941ba5f5ff0" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a18d18c75e130d4fcc2dd07babe855c7c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the array.</dd>
+            <dt id="a57f12e974f78d88d42b3c236609e7fcc">
+              <span class="m-doc-wrap-bumper">auto <a href="#a57f12e974f78d88d42b3c236609e7fcc" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a18d18c75e130d4fcc2dd07babe855c7c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the array.</dd>
+            <dt id="af5c5ae0ccce0a69a986947573a74e9e5">
+              <span class="m-doc-wrap-bumper">auto <a href="#af5c5ae0ccce0a69a986947573a74e9e5" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1array.html#a2c9cf20783c4c4760632a644b381bc38" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="aecc57427047ddc7386016c8c4236b07b">
+              <span class="m-doc-wrap-bumper">auto <a href="#aecc57427047ddc7386016c8c4236b07b" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1array.html#a2e5e466f6d7ecfb2521c345b82178ffc" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="a5e8b082c0b773713dc24644476a713f2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e8b082c0b773713dc24644476a713f2" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1array.html#a2c9cf20783c4c4760632a644b381bc38" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="a6af196ee7318031967d0dfeb9cd97506">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6af196ee7318031967d0dfeb9cd97506" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html#aafb62627b59990f2d5d8c159bc71a15c" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1array.html#a2e5e466f6d7ecfb2521c345b82178ffc" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="a6a82ecb4df54d7f145c0f7fdc58188db">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6a82ecb4df54d7f145c0f7fdc58188db" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2c9cf20783c4c4760632a644b381bc38" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reference to the first element.</dd>
+            <dt id="a329e40aaa41dad193188969b7d84f4be">
+              <span class="m-doc-wrap-bumper">auto <a href="#a329e40aaa41dad193188969b7d84f4be" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a2e5e466f6d7ecfb2521c345b82178ffc" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reference to the first element.</dd>
+            <dt id="a8256007c727a8e7f98fa85acf6f190b6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8256007c727a8e7f98fa85acf6f190b6" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1array.html#a2c9cf20783c4c4760632a644b381bc38" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a const reference to the last element.</dd>
+            <dt id="a55bb9351b9fcadd59ab70bae4530a4a8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a55bb9351b9fcadd59ab70bae4530a4a8" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html#a2e5e466f6d7ecfb2521c345b82178ffc" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a reference to the last element.</dd>
+            <dt id="adc066935cbb7824399311b6c6f71a6b9">
+              <span class="m-doc-wrap-bumper">void <a href="#adc066935cbb7824399311b6c6f71a6b9" class="m-doc-self">fill</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html#a2c9cf20783c4c4760632a644b381bc38" class="m-doc">const_<wbr />reference</a> value) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Fills the array with the given value.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5767f41447c860c6eeb63f6ce1b3b6b4" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html" class="m-doc">array</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Exchanges the contents of this array with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="pub-attribs">
+          <h2><a href="#pub-attribs">Public variables</a></h2>
+          <dl class="m-doc">
+            <dt id="aac2d5cb1d068919c828aeaa47edcb157">
+              Type <a href="#aac2d5cb1d068919c828aeaa47edcb157" class="m-doc-self">_data</a>
+            </dt>
+            <dd>(Not so) internal data.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#affb17d20a092f579efb4333ce3210ffa" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend void <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Exchanges the contents of an array with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aff7948eb35542c18aa1aba7454ff0eab" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af32222272fd6d5ac04bce344d8492fce" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a719980b4b9fef7f14268705062831d6c" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2f79a909cadff3efdbbfe6170425bf5f" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1452e4012b0df3e6275d86f8fce716d2" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab43ac8876ef0d63c966110df10b6e092" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5767f41447c860c6eeb63f6ce1b3b6b4"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />array&lt;Type, Size&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5767f41447c860c6eeb63f6ce1b3b6b4" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html" class="m-doc">array</a>&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Exchanges the contents of this array with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>array to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="affb17d20a092f579efb4333ce3210ffa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#affb17d20a092f579efb4333ce3210ffa" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Exchanges the contents of an array with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aff7948eb35542c18aa1aba7454ff0eab"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff7948eb35542c18aa1aba7454ff0eab" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af32222272fd6d5ac04bce344d8492fce"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af32222272fd6d5ac04bce344d8492fce" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a719980b4b9fef7f14268705062831d6c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a719980b4b9fef7f14268705062831d6c" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is lexicographically less than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2f79a909cadff3efdbbfe6170425bf5f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2f79a909cadff3efdbbfe6170425bf5f" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is lexicographically greater than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1452e4012b0df3e6275d86f8fce716d2"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1452e4012b0df3e6275d86f8fce716d2" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is lexicographically less than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab43ac8876ef0d63c966110df10b6e092"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">friend bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab43ac8876ef0d63c966110df10b6e092" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; a,
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&amp; b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First array to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first array is lexicographically greater than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RANDOM_H
-#define BTN_RANDOM_H
+#ifndef BN_RANDOM_H
+#define BN_RANDOM_H
 
 /**
  * @file
- * btn::random header file.
+ * bn::random header file.
  *
  * @ingroup other
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

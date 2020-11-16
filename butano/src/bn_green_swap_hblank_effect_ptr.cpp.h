@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_green_swap_hblank_effect_ptr.h"
+#include "bn_green_swap_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 green_swap_hblank_effect_ptr green_swap_hblank_effect_ptr::create(const span<const bool>& states_ref)

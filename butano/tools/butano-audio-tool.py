@@ -39,7 +39,7 @@ def process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_p
     command = ['mmutil']
 
     if not audio_file_paths:
-        dummy_file_path = build_folder_path + '/_btn_dummy_audio_file.txt'
+        dummy_file_path = build_folder_path + '/_bn_dummy_audio_file.txt'
         command.append(dummy_file_path)
 
         with open(dummy_file_path, 'w') as dummy_file:
@@ -116,16 +116,16 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
                     sound_final_names_set.add(final_name)
                     sound_items_list.append([final_name, soundbank_words[2]])
 
-    write_output_file(music_items_list, 'BTN_MUSIC_ITEMS_H', 'btn_music_item.h', 'btn::music_items', 'music_item',
-                      build_folder_path + '/btn_music_items.h')
+    write_output_file(music_items_list, 'BN_MUSIC_ITEMS_H', 'bn_music_item.h', 'bn::music_items', 'music_item',
+                      build_folder_path + '/bn_music_items.h')
 
-    write_output_file(sound_items_list, 'BTN_SOUND_ITEMS_H', 'btn_sound_item.h', 'btn::sound_items', 'sound_item',
-                      build_folder_path + '/btn_sound_items.h')
+    write_output_file(sound_items_list, 'BN_SOUND_ITEMS_H', 'bn_sound_item.h', 'bn::sound_items', 'sound_item',
+                      build_folder_path + '/bn_sound_items.h')
 
 
 def process(audio_folder_paths, build_folder_path):
     audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_folder_paths)
-    file_info_path = build_folder_path + '/_btn_audio_files_info.txt'
+    file_info_path = build_folder_path + '/_bn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
     new_file_info = FileInfo.build_from_files(audio_file_paths)
 
@@ -135,8 +135,8 @@ def process(audio_folder_paths, build_folder_path):
     for audio_file_name in audio_file_names:
         print(audio_file_name)
 
-    soundbank_bin_path = build_folder_path + '/_btn_audio_soundbank.bin'
-    soundbank_header_path = build_folder_path + '/_btn_audio_soundbank.h'
+    soundbank_bin_path = build_folder_path + '/_bn_audio_soundbank.bin'
+    soundbank_header_path = build_folder_path + '/_bn_audio_soundbank.h'
     total_size = process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)
     write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path)
     print('    Processed audio size: ' + str(total_size) + ' bytes')

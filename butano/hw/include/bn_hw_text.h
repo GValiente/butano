@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_TEXT_H
-#define BTN_HW_TEXT_H
+#ifndef BN_HW_TEXT_H
+#define BN_HW_TEXT_H
 
-#include "btn_array_fwd.h"
+#include "bn_array_fwd.h"
 
-namespace btn::hw::text
+namespace bn::hw::text
 {
     [[nodiscard]] int parse(int value, array<char, 32>& output);
 

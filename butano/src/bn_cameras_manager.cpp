@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_cameras_manager.h"
+#include "bn_cameras_manager.h"
 
-#include "btn_vector.h"
-#include "btn_config_cameras.h"
-#include "btn_bgs_manager.h"
-#include "btn_sprites_manager.h"
-#include "btn_display_manager.h"
+#include "bn_vector.h"
+#include "bn_config_cameras.h"
+#include "bn_bgs_manager.h"
+#include "bn_sprites_manager.h"
+#include "bn_display_manager.h"
 
-#include "btn_cameras.cpp.h"
-#include "btn_camera_ptr.cpp.h"
+#include "bn_cameras.cpp.h"
+#include "bn_camera_ptr.cpp.h"
 
-namespace btn::cameras_manager
+namespace bn::cameras_manager
 {
 
 namespace
 {
-    constexpr const int max_items = BTN_CFG_CAMERA_MAX_ITEMS;
+    constexpr const int max_items = BN_CFG_CAMERA_MAX_ITEMS;
 
     static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
 
@@ -42,7 +42,7 @@ namespace
         bool update = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 }
 
 void init()
@@ -65,7 +65,7 @@ int available_items_count()
 
 int create(const fixed_point& position)
 {
-    BTN_ASSERT(! data.free_item_indexes.empty(), "No more camera items available");
+    BN_ASSERT(! data.free_item_indexes.empty(), "No more camera items available");
 
     int item_index = data.free_item_indexes.back();
     data.free_item_indexes.pop_back();

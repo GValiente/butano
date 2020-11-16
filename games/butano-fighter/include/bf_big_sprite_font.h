@@ -6,12 +6,12 @@
 #ifndef BF_BIG_SPRITE_FONT_H
 #define BF_BIG_SPRITE_FONT_H
 
-#include "btn_sprite_font.h"
-#include "btn_sprite_items_big_font.h"
+#include "bn_sprite_font.h"
+#include "bn_sprite_items_big_font.h"
 
 namespace bf
 {
-    constexpr const btn::string_view big_sprite_font_utf8_characters[] = {
+    constexpr const bn::string_view big_sprite_font_utf8_characters[] = {
         "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
     };
 
@@ -129,7 +129,7 @@ namespace bf
         7,  // ¿
     };
 
-    constexpr const btn::sprite_font big_sprite_font(btn::sprite_items::big_font, big_sprite_font_utf8_characters,
+    constexpr const bn::sprite_font big_sprite_font(bn::sprite_items::big_font, big_sprite_font_utf8_characters,
                                                      big_sprite_font_character_widths);
 }
 

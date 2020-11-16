@@ -3,36 +3,36 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bg_blocks_manager.h"
+#include "bn_bg_blocks_manager.h"
 
-#include "btn_vector.h"
-#include "btn_bgs_manager.h"
-#include "btn_unordered_map.h"
-#include "btn_config_bg_blocks.h"
-#include "../hw/include/btn_hw_bg_blocks.h"
+#include "bn_vector.h"
+#include "bn_bgs_manager.h"
+#include "bn_unordered_map.h"
+#include "bn_config_bg_blocks.h"
+#include "../hw/include/bn_hw_bg_blocks.h"
 
-#include "btn_bg_maps.cpp.h"
-#include "btn_bg_tiles.cpp.h"
-#include "btn_bg_tiles_ptr.cpp.h"
-#include "btn_bg_tiles_item.cpp.h"
-#include "btn_regular_bg_map_ptr.cpp.h"
-#include "btn_regular_bg_map_item.cpp.h"
+#include "bn_bg_maps.cpp.h"
+#include "bn_bg_tiles.cpp.h"
+#include "bn_bg_tiles_ptr.cpp.h"
+#include "bn_bg_tiles_item.cpp.h"
+#include "bn_regular_bg_map_ptr.cpp.h"
+#include "bn_regular_bg_map_item.cpp.h"
 
-#if BTN_CFG_BG_BLOCKS_LOG_ENABLED
-    #include "btn_log.h"
+#if BN_CFG_BG_BLOCKS_LOG_ENABLED
+    #include "bn_log.h"
 
-    static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
-#elif BTN_CFG_LOG_ENABLED
-    #include "btn_log.h"
+    static_assert(BN_CFG_LOG_ENABLED, "Log is not enabled");
+#elif BN_CFG_LOG_ENABLED
+    #include "bn_log.h"
 #endif
 
-namespace btn::bg_blocks_manager
+namespace bn::bg_blocks_manager
 {
 
 namespace
 {
-    static_assert(BTN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BTN_CFG_BG_BLOCKS_MAX_ITEMS <= hw::bg_tiles::blocks_count());
-    static_assert(power_of_two(BTN_CFG_BG_BLOCKS_MAX_ITEMS));
+    static_assert(BN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BN_CFG_BG_BLOCKS_MAX_ITEMS <= hw::bg_tiles::blocks_count());
+    static_assert(power_of_two(BN_CFG_BG_BLOCKS_MAX_ITEMS));
 
     [[nodiscard]] constexpr int _tiles_to_half_words(int tiles)
     {
@@ -68,7 +68,7 @@ namespace
     }
 
 
-    constexpr const int max_items = BTN_CFG_BG_BLOCKS_MAX_ITEMS;
+    constexpr const int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr const int max_list_items = max_items + 1;
     constexpr const int max_tiles_half_words = _blocks_to_half_words(hw::bg_blocks::max_blocks());
 
@@ -318,27 +318,27 @@ namespace
         bool delay_commit = false;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
 
-    #if BTN_CFG_BG_BLOCKS_LOG_ENABLED
+    #if BN_CFG_BG_BLOCKS_LOG_ENABLED
         void _log_status()
         {
-            BTN_LOG("items: ", data.items.size());
-            BTN_LOG('[');
+            BN_LOG("items: ", data.items.size());
+            BN_LOG('[');
 
             for(const item_type& item : data.items)
             {
                 if(item.status() == status_type::FREE)
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             "free",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count);
                 }
                 else if(item.is_tiles)
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_tiles",
                             " - start_block: ", item.start_block,
@@ -350,7 +350,7 @@ namespace
                 }
                 else
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_map",
                             " - start_block: ", item.start_block,
@@ -367,36 +367,36 @@ namespace
                 }
             }
 
-            BTN_LOG(']');
+            BN_LOG(']');
 
-            BTN_LOG("items_map: ", data.items_map.size());
-            BTN_LOG('[');
+            BN_LOG("items_map: ", data.items_map.size());
+            BN_LOG('[');
 
             for(const auto& items_map_item : data.items_map)
             {
-                BTN_LOG("    data: ", items_map_item.first,
+                BN_LOG("    data: ", items_map_item.first,
                         " - start_block: ", data.items.item(items_map_item.second).start_block);
             }
 
-            BTN_LOG(']');
+            BN_LOG(']');
 
-            BTN_LOG("free_blocks_count: ", data.free_blocks_count);
-            BTN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
-            BTN_LOG("check_commit: ", (data.check_commit ? "true" : "false"));
-            BTN_LOG("delay_commit: ", (data.delay_commit ? "true" : "false"));
+            BN_LOG("free_blocks_count: ", data.free_blocks_count);
+            BN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
+            BN_LOG("check_commit: ", (data.check_commit ? "true" : "false"));
+            BN_LOG("delay_commit: ", (data.delay_commit ? "true" : "false"));
         }
 
-        #define BTN_BG_BLOCKS_LOG BTN_LOG
+        #define BN_BG_BLOCKS_LOG BN_LOG
 
-        #define BTN_BG_BLOCKS_LOG_STATUS \
+        #define BN_BG_BLOCKS_LOG_STATUS \
             _log_status
     #else
-        #define BTN_BG_BLOCKS_LOG(...) \
+        #define BN_BG_BLOCKS_LOG(...) \
             do \
             { \
             } while(false)
 
-        #define BTN_BG_BLOCKS_LOG_STATUS(...) \
+        #define BN_BG_BLOCKS_LOG_STATUS(...) \
             do \
             { \
             } while(false)
@@ -404,7 +404,7 @@ namespace
 
     [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words)
     {
-        BTN_ASSERT(tiles_data, "Tiles ref is null");
+        BN_ASSERT(tiles_data, "Tiles ref is null");
 
         auto items_map_iterator = data.items_map.find(tiles_data);
 
@@ -412,16 +412,16 @@ namespace
         {
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
-            BTN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
+            BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
                        tiles_data, " - ", item.data);
-            BTN_ASSERT(half_words == item.half_words(), "Tiles count does not match item tiles count: ",
+            BN_ASSERT(half_words == item.half_words(), "Tiles count does not match item tiles count: ",
                        half_words, " - ", item.half_words());
 
             switch(item.status())
             {
 
             case status_type::FREE:
-                BTN_ERROR("Invalid item state");
+                BN_ERROR("Invalid item state");
                 break;
 
             case status_type::USED:
@@ -435,17 +435,17 @@ namespace
                 break;
 
             default:
-                BTN_ERROR("Invalid item status: ", int(item.status()));
+                BN_ERROR("Invalid item status: ", int(item.status()));
                 break;
             }
 
-            BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
-            BTN_BG_BLOCKS_LOG_STATUS();
+            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG_STATUS();
 
             return id;
         }
 
-        BTN_BG_BLOCKS_LOG("NOT FOUND");
+        BN_BG_BLOCKS_LOG("NOT FOUND");
         return -1;
     }
 
@@ -460,20 +460,20 @@ namespace
         {
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
-            BTN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
+            BN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
                        map_dimensions.width(), " - ", item.width);
-            BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
+            BN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                        map_dimensions.height(), " - ", item.height);
-            BTN_ASSERT(! item.tiles || tiles == *item.tiles,
+            BN_ASSERT(! item.tiles || tiles == *item.tiles,
                        "Tiles does not match item tiles: ", tiles.id(), " - ", item.tiles->id());
-            BTN_ASSERT(! item.palette || palette == *item.palette,
+            BN_ASSERT(! item.palette || palette == *item.palette,
                        "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
 
             switch(item.status())
             {
 
             case status_type::FREE:
-                BTN_ERROR("Invalid item state");
+                BN_ERROR("Invalid item state");
                 break;
 
             case status_type::USED:
@@ -490,17 +490,17 @@ namespace
                 break;
 
             default:
-                BTN_ERROR("Invalid item status: ", int(item.status()));
+                BN_ERROR("Invalid item status: ", int(item.status()));
                 break;
             }
 
-            BTN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
-            BTN_BG_BLOCKS_LOG_STATUS();
+            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG_STATUS();
 
             return id;
         }
 
-        BTN_BG_BLOCKS_LOG("NOT FOUND");
+        BN_BG_BLOCKS_LOG("NOT FOUND");
         return -1;
     }
 
@@ -541,7 +541,7 @@ namespace
 
         if(padding_blocks_count)
         {
-            BTN_ASSERT(! data.items.full(), "No more items allowed");
+            BN_ASSERT(! data.items.full(), "No more items allowed");
 
             int new_item_blocks_count = item->blocks_count - padding_blocks_count;
             item->blocks_count = uint8_t(padding_blocks_count);
@@ -559,7 +559,7 @@ namespace
 
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {
-            BTN_ASSERT(! data.items.full(), "No more items allowed");
+            BN_ASSERT(! data.items.full(), "No more items allowed");
 
             int start_block = item->start_block;
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
@@ -595,7 +595,7 @@ namespace
             break;
 
         case status_type::USED:
-            BTN_ERROR("Invalid item state");
+            BN_ERROR("Invalid item state");
             break;
 
         case status_type::TO_REMOVE:
@@ -604,7 +604,7 @@ namespace
             break;
 
         default:
-            BTN_ERROR("Invalid item status: ", int(item->status()));
+            BN_ERROR("Invalid item status: ", int(item->status()));
             break;
         }
 
@@ -799,7 +799,7 @@ namespace
 
 void init()
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
     new_item.blocks_count = hw::bg_tiles::blocks_count();
@@ -807,7 +807,7 @@ void init()
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
 
-    BTN_BG_BLOCKS_LOG_STATUS();
+    BN_BG_BLOCKS_LOG_STATUS();
 }
 
 int used_tiles_count()
@@ -870,27 +870,27 @@ int available_map_blocks_count()
     return data.free_blocks_count;
 }
 
-#if BTN_CFG_LOG_ENABLED
+#if BN_CFG_LOG_ENABLED
     void log_status()
     {
-        #if BTN_CFG_BG_BLOCKS_LOG_ENABLED
-            BTN_BG_BLOCKS_LOG_STATUS();
+        #if BN_CFG_BG_BLOCKS_LOG_ENABLED
+            BN_BG_BLOCKS_LOG_STATUS();
         #else
-            BTN_LOG("items: ", data.items.size());
-            BTN_LOG('[');
+            BN_LOG("items: ", data.items.size());
+            BN_LOG('[');
 
             for(const item_type& item : data.items)
             {
                 if(item.status() == status_type::FREE)
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             "free",
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count);
                 }
                 else if(item.is_tiles)
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_tiles",
                             " - start_block: ", item.start_block,
@@ -901,7 +901,7 @@ int available_map_blocks_count()
                 }
                 else
                 {
-                    BTN_LOG("    ",
+                    BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
                             "_map",
                             " - start_block: ", item.start_block,
@@ -915,10 +915,10 @@ int available_map_blocks_count()
                 }
             }
 
-            BTN_LOG(']');
+            BN_LOG(']');
 
-            BTN_LOG("free_blocks_count: ", data.free_blocks_count);
-            BTN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
+            BN_LOG("free_blocks_count: ", data.free_blocks_count);
+            BN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
         #endif
     }
 #endif
@@ -928,7 +928,7 @@ int find_tiles(const span<const tile>& tiles_ref)
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND TILES: ", tiles_data, " - ", tiles_count);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND TILES: ", tiles_data, " - ", tiles_count);
 
     int half_words = _tiles_to_half_words(tiles_count);
     return _find_tiles_impl(tiles_data, half_words);
@@ -937,7 +937,7 @@ int find_tiles(const span<const tile>& tiles_ref)
 int find_regular_map(const regular_bg_map_cell& map_cells_ref, [[maybe_unused]] const size& map_dimensions,
                      const bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", palette.id());
 
     return _find_regular_map_impl(map_cells_ref, map_dimensions, tiles, palette);
@@ -949,7 +949,7 @@ int create_tiles(const span<const tile>& tiles_ref)
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_data, " - ", tiles_count, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES: ", tiles_data, " - ", tiles_count, " - ",
                       _ceil_half_words_to_blocks(half_words));
 
     int result = _find_tiles_impl(tiles_data, half_words);
@@ -959,29 +959,29 @@ int create_tiles(const span<const tile>& tiles_ref)
         return result;
     }
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     result = _create_impl<true>(create_data::from_tiles(tiles_data, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("BG tiles create failed:",
+            BN_ERROR("BG tiles create failed:",
                       "\n\tTiles data: ", tiles_data,
                       "\n\tTiles count: ", tiles_count,
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("BG tiles create failed:",
+            BN_ERROR("BG tiles create failed:",
                       "\n\tTiles data: ", tiles_data,
                       "\n\tTiles count: ", tiles_count);
         #endif
@@ -993,7 +993,7 @@ int create_tiles(const span<const tile>& tiles_ref)
 int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions, bg_tiles_ptr&& tiles,
                        bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", &map_cells_ref, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     int result = _find_regular_map_impl(map_cells_ref, map_dimensions, tiles, palette);
@@ -1003,33 +1003,33 @@ int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map
         return result;
     }
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
                "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
                "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     result = _create_impl<false>(create_data::from_map(&map_cells_ref, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("Regular BG map create failed:",
+            BN_ERROR("Regular BG map create failed:",
                       "\n\tMap data: ", &map_cells_ref,
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height(),
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("Regular BG map create failed:",
+            BN_ERROR("Regular BG map create failed:",
                       "\n\tMap data: ", &map_cells_ref,
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height());
@@ -1043,36 +1043,36 @@ int create_new_tiles(const span<const tile>& tiles_ref)
 {
     int half_words = _tiles_to_half_words(tiles_ref.size());
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW TILES: ", tiles_ref.data(), " - ", tiles_ref.size(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW TILES: ", tiles_ref.data(), " - ", tiles_ref.size(), " - ",
                       _ceil_half_words_to_blocks(half_words));
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_ref.size(), " - ", half_words);
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
-    BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                "Multiple copies of the same data not supported");
 
     int result = _create_impl<true>(create_data::from_tiles(data_ptr, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("BG tiles create new failed:",
+            BN_ERROR("BG tiles create new failed:",
                       "\n\tTiles data: ", data_ptr,
                       "\n\tTiles count: ", tiles_ref.size(),
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("BG tiles create new failed:",
+            BN_ERROR("BG tiles create new failed:",
                       "\n\tTiles data: ", data_ptr,
                       "\n\tTiles count: ", tiles_ref.size());
         #endif
@@ -1084,40 +1084,40 @@ int create_new_tiles(const span<const tile>& tiles_ref)
 int create_new_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions, bg_tiles_ptr&& tiles,
                            bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP: ", &map_cells_ref, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
                "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
                "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     const uint16_t* data_ptr = &map_cells_ref;
-    BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                "Multiple copies of the same data not supported");
 
     int result = _create_impl<false>(create_data::from_map(data_ptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("Regular BG map create new failed:",
+            BN_ERROR("Regular BG map create new failed:",
                       "\n\tMap data: ", data_ptr,
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height(),
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("Regular BG map create new failed:",
+            BN_ERROR("Regular BG map create new failed:",
                       "\n\tMap data: ", data_ptr,
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height());
@@ -1131,30 +1131,30 @@ int allocate_tiles(int tiles_count)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES: ", tiles_count, " - ",
                       _ceil_half_words_to_blocks(half_words));
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     int result = _allocate_impl<true>(create_data::from_tiles(nullptr, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT ALLOCATED");
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count,
+            BN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count,
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count);
+            BN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count);
         #endif
     }
 
@@ -1163,35 +1163,35 @@ int allocate_tiles(int tiles_count)
 
 int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
                       map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
                "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
                "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT ALLOCATED");
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
 
-        #if BTN_CFG_LOG_ENABLED
+        #if BN_CFG_LOG_ENABLED
             log_status();
 
-            BTN_ERROR("Regular BG map allocate failed:",
+            BN_ERROR("Regular BG map allocate failed:",
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height(),
                       "\n\nBG blocks manager status has been logged.");
         #else
-            BTN_ERROR("Regular BG map allocate failed:",
+            BN_ERROR("Regular BG map allocate failed:",
                       "\n\tMap width: ", map_dimensions.width(),
                       "\n\tMap height: ", map_dimensions.height());
         #endif
@@ -1206,7 +1206,7 @@ int create_tiles_optional(const span<const tile>& tiles_ref)
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE TILES OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
                       _ceil_half_words_to_blocks(half_words));
 
     int result = _find_tiles_impl(tiles_data, half_words);
@@ -1216,19 +1216,19 @@ int create_tiles_optional(const span<const tile>& tiles_ref)
         return result;
     }
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     result = _create_impl<true>(create_data::from_tiles(tiles_data, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
     }
 
     return result;
@@ -1237,7 +1237,7 @@ int create_tiles_optional(const span<const tile>& tiles_ref)
 int create_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
                                 bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP OPTIONAL: ", &map_cells_ref, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP OPTIONAL: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     int result = _find_regular_map_impl(map_cells_ref, map_dimensions, tiles, palette);
@@ -1247,22 +1247,22 @@ int create_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const 
         return result;
     }
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
                "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
                "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     result = _create_impl<false>(create_data::from_map(&map_cells_ref, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
     }
 
     return result;
@@ -1272,26 +1272,26 @@ int create_new_tiles_optional(const span<const tile>& tiles_ref)
 {
     int half_words = _tiles_to_half_words(tiles_ref.size());
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW TILES OPTIONAL: ", tiles_ref.data(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW TILES OPTIONAL: ", tiles_ref.data(), " - ",
                       tiles_ref.size(), " - ", _ceil_half_words_to_blocks(half_words));
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_ref.size(), " - ", half_words);
 
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
-    BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                "Multiple copies of the same data not supported");
 
     int result = _create_impl<true>(create_data::from_tiles(data_ptr, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
     }
 
     return result;
@@ -1300,29 +1300,29 @@ int create_new_tiles_optional(const span<const tile>& tiles_ref)
 int create_new_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
                                     bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP OPTIONAL: ", &map_cells_ref, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP OPTIONAL: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
                "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
                "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     const uint16_t* data_ptr = &map_cells_ref;
-    BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                "Multiple copies of the same data not supported");
 
     int result = _create_impl<false>(create_data::from_map(data_ptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT CREATED");
+        BN_BG_BLOCKS_LOG("NOT CREATED");
     }
 
     return result;
@@ -1332,22 +1332,22 @@ int allocate_tiles_optional(int tiles_count)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES OPTIONAL: ", tiles_count, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE TILES OPTIONAL: ", tiles_count, " - ",
                       _ceil_half_words_to_blocks(half_words));
 
-    BTN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
+    BN_ASSERT(half_words > 0 && half_words <= max_tiles_half_words,
                "Invalid tiles count: ", tiles_count, " - ", half_words);
 
     int result = _allocate_impl<true>(create_data::from_tiles(nullptr, half_words));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT ALLOCATED");
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
     }
 
     return result;
@@ -1355,23 +1355,23 @@ int allocate_tiles_optional(int tiles_count)
 
 int allocate_regular_map_optional(const size& map_dimensions, bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP OPTIONAL: ", map_dimensions.width(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP OPTIONAL: ", map_dimensions.width(), " - ",
                       map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BTN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
-    BTN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
-    BTN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64, "Invalid width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64, "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
-        BTN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
     }
     else
     {
-        BTN_BG_BLOCKS_LOG("NOT ALLOCATED");
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
     }
 
     return result;
@@ -1379,17 +1379,17 @@ int allocate_regular_map_optional(const size& map_dimensions, bg_tiles_ptr&& til
 
 void increase_usages(int id)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
     ++item.usages;
 
-    BTN_BG_BLOCKS_LOG_STATUS();
+    BN_BG_BLOCKS_LOG_STATUS();
 }
 
 void decrease_usages(int id)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
     --item.usages;
@@ -1403,7 +1403,7 @@ void decrease_usages(int id)
         item.palette.reset();
     }
 
-    BTN_BG_BLOCKS_LOG_STATUS();
+    BN_BG_BLOCKS_LOG_STATUS();
 }
 
 int hw_id(int id)
@@ -1458,12 +1458,12 @@ optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id)
 
 void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET TILES REF: ", id, " - ", data.items.item(id).start_block, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET TILES REF: ", id, " - ", data.items.item(id).start_block, " - ",
                       tiles_ref.data(), " - ", tiles_ref.size());
 
     item_type& item = data.items.item(id);
-    BTN_ASSERT(item.data, "Item has no data");
-    BTN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
+    BN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
                "Tiles count does not match item tiles count: ",
                _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
 
@@ -1471,54 +1471,54 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
 
     if(item.data != data_ptr)
     {
-        BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
         _check_commit_item(id, data_ptr, true);
 
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG_STATUS();
     }
 }
 
 void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref,
                                [[maybe_unused]] const size& map_dimensions)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", data.items.item(id).start_block,
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", data.items.item(id).start_block,
                       " - ", &map_cells_ref, " - ", map_dimensions.width(), " - ", map_dimensions.height());
 
     item_type& item = data.items.item(id);
-    BTN_ASSERT(item.data, "Item has no data");
-    BTN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
+    BN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(map_dimensions.width() == item.width, "Width does not match item width: ",
                map_dimensions.width(), " - ", item.width);
-    BTN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
+    BN_ASSERT(map_dimensions.height() == item.height, "Height does not match item height: ",
                map_dimensions.height(), " - ", item.height);
 
     const uint16_t* data_ptr = &map_cells_ref;
 
     if(item.data != data_ptr)
     {
-        BTN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                    "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
         _check_commit_item(id, data_ptr, true);
 
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG_STATUS();
     }
 }
 
 void reload(int id)
 {
-    BTN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", data.items.item(id).start_block);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
-    BTN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(item.data, "Item has no data");
 
     item.commit = true;
     data.check_commit = true;
 
-    BTN_BG_BLOCKS_LOG_STATUS();
+    BN_BG_BLOCKS_LOG_STATUS();
 }
 
 const bg_tiles_ptr& map_tiles(int id)
@@ -1533,7 +1533,7 @@ void set_map_tiles(int id, bg_tiles_ptr&& tiles)
 
     if(tiles != item.tiles)
     {
-        BTN_ASSERT(tiles.valid_tiles_count(item.palette->bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
+        BN_ASSERT(tiles.valid_tiles_count(item.palette->bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
         int old_tiles_cbb;
         int old_tiles_offset;
@@ -1585,7 +1585,7 @@ void set_map_palette(int id, bg_palette_ptr&& palette)
     if(palette != item.palette)
     {
         palette_bpp_mode new_palette_bpp_mode = palette.bpp_mode();
-        BTN_ASSERT(item.tiles->valid_tiles_count(new_palette_bpp_mode),
+        BN_ASSERT(item.tiles->valid_tiles_count(new_palette_bpp_mode),
                    "Invalid tiles count: ", item.tiles->tiles_count());
 
         int old_palette_bpp_mode;
@@ -1630,7 +1630,7 @@ void set_map_tiles_and_palette(int id, bg_tiles_ptr&& tiles, bg_palette_ptr&& pa
 {
     item_type& item = data.items.item(id);
     palette_bpp_mode new_palette_bpp_mode = palette.bpp_mode();
-    BTN_ASSERT(tiles.valid_tiles_count(new_palette_bpp_mode), "Invalid tiles count: ", tiles.tiles_count());
+    BN_ASSERT(tiles.valid_tiles_count(new_palette_bpp_mode), "Invalid tiles count: ", tiles.tiles_count());
 
     int old_tiles_offset;
     int old_palette_offset;
@@ -1710,7 +1710,7 @@ void update()
 {
     if(data.to_remove_blocks_count)
     {
-        BTN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
+        BN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
 
         auto end = data.items.end();
         auto before_previous_iterator = end;
@@ -1768,7 +1768,7 @@ void update()
             ++iterator;
         }
 
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG_STATUS();
     }
 }
 
@@ -1778,7 +1778,7 @@ void commit()
 
     if(do_commit)
     {
-        BTN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
+        BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
 
         data.check_commit = false;
 
@@ -1800,7 +1800,7 @@ void commit()
 
     if(do_commit)
     {
-        BTN_BG_BLOCKS_LOG_STATUS();
+        BN_BG_BLOCKS_LOG_STATUS();
     }
 }
 

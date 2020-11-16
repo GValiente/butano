@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bg_tiles_item.h"
+#include "bn_bg_tiles_item.h"
 
-#include "btn_optional.h"
-#include "btn_bg_tiles_ptr.h"
+#include "bn_optional.h"
+#include "bn_bg_tiles_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 optional<bg_tiles_ptr> bg_tiles_item::find_tiles() const

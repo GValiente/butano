@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MUSIC_ITEM_H
-#define BTN_MUSIC_ITEM_H
+#ifndef BN_MUSIC_ITEM_H
+#define BN_MUSIC_ITEM_H
 
 /**
  * @file
- * btn::music_item header file.
+ * bn::music_item header file.
  *
  * @ingroup music
  * @ingroup tool
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**

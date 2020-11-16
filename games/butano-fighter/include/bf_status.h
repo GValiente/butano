@@ -36,7 +36,7 @@ public:
         return _experience;
     }
 
-    [[nodiscard]] btn::fixed next_level_experience_ratio() const;
+    [[nodiscard]] bn::fixed next_level_experience_ratio() const;
 
     [[nodiscard]] bool add_experience(int experience);
 

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_STRING_FWD_H
-#define BTN_STRING_FWD_H
+#ifndef BN_STRING_FWD_H
+#define BN_STRING_FWD_H
 
 /**
  * @file
- * btn::istring and btn::string declaration header file.
+ * bn::istring and bn::string declaration header file.
  *
  * @ingroup string
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of istring.

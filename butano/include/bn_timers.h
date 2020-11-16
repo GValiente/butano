@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TIMERS_H
-#define BTN_TIMERS_H
+#ifndef BN_TIMERS_H
+#define BN_TIMERS_H
 
 /**
  * @file
- * btn::timers header file.
+ * bn::timers header file.
  *
  * @ingroup timer
  */
 
-#include "../hw/include/btn_hw_timer_constants.h"
+#include "../hw/include/bn_hw_timer_constants.h"
 
 /**
  * @brief Timing related functions.
  *
  * @ingroup timer
  */
-namespace btn::timers
+namespace bn::timers
 {
     /**
      * @brief Returns the number of ticks elapsed in a screen refresh (V-Draw + V-Blank).

@@ -27,7 +27,7 @@ GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO LOG
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBTN_CFG_LOG_ENABLED=true
+USERFLAGS   :=  -DBN_CFG_LOG_ENABLED=true
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

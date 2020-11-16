@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MEMORY_MANAGER_H
-#define BTN_MEMORY_MANAGER_H
+#ifndef BN_MEMORY_MANAGER_H
+#define BN_MEMORY_MANAGER_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::memory_manager
+namespace bn::memory_manager
 {
     void init();
 

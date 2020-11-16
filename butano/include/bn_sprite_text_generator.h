@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_TEXT_GENERATOR_H
-#define BTN_SPRITE_TEXT_GENERATOR_H
+#ifndef BN_SPRITE_TEXT_GENERATOR_H
+#define BN_SPRITE_TEXT_GENERATOR_H
 
 /**
  * @file
- * btn::sprite_text_generator header file.
+ * bn::sprite_text_generator header file.
  *
  * @ingroup sprite
  * @ingroup text
  */
 
-#include "btn_fixed.h"
-#include "btn_vector.h"
-#include "btn_sprite_font.h"
-#include "btn_unordered_map.h"
-#include "btn_config_sprite_text.h"
+#include "bn_fixed.h"
+#include "bn_vector.h"
+#include "bn_sprite_font.h"
+#include "bn_unordered_map.h"
+#include "bn_config_sprite_text.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_ptr;
@@ -273,7 +273,7 @@ public:
 private:
     sprite_font _font;
     sprite_palette_item _palette_item;
-    unordered_map<int, int, BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
+    unordered_map<int, int, BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
     alignment_type _alignment = alignment_type::LEFT;
     int _bg_priority = 3;
     int _z_order = 0;

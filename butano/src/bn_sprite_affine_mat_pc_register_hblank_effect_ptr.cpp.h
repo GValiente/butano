@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_affine_mat_pc_register_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_pc_register_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_sprite_affine_mat_attributes.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_affine_mat_pc_register_hblank_effect_ptr sprite_affine_mat_pc_register_hblank_effect_ptr::create(
@@ -62,7 +62,7 @@ optional<sprite_affine_mat_pc_register_hblank_effect_ptr> sprite_affine_mat_pc_r
 
 span<const sprite_affine_mat_attributes> sprite_affine_mat_pc_register_hblank_effect_ptr::attributes_ref() const
 {
-    BTN_ASSERT(_from_attributes, "Built from values");
+    BN_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
     return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
@@ -70,7 +70,7 @@ span<const sprite_affine_mat_attributes> sprite_affine_mat_pc_register_hblank_ef
 
 span<const int16_t> sprite_affine_mat_pc_register_hblank_effect_ptr::values_ref() const
 {
-    BTN_ASSERT(! _from_attributes, "Built from attributes");
+    BN_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int16_t*>(hblank_effects_manager::values_ref(id()));
     return span<const int16_t>(values_ptr, display::height());
@@ -79,7 +79,7 @@ span<const int16_t> sprite_affine_mat_pc_register_hblank_effect_ptr::values_ref(
 void sprite_affine_mat_pc_register_hblank_effect_ptr::set_attributes_ref(
         const span<const sprite_affine_mat_attributes>& attributes_ref)
 {
-    BTN_ASSERT(_from_attributes, "Built from values");
+    BN_ASSERT(_from_attributes, "Built from values");
 
     hblank_effects_manager::set_values_ref(id(), attributes_ref.data(), attributes_ref.size());
 }
@@ -87,7 +87,7 @@ void sprite_affine_mat_pc_register_hblank_effect_ptr::set_attributes_ref(
 void sprite_affine_mat_pc_register_hblank_effect_ptr::set_values_ref(
         const span<const int16_t>& values_ref)
 {
-    BTN_ASSERT(! _from_attributes, "Built from attributes");
+    BN_ASSERT(! _from_attributes, "Built from attributes");
 
     hblank_effects_manager::set_values_ref(id(), values_ref.data(), values_ref.size());
 }
@@ -106,7 +106,7 @@ void sprite_affine_mat_pc_register_hblank_effect_ptr::swap(
         sprite_affine_mat_pc_register_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_from_attributes, other._from_attributes);
+    bn::swap(_from_attributes, other._from_attributes);
     _affine_mat.swap(other._affine_mat);
 }
 

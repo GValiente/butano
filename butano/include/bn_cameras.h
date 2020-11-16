@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CAMERAS_H
-#define BTN_CAMERAS_H
+#ifndef BN_CAMERAS_H
+#define BN_CAMERAS_H
 
 /**
  * @file
- * btn::cameras header file.
+ * bn::cameras header file.
  *
  * @ingroup camera
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
  * @brief Cameras related functions.
  *
  * @ingroup camera
  */
-namespace btn::cameras
+namespace bn::cameras
 {
     /**
      * @brief Returns the number of used cameras managed with camera_ptr objects.

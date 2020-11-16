@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_keypad.h"
+#include "bn_keypad.h"
 
-#include "btn_keypad_manager.h"
+#include "bn_keypad_manager.h"
 
-namespace btn::keypad
+namespace bn::keypad
 {
 
 bool held(key_type key)

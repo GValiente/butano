@@ -6,10 +6,10 @@
 #ifndef BF_GAME_EXPLOSION_H
 #define BF_GAME_EXPLOSION_H
 
-#include "btn_vector.h"
-#include "btn_optional.h"
-#include "btn_sprite_ptr.h"
-#include "btn_sprite_affine_mat_ptr.h"
+#include "bn_vector.h"
+#include "bn_optional.h"
+#include "bn_sprite_ptr.h"
+#include "bn_sprite_affine_mat_ptr.h"
 
 namespace bf::game
 {
@@ -18,8 +18,8 @@ class explosion
 {
 
 public:
-    explosion(const btn::sprite_item& sprite_item, const btn::fixed_point& position, int animation_frames,
-              int z_order, bool double_size, const btn::camera_ptr& camera);
+    explosion(const bn::sprite_item& sprite_item, const bn::fixed_point& position, int animation_frames,
+              int z_order, bool double_size, const bn::camera_ptr& camera);
 
     [[nodiscard]] bool show_target_sprite() const
     {
@@ -34,9 +34,9 @@ public:
     void update();
 
 private:
-    const btn::sprite_item& _sprite_item;
-    btn::optional<btn::sprite_affine_mat_ptr> _affine_mat;
-    btn::vector<btn::sprite_ptr, 4> _sprites;
+    const bn::sprite_item& _sprite_item;
+    bn::optional<bn::sprite_affine_mat_ptr> _affine_mat;
+    bn::vector<bn::sprite_ptr, 4> _sprites;
     int _animation_frames;
     int _animation_index;
     int _frame_counter;

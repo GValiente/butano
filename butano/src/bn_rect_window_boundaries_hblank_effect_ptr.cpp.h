@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_rect_window_boundaries_hblank_effect_ptr.h"
+#include "bn_rect_window_boundaries_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_fixed.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 rect_window_boundaries_hblank_effect_ptr rect_window_boundaries_hblank_effect_ptr::create_horizontal(
@@ -79,7 +79,7 @@ void rect_window_boundaries_hblank_effect_ptr::reload_deltas_ref()
 void rect_window_boundaries_hblank_effect_ptr::swap(rect_window_boundaries_hblank_effect_ptr& other)
 {
     hblank_effect_ptr::swap(other);
-    btn::swap(_window, other._window);
+    bn::swap(_window, other._window);
 }
 
 rect_window_boundaries_hblank_effect_ptr::rect_window_boundaries_hblank_effect_ptr(int id, rect_window window) :

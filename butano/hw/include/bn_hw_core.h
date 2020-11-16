@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_CORE_H
-#define BTN_HW_CORE_H
+#ifndef BN_HW_CORE_H
+#define BN_HW_CORE_H
 
-#include "btn_hw_tonc.h"
+#include "bn_hw_tonc.h"
 
 extern "C"
 {
-    void btn_hw_soft_reset(unsigned reset_flags);
+    void bn_hw_soft_reset(unsigned reset_flags);
 }
 
-namespace btn::hw::core
+namespace bn::hw::core
 {
     inline void wait_for_vblank()
     {
@@ -27,7 +27,7 @@ namespace btn::hw::core
 
     [[noreturn]] inline void reset()
     {
-        btn_hw_soft_reset(0xFF);
+        bn_hw_soft_reset(0xFF);
 
         while(true)
         {

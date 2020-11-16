@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_PALETTE_ITEM_H
-#define BTN_BG_PALETTE_ITEM_H
+#ifndef BN_BG_PALETTE_ITEM_H
+#define BN_BG_PALETTE_ITEM_H
 
 /**
  * @file
- * btn::bg_palette_item header file.
+ * bn::bg_palette_item header file.
  *
  * @ingroup bg
  * @ingroup palette
  * @ingroup tool
  */
 
-#include "btn_span.h"
-#include "btn_color.h"
-#include "btn_optional_fwd.h"
-#include "btn_palette_bpp_mode.h"
+#include "bn_span.h"
+#include "bn_color.h"
+#include "bn_optional_fwd.h"
+#include "bn_palette_bpp_mode.h"
 
-namespace btn
+namespace bn
 {
 
 class bg_palette_ptr;
@@ -55,7 +55,7 @@ public:
         _colors_ref(colors_ref),
         _bpp_mode(bpp_mode)
     {
-        BTN_ASSERT(colors_ref.size() >= 16 && colors_ref.size() <= 256 && colors_ref.size() % 16 == 0,
+        BN_ASSERT(colors_ref.size() >= 16 && colors_ref.size() <= 256 && colors_ref.size() % 16 == 0,
                    "Invalid colors count: ", colors_ref.size());
     }
 

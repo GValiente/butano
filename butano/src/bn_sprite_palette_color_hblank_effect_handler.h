@@ -3,16 +3,16 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
-#define BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
+#define BN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any_fwd.h"
-#include "btn_palettes_bank.h"
-#include "btn_palettes_manager.h"
-#include "btn_palette_target_id.h"
-#include "../hw/include/btn_hw_palettes.h"
+#include "bn_any_fwd.h"
+#include "bn_palettes_bank.h"
+#include "bn_palettes_manager.h"
+#include "bn_palette_target_id.h"
+#include "../hw/include/bn_hw_palettes.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_palette_color_hblank_effect_handler

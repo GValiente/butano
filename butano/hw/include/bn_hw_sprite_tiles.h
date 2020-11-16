@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITE_TILES_H
-#define BTN_HW_SPRITE_TILES_H
+#ifndef BN_HW_SPRITE_TILES_H
+#define BN_HW_SPRITE_TILES_H
 
-#include "btn_tile.h"
-#include "btn_memory.h"
-#include "btn_hw_tonc.h"
+#include "bn_tile.h"
+#include "bn_memory.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::sprite_tiles
+namespace bn::hw::sprite_tiles
 {
     namespace
     {
@@ -43,7 +43,7 @@ namespace btn::hw::sprite_tiles
         memory::copy(*source_tiles_ptr, count, *tile_vram(index));
     }
 
-    BTN_CODE_IWRAM void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y,
+    BN_CODE_IWRAM void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y,
                                    int destination_y, tile* destination_tiles_ptr);
 }
 

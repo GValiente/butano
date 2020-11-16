@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_blending_fade_alpha_hblank_effect_ptr.h"
+#include "bn_blending_fade_alpha_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_display.h"
-#include "btn_optional.h"
-#include "btn_display_manager.h"
-#include "btn_blending_fade_alpha.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_display.h"
+#include "bn_optional.h"
+#include "bn_display_manager.h"
+#include "bn_blending_fade_alpha.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 blending_fade_alpha_hblank_effect_ptr blending_fade_alpha_hblank_effect_ptr::create(
         const span<const blending_fade_alpha>& alphas_ref)
 {
-    BTN_ASSERT(display_manager::blending_transparency_alpha() == 1,
+    BN_ASSERT(display_manager::blending_transparency_alpha() == 1,
                "Transparency and fade blendings can't be enabled at the same time");
-    BTN_ASSERT(display_manager::blending_intensity_alpha() == 0,
+    BN_ASSERT(display_manager::blending_intensity_alpha() == 0,
                "Intensity and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create(alphas_ref.data(), alphas_ref.size(), 0,
@@ -31,9 +31,9 @@ blending_fade_alpha_hblank_effect_ptr blending_fade_alpha_hblank_effect_ptr::cre
 optional<blending_fade_alpha_hblank_effect_ptr> blending_fade_alpha_hblank_effect_ptr::create_optional(
         const span<const blending_fade_alpha>& alphas_ref)
 {
-    BTN_ASSERT(display_manager::blending_transparency_alpha() == 1,
+    BN_ASSERT(display_manager::blending_transparency_alpha() == 1,
                "Transparency and fade blendings can't be enabled at the same time");
-    BTN_ASSERT(display_manager::blending_intensity_alpha() == 0,
+    BN_ASSERT(display_manager::blending_intensity_alpha() == 0,
                "Intensity and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create_optional(alphas_ref.data(), alphas_ref.size(), 0,

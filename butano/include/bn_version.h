@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_VERSION_H
-#define BTN_VERSION_H
+#ifndef BN_VERSION_H
+#define BN_VERSION_H
 
 /**
  * @file
- * btn::version header file.
+ * bn::version header file.
  *
  * @ingroup other
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
  * @brief Current version of butano.
  *
  * @ingroup other
  */
-namespace btn::version
+namespace bn::version
 {
     /**
      * @brief Returns the current major version.

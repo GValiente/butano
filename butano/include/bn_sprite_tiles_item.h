@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_TILES_ITEM_H
-#define BTN_SPRITE_TILES_ITEM_H
+#ifndef BN_SPRITE_TILES_ITEM_H
+#define BN_SPRITE_TILES_ITEM_H
 
 /**
  * @file
- * btn::sprite_tiles_item header file.
+ * bn::sprite_tiles_item header file.
  *
  * @ingroup sprite
  * @ingroup tile
  * @ingroup tool
  */
 
-#include "btn_span.h"
-#include "btn_tile.h"
-#include "btn_optional_fwd.h"
+#include "bn_span.h"
+#include "bn_tile.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_tiles_ptr;
@@ -54,11 +54,11 @@ public:
         _graphics_count(graphics_count),
         _tiles_count_per_graphic(0)
     {
-        BTN_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
-        BTN_ASSERT(graphics_count > 0, "Invalid graphics count: ", graphics_count);
-        BTN_ASSERT(graphics_count <= tiles_ref.size(), "Invalid tiles or graphics count: ",
+        BN_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
+        BN_ASSERT(graphics_count > 0, "Invalid graphics count: ", graphics_count);
+        BN_ASSERT(graphics_count <= tiles_ref.size(), "Invalid tiles or graphics count: ",
                    tiles_ref.size(), " - ", graphics_count);
-        BTN_ASSERT(tiles_ref.size() % graphics_count == 0, "Invalid tiles or graphics count: ",
+        BN_ASSERT(tiles_ref.size() % graphics_count == 0, "Invalid tiles or graphics count: ",
                    tiles_ref.size(), " - ", graphics_count);
 
         _tiles_count_per_graphic = tiles_ref.size() / graphics_count;
@@ -104,8 +104,8 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
-        BTN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-        BTN_ASSERT(graphics_index < _graphics_count, "Invalid graphics index: ",
+        BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
+        BN_ASSERT(graphics_index < _graphics_count, "Invalid graphics index: ",
                    graphics_index, " - ", _graphics_count);
 
         int tiles_count = _tiles_count_per_graphic;

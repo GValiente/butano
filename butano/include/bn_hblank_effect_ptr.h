@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HBLANK_EFFECT_PTR_H
-#define BTN_HBLANK_EFFECT_PTR_H
+#ifndef BN_HBLANK_EFFECT_PTR_H
+#define BN_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::hblank_effect_ptr header file.
+ * bn::hblank_effect_ptr header file.
  *
  * @ingroup hblank_effect
  */
 
-#include "btn_utility.h"
-#include "btn_span_fwd.h"
-#include "btn_functional.h"
+#include "bn_utility.h"
+#include "bn_span_fwd.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -87,18 +87,18 @@ protected:
 
     hblank_effect_ptr& operator=(hblank_effect_ptr&& other) noexcept
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
         return *this;
     }
 
     void swap(hblank_effect_ptr& other)
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
     }
 
     friend void swap(hblank_effect_ptr& a, hblank_effect_ptr& b)
     {
-        btn::swap(a._id, b._id);
+        bn::swap(a._id, b._id);
     }
 
     /// @endcond

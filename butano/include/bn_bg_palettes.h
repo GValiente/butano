@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_PALETTES_H
-#define BTN_BG_PALETTES_H
+#ifndef BN_BG_PALETTES_H
+#define BN_BG_PALETTES_H
 
 /**
  * @file
- * btn::bg_palettes header file.
+ * bn::bg_palettes header file.
  *
  * @ingroup bg
  * @ingroup palette
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_config_log.h"
-#include "btn_optional_fwd.h"
-#include "btn_config_doxygen.h"
+#include "bn_fixed_fwd.h"
+#include "bn_config_log.h"
+#include "bn_optional_fwd.h"
+#include "bn_config_doxygen.h"
 
-namespace btn
+namespace bn
 {
     class color;
 }
@@ -30,7 +30,7 @@ namespace btn
  * @ingroup bg
  * @ingroup palette
  */
-namespace btn::bg_palettes
+namespace bn::bg_palettes
 {
     /**
      * @brief Returns the number of used background colors.
@@ -144,7 +144,7 @@ namespace btn::bg_palettes
      */
     void set_fade(color color, fixed intensity);
 
-    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**
          * @brief Logs the current status of the background color palettes manager.
          */

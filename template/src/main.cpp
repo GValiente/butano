@@ -1,11 +1,11 @@
-#include "btn_core.h"
+#include "bn_core.h"
 
 int main()
 {
-    btn::core::init();
+    bn::core::init();
 
     while(true)
     {
-        btn::core::update();
+        bn::core::update();
     }
 }

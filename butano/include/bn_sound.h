@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SOUND_H
-#define BTN_SOUND_H
+#ifndef BN_SOUND_H
+#define BN_SOUND_H
 
 /**
  * @file
- * btn::sound header file.
+ * bn::sound header file.
  *
  * @ingroup sound
  */
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
     class sound_item;
 }
@@ -25,7 +25,7 @@ namespace btn
  *
  * @ingroup sound
  */
-namespace btn::sound
+namespace bn::sound
 {
     /**
      * @brief Plays the sound effect specified by the given sound_item with default settings.

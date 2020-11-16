@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ISTRING_BASE_H
-#define BTN_ISTRING_BASE_H
+#ifndef BN_ISTRING_BASE_H
+#define BN_ISTRING_BASE_H
 
 /**
  * @file
- * btn::istring_base header file.
+ * bn::istring_base header file.
  *
  * @ingroup string
  */
 
-#include "btn_algorithm.h"
-#include "btn_functional.h"
-#include "btn_string_fwd.h"
+#include "bn_algorithm.h"
+#include "bn_functional.h"
+#include "bn_string_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 /**

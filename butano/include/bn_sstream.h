@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SSTREAM_H
-#define BTN_SSTREAM_H
+#ifndef BN_SSTREAM_H
+#define BN_SSTREAM_H
 
 /**
  * @file
- * btn::ostringstream and btn::stringstream header file.
+ * bn::ostringstream and bn::stringstream header file.
  *
  * @ingroup string
  */
 
-#include "btn_cstddef.h"
-#include "btn_fixed_fwd.h"
-#include "btn_string_fwd.h"
+#include "bn_cstddef.h"
+#include "bn_fixed_fwd.h"
+#include "bn_string_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class string_view;

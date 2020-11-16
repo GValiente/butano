@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BGS_MOSAIC_H
-#define BTN_BGS_MOSAIC_H
+#ifndef BN_BGS_MOSAIC_H
+#define BN_BGS_MOSAIC_H
 
 /**
  * @file
- * btn::bgs_mosaic header file.
+ * bn::bgs_mosaic header file.
  *
  * @ingroup bg
  * @ingroup mosaic
  */
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
 /**
  * @brief Functions related with the mosaic applied to the backgrounds.
@@ -22,7 +22,7 @@
  * @ingroup bg
  * @ingroup mosaic
  */
-namespace btn::bgs_mosaic
+namespace bn::bgs_mosaic
 {
     /**
      * @brief Returns the horizontal stretch of the mosaic applied to the backgrounds.

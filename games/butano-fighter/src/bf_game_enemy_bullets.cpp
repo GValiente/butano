@@ -5,11 +5,11 @@
 
 #include "bf_game_enemy_bullets.h"
 
-#include "btn_colors.h"
-#include "btn_fixed_rect.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_affine_mats.h"
-#include "btn_sprite_items_enemy_bullets.h"
+#include "bn_colors.h"
+#include "bn_fixed_rect.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_affine_mats.h"
+#include "bn_sprite_items_enemy_bullets.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullet_event.h"
 
@@ -18,35 +18,35 @@ namespace bf::game
 
 namespace
 {
-    constexpr const btn::fixed_size dimensions[3] = {
-        btn::fixed_size(8, 8),
-        btn::fixed_size(14, 14),
-        btn::fixed_size(28, 28)
+    constexpr const bn::fixed_size dimensions[3] = {
+        bn::fixed_size(8, 8),
+        bn::fixed_size(14, 14),
+        bn::fixed_size(28, 28)
     };
 
-    [[nodiscard]] btn::sprite_palette_fade_loop_action _create_palette_fade_action()
+    [[nodiscard]] bn::sprite_palette_fade_loop_action _create_palette_fade_action()
     {
-        btn::sprite_palette_ptr palette = btn::sprite_items::enemy_bullets.palette_item().create_palette();
-        palette.set_fade_color(btn::colors::red);
-        return btn::sprite_palette_fade_loop_action(btn::move(palette), 15, 0.5);
+        bn::sprite_palette_ptr palette = bn::sprite_items::enemy_bullets.palette_item().create_palette();
+        palette.set_fade_color(bn::colors::red);
+        return bn::sprite_palette_fade_loop_action(bn::move(palette), 15, 0.5);
     }
 }
 
 enemy_bullets::enemy_bullets() :
     _palette_fade_action(_create_palette_fade_action()),
-    _tiles_list({ btn::sprite_items::enemy_bullets.tiles_item().create_tiles(0),
-           btn::sprite_items::enemy_bullets.tiles_item().create_tiles(1) })
+    _tiles_list({ bn::sprite_items::enemy_bullets.tiles_item().create_tiles(0),
+           bn::sprite_items::enemy_bullets.tiles_item().create_tiles(1) })
 {
 }
 
-bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
+bool enemy_bullets::check_hero(const bn::fixed_rect& hero_rect)
 {
-    btn::iforward_list<bullet_type>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
+    bn::iforward_list<bullet_type>* bullets = _check_odds ? &_odd_bullets : &_even_bullets;
 
     for(const bullet_type& bullet : *bullets)
     {
-        const btn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
-        btn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
+        const bn::fixed_point& bullet_position = bullet.sprite_move_action.sprite().position();
+        bn::fixed_rect bullet_rect(bullet_position, dimensions[int(bullet.type)]);
 
         if(bullet_rect.intersects(hero_rect))
         {
@@ -57,8 +57,8 @@ bool enemy_bullets::check_hero(const btn::fixed_rect& hero_rect)
     return false;
 }
 
-void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn::fixed_point& enemy_position,
-                               const enemy_bullet_event& event, const btn::camera_ptr& camera)
+void enemy_bullets::add_bullet(const bn::fixed_point& hero_position, const bn::fixed_point& enemy_position,
+                               const enemy_bullet_event& event, const bn::camera_ptr& camera)
 {
     enemy_bullet_type type = event.type;
 
@@ -70,7 +70,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         break;
 
     case enemy_bullet_type::HUGE:
-        if(btn::sprite_affine_mats::available_count() <= constants::reserved_sprite_affine_mats)
+        if(bn::sprite_affine_mats::available_count() <= constants::reserved_sprite_affine_mats)
         {
             type = enemy_bullet_type::BIG;
         }
@@ -80,8 +80,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-18, 20), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(18, 20), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-18, 20), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(18, 20), single_event, camera);
         }
         return;
 
@@ -89,7 +89,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(24, 8), hand_event, camera);
         }
         return;
 
@@ -97,7 +97,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(24, 8), hand_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(24, 8), hand_event, camera);
         }
         return;
 
@@ -105,7 +105,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-24, 8), hand_event, camera);
         }
         return;
 
@@ -113,7 +113,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event hand_event = event;
             hand_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-24, 8), hand_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-24, 8), hand_event, camera);
         }
         return;
 
@@ -121,7 +121,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event shotgun_event = event;
             shotgun_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-3, 12), shotgun_event, camera);
         }
         return;
 
@@ -129,7 +129,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event shotgun_event = event;
             shotgun_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-3, 12), shotgun_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-3, 12), shotgun_event, camera);
         }
         return;
 
@@ -137,8 +137,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-14, 14), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(14, 14), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-14, 14), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(14, 14), single_event, camera);
         }
         return;
 
@@ -146,8 +146,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-15, 22), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(15, 22), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-15, 22), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(15, 22), single_event, camera);
         }
         return;
 
@@ -155,7 +155,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -163,7 +163,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -171,7 +171,7 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event mouth_event = event;
             mouth_event.type = enemy_bullet_type::HUGE;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(0, 23), mouth_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(0, 23), mouth_event, camera);
         }
         return;
 
@@ -179,8 +179,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::BIG;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-11, 17), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(11, 17), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-11, 17), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(11, 17), single_event, camera);
         }
         return;
 
@@ -188,8 +188,8 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(25, -12), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(25, 12), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(25, -12), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(25, 12), single_event, camera);
         }
         return;
 
@@ -197,17 +197,17 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         {
             enemy_bullet_event single_event = event;
             single_event.type = enemy_bullet_type::SMALL;
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, -12), single_event, camera);
-            add_bullet(hero_position, enemy_position + btn::fixed_point(-25, 12), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-25, -12), single_event, camera);
+            add_bullet(hero_position, enemy_position + bn::fixed_point(-25, 12), single_event, camera);
         }
         return;
 
     default:
-        BTN_ERROR("Invalid bullet type: ", int(type));
+        BN_ERROR("Invalid bullet type: ", int(type));
         break;
     }
 
-    btn::fixed scale = 1;
+    bn::fixed scale = 1;
     int tile_index;
 
     if(type == enemy_bullet_type::HUGE)
@@ -220,11 +220,11 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
         tile_index = int(type);
     }
 
-    btn::iforward_list<bullet_type>* bullets = _odd_bullets.size() < _even_bullets.size() ?
+    bn::iforward_list<bullet_type>* bullets = _odd_bullets.size() < _even_bullets.size() ?
                 &_odd_bullets : &_even_bullets;
-    BTN_ASSERT(! bullets->full(), "No more space for enemy bullets");
+    BN_ASSERT(! bullets->full(), "No more space for enemy bullets");
 
-    btn::sprite_builder builder(btn::sprite_items::enemy_bullets.shape_size(), _tiles_list[tile_index],
+    bn::sprite_builder builder(bn::sprite_items::enemy_bullets.shape_size(), _tiles_list[tile_index],
                                 _palette_fade_action.palette());
     builder.set_position(enemy_position);
     builder.set_scale(scale);
@@ -233,21 +233,21 @@ void enemy_bullets::add_bullet(const btn::fixed_point& hero_position, const btn:
 
     if(event.delta_speed > 0)
     {
-        btn::fixed_point distance = hero_position - enemy_position;
+        bn::fixed_point distance = hero_position - enemy_position;
 
-        if(distance == btn::fixed_point())
+        if(distance == bn::fixed_point())
         {
             distance.set_y(1);
         }
 
-        btn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), event.delta_speed);
-        bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), delta_position),
-                             btn::nullopt, type });
+        bn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), event.delta_speed);
+        bullets->push_front({ bn::sprite_move_by_action(builder.release_build(), delta_position),
+                             bn::nullopt, type });
     }
     else
     {
-        bullets->push_front({ btn::sprite_move_by_action(builder.release_build(), event.delta_position),
-                             btn::nullopt, type });
+        bullets->push_front({ bn::sprite_move_by_action(builder.release_build(), event.delta_position),
+                             bn::nullopt, type });
     }
 
     if(type == enemy_bullet_type::HUGE)
@@ -265,8 +265,8 @@ void enemy_bullets::clear()
 
 void enemy_bullets::update()
 {
-    btn::iforward_list<bullet_type>* check_and_update_bullets;
-    btn::iforward_list<bullet_type>* update_bullets;
+    bn::iforward_list<bullet_type>* check_and_update_bullets;
+    bn::iforward_list<bullet_type>* update_bullets;
 
     if(_check_odds)
     {
@@ -289,8 +289,8 @@ void enemy_bullets::update()
     while(it != end)
     {
         bullet_type& bullet = *it;
-        btn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
-        const btn::fixed_point& position = sprite_move_action.sprite().position();
+        bn::sprite_move_by_action& sprite_move_action = bullet.sprite_move_action;
+        const bn::fixed_point& position = sprite_move_action.sprite().position();
 
         if(position.x() < -constants::view_width || position.x() > constants::view_width ||
                 position.y() < -constants::view_height || position.y() > constants::view_height)

@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_FIXED_H
-#define BTN_FIXED_H
+#ifndef BN_FIXED_H
+#define BN_FIXED_H
 
 /**
  * @file
- * btn::fixed_t and btn::fixed implementation header file.
+ * bn::fixed_t and bn::fixed implementation header file.
  *
  * @ingroup math
  */
 
-#include "btn_assert.h"
-#include "btn_limits.h"
-#include "btn_compare.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
+#include "bn_assert.h"
+#include "bn_limits.h"
+#include "bn_compare.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 template<int Precision>
@@ -279,7 +279,7 @@ public:
      */
     [[nodiscard]] constexpr fixed_t division(int value) const
     {
-        BTN_ASSERT(value, "Integer is zero");
+        BN_ASSERT(value, "Integer is zero");
 
         return from_data(_data / value);
     }
@@ -289,7 +289,7 @@ public:
      */
     [[nodiscard]] constexpr fixed_t division(unsigned value) const
     {
-        BTN_ASSERT(value, "Integer is zero");
+        BN_ASSERT(value, "Integer is zero");
 
         return from_data(_data / value);
     }
@@ -304,7 +304,7 @@ public:
         {
             int data = _data * half_scale();
             int other_data = other._data / half_scale();
-            BTN_ASSERT(other_data, "Other's internal data is zero");
+            BN_ASSERT(other_data, "Other's internal data is zero");
 
             return from_data(data / other_data);
         }
@@ -334,7 +334,7 @@ public:
      */
     [[nodiscard]] constexpr fixed_t safe_division(fixed_t other) const
     {
-        BTN_ASSERT(other._data, "Other's internal data is zero");
+        BN_ASSERT(other._data, "Other's internal data is zero");
 
         return from_data(int((int64_t(_data) * scale()) / other._data));
     }
@@ -360,7 +360,7 @@ public:
      */
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const
     {
-        BTN_ASSERT(other._data, "Other's internal data is zero");
+        BN_ASSERT(other._data, "Other's internal data is zero");
 
         return from_data((_data * scale()) / other._data);
     }

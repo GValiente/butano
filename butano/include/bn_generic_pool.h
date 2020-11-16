@@ -4,21 +4,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GENERIC_POOL_H
-#define BTN_GENERIC_POOL_H
+#ifndef BN_GENERIC_POOL_H
+#define BN_GENERIC_POOL_H
 
 /**
  * @file
- * btn::igeneric_pool and btn::generic_pool implementation header file.
+ * bn::igeneric_pool and bn::generic_pool implementation header file.
  *
  * @ingroup pool
  */
 
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_generic_pool_fwd.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_generic_pool_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<int MaxElementSize>
@@ -39,7 +39,7 @@ public:
      */
     ~igeneric_pool()
     {
-        BTN_ASSERT(empty(), "Pool is not empty");
+        BN_ASSERT(empty(), "Pool is not empty");
     }
 
     /**
@@ -93,7 +93,7 @@ public:
     [[nodiscard]] Type& create(Args&&... args)
     {
         static_assert(sizeof(Type) <= MaxElementSize);
-        BTN_ASSERT(! full(), "Pool is full");
+        BN_ASSERT(! full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(_allocate());
         ::new(result) Type(forward<Args>(args)...);
@@ -107,7 +107,7 @@ public:
     void destroy(Type& value)
     {
         static_assert(sizeof(Type) <= MaxElementSize);
-        BTN_ASSERT(_contains(value), "Pool does not contain this value");
+        BN_ASSERT(_contains(value), "Pool does not contain this value");
 
         value.~Type();
         _free(reinterpret_cast<char*>(&value));
@@ -247,7 +247,7 @@ public:
     template<typename Type>
     void destroy(Type& value)
     {
-        BTN_ASSERT(contains(value), "Pool does not contain this value");
+        BN_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
         base_type::_free(reinterpret_cast<char*>(&value));

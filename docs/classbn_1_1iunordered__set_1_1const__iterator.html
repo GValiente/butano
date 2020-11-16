@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::iunordered_set::const_iterator class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span><span class="m-breadcrumb"><a href="classbn_1_1iunordered__set.html">iunordered_set</a>::<wbr/></span>const_iterator <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__set_8h.html">&lt;bn_unordered_set.h&gt;</a></div>
+        </h1>
+        <p>Const iterator.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>In contrast to std::unordered_set::const_iterator, this one is bidirectional.</p>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="aa5269925b22272f53a0cbbf7f858f23e">
+              using <a href="#aa5269925b22272f53a0cbbf7f858f23e" class="m-doc-self">key_type</a> = <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">iunordered_set::<wbr />key_type</a>
+            </dt>
+            <dd>Key type alias.</dd>
+            <dt id="ab32d52ab331b753e7603eeb954c03c76">
+              using <a href="#ab32d52ab331b753e7603eeb954c03c76" class="m-doc-self">value_type</a> = <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">iunordered_set::<wbr />value_type</a>
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="ab477645de5877e9ecd354213fa8a9a2c">
+              using <a href="#ab477645de5877e9ecd354213fa8a9a2c" class="m-doc-self">size_type</a> = <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">iunordered_set::<wbr />size_type</a>
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a098f2049643d22e338c5e31e20a2723d">
+              using <a href="#a098f2049643d22e338c5e31e20a2723d" class="m-doc-self">difference_type</a> = <a href="classbn_1_1iunordered__set.html#a4d9613934ed7eb6de191b75d72f09a35" class="m-doc">iunordered_set::<wbr />difference_type</a>
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="a9cf969cb856bb6f6ae50fd2a3abc91b5">
+              using <a href="#a9cf969cb856bb6f6ae50fd2a3abc91b5" class="m-doc-self">hash_type</a> = <a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">iunordered_set::<wbr />hash_type</a>
+            </dt>
+            <dd>Hash type alias.</dd>
+            <dt id="a7fe209c46c4a6d0f0567711a9c8a6611">
+              using <a href="#a7fe209c46c4a6d0f0567711a9c8a6611" class="m-doc-self">hasher</a> = <a href="classbn_1_1iunordered__set.html#a99c8bb91e6f803844773b8c0231f0004" class="m-doc">iunordered_set::<wbr />hasher</a>
+            </dt>
+            <dd>Hash functor alias.</dd>
+            <dt id="aed7e85cfe2b770d75a3d46b8047148f9">
+              using <a href="#aed7e85cfe2b770d75a3d46b8047148f9" class="m-doc-self">key_equal</a> = <a href="classbn_1_1iunordered__set.html#a7512584eb3fd1d309ebe31b0aa8a3831" class="m-doc">iunordered_set::<wbr />key_equal</a>
+            </dt>
+            <dd>Equality functor alias.</dd>
+            <dt id="ab29f718114df35f23362f7439f5b22b9">
+              using <a href="#ab29f718114df35f23362f7439f5b22b9" class="m-doc-self">reference</a> = <a href="classbn_1_1iunordered__set.html#ae61cd98fd9c6409b194a4ea03e391588" class="m-doc">iunordered_set::<wbr />reference</a>
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a75708e8fc81f4d8db83ff8610ae0376e">
+              using <a href="#a75708e8fc81f4d8db83ff8610ae0376e" class="m-doc-self">const_reference</a> = <a href="classbn_1_1iunordered__set.html#a6e809e7067d091f326d7df77136e5d84" class="m-doc">iunordered_set::<wbr />const_reference</a>
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="a9d8d7fdf3aaf2e495eaa1605a3d0db11">
+              using <a href="#a9d8d7fdf3aaf2e495eaa1605a3d0db11" class="m-doc-self">pointer</a> = <a href="classbn_1_1iunordered__set.html#ab29a2b49931f60018bd7fe052062e2a8" class="m-doc">iunordered_set::<wbr />pointer</a>
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a79d8de097815ef292d89080f6257894b">
+              using <a href="#a79d8de097815ef292d89080f6257894b" class="m-doc-self">const_pointer</a> = <a href="classbn_1_1iunordered__set.html#a016fe98033196576ccb4e7a29f10899e" class="m-doc">iunordered_set::<wbr />const_pointer</a>
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="abbf24e749317e17f9bed94cf9929ba8a">
+              using <a href="#abbf24e749317e17f9bed94cf9929ba8a" class="m-doc-self">iterator_category</a> = bidirectional_iterator_tag
+            </dt>
+            <dd>Iterator category alias.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a73be636b4937d2ecd37ac49c5b13bf43" class="m-doc">const_iterator</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a>&amp; it)</span>
+            </dt>
+            <dd>Public constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a28ef4a2f56b63917f2fbd45c2d2a63c5" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp;</span>
+            </dt>
+            <dd>Increments the position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a01b6c9d49f7c5b2ecdece6e55e41e993" class="m-doc">operator--</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp;</span>
+            </dt>
+            <dd>Decrements the position.</dd>
+            <dt id="aa88e20a7d95f80fdb7833096032ee487">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa88e20a7d95f80fdb7833096032ee487" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html#a75708e8fc81f4d8db83ff8610ae0376e" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the pointed value.</dd>
+            <dt id="a9c07924a477366e014c1a6114b6e4f3c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9c07924a477366e014c1a6114b6e4f3c" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html#a79d8de097815ef292d89080f6257894b" class="m-doc">const_<wbr />pointer</a></span>
+            </dt>
+            <dd>Returns a const pointer to the pointed value.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0ac7de651351823aece097eb3be1cfb" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; a,
+              const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5fbca5b71055f2b793ae1607239b13a0" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; a,
+              const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a73be636b4937d2ecd37ac49c5b13bf43"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />iunordered_set::<wbr />const_iterator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a73be636b4937d2ecd37ac49c5b13bf43" class="m-doc-self">const_iterator</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a>&amp; it)</span></span>
+            </h3>
+            <p>Public constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">it</td>
+                  <td>Non const iterator.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a28ef4a2f56b63917f2fbd45c2d2a63c5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; bn::<wbr />iunordered_set::<wbr />const_iterator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28ef4a2f56b63917f2fbd45c2d2a63c5" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Increments the position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a01b6c9d49f7c5b2ecdece6e55e41e993"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; bn::<wbr />iunordered_set::<wbr />const_iterator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01b6c9d49f7c5b2ecdece6e55e41e993" class="m-doc-self">operator--</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Decrements the position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab0ac7de651351823aece097eb3be1cfb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab0ac7de651351823aece097eb3be1cfb" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; a,
+              const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; b)</span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5fbca5b71055f2b793ae1607239b13a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5fbca5b71055f2b793ae1607239b13a0" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; a,
+              const <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; b)</span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

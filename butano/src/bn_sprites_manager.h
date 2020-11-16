@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITES_MANAGER_H
-#define BTN_SPRITES_MANAGER_H
+#ifndef BN_SPRITES_MANAGER_H
+#define BN_SPRITES_MANAGER_H
 
-#include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
-#include "btn_intrusive_list_fwd.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
+#include "bn_intrusive_list_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class size;
@@ -68,7 +68,7 @@ namespace sprites_manager
 
     [[nodiscard]] sprite_shape_size shape_size(id_type id);
 
-    [[nodiscard]] btn::size dimensions(id_type id);
+    [[nodiscard]] bn::size dimensions(id_type id);
 
     [[nodiscard]] const sprite_tiles_ptr& tiles(id_type id);
 
@@ -211,14 +211,14 @@ namespace sprites_manager
 
     void commit();
 
-    [[nodiscard]] BTN_CODE_IWRAM bool _check_items_on_screen_impl(
+    [[nodiscard]] BN_CODE_IWRAM bool _check_items_on_screen_impl(
             void* hw_handles, intrusive_list<sorted_sprites::layer>& layers, bool rebuild_handles,
             int& first_index_to_commit, int& last_index_to_commit);
 
-    [[nodiscard]] BTN_CODE_IWRAM int _rebuild_handles_impl(
+    [[nodiscard]] BN_CODE_IWRAM int _rebuild_handles_impl(
             int last_visible_items_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers);
 
-    [[nodiscard]] BTN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
+    [[nodiscard]] BN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
 }
 
 }

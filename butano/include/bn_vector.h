@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_VECTOR_H
-#define BTN_VECTOR_H
+#ifndef BN_VECTOR_H
+#define BN_VECTOR_H
 
 /**
  * @file
- * btn::ivector and btn::vector implementation header file.
+ * bn::ivector and bn::vector implementation header file.
  *
  * @ingroup vector
  */
 
 #include <new>
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_vector_fwd.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_vector_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type>
@@ -37,8 +37,8 @@ public:
     using const_pointer = const Type*; //!< Const pointer alias.
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ivector(const ivector& other) = delete;
 
@@ -51,7 +51,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
+            BN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
 
             clear();
             _assign(other);
@@ -69,7 +69,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
+            BN_ASSERT(other._size <= _max_size, "Not enough space in vector: ", _max_size, " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -235,7 +235,7 @@ public:
      */
     [[nodiscard]] const_reference operator[](size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -245,7 +245,7 @@ public:
      */
     [[nodiscard]] reference operator[](size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -255,7 +255,7 @@ public:
      */
     [[nodiscard]] const_reference at(size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -265,7 +265,7 @@ public:
      */
     [[nodiscard]] reference at(size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _data[index];
     }
@@ -275,7 +275,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BTN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(_size, "Vector is empty");
 
         return _data[0];
     }
@@ -285,7 +285,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BTN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(_size, "Vector is empty");
 
         return _data[0];
     }
@@ -295,7 +295,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BTN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(_size, "Vector is empty");
 
         return _data[_size - 1];
     }
@@ -305,7 +305,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BTN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(_size, "Vector is empty");
 
         return _data[_size - 1];
     }
@@ -316,7 +316,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(! full(), "Vector is full");
 
         ::new(_data + _size) value_type(value);
         ++_size;
@@ -328,7 +328,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(! full(), "Vector is full");
 
         ::new(_data + _size) value_type(move(value));
         ++_size;
@@ -342,7 +342,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(! full(), "Vector is full");
 
         Type* result = _data + _size;
         ::new(result) value_type(forward<Args>(args)...);
@@ -355,7 +355,7 @@ public:
      */
     void pop_back()
     {
-        BTN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(_size, "Vector is empty");
 
         --_size;
         _data[_size].~value_type();
@@ -369,8 +369,8 @@ public:
      */
     iterator insert(const_iterator position, const_reference value)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BN_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -379,7 +379,7 @@ public:
 
         for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *last);
+            bn::swap(*it, *last);
         }
 
         return non_const_position;
@@ -393,8 +393,8 @@ public:
      */
     iterator insert(const_iterator position, value_type&& value)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BN_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -403,7 +403,7 @@ public:
 
         for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *last);
+            bn::swap(*it, *last);
         }
 
         return non_const_position;
@@ -418,8 +418,8 @@ public:
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
-        BTN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BTN_ASSERT(! full(), "Vector is full");
+        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        BN_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -428,7 +428,7 @@ public:
 
         for(iterator it = non_const_position; it != last; ++it)
         {
-            btn::swap(*it, *last);
+            bn::swap(*it, *last);
         }
 
         return non_const_position;
@@ -441,8 +441,8 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        BTN_ASSERT(_size, "Vector is empty");
-        BTN_ASSERT(position >= begin() && position < end(), "Invalid position");
+        BN_ASSERT(_size, "Vector is empty");
+        BN_ASSERT(position >= begin() && position < end(), "Invalid position");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator it = non_const_position;
@@ -473,11 +473,11 @@ public:
      */
     iterator erase(const_iterator first, const_iterator last)
     {
-        BTN_ASSERT(first >= begin(), "Invalid first");
-        BTN_ASSERT(last <= end(), "Invalid last");
+        BN_ASSERT(first >= begin(), "Invalid first");
+        BN_ASSERT(last <= end(), "Invalid last");
 
         size_type delete_count = last - first;
-        BTN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
+        BN_ASSERT(delete_count >= 0 && delete_count <= _size, "Invalid delete count: ", delete_count, " - ", _size);
 
         if(delete_count)
         {
@@ -543,7 +543,7 @@ public:
      */
     void resize(size_type count)
     {
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
 
         pointer data = _data;
         size_type size = _size;
@@ -572,7 +572,7 @@ public:
      */
     void resize(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
 
         pointer data = _data;
         size_type size = _size;
@@ -600,7 +600,7 @@ public:
      */
     void shrink(size_type count)
     {
-        BTN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
+        BN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
 
         pointer data = _data;
 
@@ -619,7 +619,7 @@ public:
      */
     void assign(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _max_size);
+        BN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _max_size);
 
         pointer data = _data;
         clear();
@@ -640,7 +640,7 @@ public:
     void assign(const Iterator& first, const Iterator& last)
     {
         size_type count = last - first;
-        BTN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
 
         pointer data = _data;
         clear();
@@ -676,8 +676,8 @@ public:
     {
         if(_data != other._data)
         {
-            BTN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
-            BTN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
+            BN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
+            BN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
 
             pointer min_data;
             pointer max_data;
@@ -701,7 +701,7 @@ public:
 
             for(size_type index = 0; index < min_size; ++index)
             {
-                btn::swap(min_data[index], max_data[index]);
+                bn::swap(min_data[index], max_data[index]);
             }
 
             for(size_type index = min_size; index < max_size; ++index)
@@ -710,7 +710,7 @@ public:
                 max_data[index].~value_type();
             }
 
-            btn::swap(_size, other._size);
+            bn::swap(_size, other._size);
         }
     }
 
@@ -884,8 +884,8 @@ public:
     using const_pointer = const Type*; //!< Const pointer alias.
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     /**
      * @brief Default constructor.
@@ -922,7 +922,7 @@ public:
     vector(const ivector<Type>& other) :
         vector()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -934,7 +934,7 @@ public:
     vector(ivector<Type>&& other) noexcept :
         vector()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -946,7 +946,7 @@ public:
     explicit vector(size_type count) :
         vector()
     {
-        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+        BN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
 
         this->_assign(count);
     }
@@ -959,7 +959,7 @@ public:
     vector(size_type count, const_reference value) :
         vector()
     {
-        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+        BN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
 
         this->_assign(count, value);
     }
@@ -1005,7 +1005,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1023,7 +1023,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);

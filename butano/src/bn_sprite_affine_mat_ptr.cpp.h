@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_affine_mat_ptr.h"
+#include "bn_sprite_affine_mat_ptr.h"
 
-#include "btn_optional.h"
-#include "btn_sprite_affine_mat_attributes.h"
-#include "btn_sprite_affine_mats_manager.h"
+#include "bn_optional.h"
+#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_sprite_affine_mats_manager.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_affine_mat_ptr sprite_affine_mat_ptr::create()

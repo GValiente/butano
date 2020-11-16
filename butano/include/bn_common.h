@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_COMMON_H
-#define BTN_COMMON_H
+#ifndef BN_COMMON_H
+#define BN_COMMON_H
 
 /**
  * @file
@@ -14,15 +14,15 @@
  */
 
 #include <cstdint>
-#include "../hw/include/btn_hw_common.h"
+#include "../hw/include/bn_hw_common.h"
 
 /**
- * @def BTN_UNREACHABLE
+ * @def BN_UNREACHABLE
  *
  * If control flow reaches the point of this macro, the program is undefined.
  *
  * @ingroup other
  */
-#define BTN_UNREACHABLE __builtin_unreachable
+#define BN_UNREACHABLE __builtin_unreachable
 
 #endif

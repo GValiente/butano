@@ -6,7 +6,7 @@
 #ifndef BF_SCENE_H
 #define BF_SCENE_H
 
-#include "btn_optional_fwd.h"
+#include "bn_optional_fwd.h"
 
 namespace bf
 {
@@ -19,7 +19,7 @@ class scene
 public:
     virtual ~scene() = default;
 
-    [[nodiscard]] virtual btn::optional<scene_type> update() = 0;
+    [[nodiscard]] virtual bn::optional<scene_type> update() = 0;
 
 protected:
     scene() = default;

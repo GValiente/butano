@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_UNORDERED_MAP_H
-#define BTN_UNORDERED_MAP_H
+#ifndef BN_UNORDERED_MAP_H
+#define BN_UNORDERED_MAP_H
 
 /**
  * @file
- * btn::iunordered_map and btn::unordered_map implementation header file.
+ * bn::iunordered_map and bn::unordered_map implementation header file.
  *
  * @ingroup unordered_map
  */
 
 #include <new>
-#include "btn_memory.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_power_of_two.h"
-#include "btn_unordered_map_fwd.h"
+#include "bn_memory.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_power_of_two.h"
+#include "bn_unordered_map_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Key, typename Value, typename KeyHash, typename KeyEqual>
@@ -114,7 +114,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage[_index];
         }
@@ -124,7 +124,7 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage[_index];
         }
@@ -134,7 +134,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage + _index;
         }
@@ -144,7 +144,7 @@ public:
          */
         pointer operator->()
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage + _index;
         }
@@ -267,7 +267,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage[_index];
         }
@@ -277,7 +277,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
+            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
 
             return _map->_storage + _index;
         }
@@ -318,8 +318,8 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     iunordered_map(const iunordered_map& other) = delete;
 
@@ -332,7 +332,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in map: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in map: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -350,7 +350,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in map: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in map: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -652,7 +652,7 @@ public:
     [[nodiscard]] mapped_type& at_hash(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
-        BTN_ASSERT(it != end(), "Key not found");
+        BN_ASSERT(it != end(), "Key not found");
 
         return it->second;
     }
@@ -732,7 +732,7 @@ public:
             }
 
             current_index = _index(current_index + 1);
-            BTN_ASSERT(current_index != index, "All indices are allocated");
+            BN_ASSERT(current_index != index, "All indices are allocated");
         }
 
         ::new(storage + current_index) value_type(move(value));
@@ -839,7 +839,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, move(value));
-            BTN_ASSERT(it != end(), "Insertion failed");
+            BN_ASSERT(it != end(), "Insertion failed");
         }
         else
         {
@@ -893,7 +893,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
-            BTN_ASSERT(it != end(), "Insertion failed");
+            BN_ASSERT(it != end(), "Insertion failed");
         }
 
         return it;
@@ -914,7 +914,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
-            BTN_ASSERT(it != end(), "Insertion failed");
+            BN_ASSERT(it != end(), "Insertion failed");
         }
 
         return it;
@@ -929,7 +929,7 @@ public:
     {
         bool* allocated = _allocated;
         size_type index = position._index;
-        BTN_ASSERT(allocated[index], "Index is not allocated: ", index);
+        BN_ASSERT(allocated[index], "Index is not allocated: ", index);
 
         pointer storage = _storage;
         storage[index].~value_type();
@@ -1074,7 +1074,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+            BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
                        "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
@@ -1181,7 +1181,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type());
-            BTN_ASSERT(it != end(), "Insertion failed");
+            BN_ASSERT(it != end(), "Insertion failed");
         }
 
         return it->second;
@@ -1195,7 +1195,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
+            BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
                        "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
@@ -1211,7 +1211,7 @@ public:
                 {
                     if(allocated[index])
                     {
-                        btn::swap(storage[index], other_storage[index]);
+                        bn::swap(storage[index], other_storage[index]);
                     }
                     else
                     {
@@ -1233,9 +1233,9 @@ public:
                 }
             }
 
-            btn::swap(_size, other._size);
-            btn::swap(_first_valid_index, other._first_valid_index);
-            btn::swap(_last_valid_index, other._last_valid_index);
+            bn::swap(_size, other._size);
+            bn::swap(_first_valid_index, other._first_valid_index);
+            bn::swap(_last_valid_index, other._last_valid_index);
         }
     }
 
@@ -1354,7 +1354,7 @@ protected:
         _max_size_minus_one(max_size - 1),
         _first_valid_index(max_size)
     {
-        BTN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
+        BN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
 
     /// @endcond
@@ -1481,7 +1481,7 @@ public:
     unordered_map(const iunordered_map<Key, Value, KeyHash, KeyEqual>& other) :
         unordered_map()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -1493,7 +1493,7 @@ public:
     unordered_map(iunordered_map<Key, Value, KeyHash, KeyEqual>&& other) noexcept :
         unordered_map()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -1539,7 +1539,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1557,7 +1557,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in map: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

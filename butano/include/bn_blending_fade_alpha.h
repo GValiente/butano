@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_FADE_ALPHA_H
-#define BTN_BLENDING_FADE_ALPHA_H
+#ifndef BN_BLENDING_FADE_ALPHA_H
+#define BN_BLENDING_FADE_ALPHA_H
 
 /**
  * @file
- * btn::blending_fade_alpha header file.
+ * bn::blending_fade_alpha header file.
  *
  * @ingroup blending
  */
 
-#include "btn_fixed.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -39,7 +39,7 @@ public:
     constexpr explicit blending_fade_alpha(fixed value) :
         _value(value)
     {
-        BTN_ASSERT(value >= 0 && value <= 1, "Invalid value: ", value);
+        BN_ASSERT(value >= 0 && value <= 1, "Invalid value: ", value);
     }
 
     /**
@@ -56,7 +56,7 @@ public:
      */
     constexpr void set_value(fixed value)
     {
-        BTN_ASSERT(value >= 0 && value <= 1, "Invalid value: ", value);
+        BN_ASSERT(value >= 0 && value <= 1, "Invalid value: ", value);
 
         _value = value;
     }

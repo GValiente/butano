@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_hblank_effects.h"
+#include "bn_hblank_effects.h"
 
-#include "btn_hblank_effects_manager.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn::hblank_effects
+namespace bn::hblank_effects
 {
 
 int used_count()

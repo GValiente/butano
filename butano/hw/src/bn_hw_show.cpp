@@ -3,50 +3,50 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_show.h"
+#include "../include/bn_hw_show.h"
 
-#if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
-    #include "btn_colors.h"
-    #include "btn_string.h"
-    #include "btn_display.h"
-    #include "btn_string_view.h"
-    #include "../include/btn_hw_tonc.h"
-    #include "../include/btn_hw_display.h"
+#if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
+    #include "bn_colors.h"
+    #include "bn_string.h"
+    #include "bn_display.h"
+    #include "bn_string_view.h"
+    #include "../include/bn_hw_tonc.h"
+    #include "../include/bn_hw_display.h"
 #endif
 
-#if BTN_CFG_PROFILER_ENABLED
-    #include "btn_core.h"
-    #include "btn_vector.h"
-    #include "btn_keypad.h"
-    #include "btn_profiler.h"
-    #include "btn_unordered_map.h"
+#if BN_CFG_PROFILER_ENABLED
+    #include "bn_core.h"
+    #include "bn_vector.h"
+    #include "bn_keypad.h"
+    #include "bn_profiler.h"
+    #include "bn_unordered_map.h"
 #endif
 
-namespace btn::hw::show
+namespace bn::hw::show
 {
 
 namespace
 {
-    #if BTN_CFG_ASSERT_ENABLED || BTN_CFG_PROFILER_ENABLED
+    #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
         void init_tte()
         {
-            btn::hw::display::set_show_mode();
+            bn::hw::display::set_show_mode();
             m3_fill(0);
 
             // Init TTE in mode 3:
             auto margin = 12;
             tte_init_bmp(3, nullptr, nullptr);
-            tte_set_margins(margin, margin, btn::display::width() - margin, btn::display::height() - margin);
+            tte_set_margins(margin, margin, bn::display::width() - margin, bn::display::height() - margin);
             tte_write("\n");
         }
     #endif
 }
 
-#if BTN_CFG_ASSERT_ENABLED
+#if BN_CFG_ASSERT_ENABLED
     void error(const string_view& condition, const string_view& file_name, const string_view& function, int line,
                const string_view& message)
     {
-        string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
+        string<BN_CFG_ASSERT_BUFFER_SIZE> buffer;
         init_tte();
 
         // Show file name:
@@ -104,10 +104,10 @@ namespace
     }
 #endif
 
-#if BTN_CFG_PROFILER_ENABLED
+#if BN_CFG_PROFILER_ENABLED
     void profiler_results()
     {
-        const auto& ticks_per_entry = _btn::profiler::ticks_per_entry();
+        const auto& ticks_per_entry = _bn::profiler::ticks_per_entry();
         init_tte();
         tte_set_ink(colors::green.data());
 
@@ -130,7 +130,7 @@ namespace
                 int max_ticks;
             };
 
-            vector<entry, BTN_CFG_PROFILER_MAX_ENTRIES * 2> entries;
+            vector<entry, BN_CFG_PROFILER_MAX_ENTRIES * 2> entries;
             int64_t total_ticks = 0;
             int64_t max_ticks = 0;
             bool show_total = true;
@@ -141,11 +141,11 @@ namespace
                 auto& ticks_entry = ticks_per_entry_pair.second;
                 entries.push_back({ ticks_per_entry_pair.first, ticks_entry.total, ticks_entry.max });
                 total_ticks += ticks_entry.total;
-                max_ticks = btn::max(max_ticks, int64_t(ticks_entry.max));
+                max_ticks = bn::max(max_ticks, int64_t(ticks_entry.max));
             }
 
             // Retrieve max width for indexes, labels and ticks:
-            string<BTN_CFG_ASSERT_BUFFER_SIZE> buffer;
+            string<BN_CFG_ASSERT_BUFFER_SIZE> buffer;
             ostringstream buffer_stream(buffer);
             int num_entries = entries.size();
             int max_index_width = 0;

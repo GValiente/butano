@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPAN_FWD_H
-#define BTN_SPAN_FWD_H
+#ifndef BN_SPAN_FWD_H
+#define BN_SPAN_FWD_H
 
 /**
  * @file
- * btn::span declaration header file.
+ * bn::span declaration header file.
  *
  * @ingroup span
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Refers to a contiguous sequence of elements with the first element of the sequence at position zero.

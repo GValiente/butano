@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITE_TILES_CONSTANTS_H
-#define BTN_HW_SPRITE_TILES_CONSTANTS_H
+#ifndef BN_HW_SPRITE_TILES_CONSTANTS_H
+#define BN_HW_SPRITE_TILES_CONSTANTS_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::sprite_tiles
+namespace bn::hw::sprite_tiles
 {
     [[nodiscard]] constexpr int tiles_count()
     {

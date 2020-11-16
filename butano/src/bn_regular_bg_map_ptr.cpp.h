@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_regular_bg_map_ptr.h"
+#include "bn_regular_bg_map_ptr.h"
 
-#include "btn_optional.h"
-#include "btn_bg_tiles_ptr.h"
-#include "btn_bg_palette_ptr.h"
-#include "btn_regular_bg_item.h"
-#include "btn_bg_blocks_manager.h"
+#include "bn_optional.h"
+#include "bn_bg_tiles_ptr.h"
+#include "bn_bg_palette_ptr.h"
+#include "bn_regular_bg_item.h"
+#include "bn_bg_blocks_manager.h"
 
-namespace btn
+namespace bn
 {
 
 optional<regular_bg_map_ptr> regular_bg_map_ptr::find(

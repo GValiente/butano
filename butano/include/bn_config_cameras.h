@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_CAMERA_H
-#define BTN_CONFIG_CAMERA_H
+#ifndef BN_CONFIG_CAMERA_H
+#define BN_CONFIG_CAMERA_H
 
 /**
  * @file
@@ -13,17 +13,17 @@
  * @ingroup camera
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_CAMERA_MAX_ITEMS
+ * @def BN_CFG_CAMERA_MAX_ITEMS
  *
- * Specifies the maximum number of cameras that can be created with btn::camera_ptr static constructors.
+ * Specifies the maximum number of cameras that can be created with bn::camera_ptr static constructors.
  *
  * @ingroup camera
  */
-#ifndef BTN_CFG_CAMERA_MAX_ITEMS
-    #define BTN_CFG_CAMERA_MAX_ITEMS 4
+#ifndef BN_CFG_CAMERA_MAX_ITEMS
+    #define BN_CFG_CAMERA_MAX_ITEMS 4
 #endif
 
 #endif

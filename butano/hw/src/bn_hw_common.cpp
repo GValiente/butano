@@ -3,9 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_common.h"
+#include "../include/bn_hw_common.h"
 
-#include "btn_assert.h"
+#include "bn_assert.h"
 
 extern "C"
 {
@@ -20,6 +20,6 @@ extern "C"
     // https://stackoverflow.com/questions/14689639/can-i-disable-exceptions-for-when-a-pure-virtual-function-is-called
     void __cxa_pure_virtual()
     {
-        BTN_ERROR("Pure virtual function call");
+        BN_ERROR("Pure virtual function call");
     }
 }

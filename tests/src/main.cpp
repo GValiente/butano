@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_core.h"
-#include "btn_colors.h"
-#include "btn_optional.h"
-#include "btn_sprite_ptr.h"
-#include "btn_bg_palettes.h"
-#include "btn_config_assert.h"
-#include "btn_sprite_text_generator.h"
+#include "bn_core.h"
+#include "bn_colors.h"
+#include "bn_optional.h"
+#include "bn_sprite_ptr.h"
+#include "bn_bg_palettes.h"
+#include "bn_config_assert.h"
+#include "bn_sprite_text_generator.h"
 
 #include "fixed_tests.h"
 #include "math_tests.h"
@@ -19,20 +19,20 @@
 #include "sram_tests.h"
 #include "variable_8x16_sprite_font.h"
 
-#if ! BTN_CFG_ASSERT_ENABLED
-    static_assert(false, "Enable asserts in btn_config_assert.h to run tests");
+#if ! BN_CFG_ASSERT_ENABLED
+    static_assert(false, "Enable asserts in bn_config_assert.h to run tests");
 #endif
 
 int main()
 {
-    btn::core::init();
+    bn::core::init();
 
-    btn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     text_generator.set_center_alignment();
 
     auto text = text_generator.generate<8>(0, 0, "Running tests...");
-    btn::bg_palettes::set_transparent_color(btn::colors::gray);
-    btn::core::update();
+    bn::bg_palettes::set_transparent_color(bn::colors::gray);
+    bn::core::update();
 
     fixed_tests();
     math_tests();
@@ -52,6 +52,6 @@ int main()
 
     while(true)
     {
-        btn::core::update();
+        bn::core::update();
     }
 }

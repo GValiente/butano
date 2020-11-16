@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RULE_OF_THREE_APPROXIMATION_H
-#define BTN_RULE_OF_THREE_APPROXIMATION_H
+#ifndef BN_RULE_OF_THREE_APPROXIMATION_H
+#define BN_RULE_OF_THREE_APPROXIMATION_H
 
 /**
  * @file
- * btn::rule_of_three_approximation header file.
+ * bn::rule_of_three_approximation header file.
  *
  * @ingroup math
  */
 
-#include "btn_assert.h"
-#include "btn_fixed_fwd.h"
+#include "bn_assert.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -105,7 +105,7 @@ private:
 
     [[nodiscard]] static constexpr unsigned _build_divisor(int divisor)
     {
-        BTN_ASSERT(divisor > 0, "Invalid divisor: ", divisor);
+        BN_ASSERT(divisor > 0, "Invalid divisor: ", divisor);
 
         unsigned shift_bits = 0;
 
@@ -124,7 +124,7 @@ private:
 
     [[nodiscard]] static constexpr unsigned _build_multiplier(int multiplier, int divisor, unsigned internal_divisor)
     {
-        BTN_ASSERT(multiplier > 0, "Invalid multiplier: ", multiplier);
+        BN_ASSERT(multiplier > 0, "Invalid multiplier: ", multiplier);
 
         if(internal_divisor == unsigned(divisor))
         {

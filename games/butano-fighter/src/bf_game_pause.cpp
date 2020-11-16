@@ -5,14 +5,14 @@
 
 #include "bf_game_pause.h"
 
-#include "btn_music.h"
-#include "btn_keypad.h"
-#include "btn_green_swap.h"
-#include "btn_sound_items.h"
-#include "btn_bg_palettes.h"
-#include "btn_sprite_palettes.h"
-#include "btn_regular_bg_builder.h"
-#include "btn_regular_bg_items_pause.h"
+#include "bn_music.h"
+#include "bn_keypad.h"
+#include "bn_green_swap.h"
+#include "bn_sound_items.h"
+#include "bn_bg_palettes.h"
+#include "bn_sprite_palettes.h"
+#include "bn_regular_bg_builder.h"
+#include "bn_regular_bg_items_pause.h"
 #include "bf_butano_background.h"
 
 namespace bf::game
@@ -22,20 +22,20 @@ void pause::update(const butano_background& butano_background)
 {
     if(_active)
     {
-        if(btn::keypad::start_pressed())
+        if(bn::keypad::start_pressed())
         {
             _bg.reset();
-            btn::bg_palettes::set_contrast(_contrast);
-            btn::bg_palettes::set_grayscale_intensity(0);
-            btn::sprite_palettes::set_contrast(_contrast);
-            btn::sprite_palettes::set_fade_intensity(_fade_intensity);
-            btn::sprite_palettes::set_grayscale_intensity(0);
-            btn::green_swap::set_enabled(_green_swap);
-            btn::sound_items::pause_out.play();
+            bn::bg_palettes::set_contrast(_contrast);
+            bn::bg_palettes::set_grayscale_intensity(0);
+            bn::sprite_palettes::set_contrast(_contrast);
+            bn::sprite_palettes::set_fade_intensity(_fade_intensity);
+            bn::sprite_palettes::set_grayscale_intensity(0);
+            bn::green_swap::set_enabled(_green_swap);
+            bn::sound_items::pause_out.play();
 
-            if(btn::music::paused())
+            if(bn::music::paused())
             {
-                btn::music::resume();
+                bn::music::resume();
             }
 
             _active = false;
@@ -43,25 +43,25 @@ void pause::update(const butano_background& butano_background)
     }
     else
     {
-        if(! butano_background.silhouette_visible() && btn::keypad::start_pressed())
+        if(! butano_background.silhouette_visible() && bn::keypad::start_pressed())
         {
-            btn::regular_bg_builder builder(btn::regular_bg_items::pause);
+            bn::regular_bg_builder builder(bn::regular_bg_items::pause);
             builder.set_priority(0);
             _bg = builder.release_build();
-            _contrast = btn::bg_palettes::contrast();
-            _fade_intensity = btn::bg_palettes::fade_intensity();
-            _green_swap = btn::green_swap::enabled();
-            btn::bg_palettes::set_contrast(0);
-            btn::bg_palettes::set_grayscale_intensity(1);
-            btn::sprite_palettes::set_contrast(0);
-            btn::sprite_palettes::set_fade_intensity(0);
-            btn::sprite_palettes::set_grayscale_intensity(1);
-            btn::green_swap::set_enabled(false);
-            btn::sound_items::pause_in.play();
+            _contrast = bn::bg_palettes::contrast();
+            _fade_intensity = bn::bg_palettes::fade_intensity();
+            _green_swap = bn::green_swap::enabled();
+            bn::bg_palettes::set_contrast(0);
+            bn::bg_palettes::set_grayscale_intensity(1);
+            bn::sprite_palettes::set_contrast(0);
+            bn::sprite_palettes::set_fade_intensity(0);
+            bn::sprite_palettes::set_grayscale_intensity(1);
+            bn::green_swap::set_enabled(false);
+            bn::sound_items::pause_in.play();
 
-            if(btn::music::playing())
+            if(bn::music::playing())
             {
-                btn::music::pause();
+                bn::music::pause();
             }
 
             _active = true;

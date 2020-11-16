@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_TYPE_ID_H
-#define BTN_TYPE_ID_H
+#ifndef BN_TYPE_ID_H
+#define BN_TYPE_ID_H
 
 /**
  * @file
- * btn::type_id_t header file.
+ * bn::type_id_t header file.
  *
  * @ingroup other
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
 
 /**

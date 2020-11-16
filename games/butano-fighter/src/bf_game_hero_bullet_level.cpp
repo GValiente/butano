@@ -5,7 +5,7 @@
 
 #include "bf_game_hero_bullet_level.h"
 
-#include "btn_sound_items.h"
+#include "bn_sound_items.h"
 #include "bf_game_bullet_util.h"
 
 namespace bf::game
@@ -173,24 +173,24 @@ namespace
     };
 
     constexpr const hero_bullet_level _levels[] = {
-        hero_bullet_level(_level0_events,   btn::fixed_size(9, 9),      btn::sound_items::gun_5,            4,
-                btn::color(31, 28, 5),  20,     1),
-        hero_bullet_level(_level1_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_5,            250,
-                btn::color(31, 28, 5),  40,     2),
-        hero_bullet_level(_level2_events,   btn::fixed_size(13, 14),    btn::sound_items::gun_1,            850,
-                btn::color(13, 2, 2),   80,     4),
-        hero_bullet_level(_level3_events,   btn::fixed_size(11, 15),    btn::sound_items::gun_3,            1200,
-                btn::color(31, 0, 6),   80,     3),
-        hero_bullet_level(_level4_events,   btn::fixed_size(16, 16),    btn::sound_items::space_shooter_3,  2100,
-                btn::color(18, 25, 27), 86,     5),
-        hero_bullet_level(_level5_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_3,            3300,
-                btn::color(31, 0, 0),   97,     3),
-        hero_bullet_level(_level6_events,   btn::fixed_size(15, 15),    btn::sound_items::gun_2,            5300,
-                btn::color(9, 20, 24),  101,    4),
-        hero_bullet_level(_level7_events,   btn::fixed_size(10, 16),    btn::sound_items::space_shooter_5,  7200,
-                btn::color(31, 0, 0),   89,     6),
-        hero_bullet_level(_level8_events,   btn::fixed_size(16, 16),    btn::sound_items::gun_1,            8800,
-                btn::color(9, 20, 24),  73,     8),
+        hero_bullet_level(_level0_events,   bn::fixed_size(9, 9),      bn::sound_items::gun_5,            4,
+                bn::color(31, 28, 5),  20,     1),
+        hero_bullet_level(_level1_events,   bn::fixed_size(16, 16),    bn::sound_items::gun_5,            250,
+                bn::color(31, 28, 5),  40,     2),
+        hero_bullet_level(_level2_events,   bn::fixed_size(13, 14),    bn::sound_items::gun_1,            850,
+                bn::color(13, 2, 2),   80,     4),
+        hero_bullet_level(_level3_events,   bn::fixed_size(11, 15),    bn::sound_items::gun_3,            1200,
+                bn::color(31, 0, 6),   80,     3),
+        hero_bullet_level(_level4_events,   bn::fixed_size(16, 16),    bn::sound_items::space_shooter_3,  2100,
+                bn::color(18, 25, 27), 86,     5),
+        hero_bullet_level(_level5_events,   bn::fixed_size(16, 16),    bn::sound_items::gun_3,            3300,
+                bn::color(31, 0, 0),   97,     3),
+        hero_bullet_level(_level6_events,   bn::fixed_size(15, 15),    bn::sound_items::gun_2,            5300,
+                bn::color(9, 20, 24),  101,    4),
+        hero_bullet_level(_level7_events,   bn::fixed_size(10, 16),    bn::sound_items::space_shooter_5,  7200,
+                bn::color(31, 0, 0),   89,     6),
+        hero_bullet_level(_level8_events,   bn::fixed_size(16, 16),    bn::sound_items::gun_1,            8800,
+                bn::color(9, 20, 24),  73,     8),
     };
 
     [[nodiscard]] int _multiplier(int level)
@@ -228,15 +228,15 @@ namespace
     }
 }
 
-btn::span<const hero_bullet_level> hero_bullet_level::all_levels()
+bn::span<const hero_bullet_level> hero_bullet_level::all_levels()
 {
     return _levels;
 }
 
-int hero_bullet_level::gem_experience(int level, btn::fixed y)
+int hero_bullet_level::gem_experience(int level, bn::fixed y)
 {
     int height = y.right_shift_integer() + constants::play_height;
-    int height_level = btn::clamp(height / 16, 0, 4);
+    int height_level = bn::clamp(height / 16, 0, 4);
     height_level = 4 + 1 - height_level;
     return height_level * _multiplier(level);
 }

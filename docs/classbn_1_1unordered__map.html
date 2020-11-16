@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::unordered_map class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__map_8h.html">&lt;bn_unordered_map.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>unordered_map <span class="m-thin">class</span>
+        </h1>
+        <p>Unordered map implementation that uses a fixed size buffer.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Key</td>
+              <td>Key type.</td>
+            </tr>
+            <tr>
+              <td>Value</td>
+              <td>Value type.</td>
+            </tr>
+            <tr>
+              <td>MaxSize</td>
+              <td>Maximum number of elements that can be stored.</td>
+            </tr>
+            <tr>
+              <td>KeyHash</td>
+              <td>Functor used to calculate the hash of a given key.</td>
+            </tr>
+            <tr>
+              <td>KeyEqual</td>
+              <td>Functor used for all key comparisons.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Key, typename Value, typename KeyHash, typename KeyEqual&gt;</div>
+              class <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_map&lt;Key, Value, KeyHash, KeyEqual&gt;</a>
+            </dt>
+            <dd>Base class of <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="aabf2ac1277b51732d8e7ff32df085283">
+              using <a href="#aabf2ac1277b51732d8e7ff32df085283" class="m-doc-self">key_type</a> = Key
+            </dt>
+            <dd>Key type alias.</dd>
+            <dt id="a309ac296bf0494bba16f03bf9b34c2f2">
+              using <a href="#a309ac296bf0494bba16f03bf9b34c2f2" class="m-doc-self">mapped_type</a> = Value
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="a373e5121af58c3f5af04c2bef566866d">
+              using <a href="#a373e5121af58c3f5af04c2bef566866d" class="m-doc-self">value_type</a> = <a href="classbn_1_1pair.html" class="m-doc">pair</a>&lt;const <a href="classbn_1_1iunordered__map.html#a4f7f6064ef1e026089464857a3165e85" class="m-doc">key_<wbr />type</a>, <a href="classbn_1_1iunordered__map.html#a8fa58a32cf5a09daf82f9e4ada2834ea" class="m-doc">mapped_<wbr />type</a>&gt;
+            </dt>
+            <dd>(Key, Value) pair type alias.</dd>
+            <dt id="aa5c736a214e5fba854080b33e354bb3e">
+              using <a href="#aa5c736a214e5fba854080b33e354bb3e" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a5cc984439b45f3bcd49ffef0b968ece8">
+              using <a href="#a5cc984439b45f3bcd49ffef0b968ece8" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="a58adcf77772222d1922b8aa8ccd2793e">
+              using <a href="#a58adcf77772222d1922b8aa8ccd2793e" class="m-doc-self">hash_type</a> = unsigned
+            </dt>
+            <dd>Hash type alias.</dd>
+            <dt id="ad7454d795da8976f8c1269b834c1ca54">
+              using <a href="#ad7454d795da8976f8c1269b834c1ca54" class="m-doc-self">hasher</a> = KeyHash
+            </dt>
+            <dd>Hash functor alias.</dd>
+            <dt id="a7d2db4f51147891258fe4d01b6c3b354">
+              using <a href="#a7d2db4f51147891258fe4d01b6c3b354" class="m-doc-self">key_equal</a> = KeyEqual
+            </dt>
+            <dd>Equality functor alias.</dd>
+            <dt id="a4570d9b698c3268b14a51f130f461dc7">
+              using <a href="#a4570d9b698c3268b14a51f130f461dc7" class="m-doc-self">reference</a> = <a href="classbn_1_1iunordered__map.html#a57ed8b6f4d4d2605c5220f0d5dee4eaa" class="m-doc">value_<wbr />type</a>&amp;
+            </dt>
+            <dd>(Key, Value) pair reference alias.</dd>
+            <dt id="a5a5a2873cb5f892a35c3264d3c8bceec">
+              using <a href="#a5a5a2873cb5f892a35c3264d3c8bceec" class="m-doc-self">const_reference</a> = const <a href="classbn_1_1iunordered__map.html#a57ed8b6f4d4d2605c5220f0d5dee4eaa" class="m-doc">value_<wbr />type</a>&amp;
+            </dt>
+            <dd>(Key, Value) pair const reference alias.</dd>
+            <dt id="af0e362c82713efd4c9663ec4dd62222c">
+              using <a href="#af0e362c82713efd4c9663ec4dd62222c" class="m-doc-self">pointer</a> = <a href="classbn_1_1iunordered__map.html#a57ed8b6f4d4d2605c5220f0d5dee4eaa" class="m-doc">value_<wbr />type</a>*
+            </dt>
+            <dd>(Key, Value) pair pointer alias.</dd>
+            <dt id="aaa6477b6fd7dad96e6d3c278d031101e">
+              using <a href="#aaa6477b6fd7dad96e6d3c278d031101e" class="m-doc-self">const_pointer</a> = const <a href="classbn_1_1iunordered__map.html#a57ed8b6f4d4d2605c5220f0d5dee4eaa" class="m-doc">value_<wbr />type</a>*
+            </dt>
+            <dd>(Key, Value) pair const pointer alias.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a6d15b38060f9b64d13fd3e73807253db">
+              <span class="m-doc-wrap-bumper"><a href="#a6d15b38060f9b64d13fd3e73807253db" class="m-doc-self">unordered_map</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6ff39e848515b131b060811bc1d72231" class="m-doc">unordered_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aa8434ac38fb9f0ad8e6d24c5fc227a35" class="m-doc">unordered_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a2a246bf99dbc66c88dfc5b8fae5f48e0" class="m-doc">unordered_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ad2ebe85a643e25a7597fb21fc1bbb733" class="m-doc">unordered_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="a77475c88427910ccaafd4478a53a277e">
+              <span class="m-doc-wrap-bumper"><a href="#a77475c88427910ccaafd4478a53a277e" class="m-doc-self">~unordered_map</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Destructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5b497abaf6edd4adccceafb8d9d0d2e" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; other) -&gt; <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adad42c59924c9c720a7ff1f8de0bc1b3" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a16f19757792b6c1844ae322880c4edc6" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp; other) -&gt; <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab97ab05e1548e9831ce4d52c1523962a" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a6ff39e848515b131b060811bc1d72231"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6ff39e848515b131b060811bc1d72231" class="m-doc-self">unordered_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa8434ac38fb9f0ad8e6d24c5fc227a35"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa8434ac38fb9f0ad8e6d24c5fc227a35" class="m-doc-self">unordered_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2a246bf99dbc66c88dfc5b8fae5f48e0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2a246bf99dbc66c88dfc5b8fae5f48e0" class="m-doc-self">unordered_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad2ebe85a643e25a7597fb21fc1bbb733"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad2ebe85a643e25a7597fb21fc1bbb733" class="m-doc-self">unordered_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae5b497abaf6edd4adccceafb8d9d0d2e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae5b497abaf6edd4adccceafb8d9d0d2e" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adad42c59924c9c720a7ff1f8de0bc1b3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adad42c59924c9c720a7ff1f8de0bc1b3" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a16f19757792b6c1844ae322880c4edc6"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16f19757792b6c1844ae322880c4edc6" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab97ab05e1548e9831ce4d52c1523962a"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__map.html" class="m-doc">unordered_<wbr />map</a>&amp; bn::<wbr />unordered_map&lt;Key, Value, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab97ab05e1548e9831ce4d52c1523962a" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Key, Value, KeyHash, KeyEqual&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

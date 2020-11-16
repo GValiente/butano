@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITES_H
-#define BTN_HW_SPRITES_H
+#ifndef BN_HW_SPRITES_H
+#define BN_HW_SPRITES_H
 
-#include "btn_memory.h"
-#include "btn_sprite_builder.h"
-#include "btn_hw_tonc.h"
+#include "bn_memory.h"
+#include "bn_sprite_builder.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::sprites
+namespace bn::hw::sprites
 {
     using handle_type = OBJ_ATTR;
 

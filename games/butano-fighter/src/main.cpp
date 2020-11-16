@@ -3,9 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_core.h"
-#include "btn_memory.h"
-#include "btn_sprite_text_generator.h"
+#include "bn_core.h"
+#include "bn_memory.h"
+#include "bn_sprite_text_generator.h"
 
 #include "bf_game.h"
 #include "bf_stats.h"
@@ -22,20 +22,20 @@
 
 int main()
 {
-    btn::core::init();
+    bn::core::init();
 
-    btn::sprite_text_generator small_text_generator(bf::small_sprite_font);
+    bn::sprite_text_generator small_text_generator(bf::small_sprite_font);
     small_text_generator.set_bg_priority(1);
 
-    btn::sprite_text_generator big_text_generator(bf::big_sprite_font);
+    bn::sprite_text_generator big_text_generator(bf::big_sprite_font);
     big_text_generator.set_bg_priority(1);
 
     bf::status status;
     bf::butano_background butano_background;
-    btn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
+    bn::unique_ptr<bf::scene> scene(new bf::intro(big_text_generator, butano_background));
     bf::stats stats(small_text_generator);
     bf::keypad_shortcuts keypad_shortcuts;
-    btn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
+    bn::optional<bf::scene_type> next_scene = bf::scene_type::INTRO;
     int wait_frames = 0;
 
     while(true)
@@ -48,7 +48,7 @@ int main()
         butano_background.update();
         stats.update();
         keypad_shortcuts.update();
-        btn::core::update();
+        bn::core::update();
 
         if(next_scene)
         {
@@ -96,7 +96,7 @@ int main()
                     break;
 
                 default:
-                    BTN_ERROR("Invalid next scene: ", int(*next_scene));
+                    BN_ERROR("Invalid next scene: ", int(*next_scene));
                     break;
                 }
             }

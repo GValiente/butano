@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_HDMA_H
-#define BTN_HW_HDMA_H
+#ifndef BN_HW_HDMA_H
+#define BN_HW_HDMA_H
 
-#include "btn_hw_tonc.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::hdma
+namespace bn::hw::hdma
 {
 
 namespace

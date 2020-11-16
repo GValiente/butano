@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_LIST_H
-#define BTN_LIST_H
+#ifndef BN_LIST_H
+#define BN_LIST_H
 
 /**
  * @file
- * btn::ilist and btn::list implementation header file.
+ * bn::ilist and bn::list implementation header file.
  *
  * @ingroup list
  */
 
-#include "btn_pool.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_list_fwd.h"
+#include "bn_pool.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_list_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type>
@@ -82,7 +82,7 @@ public:
          */
         iterator& operator++()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->next;
             return *this;
@@ -94,7 +94,7 @@ public:
          */
         iterator& operator--()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->prev;
             return *this;
@@ -105,7 +105,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const value_node_type*>(_node)->value;
         }
@@ -115,7 +115,7 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<value_node_type*>(_node)->value;
         }
@@ -125,7 +125,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return &static_cast<const value_node_type*>(_node)->value;
         }
@@ -135,7 +135,7 @@ public:
          */
         pointer operator->()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return &static_cast<value_node_type*>(_node)->value;
         }
@@ -189,7 +189,7 @@ public:
          */
         const_iterator& operator++()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->next;
             return *this;
@@ -201,7 +201,7 @@ public:
          */
         const_iterator& operator--()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->prev;
             return *this;
@@ -212,7 +212,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const value_node_type*>(_node)->value;
         }
@@ -222,7 +222,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return &static_cast<const value_node_type*>(_node)->value;
         }
@@ -243,8 +243,8 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ilist(const ilist& other) = delete;
 
@@ -257,7 +257,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
+            BN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
 
             clear();
             _assign(other);
@@ -275,7 +275,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
+            BN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
 
             clear();
             _assign(move(other));
@@ -425,7 +425,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<const value_node_type*>(_first_node.next)->value;
     }
@@ -435,7 +435,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<value_node_type*>(_first_node.next)->value;
     }
@@ -445,7 +445,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<const value_node_type*>(_last_node.prev)->value;
     }
@@ -455,7 +455,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<value_node_type*>(_last_node.prev)->value;
     }
@@ -466,7 +466,7 @@ public:
      */
     void push_front(const_reference value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(begin(), new_node);
@@ -478,7 +478,7 @@ public:
      */
     void push_front(value_type&& value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(begin(), new_node);
@@ -492,7 +492,7 @@ public:
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(begin(), new_node);
@@ -505,7 +505,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(end(), new_node);
@@ -517,7 +517,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(end(), new_node);
@@ -531,7 +531,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(end(), new_node);
@@ -543,7 +543,7 @@ public:
      */
     void pop_front()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         _erase(begin());
     }
@@ -553,7 +553,7 @@ public:
      */
     void pop_back()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         iterator it = end();
         --it;
@@ -568,7 +568,7 @@ public:
      */
     iterator insert(const_iterator position, const_reference value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(_mutable_iterator(position), new_node);
@@ -583,7 +583,7 @@ public:
      */
     iterator insert(const_iterator position, value_type&& value)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(_mutable_iterator(position), new_node);
@@ -599,7 +599,7 @@ public:
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
-        BTN_ASSERT(! full(), "List is full");
+        BN_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(_mutable_iterator(position), new_node);
@@ -613,7 +613,7 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         iterator non_const_position = _mutable_iterator(position);
         iterator next = non_const_position;
@@ -640,7 +640,7 @@ public:
 
         while(erase_it != erase_last)
         {
-            BTN_ASSERT(! empty(), "List is empty");
+            BN_ASSERT(! empty(), "List is empty");
 
             iterator next = erase_it;
             ++next;
@@ -721,7 +721,7 @@ public:
      */
     void assign(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
+        BN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         iterator last = end();
         clear();
@@ -746,7 +746,7 @@ public:
 
         for(Iterator it = first; it != last; ++it)
         {
-            BTN_ASSERT(! full(), "List is full");
+            BN_ASSERT(! full(), "List is full");
 
             node_type& new_node = _ipool->create(*it);
             _insert(input_last, new_node);
@@ -780,8 +780,8 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(size() <= other.max_size(), "Invalid size: ", size(), " - ", other.max_size());
-            BTN_ASSERT(max_size() <= other.size(), "Invalid max size: ", max_size(), " - ", other.size());
+            BN_ASSERT(size() <= other.max_size(), "Invalid size: ", size(), " - ", other.max_size());
+            BN_ASSERT(max_size() <= other.size(), "Invalid max size: ", max_size(), " - ", other.size());
 
             ilist* min_list;
             ilist* max_list;
@@ -804,7 +804,7 @@ public:
 
             while(min_iterator != min_end)
             {
-                btn::swap(*min_iterator, *max_iterator);
+                bn::swap(*min_iterator, *max_iterator);
                 ++min_iterator;
                 ++max_iterator;
             }
@@ -1027,7 +1027,7 @@ public:
     list(const ilist<Type>& other) :
         list()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -1039,7 +1039,7 @@ public:
     list(ilist<Type>&& other) noexcept :
         list()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -1106,7 +1106,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1124,7 +1124,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

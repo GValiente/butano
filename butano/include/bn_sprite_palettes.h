@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PALETTES_H
-#define BTN_SPRITE_PALETTES_H
+#ifndef BN_SPRITE_PALETTES_H
+#define BN_SPRITE_PALETTES_H
 
 /**
  * @file
- * btn::sprite_palettes header file.
+ * bn::sprite_palettes header file.
  *
  * @ingroup sprite
  * @ingroup palette
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_config_log.h"
-#include "btn_config_doxygen.h"
+#include "bn_fixed_fwd.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
-namespace btn
+namespace bn
 {
     class color;
 }
@@ -29,7 +29,7 @@ namespace btn
  * @ingroup sprite
  * @ingroup palette
  */
-namespace btn::sprite_palettes
+namespace bn::sprite_palettes
 {
     /**
      * @brief Returns the number of used sprite colors.
@@ -123,7 +123,7 @@ namespace btn::sprite_palettes
      */
     void set_fade(color color, fixed intensity);
 
-    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**
          * @brief Logs the current status of the sprite color palettes manager.
          */

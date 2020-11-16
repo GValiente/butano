@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_INSIDE_WINDOW_H
-#define BTN_INSIDE_WINDOW_H
+#ifndef BN_INSIDE_WINDOW_H
+#define BN_INSIDE_WINDOW_H
 
 /**
  * @file
- * btn::inside_window header file.
+ * bn::inside_window header file.
  *
  * @ingroup inside_window
  */
 
-#include "btn_window.h"
+#include "bn_window.h"
 
-namespace btn
+namespace bn
 {
 
 /**

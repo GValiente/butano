@@ -5,13 +5,13 @@
 
 #include "bf_game_wizard_boss.h"
 
-#include "btn_colors.h"
-#include "btn_sound_items.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_wizard.h"
-#include "btn_sprite_items_hero_death.h"
-#include "btn_sprite_items_wizard_aura.h"
-#include "btn_sprite_items_mini_explosion_2.h"
+#include "bn_colors.h"
+#include "bn_sound_items.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_wizard.h"
+#include "bn_sprite_items_hero_death.h"
+#include "bn_sprite_items_wizard_aura.h"
+#include "bn_sprite_items_mini_explosion_2.h"
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
@@ -29,71 +29,71 @@ namespace
 
     constexpr const int limit_x = 38;
     constexpr const int limit_y = 46;
-    constexpr const btn::fixed rotate_speed = 0.5;
+    constexpr const bn::fixed rotate_speed = 0.5;
 
-    void _add_wizard_sprite(const btn::camera_ptr& camera, btn::ivector<btn::sprite_ptr>& sprites)
+    void _add_wizard_sprite(const bn::camera_ptr& camera, bn::ivector<bn::sprite_ptr>& sprites)
     {
-        btn::sprite_builder builder(btn::sprite_items::wizard);
+        bn::sprite_builder builder(bn::sprite_items::wizard);
         builder.set_z_order(constants::enemies_z_order);
         builder.set_camera(camera);
         sprites.push_back(builder.release_build());
     }
 
-    [[nodiscard]] btn::sprite_animate_action<5> _create_mini_explosion(btn::fixed x, btn::fixed y,
-                                                                       const btn::camera_ptr& camera)
+    [[nodiscard]] bn::sprite_animate_action<5> _create_mini_explosion(bn::fixed x, bn::fixed y,
+                                                                       const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::mini_explosion_2);
+        bn::sprite_builder builder(bn::sprite_items::mini_explosion_2);
         builder.set_z_order(constants::enemy_explosions_z_order);
         builder.set_x(x);
         builder.set_y(y);
         builder.set_camera(camera);
-        return btn::create_sprite_animate_action_once(
-                    builder.release_build(), 6, btn::sprite_items::mini_explosion_2.tiles_item(), 0, 1, 2, 3, 4);
+        return bn::create_sprite_animate_action_once(
+                    builder.release_build(), 6, bn::sprite_items::mini_explosion_2.tiles_item(), 0, 1, 2, 3, 4);
     }
 }
 
-wizard_boss::wizard_boss(const btn::fixed_point& hero_position, const btn::sprite_palette_ptr& damage_palette,
-                         const btn::camera_ptr& camera) :
+wizard_boss::wizard_boss(const bn::fixed_point& hero_position, const bn::sprite_palette_ptr& damage_palette,
+                         const bn::camera_ptr& camera) :
     boss(total_life, 600, _wizard_rects, damage_palette),
     _wizard_position(0, -160),
-    _palette(btn::sprite_items::wizard.palette_item().create_palette())
+    _palette(bn::sprite_items::wizard.palette_item().create_palette())
 {
     _add_wizard_sprite(camera, _sprites);
 
-    btn::sprite_builder builder(btn::sprite_items::wizard_aura);
+    bn::sprite_builder builder(bn::sprite_items::wizard_aura);
     builder.set_blending_enabled(true);
     builder.set_z_order(constants::enemy_explosions_z_order);
     builder.set_camera(camera);
     _aura_sprites.push_back(builder.build());
     _aura_sprite_animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(
-                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 0, 4, 8, 12));
+                bn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, bn::sprite_items::wizard_aura.tiles_item(), 0, 0, 4, 8, 12));
 
     _aura_sprites.push_back(builder.build());
     _aura_sprite_animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(
-                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 1, 5, 9, 13));
+                bn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, bn::sprite_items::wizard_aura.tiles_item(), 0, 1, 5, 9, 13));
 
     _aura_sprites.push_back(builder.build());
     _aura_sprite_animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(
-                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 2, 6, 10, 14));
+                bn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, bn::sprite_items::wizard_aura.tiles_item(), 0, 2, 6, 10, 14));
 
     _aura_sprites.push_back(builder.build());
     _aura_sprite_animate_actions.push_back(
-                btn::create_sprite_animate_action_forever(
-                    _aura_sprites.back(), 4, btn::sprite_items::wizard_aura.tiles_item(), 0, 3, 7, 11, 15));
+                bn::create_sprite_animate_action_forever(
+                    _aura_sprites.back(), 4, bn::sprite_items::wizard_aura.tiles_item(), 0, 3, 7, 11, 15));
 
-    _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(46, 62));
+    _wizard_rects.emplace_back(bn::fixed_point(), bn::fixed_size(46, 62));
     _update_sprites(hero_position);
     _update_rects();
 }
 
-void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const hero_bomb& hero_bomb,
-                                const btn::camera_ptr& camera, enemy_bullets& enemy_bullets)
+void wizard_boss::_update_alive(const bn::fixed_point& hero_position, const hero_bomb& hero_bomb,
+                                const bn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
-    btn::fixed x = _wizard_position.x();
-    btn::fixed y = _wizard_position.y();
+    bn::fixed x = _wizard_position.x();
+    bn::fixed y = _wizard_position.y();
 
     switch(_state_index)
     {
@@ -124,8 +124,8 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                 _delta_position.set_x(-0.75);
                 _delta_position.set_y(-(_wizard_position.y() + 16) / _movement_counter);
                 _animate_actions.clear();
-                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 8,
-                                           btn::sprite_items::wizard.tiles_item(), 8, 9, 10, 11, 12, 13));
+                _animate_actions.push_back(bn::create_sprite_animate_action_forever(_sprites[0], 8,
+                                           bn::sprite_items::wizard.tiles_item(), 8, 9, 10, 11, 12, 13));
                 break;
 
             case 1:
@@ -133,7 +133,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                 _movement_counter = 120;
 
                 _animate_actions.clear();
-                _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 14);
+                _sprites[0].set_tiles(bn::sprite_items::wizard.tiles_item(), 14);
                 break;
 
             case 2:
@@ -142,12 +142,12 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
                 _target_x = limit_x;
                 _animate_actions.clear();
-                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
-                                           btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
+                _animate_actions.push_back(bn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                           bn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
                 break;
 
             default:
-                BTN_ERROR("Invalid movement index: ", _movement_index);
+                BN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
         }
@@ -202,7 +202,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         case 2:
             if(y > -limit_y)
             {
-                _wizard_position.set_y(btn::max(y - constants::background_speed, btn::fixed(-limit_y)));
+                _wizard_position.set_y(bn::max(y - constants::background_speed, bn::fixed(-limit_y)));
             }
             else
             {
@@ -211,7 +211,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             break;
 
         default:
-            BTN_ERROR("Invalid movement index: ", _movement_index);
+            BN_ERROR("Invalid movement index: ", _movement_index);
             break;
         }
         break;
@@ -257,10 +257,10 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
                     _target_x = limit_x;
                 }
 
-                _delta_position = (btn::fixed_point(*_target_x, limit_y) - _wizard_position) / 240;
+                _delta_position = (bn::fixed_point(*_target_x, limit_y) - _wizard_position) / 240;
                 _animate_actions.clear();
-                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[0], 3,
-                                           btn::sprite_items::wizard.tiles_item(), 18, 18, 18, 19, 19, 19));
+                _animate_actions.push_back(bn::create_sprite_animate_action_once(_sprites[0], 3,
+                                           bn::sprite_items::wizard.tiles_item(), 18, 18, 18, 19, 19, 19));
                 break;
 
             case 1:
@@ -269,26 +269,26 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
 
                 _add_wizard_sprite(camera, _sprites);
                 _animate_actions.clear();
-                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[0], 4,
-                                           btn::sprite_items::wizard.tiles_item(), 20, 20, 22, 22, 24, 24));
-                _animate_actions.push_back(btn::create_sprite_animate_action_once(_sprites[1], 4,
-                                           btn::sprite_items::wizard.tiles_item(), 21, 21, 23, 23, 25, 25));
+                _animate_actions.push_back(bn::create_sprite_animate_action_once(_sprites[0], 4,
+                                           bn::sprite_items::wizard.tiles_item(), 20, 20, 22, 22, 24, 24));
+                _animate_actions.push_back(bn::create_sprite_animate_action_once(_sprites[1], 4,
+                                           bn::sprite_items::wizard.tiles_item(), 21, 21, 23, 23, 25, 25));
                 break;
 
             case 2:
                 _movement_index = 0;
-                _movement_counter = (btn::abs((*_target_x - _wizard_position.x())) / btn::fixed(0.75)).right_shift_integer();
-                _movement_counter = btn::max(_movement_counter, 1);
+                _movement_counter = (bn::abs((*_target_x - _wizard_position.x())) / bn::fixed(0.75)).right_shift_integer();
+                _movement_counter = bn::max(_movement_counter, 1);
 
-                _delta_position = (btn::fixed_point(*_target_x, -limit_y) - _wizard_position) / _movement_counter;
+                _delta_position = (bn::fixed_point(*_target_x, -limit_y) - _wizard_position) / _movement_counter;
                 _sprites.shrink(1);
                 _animate_actions.clear();
-                _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
-                                           btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
+                _animate_actions.push_back(bn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                           bn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
                 break;
 
             default:
-                BTN_ERROR("Invalid movement index: ", _movement_index);
+                BN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
         }
@@ -306,7 +306,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             break;
 
         default:
-            BTN_ERROR("Invalid movement index: ", _movement_index);
+            BN_ERROR("Invalid movement index: ", _movement_index);
             break;
         }
         break;
@@ -321,7 +321,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
             _movement_counter = 1;
             _bullets_index = 0;
             _bullets_counter = 1;
-            _delta_position = btn::fixed_point(rotate_speed, -rotate_speed);
+            _delta_position = bn::fixed_point(rotate_speed, -rotate_speed);
             _vibrate = false;
         }
         else if(_movement_counter % 4 == 0)
@@ -363,7 +363,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
         break;
 
     default:
-        BTN_ERROR("Invalid state index: ", _state_index);
+        BN_ERROR("Invalid state index: ", _state_index);
         break;
     }
 
@@ -377,7 +377,7 @@ void wizard_boss::_update_alive(const btn::fixed_point& hero_position, const her
     }
 }
 
-bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, const btn::camera_ptr& camera, background&)
+bool wizard_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&)
 {
     bool done = false;
 
@@ -391,15 +391,15 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, const btn:
         _animate_actions.clear();
         _aura_sprite_animate_actions.clear();
         _add_wizard_sprite(camera, _sprites);
-        _sprites[0].set_tiles(btn::sprite_items::wizard.tiles_item(), 26);
-        _sprites[1].set_tiles(btn::sprite_items::wizard.tiles_item(), 27);
+        _sprites[0].set_tiles(bn::sprite_items::wizard.tiles_item(), 26);
+        _sprites[1].set_tiles(bn::sprite_items::wizard.tiles_item(), 27);
 
-        for(btn::sprite_ptr& sprite : _sprites)
+        for(bn::sprite_ptr& sprite : _sprites)
         {
             sprite.set_z_order(constants::intro_sprites_z_order);
         }
 
-        _palette.set_fade(btn::colors::red, 0);
+        _palette.set_fade(bn::colors::red, 0);
         _palette_action.emplace(_palette, 15, 0.6);
     }
 
@@ -428,10 +428,10 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, const btn:
                 ++_state_index;
                 _movement_index = 16;
 
-                btn::fixed x = int(_random.get() % 48) - 24 + _wizard_position.x();
-                btn::fixed y = int(_random.get() % 48) - 24 + _wizard_position.y();
+                bn::fixed x = int(_random.get() % 48) - 24 + _wizard_position.x();
+                bn::fixed y = int(_random.get() % 48) - 24 + _wizard_position.y();
                 _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
-                btn::sound_items::explosion_1.play();
+                bn::sound_items::explosion_1.play();
             }
         }
         else if(_state_index == 15)
@@ -440,9 +440,9 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, const btn:
             {
                 ++_state_index;
 
-                _explosion.emplace(btn::sprite_items::hero_death, btn::fixed_point(), 6,
+                _explosion.emplace(bn::sprite_items::hero_death, bn::fixed_point(), 6,
                                    constants::enemy_explosions_z_order, true, camera);
-                btn::sound_items::explosion_2.play();
+                bn::sound_items::explosion_2.play();
             }
         }
         else if(_state_index == 16)
@@ -470,10 +470,10 @@ bool wizard_boss::_update_dead(const btn::fixed_point& hero_position, const btn:
     return done;
 }
 
-void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_palette, const btn::camera_ptr& camera)
+void wizard_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_palette, const bn::camera_ptr& camera)
 {
-    btn::fixed x = _wizard_position.x();
-    btn::fixed y = _wizard_position.y();
+    bn::fixed x = _wizard_position.x();
+    bn::fixed y = _wizard_position.y();
     int current_life = life();
 
     switch(_state_index)
@@ -493,14 +493,14 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
             _target_x.reset();
 
             _animate_actions.clear();
-            _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 6,
-                                       btn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
+            _animate_actions.push_back(bn::create_sprite_animate_action_forever(_sprites[0], 6,
+                                       bn::sprite_items::wizard.tiles_item(), 1, 4, 5, 1, 6, 7));
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24, camera));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
-            _palette.set_fade(btn::colors::red, 0);
+            _palette.set_fade(bn::colors::red, 0);
             _palette_action.emplace(_palette, 25, 0.4);
-            btn::sound_items::explosion_3.play();
+            bn::sound_items::explosion_3.play();
         }
         break;
 
@@ -515,24 +515,24 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
             _movement_counter = 128;
             _bullets_index = 0;
             _bullets_counter = 80;
-            _delta_position = (btn::fixed_point(0, -32) - _wizard_position) / _movement_counter;
+            _delta_position = (bn::fixed_point(0, -32) - _wizard_position) / _movement_counter;
             _target_x = constants::play_width;
             _wizard_rects.clear();
-            _wizard_rects.emplace_back(btn::fixed_point(), btn::fixed_size(50, 38));
+            _wizard_rects.emplace_back(bn::fixed_point(), bn::fixed_size(50, 38));
 
             _sprites.shrink(1);
             _animate_actions.clear();
-            _animate_actions.push_back(btn::create_sprite_animate_action_forever(_sprites[0], 2,
-                                       btn::sprite_items::wizard.tiles_item(), 15, 16, 17, 15, 16, 17));
+            _animate_actions.push_back(bn::create_sprite_animate_action_forever(_sprites[0], 2,
+                                       bn::sprite_items::wizard.tiles_item(), 15, 16, 17, 15, 16, 17));
 
             _mini_explosions.push_back(_create_mini_explosion(x, y, camera));
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 24, camera));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
-            _palette.set_fade(btn::colors::red, 0);
+            _palette.set_fade(bn::colors::red, 0);
             _palette_action.emplace(_palette, 20, 0.5);
-            btn::sound_items::explosion_1.play();
-            btn::sound_items::explosion_3.play();
+            bn::sound_items::explosion_1.play();
+            bn::sound_items::explosion_3.play();
         }
         break;
 
@@ -541,11 +541,11 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
         break;
 
     default:
-        BTN_ERROR("Invalid state index: ", _state_index);
+        BN_ERROR("Invalid state index: ", _state_index);
         break;
     }
 
-    for(btn::sprite_ptr& sprite : _sprites)
+    for(bn::sprite_ptr& sprite : _sprites)
     {
         sprite.set_palette(damage_palette);
     }
@@ -553,20 +553,20 @@ void wizard_boss::_show_damage_palette(const btn::sprite_palette_ptr& damage_pal
 
 void wizard_boss::_hide_damage_palette()
 {
-    for(btn::sprite_ptr& sprite : _sprites)
+    for(bn::sprite_ptr& sprite : _sprites)
     {
         sprite.set_palette(_palette);
     }
 }
 
-bool wizard_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_position, bool hero_is_looking_down) const
+bool wizard_boss::_hero_should_look_down_impl(const bn::fixed_point& hero_position, bool hero_is_looking_down) const
 {
     if(_sprites.empty())
     {
         return false;
     }
 
-    btn::fixed y = _wizard_position.y();
+    bn::fixed y = _wizard_position.y();
 
     if(hero_position.y() < y - 48)
     {
@@ -581,69 +581,69 @@ bool wizard_boss::_hero_should_look_down_impl(const btn::fixed_point& hero_posit
     return hero_is_looking_down;
 }
 
-void wizard_boss::_shoot_bullet(enemy_bullet_type bullet_type, const btn::fixed_point& delta_position,
-                                const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+void wizard_boss::_shoot_bullet(enemy_bullet_type bullet_type, const bn::fixed_point& delta_position,
+                                const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
                                 enemy_bullets& enemy_bullets) const
 {
     enemy_bullets.add_bullet(hero_position, _wizard_position, enemy_bullet_event(bullet_type, delta_position, 1),
                              camera);
 }
 
-void wizard_boss::_shoot_random_bullet(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+void wizard_boss::_shoot_random_bullet(const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
                                        enemy_bullets& enemy_bullets)
 {
-    if(btn::abs(_wizard_position.x() - hero_position.x()) < 48 &&
-            btn::abs(_wizard_position.y() - hero_position.y()) < 48)
+    if(bn::abs(_wizard_position.x() - hero_position.x()) < 48 &&
+            bn::abs(_wizard_position.y() - hero_position.y()) < 48)
     {
         return;
     }
 
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
-    btn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
-    btn::fixed bullet_x = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
-    btn::fixed bullet_y = btn::fixed::from_data(int(_random.get() % btn::fixed(2).data())) - 1;
+    bn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
+    bn::fixed bullet_x = bn::fixed::from_data(int(_random.get() % bn::fixed(2).data())) - 1;
+    bn::fixed bullet_y = bn::fixed::from_data(int(_random.get() % bn::fixed(2).data())) - 1;
 
     if(bullet_x == 0 && bullet_y == 0)
     {
         bullet_y = 1;
     }
 
-    btn::fixed_point delta_position = direction_vector(bullet_x, bullet_y, bullet_speed);
+    bn::fixed_point delta_position = direction_vector(bullet_x, bullet_y, bullet_speed);
     _shoot_bullet(bullet_type, delta_position, hero_position, camera, enemy_bullets);
 }
 
-void wizard_boss::_update_sprites(const btn::fixed_point& hero_position)
+void wizard_boss::_update_sprites(const bn::fixed_point& hero_position)
 {
-    btn::fixed target_x = _target_x.value_or(hero_position.x());
+    bn::fixed target_x = _target_x.value_or(hero_position.x());
     bool flip = target_x < _wizard_position.x();
-    btn::fixed y_inc = _vibrate ? 1 : 0;
+    bn::fixed y_inc = _vibrate ? 1 : 0;
 
     if(_sprites.size() == 2)
     {
         if(life())
         {
-            btn::fixed x1_inc = flip ? 32 : -32;
-            btn::fixed x2_inc = flip ? -32 : 32;
-            _sprites[0].set_position(_wizard_position + btn::fixed_point(x1_inc, y_inc));
-            _sprites[1].set_position(_wizard_position + btn::fixed_point(x2_inc, y_inc));
+            bn::fixed x1_inc = flip ? 32 : -32;
+            bn::fixed x2_inc = flip ? -32 : 32;
+            _sprites[0].set_position(_wizard_position + bn::fixed_point(x1_inc, y_inc));
+            _sprites[1].set_position(_wizard_position + bn::fixed_point(x2_inc, y_inc));
         }
         else
         {
-            _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc - 32));
-            _sprites[1].set_position(_wizard_position + btn::fixed_point(0, y_inc + 32));
+            _sprites[0].set_position(_wizard_position + bn::fixed_point(0, y_inc - 32));
+            _sprites[1].set_position(_wizard_position + bn::fixed_point(0, y_inc + 32));
         }
     }
     else
     {
-        _sprites[0].set_position(_wizard_position + btn::fixed_point(0, y_inc));
+        _sprites[0].set_position(_wizard_position + bn::fixed_point(0, y_inc));
     }
 
-    for(btn::sprite_ptr& sprite : _sprites)
+    for(bn::sprite_ptr& sprite : _sprites)
     {
         sprite.set_horizontal_flip(flip);
     }
 
-    for(btn::sprite_animate_action<6>& animate_action : _animate_actions)
+    for(bn::sprite_animate_action<6>& animate_action : _animate_actions)
     {
         if(! animate_action.done())
         {
@@ -655,15 +655,15 @@ void wizard_boss::_update_sprites(const btn::fixed_point& hero_position)
     {
         bool aura_visible = ! _aura_sprites[0].visible() && ! _death_flash();
         _aura_sprites[0].set_visible(aura_visible);
-        _aura_sprites[0].set_position(_wizard_position + btn::fixed_point(-32, -32 - 4));
+        _aura_sprites[0].set_position(_wizard_position + bn::fixed_point(-32, -32 - 4));
         _aura_sprites[1].set_visible(aura_visible);
-        _aura_sprites[1].set_position(_wizard_position + btn::fixed_point(32, -32 - 4));
+        _aura_sprites[1].set_position(_wizard_position + bn::fixed_point(32, -32 - 4));
         _aura_sprites[2].set_visible(aura_visible);
-        _aura_sprites[2].set_position(_wizard_position + btn::fixed_point(-32, 32 - 4));
+        _aura_sprites[2].set_position(_wizard_position + bn::fixed_point(-32, 32 - 4));
         _aura_sprites[3].set_visible(aura_visible);
-        _aura_sprites[3].set_position(_wizard_position + btn::fixed_point(32, 32 - 4));
+        _aura_sprites[3].set_position(_wizard_position + bn::fixed_point(32, 32 - 4));
 
-        for(btn::sprite_animate_action<5>& aura_sprite_animate_action : _aura_sprite_animate_actions)
+        for(bn::sprite_animate_action<5>& aura_sprite_animate_action : _aura_sprite_animate_actions)
         {
             aura_sprite_animate_action.update();
         }
@@ -680,7 +680,7 @@ void wizard_boss::_update_rects()
     _wizard_rects[0].set_position(_wizard_position);
 }
 
-void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const btn::camera_ptr& camera,
+void wizard_boss::_update_bullets(const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
                                   enemy_bullets& enemy_bullets)
 {
     --_bullets_counter;
@@ -738,7 +738,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                         break;
 
                     default:
-                        BTN_ERROR("Invalid bullets index: ", _bullets_index);
+                        BN_ERROR("Invalid bullets index: ", _bullets_index);
                         break;
                     }
                 }
@@ -771,7 +771,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 break;
 
             default:
-                BTN_ERROR("Invalid movement index: ", _movement_index);
+                BN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
             break;
@@ -817,7 +817,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
                 break;
 
             default:
-                BTN_ERROR("Invalid movement index: ", _movement_index);
+                BN_ERROR("Invalid movement index: ", _movement_index);
                 break;
             }
             break;
@@ -831,7 +831,7 @@ void wizard_boss::_update_bullets(const btn::fixed_point& hero_position, const b
             break;
 
         default:
-            BTN_ERROR("Invalid state index: ", _state_index);
+            BN_ERROR("Invalid state index: ", _state_index);
             break;
         }
     }
@@ -841,7 +841,7 @@ void wizard_boss::_update_explosions()
 {
     for(auto it = _mini_explosions.begin(), end = _mini_explosions.end(); it != end; )
     {
-        btn::sprite_animate_action<5>& mini_explosions = *it;
+        bn::sprite_animate_action<5>& mini_explosions = *it;
         mini_explosions.update();
 
         if(mini_explosions.done())

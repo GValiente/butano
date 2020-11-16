@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sstream.h"
+#include "bn_sstream.h"
 
-#include "btn_array.h"
-#include "btn_string.h"
-#include "btn_string_view.h"
-#include "../hw/include/btn_hw_text.h"
+#include "bn_array.h"
+#include "bn_string.h"
+#include "bn_string_view.h"
+#include "../hw/include/bn_hw_text.h"
 
-namespace btn
+namespace bn
 {
 
 ostringstream::ostringstream(istring_base& string) :
@@ -20,7 +20,7 @@ ostringstream::ostringstream(istring_base& string) :
 
 istring* ostringstream::rdbuf(istring_base* sb)
 {
-    BTN_ASSERT(sb, "Sb is null");
+    BN_ASSERT(sb, "Sb is null");
 
     _string = static_cast<istring*>(sb);
     return _string;
@@ -33,7 +33,7 @@ void ostringstream::set_rdbuf(istring_base& sb)
 
 int ostringstream::precision(int new_precision)
 {
-    BTN_ASSERT(new_precision >= 0, "Invalid precision: ", new_precision);
+    BN_ASSERT(new_precision >= 0, "Invalid precision: ", new_precision);
 
     _precision = new_precision;
     return new_precision;
@@ -41,7 +41,7 @@ int ostringstream::precision(int new_precision)
 
 void ostringstream::set_precision(int precision)
 {
-    BTN_ASSERT(precision >= 0, "Invalid precision: ", precision);
+    BN_ASSERT(precision >= 0, "Invalid precision: ", precision);
 
     _precision = precision;
 }
@@ -164,8 +164,8 @@ void ostringstream::append(const void* ptr)
 
 void ostringstream::swap(ostringstream& other)
 {
-    btn::swap(_string, other._string);
-    btn::swap(_precision, other._precision);
+    bn::swap(_string, other._string);
+    bn::swap(_precision, other._precision);
 }
 
 void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digits)

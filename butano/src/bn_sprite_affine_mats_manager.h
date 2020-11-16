@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITES_AFFINE_MATS_MANAGER_H
-#define BTN_SPRITES_AFFINE_MATS_MANAGER_H
+#ifndef BN_SPRITES_AFFINE_MATS_MANAGER_H
+#define BN_SPRITES_AFFINE_MATS_MANAGER_H
 
-#include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
-#include "btn_intrusive_list.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
+#include "bn_intrusive_list.h"
 
-namespace btn
+namespace bn
 {
     class sprite_affine_mat_attributes;
 
     using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
 }
 
-namespace btn::sprite_affine_mats_manager
+namespace bn::sprite_affine_mats_manager
 {
     class commit_data
     {

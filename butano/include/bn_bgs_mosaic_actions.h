@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BGS_MOSAIC_ACTIONS_H
-#define BTN_BGS_MOSAIC_ACTIONS_H
+#ifndef BN_BGS_MOSAIC_ACTIONS_H
+#define BN_BGS_MOSAIC_ACTIONS_H
 
 /**
  * @file
- * btn::bgs_mosaic actions header file.
+ * bn::bgs_mosaic actions header file.
  *
  * @ingroup bg
  * @ingroup mosaic
  * @ingroup action
  */
 
-#include "btn_fixed.h"
-#include "btn_bgs_mosaic.h"
-#include "btn_template_actions.h"
+#include "bn_fixed.h"
+#include "bn_bgs_mosaic.h"
+#include "bn_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // horizontal_stretch
@@ -77,7 +77,7 @@ public:
     bgs_mosaic_horizontal_stretch_to_action(int duration_updates, fixed final_horizontal_stretch) :
         to_template_action(duration_updates, final_horizontal_stretch)
     {
-        BTN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
+        BN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
                    "Invalid final horizontal stretch: ", final_horizontal_stretch);
     }
 
@@ -116,7 +116,7 @@ public:
     bgs_mosaic_horizontal_stretch_loop_action(int duration_updates, fixed final_horizontal_stretch) :
         loop_template_action(duration_updates, final_horizontal_stretch)
     {
-        BTN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
+        BN_ASSERT(final_horizontal_stretch >= 0 && final_horizontal_stretch <= 1,
                    "Invalid final horizontal stretch: ", final_horizontal_stretch);
     }
 
@@ -154,7 +154,7 @@ public:
     bgs_mosaic_horizontal_stretch_toggle_action(int duration_updates, fixed new_horizontal_stretch) :
         toggle_template_action(duration_updates, new_horizontal_stretch)
     {
-        BTN_ASSERT(new_horizontal_stretch >= 0 && new_horizontal_stretch <= 1,
+        BN_ASSERT(new_horizontal_stretch >= 0 && new_horizontal_stretch <= 1,
                    "Invalid new horizontal stretch: ", new_horizontal_stretch);
     }
 
@@ -222,7 +222,7 @@ public:
     bgs_mosaic_vertical_stretch_to_action(int duration_updates, fixed final_vertical_stretch) :
         to_template_action(duration_updates, final_vertical_stretch)
     {
-        BTN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
+        BN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
                    "Invalid final vertical stretch: ", final_vertical_stretch);
     }
 
@@ -261,7 +261,7 @@ public:
     bgs_mosaic_vertical_stretch_loop_action(int duration_updates, fixed final_vertical_stretch) :
         loop_template_action(duration_updates, final_vertical_stretch)
     {
-        BTN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
+        BN_ASSERT(final_vertical_stretch >= 0 && final_vertical_stretch <= 1,
                    "Invalid final vertical stretch: ", final_vertical_stretch);
     }
 
@@ -299,7 +299,7 @@ public:
     bgs_mosaic_vertical_stretch_toggle_action(int duration_updates, fixed new_vertical_stretch) :
         toggle_template_action(duration_updates, new_vertical_stretch)
     {
-        BTN_ASSERT(new_vertical_stretch >= 0 && new_vertical_stretch <= 1,
+        BN_ASSERT(new_vertical_stretch >= 0 && new_vertical_stretch <= 1,
                    "Invalid new vertical stretch: ", new_vertical_stretch);
     }
 
@@ -367,7 +367,7 @@ public:
     bgs_mosaic_stretch_to_action(int duration_updates, fixed final_stretch) :
         to_template_action(duration_updates, final_stretch)
     {
-        BTN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
+        BN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
     }
 
     /**
@@ -404,7 +404,7 @@ public:
     bgs_mosaic_stretch_loop_action(int duration_updates, fixed final_stretch) :
         loop_template_action(duration_updates, final_stretch)
     {
-        BTN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
+        BN_ASSERT(final_stretch >= 0 && final_stretch <= 1, "Invalid final stretch: ", final_stretch);
     }
 
     /**
@@ -439,7 +439,7 @@ public:
     bgs_mosaic_stretch_toggle_action(int duration_updates, fixed new_stretch) :
         toggle_template_action(duration_updates, new_stretch)
     {
-        BTN_ASSERT(new_stretch >= 0 && new_stretch <= 1, "Invalid new stretch: ", new_stretch);
+        BN_ASSERT(new_stretch >= 0 && new_stretch <= 1, "Invalid new stretch: ", new_stretch);
     }
 
     /**

@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_ACTIONS_H
-#define BTN_BLENDING_ACTIONS_H
+#ifndef BN_BLENDING_ACTIONS_H
+#define BN_BLENDING_ACTIONS_H
 
 /**
  * @file
- * btn::blending actions header file.
+ * bn::blending actions header file.
  *
  * @ingroup blending
  * @ingroup action
  */
 
-#include "btn_fixed.h"
-#include "btn_blending.h"
-#include "btn_template_actions.h"
+#include "bn_fixed.h"
+#include "bn_blending.h"
+#include "bn_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // transparency_alpha
@@ -81,7 +81,7 @@ public:
     blending_transparency_alpha_to_action(int duration_updates, fixed final_transparency_alpha) :
         to_template_action(duration_updates, final_transparency_alpha)
     {
-        BTN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
+        BN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
                    "Invalid final transparency alpha: ", final_transparency_alpha);
     }
 
@@ -121,7 +121,7 @@ public:
     blending_transparency_alpha_loop_action(int duration_updates, fixed final_transparency_alpha) :
         loop_template_action(duration_updates, final_transparency_alpha)
     {
-        BTN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
+        BN_ASSERT(final_transparency_alpha >= 0 && final_transparency_alpha <= 1,
                    "Invalid final transparency alpha: ", final_transparency_alpha);
     }
 
@@ -161,7 +161,7 @@ public:
     blending_transparency_alpha_toggle_action(int duration_updates, fixed new_transparency_alpha) :
         toggle_template_action(duration_updates, new_transparency_alpha)
     {
-        BTN_ASSERT(new_transparency_alpha >= 0 && new_transparency_alpha <= 1,
+        BN_ASSERT(new_transparency_alpha >= 0 && new_transparency_alpha <= 1,
                    "Invalid new transparency alpha: ", new_transparency_alpha);
     }
 
@@ -233,7 +233,7 @@ public:
     blending_intensity_alpha_to_action(int duration_updates, fixed final_intensity_alpha) :
         to_template_action(duration_updates, final_intensity_alpha)
     {
-        BTN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
+        BN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
                    "Invalid final intensity alpha: ", final_intensity_alpha);
     }
 
@@ -273,7 +273,7 @@ public:
     blending_intensity_alpha_loop_action(int duration_updates, fixed final_intensity_alpha) :
         loop_template_action(duration_updates, final_intensity_alpha)
     {
-        BTN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
+        BN_ASSERT(final_intensity_alpha >= 0 && final_intensity_alpha <= 1,
                    "Invalid final intensity alpha: ", final_intensity_alpha);
     }
 
@@ -313,7 +313,7 @@ public:
     blending_intensity_alpha_toggle_action(int duration_updates, fixed new_intensity_alpha) :
         toggle_template_action(duration_updates, new_intensity_alpha)
     {
-        BTN_ASSERT(new_intensity_alpha >= 0 && new_intensity_alpha <= 1,
+        BN_ASSERT(new_intensity_alpha >= 0 && new_intensity_alpha <= 1,
                    "Invalid new intensity alpha: ", new_intensity_alpha);
     }
 
@@ -384,7 +384,7 @@ public:
     blending_fade_alpha_to_action(int duration_updates, fixed final_fade_alpha) :
         to_template_action(duration_updates, final_fade_alpha)
     {
-        BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
+        BN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
 
     /**
@@ -423,7 +423,7 @@ public:
     blending_fade_alpha_loop_action(int duration_updates, fixed final_fade_alpha) :
         loop_template_action(duration_updates, final_fade_alpha)
     {
-        BTN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
+        BN_ASSERT(final_fade_alpha >= 0 && final_fade_alpha <= 1, "Invalid final fade alpha: ", final_fade_alpha);
     }
 
     /**
@@ -461,7 +461,7 @@ public:
     blending_fade_alpha_toggle_action(int duration_updates, fixed new_fade_alpha) :
         toggle_template_action(duration_updates, new_fade_alpha)
     {
-        BTN_ASSERT(new_fade_alpha >= 0 && new_fade_alpha <= 1, "Invalid new fade alpha: ", new_fade_alpha);
+        BN_ASSERT(new_fade_alpha >= 0 && new_fade_alpha <= 1, "Invalid new fade alpha: ", new_fade_alpha);
     }
 
     /**

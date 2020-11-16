@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_INTRUSIVE_FORWARD_LIST_H
-#define BTN_INTRUSIVE_FORWARD_LIST_H
+#ifndef BN_INTRUSIVE_FORWARD_LIST_H
+#define BN_INTRUSIVE_FORWARD_LIST_H
 
 /**
  * @file
- * btn::intrusive_forward_list implementation header file.
+ * bn::intrusive_forward_list implementation header file.
  *
  * @ingroup intrusive_forward_list
  */
 
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_forward_list_fwd.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_forward_list_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -78,7 +78,7 @@ public:
          */
         iterator& operator++()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->next;
             return *this;
@@ -89,7 +89,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const_reference>(*_node);
         }
@@ -99,7 +99,7 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<reference>(*_node);
         }
@@ -109,7 +109,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const_pointer>(_node);
         }
@@ -119,7 +119,7 @@ public:
          */
         pointer operator->()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<pointer>(_node);
         }
@@ -174,7 +174,7 @@ public:
          */
         const_iterator& operator++()
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             _node = _node->next;
             return *this;
@@ -185,7 +185,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const_reference>(*_node);
         }
@@ -195,7 +195,7 @@ public:
          */
         const_pointer operator->() const
         {
-            BTN_ASSERT(_node, "Node is null");
+            BN_ASSERT(_node, "Node is null");
 
             return static_cast<const_pointer>(_node);
         }
@@ -354,7 +354,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<const_reference>(*_first_node.next);
     }
@@ -364,7 +364,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         return static_cast<reference>(_first_node.next)->value;
     }
@@ -383,7 +383,7 @@ public:
      */
     void pop_front()
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         _erase_after(before_begin());
     }
@@ -420,7 +420,7 @@ public:
      */
     iterator erase_after(const_iterator position)
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         iterator non_const_position = _mutable_iterator(position);
         _erase_after(non_const_position);
@@ -435,7 +435,7 @@ public:
      */
     iterator erase_after(reference value)
     {
-        BTN_ASSERT(! empty(), "List is empty");
+        BN_ASSERT(! empty(), "List is empty");
 
         iterator position(&value);
         _erase_after(position);
@@ -461,7 +461,7 @@ public:
 
         while(erase_it != erase_last)
         {
-            BTN_ASSERT(! empty(), "List is empty");
+            BN_ASSERT(! empty(), "List is empty");
 
             _erase_after(erase_it);
             ++erase_it;
@@ -606,7 +606,7 @@ public:
 
             while(min_iterator != min_end)
             {
-                btn::swap(*min_iterator, *max_iterator);
+                bn::swap(*min_iterator, *max_iterator);
                 min_previous_iterator = min_iterator;
                 ++min_iterator;
                 max_previous_iterator = max_iterator;

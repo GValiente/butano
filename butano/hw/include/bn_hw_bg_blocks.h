@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_BG_BLOCKS_H
-#define BTN_HW_BG_BLOCKS_H
+#ifndef BN_HW_BG_BLOCKS_H
+#define BN_HW_BG_BLOCKS_H
 
-#include "btn_memory.h"
-#include "btn_hw_tonc.h"
-#include "btn_hw_bg_blocks_constants.h"
+#include "bn_memory.h"
+#include "bn_hw_tonc.h"
+#include "bn_hw_bg_blocks_constants.h"
 
-namespace btn::hw::bg_blocks
+namespace bn::hw::bg_blocks
 {
     [[nodiscard]] constexpr int max_blocks()
     {
@@ -51,13 +51,13 @@ namespace btn::hw::bg_blocks
         memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
     }
 
-    BTN_CODE_IWRAM void _commit_map_tiles_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
+    BN_CODE_IWRAM void _commit_map_tiles_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
                                                  uint16_t* destination_vram_ptr);
 
-    BTN_CODE_IWRAM void _commit_map_palette_offset(const uint16_t* source_data_ptr, int half_words, int palette_offset,
+    BN_CODE_IWRAM void _commit_map_palette_offset(const uint16_t* source_data_ptr, int half_words, int palette_offset,
                                                    uint16_t* destination_vram_ptr);
 
-    BTN_CODE_IWRAM void _commit_map_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
+    BN_CODE_IWRAM void _commit_map_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
                                            int palette_offset, uint16_t* destination_vram_ptr);
 
     inline void commit_map(const uint16_t* source_data_ptr, int block_index, int half_words, int tiles_offset,

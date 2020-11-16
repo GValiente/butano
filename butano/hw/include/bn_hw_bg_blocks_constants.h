@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_BG_BLOCKS_CONSTANTS_H
-#define BTN_HW_BG_BLOCKS_CONSTANTS_H
+#ifndef BN_HW_BG_BLOCKS_CONSTANTS_H
+#define BN_HW_BG_BLOCKS_CONSTANTS_H
 
-#include "btn_tile.h"
+#include "bn_tile.h"
 
-namespace btn::hw::bg_maps
+namespace bn::hw::bg_maps
 {
     [[nodiscard]] constexpr int blocks_count()
     {
@@ -21,7 +21,7 @@ namespace btn::hw::bg_maps
     }
 }
 
-namespace btn::hw::bg_tiles
+namespace bn::hw::bg_tiles
 {
     [[nodiscard]] constexpr int blocks_count()
     {

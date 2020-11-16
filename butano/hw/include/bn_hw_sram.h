@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SRAM_H
-#define BTN_HW_SRAM_H
+#ifndef BN_HW_SRAM_H
+#define BN_HW_SRAM_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::sram
+namespace bn::hw::sram
 {
     void init();
 
-    BTN_CODE_EWRAM void write(const void* source, int size, int offset);
+    BN_CODE_EWRAM void write(const void* source, int size, int offset);
 
-    BTN_CODE_EWRAM void read(void* destination, int size, int offset);
+    BN_CODE_EWRAM void read(void* destination, int size, int offset);
 }
 
 #endif

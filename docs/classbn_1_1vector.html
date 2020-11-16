@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::vector class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__vector_8h.html">&lt;bn_vector.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>vector <span class="m-thin">class</span>
+        </h1>
+        <p>Vector implementation that uses a fixed size buffer.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+            <tr>
+              <td>MaxSize</td>
+              <td>Maximum number of elements that can be stored.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              class <a href="classbn_1_1ivector.html" class="m-doc">ivector&lt;Type&gt;</a>
+            </dt>
+            <dd>Base class of vector.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt id="a80bd127f051def9b7ae027d9955d9260">
+              using <a href="#a80bd127f051def9b7ae027d9955d9260" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="a831d5e2f05aecd6db65554a824f13695">
+              using <a href="#a831d5e2f05aecd6db65554a824f13695" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a98471b7461861d6f25795aa13b0a6835">
+              using <a href="#a98471b7461861d6f25795aa13b0a6835" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="aec3a1db448f71b5daf807b65afb52afe">
+              using <a href="#aec3a1db448f71b5daf807b65afb52afe" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a949f89d22c8dd9d764d6cb369fd22c3c">
+              using <a href="#a949f89d22c8dd9d764d6cb369fd22c3c" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="a07e4f436954ed2203d1335820d521b15">
+              using <a href="#a07e4f436954ed2203d1335820d521b15" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a5e0ee823b64098f407fb4fd7cbb45d9a">
+              using <a href="#a5e0ee823b64098f407fb4fd7cbb45d9a" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="ab987212957b26ee6081484919322c34a">
+              using <a href="#ab987212957b26ee6081484919322c34a" class="m-doc-self">iterator</a> = Type*
+            </dt>
+            <dd>Iterator alias.</dd>
+            <dt id="a3ac387448acd4002d270a901f3b2152c">
+              using <a href="#a3ac387448acd4002d270a901f3b2152c" class="m-doc-self">const_iterator</a> = const Type*
+            </dt>
+            <dd>Const iterator alias.</dd>
+            <dt id="a216ca693424825fcbf0d67208301357a">
+              using <a href="#a216ca693424825fcbf0d67208301357a" class="m-doc-self">reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1ivector.html#a42dfdd29e90e7fc45acee1d5026baba3" class="m-doc">iterator</a>&gt;
+            </dt>
+            <dd>Reverse iterator alias.</dd>
+            <dt id="a2566838e7ee09188280efcee75b22ef9">
+              using <a href="#a2566838e7ee09188280efcee75b22ef9" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1ivector.html#a09afa8f3d3d37e46619002fca6ab2e91" class="m-doc">const_<wbr />iterator</a>&gt;
+            </dt>
+            <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a8a428be8bcf7cb130c823fca58d9a5ee">
+              <span class="m-doc-wrap-bumper"><a href="#a8a428be8bcf7cb130c823fca58d9a5ee" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a596e07e79a9bc2536015aba23e2aa178" class="m-doc">vector</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a27e24e2ba4d25d589283b5218a2fe5c1" class="m-doc">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a69f059ea11e5bbdc1b8c8009ac29d305" class="m-doc">vector</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a9a0ff0d12ce0f0351745d5bc2b3b4646" class="m-doc">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a4208f78344b636953f162e67ead7d5bd" class="m-doc">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html#a89764d888c0a076c7e4c14671a464314" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Size constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ae1275f4c8915a855f317636ec555072e" class="m-doc">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html#a89764d888c0a076c7e4c14671a464314" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ivector.html#a10223612aa0e19a0276ec7ad2a6b79e2" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Size constructor.</dd>
+            <dt id="ab29b5e84b1ce20dc388d61734041cb34">
+              <span class="m-doc-wrap-bumper"><a href="#ab29b5e84b1ce20dc388d61734041cb34" class="m-doc-self">~vector</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Destructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7add77e2858397a7b95198b0fb6486ae" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; other) -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6d118aa40c99a8281beeb5bcdd38ab2b" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;&amp; other) -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad8003d0e15c31b51531dd16fcb8a58f0" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; other) -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a40e637d486a836ec0a867701d4c181d7" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a596e07e79a9bc2536015aba23e2aa178"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a596e07e79a9bc2536015aba23e2aa178" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>vector to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a27e24e2ba4d25d589283b5218a2fe5c1"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a27e24e2ba4d25d589283b5218a2fe5c1" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>vector to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a69f059ea11e5bbdc1b8c8009ac29d305"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a69f059ea11e5bbdc1b8c8009ac29d305" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9a0ff0d12ce0f0351745d5bc2b3b4646"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9a0ff0d12ce0f0351745d5bc2b3b4646" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4208f78344b636953f162e67ead7d5bd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4208f78344b636953f162e67ead7d5bd" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html#a89764d888c0a076c7e4c14671a464314" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Size constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Initial size of the vector.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae1275f4c8915a855f317636ec555072e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1275f4c8915a855f317636ec555072e" class="m-doc-self">vector</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html#a89764d888c0a076c7e4c14671a464314" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ivector.html#a10223612aa0e19a0276ec7ad2a6b79e2" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Size constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Initial size of the vector.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill the vector with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7add77e2858397a7b95198b0fb6486ae"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7add77e2858397a7b95198b0fb6486ae" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>vector to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6d118aa40c99a8281beeb5bcdd38ab2b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d118aa40c99a8281beeb5bcdd38ab2b" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>vector to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad8003d0e15c31b51531dd16fcb8a58f0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad8003d0e15c31b51531dd16fcb8a58f0" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a40e637d486a836ec0a867701d4c181d7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&amp; bn::<wbr />vector&lt;Type, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40e637d486a836ec0a867701d4c181d7" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_window.h"
+#include "bn_window.h"
 
-#include "btn_regular_bg_ptr.h"
-#include "btn_display_manager.h"
+#include "bn_regular_bg_ptr.h"
+#include "bn_display_manager.h"
 
-namespace btn
+namespace bn
 {
 
 bool window::show_bg(const regular_bg_ptr& regular_bg) const

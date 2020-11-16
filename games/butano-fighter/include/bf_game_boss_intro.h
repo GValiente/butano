@@ -6,11 +6,11 @@
 #ifndef BF_GAME_BOSS_INTRO_H
 #define BF_GAME_BOSS_INTRO_H
 
-#include "btn_vector.h"
-#include "btn_optional.h"
-#include "btn_sprite_ptr.h"
-#include "btn_music_actions.h"
-#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_vector.h"
+#include "bn_optional.h"
+#include "bn_sprite_ptr.h"
+#include "bn_music_actions.h"
+#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
 
 namespace bf::game
 {
@@ -41,9 +41,9 @@ private:
         DONE
     };
 
-    btn::vector<btn::sprite_ptr, 7> _sprites;
-    btn::optional<btn::music_volume_to_action> _music_volume_action;
-    btn::optional<btn::sprite_affine_mat_attributes_hblank_effect_ptr> _hblank_effect;
+    bn::vector<bn::sprite_ptr, 7> _sprites;
+    bn::optional<bn::music_volume_to_action> _music_volume_action;
+    bn::optional<bn::sprite_affine_mat_attributes_hblank_effect_ptr> _hblank_effect;
     state _state = state::INIT;
     int _loops = 0;
     int _counter = 0;

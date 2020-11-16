@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_palettes_manager.h"
+#include "bn_palettes_manager.h"
 
-#include "btn_bg_palettes.cpp.h"
-#include "btn_bg_palette_ptr.cpp.h"
-#include "btn_bg_palette_item.cpp.h"
-#include "btn_sprite_palettes.cpp.h"
-#include "btn_sprite_palette_ptr.cpp.h"
-#include "btn_sprite_palette_item.cpp.h"
-#include "btn_palettes_bank.cpp.h"
+#include "bn_bg_palettes.cpp.h"
+#include "bn_bg_palette_ptr.cpp.h"
+#include "bn_bg_palette_item.cpp.h"
+#include "bn_sprite_palettes.cpp.h"
+#include "bn_sprite_palette_ptr.cpp.h"
+#include "bn_sprite_palette_item.cpp.h"
+#include "bn_palettes_bank.cpp.h"
 
-namespace btn::palettes_manager
+namespace bn::palettes_manager
 {
 
 namespace
@@ -26,7 +26,7 @@ namespace
         palettes_bank bg_palettes_bank;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 }
 
 palettes_bank& sprite_palettes_bank()

@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_affine_mats_manager.h"
+#include "bn_sprite_affine_mats_manager.h"
 
-#include "btn_vector.h"
-#include "btn_sprites_manager_item.h"
-#include "../hw/include/btn_hw_sprite_affine_mats.h"
-#include "../hw/include/btn_hw_sprite_affine_mats_constants.h"
+#include "bn_vector.h"
+#include "bn_sprites_manager_item.h"
+#include "../hw/include/bn_hw_sprite_affine_mats.h"
+#include "../hw/include/bn_hw_sprite_affine_mats_constants.h"
 
-#include "btn_sprite_affine_mats.cpp.h"
-#include "btn_sprite_affine_mat_ptr.cpp.h"
+#include "bn_sprite_affine_mats.cpp.h"
+#include "bn_sprite_affine_mat_ptr.cpp.h"
 
-namespace btn::sprite_affine_mats_manager
+namespace bn::sprite_affine_mats_manager
 {
 
 namespace
@@ -97,7 +97,7 @@ namespace
         int last_index_to_remove_if_not_needed = 0;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
 
     void _update_indexes_to_commit(int index)
@@ -177,7 +177,7 @@ namespace
 
 void init([[maybe_unused]] int handles_size, void* handles)
 {
-    BTN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * max_items,
+    BN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * max_items,
                "Invalid handles size: ", handles_size, sizeof(hw::sprite_affine_mats::handle) * max_items);
 
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
@@ -200,14 +200,14 @@ int available_count()
 
 int create()
 {
-    BTN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
+    BN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
 
     return _create();
 }
 
 int create(const sprite_affine_mat_attributes& attributes)
 {
-    BTN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
+    BN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
 
     return _create(attributes);
 }
@@ -245,7 +245,7 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        BTN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
+        BN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
 
         item.remove_if_not_needed = false;
         data.free_item_indexes.push_back(int8_t(id));

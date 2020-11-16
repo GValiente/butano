@@ -3,37 +3,37 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITES_MANAGER_ITEM_H
-#define BTN_SPRITES_MANAGER_ITEM_H
+#ifndef BN_SPRITES_MANAGER_ITEM_H
+#define BN_SPRITES_MANAGER_ITEM_H
 
-#include "btn_display.h"
-#include "btn_sprites.h"
-#include "btn_optional.h"
-#include "btn_sort_key.h"
-#include "btn_camera_ptr.h"
-#include "btn_fixed_point.h"
-#include "btn_intrusive_list.h"
-#include "btn_display_manager.h"
-#include "btn_sprites_manager.h"
-#include "btn_sprite_tiles_ptr.h"
-#include "btn_sprite_palette_ptr.h"
-#include "btn_sprite_affine_mat_ptr.h"
-#include "btn_sprite_affine_mats_manager.h"
-#include "../hw/include/btn_hw_sprites.h"
+#include "bn_display.h"
+#include "bn_sprites.h"
+#include "bn_optional.h"
+#include "bn_sort_key.h"
+#include "bn_camera_ptr.h"
+#include "bn_fixed_point.h"
+#include "bn_intrusive_list.h"
+#include "bn_display_manager.h"
+#include "bn_sprites_manager.h"
+#include "bn_sprite_tiles_ptr.h"
+#include "bn_sprite_palette_ptr.h"
+#include "bn_sprite_affine_mat_ptr.h"
+#include "bn_sprite_affine_mats_manager.h"
+#include "../hw/include/bn_hw_sprites.h"
 
-namespace btn
+namespace bn
 {
     class sprite_builder;
 
     using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
 }
 
-namespace btn::sorted_sprites
+namespace bn::sorted_sprites
 {
     class layer;
 }
 
-namespace btn
+namespace bn
 {
 
 class sprites_manager_item : public intrusive_list_node_type
@@ -46,7 +46,7 @@ public:
     point hw_position;
     unsigned usages = 1;
     sort_key sprite_sort_key;
-    btn::sorted_sprites::layer* sort_layer_ptr;
+    bn::sorted_sprites::layer* sort_layer_ptr;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
@@ -155,7 +155,7 @@ public:
             return false;
 
         default:
-            BTN_ERROR("Invalid double size mode: ", int(double_size_mode));
+            BN_ERROR("Invalid double size mode: ", int(double_size_mode));
             return false;
         }
     }

@@ -3,9 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_memory.h"
+#include "../include/bn_hw_memory.h"
 
-#include "btn_assert.h"
+#include "bn_assert.h"
 
 extern unsigned __iwram_start__;
 extern unsigned __fini_array_end;
@@ -13,7 +13,7 @@ extern unsigned __ewram_start;
 extern unsigned __ewram_end;
 extern char __eheap_start[], __eheap_end[];
 
-namespace btn::hw::memory
+namespace bn::hw::memory
 {
 
 int used_static_iwram()
@@ -21,7 +21,7 @@ int used_static_iwram()
     auto iwram_start = reinterpret_cast<uint8_t*>(&__iwram_start__);
     auto iwram_end = reinterpret_cast<uint8_t*>(&__fini_array_end);
     auto result = iwram_end - iwram_start;
-    BTN_ASSERT(result >= 0, "Invalid used static iwram: ", result);
+    BN_ASSERT(result >= 0, "Invalid used static iwram: ", result);
 
     return result;
 }
@@ -31,7 +31,7 @@ int used_static_ewram()
     auto ewram_start = reinterpret_cast<uint8_t*>(&__ewram_start);
     auto ewram_end = reinterpret_cast<uint8_t*>(&__ewram_end);
     auto result = ewram_end - ewram_start;
-    BTN_ASSERT(result >= 0, "Invalid used static ewram: ", result);
+    BN_ASSERT(result >= 0, "Invalid used static ewram: ", result);
 
     return result;
 }

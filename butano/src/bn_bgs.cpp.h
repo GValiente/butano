@@ -3,11 +3,11 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_bgs.h"
+#include "bn_bgs.h"
 
-#include "btn_bgs_manager.h"
+#include "bn_bgs_manager.h"
 
-namespace btn::bgs
+namespace bn::bgs
 {
 
 int used_items_count()

@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_text_generator.h"
+#include "bn_sprite_text_generator.h"
 
-#include "btn_sprites.h"
-#include "btn_sprite_ptr.h"
-#include "btn_sprite_builder.h"
-#include "../hw/include/btn_hw_sprite_tiles.h"
+#include "bn_sprites.h"
+#include "bn_sprite_ptr.h"
+#include "bn_sprite_builder.h"
+#include "../hw/include/bn_hw_sprite_tiles.h"
 
-namespace btn
+namespace bn
 {
 
 namespace
 {
-    static_assert(BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > 0);
-    static_assert(power_of_two(BTN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS));
+    static_assert(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > 0);
+    static_assert(power_of_two(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS));
 
     constexpr const int max_columns_per_sprite = 32;
     constexpr const int fixed_character_width = 8;
@@ -44,14 +44,14 @@ namespace
         }
         else
         {
-            BTN_ASSERT(! output_sprites.full(), "No more output sprites available");
+            BN_ASSERT(! output_sprites.full(), "No more output sprites available");
 
             tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite);
         }
 
         sprite_tiles_ptr& tiles_ptr_ref = *tiles_ptr;
         optional<span<tile>> tiles_vram = tiles_ptr_ref.vram();
-        BTN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
+        BN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
         sprite_builder builder(sprite_shape_size(sprite_shape::WIDE, size), move(tiles_ptr_ref), palette);
         builder.set_position(current_position);
@@ -184,7 +184,7 @@ namespace
             }
             else
             {
-                BTN_ASSERT(! _output_sprites.full(), "No more output sprites available");
+                BN_ASSERT(! _output_sprites.full(), "No more output sprites available");
             }
 
             const sprite_item& item = _generator.font().item();
@@ -278,7 +278,7 @@ namespace
                 }
                 else
                 {
-                    BTN_ASSERT(! _output_sprites.full(), "No more output sprites available");
+                    BN_ASSERT(! _output_sprites.full(), "No more output sprites available");
                 }
 
                 const sprite_item& item = _generator.font().item();
@@ -698,7 +698,7 @@ namespace
                 {
                     utf8_character utf8_char(text_data[text_index]);
                     auto it = utf8_characters_map.find(utf8_char.data());
-                    BTN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", text);
+                    BN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", text);
 
                     graphics_index = it->second;
                     text_index += utf8_char.size();
@@ -713,7 +713,7 @@ namespace
             }
             else
             {
-                BTN_ERROR("Invalid character: ", character, " (text: ", text, ")");
+                BN_ERROR("Invalid character: ", character, " (text: ", text, ")");
             }
         }
 
@@ -757,7 +757,7 @@ namespace
             break;
 
         default:
-            BTN_ERROR("Invalid alignment: ", int(generator.alignment()));
+            BN_ERROR("Invalid alignment: ", int(generator.alignment()));
             break;
         }
 
@@ -834,28 +834,28 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font, const spri
     _font(font),
     _palette_item(palette_item)
 {
-    BTN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+    BN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
 
     _build_utf8_characters_map();
 }
 
 void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
 {
-    BTN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+    BN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
 
     _palette_item = palette_item;
 }
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     _bg_priority = bg_priority;
 }
 
 void sprite_text_generator::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
+    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
 }

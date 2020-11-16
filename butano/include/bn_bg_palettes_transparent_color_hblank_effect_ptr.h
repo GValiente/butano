@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
-#define BTN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
+#ifndef BN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
+#define BN_BG_PALETTES_TRANSPARENT_COLOR_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::bg_palettes_transparent_color_hblank_effect_ptr header file.
+ * bn::bg_palettes_transparent_color_hblank_effect_ptr header file.
  *
  * @ingroup bg
  * @ingroup palette
  * @ingroup hblank_effect
  */
 
-#include "btn_optional_fwd.h"
-#include "btn_hblank_effect_ptr.h"
+#include "bn_optional_fwd.h"
+#include "bn_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 class color;

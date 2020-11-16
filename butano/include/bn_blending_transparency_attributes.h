@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
-#define BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
+#ifndef BN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
+#define BN_BLENDING_TRANSPARENCY_ATTRIBUTES_H
 
 /**
  * @file
- * btn::blending_transparency_attributes header file.
+ * bn::blending_transparency_attributes header file.
  *
  * @ingroup blending
  */
 
-#include "btn_fixed.h"
+#include "bn_fixed.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -42,9 +42,9 @@ public:
         _transparency_alpha(transparency_alpha),
         _intensity_alpha(intensity_alpha)
     {
-        BTN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
+        BN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
                    "Invalid transparency alpha: ", transparency_alpha);
-        BTN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1, "Invalid intensity alpha: ", intensity_alpha);
+        BN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1, "Invalid intensity alpha: ", intensity_alpha);
     }
 
     /**
@@ -63,7 +63,7 @@ public:
      */
     constexpr void set_transparency_alpha(fixed transparency_alpha)
     {
-        BTN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
+        BN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
                    "Invalid transparency alpha: ", transparency_alpha);
 
         _transparency_alpha = transparency_alpha;
@@ -83,7 +83,7 @@ public:
      */
     constexpr void set_intensity_alpha(fixed intensity_alpha)
     {
-        BTN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1, "Invalid intensity alpha: ", intensity_alpha);
+        BN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1, "Invalid intensity alpha: ", intensity_alpha);
 
         _intensity_alpha = intensity_alpha;
     }

@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_SPRITE_TILES_H
-#define BTN_CONFIG_SPRITE_TILES_H
+#ifndef BN_CONFIG_SPRITE_TILES_H
+#define BN_CONFIG_SPRITE_TILES_H
 
 /**
  * @file
@@ -13,22 +13,22 @@
  * @ingroup sprite
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_SPRITE_TILES_MAX_ITEMS
+ * @def BN_CFG_SPRITE_TILES_MAX_ITEMS
  *
  * Specifies the maximum number of sprite tile sets that can be created with
- * btn::sprite_tiles_ptr static constructors.
+ * bn::sprite_tiles_ptr static constructors.
  *
  * @ingroup sprite
  */
-#ifndef BTN_CFG_SPRITE_TILES_MAX_ITEMS
-    #define BTN_CFG_SPRITE_TILES_MAX_ITEMS 128
+#ifndef BN_CFG_SPRITE_TILES_MAX_ITEMS
+    #define BN_CFG_SPRITE_TILES_MAX_ITEMS 128
 #endif
 
 /**
- * @def BTN_CFG_SPRITE_TILES_LOG_ENABLED
+ * @def BN_CFG_SPRITE_TILES_LOG_ENABLED
  *
  * Specifies if the sprite tiles manager must be logged in detail or not.
  *
@@ -36,8 +36,8 @@
  *
  * @ingroup sprite
  */
-#ifndef BTN_CFG_SPRITE_TILES_LOG_ENABLED
-    #define BTN_CFG_SPRITE_TILES_LOG_ENABLED false
+#ifndef BN_CFG_SPRITE_TILES_LOG_ENABLED
+    #define BN_CFG_SPRITE_TILES_LOG_ENABLED false
 #endif
 
 #endif

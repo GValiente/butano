@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_SRAM_H
-#define BTN_CONFIG_SRAM_H
+#ifndef BN_CONFIG_SRAM_H
+#define BN_CONFIG_SRAM_H
 
 /**
  * @file
@@ -13,19 +13,19 @@
  * @ingroup sram
  */
 
-#include "btn_sram_wait_state.h"
+#include "bn_sram_wait_state.h"
 
 /**
- * @def BTN_CFG_SRAM_WAIT_STATE
+ * @def BN_CFG_SRAM_WAIT_STATE
  *
  * Specifies SRAM access time in clock cycles.
  *
- * Values not specified in BTN_SRAM_WAIT_STATE_* macros are not allowed.
+ * Values not specified in BN_SRAM_WAIT_STATE_* macros are not allowed.
  *
  * @ingroup sram
  */
-#ifndef BTN_CFG_SRAM_WAIT_STATE
-    #define BTN_CFG_SRAM_WAIT_STATE BTN_SRAM_WAIT_STATE_8
+#ifndef BN_CFG_SRAM_WAIT_STATE
+    #define BN_CFG_SRAM_WAIT_STATE BN_SRAM_WAIT_STATE_8
 #endif
 
 #endif

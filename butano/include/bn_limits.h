@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_LIMITS_H
-#define BTN_LIMITS_H
+#ifndef BN_LIMITS_H
+#define BN_LIMITS_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <limits>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::numeric_limits;
 }

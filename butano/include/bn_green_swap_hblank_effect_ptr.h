@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GREEN_SWAP_HBLANK_EFFECT_PTR_H
-#define BTN_GREEN_SWAP_HBLANK_EFFECT_PTR_H
+#ifndef BN_GREEN_SWAP_HBLANK_EFFECT_PTR_H
+#define BN_GREEN_SWAP_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::green_swap_hblank_effect_ptr header file.
+ * bn::green_swap_hblank_effect_ptr header file.
  *
  * @ingroup green_swap
  * @ingroup hblank_effect
  */
 
-#include "btn_optional_fwd.h"
-#include "btn_hblank_effect_ptr.h"
+#include "bn_optional_fwd.h"
+#include "bn_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

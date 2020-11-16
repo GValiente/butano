@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ASSERT_H
-#define BTN_ASSERT_H
+#ifndef BN_ASSERT_H
+#define BN_ASSERT_H
 
 /**
  * @file
- * BTN_ASSERT and BTN_ERROR header file.
+ * BN_ASSERT and BN_ERROR header file.
  *
  * @ingroup assert
  */
 
 #include <cassert>
-#include "btn_type_traits.h"
-#include "btn_config_assert.h"
-#include "btn_config_doxygen.h"
+#include "bn_type_traits.h"
+#include "bn_config_assert.h"
+#include "bn_config_doxygen.h"
 
 /**
- * @def BTN_ASSERT(condition, ...)
+ * @def BN_ASSERT(condition, ...)
  *
  * Checks if the specified \a condition is true.
  *
@@ -30,15 +30,15 @@
  * Example:
  *
  * @code{.cpp}
- * BTN_ASSERT(integer > 0, "Invalid integer: ", integer);
+ * BN_ASSERT(integer > 0, "Invalid integer: ", integer);
  * @endcode
  *
- * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+ * Custom parameter types are supported by overloading bn::ostringstream::operator<<.
  *
  * Example:
  *
  * @code{.cpp}
- * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+ * bn::ostringstream& operator<<(bn::ostringstream& stream, const custom_type& custom_value)
  * {
  *     stream.append("custom_type: ");
  *     stream.append(custom_value.data);
@@ -52,7 +52,7 @@
  */
 
 /**
- * @def BTN_ERROR(...)
+ * @def BN_ERROR(...)
  *
  * If this is called, the execution is stopped and diagnostic information is shown on the screen.
  *
@@ -61,15 +61,15 @@
  * Example:
  *
  * @code{.cpp}
- * BTN_ERROR("Invalid integer: ", integer);
+ * BN_ERROR("Invalid integer: ", integer);
  * @endcode
  *
- * Custom parameter types are supported by overloading btn::ostringstream::operator<<.
+ * Custom parameter types are supported by overloading bn::ostringstream::operator<<.
  *
  * Example:
  *
  * @code{.cpp}
- * btn::ostringstream& operator<<(btn::ostringstream& stream, const custom_type& custom_value)
+ * bn::ostringstream& operator<<(bn::ostringstream& stream, const custom_type& custom_value)
  * {
  *     stream.append("custom_type: ");
  *     stream.append(custom_value.data);
@@ -82,14 +82,14 @@
  * @ingroup assert
  */
 
-#if BTN_CFG_ASSERT_ENABLED || BTN_DOXYGEN
-    #include "btn_sstream.h"
-    #include "btn_istring_base.h"
+#if BN_CFG_ASSERT_ENABLED || BN_DOXYGEN
+    #include "bn_sstream.h"
+    #include "bn_istring_base.h"
 
-    #define BTN_ASSERT(condition, ...) \
+    #define BN_ASSERT(condition, ...) \
         do \
         { \
-            if(btn::is_constant_evaluated()) \
+            if(bn::is_constant_evaluated()) \
             { \
                 assert(condition); \
             } \
@@ -97,37 +97,37 @@
             { \
                 if(! (condition)) [[unlikely]] \
                 { \
-                    _btn::assert::constexpr_check(true, #condition, _btn::assert::base_name(__FILE__), __func__, \
+                    _bn::assert::constexpr_check(true, #condition, _bn::assert::base_name(__FILE__), __func__, \
                             __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                 } \
             } \
         } while(false)
 
-    #define BTN_ERROR(...) \
+    #define BN_ERROR(...) \
         do \
         { \
-            if(btn::is_constant_evaluated()) \
+            if(bn::is_constant_evaluated()) \
             { \
                 assert(false); \
             } \
             else \
             { \
-                _btn::assert::constexpr_check(true, "", _btn::assert::base_name(__FILE__), __func__, \
+                _bn::assert::constexpr_check(true, "", _bn::assert::base_name(__FILE__), __func__, \
                         __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
             } \
         } while(false)
 
     /// @cond DO_NOT_DOCUMENT
 
-    namespace _btn::assert
+    namespace _bn::assert
     {
-        static_assert(BTN_CFG_ASSERT_BUFFER_SIZE >= 64);
+        static_assert(BN_CFG_ASSERT_BUFFER_SIZE >= 64);
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const char* message);
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
-                               const btn::istring_base& message);
+                               const bn::istring_base& message);
 
         template<int Size>
         [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], int index)
@@ -149,11 +149,11 @@
         [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
                                            int line, const Args&... args)
         {
-            char istring_buffer[BTN_CFG_ASSERT_BUFFER_SIZE];
-            btn::istring_base istring(istring_buffer);
-            btn::ostringstream string_stream(istring);
+            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            bn::istring_base istring(istring_buffer);
+            bn::ostringstream string_stream(istring);
             string_stream.append_args(args...);
-            _btn::assert::show(condition_msg, file, function, line, istring);
+            _bn::assert::show(condition_msg, file, function, line, istring);
         }
 
         template<typename... Args>
@@ -169,19 +169,19 @@
 
     /// @endcond
 #else
-    #define BTN_ASSERT(condition, ...) \
+    #define BN_ASSERT(condition, ...) \
         do \
         { \
-            if(btn::is_constant_evaluated()) \
+            if(bn::is_constant_evaluated()) \
             { \
                 assert(condition); \
             } \
         } while(false)
 
-    #define BTN_ERROR(...) \
+    #define BN_ERROR(...) \
         do \
         { \
-            if(btn::is_constant_evaluated()) \
+            if(bn::is_constant_evaluated()) \
             { \
                 assert(false); \
             } \

@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GREEN_SWAP_ACTIONS_H
-#define BTN_GREEN_SWAP_ACTIONS_H
+#ifndef BN_GREEN_SWAP_ACTIONS_H
+#define BN_GREEN_SWAP_ACTIONS_H
 
 /**
  * @file
- * btn::green_swap actions header file.
+ * bn::green_swap actions header file.
  *
  * @ingroup green_swap
  * @ingroup action
  */
 
-#include "btn_green_swap.h"
-#include "btn_template_actions.h"
+#include "bn_green_swap.h"
+#include "bn_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 /**

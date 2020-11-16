@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_SPRITE_AFFINE_MATS_H
-#define BTN_HW_SPRITE_AFFINE_MATS_H
+#ifndef BN_HW_SPRITE_AFFINE_MATS_H
+#define BN_HW_SPRITE_AFFINE_MATS_H
 
-#include "btn_sprite_affine_mat_attributes.h"
-#include "btn_hw_tonc.h"
+#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::sprite_affine_mats
+namespace bn::hw::sprite_affine_mats
 {
     using handle = OBJ_AFFINE;
 

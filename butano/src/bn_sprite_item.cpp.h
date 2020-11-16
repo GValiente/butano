@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_item.h"
+#include "bn_sprite_item.h"
 
-#include "btn_fixed.h"
-#include "btn_optional.h"
-#include "btn_sprite_ptr.h"
-#include "btn_fixed_point.h"
+#include "bn_fixed.h"
+#include "bn_optional.h"
+#include "bn_sprite_ptr.h"
+#include "bn_fixed_point.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_ptr sprite_item::create_sprite(fixed x, fixed y) const

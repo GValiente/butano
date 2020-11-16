@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
-#define BTN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
+#ifndef BN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
+#define BN_SPRITE_PALETTE_COLOR_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::sprite_palette_color_hblank_effect_ptr header file.
+ * bn::sprite_palette_color_hblank_effect_ptr header file.
  *
  * @ingroup sprite
  * @ingroup palette
  * @ingroup hblank_effect
  */
 
-#include "btn_hblank_effect_ptr.h"
-#include "btn_sprite_palette_ptr.h"
+#include "bn_hblank_effect_ptr.h"
+#include "bn_sprite_palette_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 class color;

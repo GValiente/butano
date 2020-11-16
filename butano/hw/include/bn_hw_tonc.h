@@ -3,10 +3,10 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_TONC_H
-#define BTN_HW_TONC_H
+#ifndef BN_HW_TONC_H
+#define BN_HW_TONC_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wvolatile"

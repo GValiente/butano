@@ -111,14 +111,14 @@ class SpriteItem:
 
     def write_header(self):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = self.__build_folder_path + '/btn_sprite_items_' + name + '.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        header_file_path = self.__build_folder_path + '/bn_sprite_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
-            grit_data = grit_data.replace('unsigned int', 'btn::tile')
-            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
-            grit_data = grit_data.replace('unsigned short', 'btn::color')
+            grit_data = grit_data.replace('unsigned int', 'bn::tile')
+            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('unsigned short', 'bn::color')
 
             for grit_line in grit_data.splitlines():
                 if 'Total size:' in grit_line:
@@ -133,20 +133,20 @@ class SpriteItem:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
-            include_guard = 'BTN_SPRITE_ITEMS_' + name.upper() + '_H'
+            include_guard = 'BN_SPRITE_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
-            header_file.write('#include "btn_sprite_item.h"' + '\n')
+            header_file.write('#include "bn_sprite_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
-            header_file.write('namespace btn::sprite_items' + '\n')
+            header_file.write('namespace bn::sprite_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr const sprite_item ' + name + '(' +
                               'sprite_shape_size(sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + '), ' + '\n            ' +
-                              'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
+                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
+                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
                               bpp_mode_label + ', ' + str(self.__graphics) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
@@ -165,7 +165,7 @@ class SpriteItem:
         else:
             command.append('-gB8')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
 
         try:
@@ -221,7 +221,7 @@ class RegularBgItem:
             if bpp_mode == 'bpp_8':
                 self.__bpp_8 = True
             elif bpp_mode == 'bpp_4_auto':
-                self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.btn_quantized.bmp'
+                self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.bn_quantized.bmp'
                 print('    Generating bpp4 image in ' + self.__file_path + '...')
                 start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
@@ -233,15 +233,15 @@ class RegularBgItem:
 
     def write_header(self):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_btn_graphics.h'
-        header_file_path = self.__build_folder_path + '/btn_regular_bg_items_' + name + '.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        header_file_path = self.__build_folder_path + '/bn_regular_bg_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
-            grit_data = grit_data.replace('unsigned int', 'btn::tile', 1)
-            grit_data = grit_data.replace(']', ' / (sizeof(btn::tile) / sizeof(uint32_t))]', 1)
-            grit_data = grit_data.replace('unsigned short', 'btn::regular_bg_map_cell', 1)
-            grit_data = grit_data.replace('unsigned short', 'btn::color', 1)
+            grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
+            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('unsigned short', 'bn::regular_bg_map_cell', 1)
+            grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
                 if 'Total size:' in grit_line:
@@ -256,20 +256,20 @@ class RegularBgItem:
             bpp_mode_label = 'palette_bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
-            include_guard = 'BTN_REGULAR_BG_ITEMS_' + name.upper() + '_H'
+            include_guard = 'BN_REGULAR_BG_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
-            header_file.write('#include "btn_regular_bg_item.h"' + '\n')
+            header_file.write('#include "bn_regular_bg_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
-            header_file.write('namespace btn::regular_bg_items' + '\n')
+            header_file.write('namespace bn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr const regular_bg_item ' + name + '(' +
-                              'span<const tile>(' + name + '_btn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_btn_graphicsPal, ' + str(self.__colors_count) + '), ' +
+                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
+                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
                               bpp_mode_label + ', ' + '\n            ' +
-                              name + '_btn_graphicsMap[0], ' +
+                              name + '_bn_graphicsMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
@@ -305,7 +305,7 @@ class RegularBgItem:
         else:
             command.append('-mLf')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_btn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
 
         try:
@@ -391,7 +391,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 
                     file_names_set.add(graphics_file_name_no_ext)
 
-                    file_info_path_prefix = build_folder_path + '/_btn_' + graphics_file_name_no_ext + '_'
+                    file_info_path_prefix = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_'
                     file_info_path = file_info_path_prefix + graphics_type + '_file_info.txt'
                     json_file_info_path = file_info_path_prefix + graphics_type + '_json_file_info.txt'
                     old_file_info = FileInfo.read(file_info_path)

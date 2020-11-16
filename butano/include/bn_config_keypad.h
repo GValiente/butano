@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_KEYPAD_H
-#define BTN_CONFIG_KEYPAD_H
+#ifndef BN_CONFIG_KEYPAD_H
+#define BN_CONFIG_KEYPAD_H
 
 /**
  * @file
@@ -13,17 +13,17 @@
  * @ingroup keypad
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_KEYPAD_LOG_ENABLED
+ * @def BN_CFG_KEYPAD_LOG_ENABLED
  *
  * Specifies if keypad logging is enabled or not.
  *
  * @ingroup keypad
  */
-#ifndef BTN_CFG_KEYPAD_LOG_ENABLED
-    #define BTN_CFG_KEYPAD_LOG_ENABLED false
+#ifndef BN_CFG_KEYPAD_LOG_ENABLED
+    #define BN_CFG_KEYPAD_LOG_ENABLED false
 #endif
 
 #endif

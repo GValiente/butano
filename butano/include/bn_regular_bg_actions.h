@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_ACTIONS_H
-#define BTN_REGULAR_BG_ACTIONS_H
+#ifndef BN_REGULAR_BG_ACTIONS_H
+#define BN_REGULAR_BG_ACTIONS_H
 
 /**
  * @file
- * btn::regular_bg_ptr actions header file.
+ * bn::regular_bg_ptr actions header file.
  *
  * @ingroup regular_bg
  * @ingroup action
  */
 
-#include "btn_fixed_point.h"
-#include "btn_regular_bg_ptr.h"
-#include "btn_value_template_actions.h"
+#include "bn_fixed_point.h"
+#include "bn_regular_bg_ptr.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // visible

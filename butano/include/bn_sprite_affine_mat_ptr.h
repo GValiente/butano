@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_MAT_PTR_H
-#define BTN_SPRITE_AFFINE_MAT_PTR_H
+#ifndef BN_SPRITE_AFFINE_MAT_PTR_H
+#define BN_SPRITE_AFFINE_MAT_PTR_H
 
 /**
  * @file
- * btn::sprite_affine_mat_ptr header file.
+ * bn::sprite_affine_mat_ptr header file.
  *
  * @ingroup sprite
  * @ingroup affine_mat
  */
 
-#include "btn_utility.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_affine_mat_attributes;
@@ -95,7 +95,7 @@ public:
      */
     sprite_affine_mat_ptr& operator=(sprite_affine_mat_ptr&& other) noexcept
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
         return *this;
     }
 
@@ -208,7 +208,7 @@ public:
      */
     void swap(sprite_affine_mat_ptr& other)
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
     }
 
     /**
@@ -218,7 +218,7 @@ public:
      */
     friend void swap(sprite_affine_mat_ptr& a, sprite_affine_mat_ptr& b)
     {
-        btn::swap(a._id, b._id);
+        bn::swap(a._id, b._id);
     }
 
     /**

@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_RECT_WINDOW_H
-#define BTN_RECT_WINDOW_H
+#ifndef BN_RECT_WINDOW_H
+#define BN_RECT_WINDOW_H
 
 /**
  * @file
- * btn::rect_window header file.
+ * bn::rect_window header file.
  *
  * @ingroup rect_window
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_optional_fwd.h"
-#include "btn_inside_window.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
+#include "bn_inside_window.h"
 
-namespace btn
+namespace bn
 {
 
 class fixed_rect;

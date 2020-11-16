@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_IRQ_H
-#define BTN_HW_IRQ_H
+#ifndef BN_HW_IRQ_H
+#define BN_HW_IRQ_H
 
-#include "btn_hw_tonc.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::irq
+namespace bn::hw::irq
 {
     enum class id
     {

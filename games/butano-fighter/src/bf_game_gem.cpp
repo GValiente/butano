@@ -5,9 +5,9 @@
 
 #include "bf_game_gem.h"
 
-#include "btn_fixed_rect.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_items_gem.h"
+#include "bn_fixed_rect.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_items_gem.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
@@ -15,14 +15,14 @@ namespace bf::game
 
 namespace
 {
-    constexpr const btn::fixed_size dimensions(15, 15);
+    constexpr const bn::fixed_size dimensions(15, 15);
     constexpr const int flash_frames = 60;
 
-    [[nodiscard]] btn::sprite_ptr _create_sprite(
-        const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
-        const btn::sprite_palette_ptr& palette, const btn::camera_ptr& camera)
+    [[nodiscard]] bn::sprite_ptr _create_sprite(
+        const bn::fixed_point& position, const bn::span<bn::sprite_tiles_ptr>& tiles,
+        const bn::sprite_palette_ptr& palette, const bn::camera_ptr& camera)
     {
-        btn::sprite_builder builder(btn::sprite_items::gem.shape_size(), tiles[0], palette);
+        bn::sprite_builder builder(bn::sprite_items::gem.shape_size(), tiles[0], palette);
         builder.set_position(position);
         builder.set_z_order(constants::gems_z_order);
         builder.set_camera(camera);
@@ -30,8 +30,8 @@ namespace
     }
 }
 
-gem::gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr>& tiles,
-         const btn::sprite_palette_ptr& palette, const btn::camera_ptr& camera) :
+gem::gem(const bn::fixed_point& position, const bn::span<bn::sprite_tiles_ptr>& tiles,
+         const bn::sprite_palette_ptr& palette, const bn::camera_ptr& camera) :
     _position(position),
     _sprite(_create_sprite(position, tiles, palette, camera)),
     _tiles(tiles),
@@ -39,9 +39,9 @@ gem::gem(const btn::fixed_point& position, const btn::span<btn::sprite_tiles_ptr
 {
 }
 
-bool gem::intersects_hero(const btn::fixed_rect& hero_rect) const
+bool gem::intersects_hero(const bn::fixed_rect& hero_rect) const
 {
-    return btn::fixed_rect(_position, dimensions).intersects(hero_rect);
+    return bn::fixed_rect(_position, dimensions).intersects(hero_rect);
 }
 
 bool gem::done() const

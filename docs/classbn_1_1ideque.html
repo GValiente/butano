@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::ideque class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__deque_8h.html">&lt;bn_deque.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;typename Type&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>ideque <span class="m-thin">class</span>
+        </h1>
+        <p>Base class of deque.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Type</td>
+              <td>Element type.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#derived-classes">Derived classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Can be used as a reference type for all deque containers containing a specific type.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
+              class <a href="classbn_1_1deque.html" class="m-doc">deque</a>
+            </dt>
+            <dd>Deque implementation that uses a fixed size buffer.</dd>
+          </dl>
+        </section>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_iterator</a>
+            </dt>
+            <dd>Const iterator.</dd>
+            <dt>
+              class <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a>
+            </dt>
+            <dd>Non const iterator.</dd>
+            <dt id="aa5b3ced243c3030c3680f44dfef69e5c">
+              using <a href="#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc-self">value_type</a> = Type
+            </dt>
+            <dd>Value type alias.</dd>
+            <dt id="a6aff122102879c5fe425e29743052e34">
+              using <a href="#a6aff122102879c5fe425e29743052e34" class="m-doc-self">size_type</a> = int
+            </dt>
+            <dd>Size type alias.</dd>
+            <dt id="a5a8b7bc94c20d6c7206d91ca8395c0b4">
+              using <a href="#a5a8b7bc94c20d6c7206d91ca8395c0b4" class="m-doc-self">difference_type</a> = int
+            </dt>
+            <dd>Difference type alias.</dd>
+            <dt id="a7cd570fa1041ed46578ec841fb25a025">
+              using <a href="#a7cd570fa1041ed46578ec841fb25a025" class="m-doc-self">reference</a> = Type&amp;
+            </dt>
+            <dd>Reference alias.</dd>
+            <dt id="a62f3f37d9f5f3d19003643ebee683b58">
+              using <a href="#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc-self">const_reference</a> = const Type&amp;
+            </dt>
+            <dd>Const reference alias.</dd>
+            <dt id="a7f6e6279ecb3e6bc33f4b2e93b4b2935">
+              using <a href="#a7f6e6279ecb3e6bc33f4b2e93b4b2935" class="m-doc-self">pointer</a> = Type*
+            </dt>
+            <dd>Pointer alias.</dd>
+            <dt id="a931da171caebb7c447f002e7684d4272">
+              using <a href="#a931da171caebb7c447f002e7684d4272" class="m-doc-self">const_pointer</a> = const Type*
+            </dt>
+            <dd>Const pointer alias.</dd>
+            <dt id="a059f9bb46e1ab3daae9b9afa5970141b">
+              using <a href="#a059f9bb46e1ab3daae9b9afa5970141b" class="m-doc-self">reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a>&gt;
+            </dt>
+            <dd>Reverse iterator alias.</dd>
+            <dt id="af3bd16a947abb59054288755e698486c">
+              using <a href="#af3bd16a947abb59054288755e698486c" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&gt;
+            </dt>
+            <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad5662638abf3d2435ef6ed67a6c70aae" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; other) -&gt; <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3626ec03f7e342e753f228d336b82840" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp;&amp; other) -&gt; <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a5e6e06a944e852504e4fa9f709467b82">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e6e06a944e852504e4fa9f709467b82" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the current elements count.</dd>
+            <dt id="aa3b800113fee541cbbff2e84b7c70bce">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa3b800113fee541cbbff2e84b7c70bce" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the maximum possible elements count.</dd>
+            <dt id="a5efd73261c5402ac9e74901119a0b5de">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5efd73261c5402ac9e74901119a0b5de" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the remaining element capacity.</dd>
+            <dt id="a1c7564f3ef02dbf95df7c17a64e25945">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1c7564f3ef02dbf95df7c17a64e25945" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it doesn&#x27;t contain any element.</dd>
+            <dt id="a31f34ad633a9660cad463f3df811c968">
+              <span class="m-doc-wrap-bumper">auto <a href="#a31f34ad633a9660cad463f3df811c968" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it can&#x27;t contain any more elements.</dd>
+            <dt id="af280eb2edef6d7c93602be9bc80884c6">
+              <span class="m-doc-wrap-bumper">auto <a href="#af280eb2edef6d7c93602be9bc80884c6" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the ideque.</dd>
+            <dt id="aa3b6dab2932eaa9d89c056a3b6e9e65c">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa3b6dab2932eaa9d89c056a3b6e9e65c" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the beginning of the ideque.</dd>
+            <dt id="ac85147ef5cc38e86432bf208c4465c65">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac85147ef5cc38e86432bf208c4465c65" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the ideque.</dd>
+            <dt id="a174e0bddf6848a95b94248cfcb61deeb">
+              <span class="m-doc-wrap-bumper">auto <a href="#a174e0bddf6848a95b94248cfcb61deeb" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Returns an iterator to the end of the ideque.</dd>
+            <dt id="a00f6de1aaaccd45fcb422e69a39ab7fe">
+              <span class="m-doc-wrap-bumper">auto <a href="#a00f6de1aaaccd45fcb422e69a39ab7fe" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the beginning of the ideque.</dd>
+            <dt id="a680c0886cf4848481e6c8cb74156003a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a680c0886cf4848481e6c8cb74156003a" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const iterator to the end of the ideque.</dd>
+            <dt id="a7a9155c051a83199b62ca10dcf60a436">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a9155c051a83199b62ca10dcf60a436" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#af3bd16a947abb59054288755e698486c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the ideque.</dd>
+            <dt id="a1a892c46e8223ee26da4fb5b3507d6e4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1a892c46e8223ee26da4fb5b3507d6e4" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque.html#a059f9bb46e1ab3daae9b9afa5970141b" class="m-doc">reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a reverse iterator to the end of the ideque.</dd>
+            <dt id="ae4c80159ca243f765cd1d5ab4275e245">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae4c80159ca243f765cd1d5ab4275e245" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#af3bd16a947abb59054288755e698486c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the ideque.</dd>
+            <dt id="af83614e2b7fe42a971e2f9bd691c0ebf">
+              <span class="m-doc-wrap-bumper">auto <a href="#af83614e2b7fe42a971e2f9bd691c0ebf" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque.html#a059f9bb46e1ab3daae9b9afa5970141b" class="m-doc">reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a reverse iterator to the beginning of the ideque.</dd>
+            <dt id="a26af44b29312042eed7c39c67ab74a6d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a26af44b29312042eed7c39c67ab74a6d" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#af3bd16a947abb59054288755e698486c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the end of the ideque.</dd>
+            <dt id="a3a28575811322f743ae95a2175c38612">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3a28575811322f743ae95a2175c38612" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#af3bd16a947abb59054288755e698486c" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+            </dt>
+            <dd>Returns a const reverse iterator to the beginning of the ideque.</dd>
+            <dt id="a545e5ed3ebdd7598a5a38f3ba6ab904a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a545e5ed3ebdd7598a5a38f3ba6ab904a" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="a4397d82dd3ba9d9af46e3a5af5cea2f5">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4397d82dd3ba9d9af46e3a5af5cea2f5" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="a3d240d109b9de87d13d671483f766530">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3d240d109b9de87d13d671483f766530" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the value stored at the specified index.</dd>
+            <dt id="a1101e1df84175bb44d3c9425227aa2a3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1101e1df84175bb44d3c9425227aa2a3" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the value stored at the specified index.</dd>
+            <dt id="a212f3e7d34b4f8a67d8ff09288a7c47c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a212f3e7d34b4f8a67d8ff09288a7c47c" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the first element.</dd>
+            <dt id="a9eb3e533e392367bc5b66f3775713804">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9eb3e533e392367bc5b66f3775713804" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the first element.</dd>
+            <dt id="a4399a4ae236f43f91b38e425ffc41869">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4399a4ae236f43f91b38e425ffc41869" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a></span>
+            </dt>
+            <dd>Returns a const reference to the last element.</dd>
+            <dt id="ab687b91233f4dc844c82151cd41ec5fd">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab687b91233f4dc844c82151cd41ec5fd" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Returns a reference to the last element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af917f468aa8b052319c6e9de38e9d3aa" class="m-doc">push_front</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Inserts a copy of a value at the beginning of the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aacaad1836fe29967cbe166bbac544dc9" class="m-doc">push_front</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span>
+            </dt>
+            <dd>Inserts a moved value at the beginning of the ideque.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a435a00b14c60001a477fb81fe0621124" class="m-doc">emplace_front</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the beginning of the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa89a4aba15c6a5896e7da589057b69c0" class="m-doc">push_back</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Inserts a copy of a value at the end of the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a18e6879d10e1645f5b64b7cbf22b9aca" class="m-doc">push_back</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span>
+            </dt>
+            <dd>Inserts a moved value at the end of the ideque.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a767cd72f4162a4774d5708fc06f12a46" class="m-doc">emplace_back</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the end of the ideque.</dd>
+            <dt id="a926075901837c263f13fbff142c4c9b9">
+              <span class="m-doc-wrap-bumper">void <a href="#a926075901837c263f13fbff142c4c9b9" class="m-doc-self">pop_front</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the first element of the ideque.</dd>
+            <dt id="a22c2a83ec9efec79894ca96b3f7ae7c6">
+              <span class="m-doc-wrap-bumper">void <a href="#a22c2a83ec9efec79894ca96b3f7ae7c6" class="m-doc-self">pop_back</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the last element of the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8e1c12d5e3d286073837df7ef65b6124" class="m-doc">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a copy of a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab361e8f551bd47c0a96b4d6dfc57edb8" class="m-doc">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              <a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts a moved value at the specified position.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a388de267bf99b5eb51234c64e11ad75b" class="m-doc">emplace</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Constructs and inserts a value at the specified position.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a56096c773094e4f8c5925d629ce71799" class="m-doc">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases an element.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa64a582cabbe83ee8c26e17693411caf" class="m-doc">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; first,
+              const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; last) -&gt; <a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Erases a range of elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a51af8268a78374e8f33e694b82f93829" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count)</span>
+            </dt>
+            <dd>Resizes the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5ab3d6c69022355f5e368e8d3546f963" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Resizes the ideque.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0f7e673b90bc1b88d3589ca74269b7e5" class="m-doc">shrink</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count)</span>
+            </dt>
+            <dd>Resizes the ideque to a size less or equal than the previous one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abd39b308ad68b58eb56daf02ec40da84" class="m-doc">assign</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span>
+            </dt>
+            <dd>Assigns values to the ideque, removing the previous ones.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Iterator&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#aa5b16194cdc5b6e21e4fac3385d631b7" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span>
+            </dt>
+            <dd>Assigns values to the ideque, removing the previous ones.</dd>
+            <dt id="a6eb14434515c17aded1a29795c203ed1">
+              <span class="m-doc-wrap-bumper">void <a href="#a6eb14434515c17aded1a29795c203ed1" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes all elements.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8cf92b44edf9e9f9f7f8ab2b93fed139" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this ideque with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aca2a0ff501cfb103b67d459bd9bd19cd" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab545b3c2969064f96d8affee242dd191" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac130694550b6cfdc5dd950668b1cd172" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a ideque with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac69e072b1406c403198476ca1ad810a5" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a314836979664ea2192d3a87e08b91027" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9770fbda7b0d3bae901e0330f8c84119" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa704a8dc9ae2da979855b32bc76eb98f" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae7b93d7d6ad408d43dd77ed3620f627f" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5918623a4ca79a48b41e871e6ac977d8" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ad5662638abf3d2435ef6ed67a6c70aae"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad5662638abf3d2435ef6ed67a6c70aae" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ideque to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3626ec03f7e342e753f228d336b82840"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3626ec03f7e342e753f228d336b82840" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ideque to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af917f468aa8b052319c6e9de38e9d3aa"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af917f468aa8b052319c6e9de38e9d3aa" class="m-doc-self">push_front</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the beginning of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aacaad1836fe29967cbe166bbac544dc9"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aacaad1836fe29967cbe166bbac544dc9" class="m-doc-self">push_front</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the beginning of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a435a00b14c60001a477fb81fe0621124"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a435a00b14c60001a477fb81fe0621124" class="m-doc-self">emplace_front</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the beginning of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa89a4aba15c6a5896e7da589057b69c0"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa89a4aba15c6a5896e7da589057b69c0" class="m-doc-self">push_back</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the end of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a18e6879d10e1645f5b64b7cbf22b9aca"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a18e6879d10e1645f5b64b7cbf22b9aca" class="m-doc-self">push_back</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the end of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a767cd72f4162a4774d5708fc06f12a46"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a7cd570fa1041ed46578ec841fb25a025" class="m-doc">reference</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a767cd72f4162a4774d5708fc06f12a46" class="m-doc-self">emplace_back</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the end of the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8e1c12d5e3d286073837df7ef65b6124"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8e1c12d5e3d286073837df7ef65b6124" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts a copy of a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab361e8f551bd47c0a96b4d6dfc57edb8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab361e8f551bd47c0a96b4d6dfc57edb8" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              <a href="classbn_1_1ideque.html#aa5b3ced243c3030c3680f44dfef69e5c" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+            </h3>
+            <p>Inserts a moved value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a388de267bf99b5eb51234c64e11ad75b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a388de267bf99b5eb51234c64e11ad75b" class="m-doc-self">emplace</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position,
+              Args &amp;&amp; ... args)</span></span>
+            </h3>
+            <p>Constructs and inserts a value at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The new value is inserted before this position.</td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td>Parameters of the value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a56096c773094e4f8c5925d629ce71799"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56096c773094e4f8c5925d629ce71799" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; position)</span></span>
+            </h3>
+            <p>Erases an element.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Iterator to the element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa64a582cabbe83ee8c26e17693411caf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa64a582cabbe83ee8c26e17693411caf" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; first,
+              const <a href="classbn_1_1ideque_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a>&amp; last)</span></span>
+            </h3>
+            <p>Erases a range of elements.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to erase.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator to the last element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator following the last erased element.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The range includes all the elements between first and last, including the element pointed by first, but not the one pointed by last.</p>
+          </div></section>
+          <section class="m-doc-details" id="a51af8268a78374e8f33e694b82f93829"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a51af8268a78374e8f33e694b82f93829" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count)</span></span>
+            </h3>
+            <p>Resizes the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5ab3d6c69022355f5e368e8d3546f963"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ab3d6c69022355f5e368e8d3546f963" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Resizes the ideque.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill new elements with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0f7e673b90bc1b88d3589ca74269b7e5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f7e673b90bc1b88d3589ca74269b7e5" class="m-doc-self">shrink</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count)</span></span>
+            </h3>
+            <p>Resizes the ideque to a size less or equal than the previous one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abd39b308ad68b58eb56daf02ec40da84"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abd39b308ad68b58eb56daf02ec40da84" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Assigns values to the ideque, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Number of elements to insert.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to fill new elements with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa5b16194cdc5b6e21e4fac3385d631b7"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename Iterator&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa5b16194cdc5b6e21e4fac3385d631b7" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const Iterator&amp; first,
+              const Iterator&amp; last)</span></span>
+            </h3>
+            <p>Assigns values to the ideque, removing the previous ones.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Iterator to the first element to insert.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator following to the last element to insert.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8cf92b44edf9e9f9f7f8ab2b93fed139"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />ideque&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cf92b44edf9e9f9f7f8ab2b93fed139" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this ideque with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ideque to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aca2a0ff501cfb103b67d459bd9bd19cd"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca2a0ff501cfb103b67d459bd9bd19cd" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
+              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Erases all elements that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">deque</td>
+                  <td>ideque from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab545b3c2969064f96d8affee242dd191"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab545b3c2969064f96d8affee242dd191" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">deque</td>
+                  <td>ideque from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac130694550b6cfdc5dd950668b1cd172"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac130694550b6cfdc5dd950668b1cd172" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a ideque with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac69e072b1406c403198476ca1ad810a5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac69e072b1406c403198476ca1ad810a5" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a314836979664ea2192d3a87e08b91027"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a314836979664ea2192d3a87e08b91027" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9770fbda7b0d3bae901e0330f8c84119"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9770fbda7b0d3bae901e0330f8c84119" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is lexicographically less than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa704a8dc9ae2da979855b32bc76eb98f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa704a8dc9ae2da979855b32bc76eb98f" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is lexicographically greater than the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae7b93d7d6ad408d43dd77ed3620f627f"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae7b93d7d6ad408d43dd77ed3620f627f" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Less than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is lexicographically less than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5918623a4ca79a48b41e871e6ac977d8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5918623a4ca79a48b41e871e6ac977d8" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
+              const <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span></span>
+            </h3>
+            <p>Greater than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First ideque to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second ideque to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first ideque is lexicographically greater than or equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

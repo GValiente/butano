@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_BGS_H
-#define BTN_HW_BGS_H
+#ifndef BN_HW_BGS_H
+#define BN_HW_BGS_H
 
-#include "btn_size.h"
-#include "btn_memory.h"
-#include "btn_regular_bg_builder.h"
-#include "btn_hw_tonc.h"
+#include "bn_size.h"
+#include "bn_memory.h"
+#include "bn_regular_bg_builder.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::bgs
+namespace bn::hw::bgs
 {
     class handle
     {

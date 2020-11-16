@@ -3,9 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_bg_blocks.h"
+#include "../include/bn_hw_bg_blocks.h"
 
-namespace btn::hw::bg_blocks
+namespace bn::hw::bg_blocks
 {
 
 void _commit_map_tiles_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_UNORDERED_SET_FWD_H
-#define BTN_UNORDERED_SET_FWD_H
+#ifndef BN_UNORDERED_SET_FWD_H
+#define BN_UNORDERED_SET_FWD_H
 
 /**
  * @file
- * btn::iunordered_set and btn::unordered_set declaration header file.
+ * bn::iunordered_set and bn::unordered_set declaration header file.
  *
  * @ingroup unordered_set
  */
 
-#include "btn_functional.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of unordered_set.

@@ -3,26 +3,26 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_memory_manager.h"
+#include "bn_memory_manager.h"
 
-#include "btn_list.h"
-#include "btn_vector.h"
-#include "btn_config_memory.h"
-#include "../hw/include/btn_hw_memory.h"
+#include "bn_list.h"
+#include "bn_vector.h"
+#include "bn_config_memory.h"
+#include "../hw/include/bn_hw_memory.h"
 
-#include "btn_memory.cpp.h"
-#include "btn_cstdlib.cpp.h"
-#include "btn_cstring.cpp.h"
+#include "bn_memory.cpp.h"
+#include "bn_cstdlib.cpp.h"
+#include "bn_cstring.cpp.h"
 
-namespace btn::memory_manager
+namespace bn::memory_manager
 {
 
 namespace
 {
-    static_assert(BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS > 0);
+    static_assert(BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS > 0);
 
 
-    constexpr const int max_items = BTN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS;
+    constexpr const int max_items = BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS;
 
 
     class item_type
@@ -52,7 +52,7 @@ namespace
         int free_bytes_count = 0;
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 
     constexpr const auto lower_bound_comparator = [](const items_iterator& items_it, int size)
     {
@@ -81,7 +81,7 @@ namespace
         auto free_items_end = data.free_items.end();
         auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, items_it->size,
                                          lower_bound_comparator);
-        BTN_ASSERT(free_items_it != free_items_end, "Free item not found: ", static_cast<void*>(items_it->data));
+        BN_ASSERT(free_items_it != free_items_end, "Free item not found: ", static_cast<void*>(items_it->data));
 
         while(*free_items_it != items_it)
         {
@@ -97,7 +97,7 @@ void init()
     char* start = hw::memory::ewram_heap_start();
     char* end = hw::memory::ewram_heap_end();
     data.total_bytes_count = end - start;
-    BTN_ASSERT(data.total_bytes_count >= 0, "Invalid heap size: ",
+    BN_ASSERT(data.total_bytes_count >= 0, "Invalid heap size: ",
                static_cast<void*>(start), " - ", static_cast<void*>(end));
 
     item_type new_item;
@@ -110,7 +110,7 @@ void init()
 
 void* ewram_alloc(int bytes)
 {
-    BTN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
+    BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
     int alignment_bytes = sizeof(int);
 
@@ -136,7 +136,7 @@ void* ewram_alloc(int bytes)
 
     items_iterator items_it = *free_items_it;
     item_type& item = *items_it;
-    BTN_ASSERT(! item.used, "Item is not free: ", item.size);
+    BN_ASSERT(! item.used, "Item is not free: ", item.size);
 
     if(int new_item_size = item.size - bytes)
     {
@@ -172,7 +172,7 @@ void ewram_free(void* ptr)
         auto items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
         items_iterator items_it = *items_it_ptr;
         item_type& item = *items_it;
-        BTN_ASSERT(item.used, "Item is not used: ", item.size);
+        BN_ASSERT(item.used, "Item is not used: ", item.size);
 
         item.used = false;
         data.free_bytes_count += item.size;

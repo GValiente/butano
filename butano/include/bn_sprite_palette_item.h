@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PALETTE_ITEM_H
-#define BTN_SPRITE_PALETTE_ITEM_H
+#ifndef BN_SPRITE_PALETTE_ITEM_H
+#define BN_SPRITE_PALETTE_ITEM_H
 
 /**
  * @file
- * btn::sprite_palette_item header file.
+ * bn::sprite_palette_item header file.
  *
  * @ingroup sprite
  * @ingroup palette
  * @ingroup tool
  */
 
-#include "btn_span.h"
-#include "btn_color.h"
-#include "btn_optional_fwd.h"
-#include "btn_palette_bpp_mode.h"
+#include "bn_span.h"
+#include "bn_color.h"
+#include "bn_optional_fwd.h"
+#include "bn_palette_bpp_mode.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_palette_ptr;
@@ -55,7 +55,7 @@ public:
         _colors_ref(colors_ref),
         _bpp_mode(bpp_mode)
     {
-        BTN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_ref.size() == 16) ||
+        BN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_ref.size() == 16) ||
                    (bpp_mode == palette_bpp_mode::BPP_8 && colors_ref.size() >= 16 && colors_ref.size() <= 256 &&
                             colors_ref.size() % 16 == 0),
                    "Invalid colors count: ", colors_ref.size());

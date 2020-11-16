@@ -3,25 +3,25 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BG_MAPS_H
-#define BTN_BG_MAPS_H
+#ifndef BN_BG_MAPS_H
+#define BN_BG_MAPS_H
 
 /**
  * @file
- * btn::bg_maps header file.
+ * bn::bg_maps header file.
  *
  * @ingroup bg_map
  */
 
-#include "btn_config_log.h"
-#include "btn_config_doxygen.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 /**
  * @brief Background maps related functions.
  *
  * @ingroup bg_map
  */
-namespace btn::bg_maps
+namespace bn::bg_maps
 {
     /**
      * @brief Returns the number of used background map cells.
@@ -43,7 +43,7 @@ namespace btn::bg_maps
      */
     [[nodiscard]] int available_blocks_count();
 
-    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**
          * @brief Logs the current status of the background blocks manager.
          */

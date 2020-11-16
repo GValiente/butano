@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ALGORITHM_H
-#define BTN_ALGORITHM_H
+#ifndef BN_ALGORITHM_H
+#define BN_ALGORITHM_H
 
 /**
  * @file
@@ -14,9 +14,9 @@
  */
 
 #include <algorithm>
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     using std::min;
     using std::max;

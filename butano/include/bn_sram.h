@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SRAM_H
-#define BTN_SRAM_H
+#ifndef BN_SRAM_H
+#define BN_SRAM_H
 
 /**
  * @file
- * btn::sram header file.
+ * bn::sram header file.
  *
  * @ingroup sram
  */
 
-#include "btn_assert.h"
-#include "../hw/include/btn_hw_sram_constants.h"
+#include "bn_assert.h"
+#include "../hw/include/bn_hw_sram_constants.h"
 
 /// @cond DO_NOT_DOCUMENT
 
-namespace _btn::sram
+namespace _bn::sram
 {
     void unsafe_write(const void* source, int size, int offset);
 
@@ -33,7 +33,7 @@ namespace _btn::sram
  *
  * @ingroup sram
  */
-namespace btn::sram
+namespace bn::sram
 {
     /**
      * @brief Returns the total SRAM size in bytes.
@@ -53,7 +53,7 @@ namespace btn::sram
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= size(), "Size is too high");
 
-        _btn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
+        _bn::sram::unsafe_write(&source, int(sizeof(Type)), 0);
     }
 
     /**
@@ -66,11 +66,11 @@ namespace btn::sram
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= size(), "Size is too high");
-        BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= size(),
+        BN_ASSERT(offset >= 0, "Invalid offset: ", offset);
+        BN_ASSERT(int(sizeof(Type)) + offset <= size(),
                    "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
-        _btn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
+        _bn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
     }
 
     /**
@@ -83,7 +83,7 @@ namespace btn::sram
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= size(), "Size is too high");
 
-        _btn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
+        _bn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }
 
     /**
@@ -96,11 +96,11 @@ namespace btn::sram
     {
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         static_assert(int(sizeof(Type)) <= size(), "Size is too high");
-        BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(int(sizeof(Type)) + offset <= size(),
+        BN_ASSERT(offset >= 0, "Invalid offset: ", offset);
+        BN_ASSERT(int(sizeof(Type)) + offset <= size(),
                    "Size and offset are too high: ", sizeof(Type), " - ", offset);
 
-        _btn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);
+        _bn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);
     }
 }
 

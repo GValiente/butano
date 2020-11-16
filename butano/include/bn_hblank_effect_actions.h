@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HBLANK_EFFECT_ACTIONS_H
-#define BTN_HBLANK_EFFECT_ACTIONS_H
+#ifndef BN_HBLANK_EFFECT_ACTIONS_H
+#define BN_HBLANK_EFFECT_ACTIONS_H
 
 /**
  * @file
- * btn::hblank_effect_ptr actions header file.
+ * bn::hblank_effect_ptr actions header file.
  *
  * @ingroup hblank_effect
  * @ingroup action
  */
 
-#include "btn_hblank_effect_ptr.h"
-#include "btn_value_template_actions.h"
+#include "bn_hblank_effect_ptr.h"
+#include "bn_value_template_actions.h"
 
-namespace btn
+namespace bn
 {
 
 // visible

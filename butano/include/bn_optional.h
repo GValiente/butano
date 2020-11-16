@@ -3,22 +3,22 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_OPTIONAL_H
-#define BTN_OPTIONAL_H
+#ifndef BN_OPTIONAL_H
+#define BN_OPTIONAL_H
 
 /**
  * @file
- * btn::optional implementation header file.
+ * bn::optional implementation header file.
  *
  * @ingroup optional
  */
 
 #include <new>
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_functional.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -286,7 +286,7 @@ public:
      */
     [[nodiscard]] const Type& value() const
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
@@ -296,7 +296,7 @@ public:
      */
     [[nodiscard]] Type& value()
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
@@ -324,7 +324,7 @@ public:
      */
     [[nodiscard]] const Type* operator->() const
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return &_value_impl();
     }
@@ -334,7 +334,7 @@ public:
      */
     [[nodiscard]] Type* operator->()
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return &_value_impl();
     }
@@ -344,7 +344,7 @@ public:
      */
     [[nodiscard]] const Type& operator*() const
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
@@ -354,7 +354,7 @@ public:
      */
     [[nodiscard]] Type& operator*()
     {
-        BTN_ASSERT(_valid, "Optional is not valid");
+        BN_ASSERT(_valid, "Optional is not valid");
 
         return _value_impl();
     }
@@ -395,7 +395,7 @@ public:
         {
             if(other._valid)
             {
-                btn::swap(_value_impl(), other._value_impl());
+                bn::swap(_value_impl(), other._value_impl());
             }
             else
             {

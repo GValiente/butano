@@ -12,12 +12,12 @@
 @ #define RESET_REGS       0x80
 @ #define RESET_ALL        0xFF
 
-@ void btn_hw_soft_reset(u32 reset_flags)
+@ void bn_hw_soft_reset(u32 reset_flags)
     .align 2
     .thumb_func
-    .global btn_hw_soft_reset
-    .type btn_hw_soft_reset STT_FUNC
-btn_hw_soft_reset:
+    .global bn_hw_soft_reset
+    .type bn_hw_soft_reset STT_FUNC
+bn_hw_soft_reset:
     ldr r3, =0x4000208
     mov r2, #0
     strb r2, [r3, #0]

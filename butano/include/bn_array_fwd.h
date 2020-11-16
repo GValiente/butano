@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ARRAY_FWD_H
-#define BTN_ARRAY_FWD_H
+#ifndef BN_ARRAY_FWD_H
+#define BN_ARRAY_FWD_H
 
 /**
  * @file
- * btn::array declaration header file.
+ * bn::array declaration header file.
  *
  * @ingroup array
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Container that encapsulates fixed size arrays.

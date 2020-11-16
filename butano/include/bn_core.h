@@ -3,25 +3,25 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CORE_H
-#define BTN_CORE_H
+#ifndef BN_CORE_H
+#define BN_CORE_H
 
 /**
  * @file
- * btn::core header file.
+ * bn::core header file.
  *
  * @ingroup core
  */
 
-#include "btn_span_fwd.h"
-#include "btn_fixed_fwd.h"
+#include "bn_span_fwd.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
     class string_view;
 }
 
-namespace btn::keypad
+namespace bn::keypad
 {
     enum class key_type;
 }
@@ -31,7 +31,7 @@ namespace btn::keypad
  *
  * @ingroup core
  */
-namespace btn::core
+namespace bn::core
 {
     /**
      * @brief This function must be called before using butano, and it must be called only once.

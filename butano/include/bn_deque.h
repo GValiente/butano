@@ -3,25 +3,25 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_DEQUE_H
-#define BTN_DEQUE_H
+#ifndef BN_DEQUE_H
+#define BN_DEQUE_H
 
 /**
  * @file
- * btn::ideque and btn::deque implementation header file.
+ * bn::ideque and bn::deque implementation header file.
  *
  * @ingroup deque
  */
 
 #include <new>
-#include "btn_assert.h"
-#include "btn_utility.h"
-#include "btn_iterator.h"
-#include "btn_algorithm.h"
-#include "btn_power_of_two.h"
-#include "btn_deque_fwd.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_iterator.h"
+#include "bn_algorithm.h"
+#include "bn_power_of_two.h"
+#include "bn_deque_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type>
@@ -442,8 +442,8 @@ public:
         }
     };
 
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     ideque(const ideque& other) = delete;
 
@@ -456,7 +456,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -474,7 +474,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space in deque: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -624,7 +624,7 @@ public:
      */
     [[nodiscard]] const_reference operator[](size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _value(index);
     }
@@ -634,7 +634,7 @@ public:
      */
     [[nodiscard]] reference operator[](size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _value(index);
     }
@@ -644,7 +644,7 @@ public:
      */
     [[nodiscard]] const_reference at(size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _value(index);
     }
@@ -654,7 +654,7 @@ public:
      */
     [[nodiscard]] reference at(size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
+        BN_ASSERT(index >= 0 && index < _size, "Invalid index: ", index, " - ", _size);
 
         return _value(index);
     }
@@ -664,7 +664,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         return _data[_begin];
     }
@@ -674,7 +674,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         return _data[_begin];
     }
@@ -684,7 +684,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         return _value(_size - 1);
     }
@@ -694,7 +694,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         return _value(_size - 1);
     }
@@ -705,7 +705,7 @@ public:
      */
     void push_front(const_reference value)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _begin) value_type(value);
         _push_front();
@@ -717,7 +717,7 @@ public:
      */
     void push_front(value_type&& value)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _begin) value_type(move(value));
         _push_front();
@@ -731,7 +731,7 @@ public:
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         Type* result = _data + _begin;
         ::new(result) value_type(forward<Args>(args)...);
@@ -745,7 +745,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _real_index(_size)) value_type(value);
         ++_size;
@@ -757,7 +757,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _real_index(_size)) value_type(move(value));
         ++_size;
@@ -771,7 +771,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BTN_ASSERT(! full(), "Deque is full");
+        BN_ASSERT(! full(), "Deque is full");
 
         Type* result = _data + _real_index(_size);
         ::new(result) value_type(forward<Args>(args)...);
@@ -784,7 +784,7 @@ public:
      */
     void pop_front()
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         _pop_front();
     }
@@ -794,7 +794,7 @@ public:
      */
     void pop_back()
     {
-        BTN_ASSERT(_size, "Deque is empty");
+        BN_ASSERT(_size, "Deque is empty");
 
         --_size;
         _value(_size).~value_type();
@@ -817,8 +817,8 @@ public:
         }
         else
         {
-            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BTN_ASSERT(! full(), "Deque is full");
+            BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;
@@ -828,7 +828,7 @@ public:
 
             for(; index != last; ++index)
             {
-                btn::swap(data[_real_index(index)], last_value);
+                bn::swap(data[_real_index(index)], last_value);
             }
 
             ++_size;
@@ -854,8 +854,8 @@ public:
         }
         else
         {
-            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BTN_ASSERT(! full(), "Deque is full");
+            BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;
@@ -865,7 +865,7 @@ public:
 
             for(; index != last; ++index)
             {
-                btn::swap(data[_real_index(index)], last_value);
+                bn::swap(data[_real_index(index)], last_value);
             }
 
             ++_size;
@@ -892,8 +892,8 @@ public:
         }
         else
         {
-            BTN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BTN_ASSERT(! full(), "Deque is full");
+            BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
+            BN_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;
@@ -903,7 +903,7 @@ public:
 
             for(; index != last; ++index)
             {
-                btn::swap(data[_real_index(index)], last_value);
+                bn::swap(data[_real_index(index)], last_value);
             }
 
             ++_size;
@@ -927,7 +927,7 @@ public:
         }
         else
         {
-            BTN_ASSERT(index > 0 && index < _size, "Invalid position: ", index, " - ", _size);
+            BN_ASSERT(index > 0 && index < _size, "Invalid position: ", index, " - ", _size);
 
             --_size;
 
@@ -962,13 +962,13 @@ public:
     {
         size_type first_index = first._index;
         size_type size = _size;
-        BTN_ASSERT(first_index >= 0 && first_index < size, "Invalid first: ", first_index, " - ", size);
+        BN_ASSERT(first_index >= 0 && first_index < size, "Invalid first: ", first_index, " - ", size);
 
         size_type last_index = last._index;
-        BTN_ASSERT(last_index >= 0 && last_index < size, "Invalid last: ", last_index, " - ", size);
+        BN_ASSERT(last_index >= 0 && last_index < size, "Invalid last: ", last_index, " - ", size);
 
         size_type delete_count = last_index - first_index;
-        BTN_ASSERT(delete_count >= 0 && delete_count <= size, "Invalid delete count: ", delete_count, " - ", size);
+        BN_ASSERT(delete_count >= 0 && delete_count <= size, "Invalid delete count: ", delete_count, " - ", size);
 
         if(delete_count)
         {
@@ -1043,7 +1043,7 @@ public:
      */
     void resize(size_type count)
     {
-        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
+        BN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         size_type size = _size;
@@ -1072,7 +1072,7 @@ public:
      */
     void resize(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
+        BN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         size_type size = _size;
@@ -1100,7 +1100,7 @@ public:
      */
     void shrink(size_type count)
     {
-        BTN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
+        BN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
 
         pointer data = _data;
 
@@ -1119,7 +1119,7 @@ public:
      */
     void assign(size_type count, const_reference value)
     {
-        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
+        BN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         clear();
@@ -1140,7 +1140,7 @@ public:
     void assign(const Iterator& first, const Iterator& last)
     {
         size_type count = last - first;
-        BTN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
+        BN_ASSERT(count >= 0 && count <= max_size(), "Invalid count: ", count, " - ", max_size());
 
         pointer data = _data;
         clear();
@@ -1177,8 +1177,8 @@ public:
     {
         if(_data != other._data)
         {
-            BTN_ASSERT(_size <= other.max_size(), "Invalid size: ", _size, " - ", other.max_size());
-            BTN_ASSERT(max_size() <= other._size, "Invalid max size: ", max_size(), " - ", other._size);
+            BN_ASSERT(_size <= other.max_size(), "Invalid size: ", _size, " - ", other.max_size());
+            BN_ASSERT(max_size() <= other._size, "Invalid max size: ", max_size(), " - ", other._size);
 
             ideque* min_deque;
             ideque* max_deque;
@@ -1201,7 +1201,7 @@ public:
 
             for(size_type index = 0; index < min_size; ++index)
             {
-                btn::swap(min_data[min_deque->_real_index(index)], max_data[max_deque->_real_index(index)]);
+                bn::swap(min_data[min_deque->_real_index(index)], max_data[max_deque->_real_index(index)]);
             }
 
             for(size_type index = min_size; index < max_size; ++index)
@@ -1211,7 +1211,7 @@ public:
                 max_data[max_real_index].~value_type();
             }
 
-            btn::swap(_size, other._size);
+            bn::swap(_size, other._size);
         }
     }
 
@@ -1460,7 +1460,7 @@ public:
     deque(const ideque<Type>& other) :
         deque()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -1472,7 +1472,7 @@ public:
     deque(ideque<Type>&& other) noexcept :
         deque()
     {
-        BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -1484,7 +1484,7 @@ public:
     explicit deque(size_type count) :
         deque()
     {
-        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+        BN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
 
         this->_assign(count);
     }
@@ -1497,7 +1497,7 @@ public:
     deque(size_type count, const_reference value) :
         deque()
     {
-        BTN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
+        BN_ASSERT(count >= 0 && count <= MaxSize, "Invalid count: ", count, " - ", MaxSize);
 
         this->_assign(count, value);
     }
@@ -1543,7 +1543,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1561,7 +1561,7 @@ public:
     {
         if(this != &other)
         {
-            BTN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space in deque: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

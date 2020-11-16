@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
-#define BTN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
+#define BN_GREEN_SWAP_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any_fwd.h"
-#include "btn_display_manager.h"
-#include "../hw/include/btn_hw_display.h"
+#include "bn_any_fwd.h"
+#include "bn_display_manager.h"
+#include "../hw/include/bn_hw_display.h"
 
-namespace btn
+namespace bn
 {
 
 class green_swap_hblank_effect_handler

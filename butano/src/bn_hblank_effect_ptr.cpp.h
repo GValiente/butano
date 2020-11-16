@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_hblank_effect_ptr.h"
+#include "bn_hblank_effect_ptr.h"
 
-#include "btn_span.h"
-#include "btn_hblank_effects_manager.h"
+#include "bn_span.h"
+#include "bn_hblank_effects_manager.h"
 
-namespace btn
+namespace bn
 {
 
 bool hblank_effect_ptr::visible() const

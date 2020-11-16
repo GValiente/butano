@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_camera_ptr.h"
+#include "bn_camera_ptr.h"
 
-#include "btn_optional.h"
-#include "btn_fixed_point.h"
-#include "btn_cameras_manager.h"
+#include "bn_optional.h"
+#include "bn_fixed_point.h"
+#include "bn_cameras_manager.h"
 
-namespace btn
+namespace bn
 {
 
 camera_ptr camera_ptr::create(fixed x, fixed y)

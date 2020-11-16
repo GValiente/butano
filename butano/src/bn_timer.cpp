@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_timer.h"
+#include "bn_timer.h"
 
-#include "btn_limits.h"
-#include "../hw/include/btn_hw_timer.h"
+#include "bn_limits.h"
+#include "../hw/include/bn_hw_timer.h"
 
-namespace btn
+namespace bn
 {
 
 timer::timer() :

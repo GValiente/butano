@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_PROFILER_H
-#define BTN_CONFIG_PROFILER_H
+#ifndef BN_CONFIG_PROFILER_H
+#define BN_CONFIG_PROFILER_H
 
 /**
  * @file
@@ -13,39 +13,39 @@
  * @ingroup profiler
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_PROFILER_ENABLED
+ * @def BN_CFG_PROFILER_ENABLED
  *
  * Specifies if the profiler is enabled or not.
  *
  * @ingroup profiler
  */
-#ifndef BTN_CFG_PROFILER_ENABLED
-    #define BTN_CFG_PROFILER_ENABLED false
+#ifndef BN_CFG_PROFILER_ENABLED
+    #define BN_CFG_PROFILER_ENABLED false
 #endif
 
 /**
- * @def BTN_CFG_PROFILER_LOG_ENGINE
+ * @def BN_CFG_PROFILER_LOG_ENGINE
  *
  * Specifies if butano subsystems must be profiled or not.
  *
  * @ingroup profiler
  */
-#ifndef BTN_CFG_PROFILER_LOG_ENGINE
-    #define BTN_CFG_PROFILER_LOG_ENGINE false
+#ifndef BN_CFG_PROFILER_LOG_ENGINE
+    #define BN_CFG_PROFILER_LOG_ENGINE false
 #endif
 
 /**
- * @def BTN_CFG_PROFILER_MAX_ENTRIES
+ * @def BN_CFG_PROFILER_MAX_ENTRIES
  *
  * Specifies the maximum number of code blocks that can be profiled without too much performance issues.
  *
  * @ingroup profiler
  */
-#ifndef BTN_CFG_PROFILER_MAX_ENTRIES
-    #define BTN_CFG_PROFILER_MAX_ENTRIES 32
+#ifndef BN_CFG_PROFILER_MAX_ENTRIES
+    #define BN_CFG_PROFILER_MAX_ENTRIES 32
 #endif
 
 #endif

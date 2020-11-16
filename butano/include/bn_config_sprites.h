@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_SPRITES_H
-#define BTN_CONFIG_SPRITES_H
+#ifndef BN_CONFIG_SPRITES_H
+#define BN_CONFIG_SPRITES_H
 
 /**
  * @file
@@ -13,24 +13,24 @@
  * @ingroup sprite
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_SPRITES_MAX_ITEMS
+ * @def BN_CFG_SPRITES_MAX_ITEMS
  *
- * Specifies the maximum number of sprite items that can be created with btn::sprite_ptr static constructors.
+ * Specifies the maximum number of sprite items that can be created with bn::sprite_ptr static constructors.
  *
  * A sprite item which is outside of the screen or hidden is not committed to the GBA,
  * so there can be more than 128 sprite items.
  *
  * @ingroup sprite
  */
-#ifndef BTN_CFG_SPRITES_MAX_ITEMS
-    #define BTN_CFG_SPRITES_MAX_ITEMS 128
+#ifndef BN_CFG_SPRITES_MAX_ITEMS
+    #define BN_CFG_SPRITES_MAX_ITEMS 128
 #endif
 
 /**
- * @def BTN_CFG_SPRITES_MAX_SORT_LAYERS
+ * @def BN_CFG_SPRITES_MAX_SORT_LAYERS
  *
  * Specifies the maximum number of used sprite sort layers.
  *
@@ -39,8 +39,8 @@
  *
  * @ingroup sprite
  */
-#ifndef BTN_CFG_SPRITES_MAX_SORT_LAYERS
-    #define BTN_CFG_SPRITES_MAX_SORT_LAYERS 16
+#ifndef BN_CFG_SPRITES_MAX_SORT_LAYERS
+    #define BN_CFG_SPRITES_MAX_SORT_LAYERS 16
 #endif
 
 #endif

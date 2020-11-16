@@ -3,9 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/btn_hw_hblank_effects.h"
+#include "../include/bn_hw_hblank_effects.h"
 
-namespace btn::hw::hblank_effects
+namespace bn::hw::hblank_effects
 {
 
 namespace
@@ -50,7 +50,7 @@ void _intr_1()
     *entries_ptr[0].dest = entries_ptr[0].src[vcount];
 }
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
     void _intr_2()
     {
         unsigned vcount = REG_VCOUNT;
@@ -74,7 +74,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 3
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 3
     void _intr_3()
     {
         unsigned vcount = REG_VCOUNT;
@@ -99,7 +99,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 4
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 4
     void _intr_4()
     {
         unsigned vcount = REG_VCOUNT;
@@ -125,7 +125,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 5
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 5
     void _intr_5()
     {
         unsigned vcount = REG_VCOUNT;
@@ -152,7 +152,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 6
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 6
     void _intr_6()
     {
         unsigned vcount = REG_VCOUNT;
@@ -180,7 +180,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 7
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 7
     void _intr_7()
     {
         unsigned vcount = REG_VCOUNT;
@@ -209,7 +209,7 @@ void _intr_1()
     }
 #endif
 
-#if BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 8
+#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 8
     void _intr_8()
     {
         unsigned vcount = REG_VCOUNT;

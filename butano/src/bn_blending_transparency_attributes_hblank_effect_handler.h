@@ -3,15 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
-#define BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
+#define BN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any_fwd.h"
-#include "btn_blending_transparency_attributes.h"
-#include "btn_display_manager.h"
-#include "../hw/include/btn_hw_display.h"
+#include "bn_any_fwd.h"
+#include "bn_blending_transparency_attributes.h"
+#include "bn_display_manager.h"
+#include "../hw/include/bn_hw_display.h"
 
-namespace btn
+namespace bn
 {
 
 class blending_transparency_attributes_hblank_effect_handler
@@ -29,7 +29,7 @@ public:
 
     [[nodiscard]] static bool target_updated(int, iany&)
     {
-        BTN_ASSERT(! display_manager::blending_fade_enabled(),
+        BN_ASSERT(! display_manager::blending_fade_enabled(),
                    "Transparency and fade blendings can't be enabled at the same time");
 
         return false;

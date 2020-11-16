@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_MEMORY_H
-#define BTN_HW_MEMORY_H
+#ifndef BN_HW_MEMORY_H
+#define BN_HW_MEMORY_H
 
 #include <cstring>
-#include "btn_hw_tonc.h"
+#include "bn_hw_tonc.h"
 
-namespace btn::hw::memory
+namespace bn::hw::memory
 {
     [[nodiscard]] int used_static_iwram();
 

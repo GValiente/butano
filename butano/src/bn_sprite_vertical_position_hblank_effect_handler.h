@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_VERTICAL_POSITION_HBLANK_EFFECT_HANDLER_H
-#define BTN_SPRITE_VERTICAL_POSITION_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_SPRITE_VERTICAL_POSITION_HBLANK_EFFECT_HANDLER_H
+#define BN_SPRITE_VERTICAL_POSITION_HBLANK_EFFECT_HANDLER_H
 
-#include "btn_any.h"
-#include "btn_sprites_manager.h"
-#include "../hw/include/btn_hw_sprites.h"
+#include "bn_any.h"
+#include "bn_sprites_manager.h"
+#include "../hw/include/bn_hw_sprites.h"
 
-namespace btn
+namespace bn
 {
 
 class sprite_vertical_position_hblank_effect_handler

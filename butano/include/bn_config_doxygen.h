@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_DOXYGEN_H
-#define BTN_CONFIG_DOXYGEN_H
+#ifndef BN_CONFIG_DOXYGEN_H
+#define BN_CONFIG_DOXYGEN_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-#ifndef BTN_DOXYGEN
-    #define BTN_DOXYGEN false
+#ifndef BN_DOXYGEN
+    #define BN_DOXYGEN false
 #endif
 
 #endif

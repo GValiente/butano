@@ -3,63 +3,63 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_hblank_effects_manager.h"
+#include "bn_hblank_effects_manager.h"
 
-#include "btn_vector.h"
-#include "../hw/include/btn_hw_hblank_effects.h"
+#include "bn_vector.h"
+#include "../hw/include/bn_hw_hblank_effects.h"
 
-#include "btn_bg_palette_color_hblank_effect_handler.h"
-#include "btn_bg_palettes_transparent_color_hblank_effect_handler.h"
-#include "btn_blending_fade_alpha_hblank_effect_handler.h"
-#include "btn_blending_transparency_attributes_hblank_effect_handler.h"
-#include "btn_green_swap_hblank_effect_handler.h"
-#include "btn_mosaic_attributes_hblank_effect_handler.h"
-#include "btn_rect_window_horizontal_boundaries_hblank_effect_handler.h"
-#include "btn_rect_window_vertical_boundaries_hblank_effect_handler.h"
-#include "btn_regular_bg_attributes_hblank_effect_handler.h"
-#include "btn_regular_bg_horizontal_position_hblank_effect_handler.h"
-#include "btn_regular_bg_vertical_position_hblank_effect_handler.h"
-#include "btn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
-#include "btn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
-#include "btn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
-#include "btn_sprite_affine_mat_pd_register_hblank_effect_handler.h"
-#include "btn_sprite_first_attributes_hblank_effect_handler.h"
-#include "btn_sprite_regular_second_attributes_hblank_effect_handler.h"
-#include "btn_sprite_affine_second_attributes_hblank_effect_handler.h"
-#include "btn_sprite_third_attributes_hblank_effect_handler.h"
-#include "btn_sprite_horizontal_position_hblank_effect_handler.h"
-#include "btn_sprite_vertical_position_hblank_effect_handler.h"
-#include "btn_sprite_palette_color_hblank_effect_handler.h"
+#include "bn_bg_palette_color_hblank_effect_handler.h"
+#include "bn_bg_palettes_transparent_color_hblank_effect_handler.h"
+#include "bn_blending_fade_alpha_hblank_effect_handler.h"
+#include "bn_blending_transparency_attributes_hblank_effect_handler.h"
+#include "bn_green_swap_hblank_effect_handler.h"
+#include "bn_mosaic_attributes_hblank_effect_handler.h"
+#include "bn_rect_window_horizontal_boundaries_hblank_effect_handler.h"
+#include "bn_rect_window_vertical_boundaries_hblank_effect_handler.h"
+#include "bn_regular_bg_attributes_hblank_effect_handler.h"
+#include "bn_regular_bg_horizontal_position_hblank_effect_handler.h"
+#include "bn_regular_bg_vertical_position_hblank_effect_handler.h"
+#include "bn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
+#include "bn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
+#include "bn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
+#include "bn_sprite_affine_mat_pd_register_hblank_effect_handler.h"
+#include "bn_sprite_first_attributes_hblank_effect_handler.h"
+#include "bn_sprite_regular_second_attributes_hblank_effect_handler.h"
+#include "bn_sprite_affine_second_attributes_hblank_effect_handler.h"
+#include "bn_sprite_third_attributes_hblank_effect_handler.h"
+#include "bn_sprite_horizontal_position_hblank_effect_handler.h"
+#include "bn_sprite_vertical_position_hblank_effect_handler.h"
+#include "bn_sprite_palette_color_hblank_effect_handler.h"
 
-#include "btn_hblank_effects.cpp.h"
-#include "btn_hblank_effect_ptr.cpp.h"
-#include "btn_bg_palette_color_hblank_effect_ptr.cpp.h"
-#include "btn_bg_palettes_transparent_color_hblank_effect_ptr.cpp.h"
-#include "btn_blending_fade_alpha_hblank_effect_ptr.cpp.h"
-#include "btn_blending_transparency_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_green_swap_hblank_effect_ptr.cpp.h"
-#include "btn_mosaic_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_rect_window_boundaries_hblank_effect_ptr.cpp.h"
-#include "btn_regular_bg_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_regular_bg_position_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_mat_pc_register_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_mat_pd_register_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_affine_second_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_first_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_palette_color_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_position_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_regular_second_attributes_hblank_effect_ptr.cpp.h"
-#include "btn_sprite_third_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_hblank_effects.cpp.h"
+#include "bn_hblank_effect_ptr.cpp.h"
+#include "bn_bg_palette_color_hblank_effect_ptr.cpp.h"
+#include "bn_bg_palettes_transparent_color_hblank_effect_ptr.cpp.h"
+#include "bn_blending_fade_alpha_hblank_effect_ptr.cpp.h"
+#include "bn_blending_transparency_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_green_swap_hblank_effect_ptr.cpp.h"
+#include "bn_mosaic_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_rect_window_boundaries_hblank_effect_ptr.cpp.h"
+#include "bn_regular_bg_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_regular_bg_position_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_mat_pc_register_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_mat_pd_register_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_affine_second_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_first_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_palette_color_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_position_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_regular_second_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_sprite_third_attributes_hblank_effect_ptr.cpp.h"
 
-namespace btn::hblank_effects_manager
+namespace bn::hblank_effects_manager
 {
 
 namespace
 {
-    constexpr const int max_items = BTN_CFG_HBLANK_EFFECTS_MAX_ITEMS;
+    constexpr const int max_items = BN_CFG_HBLANK_EFFECTS_MAX_ITEMS;
 
     static_assert(max_items > 0 && max_items <= 8);
 
@@ -194,7 +194,7 @@ namespace
                 break;
 
             default:
-                BTN_ERROR("Unknown handler: ", int(handler));
+                BN_ERROR("Unknown handler: ", int(handler));
                 break;
             }
         }
@@ -283,7 +283,7 @@ namespace
                 return _check_update_impl<sprite_palette_color_hblank_effect_handler>();
 
             default:
-                BTN_ERROR("Unknown handler: ", int(handler));
+                BN_ERROR("Unknown handler: ", int(handler));
                 return false;
             }
         }
@@ -404,7 +404,7 @@ namespace
                 break;
 
             default:
-                BTN_ERROR("Unknown handler: ", int(handler));
+                BN_ERROR("Unknown handler: ", int(handler));
                 break;
             }
         }
@@ -519,7 +519,7 @@ namespace
                 break;
 
             default:
-                BTN_ERROR("Unknown handler: ", int(handler));
+                BN_ERROR("Unknown handler: ", int(handler));
                 break;
             }
         }
@@ -597,7 +597,7 @@ namespace
         hw_entry entries_b[max_items];
     };
 
-    BTN_DATA_EWRAM static_external_data external_data;
+    BN_DATA_EWRAM static_external_data external_data;
     static_internal_data internal_data;
 
     void _update_visible_item_index(int item_index)
@@ -686,19 +686,19 @@ void disable()
 
 int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
 {
-    BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
-    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
-    BTN_ASSERT(! external_data.free_item_indexes.empty(), "No more available HBlank effects");
+    BN_ASSERT(values_ptr, "Values ptr is null");
+    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(! external_data.free_item_indexes.empty(), "No more available HBlank effects");
 
     return _create(values_ptr, target_id, handler);
 }
 
 int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
 {
-    BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
-    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(values_ptr, "Values ptr is null");
+    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     if(external_data.free_item_indexes.empty())
     {
@@ -743,9 +743,9 @@ const void* values_ref(int id)
 
 void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_count)
 {
-    BTN_ASSERT(values_ptr, "Values ptr is null");
-    BTN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
-    BTN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(values_ptr, "Values ptr is null");
+    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     item_type& item = external_data.items[id];
     item.values_ptr = values_ptr;

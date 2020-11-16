@@ -6,26 +6,26 @@
 #ifndef TESTS_H
 #define TESTS_H
 
-#include "btn_log.h"
-#include "btn_string_view.h"
+#include "bn_log.h"
+#include "bn_string_view.h"
 
 class tests
 {
 
 public:
-    explicit tests(const btn::string_view& tag) :
+    explicit tests(const bn::string_view& tag) :
         _tag(tag)
     {
-        BTN_LOG("Running ", tag, " tests...");
+        BN_LOG("Running ", tag, " tests...");
     }
 
     ~tests()
     {
-        BTN_LOG(_tag, " tests passed");
+        BN_LOG(_tag, " tests passed");
     }
 
 private:
-    btn::string_view _tag;
+    bn::string_view _tag;
 };
 
 #endif

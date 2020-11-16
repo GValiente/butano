@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SORT_KEY_H
-#define BTN_SORT_KEY_H
+#ifndef BN_SORT_KEY_H
+#define BN_SORT_KEY_H
 
-#include "btn_assert.h"
-#include "btn_limits.h"
+#include "bn_assert.h"
+#include "bn_limits.h"
 
-namespace btn
+namespace bn
 {
 
 class sort_key
@@ -36,8 +36,8 @@ public:
     constexpr sort_key(int priority, int z_order) :
         _fields({ uint16_t(z_order + numeric_limits<int16_t>::max()), uint16_t(priority) })
     {
-        BTN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
-        BTN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
+        BN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
+        BN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
     }
 
     [[nodiscard]] constexpr int priority() const
@@ -47,7 +47,7 @@ public:
 
     constexpr void set_priority(int priority)
     {
-        BTN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
+        BN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
 
         _fields.priority = priority;
     }
@@ -59,7 +59,7 @@ public:
 
     constexpr void set_z_order(int z_order)
     {
-        BTN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
+        BN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
 
         _fields.z_order = z_order + numeric_limits<int16_t>::max();
     }

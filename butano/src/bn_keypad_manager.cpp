@@ -3,34 +3,34 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_keypad_manager.h"
+#include "bn_keypad_manager.h"
 
-#include "btn_string_view.h"
-#include "btn_config_keypad.h"
-#include "../hw/include/btn_hw_keypad.h"
+#include "bn_string_view.h"
+#include "bn_config_keypad.h"
+#include "../hw/include/bn_hw_keypad.h"
 
-#include "btn_keypad.cpp.h"
+#include "bn_keypad.cpp.h"
 
-#if BTN_CFG_KEYPAD_LOG_ENABLED
-    #include "btn_log.h"
-    #include "btn_string.h"
+#if BN_CFG_KEYPAD_LOG_ENABLED
+    #include "bn_log.h"
+    #include "bn_string.h"
 
-    static_assert(BTN_CFG_LOG_ENABLED, "Log is not enabled");
+    static_assert(BN_CFG_LOG_ENABLED, "Log is not enabled");
 #endif
 
-namespace btn::keypad_manager
+namespace bn::keypad_manager
 {
 
 namespace
 {
-    #if BTN_CFG_KEYPAD_LOG_ENABLED
+    #if BN_CFG_KEYPAD_LOG_ENABLED
         class keypad_logger
         {
 
         public:
             keypad_logger()
             {
-                BTN_LOG("-- KEYPAD LOGGER INIT ---");
+                BN_LOG("-- KEYPAD LOGGER INIT ---");
             }
 
             void log(unsigned keys)
@@ -50,13 +50,13 @@ namespace
             {
                 if(! _buffer.empty())
                 {
-                    BTN_LOG(_buffer);
+                    BN_LOG(_buffer);
                     _buffer.clear();
                 }
             }
 
         private:
-            string<BTN_CFG_LOG_MAX_SIZE - 8> _buffer;
+            string<BN_CFG_LOG_MAX_SIZE - 8> _buffer;
         };
     #endif
 
@@ -70,17 +70,17 @@ namespace
         unsigned released_keys = 0;
         bool read_commands = false;
 
-        #if BTN_CFG_KEYPAD_LOG_ENABLED
+        #if BN_CFG_KEYPAD_LOG_ENABLED
             keypad_logger logger;
         #endif
     };
 
-    BTN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM static_data data;
 }
 
 void init(const string_view& commands)
 {
-    BTN_ASSERT(commands.empty() || commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
+    BN_ASSERT(commands.empty() || commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
 
     data.commands = commands;
     data.read_commands = ! commands.empty();
@@ -129,21 +129,21 @@ void update()
     data.pressed_keys = current_keys & ~previous_keys;
     data.released_keys = ~current_keys & previous_keys;
 
-    #if BTN_CFG_KEYPAD_LOG_ENABLED
+    #if BN_CFG_KEYPAD_LOG_ENABLED
         data.logger.log(current_keys);
     #endif
 }
 
 void set_interrupt(const span<const key_type>& keys)
 {
-    BTN_ASSERT(! keys.empty(), "There's no keys");
+    BN_ASSERT(! keys.empty(), "There's no keys");
 
     hw::keypad::set_interrupt(keys);
 }
 
 void stop()
 {
-    #if BTN_CFG_KEYPAD_LOG_ENABLED
+    #if BN_CFG_KEYPAD_LOG_ENABLED
         data.logger.flush();
     #endif
 }

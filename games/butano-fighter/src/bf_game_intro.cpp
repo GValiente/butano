@@ -5,10 +5,10 @@
 
 #include "bf_game_intro.h"
 
-#include "btn_colors.h"
-#include "btn_rect_window.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprite_text_generator.h"
+#include "bn_colors.h"
+#include "bn_rect_window.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprite_text_generator.h"
 #include "bf_game_stage.h"
 #include "bf_butano_background.h"
 
@@ -25,12 +25,12 @@ namespace
     constexpr const int wait_3_frames = 40;
     constexpr const int background_move_frames = wait_2_frames + wait_3_frames + (scale_frames * 2);
 
-    btn::vector<btn::sprite_ptr, 2> _create_background_sprites(const stage& stage)
+    bn::vector<bn::sprite_ptr, 2> _create_background_sprites(const stage& stage)
     {
-        btn::vector<btn::sprite_ptr, 2> result;
+        bn::vector<bn::sprite_ptr, 2> result;
         int x = -64 + 8;
 
-        btn::sprite_builder builder(stage.intro_sprite_item);
+        bn::sprite_builder builder(stage.intro_sprite_item);
         builder.set_x(x);
         builder.set_horizontal_scale(2);
         builder.set_vertical_scale(0.01);
@@ -38,7 +38,7 @@ namespace
         builder.set_visible(false);
         result.push_back(builder.build());
 
-        builder = btn::sprite_builder(stage.intro_sprite_item, 1);
+        builder = bn::sprite_builder(stage.intro_sprite_item, 1);
         builder.set_x(x + 128);
         builder.set_horizontal_scale(2);
         builder.set_vertical_scale(0.01);
@@ -49,27 +49,27 @@ namespace
         return result;
     }
 
-    btn::sprite_third_attributes_hblank_effect_ptr _create_hblank_effect(
-            const btn::sprite_ptr& sprite, const btn::sprite_palette_ptr& second_palette,
-            btn::ivector<btn::sprite_third_attributes>& hblank_effect_attributes)
+    bn::sprite_third_attributes_hblank_effect_ptr _create_hblank_effect(
+            const bn::sprite_ptr& sprite, const bn::sprite_palette_ptr& second_palette,
+            bn::ivector<bn::sprite_third_attributes>& hblank_effect_attributes)
     {
-        btn::sprite_third_attributes attributes = sprite.third_attributes();
-        btn::sprite_third_attributes alt_attributes = attributes;
+        bn::sprite_third_attributes attributes = sprite.third_attributes();
+        bn::sprite_third_attributes alt_attributes = attributes;
         alt_attributes.set_palette(second_palette);
 
-        for(int index = 0; index < btn::display::height(); index += 2)
+        for(int index = 0; index < bn::display::height(); index += 2)
         {
             hblank_effect_attributes.push_back(attributes);
             hblank_effect_attributes.push_back(alt_attributes);
         }
 
-        btn::span<const btn::sprite_third_attributes> attributes_span(
-                    hblank_effect_attributes.data(), btn::display::height());
-        return btn::sprite_third_attributes_hblank_effect_ptr::create(sprite, attributes_span);
+        bn::span<const bn::sprite_third_attributes> attributes_span(
+                    hblank_effect_attributes.data(), bn::display::height());
+        return bn::sprite_third_attributes_hblank_effect_ptr::create(sprite, attributes_span);
     }
 }
 
-intro::intro(const stage& stage, btn::sprite_text_generator& text_generator) :
+intro::intro(const stage& stage, bn::sprite_text_generator& text_generator) :
     _background_sprites(_create_background_sprites(stage)),
     _alt_palette(stage.intro_alt_sprite_item.palette_item().create_palette())
 {
@@ -85,7 +85,7 @@ intro::intro(const stage& stage, btn::sprite_text_generator& text_generator) :
     text_generator.set_z_order(old_z_order);
     text_generator.set_one_sprite_per_character(false);
 
-    for(btn::sprite_ptr& text_sprite : _text_sprites)
+    for(bn::sprite_ptr& text_sprite : _text_sprites)
     {
         text_sprite.set_x(text_sprite.x() * 2);
         text_sprite.set_scale(2, 0.01);
@@ -119,7 +119,7 @@ void intro::update(const butano_background& butano_background)
 
         if(! _counter)
         {
-            for(btn::sprite_ptr& background_sprite : _background_sprites)
+            for(bn::sprite_ptr& background_sprite : _background_sprites)
             {
                 background_sprite.set_visible(true);
                 _background_sprite_move_actions.emplace_back(background_sprite, background_move_frames,
@@ -127,10 +127,10 @@ void intro::update(const butano_background& butano_background)
                 _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, 2);
             }
 
-            btn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
-            btn::sprite_palette_ptr& second_palette = *_alt_palette;
-            first_palette.set_fade(btn::colors::white, 0.5);
-            second_palette.set_fade(btn::colors::black, 0.5);
+            bn::sprite_palette_ptr first_palette = _background_sprites[0].palette();
+            bn::sprite_palette_ptr& second_palette = *_alt_palette;
+            first_palette.set_fade(bn::colors::white, 0.5);
+            second_palette.set_fade(bn::colors::black, 0.5);
             _background_sprite_palette_actions.emplace_back(first_palette, scale_frames, 0);
             _background_sprite_palette_actions.emplace_back(second_palette, scale_frames, 0);
             _background_sprite_hblank_effects.push_back(
@@ -140,7 +140,7 @@ void intro::update(const butano_background& butano_background)
                         _create_hblank_effect(
                             _background_sprites[1], second_palette, _background_sprite_hblank_effect_attributes_2));
 
-            btn::rect_window internal_window = btn::rect_window::internal();
+            bn::rect_window internal_window = bn::rect_window::internal();
             internal_window.set_boundaries(0, -128, 0, 128);
             _window_move_top_action.emplace(internal_window, scale_frames, -64);
             _window_move_bottom_action.emplace(internal_window, scale_frames, 64);
@@ -204,9 +204,9 @@ void intro::update(const butano_background& butano_background)
 
                 if(actions_count < sprites_count)
                 {
-                    btn::sprite_ptr text_sprite = _text_sprites[actions_count];
+                    bn::sprite_ptr text_sprite = _text_sprites[actions_count];
                     text_sprite.set_visible(true);
-                    _text_sprite_vertical_scale_actions.emplace_back(btn::move(text_sprite), scale_frames / 2, 2);
+                    _text_sprite_vertical_scale_actions.emplace_back(bn::move(text_sprite), scale_frames / 2, 2);
                 }
             }
         }
@@ -228,7 +228,7 @@ void intro::update(const butano_background& butano_background)
 
                 if(text_sprite_vertical_scale_action.done())
                 {
-                    btn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
+                    bn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
                     text_sprite.set_visible(false);
                 }
             }
@@ -249,18 +249,18 @@ void intro::update(const butano_background& butano_background)
 
         if(! _counter)
         {
-            for(btn::sprite_ptr& background_sprite : _background_sprites)
+            for(bn::sprite_ptr& background_sprite : _background_sprites)
             {
                 _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, 0.1);
             }
 
             for(auto& background_sprite_palette_action : _background_sprite_palette_actions)
             {
-                background_sprite_palette_action = btn::sprite_palette_fade_to_action(
+                background_sprite_palette_action = bn::sprite_palette_fade_to_action(
                             background_sprite_palette_action.palette(), scale_frames, 0.5);
             }
 
-            btn::rect_window internal_window = btn::rect_window::internal();
+            bn::rect_window internal_window = bn::rect_window::internal();
             _window_move_top_action.emplace(internal_window, scale_frames, 0);
             _window_move_bottom_action.emplace(internal_window, scale_frames, 0);
 
@@ -297,7 +297,7 @@ void intro::update(const butano_background& butano_background)
 
                     if(text_sprite_vertical_scale_action.done())
                     {
-                        btn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
+                        bn::sprite_ptr text_sprite = text_sprite_vertical_scale_action.sprite();
                         text_sprite.set_visible(false);
                     }
                 }
@@ -321,7 +321,7 @@ void intro::update(const butano_background& butano_background)
             _text_sprites.clear();
             _text_sprite_vertical_scale_actions.clear();
 
-            btn::rect_window internal_window = btn::rect_window::internal();
+            bn::rect_window internal_window = bn::rect_window::internal();
             internal_window.set_boundaries(0, 0, 0, 0);
 
             _state = state::DONE;
@@ -332,7 +332,7 @@ void intro::update(const butano_background& butano_background)
         break;
 
     default:
-        BTN_ERROR("Invalid state: ", int(_state));
+        BN_ERROR("Invalid state: ", int(_state));
         break;
     }
 }

@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ALIGNMENT_H
-#define BTN_ALIGNMENT_H
+#ifndef BN_ALIGNMENT_H
+#define BN_ALIGNMENT_H
 
 /**
  * @file
@@ -13,9 +13,9 @@
  * @ingroup memory
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Indicates if the given pointer is aligned to the given Bytes.

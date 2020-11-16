@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_ANY_FWD_H
-#define BTN_ANY_FWD_H
+#ifndef BN_ANY_FWD_H
+#define BN_ANY_FWD_H
 
 /**
  * @file
- * btn::iany and btn::any declaration header file.
+ * bn::iany and bn::any declaration header file.
  *
  * @ingroup any
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of any.

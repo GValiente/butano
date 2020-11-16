@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_POINT_H
-#define BTN_POINT_H
+#ifndef BN_POINT_H
+#define BN_POINT_H
 
 /**
  * @file
- * btn::point header file.
+ * bn::point header file.
  *
  * @ingroup math
  */
 
-#include "btn_assert.h"
-#include "btn_functional.h"
+#include "bn_assert.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -139,7 +139,7 @@ public:
      */
     constexpr point& operator/=(int value)
     {
-        BTN_ASSERT(value != 0, "Invalid value: ", value);
+        BN_ASSERT(value != 0, "Invalid value: ", value);
 
         _x /= value;
         _y /= value;
@@ -153,7 +153,7 @@ public:
      */
     constexpr point& operator/=(unsigned value)
     {
-        BTN_ASSERT(value != 0, "Invalid value: ", value);
+        BN_ASSERT(value != 0, "Invalid value: ", value);
 
         _x /= value;
         _y /= value;
@@ -197,7 +197,7 @@ public:
      */
     [[nodiscard]] constexpr friend point operator/(const point& a, int b)
     {
-        BTN_ASSERT(b != 0, "Invalid value: ", b);
+        BN_ASSERT(b != 0, "Invalid value: ", b);
 
         return point(a._x / b, a._y / b);
     }
@@ -207,7 +207,7 @@ public:
      */
     [[nodiscard]] constexpr friend point operator/(const point& a, unsigned b)
     {
-        BTN_ASSERT(b != 0, "Invalid value: ", b);
+        BN_ASSERT(b != 0, "Invalid value: ", b);
 
         return point(a._x / b, a._y / b);
     }

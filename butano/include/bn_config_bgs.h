@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_CONFIG_BGS_H
-#define BTN_CONFIG_BGS_H
+#ifndef BN_CONFIG_BGS_H
+#define BN_CONFIG_BGS_H
 
 /**
  * @file
@@ -13,10 +13,10 @@
  * @ingroup bg
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
- * @def BTN_CFG_BGS_MAX_ITEMS
+ * @def BN_CFG_BGS_MAX_ITEMS
  *
  * Specifies the maximum number of background items that can be created.
  *
@@ -24,8 +24,8 @@
  *
  * @ingroup bg
  */
-#ifndef BTN_CFG_BGS_MAX_ITEMS
-    #define BTN_CFG_BGS_MAX_ITEMS 4
+#ifndef BN_CFG_BGS_MAX_ITEMS
+    #define BN_CFG_BGS_MAX_ITEMS 4
 #endif
 
 #endif

@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_MATS_H
-#define BTN_SPRITE_AFFINE_MATS_H
+#ifndef BN_SPRITE_AFFINE_MATS_H
+#define BN_SPRITE_AFFINE_MATS_H
 
 /**
  * @file
- * btn::sprite_affine_mats header file.
+ * bn::sprite_affine_mats header file.
  *
  * @ingroup sprite
  * @ingroup affine_mat
  */
 
-#include "btn_common.h"
+#include "bn_common.h"
 
 /**
  * @brief Sprite affine transformation matrices related functions.
@@ -22,7 +22,7 @@
  * @ingroup sprite
  * @ingroup affine_mat
  */
-namespace btn::sprite_affine_mats
+namespace bn::sprite_affine_mats
 {
     /**
      * @brief Returns the number of used sprite affine transformation matrices

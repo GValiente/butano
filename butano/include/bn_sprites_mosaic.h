@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITES_MOSAIC_H
-#define BTN_SPRITES_MOSAIC_H
+#ifndef BN_SPRITES_MOSAIC_H
+#define BN_SPRITES_MOSAIC_H
 
 /**
  * @file
- * btn::sprites_mosaic header file.
+ * bn::sprites_mosaic header file.
  *
  * @ingroup sprite
  * @ingroup mosaic
  */
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
 /**
  * @brief Functions related with the mosaic applied to the sprites.
@@ -22,7 +22,7 @@
  * @ingroup sprite
  * @ingroup mosaic
  */
-namespace btn::sprites_mosaic
+namespace bn::sprites_mosaic
 {
     /**
      * @brief Returns the horizontal stretch of the mosaic applied to the sprites.

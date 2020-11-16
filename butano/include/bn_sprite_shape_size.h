@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_SHAPE_SIZE_H
-#define BTN_SPRITE_SHAPE_SIZE_H
+#ifndef BN_SPRITE_SHAPE_SIZE_H
+#define BN_SPRITE_SHAPE_SIZE_H
 
 /**
  * @file
- * btn::sprite_shape header file.
+ * bn::sprite_shape header file.
  *
  * @ingroup sprite
  */
 
-#include "btn_assert.h"
-#include "btn_palette_bpp_mode.h"
+#include "bn_assert.h"
+#include "bn_palette_bpp_mode.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -115,7 +115,7 @@ public:
                 return 64;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
@@ -136,7 +136,7 @@ public:
                 return 64;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
@@ -157,12 +157,12 @@ public:
                 return 32;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
         default:
-            BTN_ERROR("Invalid shape: ", int(_shape));
+            BN_ERROR("Invalid shape: ", int(_shape));
             return 0;
         }
     }
@@ -192,7 +192,7 @@ public:
                 return 64;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
@@ -213,7 +213,7 @@ public:
                 return 32;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
@@ -234,12 +234,12 @@ public:
                 return 64;
 
             default:
-                BTN_ERROR("Invalid size: ", int(_size));
+                BN_ERROR("Invalid size: ", int(_size));
                 return 0;
             }
 
         default:
-            BTN_ERROR("Invalid shape: ", int(_shape));
+            BN_ERROR("Invalid shape: ", int(_shape));
             return 0;
         }
     }

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_MUSIC_H
-#define BTN_MUSIC_H
+#ifndef BN_MUSIC_H
+#define BN_MUSIC_H
 
 /**
  * @file
- * btn::music header file.
+ * bn::music header file.
  *
  * @ingroup music
  */
 
-#include "btn_fixed_fwd.h"
+#include "bn_fixed_fwd.h"
 
-namespace btn
+namespace bn
 {
     class music_item;
 }
@@ -25,7 +25,7 @@ namespace btn
  *
  * @ingroup music
  */
-namespace btn::music
+namespace bn::music
 {
     /**
      * @brief Indicates if currently there's any music playing or not.

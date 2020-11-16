@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_AUDIO_H
-#define BTN_HW_AUDIO_H
+#ifndef BN_HW_AUDIO_H
+#define BN_HW_AUDIO_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::audio
+namespace bn::hw::audio
 {
     void init();
 

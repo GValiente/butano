@@ -3,18 +3,18 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_ptr.h"
+#include "bn_sprite_ptr.h"
 
-#include "btn_size.h"
-#include "btn_sprite_builder.h"
-#include "btn_sprites_manager.h"
-#include "btn_sprite_first_attributes.h"
-#include "btn_sprite_third_attributes.h"
-#include "btn_sprite_affine_mat_attributes.h"
-#include "btn_sprite_affine_second_attributes.h"
-#include "btn_sprite_regular_second_attributes.h"
+#include "bn_size.h"
+#include "bn_sprite_builder.h"
+#include "bn_sprites_manager.h"
+#include "bn_sprite_first_attributes.h"
+#include "bn_sprite_third_attributes.h"
+#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_sprite_affine_second_attributes.h"
+#include "bn_sprite_regular_second_attributes.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item)
@@ -48,7 +48,7 @@ sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& it
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                               sprite_palette_ptr palette)
 {
-    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
                shape_size.tiles_count(palette.bpp_mode()));
 
@@ -58,7 +58,7 @@ sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_s
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                               sprite_palette_ptr palette)
 {
-    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
                shape_size.tiles_count(palette.bpp_mode()));
 
@@ -127,7 +127,7 @@ optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, co
 optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
-    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
                shape_size.tiles_count(palette.bpp_mode()));
 
@@ -144,7 +144,7 @@ optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
-    BTN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
                "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
                shape_size.tiles_count(palette.bpp_mode()));
 

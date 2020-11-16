@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sprite_builder.h"
+#include "bn_sprite_builder.h"
 
-#include "btn_sprites.h"
-#include "btn_sprite_ptr.h"
-#include "btn_sprite_affine_mat_attributes.h"
+#include "bn_sprites.h"
+#include "bn_sprite_ptr.h"
+#include "bn_sprite_affine_mat_attributes.h"
 
-namespace btn
+namespace bn
 {
 
 sprite_builder::sprite_builder(const sprite_item& item) :
@@ -24,8 +24,8 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _shape_size(item.shape_size()),
     _graphics_index(graphics_index)
 {
-    BTN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-    BTN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
+    BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
+    BN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
                item.tiles_item().graphics_count());
 }
 
@@ -36,7 +36,7 @@ sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles
     _tiles(move(tiles)),
     _palette(move(palette))
 {
-    BTN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp_mode()),
+    BN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp_mode()),
                "Invalid tiles ptr size: ", _tiles->tiles_count(), " - ",
                _shape_size.tiles_count(_palette->bpp_mode()));
 }
@@ -133,7 +133,7 @@ sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical
 
 sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 {
-    BTN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
 
     _bg_priority = bg_priority;
     return *this;
@@ -141,7 +141,7 @@ sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 
 sprite_builder& sprite_builder::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
+    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
     return *this;
@@ -173,7 +173,7 @@ sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
 
 sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 {
-    BTN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
+    BN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
 
     _blending_enabled = blending_enabled;
     return *this;
@@ -181,7 +181,7 @@ sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 
 sprite_builder& sprite_builder::set_window_enabled(bool window_enabled)
 {
-    BTN_ASSERT(! window_enabled || ! _blending_enabled, "Blending and window can't be enabled at the same time");
+    BN_ASSERT(! window_enabled || ! _blending_enabled, "Blending and window can't be enabled at the same time");
 
     _window_enabled = window_enabled;
     return *this;
@@ -214,7 +214,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BTN_ASSERT(_tiles, "Tiles has been already released");
+    BN_ASSERT(_tiles, "Tiles has been already released");
 
     return *_tiles;
 }
@@ -226,7 +226,7 @@ sprite_palette_ptr sprite_builder::palette() const
         return _item->palette_item().create_palette();
     }
 
-    BTN_ASSERT(_palette, "Palette has been already released");
+    BN_ASSERT(_palette, "Palette has been already released");
 
     return *_palette;
 }
@@ -270,7 +270,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BTN_ASSERT(_tiles, "Tiles has been already released");
+    BN_ASSERT(_tiles, "Tiles has been already released");
 
     sprite_tiles_ptr result = move(*_tiles);
     _tiles.reset();
@@ -284,7 +284,7 @@ sprite_palette_ptr sprite_builder::release_palette()
         return _item->palette_item().create_palette();
     }
 
-    BTN_ASSERT(_palette, "Palette has been already released");
+    BN_ASSERT(_palette, "Palette has been already released");
 
     sprite_palette_ptr result = move(*_palette);
     _palette.reset();

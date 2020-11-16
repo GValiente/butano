@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_UNORDERED_MAP_FWD_H
-#define BTN_UNORDERED_MAP_FWD_H
+#ifndef BN_UNORDERED_MAP_FWD_H
+#define BN_UNORDERED_MAP_FWD_H
 
 /**
  * @file
- * btn::iunordered_map and btn::unordered_map declaration header file.
+ * bn::iunordered_map and bn::unordered_map declaration header file.
  *
  * @ingroup unordered_map
  */
 
-#include "btn_functional.h"
+#include "bn_functional.h"
 
-namespace btn
+namespace bn
 {
     /**
      * @brief Base class of unordered_map.

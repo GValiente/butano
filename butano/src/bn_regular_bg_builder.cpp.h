@@ -3,17 +3,17 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_regular_bg_builder.h"
+#include "bn_regular_bg_builder.h"
 
-#include "btn_bgs.h"
-#include "btn_regular_bg_ptr.h"
+#include "bn_bgs.h"
+#include "bn_regular_bg_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 regular_bg_builder& regular_bg_builder::set_priority(int priority)
 {
-    BTN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
+    BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
     _priority = priority;
     return *this;
@@ -21,7 +21,7 @@ regular_bg_builder& regular_bg_builder::set_priority(int priority)
 
 regular_bg_builder& regular_bg_builder::set_z_order(int z_order)
 {
-    BTN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
+    BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
     return *this;
@@ -54,7 +54,7 @@ regular_bg_map_ptr regular_bg_builder::map() const
         return _item->create_map();
     }
 
-    BTN_ASSERT(_map, "Map has been already released");
+    BN_ASSERT(_map, "Map has been already released");
 
     return *_map;
 }
@@ -82,7 +82,7 @@ regular_bg_map_ptr regular_bg_builder::release_map()
         return _item->create_map();
     }
 
-    BTN_ASSERT(_map, "Map has been already released");
+    BN_ASSERT(_map, "Map has been already released");
 
     regular_bg_map_ptr result = move(*_map);
     _map.reset();

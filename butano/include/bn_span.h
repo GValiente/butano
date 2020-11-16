@@ -3,20 +3,20 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPAN_H
-#define BTN_SPAN_H
+#ifndef BN_SPAN_H
+#define BN_SPAN_H
 
 /**
  * @file
- * btn::span implementation header file.
+ * bn::span implementation header file.
  *
  * @ingroup span
  */
 
-#include "btn_array.h"
-#include "btn_span_fwd.h"
+#include "bn_array.h"
+#include "bn_span_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 template<typename Type>
@@ -33,8 +33,8 @@ public:
     using const_pointer = const Type*; //!< Const pointer alias.
     using iterator = Type*; //!< Iterator alias.
     using const_iterator = const Type*; //!< Const iterator alias.
-    using reverse_iterator = btn::reverse_iterator<iterator>; //!< Reverse iterator alias.
-    using const_reverse_iterator = btn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
+    using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
+    using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
     /**
      * @brief Constructs an empty span.
@@ -61,9 +61,9 @@ public:
         _begin(first),
         _end(last)
     {
-        BTN_ASSERT((! first && ! last) || (first && last),
+        BN_ASSERT((! first && ! last) || (first && last),
                    "Both pointers must be null or not null: ", first, " - ", last);
-        BTN_ASSERT(first <= last, "Last is before first: ", first, " - ", last);
+        BN_ASSERT(first <= last, "Last is before first: ", first, " - ", last);
     }
 
     /**
@@ -77,7 +77,7 @@ public:
     }
 
     /**
-     * @brief Constructs a span that is a const view over the given btn::array.
+     * @brief Constructs a span that is a const view over the given bn::array.
      */
     template<class OtherType, size_type ArraySize>
     constexpr span(const array<OtherType, ArraySize>& array) :
@@ -87,7 +87,7 @@ public:
     }
 
     /**
-     * @brief Constructs a span that is a non-const view over the given btn::array.
+     * @brief Constructs a span that is a non-const view over the given bn::array.
      */
     template<class OtherType, size_type ArraySize>
     constexpr span(array<OtherType, ArraySize>& array) :
@@ -247,7 +247,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BTN_ASSERT(! empty(), "Is empty");
+        BN_ASSERT(! empty(), "Is empty");
 
         return *_begin;
     }
@@ -257,7 +257,7 @@ public:
      */
     [[nodiscard]] constexpr reference front()
     {
-        BTN_ASSERT(! empty(), "Is empty");
+        BN_ASSERT(! empty(), "Is empty");
 
         return *_begin;
     }
@@ -267,7 +267,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BTN_ASSERT(! empty(), "Is empty");
+        BN_ASSERT(! empty(), "Is empty");
 
         return *(_end - 1);
     }
@@ -277,7 +277,7 @@ public:
      */
     [[nodiscard]] constexpr reference back()
     {
-        BTN_ASSERT(! empty(), "Is empty");
+        BN_ASSERT(! empty(), "Is empty");
 
         return *(_end - 1);
     }
@@ -287,7 +287,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference operator[](size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
 
         return _begin[index];
     }
@@ -297,7 +297,7 @@ public:
      */
     [[nodiscard]] constexpr reference operator[](size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
 
         return _begin[index];
     }
@@ -307,7 +307,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference at(size_type index) const
     {
-        BTN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
 
         return _begin[index];
     }
@@ -317,7 +317,7 @@ public:
      */
     [[nodiscard]] constexpr reference at(size_type index)
     {
-        BTN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index);
 
         return _begin[index];
     }
@@ -327,7 +327,7 @@ public:
      */
     [[nodiscard]] constexpr span first(size_type count) const
     {
-        BTN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count);
+        BN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count);
 
         return span(_begin, _begin + count);
     }
@@ -337,7 +337,7 @@ public:
      */
     [[nodiscard]] constexpr span last(size_type count) const
     {
-        BTN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count);
+        BN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count);
 
         return span(_end - count, _end);
     }
@@ -347,7 +347,7 @@ public:
      */
     [[nodiscard]] constexpr span subspan(size_type offset) const
     {
-        BTN_ASSERT(offset >= 0 && offset <= size(), "Invalid offset: ", offset);
+        BN_ASSERT(offset >= 0 && offset <= size(), "Invalid offset: ", offset);
 
         return span(_begin + offset, _end);
     }
@@ -357,9 +357,9 @@ public:
      */
     [[nodiscard]] constexpr span subspan(size_type offset, size_type count) const
     {
-        BTN_ASSERT(offset >= 0, "Invalid offset: ", offset);
-        BTN_ASSERT(count >= 0, "Invalid count: ", count);
-        BTN_ASSERT(offset + count <= size(), "Invalid offset or count: ", offset, " - ", offset);
+        BN_ASSERT(offset >= 0, "Invalid offset: ", offset);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
+        BN_ASSERT(offset + count <= size(), "Invalid offset or count: ", offset, " - ", offset);
 
         pointer new_begin = _begin + offset;
         return span(new_begin, new_begin + count);
@@ -371,8 +371,8 @@ public:
      */
     constexpr void swap(span& other)
     {
-        btn::swap(_begin, other._begin);
-        btn::swap(_end, other._end);
+        bn::swap(_begin, other._begin);
+        bn::swap(_end, other._end);
     }
 
     /**
@@ -466,8 +466,8 @@ private:
 
     [[nodiscard]] static constexpr pointer _build_end(pointer ptr, size_type size)
     {
-        BTN_ASSERT(size >= 0, "Invalid size: ", size);
-        BTN_ASSERT(ptr || ! size, "Pointer is null and size is not zero: ", ptr, " - ", size);
+        BN_ASSERT(size >= 0, "Invalid size: ", size);
+        BN_ASSERT(ptr || ! size, "Pointer is null and size is not zero: ", ptr, " - ", size);
 
         return ptr + size;
     }

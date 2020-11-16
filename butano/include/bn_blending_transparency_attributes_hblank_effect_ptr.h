@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_PTR_H
-#define BTN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#ifndef BN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_PTR_H
+#define BN_BLENDING_TRANSPARENCY_ATTRIBUTES_HBLANK_EFFECT_PTR_H
 
 /**
  * @file
- * btn::blending_transparency_attributes_hblank_effect_ptr header file.
+ * bn::blending_transparency_attributes_hblank_effect_ptr header file.
  *
  * @ingroup blending
  * @ingroup hblank_effect
  */
 
-#include "btn_optional_fwd.h"
-#include "btn_hblank_effect_ptr.h"
+#include "bn_optional_fwd.h"
+#include "bn_hblank_effect_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 class blending_transparency_attributes;

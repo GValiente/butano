@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_BGS_H
-#define BTN_BGS_H
+#ifndef BN_BGS_H
+#define BN_BGS_H
 
 /**
  * @file
- * btn::bgs header file.
+ * bn::bgs header file.
  *
  * @ingroup bg
  */
 
-#include "../hw/include/btn_hw_bgs_constants.h"
+#include "../hw/include/bn_hw_bgs_constants.h"
 
 /**
  * @brief Backgrounds related functions.
  *
  * @ingroup bg
  */
-namespace btn::bgs
+namespace bn::bgs
 {
     /**
      * @brief Returns the number of used background items.

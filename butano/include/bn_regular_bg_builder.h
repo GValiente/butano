@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_BUILDER_H
-#define BTN_REGULAR_BG_BUILDER_H
+#ifndef BN_REGULAR_BG_BUILDER_H
+#define BN_REGULAR_BG_BUILDER_H
 
 /**
  * @file
- * btn::regular_bg_builder header file.
+ * bn::regular_bg_builder header file.
  *
  * @ingroup regular_bg
  */
 
-#include "btn_optional.h"
-#include "btn_camera_ptr.h"
-#include "btn_fixed_point.h"
-#include "btn_regular_bg_item.h"
-#include "btn_regular_bg_map_ptr.h"
+#include "bn_optional.h"
+#include "bn_camera_ptr.h"
+#include "bn_fixed_point.h"
+#include "bn_regular_bg_item.h"
+#include "bn_regular_bg_map_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 class regular_bg_ptr;

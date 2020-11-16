@@ -6,9 +6,9 @@
 #ifndef BF_GAME_CHECK_HERO_BULLET_DATA_H
 #define BF_GAME_CHECK_HERO_BULLET_DATA_H
 
-#include "btn_fixed_rect.h"
+#include "bn_fixed_rect.h"
 
-namespace btn
+namespace bn
 {
     class camera_ptr;
 }
@@ -23,9 +23,9 @@ class check_hero_bullet_data
 {
 
 public:
-    btn::fixed_rect bullet_rect;
+    bn::fixed_rect bullet_rect;
     int bullet_damage;
-    const btn::camera_ptr& camera_ref;
+    const bn::camera_ptr& camera_ref;
     hero& hero_ref;
     objects& objects_ref;
 };

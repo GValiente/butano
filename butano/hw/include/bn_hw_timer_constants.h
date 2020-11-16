@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_HW_TIMER_CONSTANTS_H
-#define BTN_HW_TIMER_CONSTANTS_H
+#ifndef BN_HW_TIMER_CONSTANTS_H
+#define BN_HW_TIMER_CONSTANTS_H
 
-#include "btn_common.h"
+#include "bn_common.h"
 
-namespace btn::hw::timers
+namespace bn::hw::timers
 {
     [[nodiscard]] constexpr int divisor()
     {

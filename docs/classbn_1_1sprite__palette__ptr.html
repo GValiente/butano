@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::sprite_palette_ptr class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>sprite_palette_ptr <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sprite__palette__ptr_8h.html">&lt;bn_sprite_palette_ptr.h&gt;</a></div>
+        </h1>
+        <p>std::shared_ptr like smart pointer that retains shared ownership of a sprite color palette.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Several <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> objects may own the same sprite color palette.</p><p>The sprite color palette is released when the last remaining <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a7438cc19f437ff436510d507894f955d" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a287950eddc15114d74e5b1d0791c72b5" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a974c8fd552b27c7321d35b94952b86b1" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a56ebde717efdf2be156e1234ce496c86" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aa57dae6191f3f49f15f50db87dc71af5" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a779dea30222a360f62e5a067cea3ab0c" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a62e2b412021ed7531a4e543b4922fcb9" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aaf581239c86a925da2e6bbd526b41550" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aea1e2904d719b16eb28c3b585d9790cf" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a39d7514846aaac306fe39daa9ff31b32" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a56b0fcf7c5595140717956469d770e85" class="m-doc">sprite_palette_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a2106e4071fc08d54158ec0b214d9fb76" class="m-doc">sprite_palette_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="a15023d22ed922178f4ab8a99a25b688e">
+              <span class="m-doc-wrap-bumper"><a href="#a15023d22ed922178f4ab8a99a25b688e" class="m-doc-self">~sprite_palette_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced sprite color palette if no more <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3f5c1ff3368026727f587c45c69a4085" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a22f6459fd68cb13b26abfd1f5045fb3b" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="a3623cd2dca5cefff0266a1beff53790d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3623cd2dca5cefff0266a1beff53790d" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the internal id.</dd>
+            <dt id="a737069be9bf7908387d4f18856ef33e4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a737069be9bf7908387d4f18856ef33e4" class="m-doc-self">colors_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of colors contained in this palette.</dd>
+            <dt id="a78182a93aec981960bf0870d6f81b5e6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a78182a93aec981960bf0870d6f81b5e6" class="m-doc-self">colors</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns the colors contained in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a281c2b0db48f42f9a840c2d05a0ae3f2" class="m-doc">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors)</span>
+            </dt>
+            <dd>Sets the colors contained in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4f924c69264f1b85e564045988196496" class="m-doc">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Sets the colors contained in this palette.</dd>
+            <dt id="af5d0ef6de4ee4d2232e1c905771b96c5">
+              <span class="m-doc-wrap-bumper">auto <a href="#af5d0ef6de4ee4d2232e1c905771b96c5" class="m-doc-self">bpp_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a></span>
+            </dt>
+            <dd>Returns the bits per pixel of this palette.</dd>
+            <dt id="ab7997f35c8e8bae9ed0aacf18029f89c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab7997f35c8e8bae9ed0aacf18029f89c" class="m-doc-self">inverted</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the colors of this palette are inverted or not.</dd>
+            <dt id="a39b040b7079fe98f32f22669a98a2381">
+              <span class="m-doc-wrap-bumper">void <a href="#a39b040b7079fe98f32f22669a98a2381" class="m-doc-self">set_inverted</a>(</span><span class="m-doc-wrap">bool inverted)</span>
+            </dt>
+            <dd>Sets if the colors of this palette must be inverted or not.</dd>
+            <dt id="a7d2e95e0ac806bba669987b5de33ff5d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7d2e95e0ac806bba669987b5de33ff5d" class="m-doc-self">grayscale_intensity</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the intensity of the grayscale effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1e65ed42f88976c0b3b995c04078bdfa" class="m-doc">set_grayscale_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the intensity of the grayscale effect applied to the colors of this palette.</dd>
+            <dt id="a2a9a8cd0b3fc65ac2029b5f2d062cfd4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2a9a8cd0b3fc65ac2029b5f2d062cfd4" class="m-doc-self">fade_color</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1color.html" class="m-doc">color</a></span>
+            </dt>
+            <dd>Returns the color of the fade effect applied to the colors of this palette.</dd>
+            <dt id="abb3965a273a831ff6d1d6937e13c4f4e">
+              <span class="m-doc-wrap-bumper">auto <a href="#abb3965a273a831ff6d1d6937e13c4f4e" class="m-doc-self">fade_intensity</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt id="a8068f05bf46b95f4e77cc2ea63f30649">
+              <span class="m-doc-wrap-bumper">void <a href="#a8068f05bf46b95f4e77cc2ea63f30649" class="m-doc-self">set_fade_color</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Sets the color of the fade effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa76cb62cc742f2a8bf82cab46b3bbe0e" class="m-doc">set_fade_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a195ac6f3bd370155ded8d05c7eef513d" class="m-doc">set_fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> color,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span>
+            </dt>
+            <dd>Sets the color and the intensity of the fade effect applied to the colors of this palette.</dd>
+            <dt id="a156f303b530c9d60ffaa2853716b913a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a156f303b530c9d60ffaa2853716b913a" class="m-doc-self">rotate_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of colors to rotate to the right in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a65f4dc3f933aab602edddea8411df659" class="m-doc">set_rotate_count</a>(</span><span class="m-doc-wrap">int count)</span>
+            </dt>
+            <dd>Sets the number of colors to rotate to the right in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a03bdade52916468586ffdc287b6a4eeb" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac9c9b85d3834f73b64e7d4c76b00ca42" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a53eebe23ee4a65fbb7212589aac16c6f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a53eebe23ee4a65fbb7212589aac16c6f" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a7438cc19f437ff436510d507894f955d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7438cc19f437ff436510d507894f955d" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to search.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors if it has been found; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a287950eddc15114d74e5b1d0791c72b5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a287950eddc15114d74e5b1d0791c72b5" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors to search.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the referenced colors by palette_item if it has been found; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a974c8fd552b27c7321d35b94952b86b1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a974c8fd552b27c7321d35b94952b86b1" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the palette to search or create.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a56ebde717efdf2be156e1234ce496c86"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56ebde717efdf2be156e1234ce496c86" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa57dae6191f3f49f15f50db87dc71af5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa57dae6191f3f49f15f50db87dc71af5" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to search.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a779dea30222a360f62e5a067cea3ab0c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a779dea30222a360f62e5a067cea3ab0c" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a62e2b412021ed7531a4e543b4922fcb9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62e2b412021ed7531a4e543b4922fcb9" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the palette to search or create.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaf581239c86a925da2e6bbd526b41550"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaf581239c86a925da2e6bbd526b41550" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Searches for a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors. If it is not found, it creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors of the palette to search or create.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aea1e2904d719b16eb28c3b585d9790cf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aea1e2904d719b16eb28c3b585d9790cf" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors,
+              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors of the new palette.</td>
+                </tr>
+                <tr>
+                  <td>bpp_mode</td>
+                  <td>Bits per pixel of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a39d7514846aaac306fe39daa9ff31b32"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&gt; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a39d7514846aaac306fe39daa9ff31b32" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> which contains the given colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors of the new palette.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a56b0fcf7c5595140717956469d770e85"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56b0fcf7c5595140717956469d770e85" class="m-doc-self">sprite_palette_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a2106e4071fc08d54158ec0b214d9fb76"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2106e4071fc08d54158ec0b214d9fb76" class="m-doc-self">sprite_palette_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3f5c1ff3368026727f587c45c69a4085"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3f5c1ff3368026727f587c45c69a4085" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a22f6459fd68cb13b26abfd1f5045fb3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a22f6459fd68cb13b26abfd1f5045fb3b" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a281c2b0db48f42f9a840c2d05a0ae3f2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a281c2b0db48f42f9a840c2d05a0ae3f2" class="m-doc-self">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors)</span></span>
+            </h3>
+            <p>Sets the colors contained in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors</td>
+                  <td>Colors to copy to this palette.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4f924c69264f1b85e564045988196496"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4f924c69264f1b85e564045988196496" class="m-doc-self">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Sets the colors contained in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors to copy to this palette.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1e65ed42f88976c0b3b995c04078bdfa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e65ed42f88976c0b3b995c04078bdfa" class="m-doc-self">set_grayscale_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the intensity of the grayscale effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa76cb62cc742f2a8bf82cab46b3bbe0e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa76cb62cc742f2a8bf82cab46b3bbe0e" class="m-doc-self">set_fade_intensity</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the intensity of the fade effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a195ac6f3bd370155ded8d05c7eef513d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a195ac6f3bd370155ded8d05c7eef513d" class="m-doc-self">set_fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> color,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity)</span></span>
+            </h3>
+            <p>Sets the color and the intensity of the fade effect applied to the colors of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">color</td>
+                  <td>New color.</td>
+                </tr>
+                <tr>
+                  <td>intensity</td>
+                  <td>New intensity in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65f4dc3f933aab602edddea8411df659"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65f4dc3f933aab602edddea8411df659" class="m-doc-self">set_rotate_count</a>(</span><span class="m-doc-wrap">int count)</span></span>
+            </h3>
+            <p>Sets the number of colors to rotate to the right in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">count</td>
+                  <td>Number of colors to rotate to the right in the range [1 - <a href="classbn_1_1sprite__palette__ptr.html#a737069be9bf7908387d4f18856ef33e4" class="m-doc">colors_<wbr />count()</a> .. <a href="classbn_1_1sprite__palette__ptr.html#a737069be9bf7908387d4f18856ef33e4" class="m-doc">colors_<wbr />count()</a> - 1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a03bdade52916468586ffdc287b6a4eeb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a03bdade52916468586ffdc287b6a4eeb" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac9c9b85d3834f73b64e7d4c76b00ca42"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac9c9b85d3834f73b64e7d4c76b00ca42" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1sprite__palette__ptr.html" class="m-doc">sprite_<wbr />palette_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

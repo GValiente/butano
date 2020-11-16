@@ -3,24 +3,24 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_PALETTE_PTR_H
-#define BTN_SPRITE_PALETTE_PTR_H
+#ifndef BN_SPRITE_PALETTE_PTR_H
+#define BN_SPRITE_PALETTE_PTR_H
 
 /**
  * @file
- * btn::sprite_palette_ptr header file.
+ * bn::sprite_palette_ptr header file.
  *
  * @ingroup sprite
  * @ingroup palette
  */
 
-#include "btn_utility.h"
-#include "btn_span_fwd.h"
-#include "btn_fixed_fwd.h"
-#include "btn_functional.h"
-#include "btn_optional_fwd.h"
+#include "bn_utility.h"
+#include "bn_span_fwd.h"
+#include "bn_fixed_fwd.h"
+#include "bn_functional.h"
+#include "bn_optional_fwd.h"
 
-namespace btn
+namespace bn
 {
 
 class color;
@@ -153,7 +153,7 @@ public:
      */
     sprite_palette_ptr& operator=(sprite_palette_ptr&& other) noexcept
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
         return *this;
     }
 
@@ -269,7 +269,7 @@ public:
      */
     void swap(sprite_palette_ptr& other)
     {
-        btn::swap(_id, other._id);
+        bn::swap(_id, other._id);
     }
 
     /**
@@ -279,7 +279,7 @@ public:
      */
     friend void swap(sprite_palette_ptr& a, sprite_palette_ptr& b)
     {
-        btn::swap(a._id, b._id);
+        bn::swap(a._id, b._id);
     }
 
     /**

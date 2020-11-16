@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#include "btn_sound.h"
+#include "bn_sound.h"
 
-#include "btn_fixed.h"
-#include "btn_sound_item.h"
-#include "btn_audio_manager.h"
+#include "bn_fixed.h"
+#include "bn_sound_item.h"
+#include "bn_audio_manager.h"
 
-namespace btn::sound
+namespace bn::sound
 {
 
 void play(sound_item item)

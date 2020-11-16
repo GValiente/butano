@@ -6,8 +6,8 @@
 #ifndef BF_CONSTANTS_H
 #define BF_CONSTANTS_H
 
-#include "btn_fixed.h"
-#include "btn_display.h"
+#include "bn_fixed.h"
+#include "bn_display.h"
 
 #ifndef BF_CFG_ENEMIES_GRID_LOG_ENABLED
     #define BF_CFG_ENEMIES_GRID_LOG_ENABLED false
@@ -23,9 +23,9 @@ namespace bf::constants
     constexpr const int max_object_messages = max_gems;
     constexpr const int max_enemy_size = 64;
     constexpr const int play_width = 72;
-    constexpr const int play_height = (btn::display::height() - 42) / 2;
+    constexpr const int play_height = (bn::display::height() - 42) / 2;
     constexpr const int view_width = (play_width * 2) + (max_enemy_size / 2);
-    constexpr const int view_height = (btn::display::height() + max_enemy_size) / 2;
+    constexpr const int view_height = (bn::display::height() + max_enemy_size) / 2;
     constexpr const int camera_width = 32;
     constexpr const int hero_bullet_levels = 9;
     constexpr const int hero_shield_z_order = -2;
@@ -45,7 +45,7 @@ namespace bf::constants
     constexpr const int max_enemies_in_grid = 384;
     constexpr const int enemies_invencible_frames = 30;
     constexpr const int reserved_sprite_affine_mats = 3;
-    constexpr const btn::fixed background_speed = 0.5;
+    constexpr const bn::fixed background_speed = 0.5;
     constexpr const int object_flash_frames = 16;
 }
 

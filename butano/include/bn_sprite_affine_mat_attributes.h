@@ -3,21 +3,21 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
-#define BTN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
+#ifndef BN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
+#define BN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
 
 /**
  * @file
- * btn::sprite_affine_mat_attributes header file.
+ * bn::sprite_affine_mat_attributes header file.
  *
  * @ingroup sprite
  * @ingroup affine_mat
  */
 
-#include "btn_math.h"
-#include "btn_affine_mat_scale_lut.h"
+#include "bn_math.h"
+#include "bn_affine_mat_scale_lut.h"
 
-namespace btn
+namespace bn
 {
 
 /**
@@ -52,9 +52,9 @@ public:
         _hflip(1 - (2 * horizontal_flip)),
         _vflip(1 - (2 * vertical_flip))
     {
-        BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
-        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
-        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
+        BN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
+        BN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
+        BN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
         _update_rotation_angle();
         _update_horizontal_scale();
@@ -79,7 +79,7 @@ public:
      */
     constexpr void set_rotation_angle(fixed rotation_angle)
     {
-        BTN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
+        BN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
 
         _rotation_angle = rotation_angle;
         _update_rotation_angle();
@@ -102,7 +102,7 @@ public:
      */
     constexpr void set_horizontal_scale(fixed horizontal_scale)
     {
-        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
+        BN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
 
         _horizontal_scale = horizontal_scale;
         _update_horizontal_scale();
@@ -123,7 +123,7 @@ public:
      */
     constexpr void set_vertical_scale(fixed vertical_scale)
     {
-        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
+        BN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
         _vertical_scale = vertical_scale;
         _update_vertical_scale();
@@ -136,7 +136,7 @@ public:
      */
     constexpr void set_scale(fixed scale)
     {
-        BTN_ASSERT(scale > 0, "Invalid scale: ", scale);
+        BN_ASSERT(scale > 0, "Invalid scale: ", scale);
 
         _horizontal_scale = scale;
         _vertical_scale = scale;
@@ -155,8 +155,8 @@ public:
      */
     constexpr void set_scale(fixed horizontal_scale, fixed vertical_scale)
     {
-        BTN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
-        BTN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
+        BN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
+        BN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
         _horizontal_scale = horizontal_scale;
         _vertical_scale = vertical_scale;
@@ -293,8 +293,8 @@ public:
     }
 
 private:
-    constexpr static const btn::fixed min_inv_scale = 128;
-    constexpr static const btn::fixed min_scale = 1 / min_inv_scale;
+    constexpr static const bn::fixed min_inv_scale = 128;
+    constexpr static const bn::fixed min_scale = 1 / min_inv_scale;
 
     fixed _rotation_angle = 0;
     fixed _horizontal_scale = 1;

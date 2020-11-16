@@ -3,23 +3,23 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_ITEM_H
-#define BTN_REGULAR_BG_ITEM_H
+#ifndef BN_REGULAR_BG_ITEM_H
+#define BN_REGULAR_BG_ITEM_H
 
 /**
  * @file
- * btn::regular_bg_item header file.
+ * bn::regular_bg_item header file.
  *
  * @ingroup regular_bg
  * @ingroup tool
  */
 
-#include "btn_fixed_fwd.h"
-#include "btn_bg_tiles_item.h"
-#include "btn_bg_palette_item.h"
-#include "btn_regular_bg_map_item.h"
+#include "bn_fixed_fwd.h"
+#include "bn_bg_tiles_item.h"
+#include "bn_bg_palette_item.h"
+#include "bn_regular_bg_map_item.h"
 
-namespace btn
+namespace bn
 {
 
 class fixed_point;
@@ -81,7 +81,7 @@ public:
         _palette_item(palette_item),
         _map_item(map_item)
     {
-        BTN_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()),
+        BN_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()),
                    "Invalid tiles count: ", tiles_item.tiles_ref().size());
     }
 

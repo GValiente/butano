@@ -6,8 +6,8 @@
 #ifndef MALLOC_TESTS_H
 #define MALLOC_TESTS_H
 
-#include "btn_memory.h"
-#include "btn_cstdlib.h"
+#include "bn_memory.h"
+#include "bn_cstdlib.h"
 #include "tests.h"
 
 class malloc_tests : public tests
@@ -17,28 +17,28 @@ public:
     malloc_tests() :
         tests("malloc")
     {
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
 
-        void* ptr = btn::malloc(4);
-        BTN_ASSERT(ptr);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 8);
+        void* ptr = bn::malloc(4);
+        BN_ASSERT(ptr);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 8);
 
-        btn::free(ptr);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
+        bn::free(ptr);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
 
-        ptr = btn::malloc(0);
-        BTN_ASSERT(ptr);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 4);
+        ptr = bn::malloc(0);
+        BN_ASSERT(ptr);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 4);
 
-        btn::free(ptr);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
+        bn::free(ptr);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
 
         auto integer = new int(123);
-        BTN_ASSERT(integer);
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 8);
+        BN_ASSERT(integer);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 8);
 
         delete integer;
-        BTN_ASSERT(btn::memory::used_alloc_ewram() == 0);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
     }
 };
 

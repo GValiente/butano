@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BTN_REGULAR_BG_ATTRIBUTES_H
-#define BTN_REGULAR_BG_ATTRIBUTES_H
+#ifndef BN_REGULAR_BG_ATTRIBUTES_H
+#define BN_REGULAR_BG_ATTRIBUTES_H
 
 /**
  * @file
- * btn::regular_bg_attributes header file.
+ * bn::regular_bg_attributes header file.
  *
  * @ingroup regular_bg
  */
 
-#include "btn_regular_bg_map_ptr.h"
+#include "bn_regular_bg_map_ptr.h"
 
-namespace btn
+namespace bn
 {
 
 /**

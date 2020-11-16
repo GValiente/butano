@@ -124,26 +124,29 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
 
     for(int index = visible_items_count; index < last_visible_items_count; ++index)
     {
-        hw::sprites::hide(handles[index]);
+        hw::sprites::hide_and_destroy(handles[index]);
     }
 
     return visible_items_count;
 }
 
-bool _update_cameras_impl(sorted_sprites::layer& layer)
+bool _update_cameras_impl(intrusive_list<sorted_sprites::layer>& layers)
 {
     bool check_items_on_screen = false;
 
-    for(sprites_manager_item& item : layer.items())
+    for(sorted_sprites::layer& layer : layers)
     {
-        if(item.camera)
+        for(sprites_manager_item& item : layer.items())
         {
-            item.update_hw_position();
-
-            if(item.visible)
+            if(item.camera)
             {
-                item.check_on_screen = true;
-                check_items_on_screen = true;
+                item.update_hw_position();
+
+                if(item.visible)
+                {
+                    item.check_on_screen = true;
+                    check_items_on_screen = true;
+                }
             }
         }
     }

@@ -218,7 +218,7 @@ namespace sprites_manager
     [[nodiscard]] BN_CODE_IWRAM int _rebuild_handles_impl(
             int last_visible_items_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers);
 
-    [[nodiscard]] BN_CODE_IWRAM bool _update_cameras_impl(sorted_sprites::layer& layer);
+    [[nodiscard]] BN_CODE_IWRAM bool _update_cameras_impl(intrusive_list<sorted_sprites::layer>& layers);
 }
 
 }

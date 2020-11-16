@@ -159,7 +159,7 @@ void init()
 {
     for(hw::sprites::handle_type& handle : data.handles)
     {
-        hw::sprites::hide(handle);
+        hw::sprites::hide_and_destroy(handle);
     }
 
     sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
@@ -275,7 +275,7 @@ void decrease_usages(id_type id)
 
         if(item->visible)
         {
-            hw::sprites::hide(item->handle);
+            hw::sprites::hide_and_destroy(item->handle);
             _update_indexes_to_commit(*item);
         }
 
@@ -1073,7 +1073,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_b
             }
             else
             {
-                hw::sprites::hide(dest_ptr[index]);
+                hw::sprites::hide_and_destroy(dest_ptr[index]);
             }
         }
     }
@@ -1093,7 +1093,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_b
             }
             else
             {
-                hw::sprites::hide(dest_ptr[index]);
+                hw::sprites::hide_and_destroy(dest_ptr[index]);
             }
         }
     }
@@ -1166,14 +1166,7 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
 
 void update_cameras()
 {
-    bool check_items_on_screen = false;
-
-    for(sorted_sprites::layer& layer : data.sorter.layers())
-    {
-        check_items_on_screen |= _update_cameras_impl(layer);
-    }
-
-    data.check_items_on_screen |= check_items_on_screen;
+    data.check_items_on_screen |= _update_cameras_impl(data.sorter.layers());
 }
 
 void remove_identity_affine_mat_if_not_needed(id_type id)

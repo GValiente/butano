@@ -277,7 +277,7 @@ void polygon_sprite::_setup_attributes(const void* base_sprite_handle_ptr, const
         }
         else
         {
-            bn::hw::sprites::hide(sprite_hdma_source[0]);
+            bn::hw::sprites::hide_and_destroy(sprite_hdma_source[0]);
         }
 
         sprite_hdma_source += max_polygon_sprites * 4;

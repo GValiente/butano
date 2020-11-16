@@ -985,6 +985,7 @@
  * * Color palettes managers status can be printed in the log with
  *   bn::bg_palettes::log_status() and bn::sprite_palettes::log_status().
  *   This is done automatically when a non-optional color palette allocation fails too.
+ * * Sprites destruction optimized.
  * * Setters with an optional parameter added to some classes.
  * * Optional components documentation fixed.
  * * Other documentation improvements.

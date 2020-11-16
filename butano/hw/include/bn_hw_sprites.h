@@ -124,6 +124,16 @@ namespace bn::hw::sprites
         hide(sprite.attr0);
     }
 
+    inline void hide_and_destroy(uint16_t& attr0)
+    {
+        attr0 = ATTR0_HIDE;
+    }
+
+    inline void hide_and_destroy(handle_type& sprite)
+    {
+        hide(sprite.attr0);
+    }
+
     [[nodiscard]] inline sprite_shape shape(const handle_type& sprite)
     {
         return sprite_shape(sprite.attr0 >> 14);

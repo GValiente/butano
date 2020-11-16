@@ -16,6 +16,15 @@
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wvolatile"
+#pragma GCC diagnostic ignored "-Wpedantic"
+
+#include "bn_log.h"
+#include "../../butano/hw/3rd_party/gba-link-connection/include/LinkConnection.h"
+
+#pragma GCC diagnostic pop
+
 namespace
 {
     union direction
@@ -33,7 +42,7 @@ namespace
 
     [[nodiscard]] bn::optional<direction> read_keypad()
     {
-        bn::optional<direction> result;
+        bn::optional<direction> result = direction();
 
         if(bn::keypad::up_held())
         {
@@ -76,6 +85,11 @@ namespace
         }
 
         return result;
+    }
+
+    bool isBitHigh(u8 bit)
+    {
+        return (REG_SIOCNT >> bit) & 1;
     }
 }
 
@@ -170,6 +184,14 @@ int main()
 
             old_direction = new_direction;
         }
+
+        /*// log player id/count and important flags
+        BN_LOG("P", linkConnection->linkState.currentPlayerId, "/",
+               linkConnection->linkState.playerCount, "-R",
+               isBitHigh(LINK_BIT_READY), "-S",
+               isBitHigh(LINK_BIT_START), "-E",
+               isBitHigh(LINK_BIT_ERROR), "-I",
+               linkConnection->linkState._IRQFlag);*/
 
         action.update();
         info.update();

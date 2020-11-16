@@ -41,6 +41,12 @@ bool tick(int data_to_send, int& current_player_id, vector<link_player, 3>& othe
     }
 
     hw::link::state link_state = data.connection.tick(uint16_t(data_to_send));
+
+    if(! link_state.ok)
+    {
+        return false;
+    }
+
     auto this_player_id = int(link_state.currentPlayerId);
 
     for(int player_id = 0; player_id < 4; ++player_id)
@@ -49,7 +55,7 @@ bool tick(int data_to_send, int& current_player_id, vector<link_player, 3>& othe
         {
             int player_data = link_state.data[player_id];
 
-            if(player_data > 0 && player_data < 0xFFFF)
+            if(player_data >= 0 && player_data < 0xFFFF)
             {
                 BN_ASSERT(! other_players.full(), "Too much players");
 

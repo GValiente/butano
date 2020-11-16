@@ -30,12 +30,14 @@
 
 struct LinkState {
     u16 data[4];
-    unsigned currentPlayerId = 0;
+    u16 currentPlayerId = 0;
+    bool ok = false;
 
     bool hasData(u8 playerId) { return data[playerId] != LINK_NO_DATA; }
 
     void clear() {
         currentPlayerId = 0;
+        ok = false;
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++)
             data[i] = LINK_NO_DATA;
     }
@@ -91,6 +93,7 @@ extern LinkConnection* linkConnection;
 inline void ISR_serial() {
     LinkState newLinkState;
     newLinkState.currentPlayerId = (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
+    newLinkState.ok = true;
     newLinkState.data[0] = REG_SIOMULTI[0];
     newLinkState.data[1] = REG_SIOMULTI[1];
     newLinkState.data[2] = REG_SIOMULTI[2];

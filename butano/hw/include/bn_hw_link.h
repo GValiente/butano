@@ -25,9 +25,9 @@ namespace bn::hw::link
 
     inline void init(int baud_rate, connection& connection_ref)
     {
-        connection_ref.init(connection::BaudRate(baud_rate));
         linkConnection = &connection_ref;
         irq::replace_or_push_back(irq::id::SERIAL, _intr);
+        connection_ref.init(connection::BaudRate(baud_rate));
     }
 
     inline void enable()

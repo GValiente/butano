@@ -88,7 +88,7 @@ int main()
 
         while(retries)
         {
-            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get(direction_to_send.data + 1))
+            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get(direction_to_send.data))
             {
                 link_state = new_link_state;
                 retries = total_retries;
@@ -104,7 +104,7 @@ int main()
             const bn::link_player& first_other_player = link_state->other_players().front();
             bool direction_changed = false;
             direction new_direction;
-            new_direction.data = first_other_player.data() - 1;
+            new_direction.data = first_other_player.data();
 
             if(new_direction.keys.left)
             {

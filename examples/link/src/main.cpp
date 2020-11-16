@@ -16,15 +16,6 @@
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wvolatile"
-#pragma GCC diagnostic ignored "-Wpedantic"
-
-#include "bn_log.h"
-#include "../../butano/hw/3rd_party/gba-link-connection/include/LinkConnection.h"
-
-#pragma GCC diagnostic pop
-
 namespace
 {
     union direction
@@ -40,56 +31,31 @@ namespace
     };
 
 
-    [[nodiscard]] bn::optional<direction> read_keypad()
+    [[nodiscard]] direction read_keypad()
     {
-        bn::optional<direction> result = direction();
+        direction result;
 
         if(bn::keypad::up_held())
         {
-            if(! result)
-            {
-                result = direction();
-            }
-
-            result->keys.up = true;
+            result.keys.up = true;
         }
 
         if(bn::keypad::down_held())
         {
-            if(! result)
-            {
-                result = direction();
-            }
-
-            result->keys.down = true;
+            result.keys.down = true;
         }
 
         if(bn::keypad::left_held())
         {
-            if(! result)
-            {
-                result = direction();
-            }
-
-            result->keys.left = true;
+            result.keys.left = true;
         }
 
         if(bn::keypad::right_held())
         {
-            if(! result)
-            {
-                result = direction();
-            }
-
-            result->keys.right = true;
+            result.keys.right = true;
         }
 
         return result;
-    }
-
-    bool isBitHigh(u8 bit)
-    {
-        return (REG_SIOCNT >> bit) & 1;
     }
 }
 
@@ -115,18 +81,14 @@ int main()
 
     while(true)
     {
-        if(bn::optional<direction> direction_to_send = read_keypad())
-        {
-            bn::link_state::send(direction_to_send->data + 1);
-        }
-
+        direction direction_to_send = read_keypad();
         bn::optional<bn::link_state> link_state;
         int total_retries = 5;
         int retries = total_retries;
 
         while(retries)
         {
-            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
+            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get(direction_to_send.data + 1))
             {
                 link_state = new_link_state;
                 retries = total_retries;
@@ -194,21 +156,7 @@ int main()
             {
                 old_direction = new_direction;
             }
-
-            BN_LOG("received");
         }
-        else
-        {
-            BN_LOG("nothing");
-        }
-
-        /*// log player id/count and important flags
-        BN_LOG("P", linkConnection->linkState.currentPlayerId, "/",
-               linkConnection->linkState.playerCount, "-R",
-               isBitHigh(LINK_BIT_READY), "-S",
-               isBitHigh(LINK_BIT_START), "-E",
-               isBitHigh(LINK_BIT_ERROR), "-I",
-               linkConnection->linkState._IRQFlag);*/
 
         action.update();
         info.update();

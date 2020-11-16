@@ -127,9 +127,6 @@ void init(const string_view& keypad_commands)
     // Init hblank effects system:
     hblank_effects_manager::init();
 
-    // Init link communication system:
-    link_manager::init();
-
     // Init audio system:
     audio_manager::init();
 

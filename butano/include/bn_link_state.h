@@ -17,9 +17,7 @@ class link_state
 {
 
 public:
-    static void send(int data_to_send);
-
-    [[nodiscard]] static optional<link_state> get();
+    [[nodiscard]] static optional<link_state> get(int data_to_send);
 
     [[nodiscard]] int current_player_id() const
     {

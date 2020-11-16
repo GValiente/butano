@@ -26,39 +26,30 @@ namespace
 
     public:
         hw::link::connection connection;
+        bool running = false;
     };
 
     BN_DATA_EWRAM static_data data;
 }
 
-void init()
+bool tick(int data_to_send, int& current_player_id, vector<link_player, 3>& other_players)
 {
-    hw::link::init(baud_rate, data.connection);
-}
-
-void send(int data_to_send)
-{
-    data.connection.send(u16(data_to_send));
-}
-
-bool get(int& current_player_id, vector<link_player, 3>& other_players)
-{
-    hw::link::state& link_state = data.connection.linkState;
-
-    if(! link_state.isConnected())
+    if(! data.running)
     {
-        return false;
+        hw::link::init(baud_rate, data.connection);
+        data.running = true;
     }
 
+    hw::link::state link_state = data.connection.tick(uint16_t(data_to_send));
     auto this_player_id = int(link_state.currentPlayerId);
 
     for(int player_id = 0; player_id < 4; ++player_id)
     {
         if(player_id != this_player_id)
         {
-            int player_data = link_state.readMessage(u8(player_id));
+            int player_data = link_state.data[player_id];
 
-            if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
+            if(player_data > 0 && player_data < 0xFFFF)
             {
                 BN_ASSERT(! other_players.full(), "Too much players");
 
@@ -78,12 +69,18 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
 
 void enable()
 {
-    hw::link::enable();
+    if(data.running)
+    {
+        hw::link::enable();
+    }
 }
 
 void disable()
 {
-    hw::link::disable();
+    if(data.running)
+    {
+        hw::link::disable();
+    }
 }
 
 }

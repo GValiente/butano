@@ -981,6 +981,9 @@
  *   This is done automatically when a non-optional regular background map allocation fails too.
  * * Sprite tiles manager status can be printed in the log with btn::sprite_tiles::log_status().
  *   This is done automatically when a non-optional sprite tiles allocation fails too.
+ * * Color palettes managers status can be printed in the log with
+ *   btn::bg_palettes::log_status() and btn::sprite_palettes::log_status().
+ *   This is done automatically when a non-optional color palette allocation fails too.
  * * Setters with an optional parameter added to some classes.
  * * Optional components documentation fixed.
  * * Other documentation improvements.

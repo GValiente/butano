@@ -53,8 +53,7 @@ bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors, palette_b
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_4(colors, hash);
-            BTN_ASSERT(id >= 0, "Palette create failed");
+            id = bg_palettes_bank.create_bpp_4(colors, hash, true);
         }
     }
     else
@@ -63,8 +62,7 @@ bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors, palette_b
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_8(colors);
-            BTN_ASSERT(id >= 0, "Palette create failed");
+            id = bg_palettes_bank.create_bpp_8(colors, true);
         }
     }
 
@@ -83,14 +81,12 @@ bg_palette_ptr bg_palette_ptr::create_new(const span<const color>& colors, palet
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
+        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), true);
     }
     else
     {
-        id = bg_palettes_bank.create_bpp_8(colors);
+        id = bg_palettes_bank.create_bpp_8(colors, true);
     }
-
-    BTN_ASSERT(id >= 0, "Palette create new failed");
 
     return bg_palette_ptr(id);
 }
@@ -112,7 +108,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_4(colors, hash);
+            id = bg_palettes_bank.create_bpp_4(colors, hash, false);
         }
     }
     else
@@ -121,7 +117,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>
 
         if(id < 0)
         {
-            id = bg_palettes_bank.create_bpp_8(colors);
+            id = bg_palettes_bank.create_bpp_8(colors, false);
         }
     }
 
@@ -148,11 +144,11 @@ optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const span<const co
 
     if(bpp_mode == palette_bpp_mode::BPP_4)
     {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors));
+        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), false);
     }
     else
     {
-        id = bg_palettes_bank.create_bpp_8(colors);
+        id = bg_palettes_bank.create_bpp_8(colors, false);
     }
 
     optional<bg_palette_ptr> result;

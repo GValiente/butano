@@ -98,4 +98,11 @@ void set_fade(color color, fixed intensity)
     palettes_manager::sprite_palettes_bank().set_fade(color, intensity);
 }
 
+#if BTN_CFG_LOG_ENABLED
+    void log_status()
+    {
+        palettes_manager::sprite_palettes_bank().log_status();
+    }
+#endif
+
 }

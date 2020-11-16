@@ -13,6 +13,10 @@
 #include "btn_algorithm.h"
 #include "btn_palette_bpp_mode.h"
 
+#if BTN_CFG_LOG_ENABLED
+    #include "btn_log.h"
+#endif
+
 namespace btn
 {
 
@@ -68,6 +72,26 @@ int palettes_bank::used_colors_count() const
     return result * hw::palettes::colors_per_palette();
 }
 
+#if BTN_CFG_LOG_ENABLED
+    void palettes_bank::log_status() const
+    {
+        BTN_LOG("palettes: ", used_colors_count() / hw::palettes::colors_per_palette());
+        BTN_LOG('[');
+
+        for(const palette& pal : _palettes)
+        {
+            if(pal.usages)
+            {
+                BTN_LOG(pal.bpp_8 ? "bpp_8" : "bpp_4",
+                        " - slots_count: ", pal.slots_count,
+                        " - usages: ", pal.usages);
+            }
+        }
+
+        BTN_LOG(']');
+    }
+#endif
+
 int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 {
     auto bpp_4_indexes_map_it = _bpp_4_indexes_map.find(hash);
@@ -117,9 +141,10 @@ int palettes_bank::find_bpp_8(const span<const color>& colors)
     return -1;
 }
 
-int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash)
+int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, bool required)
 {
-    int required_slots_count = colors.size() / hw::palettes::colors_per_palette();
+    int colors_count = colors.size();
+    int required_slots_count = colors_count / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
     int free_slots_count = 0;
 
@@ -153,10 +178,22 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash)
         }
     }
 
+    if(required)
+    {
+        #if BTN_CFG_LOG_ENABLED
+            log_status();
+
+            BTN_ERROR("BPP4 palette create failed. Colors count: ", colors_count,
+                      "\n\nPalettes manager status has been logged.");
+        #else
+            BTN_ERROR("BPP4 palette create failed. Colors count: ", colors_count);
+        #endif
+    }
+
     return -1;
 }
 
-int palettes_bank::create_bpp_8(const span<const color>& colors)
+int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
 {
     int colors_count = colors.size();
     BTN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
@@ -196,6 +233,18 @@ int palettes_bank::create_bpp_8(const span<const color>& colors)
             _set_colors_bpp_impl(0, colors);
             return 0;
         }
+    }
+
+    if(required)
+    {
+        #if BTN_CFG_LOG_ENABLED
+            log_status();
+
+            BTN_ERROR("BPP8 palette create failed. Colors count: ", colors_count,
+                      "\n\nPalettes manager status has been logged.");
+        #else
+            BTN_ERROR("BPP8 palette create failed. Colors count: ", colors_count);
+        #endif
     }
 
     return -1;

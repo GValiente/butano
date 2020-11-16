@@ -15,7 +15,9 @@
  */
 
 #include "btn_fixed_fwd.h"
+#include "btn_config_log.h"
 #include "btn_optional_fwd.h"
+#include "btn_config_doxygen.h"
 
 namespace btn
 {
@@ -141,6 +143,13 @@ namespace btn::bg_palettes
      * @param intensity New intensity in the range [0..1].
      */
     void set_fade(color color, fixed intensity);
+
+    #if BTN_CFG_LOG_ENABLED || BTN_DOXYGEN
+        /**
+         * @brief Logs the current status of the background color palettes manager.
+         */
+        void log_status();
+    #endif
 }
 
 #endif

@@ -10,6 +10,7 @@
 #include "btn_fixed.h"
 #include "btn_color.h"
 #include "btn_optional.h"
+#include "btn_config_log.h"
 #include "btn_unordered_map.h"
 #include "../hw/include/btn_hw_palettes.h"
 
@@ -40,13 +41,17 @@ public:
         return hw::palettes::colors() - used_colors_count();
     }
 
+    #if BTN_CFG_LOG_ENABLED
+        void log_status() const;
+    #endif
+
     [[nodiscard]] int find_bpp_4(const span<const color>& colors, unsigned hash);
 
     [[nodiscard]] int find_bpp_8(const span<const color>& colors);
 
-    [[nodiscard]] int create_bpp_4(const span<const color>& colors, unsigned hash);
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors, unsigned hash, bool required);
 
-    [[nodiscard]] int create_bpp_8(const span<const color>& colors);
+    [[nodiscard]] int create_bpp_8(const span<const color>& colors, bool required);
 
     void increase_usages(int id);
 

@@ -42,7 +42,7 @@ namespace
 
     [[nodiscard]] bn::optional<direction> read_keypad()
     {
-        bn::optional<direction> result;
+        bn::optional<direction> result = direction();
 
         if(bn::keypad::up_held())
         {
@@ -140,6 +140,7 @@ int main()
         if(link_state)
         {
             const bn::link_player& first_other_player = link_state->other_players().front();
+            bool direction_changed = false;
             direction new_direction;
             new_direction.data = first_other_player.data() - 1;
 
@@ -149,6 +150,7 @@ int main()
 
                 if(new_direction.data != old_direction.data)
                 {
+                    direction_changed = true;
                     action = bn::create_sprite_animate_action_forever(
                                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 8, 9, 10, 11);
                 }
@@ -159,6 +161,7 @@ int main()
 
                 if(new_direction.data != old_direction.data)
                 {
+                    direction_changed = true;
                     action = bn::create_sprite_animate_action_forever(
                                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 12, 13, 14, 15);
                 }
@@ -170,6 +173,7 @@ int main()
 
                 if(new_direction.data != old_direction.data)
                 {
+                    direction_changed = true;
                     action = bn::create_sprite_animate_action_forever(
                                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 4, 5, 6, 7);
                 }
@@ -180,12 +184,17 @@ int main()
 
                 if(new_direction.data != old_direction.data)
                 {
+                    direction_changed = true;
                     action = bn::create_sprite_animate_action_forever(
                                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
                 }
             }
 
-            old_direction = new_direction;
+            if(direction_changed)
+            {
+                old_direction = new_direction;
+            }
+
             BN_LOG("received");
         }
         else

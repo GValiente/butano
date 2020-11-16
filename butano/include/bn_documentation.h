@@ -973,7 +973,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_0_4_0 0.4.0 (next release)
+ * @section changelog_0_4_0 0.4.0
  *
  * * `btn` renamed to `bn`. No more API breaks will be made between minor releases after 1.0.0, promise.
  * * Background tiles manager status can be printed in the log with bn::bg_tiles::log_status().

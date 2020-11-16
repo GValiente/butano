@@ -86,4 +86,15 @@ void disable()
     hw::link::disable();
 }
 
+void update()
+{
+    int current_player_id = 0;
+    vector<link_player, 3> other_players;
+
+    while(get(current_player_id, other_players))
+    {
+        other_players.clear();
+    }
+}
+
 }

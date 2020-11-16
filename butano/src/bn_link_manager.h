@@ -24,6 +24,8 @@ namespace bn::link_manager
     void enable();
 
     void disable();
+
+    void update();
 }
 
 #endif

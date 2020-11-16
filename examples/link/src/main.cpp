@@ -121,16 +121,19 @@ int main()
         }
 
         bn::optional<bn::link_state> link_state;
-        int retries = 5;
+        int total_retries = 5;
+        int retries = total_retries;
 
         while(retries)
         {
-            --retries;
-            link_state = bn::link_state::get();
-
-            if(link_state)
+            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
             {
-                break;
+                link_state = new_link_state;
+                retries = total_retries;
+            }
+            else
+            {
+                --retries;
             }
         }
 
@@ -183,6 +186,11 @@ int main()
             }
 
             old_direction = new_direction;
+            BN_LOG("received");
+        }
+        else
+        {
+            BN_LOG("nothing");
         }
 
         /*// log player id/count and important flags

@@ -194,6 +194,10 @@ void update()
     hblank_effects_manager::update();
     BN_PROFILER_ENGINE_STOP();
 
+    BN_PROFILER_ENGINE_START("eng_link_update");
+    link_manager::update();
+    BN_PROFILER_ENGINE_STOP();
+
     BN_PROFILER_ENGINE_START("eng_cpu_usage");
     data.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     BN_PROFILER_ENGINE_STOP();

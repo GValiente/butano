@@ -15,4 +15,9 @@ void _intr()
     linkConnection->_onSerial();
 }
 
+void commit()
+{
+    linkConnection->_onVBlank();
+}
+
 }

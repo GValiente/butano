@@ -9,6 +9,7 @@
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
+#include "../include/bn_hw_link.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 
@@ -116,6 +117,12 @@ namespace
         }
 
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
+    }
+
+    void _update_frame()
+    {
+        mmFrame();
+        hw::link::commit();
     }
 }
 
@@ -231,7 +238,7 @@ void disable_vblank_handler()
 
 void commit()
 {
-    mmFrame();
+    _update_frame();
 
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
@@ -255,7 +262,7 @@ void commit()
 
 void enable_vblank_handler()
 {
-    mmSetVBlankHandler(reinterpret_cast<void*>(mmFrame));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_update_frame));
 }
 
 }

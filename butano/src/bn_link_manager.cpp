@@ -86,9 +86,4 @@ void disable()
     hw::link::disable();
 }
 
-void commit()
-{
-    data.connection._onVBlank();
-}
-
 }

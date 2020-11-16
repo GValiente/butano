@@ -23,6 +23,8 @@ namespace bn::hw::link
 
     BN_CODE_IWRAM void _intr();
 
+    void commit();
+
     inline void init(int baud_rate, connection& connection_ref)
     {
         connection_ref.init(true, connection::BaudRate(baud_rate));

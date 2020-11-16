@@ -42,7 +42,7 @@ namespace
 
     [[nodiscard]] bn::optional<direction> read_keypad()
     {
-        bn::optional<direction> result = direction();
+        bn::optional<direction> result;
 
         if(bn::keypad::up_held())
         {
@@ -120,8 +120,8 @@ int main()
             bn::link_state::send(direction_to_send->data + 1);
         }
 
-        bn::optional<bn::link_state> link_state = bn::link_state::get();
-        int retries = 1;
+        bn::optional<bn::link_state> link_state;
+        int retries = 5;
 
         while(retries)
         {

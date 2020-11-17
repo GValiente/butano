@@ -1767,7 +1767,7 @@ void update_regular_map_row(int id, int x, int y)
     int x_separator = x & 31;
     regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
 
-    for(int ix = x_separator; ix < 32; ++ix)
+    /*for(int ix = x_separator; ix < 32; ++ix)
     {
         *dest_data++ = *source_data++;
     }
@@ -1777,7 +1777,13 @@ void update_regular_map_row(int id, int x, int y)
     for(int ix = 0; ix < x_separator; ++ix)
     {
         *dest_data++ = *source_data++;
-    }
+    }*/
+
+    int elements = 32 - x_separator;
+    memory::copy(*source_data, elements, *dest_data);
+    source_data += elements;
+    dest_data -= x_separator;
+    memory::copy(*source_data, x_separator, *dest_data);
 }
 
 void set_regular_map_position(int id, int x, int y)
@@ -1793,7 +1799,7 @@ void set_regular_map_position(int id, int x, int y)
         const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
         regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
-        for(int ix = x_separator; ix < 32; ++ix)
+        /*for(int ix = x_separator; ix < 32; ++ix)
         {
             *dest_data++ = *source_data++;
         }
@@ -1803,7 +1809,13 @@ void set_regular_map_position(int id, int x, int y)
         for(int ix = 0; ix < x_separator; ++ix)
         {
             *dest_data++ = *source_data++;
-        }
+        }*/
+
+        int elements = 32 - x_separator;
+        memory::copy(*source_data, elements, *dest_data);
+        source_data += elements;
+        dest_data -= x_separator;
+        memory::copy(*source_data, x_separator, *dest_data);
     }
 }
 

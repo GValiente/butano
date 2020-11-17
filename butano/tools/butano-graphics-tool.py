@@ -176,10 +176,6 @@ class SpriteItem:
 
 class RegularBgItem:
 
-    @staticmethod
-    def valid_sizes_message():
-        return ' (valid regular BG sizes: 256x256, 512x256, 256x512, 512x512)'
-
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
@@ -190,17 +186,14 @@ class RegularBgItem:
         width = bmp.width
         height = bmp.height
 
-        if width == 256 and height == 256:
-            self.__sbb = False
-        elif (width == 256 and height == 512) or (width == 512 and height == 256) or (width == 512 and height == 512):
-            self.__sbb = True
-        else:
-            raise ValueError('Invalid regular BG size: (' + str(width) + 'x' + str(height) + ')' +
-                             RegularBgItem.valid_sizes_message())
+        if width < 256 or height < 176:
+            raise ValueError('Minimum regular BG size is 256x176: (' + str(width) + 'x' + str(height) + ')')
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
         self.__bpp_8 = False
+        self.__sbb = (width == 256 and height == 512) or (width == 512 and height == 256) or \
+                     (width == 512 and height == 512)
 
         try:
             self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])

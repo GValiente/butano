@@ -101,7 +101,7 @@ namespace
         uint8_t next_index = max_list_items;
 
     private:
-        uint8_t _status = uint8_t(status_type::FREE);
+        unsigned _status: 2 = unsigned(status_type::FREE);
 
     public:
         bool is_tiles: 1 = false;
@@ -114,7 +114,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = uint8_t(status);
+            _status = unsigned(status);
         }
 
         [[nodiscard]] int half_words() const

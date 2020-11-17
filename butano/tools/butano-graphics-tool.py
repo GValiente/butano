@@ -186,8 +186,11 @@ class RegularBgItem:
         width = bmp.width
         height = bmp.height
 
-        if width < 256 or height < 176:
-            raise ValueError('Minimum regular BG size is 256x176: (' + str(width) + 'x' + str(height) + ')')
+        if width % 256 != 0:
+            raise ValueError('Regular BGs width must be divisible by 256: ' + str(width))
+
+        if height % 256 != 0:
+            raise ValueError('Regular BGs height must be divisible by 256: ' + str(height))
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)

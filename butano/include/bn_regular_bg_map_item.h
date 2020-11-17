@@ -56,8 +56,10 @@ public:
         _cells_ptr(&cells_ref),
         _dimensions(dimensions)
     {
-        BN_ASSERT(dimensions.width() >= (256 / 8), "Invalid width: ", dimensions.width());
-        BN_ASSERT(dimensions.height() >= (176 / 8), "Invalid height: ", dimensions.height());
+        BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
+                  "Invalid width: ", dimensions.width());
+        BN_ASSERT(dimensions.height() >= 32 && dimensions.height() % 32 == 0,
+                  "Invalid height: ", dimensions.height());
     }
 
     /**

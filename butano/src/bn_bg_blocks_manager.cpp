@@ -1018,8 +1018,10 @@ int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map
         return result;
     }
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     result = _create_impl<false>(create_data::from_map(&map_cells_ref, map_dimensions, move(tiles), move(palette)));
@@ -1100,8 +1102,10 @@ int create_new_regular_map(const regular_bg_map_cell& map_cells_ref, const size&
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     const uint16_t* data_ptr = &map_cells_ref;
@@ -1177,8 +1181,10 @@ int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles, bg_pa
     BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
                       map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
@@ -1256,8 +1262,10 @@ int create_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const 
         return result;
     }
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     result = _create_impl<false>(create_data::from_map(&map_cells_ref, map_dimensions, move(tiles), move(palette)));
@@ -1310,8 +1318,10 @@ int create_new_regular_map_optional(const regular_bg_map_cell& map_cells_ref, co
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP OPTIONAL: ", &map_cells_ref, " - ",
                       map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     const uint16_t* data_ptr = &map_cells_ref;
@@ -1363,8 +1373,10 @@ int allocate_regular_map_optional(const size& map_dimensions, bg_tiles_ptr&& til
     BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP OPTIONAL: ", map_dimensions.width(), " - ",
                       map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BN_ASSERT(map_dimensions.width() >= (256 / 8), "Invalid width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() >= (176 / 8), "Invalid height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
+              "Invalid map height: ", map_dimensions.height());
     BN_ASSERT(tiles.valid_tiles_count(palette.bpp_mode()), "Invalid tiles count: ", tiles.tiles_count());
 
     int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
@@ -1764,7 +1776,7 @@ void set_regular_map_position(int id, int x, int y)
     int map_width = item.width;
     int x_separator = x & 31;
 
-    for(int row = y; row < y + 32; ++row)
+    for(int row = y, row_limit = y + 22; row < row_limit; ++row)
     {
         const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
         regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);

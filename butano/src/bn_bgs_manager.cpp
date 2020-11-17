@@ -21,8 +21,6 @@
 #include "bn_regular_bg_builder.cpp.h"
 #include "bn_regular_bg_attributes.cpp.h"
 
-#include "bn_log.h"
-
 namespace bn::bgs_manager
 {
 
@@ -140,14 +138,32 @@ namespace
 
         void commit_hw_x()
         {
-            hw::bgs::set_x(hw_position.x(), handle);
-            update_map_position = ! native_map;
+            int x = hw_position.x();
+            hw::bgs::set_x(x, handle);
+
+            if(! native_map)
+            {
+                BN_ASSERT(x >= 0 && x < (half_dimensions.width() * 2) - display::width(),
+                          "Regular BGs with non native maps\ndon't allow horizontal wrapping: ",
+                          x, " - ", (half_dimensions.width() * 2) - display::width());
+
+                update_map_position = true;
+            }
         }
 
         void commit_hw_y()
         {
-            hw::bgs::set_y(hw_position.y(), handle);
-            update_map_position = ! native_map;
+            int y = hw_position.y();
+            hw::bgs::set_y(y, handle);
+
+            if(! native_map)
+            {
+                BN_ASSERT(y >= 0 && y < (half_dimensions.height() * 2) - display::height(),
+                          "Regular BGs with non native maps\ndon't allow vertical wrapping: ",
+                          y, " - ", (half_dimensions.height() * 2) - display::height());
+
+                update_map_position = true;
+            }
         }
     };
 
@@ -717,11 +733,11 @@ void update()
         {
             item->update_map_position = false;
 
-            int map_x = (item->hw_position.x() % (item->half_dimensions.width() * 2)) / 8;
-            int map_y = (item->hw_position.y() % (item->half_dimensions.height() * 2)) / 8;
+            int map_x = item->hw_position.x() / 8;
+            int map_y = item->hw_position.y() / 8;
             item->new_map_x = map_x;
             item->new_map_y = map_y;
-            item->commit_map_position = item->old_map_x != item->new_map_x || item->old_map_y != item->new_map_y ||
+            item->commit_map_position = item->old_map_x != map_x || item->old_map_y != map_y ||
                     item->map->cells_ref()->data() != item->old_map_cells_ref;
         }
     }
@@ -769,7 +785,7 @@ void commit()
                 }
                 else if(new_map_y > old_map_y)
                 {
-                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 31);
+                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 21);
                 }
             }
 

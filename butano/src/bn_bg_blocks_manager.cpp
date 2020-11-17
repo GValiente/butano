@@ -524,8 +524,11 @@ namespace
         }
         else
         {
-            hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
-                                      item.palette_offset());
+            if((item.width == 32 || item.width == 64) && (item.height == 32 || item.height == 64))
+            {
+                hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
+                                          item.palette_offset());
+            }
         }
     }
 
@@ -1710,8 +1713,54 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 
 void set_regular_map_position(int id, int x, int y)
 {
-    item_type& item = data.items.item(id);
+    BN_LOG("map x: ", x);
+    BN_LOG("map y: ", y);
 
+    item_type& item = data.items.item(id);
+    const regular_bg_map_cell* source_data_ptr = item.data;
+    regular_bg_map_cell* vram_ptr = hw::bg_blocks::vram(item.start_block);
+    int source_width = item.width;
+    int source_height = item.height;
+    int first_page = x / (32 + 2);
+    int first_block = first_page * 32;
+    int separator = (x % (32 + 2)) - 2;
+
+    BN_LOG("first_page: ", first_page);
+    BN_LOG("separator: ", separator);
+
+    if(separator <= 0)
+    {
+        for(int row = 0; row < 32; ++row)
+        {
+            const regular_bg_map_cell* source_data_row = source_data_ptr + (row * source_width);
+            regular_bg_map_cell* vram_row = vram_ptr + (row * 32);
+
+            for(int col = 0; col < 32; ++col)
+            {
+                vram_row[col] = source_data_row[first_block + col];
+            }
+        }
+    }
+    else
+    {
+        int second_block = first_block + 32;
+
+        for(int row = 0; row < 32; ++row)
+        {
+            const regular_bg_map_cell* source_data_row = source_data_ptr + (row * source_width);
+            regular_bg_map_cell* vram_row = vram_ptr + (row * 32);
+
+            for(int col = 0; col < separator; ++col)
+            {
+                vram_row[col] = source_data_row[first_block + col];
+            }
+
+            for(int col = separator; col < 32; ++col)
+            {
+                vram_row[col] = source_data_row[first_block + col];
+            }
+        }
+    }
 }
 
 void update()

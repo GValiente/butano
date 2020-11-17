@@ -20,6 +20,8 @@
 #include "bn_regular_bg_builder.cpp.h"
 #include "bn_regular_bg_attributes.cpp.h"
 
+#include "bn_log.h"
+
 namespace bn::bgs_manager
 {
 
@@ -36,15 +38,21 @@ namespace
         size half_dimensions;
         unsigned usages = 1;
         sort_key bg_sort_key;
+        const regular_bg_map_cell* old_map_cells_ref;
         hw::bgs::handle handle;
         optional<regular_bg_map_ptr> map;
         optional<camera_ptr> camera;
+        uint16_t old_map_x = 0;
+        uint16_t old_map_y = 0;
+        uint16_t new_map_x = 0;
+        uint16_t new_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
         bool native_map: 1;
         bool update: 1;
         bool update_map_position: 1;
+        bool commit_map_position: 1;
 
         item_type(regular_bg_builder&& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
@@ -72,6 +80,7 @@ namespace
             int map_height = map_dimensions.height();
             int map_size = 0;
             native_map = false;
+            commit_map_position = false;
 
             if(map_width == 32 || map_width == 64)
             {
@@ -95,6 +104,7 @@ namespace
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
             update_hw_position();
+            old_map_cells_ref = nullptr;
         }
 
         void update_hw_position()
@@ -668,17 +678,6 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
 
 void update()
 {
-    for(item_type* item : data.items_vector)
-    {
-        if(item->update_map_position)
-        {
-            int map_x = item->hw_position.x() / 8;
-            int map_y = item->hw_position.y() / 8;
-            bg_blocks_manager::set_regular_map_position(item->map->handle(), map_x, map_y);
-            item->update_map_position = false;
-        }
-    }
-
     if(data.rebuild_handles)
     {
         int id = hw::bgs::count() - 1;
@@ -710,6 +709,21 @@ void update()
 
         display_manager::update_windows_visible_bgs();
     }
+
+    for(item_type* item : data.items_vector)
+    {
+        if(item->update_map_position && item->visible)
+        {
+            item->update_map_position = false;
+
+            int map_x = (item->hw_position.x() % (item->half_dimensions.width() * 2)) / 8;
+            int map_y = (item->hw_position.y() % (item->half_dimensions.height() * 2)) / 8;
+            item->new_map_x = map_x;
+            item->new_map_y = map_y;
+            item->commit_map_position = item->old_map_x != item->new_map_x || item->old_map_y != item->new_map_y ||
+                    item->map->cells_ref()->data() != item->old_map_cells_ref;
+        }
+    }
 }
 
 void commit()
@@ -718,6 +732,22 @@ void commit()
     {
         hw::bgs::commit(data.handles);
         data.commit = false;
+    }
+
+    for(item_type* item : data.items_vector)
+    {
+        if(item->commit_map_position)
+        {
+            regular_bg_map_ptr& map = *item->map;
+            item->old_map_x = item->new_map_x;
+            item->old_map_y = item->new_map_y;
+            item->old_map_cells_ref = map.cells_ref()->data();
+            item->commit_map_position = false;
+
+            BN_LOG("bg x: ", item->hw_position.x());
+            BN_LOG("bg y: ", item->hw_position.y());
+            bg_blocks_manager::set_regular_map_position(map.handle(), item->new_map_x, item->new_map_y);
+        }
     }
 }
 

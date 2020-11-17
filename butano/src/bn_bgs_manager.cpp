@@ -48,10 +48,10 @@ namespace
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
-        bool native_map: 1;
+        bool big_map: 1;
         bool update: 1;
-        bool update_map_position: 1;
-        bool commit_map_position: 1;
+        bool update_big_map: 1;
+        bool commit_big_map: 1;
 
         item_type(regular_bg_builder&& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
@@ -78,14 +78,14 @@ namespace
             int map_width = map_dimensions.width();
             int map_height = map_dimensions.height();
             int map_size = 0;
-            native_map = false;
-            commit_map_position = false;
+            big_map = true;
+            commit_big_map = false;
 
             if(map_width == 32 || map_width == 64)
             {
                 if(map_height == 32 || map_height == 64)
                 {
-                    native_map = true;
+                    big_map = false;
 
                     if(map_width == 64)
                     {
@@ -141,13 +141,13 @@ namespace
             int x = hw_position.x();
             hw::bgs::set_x(x, handle);
 
-            if(! native_map)
+            if(big_map)
             {
                 BN_ASSERT(x >= 0 && x < (half_dimensions.width() * 2) - display::width(),
-                          "Regular BGs with non native maps\ndon't allow horizontal wrapping: ",
+                          "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
                           x, " - ", (half_dimensions.width() * 2) - display::width());
 
-                update_map_position = true;
+                update_big_map = true;
             }
         }
 
@@ -156,13 +156,13 @@ namespace
             int y = hw_position.y();
             hw::bgs::set_y(y, handle);
 
-            if(! native_map)
+            if(big_map)
             {
                 BN_ASSERT(y >= 0 && y < (half_dimensions.height() * 2) - display::height(),
-                          "Regular BGs with non native maps\ndon't allow vertical wrapping: ",
+                          "Regular BGs with big maps\ndon't allow vertical wrapping: ",
                           y, " - ", (half_dimensions.height() * 2) - display::height());
 
-                update_map_position = true;
+                update_big_map = true;
             }
         }
     };
@@ -182,9 +182,9 @@ namespace
     BN_DATA_EWRAM static_data data;
 
 
-    [[nodiscard]] bool _check_unique_map(item_type& item)
+    [[nodiscard]] bool _check_unique_big_map(item_type& item)
     {
-        if(! item.native_map)
+        if(item.big_map)
         {
             for(item_type* other_item : data.items_vector)
             {
@@ -247,7 +247,7 @@ id_type create(regular_bg_builder&& builder)
 
     regular_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
-    BN_ASSERT(_check_unique_map(item), "Two or more BGs have the same non-native map");
+    BN_ASSERT(_check_unique_big_map(item), "Two or more BGs have the same big map");
 
     _insert_item(item);
     display_manager::set_show_bg_in_all_windows(&item, true);
@@ -269,7 +269,7 @@ id_type create_optional(regular_bg_builder&& builder)
     }
 
     item_type& item = data.items_pool.create(move(builder), move(*map));
-    BN_ASSERT(_check_unique_map(item), "Two or more BGs have the same non-native map");
+    BN_ASSERT(_check_unique_big_map(item), "Two or more BGs have the same big map");
 
     _insert_item(item);
     display_manager::set_show_bg_in_all_windows(&item, true);
@@ -341,7 +341,7 @@ void set_map(id_type id, const regular_bg_map_ptr& map)
     {
         item->map = map;
         item->update_map();
-        BN_ASSERT(_check_unique_map(*item), "Two or more BGs have the same non-native map");
+        BN_ASSERT(_check_unique_big_map(*item), "Two or more BGs have the same big map");
 
         _update_item(*item);
     }
@@ -355,7 +355,7 @@ void set_map(id_type id, regular_bg_map_ptr&& map)
     {
         item->map = move(map);
         item->update_map();
-        BN_ASSERT(_check_unique_map(*item), "Two or more BGs have the same non-native map");
+        BN_ASSERT(_check_unique_big_map(*item), "Two or more BGs have the same big map");
 
         _update_item(*item);
     }
@@ -729,16 +729,29 @@ void update()
 
     for(item_type* item : data.items_vector)
     {
-        if(item->update_map_position && item->visible)
+        if(item->big_map)
         {
-            item->update_map_position = false;
+            bool force_full_commit = bg_blocks_manager::must_commit(item->map->handle());
 
-            int map_x = item->hw_position.x() / 8;
-            int map_y = item->hw_position.y() / 8;
-            item->new_map_x = map_x;
-            item->new_map_y = map_y;
-            item->commit_map_position = item->old_map_x != map_x || item->old_map_y != map_y ||
-                    item->map->cells_ref()->data() != item->old_map_cells_ref;
+            if(force_full_commit || (item->update_big_map && item->visible))
+            {
+                int map_x = item->hw_position.x() / 8;
+                int map_y = item->hw_position.y() / 8;
+                item->new_map_x = map_x;
+                item->new_map_y = map_y;
+                item->update_big_map = false;
+
+                if(force_full_commit)
+                {
+                    item->old_map_cells_ref = nullptr;
+                    item->commit_big_map = true;
+                }
+                else
+                {
+                    item->commit_big_map = item->old_map_x != map_x || item->old_map_y != map_y ||
+                            item->map->cells_ref()->data() != item->old_map_cells_ref;
+                }
+            }
         }
     }
 }
@@ -753,7 +766,7 @@ void commit()
 
     for(item_type* item : data.items_vector)
     {
-        if(item->commit_map_position)
+        if(item->commit_big_map)
         {
             regular_bg_map_ptr& map = *item->map;
             int map_handle = map.handle();
@@ -792,7 +805,7 @@ void commit()
             item->old_map_x = new_map_x;
             item->old_map_y = new_map_y;
             item->old_map_cells_ref = new_map_cells_ref;
-            item->commit_map_position = false;
+            item->commit_big_map = false;
         }
     }
 }

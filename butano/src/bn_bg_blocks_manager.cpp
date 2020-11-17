@@ -67,6 +67,11 @@ namespace
         return result;
     }
 
+    [[nodiscard]] constexpr bool _big_map(int width, int height)
+    {
+        return width > 64 || height > 64;
+    }
+
 
     constexpr const int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr const int max_list_items = max_items + 1;
@@ -304,13 +309,13 @@ namespace
             int height = dimensions.height();
             int blocks_count;
 
-            if((width == 32 || width == 64) && (height == 32 || height == 64))
+            if(_big_map(width, height))
             {
-                blocks_count = _ceil_half_words_to_blocks(width * height);
+                blocks_count = _ceil_half_words_to_blocks(32 * 32);
             }
             else
             {
-                blocks_count = _ceil_half_words_to_blocks(32 * 32);
+                blocks_count = _ceil_half_words_to_blocks(width * height);
             }
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), move(palette) };
@@ -524,7 +529,8 @@ namespace
         }
         else
         {
-            if((item.width == 32 || item.width == 64) && (item.height == 32 || item.height == 64))
+            // Big maps are committed from bgs_manager:
+            if(! _big_map(item.width, item.height))
             {
                 hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
                                           item.palette_offset());
@@ -1746,6 +1752,12 @@ void update_regular_map_col(int id, int x, int y)
         dest_data += 32;
         source_data += map_width;
     }
+}
+
+bool must_commit(int id)
+{
+    const item_type& item = data.items.item(id);
+    return item.commit;
 }
 
 void update_regular_map_row(int id, int x, int y)

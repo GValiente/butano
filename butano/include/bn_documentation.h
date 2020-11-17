@@ -973,6 +973,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_1_0_0 1.0.0 (next release)
+ *
+ * Division by 0 assert added.
+ *
+ *
  * @section changelog_0_4_0 0.4.0
  *
  * * `btn` renamed to `bn`. No more API breaks will be made between minor releases after 1.0.0, promise.

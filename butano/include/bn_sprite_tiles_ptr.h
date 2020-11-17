@@ -369,11 +369,11 @@ public:
     [[nodiscard]] optional<span<tile>> vram();
 
     /**
-     * @brief Returns the hash of the internal handle.
+     * @brief Returns the internal handle.
      */
-    [[nodiscard]] unsigned hash() const
+    [[nodiscard]] int handle() const
     {
-        return make_hash(_handle);
+        return _handle;
     }
 
     /**
@@ -427,7 +427,7 @@ struct hash<sprite_tiles_ptr>
      */
     [[nodiscard]] unsigned operator()(const sprite_tiles_ptr& value) const
     {
-        return value.hash();
+        return make_hash(value.handle());
     }
 };
 

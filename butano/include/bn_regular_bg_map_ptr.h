@@ -477,11 +477,11 @@ public:
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 
     /**
-     * @brief Returns the hash of the internal handle.
+     * @brief Returns the internal handle.
      */
-    [[nodiscard]] unsigned hash() const
+    [[nodiscard]] int handle() const
     {
-        return make_hash(_handle);
+        return _handle;
     }
 
     /**
@@ -535,7 +535,7 @@ struct hash<regular_bg_map_ptr>
      */
     [[nodiscard]] unsigned operator()(const regular_bg_map_ptr& value) const
     {
-        return value.hash();
+        return make_hash(value.handle());
     }
 };
 

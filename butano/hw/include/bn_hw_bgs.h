@@ -6,7 +6,6 @@
 #ifndef BN_HW_BGS_H
 #define BN_HW_BGS_H
 
-#include "bn_size.h"
 #include "bn_memory.h"
 #include "bn_regular_bg_builder.h"
 #include "bn_hw_tonc.h"
@@ -52,9 +51,8 @@ namespace bn::hw::bgs
         set_map_sbb(map_sbb, bg.cnt);
     }
 
-    inline void set_map_dimensions(const size& map_dimensions, handle& bg)
+    inline void set_map_dimensions(int size, handle& bg)
     {
-        int size = (map_dimensions.width() > 32) + ((map_dimensions.height() > 32) * 2);
         BFN_SET(bg.cnt, size, BG_SIZE);
     }
 

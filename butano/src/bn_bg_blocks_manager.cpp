@@ -1711,54 +1711,74 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
     return result;
 }
 
+void update_regular_map_col(int id, int x, int y)
+{
+    const item_type& item = data.items.item(id);
+    int map_width = item.width;
+    const regular_bg_map_cell* source_data = item.data + ((y * map_width) + x);
+    int y_separator = y & 31;
+    regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+
+    for(int iy = y_separator; iy < 32; ++iy)
+    {
+        *dest_data = *source_data;
+        dest_data += 32;
+        source_data += map_width;
+    }
+
+    dest_data -= 1024;
+
+    for(int iy = 0; iy < y_separator; ++iy)
+    {
+        *dest_data= *source_data;
+        dest_data += 32;
+        source_data += map_width;
+    }
+}
+
+void update_regular_map_row(int id, int x, int y)
+{
+    const item_type& item = data.items.item(id);
+    const regular_bg_map_cell* source_data = item.data + ((y * item.width) + x);
+    int x_separator = x & 31;
+    regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
+
+    for(int ix = x_separator; ix < 32; ++ix)
+    {
+        *dest_data++ = *source_data++;
+    }
+
+    dest_data -= 32;
+
+    for(int ix = 0; ix < x_separator; ++ix)
+    {
+        *dest_data++ = *source_data++;
+    }
+}
+
 void set_regular_map_position(int id, int x, int y)
 {
-    BN_LOG("map x: ", x);
-    BN_LOG("map y: ", y);
+    const item_type& item = data.items.item(id);
+    const regular_bg_map_cell* item_data = item.data;
+    regular_bg_map_cell* vram_data = hw::bg_blocks::vram(item.start_block);
+    int map_width = item.width;
+    int x_separator = x & 31;
 
-    item_type& item = data.items.item(id);
-    const regular_bg_map_cell* source_data_ptr = item.data;
-    regular_bg_map_cell* vram_ptr = hw::bg_blocks::vram(item.start_block);
-    int source_width = item.width;
-    int source_height = item.height;
-    int first_page = x / (32 + 2);
-    int first_block = first_page * 32;
-    int separator = (x % (32 + 2)) - 2;
-
-    BN_LOG("first_page: ", first_page);
-    BN_LOG("separator: ", separator);
-
-    if(separator <= 0)
+    for(int row = y; row < y + 32; ++row)
     {
-        for(int row = 0; row < 32; ++row)
-        {
-            const regular_bg_map_cell* source_data_row = source_data_ptr + (row * source_width);
-            regular_bg_map_cell* vram_row = vram_ptr + (row * 32);
+        const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
+        regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
-            for(int col = 0; col < 32; ++col)
-            {
-                vram_row[col] = source_data_row[first_block + col];
-            }
+        for(int ix = x_separator; ix < 32; ++ix)
+        {
+            *dest_data++ = *source_data++;
         }
-    }
-    else
-    {
-        int second_block = first_block + 32;
 
-        for(int row = 0; row < 32; ++row)
+        dest_data -= 32;
+
+        for(int ix = 0; ix < x_separator; ++ix)
         {
-            const regular_bg_map_cell* source_data_row = source_data_ptr + (row * source_width);
-            regular_bg_map_cell* vram_row = vram_ptr + (row * 32);
-
-            for(int col = 0; col < separator; ++col)
-            {
-                vram_row[col] = source_data_row[first_block + col];
-            }
-
-            for(int col = separator; col < 32; ++col)
-            {
-                vram_row[col] = source_data_row[first_block + col];
-            }
+            *dest_data++ = *source_data++;
         }
     }
 }

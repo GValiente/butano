@@ -99,7 +99,7 @@ int main()
 
     while(true)
     {
-        bg_384_320_scene(text_generator);
+        bg_1536_1280_scene(text_generator);
         bn::core::update();
     }
 }

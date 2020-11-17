@@ -5,6 +5,7 @@
 
 #include "bn_bgs_manager.h"
 
+#include "bn_math.h"
 #include "bn_pool.h"
 #include "bn_vector.h"
 #include "bn_display.h"
@@ -739,14 +740,43 @@ void commit()
         if(item->commit_map_position)
         {
             regular_bg_map_ptr& map = *item->map;
-            item->old_map_x = item->new_map_x;
-            item->old_map_y = item->new_map_y;
-            item->old_map_cells_ref = map.cells_ref()->data();
-            item->commit_map_position = false;
+            int map_handle = map.handle();
+            const regular_bg_map_cell* new_map_cells_ref = bg_blocks_manager::regular_map_cells_ref(map_handle)->data();
+            int old_map_x = item->old_map_x;
+            int old_map_y = item->old_map_y;
+            int new_map_x = item->new_map_x;
+            int new_map_y = item->new_map_y;
 
-            BN_LOG("bg x: ", item->hw_position.x());
-            BN_LOG("bg y: ", item->hw_position.y());
-            bg_blocks_manager::set_regular_map_position(map.handle(), item->new_map_x, item->new_map_y);
+            if(item->old_map_cells_ref != new_map_cells_ref ||
+                    bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)
+            {
+                bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
+            }
+            else
+            {
+                if(new_map_x < old_map_x)
+                {
+                    bg_blocks_manager::update_regular_map_col(map_handle, new_map_x, new_map_y);
+                }
+                else if(new_map_x > old_map_x)
+                {
+                    bg_blocks_manager::update_regular_map_col(map_handle, new_map_x + 31, new_map_y);
+                }
+
+                if(new_map_y < old_map_y)
+                {
+                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y);
+                }
+                else if(new_map_y > old_map_y)
+                {
+                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 31);
+                }
+            }
+
+            item->old_map_x = new_map_x;
+            item->old_map_y = new_map_y;
+            item->old_map_cells_ref = new_map_cells_ref;
+            item->commit_map_position = false;
         }
     }
 }

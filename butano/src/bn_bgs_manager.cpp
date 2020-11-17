@@ -43,8 +43,6 @@ namespace
         optional<camera_ptr> camera;
         uint16_t old_map_x = 0;
         uint16_t old_map_y = 0;
-        uint16_t new_map_x = 0;
-        uint16_t new_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
@@ -735,10 +733,6 @@ void update()
 
             if(force_full_commit || (item->update_big_map && item->visible))
             {
-                int map_x = item->hw_position.x() / 8;
-                int map_y = item->hw_position.y() / 8;
-                item->new_map_x = map_x;
-                item->new_map_y = map_y;
                 item->update_big_map = false;
 
                 if(force_full_commit)
@@ -748,6 +742,8 @@ void update()
                 }
                 else
                 {
+                    int map_x = item->hw_position.x() / 8;
+                    int map_y = item->hw_position.y() / 8;
                     item->commit_big_map = item->old_map_x != map_x || item->old_map_y != map_y ||
                             item->map->cells_ref()->data() != item->old_map_cells_ref;
                 }
@@ -773,8 +769,8 @@ void commit()
             const regular_bg_map_cell* new_map_cells_ref = bg_blocks_manager::regular_map_cells_ref(map_handle)->data();
             int old_map_x = item->old_map_x;
             int old_map_y = item->old_map_y;
-            int new_map_x = item->new_map_x;
-            int new_map_y = item->new_map_y;
+            int new_map_x = item->hw_position.x() / 8;
+            int new_map_y = item->hw_position.y() / 8;
 
             if(item->old_map_cells_ref != new_map_cells_ref ||
                     bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)

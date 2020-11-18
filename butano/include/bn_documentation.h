@@ -977,6 +977,7 @@
  *
  * * Regular maps bigger than 512x512 supported.
  * * Division by 0 assert added.
+ * * bn::regular_bg_item generation fixed.
  *
  *
  * @section changelog_0_4_0 0.4.0

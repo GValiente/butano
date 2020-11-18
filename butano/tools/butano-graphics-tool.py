@@ -282,19 +282,25 @@ class RegularBgItem:
         if self.__bpp_8:
             command.append('-gB8')
 
-            if self.__repeated_tiles_reduction:
+            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
+                command.append('-mRtf')
+            elif self.__repeated_tiles_reduction:
                 command.append('-mRt')
-
-            if self.__flipped_tiles_reduction:
+            elif self.__flipped_tiles_reduction:
                 command.append('-mRf')
+            else:
+                command.append('-mR!')
         else:
             command.append('-gB4')
 
-            if self.__repeated_tiles_reduction:
+            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
+                command.append('-mRtpf')
+            elif self.__repeated_tiles_reduction:
                 command.append('-mRtp')
-
-            if self.__flipped_tiles_reduction:
-                command.append('-mRf')
+            elif self.__flipped_tiles_reduction:
+                command.append('-mRpf')
+            else:
+                command.append('-mRp')
 
         if self.__sbb:
             command.append('-mLs')

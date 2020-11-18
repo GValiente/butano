@@ -240,6 +240,17 @@ class RegularBgItem:
             grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
+                if ' tiles ' in grit_line:
+                    for grit_word in grit_line.split():
+                        try:
+                            tiles_count = int(grit_word)
+                            break
+                        except ValueError:
+                            pass
+
+                    if tiles_count > 1024:
+                        raise ValueError('Regular BGs with more than 1024 tiles not supported: ' + str(tiles_count))
+
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
                     break

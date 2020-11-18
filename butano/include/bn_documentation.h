@@ -977,7 +977,8 @@
  *
  * * Regular maps bigger than 512x512 supported.
  * * Division by 0 assert added.
- * * bn::regular_bg_item generation fixed.
+ * * bn::regular_bg_item maximum tiles check added.
+ * * bn::regular_bg_item generation options fixed.
  *
  *
  * @section changelog_0_4_0 0.4.0

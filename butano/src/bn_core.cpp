@@ -223,6 +223,10 @@ void update()
     sprite_tiles_manager::commit();
     BN_PROFILER_ENGINE_STOP();
 
+    BN_PROFILER_ENGINE_START("eng_big_maps_commit");
+    bgs_manager::commit_big_maps();
+    BN_PROFILER_ENGINE_STOP();
+
     BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
     bg_blocks_manager::commit();
     BN_PROFILER_ENGINE_STOP();

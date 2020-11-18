@@ -37,19 +37,18 @@ namespace
         size half_dimensions;
         unsigned usages = 1;
         sort_key bg_sort_key;
-        const regular_bg_map_cell* old_map_cells_ref;
         hw::bgs::handle handle;
         optional<regular_bg_map_ptr> map;
         optional<camera_ptr> camera;
-        uint16_t old_map_x = 0;
-        uint16_t old_map_y = 0;
+        uint16_t old_big_map_x = 0;
+        uint16_t old_big_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
-        bool big_map: 1;
         bool update: 1;
-        bool update_big_map: 1;
+        bool big_map: 1;
         bool commit_big_map: 1;
+        bool full_commit_big_map: 1;
 
         item_type(regular_bg_builder&& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
@@ -77,7 +76,6 @@ namespace
             int map_height = map_dimensions.height();
             int map_size = 0;
             big_map = true;
-            commit_big_map = false;
 
             if(map_width == 32 || map_width == 64)
             {
@@ -101,7 +99,8 @@ namespace
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
             update_hw_position();
-            old_map_cells_ref = nullptr;
+            commit_big_map = big_map;
+            full_commit_big_map = big_map;
         }
 
         void update_hw_position()
@@ -145,7 +144,7 @@ namespace
                           "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
                           x, " - ", (half_dimensions.width() * 2) - display::width());
 
-                update_big_map = true;
+                commit_big_map = true;
             }
         }
 
@@ -160,7 +159,7 @@ namespace
                           "Regular BGs with big maps\ndon't allow vertical wrapping: ",
                           y, " - ", (half_dimensions.height() * 2) - display::height());
 
-                update_big_map = true;
+                commit_big_map = true;
             }
         }
     };
@@ -724,32 +723,6 @@ void update()
 
         display_manager::update_windows_visible_bgs();
     }
-
-    for(item_type* item : data.items_vector)
-    {
-        if(item->big_map)
-        {
-            bool force_full_commit = bg_blocks_manager::must_commit(item->map->handle());
-
-            if(force_full_commit || (item->update_big_map && item->visible))
-            {
-                item->update_big_map = false;
-
-                if(force_full_commit)
-                {
-                    item->old_map_cells_ref = nullptr;
-                    item->commit_big_map = true;
-                }
-                else
-                {
-                    int map_x = item->hw_position.x() / 8;
-                    int map_y = item->hw_position.y() / 8;
-                    item->commit_big_map = item->old_map_x != map_x || item->old_map_y != map_y ||
-                            item->map->cells_ref()->data() != item->old_map_cells_ref;
-                }
-            }
-        }
-    }
 }
 
 void commit()
@@ -759,49 +732,60 @@ void commit()
         hw::bgs::commit(data.handles);
         data.commit = false;
     }
+}
 
+void commit_big_maps()
+{
     for(item_type* item : data.items_vector)
     {
-        if(item->commit_big_map)
+        if(item->big_map)
         {
             regular_bg_map_ptr& map = *item->map;
             int map_handle = map.handle();
-            const regular_bg_map_cell* new_map_cells_ref = bg_blocks_manager::regular_map_cells_ref(map_handle)->data();
-            int old_map_x = item->old_map_x;
-            int old_map_y = item->old_map_y;
+            int old_map_x = item->old_big_map_x;
+            int old_map_y = item->old_big_map_y;
             int new_map_x = item->hw_position.x() / 8;
             int new_map_y = item->hw_position.y() / 8;
+            bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
+            bool commit_big_map = full_commit_big_map;
 
-            if(item->old_map_cells_ref != new_map_cells_ref ||
-                    bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)
+            if(! commit_big_map && item->commit_big_map && item->visible)
             {
-                bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
-            }
-            else
-            {
-                if(new_map_x < old_map_x)
-                {
-                    bg_blocks_manager::update_regular_map_col(map_handle, new_map_x, new_map_y);
-                }
-                else if(new_map_x > old_map_x)
-                {
-                    bg_blocks_manager::update_regular_map_col(map_handle, new_map_x + 31, new_map_y);
-                }
-
-                if(new_map_y < old_map_y)
-                {
-                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y);
-                }
-                else if(new_map_y > old_map_y)
-                {
-                    bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 21);
-                }
+                commit_big_map = old_map_x != new_map_x || old_map_y != new_map_y;
             }
 
-            item->old_map_x = new_map_x;
-            item->old_map_y = new_map_y;
-            item->old_map_cells_ref = new_map_cells_ref;
-            item->commit_big_map = false;
+            if(commit_big_map)
+            {
+                item->old_big_map_x = new_map_x;
+                item->old_big_map_y = new_map_y;
+                item->commit_big_map = false;
+                item->full_commit_big_map = false;
+
+                if(full_commit_big_map || bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)
+                {
+                    bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
+                }
+                else
+                {
+                    if(new_map_x < old_map_x)
+                    {
+                        bg_blocks_manager::update_regular_map_col(map_handle, new_map_x, new_map_y);
+                    }
+                    else if(new_map_x > old_map_x)
+                    {
+                        bg_blocks_manager::update_regular_map_col(map_handle, new_map_x + 31, new_map_y);
+                    }
+
+                    if(new_map_y < old_map_y)
+                    {
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y);
+                    }
+                    else if(new_map_y > old_map_y)
+                    {
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 21);
+                    }
+                }
+            }
         }
     }
 }

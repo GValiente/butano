@@ -534,7 +534,7 @@
 /**
  * @mainpage Butano
  *
- * Modern C++ high level GBA engine.
+ * Butano is a modern C++ high level engine for the GBA.
  *
  * This is the documentation for the Butano engine. To see a high-level overview,
  * go to the <a href="https://github.com/GValiente/butano">GitHub main page</a>.

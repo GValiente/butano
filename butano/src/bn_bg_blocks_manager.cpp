@@ -525,15 +525,57 @@ namespace
     {
         if(item.is_tiles)
         {
-            hw::bg_blocks::commit_tiles(item.data, item.start_block, item.half_words());
+            uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
+            memory::copy(*item.data, item.half_words(), *destination_vram_ptr);
         }
         else
         {
             // Big maps are committed from bgs_manager:
             if(! _big_map(item.width, item.height))
             {
-                hw::bg_blocks::commit_map(item.data, item.start_block, item.half_words(), item.tiles_offset(),
-                                          item.palette_offset());
+                const uint16_t* source_data_ptr = item.data;
+                uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
+                int tiles_offset = item.tiles_offset();
+                int palette_offset = item.palette_offset();
+                int half_words = item.half_words();
+
+                if(tiles_offset)
+                {
+                    if(palette_offset)
+                    {
+                        for(int index = 0; index < half_words; ++index)
+                        {
+                            hw::bg_blocks::copy_regular_bg_map_cell_offset(
+                                        source_data_ptr[index], tiles_offset, palette_offset,
+                                        destination_vram_ptr[index]);
+                        }
+                    }
+                    else
+                    {
+                        for(int index = 0; index < half_words; ++index)
+                        {
+                            hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(
+                                        source_data_ptr[index], tiles_offset,
+                                        destination_vram_ptr[index]);
+                        }
+                    }
+                }
+                else
+                {
+                    if(palette_offset)
+                    {
+                        for(int index = 0; index < half_words; ++index)
+                        {
+                            hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(
+                                        source_data_ptr[index], palette_offset,
+                                        destination_vram_ptr[index]);
+                        }
+                    }
+                    else
+                    {
+                        memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+                    }
+                }
             }
         }
     }
@@ -1729,6 +1771,12 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
     return result;
 }
 
+bool must_commit(int id)
+{
+    const item_type& item = data.items.item(id);
+    return item.commit;
+}
+
 void update_regular_map_col(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
@@ -1736,28 +1784,87 @@ void update_regular_map_col(int id, int x, int y)
     const regular_bg_map_cell* source_data = item.data + ((y * map_width) + x);
     int y_separator = y & 31;
     regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+    int tiles_offset = item.tiles_offset();
+    int palette_offset = item.palette_offset();
 
-    for(int iy = y_separator; iy < 32; ++iy)
+    if(tiles_offset)
     {
-        *dest_data = *source_data;
-        dest_data += 32;
-        source_data += map_width;
+        if(palette_offset)
+        {
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
+
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
+        }
+        else
+        {
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
+
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
+        }
     }
-
-    dest_data -= 1024;
-
-    for(int iy = 0; iy < y_separator; ++iy)
+    else
     {
-        *dest_data= *source_data;
-        dest_data += 32;
-        source_data += map_width;
-    }
-}
+        if(palette_offset)
+        {
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
 
-bool must_commit(int id)
-{
-    const item_type& item = data.items.item(id);
-    return item.commit;
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                dest_data += 32;
+                source_data += map_width;
+            }
+        }
+        else
+        {
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                *dest_data = *source_data;
+                dest_data += 32;
+                source_data += map_width;
+            }
+
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                *dest_data = *source_data;
+                dest_data += 32;
+                source_data += map_width;
+            }
+        }
+    }
 }
 
 void update_regular_map_row(int id, int x, int y)
@@ -1766,24 +1873,77 @@ void update_regular_map_row(int id, int x, int y)
     const regular_bg_map_cell* source_data = item.data + ((y * item.width) + x);
     int x_separator = x & 31;
     regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
+    int tiles_offset = item.tiles_offset();
+    int palette_offset = item.palette_offset();
 
-    /*for(int ix = x_separator; ix < 32; ++ix)
+    if(tiles_offset)
     {
-        *dest_data++ = *source_data++;
+        if(palette_offset)
+        {
+            for(int ix = x_separator; ix < 32; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+
+            dest_data -= 32;
+
+            for(int ix = 0; ix < x_separator; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+        }
+        else
+        {
+            for(int ix = x_separator; ix < 32; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+
+            dest_data -= 32;
+
+            for(int ix = 0; ix < x_separator; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+        }
     }
-
-    dest_data -= 32;
-
-    for(int ix = 0; ix < x_separator; ++ix)
+    else
     {
-        *dest_data++ = *source_data++;
-    }*/
+        if(palette_offset)
+        {
+            for(int ix = x_separator; ix < 32; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
 
-    int elements = 32 - x_separator;
-    memory::copy(*source_data, elements, *dest_data);
-    source_data += elements;
-    dest_data -= x_separator;
-    memory::copy(*source_data, x_separator, *dest_data);
+            dest_data -= 32;
+
+            for(int ix = 0; ix < x_separator; ++ix)
+            {
+                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+        }
+        else
+        {
+            int elements = 32 - x_separator;
+            memory::copy(*source_data, elements, *dest_data);
+            source_data += elements;
+            dest_data -= x_separator;
+            memory::copy(*source_data, x_separator, *dest_data);
+        }
+    }
 }
 
 void set_regular_map_position(int id, int x, int y)
@@ -1793,29 +1953,101 @@ void set_regular_map_position(int id, int x, int y)
     regular_bg_map_cell* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
     int x_separator = x & 31;
+    int tiles_offset = item.tiles_offset();
+    int palette_offset = item.palette_offset();
 
-    for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+    if(tiles_offset)
     {
-        const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
-        regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-
-        /*for(int ix = x_separator; ix < 32; ++ix)
+        if(palette_offset)
         {
-            *dest_data++ = *source_data++;
+            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+            {
+                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
+                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+
+                for(int ix = x_separator; ix < 32; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset,
+                                                                   *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+
+                dest_data -= 32;
+
+                for(int ix = 0; ix < x_separator; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset,
+                                                                   *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+            }
         }
-
-        dest_data -= 32;
-
-        for(int ix = 0; ix < x_separator; ++ix)
+        else
         {
-            *dest_data++ = *source_data++;
-        }*/
+            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+            {
+                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
+                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
-        int elements = 32 - x_separator;
-        memory::copy(*source_data, elements, *dest_data);
-        source_data += elements;
-        dest_data -= x_separator;
-        memory::copy(*source_data, x_separator, *dest_data);
+                for(int ix = x_separator; ix < 32; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+
+                dest_data -= 32;
+
+                for(int ix = 0; ix < x_separator; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+            }
+        }
+    }
+    else
+    {
+        if(palette_offset)
+        {
+            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+            {
+                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
+                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+
+                for(int ix = x_separator; ix < 32; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+
+                dest_data -= 32;
+
+                for(int ix = 0; ix < x_separator; ++ix)
+                {
+                    hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
+                    ++source_data;
+                    ++dest_data;
+                }
+            }
+        }
+        else
+        {
+            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+            {
+                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
+                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+                int elements = 32 - x_separator;
+                memory::copy(*source_data, elements, *dest_data);
+                source_data += elements;
+                dest_data -= x_separator;
+                memory::copy(*source_data, x_separator, *dest_data);
+            }
+        }
     }
 }
 

@@ -18,16 +18,16 @@
 #---------------------------------------------------------------------------------------------------------------------
 TARGET      :=  $(notdir $(CURDIR))
 BUILD       :=  build
-LIBBUTANO   :=  ../butano
+LIBBUTANO   :=  ../../butano
 PYTHON      :=  python
-SOURCES     :=  src ../common/src
-INCLUDES    :=  include ../common/include
+SOURCES     :=  src ../../common/src
+INCLUDES    :=  include ../../common/include
 DATA        :=
-GRAPHICS    :=  graphics ../common/graphics
-AUDIO       :=  audio ../common/audio
-ROMTITLE    :=  BUTANO TESTS
+GRAPHICS    :=  graphics ../../common/graphics
+AUDIO       :=  audio ../../common/audio
+ROMTITLE    :=  BUTANO BIGMT
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBN_CFG_ASSERT_ENABLED=true
+USERFLAGS   :=  
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

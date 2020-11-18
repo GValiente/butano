@@ -176,10 +176,6 @@ class SpriteItem:
 
 class RegularBgItem:
 
-    @staticmethod
-    def valid_sizes_message():
-        return ' (valid regular BG sizes: 256x256, 512x256, 256x512, 512x512)'
-
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
@@ -190,17 +186,17 @@ class RegularBgItem:
         width = bmp.width
         height = bmp.height
 
-        if width == 256 and height == 256:
-            self.__sbb = False
-        elif (width == 256 and height == 512) or (width == 512 and height == 256) or (width == 512 and height == 512):
-            self.__sbb = True
-        else:
-            raise ValueError('Invalid regular BG size: (' + str(width) + 'x' + str(height) + ')' +
-                             RegularBgItem.valid_sizes_message())
+        if width % 256 != 0:
+            raise ValueError('Regular BGs width must be divisible by 256: ' + str(width))
+
+        if height % 256 != 0:
+            raise ValueError('Regular BGs height must be divisible by 256: ' + str(height))
 
         self.__width = int(width / 8)
         self.__height = int(height / 8)
         self.__bpp_8 = False
+        self.__sbb = (width == 256 and height == 512) or (width == 512 and height == 256) or \
+                     (width == 512 and height == 512)
 
         try:
             self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])
@@ -223,6 +219,7 @@ class RegularBgItem:
             elif bpp_mode == 'bpp_4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.bn_quantized.bmp'
                 print('    Generating bpp4 image in ' + self.__file_path + '...')
+                sys.stdout.flush()
                 start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
                 end = time.time()
@@ -244,6 +241,17 @@ class RegularBgItem:
             grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
+                if ' tiles ' in grit_line:
+                    for grit_word in grit_line.split():
+                        try:
+                            tiles_count = int(grit_word)
+                            break
+                        except ValueError:
+                            pass
+
+                    if tiles_count > 1024:
+                        raise ValueError('Regular BGs with more than 1024 tiles not supported: ' + str(tiles_count))
+
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
                     break
@@ -286,19 +294,25 @@ class RegularBgItem:
         if self.__bpp_8:
             command.append('-gB8')
 
-            if self.__repeated_tiles_reduction:
+            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
+                command.append('-mRtf')
+            elif self.__repeated_tiles_reduction:
                 command.append('-mRt')
-
-            if self.__flipped_tiles_reduction:
+            elif self.__flipped_tiles_reduction:
                 command.append('-mRf')
+            else:
+                command.append('-mR!')
         else:
             command.append('-gB4')
 
-            if self.__repeated_tiles_reduction:
+            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
+                command.append('-mRtpf')
+            elif self.__repeated_tiles_reduction:
                 command.append('-mRtp')
-
-            if self.__flipped_tiles_reduction:
-                command.append('-mRf')
+            elif self.__flipped_tiles_reduction:
+                command.append('-mRpf')
+            else:
+                command.append('-mRp')
 
         if self.__sbb:
             command.append('-mLs')
@@ -330,6 +344,7 @@ class GraphicsFileInfo:
 
     def process(self, build_folder_path):
         print(self.__file_name)
+        sys.stdout.flush()
 
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)

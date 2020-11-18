@@ -112,6 +112,8 @@ namespace bgs_manager
     void update();
 
     void commit();
+
+    void commit_big_maps();
 }
 
 }

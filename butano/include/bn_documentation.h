@@ -534,7 +534,7 @@
 /**
  * @mainpage Butano
  *
- * Modern C++ high level GBA engine.
+ * Butano is a modern C++ high level engine for the GBA.
  *
  * This is the documentation for the Butano engine. To see a high-level overview,
  * go to the <a href="https://github.com/GValiente/butano">GitHub main page</a>.
@@ -975,7 +975,10 @@
  *
  * @section changelog_1_0_0 1.0.0 (next release)
  *
- * Division by 0 assert added.
+ * * Regular maps bigger than 512x512 supported.
+ * * Division by 0 assert added.
+ * * bn::regular_bg_item maximum tiles check added.
+ * * bn::regular_bg_item generation options fixed.
  *
  *
  * @section changelog_0_4_0 0.4.0

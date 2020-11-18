@@ -119,6 +119,14 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] optional<span<regular_bg_map_cell>> regular_map_vram(int id);
 
+    [[nodiscard]] bool must_commit(int id);
+
+    void update_regular_map_col(int id, int x, int y);
+
+    void update_regular_map_row(int id, int x, int y);
+
+    void set_regular_map_position(int id, int x, int y);
+
     void update();
 
     void commit();

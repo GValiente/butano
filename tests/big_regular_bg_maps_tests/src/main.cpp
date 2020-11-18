@@ -12,11 +12,13 @@
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
-#include "bn_regular_bg_items_big_map.h"
+#include "bn_regular_bg_items_big_map_4.h"
+#include "bn_regular_bg_items_big_map_8.h"
 
 namespace
 {
-    void big_map_scene(bn::sprite_text_generator& text_generator)
+    void big_map_scene(const bn::string_view& title, const bn::regular_bg_item& item,
+                       bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "PAD: move BG",
@@ -25,9 +27,9 @@ namespace
             "START: go to next scene",
         };
 
-        info info("1280x768 regular BG", info_text_lines, text_generator);
+        info info(title, info_text_lines, text_generator);
 
-        bn::regular_bg_ptr bg = bn::regular_bg_items::big_map.create_bg(0, 0);
+        bn::regular_bg_ptr bg = item.create_bg(0, 0);
         int x_limit = (bg.dimensions().width() - bn::display::width()) / 2;
         int y_limit = (bg.dimensions().height() - bn::display::height()) / 2;
 
@@ -67,7 +69,10 @@ int main()
 
     while(true)
     {
-        big_map_scene(text_generator);
+        big_map_scene("1280x768 BPP4 regular BG", bn::regular_bg_items::big_map_4, text_generator);
+        bn::core::update();
+
+        big_map_scene("1280x768 BPP8 regular BG", bn::regular_bg_items::big_map_8, text_generator);
         bn::core::update();
     }
 }

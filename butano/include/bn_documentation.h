@@ -975,7 +975,8 @@
  *
  * @section changelog_1_0_0 1.0.0 (next release)
  *
- * Division by 0 assert added.
+ * * Regular maps bigger than 512x512 supported.
+ * * Division by 0 assert added.
  *
  *
  * @section changelog_0_4_0 0.4.0

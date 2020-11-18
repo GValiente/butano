@@ -135,6 +135,8 @@ def process(audio_folder_paths, build_folder_path):
     for audio_file_name in audio_file_names:
         print(audio_file_name)
 
+    sys.stdout.flush()
+
     soundbank_bin_path = build_folder_path + '/_bn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/_bn_audio_soundbank.h'
     total_size = process_audio_files(audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path)

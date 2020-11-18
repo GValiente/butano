@@ -219,6 +219,7 @@ class RegularBgItem:
             elif bpp_mode == 'bpp_4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.bn_quantized.bmp'
                 print('    Generating bpp4 image in ' + self.__file_path + '...')
+                sys.stdout.flush()
                 start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
                 end = time.time()
@@ -343,6 +344,7 @@ class GraphicsFileInfo:
 
     def process(self, build_folder_path):
         print(self.__file_name)
+        sys.stdout.flush()
 
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)

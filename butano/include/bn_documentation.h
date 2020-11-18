@@ -973,7 +973,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_1_0_0 1.0.0 (next release)
+ * @section changelog_1_0_0 1.0.0
  *
  * * Regular maps bigger than 512x512 supported.
  * * Division by 0 assert added.

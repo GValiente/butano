@@ -51,13 +51,13 @@ public:
      *
      * The colors are not copied but referenced, so they should outlive the sprite_item to avoid dangling references.
      *
-     * @param bpp_mode Bits per pixel of the output sprites.
+     * @param bpp Bits per pixel of the output sprites.
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.
      */
     constexpr sprite_item(const sprite_shape_size& shape_size, const span<const tile>& tiles_ref,
-                          const span<const color>& colors_ref, palette_bpp_mode bpp_mode, int graphics_count) :
-        sprite_item(shape_size, sprite_tiles_item(tiles_ref, graphics_count),
-                    sprite_palette_item(colors_ref, bpp_mode))
+                          const span<const color>& colors_ref, bpp_mode bpp, int graphics_count) :
+        sprite_item(shape_size, sprite_tiles_item(tiles_ref, bpp, graphics_count),
+                    sprite_palette_item(colors_ref, bpp))
     {
     }
 
@@ -73,9 +73,10 @@ public:
         _tiles_item(tiles_item),
         _palette_item(palette_item)
     {
+        BN_ASSERT(tiles_item.bpp() == palette_item.bpp(), "Tiles and color palette BPP are different");
         BN_ASSERT(tiles_item.tiles_ref().size() ==
-                   _shape_size.tiles_count(palette_item.bpp_mode()) * tiles_item.graphics_count(),
-                   "Invalid shape or size");
+                  _shape_size.tiles_count(palette_item.bpp()) * tiles_item.graphics_count(),
+                  "Invalid shape or size");
     }
 
     /**

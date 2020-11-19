@@ -71,7 +71,7 @@ private:
         explicit last_value_type(const regular_bg_map_ptr& target_map_ptr) :
             _map_dimensions(target_map_ptr.dimensions()),
             _tiles_cbb(target_map_ptr.tiles().cbb()),
-            _bpp_mode(target_map_ptr.bpp_mode())
+            _bpp(target_map_ptr.bpp())
         {
         }
 
@@ -90,7 +90,7 @@ private:
     private:
         size _map_dimensions;
         int _tiles_cbb;
-        palette_bpp_mode _bpp_mode;
+        bpp_mode _bpp;
     };
 };
 

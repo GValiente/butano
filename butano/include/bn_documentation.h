@@ -973,6 +973,13 @@
  * @tableofcontents
  *
  *
+ * @section changelog_2_0_0 2.0.0 (next release)
+ *
+ * * By removing some method overloads, lots of runtime asserts when creating resources have been removed.
+ * * bn::palette_bpp_mode has been renamed to bn::bpp_mode and `bpp_mode()` methods have been renamed to `bpp()`.
+ * * 8 bits per pixel background tiles allocation fixed.
+ *
+ *
  * @section changelog_1_0_0 1.0.0
  *
  * * Regular maps bigger than 512x512 supported.

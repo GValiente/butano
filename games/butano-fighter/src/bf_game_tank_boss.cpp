@@ -555,7 +555,7 @@ void tank_boss::_update_footprint_sprites(bn::fixed y)
         _footprint_counter = 2;
 
         bn::sprite_tiles_ptr tiles = _footprint_sprites[0].tiles();
-        tiles.set_tiles_ref(bn::sprite_items::tank_extras.tiles_item().graphics_tiles_ref(_footprint_graphics_index));
+        tiles.set_tiles_ref(bn::sprite_items::tank_extras.tiles_item(), _footprint_graphics_index);
     }
 
     bn::fixed hidden_y = -44;

@@ -51,9 +51,8 @@ public:
         const last_value_type& last_value = target_last_value.value<last_value_type>();
         auto sprite_first_attributes_ptr = reinterpret_cast<const sprite_first_attributes*>(input_values_ptr);
         sprites_manager::fill_hblank_effect_first_attributes(
-                    last_value.hw_y, bn::sprite_shape(last_value.shape),
-                    bn::palette_bpp_mode(last_value.bpp_mode), last_value.view_mode,
-                    sprite_first_attributes_ptr, output_values_ptr);
+                    last_value.hw_y, bn::sprite_shape(last_value.shape), bpp_mode(last_value.bpp),
+                    last_value.view_mode, sprite_first_attributes_ptr, output_values_ptr);
     }
 
     static void show(int)
@@ -74,7 +73,7 @@ private:
         int hw_y = -1;
         int view_mode = -1;
         uint8_t shape = 0;
-        uint8_t bpp_mode = 0;
+        uint8_t bpp = 0;
         bool fade_enabled = false;
 
         last_value_type() = default;
@@ -83,7 +82,7 @@ private:
             hw_y(sprites_manager::hw_position(handle).y()),
             view_mode(sprites_manager::view_mode(handle)),
             shape(uint8_t(sprites_manager::shape(handle))),
-            bpp_mode(uint8_t(sprites_manager::palette(handle).bpp_mode())),
+            bpp(uint8_t(sprites_manager::palette(handle).bpp())),
             fade_enabled(display_manager::blending_fade_enabled())
         {
         }

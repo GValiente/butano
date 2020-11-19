@@ -128,9 +128,9 @@ class SpriteItem:
         remove_file(grit_file_path)
 
         if self.__bpp_8:
-            bpp_mode_label = 'palette_bpp_mode::BPP_8'
+            bpp_mode_label = 'bpp_mode::BPP_8'
         else:
-            bpp_mode_label = 'palette_bpp_mode::BPP_4'
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_ITEMS_' + name.upper() + '_H'
@@ -259,9 +259,9 @@ class RegularBgItem:
         remove_file(grit_file_path)
 
         if self.__bpp_8:
-            bpp_mode_label = 'palette_bpp_mode::BPP_8'
+            bpp_mode_label = 'bpp_mode::BPP_8'
         else:
-            bpp_mode_label = 'palette_bpp_mode::BPP_4'
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_REGULAR_BG_ITEMS_' + name.upper() + '_H'

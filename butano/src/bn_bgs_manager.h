@@ -20,7 +20,7 @@ class fixed_point;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class regular_bg_attributes;
-enum class palette_bpp_mode;
+enum class bpp_mode;
 
 namespace bgs_manager
 {
@@ -98,7 +98,7 @@ namespace bgs_manager
 
     void update_map_tiles_cbb(int map_id, int tiles_cbb);
 
-    void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode);
+    void update_map_palette_bpp(int map_id, bpp_mode bpp);
 
     void reload();
 

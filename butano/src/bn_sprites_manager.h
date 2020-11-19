@@ -26,9 +26,9 @@ class sprite_first_attributes;
 class sprite_third_attributes;
 class sprite_regular_second_attributes;
 class sprite_affine_second_attributes;
+enum class bpp_mode;
 enum class sprite_size;
 enum class sprite_shape;
-enum class palette_bpp_mode;
 enum class sprite_double_size_mode;
 
 namespace sorted_sprites
@@ -187,8 +187,8 @@ namespace sprites_manager
 
     void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode,
-            int view_mode, const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode bpp, int view_mode,
+                                             const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_second_attributes(
             id_type id, int hw_x, sprite_size size, const sprite_regular_second_attributes* second_attributes_ptr,

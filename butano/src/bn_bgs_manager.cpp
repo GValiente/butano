@@ -69,7 +69,7 @@ namespace
             hw::bgs::handle new_handle = handle;
             hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_handle);
             hw::bgs::set_map_sbb(map_ref.id(), new_handle);
-            hw::bgs::set_bpp_mode(map_ref.bpp_mode(), new_handle);
+            hw::bgs::set_bpp(map_ref.bpp(), new_handle);
 
             size map_dimensions = map_ref.dimensions();
             int map_width = map_dimensions.width();
@@ -615,13 +615,13 @@ void update_map_tiles_cbb(int map_id, int tiles_cbb)
     }
 }
 
-void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
+void update_map_palette_bpp(int map_id, bpp_mode bpp)
 {
     for(item_type* item : data.items_vector)
     {
         if(item->map->id() == map_id)
         {
-            hw::bgs::set_bpp_mode(new_bpp_mode, item->handle);
+            hw::bgs::set_bpp(bpp, item->handle);
             _update_item(*item);
         }
     }
@@ -683,7 +683,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
         uint16_t dest_cnt = bg_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
         hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
-        hw::bgs::set_bpp_mode(attributes_map.bpp_mode(), dest_cnt);
+        hw::bgs::set_bpp(attributes_map.bpp(), dest_cnt);
         hw::bgs::set_priority(attributes.priority(), dest_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
         dest_ptr[index] = dest_cnt;

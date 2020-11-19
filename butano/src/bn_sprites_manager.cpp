@@ -363,9 +363,9 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
 
     if(tiles != item->tiles)
     {
-        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
-                   "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette->bpp_mode()));
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp()),
+                  "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
+                  shape_size.tiles_count(item->palette->bpp()));
 
         hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
@@ -395,9 +395,9 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 
     if(tiles != item->tiles)
     {
-        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp_mode()),
-                   "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(item->palette->bpp_mode()));
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(item->palette->bpp()),
+                  "Invalid tiles or shape size: ", tiles.tiles_count(), " - ",
+                  shape_size.tiles_count(item->palette->bpp()));
 
         hw::sprites::handle_type& handle = item->handle;
         hw::sprites::set_tiles(tiles.id(), handle);
@@ -427,8 +427,8 @@ void set_palette(id_type id, const sprite_palette_ptr& palette)
 
     if(palette != item->palette)
     {
-        BN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
-                   "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
+        BN_ASSERT(! item->palette || item->palette->bpp() == palette.bpp(),
+                  "Palette BPP mode mismatch: ", int(item->palette->bpp()), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
@@ -442,8 +442,8 @@ void set_palette(id_type id, sprite_palette_ptr&& palette)
 
     if(palette != item->palette)
     {
-        BN_ASSERT(! item->palette || item->palette->bpp_mode() == palette.bpp_mode(),
-                   "Palette BPP mode mismatch: ", int(item->palette->bpp_mode()), " - ", int(palette.bpp_mode()));
+        BN_ASSERT(! item->palette || item->palette->bpp() == palette.bpp(),
+                  "Palette BPP mode mismatch: ", int(item->palette->bpp()), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);
@@ -468,9 +468,9 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
     if(different_shape_size || different_tiles || different_palette)
     {
-        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-                   "Invalid tiles, palette or shape size: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(palette.bpp_mode()));
+        bpp_mode bpp = palette.bpp();
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(bpp),
+                  "Invalid tiles, palette or shape size: ", tiles.tiles_count(), " - ", shape_size.tiles_count(bpp));
 
         if(different_tiles)
         {
@@ -481,7 +481,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
         if(different_palette)
         {
             hw::sprites::set_palette(palette.id(), handle);
-            hw::sprites::set_bpp_mode(palette.bpp_mode(), handle);
+            hw::sprites::set_bpp(bpp, handle);
             item->palette = move(palette);
         }
 
@@ -596,7 +596,7 @@ void set_bg_priority(id_type id, int bg_priority)
 
     if(bg_priority != item->bg_priority())
     {
-        BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+        BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
 
         hw::sprites::set_bg_priority(bg_priority, item->handle);
         data.sorter.erase(*item);
@@ -731,7 +731,7 @@ void set_blending_enabled(id_type id, bool blending_enabled)
     {
         hw::sprites::handle_type& handle = item->handle;
         BN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
-                   "Blending and window can't be enabled at the same time");
+                  "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_blending_enabled(blending_enabled, display_manager::blending_fade_enabled(), handle);
         item->blending_enabled = blending_enabled;
@@ -753,7 +753,7 @@ void set_window_enabled(id_type id, bool window_enabled)
     if(window_enabled != hw::sprites::window_enabled(handle))
     {
         BN_ASSERT(! window_enabled || ! item->blending_enabled,
-                   "Blending and window can't be enabled at the same time");
+                  "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_window_enabled(window_enabled, handle);
         _update_indexes_to_commit(*item);
@@ -1052,7 +1052,7 @@ void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* po
     }
 }
 
-void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, palette_bpp_mode bpp_mode, int view_mode,
+void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode bpp_mode, int view_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
@@ -1155,9 +1155,8 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
         const sprite_third_attributes& third_attributes = third_attributes_ptr[index];
         const sprite_tiles_ptr& tiles = third_attributes.tiles();
         const sprite_palette_ptr& palette = third_attributes.palette();
-        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-                   "Invalid tiles or palette: ", tiles.tiles_count(), " - ",
-                   shape_size.tiles_count(palette.bpp_mode()));
+        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+                  "Invalid tiles or palette: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
 
         int bg_priority = third_attributes.bg_priority();
         dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles.id(), palette.id(), bg_priority));

@@ -17,6 +17,7 @@
 
 #include "bn_span.h"
 #include "bn_tile.h"
+#include "bn_bpp_mode.h"
 #include "bn_optional_fwd.h"
 
 namespace bn
@@ -41,27 +42,83 @@ class sprite_tiles_item
 
 public:
     /**
+     * @brief Indicates if the specified tiles count are valid for the specified bits per pixel or not.
+     */
+    [[nodiscard]] constexpr static bool valid_tiles_count(int tiles_count, bpp_mode bpp)
+    {
+        if(bpp == bpp_mode::BPP_4)
+        {
+            return tiles_count == 1 || tiles_count == 2 || tiles_count == 4 || tiles_count == 8 ||
+                    tiles_count == 16 || tiles_count == 32 || tiles_count == 64;
+        }
+
+        return tiles_count == 2 || tiles_count == 4 || tiles_count == 8 || tiles_count == 16 || tiles_count == 32 ||
+                tiles_count == 64 || tiles_count == 128;
+    }
+
+    /**
      * @brief Constructor.
      * @param tiles_ref Reference to one or more sprite tile sets.
      *
      * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
      * to avoid dangling references.
      *
+     * @param bpp tiles_ref bits per pixel.
+     */
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp) :
+        _tiles_ref(tiles_ref),
+        _bpp(bpp),
+        _graphics_count(1),
+        _tiles_count_per_graphic(tiles_ref.size())
+    {
+        BN_ASSERT(valid_tiles_count(_tiles_count_per_graphic, bpp),
+                  "Invalid tiles count per graphic: ", _tiles_count_per_graphic, " - ", int(bpp));
+    }
+
+    /**
+     * @brief Constructor.
+     * @param tiles_ref Reference to one or more sprite tile sets.
+     *
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
+     * to avoid dangling references.
+     *
+     * @param bpp tiles_ref bits per pixel.
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.
      */
-    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, int graphics_count) :
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, int graphics_count) :
         _tiles_ref(tiles_ref),
+        _bpp(bpp),
         _graphics_count(graphics_count),
         _tiles_count_per_graphic(0)
     {
-        BN_ASSERT(! tiles_ref.empty(), "Tiles ref is empty");
         BN_ASSERT(graphics_count > 0, "Invalid graphics count: ", graphics_count);
-        BN_ASSERT(graphics_count <= tiles_ref.size(), "Invalid tiles or graphics count: ",
-                   tiles_ref.size(), " - ", graphics_count);
-        BN_ASSERT(tiles_ref.size() % graphics_count == 0, "Invalid tiles or graphics count: ",
-                   tiles_ref.size(), " - ", graphics_count);
+        BN_ASSERT(graphics_count <= tiles_ref.size(),
+                  "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
+        BN_ASSERT(tiles_ref.size() % graphics_count == 0,
+                  "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
 
         _tiles_count_per_graphic = tiles_ref.size() / graphics_count;
+        BN_ASSERT(valid_tiles_count(_tiles_count_per_graphic, bpp),
+                  "Invalid tiles count per graphic: ", _tiles_count_per_graphic, " - ", int(bpp));
+    }
+
+    /**
+     * @brief Returns the reference to one or more sprite tile sets.
+     *
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
+     * to avoid dangling references.
+     */
+    [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
+    {
+        return _tiles_ref;
+    }
+
+    /**
+     * @brief Returns the bits per pixel of the referenced tiles.
+     */
+    [[nodiscard]] constexpr bpp_mode bpp() const
+    {
+        return _bpp;
     }
 
     /**
@@ -81,17 +138,6 @@ public:
     }
 
     /**
-     * @brief Returns the reference to one or more sprite tile sets.
-     *
-     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
-     * to avoid dangling references.
-     */
-    [[nodiscard]] constexpr const span<const tile>& tiles_ref() const
-    {
-        return _tiles_ref;
-    }
-
-    /**
      * @brief Returns the reference to the first sprite tile set.
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
@@ -105,8 +151,8 @@ public:
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
         BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-        BN_ASSERT(graphics_index < _graphics_count, "Invalid graphics index: ",
-                   graphics_index, " - ", _graphics_count);
+        BN_ASSERT(graphics_index < _graphics_count,
+                  "Invalid graphics index: ", graphics_index, " - ", _graphics_count);
 
         int tiles_count = _tiles_count_per_graphic;
         return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
@@ -260,6 +306,7 @@ public:
 
 private:
     span<const tile> _tiles_ref;
+    bpp_mode _bpp;
     int _graphics_count;
     int _tiles_count_per_graphic;
 };

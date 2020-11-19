@@ -23,7 +23,7 @@ namespace bn
      * @ingroup memory
      */
     template<int Bytes>
-    [[nodiscard]] bool aligned(const void* pointer)
+    [[nodiscard]] constexpr bool aligned(const void* pointer)
     {
         static_assert(Bytes > 0);
 
@@ -36,7 +36,7 @@ namespace bn
      * @ingroup memory
      */
     template<int Bytes, typename Type>
-    [[nodiscard]] bool aligned(const Type& reference)
+    [[nodiscard]] constexpr bool aligned(const Type& reference)
     {
         static_assert(Bytes > 0);
 

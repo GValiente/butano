@@ -69,8 +69,8 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a787af5ab7725e214474a23004bc96044" class="m-doc">sprite_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
-              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ad421f6d3daae7bc6890e9599c7e1df43" class="m-doc">sprite_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -82,8 +82,8 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a85ae5e19e47941a77774444c174b8ebb" class="m-doc">colors_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the referenced array of multiples of 16 colors.</dd>
-            <dt id="a31b2e8e3f3f7004bab23a205d23615fb">
-              <span class="m-doc-wrap-bumper">auto <a href="#a31b2e8e3f3f7004bab23a205d23615fb" class="m-doc-self">bpp_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a85b920c27762dc891da480fa36d89556">
+              <span class="m-doc-wrap-bumper">auto <a href="#a85b920c27762dc891da480fa36d89556" class="m-doc-self">bpp</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the bits per pixel of the color palettes to create.</dd>
             <dt>
@@ -120,10 +120,10 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a787af5ab7725e214474a23004bc96044"><div>
+          <section class="m-doc-details" id="ad421f6d3daae7bc6890e9599c7e1df43"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_palette_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a787af5ab7725e214474a23004bc96044" class="m-doc-self">sprite_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
-              <a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_palette_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad421f6d3daae7bc6890e9599c7e1df43" class="m-doc-self">sprite_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -136,7 +136,7 @@
                   <td>Reference to an array of multiples of 16 colors.</td>
                 </tr>
                 <tr>
-                  <td>bpp_mode</td>
+                  <td>bpp</td>
                   <td>Bits per pixel of the color palettes to create.</td>
                 </tr>
               </tbody>

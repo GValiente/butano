@@ -13,6 +13,7 @@
 namespace bn
 {
     class tile;
+    enum class bpp_mode;
 }
 
 namespace bn::sprite_tiles_manager
@@ -37,13 +38,13 @@ namespace bn::sprite_tiles_manager
 
     [[nodiscard]] int create_new(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] int allocate(int tiles_count);
+    [[nodiscard]] int allocate(int tiles_count, bpp_mode bpp);
 
     [[nodiscard]] int create_optional(const span<const tile>& tiles_ref);
 
     [[nodiscard]] int create_new_optional(const span<const tile>& tiles_ref);
 
-    [[nodiscard]] int allocate_optional(int tiles_count);
+    [[nodiscard]] int allocate_optional(int tiles_count, bpp_mode bpp);
 
     void increase_usages(int id);
 

@@ -80,7 +80,7 @@ public:
         BN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters_ref.size(),
                    "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
-        BN_ASSERT(item.palette_item().bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+        BN_ASSERT(item.palette_item().bpp() == bpp_mode::BPP_4, "8BPP fonts not supported");
         BN_ASSERT(utf8_characters_ref.size() <= BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
                    "Invalid UTF-8 characters count: ", utf8_characters_ref.size());
         BN_ASSERT(_validate_utf8_characters(utf8_characters_ref), "UTF-8 characters validation failed");

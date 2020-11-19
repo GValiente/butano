@@ -17,7 +17,7 @@
 namespace bn
 {
 
-enum class palette_bpp_mode;
+enum class bpp_mode;
 
 class palettes_bank
 {
@@ -62,7 +62,7 @@ public:
         return _palettes[id].slots_count * hw::palettes::colors_per_palette();
     }
 
-    [[nodiscard]] palette_bpp_mode bpp_mode(int id) const;
+    [[nodiscard]] bpp_mode bpp(int id) const;
 
     [[nodiscard]] span<const color> colors(int id) const;
 

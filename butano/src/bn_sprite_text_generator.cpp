@@ -35,7 +35,7 @@ namespace
                 return nullptr;
             }
 
-            tiles_ptr = sprite_tiles_ptr::allocate_optional(max_tiles_per_sprite);
+            tiles_ptr = sprite_tiles_ptr::allocate_optional(max_tiles_per_sprite, bpp_mode::BPP_4);
 
             if(! tiles_ptr)
             {
@@ -46,7 +46,7 @@ namespace
         {
             BN_ASSERT(! output_sprites.full(), "No more output sprites available");
 
-            tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite);
+            tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite, bpp_mode::BPP_4);
         }
 
         sprite_tiles_ptr& tiles_ptr_ref = *tiles_ptr;
@@ -834,14 +834,14 @@ sprite_text_generator::sprite_text_generator(const sprite_font& font, const spri
     _font(font),
     _palette_item(palette_item)
 {
-    BN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+    BN_ASSERT(palette_item.bpp() == bpp_mode::BPP_4, "8BPP fonts not supported");
 
     _build_utf8_characters_map();
 }
 
 void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_item)
 {
-    BN_ASSERT(palette_item.bpp_mode() == palette_bpp_mode::BPP_4, "8BPP fonts not supported");
+    BN_ASSERT(palette_item.bpp() == bpp_mode::BPP_4, "8BPP fonts not supported");
 
     _palette_item = palette_item;
 }

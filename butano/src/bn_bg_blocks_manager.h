@@ -16,7 +16,10 @@ namespace bn
     class size;
     class tile;
     class bg_tiles_ptr;
+    class bg_tiles_item;
     class bg_palette_ptr;
+    class regular_bg_map_item;
+    enum class bpp_mode;
 }
 
 namespace bn::bg_blocks_manager
@@ -43,38 +46,37 @@ namespace bn::bg_blocks_manager
         void log_status();
     #endif
 
-    [[nodiscard]] int find_tiles(const span<const tile>& tiles_ref);
+    [[nodiscard]] int find_tiles(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int find_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                       const bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
+    [[nodiscard]] int find_regular_map(const regular_bg_map_item& map_item, const bg_tiles_ptr& tiles,
+                                       const bg_palette_ptr& palette);
 
-    [[nodiscard]] int create_tiles(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_tiles(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int create_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                         bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
+    [[nodiscard]] int create_regular_map(const regular_bg_map_item& map_item, bg_tiles_ptr&& tiles,
+                                         bg_palette_ptr&& palette);
 
-    [[nodiscard]] int create_new_tiles(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_new_tiles(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int create_new_regular_map(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
-                                             bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
+    [[nodiscard]] int create_new_regular_map(const regular_bg_map_item& map_item, bg_tiles_ptr&& tiles,
+                                             bg_palette_ptr&& palette);
 
-    [[nodiscard]] int allocate_tiles(int tiles_count);
+    [[nodiscard]] int allocate_tiles(int tiles_count, bpp_mode bpp);
 
     [[nodiscard]] int allocate_regular_map(const size& map_dimensions, bg_tiles_ptr&& tiles,
                                            bg_palette_ptr&& palette);
 
-    [[nodiscard]] int create_tiles_optional(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_tiles_optional(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int create_regular_map_optional(const regular_bg_map_cell& map_cells_ref, const size& map_dimensions,
+    [[nodiscard]] int create_regular_map_optional(const regular_bg_map_item& map_item,
                                                   bg_tiles_ptr&& tiles, bg_palette_ptr&& palette);
 
-    [[nodiscard]] int create_new_tiles_optional(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_new_tiles_optional(const bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int create_new_regular_map_optional(const regular_bg_map_cell& map_cells_ref,
-                                                      const size& map_dimensions, bg_tiles_ptr&& tiles,
+    [[nodiscard]] int create_new_regular_map_optional(const regular_bg_map_item& map_item, bg_tiles_ptr&& tiles,
                                                       bg_palette_ptr&& palette);
 
-    [[nodiscard]] int allocate_tiles_optional(int tiles_count);
+    [[nodiscard]] int allocate_tiles_optional(int tiles_count, bpp_mode bpp);
 
     [[nodiscard]] int allocate_regular_map_optional(const size& map_dimensions, bg_tiles_ptr&& tiles,
                                                     bg_palette_ptr&& palette);
@@ -95,9 +97,9 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id);
 
-    void set_tiles_ref(int id, const span<const tile>& tiles_ref);
+    void set_tiles_ref(int id, const bg_tiles_item& tiles_item);
 
-    void set_regular_map_cells_ref(int id, const regular_bg_map_cell& map_cells_ref, const size& map_dimensions);
+    void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item);
 
     void reload(int id);
 

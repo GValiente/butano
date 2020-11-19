@@ -26,6 +26,11 @@ namespace bn::hw::bg_blocks
         return 16;
     }
 
+    [[nodiscard]] constexpr int max_bpp_8_tiles_blocks_count()
+    {
+        return 32;
+    }
+
     [[nodiscard]] constexpr int half_words_per_block()
     {
         return bg_maps::cells_count() / bg_maps::blocks_count();

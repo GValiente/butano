@@ -3,14 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_PALETTE_BPP_MODE_H
-#define BN_PALETTE_BPP_MODE_H
+#ifndef BN_BPP_MODE_H
+#define BN_BPP_MODE_H
 
 /**
  * @file
- * bn::palette_bpp_mode header file.
+ * bn::bpp_mode header file.
  *
- * @ingroup palette
+ * @ingroup color
  */
 
 #include "bn_common.h"
@@ -21,9 +21,9 @@ namespace bn
 /**
  * @brief Specifies the available bits per pixel modes.
  *
- * @ingroup palette
+ * @ingroup color
  */
-enum class palette_bpp_mode
+enum class bpp_mode
 {
     BPP_4, //!< 4 bits per pixel (16 colors).
     BPP_8 //!< 8 bits per pixel (256 colors).

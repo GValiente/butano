@@ -53,7 +53,7 @@ public:
      * The colors are not copied but referenced,
      * so they should outlive the regular_bg_item to avoid dangling references.
      *
-     * @param bpp_mode Bits per pixel of referenced colors.
+     * @param bpp Bits per pixel of referenced colors.
      * @param map_cells_ref Regular background map cells to reference.
      *
      * The map cells are not copied but referenced,
@@ -61,10 +61,9 @@ public:
      *
      * @param map_dimensions Size in map cells of the referenced map cells.
      */
-    constexpr regular_bg_item(const span<const tile>& tiles_ref, const span<const color>& colors_ref,
-                              palette_bpp_mode bpp_mode, const regular_bg_map_cell& map_cells_ref,
-                              const size& map_dimensions) :
-        regular_bg_item(bg_tiles_item(tiles_ref), bg_palette_item(colors_ref, bpp_mode),
+    constexpr regular_bg_item(const span<const tile>& tiles_ref, const span<const color>& colors_ref, bpp_mode bpp,
+                              const regular_bg_map_cell& map_cells_ref, const size& map_dimensions) :
+        regular_bg_item(bg_tiles_item(tiles_ref, bpp), bg_palette_item(colors_ref, bpp),
                         regular_bg_map_item(map_cells_ref, map_dimensions))
     {
     }
@@ -81,8 +80,7 @@ public:
         _palette_item(palette_item),
         _map_item(map_item)
     {
-        BN_ASSERT(tiles_item.valid_tiles_count(palette_item.bpp_mode()),
-                   "Invalid tiles count: ", tiles_item.tiles_ref().size());
+        BN_ASSERT(tiles_item.bpp() == palette_item.bpp(), "Tiles and palette BPP are different");
     }
 
     /**

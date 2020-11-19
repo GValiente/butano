@@ -69,10 +69,10 @@ int main()
 
     while(true)
     {
-        big_map_scene("1280x768 BPP4 regular BG", bn::regular_bg_items::big_map_4, text_generator);
+        big_map_scene("1024x512 BPP8 regular BG", bn::regular_bg_items::big_map_8, text_generator);
         bn::core::update();
 
-        big_map_scene("1280x768 BPP8 regular BG", bn::regular_bg_items::big_map_8, text_generator);
+        big_map_scene("1280x768 BPP4 regular BG", bn::regular_bg_items::big_map_4, text_generator);
         bn::core::update();
     }
 }

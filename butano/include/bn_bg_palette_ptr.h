@@ -33,7 +33,7 @@ namespace bn
 
 class color;
 class bg_palette_item;
-enum class palette_bpp_mode;
+enum class bpp_mode;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a background color palette.
@@ -51,28 +51,11 @@ class bg_palette_ptr
 public:
     /**
      * @brief Searches for a bg_palette_ptr which contains the given colors.
-     * @param colors Colors to search.
-     * @param bpp_mode Bits per pixel of the palette to search.
-     * @return bg_palette_ptr which contains the given colors if it has been found; `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<bg_palette_ptr> find(const span<const color>& colors, palette_bpp_mode bpp_mode);
-
-    /**
-     * @brief Searches for a bg_palette_ptr which contains the given colors.
      * @param palette_item bg_palette_item which references the colors to search.
      * @return bg_palette_ptr which contains the referenced colors by palette_item if it has been found;
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_palette_ptr> find(const bg_palette_item& palette_item);
-
-    /**
-     * @brief Searches for a bg_palette_ptr which contains the given colors.
-     * If it is not found, it creates a bg_palette_ptr which contains them.
-     * @param colors Colors of the palette to search or create.
-     * @param bpp_mode Bits per pixel of the palette to search or create.
-     * @return The requested bg_palette_ptr.
-     */
-    [[nodiscard]] static bg_palette_ptr create(const span<const color>& colors, palette_bpp_mode bpp_mode);
 
     /**
      * @brief Searches for a bg_palette_ptr which contains the given colors.
@@ -84,14 +67,6 @@ public:
 
     /**
      * @brief Creates a bg_palette_ptr which contains the given colors.
-     * @param colors Colors to search.
-     * @param bpp_mode Bits per pixel of the new palette.
-     * @return The requested bg_palette_ptr.
-     */
-    [[nodiscard]] static bg_palette_ptr create_new(const span<const color>& colors, palette_bpp_mode bpp_mode);
-
-    /**
-     * @brief Creates a bg_palette_ptr which contains the given colors.
      * @param palette_item bg_palette_item which references the colors of the new palette.
      * @return The requested bg_palette_ptr.
      */
@@ -100,29 +75,10 @@ public:
     /**
      * @brief Searches for a bg_palette_ptr which contains the given colors.
      * If it is not found, it creates a bg_palette_ptr which contains them.
-     * @param colors Colors of the palette to search or create.
-     * @param bpp_mode Bits per pixel of the palette to search or create.
-     * @return The requested bg_palette_ptr if it could be allocated; `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<bg_palette_ptr> create_optional(const span<const color>& colors,
-                                                                  palette_bpp_mode bpp_mode);
-
-    /**
-     * @brief Searches for a bg_palette_ptr which contains the given colors.
-     * If it is not found, it creates a bg_palette_ptr which contains them.
      * @param palette_item bg_palette_item which references the colors of the palette to search or create.
      * @return The requested bg_palette_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<bg_palette_ptr> create_optional(const bg_palette_item& palette_item);
-
-    /**
-     * @brief Creates a bg_palette_ptr which contains the given colors.
-     * @param colors Colors of the new palette.
-     * @param bpp_mode Bits per pixel of the new palette.
-     * @return The requested bg_palette_ptr if it could be allocated; `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<bg_palette_ptr> create_new_optional(const span<const color>& colors,
-                                                                      palette_bpp_mode bpp_mode);
 
     /**
      * @brief Creates a bg_palette_ptr which contains the given colors.
@@ -196,12 +152,6 @@ public:
 
     /**
      * @brief Sets the colors contained in this palette.
-     * @param colors Colors to copy to this palette.
-     */
-    void set_colors(const span<const color>& colors);
-
-    /**
-     * @brief Sets the colors contained in this palette.
      * @param palette_item bg_palette_item which references the colors to copy to this palette.
      */
     void set_colors(const bg_palette_item& palette_item);
@@ -209,7 +159,7 @@ public:
     /**
      * @brief Returns the bits per pixel of this palette.
      */
-    [[nodiscard]] palette_bpp_mode bpp_mode() const;
+    [[nodiscard]] bpp_mode bpp() const;
 
     /**
      * @brief Indicates if the colors of this palette are inverted or not.

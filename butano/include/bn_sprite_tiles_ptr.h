@@ -181,8 +181,8 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it could be allocated;
-     * `nullopt` otherwise.
+     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index)
+     * if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item,
                                                                         int graphics_index);

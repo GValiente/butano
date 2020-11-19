@@ -973,7 +973,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_2_0_0 2.0.0 (next release)
+ * @section changelog_2_0_0 2.0.0
  *
  * * By removing some method overloads, lots of runtime asserts when creating resources have been removed.
  * * bn::palette_bpp_mode has been renamed to bn::bpp_mode and `bpp_mode()` methods have been renamed to `bpp()`.

@@ -27,7 +27,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int major()
     {
-        return 1;
+        return 2;
     }
 
     /**

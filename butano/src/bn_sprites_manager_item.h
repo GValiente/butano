@@ -87,7 +87,7 @@ public:
         check_on_screen(true)
     {
         const sprite_palette_ptr& palette_ref = *palette;
-        hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+        hw::sprites::setup_regular(shape_size, tiles->id(), palette_ref.id(), palette_ref.bpp(),
                                    display_manager::blending_fade_enabled(), handle);
         update_half_dimensions();
     }
@@ -115,7 +115,7 @@ public:
 
             if(remove_affine_mat_when_not_needed && affine_mat_ref.flipped_identity())
             {
-                hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
                                            affine_mat_ref.horizontal_flip(), affine_mat_ref.vertical_flip(),
                                            display_manager::blending_fade_enabled(), handle);
                 affine_mat.reset();
@@ -124,7 +124,7 @@ public:
             {
                 int affine_mat_id = affine_mat_ref.id();
                 double_size = new_double_size();
-                hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+                hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
                                           display_manager::blending_fade_enabled(), handle);
                 hw::sprites::set_affine_mat(affine_mat_id, handle);
                 hw::sprites::show_affine(double_size, handle);
@@ -133,7 +133,7 @@ public:
         }
         else
         {
-            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp_mode(),
+            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
                                        display_manager::blending_fade_enabled(), handle);
         }
 

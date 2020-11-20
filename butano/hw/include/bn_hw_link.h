@@ -21,24 +21,28 @@ namespace bn::hw::link
     using connection = LinkConnection;
     using state = LinkState;
 
-    BN_CODE_IWRAM void _intr();
+    BN_CODE_IWRAM void _serial_intr();
 
-    void commit();
+    BN_CODE_IWRAM void _timer_intr();
 
     inline void init(int baud_rate, connection& connection_ref)
     {
-        connection_ref.init(true, connection::BaudRate(baud_rate));
+        connection_ref.init(connection::BaudRate(baud_rate));
         linkConnection = &connection_ref;
-        irq::replace_or_push_back(irq::id::SERIAL, _intr);
+        irq::replace_or_push_back(irq::id::SERIAL, _serial_intr);
+        irq::replace_or_push_back(irq::id::TIMER1, _timer_intr);
+        connection_ref.activate();
     }
 
     inline void enable()
     {
         irq::enable(irq::id::SERIAL);
+        irq::enable(irq::id::TIMER1);
     }
 
     inline void disable()
     {
+        irq::disable(irq::id::TIMER1);
         irq::disable(irq::id::SERIAL);
     }
 }

@@ -5,12 +5,14 @@
 
 #include "bn_bgs_manager.h"
 
+#include "bn_math.h"
 #include "bn_pool.h"
 #include "bn_vector.h"
 #include "bn_display.h"
 #include "bn_sort_key.h"
 #include "bn_config_bgs.h"
 #include "bn_display_manager.h"
+#include "bn_bg_blocks_manager.h"
 #include "../hw/include/bn_hw_bgs.h"
 
 #include "bn_bgs.cpp.h"
@@ -38,10 +40,15 @@ namespace
         hw::bgs::handle handle;
         optional<regular_bg_map_ptr> map;
         optional<camera_ptr> camera;
+        uint16_t old_big_map_x = 0;
+        uint16_t old_big_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
         bool update: 1;
+        bool big_map: 1;
+        bool commit_big_map: 1;
+        bool full_commit_big_map: 1;
 
         item_type(regular_bg_builder&& builder, regular_bg_map_ptr&& _map) :
             position(builder.position()),
@@ -59,15 +66,41 @@ namespace
         void update_map()
         {
             const regular_bg_map_ptr& map_ref = *map;
-            size map_dimensions = map_ref.dimensions();
             hw::bgs::handle new_handle = handle;
             hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_handle);
             hw::bgs::set_map_sbb(map_ref.id(), new_handle);
-            hw::bgs::set_bpp_mode(map_ref.bpp_mode(), new_handle);
-            hw::bgs::set_map_dimensions(map_dimensions, new_handle);
+            hw::bgs::set_bpp(map_ref.bpp(), new_handle);
+
+            size map_dimensions = map_ref.dimensions();
+            int map_width = map_dimensions.width();
+            int map_height = map_dimensions.height();
+            int map_size = 0;
+            big_map = true;
+
+            if(map_width == 32 || map_width == 64)
+            {
+                if(map_height == 32 || map_height == 64)
+                {
+                    big_map = false;
+
+                    if(map_width == 64)
+                    {
+                        ++map_size;
+                    }
+
+                    if(map_height == 64)
+                    {
+                        map_size += 2;
+                    }
+                }
+            }
+
+            hw::bgs::set_map_dimensions(map_size, new_handle);
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
             update_hw_position();
+            commit_big_map = big_map;
+            full_commit_big_map = big_map;
         }
 
         void update_hw_position()
@@ -90,14 +123,44 @@ namespace
         {
             int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
             hw_position.set_x(hw_x);
-            hw::bgs::set_x(hw_x, handle);
+            commit_hw_x();
         }
 
         void update_hw_y(int real_y)
         {
             int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
             hw_position.set_y(hw_y);
-            hw::bgs::set_y(hw_y, handle);
+            commit_hw_y();
+        }
+
+        void commit_hw_x()
+        {
+            int x = hw_position.x();
+            hw::bgs::set_x(x, handle);
+
+            if(big_map)
+            {
+                BN_ASSERT(x >= 0 && x < (half_dimensions.width() * 2) - display::width(),
+                          "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
+                          x, " - ", (half_dimensions.width() * 2) - display::width());
+
+                commit_big_map = true;
+            }
+        }
+
+        void commit_hw_y()
+        {
+            int y = hw_position.y();
+            hw::bgs::set_y(y, handle);
+
+            if(big_map)
+            {
+                BN_ASSERT(y >= 0 && y < (half_dimensions.height() * 2) - display::height(),
+                          "Regular BGs with big maps\ndon't allow vertical wrapping: ",
+                          y, " - ", (half_dimensions.height() * 2) - display::height());
+
+                commit_big_map = true;
+            }
         }
     };
 
@@ -115,6 +178,22 @@ namespace
 
     BN_DATA_EWRAM static_data data;
 
+
+    [[nodiscard]] bool _check_unique_big_map(item_type& item)
+    {
+        if(item.big_map)
+        {
+            for(item_type* other_item : data.items_vector)
+            {
+                if(other_item != &item && other_item->map == item.map)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
     void _insert_item(item_type& new_item)
     {
@@ -161,10 +240,12 @@ int available_count()
 
 id_type create(regular_bg_builder&& builder)
 {
-    BN_ASSERT(! data.items_vector.full(), "No more available bgs");
+    BN_ASSERT(! data.items_vector.full(), "No more available BGs");
 
     regular_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
+    BN_ASSERT(_check_unique_big_map(item), "Two or more BGs have the same big map");
+
     _insert_item(item);
     display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
@@ -185,6 +266,8 @@ id_type create_optional(regular_bg_builder&& builder)
     }
 
     item_type& item = data.items_pool.create(move(builder), move(*map));
+    BN_ASSERT(_check_unique_big_map(item), "Two or more BGs have the same big map");
+
     _insert_item(item);
     display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
@@ -255,6 +338,8 @@ void set_map(id_type id, const regular_bg_map_ptr& map)
     {
         item->map = map;
         item->update_map();
+        BN_ASSERT(_check_unique_big_map(*item), "Two or more BGs have the same big map");
+
         _update_item(*item);
     }
 }
@@ -267,6 +352,8 @@ void set_map(id_type id, regular_bg_map_ptr&& map)
     {
         item->map = move(map);
         item->update_map();
+        BN_ASSERT(_check_unique_big_map(*item), "Two or more BGs have the same big map");
+
         _update_item(*item);
     }
 }
@@ -301,9 +388,8 @@ void set_x(id_type id, fixed x)
 
     if(diff)
     {
-        int hw_x = item->hw_position.x() - diff;
-        item->hw_position.set_x(hw_x);
-        hw::bgs::set_x(hw_x, item->handle);
+        item->hw_position.set_x(item->hw_position.x() - diff);
+        item->commit_hw_x();
         _update_item(*item);
     }
 }
@@ -320,9 +406,8 @@ void set_y(id_type id, fixed y)
 
     if(diff)
     {
-        int hw_y = item->hw_position.y() - diff;
-        item->hw_position.set_y(hw_y);
-        hw::bgs::set_y(hw_y, item->handle);
+        item->hw_position.set_y(item->hw_position.y() - diff);
+        item->commit_hw_y();
         _update_item(*item);
     }
 }
@@ -339,12 +424,9 @@ void set_position(id_type id, const fixed_point& position)
 
     if(diff != point())
     {
-        point hw_position = item->hw_position - diff;
-        item->hw_position = hw_position;
-
-        hw::bgs::handle& handle = item->handle;
-        hw::bgs::set_x(hw_position.x(), handle);
-        hw::bgs::set_y(hw_position.y(), handle);
+        item->hw_position -= diff;
+        item->commit_hw_x();
+        item->commit_hw_y();
         _update_item(*item);
     }
 }
@@ -533,13 +615,13 @@ void update_map_tiles_cbb(int map_id, int tiles_cbb)
     }
 }
 
-void update_map_palette_bpp_mode(int map_id, palette_bpp_mode new_bpp_mode)
+void update_map_palette_bpp(int map_id, bpp_mode bpp)
 {
     for(item_type* item : data.items_vector)
     {
         if(item->map->id() == map_id)
         {
-            hw::bgs::set_bpp_mode(new_bpp_mode, item->handle);
+            hw::bgs::set_bpp(bpp, item->handle);
             _update_item(*item);
         }
     }
@@ -601,7 +683,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
         uint16_t dest_cnt = bg_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
         hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
-        hw::bgs::set_bpp_mode(attributes_map.bpp_mode(), dest_cnt);
+        hw::bgs::set_bpp(attributes_map.bpp(), dest_cnt);
         hw::bgs::set_priority(attributes.priority(), dest_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
         dest_ptr[index] = dest_cnt;
@@ -620,7 +702,7 @@ void update()
         {
             if(item->visible)
             {
-                BN_ASSERT(BN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much bgs on screen");
+                BN_ASSERT(BN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much BGs on screen");
 
                 item->handles_index = int8_t(id);
                 data.handles[id] = item->handle;
@@ -649,6 +731,62 @@ void commit()
     {
         hw::bgs::commit(data.handles);
         data.commit = false;
+    }
+}
+
+void commit_big_maps()
+{
+    for(item_type* item : data.items_vector)
+    {
+        if(item->big_map)
+        {
+            regular_bg_map_ptr& map = *item->map;
+            int map_handle = map.handle();
+            int old_map_x = item->old_big_map_x;
+            int old_map_y = item->old_big_map_y;
+            int new_map_x = item->hw_position.x() / 8;
+            int new_map_y = item->hw_position.y() / 8;
+            bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
+            bool commit_big_map = full_commit_big_map;
+
+            if(! commit_big_map && item->commit_big_map && item->visible)
+            {
+                commit_big_map = old_map_x != new_map_x || old_map_y != new_map_y;
+            }
+
+            if(commit_big_map)
+            {
+                item->old_big_map_x = new_map_x;
+                item->old_big_map_y = new_map_y;
+                item->commit_big_map = false;
+                item->full_commit_big_map = false;
+
+                if(full_commit_big_map || bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)
+                {
+                    bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
+                }
+                else
+                {
+                    if(new_map_x < old_map_x)
+                    {
+                        bg_blocks_manager::update_regular_map_col(map_handle, new_map_x, new_map_y);
+                    }
+                    else if(new_map_x > old_map_x)
+                    {
+                        bg_blocks_manager::update_regular_map_col(map_handle, new_map_x + 31, new_map_y);
+                    }
+
+                    if(new_map_y < old_map_y)
+                    {
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y);
+                    }
+                    else if(new_map_y > old_map_y)
+                    {
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 21);
+                    }
+                }
+            }
+        }
     }
 }
 

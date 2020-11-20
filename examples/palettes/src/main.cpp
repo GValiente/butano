@@ -38,22 +38,22 @@ namespace
         info info("Palette swap", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
-        bn::span<const bn::color> cavegirl_colors = bn::sprite_items::cavegirl.palette_item().colors_ref();
-        bn::span<const bn::color> cavegirl_alt_colors = bn::sprite_items::cavegirl_alt.palette_item().colors_ref();
+        const bn::sprite_palette_item& palette_item = bn::sprite_items::cavegirl.palette_item();
+        const bn::sprite_palette_item& alt_palette_item = bn::sprite_items::cavegirl_alt.palette_item();
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
-        cavegirl_palette.set_colors(cavegirl_alt_colors);
+        cavegirl_palette.set_colors(alt_palette_item);
 
         while(! bn::keypad::start_pressed())
         {
             if(bn::keypad::a_pressed())
             {
-                if(cavegirl_palette.colors() == cavegirl_colors)
+                if(cavegirl_palette.colors() == palette_item.colors_ref())
                 {
-                    cavegirl_palette.set_colors(cavegirl_alt_colors);
+                    cavegirl_palette.set_colors(alt_palette_item);
                 }
                 else
                 {
-                    cavegirl_palette.set_colors(cavegirl_colors);
+                    cavegirl_palette.set_colors(palette_item);
                 }
             }
 

@@ -413,16 +413,8 @@ namespace
         data.to_remove_items.erase(to_remove_items_it);
     }
 
-    [[maybe_unused]] bool _valid_tiles_count(int tiles_count)
-    {
-        return tiles_count == 1 || tiles_count == 2 || tiles_count == 4 || tiles_count == 8 || tiles_count == 16 ||
-                tiles_count == 32 || tiles_count == 64 || tiles_count == 128;
-    }
-
     [[nodiscard]] int _find_impl(const tile* tiles_data, [[maybe_unused]] int tiles_count)
     {
-        BN_ASSERT(tiles_data, "Tiles ref is null");
-
         auto items_map_iterator = data.items_map.find(tiles_data);
 
         if(items_map_iterator != data.items_map.end())
@@ -431,9 +423,9 @@ namespace
             item_type& item = data.items.item(id);
 
             BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
-                       tiles_data, " - ", item.data);
+                      tiles_data, " - ", item.data);
             BN_ASSERT(tiles_count == item.tiles_count, "Tiles count does not match item tiles count: ",
-                       tiles_count, " - ", item.tiles_count);
+                      tiles_count, " - ", item.tiles_count);
 
             switch(item.status())
             {
@@ -716,8 +708,6 @@ int create(const span<const tile>& tiles_ref)
         return result;
     }
 
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
-
     result = _create_impl(tiles_data, tiles_count);
 
     if(result != -1)
@@ -753,9 +743,8 @@ int create_new(const span<const tile>& tiles_ref)
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count);
 
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
     BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-               "Multiple copies of the same tiles data not supported");
+              "Multiple copies of the same tiles data not supported");
 
     int result = _create_impl(tiles_data, tiles_count);
 
@@ -785,11 +774,12 @@ int create_new(const span<const tile>& tiles_ref)
     return result;
 }
 
-int allocate(int tiles_count)
+int allocate(int tiles_count, bpp_mode bpp)
 {
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count, " - ", int(bpp));
 
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
+    BN_ASSERT(sprite_tiles_item::valid_tiles_count(tiles_count, bpp),
+              "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
     int result = _allocate_impl(tiles_count);
 
@@ -806,7 +796,7 @@ int allocate(int tiles_count)
             log_status();
 
             BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count,
-                      "\n\nSprite tiles manager status has been logged.");
+                     "\n\nSprite tiles manager status has been logged.");
         #else
             BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count);
         #endif
@@ -828,8 +818,6 @@ int create_optional(const span<const tile>& tiles_ref)
     {
         return result;
     }
-
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
 
     result = _create_impl(tiles_data, tiles_count);
 
@@ -855,9 +843,8 @@ int create_new_optional(const span<const tile>& tiles_ref)
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count);
 
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles ref count: ", tiles_count);
     BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-               "Multiple copies of the same tiles data not supported");
+              "Multiple copies of the same tiles data not supported");
 
     int result = _create_impl(tiles_data, tiles_count);
 
@@ -876,11 +863,12 @@ int create_new_optional(const span<const tile>& tiles_ref)
     return result;
 }
 
-int allocate_optional(int tiles_count)
+int allocate_optional(int tiles_count, bpp_mode bpp)
 {
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE OPTIONAL: ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE OPTIONAL: ", tiles_count, " - ", int(bpp));
 
-    BN_ASSERT(_valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
+    BN_ASSERT(sprite_tiles_item::valid_tiles_count(tiles_count, bpp),
+              "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
     int result = _allocate_impl(tiles_count);
 
@@ -958,16 +946,14 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
     [[maybe_unused]] int new_tiles_count = tiles_ref.size();
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
-                         " - ", new_tiles_count);
-
-    BN_ASSERT(old_tiles_data, "Item has no data");
+                        " - ", new_tiles_count);
 
     if(old_tiles_data != new_tiles_data)
     {
         BN_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
-                   "Multiple copies of the same tiles data not supported");
+                  "Multiple copies of the same tiles data not supported");
         BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
-                   old_tiles_count, " - ", new_tiles_count);
+                  old_tiles_count, " - ", new_tiles_count);
 
         data.items_map.erase(old_tiles_data);
         _commit_item(new_tiles_data, true, item);

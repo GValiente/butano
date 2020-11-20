@@ -10,8 +10,8 @@
 #include "bn_limits.h"
 #include "bn_memory.h"
 #include "bn_display.h"
+#include "bn_bpp_mode.h"
 #include "bn_algorithm.h"
-#include "bn_palette_bpp_mode.h"
 
 #if BN_CFG_LOG_ENABLED
     #include "bn_log.h"
@@ -22,14 +22,6 @@ namespace bn
 
 namespace
 {
-    [[maybe_unused]] bool _valid_colors_count(const span<const color>& colors)
-    {
-        int colors_count = colors.size();
-        return colors_count >= hw::palettes::colors_per_palette() &&
-                colors_count <= hw::palettes::colors() &&
-                colors_count % hw::palettes::colors_per_palette() == 0;
-    }
-
     void copy_colors(const color* source, int count, color* destination)
     {
         auto int_source = reinterpret_cast<const unsigned*>(source);
@@ -40,12 +32,8 @@ namespace
 
 unsigned palettes_bank::colors_hash(const span<const color>& colors)
 {
-    int colors_count = colors.size();
-    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
-
     auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
-    auto result = unsigned(colors_count);
+    auto result = unsigned(colors.size());
     result += int_colors[0];
     result += int_colors[1];
     result += int_colors[2];
@@ -125,12 +113,8 @@ int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
 
 int palettes_bank::find_bpp_8(const span<const color>& colors)
 {
-    int colors_count = colors.size();
-    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
-
     int bpp_8_slots_count = _bpp_8_slots_count();
-    int slots_count = colors_count / hw::palettes::colors_per_palette();
+    int slots_count = colors.size() / hw::palettes::colors_per_palette();
 
     if(bpp_8_slots_count >= slots_count)
     {
@@ -195,11 +179,8 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, 
 
 int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
 {
-    int colors_count = colors.size();
-    BN_ASSERT(_valid_colors_count(colors), "Invalid colors count: ", colors_count);
-    BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
-
     palette& first_pal = _palettes[0];
+    int colors_count = colors.size();
     int required_slots_count = colors_count / hw::palettes::colors_per_palette();
     int bpp_8_slots_count = _bpp_8_slots_count();
 
@@ -277,9 +258,9 @@ void palettes_bank::decrease_usages(int id)
     }
 }
 
-palette_bpp_mode palettes_bank::bpp_mode(int id) const
+bpp_mode palettes_bank::bpp(int id) const
 {
-    return palette_bpp_mode(_palettes[id].bpp_8);
+    return bpp_mode(_palettes[id].bpp_8);
 }
 
 span<const color> palettes_bank::colors(int id) const
@@ -296,11 +277,7 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 
     palette& pal = _palettes[id];
 
-    if(pal.bpp_8)
-    {
-        BN_ASSERT(aligned<alignof(int)>(colors.data()), "Colors are not aligned");
-    }
-    else
+    if(! pal.bpp_8)
     {
         unsigned old_hash = pal.hash;
         unsigned new_hash = colors_hash(colors);
@@ -686,9 +663,6 @@ void palettes_bank::reset_commit_data()
 
 void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
-    BN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
-    BN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
-
     const palette& pal = _palettes[id];
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
@@ -703,9 +677,6 @@ void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors
 
 void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const
 {
-    BN_ASSERT(aligned<alignof(int)>(source_colors_ptr), "Source colors are not aligned");
-    BN_ASSERT(aligned<alignof(int)>(dest_ptr), "Destination colors are not aligned");
-
     int dest_colors_count = display::height();
     auto dest_colors_ptr = reinterpret_cast<color*>(dest_ptr);
     copy_colors(source_colors_ptr, dest_colors_count, dest_colors_ptr);

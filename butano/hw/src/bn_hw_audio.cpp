@@ -8,8 +8,8 @@
 #include "maxmod.h"
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
+#include "../src/bn_link_manager.h"
 #include "../include/bn_hw_irq.h"
-#include "../include/bn_hw_link.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 
@@ -122,7 +122,7 @@ namespace
     void _update_frame()
     {
         mmFrame();
-        hw::link::commit();
+        bn::link_manager::commit();
     }
 }
 

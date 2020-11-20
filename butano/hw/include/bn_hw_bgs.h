@@ -6,7 +6,6 @@
 #ifndef BN_HW_BGS_H
 #define BN_HW_BGS_H
 
-#include "bn_size.h"
 #include "bn_memory.h"
 #include "bn_regular_bg_builder.h"
 #include "bn_hw_tonc.h"
@@ -52,20 +51,19 @@ namespace bn::hw::bgs
         set_map_sbb(map_sbb, bg.cnt);
     }
 
-    inline void set_map_dimensions(const size& map_dimensions, handle& bg)
+    inline void set_map_dimensions(int size, handle& bg)
     {
-        int size = (map_dimensions.width() > 32) + ((map_dimensions.height() > 32) * 2);
         BFN_SET(bg.cnt, size, BG_SIZE);
     }
 
-    [[nodiscard]] inline palette_bpp_mode bpp_mode(const handle& bg)
+    [[nodiscard]] inline bpp_mode bpp(const handle& bg)
     {
-        return (bg.cnt & BG_8BPP) ? palette_bpp_mode::BPP_8 : palette_bpp_mode::BPP_4;
+        return (bg.cnt & BG_8BPP) ? bpp_mode::BPP_8 : bpp_mode::BPP_4;
     }
 
-    inline void set_bpp_mode(palette_bpp_mode bpp_mode, uint16_t& bg_cnt)
+    inline void set_bpp(bpp_mode bpp, uint16_t& bg_cnt)
     {
-        if(bpp_mode == palette_bpp_mode::BPP_8)
+        if(bpp == bpp_mode::BPP_8)
         {
             bg_cnt |= BG_8BPP;
         }
@@ -75,9 +73,9 @@ namespace bn::hw::bgs
         }
     }
 
-    inline void set_bpp_mode(palette_bpp_mode bpp_mode, handle& bg)
+    inline void set_bpp(bpp_mode bpp, handle& bg)
     {
-        set_bpp_mode(bpp_mode, bg.cnt);
+        set_bpp(bpp, bg.cnt);
     }
 
     inline void set_x(int x, handle& bg)

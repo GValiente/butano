@@ -57,6 +57,7 @@
             <li>
               Reference
               <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
@@ -65,11 +66,22 @@
           </ul>
         </div>
 <p>The assets conversion tools generate an object of this type in the build folder for each *.bmp file with <code>regular_bg</code> type.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a1c340eb9c7c3cd4bdbbb1179b69566da">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a1c340eb9c7c3cd4bdbbb1179b69566da" class="m-doc-self">valid_tiles_count</a>(</span><span class="m-doc-wrap">int tiles_count,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the specified tiles count are valid for the specified bits per pixel or not.</dd>
+          </dl>
+        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a56684e41b43a3f01315c0eae16488cad" class="m-doc">bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#adf9658cf5e0f743a319a2fc8238350da" class="m-doc">bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -81,10 +93,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a651ec9d08f50f17d2615bc68b8914706" class="m-doc">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the reference to one or more background tiles.</dd>
-            <dt id="a75f368fc6ca2ced1dd344c98ab60cd1f">
-              <span class="m-doc-wrap-bumper">auto <a href="#a75f368fc6ca2ced1dd344c98ab60cd1f" class="m-doc-self">valid_tiles_count</a>(</span><span class="m-doc-wrap"><a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a1c57da37f94cc125b6d83c805c71954b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1c57da37f94cc125b6d83c805c71954b" class="m-doc-self">bpp</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Indicates if the referenced tiles are valid for the specified bits per pixel or not.</dd>
+            <dd>Returns the bits per pixel of the referenced tiles.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#af3ce9785fe691ef22202e79de01348ba" class="m-doc">find_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
@@ -124,9 +136,10 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a56684e41b43a3f01315c0eae16488cad"><div>
+          <section class="m-doc-details" id="adf9658cf5e0f743a319a2fc8238350da"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56684e41b43a3f01315c0eae16488cad" class="m-doc-self">bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adf9658cf5e0f743a319a2fc8238350da" class="m-doc-self">bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -137,6 +150,10 @@
                 <tr>
                   <td style="width: 1%">tiles_ref</td>
                   <td>Reference to one or more background tiles.</td>
+                </tr>
+                <tr>
+                  <td>bpp</td>
+                  <td>tiles_ref bits per pixel.</td>
                 </tr>
               </tbody>
             </table>

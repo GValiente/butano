@@ -12,12 +12,13 @@
 namespace bn
 {
 
-optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& colors, palette_bpp_mode bpp_mode)
+optional<sprite_palette_ptr> sprite_palette_ptr::find(const sprite_palette_item& palette_item)
 {
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = sprite_palettes_bank.find_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
@@ -36,17 +37,13 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const span<const color>& c
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_palette_ptr::find(const sprite_palette_item& palette_item)
+sprite_palette_ptr sprite_palette_ptr::create(const sprite_palette_item& palette_item)
 {
-    return find(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         unsigned hash = palettes_bank::colors_hash(colors);
         id = sprite_palettes_bank.find_bpp_4(colors, hash);
@@ -69,17 +66,13 @@ sprite_palette_ptr sprite_palette_ptr::create(const span<const color>& colors, p
     return sprite_palette_ptr(id);
 }
 
-sprite_palette_ptr sprite_palette_ptr::create(const sprite_palette_item& palette_item)
+sprite_palette_ptr sprite_palette_ptr::create_new(const sprite_palette_item& palette_item)
 {
-    return create(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-sprite_palette_ptr sprite_palette_ptr::create_new(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = sprite_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), true);
     }
@@ -91,18 +84,13 @@ sprite_palette_ptr sprite_palette_ptr::create_new(const span<const color>& color
     return sprite_palette_ptr(id);
 }
 
-sprite_palette_ptr sprite_palette_ptr::create_new(const sprite_palette_item& palette_item)
+optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const sprite_palette_item& palette_item)
 {
-    return create_new(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const span<const color>& colors,
-                                                                 palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         unsigned hash = palettes_bank::colors_hash(colors);
         id = sprite_palettes_bank.find_bpp_4(colors, hash);
@@ -132,18 +120,13 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const span<cons
     return result;
 }
 
-optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const sprite_palette_item& palette_item)
+optional<sprite_palette_ptr> sprite_palette_ptr::create_new_optional(const sprite_palette_item& palette_item)
 {
-    return create_new_optional(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-optional<sprite_palette_ptr> sprite_palette_ptr::create_new_optional(const span<const color>& colors,
-                                                                     palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = sprite_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), false);
     }
@@ -160,11 +143,6 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_new_optional(const span<
     }
 
     return result;
-}
-
-optional<sprite_palette_ptr> sprite_palette_ptr::create_new_optional(const sprite_palette_item& palette_item)
-{
-    return create_new_optional(palette_item.colors_ref(), palette_item.bpp_mode());
 }
 
 sprite_palette_ptr::sprite_palette_ptr(const sprite_palette_ptr& other) :
@@ -199,19 +177,14 @@ span<const color> sprite_palette_ptr::colors() const
     return palettes_manager::sprite_palettes_bank().colors(_id);
 }
 
-void sprite_palette_ptr::set_colors(const span<const color>& colors)
-{
-    palettes_manager::sprite_palettes_bank().set_colors(_id, colors);
-}
-
 void sprite_palette_ptr::set_colors(const sprite_palette_item& palette_item)
 {
     palettes_manager::sprite_palettes_bank().set_colors(_id, palette_item.colors_ref());
 }
 
-palette_bpp_mode sprite_palette_ptr::bpp_mode() const
+bpp_mode sprite_palette_ptr::bpp() const
 {
-    return palettes_manager::sprite_palettes_bank().bpp_mode(_id);
+    return palettes_manager::sprite_palettes_bank().bpp(_id);
 }
 
 bool sprite_palette_ptr::inverted() const

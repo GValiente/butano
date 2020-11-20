@@ -29,7 +29,7 @@ namespace bn::hw::sprites
         }
     }
 
-    [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, palette_bpp_mode bpp_mode, int view_mode,
+    [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, bpp_mode bpp, int view_mode,
                                               bool mosaic_enabled, bool blending_enabled, bool window_enabled,
                                               bool fade_enabled)
     {
@@ -39,7 +39,7 @@ namespace bn::hw::sprites
         }
 
         int result = ATTR0_BUILD(y, int(shape), 0, 0, mosaic_enabled, blending_enabled, window_enabled);
-        result |= unsigned(bpp_mode) * ATTR0_8BPP;
+        result |= unsigned(bpp) * ATTR0_8BPP;
         BFN_SET2(result, view_mode, ATTR0_MODE);
         return result;
     }
@@ -59,41 +59,40 @@ namespace bn::hw::sprites
         return ATTR2_BUILD(tiles_id, palette_id, bg_priority);
     }
 
-    inline void setup_regular(const sprite_shape_size& shape_size, int tiles_id, int palette_id,
-                              palette_bpp_mode bpp_mode, bool fade_enabled, handle_type& sprite)
+    inline void setup_regular(const sprite_shape_size& shape_size, int tiles_id, int palette_id, bpp_mode bpp,
+                              bool fade_enabled, handle_type& sprite)
     {
-        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, false, false, false,
-                                                 fade_enabled));
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp, 0, false, false, false, fade_enabled));
         sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), false, false));
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, 3));
     }
 
-    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
+    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, bpp_mode bpp,
                               bool fade_enabled, handle_type& sprite)
     {
         const sprite_shape_size& shape_size = builder.shape_size();
-        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp, 0, builder.mosaic_enabled(),
                                                  builder.blending_enabled(), builder.window_enabled(), fade_enabled));
         sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), builder.horizontal_flip(),
                                                   builder.vertical_flip()));
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
     }
 
-    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
+    inline void setup_regular(const sprite_builder& builder, int tiles_id, int palette_id, bpp_mode bpp,
                               bool horizontal_flip, bool vertical_flip, bool fade_enabled, handle_type& sprite)
     {
         const sprite_shape_size& shape_size = builder.shape_size();
-        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp, 0, builder.mosaic_enabled(),
                                                  builder.blending_enabled(), builder.window_enabled(), fade_enabled));
         sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), horizontal_flip, vertical_flip));
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
     }
 
-    inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, palette_bpp_mode bpp_mode,
+    inline void setup_affine(const sprite_builder& builder, int tiles_id, int palette_id, bpp_mode bpp,
                              bool fade_enabled, handle_type& sprite)
     {
         const sprite_shape_size& shape_size = builder.shape_size();
-        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp_mode, 0, builder.mosaic_enabled(),
+        sprite.attr0 = uint16_t(first_attributes(0, shape_size.shape(), bpp, 0, builder.mosaic_enabled(),
                                                  builder.blending_enabled(), builder.window_enabled(), fade_enabled));
         sprite.attr1 = uint16_t(second_attributes(0, shape_size.size(), 0));
         sprite.attr2 = uint16_t(third_attributes(tiles_id, palette_id, builder.bg_priority()));
@@ -179,9 +178,9 @@ namespace bn::hw::sprites
         BFN_SET(sprite.attr2, palette_id, ATTR2_PALBANK);
     }
 
-    inline void set_bpp_mode(palette_bpp_mode bpp_mode, handle_type& sprite)
+    inline void set_bpp(bpp_mode bpp, handle_type& sprite)
     {
-        if(bpp_mode == palette_bpp_mode::BPP_8)
+        if(bpp == bpp_mode::BPP_8)
         {
             sprite.attr0 |= ATTR0_8BPP;
         }

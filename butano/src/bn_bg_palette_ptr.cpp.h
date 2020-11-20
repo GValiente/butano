@@ -12,12 +12,13 @@
 namespace bn
 {
 
-optional<bg_palette_ptr> bg_palette_ptr::find(const span<const color>& colors, palette_bpp_mode bpp_mode)
+optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_item)
 {
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = bg_palettes_bank.find_bpp_4(colors, palettes_bank::colors_hash(colors));
     }
@@ -36,17 +37,13 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const span<const color>& colors, p
     return result;
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_item)
+bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
 {
-    return find(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         unsigned hash = palettes_bank::colors_hash(colors);
         id = bg_palettes_bank.find_bpp_4(colors, hash);
@@ -69,17 +66,13 @@ bg_palette_ptr bg_palette_ptr::create(const span<const color>& colors, palette_b
     return bg_palette_ptr(id);
 }
 
-bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
+bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
 {
-    return create(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-bg_palette_ptr bg_palette_ptr::create_new(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), true);
     }
@@ -91,17 +84,13 @@ bg_palette_ptr bg_palette_ptr::create_new(const span<const color>& colors, palet
     return bg_palette_ptr(id);
 }
 
-bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
+optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& palette_item)
 {
-    return create_new(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>& colors, palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         unsigned hash = palettes_bank::colors_hash(colors);
         id = bg_palettes_bank.find_bpp_4(colors, hash);
@@ -131,18 +120,13 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const span<const color>
     return result;
 }
 
-optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& palette_item)
+optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_item& palette_item)
 {
-    return create_optional(palette_item.colors_ref(), palette_item.bpp_mode());
-}
-
-optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const span<const color>& colors,
-                                                             palette_bpp_mode bpp_mode)
-{
+    const span<const color>& colors = palette_item.colors_ref();
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(bpp_mode == palette_bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), false);
     }
@@ -159,11 +143,6 @@ optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const span<const co
     }
 
     return result;
-}
-
-optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_item& palette_item)
-{
-    return create_new_optional(palette_item.colors_ref(), palette_item.bpp_mode());
 }
 
 bg_palette_ptr::bg_palette_ptr(const bg_palette_ptr& other) :
@@ -198,19 +177,14 @@ span<const color> bg_palette_ptr::colors() const
     return palettes_manager::bg_palettes_bank().colors(_id);
 }
 
-void bg_palette_ptr::set_colors(const span<const color>& colors)
-{
-    palettes_manager::bg_palettes_bank().set_colors(_id, colors);
-}
-
 void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
 {
     palettes_manager::bg_palettes_bank().set_colors(_id, palette_item.colors_ref());
 }
 
-palette_bpp_mode bg_palette_ptr::bpp_mode() const
+bpp_mode bg_palette_ptr::bpp() const
 {
-    return palettes_manager::bg_palettes_bank().bpp_mode(_id);
+    return palettes_manager::bg_palettes_bank().bpp(_id);
 }
 
 bool bg_palette_ptr::inverted() const

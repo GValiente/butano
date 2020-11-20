@@ -14,7 +14,7 @@
  */
 
 #include "bn_assert.h"
-#include "bn_palette_bpp_mode.h"
+#include "bn_bpp_mode.h"
 
 namespace bn
 {
@@ -254,12 +254,12 @@ public:
 
     /**
      * @brief Returns the area of the sprite in tiles.
-     * @param bpp_mode Tiles' bits per pixel mode.
+     * @param bpp Tiles' bits per pixel mode.
      * @return Area of the sprite in tiles.
      */
-    [[nodiscard]] constexpr int tiles_count(palette_bpp_mode bpp_mode) const
+    [[nodiscard]] constexpr int tiles_count(bpp_mode bpp) const
     {
-        return bpp_mode == palette_bpp_mode::BPP_8 ? pixels_count() / 32 : pixels_count() / 64;
+        return bpp == bpp_mode::BPP_8 ? pixels_count() / 32 : pixels_count() / 64;
     }
 
     /**

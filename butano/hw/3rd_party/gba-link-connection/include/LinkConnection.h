@@ -1,18 +1,24 @@
 #ifndef LINK_CONNECTION_H
 #define LINK_CONNECTION_H
 
+#include <tonc_bios.h>
 #include <tonc_core.h>
 #include <tonc_memdef.h>
 #include <tonc_memmap.h>
 
 #include "bn_deque.h"
+#include "bn_timer.h"
 
 #define LINK_MAX_PLAYERS 4
 #define LINK_DISCONNECTED 0xFFFF
 #define LINK_NO_DATA 0x0
-#define LINK_TRANSFER_VCOUNT_WAIT 2
 #define LINK_DEFAULT_TIMEOUT 3
-#define LINK_DEFAULT_BUFFER_SIZE 64
+#define LINK_DEFAULT_REMOTE_TIMEOUT 5
+#define LINK_DEFAULT_BUFFER_SIZE 8
+#define LINK_DEFAULT_SPEED 100
+#define LINK_DEFAULT_SEND_TIMER_ID 1
+#define LINK_TRANSFER_WAIT_CYCLES 1000
+#define LINK_BASE_FREQUENCY TM_FREQ_1024
 
 #define LINK_BIT_SLAVE 2
 #define LINK_BIT_READY 3
@@ -31,10 +37,15 @@
 // Usage:
 // - 1) Include this header in your main.cpp file and add:
 //       LinkConnection* linkConnection = new LinkConnection();
-// - 2) Add the interrupt service routines:
+// - 2) Add the required interrupt service routines:
+//       irq_init(NULL);
 //       irq_add(II_VBLANK, LINK_ISR_VBLANK);
 //       irq_add(II_SERIAL, LINK_ISR_SERIAL);
-// - 3) Send/read messages by using:
+//       irq_add(II_TIMER3, LINK_ISR_TIMER);
+//       irq_add(II_TIMER2, NULL);
+// - 3) Initialize the library with:
+//       linkConnection->activate();
+// - 4) Send/read messages by using:
 //       linkConnection->send(...);
 //       linkConnection->linkState
 
@@ -43,29 +54,31 @@
 // (they mean 'disconnected' and 'no data' respectively)
 
 void LINK_ISR_VBLANK();
+void LINK_ISR_TIMER();
 void LINK_ISR_SERIAL();
 u16 LINK_QUEUE_POP(bn::ideque<u16>& q);
 void LINK_QUEUE_CLEAR(bn::ideque<u16>& q);
 
 struct LinkState {
-    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _incomingMessages[LINK_MAX_PLAYERS];
-    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
-    u32 _IRQTimeout;
-    bool _IRQFlag;
     u8 playerCount;
     u8 currentPlayerId;
-
+    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _incomingMessages[LINK_MAX_PLAYERS];
+    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
+    int _timeouts[LINK_MAX_PLAYERS];
+    bool _IRQFlag;
+    u32 _IRQTimeout;
+    
     bool isConnected() {
         return playerCount > 1 && currentPlayerId < playerCount;
     }
-
+    
     bool hasMessage(u8 playerId) {
         if (playerId >= playerCount)
             return false;
-
+        
         return !_incomingMessages[playerId].empty();
     }
-
+    
     u16 readMessage(u8 playerId) {
         return LINK_QUEUE_POP(_incomingMessages[playerId]);
     }
@@ -81,165 +94,199 @@ public:
     };
 
     LinkState linkState;
-
-    void init(bool startNow = true,
-              BaudRate _baudRate = BAUD_RATE_3,
-              u32 _timeout = LINK_DEFAULT_TIMEOUT) {
-        this->baudRate = _baudRate;
-        this->timeout = _timeout;
-
-        if (startNow)
-            activate();
-        else
-            stop();
+    
+    void init(BaudRate _baudRate = BAUD_RATE_3,
+              u32 _timeout = LINK_DEFAULT_TIMEOUT,
+              u32 _remoteTimeout = LINK_DEFAULT_REMOTE_TIMEOUT,
+              u16 _speed = LINK_DEFAULT_SPEED,
+              u8 _sendTimerId = LINK_DEFAULT_SEND_TIMER_ID) {
+        baudRate = _baudRate;
+        timeout = _timeout;
+        remoteTimeout = _remoteTimeout;
+        speed = _speed;
+        sendTimerId = _sendTimerId;
+        
+        stop();
     }
-
+    
     bool isActive() { return isEnabled; }
-
+    
     void activate() {
         isEnabled = true;
         reset();
     }
-
+    
     void deactivate() {
         isEnabled = false;
         resetState();
         stop();
     }
-
+    
     void send(u16 data) {
         if (data == LINK_DISCONNECTED || data == LINK_NO_DATA)
             return;
-
+        
         push(linkState._outgoingMessages, data);
     }
-
-    bool isReady() {
-        return isBitHigh(LINK_BIT_READY) && !isBitHigh(LINK_BIT_ERROR);
-    }
-
+    
     void _onVBlank() {
-        if (!isEnabled || resetIfNeeded())
+        if (!isEnabled)
             return;
-
-        if (!linkState._IRQFlag) {
+        
+        if (!linkState._IRQFlag)
             linkState._IRQTimeout++;
-
-            if (linkState._IRQTimeout >= timeout)
-                reset();
-            else if (isMaster())
-                transfer(LINK_NO_DATA, true);
-        }
-
+        
         linkState._IRQFlag = false;
     }
-
-    void _onSerial() {
-        if (!isEnabled || resetIfNeeded())
+    
+    void _onTimer() {
+        if (!isEnabled)
             return;
-
+        
+        if (didTimeout()) {
+            reset();
+            return;
+        }
+        
+        if (isMaster() && isReady() && !isSending())
+            sendPendingData();
+    }
+    
+    void _onSerial() {
+        if (!isEnabled)
+            return;
+        
+        wait();
+        
+        if (resetIfNeeded())
+            return;
+        
         linkState._IRQFlag = true;
         linkState._IRQTimeout = 0;
-
-        linkState.playerCount = 0;
-        linkState.currentPlayerId =
-                (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
-
+        
+        u8 newPlayerCount = 0;
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             u16 data = REG_SIOMULTI[i];
-
+            
             if (data != LINK_DISCONNECTED) {
                 if (data != LINK_NO_DATA)
                     push(linkState._incomingMessages[i], data);
-                linkState.playerCount++;
-            } else
-                LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
+                newPlayerCount++;
+                linkState._timeouts[i] = 0;
+            } else if (linkState._timeouts[i] > 0) {
+                linkState._timeouts[i]++;
+                
+                if (linkState._timeouts[i] >= (int)remoteTimeout) {
+                    LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
+                    linkState._timeouts[i] = -1;
+                } else
+                    newPlayerCount++;
+            }
         }
-
-        if (linkState.isConnected())
+        
+        linkState.playerCount = newPlayerCount;
+        linkState.currentPlayerId =
+                (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
+        
+        if (!isMaster())
             sendPendingData();
     }
-
+    
 private:
     BaudRate baudRate;
     u32 timeout;
+    u32 remoteTimeout;
+    u32 speed;
+    u8 sendTimerId;
     bool isEnabled = false;
-
+    
+    bool isReady() { return isBitHigh(LINK_BIT_READY); }
+    bool hasError() { return isBitHigh(LINK_BIT_ERROR); }
+    bool isMaster() { return !isBitHigh(LINK_BIT_SLAVE); }
+    bool isSending() { return isBitHigh(LINK_BIT_START); }
+    bool didTimeout() { return linkState._IRQTimeout >= timeout; }
+    
     void sendPendingData() {
         transfer(LINK_QUEUE_POP(linkState._outgoingMessages));
     }
-
-    void transfer(u16 data, bool force = false) {
-        bool shouldNotify = isMaster() && (data != LINK_NO_DATA || force);
-
-        if (shouldNotify)
-            setBitLow(LINK_BIT_START);
-
-        wait(LINK_TRANSFER_VCOUNT_WAIT);
+    
+    void transfer(u16 data) {
         REG_SIOMLT_SEND = data;
-
-        if (shouldNotify)
+        
+        if (isMaster()) {
+            wait();
             setBitHigh(LINK_BIT_START);
+        }
     }
-
+    
     bool resetIfNeeded() {
-        if (!isReady()) {
+        if (!isReady() || hasError()) {
             reset();
             return true;
         }
-
+        
         return false;
     }
-
+    
     void reset() {
         resetState();
         stop();
         start();
     }
-
+    
     void resetState() {
         linkState.playerCount = 0;
         linkState.currentPlayerId = 0;
-        for (u32 i = 0; i < LINK_MAX_PLAYERS; i++)
+        for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
+            linkState._timeouts[i] = -1;
+        }
         LINK_QUEUE_CLEAR(linkState._outgoingMessages);
         linkState._IRQFlag = false;
         linkState._IRQTimeout = 0;
     }
-
+    
     void stop() {
+        stopTimer();
+        
         LINK_SET_LOW(REG_RCNT, LINK_BIT_GENERAL_PURPOSE_LOW);
         LINK_SET_HIGH(REG_RCNT, LINK_BIT_GENERAL_PURPOSE_HIGH);
     }
-
+    
     void start() {
+        startTimer();
+        
         LINK_SET_LOW(REG_RCNT, LINK_BIT_GENERAL_PURPOSE_HIGH);
         REG_SIOCNT = baudRate;
         REG_SIOMLT_SEND = 0;
         setBitHigh(LINK_BIT_MULTIPLAYER);
         setBitHigh(LINK_BIT_IRQ);
     }
-
+    
+    void stopTimer() {
+        REG_TM[sendTimerId].cnt = REG_TM[sendTimerId].cnt & (~TM_ENABLE);
+    }
+    
+    void startTimer() {
+        REG_TM[sendTimerId].start = -speed;
+        REG_TM[sendTimerId].cnt = TM_ENABLE | TM_IRQ | LINK_BASE_FREQUENCY;
+    }
+    
     void push(bn::ideque<u16>& q, u16 value) {
         if (q.full())
-            q.pop_front();
-
+            LINK_QUEUE_POP(q);
+        
         q.push_back(value);
     }
+    
+    void wait() {
+        bn::timer timer;
 
-    void wait(u32 verticalLines) {
-        u32 lines = 0;
-        u32 vCount = REG_VCOUNT;
-
-        while (lines < verticalLines) {
-            if (REG_VCOUNT != vCount) {
-                lines++;
-                vCount = REG_VCOUNT;
-            }
-        };
+        while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / 64) + 1)
+        {
+        }
     }
-
-    bool isMaster() { return !isBitHigh(LINK_BIT_SLAVE); }
+    
     bool isBitHigh(u8 bit) { return (REG_SIOCNT >> bit) & 1; }
     void setBitHigh(u8 bit) { LINK_SET_HIGH(REG_SIOCNT, bit); }
     void setBitLow(u8 bit) { LINK_SET_LOW(REG_SIOCNT, bit); }
@@ -251,6 +298,10 @@ inline void LINK_ISR_VBLANK() {
     linkConnection->_onVBlank();
 }
 
+inline void LINK_ISR_TIMER() {
+    linkConnection->_onTimer();
+}
+
 inline void LINK_ISR_SERIAL() {
     linkConnection->_onSerial();
 }
@@ -258,7 +309,7 @@ inline void LINK_ISR_SERIAL() {
 inline u16 LINK_QUEUE_POP(bn::ideque<u16>& q) {
     if (q.empty())
         return LINK_NO_DATA;
-
+    
     u16 value = q.front();
     q.pop_front();
     return value;

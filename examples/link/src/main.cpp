@@ -86,11 +86,6 @@ namespace
 
         return result;
     }
-
-    bool isBitHigh(u8 bit)
-    {
-        return (REG_SIOCNT >> bit) & 1;
-    }
 }
 
 int main()
@@ -121,19 +116,21 @@ int main()
         }
 
         bn::optional<bn::link_state> link_state;
-        int total_retries = 5;
-        int retries = total_retries;
+        int total_success_retries = 1;
+        int total_failed_retries = 5;
+        int success_retries = 0;
+        int failed_retries = 0;
 
-        while(retries)
+        while(success_retries <= total_success_retries && failed_retries <= total_failed_retries)
         {
             if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
             {
                 link_state = new_link_state;
-                retries = total_retries;
+                ++success_retries;
             }
             else
             {
-                --retries;
+                ++failed_retries;
             }
         }
 
@@ -201,14 +198,6 @@ int main()
         {
             BN_LOG("nothing");
         }
-
-        /*// log player id/count and important flags
-        BN_LOG("P", linkConnection->linkState.currentPlayerId, "/",
-               linkConnection->linkState.playerCount, "-R",
-               isBitHigh(LINK_BIT_READY), "-S",
-               isBitHigh(LINK_BIT_START), "-E",
-               isBitHigh(LINK_BIT_ERROR), "-I",
-               linkConnection->linkState._IRQFlag);*/
 
         action.update();
         info.update();

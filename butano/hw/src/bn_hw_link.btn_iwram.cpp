@@ -10,14 +10,14 @@ LinkConnection* linkConnection = nullptr;
 namespace bn::hw::link
 {
 
-void _intr()
+void _serial_intr()
 {
     linkConnection->_onSerial();
 }
 
-void commit()
+void _timer_intr()
 {
-    linkConnection->_onVBlank();
+    linkConnection->_onTimer();
 }
 
 }

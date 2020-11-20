@@ -17,8 +17,8 @@
 
 #include "bn_span.h"
 #include "bn_tile.h"
+#include "bn_bpp_mode.h"
 #include "bn_optional_fwd.h"
-#include "bn_palette_bpp_mode.h"
 
 namespace bn
 {
@@ -42,17 +42,33 @@ class bg_tiles_item
 
 public:
     /**
+     * @brief Indicates if the specified tiles count are valid for the specified bits per pixel or not.
+     */
+    [[nodiscard]] constexpr static bool valid_tiles_count(int tiles_count, bpp_mode bpp)
+    {
+        if(bpp == bpp_mode::BPP_8)
+        {
+            return tiles_count && tiles_count < 2048 && (tiles_count % 2) == 0;
+        }
+
+        return tiles_count && tiles_count < 1024;
+    }
+
+    /**
      * @brief Constructor.
      * @param tiles_ref Reference to one or more background tiles.
      *
      * The tiles are not copied but referenced, so they should outlive the bg_tiles_item
      * to avoid dangling references.
+     *
+     * @param bpp tiles_ref bits per pixel.
      */
-    constexpr explicit bg_tiles_item(const span<const tile>& tiles_ref) :
-        _tiles_ref(tiles_ref)
+    constexpr bg_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp) :
+        _tiles_ref(tiles_ref),
+        _bpp(bpp)
     {
-        BN_ASSERT(valid_tiles_count(palette_bpp_mode::BPP_4) || valid_tiles_count(palette_bpp_mode::BPP_8),
-                   "Invalid tiles count: ", _tiles_ref.size());
+        BN_ASSERT(valid_tiles_count(tiles_ref.size(), bpp),
+                  "Invalid tiles count: ", _tiles_ref.size(), " - ", int(bpp));
     }
 
     /**
@@ -67,18 +83,11 @@ public:
     }
 
     /**
-     * @brief Indicates if the referenced tiles are valid for the specified bits per pixel or not.
+     * @brief Returns the bits per pixel of the referenced tiles.
      */
-    [[nodiscard]] constexpr bool valid_tiles_count(palette_bpp_mode bpp_mode) const
+    [[nodiscard]] constexpr bpp_mode bpp() const
     {
-        int count = _tiles_ref.size();
-
-        if(bpp_mode == palette_bpp_mode::BPP_8)
-        {
-            return count && count < 2048 && (count % 2) == 0;
-        }
-
-        return count && count < 1024;
+        return _bpp;
     }
 
     /**
@@ -148,7 +157,8 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const bg_tiles_item& a, const bg_tiles_item& b)
     {
-        return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size();
+        return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size() &&
+                a._bpp == b._bpp;
     }
 
     /**
@@ -164,6 +174,7 @@ public:
 
 private:
     span<const tile> _tiles_ref;
+    bpp_mode _bpp;
 };
 
 }

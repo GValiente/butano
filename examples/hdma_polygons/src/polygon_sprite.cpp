@@ -97,25 +97,29 @@ void polygon_sprite::update(int max_polygon_sprites, uint16_t* hdma_source)
         if(! tlh)
         {
             _draw_not_horizontal_line(true,
-                                      top_vertex.x(), top_vertex.y(), left_vertex.x(), left_vertex.y(), hlines_data);
+                                      top_vertex.x(), top_vertex.y(), left_vertex.x(), left_vertex.y(),
+                                      hlines_data);
         }
 
         if(! trh)
         {
             _draw_not_horizontal_line(false,
-                                      top_vertex.x(), top_vertex.y(), right_vertex.x(), right_vertex.y(), hlines_data);
+                                      top_vertex.x(), top_vertex.y(), right_vertex.x(), right_vertex.y(),
+                                      hlines_data);
         }
 
         if(! lbh)
         {
             _draw_not_horizontal_line(left_vertex.y() < bottom_vertex.y(),
-                                      left_vertex.x(), left_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+                                      left_vertex.x(), left_vertex.y(), bottom_vertex.x(), bottom_vertex.y(),
+                                      hlines_data);
         }
 
         if(! rbh)
         {
             _draw_not_horizontal_line(right_vertex.y() > bottom_vertex.y(),
-                                      right_vertex.x(), right_vertex.y(), bottom_vertex.x(), bottom_vertex.y(), hlines_data);
+                                      right_vertex.x(), right_vertex.y(), bottom_vertex.x(), bottom_vertex.y(),
+                                      hlines_data);
         }
         else
         {
@@ -139,8 +143,8 @@ void polygon_sprite::update(int max_polygon_sprites, uint16_t* hdma_source)
     }
 
     bn::hw::sprites::handle_type base_sprite_handle;
-    bn::hw::sprites::setup_regular(bn::sprite_items::texture.shape_size(), _tiles.id(), _palette.id(),
-                                    _palette.bpp_mode(), false, base_sprite_handle);
+    bn::hw::sprites::setup_regular(bn::sprite_items::texture.shape_size(), _tiles.id(), _palette.id(), _palette.bpp(),
+                                   false, base_sprite_handle);
 
     int minimum_y = bn::min(_minimum_y, new_minimum_y);
     int maximum_y = bn::max(_maximum_y, new_maximum_y);

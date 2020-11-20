@@ -23,7 +23,7 @@ __aeabi_uidiv:
 
     @ Check for division by zero
     cmp     r1, #0
-    bxeq    lr
+    beq     __aeabi_idiv0
 
     .global udiv32pastzero
 udiv32pastzero:

@@ -26,24 +26,34 @@ namespace
 
     public:
         hw::link::connection connection;
+        bool activated = false;
     };
 
     BN_DATA_EWRAM static_data data;
-}
 
-void init()
-{
-    hw::link::init(baud_rate, data.connection);
+
+    void _check_activated()
+    {
+        if(! data.activated)
+        {
+            hw::link::init(baud_rate, data.connection);
+            data.activated = true;
+        }
+    }
 }
 
 void send(int data_to_send)
 {
+    _check_activated();
+
     data.connection.send(u16(data_to_send));
 }
 
 bool get(int& current_player_id, vector<link_player, 3>& other_players)
 {
-    hw::link::state& link_state = data.connection.linkState;
+    _check_activated();
+
+    hw::link::state link_state = data.connection.linkState;
 
     if(! link_state.isConnected())
     {
@@ -78,12 +88,26 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
 
 void enable()
 {
-    hw::link::enable();
+    if(data.activated)
+    {
+        hw::link::enable();
+    }
 }
 
 void disable()
 {
-    hw::link::disable();
+    if(data.activated)
+    {
+        hw::link::disable();
+    }
+}
+
+void commit()
+{
+    if(data.activated)
+    {
+        data.connection._onVBlank();
+    }
 }
 
 }

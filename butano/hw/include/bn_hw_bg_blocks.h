@@ -6,7 +6,6 @@
 #ifndef BN_HW_BG_BLOCKS_H
 #define BN_HW_BG_BLOCKS_H
 
-#include "bn_memory.h"
 #include "bn_hw_tonc.h"
 #include "bn_hw_bg_blocks_constants.h"
 
@@ -27,66 +26,45 @@ namespace bn::hw::bg_blocks
         return 16;
     }
 
+    [[nodiscard]] constexpr int max_bpp_8_tiles_blocks_count()
+    {
+        return 32;
+    }
+
     [[nodiscard]] constexpr int half_words_per_block()
     {
         return bg_maps::cells_count() / bg_maps::blocks_count();
     }
 
-    namespace
-    {
-        [[nodiscard]] inline uint16_t* bg_block_vram(int block_index)
-        {
-            return reinterpret_cast<uint16_t*>(MEM_VRAM) + (block_index * half_words_per_block());
-        }
-    }
-
     [[nodiscard]] inline uint16_t* vram(int block_index)
     {
-        return bg_block_vram(block_index);
+        return reinterpret_cast<uint16_t*>(MEM_VRAM) + (block_index * half_words_per_block());
     }
 
-    inline void commit_tiles(const uint16_t* source_data_ptr, int block_index, int half_words)
+    inline void copy_regular_bg_map_cell_tiles_offset(unsigned source_cell, unsigned tiles_offset,
+                                                      uint16_t& destination_cell)
     {
-        uint16_t* destination_vram_ptr = bg_block_vram(block_index);
-        memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+        unsigned tile_id = BFN_GET(source_cell, SE_ID);
+        BFN_SET(source_cell, tile_id + tiles_offset, SE_ID);
+        destination_cell = uint16_t(source_cell);
     }
 
-    BN_CODE_IWRAM void _commit_map_tiles_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
-                                                 uint16_t* destination_vram_ptr);
-
-    BN_CODE_IWRAM void _commit_map_palette_offset(const uint16_t* source_data_ptr, int half_words, int palette_offset,
-                                                   uint16_t* destination_vram_ptr);
-
-    BN_CODE_IWRAM void _commit_map_offset(const uint16_t* source_data_ptr, int half_words, int tiles_offset,
-                                           int palette_offset, uint16_t* destination_vram_ptr);
-
-    inline void commit_map(const uint16_t* source_data_ptr, int block_index, int half_words, int tiles_offset,
-                           int palette_offset)
+    inline void copy_regular_bg_map_cell_palette_offset(unsigned source_cell, unsigned palette_offset,
+                                                        uint16_t& destination_cell)
     {
-        uint16_t* destination_vram_ptr = bg_block_vram(block_index);
+        unsigned palette_bank = BFN_GET(source_cell, SE_PALBANK);
+        BFN_SET(source_cell, palette_bank + palette_offset, SE_PALBANK);
+        destination_cell = uint16_t(source_cell);
+    }
 
-        if(tiles_offset)
-        {
-            if(palette_offset)
-            {
-                _commit_map_offset(source_data_ptr, half_words, tiles_offset, palette_offset, destination_vram_ptr);
-            }
-            else
-            {
-                _commit_map_tiles_offset(source_data_ptr, half_words, tiles_offset, destination_vram_ptr);
-            }
-        }
-        else
-        {
-            if(palette_offset)
-            {
-                _commit_map_palette_offset(source_data_ptr, half_words, palette_offset, destination_vram_ptr);
-            }
-            else
-            {
-                memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
-            }
-        }
+    inline void copy_regular_bg_map_cell_offset(unsigned source_cell, unsigned tiles_offset,
+                                                unsigned palette_offset, uint16_t& destination_cell)
+    {
+        unsigned tile_id = BFN_GET(source_cell, SE_ID);
+        unsigned palette_bank = BFN_GET(source_cell, SE_PALBANK);
+        BFN_SET(source_cell, tile_id + tiles_offset, SE_ID);
+        BFN_SET(source_cell, palette_bank + palette_offset, SE_PALBANK);
+        destination_cell = uint16_t(source_cell);
     }
 }
 

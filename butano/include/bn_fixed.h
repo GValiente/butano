@@ -13,7 +13,6 @@
  * @ingroup math
  */
 
-#include "bn_assert.h"
 #include "bn_limits.h"
 #include "bn_compare.h"
 #include "bn_fixed_fwd.h"
@@ -279,8 +278,6 @@ public:
      */
     [[nodiscard]] constexpr fixed_t division(int value) const
     {
-        BN_ASSERT(value, "Integer is zero");
-
         return from_data(_data / value);
     }
 
@@ -289,8 +286,6 @@ public:
      */
     [[nodiscard]] constexpr fixed_t division(unsigned value) const
     {
-        BN_ASSERT(value, "Integer is zero");
-
         return from_data(_data / value);
     }
 
@@ -304,8 +299,6 @@ public:
         {
             int data = _data * half_scale();
             int other_data = other._data / half_scale();
-            BN_ASSERT(other_data, "Other's internal data is zero");
-
             return from_data(data / other_data);
         }
 
@@ -334,8 +327,6 @@ public:
      */
     [[nodiscard]] constexpr fixed_t safe_division(fixed_t other) const
     {
-        BN_ASSERT(other._data, "Other's internal data is zero");
-
         return from_data(int((int64_t(_data) * scale()) / other._data));
     }
 
@@ -360,8 +351,6 @@ public:
      */
     [[nodiscard]] constexpr fixed_t unsafe_division(fixed_t other) const
     {
-        BN_ASSERT(other._data, "Other's internal data is zero");
-
         return from_data((_data * scale()) / other._data);
     }
 

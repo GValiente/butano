@@ -127,9 +127,6 @@ void init(const string_view& keypad_commands)
     // Init hblank effects system:
     hblank_effects_manager::init();
 
-    // Init link communication system:
-    link_manager::init();
-
     // Init audio system:
     audio_manager::init();
 
@@ -227,6 +224,10 @@ void update()
 
     BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
     sprite_tiles_manager::commit();
+    BN_PROFILER_ENGINE_STOP();
+
+    BN_PROFILER_ENGINE_START("eng_big_maps_commit");
+    bgs_manager::commit_big_maps();
     BN_PROFILER_ENGINE_STOP();
 
     BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");

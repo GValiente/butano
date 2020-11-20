@@ -12,9 +12,9 @@
 namespace bn
 {
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_ref)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const sprite_tiles_item& tiles_item)
 {
-    int handle = sprite_tiles_manager::find(tiles_ref);
+    int handle = sprite_tiles_manager::find(tiles_item.graphics_tiles_ref());
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)
@@ -25,19 +25,17 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const span<const tile>& tiles_
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const sprite_tiles_item& tiles_item)
-{
-    return find(tiles_item.graphics_tiles_ref());
-}
-
 optional<sprite_tiles_ptr> sprite_tiles_ptr::find(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    return find(tiles_item.graphics_tiles_ref(graphics_index));
-}
+    int handle = sprite_tiles_manager::find(tiles_item.graphics_tiles_ref(graphics_index));
+    optional<sprite_tiles_ptr> result;
 
-sprite_tiles_ptr sprite_tiles_ptr::create(const span<const tile>& tiles_ref)
-{
-    return sprite_tiles_ptr(sprite_tiles_manager::create(tiles_ref));
+    if(handle >= 0)
+    {
+        result = sprite_tiles_ptr(handle);
+    }
+
+    return result;
 }
 
 sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item)
@@ -50,11 +48,6 @@ sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item, i
     return sprite_tiles_ptr(sprite_tiles_manager::create(tiles_item.graphics_tiles_ref(graphics_index)));
 }
 
-sprite_tiles_ptr sprite_tiles_ptr::create_new(const span<const tile>& tiles_ref)
-{
-    return sprite_tiles_ptr(sprite_tiles_manager::create_new(tiles_ref));
-}
-
 sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_item)
 {
     return sprite_tiles_ptr(sprite_tiles_manager::create_new(tiles_item.graphics_tiles_ref()));
@@ -65,14 +58,14 @@ sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_ite
     return sprite_tiles_ptr(sprite_tiles_manager::create_new(tiles_item.graphics_tiles_ref(graphics_index)));
 }
 
-sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count)
+sprite_tiles_ptr sprite_tiles_ptr::allocate(int tiles_count, bpp_mode bpp)
 {
-    return sprite_tiles_ptr(sprite_tiles_manager::allocate(tiles_count));
+    return sprite_tiles_ptr(sprite_tiles_manager::allocate(tiles_count, bpp));
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const span<const tile>& tiles_ref)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_item& tiles_item)
 {
-    int handle = sprite_tiles_manager::create_optional(tiles_ref);
+    int handle = sprite_tiles_manager::create_optional(tiles_item.graphics_tiles_ref());
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)
@@ -83,19 +76,9 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const span<const ti
     return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_item& tiles_item)
-{
-    return create_optional(tiles_item.graphics_tiles_ref());
-}
-
 optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    return create_optional(tiles_item.graphics_tiles_ref(graphics_index));
-}
-
-optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const span<const tile>& tiles_ref)
-{
-    int handle = sprite_tiles_manager::create_new_optional(tiles_ref);
+    int handle = sprite_tiles_manager::create_optional(tiles_item.graphics_tiles_ref(graphics_index));
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)
@@ -108,18 +91,34 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const span<cons
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const sprite_tiles_item& tiles_item)
 {
-    return create_new_optional(tiles_item.graphics_tiles_ref());
+    int handle = sprite_tiles_manager::create_new_optional(tiles_item.graphics_tiles_ref());
+    optional<sprite_tiles_ptr> result;
+
+    if(handle >= 0)
+    {
+        result = sprite_tiles_ptr(handle);
+    }
+
+    return result;
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const sprite_tiles_item& tiles_item,
                                                                  int graphics_index)
 {
-    return create_new_optional(tiles_item.graphics_tiles_ref(graphics_index));
+    int handle = sprite_tiles_manager::create_new_optional(tiles_item.graphics_tiles_ref(graphics_index));
+    optional<sprite_tiles_ptr> result;
+
+    if(handle >= 0)
+    {
+        result = sprite_tiles_ptr(handle);
+    }
+
+    return result;
 }
 
-optional<sprite_tiles_ptr> sprite_tiles_ptr::allocate_optional(int tiles_count)
+optional<sprite_tiles_ptr> sprite_tiles_ptr::allocate_optional(int tiles_count, bpp_mode bpp)
 {
-    int handle = sprite_tiles_manager::allocate_optional(tiles_count);
+    int handle = sprite_tiles_manager::allocate_optional(tiles_count, bpp);
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)
@@ -165,11 +164,6 @@ int sprite_tiles_ptr::tiles_count() const
 optional<span<const tile>> sprite_tiles_ptr::tiles_ref() const
 {
     return sprite_tiles_manager::tiles_ref(_handle);
-}
-
-void sprite_tiles_ptr::set_tiles_ref(const span<const tile>& tiles_ref)
-{
-    sprite_tiles_manager::set_tiles_ref(_handle, tiles_ref);
 }
 
 void sprite_tiles_ptr::set_tiles_ref(const sprite_tiles_item& tiles_item)

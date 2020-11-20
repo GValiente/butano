@@ -26,7 +26,7 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
 {
     BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
     BN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
-               item.tiles_item().graphics_count());
+              item.tiles_item().graphics_count());
 }
 
 sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
@@ -36,9 +36,8 @@ sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles
     _tiles(move(tiles)),
     _palette(move(palette))
 {
-    BN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp_mode()),
-               "Invalid tiles ptr size: ", _tiles->tiles_count(), " - ",
-               _shape_size.tiles_count(_palette->bpp_mode()));
+    BN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp()),
+              "Invalid tiles count: ", _tiles->tiles_count(), " - ", _shape_size.tiles_count(_palette->bpp()));
 }
 
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
@@ -133,7 +132,7 @@ sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical
 
 sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 {
-    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
 
     _bg_priority = bg_priority;
     return *this;
@@ -141,7 +140,7 @@ sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 
 sprite_builder& sprite_builder::set_z_order(int z_order)
 {
-    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
+    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid Z order: ", z_order);
 
     _z_order = z_order;
     return *this;
@@ -214,7 +213,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles has been already released");
+    BN_ASSERT(_tiles, "Tiles have been already released");
 
     return *_tiles;
 }
@@ -270,7 +269,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles has been already released");
+    BN_ASSERT(_tiles, "Tiles have been already released");
 
     sprite_tiles_ptr result = move(*_tiles);
     _tiles.reset();

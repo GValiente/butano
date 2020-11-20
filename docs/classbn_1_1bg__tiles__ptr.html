@@ -70,51 +70,33 @@
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#aa965efb0365f47308f87791557d53b6f" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
-            </dt>
-            <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#af7d336bcdf1815420e974ad23d2df102" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#ade13e01ee213655596c4b5bb167984eb" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
-            </dt>
-            <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a04ac289b85e03fc489be1995df302760" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#a0f42befbc9338c0b3042f5281b7014df" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
-            </dt>
-            <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a04cd8db05d8096d0020a89df456eccdb" class="m-doc">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
             </dt>
             <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#ae8e50b889c9098f2b4d8b3275e971691" class="m-doc">allocate</a>(</span><span class="m-doc-wrap">int tiles_count) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a7a8956ce6ca03d372bdd45ef61cc6369" class="m-doc">allocate</a>(</span><span class="m-doc-wrap">int tiles_count,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) -&gt; <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a></span>
             </dt>
             <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#a29a01bbf51600995727b84de93f76878" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
-            </dt>
-            <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a264a7f039b64e498da579920691c0557" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#a569111779fa764cffa232a9955caa668" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
-            </dt>
-            <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a9bf84b7605ac39f36e00e560fb0150e6" class="m-doc">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#ad68dcf94a636e1bcbd4bf57cee36a4e5" class="m-doc">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a793324a9a02daa88a1a41aba2344195d" class="m-doc">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
           </dl>
@@ -159,18 +141,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#acaeed7aaf15274aff36276183eda31bc" class="m-doc-self">tiles_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
             <dd>Returns the referenced number of tiles.</dd>
-            <dt id="a52f896f97f1560bfc73e5a3672563b7f">
-              <span class="m-doc-wrap-bumper">auto <a href="#a52f896f97f1560bfc73e5a3672563b7f" class="m-doc-self">valid_tiles_count</a>(</span><span class="m-doc-wrap"><a href="group__palette.html#gaa05cf83a7eda48d0ef7a0e4c1ea5d9f1" class="m-doc">palette_<wbr />bpp_<wbr />mode</a> bpp_mode) const -&gt; bool</span>
-            </dt>
-            <dd>Indicates if the referenced tiles are valid for the specified bits per pixel or not.</dd>
             <dt id="a4c26ac9c8ce1c7518fba8c2f44516b7f">
               <span class="m-doc-wrap-bumper">auto <a href="#a4c26ac9c8ce1c7518fba8c2f44516b7f" class="m-doc-self">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&gt;</span>
             </dt>
             <dd>Returns the referenced tiles unless it was created with allocate or allocate_optional. In that case, it returns <code>nullopt</code>.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a49cb1fa0777129e4e0ef4ed95de597cd" class="m-doc">set_tiles_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span>
-            </dt>
-            <dd>Sets the tiles to handle.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#abf8e4d3e60ff0eba280055f5acf90ad2" class="m-doc">set_tiles_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span>
             </dt>
@@ -183,10 +157,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a6a25094ca8df9d41678f6f5e04211336" class="m-doc-self">vram</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&gt;</span>
             </dt>
             <dd>Returns the allocated memory in VRAM if this <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> was created with allocate or allocate_optional; <code>nullopt</code> otherwise.</dd>
-            <dt id="a89f6e1ec38677c3671119edb46ef0cb7">
-              <span class="m-doc-wrap-bumper">auto <a href="#a89f6e1ec38677c3671119edb46ef0cb7" class="m-doc-self">hash</a>(</span><span class="m-doc-wrap">) const -&gt; unsigned</span>
+            <dt id="a6902474988da83a05e1b9fbc122b4639">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6902474988da83a05e1b9fbc122b4639" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
-            <dd>Returns the hash of the internal handle.</dd>
+            <dd>Returns the internal handle.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a3c2822f684f34f11f875a328845dc500" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&amp; other)</span>
             </dt>
@@ -210,29 +184,6 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="aa965efb0365f47308f87791557d53b6f"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa965efb0365f47308f87791557d53b6f" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to search.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; <code>nullopt</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
           <section class="m-doc-details" id="af7d336bcdf1815420e974ad23d2df102"><div>
             <h3>
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af7d336bcdf1815420e974ad23d2df102" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
@@ -255,30 +206,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="ade13e01ee213655596c4b5bb167984eb"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ade13e01ee213655596c4b5bb167984eb" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to search or handle.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; otherwise it returns a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a04ac289b85e03fc489be1995df302760"><div>
             <h3>
@@ -304,30 +231,6 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="a0f42befbc9338c0b3042f5281b7014df"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f42befbc9338c0b3042f5281b7014df" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to handle.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The background tiles system does not support multiple <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use the static create methods instead.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
           <section class="m-doc-details" id="a04cd8db05d8096d0020a89df456eccdb"><div>
             <h3>
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a04cd8db05d8096d0020a89df456eccdb" class="m-doc-self">create_new</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
@@ -352,9 +255,10 @@
             </table>
 <p>The background tiles system does not support multiple <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use the static create methods instead.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="ae8e50b889c9098f2b4d8b3275e971691"><div>
+          <section class="m-doc-details" id="a7a8956ce6ca03d372bdd45ef61cc6369"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae8e50b889c9098f2b4d8b3275e971691" class="m-doc-self">allocate</a>(</span><span class="m-doc-wrap">int tiles_count)</span></span>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7a8956ce6ca03d372bdd45ef61cc6369" class="m-doc-self">allocate</a>(</span><span class="m-doc-wrap">int tiles_count,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp)</span></span>
             </h3>
             <p>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -366,6 +270,10 @@
                   <td style="width: 1%">tiles_count</td>
                   <td>Number of tiles to allocate.</td>
                 </tr>
+                <tr>
+                  <td>bpp</td>
+                  <td>Bits per pixel of the tiles to allocate.</td>
+                </tr>
               </tbody>
               <tfoot>
                 <tr>
@@ -374,30 +282,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="a29a01bbf51600995727b84de93f76878"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a29a01bbf51600995727b84de93f76878" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Searches for a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to search or handle.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it has been found; otherwise it returns a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <code>nullopt</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a264a7f039b64e498da579920691c0557"><div>
             <h3>
@@ -423,30 +307,6 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="a569111779fa764cffa232a9955caa668"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a569111779fa764cffa232a9955caa668" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to handle.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references tiles_ref if it could be allocated; <code>nullopt</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The background tiles system does not support multiple <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use the static create_optional methods instead.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
           <section class="m-doc-details" id="a9bf84b7605ac39f36e00e560fb0150e6"><div>
             <h3>
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9bf84b7605ac39f36e00e560fb0150e6" class="m-doc-self">create_new_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
@@ -471,9 +331,10 @@
             </table>
 <p>The background tiles system does not support multiple <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use the static create_optional methods instead.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="ad68dcf94a636e1bcbd4bf57cee36a4e5"><div>
+          <section class="m-doc-details" id="a793324a9a02daa88a1a41aba2344195d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad68dcf94a636e1bcbd4bf57cee36a4e5" class="m-doc-self">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count)</span></span>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a793324a9a02daa88a1a41aba2344195d" class="m-doc-self">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count,
+              <a href="group__color.html#ga297688ff852c5695452017a2622cb204" class="m-doc">bpp_<wbr />mode</a> bpp)</span></span>
             </h3>
             <p>Creates a <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -484,6 +345,10 @@
                 <tr>
                   <td style="width: 1%">tiles_count</td>
                   <td>Number of tiles to allocate.</td>
+                </tr>
+                <tr>
+                  <td>bpp</td>
+                  <td>Bits per pixel of the tiles to allocate.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -573,24 +438,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="a49cb1fa0777129e4e0ef4ed95de597cd"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a49cb1fa0777129e4e0ef4ed95de597cd" class="m-doc-self">set_tiles_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref)</span></span>
-            </h3>
-            <p>Sets the tiles to handle.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">tiles_ref</td>
-                  <td>Reference to the tiles to handle.</td>
-                </tr>
-              </tbody>
-            </table>
-<p>Remember that the background tiles system does not support multiple <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles.</p><p>Remember also that the tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="abf8e4d3e60ff0eba280055f5acf90ad2"><div>
             <h3>

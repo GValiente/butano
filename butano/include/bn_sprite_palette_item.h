@@ -17,8 +17,9 @@
 
 #include "bn_span.h"
 #include "bn_color.h"
+#include "bn_bpp_mode.h"
+#include "bn_alignment.h"
 #include "bn_optional_fwd.h"
-#include "bn_palette_bpp_mode.h"
 
 namespace bn
 {
@@ -49,16 +50,17 @@ public:
      * The colors are not copied but referenced, so they should outlive the sprite_palette_item
      * to avoid dangling references.
      *
-     * @param bpp_mode Bits per pixel of the color palettes to create.
+     * @param bpp Bits per pixel of the color palettes to create.
      */
-    constexpr sprite_palette_item(const span<const color>& colors_ref, palette_bpp_mode bpp_mode) :
+    constexpr sprite_palette_item(const span<const color>& colors_ref, bpp_mode bpp) :
         _colors_ref(colors_ref),
-        _bpp_mode(bpp_mode)
+        _bpp(bpp)
     {
-        BN_ASSERT((bpp_mode == palette_bpp_mode::BPP_4 && colors_ref.size() == 16) ||
-                   (bpp_mode == palette_bpp_mode::BPP_8 && colors_ref.size() >= 16 && colors_ref.size() <= 256 &&
-                            colors_ref.size() % 16 == 0),
-                   "Invalid colors count: ", colors_ref.size());
+        BN_ASSERT(aligned<alignof(int)>(colors_ref.data()), "Colors are not aligned");
+        BN_ASSERT((bpp == bpp_mode::BPP_4 && colors_ref.size() == 16) ||
+                  (bpp == bpp_mode::BPP_8 && colors_ref.size() >= 16 && colors_ref.size() <= 256 &&
+                        colors_ref.size() % 16 == 0),
+                  "Invalid colors count: ", colors_ref.size());
     }
 
     /**
@@ -75,9 +77,9 @@ public:
     /**
      * @brief Returns the bits per pixel of the color palettes to create.
      */
-    [[nodiscard]] constexpr palette_bpp_mode bpp_mode() const
+    [[nodiscard]] constexpr bpp_mode bpp() const
     {
-        return _bpp_mode;
+        return _bpp;
     }
 
     /**
@@ -125,7 +127,7 @@ public:
 
 private:
     span<const color> _colors_ref;
-    palette_bpp_mode _bpp_mode;
+    bpp_mode _bpp;
 };
 
 }

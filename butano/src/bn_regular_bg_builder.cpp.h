@@ -21,7 +21,7 @@ regular_bg_builder& regular_bg_builder::set_priority(int priority)
 
 regular_bg_builder& regular_bg_builder::set_z_order(int z_order)
 {
-    BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
+    BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid Z order: ", z_order);
 
     _z_order = z_order;
     return *this;

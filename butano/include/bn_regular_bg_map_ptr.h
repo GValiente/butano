@@ -30,7 +30,7 @@ class bg_palette_ptr;
 class bg_palette_item;
 class regular_bg_item;
 class regular_bg_map_item;
-enum class palette_bpp_mode;
+enum class bpp_mode;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a regular background map.
@@ -46,19 +46,6 @@ class regular_bg_map_ptr
 {
 
 public:
-    /**
-     * @brief Searches for a regular_bg_map_ptr which references the given information.
-     * @param cells_ref Reference to the map cells to search.
-     * @param dimensions Size in map cells of the map to search.
-     * @param tiles Referenced tiles of the map to search.
-     * @param palette Referenced color palette of the map to search.
-     * @return regular_bg_map_ptr which references the given information if it has been found;
-     * `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<regular_bg_map_ptr> find(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, const bg_tiles_ptr& tiles,
-            const bg_palette_ptr& palette);
-
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
      * @param map_item regular_bg_map_item which references the map cells to search.
@@ -77,23 +64,6 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_item& item);
-
-    /**
-     * @brief Searches for a regular_bg_map_ptr which references the given information.
-     * If it is not found, it creates a regular_bg_map_ptr which references it.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
-     *
-     * @param cells_ref Reference to the map cells to search or handle.
-     * @param dimensions Size in map cells of the map to search or handle.
-     * @param tiles Referenced tiles of the map to search or handle.
-     * @param palette Referenced color palette of the map to search or handle.
-     * @return regular_bg_map_ptr which references the given information if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it.
-     */
-    [[nodiscard]] static regular_bg_map_ptr create(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -123,25 +93,6 @@ public:
      * otherwise it returns a regular_bg_map_ptr which references it.
      */
     [[nodiscard]] static regular_bg_map_ptr create(const regular_bg_item& item);
-
-    /**
-     * @brief Creates a regular_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
-     *
-     * @param cells_ref Reference to the map cells to handle.
-     * @param dimensions Size in map cells of the map to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @return regular_bg_map_ptr which references the given information.
-     */
-    [[nodiscard]] static regular_bg_map_ptr create_new(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -193,24 +144,6 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
-     * @param cells_ref Reference to the map cells to search or handle.
-     * @param dimensions Size in map cells of the map to search or handle.
-     * @param tiles Referenced tiles of the map to search or handle.
-     * @param palette Referenced color palette of the map to search or handle.
-     * @return regular_bg_map_ptr which references the given information if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated;
-     * `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
-
-    /**
-     * @brief Searches for a regular_bg_map_ptr which references the given information.
-     * If it is not found, it creates a regular_bg_map_ptr which references it.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
-     *
      * @param map_item regular_bg_map_item which references the map cells to search or handle.
      * @param tiles Referenced tiles of the map to search or handle.
      * @param palette Referenced color palette of the map to search or handle.
@@ -234,26 +167,6 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(const regular_bg_item& item);
-
-    /**
-     * @brief Creates a regular_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
-     *
-     * @param cells_ref Reference to the map cells to handle.
-     * @param dimensions Size in map cells of the map to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * `nullopt` otherwise.
-     */
-    [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
-            const regular_bg_map_cell& cells_ref, const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -359,7 +272,7 @@ public:
     /**
      * @brief Returns the bits per pixel of the referenced color palette.
      */
-    [[nodiscard]] palette_bpp_mode bpp_mode() const;
+    [[nodiscard]] bpp_mode bpp() const;
 
     /**
      * @brief Returns the referenced map cells unless it was created with allocate or allocate_optional.
@@ -375,10 +288,9 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
-     * @param cells_ref Reference to the map cells to handle.
-     * @param dimensions Size in map cells of the map to handle.
+     * @param map_item regular_bg_map_item which references the map cells to search.
      */
-    void set_cells_ref(const regular_bg_map_cell& cells_ref, const size& dimensions);
+    void set_cells_ref(const regular_bg_map_item& map_item);
 
     /**
      * @brief Uploads the referenced map cells to VRAM again to make visible the possible changes in them.
@@ -477,11 +389,11 @@ public:
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 
     /**
-     * @brief Returns the hash of the internal handle.
+     * @brief Returns the internal handle.
      */
-    [[nodiscard]] unsigned hash() const
+    [[nodiscard]] int handle() const
     {
-        return make_hash(_handle);
+        return _handle;
     }
 
     /**
@@ -535,7 +447,7 @@ struct hash<regular_bg_map_ptr>
      */
     [[nodiscard]] unsigned operator()(const regular_bg_map_ptr& value) const
     {
-        return value.hash();
+        return make_hash(value.handle());
     }
 };
 

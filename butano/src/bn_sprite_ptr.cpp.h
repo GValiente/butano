@@ -48,9 +48,8 @@ sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& it
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                               sprite_palette_ptr palette)
 {
-    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
-               shape_size.tiles_count(palette.bpp_mode()));
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
 
     return sprite_ptr(sprites_manager::create(fixed_point(x, y), shape_size, move(tiles), move(palette)));
 }
@@ -58,9 +57,8 @@ sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_s
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                               sprite_palette_ptr palette)
 {
-    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
-               shape_size.tiles_count(palette.bpp_mode()));
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
 
     return sprite_ptr(sprites_manager::create(position, shape_size, move(tiles), move(palette)));
 }
@@ -127,9 +125,8 @@ optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, co
 optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
-    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
-               shape_size.tiles_count(palette.bpp_mode()));
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
 
     optional<sprite_ptr> result;
 
@@ -144,9 +141,8 @@ optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_shape_size& shape_size,
                                                  sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
-    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp_mode()),
-               "Invalid tiles ptr size: ", tiles.tiles_count(), " - ",
-               shape_size.tiles_count(palette.bpp_mode()));
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
 
     optional<sprite_ptr> result;
 

@@ -47,7 +47,7 @@ private:
     bn::vector<bn::sprite_ptr, 3> _text_sprites;
     bn::fixed_point _text_position;
     bn::fixed _max_cpu_usage;
-    mode_type _mode = mode_type::DISABLED;
+    mode_type _mode = mode_type::DETAILED;
     int _counter = 0;
 };
 

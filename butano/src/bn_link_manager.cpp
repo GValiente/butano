@@ -36,7 +36,7 @@ namespace
     {
         if(! data.activated)
         {
-            hw::link::init(baud_rate, data.connection);
+            hw::link::init(data.connection);
             data.activated = true;
         }
     }
@@ -62,7 +62,7 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
 
     auto this_player_id = int(link_state.currentPlayerId);
 
-    for(int player_id = 0; player_id < 4; ++player_id)
+    for(int player_id = 0, players_count = link_state.playerCount; player_id < players_count; ++player_id)
     {
         if(player_id != this_player_id)
         {

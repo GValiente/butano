@@ -8,6 +8,7 @@
 
 #include "bn_deque.h"
 #include "bn_timer.h"
+#include "bn_config_link.h"
 
 #define LINK_MAX_PLAYERS 4
 #define LINK_DISCONNECTED 0xFFFF
@@ -86,26 +87,9 @@ struct LinkState {
 
 class LinkConnection {
 public:
-    enum BaudRate {
-        BAUD_RATE_0,  // 9600 bps
-        BAUD_RATE_1,  // 38400 bps
-        BAUD_RATE_2,  // 57600 bps
-        BAUD_RATE_3   // 115200 bps
-    };
-
     LinkState linkState;
     
-    void init(BaudRate _baudRate = BAUD_RATE_3,
-              u32 _timeout = LINK_DEFAULT_TIMEOUT,
-              u32 _remoteTimeout = LINK_DEFAULT_REMOTE_TIMEOUT,
-              u16 _speed = LINK_DEFAULT_SPEED,
-              u8 _sendTimerId = LINK_DEFAULT_SEND_TIMER_ID) {
-        baudRate = _baudRate;
-        timeout = _timeout;
-        remoteTimeout = _remoteTimeout;
-        speed = _speed;
-        sendTimerId = _sendTimerId;
-        
+    void init() {
         stop();
     }
     
@@ -176,7 +160,7 @@ public:
             } else if (linkState._timeouts[i] > 0) {
                 linkState._timeouts[i]++;
                 
-                if (linkState._timeouts[i] >= (int)remoteTimeout) {
+                if (linkState._timeouts[i] >= LINK_DEFAULT_REMOTE_TIMEOUT) {
                     LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
                     linkState._timeouts[i] = -1;
                 } else
@@ -193,18 +177,13 @@ public:
     }
     
 private:
-    BaudRate baudRate;
-    u32 timeout;
-    u32 remoteTimeout;
-    u32 speed;
-    u8 sendTimerId;
     bool isEnabled = false;
     
     bool isReady() { return isBitHigh(LINK_BIT_READY); }
     bool hasError() { return isBitHigh(LINK_BIT_ERROR); }
     bool isMaster() { return !isBitHigh(LINK_BIT_SLAVE); }
     bool isSending() { return isBitHigh(LINK_BIT_START); }
-    bool didTimeout() { return linkState._IRQTimeout >= timeout; }
+    bool didTimeout() { return linkState._IRQTimeout >= LINK_DEFAULT_TIMEOUT; }
     
     void sendPendingData() {
         transfer(LINK_QUEUE_POP(linkState._outgoingMessages));
@@ -257,24 +236,24 @@ private:
         startTimer();
         
         LINK_SET_LOW(REG_RCNT, LINK_BIT_GENERAL_PURPOSE_HIGH);
-        REG_SIOCNT = baudRate;
+        REG_SIOCNT = BN_CFG_LINK_BAUD_RATE;
         REG_SIOMLT_SEND = 0;
         setBitHigh(LINK_BIT_MULTIPLAYER);
         setBitHigh(LINK_BIT_IRQ);
     }
     
     void stopTimer() {
-        REG_TM[sendTimerId].cnt = REG_TM[sendTimerId].cnt & (~TM_ENABLE);
+        REG_TM[LINK_DEFAULT_SEND_TIMER_ID].cnt = REG_TM[LINK_DEFAULT_SEND_TIMER_ID].cnt & (~TM_ENABLE);
     }
     
     void startTimer() {
-        REG_TM[sendTimerId].start = -speed;
-        REG_TM[sendTimerId].cnt = TM_ENABLE | TM_IRQ | LINK_BASE_FREQUENCY;
+        REG_TM[LINK_DEFAULT_SEND_TIMER_ID].start = -LINK_DEFAULT_SPEED;
+        REG_TM[LINK_DEFAULT_SEND_TIMER_ID].cnt = TM_ENABLE | TM_IRQ | LINK_BASE_FREQUENCY;
     }
     
     void push(bn::ideque<u16>& q, u16 value) {
         if (q.full())
-            LINK_QUEUE_POP(q);
+            q.pop_front();
         
         q.push_back(value);
     }
@@ -287,9 +266,9 @@ private:
         }
     }
     
-    bool isBitHigh(u8 bit) { return (REG_SIOCNT >> bit) & 1; }
-    void setBitHigh(u8 bit) { LINK_SET_HIGH(REG_SIOCNT, bit); }
-    void setBitLow(u8 bit) { LINK_SET_LOW(REG_SIOCNT, bit); }
+    bool isBitHigh(unsigned bit) { return (REG_SIOCNT >> bit) & 1; }
+    void setBitHigh(unsigned bit) { LINK_SET_HIGH(REG_SIOCNT, bit); }
+    void setBitLow(unsigned bit) { LINK_SET_LOW(REG_SIOCNT, bit); }
 };
 
 extern LinkConnection* linkConnection;

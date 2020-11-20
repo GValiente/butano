@@ -25,9 +25,9 @@ namespace bn::hw::link
 
     BN_CODE_IWRAM void _timer_intr();
 
-    inline void init(int baud_rate, connection& connection_ref)
+    inline void init(connection& connection_ref)
     {
-        connection_ref.init(connection::BaudRate(baud_rate));
+        connection_ref.init();
         linkConnection = &connection_ref;
         irq::replace_or_push_back(irq::id::SERIAL, _serial_intr);
         irq::replace_or_push_back(irq::id::TIMER1, _timer_intr);

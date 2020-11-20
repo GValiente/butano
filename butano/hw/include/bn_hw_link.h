@@ -38,10 +38,12 @@ namespace bn::hw::link
     {
         irq::enable(irq::id::SERIAL);
         irq::enable(irq::id::TIMER1);
+        linkConnection->activate();
     }
 
     inline void disable()
     {
+        linkConnection->deactivate();
         irq::disable(irq::id::TIMER1);
         irq::disable(irq::id::SERIAL);
     }

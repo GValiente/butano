@@ -61,13 +61,13 @@ u16 LINK_QUEUE_POP(bn::ideque<u16>& q);
 void LINK_QUEUE_CLEAR(bn::ideque<u16>& q);
 
 struct LinkState {
-    u8 playerCount;
-    u8 currentPlayerId;
     bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _incomingMessages[LINK_MAX_PLAYERS];
     bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
     int _timeouts[LINK_MAX_PLAYERS];
-    bool _IRQFlag;
     u32 _IRQTimeout;
+    u8 playerCount;
+    u8 currentPlayerId;
+    bool _IRQFlag;
     
     bool isConnected() {
         return playerCount > 1 && currentPlayerId < playerCount;
@@ -148,7 +148,7 @@ public:
         linkState._IRQFlag = true;
         linkState._IRQTimeout = 0;
         
-        u8 newPlayerCount = 0;
+        unsigned newPlayerCount = 0;
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             u16 data = REG_SIOMULTI[i];
             

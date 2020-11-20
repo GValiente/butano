@@ -5,6 +5,7 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
+#include "bn_string.h"
 #include "bn_optional.h"
 #include "bn_link_state.h"
 #include "bn_bg_palettes.h"
@@ -20,7 +21,6 @@
 #pragma GCC diagnostic ignored "-Wvolatile"
 #pragma GCC diagnostic ignored "-Wpedantic"
 
-#include "bn_log.h"
 #include "../../butano/hw/3rd_party/gba-link-connection/include/LinkConnection.h"
 
 #pragma GCC diagnostic pop
@@ -42,7 +42,7 @@ namespace
 
     [[nodiscard]] bn::optional<direction> read_keypad()
     {
-        bn::optional<direction> result = direction();
+        bn::optional<direction> result;
 
         if(bn::keypad::up_held())
         {
@@ -95,11 +95,12 @@ int main()
     bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
-    constexpr const bn::string_view info_text_lines[] = {
+    bn::vector<bn::sprite_ptr, 64> messages_per_second_sprites;
+    bn::string_view info_text_lines[] = {
         "PAD: move other player's ninja",
     };
 
-    info info("Link communication", info_text_lines, text_generator);
+    info information("Link communication", info_text_lines, text_generator);
 
     bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
     bn::sprite_animate_action<4> action = bn::create_sprite_animate_action_forever(
@@ -107,6 +108,9 @@ int main()
 
     direction old_direction;
     old_direction.keys.down = true;
+
+    int frame_counter = 0;
+    int success_counter = 0;
 
     while(true)
     {
@@ -137,6 +141,7 @@ int main()
             bool direction_changed = false;
             direction new_direction;
             new_direction.data = first_other_player.data() - 1;
+            ++success_counter;
 
             if(new_direction.keys.left)
             {
@@ -188,16 +193,21 @@ int main()
             {
                 old_direction = new_direction;
             }
-
-            BN_LOG("received");
         }
-        else
+
+        if(++frame_counter == 60)
         {
-            BN_LOG("nothing");
+            bn::string<64> messages_per_second = "Messages per second: ";
+            messages_per_second += bn::to_string<18>(success_counter);
+            messages_per_second_sprites.clear();
+            text_generator.generate(0, 44, messages_per_second, messages_per_second_sprites);
+
+            frame_counter = 0;
+            success_counter = 0;
         }
 
         action.update();
-        info.update();
+        information.update();
         bn::core::update();
     }
 }

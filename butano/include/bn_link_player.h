@@ -20,7 +20,7 @@ public:
         _data(uint16_t(data))
     {
         BN_ASSERT(id >= 0 && id <= 3, "Invalid id: ", id);
-        BN_ASSERT(data > 0 && data < 0xFFFF, "Invalid data: ", data);
+        BN_ASSERT(data >= 0 && data <= 65533, "Invalid data: ", data);
     }
 
     [[nodiscard]] constexpr int id() const

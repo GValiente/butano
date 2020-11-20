@@ -86,6 +86,63 @@ namespace
 
         return result;
     }
+
+    void move_ninja(direction new_direction, direction& old_direction, bn::sprite_ptr& ninja_sprite,
+                    bn::sprite_animate_action<4>& ninja_animate_action)
+    {
+        bool direction_changed = false;
+
+        if(new_direction.keys.left)
+        {
+            ninja_sprite.set_x(ninja_sprite.x() - 1);
+
+            if(new_direction.data != old_direction.data)
+            {
+                direction_changed = true;
+                ninja_animate_action = bn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 8, 9, 10, 11);
+            }
+        }
+        else if(new_direction.keys.right)
+        {
+            ninja_sprite.set_x(ninja_sprite.x() + 1);
+
+            if(new_direction.data != old_direction.data)
+            {
+                direction_changed = true;
+                ninja_animate_action = bn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 12, 13, 14, 15);
+            }
+        }
+
+        if(new_direction.keys.up)
+        {
+            ninja_sprite.set_y(ninja_sprite.y() - 1);
+
+            if(new_direction.data != old_direction.data)
+            {
+                direction_changed = true;
+                ninja_animate_action = bn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 4, 5, 6, 7);
+            }
+        }
+        else if(new_direction.keys.down)
+        {
+            ninja_sprite.set_y(ninja_sprite.y() + 1);
+
+            if(new_direction.data != old_direction.data)
+            {
+                direction_changed = true;
+                ninja_animate_action = bn::create_sprite_animate_action_forever(
+                            ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
+            }
+        }
+
+        if(direction_changed)
+        {
+            old_direction = new_direction;
+        }
+    }
 }
 
 int main()
@@ -95,28 +152,28 @@ int main()
     bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
-    bn::vector<bn::sprite_ptr, 64> messages_per_second_sprites;
     bn::string_view info_text_lines[] = {
         "PAD: move other player's ninja",
     };
 
     info information("Link communication", info_text_lines, text_generator);
 
+    bn::vector<bn::sprite_ptr, 64> messages_per_second_sprites;
     bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
-    bn::sprite_animate_action<4> action = bn::create_sprite_animate_action_forever(
+    bn::sprite_animate_action<4> ninja_animate_action = bn::create_sprite_animate_action_forever(
                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
 
     direction old_direction;
     old_direction.keys.down = true;
 
-    int frame_counter = 0;
-    int success_counter = 0;
+    int frames_counter = 0;
+    int success_frames_counter = 0;
 
     while(true)
     {
         if(bn::optional<direction> direction_to_send = read_keypad())
         {
-            bn::link_state::send(direction_to_send->data + 1);
+            bn::link_state::send(direction_to_send->data);
         }
 
         bn::optional<bn::link_state> link_state;
@@ -138,75 +195,23 @@ int main()
         if(link_state)
         {
             const bn::link_player& first_other_player = link_state->other_players().front();
-            bool direction_changed = false;
             direction new_direction;
-            new_direction.data = first_other_player.data() - 1;
-            ++success_counter;
-
-            if(new_direction.keys.left)
-            {
-                ninja_sprite.set_x(ninja_sprite.x() - 1);
-
-                if(new_direction.data != old_direction.data)
-                {
-                    direction_changed = true;
-                    action = bn::create_sprite_animate_action_forever(
-                                ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 8, 9, 10, 11);
-                }
-            }
-            else if(new_direction.keys.right)
-            {
-                ninja_sprite.set_x(ninja_sprite.x() + 1);
-
-                if(new_direction.data != old_direction.data)
-                {
-                    direction_changed = true;
-                    action = bn::create_sprite_animate_action_forever(
-                                ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 12, 13, 14, 15);
-                }
-            }
-
-            if(new_direction.keys.up)
-            {
-                ninja_sprite.set_y(ninja_sprite.y() - 1);
-
-                if(new_direction.data != old_direction.data)
-                {
-                    direction_changed = true;
-                    action = bn::create_sprite_animate_action_forever(
-                                ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 4, 5, 6, 7);
-                }
-            }
-            else if(new_direction.keys.down)
-            {
-                ninja_sprite.set_y(ninja_sprite.y() + 1);
-
-                if(new_direction.data != old_direction.data)
-                {
-                    direction_changed = true;
-                    action = bn::create_sprite_animate_action_forever(
-                                ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
-                }
-            }
-
-            if(direction_changed)
-            {
-                old_direction = new_direction;
-            }
+            new_direction.data = first_other_player.data();
+            move_ninja(new_direction, old_direction, ninja_sprite, ninja_animate_action);
+            ++success_frames_counter;
         }
 
-        if(++frame_counter == 60)
+        if(++frames_counter == 60)
         {
             bn::string<64> messages_per_second = "Messages per second: ";
-            messages_per_second += bn::to_string<18>(success_counter);
+            messages_per_second += bn::to_string<18>(success_frames_counter);
             messages_per_second_sprites.clear();
             text_generator.generate(0, 44, messages_per_second, messages_per_second_sprites);
-
-            frame_counter = 0;
-            success_counter = 0;
+            frames_counter = 0;
+            success_frames_counter = 0;
         }
 
-        action.update();
+        ninja_animate_action.update();
         information.update();
         bn::core::update();
     }

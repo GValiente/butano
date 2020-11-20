@@ -46,7 +46,7 @@ void send(int data_to_send)
 {
     _check_activated();
 
-    data.connection.send(u16(data_to_send));
+    data.connection.send(u16(data_to_send + 1));
 }
 
 bool get(int& current_player_id, vector<link_player, 3>& other_players)
@@ -72,7 +72,7 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
             {
                 BN_ASSERT(! other_players.full(), "Too much players");
 
-                other_players.emplace_back(player_id, player_data);
+                other_players.emplace_back(player_id, player_data - 1);
             }
         }
     }

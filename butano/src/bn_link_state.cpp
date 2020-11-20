@@ -13,7 +13,7 @@ namespace bn
 
 void link_state::send(int data_to_send)
 {
-    BN_ASSERT(data_to_send > 0 && data_to_send < 0xFFFF, "Invalid data to send: ", data_to_send);
+    BN_ASSERT(data_to_send >= 0 && data_to_send <= 65533, "Invalid data to send: ", data_to_send);
 
     link_manager::send(data_to_send);
 }

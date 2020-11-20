@@ -53,7 +53,7 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
 {
     _check_activated();
 
-    hw::link::state link_state = data.connection.linkState;
+    hw::link::state& link_state = data.connection.linkState;
 
     if(! link_state.isConnected())
     {

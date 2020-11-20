@@ -116,17 +116,14 @@ int main()
         }
 
         bn::optional<bn::link_state> link_state;
-        int total_success_retries = 1;
-        int total_failed_retries = 5;
-        int success_retries = 0;
+        int max_failed_retries = 5;
         int failed_retries = 0;
 
-        while(success_retries <= total_success_retries && failed_retries <= total_failed_retries)
+        while(failed_retries <= max_failed_retries)
         {
             if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
             {
                 link_state = new_link_state;
-                ++success_retries;
             }
             else
             {

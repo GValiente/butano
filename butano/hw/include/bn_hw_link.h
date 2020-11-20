@@ -21,9 +21,9 @@ namespace bn::hw::link
     using connection = LinkConnection;
     using state = LinkState;
 
-    BN_CODE_IWRAM void _serial_intr();
+    void _serial_intr();
 
-    BN_CODE_IWRAM void _timer_intr();
+    void _timer_intr();
 
     inline void init(connection& connection_ref)
     {

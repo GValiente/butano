@@ -161,14 +161,16 @@ public:
                     push(linkState._incomingMessages[i], data);
                 newPlayerCount++;
                 linkState._timeouts[i] = 0;
-            } else if (linkState._timeouts[i] > 0) {
-                linkState._timeouts[i]++;
-                
+            }
+            else if (linkState._timeouts[i] > 0) {
                 if (linkState._timeouts[i] >= LINK_DEFAULT_REMOTE_TIMEOUT) {
                     LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
                     linkState._timeouts[i] = -1;
-                } else
+                }
+                else {
+                    linkState._timeouts[i]++;
                     newPlayerCount++;
+                }
             }
         }
         

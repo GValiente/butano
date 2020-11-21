@@ -7,14 +7,19 @@
 #include "bn_math.h"
 #include "bn_keypad.h"
 #include "bn_string.h"
+#include "bn_display.h"
 #include "bn_optional.h"
+#include "bn_blending.h"
 #include "bn_link_state.h"
+#include "bn_rect_window.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
+#include "bn_rect_window_boundaries_hblank_effect_ptr.h"
 
 #include "bn_music_items.h"
 #include "bn_sprite_items_ninja.h"
+#include "bn_regular_bg_items_clouds.h"
 #include "bn_regular_bg_items_village.h"
 
 #include "info.h"
@@ -156,8 +161,6 @@ int main()
 
     bn::string_view info_text_lines[] = {
         "PAD: move other player's ninja",
-        "A: sleep",
-        "B: awake",
     };
 
     info information("Link communication", info_text_lines, text_generator);
@@ -168,13 +171,31 @@ int main()
                 ninja_sprite, 16, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
 
     bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
+    bn::regular_bg_ptr clouds_bg = bn::regular_bg_items::clouds.create_bg(0, 0);
+
+    bn::window outside_window = bn::window::outside();
+    outside_window.set_show_bg(clouds_bg, false);
+
+    bn::blending::set_transparency_alpha(0.5);
+    clouds_bg.set_blending_enabled(true);
+
+    bn::rect_window internal_window = bn::rect_window::internal();
+    int amplitude = 56;
+    internal_window.set_top(-amplitude);
+    internal_window.set_bottom(amplitude);
+
+    bn::array<bn::pair<bn::fixed, bn::fixed>, bn::display::height()> horizontal_boundaries;
+    bn::rect_window_boundaries_hblank_effect_ptr horizontal_hblank_effect =
+            bn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(internal_window, horizontal_boundaries);
+    bn::fixed base_degrees_angle;
+
     bn::music_items::soda7_xcopy_ohc.play();
 
     direction old_direction;
     old_direction.keys.down = true;
 
     int frames_counter = 0;
-    int success_frames_counter = 0;
+    int messages_counter = 0;
 
     while(true)
     {
@@ -183,15 +204,19 @@ int main()
             bn::link_state::send(direction_to_send->data);
         }
 
-        bn::optional<bn::link_state> link_state;
         int max_failed_retries = 5;
         int failed_retries = 0;
 
         while(failed_retries <= max_failed_retries)
         {
-            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
+            if(bn::optional<bn::link_state> link_state = bn::link_state::get())
             {
-                link_state = new_link_state;
+                const bn::link_player& first_other_player = link_state->other_players().front();
+                direction new_direction;
+                new_direction.data = first_other_player.data();
+                move_ninja(new_direction, old_direction, ninja_sprite, ninja_animate_action);
+                failed_retries = 0;
+                ++messages_counter;
             }
             else
             {
@@ -199,28 +224,42 @@ int main()
             }
         }
 
-        if(link_state)
+        base_degrees_angle += 4;
+
+        if(base_degrees_angle >= 360)
         {
-            const bn::link_player& first_other_player = link_state->other_players().front();
-            direction new_direction;
-            new_direction.data = first_other_player.data();
-            move_ninja(new_direction, old_direction, ninja_sprite, ninja_animate_action);
-            ++success_frames_counter;
+            base_degrees_angle -= 360;
         }
+
+        bn::fixed degrees_angle = base_degrees_angle;
+
+        for(int index = 0; index < amplitude; ++index)
+        {
+            degrees_angle += 16;
+
+            if(degrees_angle >= 360)
+            {
+                degrees_angle -= 360;
+            }
+
+            bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+            bn::fixed stretch = amplitude - index;
+            bn::pair<bn::fixed, bn::fixed> left_right(desp - stretch, desp + stretch);
+            horizontal_boundaries[(bn::display::height() / 2) + index] = left_right;
+            horizontal_boundaries[(bn::display::height() / 2) - index - 1] = left_right;
+        }
+
+        horizontal_hblank_effect.reload_deltas_ref();
+        clouds_bg.set_position(clouds_bg.x() + 0.5, clouds_bg.y() + 0.5);
 
         if(++frames_counter == 60)
         {
             bn::string<64> messages_per_second = "Messages per second: ";
-            messages_per_second += bn::to_string<18>(success_frames_counter);
+            messages_per_second += bn::to_string<18>(messages_counter);
             messages_per_second_sprites.clear();
             text_generator.generate(0, 44, messages_per_second, messages_per_second_sprites);
             frames_counter = 0;
-            success_frames_counter = 0;
-        }
-
-        if(bn::keypad::a_pressed())
-        {
-            bn::core::sleep(bn::keypad::key_type::B);
+            messages_counter = 0;
         }
 
         ninja_animate_action.update();

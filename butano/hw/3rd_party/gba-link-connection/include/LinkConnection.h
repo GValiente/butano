@@ -7,18 +7,22 @@
 #include <tonc_memmap.h>
 
 #include "bn_deque.h"
-#include "bn_timer.h"
 #include "bn_config_link.h"
+
+#if BN_CFG_LINK_RECV_WAIT > 0
+    #include "bn_timer.h"
+#endif
 
 #define LINK_MAX_PLAYERS 4
 #define LINK_DISCONNECTED 0xFFFF
 #define LINK_NO_DATA 0x0
+
 #define LINK_DEFAULT_TIMEOUT 3
 #define LINK_DEFAULT_REMOTE_TIMEOUT 5
 #define LINK_DEFAULT_BUFFER_SIZE 8
-#define LINK_DEFAULT_SPEED 100
+#define LINK_DEFAULT_INTERVAL BN_CFG_LINK_SEND_WAIT
 #define LINK_DEFAULT_SEND_TIMER_ID 1
-#define LINK_TRANSFER_WAIT_CYCLES 1000
+#define LINK_TRANSFER_WAIT_CYCLES BN_CFG_LINK_RECV_WAIT
 #define LINK_BASE_FREQUENCY TM_FREQ_1024
 
 #define LINK_BIT_SLAVE 2
@@ -234,7 +238,7 @@ private:
     
     void start() {
         startTimer();
-        
+
         LINK_SET_LOW(REG_RCNT, LINK_BIT_GENERAL_PURPOSE_HIGH);
         REG_SIOCNT = BN_CFG_LINK_BAUD_RATE;
         REG_SIOMLT_SEND = 0;
@@ -247,7 +251,7 @@ private:
     }
     
     void startTimer() {
-        REG_TM[LINK_DEFAULT_SEND_TIMER_ID].start = -LINK_DEFAULT_SPEED;
+        REG_TM[LINK_DEFAULT_SEND_TIMER_ID].start = -LINK_DEFAULT_INTERVAL;
         REG_TM[LINK_DEFAULT_SEND_TIMER_ID].cnt = TM_ENABLE | TM_IRQ | LINK_BASE_FREQUENCY;
     }
     
@@ -259,11 +263,13 @@ private:
     }
     
     void wait() {
-        bn::timer timer;
+        #if LINK_TRANSFER_WAIT_CYCLES > 0
+            bn::timer timer;
 
-        while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / 64) + 1)
-        {
-        }
+            while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / 64) + 1)
+            {
+            }
+        #endif
     }
     
     bool isBitHigh(unsigned bit) { return (REG_SIOCNT >> bit) & 1; }

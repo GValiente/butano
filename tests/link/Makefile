@@ -10,7 +10,6 @@
 # AUDIO is a list of directories containing files to be processed by mmutil.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
-#     If it starts with S, maybe SRAM could work out of the box in EverDrive flash carts.
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
 #     Pass -O0 to improve debugging.
@@ -26,9 +25,9 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO LINK
+ROMTITLE    :=  BUTANO LINKT
 ROMCODE     :=  SBTP
-USERFLAGS   :=
+USERFLAGS   :=  -DBN_CFG_LINK_SEND_WAIT=400
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

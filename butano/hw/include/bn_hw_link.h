@@ -25,15 +25,6 @@ namespace bn::hw::link
 
     void _timer_intr();
 
-    inline void init(connection& connection_ref)
-    {
-        connection_ref.init();
-        linkConnection = &connection_ref;
-        irq::replace_or_push_back(irq::id::SERIAL, _serial_intr);
-        irq::replace_or_push_back(irq::id::TIMER1, _timer_intr);
-        connection_ref.activate();
-    }
-
     inline void enable()
     {
         irq::enable(irq::id::SERIAL);
@@ -46,6 +37,37 @@ namespace bn::hw::link
         linkConnection->deactivate();
         irq::disable(irq::id::TIMER1);
         irq::disable(irq::id::SERIAL);
+    }
+
+    inline void init(connection& connection_ref)
+    {
+        linkConnection = &connection_ref;
+        connection_ref.init();
+        irq::replace_or_push_back(irq::id::SERIAL, _serial_intr);
+        irq::replace_or_push_back(irq::id::TIMER1, _timer_intr);
+        disable();
+    }
+
+    inline state* current_state()
+    {
+        state& link_state = linkConnection->linkState;
+
+        if(! link_state.isConnected())
+        {
+            return nullptr;
+        }
+
+        return &link_state;
+    }
+
+    inline void send(int data_to_send)
+    {
+        linkConnection->send(u16(data_to_send));
+    }
+
+    inline void commit()
+    {
+        linkConnection->_onVBlank();
     }
 }
 

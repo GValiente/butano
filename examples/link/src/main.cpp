@@ -167,7 +167,7 @@ int main()
     old_direction.keys.down = true;
 
     int frames_counter = 0;
-    int success_frames_counter = 0;
+    int messages_counter = 0;
 
     while(true)
     {
@@ -176,15 +176,19 @@ int main()
             bn::link_state::send(direction_to_send->data);
         }
 
-        bn::optional<bn::link_state> link_state;
         int max_failed_retries = 5;
         int failed_retries = 0;
 
         while(failed_retries <= max_failed_retries)
         {
-            if(bn::optional<bn::link_state> new_link_state = bn::link_state::get())
+            if(bn::optional<bn::link_state> link_state = bn::link_state::get())
             {
-                link_state = new_link_state;
+                const bn::link_player& first_other_player = link_state->other_players().front();
+                direction new_direction;
+                new_direction.data = first_other_player.data();
+                move_ninja(new_direction, old_direction, ninja_sprite, ninja_animate_action);
+                failed_retries = 0;
+                ++messages_counter;
             }
             else
             {
@@ -192,23 +196,14 @@ int main()
             }
         }
 
-        if(link_state)
-        {
-            const bn::link_player& first_other_player = link_state->other_players().front();
-            direction new_direction;
-            new_direction.data = first_other_player.data();
-            move_ninja(new_direction, old_direction, ninja_sprite, ninja_animate_action);
-            ++success_frames_counter;
-        }
-
         if(++frames_counter == 60)
         {
             bn::string<64> messages_per_second = "Messages per second: ";
-            messages_per_second += bn::to_string<18>(success_frames_counter);
+            messages_per_second += bn::to_string<18>(messages_counter);
             messages_per_second_sprites.clear();
             text_generator.generate(0, 44, messages_per_second, messages_per_second_sprites);
             frames_counter = 0;
-            success_frames_counter = 0;
+            messages_counter = 0;
         }
 
         ninja_animate_action.update();

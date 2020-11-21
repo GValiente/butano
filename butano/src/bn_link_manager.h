@@ -15,6 +15,8 @@ namespace bn
 
 namespace bn::link_manager
 {
+    void init();
+
     void send(int data_to_send);
 
     [[nodiscard]] bool get(int& current_player_id, vector<link_player, 3>& other_players);

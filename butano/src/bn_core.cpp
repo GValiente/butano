@@ -130,6 +130,9 @@ void init(const string_view& keypad_commands)
     // Init audio system:
     audio_manager::init();
 
+    // Init link system:
+    link_manager::init();
+
     // Init high level systems:
     memory_manager::init();
     cameras_manager::init();

@@ -8,7 +8,6 @@
 
 #include "bn_vector.h"
 #include "bn_link_player.h"
-#include "bn_optional_fwd.h"
 
 namespace bn
 {
@@ -17,9 +16,12 @@ class link_state
 {
 
 public:
-    static void send(int data_to_send);
-
-    [[nodiscard]] static optional<link_state> get();
+    link_state(int current_player_id, const vector<link_player, 3>& other_players) :
+        _other_players(other_players),
+        _current_player_id(current_player_id)
+    {
+        BN_ASSERT(current_player_id >= 0 && current_player_id <= 3, "Invalid current player id: ", current_player_id);
+    }
 
     [[nodiscard]] int current_player_id() const
     {

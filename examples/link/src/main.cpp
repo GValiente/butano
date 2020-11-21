@@ -4,6 +4,7 @@
  */
 
 #include "bn_core.h"
+#include "bn_link.h"
 #include "bn_keypad.h"
 #include "bn_string.h"
 #include "bn_optional.h"
@@ -173,7 +174,7 @@ int main()
     {
         if(bn::optional<direction> direction_to_send = read_keypad())
         {
-            bn::link_state::send(direction_to_send->data);
+            bn::link::send(direction_to_send->data);
         }
 
         int max_failed_retries = 5;
@@ -181,7 +182,7 @@ int main()
 
         while(failed_retries <= max_failed_retries)
         {
-            if(bn::optional<bn::link_state> link_state = bn::link_state::get())
+            if(bn::optional<bn::link_state> link_state = bn::link::receive())
             {
                 const bn::link_player& first_other_player = link_state->other_players().front();
                 direction new_direction;

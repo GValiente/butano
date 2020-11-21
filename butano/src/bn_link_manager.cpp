@@ -5,9 +5,9 @@
 
 #include "bn_link_manager.h"
 
-#include "bn_vector.h"
-#include "bn_link_player.h"
 #include "../hw/include/bn_hw_link.h"
+
+#include "bn_link.cpp.h"
 
 namespace bn::link_manager
 {
@@ -57,19 +57,21 @@ void send(int data_to_send)
     hw::link::send(data_to_send + 1);
 }
 
-bool get(int& current_player_id, vector<link_player, 3>& other_players)
+optional<link_state> receive()
 {
+    int current_player_id;
+    vector<link_player, 3> other_players;
     _check_activated();
 
     hw::link::block();
 
     if(hw::link::state* link_state = hw::link::current_state())
     {
-        auto this_player_id = int(link_state->currentPlayerId);
+        current_player_id = int(link_state->currentPlayerId);
 
         for(int player_id = 0, players_count = link_state->playerCount; player_id < players_count; ++player_id)
         {
-            if(player_id != this_player_id)
+            if(player_id != current_player_id)
             {
                 int player_data = link_state->readMessage(u8(player_id));
 
@@ -81,13 +83,27 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
                 }
             }
         }
-
-        current_player_id = this_player_id;
     }
 
     hw::link::unblock();
 
-    return ! other_players.empty();
+    optional<link_state> result;
+
+    if(! other_players.empty())
+    {
+        result.emplace(current_player_id, other_players);
+    }
+
+    return result;
+}
+
+void deactivate()
+{
+    if(data.activated)
+    {
+        data.activated = false;
+        hw::link::disable();
+    }
 }
 
 void enable()

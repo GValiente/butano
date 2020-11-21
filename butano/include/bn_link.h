@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_LINK_MANAGER_H
-#define BN_LINK_MANAGER_H
+#ifndef BN_LINK_H
+#define BN_LINK_H
 
 #include "bn_optional_fwd.h"
 
@@ -13,21 +13,13 @@ namespace bn
     class link_state;
 }
 
-namespace bn::link_manager
+namespace bn::link
 {
-    void init();
-
-    void send(int data_to_send);
+    void send(int data);
 
     [[nodiscard]] optional<link_state> receive();
 
     void deactivate();
-
-    void enable();
-
-    void disable();
-
-    void commit();
 }
 
 #endif

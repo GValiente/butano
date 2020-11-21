@@ -48,6 +48,16 @@ namespace bn::hw::link
         disable();
     }
 
+    inline void block()
+    {
+        linkConnection->block();
+    }
+
+    inline void unblock()
+    {
+        linkConnection->unblock();
+    }
+
     inline state* current_state()
     {
         state& link_state = linkConnection->linkState;

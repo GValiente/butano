@@ -61,37 +61,33 @@ bool get(int& current_player_id, vector<link_player, 3>& other_players)
 {
     _check_activated();
 
-    hw::link::state* link_state = hw::link::current_state();
+    hw::link::block();
 
-    if(! link_state)
+    if(hw::link::state* link_state = hw::link::current_state())
     {
-        return false;
-    }
+        auto this_player_id = int(link_state->currentPlayerId);
 
-    auto this_player_id = int(link_state->currentPlayerId);
-
-    for(int player_id = 0, players_count = link_state->playerCount; player_id < players_count; ++player_id)
-    {
-        if(player_id != this_player_id)
+        for(int player_id = 0, players_count = link_state->playerCount; player_id < players_count; ++player_id)
         {
-            int player_data = link_state->readMessage(u8(player_id));
-
-            if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
+            if(player_id != this_player_id)
             {
-                BN_ASSERT(! other_players.full(), "Too much players");
+                int player_data = link_state->readMessage(u8(player_id));
 
-                other_players.emplace_back(player_id, player_data - 1);
+                if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
+                {
+                    BN_ASSERT(! other_players.full(), "Too much players");
+
+                    other_players.emplace_back(player_id, player_data - 1);
+                }
             }
         }
+
+        current_player_id = this_player_id;
     }
 
-    if(other_players.empty())
-    {
-        return false;
-    }
+    hw::link::unblock();
 
-    current_player_id = this_player_id;
-    return true;
+    return ! other_players.empty();
 }
 
 void enable()

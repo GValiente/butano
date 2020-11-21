@@ -97,7 +97,9 @@ public:
         stop();
     }
     
-    bool isActive() { return isEnabled; }
+    bool isActive() {
+        return isEnabled;
+    }
     
     void activate() {
         isEnabled = true;
@@ -109,6 +111,14 @@ public:
         resetState();
         stop();
     }
+
+    void block() {
+        isBlocked = true;
+    }
+
+    void unblock() {
+        isBlocked = false;
+    }
     
     void send(u16 data) {
         if (data == LINK_DISCONNECTED || data == LINK_NO_DATA)
@@ -118,7 +128,7 @@ public:
     }
     
     void _onVBlank() {
-        if (!isEnabled)
+        if (!isEnabled || isBlocked)
             return;
         
         if (!linkState._IRQFlag)
@@ -128,7 +138,7 @@ public:
     }
     
     void _onTimer() {
-        if (!isEnabled)
+        if (!isEnabled || isBlocked)
             return;
         
         if (didTimeout()) {
@@ -141,7 +151,7 @@ public:
     }
     
     void _onSerial() {
-        if (!isEnabled)
+        if (!isEnabled || isBlocked)
             return;
         
         wait();
@@ -184,6 +194,7 @@ public:
     
 private:
     bool isEnabled = false;
+    bool isBlocked = false;
     
     bool isReady() { return isBitHigh(LINK_BIT_READY); }
     bool hasError() { return isBitHigh(LINK_BIT_ERROR); }

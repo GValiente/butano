@@ -14,16 +14,6 @@ namespace bn::link_manager
 
 namespace
 {
-    static_assert(BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_9600_BPS ||
-                  BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_38400_BPS ||
-                  BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_57600_BPS ||
-                  BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_115200_BPS);
-
-    static_assert(BN_CFG_LINK_SEND_WAIT > 0);
-
-    static_assert(BN_CFG_LINK_RECV_WAIT >= 0);
-
-
     class static_data
     {
 
@@ -59,7 +49,7 @@ void send(int data_to_send)
 
 optional<link_state> receive()
 {
-    int current_player_id;
+    int current_player_id = 0;
     vector<link_player, 3> other_players;
     _check_activated();
 

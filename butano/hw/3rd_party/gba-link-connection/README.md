@@ -1,17 +1,33 @@
 ﻿# gba-link-connection
 
-A GBA Link Cable library to add multiplayer support to homebrew games.
+A GameBoy Advance Link Cable library to add multiplayer support to homebrew games.
 
-![screenshot](https://user-images.githubusercontent.com/1631752/97110671-45c17800-16b9-11eb-8fd9-11e4c0248506.png)
+The library uses message queues to send/receive data and transmits when it's possible. As it uses CPU interrupts, the connection is alive even if a console drops a frame or gets stucked in a long iteration loop. After such event, all nodes end up receiving all the pending messages, so a lockstep communication protocol can be used.
+
+![screenshot](https://user-images.githubusercontent.com/1631752/99154109-1d131980-268c-11eb-86b1-7a728f639e5e.png)
 
 ## Usage
 
 All the complexity is abstracted in a single header file that exposes an easy-to-use interface.
 
-- Include [LinkConnection.h](src/lib/LinkConnection.h) in your game code.
-- Check out an example implementation in [main.cpp](src/main.cpp).
-	* A build is available in *Releases*.
-	* It can be tested on real GBAs or with the *NO$GBA* emulator.
+- Include [LinkConnection.h](lib/LinkConnection.h) in your game code, and read its comment with instructions.
+- Check out the [examples](examples) folder
+	* Builds are available in *Releases*.
+	* They can be tested on real GBAs or with emulators (*NO$GBA*, *mGBA*, or *VBA-M*).
+
+## Constructor options
+
+`new LinkConnection(...)` accepts these **optional** parameters:
+
+Name | Type | Default | Description
+--- | --- | --- | ---
+`baudRate` | **BaudRate** | `BaudRate::BAUD_RATE_3` | Sets a specific baud rate.
+`timeout` | **u32** | `3` | Number of *frames* without an `II_SERIAL` IRQ to reset the connection.
+`remoteTimeout` | **u32** | `5` | Number of *messages* with `0xFFFF` to mark a player as disconnected.
+`bufferSize` | **u32** | `10` | Number of *messages* that the queues will be able to store.
+`interval` | **u16** | `100` | Number of *1024cycles* (61.04μs) ticks between messages *(100 = 6,104ms)*. It's the interval of Timer #`sendTimerId`.
+`sendTimerId` | **u8** *(0~3)* | `3` | GBA Timer to use for sending.
+`waitTimerId` | **u8** *(0~3)* | `2` | GBA Timer to use for waiting.
 
 ## Makefile actions
 

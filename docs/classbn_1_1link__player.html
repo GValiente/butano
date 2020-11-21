@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Examples | Butano Docs</title>
+  <title>bn::link_player class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,9 +47,81 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          Examples
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>link_player <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__link__player_8h.html">&lt;bn_link_player.h&gt;</a></div>
         </h1>
-<p>Learn by example to get quickly up to speed.</p><p>The examples assume that you have at least basic knowledge about:</p><ul><li>Modern C++ (Butano is based on modern C++ concepts like shared ownership, RAII, standard containers...).</li><li>Old school 2D graphics (what are sprites, backgrounds, color palettes...).</li><li>Basics of retro game development (at least to know that floating point usage is a no-no and things like that).</li></ul><p>Deep knowledge of GBA hardware is not required, as Butano wraps most of the functionality in its own classes.</p><p>As always, to understand how the little machine works, <a href="https://www.coranac.com/tonc/text/toc.htm">Tonc</a> and <a href="http://problemkaputt.de/gbatek.htm">GBATEK</a> are your friends.</p><p>Butano brings multiple examples of most aspects of the engine in <code>/path/to/butano/examples/</code>. Each example project contains multiple mini examples showcasing how easy is to work with Butano.</p><p>The included example projects are the following:</p><table class="m-table"><tbody><tr><td><p><a href="group__audio.html" class="m-doc">Audio</a></p><img class="m-image" src="examples_audio.png" alt="Image" /><p>Shows how to play music and sound effects with Butano.</p></td><td><p><a href="group__blending.html" class="m-doc">Blending</a></p><img class="m-image" src="examples_blending.png" alt="Image" /><p>Demonstrates usage of transparency, intensity and fade blending.</p></td><td><p><a href="group__camera.html" class="m-doc">Cameras</a></p><img class="m-image" src="examples_cameras.png" alt="Image" /><p>Shows how a camera affects the displayed elements.</p></td></tr><tr><td><p><a href="group__core.html" class="m-doc">Core</a></p><img class="m-image" src="examples_core.png" alt="Image" /><p>Shows how to sleep and reset the GBA among other things.</p></td><td><p><a href="group__green__swap.html" class="m-doc">Green swap</a></p><img class="m-image" src="examples_green_swap.png" alt="Image" /><p>See how it looks this undocumented graphic effect.</p></td><td><p><a href="group__keypad.html" class="m-doc">Keypad</a></p><img class="m-image" src="examples_keypad.png" alt="Image" /><p>Simple keypad status demo.</p></td></tr><tr><td><p><a href="group__link.html" class="m-doc">Link communication</a></p><img class="m-image" src="examples_link.png" alt="Image" /><p>Multiplayer communication through a link cable.</p></td><td><p><a href="group__log.html" class="m-doc">Logging</a></p><img class="m-image" src="examples_log.png" alt="Image" /><p>Integration of emulator logging into Butano.</p></td><td><p><a href="group__mosaic.html" class="m-doc">Mosaic</a></p><img class="m-image" src="examples_mosaic.png" alt="Image" /><p>Sprites and backgrounds mosaic effects.</p></td></tr><tr><td><p><a href="group__palette.html" class="m-doc">Color palettes</a></p><img class="m-image" src="examples_palettes.png" alt="Image" /><p>Showcases multiple color palette effects.</p></td><td><p><strong>Polygons</strong></p><img class="m-image" src="examples_polygons.png" alt="Image" /><p>Showcases polygon drawing with sprites.</p></td><td><p><a href="group__profiler.html" class="m-doc">Profiler</a></p><img class="m-image" src="examples_profiler.png" alt="Image" /><p>Basic code blocks profiling.</p></td></tr><tr><td><p><a href="group__regular__bg.html" class="m-doc">Regular backgrounds</a></p><img class="m-image" src="examples_regular_bgs.png" alt="Image" /><p>Shows how to use regular backgrounds with Butano.</p></td><td><p><a href="group__affine__mat.html" class="m-doc">Sprite affine matrices</a></p><img class="m-image" src="examples_sprite_affine_mats.png" alt="Image" /><p>Demonstrates usage of one affine matrix for multiple sprites.</p></td><td><p><a href="group__sprite.html" class="m-doc">Sprites</a></p><img class="m-image" src="examples_sprites.png" alt="Image" /><p>Simple sprites examples.</p></td></tr><tr><td><p><a href="group__sram.html" class="m-doc">Game Pak SRAM</a></p><img class="m-image" src="examples_sram.png" alt="Image" /><p>SRAM reads and writes with Butano.</p></td><td><p><a href="group__text.html" class="m-doc">Text</a></p><img class="m-image" src="examples_text.png" alt="Image" /><p>Showcase of Butano sprite text rendering.</p></td><td><p><a href="group__window.html" class="m-doc">Windows</a></p><img class="m-image" src="examples_windows.png" alt="Image" /><p>Demonstrates usage of rectangle and sprite windows.</p></td></tr></tbody></table>
+        <p>Contains the data of a message provided by a player.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a61eac068d1f5080f462106ede101a79a" class="m-doc">link_player</a>(</span><span class="m-doc-wrap">int id,
+              int data) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a9d0a1dc99e1d541816ec7916f987ff37">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d0a1dc99e1d541816ec7916f987ff37" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the ID of the player.</dd>
+            <dt id="a2ce4bb2cbe8faba593b8dbe1bc7b7b99">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2ce4bb2cbe8faba593b8dbe1bc7b7b99" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; uint16_t <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the data provided by the player.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a6695c93930a669aecbc5ca5eba3f6bc4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6695c93930a669aecbc5ca5eba3f6bc4" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>&amp; a,
+              const <a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a61eac068d1f5080f462106ede101a79a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />link_player::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a61eac068d1f5080f462106ede101a79a" class="m-doc-self">link_player</a>(</span><span class="m-doc-wrap">int id,
+              int data) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">id</td>
+                  <td>Player ID, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>data</td>
+                  <td>Player data, in the range [0..65533].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
       </div>
     </div>
   </div>

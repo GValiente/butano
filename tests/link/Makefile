@@ -27,7 +27,7 @@ GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO LINKT
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBN_CFG_LINK_SEND_WAIT=400
+USERFLAGS   :=  -DBN_CFG_LINK_SEND_WAIT=200
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

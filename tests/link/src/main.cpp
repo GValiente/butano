@@ -5,6 +5,7 @@
 
 #include "bn_core.h"
 #include "bn_math.h"
+#include "bn_music.h"
 #include "bn_keypad.h"
 #include "bn_string.h"
 #include "bn_display.h"
@@ -161,6 +162,9 @@ int main()
 
     bn::string_view info_text_lines[] = {
         "PAD: move other player's ninja",
+        "A: pause/resume music",
+        "R: sleep",
+        "L: wake up",
     };
 
     info information("Link communication", info_text_lines, text_generator);
@@ -199,6 +203,23 @@ int main()
 
     while(true)
     {
+        if(bn::keypad::a_pressed())
+        {
+            if(bn::music::paused())
+            {
+                bn::music::resume();
+            }
+            else
+            {
+                bn::music::pause();
+            }
+        }
+
+        if(bn::keypad::r_pressed())
+        {
+            bn::core::sleep(bn::keypad::key_type::L);
+        }
+
         if(bn::optional<direction> direction_to_send = read_keypad())
         {
             bn::link_state::send(direction_to_send->data);

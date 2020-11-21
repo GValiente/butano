@@ -60,7 +60,7 @@ namespace
     {
         constexpr const bn::string_view info_text_lines[] = {
             "A: sleep",
-            "B: awake",
+            "B: wake up",
             "",
             "",
             "",

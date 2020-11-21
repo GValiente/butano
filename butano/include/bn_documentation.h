@@ -167,7 +167,7 @@
 /**
  * @defgroup audio Audio
  *
- * Music for your ears, provided by Maxmod (https://maxmod.devkitpro.org/).
+ * Music for your ears, provided by <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
  */
 
 /**
@@ -233,17 +233,12 @@
  */
 
 /**
- * @defgroup camera Cameras
+ * @defgroup link Link communication
  *
- * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
+ * Multiplayer communication through a link cable,
+ * provided by <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a>.
  *
- * @ingroup display
- */
-
-/**
- * @defgroup memory Memory
- *
- * Memory management utilities.
+ * Keep in mind that some messages will be lost between players.
  */
 
 /**
@@ -264,6 +259,20 @@
  * Allows game or application data to be saved when the GBA is turned off.
  *
  * @ingroup game_pak
+ */
+
+/**
+ * @defgroup camera Cameras
+ *
+ * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
+ *
+ * @ingroup display
+ */
+
+/**
+ * @defgroup memory Memory
+ *
+ * Memory management utilities.
  */
 
 /**
@@ -723,7 +732,13 @@
  *
  * Simple keypad status demo.
  *
- * <tr><td> @ref log
+ * <tr><td> @ref link
+ *
+ * @image html examples_link.png
+ *
+ * Multiplayer communication through a link cable.
+ *
+ * <td> @ref log
  *
  * @image html examples_log.png
  *
@@ -735,13 +750,13 @@
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <td> @ref palette
+ * <tr><td> @ref palette
  *
  * @image html examples_palettes.png
  *
  * Showcases multiple color palette effects.
  *
- * <tr><td> **Polygons**
+ * <td> **Polygons**
  *
  * @image html examples_polygons.png
  *
@@ -753,13 +768,13 @@
  *
  * Basic code blocks profiling.
  *
- * <td> @ref regular_bg
+ * <tr><td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -771,13 +786,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -971,6 +986,12 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_3_0_0 3.0.0 (next release)
+ *
+ * Thanks to the awesome <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a>,
+ * multiplayer support has been implemented! Check bn::link and the `link` example for more.
  *
  *
  * @section changelog_2_0_0 2.0.0

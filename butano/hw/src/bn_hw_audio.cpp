@@ -35,6 +35,7 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        func_type vblank_function = nullptr;
         uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
@@ -117,10 +118,18 @@ namespace
 
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
     }
+
+    void _update_frame()
+    {
+        mmFrame();
+        data.vblank_function();
+    }
 }
 
-void init()
+void init(func_type vblank_function)
 {
+    data.vblank_function = vblank_function;
+
     irq::replace_or_push_back(irq::id::VBLANK, mmVBlank);
 
     mm_gba_system maxmod_info;
@@ -231,7 +240,7 @@ void disable_vblank_handler()
 
 void commit()
 {
-    mmFrame();
+    _update_frame();
 
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
@@ -255,7 +264,7 @@ void commit()
 
 void enable_vblank_handler()
 {
-    mmSetVBlankHandler(reinterpret_cast<void*>(mmFrame));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_update_frame));
 }
 
 }

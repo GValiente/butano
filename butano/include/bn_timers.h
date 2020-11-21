@@ -37,6 +37,14 @@ namespace bn::timers
     {
         return hw::timers::ticks_per_vblank();
     }
+
+    /**
+     * @brief Returns the number of CPU clocks per timer tick.
+     */
+    [[nodiscard]] constexpr int cpu_clocks_per_tick()
+    {
+        return hw::timers::divisor();
+    }
 }
 
 #endif

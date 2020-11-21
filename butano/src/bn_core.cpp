@@ -14,6 +14,7 @@
 #include "bn_profiler.h"
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
+#include "bn_link_manager.h"
 #include "bn_audio_manager.h"
 #include "bn_keypad_manager.h"
 #include "bn_memory_manager.h"
@@ -75,6 +76,7 @@ namespace
     void enable()
     {
         hblank_effects_manager::enable();
+        link_manager::enable();
         audio_manager::enable();
     }
 
@@ -85,6 +87,7 @@ namespace
             audio_manager::disable();
         }
 
+        link_manager::disable();
         hblank_effects_manager::disable();
     }
 
@@ -126,6 +129,9 @@ void init(const string_view& keypad_commands)
 
     // Init audio system:
     audio_manager::init();
+
+    // Init link system:
+    link_manager::init();
 
     // Init high level systems:
     memory_manager::init();

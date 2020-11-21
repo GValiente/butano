@@ -43,6 +43,7 @@ Butano would have not been possible without these libraries:
 * Music and sound effects provided by [Maxmod](https://maxmod.devkitpro.org).
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern).
+* Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
 
 
 ## Butano Fighter

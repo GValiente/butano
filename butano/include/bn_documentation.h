@@ -988,7 +988,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_3_0_0 3.0.0 (next release)
+ * @section changelog_3_0_0 3.0.0
  *
  * Thanks to the awesome <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a>,
  * multiplayer support has been implemented! Check bn::link and the `link` example for more.

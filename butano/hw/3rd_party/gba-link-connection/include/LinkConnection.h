@@ -11,6 +11,7 @@
 
 #if BN_CFG_LINK_RECV_WAIT > 0
     #include "bn_timer.h"
+    #include "bn_timers.h"
 #endif
 
 #define LINK_MAX_PLAYERS 4
@@ -279,7 +280,7 @@ private:
         #if LINK_TRANSFER_WAIT_CYCLES > 0
             bn::timer timer;
 
-            while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / 64) + 1)
+            while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / bn::timers::cpu_clocks_per_tick()) + 1)
             {
             }
         #endif

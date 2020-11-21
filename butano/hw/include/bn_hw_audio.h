@@ -10,7 +10,9 @@
 
 namespace bn::hw::audio
 {
-    void init();
+    typedef void (*func_type)(void);
+
+    void init(func_type vblank_function);
 
     void enable();
 

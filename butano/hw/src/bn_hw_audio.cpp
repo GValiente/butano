@@ -8,7 +8,6 @@
 #include "maxmod.h"
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
-#include "../src/bn_link_manager.h"
 #include "../include/bn_hw_irq.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
@@ -36,6 +35,7 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        func_type vblank_function = nullptr;
         uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
         volatile bool locked = false;
@@ -122,12 +122,14 @@ namespace
     void _update_frame()
     {
         mmFrame();
-        bn::link_manager::commit();
+        data.vblank_function();
     }
 }
 
-void init()
+void init(func_type vblank_function)
 {
+    data.vblank_function = vblank_function;
+
     irq::replace_or_push_back(irq::id::VBLANK, mmVBlank);
 
     mm_gba_system maxmod_info;

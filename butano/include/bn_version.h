@@ -43,7 +43,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int patch()
     {
-        return 0;
+        return 1;
     }
 }
 

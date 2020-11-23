@@ -988,7 +988,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_3_2_1 3.2.1 (next release)
+ * @section changelog_3_2_1 3.2.1
  *
  * bn::optional build fix.
  *

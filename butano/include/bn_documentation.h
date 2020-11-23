@@ -988,6 +988,10 @@
  * @tableofcontents
  *
  *
+ * @section changelog_3_2_1 3.2.1 (next release)
+ *
+ * bn::optional build fix.
+ *
  *
  * @section changelog_3_2_0 3.2.0
  *

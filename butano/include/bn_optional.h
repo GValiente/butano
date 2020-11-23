@@ -112,7 +112,7 @@ public:
     {
         if(_valid)
         {
-            construct_at(&_value, other._value);
+            construct_at(&_value, *other);
         }
     }
 
@@ -127,7 +127,7 @@ public:
     {
         if(_valid)
         {
-            construct_at(&_value, move(other._value));
+            construct_at(&_value, move(*other));
         }
     }
 

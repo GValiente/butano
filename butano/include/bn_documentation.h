@@ -988,6 +988,12 @@
  * @tableofcontents
  *
  *
+ *
+ * @section changelog_3_2_0 3.2.0 (next release)
+ *
+ * bn::optional is now constexpr.
+ *
+ *
  * @section changelog_3_1_0 3.1.0
  *
  * * bn::regular_bg_map_ptr::tiles_offset() and bn::regular_bg_map_ptr::palette_banks_offset() methods added.

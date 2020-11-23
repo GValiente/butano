@@ -34,7 +34,7 @@ public:
     void update();
 
 private:
-    const bn::sprite_item& _sprite_item;
+    const bn::sprite_item* _sprite_item;
     bn::optional<bn::sprite_affine_mat_ptr> _affine_mat;
     bn::vector<bn::sprite_ptr, 4> _sprites;
     int _animation_frames;

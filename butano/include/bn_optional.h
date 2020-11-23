@@ -13,10 +13,7 @@
  * @ingroup optional
  */
 
-#include <new>
-#include "bn_assert.h"
-#include "bn_utility.h"
-#include "bn_functional.h"
+#include "bn_memory.h"
 
 namespace bn
 {
@@ -48,7 +45,8 @@ public:
     /**
      * @brief Default constructor.
      */
-    optional() :
+    constexpr optional() :
+        _empty(0),
         _valid(false)
     {
     }
@@ -56,8 +54,8 @@ public:
     /**
      * @brief Null constructor.
      */
-    optional(nullopt_t) :
-        _valid(false)
+    constexpr optional(nullopt_t) :
+        optional()
     {
     }
 
@@ -65,12 +63,20 @@ public:
      * @brief Copy constructor.
      * @param other optional to copy.
      */
-    optional(const optional& other) :
-        _valid(other)
+    constexpr optional(const optional& other) = default;
+
+    /**
+     * @brief Copy constructor.
+     * @param other optional to copy.
+     */
+    constexpr optional(const optional& other)
+    requires (is_copy_constructible_v<Type> && ! is_trivially_copy_constructible_v<Type>) :
+        _empty(0),
+        _valid(other._valid)
     {
         if(_valid)
         {
-            ::new(_storage) Type(other._value_impl());
+            construct_at(&_value, other._value);
         }
     }
 
@@ -78,12 +84,20 @@ public:
      * @brief Move constructor.
      * @param other optional to move.
      */
-    optional(optional&& other) noexcept :
-        _valid(other)
+    constexpr optional(optional&& other) noexcept = default;
+
+    /**
+     * @brief Move constructor.
+     * @param other optional to move.
+     */
+    constexpr optional(optional&& other) noexcept
+    requires (is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>) :
+        _empty(0),
+        _valid(other._valid)
     {
         if(_valid)
         {
-            ::new(_storage) Type(move(other._value_impl()));
+            construct_at(&_value, move(other._value));
         }
     }
 
@@ -92,12 +106,13 @@ public:
      * @param other Different type optional to copy.
      */
     template<typename OtherType>
-    optional(const optional<OtherType>& other) :
+    constexpr optional(const optional<OtherType>& other) :
+        _empty(0),
         _valid(other)
     {
         if(_valid)
         {
-            ::new(_storage) Type(other._value_impl());
+            construct_at(&_value, other._value);
         }
     }
 
@@ -106,12 +121,13 @@ public:
      * @param other Different type optional to move.
      */
     template<typename OtherType>
-    optional(optional<OtherType>&& other) noexcept :
+    constexpr optional(optional<OtherType>&& other) noexcept :
+        _empty(0),
         _valid(other)
     {
         if(_valid)
         {
-            ::new(_storage) Type(move(other._value_impl()));
+            construct_at(&_value, move(other._value));
         }
     }
 
@@ -119,26 +135,26 @@ public:
      * @brief Constructor.
      * @param value Value to copy.
      */
-    optional(const Type& value) :
+    constexpr optional(const Type& value) :
+        _value(value),
         _valid(true)
     {
-        ::new(_storage) Type(value);
     }
 
     /**
      * @brief Constructor.
      * @param value Value to move.
      */
-    optional(Type&& value) :
+    constexpr optional(Type&& value) :
+        _value(move(value)),
         _valid(true)
     {
-        ::new(_storage) Type(move(value));
     }
 
     /**
      * @brief Destructor.
      */
-    ~optional()
+    constexpr ~optional()
     {
         _clean();
     }
@@ -147,7 +163,7 @@ public:
      * @brief Null assignment operator.
      * @return Reference to this.
      */
-    optional& operator=(nullopt_t)
+    constexpr optional& operator=(nullopt_t)
     {
         reset();
         return *this;
@@ -158,17 +174,31 @@ public:
      * @param other optional to copy.
      * @return Reference to this.
      */
-    optional& operator=(const optional& other)
-    {
-        if(this != &other)
-        {
-            reset();
+    constexpr optional& operator=(const optional& other) = default;
 
-            if(other)
+    /**
+     * @brief Copy assignment operator.
+     * @param other optional to copy.
+     * @return Reference to this.
+     */
+    constexpr optional& operator=(const optional& other)
+    requires (is_copy_assignable_v<Type> && ! is_trivially_copy_assignable_v<Type>)
+    {
+        if(other)
+        {
+            if(_valid)
             {
-                ::new(_storage) Type(other._value_impl());
+                _value = other._value;
+            }
+            else
+            {
+                construct_at(&_value, other._value);
                 _valid = true;
             }
+        }
+        else
+        {
+            reset();
         }
 
         return *this;
@@ -179,17 +209,31 @@ public:
      * @param other optional to move.
      * @return Reference to this.
      */
-    optional& operator=(optional&& other) noexcept
-    {
-        if(this != &other)
-        {
-            reset();
+    constexpr optional& operator=(optional&& other) noexcept = default;
 
-            if(other)
+    /**
+     * @brief Move assignment operator.
+     * @param other optional to move.
+     * @return Reference to this.
+     */
+    constexpr optional& operator=(optional&& other) noexcept
+    requires (is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>)
+    {
+        if(other)
+        {
+            if(_valid)
             {
-                ::new(_storage) Type(move(other._value_impl()));
+                _value = move(other._value);
+            }
+            else
+            {
+                construct_at(&_value, move(other._value));
                 _valid = true;
             }
+        }
+        else
+        {
+            reset();
         }
 
         return *this;
@@ -201,17 +245,23 @@ public:
      * @return Reference to this.
      */
     template<typename OtherType>
-    optional& operator=(const optional<OtherType>& other)
+    constexpr optional& operator=(const optional<OtherType>& other)
     {
-        if(this != &other)
+        if(other)
         {
-            reset();
-
-            if(other)
+            if(_valid)
             {
-                ::new(_storage) Type(other._value_impl());
+                _value = *other;
+            }
+            else
+            {
+                construct_at(&_value, *other);
                 _valid = true;
             }
+        }
+        else
+        {
+            reset();
         }
 
         return *this;
@@ -223,17 +273,23 @@ public:
      * @return Reference to this.
      */
     template<typename OtherType>
-    optional& operator=(optional<OtherType>&& other) noexcept
+    constexpr optional& operator=(optional<OtherType>&& other) noexcept
     {
-        if(this != &other)
+        if(other)
         {
-            reset();
-
-            if(other)
+            if(_valid)
             {
-                ::new(_storage) Type(move(other._value_impl()));
+                _value = move(*other);
+            }
+            else
+            {
+                construct_at(&_value, move(*other));
                 _valid = true;
             }
+        }
+        else
+        {
+            reset();
         }
 
         return *this;
@@ -244,11 +300,18 @@ public:
      * @param value Value to copy.
      * @return Reference to this.
      */
-    optional& operator=(const Type& value)
+    constexpr optional& operator=(const Type& value)
     {
-        _clean();
-        ::new(_storage) Type(value);
-        _valid = true;
+        if(_valid)
+        {
+            _value = value;
+        }
+        else
+        {
+            construct_at(&_value, value);
+            _valid = true;
+        }
+
         return *this;
     }
 
@@ -257,18 +320,25 @@ public:
      * @param value Value to move.
      * @return Reference to this.
      */
-    optional& operator=(Type&& value)
+    constexpr optional& operator=(Type&& value)
     {
-        _clean();
-        ::new(_storage) Type(move(value));
-        _valid = true;
+        if(_valid)
+        {
+            _value = move(value);
+        }
+        else
+        {
+            construct_at(&_value, move(value));
+            _valid = true;
+        }
+
         return *this;
     }
 
     /**
      * @brief Indicates if it contains a value or not.
      */
-    [[nodiscard]] bool has_value() const
+    [[nodiscard]] constexpr bool has_value() const
     {
         return _valid;
     }
@@ -276,7 +346,7 @@ public:
     /**
      * @brief Indicates if it contains a value or not.
      */
-    [[nodiscard]] explicit operator bool() const
+    [[nodiscard]] constexpr explicit operator bool() const
     {
         return _valid;
     }
@@ -284,79 +354,79 @@ public:
     /**
      * @brief Returns a const reference to the contained value.
      */
-    [[nodiscard]] const Type& value() const
+    [[nodiscard]] constexpr const Type& value() const
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return _value_impl();
+        return _value;
     }
 
     /**
      * @brief Returns a reference to the contained value.
      */
-    [[nodiscard]] Type& value()
+    [[nodiscard]] constexpr Type& value()
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return _value_impl();
+        return _value;
     }
 
     /**
      * @brief Returns a copy of the contained value if this optional has one;
      * otherwise it returns a copy of the given default value.
      */
-    [[nodiscard]] Type value_or(const Type& default_value) const
+    [[nodiscard]] constexpr Type value_or(const Type& default_value) const
     {
-        return _valid ? _value_impl() : default_value;
+        return _valid ? _value : default_value;
     }
 
     /**
      * @brief Returns a copy of the contained value if this optional has one;
      * otherwise it returns a moved copy of the given default value.
      */
-    [[nodiscard]] Type value_or(Type&& default_value) const
+    [[nodiscard]] constexpr Type value_or(Type&& default_value) const
     {
-        return _valid ? _value_impl() : move(default_value);
+        return _valid ? _value : move(default_value);
     }
 
     /**
      * @brief Returns a const pointer to the contained value.
      */
-    [[nodiscard]] const Type* operator->() const
+    [[nodiscard]] constexpr const Type* operator->() const
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return &_value_impl();
+        return &_value;
     }
 
     /**
      * @brief Returns a pointer to the contained value.
      */
-    [[nodiscard]] Type* operator->()
+    [[nodiscard]] constexpr Type* operator->()
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return &_value_impl();
+        return &_value;
     }
 
     /**
      * @brief Returns a const reference to the contained value.
      */
-    [[nodiscard]] const Type& operator*() const
+    [[nodiscard]] constexpr const Type& operator*() const
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return _value_impl();
+        return _value;
     }
 
     /**
      * @brief Returns a reference to the contained value.
      */
-    [[nodiscard]] Type& operator*()
+    [[nodiscard]] constexpr Type& operator*()
     {
         BN_ASSERT(_valid, "Optional is not valid");
 
-        return _value_impl();
+        return _value;
     }
 
     /**
@@ -365,22 +435,29 @@ public:
      * @return Reference to the constructed value.
      */
     template<typename... Args>
-    Type& emplace(Args&&... args)
+    constexpr Type& emplace(Args&&... args)
     {
-        _clean();
-        ::new(_storage) Type(forward<Args>(args)...);
-        _valid = true;
-        return _value_impl();
+        if(_valid)
+        {
+            _value = Type(forward<Args>(args)...);
+        }
+        else
+        {
+            construct_at(&_value, forward<Args>(args)...);
+            _valid = true;
+        }
+
+        return _value;
     }
 
     /**
      * @brief Disposes the contained value.
      */
-    void reset()
+    constexpr void reset()
     {
         if(_valid)
         {
-            _value_impl().~Type();
+            destroy_at(&_value);
             _valid = false;
         }
     }
@@ -389,18 +466,18 @@ public:
      * @brief Exchanges the contents of this optional with those of the other one.
      * @param other optional to exchange the contents with.
      */
-    void swap(optional& other)
+    constexpr void swap(optional& other)
     {
         if(_valid)
         {
             if(other._valid)
             {
-                bn::swap(_value_impl(), other._value_impl());
+                bn::swap(_value, other._value);
             }
             else
             {
-                ::new(other._storage) Type(move(_value_impl()));
-                _value_impl().~Type();
+                construct_at(&other._value, move(_value));
+                destroy_at(&_value);
                 other._valid = true;
                 _valid = false;
             }
@@ -409,8 +486,8 @@ public:
         {
             if(other._valid)
             {
-                ::new(_storage) Type(move(other._value_impl()));
-                other.value_impl().~Type();
+                construct_at(&_value, move(other._value));
+                destroy_at(&other._value);
                 _valid = true;
                 other._valid = false;
             }
@@ -422,7 +499,7 @@ public:
      * @param a First optional to exchange the contents with.
      * @param b Second optional to exchange the contents with.
      */
-    friend void swap(optional& a, optional& b)
+    constexpr friend void swap(optional& a, optional& b)
     {
         a.swap(b);
     }
@@ -430,7 +507,7 @@ public:
     /**
      * @brief Equal operator.
      */
-    [[nodiscard]] friend bool operator==(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, const optional& b)
     {
         if(a._valid != b._valid)
         {
@@ -442,13 +519,13 @@ public:
             return true;
         }
 
-        return a._value_impl() == b._value_impl();
+        return a._value == b._value;
     }
 
     /**
      * @brief Not equal operator.
      */
-    [[nodiscard]] friend bool operator!=(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const optional& b)
     {
         return ! (a == b);
     }
@@ -456,7 +533,7 @@ public:
     /**
      * @brief Less than operator.
      */
-    [[nodiscard]] friend bool operator<(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator<(const optional& a, const optional& b)
     {
         if(! b._valid)
         {
@@ -468,13 +545,13 @@ public:
             return true;
         }
 
-        return a._value_impl() < b._value_impl();
+        return a._value < b._value;
     }
 
     /**
      * @brief Greater than operator.
      */
-    [[nodiscard]] friend bool operator>(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, const optional& b)
     {
         return b < a;
     }
@@ -482,7 +559,7 @@ public:
     /**
      * @brief Less than or equal operator.
      */
-    [[nodiscard]] friend bool operator<=(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const optional& b)
     {
         return ! (a > b);
     }
@@ -490,7 +567,7 @@ public:
     /**
      * @brief Greater than or equal operator.
      */
-    [[nodiscard]] friend bool operator>=(const optional& a, const optional& b)
+    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const optional& b)
     {
         return ! (a < b);
     }
@@ -498,7 +575,7 @@ public:
     /**
      * @brief Equal operator.
      */
-    [[nodiscard]] friend bool operator==(const optional& a, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, nullopt_t)
     {
         return ! a._valid;
     }
@@ -506,7 +583,7 @@ public:
     /**
      * @brief Not equal operator.
      */
-    [[nodiscard]] friend bool operator!=(const optional& a, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, nullopt_t)
     {
         return a._valid;
     }
@@ -514,7 +591,7 @@ public:
     /**
      * @brief Less than operator.
      */
-    [[nodiscard]] friend bool operator<(const optional&, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator<(const optional&, nullopt_t)
     {
         return false;
     }
@@ -522,7 +599,7 @@ public:
     /**
      * @brief Greater than operator.
      */
-    [[nodiscard]] friend bool operator>(const optional& a, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, nullopt_t)
     {
         return a._valid;
     }
@@ -530,7 +607,7 @@ public:
     /**
      * @brief Less than or equal operator.
      */
-    [[nodiscard]] friend bool operator<=(const optional& a, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, nullopt_t)
     {
         return ! a._valid;
     }
@@ -538,7 +615,7 @@ public:
     /**
      * @brief Greater than or equal operator.
      */
-    [[nodiscard]] friend bool operator>=(const optional&, nullopt_t)
+    [[nodiscard]] constexpr friend bool operator>=(const optional&, nullopt_t)
     {
         return true;
     }
@@ -547,16 +624,16 @@ public:
      * @brief Equal operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator==(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator==(const optional& a, const OtherType& b)
     {
-        return a._valid ? a._value_impl() == b : false;
+        return a._valid ? a._value == b : false;
     }
 
     /**
      * @brief Not equal operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator!=(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator!=(const optional& a, const OtherType& b)
     {
         return ! (a == b);
     }
@@ -565,16 +642,16 @@ public:
      * @brief Less than operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator<(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator<(const optional& a, const OtherType& b)
     {
-        return a._valid ? a._value_impl() < b : true;
+        return a._valid ? a._value < b : true;
     }
 
     /**
      * @brief Greater than operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator>(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator>(const optional& a, const OtherType& b)
     {
         return b < a;
     }
@@ -583,7 +660,7 @@ public:
      * @brief Less than or equal operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator<=(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator<=(const optional& a, const OtherType& b)
     {
         return ! (a > b);
     }
@@ -592,30 +669,25 @@ public:
      * @brief Greater than or equal operator.
      */
     template<typename OtherType>
-    [[nodiscard]] friend bool operator>=(const optional& a, const OtherType& b)
+    [[nodiscard]] constexpr friend bool operator>=(const optional& a, const OtherType& b)
     {
         return ! (a < b);
     }
 
 private:
-    alignas(Type) char _storage[sizeof(Type)];
-    bool _valid;
-
-    [[nodiscard]] const Type& _value_impl() const
+    union
     {
-        return *(reinterpret_cast<const Type*>(_storage));
-    }
+        Type _value;
+        char _empty;
+    };
 
-    [[nodiscard]] Type& _value_impl()
-    {
-        return *(reinterpret_cast<Type*>(_storage));
-    }
+    bool _valid = false;
 
-    void _clean()
+    constexpr void _clean()
     {
         if(_valid)
         {
-            _value_impl().~Type();
+            destroy_at(&_value);
         }
     }
 };
@@ -633,7 +705,7 @@ private:
  * @ingroup optional
  */
 template<typename Type, class... Args>
-[[nodiscard]] optional<Type> make_optional(Args&&... args)
+[[nodiscard]] constexpr optional<Type> make_optional(Args&&... args)
 {
     return optional<Type>(Type(forward<Args>(args)...));
 }
@@ -653,7 +725,7 @@ struct hash<optional<Type>>
     /**
      * @brief Returns the hash of the given optional.
      */
-    [[nodiscard]] unsigned operator()(const optional<Type>& optional) const
+    [[nodiscard]] constexpr unsigned operator()(const optional<Type>& optional) const
     {
         return optional.has_value() ? make_hash(optional.value()) : make_hash(0);
     }

@@ -33,14 +33,26 @@ namespace bn
     using std::is_copy_constructible;
     using std::is_copy_constructible_v;
 
+    using std::is_trivially_copy_constructible;
+    using std::is_trivially_copy_constructible_v;
+
     using std::is_copy_assignable;
     using std::is_copy_assignable_v;
+
+    using std::is_trivially_copy_assignable;
+    using std::is_trivially_copy_assignable_v;
 
     using std::is_move_constructible;
     using std::is_move_constructible_v;
 
+    using std::is_trivially_move_constructible;
+    using std::is_trivially_move_constructible_v;
+
     using std::is_move_assignable;
     using std::is_move_assignable_v;
+
+    using std::is_trivially_move_assignable;
+    using std::is_trivially_move_assignable_v;
 
     using std::is_swappable;
     using std::is_swappable_v;

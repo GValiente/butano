@@ -4,7 +4,6 @@
  */
 
 #include "bn_core.h"
-#include "bn_memory.h"
 #include "bn_sprite_text_generator.h"
 
 #include "bf_game.h"

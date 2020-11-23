@@ -13,13 +13,13 @@ namespace bf::game
 
 explosion::explosion(const bn::sprite_item& sprite_item, const bn::fixed_point& position, int animation_frames,
                      int z_order, bool double_size, const bn::camera_ptr& camera) :
-    _sprite_item(sprite_item),
+    _sprite_item(&sprite_item),
     _animation_frames(animation_frames),
     _animation_index(0),
     _frame_counter(animation_frames)
 {
-    BN_ASSERT(_sprite_item.tiles_item().graphics_count() > 4 && _sprite_item.tiles_item().graphics_count() % 4 == 0,
-               "Invalid graphics count: ", _sprite_item.tiles_item().graphics_count());
+    BN_ASSERT(_sprite_item->tiles_item().graphics_count() > 4 && _sprite_item->tiles_item().graphics_count() % 4 == 0,
+               "Invalid graphics count: ", _sprite_item->tiles_item().graphics_count());
     BN_ASSERT(animation_frames > 0, "Invalid animation frames: ", animation_frames);
 
     bn::fixed x = position.x();
@@ -105,7 +105,7 @@ void explosion::update()
 
     if(! _frame_counter)
     {
-        const bn::sprite_tiles_item& tiles_item = _sprite_item.tiles_item();
+        const bn::sprite_tiles_item& tiles_item = _sprite_item->tiles_item();
         int animations_count = tiles_item.graphics_count() / 4;
         int animation_index = _animation_index + 1;
         _animation_index = animation_index;

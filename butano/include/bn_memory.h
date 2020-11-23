@@ -23,6 +23,9 @@
 namespace bn
 {
 
+using std::construct_at;
+using std::destroy_at;
+
 /**
  * @brief Default deleter.
  *

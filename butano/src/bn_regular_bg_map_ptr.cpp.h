@@ -199,6 +199,16 @@ bpp_mode regular_bg_map_ptr::bpp() const
     return palette().bpp();
 }
 
+int regular_bg_map_ptr::tiles_offset() const
+{
+    return bg_blocks_manager::tiles_offset(_handle);
+}
+
+int regular_bg_map_ptr::palette_banks_offset() const
+{
+    return bg_blocks_manager::palette_offset(_handle);
+}
+
 optional<span<const regular_bg_map_cell>> regular_bg_map_ptr::cells_ref() const
 {
     return bg_blocks_manager::regular_map_cells_ref(_handle);

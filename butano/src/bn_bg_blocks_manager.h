@@ -93,6 +93,10 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] size map_dimensions(int id);
 
+    [[nodiscard]] int tiles_offset(int id);
+
+    [[nodiscard]] int palette_offset(int id);
+
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
 
     [[nodiscard]] optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id);

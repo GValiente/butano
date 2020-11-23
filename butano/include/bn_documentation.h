@@ -989,7 +989,7 @@
  *
  *
  *
- * @section changelog_3_2_0 3.2.0 (next release)
+ * @section changelog_3_2_0 3.2.0
  *
  * bn::optional is now constexpr.
  *

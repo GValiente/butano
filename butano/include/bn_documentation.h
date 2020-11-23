@@ -988,7 +988,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_3_1_0 3.1.0 (next release)
+ * @section changelog_3_1_0 3.1.0
  *
  * * bn::regular_bg_map_ptr::tiles_offset() and bn::regular_bg_map_ptr::palette_banks_offset() methods added.
  * * Allocated background tiles and maps commit fixed.

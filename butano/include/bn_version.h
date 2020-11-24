@@ -35,7 +35,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int minor()
     {
-        return 2;
+        return 3;
     }
 
     /**
@@ -43,7 +43,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int patch()
     {
-        return 1;
+        return 0;
     }
 }
 

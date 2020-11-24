@@ -1011,7 +1011,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_3_3_0 3.3.0 (next release)
+ * @section changelog_3_3_0 3.3.0
  *
  * * HDMA properly supported (now it works at less than 60fps). See bn::hdma and the `hdma_polygons` example for more.
  * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> remote timeout detection fixed.

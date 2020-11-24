@@ -45,7 +45,7 @@
  * @ingroup profiler
  */
 #ifndef BN_CFG_PROFILER_MAX_ENTRIES
-    #define BN_CFG_PROFILER_MAX_ENTRIES 32
+    #define BN_CFG_PROFILER_MAX_ENTRIES 64
 #endif
 
 #endif

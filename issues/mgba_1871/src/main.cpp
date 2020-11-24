@@ -5,10 +5,10 @@
 
 #include "bn_core.h"
 
+#include "bn_hdma.h"
 #include "polygon.h"
 #include "polygon_sprite.h"
 
-#include "../../butano/hw/include/bn_hw_hdma.h"
 #include "../../butano/hw/include/bn_hw_sprites.h"
 
 int main()
@@ -29,13 +29,13 @@ int main()
     using hdma_source_array = bn::array<uint16_t, bn::display::height() * 4 * max_polygon_sprites>;
     bn::unique_ptr<hdma_source_array> hdma_source(new hdma_source_array());
     uint16_t* hdma_source_data = hdma_source->data();
+    bn::hdma::start(*hdma_source_data, 4 * max_polygon_sprites,
+                    bn::hw::sprites::vram()[128 - max_polygon_sprites].attr0);
 
     while(true)
     {
         user_polygon_sprite.update(max_polygon_sprites, hdma_source_data);
 
         bn::core::update();
-        bn::hw::hdma::start(hdma_source_data, 4 * max_polygon_sprites,
-                             &bn::hw::sprites::vram()[128 - max_polygon_sprites].attr0);
     }
 }

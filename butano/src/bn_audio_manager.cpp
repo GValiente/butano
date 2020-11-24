@@ -7,6 +7,7 @@
 
 #include "bn_vector.h"
 #include "bn_config_audio.h"
+#include "bn_hdma_manager.h"
 #include "bn_link_manager.h"
 #include "../hw/include/bn_hw_audio.h"
 
@@ -192,7 +193,7 @@ namespace
 
 void init()
 {
-    hw::audio::init(link_manager::commit);
+    hw::audio::init(hdma_manager::commit, link_manager::commit);
 }
 
 void enable()

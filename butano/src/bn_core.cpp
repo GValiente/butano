@@ -14,6 +14,7 @@
 #include "bn_profiler.h"
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
+#include "bn_hdma_manager.h"
 #include "bn_link_manager.h"
 #include "bn_audio_manager.h"
 #include "bn_keypad_manager.h"
@@ -192,6 +193,10 @@ void update()
 
     BN_PROFILER_ENGINE_START("eng_hblank_fx_update");
     hblank_effects_manager::update();
+    BN_PROFILER_ENGINE_STOP();
+
+    BN_PROFILER_ENGINE_START("eng_hdma_update");
+    hdma_manager::update();
     BN_PROFILER_ENGINE_STOP();
 
     BN_PROFILER_ENGINE_START("eng_cpu_usage");

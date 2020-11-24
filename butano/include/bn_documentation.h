@@ -229,6 +229,29 @@
  * For example, with a H-Blank effect you can change the transparent color every screen horizontal line,
  * which is how games like Chrono Trigger fills their menus with a color gradient.
  *
+ * They differ from HDMA in that only a register can be written by a H-Blank effect in each screen horizontal line,
+ * but since multiple H-Blank effects can be displayed at the same time,
+ * non consecutive registers can be written with them.
+ *
+ * They are also higher level than HDMA, so they should be your first option.
+ *
+ * @ingroup display
+ */
+
+/**
+ * @defgroup hdma H-Blank direct memory access
+ *
+ * It allows to change how things are drawn in each screen horizontal line,
+ * since they transfer data to the GBA during each horizontal blanking (H-Blank) period.
+ *
+ * For example, with HDMA you can change the transparent color every screen horizontal line,
+ * which is how games like Chrono Trigger fills their menus with a color gradient.
+ *
+ * It differs from H-Blank effects in that multiple registers can be written by HDMA in each screen horizontal line,
+ * but since there's only one DMA channel available, written registers must be consecutive.
+ *
+ * It is also lower level than H-Blank effects, so you should try with H-Blank effects first.
+ *
  * @ingroup display
  */
 
@@ -988,9 +1011,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_3_2_2 3.2.2 (next release)
+ * @section changelog_3_3_0 3.3.0 (next release)
  *
- * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> remote timeout detection fixed.
+ * * HDMA properly supported (now it works at less than 60fps). See bn::hdma and the `hdma_polygons` example for more.
+ * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> remote timeout detection fixed.
  *
  *
  * @section changelog_3_2_1 3.2.1
@@ -1012,7 +1036,7 @@
  * @section changelog_3_0_0 3.0.0
  *
  * Thanks to the awesome <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a>,
- * multiplayer support has been implemented! Check bn::link and the `link` example for more.
+ * multiplayer support has been implemented! See bn::link and the `link` example for more.
  *
  *
  * @section changelog_2_0_0 2.0.0

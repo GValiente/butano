@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display module | Butano Docs</title>
+  <title>Display &raquo; H-Blank direct memory access module | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,58 +47,25 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          Display <span class="m-thin">module</span></h1>
+          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
+          H-Blank direct memory access <span class="m-thin">module</span></h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#groups">Modules</a></li>
                 <li><a href="#files">Files</a></li>
                 <li><a href="#namespaces">Namespaces</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>That square window of 240x160 pixels capable of displaying 32768 colors (15 bits).</p>
-        <section id="groups">
-          <h2><a href="#groups">Modules</a></h2>
-          <dl class="m-doc">
-            <dt>module <a href="group__tile.html" class="m-doc">Tiles</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__color.html" class="m-doc">Colors</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__palette.html" class="m-doc">Color palettes</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__affine__mat.html" class="m-doc">Affine transformation matrices</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__bg.html" class="m-doc">Backgrounds</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__sprite.html" class="m-doc">Sprites</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__mosaic.html" class="m-doc">Mosaic</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__blending.html" class="m-doc">Blending</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__window.html" class="m-doc">Windows</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__text.html" class="m-doc">Text</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__green__swap.html" class="m-doc">Green swap</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__hblank__effect.html" class="m-doc">H-Blank effects</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__hdma.html" class="m-doc">H-Blank direct memory access</a></dt>
-            <dd></dd>
-            <dt>module <a href="group__camera.html" class="m-doc">Cameras</a></dt>
-            <dd></dd>
-          </dl>
-        </section>
+<p>It allows to change how things are drawn in each screen horizontal line, since they transfer data to the GBA during each horizontal blanking (H-Blank) period.</p><p>For example, with HDMA you can change the transparent color every screen horizontal line, which is how games like Chrono Trigger fills their menus with a color gradient.</p><p>It differs from H-Blank effects in that multiple registers can be written by HDMA in each screen horizontal line, but since there&#x27;s only one DMA channel available, written registers must be consecutive.</p><p>It is also lower level than H-Blank effects, so you should try with H-Blank effects first.</p>
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__display_8h.html" class="m-doc">bn_display.h</a></dt>
+            <dt>file <a href="bn__hdma_8h.html" class="m-doc">bn_hdma.h</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -107,8 +74,8 @@
           <dl class="m-doc">
             <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
             <dd>Main butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1display.html" class="m-doc">bn::display</a></dt>
-            <dd>Display related functions.</dd>
+            <dt>namespace <a href="namespacebn_1_1hdma.html" class="m-doc">bn::hdma</a></dt>
+            <dd>H-Blank direct memory access related functions.</dd>
           </dl>
         </section>
       </div>

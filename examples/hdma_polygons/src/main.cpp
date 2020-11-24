@@ -5,6 +5,7 @@
 
 #include "bn_core.h"
 
+#include "bn_hdma.h"
 #include "bn_color.h"
 #include "bn_keypad.h"
 #include "bn_random.h"
@@ -18,7 +19,6 @@
 #include "demo_polygon.h"
 #include "polygon_sprite.h"
 
-#include "../../butano/hw/include/bn_hw_hdma.h"
 #include "../../butano/hw/include/bn_hw_sprites.h"
 
 namespace
@@ -124,8 +124,11 @@ int main()
     polygon_sprite user_polygon_sprite(user_polygon, 0, 0);
 
     bn::random random;
-    bn::unique_ptr<bn::vector<demo_polygon, 16>> demo_polygons(new bn::vector<demo_polygon, 16>());
-    bn::unique_ptr<bn::vector<polygon_sprite, 8>> demo_polygon_sprites(new bn::vector<polygon_sprite, 8>());
+    constexpr const int demo_polygons_count = 16;
+    bn::unique_ptr<bn::vector<demo_polygon, demo_polygons_count>> demo_polygons(
+                new bn::vector<demo_polygon, demo_polygons_count>());
+    bn::unique_ptr<bn::vector<polygon_sprite, demo_polygons_count / 2>> demo_polygon_sprites(
+                new bn::vector<polygon_sprite, demo_polygons_count / 2>());
     bn::fixed first_y = 1;
     bn::fixed second_y = 159 - 65 - 64;
     _create_demo_polygon_sprite(0, first_y, *demo_polygons, *demo_polygon_sprites);
@@ -137,10 +140,12 @@ int main()
     _create_demo_polygon_sprite(240 - 64 - 16, first_y, *demo_polygons, *demo_polygon_sprites);
     _create_demo_polygon_sprite(240 - 64, second_y, *demo_polygons, *demo_polygon_sprites);
 
-    const int max_polygon_sprites = 9;
+    const int max_polygon_sprites = (demo_polygons_count / 2) + 1;
     using hdma_source_array = bn::array<uint16_t, bn::display::height() * 4 * max_polygon_sprites>;
     bn::unique_ptr<hdma_source_array> hdma_source(new hdma_source_array());
     uint16_t* hdma_source_data = hdma_source->data();
+    bn::hdma::start(*hdma_source_data, 4 * max_polygon_sprites,
+                    bn::hw::sprites::vram()[128 - max_polygon_sprites].attr0);
 
     while(true)
     {
@@ -176,7 +181,5 @@ int main()
         info.update();
         stats.update();
         bn::core::update();
-        bn::hw::hdma::start(hdma_source_data, 4 * max_polygon_sprites,
-                             &bn::hw::sprites::vram()[128 - max_polygon_sprites].attr0);
     }
 }

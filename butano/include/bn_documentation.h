@@ -988,6 +988,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_3_2_2 3.2.2 (next release)
+ *
+ * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> remote timeout detection fixed.
+ *
+ *
  * @section changelog_3_2_1 3.2.1
  *
  * bn::optional build fix.

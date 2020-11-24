@@ -40,6 +40,7 @@ static_assert(BN_CFG_LINK_MAX_MISSING_MESSAGES >= 0);
 #define LINK_DEFAULT_SEND_TIMER_ID 1
 #define LINK_TRANSFER_WAIT_CYCLES BN_CFG_LINK_RECV_WAIT
 #define LINK_BASE_FREQUENCY TM_FREQ_1024
+#define LINK_REMOTE_TIMEOUT_OFFLINE -1
 
 #define LINK_BIT_SLAVE 2
 #define LINK_BIT_READY 3
@@ -188,10 +189,10 @@ public:
                 newPlayerCount++;
                 linkState._timeouts[i] = 0;
             }
-            else if (linkState._timeouts[i] > 0) {
+            else if (linkState._timeouts[i] > LINK_REMOTE_TIMEOUT_OFFLINE) {
                 if (linkState._timeouts[i] >= LINK_DEFAULT_REMOTE_TIMEOUT) {
                     LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
-                    linkState._timeouts[i] = -1;
+                    linkState._timeouts[i] = LINK_REMOTE_TIMEOUT_OFFLINE;
                 }
                 else {
                     linkState._timeouts[i]++;
@@ -251,7 +252,7 @@ private:
         linkState.currentPlayerId = 0;
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
-            linkState._timeouts[i] = -1;
+            linkState._timeouts[i] = LINK_REMOTE_TIMEOUT_OFFLINE;
         }
         LINK_QUEUE_CLEAR(linkState._outgoingMessages);
         linkState._IRQFlag = false;

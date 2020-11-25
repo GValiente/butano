@@ -27,6 +27,7 @@ class camera_ptr;
 class fixed_point;
 class bg_palette_ptr;
 class affine_bg_item;
+class bg_palette_item;
 class affine_bg_builder;
 class affine_bg_map_ptr;
 class affine_bg_map_item;
@@ -198,6 +199,29 @@ public:
      * @brief Returns the color palette used by this affine background.
      */
     [[nodiscard]] const bg_palette_ptr& palette() const;
+
+    /**
+     * @brief Sets the color palette to use by this affine background.
+     * @param palette bg_palette_ptr to copy.
+     */
+    void set_palette(const bg_palette_ptr& palette);
+
+    /**
+     * @brief Sets the color palette to use by this affine background.
+     * @param palette bg_palette_ptr to move.
+     */
+    void set_palette(bg_palette_ptr&& palette);
+
+    /**
+     * @brief Replaces the color palette used by this affine background
+     * with a new one created with the given bg_palette_item.
+     *
+     * Before creating a new color palette, the bg_palette_ptr used by this affine background is removed,
+     * so VRAM usage is reduced.
+     *
+     * @param palette_item It creates the color palette to use by this affine background.
+     */
+    void set_palette(const bg_palette_item& palette_item);
 
     /**
      * @brief Returns the map used by this affine background.

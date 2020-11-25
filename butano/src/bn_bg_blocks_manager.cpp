@@ -17,6 +17,10 @@
 #include "bn_regular_bg_map_item.cpp.h"
 #include "bn_regular_bg_tiles_ptr.cpp.h"
 #include "bn_regular_bg_tiles_item.cpp.h"
+#include "bn_affine_bg_map_ptr.cpp.h"
+#include "bn_affine_bg_map_item.cpp.h"
+#include "bn_affine_bg_tiles_ptr.cpp.h"
+#include "bn_affine_bg_tiles_item.cpp.h"
 
 #if BN_CFG_BG_BLOCKS_LOG_ENABLED
     #include "bn_log.h"
@@ -67,9 +71,15 @@ namespace
         return result;
     }
 
-    [[nodiscard]] constexpr bool _big_map(int width, int height)
+    [[nodiscard]] constexpr bool _big_regular_map(int width, int height)
     {
         return width > 64 || height > 64;
+    }
+
+    [[nodiscard]] constexpr bool _big_affine_map(int width, int height)
+    {
+        bool native_map = (width == height) && (width == 16 || width == 32 || width == 64 || width == 128);
+        return ! native_map;
     }
 
 
@@ -91,7 +101,8 @@ namespace
     public:
         const uint16_t* data = nullptr;
         unsigned usages = 0;
-        optional<regular_bg_tiles_ptr> tiles;
+        optional<regular_bg_tiles_ptr> regular_tiles;
+        optional<affine_bg_tiles_ptr> affine_tiles;
         optional<bg_palette_ptr> palette;
         uint16_t width = 0;
         uint16_t height = 0;
@@ -104,6 +115,7 @@ namespace
 
     public:
         bool is_tiles: 1 = false;
+        bool is_affine: 1 = false;
         bool commit: 1 = false;
 
         [[nodiscard]] status_type status() const
@@ -126,9 +138,9 @@ namespace
             return _half_words_to_tiles(half_words());
         }
 
-        [[nodiscard]] int tiles_offset() const
+        [[nodiscard]] int regular_tiles_offset() const
         {
-            int tiles_start_block = tiles->id();
+            int tiles_start_block = regular_tiles->id();
             int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
             int result = _blocks_to_tiles(offset_blocks_count);
 
@@ -138,6 +150,13 @@ namespace
             }
 
             return result;
+        }
+
+        [[nodiscard]] int affine_tiles_offset() const
+        {
+            int tiles_start_block = affine_tiles->id();
+            int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
+            return _blocks_to_tiles(offset_blocks_count);
         }
 
         [[nodiscard]] int palette_offset() const
@@ -294,23 +313,31 @@ namespace
         int width;
         int height;
         bpp_mode bpp;
-        optional<regular_bg_tiles_ptr> tiles;
+        optional<regular_bg_tiles_ptr> regular_tiles;
+        optional<affine_bg_tiles_ptr> affine_tiles;
         optional<bg_palette_ptr> palette;
+        bool is_affine;
 
-        static create_data from_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp)
+        static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            return create_data{ data_ptr, blocks_count, half_words, 1, bpp, nullopt, nullopt };
+            return create_data{ data_ptr, blocks_count, half_words, 1, bpp, nullopt, nullopt, nullopt, false };
         }
 
-        static create_data from_map(const uint16_t* data_ptr, const size& dimensions, regular_bg_tiles_ptr&& tiles,
-                                    bg_palette_ptr&& palette)
+        static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words)
+        {
+            int blocks_count = _ceil_half_words_to_blocks(half_words);
+            return create_data{ data_ptr, blocks_count, half_words, 1, bpp_mode::BPP_8, nullopt, nullopt, nullopt, true };
+        }
+
+        static create_data from_regular_map(const uint16_t* data_ptr, const size& dimensions,
+                                            regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
         {
             int width = dimensions.width();
             int height = dimensions.height();
             int blocks_count;
 
-            if(_big_map(width, height))
+            if(_big_regular_map(width, height))
             {
                 blocks_count = _ceil_half_words_to_blocks(32 * 32);
             }
@@ -319,7 +346,28 @@ namespace
                 blocks_count = _ceil_half_words_to_blocks(width * height);
             }
 
-            return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), move(tiles), move(palette) };
+            return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), move(tiles), nullopt,
+                        move(palette), false };
+        }
+
+        static create_data from_affine_map(const uint16_t* data_ptr, const size& dimensions,
+                                            affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
+        {
+            int width = dimensions.width();
+            int height = dimensions.height();
+            int blocks_count;
+
+            if(_big_affine_map(width, height))
+            {
+                blocks_count = _ceil_half_words_to_blocks(32 * 32);
+            }
+            else
+            {
+                blocks_count = _ceil_half_words_to_blocks(width * height);
+            }
+
+            return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), nullopt, move(tiles),
+                        move(palette), true };
         }
     };
 
@@ -329,7 +377,7 @@ namespace
 
     public:
         items_list items;
-        unordered_map<const uint16_t*, int, max_items * 2> items_map;
+        unordered_map<const void*, int, max_items * 2> items_map;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         bool check_commit = false;
@@ -358,7 +406,7 @@ namespace
                 {
                     BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
-                            "_tiles",
+                            (item.is_affine ? "_affine_tiles" : "_regular_tiles"),
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
                             " - data: ", item.data,
@@ -370,7 +418,7 @@ namespace
                 {
                     BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
-                            "_map",
+                            (item.is_affine ? "_affine_map" : "_regular_map"),
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
                             " - data: ", item.data,
@@ -420,7 +468,7 @@ namespace
             } while(false)
     #endif
 
-    [[nodiscard]] int _find_regular_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words)
+    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words)
     {
         auto items_map_iterator = data.items_map.find(tiles_data);
 
@@ -479,8 +527,9 @@ namespace
                       map_item.dimensions().width(), " - ", item.width);
             BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
                       map_item.dimensions().height(), " - ", item.height);
-            BN_ASSERT(! item.tiles || tiles == *item.tiles,
-                      "Tiles does not match item tiles: ", tiles.id(), " - ", item.tiles->id());
+            BN_ASSERT(! item.is_affine, "Item is an affine map");
+            BN_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
+                      "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
             BN_ASSERT(! item.palette || palette == *item.palette,
                       "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
 
@@ -500,7 +549,67 @@ namespace
                 item.set_status(status_type::USED);
                 data.to_remove_blocks_count -= item.blocks_count;
 
-                item.tiles = tiles;
+                BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
+                          "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
+
+                item.regular_tiles = tiles;
+                item.palette = palette;
+                break;
+
+            default:
+                BN_ERROR("Invalid item status: ", int(item.status()));
+                break;
+            }
+
+            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG_STATUS();
+
+            return id;
+        }
+
+        BN_BG_BLOCKS_LOG("NOT FOUND");
+        return -1;
+    }
+
+    [[nodiscard]] int _find_affine_map_impl(const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles,
+                                            const bg_palette_ptr& palette)
+    {
+        const affine_bg_map_cell* data_ptr = &map_item.cells_ref();
+        auto items_map_iterator = data.items_map.find(data_ptr);
+
+        if(items_map_iterator != data.items_map.end())
+        {
+            int id = items_map_iterator->second;
+            item_type& item = data.items.item(id);
+            BN_ASSERT(map_item.dimensions().width() == item.width, "Width does not match item width: ",
+                      map_item.dimensions().width(), " - ", item.width);
+            BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
+                      map_item.dimensions().height(), " - ", item.height);
+            BN_ASSERT(item.is_affine, "Item is a regular map");
+            BN_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
+                      "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
+            BN_ASSERT(! item.palette || palette == *item.palette,
+                      "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
+
+            switch(item.status())
+            {
+
+            case status_type::FREE:
+                BN_ERROR("Invalid item state");
+                break;
+
+            case status_type::USED:
+                ++item.usages;
+                break;
+
+            case status_type::TO_REMOVE:
+                item.usages = 1;
+                item.set_status(status_type::USED);
+                data.to_remove_blocks_count -= item.blocks_count;
+
+                BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+
+                item.affine_tiles = tiles;
                 item.palette = palette;
                 break;
 
@@ -535,52 +644,78 @@ namespace
             return;
         }
 
-        // Big maps are committed from bgs_manager:
-        if(_big_map(item.width, item.height))
+        if(item.is_affine)
         {
-            return;
-        }
-
-        uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
-        int tiles_offset = item.tiles_offset();
-        int palette_offset = item.palette_offset();
-        int half_words = item.half_words();
-
-        if(tiles_offset)
-        {
-            if(palette_offset)
+            // Big maps are committed from bgs_manager:
+            if(_big_affine_map(item.width, item.height))
             {
-                for(int index = 0; index < half_words; ++index)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_offset(
-                                source_data_ptr[index], tiles_offset, palette_offset,
-                                destination_vram_ptr[index]);
-                }
+                return;
             }
-            else
+
+            uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
+            auto tiles_offset = unsigned(item.affine_tiles_offset());
+            int half_words = item.half_words();
+
+            if(tiles_offset)
             {
                 for(int index = 0; index < half_words; ++index)
                 {
-                    hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(
-                                source_data_ptr[index], tiles_offset,
-                                destination_vram_ptr[index]);
-                }
-            }
-        }
-        else
-        {
-            if(palette_offset)
-            {
-                for(int index = 0; index < half_words; ++index)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(
-                                source_data_ptr[index], palette_offset,
-                                destination_vram_ptr[index]);
+                    hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(
+                                source_data_ptr[index], tiles_offset, destination_vram_ptr[index]);
                 }
             }
             else
             {
                 memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+            }
+        }
+        else
+        {
+            // Big maps are committed from bgs_manager:
+            if(_big_regular_map(item.width, item.height))
+            {
+                return;
+            }
+
+            uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
+            auto tiles_offset = unsigned(item.regular_tiles_offset());
+            auto palette_offset = unsigned(item.palette_offset());
+            int half_words = item.half_words();
+
+            if(tiles_offset)
+            {
+                if(palette_offset)
+                {
+                    for(int index = 0; index < half_words; ++index)
+                    {
+                        hw::bg_blocks::copy_regular_bg_map_cell_offset(
+                                    source_data_ptr[index], tiles_offset, palette_offset,
+                                    destination_vram_ptr[index]);
+                    }
+                }
+                else
+                {
+                    for(int index = 0; index < half_words; ++index)
+                    {
+                        hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(
+                                    source_data_ptr[index], tiles_offset, destination_vram_ptr[index]);
+                    }
+                }
+            }
+            else
+            {
+                if(palette_offset)
+                {
+                    for(int index = 0; index < half_words; ++index)
+                    {
+                        hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(
+                                    source_data_ptr[index], palette_offset, destination_vram_ptr[index]);
+                    }
+                }
+                else
+                {
+                    memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+                }
             }
         }
     }
@@ -679,13 +814,15 @@ namespace
         const uint16_t* data_ptr = create_data.data_ptr;
         item->data = data_ptr;
         item->blocks_count = uint8_t(blocks_count);
-        item->tiles = move(create_data.tiles);
+        item->regular_tiles = move(create_data.regular_tiles);
+        item->affine_tiles = move(create_data.affine_tiles);
         item->palette = move(create_data.palette);
         item->width = uint16_t(create_data.width);
         item->height = uint8_t(create_data.height);
         item->usages = 1;
         item->set_status(status_type::USED);
         item->is_tiles = is_tiles;
+        item->is_affine = create_data.is_affine;
         item->commit = false;
 
         if(data_ptr)
@@ -966,7 +1103,7 @@ int available_map_blocks_count()
                 {
                     BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
-                            "_tiles",
+                            (item.is_affine ? "_affine_tiles" : "_regular_tiles"),
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
                             " - data: ", item.data,
@@ -977,14 +1114,15 @@ int available_map_blocks_count()
                 {
                     BN_LOG("    ",
                             (item.status() == status_type::USED ? "used" : "to_remove"),
-                            "_map",
+                            (item.is_affine ? "_affine_map" : "_regular_map"),
                             " - start_block: ", item.start_block,
                             " - blocks_count: ", item.blocks_count,
                             " - data: ", item.data,
                             " - usages: ", item.usages,
                             " - width: ", item.width,
                             " - height: ", item.height,
-                            " - tiles: ", (item.tiles ? item.tiles->id() : -1),
+                            " - tiles: ", (item.is_affine ? (item.affine_tiles ? item.affine_tiles->id() : -1) :
+                                                            (item.regular_tiles ? item.regular_tiles->id() : -1)),
                             " - palette: ", (item.palette ? item.palette->id() : -1));
                 }
             }
@@ -1006,7 +1144,19 @@ int find_regular_tiles(const regular_bg_tiles_item& tiles_item)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR TILES: ", tiles_data, " - ", tiles_count);
 
     int half_words = _tiles_to_half_words(tiles_count);
-    return _find_regular_tiles_impl(tiles_data, half_words);
+    return _find_tiles_impl(tiles_data, half_words);
+}
+
+int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
+{
+    const span<const tile>& tiles_ref = tiles_item.tiles_ref();
+    auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
+    int tiles_count = tiles_ref.size();
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE TILES: ", tiles_data, " - ", tiles_count);
+
+    int half_words = _tiles_to_half_words(tiles_count);
+    return _find_tiles_impl(tiles_data, half_words);
 }
 
 int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
@@ -1018,7 +1168,16 @@ int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles
     return _find_regular_map_impl(map_item, tiles, palette);
 }
 
-int create_regular_tiles(const regular_bg_tiles_item& tiles_item)
+int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles,
+                    const bg_palette_ptr& palette)
+{
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE MAP: ", &map_item.cells_ref(), " - ",
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", palette.id());
+
+    return _find_affine_map_impl(map_item, tiles, palette);
+}
+
+int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
@@ -1026,17 +1185,17 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item)
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR_TILES: ", tiles_data, " - ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
-    int result = _find_regular_tiles_impl(tiles_data, half_words);
+    int result = _find_tiles_impl(tiles_data, half_words);
 
     if(result != -1)
     {
         return result;
     }
 
-    result = _create_impl<true>(create_data::from_tiles(tiles_data, half_words, bpp));
+    result = _create_impl<true>(create_data::from_regular_tiles(tiles_data, half_words, bpp));
 
     if(result != -1)
     {
@@ -1047,29 +1206,81 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item)
     {
         BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BN_CFG_LOG_ENABLED
-            log_status();
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
 
-            BN_ERROR("BG tiles create failed:",
-                      "\n\tTiles data: ", tiles_data,
-                      "\n\tTiles count: ", tiles_count,
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("BG tiles create failed:",
-                      "\n\tTiles data: ", tiles_data,
-                      "\n\tTiles count: ", tiles_count);
-        #endif
+                BN_ERROR("Regular BG tiles create failed:",
+                          "\n\tTiles data: ", tiles_data,
+                          "\n\tTiles count: ", tiles_count,
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG tiles create failed:",
+                          "\n\tTiles data: ", tiles_data,
+                          "\n\tTiles count: ", tiles_count);
+            #endif
+        }
     }
 
     return result;
 }
 
-int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
+int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
+{
+    const span<const tile>& tiles_ref = tiles_item.tiles_ref();
+    auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
+    int tiles_count = tiles_ref.size();
+    int half_words = _tiles_to_half_words(tiles_count);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE_TILES", (optional ? " OPTIONAL: ", ": "),
+                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+
+    int result = _find_tiles_impl(tiles_data, half_words);
+
+    if(result != -1)
+    {
+        return result;
+    }
+
+    result = _create_impl<true>(create_data::from_affine_tiles(tiles_data, half_words));
+
+    if(result != -1)
+    {
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT CREATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG tiles create failed:",
+                          "\n\tTiles data: ", tiles_data,
+                          "\n\tTiles count: ", tiles_count,
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG tiles create failed:",
+                          "\n\tTiles data: ", tiles_data,
+                          "\n\tTiles count: ", tiles_count);
+            #endif
+        }
+    }
+
+    return result;
+}
+
+int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette,
+                       bool optional)
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP: ", data_ptr, " - ", dimensions.width(), " - ",
-                     dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     int result = _find_regular_map_impl(map_item, tiles, palette);
 
@@ -1081,7 +1292,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
-    result = _create_impl<false>(create_data::from_map(data_ptr, dimensions, move(tiles), move(palette)));
+    result = _create_impl<false>(create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1092,26 +1303,79 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     {
         BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BN_CFG_LOG_ENABLED
-            log_status();
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
 
-            BN_ERROR("Regular BG map create failed:",
-                      "\n\tMap data: ", data_ptr,
-                      "\n\tMap width: ", dimensions.width(),
-                      "\n\tMap height: ", dimensions.height(),
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("Regular BG map create failed:",
-                     "\n\tMap data: ", data_ptr,
-                     "\n\tMap width: ", dimensions.width(),
-                     "\n\tMap height: ", dimensions.height());
-        #endif
+                BN_ERROR("Regular BG map create failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG map create failed:",
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                 "\n\tMap height: ", dimensions.height());
+            #endif
+        }
     }
 
     return result;
 }
 
-int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item)
+int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette,
+                      bool optional)
+{
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
+    const size& dimensions = map_item.dimensions();
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+
+    int result = _find_affine_map_impl(map_item, tiles, palette);
+
+    if(result != -1)
+    {
+        return result;
+    }
+
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+
+    result = _create_impl<false>(create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+
+    if(result != -1)
+    {
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT CREATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG map create failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG map create failed:",
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height());
+            #endif
+        }
+    }
+
+    return result;
+}
+
+int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
@@ -1119,13 +1383,13 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item)
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES: ", data_ptr, " - ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<true>(create_data::from_tiles(data_ptr, half_words, bpp));
+    int result = _create_impl<true>(create_data::from_regular_tiles(data_ptr, half_words, bpp));
 
     if(result != -1)
     {
@@ -1136,220 +1400,40 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item)
     {
         BN_BG_BLOCKS_LOG("NOT CREATED");
 
-        #if BN_CFG_LOG_ENABLED
-            log_status();
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
 
-            BN_ERROR("BG tiles create new failed:",
-                      "\n\tTiles data: ", data_ptr,
-                      "\n\tTiles count: ", tiles_count,
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("BG tiles create new failed:",
-                      "\n\tTiles data: ", data_ptr,
-                      "\n\tTiles count: ", tiles_count);
-        #endif
+                BN_ERROR("Regular BG tiles create new failed:",
+                          "\n\tTiles data: ", data_ptr,
+                          "\n\tTiles count: ", tiles_count,
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG tiles create new failed:",
+                          "\n\tTiles data: ", data_ptr,
+                          "\n\tTiles count: ", tiles_count);
+            #endif
+        }
     }
 
     return result;
 }
 
-int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
-{
-    const uint16_t* data_ptr = &map_item.cells_ref();
-    const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP: ", data_ptr, " - ", dimensions.width(), " - ",
-                     dimensions.height(), " - ", tiles.id(), " - ", palette.id());
-
-    BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
-              "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-              "Multiple copies of the same data not supported");
-
-    int result = _create_impl<false>(create_data::from_map(data_ptr, dimensions, move(tiles), move(palette)));
-
-    if(result != -1)
-    {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BN_BG_BLOCKS_LOG("NOT CREATED");
-
-        #if BN_CFG_LOG_ENABLED
-            log_status();
-
-            BN_ERROR("Regular BG map create new failed:",
-                      "\n\tMap data: ", data_ptr,
-                      "\n\tMap width: ", dimensions.width(),
-                      "\n\tMap height: ", dimensions.height(),
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("Regular BG map create new failed:",
-                      "\n\tMap data: ", data_ptr,
-                      "\n\tMap width: ", dimensions.width(),
-                      "\n\tMap height: ", dimensions.height());
-        #endif
-    }
-
-    return result;
-}
-
-int allocate_regular_tiles(int tiles_count, bpp_mode bpp)
-{
-    int half_words = _tiles_to_half_words(tiles_count);
-
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES: ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
-
-    BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
-              "Invalid tiles count: ", tiles_count, " - ", int(bpp));
-
-    int result = _allocate_impl<true>(create_data::from_tiles(nullptr, half_words, bpp));
-
-    if(result != -1)
-    {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
-
-        #if BN_CFG_LOG_ENABLED
-            log_status();
-
-            BN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count,
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("BG tiles allocate failed. Tiles count: ", tiles_count);
-        #endif
-    }
-
-    return result;
-}
-
-int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
-{
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP: ", map_dimensions.width(), " - ",
-                     map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
-
-    BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
-              "Invalid map width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() == 32 || map_dimensions.height() == 64,
-              "Invalid map height: ", map_dimensions.height());
-    BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
-              "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-
-    int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
-
-    if(result != -1)
-    {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
-        BN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
-
-        #if BN_CFG_LOG_ENABLED
-            log_status();
-
-            BN_ERROR("Regular BG map allocate failed:",
-                      "\n\tMap width: ", map_dimensions.width(),
-                      "\n\tMap height: ", map_dimensions.height(),
-                      "\n\nBG blocks manager status has been logged.");
-        #else
-            BN_ERROR("Regular BG map allocate failed:",
-                      "\n\tMap width: ", map_dimensions.width(),
-                      "\n\tMap height: ", map_dimensions.height());
-        #endif
-    }
-
-    return result;
-}
-
-int create_regular_tiles_optional(const regular_bg_tiles_item& tiles_item)
-{
-    const span<const tile>& tiles_ref = tiles_item.tiles_ref();
-    auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
-    int tiles_count = tiles_ref.size();
-    int half_words = _tiles_to_half_words(tiles_count);
-    bpp_mode bpp = tiles_item.bpp();
-
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
-
-    int result = _find_regular_tiles_impl(tiles_data, half_words);
-
-    if(result != -1)
-    {
-        return result;
-    }
-
-    result = _create_impl<true>(create_data::from_tiles(tiles_data, half_words, bpp));
-
-    if(result != -1)
-    {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BN_BG_BLOCKS_LOG("NOT CREATED");
-    }
-
-    return result;
-}
-
-int create_regular_map_optional(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
-                                bg_palette_ptr&& palette)
-{
-    const uint16_t* data_ptr = &map_item.cells_ref();
-    const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP OPTIONAL: ", data_ptr, " - ", dimensions.width(), " - ",
-                     dimensions.height(), " - ", tiles.id(), " - ", palette.id());
-
-    int result = _find_regular_map_impl(map_item, tiles, palette);
-
-    if(result != -1)
-    {
-        return result;
-    }
-
-    BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
-              "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-
-    result = _create_impl<false>(create_data::from_map(data_ptr, dimensions, move(tiles), move(palette)));
-
-    if(result != -1)
-    {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
-        BN_BG_BLOCKS_LOG_STATUS();
-    }
-    else
-    {
-        BN_BG_BLOCKS_LOG("NOT CREATED");
-    }
-
-    return result;
-}
-
-int create_new_regular_tiles_optional(const regular_bg_tiles_item& tiles_item)
+int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
-    bpp_mode bpp = tiles_item.bpp();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES OPTIONAL: ", data_ptr, " - ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE TILES", (optional ? " OPTIONAL: ", ": "),
+                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<true>(create_data::from_tiles(data_ptr, half_words, bpp));
+    int result = _create_impl<true>(create_data::from_affine_tiles(data_ptr, half_words));
 
     if(result != -1)
     {
@@ -1359,17 +1443,34 @@ int create_new_regular_tiles_optional(const regular_bg_tiles_item& tiles_item)
     else
     {
         BN_BG_BLOCKS_LOG("NOT CREATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG tiles create new failed:",
+                          "\n\tTiles data: ", data_ptr,
+                          "\n\tTiles count: ", tiles_count,
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG tiles create new failed:",
+                          "\n\tTiles data: ", data_ptr,
+                          "\n\tTiles count: ", tiles_count);
+            #endif
+        }
     }
 
     return result;
 }
 
-int create_new_regular_map_optional(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
-                                    bg_palette_ptr&& palette)
+int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
+                           bg_palette_ptr&& palette, bool optional)
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP OPTIONAL: ", data_ptr, " - ",
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
@@ -1377,7 +1478,7 @@ int create_new_regular_map_optional(const regular_bg_map_item& map_item, regular
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<false>(create_data::from_map(data_ptr, dimensions, move(tiles), move(palette)));
+    int result = _create_impl<false>(create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1387,22 +1488,85 @@ int create_new_regular_map_optional(const regular_bg_map_item& map_item, regular
     else
     {
         BN_BG_BLOCKS_LOG("NOT CREATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Regular BG map create new failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG map create new failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height());
+            #endif
+        }
     }
 
     return result;
 }
 
-int allocate_regular_tiles_optional(int tiles_count, bpp_mode bpp)
+int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles,
+                          bg_palette_ptr&& palette, bool optional)
+{
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
+    const size& dimensions = map_item.dimensions();
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+              "Multiple copies of the same data not supported");
+
+    int result = _create_impl<false>(create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+
+    if(result != -1)
+    {
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT CREATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG map create new failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG map create new failed:",
+                          "\n\tMap data: ", data_ptr,
+                          "\n\tMap width: ", dimensions.width(),
+                          "\n\tMap height: ", dimensions.height());
+            #endif
+        }
+    }
+
+    return result;
+}
+
+int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES OPTIONAL: ", tiles_count, " - ",
-                     _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
               "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
-    int result = _allocate_impl<true>(create_data::from_tiles(nullptr, half_words, bpp));
+    int result = _allocate_impl<true>(create_data::from_regular_tiles(nullptr, half_words, bpp));
 
     if(result != -1)
     {
@@ -1412,15 +1576,64 @@ int allocate_regular_tiles_optional(int tiles_count, bpp_mode bpp)
     else
     {
         BN_BG_BLOCKS_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Regular BG tiles allocate failed. Tiles count: ", tiles_count,
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG tiles allocate failed. Tiles count: ", tiles_count);
+            #endif
+        }
     }
 
     return result;
 }
 
-int allocate_regular_map_optional(const size& map_dimensions, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
+int allocate_affine_tiles(int tiles_count, bool optional)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP OPTIONAL: ", map_dimensions.width(), " - ",
-                     map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+    int half_words = _tiles_to_half_words(tiles_count);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE TILES", (optional ? " OPTIONAL: ", ": "),
+                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+
+    BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
+
+    int result = _allocate_impl<true>(create_data::from_affine_tiles(nullptr, half_words));
+
+    if(result != -1)
+    {
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG tiles allocate failed. Tiles count: ", tiles_count,
+                         "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG tiles allocate failed. Tiles count: ", tiles_count);
+            #endif
+        }
+    }
+
+    return result;
+}
+
+int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tiles,
+                         bg_palette_ptr&& palette, bool optional)
+{
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP", (optional ? " OPTIONAL: ", ": "),
+                     map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
               "Invalid map width: ", map_dimensions.width());
@@ -1429,7 +1642,7 @@ int allocate_regular_map_optional(const size& map_dimensions, regular_bg_tiles_p
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
-    int result = _allocate_impl<false>(create_data::from_map(nullptr, map_dimensions, move(tiles), move(palette)));
+    int result = _allocate_impl<false>(create_data::from_regular_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1439,6 +1652,65 @@ int allocate_regular_map_optional(const size& map_dimensions, regular_bg_tiles_p
     else
     {
         BN_BG_BLOCKS_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Regular BG map allocate failed:",
+                          "\n\tMap width: ", map_dimensions.width(),
+                          "\n\tMap height: ", map_dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Regular BG map allocate failed:",
+                          "\n\tMap width: ", map_dimensions.width(),
+                          "\n\tMap height: ", map_dimensions.height());
+            #endif
+        }
+    }
+
+    return result;
+}
+
+int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
+                        bg_palette_ptr&& palette, bool optional)
+{
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE MAP", (optional ? " OPTIONAL: ", ": "),
+                     map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+
+    BN_ASSERT(map_dimensions.width() == 16 || (map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0),
+              "Invalid map width: ", map_dimensions.width());
+    BN_ASSERT(map_dimensions.height() == 16 || (map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0),
+              "Invalid map height: ", map_dimensions.height());
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+
+    int result = _allocate_impl<false>(create_data::from_affine_map(nullptr, map_dimensions, move(tiles), move(palette)));
+
+    if(result != -1)
+    {
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+
+                BN_ERROR("Affine BG map allocate failed:",
+                          "\n\tMap width: ", map_dimensions.width(),
+                          "\n\tMap height: ", map_dimensions.height(),
+                          "\n\nBG blocks manager status has been logged.");
+            #else
+                BN_ERROR("Affine BG map allocate failed:",
+                          "\n\tMap width: ", map_dimensions.width(),
+                          "\n\tMap height: ", map_dimensions.height());
+            #endif
+        }
     }
 
     return result;
@@ -1466,7 +1738,8 @@ void decrease_usages(int id)
         item.set_status(status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
 
-        item.tiles.reset();
+        item.regular_tiles.reset();
+        item.affine_tiles.reset();
         item.palette.reset();
     }
 
@@ -1496,10 +1769,16 @@ size map_dimensions(int id)
     return size(item.width, item.height);
 }
 
-int tiles_offset(int id)
+int regular_tiles_offset(int id)
 {
     const item_type& item = data.items.item(id);
-    return item.tiles_offset();
+    return item.regular_tiles_offset();
+}
+
+int affine_tiles_offset(int id)
+{
+    const item_type& item = data.items.item(id);
+    return item.affine_tiles_offset();
 }
 
 int palette_offset(int id)
@@ -1599,14 +1878,14 @@ void reload(int id)
 const regular_bg_tiles_ptr& regular_map_tiles(int id)
 {
     const item_type& item = data.items.item(id);
-    return *item.tiles;
+    return *item.regular_tiles;
 }
 
 void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
 {
     item_type& item = data.items.item(id);
 
-    if(tiles != item.tiles)
+    if(tiles != item.regular_tiles)
     {
         BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), item.palette->bpp()),
                   "Invalid tiles count: ", tiles.tiles_count(), " - ", int(item.palette->bpp()));
@@ -1614,10 +1893,10 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
         int old_tiles_cbb;
         int old_tiles_offset;
 
-        if(item.tiles)
+        if(item.regular_tiles)
         {
-            old_tiles_cbb = item.tiles->cbb();
-            old_tiles_offset = item.tiles_offset();
+            old_tiles_cbb = item.regular_tiles->cbb();
+            old_tiles_offset = item.regular_tiles_offset();
         }
         else
         {
@@ -1632,9 +1911,9 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
             bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
-        item.tiles = move(tiles);
+        item.regular_tiles = move(tiles);
 
-        if(item.tiles_offset() != old_tiles_offset)
+        if(item.regular_tiles_offset() != old_tiles_offset)
         {
             item.commit = true;
             data.check_commit = true;
@@ -1642,10 +1921,16 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
     }
 }
 
-void remove_map_tiles(int id)
+void remove_regular_map_tiles(int id)
 {
     item_type& item = data.items.item(id);
-    item.tiles.reset();
+    item.regular_tiles.reset();
+}
+
+void remove_affine_map_tiles(int id)
+{
+    item_type& item = data.items.item(id);
+    item.affine_tiles.reset();
 }
 
 const bg_palette_ptr& map_palette(int id)
@@ -1654,15 +1939,15 @@ const bg_palette_ptr& map_palette(int id)
     return *item.palette;
 }
 
-void set_map_palette(int id, bg_palette_ptr&& palette)
+void set_regular_map_palette(int id, bg_palette_ptr&& palette)
 {
     item_type& item = data.items.item(id);
 
     if(palette != item.palette)
     {
         bpp_mode new_palette_bpp = palette.bpp();
-        BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(item.tiles->tiles_count(), new_palette_bpp),
-                  "Invalid palette BPP: ", item.tiles->tiles_count(), " - ", int(new_palette_bpp));
+        BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(item.regular_tiles->tiles_count(), new_palette_bpp),
+                  "Invalid palette BPP: ", item.regular_tiles->tiles_count(), " - ", int(new_palette_bpp));
 
         int old_palette_bpp;
         int old_tiles_offset;
@@ -1671,7 +1956,7 @@ void set_map_palette(int id, bg_palette_ptr&& palette)
         if(item.palette)
         {
             old_palette_bpp = int(item.palette->bpp());
-            old_tiles_offset = item.tiles_offset();
+            old_tiles_offset = item.regular_tiles_offset();
             old_palette_offset = item.palette_offset();
         }
         else
@@ -1688,11 +1973,23 @@ void set_map_palette(int id, bg_palette_ptr&& palette)
 
         item.palette = move(palette);
 
-        if(item.tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
+        if(item.regular_tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
         {
             item.commit = true;
             data.check_commit = true;
         }
+    }
+}
+
+void set_affine_map_palette(int id, bg_palette_ptr&& palette)
+{
+    item_type& item = data.items.item(id);
+
+    if(palette != item.palette)
+    {
+        BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+
+        item.palette = move(palette);
     }
 }
 
@@ -1712,9 +2009,9 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
     int old_tiles_offset;
     int old_palette_offset;
 
-    if(item.tiles && item.palette)
+    if(item.regular_tiles && item.palette)
     {
-        old_tiles_offset = item.tiles_offset();
+        old_tiles_offset = item.regular_tiles_offset();
         old_palette_offset = item.palette_offset();
     }
     else
@@ -1723,9 +2020,9 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
         old_palette_offset = -1;
     }
 
-    if(tiles != item.tiles)
+    if(tiles != item.regular_tiles)
     {
-        int old_tiles_cbb = item.tiles ? item.tiles->cbb() : -1;
+        int old_tiles_cbb = item.regular_tiles ? item.regular_tiles->cbb() : -1;
         int new_tiles_cbb = tiles.cbb();
 
         if(new_tiles_cbb != old_tiles_cbb)
@@ -1733,7 +2030,7 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
             bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
-        item.tiles = move(tiles);
+        item.regular_tiles = move(tiles);
     }
 
     if(palette != item.palette)
@@ -1748,7 +2045,7 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
         item.palette = move(palette);
     }
 
-    if(item.tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
+    if(item.regular_tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
     {
         item.commit = true;
         data.check_commit = true;
@@ -1804,8 +2101,8 @@ void update_regular_map_col(int id, int x, int y)
 
     int y_separator = y & 31;
     regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
-    int tiles_offset = item.tiles_offset();
-    int palette_offset = item.palette_offset();
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
     if(tiles_offset)
     {
@@ -1901,8 +2198,8 @@ void update_regular_map_row(int id, int x, int y)
 
     int x_separator = x & 31;
     regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
-    int tiles_offset = item.tiles_offset();
-    int palette_offset = item.palette_offset();
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
     if(tiles_offset)
     {
@@ -1987,8 +2284,8 @@ void set_regular_map_position(int id, int x, int y)
     regular_bg_map_cell* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
     int x_separator = x & 31;
-    int tiles_offset = item.tiles_offset();
-    int palette_offset = item.palette_offset();
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
     if(tiles_offset)
     {

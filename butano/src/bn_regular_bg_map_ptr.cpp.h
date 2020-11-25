@@ -46,21 +46,21 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::find(const regular_bg_item& ite
 regular_bg_map_ptr regular_bg_map_ptr::create(
         const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::create_regular_map(map_item, move(tiles), move(palette));
+    int handle = bg_blocks_manager::create_regular_map(map_item, move(tiles), move(palette), false);
     return regular_bg_map_ptr(handle);
 }
 
 regular_bg_map_ptr regular_bg_map_ptr::create(const regular_bg_item& item)
 {
     int handle = bg_blocks_manager::create_regular_map(
-                item.map_item(), item.tiles_item().create_tiles(), item.palette_item().create_palette());
+                item.map_item(), item.tiles_item().create_tiles(), item.palette_item().create_palette(), false);
     return regular_bg_map_ptr(handle);
 }
 
 regular_bg_map_ptr regular_bg_map_ptr::create_new(
         const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::create_new_regular_map(map_item, move(tiles), move(palette));
+    int handle = bg_blocks_manager::create_new_regular_map(map_item, move(tiles), move(palette), false);
     return regular_bg_map_ptr(handle);
 }
 
@@ -68,21 +68,21 @@ regular_bg_map_ptr regular_bg_map_ptr::create_new(const regular_bg_item& item)
 {
     const regular_bg_map_item& map_item = item.map_item();
     int handle = bg_blocks_manager::create_new_regular_map(map_item, item.tiles_item().create_tiles(),
-                                                           item.palette_item().create_palette());
+                                                           item.palette_item().create_palette(), false);
     return regular_bg_map_ptr(handle);
 }
 
 regular_bg_map_ptr regular_bg_map_ptr::allocate(
         const size& dimensions, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::allocate_regular_map(dimensions, move(tiles), move(palette));
+    int handle = bg_blocks_manager::allocate_regular_map(dimensions, move(tiles), move(palette), false);
     return regular_bg_map_ptr(handle);
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(
         const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::create_regular_map_optional(map_item, move(tiles), move(palette));
+    int handle = bg_blocks_manager::create_regular_map(map_item, move(tiles), move(palette), true);
     optional<regular_bg_map_ptr> result;
 
     if(handle >= 0)
@@ -101,8 +101,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(const regular_b
     {
         if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
         {
-            int handle = bg_blocks_manager::create_regular_map_optional(
-                        item.map_item(), move(*tiles), move(*palette));
+            int handle = bg_blocks_manager::create_regular_map(item.map_item(), move(*tiles), move(*palette), true);
 
             if(handle >= 0)
             {
@@ -117,7 +116,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(const regular_b
 optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(
         const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::create_new_regular_map_optional(map_item, move(tiles), move(palette));
+    int handle = bg_blocks_manager::create_new_regular_map(map_item, move(tiles), move(palette), true);
     optional<regular_bg_map_ptr> result;
 
     if(handle >= 0)
@@ -136,8 +135,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(const regul
     {
         if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
         {
-            int handle = bg_blocks_manager::create_new_regular_map_optional(
-                        item.map_item(), move(*tiles), move(*palette));
+            int handle = bg_blocks_manager::create_new_regular_map(item.map_item(), move(*tiles), move(*palette), true);
 
             if(handle >= 0)
             {
@@ -152,7 +150,7 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(const regul
 optional<regular_bg_map_ptr> regular_bg_map_ptr::allocate_optional(
         const size& dimensions, regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
-    int handle = bg_blocks_manager::allocate_regular_map_optional(dimensions, move(tiles), move(palette));
+    int handle = bg_blocks_manager::allocate_regular_map(dimensions, move(tiles), move(palette), true);
     optional<regular_bg_map_ptr> result;
 
     if(handle >= 0)
@@ -202,7 +200,7 @@ bpp_mode regular_bg_map_ptr::bpp() const
 
 int regular_bg_map_ptr::tiles_offset() const
 {
-    return bg_blocks_manager::tiles_offset(_handle);
+    return bg_blocks_manager::regular_tiles_offset(_handle);
 }
 
 int regular_bg_map_ptr::palette_banks_offset() const
@@ -248,7 +246,7 @@ void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
     }
     else
     {
-        bg_blocks_manager::remove_map_tiles(_handle);
+        bg_blocks_manager::remove_regular_map_tiles(_handle);
         bg_blocks_manager::set_regular_map_tiles(_handle, tiles_item.create_new_tiles());
     }
 }
@@ -260,24 +258,24 @@ const bg_palette_ptr& regular_bg_map_ptr::palette() const
 
 void regular_bg_map_ptr::set_palette(const bg_palette_ptr& palette)
 {
-    bg_blocks_manager::set_map_palette(_handle, bg_palette_ptr(palette));
+    bg_blocks_manager::set_regular_map_palette(_handle, bg_palette_ptr(palette));
 }
 
 void regular_bg_map_ptr::set_palette(bg_palette_ptr&& palette)
 {
-    bg_blocks_manager::set_map_palette(_handle, move(palette));
+    bg_blocks_manager::set_regular_map_palette(_handle, move(palette));
 }
 
 void regular_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
 {
     if(optional<bg_palette_ptr> palette = palette_item.find_palette())
     {
-        bg_blocks_manager::set_map_palette(_handle, move(*palette));
+        bg_blocks_manager::set_regular_map_palette(_handle, move(*palette));
     }
     else
     {
         bg_blocks_manager::remove_map_palette(_handle);
-        bg_blocks_manager::set_map_palette(_handle, palette_item.create_new_palette());
+        bg_blocks_manager::set_regular_map_palette(_handle, palette_item.create_new_palette());
     }
 }
 
@@ -293,7 +291,7 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
 
     if(! tiles)
     {
-        bg_blocks_manager::remove_map_tiles(_handle);
+        bg_blocks_manager::remove_regular_map_tiles(_handle);
         tiles = tiles_item.create_new_tiles();
     }
 

@@ -147,6 +147,24 @@ const bg_palette_ptr& affine_bg_ptr::palette() const
     return bgs_manager::map(_handle).palette();
 }
 
+void affine_bg_ptr::set_palette(const bg_palette_ptr& palette)
+{
+    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    map.set_palette(palette);
+}
+
+void affine_bg_ptr::set_palette(bg_palette_ptr&& palette)
+{
+    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    map.set_palette(move(palette));
+}
+
+void affine_bg_ptr::set_palette(const bg_palette_item& palette_item)
+{
+    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    map.set_palette(palette_item);
+}
+
 const affine_bg_map_ptr& affine_bg_ptr::map() const
 {
     return bgs_manager::map(_handle);

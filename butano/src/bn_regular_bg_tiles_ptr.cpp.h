@@ -27,22 +27,22 @@ optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::find(const regular_bg_tiles
 
 regular_bg_tiles_ptr regular_bg_tiles_ptr::create(const regular_bg_tiles_item& tiles_item)
 {
-    return regular_bg_tiles_ptr(bg_blocks_manager::create_regular_tiles(tiles_item));
+    return regular_bg_tiles_ptr(bg_blocks_manager::create_regular_tiles(tiles_item, false));
 }
 
 regular_bg_tiles_ptr regular_bg_tiles_ptr::create_new(const regular_bg_tiles_item& tiles_item)
 {
-    return regular_bg_tiles_ptr(bg_blocks_manager::create_new_regular_tiles(tiles_item));
+    return regular_bg_tiles_ptr(bg_blocks_manager::create_new_regular_tiles(tiles_item, false));
 }
 
 regular_bg_tiles_ptr regular_bg_tiles_ptr::allocate(int tiles_count, bpp_mode bpp)
 {
-    return regular_bg_tiles_ptr(bg_blocks_manager::allocate_regular_tiles(tiles_count, bpp));
+    return regular_bg_tiles_ptr(bg_blocks_manager::allocate_regular_tiles(tiles_count, bpp, false));
 }
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::create_optional(const regular_bg_tiles_item& tiles_item)
 {
-    int handle = bg_blocks_manager::create_regular_tiles_optional(tiles_item);
+    int handle = bg_blocks_manager::create_regular_tiles(tiles_item, true);
     optional<regular_bg_tiles_ptr> result;
 
     if(handle >= 0)
@@ -55,7 +55,7 @@ optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::create_optional(const regul
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::create_new_optional(const regular_bg_tiles_item& tiles_item)
 {
-    int handle = bg_blocks_manager::create_new_regular_tiles_optional(tiles_item);
+    int handle = bg_blocks_manager::create_new_regular_tiles(tiles_item, true);
     optional<regular_bg_tiles_ptr> result;
 
     if(handle >= 0)
@@ -68,7 +68,7 @@ optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::create_new_optional(const r
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_ptr::allocate_optional(int tiles_count, bpp_mode bpp)
 {
-    int handle = bg_blocks_manager::allocate_regular_tiles_optional(tiles_count, bpp);
+    int handle = bg_blocks_manager::allocate_regular_tiles(tiles_count, bpp, true);
     optional<regular_bg_tiles_ptr> result;
 
     if(handle >= 0)

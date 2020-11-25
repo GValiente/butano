@@ -26,6 +26,7 @@ namespace bn
 class size;
 class affine_bg_item;
 class bg_palette_ptr;
+class bg_palette_item;
 class affine_bg_map_item;
 class affine_bg_tiles_ptr;
 class affine_bg_tiles_item;
@@ -328,6 +329,28 @@ public:
      * @brief Returns the referenced color palette.
      */
     [[nodiscard]] const bg_palette_ptr& palette() const;
+
+    /**
+     * @brief Sets the referenced color palette.
+     * @param palette bg_palette_ptr to copy.
+     */
+    void set_palette(const bg_palette_ptr& palette);
+
+    /**
+     * @brief Sets the referenced color palette.
+     * @param palette bg_palette_ptr to move.
+     */
+    void set_palette(bg_palette_ptr&& palette);
+
+    /**
+     * @brief Replaces the referenced color palette with a new tile set created with the given bg_palette_item.
+     *
+     * Before creating a new color palette, the bg_palette_ptr referenced by this map is removed,
+     * so VRAM usage is reduced.
+     *
+     * @param palette_item It creates the new color palette to reference.
+     */
+    void set_palette(const bg_palette_item& palette_item);
 
     /**
      * @brief Returns the allocated memory in VRAM

@@ -49,6 +49,12 @@ namespace bn::hw::bg_blocks
         destination_cell = uint16_t(source_cell);
     }
 
+    inline void copy_affine_bg_map_cell_tiles_offset(unsigned source_cell, unsigned tiles_offset,
+                                                     uint16_t& destination_cell)
+    {
+        destination_cell = uint16_t(source_cell + tiles_offset);
+    }
+
     inline void copy_regular_bg_map_cell_palette_offset(unsigned source_cell, unsigned palette_offset,
                                                         uint16_t& destination_cell)
     {

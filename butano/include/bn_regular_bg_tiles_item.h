@@ -49,10 +49,10 @@ public:
     {
         if(bpp == bpp_mode::BPP_8)
         {
-            return tiles_count && tiles_count < 2048 && (tiles_count % 2) == 0;
+            return tiles_count && tiles_count <= 2048 && (tiles_count % 2) == 0;
         }
 
-        return tiles_count && tiles_count < 1024;
+        return tiles_count && tiles_count <= 1024;
     }
 
     /**

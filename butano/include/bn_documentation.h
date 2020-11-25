@@ -1020,6 +1020,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_4_0_0 4.0.0 (next release)
+ *
+ * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item and bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.
+ * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.
+ *
+ *
  * @section changelog_3_3_0 3.3.0
  *
  * * HDMA properly supported (now it works at less than 60fps). See bn::hdma and the `hdma_polygons` example for more.

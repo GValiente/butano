@@ -24,12 +24,12 @@ namespace bn
 {
 
 class size;
-class bg_tiles_ptr;
-class bg_tiles_item;
 class bg_palette_ptr;
 class bg_palette_item;
 class regular_bg_item;
 class regular_bg_map_item;
+class regular_bg_tiles_ptr;
+class regular_bg_tiles_item;
 enum class bpp_mode;
 
 /**
@@ -55,7 +55,7 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(
-            const regular_bg_map_item& map_item, const bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
+            const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -79,7 +79,7 @@ public:
      * otherwise it returns a regular_bg_map_ptr which references it.
      */
     [[nodiscard]] static regular_bg_map_ptr create(
-            const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -88,7 +88,8 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
-     * @param item regular_bg_item which references the tiles, the color palette and the map cells to search or handle.
+     * @param item regular_bg_item which references the tiles,
+     * the color palette and the map cells to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it.
      */
@@ -110,7 +111,7 @@ public:
      * @return regular_bg_map_ptr which references the given information.
      */
     [[nodiscard]] static regular_bg_map_ptr create_new(
-            const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -135,7 +136,7 @@ public:
      * @return regular_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen.
      */
     [[nodiscard]] static regular_bg_map_ptr allocate(
-            const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const size& dimensions, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -152,7 +153,7 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
-            const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -161,7 +162,8 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
-     * @param item regular_bg_item which references the tiles, the color palette and the map cells to search or handle.
+     * @param item regular_bg_item which references the tiles,
+     * the color palette and the map cells to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it if the regular_bg_map_ptr can be allocated;
      * `nullopt` otherwise.
@@ -181,11 +183,11 @@ public:
      * @param map_item regular_bg_map_item which references the map cells to handle.
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
-     * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * `nullopt` otherwise.
+     * @return regular_bg_map_ptr which references the given information
+     * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
-            const regular_bg_map_item& map_item, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -198,8 +200,8 @@ public:
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
-     * @return regular_bg_map_ptr which references the given information if the regular_bg_map_ptr can be allocated;
-     * `nullopt` otherwise.
+     * @return regular_bg_map_ptr which references the given information
+     * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(const regular_bg_item& item);
 
@@ -212,7 +214,7 @@ public:
      * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> allocate_optional(
-            const size& dimensions, bg_tiles_ptr tiles, bg_palette_ptr palette);
+            const size& dimensions, regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Copy constructor.
@@ -310,35 +312,35 @@ public:
     /**
      * @brief Returns the referenced tiles.
      */
-    [[nodiscard]] const bg_tiles_ptr& tiles() const;
+    [[nodiscard]] const regular_bg_tiles_ptr& tiles() const;
 
     /**
      * @brief Sets the referenced tiles.
-     * @param tiles bg_tiles_ptr to copy.
+     * @param tiles regular_bg_tiles_ptr to copy.
      *
      * It must be compatible with the referenced color palette.
      */
-    void set_tiles(const bg_tiles_ptr& tiles);
+    void set_tiles(const regular_bg_tiles_ptr& tiles);
 
     /**
      * @brief Sets the referenced tiles.
-     * @param tiles bg_tiles_ptr to move.
+     * @param tiles regular_bg_tiles_ptr to move.
      *
      * It must be compatible with the referenced color palette.
      */
-    void set_tiles(bg_tiles_ptr&& tiles);
+    void set_tiles(regular_bg_tiles_ptr&& tiles);
 
     /**
-     * @brief Replaces the referenced tiles with a new tile set created with the given bg_tiles_item.
+     * @brief Replaces the referenced tiles with a new tile set created with the given regular_bg_tiles_item.
      *
-     * Before creating a new background tile set, the bg_tiles_ptr referenced by this map is removed,
+     * Before creating a new background tile set, the regular_bg_tiles_ptr referenced by this map is removed,
      * so VRAM usage is reduced.
      *
      * The new background tiles must be compatible with the referenced color palette.
      *
      * @param tiles_item It creates the new background tiles to reference.
      */
-    void set_tiles(const bg_tiles_item& tiles_item);
+    void set_tiles(const regular_bg_tiles_item& tiles_item);
 
     /**
      * @brief Returns the referenced color palette.
@@ -375,14 +377,14 @@ public:
 
     /**
      * @brief Sets the tiles and the color palette to reference.
-     * @param tiles bg_tiles_ptr to reference.
+     * @param tiles regular_bg_tiles_ptr to reference.
      * @param palette bg_palette_ptr to reference.
      */
-    void set_tiles_and_palette(bg_tiles_ptr tiles, bg_palette_ptr palette);
+    void set_tiles_and_palette(regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Replaces the referenced tiles and color palette
-     * with the created with the given bg_tiles_item and bg_palette_item.
+     * with the created with the given regular_bg_tiles_item and bg_palette_item.
      *
      * Before creating new resources, the resources referenced by this map are removed,
      * so VRAM usage is reduced.
@@ -390,7 +392,7 @@ public:
      * @param tiles_item It creates the new background tiles to reference.
      * @param palette_item It creates the color palette to reference.
      */
-    void set_tiles_and_palette(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
+    void set_tiles_and_palette(const regular_bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
 
     /**
      * @brief Returns the allocated memory in VRAM

@@ -22,9 +22,9 @@
 namespace bn
 {
 
-class bg_tiles_ptr;
 class bg_palette_ptr;
 class regular_bg_map_ptr;
+class regular_bg_tiles_ptr;
 
 /**
  * @brief Contains the required information to generate regular background maps.
@@ -85,8 +85,8 @@ public:
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
      * `nullopt` otherwise.
      */
-    [[nodiscard]] optional<regular_bg_map_ptr> find_map(const bg_tiles_ptr& tiles,
-                                                        const bg_palette_ptr& palette) const;
+    [[nodiscard]] optional<regular_bg_map_ptr> find_map(
+            const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette) const;
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the information provided by this item.
@@ -100,7 +100,7 @@ public:
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it.
      */
-    [[nodiscard]] regular_bg_map_ptr create_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
+    [[nodiscard]] regular_bg_map_ptr create_map(regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the information provided by this item.
@@ -116,7 +116,7 @@ public:
      * @param palette Referenced color palette of the map to handle.
      * @return regular_bg_map_ptr which references the information provided by this item.
      */
-    [[nodiscard]] regular_bg_map_ptr create_new_map(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
+    [[nodiscard]] regular_bg_map_ptr create_new_map(regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the information provided by this item.
@@ -128,9 +128,11 @@ public:
      * @param tiles Referenced tiles of the map to search or handle.
      * @param palette Referenced color palette of the map to search or handle.
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; `nullopt` otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated;
+     * `nullopt` otherwise.
      */
-    [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional(bg_tiles_ptr tiles, bg_palette_ptr palette) const;
+    [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional(
+            regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the information provided by this item.
@@ -147,13 +149,14 @@ public:
      * @return regular_bg_map_ptr which references the information provided by this item
      * if the regular_bg_map_ptr can be allocated; `nullopt` otherwise.
      */
-    [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional(bg_tiles_ptr tiles,
-                                                                       bg_palette_ptr palette) const;
+    [[nodiscard]] optional<regular_bg_map_ptr> create_new_map_optional(
+            regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const;
 
     /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a, const regular_bg_map_item& b) = default;
+    [[nodiscard]] constexpr friend bool operator==(const regular_bg_map_item& a,
+                                                   const regular_bg_map_item& b) = default;
 
 private:
     const regular_bg_map_cell* _cells_ptr;

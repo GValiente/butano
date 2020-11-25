@@ -15,9 +15,9 @@
  */
 
 #include "bn_fixed_fwd.h"
-#include "bn_bg_tiles_item.h"
 #include "bn_bg_palette_item.h"
 #include "bn_regular_bg_map_item.h"
+#include "bn_regular_bg_tiles_item.h"
 
 namespace bn
 {
@@ -61,9 +61,9 @@ public:
      *
      * @param map_dimensions Size in map cells of the referenced map cells.
      */
-    constexpr regular_bg_item(const span<const tile>& tiles_ref, const span<const color>& colors_ref, bpp_mode bpp,
-                              const regular_bg_map_cell& map_cells_ref, const size& map_dimensions) :
-        regular_bg_item(bg_tiles_item(tiles_ref, bpp), bg_palette_item(colors_ref, bpp),
+    constexpr regular_bg_item(const span<const tile>& tiles_ref, const span<const color>& colors_ref,
+                              bpp_mode bpp, const regular_bg_map_cell& map_cells_ref, const size& map_dimensions) :
+        regular_bg_item(regular_bg_tiles_item(tiles_ref, bpp), bg_palette_item(colors_ref, bpp),
                         regular_bg_map_item(map_cells_ref, map_dimensions))
     {
     }
@@ -74,7 +74,7 @@ public:
      * @param palette_item It creates the color palette of the output regular backgrounds.
      * @param map_item It creates the map of the output regular backgrounds.
      */
-    constexpr regular_bg_item(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item,
+    constexpr regular_bg_item(const regular_bg_tiles_item& tiles_item, const bg_palette_item& palette_item,
                               const regular_bg_map_item& map_item) :
         _tiles_item(tiles_item),
         _palette_item(palette_item),
@@ -86,7 +86,7 @@ public:
     /**
      * @brief Returns the item used to create the tiles of the output regular backgrounds.
      */
-    [[nodiscard]] constexpr const bg_tiles_item& tiles_item() const
+    [[nodiscard]] constexpr const regular_bg_tiles_item& tiles_item() const
     {
         return _tiles_item;
     }
@@ -178,7 +178,8 @@ public:
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
      * @return regular_bg_map_ptr which references the information provided by this item if it has been found;
-     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated; `nullopt` otherwise.
+     * otherwise it returns a regular_bg_map_ptr which references it if it could be allocated;
+     * `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> create_map_optional() const;
 
@@ -203,7 +204,7 @@ public:
     [[nodiscard]] constexpr friend bool operator==(const regular_bg_item& a, const regular_bg_item& b) = default;
 
 private:
-    bg_tiles_item _tiles_item;
+    regular_bg_tiles_item _tiles_item;
     bg_palette_item _palette_item;
     regular_bg_map_item _map_item;
 };

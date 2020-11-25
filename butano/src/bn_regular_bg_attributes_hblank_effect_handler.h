@@ -7,7 +7,7 @@
 #define BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
 #include "bn_any.h"
-#include "bn_bg_tiles_ptr.h"
+#include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_bgs_manager.h"
 #include "../hw/include/bn_hw_bgs.h"

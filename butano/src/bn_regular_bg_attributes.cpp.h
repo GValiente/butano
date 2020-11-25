@@ -7,7 +7,6 @@
 
 #include "bn_bgs.h"
 #include "bn_assert.h"
-#include "bn_bg_tiles_ptr.h"
 
 namespace bn
 {

@@ -954,7 +954,16 @@
  *
  * @subsection import_affine_bg Affine backgrounds
  *
- * Soon?
+ * The fields for affine background images are the following:
+ * * `"type"`: must be `"affine_bg"` for affine backgrounds.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::affine_bg_item should have been generated in the `build` folder.
+ * You can use this item to create an affine background with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * bn::affine_bg_ptr affine_bg = bn::affine_bg_items::image.create_bg(0, 0);
+ * @endcode
  *
  *
  * @section import_audio Audio

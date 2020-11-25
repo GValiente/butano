@@ -25,14 +25,14 @@ class size;
 class window;
 class camera_ptr;
 class fixed_point;
-class bg_tiles_ptr;
-class bg_tiles_item;
 class bg_palette_ptr;
 class bg_palette_item;
 class regular_bg_item;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class regular_bg_map_item;
+class regular_bg_tiles_ptr;
+class regular_bg_tiles_item;
 class regular_bg_attributes;
 
 /**
@@ -164,36 +164,36 @@ public:
     /**
      * @brief Returns the tiles used by this regular background.
      */
-    [[nodiscard]] const bg_tiles_ptr& tiles() const;
+    [[nodiscard]] const regular_bg_tiles_ptr& tiles() const;
 
     /**
      * @brief Sets the tiles used by this regular background.
-     * @param tiles bg_tiles_ptr to copy.
+     * @param tiles regular_bg_tiles_ptr to copy.
      *
      * It must be compatible with the current map of the regular background.
      */
-    void set_tiles(const bg_tiles_ptr& tiles);
+    void set_tiles(const regular_bg_tiles_ptr& tiles);
 
     /**
      * @brief Sets the tiles used by this regular background.
-     * @param tiles bg_tiles_ptr to move.
+     * @param tiles regular_bg_tiles_ptr to move.
      *
      * It must be compatible with the current map of the regular background.
      */
-    void set_tiles(bg_tiles_ptr&& tiles);
+    void set_tiles(regular_bg_tiles_ptr&& tiles);
 
     /**
      * @brief Replaces the tiles used by this regular background
-     * with a new tile set created with the given bg_tiles_item.
+     * with a new tile set created with the given regular_bg_tiles_item.
      *
-     * Before creating a new background tile set, the bg_tiles_ptr used by this regular background is removed,
-     * so VRAM usage is reduced.
+     * Before creating a new background tile set,
+     * the regular_bg_tiles_ptr used by this regular background is removed, so VRAM usage is reduced.
      *
      * The new background tiles must be compatible with the current map of the regular background.
      *
      * @param tiles_item It creates the new background tiles to use by this regular background.
      */
-    void set_tiles(const bg_tiles_item& tiles_item);
+    void set_tiles(const regular_bg_tiles_item& tiles_item);
 
     /**
      * @brief Returns the color palette used by this regular background.
@@ -234,14 +234,14 @@ public:
      *
      * The given parameters must be compatible with the current map of the regular background.
      *
-     * @param tiles bg_tiles_ptr to set.
+     * @param tiles regular_bg_tiles_ptr to set.
      * @param palette bg_palette_ptr to set.
      */
-    void set_tiles_and_palette(bg_tiles_ptr tiles, bg_palette_ptr palette);
+    void set_tiles_and_palette(regular_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
     /**
      * @brief Replaces the tiles and the color palette used by this regular background
-     * with the created with the given bg_tiles_item and bg_palette_item.
+     * with the created with the given regular_bg_tiles_item and bg_palette_item.
      *
      * Before creating new resources, the resources used by this regular background are removed,
      * so VRAM usage is reduced.
@@ -249,7 +249,7 @@ public:
      * @param tiles_item It creates the new background tiles to use by this regular background.
      * @param palette_item It creates the color palette to use by this regular background.
      */
-    void set_tiles_and_palette(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
+    void set_tiles_and_palette(const regular_bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
 
     /**
      * @brief Returns the map used by this regular background.

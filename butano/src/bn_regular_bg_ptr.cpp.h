@@ -8,9 +8,9 @@
 #include "bn_size.h"
 #include "bn_window.h"
 #include "bn_bgs_manager.h"
-#include "bn_bg_tiles_ptr.h"
 #include "bn_bg_palette_ptr.h"
 #include "bn_regular_bg_builder.h"
+#include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 
 namespace bn
@@ -119,24 +119,24 @@ size regular_bg_ptr::dimensions() const
     return bgs_manager::dimensions(_handle);
 }
 
-const bg_tiles_ptr& regular_bg_ptr::tiles() const
+const regular_bg_tiles_ptr& regular_bg_ptr::tiles() const
 {
     return bgs_manager::map(_handle).tiles();
 }
 
-void regular_bg_ptr::set_tiles(const bg_tiles_ptr& tiles)
+void regular_bg_ptr::set_tiles(const regular_bg_tiles_ptr& tiles)
 {
     regular_bg_map_ptr map = bgs_manager::map(_handle);
     map.set_tiles(tiles);
 }
 
-void regular_bg_ptr::set_tiles(bg_tiles_ptr&& tiles)
+void regular_bg_ptr::set_tiles(regular_bg_tiles_ptr&& tiles)
 {
     regular_bg_map_ptr map = bgs_manager::map(_handle);
     map.set_tiles(move(tiles));
 }
 
-void regular_bg_ptr::set_tiles(const bg_tiles_item& tiles_item)
+void regular_bg_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
 {
     regular_bg_map_ptr map = bgs_manager::map(_handle);
     map.set_tiles(tiles_item);
@@ -165,13 +165,14 @@ void regular_bg_ptr::set_palette(const bg_palette_item& palette_item)
     map.set_palette(palette_item);
 }
 
-void regular_bg_ptr::set_tiles_and_palette(bg_tiles_ptr tiles, bg_palette_ptr palette)
+void regular_bg_ptr::set_tiles_and_palette(regular_bg_tiles_ptr tiles, bg_palette_ptr palette)
 {
     regular_bg_map_ptr map = bgs_manager::map(_handle);
     map.set_tiles_and_palette(move(tiles), move(palette));
 }
 
-void regular_bg_ptr::set_tiles_and_palette(const bg_tiles_item& tiles_item, const bg_palette_item& palette_item)
+void regular_bg_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tiles_item,
+                                           const bg_palette_item& palette_item)
 {
     regular_bg_map_ptr map = bgs_manager::map(_handle);
     map.set_tiles_and_palette(tiles_item, palette_item);
@@ -194,7 +195,7 @@ void regular_bg_ptr::set_map(regular_bg_map_ptr&& map)
 
 void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
 {
-    const bg_tiles_ptr& current_tiles = tiles();
+    const regular_bg_tiles_ptr& current_tiles = tiles();
     const bg_palette_ptr& current_palette = palette();
 
     if(optional<regular_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette))
@@ -203,7 +204,7 @@ void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
     }
     else
     {
-        bg_tiles_ptr tiles_copy(current_tiles);
+        regular_bg_tiles_ptr tiles_copy(current_tiles);
         bg_palette_ptr palette_copy(current_palette);
         bgs_manager::remove_map(_handle);
         bgs_manager::set_map(_handle, map_item.create_new_map(move(tiles_copy), move(palette_copy)));

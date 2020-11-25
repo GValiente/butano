@@ -266,7 +266,7 @@ private:
 /**
  * @brief Hash support for regular_bg_tiles_ptr.
  *
- * @ingroup bg
+ * @ingroup regular_bg
  * @ingroup tile
  * @ingroup functional
  */

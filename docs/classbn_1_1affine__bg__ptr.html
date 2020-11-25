@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::affine_bg_ptr class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>affine_bg_ptr <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__ptr_8h.html">&lt;bn_affine_bg_ptr.h&gt;</a></div>
+        </h1>
+        <p>std::shared_ptr like smart pointer that retains shared ownership of a affine background.</p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+<p>Several <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> objects may own the same affine background.</p><p>The affine background is released when the last remaining <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a703d48632e3ad213fe55ed24c804c387" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a92176494ac712958337401d1c394ad93" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a50ac65ffd6d6a6d94fdc8a32f1e2c7dd" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a8cd54685fc97297087070697927cfa2f" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a8b93b184d017439b00a991351d0b67d6" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#aaa27aed80946ac4c5c281d151d0d07a1" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a3cd3136d1463581e2f0f503ed01b9279" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a0aea0cf9a28e5b9160a333fc4425f96e" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a87628e10192e21266f86800d7f170935" class="m-doc">affine_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab831cdfa6fc166a01ff5964f1a2318eb" class="m-doc">affine_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="ae1823d49a38229521dba9af65f4ba720">
+              <span class="m-doc-wrap-bumper"><a href="#ae1823d49a38229521dba9af65f4ba720" class="m-doc-self">~affine_bg_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced affine background if no more <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a18b52bfe0fd3ab7fc8911e7792c8ab6a" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8a9d067013ec384755af8493618d0cd1" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="ad1630a03da678e6d7371ac2968ac36d3">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad1630a03da678e6d7371ac2968ac36d3" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1size.html" class="m-doc">size</a></span>
+            </dt>
+            <dd>Returns the size in pixels of the affine background.</dd>
+            <dt id="a05b03354d24439ddb25f524bf35f21fd">
+              <span class="m-doc-wrap-bumper">auto <a href="#a05b03354d24439ddb25f524bf35f21fd" class="m-doc-self">tiles</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the tiles used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4febffc15191460072fd4af2132aceb9" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a40c04d6e9de8c6908ecc24f33331a11e" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span>
+            </dt>
+            <dd>Sets the tiles used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acf742f2cb12ca2b63b210dff23aea90e" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span>
+            </dt>
+            <dd>Replaces the tiles used by this affine background with a new tile set created with the given <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>.</dd>
+            <dt id="a8140b5ccd8e50a70c62ee05e0448b05c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8140b5ccd8e50a70c62ee05e0448b05c" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the color palette used by this affine background.</dd>
+            <dt id="a3ab73fbbc08f5ff6934b9b7d77628769">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3ab73fbbc08f5ff6934b9b7d77628769" class="m-doc-self">map</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the map used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a60bdbda4a393a235704f18a3bad9eb33" class="m-doc">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map)</span>
+            </dt>
+            <dd>Sets the map used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1493903af277eb08baedaf39825365de" class="m-doc">set_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map)</span>
+            </dt>
+            <dd>Sets the map used by this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a123b6b55088781d5046584b900cfb87d" class="m-doc">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a>&amp; map_item)</span>
+            </dt>
+            <dd>Replaces the map used by this affine background with a new map created with the given <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a454ab025d8c5726e46a114973f725a77" class="m-doc">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Replaces the tiles, the color palette and the map used by this affine background with the created with the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</dd>
+            <dt id="a3f28d919ec5253f227d093f1bedba11a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3f28d919ec5253f227d093f1bedba11a" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the affine background (relative to its camera, if it has one).</dd>
+            <dt id="a5c1a9a2a67893fd50b084717d6fa3e65">
+              <span class="m-doc-wrap-bumper">void <a href="#a5c1a9a2a67893fd50b084717d6fa3e65" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the affine background (relative to its camera, if it has one).</dd>
+            <dt id="a2f993da9dc8876cf81df00ba67c3cd9a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2f993da9dc8876cf81df00ba67c3cd9a" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the affine background (relative to its camera, if it has one).</dd>
+            <dt id="a92e809c7f72b4e889310e4de50597834">
+              <span class="m-doc-wrap-bumper">void <a href="#a92e809c7f72b4e889310e4de50597834" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the vertical position of the affine background (relative to its camera, if it has one).</dd>
+            <dt id="ab69015c52750f0369095014a6cedda3b">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab69015c52750f0369095014a6cedda3b" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the affine background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8f8891a139429df3ab19d65e3e695852" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the position of the affine background (relative to its camera, if it has one).</dd>
+            <dt id="afd6ee5c5601df48ae476d0fd8370f717">
+              <span class="m-doc-wrap-bumper">void <a href="#afd6ee5c5601df48ae476d0fd8370f717" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            </dt>
+            <dd>Sets the position of the affine background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a40b7d7667816ff7b3a0842b4a2350b73" class="m-doc">priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the affine background relative to sprites and other backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8a9dde1bd8148ec36cb3f4fb34a3facb" class="m-doc">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span>
+            </dt>
+            <dd>Sets the priority of the affine background relative to sprites and other backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adad1407842aa80657bff4b6a3a383fcc" class="m-doc">z_order</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the affine background relative to other backgrounds, excluding sprites.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae2360197f014cb4ce262ff5e58277c9d" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span>
+            </dt>
+            <dd>Sets the priority of the affine background relative to other backgrounds, excluding sprites.</dd>
+            <dt id="afd4507bb45fc9e28b16f89cddb64dea7">
+              <span class="m-doc-wrap-bumper">void <a href="#afd4507bb45fc9e28b16f89cddb64dea7" class="m-doc-self">put_above</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Modify this affine background to be drawn above all of the other backgrounds with the same priorities.</dd>
+            <dt id="aa67186cdb90d9f95b35c525e08056137">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa67186cdb90d9f95b35c525e08056137" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to this affine background or not.</dd>
+            <dt id="a1d3d93185fd4fdd303f95f62ad65aa1f">
+              <span class="m-doc-wrap-bumper">void <a href="#a1d3d93185fd4fdd303f95f62ad65aa1f" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to this affine background or not.</dd>
+            <dt id="ad1654cd868c7810d393e402610960e59">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad1654cd868c7810d393e402610960e59" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to this affine background or not.</dd>
+            <dt id="a715b1bc30121d4d9ef1cb359200a830a">
+              <span class="m-doc-wrap-bumper">void <a href="#a715b1bc30121d4d9ef1cb359200a830a" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            </dt>
+            <dd>Sets if blending must be applied to this affine background or not.</dd>
+            <dt id="a711ebbd8f56b6fb3e938a7a9274ee0f9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a711ebbd8f56b6fb3e938a7a9274ee0f9" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this affine background must be committed to the GBA or not.</dd>
+            <dt id="a90f265673223a0777601a8bf5cbd63b2">
+              <span class="m-doc-wrap-bumper">void <a href="#a90f265673223a0777601a8bf5cbd63b2" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if this affine background must be committed to the GBA or not.</dd>
+            <dt id="a6df74201a426a7ab8a7c22f362b0378b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6df74201a426a7ab8a7c22f362b0378b" class="m-doc-self">visible_in_window</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1window.html" class="m-doc">window</a>&amp; window) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this affine background is visible in the given window or not.</dd>
+            <dt id="a52c01bb9352b260bf162c800f442ef93">
+              <span class="m-doc-wrap-bumper">void <a href="#a52c01bb9352b260bf162c800f442ef93" class="m-doc-self">set_visible_in_window</a>(</span><span class="m-doc-wrap">bool visible,
+              <a href="classbn_1_1window.html" class="m-doc">window</a>&amp; window)</span>
+            </dt>
+            <dd>Sets if this affine background must be visible in the given window or not.</dd>
+            <dt id="a4be395da6534142ee67408da99eeb13e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4be395da6534142ee67408da99eeb13e" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af560d9ebe678e2b1b3e4354b79c78b39" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ab72083110b1c6760b04c067ec7b024e5" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae13afca478f34c871ab492a4372adccd" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac4703ddfac6f8ae01c6aa56767c6658a" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</dd>
+            <dt id="a7b7b71184469feb38f56cf70be65808f">
+              <span class="m-doc-wrap-bumper">void <a href="#a7b7b71184469feb38f56cf70be65808f" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background (if any).</dd>
+            <dt id="ad33ac1d8b111f2b93846a795bb01fde2">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad33ac1d8b111f2b93846a795bb01fde2" class="m-doc-self">attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1affine__bg__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the GBA for this affine background.</dd>
+            <dt id="af20ba696aa3ff02125563455d24a322e">
+              <span class="m-doc-wrap-bumper">void <a href="#af20ba696aa3ff02125563455d24a322e" class="m-doc-self">set_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />attributes</a>&amp; attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the GBA for this affine background.</dd>
+            <dt id="aec2632b113a67911ed20f577fe64ed2b">
+              <span class="m-doc-wrap-bumper">auto <a href="#aec2632b113a67911ed20f577fe64ed2b" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
+            </dt>
+            <dd>Returns the internal handle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a711126f7613bc75e9f22ce93ca3c0f79" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#afeac219f2f6c1f42d6379aaf4af3f473" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a3d684399194d780f67e2b07ec02f2863">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3d684399194d780f67e2b07ec02f2863" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a703d48632e3ad213fe55ed24c804c387"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a703d48632e3ad213fe55ed24c804c387" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a> containing the required information to generate the affine background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a92176494ac712958337401d1c394ad93"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92176494ac712958337401d1c394ad93" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a> containing the required information to generate the affine background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a50ac65ffd6d6a6d94fdc8a32f1e2c7dd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a50ac65ffd6d6a6d94fdc8a32f1e2c7dd" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8cd54685fc97297087070697927cfa2f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cd54685fc97297087070697927cfa2f" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8b93b184d017439b00a991351d0b67d6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8b93b184d017439b00a991351d0b67d6" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a> containing the required information to generate the affine background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaa27aed80946ac4c5c281d151d0d07a1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa27aed80946ac4c5c281d151d0d07a1" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+              const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td><a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a> containing the required information to generate the affine background.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3cd3136d1463581e2f0f503ed01b9279"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3cd3136d1463581e2f0f503ed01b9279" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0aea0cf9a28e5b9160a333fc4425f96e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0aea0cf9a28e5b9160a333fc4425f96e" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> if it could be allocated; <code>nullopt</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a87628e10192e21266f86800d7f170935"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a87628e10192e21266f86800d7f170935" class="m-doc-self">affine_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab831cdfa6fc166a01ff5964f1a2318eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab831cdfa6fc166a01ff5964f1a2318eb" class="m-doc-self">affine_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a18b52bfe0fd3ab7fc8911e7792c8ab6a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a18b52bfe0fd3ab7fc8911e7792c8ab6a" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8a9d067013ec384755af8493618d0cd1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8a9d067013ec384755af8493618d0cd1" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4febffc15191460072fd4af2132aceb9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4febffc15191460072fd4af2132aceb9" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the affine background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a40c04d6e9de8c6908ecc24f33331a11e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40c04d6e9de8c6908ecc24f33331a11e" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp;&amp; tiles)</span></span>
+            </h3>
+            <p>Sets the tiles used by this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>It must be compatible with the current map of the affine background.</p>
+          </div></section>
+          <section class="m-doc-details" id="acf742f2cb12ca2b63b210dff23aea90e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acf742f2cb12ca2b63b210dff23aea90e" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span></span>
+            </h3>
+            <p>Replaces the tiles used by this affine background with a new tile set created with the given <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new background tiles to use by this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new background tile set, the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> used by this affine background is removed, so VRAM usage is reduced.</p><p>The new background tiles must be compatible with the current map of the affine background.</p>
+          </div></section>
+          <section class="m-doc-details" id="a60bdbda4a393a235704f18a3bad9eb33"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a60bdbda4a393a235704f18a3bad9eb33" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map)</span></span>
+            </h3>
+            <p>Sets the map used by this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1493903af277eb08baedaf39825365de"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1493903af277eb08baedaf39825365de" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map)</span></span>
+            </h3>
+            <p>Sets the map used by this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a123b6b55088781d5046584b900cfb87d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a123b6b55088781d5046584b900cfb87d" class="m-doc-self">set_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a>&amp; map_item)</span></span>
+            </h3>
+            <p>Replaces the map used by this affine background with a new map created with the given <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_item</td>
+                  <td>It creates the new map to use by this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new map, the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> used by this affine background is removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a454ab025d8c5726e46a114973f725a77"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a454ab025d8c5726e46a114973f725a77" class="m-doc-self">set_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Replaces the tiles, the color palette and the map used by this affine background with the created with the given <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_<wbr />bg_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td>It creates the resources to use by this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources used by this affine background are removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="a8f8891a139429df3ab19d65e3e695852"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8f8891a139429df3ab19d65e3e695852" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the position of the affine background (relative to its camera, if it has one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the affine background (relative to its camera, if it has one).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the affine background (relative to its camera, if it has one).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a40b7d7667816ff7b3a0842b4a2350b73"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40b7d7667816ff7b3a0842b4a2350b73" class="m-doc-self">priority</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the affine background relative to sprites and other backgrounds.</p>
+<p>Backgrounds with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a8a9dde1bd8148ec36cb3f4fb34a3facb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8a9dde1bd8148ec36cb3f4fb34a3facb" class="m-doc-self">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span></span>
+            </h3>
+            <p>Sets the priority of the affine background relative to sprites and other backgrounds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority in the range [0..3].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="adad1407842aa80657bff4b6a3a383fcc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adad1407842aa80657bff4b6a3a383fcc" class="m-doc-self">z_order</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the affine background relative to other backgrounds, excluding sprites.</p>
+<p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="ae2360197f014cb4ce262ff5e58277c9d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae2360197f014cb4ce262ff5e58277c9d" class="m-doc-self">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span></span>
+            </h3>
+            <p>Sets the priority of the affine background relative to other backgrounds, excluding sprites.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">z_order</td>
+                  <td>Priority relative to other backgrounds, excluding sprites, in the range [-32767..32767].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="af560d9ebe678e2b1b3e4354b79c78b39"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af560d9ebe678e2b1b3e4354b79c78b39" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab72083110b1c6760b04c067ec7b024e5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab72083110b1c6760b04c067ec7b024e5" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae13afca478f34c871ab492a4372adccd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae13afca478f34c871ab492a4372adccd" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac4703ddfac6f8ae01c6aa56767c6658a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac4703ddfac6f8ae01c6aa56767c6658a" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this affine background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a711126f7613bc75e9f22ce93ca3c0f79"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a711126f7613bc75e9f22ce93ca3c0f79" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afeac219f2f6c1f42d6379aaf4af3f473"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afeac219f2f6c1f42d6379aaf4af3f473" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of a <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

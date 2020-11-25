@@ -26,7 +26,7 @@ macOS and Unix-like platforms.
 ## What's new
 
 Curious about what was added or improved recently? 
-Check out the [changelog page](https://gvaliente.github.io/butano/changelog.html) in the documentation.
+Check out the [changelog](https://gvaliente.github.io/butano/changelog.html) in the documentation.
 
 
 ## Getting started

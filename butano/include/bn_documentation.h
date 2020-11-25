@@ -934,6 +934,8 @@
  *
  * The fields for regular background images are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
+ * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
+ * * `"flipped_tiles_reduction"`: specifies if flipped tiles must be reduced or not (`true` by default).
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
@@ -956,6 +958,7 @@
  *
  * The fields for affine background images are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
+ * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_item should have been generated in the `build` folder.

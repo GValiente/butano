@@ -32,12 +32,6 @@ namespace
 {
     static_assert(BN_CFG_BGS_MAX_ITEMS > 0);
 
-    [[nodiscard]] int _affine_position(fixed position)
-    {
-        constexpr int right_shift = position.precision() - hw::bgs::affine_precision;
-        return position.data() >> right_shift;
-    }
-
     class item_type
     {
 
@@ -615,7 +609,7 @@ void set_affine_x(id_type id, fixed x)
     fixed old_x = item->position.x();
     item->position.set_x(x);
 
-    if(_affine_position(old_x) != _affine_position(x))
+    if(old_x.right_shift_integer() != x.right_shift_integer())
     {
         item->update_affine_hw_position();
         _update_item(*item);
@@ -646,7 +640,7 @@ void set_affine_y(id_type id, fixed y)
     fixed old_y = item->position.y();
     item->position.set_y(y);
 
-    if(_affine_position(old_y) != _affine_position(y))
+    if(old_y.right_shift_integer() != y.right_shift_integer())
     {
         item->update_affine_hw_position();
         _update_item(*item);
@@ -678,8 +672,8 @@ void set_affine_position(id_type id, const fixed_point& position)
     fixed_point old_position = item->position;
     item->position = position;
 
-    point old_integer_position(_affine_position(old_position.x()), _affine_position(old_position.y()));
-    point new_integer_position(_affine_position(position.x()), _affine_position(position.y()));
+    point old_integer_position(old_position.x().right_shift_integer(), old_position.y().right_shift_integer());
+    point new_integer_position(position.x().right_shift_integer(), position.y().right_shift_integer());
 
     if(old_integer_position != new_integer_position)
     {
@@ -973,18 +967,20 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
 
 void fill_hblank_effect_affine_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
+    constexpr int right_shift = fixed().precision() - hw::bgs::affine_precision;
+
     if(base_position == 0)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(_affine_position(positions_ptr[index]));
+            dest_ptr[index] = uint16_t(positions_ptr[index].data() >> right_shift);
         }
     }
     else
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(base_position + _affine_position(positions_ptr[index]));
+            dest_ptr[index] = uint16_t(base_position + (positions_ptr[index].data() >> right_shift));
         }
     }
 }

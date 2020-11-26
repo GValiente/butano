@@ -222,7 +222,7 @@ namespace
 
         void update_affine_hw_x(int real_x)
         {
-            int hw_x = -real_x - (((display::width() / 2) + half_dimensions.width()) << affine_precision);
+            int hw_x = ((half_dimensions.width() - (display::width() / 2)) << affine_precision) - real_x;
             hw_position.set_x(hw_x);
             commit_affine_hw_x();
         }
@@ -236,7 +236,7 @@ namespace
 
         void update_affine_hw_y(int real_y)
         {
-            int hw_y = -real_y - (((display::height() / 2) + half_dimensions.height()) << affine_precision);
+            int hw_y = ((half_dimensions.height() - (display::height() / 2)) << affine_precision) - real_y;
             hw_position.set_y(hw_y);
             commit_affine_hw_y();
         }
@@ -352,6 +352,7 @@ namespace
     void _insert_item(item_type& new_item)
     {
         sort_key bg_sort_key = new_item.bg_sort_key;
+        bool affine_new_item = new_item.affine_map.has_value();
 
         if(new_item.visible)
         {
@@ -362,7 +363,7 @@ namespace
         {
             const item_type* item = *it;
 
-            if(bg_sort_key > item->bg_sort_key)
+            if((affine_new_item && ! item->affine_map) || bg_sort_key > item->bg_sort_key)
             {
                 data.items_vector.insert(it, &new_item);
                 return;
@@ -477,13 +478,13 @@ void decrease_usages(id_type id)
     {
         if(! data.rebuild_handles && item->visible)
         {
-            if(! data.items_vector.empty() && item != data.items_vector.back())
+            if(item->regular_map && item == data.items_vector.back())
             {
-                data.rebuild_handles = true;
+                display_manager::set_bg_enabled(item->handles_index, false);
             }
             else
             {
-                display_manager::set_bg_enabled(item->handles_index, false);
+                data.rebuild_handles = true;
             }
         }
 
@@ -966,7 +967,7 @@ void reload()
     data.commit = true;
 }
 
-void fill_hblank_effect_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_regular_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
@@ -984,7 +985,7 @@ void fill_hblank_effect_horizontal_positions(int base_position, const fixed* pos
     }
 }
 
-void fill_hblank_effect_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_regular_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
@@ -1049,21 +1050,40 @@ void update()
 {
     if(data.rebuild_handles)
     {
-        int id = hw::bgs::count() - 1;
+        int affine_bgs_count = 0;
         data.rebuild_handles = false;
         data.commit = true;
 
         for(item_type* item : data.items_vector)
         {
+            if(item->affine_map && item->visible)
+            {
+                ++affine_bgs_count;
+            }
+        }
+
+        BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
+
+        int available_bgs = hw::bgs::count() - affine_bgs_count;
+        int id = hw::bgs::count() - 1;
+
+        if(affine_bgs_count == 1)
+        {
+            --id;
+        }
+
+        for(item_type* item : data.items_vector)
+        {
             if(item->visible)
             {
-                BN_ASSERT(BN_CFG_BGS_MAX_ITEMS <= hw::bgs::count() || id >= 0, "Too much BGs on screen");
+                BN_ASSERT(available_bgs, "Too much BGs on screen");
 
                 item->handles_index = int8_t(id);
                 data.handles[id] = item->handle;
                 display_manager::set_bg_enabled(id, true);
                 display_manager::set_blending_bg_enabled(id, item->blending_enabled);
                 --id;
+                --available_bgs;
             }
             else
             {
@@ -1071,9 +1091,16 @@ void update()
             }
         }
 
+        display_manager::set_mode(affine_bgs_count);
+
         for(int index = 0; index <= id; ++index)
         {
             display_manager::set_bg_enabled(index, false);
+        }
+
+        if(affine_bgs_count == 1)
+        {
+            display_manager::set_bg_enabled(hw::bgs::count() - 1, false);
         }
 
         display_manager::update_windows_visible_bgs();

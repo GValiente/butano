@@ -30,6 +30,7 @@ namespace
     {
 
     public:
+        int mode = 0;
         bool enabled_bgs[hw::bgs::count()] = {};
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
@@ -47,9 +48,9 @@ namespace
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
         optional<camera_ptr> rect_windows_camera[hw::display::rect_windows_count()] = {};
-        bool inside_window_enabled[hw::display::inside_windows_count()] = {};
+        bool inside_windows_enabled[hw::display::inside_windows_count()] = {};
         bool commit = true;
-        bool commit_enabled_bgs = false;
+        bool commit_display = true;
         bool green_swap_enabled = false;
         bool commit_mosaic = false;
         bool blending_fade_to_black = true;
@@ -61,7 +62,6 @@ namespace
         bool update_windows_visible_bgs = false;
         bool commit_windows_flags = true;
         bool commit_windows_boundaries = false;
-        bool commit_inside_window[hw::display::inside_windows_count()] = {};
         bool commit_green_swap = false;
     };
 
@@ -90,8 +90,6 @@ namespace
 
 void init()
 {
-    hw::display::init();
-
     unsigned initial_window_flags =
             unsigned(hw::display::window_flag::SPRITES) |
             unsigned(hw::display::window_flag::BLENDING);
@@ -101,19 +99,24 @@ void init()
         window_flags = initial_window_flags;
     }
 
-    for(bool& inside_window_enabled : data.inside_window_enabled)
+    for(bool& inside_windows_enabled : data.inside_windows_enabled)
     {
-        inside_window_enabled = true;
-    }
-
-    for(bool& commit_inside_window : data.commit_inside_window)
-    {
-        commit_inside_window = true;
+        inside_windows_enabled = true;
     }
 
     for(int index = 0, limit = hw::display::rect_windows_count() * 2; index < limit; ++index)
     {
         _update_rect_windows_hw_boundaries(index);
+    }
+}
+
+void set_mode(int mode)
+{
+    if(data.mode != mode)
+    {
+        data.mode = mode;
+        data.commit_display = true;
+        data.commit = true;
     }
 }
 
@@ -124,9 +127,12 @@ bool bg_enabled(int bg)
 
 void set_bg_enabled(int bg, bool enabled)
 {
-    data.enabled_bgs[bg] = enabled;
-    data.commit_enabled_bgs = true;
-    data.commit = true;
+    if(data.enabled_bgs[bg] != enabled)
+    {
+        data.enabled_bgs[bg] = enabled;
+        data.commit_display = true;
+        data.commit = true;
+    }
 }
 
 fixed sprites_mosaic_horizontal_stretch()
@@ -674,14 +680,17 @@ void fill_rect_window_hblank_effect_vertical_boundaries(
 
 bool inside_window_enabled(int window)
 {
-    return data.inside_window_enabled[window];
+    return data.inside_windows_enabled[window];
 }
 
 void set_inside_window_enabled(int window, bool enabled)
 {
-    data.inside_window_enabled[window] = enabled;
-    data.commit_inside_window[window] = true;
-    data.commit = true;
+    if(data.inside_windows_enabled[window] != enabled)
+    {
+        data.inside_windows_enabled[window] = enabled;
+        data.commit_display = true;
+        data.commit = true;
+    }
 }
 
 bool green_swap_enabled()
@@ -791,14 +800,10 @@ void commit()
     {
         data.commit = false;
 
-        if(data.commit_enabled_bgs)
+        if(data.commit_display)
         {
-            for(int index = 0; index < hw::bgs::count(); ++index)
-            {
-                hw::display::set_bg_enabled(index, data.enabled_bgs[index]);
-            }
-
-            data.commit_enabled_bgs = false;
+            hw::display::setup(data.mode, data.enabled_bgs, data.inside_windows_enabled);
+            data.commit_display = false;
         }
 
         if(data.commit_mosaic)
@@ -834,17 +839,6 @@ void commit()
         {
             hw::display::set_windows_flags(data.windows_flags);
             data.commit_windows_flags = false;
-        }
-
-        for(int index = 0; index < hw::display::inside_windows_count(); ++index)
-        {
-            bool& commit_inside_window = data.commit_inside_window[index];
-
-            if(commit_inside_window)
-            {
-                hw::display::set_inside_window_enabled(index, data.inside_window_enabled[index]);
-                commit_inside_window = false;
-            }
         }
 
         if(data.commit_windows_boundaries)

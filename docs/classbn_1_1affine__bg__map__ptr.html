@@ -205,6 +205,18 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a213df10714c0c8326bb656786a5eedd2" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;</span>
             </dt>
             <dd>Returns the referenced color palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad4296dac489b600de6cb6d81e44b7790" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette)</span>
+            </dt>
+            <dd>Sets the referenced color palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ab456b10036b5df6469c9b8f3a8369722" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span>
+            </dt>
+            <dd>Sets the referenced color palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af9cb7a325728ada21a0c860b0611fd45" class="m-doc">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Replaces the referenced color palette with a new tile set created with the given <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</dd>
             <dt id="a013b65d853bd87ac087854879bd0fb22">
               <span class="m-doc-wrap-bumper">auto <a href="#a013b65d853bd87ac087854879bd0fb22" class="m-doc-self">vram</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&gt;&gt;</span>
             </dt>
@@ -739,6 +751,58 @@
               </tbody>
             </table>
 <p>Before creating a new background tile set, the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> referenced by this map is removed, so VRAM usage is reduced.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad4296dac489b600de6cb6d81e44b7790"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_map_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad4296dac489b600de6cb6d81e44b7790" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette)</span></span>
+            </h3>
+            <p>Sets the referenced color palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab456b10036b5df6469c9b8f3a8369722"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_map_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab456b10036b5df6469c9b8f3a8369722" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;&amp; palette)</span></span>
+            </h3>
+            <p>Sets the referenced color palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette</td>
+                  <td><a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af9cb7a325728ada21a0c860b0611fd45"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_map_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af9cb7a325728ada21a0c860b0611fd45" class="m-doc-self">set_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Replaces the referenced color palette with a new tile set created with the given <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">palette_item</td>
+                  <td>It creates the new color palette to reference.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating a new color palette, the <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> referenced by this map is removed, so VRAM usage is reduced.</p>
           </div></section>
           <section class="m-doc-details" id="af62b8c7b3f3a7e7e1bf5b382ca2f6dea"><div>
             <h3>

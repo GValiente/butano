@@ -129,9 +129,11 @@ namespace bgs_manager
 
     void reload();
 
-    void fill_hblank_effect_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_regular_horizontal_positions(int base_position, const fixed* positions_ptr,
+                                                         uint16_t* dest_ptr);
 
-    void fill_hblank_effect_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
+    void fill_hblank_effect_regular_vertical_positions(int base_position, const fixed* positions_ptr,
+                                                       uint16_t* dest_ptr);
 
     void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr,
                                                uint16_t* dest_ptr);

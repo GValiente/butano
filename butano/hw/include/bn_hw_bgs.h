@@ -38,6 +38,11 @@ namespace bn::hw::bgs
         return 4;
     }
 
+    [[nodiscard]] constexpr int affine_count()
+    {
+        return 2;
+    }
+
     inline void setup_regular(const regular_bg_builder& builder, handle& bg)
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6));

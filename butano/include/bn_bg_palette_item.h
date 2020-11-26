@@ -30,7 +30,7 @@ class bg_palette_ptr;
  * @brief Contains the required information to generate background color palettes.
  *
  * The assets conversion tools generate an object of this type in the build folder for each *.bmp file
- * with `regular_bg` type.
+ * with `regular_bg` or `affine_bg` types.
  *
  * The colors are not copied but referenced, so they should outlive the bg_palette_item
  * to avoid dangling references.

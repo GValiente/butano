@@ -59,7 +59,7 @@ namespace bn::hw::bg_blocks
     {
         first_source_cell += tiles_offset;
         second_source_cell += tiles_offset;
-        destination_cell = uint16_t((first_source_cell << 8) + second_source_cell);
+        destination_cell = uint16_t((second_source_cell << 8) + first_source_cell);
     }
 
     inline void copy_regular_bg_map_cell_palette_offset(unsigned source_cell, unsigned palette_offset,

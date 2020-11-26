@@ -151,7 +151,7 @@ namespace
         {
             int tiles_start_block = affine_tiles->id();
             int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
-            return _blocks_to_tiles(offset_blocks_count);
+            return _blocks_to_tiles(offset_blocks_count) / 2;
         }
 
         [[nodiscard]] int palette_offset() const
@@ -1243,7 +1243,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE_TILES", (optional ? " OPTIONAL: " : ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
     int result = _find_tiles_impl(tiles_data, half_words);
@@ -1735,7 +1735,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
 
 void increase_usages(int id)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE USAGES: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
     ++item.usages;
@@ -1745,7 +1745,7 @@ void increase_usages(int id)
 
 void decrease_usages(int id)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE_USAGES: ", id, " - ", data.items.item(id).start_block);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE USAGES: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
     --item.usages;

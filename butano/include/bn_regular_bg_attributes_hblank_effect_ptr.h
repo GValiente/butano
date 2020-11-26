@@ -21,8 +21,8 @@ namespace bn
 {
 
 /**
- * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes
- * to commit to the GBA register of a regular background in each screen horizontal line.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect
+ * which changes the attributes to commit to the GBA register of a regular background in each screen horizontal line.
  *
  * @ingroup regular_bg
  * @ingroup hblank_effect

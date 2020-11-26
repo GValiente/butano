@@ -188,9 +188,19 @@ namespace bn::hw::bgs
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0010 + (0x0004 * id));
     }
 
+    [[nodiscard]] inline uint16_t* affine_horizontal_position_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(&REG_BG_AFFINE[id].dx);
+    }
+
     [[nodiscard]] inline uint16_t* regular_vertical_position_register(int id)
     {
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0012 + (0x0004 * id));
+    }
+
+    [[nodiscard]] inline uint16_t* affine_vertical_position_register(int id)
+    {
+        return reinterpret_cast<uint16_t*>(&REG_BG_AFFINE[id].dy);
     }
 
     [[nodiscard]] inline uint16_t* attributes_register(int id)

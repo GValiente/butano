@@ -10,13 +10,13 @@
 #include "bn_blending.h"
 #include "bn_bgs_mosaic.h"
 #include "bn_bg_palettes.h"
-// #include "bn_affine_bg_actions.h"
+#include "bn_affine_bg_actions.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_builder.h"
 #include "bn_affine_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
-// #include "bn_affine_bg_position_hblank_effect_ptr.h"
-// #include "bn_affine_bg_attributes_hblank_effect_ptr.h"
+#include "bn_affine_bg_position_hblank_effect_ptr.h"
+#include "bn_affine_bg_attributes_hblank_effect_ptr.h"
 
 #include "bn_sprite_items_turtle.h"
 #include "bn_affine_bg_items_red.h"
@@ -51,7 +51,7 @@ namespace
         }
     }
 
-    /*void affine_bgs_visibility_actions_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_visibility_actions_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -59,8 +59,8 @@ namespace
 
         info info("Affine BGs visibility actions", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr green_bg = bn::affine_bg_items::green.create_bg(0, 0);
-        bn::affine_bg_visible_toggle_action action(green_bg, 60);
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        bn::affine_bg_visible_toggle_action action(blue_bg, 60);
 
         while(! bn::keypad::start_pressed())
         {
@@ -68,7 +68,7 @@ namespace
             info.update();
             bn::core::update();
         }
-    }*/
+    }
 
     void affine_bgs_position_scene(bn::sprite_text_generator& text_generator)
     {
@@ -80,26 +80,26 @@ namespace
 
         info info("Affine BGs position", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
 
         while(! bn::keypad::start_pressed())
         {
             if(bn::keypad::left_held())
             {
-                blue_bg.set_x(blue_bg.x() - 1);
+                red_bg.set_x(red_bg.x() - 1);
             }
             else if(bn::keypad::right_held())
             {
-                blue_bg.set_x(blue_bg.x() + 1);
+                red_bg.set_x(red_bg.x() + 1);
             }
 
             if(bn::keypad::up_held())
             {
-                blue_bg.set_y(blue_bg.y() - 1);
+                red_bg.set_y(red_bg.y() - 1);
             }
             else if(bn::keypad::down_held())
             {
-                blue_bg.set_y(blue_bg.y() + 1);
+                red_bg.set_y(red_bg.y() + 1);
             }
 
             info.update();
@@ -107,7 +107,7 @@ namespace
         }
     }
 
-    /*void affine_bgs_position_actions_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -116,8 +116,8 @@ namespace
         info info("Affine BGs position actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
-        bn::affine_bg_ptr yellow_bg = bn::affine_bg_items::yellow.create_bg(-amplitude, -amplitude);
-        bn::affine_bg_move_loop_action action(yellow_bg, 120, amplitude, amplitude);
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        bn::affine_bg_move_loop_action action(blue_bg, 120, amplitude, amplitude);
 
         while(! bn::keypad::start_pressed())
         {
@@ -125,9 +125,9 @@ namespace
             info.update();
             bn::core::update();
         }
-    }*/
+    }
 
-    /*void affine_bgs_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -173,7 +173,7 @@ namespace
             info.update();
             bn::core::update();
         }
-    }*/
+    }
 
     void affine_bgs_priority_scene(bn::sprite_text_generator& text_generator)
     {
@@ -310,7 +310,7 @@ namespace
         }
     }
 
-    /*void affine_bgs_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -319,10 +319,10 @@ namespace
         info info("Affine BGs attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
-        bn::affine_bg_map_ptr green_map = bn::affine_bg_items::green.create_map();
+        bn::affine_bg_map_ptr blue_map = bn::affine_bg_items::blue.create_map();
         bn::affine_bg_attributes red_attributes = red_bg.attributes();
-        bn::affine_bg_attributes green_attributes = red_attributes;
-        green_attributes.set_map(green_map);
+        bn::affine_bg_attributes blue_attributes = red_attributes;
+        blue_attributes.set_map(blue_map);
 
         bn::vector<bn::affine_bg_attributes, bn::display::height()> attributes;
 
@@ -330,7 +330,7 @@ namespace
         {
             if(index % 2)
             {
-                attributes.push_back(green_attributes);
+                attributes.push_back(blue_attributes);
             }
             else
             {
@@ -347,7 +347,7 @@ namespace
             info.update();
             bn::core::update();
         }
-    }*/
+    }
 
     void affine_bg_builder_scene(bn::sprite_text_generator& text_generator)
     {
@@ -391,17 +391,17 @@ int main()
         affine_bgs_visibility_scene(text_generator);
         bn::core::update();
 
-        /*affine_bgs_visibility_actions_scene(text_generator);
-        bn::core::update();*/
+        affine_bgs_visibility_actions_scene(text_generator);
+        bn::core::update();
 
         affine_bgs_position_scene(text_generator);
         bn::core::update();
 
-        /*affine_bgs_position_actions_scene(text_generator);
-        bn::core::update();*/
+        affine_bgs_position_actions_scene(text_generator);
+        bn::core::update();
 
-        /*affine_bgs_position_hblank_effect_scene(text_generator);
-        bn::core::update();*/
+        affine_bgs_position_hblank_effect_scene(text_generator);
+        bn::core::update();
 
         affine_bgs_priority_scene(text_generator);
         bn::core::update();
@@ -415,8 +415,8 @@ int main()
         affine_bgs_attributes_scene(text_generator);
         bn::core::update();
 
-        /*affine_bgs_attributes_hblank_effect_scene(text_generator);
-        bn::core::update();*/
+        affine_bgs_attributes_hblank_effect_scene(text_generator);
+        bn::core::update();
 
         affine_bg_builder_scene(text_generator);
         bn::core::update();

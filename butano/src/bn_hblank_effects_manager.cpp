@@ -17,8 +17,11 @@
 #include "bn_rect_window_horizontal_boundaries_hblank_effect_handler.h"
 #include "bn_rect_window_vertical_boundaries_hblank_effect_handler.h"
 #include "bn_regular_bg_attributes_hblank_effect_handler.h"
+#include "bn_affine_bg_attributes_hblank_effect_handler.h"
 #include "bn_regular_bg_horizontal_position_hblank_effect_handler.h"
+#include "bn_affine_bg_horizontal_position_hblank_effect_handler.h"
 #include "bn_regular_bg_vertical_position_hblank_effect_handler.h"
+#include "bn_affine_bg_vertical_position_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
@@ -41,7 +44,9 @@
 #include "bn_mosaic_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_rect_window_boundaries_hblank_effect_ptr.cpp.h"
 #include "bn_regular_bg_attributes_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_regular_bg_position_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_position_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
@@ -125,12 +130,24 @@ namespace
                 regular_bg_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
+            case handler_type::AFFINE_BG_ATTRIBUTES:
+                affine_bg_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
                 regular_bg_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
+            case handler_type::AFFINE_BG_HORIZONTAL_POSITION:
+                affine_bg_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_VERTICAL_POSITION:
+                affine_bg_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -231,11 +248,20 @@ namespace
             case handler_type::REGULAR_BG_ATTRIBUTES:
                 return _check_update_impl<regular_bg_attributes_hblank_effect_handler>();
 
+            case handler_type::AFFINE_BG_ATTRIBUTES:
+                return _check_update_impl<affine_bg_attributes_hblank_effect_handler>();
+
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
                 return _check_update_impl<regular_bg_horizontal_position_hblank_effect_handler>();
 
+            case handler_type::AFFINE_BG_HORIZONTAL_POSITION:
+                return _check_update_impl<affine_bg_horizontal_position_hblank_effect_handler>();
+
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 return _check_update_impl<regular_bg_vertical_position_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_VERTICAL_POSITION:
+                return _check_update_impl<affine_bg_vertical_position_hblank_effect_handler>();
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
                 return _check_update_impl<sprite_affine_mat_pa_register_attributes_hblank_effect_handler>();
@@ -335,12 +361,24 @@ namespace
                 regular_bg_attributes_hblank_effect_handler::show(target_id);
                 break;
 
+            case handler_type::AFFINE_BG_ATTRIBUTES:
+                affine_bg_attributes_hblank_effect_handler::show(target_id);
+                break;
+
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
                 regular_bg_horizontal_position_hblank_effect_handler::show(target_id);
                 break;
 
+            case handler_type::AFFINE_BG_HORIZONTAL_POSITION:
+                affine_bg_horizontal_position_hblank_effect_handler::show(target_id);
+                break;
+
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_VERTICAL_POSITION:
+                affine_bg_vertical_position_hblank_effect_handler::show(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -450,12 +488,24 @@ namespace
                 regular_bg_attributes_hblank_effect_handler::cleanup(target_id);
                 break;
 
+            case handler_type::AFFINE_BG_ATTRIBUTES:
+                affine_bg_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
                 regular_bg_horizontal_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
+            case handler_type::AFFINE_BG_HORIZONTAL_POSITION:
+                affine_bg_horizontal_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_VERTICAL_POSITION:
+                affine_bg_vertical_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:

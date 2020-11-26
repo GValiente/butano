@@ -32,11 +32,9 @@ namespace
 {
     static_assert(BN_CFG_BGS_MAX_ITEMS > 0);
 
-    constexpr const int affine_precision = 8;
-
     [[nodiscard]] int _affine_position(fixed position)
     {
-        constexpr int right_shift = position.precision() - affine_precision;
+        constexpr int right_shift = position.precision() - hw::bgs::affine_precision;
         return position.data() >> right_shift;
     }
 
@@ -222,7 +220,7 @@ namespace
 
         void update_affine_hw_x(int real_x)
         {
-            int hw_x = ((half_dimensions.width() - (display::width() / 2)) << affine_precision) - real_x;
+            int hw_x = ((half_dimensions.width() - (display::width() / 2)) << hw::bgs::affine_precision) - real_x;
             hw_position.set_x(hw_x);
             commit_affine_hw_x();
         }
@@ -236,7 +234,7 @@ namespace
 
         void update_affine_hw_y(int real_y)
         {
-            int hw_y = ((half_dimensions.height() - (display::height() / 2)) << affine_precision) - real_y;
+            int hw_y = ((half_dimensions.height() - (display::height() / 2)) << hw::bgs::affine_precision) - real_y;
             hw_position.set_y(hw_y);
             commit_affine_hw_y();
         }
@@ -263,9 +261,9 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(x >= 0 && x < ((half_dimensions.width() * 2) - display::width()) << affine_precision,
+                BN_ASSERT(x >= 0 && x >> hw::bgs::affine_precision < (half_dimensions.width() * 2) - display::width(),
                           "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          x, " - ", (half_dimensions.width() * 2) - display::width());
+                          x >> hw::bgs::affine_precision, " - ", (half_dimensions.width() * 2) - display::width());
 
                 commit_big_map = true;
             }
@@ -293,9 +291,9 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(y >= 0 && y < ((half_dimensions.height() * 2) - display::height()) << affine_precision,
+                BN_ASSERT(y >= 0 && y >> hw::bgs::affine_precision < (half_dimensions.height() * 2) - display::height(),
                           "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          y, " - ", (half_dimensions.height() * 2) - display::height());
+                          y >> hw::bgs::affine_precision, " - ", (half_dimensions.height() * 2) - display::height());
 
                 commit_big_map = true;
             }
@@ -967,7 +965,7 @@ void reload()
     data.commit = true;
 }
 
-void fill_hblank_effect_regular_horizontal_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_regular_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
@@ -985,20 +983,20 @@ void fill_hblank_effect_regular_horizontal_positions(int base_position, const fi
     }
 }
 
-void fill_hblank_effect_regular_vertical_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_affine_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     if(base_position == 0)
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(positions_ptr[index].right_shift_integer());
+            dest_ptr[index] = uint16_t(_affine_position(positions_ptr[index]));
         }
     }
     else
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(base_position + positions_ptr[index].right_shift_integer());
+            dest_ptr[index] = uint16_t(base_position + _affine_position(positions_ptr[index]));
         }
     }
 }
@@ -1122,12 +1120,22 @@ void commit_big_maps()
     {
         if(item->big_map)
         {
+            bool is_regular = item->regular_map.has_value();
             int old_map_x = item->old_big_map_x;
             int old_map_y = item->old_big_map_y;
-            int new_map_x = item->hw_position.x() / 8;
-            int new_map_y = item->hw_position.y() / 8;
+            int new_map_x, new_map_y;
 
-            bool is_regular = item->regular_map.has_value();
+            if(is_regular)
+            {
+                new_map_x = item->hw_position.x() / 8;
+                new_map_y = item->hw_position.y() / 8;
+            }
+            else
+            {
+                new_map_x = item->hw_position.x() / (8 * hw::bgs::affine_precision);
+                new_map_y = item->hw_position.y() / (8 * hw::bgs::affine_precision);
+            }
+
             int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
             bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
             bool commit_big_map = full_commit_big_map;

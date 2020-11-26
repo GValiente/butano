@@ -197,15 +197,13 @@ namespace
 
         while(! bn::keypad::start_pressed())
         {
-            int priority = red_bg.priority();
-
             if(bn::keypad::left_pressed())
             {
-                red_bg.set_priority(bn::max(priority - 1, 0));
+                red_bg.set_priority(1);
             }
             else if(bn::keypad::right_pressed())
             {
-                red_bg.set_priority(bn::min(priority + 1, 3));
+                red_bg.set_priority(2);
             }
 
             info.update();
@@ -235,15 +233,13 @@ namespace
 
         while(! bn::keypad::start_pressed())
         {
-            int z_order = red_bg.z_order();
-
             if(bn::keypad::left_pressed())
             {
-                red_bg.set_z_order(bn::max(z_order - 1, 0));
+                red_bg.set_z_order(1);
             }
             else if(bn::keypad::right_pressed())
             {
-                red_bg.set_z_order(bn::min(z_order + 1, 3));
+                red_bg.set_z_order(2);
             }
 
             info.update();
@@ -255,7 +251,7 @@ namespace
     {
         constexpr const bn::string_view info_text_lines[] = {
             "B: put blue BG above red BG",
-            "A: put red BG above all",
+            "A: put red BG above blue BG",
             "",
             "START: go to next scene",
         };

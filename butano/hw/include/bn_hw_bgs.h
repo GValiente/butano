@@ -13,6 +13,8 @@
 
 namespace bn::hw::bgs
 {
+    constexpr const int affine_precision = 8;
+
     class handle
     {
 

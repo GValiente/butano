@@ -13,24 +13,24 @@
 
 namespace bn::hw::bgs
 {
-    struct alignas(int) affine_info
-    {
-        int16_t pa = 256;
-        int16_t pb = 0;
-        int16_t pc = 0;
-        int16_t pd = 256;
-        int dx = 0;
-        int dy = 0;
-    };
-
     class handle
     {
 
     public:
-        affine_info affine;
+        BG_AFFINE affine;
         uint16_t cnt = 0;
         uint16_t hofs = 0;
         uint16_t vofs = 0;
+
+        handle()
+        {
+            affine.pa = 256;
+            affine.pb = 0;
+            affine.pc = 0;
+            affine.pd = 256;
+            affine.dx = 0;
+            affine.dy = 0;
+        }
     };
 
     [[nodiscard]] constexpr int count()
@@ -167,13 +167,13 @@ namespace bn::hw::bgs
         REG_BG2CNT = bg2.cnt;
         REG_BG2HOFS = bg2.hofs;
         REG_BG2VOFS = bg2.vofs;
-        REG_BG_AFFINE[2] = reinterpret_cast<const BG_AFFINE&>(bg2.affine);
+        REG_BG_AFFINE[2] = bg2.affine;
 
         const handle& bg3 = bgs_ptr[3];
         REG_BG3CNT = bg3.cnt;
         REG_BG3HOFS = bg3.hofs;
         REG_BG3VOFS = bg3.vofs;
-        REG_BG_AFFINE[3] = reinterpret_cast<const BG_AFFINE&>(bg3.affine);
+        REG_BG_AFFINE[3] = bg3.affine;
     }
 
     [[nodiscard]] inline uint16_t* regular_horizontal_position_register(int id)

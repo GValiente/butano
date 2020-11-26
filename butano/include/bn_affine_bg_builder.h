@@ -18,11 +18,14 @@
 #include "bn_fixed_point.h"
 #include "bn_affine_bg_item.h"
 #include "bn_affine_bg_map_ptr.h"
+#include "bn_sprite_affine_mat_attributes.h"
 
 namespace bn
 {
 
 class affine_bg_ptr;
+
+using affine_mat_attributes = sprite_affine_mat_attributes;
 
 /**
  * @brief Creates affine_bg_map_ptr objects with custom attributes.
@@ -145,6 +148,25 @@ public:
     affine_bg_builder& set_position(const fixed_point& position)
     {
         _position = position;
+        return *this;
+    }
+
+    /**
+     * @brief Returns the attributes of the affine transformation matrix of the affine backgrounds to generate.
+     */
+    [[nodiscard]] const affine_mat_attributes& mat_attributes() const
+    {
+        return _mat_attributes;
+    }
+
+    /**
+     * @brief Sets the attributes of the affine transformation matrix of the affine backgrounds to generate.
+     * @param mat_attributes affine_mat_attributes of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_affine_mat(const affine_mat_attributes& mat_attributes)
+    {
+        _mat_attributes = mat_attributes;
         return *this;
     }
 
@@ -391,6 +413,7 @@ public:
     [[nodiscard]] optional<affine_bg_map_ptr> release_map_optional();
 
 private:
+    affine_mat_attributes _mat_attributes;
     optional<affine_bg_item> _item;
     fixed_point _position;
     int _priority = 3;

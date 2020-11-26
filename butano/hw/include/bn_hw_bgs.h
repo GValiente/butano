@@ -54,10 +54,12 @@ namespace bn::hw::bgs
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) |
                           (builder.wrapping_enabled() << 13) | BG_8BPP);
-        bg.affine.pa = 256;
-        bg.affine.pb = 0;
-        bg.affine.pc = 0;
-        bg.affine.pd = 256;
+
+        const affine_mat_attributes& mat_attributes = builder.mat_attributes();
+        bg.affine.pa = int16_t(mat_attributes.pa_register_value());
+        bg.affine.pb = int16_t(mat_attributes.pb_register_value());
+        bg.affine.pc = int16_t(mat_attributes.pc_register_value());
+        bg.affine.pd = int16_t(mat_attributes.pd_register_value());
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& bg_cnt)

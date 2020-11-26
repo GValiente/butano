@@ -43,6 +43,7 @@ namespace
 
     public:
         fixed_point position;
+        affine_mat_attributes mat_attributes;
         point hw_position;
         size half_dimensions;
         unsigned usages = 1;
@@ -76,6 +77,7 @@ namespace
 
         item_type(affine_bg_builder&& builder, affine_bg_map_ptr&& _affine_map) :
             position(builder.position()),
+            mat_attributes(builder.mat_attributes()),
             bg_sort_key(builder.priority(), builder.z_order()),
             affine_map(move(_affine_map)),
             camera(builder.release_camera()),
@@ -197,18 +199,46 @@ namespace
 
         void update_affine_hw_position()
         {
-            int real_x = _affine_position(position.x());
-            int real_y = _affine_position(position.y());
+            int real_x = position.x().right_shift_integer();
+            int real_y = position.y().right_shift_integer();
 
             if(camera)
             {
                 const fixed_point& camera_position = camera->position();
-                real_x -= _affine_position(camera_position.x());
-                real_y -= _affine_position(camera_position.y());
+                real_x -= camera_position.x().right_shift_integer();
+                real_y -= camera_position.y().right_shift_integer();
             }
 
-            update_affine_hw_x(real_x);
-            update_affine_hw_y(real_y);
+            int tex_x = half_dimensions.width() << hw::bgs::affine_precision;
+            int tex_y = half_dimensions.height() << hw::bgs::affine_precision;
+            int scr_x = real_x + (display::width() / 2);
+            int scr_y = real_y + (display::height() / 2);
+            int hw_x = tex_x - ((mat_attributes.pa_register_value() * scr_x) +
+                                (mat_attributes.pb_register_value() * scr_y));
+            int hw_y = tex_y - ((mat_attributes.pc_register_value() * scr_x) +
+                                (mat_attributes.pd_register_value() * scr_y));
+
+            hw_position.set_x(hw_x);
+            hw_position.set_y(hw_y);
+            hw::bgs::set_affine_x(hw_x, handle);
+            hw::bgs::set_affine_y(hw_y, handle);
+
+            if(big_map)
+            {
+                BN_ASSERT(hw_x >= 0 && hw_x / (8 * hw::bgs::affine_precision) <
+                          (half_dimensions.width() * 2) - display::width(),
+                          "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
+                          hw_x / (8 * hw::bgs::affine_precision), " - ",
+                          (half_dimensions.width() * 2) - display::width());
+
+                BN_ASSERT(hw_y >= 0 && hw_y / (8 * hw::bgs::affine_precision) <
+                          (half_dimensions.height() * 2) - display::height(),
+                          "Affine BGs with big maps\ndon't allow vertical wrapping: ",
+                          hw_y / (8 * hw::bgs::affine_precision), " - ",
+                          (half_dimensions.height() * 2) - display::height());
+
+                commit_big_map = true;
+            }
         }
 
         void update_regular_hw_x(int real_x)
@@ -218,25 +248,12 @@ namespace
             commit_regular_hw_x();
         }
 
-        void update_affine_hw_x(int real_x)
-        {
-            int hw_x = ((half_dimensions.width() - (display::width() / 2)) << hw::bgs::affine_precision) - real_x;
-            hw_position.set_x(hw_x);
-            commit_affine_hw_x();
-        }
-
         void update_regular_hw_y(int real_y)
         {
             int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
+
             hw_position.set_y(hw_y);
             commit_regular_hw_y();
-        }
-
-        void update_affine_hw_y(int real_y)
-        {
-            int hw_y = ((half_dimensions.height() - (display::height() / 2)) << hw::bgs::affine_precision) - real_y;
-            hw_position.set_y(hw_y);
-            commit_affine_hw_y();
         }
 
         void commit_regular_hw_x()
@@ -254,21 +271,6 @@ namespace
             }
         }
 
-        void commit_affine_hw_x()
-        {
-            int x = hw_position.x();
-            hw::bgs::set_affine_x(x, handle);
-
-            if(big_map)
-            {
-                BN_ASSERT(x >= 0 && x >> hw::bgs::affine_precision < (half_dimensions.width() * 2) - display::width(),
-                          "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          x >> hw::bgs::affine_precision, " - ", (half_dimensions.width() * 2) - display::width());
-
-                commit_big_map = true;
-            }
-        }
-
         void commit_regular_hw_y()
         {
             int y = hw_position.y();
@@ -279,21 +281,6 @@ namespace
                 BN_ASSERT(y >= 0 && y < (half_dimensions.height() * 2) - display::height(),
                           "Regular BGs with big maps\ndon't allow vertical wrapping: ",
                           y, " - ", (half_dimensions.height() * 2) - display::height());
-
-                commit_big_map = true;
-            }
-        }
-
-        void commit_affine_hw_y()
-        {
-            int y = hw_position.y();
-            hw::bgs::set_affine_y(y, handle);
-
-            if(big_map)
-            {
-                BN_ASSERT(y >= 0 && y >> hw::bgs::affine_precision < (half_dimensions.height() * 2) - display::height(),
-                          "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          y >> hw::bgs::affine_precision, " - ", (half_dimensions.height() * 2) - display::height());
 
                 commit_big_map = true;
             }
@@ -628,14 +615,9 @@ void set_affine_x(id_type id, fixed x)
     fixed old_x = item->position.x();
     item->position.set_x(x);
 
-    int old_integer_x = _affine_position(old_x);
-    int new_integer_x = _affine_position(x);
-    int diff = new_integer_x - old_integer_x;
-
-    if(diff)
+    if(_affine_position(old_x) != _affine_position(x))
     {
-        item->hw_position.set_x(item->hw_position.x() - diff);
-        item->commit_affine_hw_x();
+        item->update_affine_hw_position();
         _update_item(*item);
     }
 }
@@ -664,14 +646,9 @@ void set_affine_y(id_type id, fixed y)
     fixed old_y = item->position.y();
     item->position.set_y(y);
 
-    int old_integer_y = _affine_position(old_y);
-    int new_integer_y = _affine_position(y);
-    int diff = new_integer_y - old_integer_y;
-
-    if(diff)
+    if(_affine_position(old_y) != _affine_position(y))
     {
-        item->hw_position.set_y(item->hw_position.y() - diff);
-        item->commit_affine_hw_y();
+        item->update_affine_hw_position();
         _update_item(*item);
     }
 }
@@ -703,13 +680,10 @@ void set_affine_position(id_type id, const fixed_point& position)
 
     point old_integer_position(_affine_position(old_position.x()), _affine_position(old_position.y()));
     point new_integer_position(_affine_position(position.x()), _affine_position(position.y()));
-    point diff = new_integer_position - old_integer_position;
 
-    if(diff != point())
+    if(old_integer_position != new_integer_position)
     {
-        item->hw_position -= diff;
-        item->commit_affine_hw_x();
-        item->commit_affine_hw_y();
+        item->update_affine_hw_position();
         _update_item(*item);
     }
 }

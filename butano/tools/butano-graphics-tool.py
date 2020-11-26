@@ -340,10 +340,10 @@ class AffineBgItem:
         width = bmp.width
         height = bmp.height
 
-        if width == 128 or width % 256 != 0:
+        if width != 128 and width % 256 != 0:
             raise ValueError('Affine BGs width must be 128 or divisible by 256: ' + str(width))
 
-        if height == 128 or height % 256 != 0:
+        if height != 128 and height % 256 != 0:
             raise ValueError('Affine BGs height must be 128 or divisible by 256: ' + str(height))
 
         self.__width = int(width / 8)

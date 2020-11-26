@@ -35,9 +35,10 @@ public:
      *
      * Backgrounds with higher priorities are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
+     * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
      * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
      */
-    affine_bg_attributes(const affine_bg_map_ptr& map, int priority, bool mosaic_enabled);
+    affine_bg_attributes(const affine_bg_map_ptr& map, int priority, bool wrapping_enabled, bool mosaic_enabled);
 
     /**
      * @brief Constructor.
@@ -47,9 +48,10 @@ public:
      *
      * Backgrounds with higher priorities are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
+     * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
      * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
      */
-    affine_bg_attributes(affine_bg_map_ptr&& map, int priority, bool mosaic_enabled);
+    affine_bg_attributes(affine_bg_map_ptr&& map, int priority, bool wrapping_enabled, bool mosaic_enabled);
 
     /**
      * @brief Returns the affine_bg_map_ptr of an affine background.
@@ -99,6 +101,22 @@ public:
     void set_priority(int priority);
 
     /**
+     * @brief Indicates if an affine background wraps around at the edges or not.
+     */
+    [[nodiscard]] bool wrapping_enabled() const
+    {
+        return _wrapping_enabled;
+    }
+
+    /**
+     * @brief Sets if an affine background must wrap around at the edges or not.
+     */
+    void set_wrapping_enabled(bool wrapping_enabled)
+    {
+        _wrapping_enabled = wrapping_enabled;
+    }
+
+    /**
      * @brief Indicates if the mosaic effect is applied to an affine background or not.
      */
     [[nodiscard]] bool mosaic_enabled() const
@@ -122,6 +140,7 @@ public:
 private:
     affine_bg_map_ptr _map;
     int8_t _priority;
+    bool _wrapping_enabled;
     bool _mosaic_enabled;
 };
 

@@ -21,6 +21,8 @@
 #include "bn_sprite_items_turtle.h"
 #include "bn_affine_bg_items_red.h"
 #include "bn_affine_bg_items_blue.h"
+#include "bn_affine_bg_items_red_small.h"
+#include "bn_affine_bg_items_blue_small.h"
 
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
@@ -170,6 +172,49 @@ namespace
             }
 
             horizontal_hblank_effect.reload_deltas_ref();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_wrapping_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "A: enable/disable wrapping",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs wrapping", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::a_pressed())
+            {
+                red_bg.set_wrapping_enabled(! red_bg.wrapping_enabled());
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_wrapping_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs wrapping actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue_small.create_bg(0, 0);
+        bn::affine_bg_wrapping_toggle_action action(blue_bg, 60);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
             info.update();
             bn::core::update();
         }
@@ -401,6 +446,12 @@ int main()
         bn::core::update();
 
         affine_bgs_position_hblank_effect_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_wrapping_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_wrapping_actions_scene(text_generator);
         bn::core::update();
 
         affine_bgs_priority_scene(text_generator);

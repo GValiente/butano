@@ -193,6 +193,25 @@ public:
     affine_bg_builder& set_z_order(int z_order);
 
     /**
+     * @brief Indicates if the affine backgrounds to generate wrap around at the edges or not.
+     */
+    [[nodiscard]] bool wrapping_enabled() const
+    {
+        return _wrapping_enabled;
+    }
+
+    /**
+     * @brief Sets if the affine backgrounds to generate must wrap around at the edges or not.
+     * @param wrapping_enabled `true` if they must wrap around at the edges; `false` otherwise.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_wrapping_enabled(bool wrapping_enabled)
+    {
+        _wrapping_enabled = wrapping_enabled;
+        return *this;
+    }
+
+    /**
      * @brief Indicates if the mosaic effect must be applied to the affine backgrounds to generate or not.
      */
     [[nodiscard]] bool mosaic_enabled() const
@@ -378,6 +397,7 @@ private:
     int _z_order = 0;
     optional<affine_bg_map_ptr> _map;
     optional<camera_ptr> _camera;
+    bool _wrapping_enabled = true;
     bool _mosaic_enabled = false;
     bool _blending_enabled = false;
     bool _visible = true;

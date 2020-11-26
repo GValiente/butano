@@ -271,6 +271,16 @@ void affine_bg_ptr::put_above()
     bgs_manager::put_above(_handle);
 }
 
+bool affine_bg_ptr::wrapping_enabled() const
+{
+    return bgs_manager::wrapping_enabled(_handle);
+}
+
+void affine_bg_ptr::set_wrapping_enabled(bool wrapping_enabled)
+{
+    bgs_manager::set_wrapping_enabled(_handle, wrapping_enabled);
+}
+
 bool affine_bg_ptr::mosaic_enabled() const
 {
     return bgs_manager::mosaic_enabled(_handle);

@@ -68,14 +68,16 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ade72e089affcafe2e92645f56f7bedcf" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              <span class="m-doc-wrap-bumper"><a href="#a21449ad7e39ad81950c4d82282e6e66f" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
               int priority,
+              bool wrapping_enabled,
               bool mosaic_enabled)</span>
             </dt>
             <dd>Constructor.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a2a56959469ef13c09b53d7ffce5bcf48" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              <span class="m-doc-wrap-bumper"><a href="#aafd01a6632cbdf5b59aff44813b9d2d1" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
               int priority,
+              bool wrapping_enabled,
               bool mosaic_enabled)</span>
             </dt>
             <dd>Constructor.</dd>
@@ -104,6 +106,14 @@
               <span class="m-doc-wrap-bumper">void <a href="#adb6eb3802079cfe87bc81731a114d7a7" class="m-doc">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span>
             </dt>
             <dd>Sets the priority of an affine background relative to sprites and other backgrounds.</dd>
+            <dt id="a9d03dd7fd55f1045e47443f38932e9b6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d03dd7fd55f1045e47443f38932e9b6" class="m-doc-self">wrapping_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if an affine background wraps around at the edges or not.</dd>
+            <dt id="a32e13ef1fac01ce6080b16d93e17c6d8">
+              <span class="m-doc-wrap-bumper">void <a href="#a32e13ef1fac01ce6080b16d93e17c6d8" class="m-doc-self">set_wrapping_enabled</a>(</span><span class="m-doc-wrap">bool wrapping_enabled)</span>
+            </dt>
+            <dd>Sets if an affine background must wrap around at the edges or not.</dd>
             <dt id="a5815e20706919a99ac5bc1a5e1c12caa">
               <span class="m-doc-wrap-bumper">auto <a href="#a5815e20706919a99ac5bc1a5e1c12caa" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -126,10 +136,11 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ade72e089affcafe2e92645f56f7bedcf"><div>
+          <section class="m-doc-details" id="a21449ad7e39ad81950c4d82282e6e66f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ade72e089affcafe2e92645f56f7bedcf" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a21449ad7e39ad81950c4d82282e6e66f" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
               int priority,
+              bool wrapping_enabled,
               bool mosaic_enabled)</span></span>
             </h3>
             <p>Constructor.</p>
@@ -147,6 +158,10 @@
                   <td>Priority of an affine background relative to sprites and other backgrounds, in the range [0..3].</td>
                 </tr>
                 <tr>
+                  <td>wrapping_enabled</td>
+                  <td>Indicates if an affine background wraps around at the edges or not.</td>
+                </tr>
+                <tr>
                   <td>mosaic_enabled</td>
                   <td>Indicates if the mosaic effect is applied to an affine background or not.</td>
                 </tr>
@@ -154,10 +169,11 @@
             </table>
 <p>Backgrounds with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
           </div></section>
-          <section class="m-doc-details" id="a2a56959469ef13c09b53d7ffce5bcf48"><div>
+          <section class="m-doc-details" id="aafd01a6632cbdf5b59aff44813b9d2d1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2a56959469ef13c09b53d7ffce5bcf48" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aafd01a6632cbdf5b59aff44813b9d2d1" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
               int priority,
+              bool wrapping_enabled,
               bool mosaic_enabled)</span></span>
             </h3>
             <p>Constructor.</p>
@@ -173,6 +189,10 @@
                 <tr>
                   <td>priority</td>
                   <td>Priority of an affine background relative to sprites and other backgrounds, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>wrapping_enabled</td>
+                  <td>Indicates if an affine background wraps around at the edges or not.</td>
                 </tr>
                 <tr>
                   <td>mosaic_enabled</td>

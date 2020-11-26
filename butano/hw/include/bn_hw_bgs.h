@@ -52,7 +52,8 @@ namespace bn::hw::bgs
 
     inline void setup_affine(const affine_bg_builder& builder, handle& bg)
     {
-        bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) | BG_8BPP);
+        bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) |
+                          (builder.wrapping_enabled() << 13) | BG_8BPP);
         bg.affine.pa = 256;
         bg.affine.pb = 0;
         bg.affine.pc = 0;
@@ -134,6 +135,28 @@ namespace bn::hw::bgs
     inline void set_priority(int priority, handle& bg)
     {
         set_priority(priority, bg.cnt);
+    }
+
+    [[nodiscard]] inline bool wrapping_enabled(const handle& bg)
+    {
+        return bg.cnt & BG_WRAP;
+    }
+
+    inline void set_wrapping_enabled(bool wrapping_enabled, uint16_t& bg_cnt)
+    {
+        if(wrapping_enabled)
+        {
+            bg_cnt |= BG_WRAP;
+        }
+        else
+        {
+            bg_cnt &= ~BG_WRAP;
+        }
+    }
+
+    inline void set_wrapping_enabled(bool wrapping_enabled, handle& bg)
+    {
+        set_wrapping_enabled(wrapping_enabled, bg.cnt);
     }
 
     [[nodiscard]] inline bool mosaic_enabled(const handle& bg)

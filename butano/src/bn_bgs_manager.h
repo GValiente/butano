@@ -93,6 +93,10 @@ namespace bgs_manager
 
     void put_above(id_type id);
 
+    [[nodiscard]] bool wrapping_enabled(id_type id);
+
+    void set_wrapping_enabled(id_type id, bool wrapping_enabled);
+
     [[nodiscard]] bool mosaic_enabled(id_type id);
 
     void set_mosaic_enabled(id_type id, bool mosaic_enabled);

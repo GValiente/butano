@@ -448,6 +448,80 @@ public:
 };
 
 
+// wrapping
+
+/**
+ * @brief Manages if an affine background must wrap around at the edges or not.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_wrapping_manager
+{
+
+public:
+    /**
+     * @brief Indicates if the given affine_bg_ptr wraps around at the edges or not.
+     */
+    [[nodiscard]] static bool get(const affine_bg_ptr& bg)
+    {
+        return bg.wrapping_enabled();
+    }
+
+    /**
+     * @brief Sets if the given affine_bg_ptr must wrap around at the edges or not.
+     */
+    static void set(bool wrapping_enabled, affine_bg_ptr& bg)
+    {
+        bg.set_wrapping_enabled(wrapping_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if an affine_bg_ptr must wrap around at the edges or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_wrapping_toggle_action :
+        public bool_toggle_value_template_action<affine_bg_ptr, affine_bg_wrapping_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr wraps around at the edges or not.
+     */
+    affine_bg_wrapping_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
+        bool_toggle_value_template_action(bg, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr wraps around at the edges or not.
+     */
+    affine_bg_wrapping_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
+        bool_toggle_value_template_action(move(bg), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+};
+
+
 // mosaic
 
 /**

@@ -785,6 +785,19 @@ void put_above(id_type id)
     }
 }
 
+bool wrapping_enabled(id_type id)
+{
+    auto item = static_cast<const item_type*>(id);
+    return hw::bgs::wrapping_enabled(item->handle);
+}
+
+void set_wrapping_enabled(id_type id, bool wrapping_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::bgs::set_wrapping_enabled(wrapping_enabled, item->handle);
+    _update_item(*item);
+}
+
 bool mosaic_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
@@ -805,7 +818,7 @@ regular_bg_attributes regular_attributes(id_type id)
 
 affine_bg_attributes affine_attributes(id_type id)
 {
-    return affine_bg_attributes(affine_map(id), priority(id), mosaic_enabled(id));
+    return affine_bg_attributes(affine_map(id), priority(id), wrapping_enabled(id), mosaic_enabled(id));
 }
 
 void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
@@ -819,6 +832,7 @@ void set_affine_attributes(id_type id, const affine_bg_attributes& attributes)
 {
     set_affine_map(id, attributes.map());
     set_priority(id, attributes.priority());
+    set_wrapping_enabled(id, attributes.wrapping_enabled());
     set_mosaic_enabled(id, attributes.mosaic_enabled());
 }
 
@@ -1039,6 +1053,7 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
         hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
         hw::bgs::set_priority(attributes.priority(), dest_cnt);
+        hw::bgs::set_wrapping_enabled(attributes.wrapping_enabled(), dest_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
         dest_ptr[index] = dest_cnt;
     }

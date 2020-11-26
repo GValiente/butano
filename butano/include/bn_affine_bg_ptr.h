@@ -339,6 +339,16 @@ public:
     void put_above();
 
     /**
+     * @brief Indicates if this affine background wraps around at the edges or not.
+     */
+    [[nodiscard]] bool wrapping_enabled() const;
+
+    /**
+     * @brief Sets if this affine background must wrap around at the edges or not.
+     */
+    void set_wrapping_enabled(bool wrapping_enabled);
+
+    /**
      * @brief Indicates if the mosaic effect must be applied to this affine background or not.
      */
     [[nodiscard]] bool mosaic_enabled() const;

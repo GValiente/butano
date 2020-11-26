@@ -133,6 +133,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#aebabaa03d5c792e211a2670a84fa4b2a" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets the priority of the affine backgrounds to generate relative to other backgrounds, excluding sprites.</dd>
+            <dt id="a8153b411853b45b1f2c5d622f7a93a6d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8153b411853b45b1f2c5d622f7a93a6d" class="m-doc-self">wrapping_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the affine backgrounds to generate wrap around at the edges or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8cc98019834bf15c319e4f8af78b4530" class="m-doc">set_wrapping_enabled</a>(</span><span class="m-doc-wrap">bool wrapping_enabled) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the affine backgrounds to generate must wrap around at the edges or not.</dd>
             <dt id="a0a34052e2423643aca3993563b0a31a2">
               <span class="m-doc-wrap-bumper">auto <a href="#a0a34052e2423643aca3993563b0a31a2" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -430,6 +438,29 @@
               </tfoot>
             </table>
 <p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a8cc98019834bf15c319e4f8af78b4530"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cc98019834bf15c319e4f8af78b4530" class="m-doc-self">set_wrapping_enabled</a>(</span><span class="m-doc-wrap">bool wrapping_enabled)</span></span>
+            </h3>
+            <p>Sets if the affine backgrounds to generate must wrap around at the edges or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">wrapping_enabled</td>
+                  <td><code>true</code> if they must wrap around at the edges; <code>false</code> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
           <section class="m-doc-details" id="abdba39d89a83bf6f9078b79867edda9f"><div>
             <h3>

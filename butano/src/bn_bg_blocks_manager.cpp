@@ -104,7 +104,7 @@ namespace
         optional<regular_bg_tiles_ptr> regular_tiles;
         optional<affine_bg_tiles_ptr> affine_tiles;
         optional<bg_palette_ptr> palette;
-        uint16_t width = 0;
+        uint16_t width = 0; // If is_tiles == true, it stores half_words.
         uint16_t height = 0;
         uint8_t start_block = 0;
         uint8_t blocks_count = 0;
@@ -128,14 +128,9 @@ namespace
             _status = unsigned(status);
         }
 
-        [[nodiscard]] int half_words() const
-        {
-            return width * height;
-        }
-
         [[nodiscard]] int tiles_count() const
         {
-            return _half_words_to_tiles(half_words());
+            return _half_words_to_tiles(width);
         }
 
         [[nodiscard]] int regular_tiles_offset() const
@@ -481,8 +476,8 @@ namespace
             item_type& item = data.items.item(id);
             BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
                       tiles_data, " - ", item.data);
-            BN_ASSERT(half_words == item.half_words(), "Tiles count does not match item tiles count: ",
-                      half_words, " - ", item.half_words());
+            BN_ASSERT(half_words == item.width, "Tiles count does not match item tiles count: ",
+                      _half_words_to_tiles(half_words), " - ", item.tiles_count());
 
             switch(item.status())
             {
@@ -643,7 +638,7 @@ namespace
         if(item.is_tiles)
         {
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
-            memory::copy(*source_data_ptr, item.half_words(), *destination_vram_ptr);
+            memory::copy(*source_data_ptr, item.width, *destination_vram_ptr);
             return;
         }
 
@@ -657,7 +652,7 @@ namespace
 
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
             auto tiles_offset = unsigned(item.affine_tiles_offset());
-            int half_words = item.half_words();
+            int half_words = (item.width * item.height) / 2;
 
             if(tiles_offset)
             {
@@ -686,7 +681,7 @@ namespace
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
             auto tiles_offset = unsigned(item.regular_tiles_offset());
             auto palette_offset = unsigned(item.palette_offset());
-            int half_words = item.half_words();
+            int half_words = item.width * item.height;
 
             if(tiles_offset)
             {
@@ -1859,9 +1854,8 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
-    BN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
-              "Tiles count does not match item tiles count: ",
-              _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
+    BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
+              tiles_ref.size(), " - ", item.tiles_count());
 
     if(item.data != data_ptr)
     {
@@ -1885,9 +1879,8 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
-    BN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
-              "Tiles count does not match item tiles count: ",
-              _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
+    BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
+              tiles_ref.size(), " - ", item.tiles_count());
 
     if(item.data != data_ptr)
     {
@@ -2202,7 +2195,7 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
     if(! item.data)
     {
         regular_bg_map_cell* vram_ptr = hw::bg_blocks::vram(item.start_block);
-        result.emplace(vram_ptr, item.half_words());
+        result.emplace(vram_ptr, item.width * item.height);
     }
 
     return result;
@@ -2216,7 +2209,7 @@ optional<span<affine_bg_map_cell>> affine_map_vram(int id)
     if(! item.data)
     {
         auto vram_ptr = reinterpret_cast<affine_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
-        result.emplace(vram_ptr, item.half_words());
+        result.emplace(vram_ptr, item.width * item.height);
     }
 
     return result;

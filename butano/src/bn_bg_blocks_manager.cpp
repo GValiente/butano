@@ -1999,7 +1999,7 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
 
         if(new_tiles_cbb != old_tiles_cbb)
         {
-            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
+            bgs_manager::update_regular_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
         item.regular_tiles = move(tiles);
@@ -2036,7 +2036,7 @@ void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
 
         if(new_tiles_cbb != old_tiles_cbb)
         {
-            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
+            bgs_manager::update_affine_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
         item.affine_tiles = move(tiles);
@@ -2096,7 +2096,7 @@ void set_regular_map_palette(int id, bg_palette_ptr&& palette)
 
         if(int(new_palette_bpp) != old_palette_bpp)
         {
-            bgs_manager::update_map_palette_bpp(item.start_block, new_palette_bpp);
+            bgs_manager::update_regular_map_palette_bpp(item.start_block, new_palette_bpp);
         }
 
         item.palette = move(palette);
@@ -2155,7 +2155,7 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
 
         if(new_tiles_cbb != old_tiles_cbb)
         {
-            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
+            bgs_manager::update_regular_map_tiles_cbb(item.start_block, new_tiles_cbb);
         }
 
         item.regular_tiles = move(tiles);
@@ -2167,7 +2167,7 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
 
         if(int(new_palette_bpp) != old_palette_bpp)
         {
-            bgs_manager::update_map_palette_bpp(item.start_block, new_palette_bpp);
+            bgs_manager::update_regular_map_palette_bpp(item.start_block, new_palette_bpp);
         }
 
         item.palette = move(palette);
@@ -2216,7 +2216,7 @@ optional<span<affine_bg_map_cell>> affine_map_vram(int id)
     if(! item.data)
     {
         auto vram_ptr = reinterpret_cast<affine_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
-        result.emplace(vram_ptr, item.half_words() * 2);
+        result.emplace(vram_ptr, item.half_words());
     }
 
     return result;

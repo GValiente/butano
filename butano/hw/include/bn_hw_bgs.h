@@ -7,18 +7,30 @@
 #define BN_HW_BGS_H
 
 #include "bn_memory.h"
+#include "bn_affine_bg_builder.h"
 #include "bn_regular_bg_builder.h"
 #include "bn_hw_tonc.h"
 
 namespace bn::hw::bgs
 {
+    struct alignas(int) affine_info
+    {
+        int16_t pa = 256;
+        int16_t pb = 0;
+        int16_t pc = 0;
+        int16_t pd = 256;
+        int dx = 0;
+        int dy = 0;
+    };
+
     class handle
     {
 
     public:
-        uint16_t cnt;
-        uint16_t hofs;
-        uint16_t vofs;
+        affine_info affine;
+        uint16_t cnt = 0;
+        uint16_t hofs = 0;
+        uint16_t vofs = 0;
     };
 
     [[nodiscard]] constexpr int count()
@@ -29,6 +41,15 @@ namespace bn::hw::bgs
     inline void setup_regular(const regular_bg_builder& builder, handle& bg)
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6));
+    }
+
+    inline void setup_affine(const affine_bg_builder& builder, handle& bg)
+    {
+        bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) | BG_8BPP);
+        bg.affine.pa = 256;
+        bg.affine.pb = 0;
+        bg.affine.pc = 0;
+        bg.affine.pd = 256;
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& bg_cnt)
@@ -78,14 +99,24 @@ namespace bn::hw::bgs
         set_bpp(bpp, bg.cnt);
     }
 
-    inline void set_x(int x, handle& bg)
+    inline void set_regular_x(int x, handle& bg)
     {
         bg.hofs = uint16_t(x);
     }
 
-    inline void set_y(int y, handle& bg)
+    inline void set_affine_x(int x, handle& bg)
+    {
+        bg.affine.dx = x;
+    }
+
+    inline void set_regular_y(int y, handle& bg)
     {
         bg.vofs = uint16_t(y);
+    }
+
+    inline void set_affine_y(int y, handle& bg)
+    {
+        bg.affine.dy = y;
     }
 
     inline void set_priority(int priority, uint16_t& bg_cnt)
@@ -136,11 +167,13 @@ namespace bn::hw::bgs
         REG_BG2CNT = bg2.cnt;
         REG_BG2HOFS = bg2.hofs;
         REG_BG2VOFS = bg2.vofs;
+        REG_BG_AFFINE[2] = reinterpret_cast<const BG_AFFINE&>(bg2.affine);
 
         const handle& bg3 = bgs_ptr[3];
         REG_BG3CNT = bg3.cnt;
         REG_BG3HOFS = bg3.hofs;
         REG_BG3VOFS = bg3.vofs;
+        REG_BG_AFFINE[3] = reinterpret_cast<const BG_AFFINE&>(bg3.affine);
     }
 
     [[nodiscard]] inline uint16_t* regular_horizontal_position_register(int id)

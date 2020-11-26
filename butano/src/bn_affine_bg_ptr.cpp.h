@@ -121,63 +121,63 @@ size affine_bg_ptr::dimensions() const
 
 const affine_bg_tiles_ptr& affine_bg_ptr::tiles() const
 {
-    return bgs_manager::map(_handle).tiles();
+    return bgs_manager::affine_map(_handle).tiles();
 }
 
 void affine_bg_ptr::set_tiles(const affine_bg_tiles_ptr& tiles)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_tiles(tiles);
 }
 
 void affine_bg_ptr::set_tiles(affine_bg_tiles_ptr&& tiles)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_tiles(move(tiles));
 }
 
 void affine_bg_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_tiles(tiles_item);
 }
 
 const bg_palette_ptr& affine_bg_ptr::palette() const
 {
-    return bgs_manager::map(_handle).palette();
+    return bgs_manager::affine_map(_handle).palette();
 }
 
 void affine_bg_ptr::set_palette(const bg_palette_ptr& palette)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_palette(palette);
 }
 
 void affine_bg_ptr::set_palette(bg_palette_ptr&& palette)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_palette(move(palette));
 }
 
 void affine_bg_ptr::set_palette(const bg_palette_item& palette_item)
 {
-    affine_bg_map_ptr map = bgs_manager::map(_handle);
+    affine_bg_map_ptr map = bgs_manager::affine_map(_handle);
     map.set_palette(palette_item);
 }
 
 const affine_bg_map_ptr& affine_bg_ptr::map() const
 {
-    return bgs_manager::map(_handle);
+    return bgs_manager::affine_map(_handle);
 }
 
 void affine_bg_ptr::set_map(const affine_bg_map_ptr& map)
 {
-    bgs_manager::set_map(_handle, map);
+    bgs_manager::set_affine_map(_handle, map);
 }
 
 void affine_bg_ptr::set_map(affine_bg_map_ptr&& map)
 {
-    bgs_manager::set_map(_handle, move(map));
+    bgs_manager::set_affine_map(_handle, move(map));
 }
 
 void affine_bg_ptr::set_map(const affine_bg_map_item& map_item)
@@ -187,14 +187,14 @@ void affine_bg_ptr::set_map(const affine_bg_map_item& map_item)
 
     if(optional<affine_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette))
     {
-        bgs_manager::set_map(_handle, move(*map));
+        bgs_manager::set_affine_map(_handle, move(*map));
     }
     else
     {
         affine_bg_tiles_ptr tiles_copy(current_tiles);
         bg_palette_ptr palette_copy(current_palette);
-        bgs_manager::remove_map(_handle);
-        bgs_manager::set_map(_handle, map_item.create_new_map(move(tiles_copy), move(palette_copy)));
+        bgs_manager::remove_affine_map(_handle);
+        bgs_manager::set_affine_map(_handle, map_item.create_new_map(move(tiles_copy), move(palette_copy)));
     }
 }
 
@@ -202,12 +202,12 @@ void affine_bg_ptr::set_item(const affine_bg_item& item)
 {
     if(optional<affine_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
     {
-        bgs_manager::set_map(_handle, move(*map));
+        bgs_manager::set_affine_map(_handle, move(*map));
     }
     else
     {
-        bgs_manager::remove_map(_handle);
-        bgs_manager::set_map(_handle, item.create_new_map());
+        bgs_manager::remove_affine_map(_handle);
+        bgs_manager::set_affine_map(_handle, item.create_new_map());
     }
 }
 
@@ -218,7 +218,7 @@ fixed affine_bg_ptr::x() const
 
 void affine_bg_ptr::set_x(fixed x)
 {
-    bgs_manager::set_x(_handle, x);
+    bgs_manager::set_affine_x(_handle, x);
 }
 
 fixed affine_bg_ptr::y() const
@@ -228,7 +228,7 @@ fixed affine_bg_ptr::y() const
 
 void affine_bg_ptr::set_y(fixed y)
 {
-    bgs_manager::set_y(_handle, y);
+    bgs_manager::set_affine_y(_handle, y);
 }
 
 const fixed_point& affine_bg_ptr::position() const
@@ -238,12 +238,12 @@ const fixed_point& affine_bg_ptr::position() const
 
 void affine_bg_ptr::set_position(fixed x, fixed y)
 {
-    bgs_manager::set_position(_handle, fixed_point(x, y));
+    bgs_manager::set_affine_position(_handle, fixed_point(x, y));
 }
 
 void affine_bg_ptr::set_position(const fixed_point& position)
 {
-    bgs_manager::set_position(_handle, position);
+    bgs_manager::set_affine_position(_handle, position);
 }
 
 int affine_bg_ptr::priority() const

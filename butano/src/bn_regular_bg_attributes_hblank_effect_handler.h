@@ -76,7 +76,7 @@ private:
         }
 
         explicit last_value_type(void* handle) :
-            last_value_type(bgs_manager::map(handle))
+            last_value_type(bgs_manager::regular_map(handle))
         {
         }
 

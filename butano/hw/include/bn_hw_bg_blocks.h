@@ -21,14 +21,19 @@ namespace bn::hw::bg_blocks
         return 8;
     }
 
-    [[nodiscard]] constexpr int max_bpp_4_tiles_blocks_count()
+    [[nodiscard]] constexpr int max_bpp_4_regular_tiles_blocks_count()
     {
         return 16;
     }
 
-    [[nodiscard]] constexpr int max_bpp_8_tiles_blocks_count()
+    [[nodiscard]] constexpr int max_bpp_8_regular_tiles_blocks_count()
     {
         return 32;
+    }
+
+    [[nodiscard]] constexpr int max_affine_tiles_blocks_count()
+    {
+        return 8;
     }
 
     [[nodiscard]] constexpr int half_words_per_block()
@@ -49,10 +54,12 @@ namespace bn::hw::bg_blocks
         destination_cell = uint16_t(source_cell);
     }
 
-    inline void copy_affine_bg_map_cell_tiles_offset(unsigned source_cell, unsigned tiles_offset,
-                                                     uint16_t& destination_cell)
+    inline void copy_affine_bg_map_cells_tiles_offset(unsigned first_source_cell, unsigned second_source_cell,
+                                                      unsigned tiles_offset, uint16_t& destination_cell)
     {
-        destination_cell = uint16_t(source_cell + tiles_offset);
+        first_source_cell += tiles_offset;
+        second_source_cell += tiles_offset;
+        destination_cell = uint16_t((first_source_cell << 8) + second_source_cell);
     }
 
     inline void copy_regular_bg_map_cell_palette_offset(unsigned source_cell, unsigned palette_offset,

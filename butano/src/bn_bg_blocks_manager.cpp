@@ -359,11 +359,11 @@ namespace
 
             if(_big_affine_map(width, height))
             {
-                blocks_count = _ceil_half_words_to_blocks(32 * 32);
+                blocks_count = _ceil_half_words_to_blocks((32 * 32) / 2);
             }
             else
             {
-                blocks_count = _ceil_half_words_to_blocks(width * height);
+                blocks_count = _ceil_half_words_to_blocks((width * height) / 2);
             }
 
             return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), nullopt, move(tiles),
@@ -425,9 +425,12 @@ namespace
                             " - usages: ", item.usages,
                             " - width: ", item.width,
                             " - height: ", item.height,
-                            " - tiles: ", (item.tiles ? item.tiles->id() : -1),
+                            " - tiles: ", (item.is_affine ? (item.affine_tiles ? item.affine_tiles->id() : -1) :
+                                                            (item.regular_tiles ? item.regular_tiles->id() : -1)),
                             " - palette: ", (item.palette ? item.palette->id() : -1),
-                            " - tiles_offset: ", (item.tiles ? item.tiles_offset() : -1),
+                            " - tiles_offset: ", (item.is_affine ?
+                                                      (item.affine_tiles ? item.affine_tiles_offset() : -1) :
+                                                      (item.regular_tiles ? item.regular_tiles_offset() : -1)),
                             " - palette_offset: ", (item.palette ? item.palette_offset() : -1),
                             (item.commit ? " - commit" : " - no_commit"));
                 }
@@ -658,10 +661,13 @@ namespace
 
             if(tiles_offset)
             {
+                auto affine_map_cells = reinterpret_cast<const affine_bg_map_cell*>(source_data_ptr);
+
                 for(int index = 0; index < half_words; ++index)
                 {
-                    hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(
-                                source_data_ptr[index], tiles_offset, destination_vram_ptr[index]);
+                    hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
+                                affine_map_cells[0], affine_map_cells[1], tiles_offset, destination_vram_ptr[index]);
+                    affine_map_cells += 2;
                 }
             }
             else
@@ -833,7 +839,7 @@ namespace
         return id;
     }
 
-    template<bool tiles>
+    template<bool tiles, bool affine>
     [[nodiscard]] int _padding_blocks_count(int start_block, int blocks_count, bpp_mode bpp)
     {
         int result = 0;
@@ -842,9 +848,18 @@ namespace
         {
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
             int extra_blocks_count = start_block % alignment_blocks_count;
-            int max_blocks_count = bpp == bpp_mode::BPP_4 ?
-                        hw::bg_blocks::max_bpp_4_tiles_blocks_count() :
-                        hw::bg_blocks::max_bpp_8_tiles_blocks_count();
+            int max_blocks_count;
+
+            if(affine)
+            {
+                max_blocks_count = hw::bg_blocks::max_affine_tiles_blocks_count();
+            }
+            else
+            {
+                max_blocks_count = bpp == bpp_mode::BPP_4 ?
+                                        hw::bg_blocks::max_bpp_4_regular_tiles_blocks_count() :
+                                        hw::bg_blocks::max_bpp_8_regular_tiles_blocks_count();
+            }
 
             if(blocks_count + extra_blocks_count > max_blocks_count)
             {
@@ -855,7 +870,7 @@ namespace
         return result;
     }
 
-    template<bool tiles>
+    template<bool tiles, bool affine>
     [[nodiscard]] int _create_impl(create_data&& create_data)
     {
         auto begin = data.items.begin();
@@ -871,8 +886,8 @@ namespace
 
                 if(item.status() == status_type::TO_REMOVE)
                 {
-                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count,
-                                                                            create_data.bpp);
+                    int padding_blocks_count = _padding_blocks_count<tiles, affine>(
+                                item.start_block, blocks_count, create_data.bpp);
 
                     if(item.blocks_count == blocks_count + padding_blocks_count)
                     {
@@ -894,8 +909,8 @@ namespace
 
                 if(item.status() == status_type::FREE)
                 {
-                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count,
-                                                                            create_data.bpp);
+                    int padding_blocks_count = _padding_blocks_count<tiles, affine>(
+                                item.start_block, blocks_count, create_data.bpp);
                     int requested_blocks_count = blocks_count + padding_blocks_count;
 
                     if(item.blocks_count > requested_blocks_count)
@@ -925,13 +940,13 @@ namespace
         {
             update();
             data.delay_commit = true;
-            return _create_impl<tiles>(move(create_data));
+            return _create_impl<tiles, affine>(move(create_data));
         }
 
         return -1;
     }
 
-    template<bool tiles>
+    template<bool tiles, bool affine>
     [[nodiscard]] int _allocate_impl(create_data&& create_data)
     {
         if(data.delay_commit)
@@ -954,8 +969,8 @@ namespace
 
                 if(item.status() == status_type::FREE)
                 {
-                    int padding_blocks_count = _padding_blocks_count<tiles>(item.start_block, blocks_count,
-                                                                            create_data.bpp);
+                    int padding_blocks_count = _padding_blocks_count<tiles, affine>(
+                                item.start_block, blocks_count, create_data.bpp);
                     int requested_blocks_count = blocks_count + padding_blocks_count;
 
                     if(item.blocks_count > requested_blocks_count)
@@ -1185,7 +1200,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
     int result = _find_tiles_impl(tiles_data, half_words);
@@ -1195,7 +1210,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
         return result;
     }
 
-    result = _create_impl<true>(create_data::from_regular_tiles(tiles_data, half_words, bpp));
+    result = _create_impl<true, false>(create_data::from_regular_tiles(tiles_data, half_words, bpp));
 
     if(result != -1)
     {
@@ -1233,7 +1248,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE_TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE_TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
     int result = _find_tiles_impl(tiles_data, half_words);
@@ -1243,7 +1258,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
         return result;
     }
 
-    result = _create_impl<true>(create_data::from_affine_tiles(tiles_data, half_words));
+    result = _create_impl<true, true>(create_data::from_affine_tiles(tiles_data, half_words));
 
     if(result != -1)
     {
@@ -1279,7 +1294,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     int result = _find_regular_map_impl(map_item, tiles, palette);
@@ -1292,7 +1307,8 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
-    result = _create_impl<false>(create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
+    result = _create_impl<false, false>(
+                create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1330,7 +1346,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
 {
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
     const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     int result = _find_affine_map_impl(map_item, tiles, palette);
@@ -1342,7 +1358,8 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
 
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
 
-    result = _create_impl<false>(create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+    result = _create_impl<false, true>(
+                create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1383,13 +1400,13 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<true>(create_data::from_regular_tiles(data_ptr, half_words, bpp));
+    int result = _create_impl<true, false>(create_data::from_regular_tiles(data_ptr, half_words, bpp));
 
     if(result != -1)
     {
@@ -1427,13 +1444,13 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<true>(create_data::from_affine_tiles(data_ptr, half_words));
+    int result = _create_impl<true, true>(create_data::from_affine_tiles(data_ptr, half_words));
 
     if(result != -1)
     {
@@ -1470,7 +1487,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
@@ -1478,7 +1495,8 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<false>(create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
+    int result = _create_impl<false, false>(
+                create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1516,14 +1534,15 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
 {
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
     const size& dimensions = map_item.dimensions();
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE MAP", (optional ? " OPTIONAL: ", ": "), data_ptr, " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<false>(create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+    int result = _create_impl<false, true>(
+                create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1560,13 +1579,13 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
               "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
-    int result = _allocate_impl<true>(create_data::from_regular_tiles(nullptr, half_words, bpp));
+    int result = _allocate_impl<true, false>(create_data::from_regular_tiles(nullptr, half_words, bpp));
 
     if(result != -1)
     {
@@ -1597,12 +1616,12 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE TILES", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
     BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
-    int result = _allocate_impl<true>(create_data::from_affine_tiles(nullptr, half_words));
+    int result = _allocate_impl<true, true>(create_data::from_affine_tiles(nullptr, half_words));
 
     if(result != -1)
     {
@@ -1632,7 +1651,7 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tiles,
                          bg_palette_ptr&& palette, bool optional)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR MAP", (optional ? " OPTIONAL: " : ": "),
                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
     BN_ASSERT(map_dimensions.width() == 32 || map_dimensions.width() == 64,
@@ -1642,7 +1661,8 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
-    int result = _allocate_impl<false>(create_data::from_regular_map(nullptr, map_dimensions, move(tiles), move(palette)));
+    int result = _allocate_impl<false, false>(
+                create_data::from_regular_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1676,16 +1696,18 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
 int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
                         bg_palette_ptr&& palette, bool optional)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE MAP", (optional ? " OPTIONAL: ", ": "),
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE MAP", (optional ? " OPTIONAL: " : ": "),
                      map_dimensions.width(), " - ", map_dimensions.height(), " - ", tiles.id(), " - ", palette.id());
 
-    BN_ASSERT(map_dimensions.width() == 16 || (map_dimensions.width() >= 32 && map_dimensions.width() % 32 == 0),
+    BN_ASSERT(map_dimensions.width() == 16 || map_dimensions.width() == 32 ||
+              map_dimensions.width() == 64 || map_dimensions.width() == 128,
               "Invalid map width: ", map_dimensions.width());
-    BN_ASSERT(map_dimensions.height() == 16 || (map_dimensions.height() >= 32 && map_dimensions.height() % 32 == 0),
-              "Invalid map height: ", map_dimensions.height());
+    BN_ASSERT(map_dimensions.height() == map_dimensions.width(),
+              "Map height is different from map width: ", map_dimensions.height(), " - ", map_dimensions.width());
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
 
-    int result = _allocate_impl<false>(create_data::from_affine_map(nullptr, map_dimensions, move(tiles), move(palette)));
+    int result = _allocate_impl<false, true>(
+                create_data::from_affine_map(nullptr, map_dimensions, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1806,9 +1828,22 @@ optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id)
     const item_type& item = data.items.item(id);
     optional<span<const regular_bg_map_cell>> result;
 
-    if(item.data)
+    if(const uint16_t* item_data = item.data)
     {
-        result.emplace(item.data, item.width * item.height);
+        result.emplace(item_data, item.width * item.height);
+    }
+
+    return result;
+}
+
+optional<span<const affine_bg_map_cell>> affine_map_cells_ref(int id)
+{
+    const item_type& item = data.items.item(id);
+    optional<span<const affine_bg_map_cell>> result;
+
+    if(const uint16_t* item_data = item.data)
+    {
+        result.emplace(reinterpret_cast<const affine_bg_map_cell*>(item_data), item.width * item.height);
     }
 
     return result;
@@ -1840,12 +1875,62 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
     }
 }
 
+void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
+{
+    const span<const tile>& tiles_ref = tiles_item.tiles_ref();
+    auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE TILES REF: ", id, " - ",
+                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size());
+
+    item_type& item = data.items.item(id);
+    BN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(_tiles_to_half_words(tiles_ref.size()) == item.half_words(),
+              "Tiles count does not match item tiles count: ",
+              _tiles_to_half_words(tiles_ref.size()), " - ", item.half_words());
+
+    if(item.data != data_ptr)
+    {
+        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                  "Multiple copies of the same data not supported");
+
+        data.items_map.erase(item.data);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+}
+
 void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", data.items.item(id).start_block,
-                     " - ", data_ptr, " - ", map_item.dimensions().width(), " - ", map_item.dimensions().height());
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ",
+                     data.items.item(id).start_block, " - ", data_ptr, " - ",
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height());
+
+    item_type& item = data.items.item(id);
+    BN_ASSERT(item.data, "Item has no data");
+
+    if(item.data != data_ptr)
+    {
+        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                  "Multiple copies of the same data not supported");
+
+        data.items_map.erase(item.data);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+}
+
+void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
+{
+    auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ",
+                     data.items.item(id).start_block, " - ", data_ptr, " - ",
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height());
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
@@ -1881,6 +1966,12 @@ const regular_bg_tiles_ptr& regular_map_tiles(int id)
     return *item.regular_tiles;
 }
 
+const affine_bg_tiles_ptr& affine_map_tiles(int id)
+{
+    const item_type& item = data.items.item(id);
+    return *item.affine_tiles;
+}
+
 void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
 {
     item_type& item = data.items.item(id);
@@ -1914,6 +2005,43 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
         item.regular_tiles = move(tiles);
 
         if(item.regular_tiles_offset() != old_tiles_offset)
+        {
+            item.commit = true;
+            data.check_commit = true;
+        }
+    }
+}
+
+void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
+{
+    item_type& item = data.items.item(id);
+
+    if(tiles != item.affine_tiles)
+    {
+        int old_tiles_cbb;
+        int old_tiles_offset;
+
+        if(item.affine_tiles)
+        {
+            old_tiles_cbb = item.affine_tiles->cbb();
+            old_tiles_offset = item.affine_tiles_offset();
+        }
+        else
+        {
+            old_tiles_cbb = -1;
+            old_tiles_offset = -1;
+        }
+
+        int new_tiles_cbb = tiles.cbb();
+
+        if(new_tiles_cbb != old_tiles_cbb)
+        {
+            bgs_manager::update_map_tiles_cbb(item.start_block, new_tiles_cbb);
+        }
+
+        item.affine_tiles = move(tiles);
+
+        if(item.affine_tiles_offset() != old_tiles_offset)
         {
             item.commit = true;
             data.check_commit = true;
@@ -2080,6 +2208,20 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
     return result;
 }
 
+optional<span<affine_bg_map_cell>> affine_map_vram(int id)
+{
+    const item_type& item = data.items.item(id);
+    optional<span<affine_bg_map_cell>> result;
+
+    if(! item.data)
+    {
+        auto vram_ptr = reinterpret_cast<affine_bg_map_cell*>(hw::bg_blocks::vram(item.start_block));
+        result.emplace(vram_ptr, item.half_words() * 2);
+    }
+
+    return result;
+}
+
 bool must_commit(int id)
 {
     const item_type& item = data.items.item(id);
@@ -2089,7 +2231,7 @@ bool must_commit(int id)
 void update_regular_map_col(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    const regular_bg_map_cell* source_data = item.data;
+    const uint16_t* source_data = item.data;
 
     if(! source_data)
     {
@@ -2100,7 +2242,7 @@ void update_regular_map_col(int id, int x, int y)
     source_data += ((y * map_width) + x);
 
     int y_separator = y & 31;
-    regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
     auto tiles_offset = unsigned(item.regular_tiles_offset());
     auto palette_offset = unsigned(item.palette_offset());
 
@@ -2184,10 +2326,65 @@ void update_regular_map_col(int id, int x, int y)
     }
 }
 
+void update_affine_map_col(int id, int x, int y)
+{
+    /*const item_type& item = data.items.item(id);
+    auto source_data = reinterpret_cast<const affine_bg_map_cell*>(item.data);
+
+    if(! source_data)
+    {
+        return;
+    }
+
+    int map_width = item.width;
+    source_data += ((y * map_width) + x);
+
+    int y_separator = y & 31;
+    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+    auto tiles_offset = unsigned(item.affine_tiles_offset());
+
+    if(tiles_offset)
+    {
+        for(int iy = y_separator; iy < 32; ++iy)
+        {
+            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+            dest_data += 32;
+            source_data += map_width;
+        }
+
+        dest_data -= 1024;
+
+        for(int iy = 0; iy < y_separator; ++iy)
+        {
+            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+            dest_data += 32;
+            source_data += map_width;
+        }
+    }
+    else
+    {
+        for(int iy = y_separator; iy < 32; ++iy)
+        {
+            *dest_data = *source_data;
+            dest_data += 32;
+            source_data += map_width;
+        }
+
+        dest_data -= 1024;
+
+        for(int iy = 0; iy < y_separator; ++iy)
+        {
+            *dest_data = *source_data;
+            dest_data += 32;
+            source_data += map_width;
+        }
+    }*/
+}
+
 void update_regular_map_row(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    const regular_bg_map_cell* source_data = item.data;
+    const uint16_t* source_data = item.data;
 
     if(! source_data)
     {
@@ -2197,7 +2394,7 @@ void update_regular_map_row(int id, int x, int y)
     source_data += ((y * item.width) + x);
 
     int x_separator = x & 31;
-    regular_bg_map_cell* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
+    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
     auto tiles_offset = unsigned(item.regular_tiles_offset());
     auto palette_offset = unsigned(item.palette_offset());
 
@@ -2271,17 +2468,61 @@ void update_regular_map_row(int id, int x, int y)
     }
 }
 
+void update_affine_map_row(int id, int x, int y)
+{
+    /*const item_type& item = data.items.item(id);
+    auto source_data = reinterpret_cast<const affine_bg_map_cell*>(item.data);
+
+    if(! source_data)
+    {
+        return;
+    }
+
+    source_data += ((y * item.width) + x);
+
+    int x_separator = x & 31;
+    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
+    auto tiles_offset = unsigned(item.affine_tiles_offset());
+
+    if(tiles_offset)
+    {
+        for(int ix = x_separator; ix < 32; ++ix)
+        {
+            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+            ++source_data;
+            ++dest_data;
+        }
+
+        dest_data -= 32;
+
+        for(int ix = 0; ix < x_separator; ++ix)
+        {
+            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+            ++source_data;
+            ++dest_data;
+        }
+    }
+    else
+    {
+        int elements = 32 - x_separator;
+        memory::copy(*source_data, elements, *dest_data);
+        source_data += elements;
+        dest_data -= x_separator;
+        memory::copy(*source_data, x_separator, *dest_data);
+    }*/
+}
+
 void set_regular_map_position(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    const regular_bg_map_cell* item_data = item.data;
+    const uint16_t* item_data = item.data;
 
     if(! item_data)
     {
         return;
     }
 
-    regular_bg_map_cell* vram_data = hw::bg_blocks::vram(item.start_block);
+    uint16_t* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
     int x_separator = x & 31;
     auto tiles_offset = unsigned(item.regular_tiles_offset());
@@ -2293,8 +2534,8 @@ void set_regular_map_position(int id, int x, int y)
         {
             for(int row = y, row_limit = y + 22; row < row_limit; ++row)
             {
-                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
-                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+                const uint16_t* source_data = item_data + ((row * map_width) + x);
+                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
                 for(int ix = x_separator; ix < 32; ++ix)
                 {
@@ -2319,8 +2560,8 @@ void set_regular_map_position(int id, int x, int y)
         {
             for(int row = y, row_limit = y + 22; row < row_limit; ++row)
             {
-                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
-                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+                const uint16_t* source_data = item_data + ((row * map_width) + x);
+                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
                 for(int ix = x_separator; ix < 32; ++ix)
                 {
@@ -2346,8 +2587,8 @@ void set_regular_map_position(int id, int x, int y)
         {
             for(int row = y, row_limit = y + 22; row < row_limit; ++row)
             {
-                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
-                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+                const uint16_t* source_data = item_data + ((row * map_width) + x);
+                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
 
                 for(int ix = x_separator; ix < 32; ++ix)
                 {
@@ -2370,14 +2611,68 @@ void set_regular_map_position(int id, int x, int y)
         {
             for(int row = y, row_limit = y + 22; row < row_limit; ++row)
             {
-                const regular_bg_map_cell* source_data = item_data + ((row * map_width) + x);
-                regular_bg_map_cell* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+                const uint16_t* source_data = item_data + ((row * map_width) + x);
+                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
                 int elements = 32 - x_separator;
                 memory::copy(*source_data, elements, *dest_data);
                 source_data += elements;
                 dest_data -= x_separator;
                 memory::copy(*source_data, x_separator, *dest_data);
             }
+        }
+    }
+}
+
+void set_affine_map_position(int id, int x, int y)
+{
+    const item_type& item = data.items.item(id);
+    auto item_data = reinterpret_cast<const uint8_t*>(item.data);
+
+    if(! item_data)
+    {
+        return;
+    }
+
+    auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
+    int map_width = item.width;
+    int x_separator = x & 31;
+    auto tiles_offset = unsigned(item.affine_tiles_offset());
+
+    if(tiles_offset)
+    {
+        /*for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        {
+            const uint8_t* source_data = item_data + ((row * map_width) + x);
+            uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+
+            for(int ix = x_separator; ix < 32; ++ix)
+            {
+                hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+
+            dest_data -= 32;
+
+            for(int ix = 0; ix < x_separator; ++ix)
+            {
+                hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
+                ++source_data;
+                ++dest_data;
+            }
+        }*/
+    }
+    else
+    {
+        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        {
+            const uint8_t* source_data = item_data + ((row * map_width) + x);
+            uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+            int elements = 32 - x_separator;
+            memory::copy(*source_data, elements, *dest_data);
+            source_data += elements;
+            dest_data -= x_separator;
+            memory::copy(*source_data, x_separator, *dest_data);
         }
     }
 }

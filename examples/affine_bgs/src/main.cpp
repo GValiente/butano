@@ -334,8 +334,10 @@ namespace
 
         info info("Affine BGs attributes", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(-64, 64);
-        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue_small.create_bg(-64, 64);
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
+        red_bg.set_wrapping_enabled(false);
+
         bn::affine_bg_attributes red_bg_attributes = red_bg.attributes();
 
         while(! bn::keypad::start_pressed())
@@ -363,11 +365,12 @@ namespace
 
         info info("Affine BGs attributes H-Blank effect", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
-        bn::affine_bg_map_ptr blue_map = bn::affine_bg_items::blue.create_map();
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
+        bn::affine_bg_map_ptr blue_map = bn::affine_bg_items::blue_small.create_map();
         bn::affine_bg_attributes red_attributes = red_bg.attributes();
         bn::affine_bg_attributes blue_attributes = red_attributes;
         blue_attributes.set_map(blue_map);
+        blue_attributes.set_wrapping_enabled(false);
 
         bn::vector<bn::affine_bg_attributes, bn::display::height()> attributes;
 
@@ -402,14 +405,15 @@ namespace
 
         info info("Affine BG builder", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
         bn::bgs_mosaic::set_stretch(0.2);
         bn::blending::set_transparency_alpha(0.6);
 
-        bn::affine_bg_builder builder(bn::affine_bg_items::blue);
+        bn::affine_bg_builder builder(bn::affine_bg_items::blue_small);
         builder.set_position(30, 10);
         builder.set_mosaic_enabled(true);
         builder.set_blending_enabled(true);
+        builder.set_wrapping_enabled(false);
 
         bn::affine_bg_ptr blue_bg = builder.build();
 

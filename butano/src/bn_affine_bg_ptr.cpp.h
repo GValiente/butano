@@ -306,7 +306,42 @@ void affine_bg_ptr::set_vertical_flip(bool vertical_flip)
     bgs_manager::set_vertical_flip(_handle, vertical_flip);
 }
 
-const affine_mat_attributes& affine_bg_ptr::mat_attributes() const
+fixed affine_bg_ptr::pivot_x() const
+{
+    return bgs_manager::pivot_position(_handle).x();
+}
+
+void affine_bg_ptr::set_pivot_x(fixed pivot_x)
+{
+    bgs_manager::set_pivot_x(_handle, pivot_x);
+}
+
+fixed affine_bg_ptr::pivot_y() const
+{
+    return bgs_manager::pivot_position(_handle).y();
+}
+
+void affine_bg_ptr::set_pivot_y(fixed pivot_y)
+{
+    bgs_manager::set_pivot_y(_handle, pivot_y);
+}
+
+const fixed_point& affine_bg_ptr::pivot_position() const
+{
+    return bgs_manager::pivot_position(_handle);
+}
+
+void affine_bg_ptr::set_pivot_position(fixed pivot_x, fixed pivot_y)
+{
+    bgs_manager::set_pivot_position(_handle, fixed_point(pivot_x, pivot_y));
+}
+
+void affine_bg_ptr::set_pivot_position(const fixed_point& pivot_position)
+{
+    bgs_manager::set_pivot_position(_handle, pivot_position);
+}
+
+const affine_bg_mat_attributes& affine_bg_ptr::mat_attributes() const
 {
     return bgs_manager::mat_attributes(_handle);
 }

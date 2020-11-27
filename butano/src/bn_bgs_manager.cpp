@@ -13,6 +13,7 @@
 #include "bn_config_bgs.h"
 #include "bn_display_manager.h"
 #include "bn_bg_blocks_manager.h"
+#include "bn_affine_bg_mat_attributes.h"
 #include "../hw/include/bn_hw_bgs.h"
 
 #include "bn_bgs.cpp.h"
@@ -37,7 +38,7 @@ namespace
 
     public:
         fixed_point position;
-        affine_mat_attributes mat_attributes;
+        affine_bg_mat_attributes affine_mat_attributes;
         point hw_position;
         size half_dimensions;
         unsigned usages = 1;
@@ -71,7 +72,8 @@ namespace
 
         item_type(affine_bg_builder&& builder, affine_bg_map_ptr&& _affine_map) :
             position(builder.position()),
-            mat_attributes(builder.mat_attributes()),
+            affine_mat_attributes((builder.camera() ? position - builder.camera()->position() : position),
+                                  _affine_map.dimensions() * 4, builder.pivot_position(), builder.mat_attributes()),
             bg_sort_key(builder.priority(), builder.z_order()),
             affine_map(move(_affine_map)),
             camera(builder.release_camera()),
@@ -80,7 +82,7 @@ namespace
             update(true)
         {
             hw::bgs::setup_affine(builder, handle);
-            update_affine_map();
+            update_affine_map(true);
         }
 
         void update_regular_map()
@@ -115,15 +117,16 @@ namespace
                 }
             }
 
+            commit_big_map = big_map;
+            full_commit_big_map = big_map;
+
             hw::bgs::set_map_dimensions(map_size, new_handle);
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
             update_regular_hw_position();
-            commit_big_map = big_map;
-            full_commit_big_map = big_map;
         }
 
-        void update_affine_map()
+        void update_affine_map(bool force_affine_mat_attributes_update)
         {
             const affine_bg_map_ptr& map_ref = *affine_map;
             hw::bgs::handle new_handle = handle;
@@ -167,12 +170,22 @@ namespace
                 big_map = true;
             }
 
+            commit_big_map = big_map;
+            full_commit_big_map = big_map;
+
             hw::bgs::set_map_dimensions(map_size, new_handle);
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
-            update_affine_mat_attributes();
-            commit_big_map = big_map;
-            full_commit_big_map = big_map;
+
+            if(force_affine_mat_attributes_update)
+            {
+                update_affine_mat_attributes();
+            }
+            else if(half_dimensions != affine_mat_attributes.half_dimensions())
+            {
+                affine_mat_attributes.set_half_dimensions(half_dimensions);
+                update_affine_mat_attributes();
+            }
         }
 
         void update_regular_hw_position()
@@ -187,73 +200,35 @@ namespace
                 real_y -= camera_position.y().right_shift_integer();
             }
 
-            update_regular_hw_x(real_x);
-            update_regular_hw_y(real_y);
+            int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
+            hw_position.set_x(hw_x);
+            commit_regular_hw_x();
+
+            int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
+            hw_position.set_y(hw_y);
+            commit_regular_hw_y();
         }
 
         void update_affine_mat_attributes()
         {
-            hw::bgs::set_affine_mat_attributes(mat_attributes, handle);
-            update_affine_hw_position();
+            hw::bgs::set_affine_mat_attributes(affine_mat_attributes.mat_attributes(), handle);
+            commit_affine_hw_x();
+            commit_affine_hw_y();
         }
 
-        void update_affine_hw_position()
+        void update_affine_camera()
         {
-            int real_x = position.x().right_shift_integer();
-            int real_y = position.y().right_shift_integer();
-
             if(camera)
             {
-                const fixed_point& camera_position = camera->position();
-                real_x -= camera_position.x().right_shift_integer();
-                real_y -= camera_position.y().right_shift_integer();
+                affine_mat_attributes.set_position(position - camera->position());
             }
-
-            int tex_x = half_dimensions.width() << hw::bgs::affine_precision;
-            int tex_y = half_dimensions.height() << hw::bgs::affine_precision;
-            int scr_x = real_x + (display::width() / 2);
-            int scr_y = real_y + (display::height() / 2);
-            int hw_x = tex_x - ((mat_attributes.pa_register_value() * scr_x) +
-                                (mat_attributes.pb_register_value() * scr_y));
-            int hw_y = tex_y - ((mat_attributes.pc_register_value() * scr_x) +
-                                (mat_attributes.pd_register_value() * scr_y));
-
-            hw_position.set_x(hw_x);
-            hw_position.set_y(hw_y);
-            hw::bgs::set_affine_x(hw_x, handle);
-            hw::bgs::set_affine_y(hw_y, handle);
-
-            if(big_map)
+            else
             {
-                BN_ASSERT(hw_x >= 0 && hw_x / (8 * hw::bgs::affine_precision) <
-                          (half_dimensions.width() * 2) - display::width(),
-                          "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          hw_x / (8 * hw::bgs::affine_precision), " - ",
-                          (half_dimensions.width() * 2) - display::width());
-
-                BN_ASSERT(hw_y >= 0 && hw_y / (8 * hw::bgs::affine_precision) <
-                          (half_dimensions.height() * 2) - display::height(),
-                          "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          hw_y / (8 * hw::bgs::affine_precision), " - ",
-                          (half_dimensions.height() * 2) - display::height());
-
-                commit_big_map = true;
+                affine_mat_attributes.set_position(position);
             }
-        }
 
-        void update_regular_hw_x(int real_x)
-        {
-            int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
-            hw_position.set_x(hw_x);
-            commit_regular_hw_x();
-        }
-
-        void update_regular_hw_y(int real_y)
-        {
-            int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
-
-            hw_position.set_y(hw_y);
-            commit_regular_hw_y();
+            commit_affine_hw_x();
+            commit_affine_hw_y();
         }
 
         void commit_regular_hw_x()
@@ -285,6 +260,42 @@ namespace
                 commit_big_map = true;
             }
         }
+
+        void commit_affine_hw_x()
+        {
+            int dx = affine_mat_attributes.dx_register_value();
+            hw_position.set_x(dx);
+            hw::bgs::set_affine_x(dx, handle);
+
+            if(big_map)
+            {
+                BN_ASSERT(dx >= 0 && dx / (8 * hw::bgs::affine_precision) <
+                          (half_dimensions.width() * 2) - display::width(),
+                          "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
+                          dx / (8 * hw::bgs::affine_precision), " - ",
+                          (half_dimensions.width() * 2) - display::width());
+
+                commit_big_map = true;
+            }
+        }
+
+        void commit_affine_hw_y()
+        {
+            int dy = affine_mat_attributes.dy_register_value();
+            hw_position.set_y(dy);
+            hw::bgs::set_affine_y(dy, handle);
+
+            if(big_map)
+            {
+                BN_ASSERT(dy >= 0 && dy / (8 * hw::bgs::affine_precision) <
+                          (half_dimensions.height() * 2) - display::height(),
+                          "Affine BGs with big maps\ndon't allow vertical wrapping: ",
+                          dy / (8 * hw::bgs::affine_precision), " - ",
+                          (half_dimensions.height() * 2) - display::height());
+
+                commit_big_map = true;
+            }
+        }
     };
 
 
@@ -292,11 +303,11 @@ namespace
     {
 
     public:
-        explicit affine_mat_registers(const affine_mat_attributes& mat_attributes) :
-            _pa(mat_attributes.pa_register_value()),
-            _pb(mat_attributes.pb_register_value()),
-            _pc(mat_attributes.pc_register_value()),
-            _pd(mat_attributes.pd_register_value())
+        explicit affine_mat_registers(const affine_bg_mat_attributes& affine_mat_attributes) :
+            _pa(affine_mat_attributes.pa_register_value()),
+            _pb(affine_mat_attributes.pb_register_value()),
+            _pc(affine_mat_attributes.pc_register_value()),
+            _pd(affine_mat_attributes.pd_register_value())
         {
         }
 
@@ -554,7 +565,7 @@ void set_affine_map(id_type id, const affine_bg_map_ptr& map)
     if(map != item->affine_map)
     {
         item->affine_map = map;
-        item->update_affine_map();
+        item->update_affine_map(false);
         BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
         _update_item(*item);
@@ -582,7 +593,7 @@ void set_affine_map(id_type id, affine_bg_map_ptr&& map)
     if(map != item->affine_map)
     {
         item->affine_map = move(map);
-        item->update_affine_map();
+        item->update_affine_map(false);
         BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
         _update_item(*item);
@@ -639,7 +650,13 @@ void set_affine_x(id_type id, fixed x)
 
     if(old_x.right_shift_integer() != x.right_shift_integer())
     {
-        item->update_affine_hw_position();
+        if(item->camera)
+        {
+            x -= item->camera->x();
+        }
+
+        item->affine_mat_attributes.set_x(x);
+        item->commit_affine_hw_x();
         _update_item(*item);
     }
 }
@@ -670,7 +687,13 @@ void set_affine_y(id_type id, fixed y)
 
     if(old_y.right_shift_integer() != y.right_shift_integer())
     {
-        item->update_affine_hw_position();
+        if(item->camera)
+        {
+            y -= item->camera->y();
+        }
+
+        item->affine_mat_attributes.set_y(y);
+        item->commit_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -705,7 +728,17 @@ void set_affine_position(id_type id, const fixed_point& position)
 
     if(old_integer_position != new_integer_position)
     {
-        item->update_affine_hw_position();
+        if(item->camera)
+        {
+            item->affine_mat_attributes.set_position(position - item->camera->position());
+        }
+        else
+        {
+            item->affine_mat_attributes.set_position(position);
+        }
+
+        item->commit_affine_hw_x();
+        item->commit_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -713,19 +746,19 @@ void set_affine_position(id_type id, const fixed_point& position)
 fixed rotation_angle(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes.rotation_angle();
+    return item->affine_mat_attributes.rotation_angle();
 }
 
 void set_rotation_angle(id_type id, fixed rotation_angle)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(rotation_angle != item->mat_attributes.rotation_angle())
+    if(rotation_angle != item->affine_mat_attributes.rotation_angle())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_rotation_angle(rotation_angle);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_rotation_angle(rotation_angle);
 
-        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -736,19 +769,19 @@ void set_rotation_angle(id_type id, fixed rotation_angle)
 fixed horizontal_scale(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes.horizontal_scale();
+    return item->affine_mat_attributes.horizontal_scale();
 }
 
 void set_horizontal_scale(id_type id, fixed horizontal_scale)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(horizontal_scale != item->mat_attributes.horizontal_scale())
+    if(horizontal_scale != item->affine_mat_attributes.horizontal_scale())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_horizontal_scale(horizontal_scale);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_horizontal_scale(horizontal_scale);
 
-        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -759,19 +792,19 @@ void set_horizontal_scale(id_type id, fixed horizontal_scale)
 fixed vertical_scale(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes.vertical_scale();
+    return item->affine_mat_attributes.vertical_scale();
 }
 
 void set_vertical_scale(id_type id, fixed vertical_scale)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(vertical_scale != item->mat_attributes.vertical_scale())
+    if(vertical_scale != item->affine_mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_vertical_scale(vertical_scale);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_vertical_scale(vertical_scale);
 
-        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -783,12 +816,13 @@ void set_scale(id_type id, fixed scale)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(scale != item->mat_attributes.horizontal_scale() || scale != item->mat_attributes.vertical_scale())
+    if(scale != item->affine_mat_attributes.horizontal_scale() ||
+            scale != item->affine_mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_scale(scale);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_scale(scale);
 
-        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -800,13 +834,13 @@ void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(horizontal_scale != item->mat_attributes.horizontal_scale() ||
-            vertical_scale != item->mat_attributes.vertical_scale())
+    if(horizontal_scale != item->affine_mat_attributes.horizontal_scale() ||
+            vertical_scale != item->affine_mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_scale(horizontal_scale, vertical_scale);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_scale(horizontal_scale, vertical_scale);
 
-        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -817,16 +851,16 @@ void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
 bool horizontal_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes.horizontal_flip();
+    return item->affine_mat_attributes.horizontal_flip();
 }
 
 void set_horizontal_flip(id_type id, bool horizontal_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(horizontal_flip != item->mat_attributes.horizontal_flip())
+    if(horizontal_flip != item->affine_mat_attributes.horizontal_flip())
     {
-        item->mat_attributes.set_horizontal_flip(horizontal_flip);
+        item->affine_mat_attributes.set_horizontal_flip(horizontal_flip);
         item->update_affine_mat_attributes();
         _update_item(*item);
     }
@@ -835,38 +869,85 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
 bool vertical_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes.vertical_flip();
+    return item->affine_mat_attributes.vertical_flip();
 }
 
 void set_vertical_flip(id_type id, bool vertical_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(vertical_flip != item->mat_attributes.vertical_flip())
+    if(vertical_flip != item->affine_mat_attributes.vertical_flip())
     {
-        affine_mat_registers old_registers(item->mat_attributes);
-        item->mat_attributes.set_vertical_flip(vertical_flip);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_vertical_flip(vertical_flip);
         item->update_affine_mat_attributes();
         _update_item(*item);
     }
 }
 
-const affine_mat_attributes& mat_attributes(id_type id)
+const fixed_point& pivot_position(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    return item->mat_attributes;
+    return item->affine_mat_attributes.pivot_position();
+}
+
+void set_pivot_x(id_type id, fixed pivot_x)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(pivot_x != item->affine_mat_attributes.pivot_x())
+    {
+        item->affine_mat_attributes.set_pivot_x(pivot_x);
+        item->commit_affine_hw_x();
+        _update_item(*item);
+    }
+}
+
+void set_pivot_y(id_type id, fixed pivot_y)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(pivot_y != item->affine_mat_attributes.pivot_y())
+    {
+        item->affine_mat_attributes.set_pivot_y(pivot_y);
+        item->commit_affine_hw_y();
+        _update_item(*item);
+    }
+}
+
+void set_pivot_position(id_type id, const fixed_point& pivot_position)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(pivot_position != item->affine_mat_attributes.pivot_position())
+    {
+        item->affine_mat_attributes.set_pivot_position(pivot_position);
+        item->commit_affine_hw_x();
+        item->commit_affine_hw_y();
+        _update_item(*item);
+    }
+}
+
+const affine_bg_mat_attributes& mat_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->affine_mat_attributes;
 }
 
 void set_mat_attributes(id_type id, const affine_mat_attributes& mat_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    affine_mat_registers old_registers(item->mat_attributes);
-    item->mat_attributes = mat_attributes;
 
-    if(affine_mat_registers(mat_attributes) != old_registers)
+    if(mat_attributes != item->affine_mat_attributes.mat_attributes())
     {
-        item->update_affine_mat_attributes();
-        _update_item(*item);
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_mat_attributes(mat_attributes);
+
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
     }
 }
 
@@ -1046,7 +1127,7 @@ void set_camera(id_type id, camera_ptr&& camera)
         }
         else
         {
-            item->update_affine_hw_position();
+            item->update_affine_camera();
         }
 
         _update_item(*item);
@@ -1067,7 +1148,7 @@ void remove_camera(id_type id)
         }
         else
         {
-            item->update_affine_hw_position();
+            item->update_affine_camera();
         }
 
         _update_item(*item);
@@ -1086,7 +1167,7 @@ void update_cameras()
             }
             else
             {
-                item->update_affine_hw_position();
+                item->update_affine_camera();
             }
 
             _update_item(*item);

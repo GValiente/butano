@@ -1488,6 +1488,372 @@ public:
 };
 
 
+// position
+
+/**
+ * @brief Manages the position of the pivot of an affine_bg_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class bg_pivot_position_manager
+{
+
+public:
+    /**
+     * @brief Returns the position of the pivot of the given affine_bg_ptr.
+     */
+    [[nodiscard]] static const fixed_point& get(const affine_bg_ptr& bg)
+    {
+        return bg.pivot_position();
+    }
+
+    /**
+     * @brief Sets the position of the pivot of the given affine_bg_ptr.
+     */
+    static void set(const fixed_point& position, affine_bg_ptr& bg)
+    {
+        bg.set_pivot_position(position);
+    }
+};
+
+
+/**
+ * @brief Modifies the position of the pivot of an affine_bg_ptr by a given delta.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_move_pivot_by_action :
+        public by_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param delta_x How much to add to the horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     * @param delta_y How much to add to the horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     */
+    affine_bg_move_pivot_by_action(const affine_bg_ptr& bg, fixed delta_x, fixed delta_y) :
+        by_value_template_action(bg, fixed_point(delta_x, delta_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param delta_x How much to add to the horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     * @param delta_y How much to add to the horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     */
+    affine_bg_move_pivot_by_action(affine_bg_ptr&& bg, fixed delta_x, fixed delta_y) :
+        by_value_template_action(move(bg), fixed_point(delta_x, delta_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param delta_position How much to add to the position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     */
+    affine_bg_move_pivot_by_action(const affine_bg_ptr& bg, const fixed_point& delta_position) :
+        by_value_template_action(bg, delta_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param delta_position How much to add to the position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     */
+    affine_bg_move_pivot_by_action(affine_bg_ptr&& bg, const fixed_point& delta_position) :
+        by_value_template_action(move(bg), delta_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns how much to add to the position of the pivot of the given affine_bg_ptr
+     * when the action is updated.
+     */
+    [[nodiscard]] const fixed_point& delta_position() const
+    {
+        return delta_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the position of the pivot of an affine_bg_ptr until it has a given state.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_move_pivot_to_action :
+        public to_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the position of the pivot of the given affine_bg_ptr is equal to (final_x, final_y).
+     * @param final_x Horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_y Vertical position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_to_action(const affine_bg_ptr& bg, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(bg, duration_updates, fixed_point(final_x, final_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the position of the pivot of the given affine_bg_ptr is equal to (final_x, final_y).
+     * @param final_x Horizontal position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_y Vertical position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_to_action(affine_bg_ptr&& bg, int duration_updates, fixed final_x, fixed final_y) :
+        to_value_template_action(move(bg), duration_updates, fixed_point(final_x, final_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the position of the pivot of the given affine_bg_ptr is equal to final_position.
+     * @param final_position Position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_to_action(const affine_bg_ptr& bg, int duration_updates,
+                                   const fixed_point& final_position) :
+        to_value_template_action(bg, duration_updates, final_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the position of the pivot of the given affine_bg_ptr is equal to final_position.
+     * @param final_position Position of the pivot of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_to_action(affine_bg_ptr&& bg, int duration_updates, const fixed_point& final_position) :
+        to_value_template_action(move(bg), duration_updates, final_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the position of the pivot of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] const fixed_point& final_position() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the position of the pivot of an affine_bg_ptr from a minimum to a maximum.
+ * When the position is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_move_pivot_loop_action :
+        public loop_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the position delta.
+     * @param final_x When the horizontal position of the pivot of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     * @param final_y When the vertical position of the pivot of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_move_pivot_loop_action(const affine_bg_ptr& bg, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(bg, duration_updates, fixed_point(final_x, final_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the position delta.
+     * @param final_x When the horizontal position of the pivot of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     * @param final_y When the vertical position of the pivot of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_move_pivot_loop_action(affine_bg_ptr&& bg, int duration_updates, fixed final_x, fixed final_y) :
+        loop_value_template_action(move(bg), duration_updates, fixed_point(final_x, final_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the position delta.
+     * @param final_position When the position of the pivot of the given affine_bg_ptr is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    affine_bg_move_pivot_loop_action(const affine_bg_ptr& bg, int duration_updates,
+                                     const fixed_point& final_position) :
+        loop_value_template_action(bg, duration_updates, final_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the position delta.
+     * @param final_position When the position of the pivot of the given affine_bg_ptr is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    affine_bg_move_pivot_loop_action(affine_bg_ptr&& bg, int duration_updates,
+                                     const fixed_point& final_position) :
+        loop_value_template_action(move(bg), duration_updates, final_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the position of the pivot of the given affine_bg_ptr is equal to this returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] const fixed_point& final_position() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the position of the pivot of an affine_bg_ptr when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_move_pivot_toggle_action :
+        public toggle_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * to change the position of the pivot of the given affine_bg_ptr.
+     * @param new_x New horizontal position when the action is updated duration_updates times.
+     * @param new_y New vertical position when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_toggle_action(const affine_bg_ptr& bg, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(bg, duration_updates, fixed_point(new_x, new_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * to change the position of the pivot of the given affine_bg_ptr.
+     * @param new_x New horizontal position when the action is updated duration_updates times.
+     * @param new_y New vertical position when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_toggle_action(affine_bg_ptr&& bg, int duration_updates, fixed new_x, fixed new_y) :
+        toggle_value_template_action(move(bg), duration_updates, fixed_point(new_x, new_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * to change the position of the pivot of the given affine_bg_ptr.
+     * @param new_position New position when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_toggle_action(const affine_bg_ptr& bg, int duration_updates,
+                                       const fixed_point& new_position) :
+        toggle_value_template_action(bg, duration_updates, new_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * to change the position of the pivot of the given affine_bg_ptr.
+     * @param new_position New position when the action is updated duration_updates times.
+     */
+    affine_bg_move_pivot_toggle_action(affine_bg_ptr&& bg, int duration_updates,
+                                       const fixed_point& new_position) :
+        toggle_value_template_action(move(bg), duration_updates, new_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the position of the pivot of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] const fixed_point& new_position() const
+    {
+        return new_property();
+    }
+};
+
+
 // wrapping
 
 /**

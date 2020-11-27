@@ -166,6 +166,35 @@
               <span class="m-doc-wrap-bumper">auto <a href="#adc978f8f3a746107f1deef6653e176fd" class="m-doc">set_vertical_flip</a>(</span><span class="m-doc-wrap">bool vertical_flip) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets if the affine backgrounds to generate must be flipped in the vertical axis or not.</dd>
+            <dt id="ad39c2128c5bafbc46e7b455fa9b1d18f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad39c2128c5bafbc46e7b455fa9b1d18f" class="m-doc-self">pivot_x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt id="a29fc25787dbb072bddc260da8ad10b0c">
+              <span class="m-doc-wrap-bumper">void <a href="#a29fc25787dbb072bddc260da8ad10b0c" class="m-doc-self">set_pivot_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt id="ab2c0836d1fa410f44ddcf42602b0e95c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab2c0836d1fa410f44ddcf42602b0e95c" class="m-doc-self">pivot_y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt id="aa1f39a44f220fcdaf32639c0b6d1df22">
+              <span class="m-doc-wrap-bumper">void <a href="#aa1f39a44f220fcdaf32639c0b6d1df22" class="m-doc-self">set_pivot_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_y)</span>
+            </dt>
+            <dd>Sets the vertical position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt id="a2dee49ddc8e089f2c8f22fe6ed48d26b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2dee49ddc8e089f2c8f22fe6ed48d26b" class="m-doc-self">pivot_position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a428038590d4f3a50070b1be04282acd7" class="m-doc">set_pivot_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_y)</span>
+            </dt>
+            <dd>Sets the position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae34ccc377a867ce27992cf35a26909a0" class="m-doc">set_pivot_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; pivot_position)</span>
+            </dt>
+            <dd>Sets the position of the affine transformations pivot point of the affine backgrounds to generate.</dd>
             <dt id="acf40353341a93ab14158c4ff6335353a">
               <span class="m-doc-wrap-bumper">auto <a href="#acf40353341a93ab14158c4ff6335353a" class="m-doc-self">mat_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a>&amp;</span>
             </dt>
@@ -598,6 +627,45 @@
                   <td>Reference to this.</td>
                 </tr>
               </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a428038590d4f3a50070b1be04282acd7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a428038590d4f3a50070b1be04282acd7" class="m-doc-self">set_pivot_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_x,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pivot_y)</span></span>
+            </h3>
+            <p>Sets the position of the affine transformations pivot point of the affine backgrounds to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pivot_x</td>
+                  <td>Horizontal position of the pivot point.</td>
+                </tr>
+                <tr>
+                  <td>pivot_y</td>
+                  <td>Vertical position of the pivot point.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae34ccc377a867ce27992cf35a26909a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae34ccc377a867ce27992cf35a26909a0" class="m-doc-self">set_pivot_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; pivot_position)</span></span>
+            </h3>
+            <p>Sets the position of the affine transformations pivot point of the affine backgrounds to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pivot_position</td>
+                  <td>Position of the pivot point.</td>
+                </tr>
+              </tbody>
             </table>
           </div></section>
           <section class="m-doc-details" id="a708822bbdf545aacad3c39391152424a"><div>

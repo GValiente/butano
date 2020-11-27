@@ -24,6 +24,7 @@ class regular_bg_map_ptr;
 class affine_bg_attributes;
 class regular_bg_attributes;
 class affine_mat_attributes;
+class affine_bg_mat_attributes;
 enum class bpp_mode;
 
 namespace bgs_manager
@@ -106,7 +107,15 @@ namespace bgs_manager
 
     void set_vertical_flip(id_type id, bool vertical_flip);
 
-    [[nodiscard]] const affine_mat_attributes& mat_attributes(id_type id);
+    [[nodiscard]] const fixed_point& pivot_position(id_type id);
+
+    void set_pivot_x(id_type id, fixed pivot_x);
+
+    void set_pivot_y(id_type id, fixed pivot_y);
+
+    void set_pivot_position(id_type id, const fixed_point& pivot_position);
+
+    [[nodiscard]] const affine_bg_mat_attributes& mat_attributes(id_type id);
 
     void set_mat_attributes(id_type id, const affine_mat_attributes& mat_attributes);
 

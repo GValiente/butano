@@ -35,6 +35,7 @@ class affine_bg_tiles_ptr;
 class affine_bg_tiles_item;
 class affine_bg_attributes;
 class affine_mat_attributes;
+class affine_bg_mat_attributes;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of an affine background.
@@ -364,9 +365,47 @@ public:
     void set_vertical_flip(bool vertical_flip);
 
     /**
-     * @brief Returns the attributes of the affine transformation matrix of this affine background.
+     * @brief Returns the horizontal position of the affine transformations pivot point of this affine background.
      */
-    [[nodiscard]] const affine_mat_attributes& mat_attributes() const;
+    [[nodiscard]] fixed pivot_x() const;
+
+    /**
+     * @brief Sets the horizontal position of the affine transformations pivot point of this affine background.
+     */
+    void set_pivot_x(fixed pivot_x);
+
+    /**
+     * @brief Returns the vertical position of the affine transformations pivot point of this affine background.
+     */
+    [[nodiscard]] fixed pivot_y() const;
+
+    /**
+     * @brief Sets the vertical position of the affine transformations pivot point of this affine background.
+     */
+    void set_pivot_y(fixed pivot_y);
+
+    /**
+     * @brief Returns the position of the affine transformations pivot point of this affine background.
+     */
+    [[nodiscard]] const fixed_point& pivot_position() const;
+
+    /**
+     * @brief Sets the position of the affine transformations pivot point of this affine background.
+     * @param pivot_x Horizontal position of the pivot point.
+     * @param pivot_y Vertical position of the pivot point.
+     */
+    void set_pivot_position(fixed pivot_x, fixed pivot_y);
+
+    /**
+     * @brief Sets the position of the affine transformations pivot point of this affine background.
+     * @param pivot_position Position of the pivot point.
+     */
+    void set_pivot_position(const fixed_point& pivot_position);
+
+    /**
+     * @brief Returns the attributes of the position and the transformation matrix of this affine background.
+     */
+    [[nodiscard]] const affine_bg_mat_attributes& mat_attributes() const;
 
     /**
      * @brief Sets the attributes of the affine transformation matrix of this affine background.

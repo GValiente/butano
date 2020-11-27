@@ -270,6 +270,73 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed pivot_x() const
+    {
+        return _pivot_position.x();
+    }
+
+    /**
+     * @brief Sets the horizontal position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     */
+    void set_pivot_x(fixed pivot_x)
+    {
+        _pivot_position.set_x(pivot_x);
+    }
+
+    /**
+     * @brief Returns the vertical position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed pivot_y() const
+    {
+        return _pivot_position.y();
+    }
+
+    /**
+     * @brief Sets the vertical position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     */
+    void set_pivot_y(fixed pivot_y)
+    {
+        _pivot_position.set_y(pivot_y);
+    }
+
+    /**
+     * @brief Returns the position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     */
+    [[nodiscard]] const fixed_point& pivot_position() const
+    {
+        return _pivot_position;
+    }
+
+    /**
+     * @brief Sets the position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     * @param pivot_x Horizontal position of the pivot point.
+     * @param pivot_y Vertical position of the pivot point.
+     */
+    void set_pivot_position(fixed pivot_x, fixed pivot_y)
+    {
+        _pivot_position.set_x(pivot_x);
+        _pivot_position.set_y(pivot_y);
+    }
+
+    /**
+     * @brief Sets the position of the affine transformations pivot point
+     * of the affine backgrounds to generate.
+     * @param pivot_position Position of the pivot point.
+     */
+    void set_pivot_position(const fixed_point& pivot_position)
+    {
+        _pivot_position = pivot_position;
+    }
+
+    /**
      * @brief Returns the attributes of the affine transformation matrix of the affine backgrounds to generate.
      */
     [[nodiscard]] const affine_mat_attributes& mat_attributes() const
@@ -534,6 +601,7 @@ private:
     affine_mat_attributes _mat_attributes;
     optional<affine_bg_item> _item;
     fixed_point _position;
+    fixed_point _pivot_position;
     int _priority = 3;
     int _z_order = 0;
     optional<affine_bg_map_ptr> _map;

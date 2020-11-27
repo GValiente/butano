@@ -14,6 +14,7 @@
  * @ingroup memory
  */
 
+#include <memory>
 #include "bn_assert.h"
 #include "bn_cstddef.h"
 #include "bn_utility.h"

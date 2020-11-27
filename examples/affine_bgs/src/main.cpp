@@ -726,12 +726,6 @@ int main()
 
     while(true)
     {
-
-        affine_bgs_pivot_position_hblank_effect_scene(text_generator);
-        bn::core::update();
-
-
-
         affine_bgs_visibility_scene(text_generator);
         bn::core::update();
 

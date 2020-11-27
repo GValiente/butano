@@ -9,8 +9,8 @@
 #include "bn_display.h"
 #include "bn_music_items.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_double_size_mode.h"
-#include "bn_sprite_affine_mat_attributes.h"
 #include "bn_sprite_items_stage_1_animals.h"
 #include "bn_sprite_items_stage_1_characters_1.h"
 #include "bn_sprite_items_stage_1_characters_2.h"
@@ -233,14 +233,13 @@ namespace
         { &bn::sprite_items::stage_4_meteors_small, 2, 2, 2, 2 },
     };
 
-    [[nodiscard]] constexpr bn::array<bn::sprite_affine_mat_attributes, bn::display::height()>
-    _create_hblank_effect_attributes()
+    [[nodiscard]] constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> _create_hblank_effect_attributes()
     {
-        bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> result;
+        bn::array<bn::affine_mat_attributes, bn::display::height()> result;
 
         for(int index = 0; index < bn::display::height(); ++index)
         {
-            bn::sprite_affine_mat_attributes& attributes = result[index];
+            bn::affine_mat_attributes& attributes = result[index];
             bn::fixed sin = bn::lut_sin((index * 256) / bn::display::height());
             attributes.set_rotation_angle((index * 360) / bn::display::height());
             attributes.set_scale(1 + (sin / 2));
@@ -249,7 +248,7 @@ namespace
         return result;
     }
 
-    constexpr const bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> _hblank_effect_attributes =
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes =
             _create_hblank_effect_attributes();
 }
 

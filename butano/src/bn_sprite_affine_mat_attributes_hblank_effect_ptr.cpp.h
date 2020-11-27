@@ -12,7 +12,7 @@ namespace bn
 {
 
 sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hblank_effect_ptr::create(
-        const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const sprite_affine_mat_ptr& affine_mat, const span<const affine_mat_attributes>& attributes_ref)
 {
     return sprite_affine_mat_attributes_hblank_effect_ptr(
                 sprite_affine_mat_pa_register_hblank_effect_ptr::create(affine_mat, attributes_ref),
@@ -22,7 +22,7 @@ sprite_affine_mat_attributes_hblank_effect_ptr sprite_affine_mat_attributes_hbla
 }
 
 optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attributes_hblank_effect_ptr::create_optional(
-        const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const sprite_affine_mat_ptr& affine_mat, const span<const affine_mat_attributes>& attributes_ref)
 {
     optional<sprite_affine_mat_attributes_hblank_effect_ptr> result;
 
@@ -51,13 +51,13 @@ void sprite_affine_mat_attributes_hblank_effect_ptr::set_visible(bool visible)
     _pd_hblank_effect_ptr.set_visible(visible);
 }
 
-span<const sprite_affine_mat_attributes> sprite_affine_mat_attributes_hblank_effect_ptr::attributes_ref() const
+span<const affine_mat_attributes> sprite_affine_mat_attributes_hblank_effect_ptr::attributes_ref() const
 {
     return _pa_hblank_effect_ptr.attributes_ref();
 }
 
 void sprite_affine_mat_attributes_hblank_effect_ptr::set_attributes_ref(
-        const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const span<const affine_mat_attributes>& attributes_ref)
 {
     _pa_hblank_effect_ptr.set_attributes_ref(attributes_ref);
     _pb_hblank_effect_ptr.set_attributes_ref(attributes_ref);

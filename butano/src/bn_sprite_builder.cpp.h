@@ -7,7 +7,7 @@
 
 #include "bn_sprites.h"
 #include "bn_sprite_ptr.h"
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 
 namespace bn
 {
@@ -48,11 +48,11 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     }
     else if(rotation_angle != 0)
     {
-        sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_rotation_angle(rotation_angle);
-        affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
-        affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_rotation_angle(rotation_angle);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
     }
 
     return *this;
@@ -66,11 +66,11 @@ sprite_builder& sprite_builder::set_horizontal_scale(fixed horizontal_scale)
     }
     else if(horizontal_scale != 1)
     {
-        sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_horizontal_scale(horizontal_scale);
-        affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
-        affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_horizontal_scale(horizontal_scale);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
     }
 
     return *this;
@@ -84,11 +84,11 @@ sprite_builder& sprite_builder::set_vertical_scale(fixed vertical_scale)
     }
     else if(vertical_scale != 1)
     {
-        sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_vertical_scale(vertical_scale);
-        affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
-        affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_vertical_scale(vertical_scale);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
     }
 
     return *this;
@@ -102,11 +102,11 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
     }
     else if(scale != 1)
     {
-        sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_scale(scale);
-        affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
-        affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_scale(scale);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
     }
 
     return *this;
@@ -120,11 +120,11 @@ sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical
     }
     else if(horizontal_scale != 1 || vertical_scale != 1)
     {
-        sprite_affine_mat_attributes affine_mat_attributes;
-        affine_mat_attributes.set_scale(horizontal_scale, vertical_scale);
-        affine_mat_attributes.set_horizontal_flip(_horizontal_flip);
-        affine_mat_attributes.set_vertical_flip(_vertical_flip);
-        _affine_mat = sprite_affine_mat_ptr::create(affine_mat_attributes);
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_scale(horizontal_scale, vertical_scale);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
     }
 
     return *this;

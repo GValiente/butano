@@ -6,7 +6,7 @@
 #ifndef BN_HW_SPRITE_AFFINE_MATS_H
 #define BN_HW_SPRITE_AFFINE_MATS_H
 
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_hw_tonc.h"
 
 namespace bn::hw::sprite_affine_mats
@@ -31,7 +31,7 @@ namespace bn::hw::sprite_affine_mats
         affine_mat.pd = 1 << 8;
     }
 
-    inline void setup(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
+    inline void setup(const affine_mat_attributes& attributes, handle& affine_mat)
     {
         affine_mat.pa = int16_t(attributes.pa_register_value());
         affine_mat.pb = int16_t(attributes.pb_register_value());
@@ -39,13 +39,13 @@ namespace bn::hw::sprite_affine_mats
         affine_mat.pd = int16_t(attributes.pd_register_value());
     }
 
-    inline void update_horizontal_scale(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
+    inline void update_horizontal_scale(const affine_mat_attributes& attributes, handle& affine_mat)
     {
         affine_mat.pa = int16_t(attributes.pa_register_value());
         affine_mat.pb = int16_t(attributes.pb_register_value());
     }
 
-    inline void update_vertical_scale(const sprite_affine_mat_attributes& attributes, handle& affine_mat)
+    inline void update_vertical_scale(const affine_mat_attributes& attributes, handle& affine_mat)
     {
         affine_mat.pc = int16_t(attributes.pc_register_value());
         affine_mat.pd = int16_t(attributes.pd_register_value());

@@ -12,7 +12,7 @@
 
 namespace bn
 {
-    class sprite_affine_mat_attributes;
+    class affine_mat_attributes;
 
     using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
 }
@@ -36,11 +36,11 @@ namespace bn::sprite_affine_mats_manager
 
     [[nodiscard]] int create();
 
-    [[nodiscard]] int create(const sprite_affine_mat_attributes& attributes);
+    [[nodiscard]] int create(const affine_mat_attributes& attributes);
 
     [[nodiscard]] int create_optional();
 
-    [[nodiscard]] int create_optional(const sprite_affine_mat_attributes& attributes);
+    [[nodiscard]] int create_optional(const affine_mat_attributes& attributes);
 
     void increase_usages(int id);
 
@@ -74,9 +74,9 @@ namespace bn::sprite_affine_mats_manager
 
     void set_vertical_flip(int id, bool vertical_flip);
 
-    [[nodiscard]] const sprite_affine_mat_attributes& attributes(int id);
+    [[nodiscard]] const affine_mat_attributes& attributes(int id);
 
-    void set_attributes(int id, const sprite_affine_mat_attributes& attributes);
+    void set_attributes(int id, const affine_mat_attributes& attributes);
 
     [[nodiscard]] bool identity(int id);
 

@@ -3,14 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
-#define BN_SPRITE_AFFINE_MAT_ATTRIBUTES_H
+#ifndef BN_AFFINE_MAT_ATTRIBUTES_H
+#define BN_AFFINE_MAT_ATTRIBUTES_H
 
 /**
  * @file
- * bn::sprite_affine_mat_attributes header file.
+ * bn::affine_mat_attributes header file.
  *
- * @ingroup sprite
  * @ingroup affine_mat
  */
 
@@ -21,20 +20,18 @@ namespace bn
 {
 
 /**
- * @brief Contains the attributes which define a sprite affine transformation matrix
- * (created with sprite_affine_mat_ptr static constructors).
+ * @brief Contains the attributes which define an affine transformation matrix.
  *
- * @ingroup sprite
  * @ingroup affine_mat
  */
-class sprite_affine_mat_attributes
+class affine_mat_attributes
 {
 
 public:
     /**
      * @brief Identity constructor.
      */
-    constexpr sprite_affine_mat_attributes() = default;
+    constexpr affine_mat_attributes() = default;
 
     /**
      * @brief Constructor.
@@ -44,8 +41,8 @@ public:
      * @param horizontal_flip Indicates if this matrix is flipped in the horizontal axis or not.
      * @param vertical_flip Indicates if this matrix is flipped in the vertical axis or not.
      */
-    constexpr sprite_affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
-                                           bool horizontal_flip, bool vertical_flip) :
+    constexpr affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
+                                    bool horizontal_flip, bool vertical_flip) :
         _rotation_angle(rotation_angle),
         _horizontal_scale(horizontal_scale),
         _vertical_scale(vertical_scale),
@@ -234,7 +231,8 @@ public:
     }
 
     /**
-     * @brief Returns the value to commit to the first GBA register of a sprite_affine_mat_ptr with these attributes.
+     * @brief Returns the value to commit to the first GBA register of
+     * an affine transformation matrix with these attributes.
      */
     [[nodiscard]] constexpr int pa_register_value() const
     {
@@ -242,7 +240,8 @@ public:
     }
 
     /**
-     * @brief Returns the value to commit to the second GBA register of a sprite_affine_mat_ptr with these attributes.
+     * @brief Returns the value to commit to the second GBA register of
+     * an affine transformation matrix with these attributes.
      */
     [[nodiscard]] constexpr int pb_register_value() const
     {
@@ -250,7 +249,8 @@ public:
     }
 
     /**
-     * @brief Returns the value to commit to the third GBA register of a sprite_affine_mat_ptr with these attributes.
+     * @brief Returns the value to commit to the third GBA register of
+     * an affine transformation matrix with these attributes.
      */
     [[nodiscard]] constexpr int pc_register_value() const
     {
@@ -258,7 +258,8 @@ public:
     }
 
     /**
-     * @brief Returns the value to commit to the fourth GBA register of a sprite_affine_mat_ptr with these attributes.
+     * @brief Returns the value to commit to the fourth GBA register of
+     * an affine transformation matrix with these attributes.
      */
     [[nodiscard]] constexpr int pd_register_value() const
     {
@@ -267,13 +268,11 @@ public:
 
     /**
      * @brief Equal operator.
-     * @param a First sprite_affine_mat_attributes to compare.
-     * @param b Second sprite_affine_mat_attributes to compare.
-     * @return `true` if the first sprite_affine_mat_attributes is equal to the second one,
-     * otherwise `false`.
+     * @param a First affine_mat_attributes to compare.
+     * @param b Second affine_mat_attributes to compare.
+     * @return `true` if the first affine_mat_attributes is equal to the second one, otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator==(const sprite_affine_mat_attributes& a,
-                                                   const sprite_affine_mat_attributes& b)
+    [[nodiscard]] constexpr friend bool operator==(const affine_mat_attributes& a, const affine_mat_attributes& b)
     {
         return a._rotation_angle == b._rotation_angle && a._horizontal_scale == b._horizontal_scale &&
                 a._vertical_scale == b._vertical_scale && a._hflip == b._hflip && a._vflip == b._vflip;
@@ -281,13 +280,11 @@ public:
 
     /**
      * @brief Not equal operator.
-     * @param a First sprite_affine_mat_attributes to compare.
-     * @param b Second sprite_affine_mat_attributes to compare.
-     * @return `true` if the first sprite_affine_mat_attributes is not equal to the second one,
-     * otherwise `false`.
+     * @param a First affine_mat_attributes to compare.
+     * @param b Second affine_mat_attributes to compare.
+     * @return `true` if the first affine_mat_attributes is not equal to the second one, otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_affine_mat_attributes& a,
-                                                   const sprite_affine_mat_attributes& b)
+    [[nodiscard]] constexpr friend bool operator!=(const affine_mat_attributes& a, const affine_mat_attributes& b)
     {
         return ! (a == b);
     }

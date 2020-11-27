@@ -18,14 +18,12 @@
 #include "bn_fixed_point.h"
 #include "bn_affine_bg_item.h"
 #include "bn_affine_bg_map_ptr.h"
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 
 namespace bn
 {
 
 class affine_bg_ptr;
-
-using affine_mat_attributes = sprite_affine_mat_attributes;
 
 /**
  * @brief Creates affine_bg_map_ptr objects with custom attributes.

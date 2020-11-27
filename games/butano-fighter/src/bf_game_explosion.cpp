@@ -6,7 +6,7 @@
 #include "bf_game_explosion.h"
 
 #include "bn_sprite_builder.h"
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 
 namespace bf::game
 {
@@ -27,7 +27,7 @@ explosion::explosion(const bn::sprite_item& sprite_item, const bn::fixed_point& 
 
     if(double_size)
     {
-        bn::sprite_affine_mat_attributes attributes;
+        bn::affine_mat_attributes attributes;
         attributes.set_scale(2);
         _affine_mat = bn::sprite_affine_mat_ptr::create(attributes);
     }

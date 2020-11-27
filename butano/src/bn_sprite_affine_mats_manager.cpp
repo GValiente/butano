@@ -26,7 +26,7 @@ namespace
     {
 
     public:
-        sprite_affine_mat_attributes attributes;
+        affine_mat_attributes attributes;
         intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
         bool flipped_identity;
@@ -35,14 +35,14 @@ namespace
 
         void init()
         {
-            attributes = sprite_affine_mat_attributes();
+            attributes = affine_mat_attributes();
             usages = 1;
             flipped_identity = true;
             double_size = false;
             remove_if_not_needed = false;
         }
 
-        void init(const sprite_affine_mat_attributes& new_attributes)
+        void init(const affine_mat_attributes& new_attributes)
         {
             attributes = new_attributes;
             usages = 1;
@@ -66,7 +66,7 @@ namespace
     {
 
     public:
-        explicit registers(const sprite_affine_mat_attributes& attributes) :
+        explicit registers(const affine_mat_attributes& attributes) :
             _pa(attributes.pa_register_value()),
             _pb(attributes.pb_register_value()),
             _pc(attributes.pc_register_value()),
@@ -109,7 +109,7 @@ namespace
     void _update(int index)
     {
         item_type& item = data.items[index];
-        const sprite_affine_mat_attributes& attributes = item.attributes;
+        const affine_mat_attributes& attributes = item.attributes;
         bool new_double_size;
 
         if(attributes.flipped_identity())
@@ -162,7 +162,7 @@ namespace
         return item_index;
     }
 
-    [[nodiscard]] int _create(const sprite_affine_mat_attributes& attributes)
+    [[nodiscard]] int _create(const affine_mat_attributes& attributes)
     {
         int item_index = data.free_item_indexes.back();
         data.free_item_indexes.pop_back();
@@ -205,7 +205,7 @@ int create()
     return _create();
 }
 
-int create(const sprite_affine_mat_attributes& attributes)
+int create(const affine_mat_attributes& attributes)
 {
     BN_ASSERT(! data.free_item_indexes.empty(), "No more sprite affine mats available");
 
@@ -222,7 +222,7 @@ int create_optional()
     return _create();
 }
 
-int create_optional(const sprite_affine_mat_attributes& attributes)
+int create_optional(const affine_mat_attributes& attributes)
 {
     if(data.free_item_indexes.empty())
     {
@@ -400,12 +400,12 @@ void set_vertical_flip(int id, bool vertical_flip)
     }
 }
 
-const sprite_affine_mat_attributes& attributes(int id)
+const affine_mat_attributes& attributes(int id)
 {
     return data.items[id].attributes;
 }
 
-void set_attributes(int id, const sprite_affine_mat_attributes& attributes)
+void set_attributes(int id, const affine_mat_attributes& attributes)
 {
     item_type& item = data.items[id];
     registers old_registers(item.attributes);

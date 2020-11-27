@@ -13,11 +13,11 @@
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_items_hero_head.h"
 #include "bn_sprite_items_butano_font.h"
 #include "bn_sprite_items_fighter_font.h"
-#include "bn_sprite_affine_mat_attributes.h"
 #include "bn_sprite_items_butano_big_sprite.h"
 #include "bf_status.h"
 #include "bf_scene_type.h"
@@ -89,10 +89,10 @@ namespace
     constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas =
             _create_butano_character_hblank_effect_deltas();
 
-    [[nodiscard]] constexpr bn::array<bn::sprite_affine_mat_attributes, bn::display::height()>
+    [[nodiscard]] constexpr bn::array<bn::affine_mat_attributes, bn::display::height()>
     _create_fighter_character_hblank_effect_attributes()
     {
-        bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> result;
+        bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 
         for(int index = start; index < bn::display::height(); ++index)
@@ -104,7 +104,7 @@ namespace
         return result;
     }
 
-    constexpr const bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes =
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes =
             _create_fighter_character_hblank_effect_attributes();
 }
 

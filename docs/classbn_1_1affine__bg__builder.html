@@ -117,6 +117,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ac1650a21321f566d9a7bbc199136c82f" class="m-doc">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets the position of the affine backgrounds to generate (relative to their camera, if they are going to have one).</dd>
+            <dt id="acf40353341a93ab14158c4ff6335353a">
+              <span class="m-doc-wrap-bumper">auto <a href="#acf40353341a93ab14158c4ff6335353a" class="m-doc-self">mat_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a>&amp;</span>
+            </dt>
+            <dd>Returns the attributes of the affine transformation matrix of the affine backgrounds to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a708822bbdf545aacad3c39391152424a" class="m-doc">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a>&amp; mat_attributes) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the attributes of the affine transformation matrix of the affine backgrounds to generate.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ab3063ae93adda5b0f84630d9fd58ee77" class="m-doc">priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
@@ -367,6 +375,29 @@
                 <tr>
                   <td style="width: 1%">position</td>
                   <td>Position of the affine backgrounds to generate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a708822bbdf545aacad3c39391152424a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a708822bbdf545aacad3c39391152424a" class="m-doc-self">set_affine_mat</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a>&amp; mat_attributes)</span></span>
+            </h3>
+            <p>Sets the attributes of the affine transformation matrix of the affine backgrounds to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">mat_attributes</td>
+                  <td><a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a> of the affine backgrounds to generate.</td>
                 </tr>
               </tbody>
               <tfoot>

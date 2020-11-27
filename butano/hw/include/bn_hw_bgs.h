@@ -54,12 +54,6 @@ namespace bn::hw::bgs
     {
         bg.cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) |
                           (builder.wrapping_enabled() << 13) | BG_8BPP);
-
-        const affine_mat_attributes& mat_attributes = builder.mat_attributes();
-        bg.affine.pa = int16_t(mat_attributes.pa_register_value());
-        bg.affine.pb = int16_t(mat_attributes.pb_register_value());
-        bg.affine.pc = int16_t(mat_attributes.pc_register_value());
-        bg.affine.pd = int16_t(mat_attributes.pd_register_value());
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& bg_cnt)
@@ -127,6 +121,14 @@ namespace bn::hw::bgs
     inline void set_affine_y(int y, handle& bg)
     {
         bg.affine.dy = y;
+    }
+
+    inline void set_affine_mat_attributes(const affine_mat_attributes& mat_attributes, handle& bg)
+    {
+        bg.affine.pa = int16_t(mat_attributes.pa_register_value());
+        bg.affine.pb = int16_t(mat_attributes.pb_register_value());
+        bg.affine.pc = int16_t(mat_attributes.pc_register_value());
+        bg.affine.pd = int16_t(mat_attributes.pd_register_value());
     }
 
     inline void set_priority(int priority, uint16_t& bg_cnt)

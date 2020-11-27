@@ -23,6 +23,7 @@ class regular_bg_builder;
 class regular_bg_map_ptr;
 class affine_bg_attributes;
 class regular_bg_attributes;
+class affine_mat_attributes;
 enum class bpp_mode;
 
 namespace bgs_manager
@@ -80,6 +81,34 @@ namespace bgs_manager
     void set_regular_position(id_type id, const fixed_point& position);
 
     void set_affine_position(id_type id, const fixed_point& position);
+
+    [[nodiscard]] fixed rotation_angle(id_type id);
+
+    void set_rotation_angle(id_type id, fixed rotation_angle);
+
+    [[nodiscard]] fixed horizontal_scale(id_type id);
+
+    void set_horizontal_scale(id_type id, fixed horizontal_scale);
+
+    [[nodiscard]] fixed vertical_scale(id_type id);
+
+    void set_vertical_scale(id_type id, fixed vertical_scale);
+
+    void set_scale(id_type id, fixed scale);
+
+    void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale);
+
+    [[nodiscard]] bool horizontal_flip(id_type id);
+
+    void set_horizontal_flip(id_type id, bool horizontal_flip);
+
+    [[nodiscard]] bool vertical_flip(id_type id);
+
+    void set_vertical_flip(id_type id, bool vertical_flip);
+
+    [[nodiscard]] const affine_mat_attributes& mat_attributes(id_type id);
+
+    void set_mat_attributes(id_type id, const affine_mat_attributes& mat_attributes);
 
     [[nodiscard]] int priority(id_type id);
 

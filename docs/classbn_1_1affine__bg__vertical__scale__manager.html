@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_affine_bg_ptr.h file | Butano Docs</title>
+  <title>bn::affine_bg_vertical_scale_manager class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,40 +47,33 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_affine_bg_ptr.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>affine_bg_vertical_scale_manager <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__actions_8h.html">&lt;bn_affine_bg_actions.h&gt;</a></div>
         </h1>
+        <p>Manages the vertical scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">bn::<wbr />affine_bg_ptr</a> header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main butano namespace.</dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">bn::affine_bg_ptr</a>
+            <dt id="a9bd5345514d5710f60d40d0cfef24151">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a9bd5345514d5710f60d40d0cfef24151" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
-            <dd>std::shared_ptr like smart pointer that retains shared ownership of an affine background.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01affine__bg__ptr_01_4.html" class="m-doc">bn::hash&lt;affine_bg_ptr&gt;</a>
+            <dd>Returns the vertical scale of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt id="a90d2f580a41e4d96e8206614f6a2a506">
+              <span class="m-doc-wrap-bumper">static void <a href="#a90d2f580a41e4d96e8206614f6a2a506" class="m-doc-self">set</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale,
+              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg)</span>
             </dt>
-            <dd>Hash support for <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dd>Sets the vertical scale of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
           </dl>
         </section>
       </div>

@@ -170,7 +170,7 @@ namespace
             hw::bgs::set_map_dimensions(map_size, new_handle);
             handle = new_handle;
             half_dimensions = map_dimensions * 4;
-            update_affine_hw_position();
+            update_affine_mat_attributes();
             commit_big_map = big_map;
             full_commit_big_map = big_map;
         }
@@ -189,6 +189,12 @@ namespace
 
             update_regular_hw_x(real_x);
             update_regular_hw_y(real_y);
+        }
+
+        void update_affine_mat_attributes()
+        {
+            hw::bgs::set_affine_mat_attributes(mat_attributes, handle);
+            update_affine_hw_position();
         }
 
         void update_affine_hw_position()
@@ -279,6 +285,28 @@ namespace
                 commit_big_map = true;
             }
         }
+    };
+
+
+    class affine_mat_registers
+    {
+
+    public:
+        explicit affine_mat_registers(const affine_mat_attributes& mat_attributes) :
+            _pa(mat_attributes.pa_register_value()),
+            _pb(mat_attributes.pb_register_value()),
+            _pc(mat_attributes.pc_register_value()),
+            _pd(mat_attributes.pd_register_value())
+        {
+        }
+
+        [[nodiscard]] friend bool operator==(const affine_mat_registers& a, const affine_mat_registers& b) = default;
+
+    private:
+        int _pa;
+        int _pb;
+        int _pc;
+        int _pd;
     };
 
 
@@ -678,6 +706,166 @@ void set_affine_position(id_type id, const fixed_point& position)
     if(old_integer_position != new_integer_position)
     {
         item->update_affine_hw_position();
+        _update_item(*item);
+    }
+}
+
+fixed rotation_angle(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes.rotation_angle();
+}
+
+void set_rotation_angle(id_type id, fixed rotation_angle)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(rotation_angle != item->mat_attributes.rotation_angle())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_rotation_angle(rotation_angle);
+
+        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+fixed horizontal_scale(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes.horizontal_scale();
+}
+
+void set_horizontal_scale(id_type id, fixed horizontal_scale)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(horizontal_scale != item->mat_attributes.horizontal_scale())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_horizontal_scale(horizontal_scale);
+
+        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+fixed vertical_scale(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes.vertical_scale();
+}
+
+void set_vertical_scale(id_type id, fixed vertical_scale)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(vertical_scale != item->mat_attributes.vertical_scale())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_vertical_scale(vertical_scale);
+
+        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+void set_scale(id_type id, fixed scale)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(scale != item->mat_attributes.horizontal_scale() || scale != item->mat_attributes.vertical_scale())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_scale(scale);
+
+        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(horizontal_scale != item->mat_attributes.horizontal_scale() ||
+            vertical_scale != item->mat_attributes.vertical_scale())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_scale(horizontal_scale, vertical_scale);
+
+        if(affine_mat_registers(item->mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+bool horizontal_flip(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes.horizontal_flip();
+}
+
+void set_horizontal_flip(id_type id, bool horizontal_flip)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(horizontal_flip != item->mat_attributes.horizontal_flip())
+    {
+        item->mat_attributes.set_horizontal_flip(horizontal_flip);
+        item->update_affine_mat_attributes();
+        _update_item(*item);
+    }
+}
+
+bool vertical_flip(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes.vertical_flip();
+}
+
+void set_vertical_flip(id_type id, bool vertical_flip)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(vertical_flip != item->mat_attributes.vertical_flip())
+    {
+        affine_mat_registers old_registers(item->mat_attributes);
+        item->mat_attributes.set_vertical_flip(vertical_flip);
+        item->update_affine_mat_attributes();
+        _update_item(*item);
+    }
+}
+
+const affine_mat_attributes& mat_attributes(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->mat_attributes;
+}
+
+void set_mat_attributes(id_type id, const affine_mat_attributes& mat_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    affine_mat_registers old_registers(item->mat_attributes);
+    item->mat_attributes = mat_attributes;
+
+    if(affine_mat_registers(mat_attributes) != old_registers)
+    {
+        item->update_affine_mat_attributes();
         _update_item(*item);
     }
 }

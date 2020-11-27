@@ -437,7 +437,7 @@ namespace
         info info("Sprites flip actions", info_text_lines, text_generator);
 
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(0, 0);
-        bn::sprite_horizontal_flip_toggle_action action(blue_sprite, 120);
+        bn::sprite_horizontal_flip_toggle_action action(blue_sprite, 60);
 
         while(! bn::keypad::start_pressed())
         {

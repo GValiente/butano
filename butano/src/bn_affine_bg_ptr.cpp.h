@@ -246,6 +246,76 @@ void affine_bg_ptr::set_position(const fixed_point& position)
     bgs_manager::set_affine_position(_handle, position);
 }
 
+fixed affine_bg_ptr::rotation_angle() const
+{
+    return bgs_manager::rotation_angle(_handle);
+}
+
+void affine_bg_ptr::set_rotation_angle(fixed rotation_angle)
+{
+    bgs_manager::set_rotation_angle(_handle, rotation_angle);
+}
+
+fixed affine_bg_ptr::horizontal_scale() const
+{
+    return bgs_manager::horizontal_scale(_handle);
+}
+
+void affine_bg_ptr::set_horizontal_scale(fixed horizontal_scale)
+{
+    bgs_manager::set_horizontal_scale(_handle, horizontal_scale);
+}
+
+fixed affine_bg_ptr::vertical_scale() const
+{
+    return bgs_manager::vertical_scale(_handle);
+}
+
+void affine_bg_ptr::set_vertical_scale(fixed vertical_scale)
+{
+    bgs_manager::set_vertical_scale(_handle, vertical_scale);
+}
+
+void affine_bg_ptr::set_scale(fixed scale)
+{
+    bgs_manager::set_scale(_handle, scale);
+}
+
+void affine_bg_ptr::set_scale(fixed horizontal_scale, fixed vertical_scale)
+{
+    bgs_manager::set_scale(_handle, horizontal_scale, vertical_scale);
+}
+
+bool affine_bg_ptr::horizontal_flip() const
+{
+    return bgs_manager::horizontal_flip(_handle);
+}
+
+void affine_bg_ptr::set_horizontal_flip(bool horizontal_flip)
+{
+    bgs_manager::set_horizontal_flip(_handle, horizontal_flip);
+}
+
+bool affine_bg_ptr::vertical_flip() const
+{
+    return bgs_manager::vertical_flip(_handle);
+}
+
+void affine_bg_ptr::set_vertical_flip(bool vertical_flip)
+{
+    bgs_manager::set_vertical_flip(_handle, vertical_flip);
+}
+
+const affine_mat_attributes& affine_bg_ptr::mat_attributes() const
+{
+    return bgs_manager::mat_attributes(_handle);
+}
+
+void affine_bg_ptr::set_mat_attributes(const affine_mat_attributes& mat_attributes)
+{
+    bgs_manager::set_mat_attributes(_handle, mat_attributes);
+}
+
 int affine_bg_ptr::priority() const
 {
     return bgs_manager::priority(_handle);

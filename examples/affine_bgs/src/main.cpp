@@ -137,7 +137,8 @@ namespace
 
         info info("Affine BGs position H-Blank effect", info_text_lines, text_generator);
 
-        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(60, -20);
+        red_bg.set_rotation_angle(45);
 
         bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
 
@@ -172,6 +173,183 @@ namespace
             }
 
             horizontal_hblank_effect.reload_deltas_ref();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_rotation_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: decrease rotation angle",
+            "RIGHT: increase rotation angle",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs rotation", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        red_bg.set_rotation_angle(45);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed rotation_angle = red_bg.rotation_angle();
+
+            if(bn::keypad::left_held())
+            {
+                red_bg.set_rotation_angle(bn::max(rotation_angle - 1, bn::fixed(0)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                red_bg.set_rotation_angle(bn::min(rotation_angle + 1, bn::fixed(360)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_rotation_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs rotation actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        bn::affine_bg_rotate_loop_action action(blue_bg, 180, 360);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_scale_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: decrease horizontal scale",
+            "RIGHT: increase horizontal scale",
+            "DOWN: decrease vertical scale",
+            "UP: increase vertical scale",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs scale", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        red_bg.set_horizontal_scale(1.5);
+        red_bg.set_vertical_scale(0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed horizontal_scale = red_bg.horizontal_scale();
+            bn::fixed vertical_scale = red_bg.vertical_scale();
+
+            if(bn::keypad::left_held())
+            {
+                red_bg.set_horizontal_scale(bn::max(horizontal_scale - 0.01, bn::fixed(0.01)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                red_bg.set_horizontal_scale(bn::min(horizontal_scale + 0.01, bn::fixed(2)));
+            }
+
+            if(bn::keypad::down_held())
+            {
+                red_bg.set_vertical_scale(bn::max(vertical_scale - 0.01, bn::fixed(0.01)));
+            }
+            else if(bn::keypad::up_held())
+            {
+                red_bg.set_vertical_scale(bn::min(vertical_scale + 0.01, bn::fixed(2)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_scale_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs scale actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        blue_bg.set_scale(0.01);
+
+        bn::affine_bg_scale_loop_action action(blue_bg, 120, 2);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_flip_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: disable horizontal flip",
+            "RIGHT: enable horizontal flip",
+            "DOWN: disable vertical flip",
+            "UP: enable vertical flip",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs flip", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        red_bg.set_horizontal_flip(true);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_pressed())
+            {
+                red_bg.set_horizontal_flip(false);
+            }
+            else if(bn::keypad::right_pressed())
+            {
+                red_bg.set_horizontal_flip(true);
+            }
+
+            if(bn::keypad::down_pressed())
+            {
+                red_bg.set_vertical_flip(false);
+            }
+            else if(bn::keypad::up_pressed())
+            {
+                red_bg.set_vertical_flip(true);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_flip_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs flip actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        bn::affine_bg_horizontal_flip_toggle_action action(blue_bg, 60);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
             info.update();
             bn::core::update();
         }
@@ -411,6 +589,8 @@ namespace
 
         bn::affine_bg_builder builder(bn::affine_bg_items::blue_small);
         builder.set_position(30, 10);
+        builder.set_rotation_angle(45);
+        builder.set_scale(2);
         builder.set_mosaic_enabled(true);
         builder.set_blending_enabled(true);
         builder.set_wrapping_enabled(false);
@@ -450,6 +630,24 @@ int main()
         bn::core::update();
 
         affine_bgs_position_hblank_effect_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_rotation_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_rotation_actions_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_scale_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_scale_actions_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_flip_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_flip_actions_scene(text_generator);
         bn::core::update();
 
         affine_bgs_wrapping_scene(text_generator);

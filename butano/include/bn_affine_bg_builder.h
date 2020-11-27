@@ -150,6 +150,126 @@ public:
     }
 
     /**
+     * @brief Returns the rotation angle in degrees of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed rotation_angle() const
+    {
+        return _mat_attributes.rotation_angle();
+    }
+
+    /**
+     * @brief Sets the rotation angle in degrees of the affine backgrounds to generate.
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_rotation_angle(fixed rotation_angle)
+    {
+        _mat_attributes.set_rotation_angle(rotation_angle);
+        return *this;
+    }
+
+    /**
+     * @brief Returns the horizontal scale of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed horizontal_scale() const
+    {
+        return _mat_attributes.horizontal_scale();
+    }
+
+    /**
+     * @brief Sets the horizontal scale of the affine backgrounds to generate.
+     * @param horizontal_scale Horizontal scale of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_horizontal_scale(fixed horizontal_scale)
+    {
+        _mat_attributes.set_horizontal_scale(horizontal_scale);
+        return *this;
+    }
+
+    /**
+     * @brief Returns the vertical scale of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed vertical_scale() const
+    {
+        return _mat_attributes.horizontal_scale();
+    }
+
+    /**
+     * @brief Sets the vertical scale of the affine backgrounds to generate.
+     * @param vertical_scale Vertical scale of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_vertical_scale(fixed vertical_scale)
+    {
+        _mat_attributes.set_vertical_scale(vertical_scale);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the scale of the affine backgrounds to generate.
+     * @param scale Scale of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_scale(fixed scale)
+    {
+        _mat_attributes.set_scale(scale);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the scale of the affine backgrounds to generate.
+     * @param horizontal_scale Horizontal scale of the affine backgrounds to generate.
+     * @param vertical_scale Vertical scale of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_scale(fixed horizontal_scale, fixed vertical_scale)
+    {
+        _mat_attributes.set_scale(horizontal_scale, vertical_scale);
+        return *this;
+    }
+
+    /**
+     * @brief Indicates if the affine backgrounds to generate are flipped in the horizontal axis or not.
+     */
+    [[nodiscard]] bool horizontal_flip() const
+    {
+        return _mat_attributes.horizontal_flip();
+    }
+
+    /**
+     * @brief Sets if the affine backgrounds to generate must be flipped in the horizontal axis or not.
+     * @param horizontal_flip `true` if the affine backgrounds must be flipped in the horizontal axis;
+     * `false` otherwise.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_horizontal_flip(bool horizontal_flip)
+    {
+        _mat_attributes.set_horizontal_flip(horizontal_flip);
+        return *this;
+    }
+
+    /**
+     * @brief Indicates if the affine backgrounds to generate are flipped in the vertical axis or not.
+     */
+    [[nodiscard]] bool vertical_flip() const
+    {
+        return _mat_attributes.horizontal_flip();
+    }
+
+    /**
+     * @brief Sets if the affine backgrounds to generate must be flipped in the vertical axis or not.
+     * @param vertical_flip `true` if the affine backgrounds must be flipped in the vertical axis;
+     * `false` otherwise.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_vertical_flip(bool vertical_flip)
+    {
+        _mat_attributes.set_vertical_flip(vertical_flip);
+        return *this;
+    }
+
+    /**
      * @brief Returns the attributes of the affine transformation matrix of the affine backgrounds to generate.
      */
     [[nodiscard]] const affine_mat_attributes& mat_attributes() const

@@ -34,9 +34,10 @@ class affine_bg_map_item;
 class affine_bg_tiles_ptr;
 class affine_bg_tiles_item;
 class affine_bg_attributes;
+class affine_mat_attributes;
 
 /**
- * @brief std::shared_ptr like smart pointer that retains shared ownership of a affine background.
+ * @brief std::shared_ptr like smart pointer that retains shared ownership of an affine background.
  *
  * Several affine_bg_ptr objects may own the same affine background.
  *
@@ -49,7 +50,7 @@ class affine_bg_ptr
 
 public:
     /**
-     * @brief Creates a affine_bg_ptr from the given affine_bg_item.
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
@@ -58,7 +59,7 @@ public:
     [[nodiscard]] static affine_bg_ptr create(fixed x, fixed y, const affine_bg_item& item);
 
     /**
-     * @brief Creates a affine_bg_ptr from the given affine_bg_item.
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param position Position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
      * @return The requested affine_bg_ptr.
@@ -66,21 +67,21 @@ public:
     [[nodiscard]] static affine_bg_ptr create(const fixed_point& position, const affine_bg_item& item);
 
     /**
-     * @brief Creates a affine_bg_ptr from a affine_bg_builder reference.
+     * @brief Creates an affine_bg_ptr from an affine_bg_builder reference.
      * @param builder affine_bg_builder reference.
      * @return The requested affine_bg_ptr.
      */
     [[nodiscard]] static affine_bg_ptr create(const affine_bg_builder& builder);
 
     /**
-     * @brief Creates a affine_bg_ptr from a moved affine_bg_builder.
+     * @brief Creates an affine_bg_ptr from a moved affine_bg_builder.
      * @param builder affine_bg_builder to move.
      * @return The requested affine_bg_ptr.
      */
     [[nodiscard]] static affine_bg_ptr create(affine_bg_builder&& builder);
 
     /**
-     * @brief Creates a affine_bg_ptr from the given affine_bg_item.
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
@@ -89,7 +90,7 @@ public:
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(fixed x, fixed y, const affine_bg_item& item);
 
     /**
-     * @brief Creates a affine_bg_ptr from the given affine_bg_item.
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param position Position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
      * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
@@ -98,14 +99,14 @@ public:
             const fixed_point& position, const affine_bg_item& item);
 
     /**
-     * @brief Creates a affine_bg_ptr from a affine_bg_builder reference.
+     * @brief Creates an affine_bg_ptr from an affine_bg_builder reference.
      * @param builder affine_bg_builder reference.
      * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(const affine_bg_builder& builder);
 
     /**
-     * @brief Creates a affine_bg_ptr from a moved affine_bg_builder.
+     * @brief Creates an affine_bg_ptr from a moved affine_bg_builder.
      * @param builder affine_bg_builder to move.
      * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
      */
@@ -300,6 +301,79 @@ public:
     void set_position(const fixed_point& position);
 
     /**
+     * @brief Returns the rotation angle in degrees of the affine background.
+     */
+    [[nodiscard]] fixed rotation_angle() const;
+
+    /**
+     * @brief Sets the rotation angle in degrees of the affine background.
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
+     */
+    void set_rotation_angle(fixed rotation_angle);
+
+    /**
+     * @brief Returns the horizontal scale of the affine background.
+     */
+    [[nodiscard]] fixed horizontal_scale() const;
+
+    /**
+     * @brief Sets the horizontal scale of the affine background.
+     */
+    void set_horizontal_scale(fixed horizontal_scale);
+
+    /**
+     * @brief Returns the vertical scale of the affine background.
+     */
+    [[nodiscard]] fixed vertical_scale() const;
+
+    /**
+     * @brief Sets the vertical scale of the affine background.
+     */
+    void set_vertical_scale(fixed vertical_scale);
+
+    /**
+     * @brief Sets the scale of the affine background.
+     */
+    void set_scale(fixed scale);
+
+    /**
+     * @brief Sets the scale of the affine background.
+     * @param horizontal_scale Horizontal scale.
+     * @param vertical_scale Vertical scale.
+     */
+    void set_scale(fixed horizontal_scale, fixed vertical_scale);
+
+    /**
+     * @brief Indicates if this affine background is flipped in the horizontal axis or not.
+     */
+    [[nodiscard]] bool horizontal_flip() const;
+
+    /**
+     * @brief Sets if this affine background must be flipped in the horizontal axis or not.
+     */
+    void set_horizontal_flip(bool horizontal_flip);
+
+    /**
+     * @brief Indicates if this affine background must be flipped in the vertical axis or not.
+     */
+    [[nodiscard]] bool vertical_flip() const;
+
+    /**
+     * @brief Sets if this affine background must be flipped in the vertical axis or not.
+     */
+    void set_vertical_flip(bool vertical_flip);
+
+    /**
+     * @brief Returns the attributes of the affine transformation matrix of this affine background.
+     */
+    [[nodiscard]] const affine_mat_attributes& mat_attributes() const;
+
+    /**
+     * @brief Sets the attributes of the affine transformation matrix of this affine background.
+     */
+    void set_mat_attributes(const affine_mat_attributes& mat_attributes);
+
+    /**
      * @brief Returns the priority of the affine background relative to sprites and other backgrounds.
      *
      * Backgrounds with higher priorities are drawn first
@@ -450,7 +524,7 @@ public:
     }
 
     /**
-     * @brief Exchanges the contents of a affine_bg_ptr with those of another one.
+     * @brief Exchanges the contents of an affine_bg_ptr with those of another one.
      * @param a First affine_bg_ptr to exchange the contents with.
      * @param b Second affine_bg_ptr to exchange the contents with.
      */

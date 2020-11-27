@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_affine_bg_ptr.h file | Butano Docs</title>
+  <title>bn::affine_bg_rotation_manager class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,41 +47,59 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_affine_bg_ptr.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>affine_bg_rotation_manager <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__actions_8h.html">&lt;bn_affine_bg_actions.h&gt;</a></div>
         </h1>
+        <p>Manages the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">bn::<wbr />affine_bg_ptr</a> header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main butano namespace.</dd>
+            <dt id="ae99af72b8c65fa8cbbbe879aa76dfc78">
+              <span class="m-doc-wrap-bumper">static auto <a href="#ae99af72b8c65fa8cbbbe879aa76dfc78" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the rotation angle of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static void <a href="#a3b4e52ede42d55668f88fc8be0273ab3" class="m-doc">set</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle,
+              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg)</span>
+            </dt>
+            <dd>Sets the rotation angle of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">bn::affine_bg_ptr</a>
-            </dt>
-            <dd>std::shared_ptr like smart pointer that retains shared ownership of an affine background.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01affine__bg__ptr_01_4.html" class="m-doc">bn::hash&lt;affine_bg_ptr&gt;</a>
-            </dt>
-            <dd>Hash support for <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
-          </dl>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a3b4e52ede42d55668f88fc8be0273ab3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static void bn::<wbr />affine_bg_rotation_manager::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3b4e52ede42d55668f88fc8be0273ab3" class="m-doc-self">set</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle,
+              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg)</span></span>
+            </h3>
+            <p>Sets the rotation angle of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+                <tr>
+                  <td>bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to modify.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

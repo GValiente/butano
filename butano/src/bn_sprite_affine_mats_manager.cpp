@@ -303,7 +303,7 @@ void set_horizontal_scale(int id, fixed horizontal_scale)
 
         if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb)
         {
-            hw::sprite_affine_mats::update_horizontal_scale(item.attributes, data.handles_ptr[id]);
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -326,7 +326,7 @@ void set_vertical_scale(int id, fixed vertical_scale)
 
         if(item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
         {
-            hw::sprite_affine_mats::update_vertical_scale(item.attributes, data.handles_ptr[id]);
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -378,7 +378,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
     if(horizontal_flip != item.attributes.horizontal_flip())
     {
         item.attributes.set_horizontal_flip(horizontal_flip);
-        hw::sprite_affine_mats::update_horizontal_scale(item.attributes, data.handles_ptr[id]);
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
         _update_indexes_to_commit(id);
     }
 }
@@ -395,7 +395,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     if(vertical_flip != item.attributes.vertical_flip())
     {
         item.attributes.set_vertical_flip(vertical_flip);
-        hw::sprite_affine_mats::update_vertical_scale(item.attributes, data.handles_ptr[id]);
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
         _update_indexes_to_commit(id);
     }
 }
@@ -411,7 +411,7 @@ void set_attributes(int id, const affine_mat_attributes& attributes)
     registers old_registers(item.attributes);
     item.attributes = attributes;
 
-    if(registers(item.attributes) != old_registers)
+    if(registers(attributes) != old_registers)
     {
         hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
         _update(id);

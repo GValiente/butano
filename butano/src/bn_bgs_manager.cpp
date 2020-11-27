@@ -1234,9 +1234,9 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
     }
 }
 
-void fill_hblank_effect_affine_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
+void fill_hblank_effect_pivot_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
-    constexpr int right_shift = fixed().precision() - hw::bgs::affine_precision;
+    constexpr const int right_shift = fixed().precision() - hw::bgs::affine_precision;
 
     if(base_position == 0)
     {

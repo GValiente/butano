@@ -16,8 +16,8 @@
 #include "bn_affine_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_mat_attributes.h"
-#include "bn_affine_bg_position_hblank_effect_ptr.h"
 #include "bn_affine_bg_attributes_hblank_effect_ptr.h"
+#include "bn_affine_bg_pivot_position_hblank_effect_ptr.h"
 
 #include "bn_sprite_items_pivot.h"
 #include "bn_sprite_items_turtle.h"
@@ -126,55 +126,6 @@ namespace
         while(! bn::keypad::start_pressed())
         {
             action.update();
-            info.update();
-            bn::core::update();
-        }
-    }
-
-    void affine_bgs_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
-    {
-        constexpr const bn::string_view info_text_lines[] = {
-            "START: go to next scene",
-        };
-
-        info info("Affine BGs position H-Blank effect", info_text_lines, text_generator);
-
-        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(60, -20);
-        red_bg.set_rotation_angle(45);
-
-        bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
-
-        bn::affine_bg_position_hblank_effect_ptr horizontal_hblank_effect =
-                bn::affine_bg_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
-
-        bn::fixed base_degrees_angle;
-
-        while(! bn::keypad::start_pressed())
-        {
-            base_degrees_angle += 4;
-
-            if(base_degrees_angle >= 360)
-            {
-                base_degrees_angle -= 360;
-            }
-
-            bn::fixed degrees_angle = base_degrees_angle;
-
-            for(int index = 0, limit = bn::display::height() / 2; index < limit; ++index)
-            {
-                degrees_angle += 16;
-
-                if(degrees_angle >= 360)
-                {
-                    degrees_angle -= 360;
-                }
-
-                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
-                horizontal_deltas[(bn::display::height() / 2) + index] = desp;
-                horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
-            }
-
-            horizontal_hblank_effect.reload_deltas_ref();
             info.update();
             bn::core::update();
         }
@@ -419,6 +370,55 @@ namespace
         {
             action.update();
             pivot_sprite.set_position(blue_bg.pivot_position());
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_pivot_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs pivot H-Blank effect", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        red_bg.set_rotation_angle(45);
+
+        bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
+
+        bn::affine_bg_pivot_position_hblank_effect_ptr horizontal_hblank_effect =
+                bn::affine_bg_pivot_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
+
+        bn::fixed base_degrees_angle;
+
+        while(! bn::keypad::start_pressed())
+        {
+            base_degrees_angle += 4;
+
+            if(base_degrees_angle >= 360)
+            {
+                base_degrees_angle -= 360;
+            }
+
+            bn::fixed degrees_angle = base_degrees_angle;
+
+            for(int index = 0, limit = bn::display::height() / 2; index < limit; ++index)
+            {
+                degrees_angle += 16;
+
+                if(degrees_angle >= 360)
+                {
+                    degrees_angle -= 360;
+                }
+
+                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+                horizontal_deltas[(bn::display::height() / 2) + index] = desp;
+                horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
+            }
+
+            horizontal_hblank_effect.reload_deltas_ref();
             info.update();
             bn::core::update();
         }
@@ -726,6 +726,12 @@ int main()
 
     while(true)
     {
+
+        affine_bgs_pivot_position_hblank_effect_scene(text_generator);
+        bn::core::update();
+
+
+
         affine_bgs_visibility_scene(text_generator);
         bn::core::update();
 
@@ -736,9 +742,6 @@ int main()
         bn::core::update();
 
         affine_bgs_position_actions_scene(text_generator);
-        bn::core::update();
-
-        affine_bgs_position_hblank_effect_scene(text_generator);
         bn::core::update();
 
         affine_bgs_rotation_scene(text_generator);
@@ -763,6 +766,9 @@ int main()
         bn::core::update();
 
         affine_bgs_pivot_position_actions_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_pivot_position_hblank_effect_scene(text_generator);
         bn::core::update();
 
         affine_bgs_wrapping_scene(text_generator);

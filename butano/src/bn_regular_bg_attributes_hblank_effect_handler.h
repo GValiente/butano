@@ -64,7 +64,7 @@ public:
     }
 
 private:
-    class alignas(int) last_value_type
+    class last_value_type
     {
 
     public:

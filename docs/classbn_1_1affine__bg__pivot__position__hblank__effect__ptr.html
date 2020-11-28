@@ -57,7 +57,6 @@
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#pub-static-methods">Public static functions</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
@@ -65,15 +64,6 @@
             </li>
           </ul>
         </div>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1hblank__effect__ptr.html" class="m-doc">hblank_effect_ptr</a>
-            </dt>
-            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect.</dd>
-          </dl>
-        </section>
         <section id="pub-static-methods">
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
@@ -102,6 +92,18 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
+            <dt id="ad074661b29e73525f04000f00cc56a4d">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad074661b29e73525f04000f00cc56a4d" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the internal id.</dd>
+            <dt id="a95a2c5099d5470a3e88e096341cc391c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a95a2c5099d5470a3e88e096341cc391c" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this H-Blank effect must be committed to the GBA or not.</dd>
+            <dt id="a66fff12dbab1f086eb9b476a9d94f3e0">
+              <span class="m-doc-wrap-bumper">void <a href="#a66fff12dbab1f086eb9b476a9d94f3e0" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if this H-Blank effect must be committed to the GBA or not.</dd>
             <dt id="a7a6b0ec34113032708b8140962c7e269">
               <span class="m-doc-wrap-bumper">auto <a href="#a7a6b0ec34113032708b8140962c7e269" class="m-doc-self">bg</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;</span>
             </dt>
@@ -132,6 +134,16 @@
               <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span>
             </dt>
             <dd>Exchanges the contents of an <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4445bcdfd5a0c029fc260d6661898a10" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a204da87fc75a35ff61d77f876217ad65" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b) -&gt; bool</span>
+            </dt>
+            <dd>Not equal operator.</dd>
           </dl>
         </section>
         <section>
@@ -310,6 +322,62 @@
                   <td>Second <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to exchange the contents with.</td>
                 </tr>
               </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4445bcdfd5a0c029fc260d6661898a10"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4445bcdfd5a0c029fc260d6661898a10" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> is equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a204da87fc75a35ff61d77f876217ad65"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a204da87fc75a35ff61d77f876217ad65" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Not equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the first <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />pivot_<wbr />position_<wbr />hblank_<wbr />effect_<wbr />ptr</a> is not equal to the second one, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
             </table>
           </div></section>
         </section>

@@ -32,7 +32,8 @@ optional<sprite_affine_mat_attributes_hblank_effect_ptr> sprite_affine_mat_attri
         {
             if(auto pc = sprite_affine_mat_pc_register_hblank_effect_ptr::create_optional(affine_mat, attributes_ref))
             {
-                if(auto pd = sprite_affine_mat_pd_register_hblank_effect_ptr::create_optional(affine_mat, attributes_ref))
+                if(auto pd = sprite_affine_mat_pd_register_hblank_effect_ptr::create_optional(
+                            move(affine_mat), attributes_ref))
                 {
                     result = sprite_affine_mat_attributes_hblank_effect_ptr(move(*pa), move(*pb), move(*pc), move(*pd));
                 }

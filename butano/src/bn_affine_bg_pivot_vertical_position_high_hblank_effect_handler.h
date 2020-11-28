@@ -1,0 +1,97 @@
+/*
+ * Copyright (c) 2020 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
+#ifndef BN_AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH_HBLANK_EFFECT_HANDLER_H
+#define BN_AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH_HBLANK_EFFECT_HANDLER_H
+
+#include "bn_any.h"
+#include "bn_bgs_manager.h"
+#include "bn_affine_bg_mat_attributes.h"
+#include "../hw/include/bn_hw_bgs.h"
+
+namespace bn
+{
+
+class affine_bg_pivot_vertical_position_high_hblank_effect_handler
+{
+
+public:
+    static void setup_target(int target_id, iany& target_last_value)
+    {
+        target_last_value = last_value_type(target_id);
+    }
+
+    [[nodiscard]] static bool target_visible(int target_id)
+    {
+        auto handle = reinterpret_cast<void*>(target_id);
+        return bgs_manager::hw_id(handle).has_value();
+    }
+
+    [[nodiscard]] static bool target_updated(int target_id, iany& target_last_value)
+    {
+        last_value_type& last_value = target_last_value.value<last_value_type>();
+        last_value_type new_value = last_value_type(target_id);
+        bool updated = last_value != new_value;
+        last_value = new_value;
+        return updated;
+    }
+
+    [[nodiscard]] static uint16_t* output_register(int target_id)
+    {
+        auto handle = reinterpret_cast<void*>(target_id);
+        int hw_id = *bgs_manager::hw_id(handle);
+        int* result = &hw::bgs::affine_mat_register(hw_id)->dy;
+        return reinterpret_cast<uint16_t*>(result);
+    }
+
+    static void write_output_values(int target_id, const iany&, const void* input_values_ptr,
+                                    uint16_t* output_values_ptr)
+    {
+        auto handle = reinterpret_cast<void*>(target_id);
+        auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
+        bgs_manager::fill_hblank_effect_pivot_vertical_positions(handle, true, fixed_values_ptr, output_values_ptr);
+    }
+
+    static void show(int)
+    {
+    }
+
+    static void cleanup(int)
+    {
+        bgs_manager::reload();
+    }
+
+private:
+    class last_value_type
+    {
+
+    public:
+        explicit last_value_type(const affine_bg_mat_attributes& mat_attributes) :
+            _dy(mat_attributes.dy_register_value()),
+            _pd(mat_attributes.pd_register_value())
+        {
+        }
+
+        explicit last_value_type(void* handle) :
+            last_value_type(bgs_manager::mat_attributes(handle))
+        {
+        }
+
+        explicit last_value_type(int target_id) :
+            last_value_type(reinterpret_cast<void*>(target_id))
+        {
+        }
+
+        [[nodiscard]] friend bool operator==(const last_value_type& a, const last_value_type& b) = default;
+
+    private:
+        int _dy;
+        int _pd;
+    };
+};
+
+}
+
+#endif

@@ -6,10 +6,7 @@
 #include "bn_affine_bg_pivot_position_hblank_effect_ptr.h"
 
 #include "bn_span.h"
-#include "bn_fixed.h"
-#include "bn_display.h"
 #include "bn_optional.h"
-#include "bn_hblank_effects_manager.h"
 
 namespace bn
 {
@@ -17,25 +14,22 @@ namespace bn
 affine_bg_pivot_position_hblank_effect_ptr affine_bg_pivot_position_hblank_effect_ptr::create_horizontal(
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION);
-
-    return affine_bg_pivot_position_hblank_effect_ptr(id, move(bg));
+    return affine_bg_pivot_position_hblank_effect_ptr(
+                affine_bg_pivot_position_high_hblank_effect_ptr::create_horizontal(bg, deltas_ref),
+                affine_bg_pivot_position_low_hblank_effect_ptr::create_horizontal(bg, deltas_ref));
 }
 
 optional<affine_bg_pivot_position_hblank_effect_ptr> affine_bg_pivot_position_hblank_effect_ptr::create_horizontal_optional(
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION);
-
     optional<affine_bg_pivot_position_hblank_effect_ptr> result;
 
-    if(id >= 0)
+    if(auto high = affine_bg_pivot_position_high_hblank_effect_ptr::create_horizontal_optional(bg, deltas_ref))
     {
-        result = affine_bg_pivot_position_hblank_effect_ptr(id, move(bg));
+        if(auto low = affine_bg_pivot_position_low_hblank_effect_ptr::create_horizontal_optional(move(bg), deltas_ref))
+        {
+            result = affine_bg_pivot_position_hblank_effect_ptr(move(*high), move(*low));
+        }
     }
 
     return result;
@@ -44,55 +38,61 @@ optional<affine_bg_pivot_position_hblank_effect_ptr> affine_bg_pivot_position_hb
 affine_bg_pivot_position_hblank_effect_ptr affine_bg_pivot_position_hblank_effect_ptr::create_vertical(
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION);
-
-    return affine_bg_pivot_position_hblank_effect_ptr(id, move(bg));
+    return affine_bg_pivot_position_hblank_effect_ptr(
+                affine_bg_pivot_position_high_hblank_effect_ptr::create_vertical(bg, deltas_ref),
+                affine_bg_pivot_position_low_hblank_effect_ptr::create_vertical(bg, deltas_ref));
 }
 
 optional<affine_bg_pivot_position_hblank_effect_ptr> affine_bg_pivot_position_hblank_effect_ptr::create_vertical_optional(
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
-                hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION);
-
     optional<affine_bg_pivot_position_hblank_effect_ptr> result;
 
-    if(id >= 0)
+    if(auto high = affine_bg_pivot_position_high_hblank_effect_ptr::create_vertical_optional(bg, deltas_ref))
     {
-        result = affine_bg_pivot_position_hblank_effect_ptr(id, move(bg));
+        if(auto low = affine_bg_pivot_position_low_hblank_effect_ptr::create_vertical_optional(move(bg), deltas_ref))
+        {
+            result = affine_bg_pivot_position_hblank_effect_ptr(move(*high), move(*low));
+        }
     }
 
     return result;
 }
 
+void affine_bg_pivot_position_hblank_effect_ptr::set_visible(bool visible)
+{
+    _high_hblank_effect_ptr.set_visible(visible);
+    _low_hblank_effect_ptr.set_visible(visible);
+}
+
 span<const fixed> affine_bg_pivot_position_hblank_effect_ptr::deltas_ref() const
 {
-    auto values_ptr = reinterpret_cast<const fixed*>(hblank_effects_manager::values_ref(id()));
-    return span<const fixed>(values_ptr, display::height());
+    return _high_hblank_effect_ptr.deltas_ref();
 }
 
 void affine_bg_pivot_position_hblank_effect_ptr::set_deltas_ref(const span<const fixed>& deltas_ref)
 {
-    hblank_effects_manager::set_values_ref(id(), deltas_ref.data(), deltas_ref.size());
+    _high_hblank_effect_ptr.set_deltas_ref(deltas_ref);
+    _low_hblank_effect_ptr.set_deltas_ref(deltas_ref);
 }
 
 void affine_bg_pivot_position_hblank_effect_ptr::reload_deltas_ref()
 {
-    hblank_effects_manager::reload_values_ref(id());
+    _high_hblank_effect_ptr.reload_deltas_ref();
+    _low_hblank_effect_ptr.reload_deltas_ref();
 }
 
 void affine_bg_pivot_position_hblank_effect_ptr::swap(affine_bg_pivot_position_hblank_effect_ptr& other)
 {
-    hblank_effect_ptr::swap(other);
-    _bg.swap(other._bg);
+    _high_hblank_effect_ptr.swap(other._high_hblank_effect_ptr);
+    _low_hblank_effect_ptr.swap(other._low_hblank_effect_ptr);
 }
 
-affine_bg_pivot_position_hblank_effect_ptr::affine_bg_pivot_position_hblank_effect_ptr(int id, affine_bg_ptr&& bg) :
-    hblank_effect_ptr(id),
-    _bg(move(bg))
+affine_bg_pivot_position_hblank_effect_ptr::affine_bg_pivot_position_hblank_effect_ptr(
+        affine_bg_pivot_position_high_hblank_effect_ptr&& high_hblank_effect_ptr,
+        affine_bg_pivot_position_low_hblank_effect_ptr&& low_hblank_effect_ptr) :
+    _high_hblank_effect_ptr(move(high_hblank_effect_ptr)),
+    _low_hblank_effect_ptr(move(low_hblank_effect_ptr))
 {
 }
 

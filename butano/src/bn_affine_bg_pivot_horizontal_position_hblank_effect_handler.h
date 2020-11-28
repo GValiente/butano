@@ -41,7 +41,9 @@ public:
     [[nodiscard]] static uint16_t* output_register(int target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        return hw::bgs::affine_horizontal_position_register(*bgs_manager::hw_id(handle));
+        int hw_id = *bgs_manager::hw_id(handle);
+        int* result = &hw::bgs::affine_mat_register(hw_id)->dx;
+        return reinterpret_cast<uint16_t*>(result);
     }
 
     static void write_output_values(int target_id, const iany&, const void* input_values_ptr,

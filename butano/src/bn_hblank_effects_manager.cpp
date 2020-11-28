@@ -22,6 +22,12 @@
 #include "bn_affine_bg_pivot_horizontal_position_hblank_effect_handler.h"
 #include "bn_regular_bg_vertical_position_hblank_effect_handler.h"
 #include "bn_affine_bg_pivot_vertical_position_hblank_effect_handler.h"
+#include "bn_affine_bg_pa_register_hblank_effect_handler.h"
+#include "bn_affine_bg_pb_register_hblank_effect_handler.h"
+#include "bn_affine_bg_pc_register_hblank_effect_handler.h"
+#include "bn_affine_bg_pd_register_hblank_effect_handler.h"
+#include "bn_affine_bg_dx_register_hblank_effect_handler.h"
+#include "bn_affine_bg_dy_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
@@ -47,6 +53,12 @@
 #include "bn_affine_bg_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_regular_bg_position_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pivot_position_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_pa_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_pb_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_pc_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_pd_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_dx_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_dy_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
@@ -148,6 +160,54 @@ namespace
 
             case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
                 affine_bg_pivot_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+                affine_bg_pa_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+                affine_bg_pa_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+                affine_bg_pb_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+                affine_bg_pb_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+                affine_bg_pc_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+                affine_bg_pc_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+                affine_bg_pd_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+                affine_bg_pd_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -262,6 +322,42 @@ namespace
 
             case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
                 return _check_update_impl<affine_bg_pivot_vertical_position_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_pa_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_pa_register_values_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_pb_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_pb_register_values_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_pc_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_pc_register_values_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_pd_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_pd_register_values_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_dx_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_dx_register_values_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_dy_register_attributes_hblank_effect_handler>();
+
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_dy_register_values_hblank_effect_handler>();
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
                 return _check_update_impl<sprite_affine_mat_pa_register_attributes_hblank_effect_handler>();
@@ -379,6 +475,54 @@ namespace
 
             case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
                 affine_bg_pivot_vertical_position_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+                affine_bg_pa_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+                affine_bg_pa_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+                affine_bg_pb_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+                affine_bg_pb_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+                affine_bg_pc_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+                affine_bg_pc_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+                affine_bg_pd_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+                affine_bg_pd_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::show(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::show(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -506,6 +650,54 @@ namespace
 
             case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
                 affine_bg_pivot_vertical_position_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+                affine_bg_pa_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+                affine_bg_pa_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+                affine_bg_pb_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+                affine_bg_pb_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+                affine_bg_pc_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+                affine_bg_pc_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+                affine_bg_pd_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+                affine_bg_pd_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::cleanup(target_id);
+                break;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::cleanup(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:

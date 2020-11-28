@@ -181,10 +181,15 @@ namespace
             {
                 update_affine_mat_attributes();
             }
-            else if(half_dimensions != affine_mat_attributes.half_dimensions())
+            else
             {
-                affine_mat_attributes.set_half_dimensions(half_dimensions);
-                update_affine_mat_attributes();
+                fixed_size fixed_half_dimensions = half_dimensions;
+
+                if(fixed_half_dimensions != affine_mat_attributes.half_dimensions())
+                {
+                    affine_mat_attributes.set_half_dimensions(fixed_half_dimensions);
+                    update_affine_mat_attributes();
+                }
             }
         }
 

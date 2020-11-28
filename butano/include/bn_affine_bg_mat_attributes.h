@@ -13,8 +13,8 @@
  * @ingroup affine_mat
  */
 
-#include "bn_size.h"
 #include "bn_display.h"
+#include "bn_fixed_size.h"
 #include "bn_fixed_point.h"
 #include "bn_affine_mat_attributes.h"
 
@@ -44,7 +44,7 @@ public:
      * @param mat_attributes Attributes which define the base affine transformation matrix.
      */
     constexpr affine_bg_mat_attributes(
-            const fixed_point& position, const size& half_dimensions, const fixed_point& pivot_position,
+            const fixed_point& position, const fixed_size& half_dimensions, const fixed_point& pivot_position,
             const affine_mat_attributes& mat_attributes) :
         _position(position),
         _half_dimensions(half_dimensions),
@@ -121,7 +121,7 @@ public:
     /**
      * @brief Returns the half of the affine background size.
      */
-    [[nodiscard]] constexpr const size& half_dimensions() const
+    [[nodiscard]] constexpr const fixed_size& half_dimensions() const
     {
         return _half_dimensions;
     }
@@ -129,7 +129,7 @@ public:
     /**
      * @brief Sets the half of the affine background size.
      */
-    constexpr void set_half_dimensions(const size& half_dimensions)
+    constexpr void set_half_dimensions(const fixed_size& half_dimensions)
     {
         _half_dimensions = half_dimensions;
         _update_dx_and_dy();
@@ -405,7 +405,7 @@ private:
     static constexpr const int _right_shift = fixed().precision() - 8;
 
     fixed_point _position;
-    size _half_dimensions;
+    fixed_size _half_dimensions;
     fixed_point _pivot_position;
     affine_mat_attributes _mat_attributes;
     int _dx = 0 - (256 * (display::width() / 2));

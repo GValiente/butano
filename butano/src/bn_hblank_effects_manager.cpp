@@ -59,7 +59,6 @@
 #include "bn_affine_bg_pivot_position_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pivot_position_high_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pivot_position_low_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pb_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pc_register_hblank_effect_ptr.cpp.h"

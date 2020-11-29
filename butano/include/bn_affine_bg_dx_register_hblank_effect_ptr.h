@@ -14,8 +14,8 @@
  * @ingroup hblank_effect
  */
 
-#include "bn_affine_bg_ptr.h"
-#include "bn_hblank_effect_ptr.h"
+#include "bn_affine_bg_dx_high_register_hblank_effect_ptr.h"
+#include "bn_affine_bg_dx_low_register_hblank_effect_ptr.h"
 
 namespace bn
 {
@@ -28,7 +28,7 @@ namespace bn
  * @ingroup affine_bg
  * @ingroup hblank_effect
  */
-class affine_bg_dx_register_hblank_effect_ptr : public hblank_effect_ptr
+class affine_bg_dx_register_hblank_effect_ptr
 {
 
 public:
@@ -60,7 +60,7 @@ public:
      * @return The requested affine_bg_dx_register_hblank_effect_ptr.
      */
     [[nodiscard]] static affine_bg_dx_register_hblank_effect_ptr create(
-            affine_bg_ptr bg, const span<const int16_t>& values_ref);
+            affine_bg_ptr bg, const span<const int>& values_ref);
 
     /**
      * @brief Creates an affine_bg_dx_register_hblank_effect_ptr which changes the attributes to commit
@@ -93,14 +93,35 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<affine_bg_dx_register_hblank_effect_ptr> create_optional(
-            affine_bg_ptr bg, const span<const int16_t>& values_ref);
+            affine_bg_ptr bg, const span<const int>& values_ref);
+
+    /**
+     * @brief Returns the internal id.
+     */
+    [[nodiscard]] int id() const
+    {
+        return _high_hblank_effect_ptr.id();
+    }
+
+    /**
+     * @brief Indicates if this H-Blank effect must be committed to the GBA or not.
+     */
+    [[nodiscard]] bool visible() const
+    {
+        return _high_hblank_effect_ptr.visible();
+    }
+
+    /**
+     * @brief Sets if this H-Blank effect must be committed to the GBA or not.
+     */
+    void set_visible(bool visible);
 
     /**
      * @brief Returns the affine_bg_ptr modified by this H-Blank effect.
      */
     [[nodiscard]] const affine_bg_ptr& bg() const
     {
-        return _bg;
+        return _high_hblank_effect_ptr.bg();
     }
 
     /**
@@ -119,7 +140,7 @@ public:
      * The values are not copied but referenced, so they should outlive
      * affine_bg_dx_register_hblank_effect_ptr to avoid dangling references.
      */
-    [[nodiscard]] span<const int16_t> values_ref() const;
+    [[nodiscard]] span<const int> values_ref() const;
 
     /**
      * @brief Sets the reference to an array of 160 affine_bg_mat_attributes objects with the attributes to commit
@@ -137,7 +158,7 @@ public:
      * The values are not copied but referenced, so they should outlive
      * affine_bg_dx_register_hblank_effect_ptr to avoid dangling references.
      */
-    void set_values_ref(const span<const int16_t>& values_ref);
+    void set_values_ref(const span<const int>& values_ref);
 
     /**
      * @brief Rereads the content of the referenced attributes to commit
@@ -174,11 +195,59 @@ public:
         a.swap(b);
     }
 
-private:
-    bool _from_attributes;
-    affine_bg_ptr _bg;
+    /**
+     * @brief Equal operator.
+     * @param a First affine_bg_dx_register_hblank_effect_ptr to compare.
+     * @param b Second affine_bg_dx_register_hblank_effect_ptr to compare.
+     * @return `true` if the first affine_bg_dx_register_hblank_effect_ptr is equal to the second one,
+     * otherwise `false`.
+     */
+    [[nodiscard]] friend bool operator==(const affine_bg_dx_register_hblank_effect_ptr& a,
+                                         const affine_bg_dx_register_hblank_effect_ptr& b)
+    {
+        return a._high_hblank_effect_ptr == b._high_hblank_effect_ptr;
+    }
 
-    affine_bg_dx_register_hblank_effect_ptr(int id, bool from_attributes, affine_bg_ptr&& bg);
+    /**
+     * @brief Not equal operator.
+     * @param a First affine_bg_dx_register_hblank_effect_ptr to compare.
+     * @param b Second affine_bg_dx_register_hblank_effect_ptr to compare.
+     * @return `true` if the first affine_bg_dx_register_hblank_effect_ptr is not equal to the second one,
+     * otherwise `false`.
+     */
+    [[nodiscard]] friend bool operator!=(const affine_bg_dx_register_hblank_effect_ptr& a,
+                                         const affine_bg_dx_register_hblank_effect_ptr& b)
+    {
+        return ! (a == b);
+    }
+
+private:
+    affine_bg_dx_high_register_hblank_effect_ptr _high_hblank_effect_ptr;
+    affine_bg_dx_low_register_hblank_effect_ptr _low_hblank_effect_ptr;
+
+    affine_bg_dx_register_hblank_effect_ptr(
+            affine_bg_dx_high_register_hblank_effect_ptr&& high_hblank_effect_ptr,
+            affine_bg_dx_low_register_hblank_effect_ptr&& low_hblank_effect_ptr);
+};
+
+
+/**
+ * @brief Hash support for affine_bg_dx_register_hblank_effect_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup hblank_effect
+ * @ingroup functional
+ */
+template<>
+struct hash<affine_bg_dx_register_hblank_effect_ptr>
+{
+    /**
+     * @brief Returns the hash of the given affine_bg_dx_register_hblank_effect_ptr.
+     */
+    [[nodiscard]] unsigned operator()(const affine_bg_dx_register_hblank_effect_ptr& value) const
+    {
+        return make_hash(value.id());
+    }
 };
 
 }

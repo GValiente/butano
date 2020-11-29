@@ -3,10 +3,9 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_AFFINE_BG_DX_REGISTER_HBLANK_EFFECT_HANDLER_H
-#define BN_AFFINE_BG_DX_REGISTER_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_AFFINE_BG_DX_LOW_REGISTER_HBLANK_EFFECT_HANDLER_H
+#define BN_AFFINE_BG_DX_LOW_REGISTER_HBLANK_EFFECT_HANDLER_H
 
-#include "bn_memory.h"
 #include "bn_display.h"
 #include "bn_any_fwd.h"
 #include "bn_bgs_manager.h"
@@ -16,7 +15,7 @@
 namespace bn
 {
 
-class affine_bg_dx_register_attributes_hblank_effect_handler
+class affine_bg_dx_low_register_attributes_hblank_effect_handler
 {
 
 public:
@@ -51,7 +50,8 @@ public:
         for(int index = 0; index < display::height(); ++index)
         {
             const affine_bg_mat_attributes& attributes = attributes_ptr[index];
-            output_values_ptr[index] = uint16_t(attributes.dx_register_value() + pb_sum);
+            int result = attributes.dx_register_value() + pb_sum;
+            output_values_ptr[index] = uint16_t(result);
             pb_sum += attributes.pb_register_value();
         }
     }
@@ -67,7 +67,7 @@ public:
 };
 
 
-class affine_bg_dx_register_values_hblank_effect_handler
+class affine_bg_dx_low_register_values_hblank_effect_handler
 {
 
 public:
@@ -96,9 +96,12 @@ public:
 
     static void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
-        auto int_source = static_cast<const unsigned*>(input_values_ptr);
-        auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
-        memory::copy(*int_source, display::height() / 2, *int_destination);
+        auto values_ptr = reinterpret_cast<const int*>(input_values_ptr);
+
+        for(int index = 0; index < display::height(); ++index)
+        {
+            output_values_ptr[index] = uint16_t(values_ptr[index]);
+        }
     }
 
     static void show(int)

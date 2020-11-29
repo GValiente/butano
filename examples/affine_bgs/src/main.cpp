@@ -434,8 +434,6 @@ namespace
         info info("Affine BGs matrix H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
-        blue_bg.set_wrapping_enabled(false);
-
         const bn::affine_bg_mat_attributes& base_attributes = blue_bg.mat_attributes();
         bn::affine_bg_mat_attributes attributes[bn::display::height()];
 
@@ -462,16 +460,16 @@ namespace
 
             for(int index = 0, limit = bn::display::height() / 2; index < limit; ++index)
             {
-                degrees_angle += 4;
+                degrees_angle += 16;
 
                 if(degrees_angle >= 360)
                 {
                     degrees_angle -= 360;
                 }
 
-                bn::fixed scale_inc = bn::degrees_sin(degrees_angle) / 2;
-                attributes[(bn::display::height() / 2) + index].set_horizontal_scale(0.5);
-                attributes[(bn::display::height() / 2) - index - 1].set_horizontal_scale(0.5);
+                bn::fixed scale_inc = bn::degrees_sin(degrees_angle) / 4;
+                attributes[(bn::display::height() / 2) + index].set_horizontal_scale(1.5 + scale_inc);
+                attributes[(bn::display::height() / 2) - index - 1].set_horizontal_scale(1.5 + scale_inc);
             }
 
             hblank_effect.reload_attributes_ref();
@@ -782,10 +780,6 @@ int main()
 
     while(true)
     {
-        affine_bgs_mat_attributes_hblank_effect_scene(text_generator);
-        bn::core::update();
-
-
         affine_bgs_visibility_scene(text_generator);
         bn::core::update();
 

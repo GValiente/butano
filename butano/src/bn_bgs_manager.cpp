@@ -1488,4 +1488,9 @@ void commit_big_maps()
     }
 }
 
+void stop()
+{
+    hw::bgs::stop();
+}
+
 }

@@ -210,6 +210,11 @@ namespace bn::hw::bgs
         REG_BG_AFFINE[3] = bg3.affine;
     }
 
+    [[nodiscard]] inline void stop()
+    {
+        REG_BG_AFFINE[2] = handle().affine;
+    }
+
     [[nodiscard]] inline uint16_t* regular_horizontal_position_register(int id)
     {
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0010 + (0x0004 * id));

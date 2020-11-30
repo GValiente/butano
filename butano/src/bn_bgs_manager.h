@@ -188,6 +188,8 @@ namespace bgs_manager
     void commit();
 
     void commit_big_maps();
+
+    void stop();
 }
 
 }

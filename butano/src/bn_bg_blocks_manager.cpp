@@ -2336,21 +2336,50 @@ void update_affine_map_col(int id, int x, int y)
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
-        /*for(int iy = y_separator; iy < 32; ++iy)
+        if(x % 2)
         {
-            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-            dest_data += 32;
-            source_data += map_width;
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
+                uint16_t joined_value = (uint16_t(*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF);
+                *u16_dest_data = joined_value;
+                dest_data += 32;
+                source_data += map_width;
+            }
+
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
+                uint16_t joined_value = (uint16_t(*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF);
+                *u16_dest_data = joined_value;
+                dest_data += 32;
+                source_data += map_width;
+            }
         }
-
-        dest_data -= 1024;
-
-        for(int iy = 0; iy < y_separator; ++iy)
+        else
         {
-            hw::bg_blocks::copy_affine_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-            dest_data += 32;
-            source_data += map_width;
-        }*/
+            for(int iy = y_separator; iy < 32; ++iy)
+            {
+                auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
+                uint16_t joined_value = (*u16_dest_data & 0xFF00) | (*source_data + tiles_offset);
+                *u16_dest_data = joined_value;
+                dest_data += 32;
+                source_data += map_width;
+            }
+
+            dest_data -= 1024;
+
+            for(int iy = 0; iy < y_separator; ++iy)
+            {
+                auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
+                uint16_t joined_value = (*u16_dest_data & 0xFF00) | (*source_data + tiles_offset);
+                *u16_dest_data = joined_value;
+                dest_data += 32;
+                source_data += map_width;
+            }
+        }
     }
     else
     {

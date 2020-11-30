@@ -819,7 +819,7 @@ namespace
         item->affine_tiles = move(create_data.affine_tiles);
         item->palette = move(create_data.palette);
         item->width = uint16_t(create_data.width);
-        item->height = uint8_t(create_data.height);
+        item->height = uint16_t(create_data.height);
         item->usages = 1;
         item->set_status(status_type::USED);
         item->is_tiles = is_tiles;

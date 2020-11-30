@@ -76,7 +76,7 @@ void butano_background::show(const bn::fixed_point& silhouette_position, const b
 
     bn::sprite_ptr silhouette_up_sprite = builder.release_build();
     _silhouette_up_sprite_move_action.emplace(silhouette_up_sprite, show_hide_frames, silhouette_position);
-    _silhouette_up_sprite_scale_action.emplace(bn::move(silhouette_up_sprite), show_hide_frames, 0.01);
+    _silhouette_up_sprite_scale_action.emplace(bn::move(silhouette_up_sprite), show_hide_frames, bn::fixed(0.01));
 
     builder = bn::sprite_builder(bn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position.x(), silhouette_position.y() + 63);
@@ -86,7 +86,7 @@ void butano_background::show(const bn::fixed_point& silhouette_position, const b
 
     bn::sprite_ptr silhouette_down_sprite = builder.release_build();
     _silhouette_down_sprite_move_action.emplace(silhouette_down_sprite, show_hide_frames, silhouette_position);
-    _silhouette_down_sprite_scale_action.emplace(bn::move(silhouette_down_sprite), show_hide_frames, 0.01);
+    _silhouette_down_sprite_scale_action.emplace(bn::move(silhouette_down_sprite), show_hide_frames, bn::fixed(0.01));
 }
 
 void butano_background::hide(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera)

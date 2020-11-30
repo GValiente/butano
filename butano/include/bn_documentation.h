@@ -1028,6 +1028,7 @@
  * * bn::sprite_affine_mat_attributes renamed to bn::affine_mat_attributes.
  * * bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.
  * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item.
+ * * Floating point methods of bn::fixed_t are only allowed at build time.
  * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.
  *
  *

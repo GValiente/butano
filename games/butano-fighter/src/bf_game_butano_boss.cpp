@@ -620,7 +620,7 @@ void butano_boss::_shoot_random_bullet(bool down_only, const bn::fixed_point& he
                                        const bn::camera_ptr& camera, enemy_bullets& enemy_bullets)
 {
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
-    bn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
+    bn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? bn::fixed(0.9) : bn::fixed(1.0);
 
     if(_random.get() % 8 == 0)
     {

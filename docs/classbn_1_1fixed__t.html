@@ -115,14 +115,6 @@
             </dt>
             <dd>Constructor.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ad0b88c27363175230fb4d79ea90bac45" class="m-doc">fixed_t</a>(</span><span class="m-doc-wrap">float value) <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Constructor.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a02730b92c60524367d1467efb245199e" class="m-doc">fixed_t</a>(</span><span class="m-doc-wrap">double value) <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Constructor.</dd>
-            <dt>
               <div class="m-doc-template">template&lt;int OtherPrecision&gt;</div>
               <span class="m-doc-wrap-bumper"><a href="#af6e2d457d8fb0390e1b825776be49021" class="m-doc">fixed_t</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; other) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -132,6 +124,14 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3f4951c833304a6cc1c16beac4262209" class="m-doc">fixed_t</a>(</span><span class="m-doc-wrap">float value) -&gt; consteval</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a296a602e1879cde23a8b9f68fca15e75" class="m-doc">fixed_t</a>(</span><span class="m-doc-wrap">double value) -&gt; consteval</span>
+            </dt>
+            <dd>Constructor.</dd>
             <dt id="a376eb52b019789a7321f890618cb0272">
               <span class="m-doc-wrap-bumper">auto <a href="#a376eb52b019789a7321f890618cb0272" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -156,12 +156,12 @@
               <span class="m-doc-wrap-bumper">auto <a href="#acdae09807af4e680287e19884acd85a8" class="m-doc-self">fraction</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the fractional part.</dd>
-            <dt id="a46d9b340da37b1b5654ba82d223f4849">
-              <span class="m-doc-wrap-bumper">auto <a href="#a46d9b340da37b1b5654ba82d223f4849" class="m-doc-self">to_float</a>(</span><span class="m-doc-wrap">) const -&gt; float <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a47a418e0e16d51667853d818c549c21e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a47a418e0e16d51667853d818c549c21e" class="m-doc-self">to_float</a>(</span><span class="m-doc-wrap">) const -&gt; consteval float</span>
             </dt>
             <dd>Returns the nearest single precision floating point value.</dd>
-            <dt id="accfe483ec6c76f08a04593681536cd66">
-              <span class="m-doc-wrap-bumper">auto <a href="#accfe483ec6c76f08a04593681536cd66" class="m-doc-self">to_double</a>(</span><span class="m-doc-wrap">) const -&gt; double <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a00cb20b1eae05e7f39cebab9a98ba6eb">
+              <span class="m-doc-wrap-bumper">auto <a href="#a00cb20b1eae05e7f39cebab9a98ba6eb" class="m-doc-self">to_double</a>(</span><span class="m-doc-wrap">) const -&gt; consteval double</span>
             </dt>
             <dd>Returns the nearest double precision floating point value.</dd>
             <dt id="a636d26d5956369b2d92a7f1f9be4da2c">
@@ -376,46 +376,6 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ad0b88c27363175230fb4d79ea90bac45"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;int Precision&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad0b88c27363175230fb4d79ea90bac45" class="m-doc-self">fixed_t</a>(</span><span class="m-doc-wrap">float value) <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Constructor.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Single precision floating point value.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a02730b92c60524367d1467efb245199e"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;int Precision&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a02730b92c60524367d1467efb245199e" class="m-doc-self">fixed_t</a>(</span><span class="m-doc-wrap">double value) <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Constructor.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Double precision floating point value.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
           <section class="m-doc-details" id="af6e2d457d8fb0390e1b825776be49021"><div>
             <h3>
               <div class="m-doc-template">
@@ -433,6 +393,46 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td>Fixed point value.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3f4951c833304a6cc1c16beac4262209"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">consteval bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3f4951c833304a6cc1c16beac4262209" class="m-doc-self">fixed_t</a>(</span><span class="m-doc-wrap">float value)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Single precision floating point value.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a296a602e1879cde23a8b9f68fca15e75"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">consteval bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a296a602e1879cde23a8b9f68fca15e75" class="m-doc-self">fixed_t</a>(</span><span class="m-doc-wrap">double value)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Double precision floating point value.</td>
                 </tr>
               </tbody>
             </table>

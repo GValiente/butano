@@ -71,11 +71,13 @@ public:
 private:
     static void _truncate_and_round_test(float value)
     {
-        BN_ASSERT(bn::fixed(value).integer() == int(value), "Fixed truncate failed: ",
-                   bn::fixed(value), " - ", bn::fixed(value).integer(), " - ", int(value));
+        bn::fixed fixed_value = bn::fixed::from_data(int(value * bn::fixed().scale()));
 
-        BN_ASSERT(bn::fixed(value).round_integer() == int(std::round(value)), "Fixed round failed: ",
-                   bn::fixed(value), " - ", bn::fixed(value).round_integer(), " - ", int(std::round(value)));
+        BN_ASSERT(fixed_value.integer() == int(value), "Fixed truncate failed: ",
+                   fixed_value, " - ", fixed_value.integer(), " - ", int(value));
+
+        BN_ASSERT(fixed_value.round_integer() == int(std::round(value)), "Fixed round failed: ",
+                   fixed_value, " - ", fixed_value.round_integer(), " - ", int(std::round(value)));
     }
 };
 

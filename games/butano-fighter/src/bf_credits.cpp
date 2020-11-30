@@ -258,7 +258,7 @@ credits::credits(bn::sprite_text_generator& text_generator, butano_background& b
                        bn::sprite_affine_mat_ptr::create(), _hblank_effect_attributes))
 {
     bn::blending::set_transparency_alpha(0);
-    _blending_action.emplace(blending_frames, 0.5);
+    _blending_action.emplace(blending_frames, bn::fixed(0.5));
     butano_background.put_under_all();
 
     if(! bn::music::playing())

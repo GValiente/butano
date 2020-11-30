@@ -386,7 +386,7 @@ bn::optional<scene_type> title::_menu()
                 _blending_intensity_action.emplace(cursor_scale_frames, 0);
             }
 
-            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 0.01);
+            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, bn::fixed(0.01));
 
             if(_menu_index == 0)
             {

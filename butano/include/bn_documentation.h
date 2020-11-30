@@ -719,7 +719,13 @@
  *
  * <table>
  *
- * <tr><td> @ref audio
+ * <tr><td> @ref affine_bg
+ *
+ * @image html examples_affine_bgs.png
+ *
+ * Demonstrates usage of backgrounds with affine transformations.
+ *
+ * <td> @ref audio
  *
  * @image html examples_audio.png
  *
@@ -731,13 +737,13 @@
  *
  * Demonstrates usage of transparency, intensity and fade blending.
  *
- * <td> @ref camera
+ * <tr><td> @ref camera
  *
  * @image html examples_cameras.png
  *
  * Shows how a camera affects the displayed elements.
  *
- * <tr><td> @ref core
+ * <td> @ref core
  *
  * @image html examples_core.png
  *
@@ -749,13 +755,13 @@
  *
  * See how it looks this undocumented graphic effect.
  *
- * <td> @ref keypad
+ * <tr><td> @ref keypad
  *
  * @image html examples_keypad.png
  *
  * Simple keypad status demo.
  *
- * <tr><td> @ref link
+ * <td> @ref link
  *
  * @image html examples_link.png
  *
@@ -767,19 +773,25 @@
  *
  * Integration of emulator logging into Butano.
  *
+ * <tr><td> **Mode 7**
+ *
+ * @image html examples_mode_7.png
+ *
+ * Basic SNES mode 7 like background example.
+ *
  * <td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <tr><td> @ref palette
+ * <td> @ref palette
  *
  * @image html examples_palettes.png
  *
  * Showcases multiple color palette effects.
  *
- * <td> **Polygons**
+ * <tr><td> **Polygons**
  *
  * @image html examples_polygons.png
  *
@@ -791,13 +803,13 @@
  *
  * Basic code blocks profiling.
  *
- * <tr><td> @ref regular_bg
+ * <td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -809,13 +821,13 @@
  *
  * Simple sprites examples.
  *
- * <tr><td> @ref sram
+ * <td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *

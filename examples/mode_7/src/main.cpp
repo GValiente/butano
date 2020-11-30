@@ -23,9 +23,9 @@ namespace
 {
     struct camera
     {
-        int x = 400 << 8;
-        int y = 128 << 8;
-        int z = 280 << 8;
+        bn::fixed x = 400;
+        bn::fixed y = 128;
+        bn::fixed z = 280;
         int phi = 10;
         int cos = 0;
         int sin = 0;
@@ -33,30 +33,30 @@ namespace
 
     void update_camera(camera& camera)
     {
-        int dir_x = 0;
-        int dir_z = 0;
+        bn::fixed dir_x = 0;
+        bn::fixed dir_z = 0;
 
         if(bn::keypad::left_held())
         {
-            dir_x -= 2;
+            dir_x -= bn::fixed::from_data(32);
         }
         else if(bn::keypad::right_held())
         {
-            dir_x += 2;
+            dir_x += bn::fixed::from_data(32);
         }
 
         if(bn::keypad::down_held())
         {
-            dir_z += 2;
+            dir_z += bn::fixed::from_data(32);
         }
         else if(bn::keypad::up_held())
         {
-            dir_z -= 2;
+            dir_z -= bn::fixed::from_data(32);
         }
 
         if(bn::keypad::b_held())
         {
-            camera.y -= 64;
+            camera.y -= bn::fixed::from_data(2048);
 
             if(camera.y < 0)
             {
@@ -65,7 +65,7 @@ namespace
         }
         else if(bn::keypad::a_held())
         {
-            camera.y += 64;
+            camera.y += bn::fixed::from_data(2048);
         }
 
         if(bn::keypad::l_held())
@@ -96,9 +96,9 @@ namespace
     void update_hblank_effect_values(const camera& camera, int16_t* pa_values, int16_t* pc_values, int* dx_values,
                                      int* dy_values)
     {
-        int camera_x = camera.x;
-        int camera_y = camera.y;
-        int camera_z = camera.z;
+        int camera_x = camera.x.data();
+        int camera_y = camera.y.data() >> 4;
+        int camera_z = camera.z.data();
         int camera_cos = camera.cos;
         int camera_sin = camera.sin;
         int y_shift = 160;
@@ -113,13 +113,13 @@ namespace
             pa_values[index] = lcf >> 4;
             pc_values[index] = lsf >> 4;
 
-            int lxr = (bn::display::width() / 2) * (lcf >> 4);
-            int lyr = (y_shift * lsf) >> 4;
-            dx_values[index] = camera_x - lxr + lyr;
+            int lxr = (bn::display::width() / 2) * lcf;
+            int lyr = y_shift * lsf;
+            dx_values[index] = (camera_x - lxr + lyr) >> 4;
 
-            lxr = (bn::display::width() / 2) * (lsf >> 4);
-            lyr = (y_shift * lcf) >> 4;
-            dy_values[index] = camera_z - lxr - lyr;
+            lxr = (bn::display::width() / 2) * lsf;
+            lyr = y_shift * lcf;
+            dy_values[index] = (camera_z - lxr - lyr) >> 4;
         }
     }
 }

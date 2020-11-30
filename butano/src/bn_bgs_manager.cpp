@@ -217,8 +217,8 @@ namespace
         void update_affine_mat_attributes()
         {
             hw::bgs::set_affine_mat_attributes(affine_mat_attributes.mat_attributes(), handle);
-            commit_affine_hw_x();
-            commit_affine_hw_y();
+            update_affine_hw_x();
+            update_affine_hw_y();
         }
 
         void update_affine_camera()
@@ -232,8 +232,8 @@ namespace
                 affine_mat_attributes.set_position(position);
             }
 
-            commit_affine_hw_x();
-            commit_affine_hw_y();
+            update_affine_hw_x();
+            update_affine_hw_y();
         }
 
         void commit_regular_hw_x()
@@ -266,7 +266,7 @@ namespace
             }
         }
 
-        void commit_affine_hw_x()
+        void update_affine_hw_x()
         {
             int dx = affine_mat_attributes.dx_register_value();
             hw_position.set_x(dx);
@@ -274,17 +274,16 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(dx >= 0 && dx / (8 * hw::bgs::affine_precision) <
+                BN_ASSERT(dx >= 0 && dx >> hw::bgs::affine_precision <
                           (half_dimensions.width() * 2) - display::width(),
                           "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          dx / (8 * hw::bgs::affine_precision), " - ",
-                          (half_dimensions.width() * 2) - display::width());
+                          dx >> hw::bgs::affine_precision, " - ", (half_dimensions.width() * 2) - display::width());
 
                 commit_big_map = true;
             }
         }
 
-        void commit_affine_hw_y()
+        void update_affine_hw_y()
         {
             int dy = affine_mat_attributes.dy_register_value();
             hw_position.set_y(dy);
@@ -292,11 +291,10 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(dy >= 0 && dy / (8 * hw::bgs::affine_precision) <
+                BN_ASSERT(dy >= 0 && dy >> hw::bgs::affine_precision <
                           (half_dimensions.height() * 2) - display::height(),
                           "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          dy / (8 * hw::bgs::affine_precision), " - ",
-                          (half_dimensions.height() * 2) - display::height());
+                          dy >> hw::bgs::affine_precision, " - ", (half_dimensions.height() * 2) - display::height());
 
                 commit_big_map = true;
             }
@@ -661,7 +659,7 @@ void set_affine_x(id_type id, fixed x)
         }
 
         item->affine_mat_attributes.set_x(x);
-        item->commit_affine_hw_x();
+        item->update_affine_hw_x();
         _update_item(*item);
     }
 }
@@ -698,7 +696,7 @@ void set_affine_y(id_type id, fixed y)
         }
 
         item->affine_mat_attributes.set_y(y);
-        item->commit_affine_hw_y();
+        item->update_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -742,8 +740,8 @@ void set_affine_position(id_type id, const fixed_point& position)
             item->affine_mat_attributes.set_position(position);
         }
 
-        item->commit_affine_hw_x();
-        item->commit_affine_hw_y();
+        item->update_affine_hw_x();
+        item->update_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -903,7 +901,7 @@ void set_pivot_x(id_type id, fixed pivot_x)
     if(pivot_x != item->affine_mat_attributes.pivot_x())
     {
         item->affine_mat_attributes.set_pivot_x(pivot_x);
-        item->commit_affine_hw_x();
+        item->update_affine_hw_x();
         _update_item(*item);
     }
 }
@@ -915,7 +913,7 @@ void set_pivot_y(id_type id, fixed pivot_y)
     if(pivot_y != item->affine_mat_attributes.pivot_y())
     {
         item->affine_mat_attributes.set_pivot_y(pivot_y);
-        item->commit_affine_hw_y();
+        item->update_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -927,8 +925,8 @@ void set_pivot_position(id_type id, const fixed_point& pivot_position)
     if(pivot_position != item->affine_mat_attributes.pivot_position())
     {
         item->affine_mat_attributes.set_pivot_position(pivot_position);
-        item->commit_affine_hw_x();
-        item->commit_affine_hw_y();
+        item->update_affine_hw_x();
+        item->update_affine_hw_y();
         _update_item(*item);
     }
 }
@@ -1399,13 +1397,18 @@ void commit_big_maps()
 
             if(is_regular)
             {
-                new_map_x = item->hw_position.x() / 8;
-                new_map_y = item->hw_position.y() / 8;
+                new_map_x = item->hw_position.x() >> 3;
+                new_map_y = item->hw_position.y() >> 3;
             }
             else
             {
-                new_map_x = item->hw_position.x() / (8 * hw::bgs::affine_precision);
-                new_map_y = item->hw_position.y() / (8 * hw::bgs::affine_precision);
+                new_map_x = item->hw_position.x() >> (hw::bgs::affine_precision + 3);
+                new_map_y = item->hw_position.y() >> (hw::bgs::affine_precision + 3);
+
+                if(new_map_x % 2)
+                {
+                    --new_map_x;
+                }
             }
 
             int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
@@ -1424,7 +1427,7 @@ void commit_big_maps()
                 item->commit_big_map = false;
                 item->full_commit_big_map = false;
 
-                if(full_commit_big_map || bn::abs(new_map_x - old_map_x) > 1 || bn::abs(new_map_y - old_map_y) > 1)
+                if(full_commit_big_map || bn::abs(new_map_x - old_map_x) > 8 || bn::abs(new_map_y - old_map_y) > 8)
                 {
                     if(is_regular)
                     {
@@ -1437,49 +1440,56 @@ void commit_big_maps()
                 }
                 else
                 {
-                    if(new_map_x < old_map_x)
+                    if(is_regular)
                     {
-                        if(is_regular)
+                        while(new_map_x < old_map_x)
                         {
                             bg_blocks_manager::update_regular_map_col(map_handle, new_map_x, new_map_y);
+                            ++new_map_x;
                         }
-                        else
-                        {
-                            bg_blocks_manager::update_affine_map_col(map_handle, new_map_x, new_map_y);
-                        }
-                    }
-                    else if(new_map_x > old_map_x)
-                    {
-                        if(is_regular)
+
+                        while(new_map_x > old_map_x)
                         {
                             bg_blocks_manager::update_regular_map_col(map_handle, new_map_x + 31, new_map_y);
+                            --new_map_x;
                         }
-                        else
-                        {
-                            bg_blocks_manager::update_affine_map_col(map_handle, new_map_x + 31, new_map_y);
-                        }
-                    }
 
-                    if(new_map_y < old_map_y)
-                    {
-                        if(is_regular)
+                        while(new_map_y < old_map_y)
                         {
                             bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y);
+                            ++new_map_y;
                         }
-                        else
-                        {
-                            bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, new_map_y);
-                        }
-                    }
-                    else if(new_map_y > old_map_y)
-                    {
-                        if(is_regular)
+
+                        while(new_map_y > old_map_y)
                         {
                             bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, new_map_y + 21);
+                            --new_map_y;
                         }
-                        else
+                    }
+                    else
+                    {
+                        while(new_map_x < old_map_x)
+                        {
+                            bg_blocks_manager::update_affine_map_col(map_handle, new_map_x, new_map_y);
+                            ++new_map_x;
+                        }
+
+                        while(new_map_x > old_map_x)
+                        {
+                            bg_blocks_manager::update_affine_map_col(map_handle, new_map_x + 31, new_map_y);
+                            --new_map_x;
+                        }
+
+                        while(new_map_y < old_map_y)
+                        {
+                            bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, new_map_y);
+                            ++new_map_y;
+                        }
+
+                        while(new_map_y > old_map_y)
                         {
                             bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, new_map_y + 21);
+                            --new_map_y;
                         }
                     }
                 }

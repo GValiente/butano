@@ -20,12 +20,11 @@ namespace bn
 {
 
 /**
- * @brief Returns the LUT used to calculate the reciprocal of the given value (1 / value).
+ * @brief LUT used to calculate the reciprocal of the given value (1 / value).
  *
  * @ingroup math
  */
-[[nodiscard]] constexpr array<fixed, 1025> create_reciprocal_lut()
-{
+constexpr const array<fixed, 1025> reciprocal_lut = []() -> auto {
     array<fixed, 1025> result;
     int one = fixed(1).data() * fixed::scale();
 
@@ -35,14 +34,7 @@ namespace bn
     }
 
     return result;
-}
-
-/**
- * @brief LUT used to calculate the reciprocal of the given value (1 / value).
- *
- * @ingroup math
- */
-constexpr const array<fixed, 1025> reciprocal_lut = create_reciprocal_lut();
+}();
 
 }
 

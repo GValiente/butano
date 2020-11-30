@@ -173,11 +173,9 @@ namespace bgs_manager
 
     void fill_hblank_effect_regular_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr);
 
-    void fill_hblank_effect_pivot_horizontal_positions(id_type id, bool high, const fixed* positions_ptr,
-                                                       uint16_t* dest_ptr);
+    void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr);
 
-    void fill_hblank_effect_pivot_vertical_positions(id_type id, bool high, const fixed* positions_ptr,
-                                                     uint16_t* dest_ptr);
+    void fill_hblank_effect_pivot_vertical_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr);
 
     void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attributes* attributes_ptr,
                                                uint16_t* dest_ptr);

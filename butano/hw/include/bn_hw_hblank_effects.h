@@ -11,7 +11,7 @@
 
 namespace bn::hw::hblank_effects
 {
-    class entry
+    class uint16_entry
     {
 
     public:
@@ -19,43 +19,32 @@ namespace bn::hw::hblank_effects
         volatile uint16_t* dest;
     };
 
-    BN_CODE_IWRAM void commit_entries_ptr(entry* entries_ptr);
-
-    BN_CODE_IWRAM void _intr_0();
-
-    BN_CODE_IWRAM void _intr_1();
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
-        BN_CODE_IWRAM void _intr_2();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 3
-        BN_CODE_IWRAM void _intr_3();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 4
-        BN_CODE_IWRAM void _intr_4();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 5
-        BN_CODE_IWRAM void _intr_5();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 6
-        BN_CODE_IWRAM void _intr_6();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 7
-        BN_CODE_IWRAM void _intr_7();
-    #endif
-
-    #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 8
-        BN_CODE_IWRAM void _intr_8();
-    #endif
-
-    inline void init()
+    class uint32_entry
     {
-        irq::replace_or_push_back(irq::id::HBLANK, _intr_0);
+
+    public:
+        const unsigned* src;
+        volatile unsigned* dest;
+    };
+
+    class entries
+    {
+
+    public:
+        uint16_entry uint16_entries[BN_CFG_HBLANK_EFFECTS_MAX_ITEMS];
+        uint32_entry uint32_entries[BN_CFG_HBLANK_EFFECTS_MAX_ITEMS];
+        int uint16_entries_count = 0;
+        int uint32_entries_count = 0;
+    };
+
+    BN_CODE_IWRAM void commit_entries(entries& entries_ref);
+
+    BN_CODE_IWRAM void _intr();
+
+    inline void init(entries& entries_ref)
+    {
+        commit_entries(entries_ref);
+        irq::replace_or_push_back(irq::id::HBLANK, _intr);
         irq::disable(irq::id::HBLANK);
     }
 
@@ -67,62 +56,6 @@ namespace bn::hw::hblank_effects
     inline void disable()
     {
         irq::disable(irq::id::HBLANK);
-    }
-
-    inline void commit_entries_count(int entries_count)
-    {
-        switch(entries_count)
-        {
-
-        case 1:
-            irq::replace_or_push_back(irq::id::HBLANK, _intr_1);
-            break;
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
-            case 2:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_2);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 3
-            case 3:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_3);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 4
-            case 4:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_4);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 5
-            case 5:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_5);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 6
-            case 6:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_6);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 7
-            case 7:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_7);
-                break;
-        #endif
-
-        #if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 8
-            case 8:
-                irq::replace_or_push_back(irq::id::HBLANK, _intr_8);
-                break;
-        #endif
-
-        default:
-            break;
-        }
     }
 }
 

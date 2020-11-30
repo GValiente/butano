@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW_HBLANK_EFFECT_HANDLER_H
-#define BN_AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW_HBLANK_EFFECT_HANDLER_H
+#ifndef BN_AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HBLANK_EFFECT_HANDLER_H
+#define BN_AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HBLANK_EFFECT_HANDLER_H
 
 #include "bn_any.h"
 #include "bn_bgs_manager.h"
@@ -14,7 +14,7 @@
 namespace bn
 {
 
-class affine_bg_pivot_horizontal_position_low_hblank_effect_handler
+class affine_bg_pivot_horizontal_position_hblank_effect_handler
 {
 
 public:
@@ -51,7 +51,8 @@ public:
     {
         auto handle = reinterpret_cast<void*>(target_id);
         auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
-        bgs_manager::fill_hblank_effect_pivot_horizontal_positions(handle, false, fixed_values_ptr, output_values_ptr);
+        auto result_ptr = reinterpret_cast<unsigned*>(output_values_ptr);
+        bgs_manager::fill_hblank_effect_pivot_horizontal_positions(handle, fixed_values_ptr, result_ptr);
     }
 
     static void show(int)
@@ -70,6 +71,7 @@ private:
     public:
         explicit last_value_type(const affine_bg_mat_attributes& mat_attributes) :
             _dx(mat_attributes.dx_register_value()),
+            _pa(mat_attributes.pa_register_value()),
             _pb(mat_attributes.pb_register_value())
         {
         }
@@ -88,6 +90,7 @@ private:
 
     private:
         int _dx;
+        int _pa;
         int _pb;
     };
 };

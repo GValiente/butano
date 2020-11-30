@@ -1239,8 +1239,7 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
     }
 }
 
-void fill_hblank_effect_pivot_horizontal_positions(id_type id, bool high, const fixed* positions_ptr,
-                                                   uint16_t* dest_ptr)
+void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
     constexpr const int right_shift = fixed().precision() - hw::bgs::affine_precision;
 
@@ -1248,28 +1247,16 @@ void fill_hblank_effect_pivot_horizontal_positions(id_type id, bool high, const 
     int base_dx = item->affine_mat_attributes.dx_register_value();
     int pb = item->affine_mat_attributes.pb_register_value();
 
-    if(high)
+
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
-        {
-            int result = base_dx + (positions_ptr[index].data() >> right_shift);
-            dest_ptr[index] = uint16_t(result >> 16);
-            base_dx += pb;
-        }
-    }
-    else
-    {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
-        {
-            int result = base_dx + (positions_ptr[index].data() >> right_shift);
-            dest_ptr[index] = uint16_t(result);
-            base_dx += pb;
-        }
+        int result = base_dx + (positions_ptr[index].data() >> right_shift);
+        dest_ptr[index] = unsigned(result);
+        base_dx += pb;
     }
 }
 
-void fill_hblank_effect_pivot_vertical_positions(id_type id, bool high, const fixed* positions_ptr,
-                                                 uint16_t* dest_ptr)
+void fill_hblank_effect_pivot_vertical_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
     constexpr const int right_shift = fixed().precision() - hw::bgs::affine_precision;
 
@@ -1277,23 +1264,11 @@ void fill_hblank_effect_pivot_vertical_positions(id_type id, bool high, const fi
     int base_dy = item->affine_mat_attributes.dy_register_value();
     int pd = item->affine_mat_attributes.pd_register_value();
 
-    if(high)
+    for(int index = 0, limit = display::height(); index < limit; ++index)
     {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
-        {
-            int result = base_dy + (positions_ptr[index].data() >> right_shift);
-            dest_ptr[index] = uint16_t(result >> 16);
-            base_dy += pd;
-        }
-    }
-    else
-    {
-        for(int index = 0, limit = display::height(); index < limit; ++index)
-        {
-            int result = base_dy + (positions_ptr[index].data() >> right_shift);
-            dest_ptr[index] = uint16_t(result);
-            base_dy += pd;
-        }
+        int result = base_dy + (positions_ptr[index].data() >> right_shift);
+        dest_ptr[index] = unsigned(result);
+        base_dy += pd;
     }
 }
 

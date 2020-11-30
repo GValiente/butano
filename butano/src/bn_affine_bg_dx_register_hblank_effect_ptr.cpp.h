@@ -17,30 +17,35 @@ namespace bn
 affine_bg_dx_register_hblank_effect_ptr affine_bg_dx_register_hblank_effect_ptr::create(
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
-    return affine_bg_dx_register_hblank_effect_ptr(
-                affine_bg_dx_high_register_hblank_effect_ptr::create(bg, attributes_ref),
-                affine_bg_dx_low_register_hblank_effect_ptr::create(bg, attributes_ref));
+    int id = hblank_effects_manager::create(
+                attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+                hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES);
+
+    return affine_bg_dx_register_hblank_effect_ptr(id, true, move(bg));
 }
 
 affine_bg_dx_register_hblank_effect_ptr affine_bg_dx_register_hblank_effect_ptr::create(
         affine_bg_ptr bg, const span<const int>& values_ref)
 {
-    return affine_bg_dx_register_hblank_effect_ptr(
-                affine_bg_dx_high_register_hblank_effect_ptr::create(bg, values_ref),
-                affine_bg_dx_low_register_hblank_effect_ptr::create(bg, values_ref));
+    int id = hblank_effects_manager::create(
+                values_ref.data(), values_ref.size(), int(bg.handle()),
+                hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_VALUES);
+
+    return affine_bg_dx_register_hblank_effect_ptr(id, false, move(bg));
 }
 
 optional<affine_bg_dx_register_hblank_effect_ptr> affine_bg_dx_register_hblank_effect_ptr::create_optional(
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
+    int id = hblank_effects_manager::create_optional(
+                attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+                hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES);
+
     optional<affine_bg_dx_register_hblank_effect_ptr> result;
 
-    if(auto high = affine_bg_dx_high_register_hblank_effect_ptr::create_optional(bg, attributes_ref))
+    if(id >= 0)
     {
-        if(auto low = affine_bg_dx_low_register_hblank_effect_ptr::create_optional(move(bg), attributes_ref))
-        {
-            result = affine_bg_dx_register_hblank_effect_ptr(move(*high), move(*low));
-        }
+        result = affine_bg_dx_register_hblank_effect_ptr(id, true, move(bg));
     }
 
     return result;
@@ -49,71 +54,73 @@ optional<affine_bg_dx_register_hblank_effect_ptr> affine_bg_dx_register_hblank_e
 optional<affine_bg_dx_register_hblank_effect_ptr> affine_bg_dx_register_hblank_effect_ptr::create_optional(
         affine_bg_ptr bg, const span<const int>& values_ref)
 {
+    int id = hblank_effects_manager::create_optional(
+                values_ref.data(), values_ref.size(), int(bg.handle()),
+                hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_VALUES);
+
     optional<affine_bg_dx_register_hblank_effect_ptr> result;
 
-    if(auto high = affine_bg_dx_high_register_hblank_effect_ptr::create_optional(bg, values_ref))
+    if(id >= 0)
     {
-        if(auto low = affine_bg_dx_low_register_hblank_effect_ptr::create_optional(move(bg), values_ref))
-        {
-            result = affine_bg_dx_register_hblank_effect_ptr(move(*high), move(*low));
-        }
+        result = affine_bg_dx_register_hblank_effect_ptr(id, false, move(bg));
     }
 
     return result;
 }
 
-void affine_bg_dx_register_hblank_effect_ptr::set_visible(bool visible)
-{
-    _high_hblank_effect_ptr.set_visible(visible);
-    _low_hblank_effect_ptr.set_visible(visible);
-}
-
 span<const affine_bg_mat_attributes> affine_bg_dx_register_hblank_effect_ptr::attributes_ref() const
 {
-    return _high_hblank_effect_ptr.attributes_ref();
+    BN_ASSERT(_from_attributes, "Built from values");
+
+    auto attributes_ptr = reinterpret_cast<const affine_bg_mat_attributes*>(hblank_effects_manager::values_ref(id()));
+    return span<const affine_bg_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int> affine_bg_dx_register_hblank_effect_ptr::values_ref() const
 {
-    return _high_hblank_effect_ptr.values_ref();
+    BN_ASSERT(! _from_attributes, "Built from attributes");
+
+    auto values_ptr = reinterpret_cast<const int*>(hblank_effects_manager::values_ref(id()));
+    return span<const int>(values_ptr, display::height());
 }
 
 void affine_bg_dx_register_hblank_effect_ptr::set_attributes_ref(
         const span<const affine_bg_mat_attributes>& attributes_ref)
 {
-    _high_hblank_effect_ptr.set_attributes_ref(attributes_ref);
-    _low_hblank_effect_ptr.set_attributes_ref(attributes_ref);
+    BN_ASSERT(_from_attributes, "Built from values");
+
+    hblank_effects_manager::set_values_ref(id(), attributes_ref.data(), attributes_ref.size());
 }
 
 void affine_bg_dx_register_hblank_effect_ptr::set_values_ref(const span<const int>& values_ref)
 {
-    _high_hblank_effect_ptr.set_values_ref(values_ref);
-    _low_hblank_effect_ptr.set_values_ref(values_ref);
+    BN_ASSERT(! _from_attributes, "Built from attributes");
+
+    hblank_effects_manager::set_values_ref(id(), values_ref.data(), values_ref.size());
 }
 
 void affine_bg_dx_register_hblank_effect_ptr::reload_attributes_ref()
 {
-    _high_hblank_effect_ptr.reload_attributes_ref();
-    _low_hblank_effect_ptr.reload_attributes_ref();
+    hblank_effects_manager::reload_values_ref(id());
 }
 
 void affine_bg_dx_register_hblank_effect_ptr::reload_values_ref()
 {
-    _high_hblank_effect_ptr.reload_values_ref();
-    _low_hblank_effect_ptr.reload_values_ref();
+    hblank_effects_manager::reload_values_ref(id());
 }
 
 void affine_bg_dx_register_hblank_effect_ptr::swap(affine_bg_dx_register_hblank_effect_ptr& other)
 {
-    _high_hblank_effect_ptr.swap(other._high_hblank_effect_ptr);
-    _low_hblank_effect_ptr.swap(other._low_hblank_effect_ptr);
+    hblank_effect_ptr::swap(other);
+    bn::swap(_from_attributes, other._from_attributes);
+    _bg.swap(other._bg);
 }
 
 affine_bg_dx_register_hblank_effect_ptr::affine_bg_dx_register_hblank_effect_ptr(
-        affine_bg_dx_high_register_hblank_effect_ptr&& high_hblank_effect_ptr,
-        affine_bg_dx_low_register_hblank_effect_ptr&& low_hblank_effect_ptr) :
-    _high_hblank_effect_ptr(move(high_hblank_effect_ptr)),
-    _low_hblank_effect_ptr(move(low_hblank_effect_ptr))
+        int id, bool from_attributes, affine_bg_ptr&& bg) :
+    hblank_effect_ptr(id),
+    _from_attributes(from_attributes),
+    _bg(move(bg))
 {
 }
 

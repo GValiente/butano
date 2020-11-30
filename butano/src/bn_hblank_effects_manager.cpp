@@ -19,19 +19,15 @@
 #include "bn_regular_bg_attributes_hblank_effect_handler.h"
 #include "bn_affine_bg_attributes_hblank_effect_handler.h"
 #include "bn_regular_bg_horizontal_position_hblank_effect_handler.h"
-#include "bn_affine_bg_pivot_horizontal_position_high_hblank_effect_handler.h"
-#include "bn_affine_bg_pivot_horizontal_position_low_hblank_effect_handler.h"
+#include "bn_affine_bg_pivot_horizontal_position_hblank_effect_handler.h"
 #include "bn_regular_bg_vertical_position_hblank_effect_handler.h"
-#include "bn_affine_bg_pivot_vertical_position_high_hblank_effect_handler.h"
-#include "bn_affine_bg_pivot_vertical_position_low_hblank_effect_handler.h"
+#include "bn_affine_bg_pivot_vertical_position_hblank_effect_handler.h"
 #include "bn_affine_bg_pa_register_hblank_effect_handler.h"
 #include "bn_affine_bg_pb_register_hblank_effect_handler.h"
 #include "bn_affine_bg_pc_register_hblank_effect_handler.h"
 #include "bn_affine_bg_pd_register_hblank_effect_handler.h"
-#include "bn_affine_bg_dx_high_register_hblank_effect_handler.h"
-#include "bn_affine_bg_dx_low_register_hblank_effect_handler.h"
-#include "bn_affine_bg_dy_high_register_hblank_effect_handler.h"
-#include "bn_affine_bg_dy_low_register_hblank_effect_handler.h"
+#include "bn_affine_bg_dx_register_hblank_effect_handler.h"
+#include "bn_affine_bg_dy_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_handler.h"
 #include "bn_sprite_affine_mat_pc_register_hblank_effect_handler.h"
@@ -57,18 +53,12 @@
 #include "bn_affine_bg_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_regular_bg_position_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pivot_position_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_pivot_position_high_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_pivot_position_low_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pb_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pc_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_pd_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_dx_register_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_dx_high_register_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_dx_low_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_dy_register_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_dy_high_register_hblank_effect_ptr.cpp.h"
-#include "bn_affine_bg_dy_low_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"
@@ -91,7 +81,7 @@ namespace
     static_assert(max_items > 0 && max_items <= 8);
 
     using last_value_type = any<4 * sizeof(int)>;
-    using hw_entry = hw::hblank_effects::entry;
+    using hw_entries = hw::hblank_effects::entries;
 
     class item_type
     {
@@ -102,8 +92,8 @@ namespace
         int target_id = 0;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
-        alignas(int) uint16_t output_values_a[display::height()] = {};
-        alignas(int) uint16_t output_values_b[display::height()] = {};
+        alignas(int) uint16_t output_values_a[display::height() * 2] = {};
+        alignas(int) uint16_t output_values_b[display::height() * 2] = {};
         handler_type handler;
         bool visible: 1 = false;
         bool update: 1 = false;
@@ -160,24 +150,16 @@ namespace
                 regular_bg_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HIGH:
-                affine_bg_pivot_horizontal_position_high_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW:
-                affine_bg_pivot_horizontal_position_low_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+                affine_bg_pivot_horizontal_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH:
-                affine_bg_pivot_vertical_position_high_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_LOW:
-                affine_bg_pivot_vertical_position_low_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+                affine_bg_pivot_vertical_position_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
             case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
@@ -212,36 +194,20 @@ namespace
                 affine_bg_pd_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dx_high_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dx_low_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_VALUES:
-                affine_bg_dx_high_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_VALUES:
-                affine_bg_dx_low_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dy_high_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dy_low_register_attributes_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_VALUES:
-                affine_bg_dy_high_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_VALUES:
-                affine_bg_dy_low_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::setup_target(target_id, target_last_value);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -348,20 +314,14 @@ namespace
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
                 return _check_update_impl<regular_bg_horizontal_position_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HIGH:
-                return _check_update_impl<affine_bg_pivot_horizontal_position_high_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW:
-                return _check_update_impl<affine_bg_pivot_horizontal_position_low_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+                return _check_update_impl<affine_bg_pivot_horizontal_position_hblank_effect_handler>();
 
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 return _check_update_impl<regular_bg_vertical_position_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH:
-                return _check_update_impl<affine_bg_pivot_vertical_position_high_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_LOW:
-                return _check_update_impl<affine_bg_pivot_vertical_position_low_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+                return _check_update_impl<affine_bg_pivot_vertical_position_hblank_effect_handler>();
 
             case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
                 return _check_update_impl<affine_bg_pa_register_attributes_hblank_effect_handler>();
@@ -387,29 +347,17 @@ namespace
             case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
                 return _check_update_impl<affine_bg_pd_register_values_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dx_high_register_attributes_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_dx_register_attributes_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dx_low_register_attributes_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_dx_register_values_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dx_high_register_values_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                return _check_update_impl<affine_bg_dy_register_attributes_hblank_effect_handler>();
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dx_low_register_values_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dy_high_register_attributes_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dy_low_register_attributes_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dy_high_register_values_hblank_effect_handler>();
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dy_low_register_values_hblank_effect_handler>();
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                return _check_update_impl<affine_bg_dy_register_values_hblank_effect_handler>();
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
                 return _check_update_impl<sprite_affine_mat_pa_register_attributes_hblank_effect_handler>();
@@ -462,10 +410,159 @@ namespace
             }
         }
 
-        void setup_entry(hw_entry& entry) const
+        [[nodiscard]] bool is_unsigned() const
         {
-            entry.src = output_values_a_active ? output_values_a : output_values_b;
-            entry.dest = output_register;
+            switch(handler)
+            {
+
+            case handler_type::BG_PALETTE_COLOR:
+                return false;
+
+            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+                return false;
+
+            case handler_type::BLENDING_FADE_ALPHA:
+                return false;
+
+            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+                return false;
+
+            case handler_type::GREEN_SWAP:
+                return false;
+
+            case handler_type::MOSAIC_ATTRIBUTES:
+                return false;
+
+            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+                return false;
+
+            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+                return false;
+
+            case handler_type::REGULAR_BG_ATTRIBUTES:
+                return false;
+
+            case handler_type::AFFINE_BG_ATTRIBUTES:
+                return false;
+
+            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+                return false;
+
+            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+                return true;
+
+            case handler_type::REGULAR_BG_VERTICAL_POSITION:
+                return false;
+
+            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+                return true;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+                return false;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+                return false;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+                return false;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+                return false;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                return true;
+
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                return true;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                return true;
+
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                return true;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+                return false;
+
+            case handler_type::SPRITE_FIRST_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_THIRD_ATTRIBUTES:
+                return false;
+
+            case handler_type::SPRITE_HORIZONTAL_POSITION:
+                return false;
+
+            case handler_type::SPRITE_VERTICAL_POSITION:
+                return false;
+
+            case handler_type::SPRITE_PALETTE_COLOR:
+                return false;
+
+            default:
+                BN_ERROR("Unknown handler: ", int(handler));
+                return false;
+            }
+        }
+
+        void setup_entry(hw_entries& entries) const
+        {
+            const uint16_t* src = output_values_a_active ? output_values_a : output_values_b;
+            uint16_t* dest = output_register;
+
+            if(is_unsigned())
+            {
+                hw::hblank_effects::uint32_entry& uint32_entry = entries.uint32_entries[entries.uint32_entries_count];
+                uint32_entry.src = reinterpret_cast<const unsigned*>(src);
+                uint32_entry.dest = reinterpret_cast<unsigned*>(dest);
+                ++entries.uint32_entries_count;
+            }
+            else
+            {
+                hw::hblank_effects::uint16_entry& uint16_entry = entries.uint16_entries[entries.uint16_entries_count];
+                uint16_entry.src = src;
+                uint16_entry.dest = dest;
+                ++entries.uint16_entries_count;
+            }
         }
 
         void show()
@@ -517,24 +614,16 @@ namespace
                 regular_bg_horizontal_position_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HIGH:
-                affine_bg_pivot_horizontal_position_high_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW:
-                affine_bg_pivot_horizontal_position_low_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+                affine_bg_pivot_horizontal_position_hblank_effect_handler::show(target_id);
                 break;
 
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH:
-                affine_bg_pivot_vertical_position_high_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_LOW:
-                affine_bg_pivot_vertical_position_low_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+                affine_bg_pivot_vertical_position_hblank_effect_handler::show(target_id);
                 break;
 
             case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
@@ -569,36 +658,20 @@ namespace
                 affine_bg_pd_register_values_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dx_high_register_attributes_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dx_low_register_attributes_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_VALUES:
-                affine_bg_dx_high_register_values_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::show(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_VALUES:
-                affine_bg_dx_low_register_values_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dy_high_register_attributes_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dy_low_register_attributes_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_VALUES:
-                affine_bg_dy_high_register_values_hblank_effect_handler::show(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_VALUES:
-                affine_bg_dy_low_register_values_hblank_effect_handler::show(target_id);
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::show(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -716,24 +789,16 @@ namespace
                 regular_bg_horizontal_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_HIGH:
-                affine_bg_pivot_horizontal_position_high_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION_LOW:
-                affine_bg_pivot_horizontal_position_low_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+                affine_bg_pivot_horizontal_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
                 regular_bg_vertical_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_HIGH:
-                affine_bg_pivot_vertical_position_high_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION_LOW:
-                affine_bg_pivot_vertical_position_low_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+                affine_bg_pivot_vertical_position_hblank_effect_handler::cleanup(target_id);
                 break;
 
             case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
@@ -768,36 +833,20 @@ namespace
                 affine_bg_pd_register_values_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dx_high_register_attributes_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+                affine_bg_dx_register_attributes_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dx_low_register_attributes_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+                affine_bg_dx_register_values_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_HIGH_REGISTER_VALUES:
-                affine_bg_dx_high_register_values_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+                affine_bg_dy_register_attributes_hblank_effect_handler::cleanup(target_id);
                 break;
 
-            case handler_type::AFFINE_BG_DX_LOW_REGISTER_VALUES:
-                affine_bg_dx_low_register_values_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_ATTRIBUTES:
-                affine_bg_dy_high_register_attributes_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_ATTRIBUTES:
-                affine_bg_dy_low_register_attributes_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_HIGH_REGISTER_VALUES:
-                affine_bg_dy_high_register_values_hblank_effect_handler::cleanup(target_id);
-                break;
-
-            case handler_type::AFFINE_BG_DY_LOW_REGISTER_VALUES:
-                affine_bg_dy_low_register_values_hblank_effect_handler::cleanup(target_id);
+            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+                affine_bg_dy_register_values_hblank_effect_handler::cleanup(target_id);
                 break;
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
@@ -921,10 +970,9 @@ namespace
     public:
         item_type items[max_items];
         vector<int8_t, max_items> free_item_indexes;
-        int8_t old_entries_count = 0;
-        int8_t new_entries_count = 0;
         int8_t first_visible_item_index = max_items - 1;
         int8_t last_visible_item_index = 0;
+        bool visible_entries = false;
         bool entries_a_active = false;
         bool update = false;
         bool commit = false;
@@ -935,8 +983,8 @@ namespace
     {
 
     public:
-        hw_entry entries_a[max_items];
-        hw_entry entries_b[max_items];
+        hw_entries entries_a;
+        hw_entries entries_b;
     };
 
     BN_DATA_EWRAM static_external_data external_data;
@@ -992,7 +1040,7 @@ namespace
 
 void init()
 {
-    hw::hblank_effects::init();
+    hw::hblank_effects::init(internal_data.entries_b);
 
     for(int index = max_items - 1; index >= 0; --index)
     {
@@ -1184,19 +1232,22 @@ void update()
 
     if(update)
     {
-        hw_entry* entries;
-        int entries_count = 0;
+        hw_entries* entries;
+        bool visible_entries = false;
 
         if(external_data.entries_a_active)
         {
-            entries = internal_data.entries_b;
+            entries = &internal_data.entries_b;
             external_data.entries_a_active = false;
         }
         else
         {
-            entries = internal_data.entries_a;
+            entries = &internal_data.entries_a;
             external_data.entries_a_active = true;
         }
+
+        entries->uint16_entries_count = 0;
+        entries->uint32_entries_count = 0;
 
         for(int item_index = first_visible_item_index; item_index <= last_visible_item_index; ++item_index)
         {
@@ -1204,13 +1255,12 @@ void update()
 
             if(item.visible && item.on_screen)
             {
-                hw_entry& entry = entries[entries_count];
-                item.setup_entry(entry);
-                ++entries_count;
+                item.setup_entry(*entries);
+                visible_entries = true;
             }
         }
 
-        external_data.new_entries_count = int8_t(entries_count);
+        external_data.visible_entries = visible_entries;
         external_data.commit = true;
     }
 }
@@ -1219,22 +1269,14 @@ void commit()
 {
     if(external_data.commit)
     {
-        int old_entries_count = external_data.old_entries_count;
-        int new_entries_count = external_data.new_entries_count;
-        external_data.old_entries_count = external_data.new_entries_count;
         external_data.commit = false;
 
-        if(new_entries_count)
+        if(external_data.visible_entries)
         {
-            hw_entry* entries_ptr = external_data.entries_a_active ? internal_data.entries_a : internal_data.entries_b;
-            hw::hblank_effects::commit_entries_ptr(entries_ptr);
+            hw_entries* entries = external_data.entries_a_active ? &internal_data.entries_a : &internal_data.entries_b;
+            hw::hblank_effects::commit_entries(*entries);
 
-            if(old_entries_count != new_entries_count)
-            {
-                hw::hblank_effects::commit_entries_count(new_entries_count);
-                external_data.enabled = true;
-            }
-            else if(! external_data.enabled)
+            if(! external_data.enabled)
             {
                 external_data.enabled = true;
                 hw::hblank_effects::enable();

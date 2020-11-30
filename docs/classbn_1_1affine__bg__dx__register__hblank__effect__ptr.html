@@ -50,13 +50,14 @@
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>affine_bg_dx_register_hblank_effect_ptr <span class="m-thin">class</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__dx__register__hblank__effect__ptr_8h.html">&lt;bn_affine_bg_dx_register_hblank_effect_ptr.h&gt;</a></div>
         </h1>
-        <p>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+        <p>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
+                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#pub-static-methods">Public static functions</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
@@ -64,6 +65,15 @@
             </li>
           </ul>
         </div>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classbn_1_1hblank__effect__ptr.html" class="m-doc">hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect.</dd>
+          </dl>
+        </section>
         <section id="pub-static-methods">
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
@@ -71,39 +81,27 @@
               <span class="m-doc-wrap-bumper">static auto <a href="#a222b28dd3107e17caec47acc7912885b" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref) -&gt; <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a></span>
             </dt>
-            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#aaba6fda6ca4d06d14f0b31c74aeea1e3" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref) -&gt; <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a></span>
             </dt>
-            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a1fae689e5d907069c052227b39a246ca" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&gt;</span>
             </dt>
-            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#a692fb95604486996517a78a2c48c7f3c" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&gt;</span>
             </dt>
-            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dd>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="af4610d9edb62ac7ac06e947cf8b780a2">
-              <span class="m-doc-wrap-bumper">auto <a href="#af4610d9edb62ac7ac06e947cf8b780a2" class="m-doc-self">id</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
-            </dt>
-            <dd>Returns the internal id.</dd>
-            <dt id="ac35f9116cd4a025b618eb2d24be3ad89">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac35f9116cd4a025b618eb2d24be3ad89" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
-            </dt>
-            <dd>Indicates if this H-Blank effect must be committed to the GBA or not.</dd>
-            <dt id="a0bc8a447271a6ef21bdbf2deb3dabaef">
-              <span class="m-doc-wrap-bumper">void <a href="#a0bc8a447271a6ef21bdbf2deb3dabaef" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
-            </dt>
-            <dd>Sets if this H-Blank effect must be committed to the GBA or not.</dd>
             <dt id="a244ff4c158432a9caa18325f93dd97f9">
               <span class="m-doc-wrap-bumper">auto <a href="#a244ff4c158432a9caa18325f93dd97f9" class="m-doc-self">bg</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp;</span>
             </dt>
@@ -111,27 +109,27 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a82620ff8c4eae699a0b1db0558120f98" class="m-doc">attributes_ref</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;</span>
             </dt>
-            <dd>Returns the referenced array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Returns the referenced array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ab25f7727c2eb18d459fe0b21322c88a8" class="m-doc">values_ref</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;</span>
             </dt>
-            <dd>Returns the referenced array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Returns the referenced array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a6d0e8860efcde6009cc811949745bef4" class="m-doc">set_attributes_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref)</span>
             </dt>
-            <dd>Sets the reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Sets the reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#af5c641927ebac4e8da6d553e13cf50cb" class="m-doc">set_values_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref)</span>
             </dt>
-            <dd>Sets the reference to an array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Sets the reference to an array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a11f6460a367d09c1a6585c5922aa36e6" class="m-doc">reload_attributes_ref</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Rereads the content of the referenced attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Rereads the content of the referenced attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#aaa516e7fdf10cd59ef893567c8d55d81" class="m-doc">reload_values_ref</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Rereads the content of the referenced values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dd>Rereads the content of the referenced values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a40afae66d4151b929c8ced66484d30a2" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; other)</span>
             </dt>
@@ -146,16 +144,6 @@
               <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span>
             </dt>
             <dd>Exchanges the contents of an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> with those of another one.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#afe021a385762ff4ba84b2c11f30519dd" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
-              const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b) -&gt; bool</span>
-            </dt>
-            <dd>Equal operator.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a30d67e56d32a572a6cb9daceee2e9de3" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
-              const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b) -&gt; bool</span>
-            </dt>
-            <dd>Not equal operator.</dd>
           </dl>
         </section>
         <section>
@@ -165,7 +153,7 @@
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a222b28dd3107e17caec47acc7912885b" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref)</span></span>
             </h3>
-            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -177,7 +165,7 @@
                 </tr>
                 <tr>
                   <td>attributes_ref</td>
-                  <td>Reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
+                  <td>Reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -194,7 +182,7 @@
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaba6fda6ca4d06d14f0b31c74aeea1e3" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref)</span></span>
             </h3>
-            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -206,7 +194,7 @@
                 </tr>
                 <tr>
                   <td>values_ref</td>
-                  <td>Reference to an array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
+                  <td>Reference to an array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -223,7 +211,7 @@
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1fae689e5d907069c052227b39a246ca" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref)</span></span>
             </h3>
-            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -235,7 +223,7 @@
                 </tr>
                 <tr>
                   <td>attributes_ref</td>
-                  <td>Reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
+                  <td>Reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -252,7 +240,7 @@
               <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a692fb95604486996517a78a2c48c7f3c" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> bg,
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref)</span></span>
             </h3>
-            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+            <p>Creates an <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> which changes the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -264,7 +252,7 @@
                 </tr>
                 <tr>
                   <td>values_ref</td>
-                  <td>Reference to an array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
+                  <td>Reference to an array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -280,42 +268,42 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt; bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a82620ff8c4eae699a0b1db0558120f98" class="m-doc-self">attributes_ref</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
-            <p>Returns the referenced array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Returns the referenced array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The attributes are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="ab25f7727c2eb18d459fe0b21322c88a8"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt; bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab25f7727c2eb18d459fe0b21322c88a8" class="m-doc-self">values_ref</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
-            <p>Returns the referenced array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Returns the referenced array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The values are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a6d0e8860efcde6009cc811949745bef4"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d0e8860efcde6009cc811949745bef4" class="m-doc-self">set_attributes_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&gt;&amp; attributes_ref)</span></span>
             </h3>
-            <p>Sets the reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Sets the reference to an array of 160 <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a> objects with the attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The attributes are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="af5c641927ebac4e8da6d553e13cf50cb"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af5c641927ebac4e8da6d553e13cf50cb" class="m-doc-self">set_values_ref</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int&gt;&amp; values_ref)</span></span>
             </h3>
-            <p>Sets the reference to an array of 160 values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Sets the reference to an array of 160 values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The values are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a11f6460a367d09c1a6585c5922aa36e6"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11f6460a367d09c1a6585c5922aa36e6" class="m-doc-self">reload_attributes_ref</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Rereads the content of the referenced attributes to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Rereads the content of the referenced attributes to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The attributes are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="aaa516e7fdf10cd59ef893567c8d55d81"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_dx_register_hblank_effect_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa516e7fdf10cd59ef893567c8d55d81" class="m-doc-self">reload_values_ref</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Rereads the content of the referenced values to commit to the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
+            <p>Rereads the content of the referenced values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</p>
 <p>The values are not copied but referenced, so they should outlive <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a40afae66d4151b929c8ced66484d30a2"><div>
@@ -355,62 +343,6 @@
                   <td>Second <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to exchange the contents with.</td>
                 </tr>
               </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="afe021a385762ff4ba84b2c11f30519dd"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe021a385762ff4ba84b2c11f30519dd" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
-              const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span></span>
-            </h3>
-            <p>Equal operator.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">a</td>
-                  <td>First <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
-                </tr>
-                <tr>
-                  <td>b</td>
-                  <td>Second <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the first <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> is equal to the second one, otherwise <code>false</code>.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a30d67e56d32a572a6cb9daceee2e9de3"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a30d67e56d32a572a6cb9daceee2e9de3" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; a,
-              const <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a>&amp; b)</span></span>
-            </h3>
-            <p>Not equal operator.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">a</td>
-                  <td>First <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
-                </tr>
-                <tr>
-                  <td>b</td>
-                  <td>Second <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> to compare.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the first <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />dx_<wbr />register_<wbr />hblank_<wbr />effect_<wbr />ptr</a> is not equal to the second one, otherwise <code>false</code>.</td>
-                </tr>
-              </tfoot>
             </table>
           </div></section>
         </section>

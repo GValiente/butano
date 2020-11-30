@@ -14,8 +14,8 @@
  * @ingroup hblank_effect
  */
 
-#include "bn_affine_bg_pivot_position_high_hblank_effect_ptr.h"
-#include "bn_affine_bg_pivot_position_low_hblank_effect_ptr.h"
+#include "bn_affine_bg_ptr.h"
+#include "bn_hblank_effect_ptr.h"
 
 namespace bn
 {
@@ -28,7 +28,7 @@ namespace bn
  * @ingroup affine_bg
  * @ingroup hblank_effect
  */
-class affine_bg_pivot_position_hblank_effect_ptr
+class affine_bg_pivot_position_hblank_effect_ptr : public hblank_effect_ptr
 {
 
 public:
@@ -99,32 +99,11 @@ public:
             affine_bg_ptr bg, const span<const fixed>& deltas_ref);
 
     /**
-     * @brief Returns the internal id.
-     */
-    [[nodiscard]] int id() const
-    {
-        return _high_hblank_effect_ptr.id();
-    }
-
-    /**
-     * @brief Indicates if this H-Blank effect must be committed to the GBA or not.
-     */
-    [[nodiscard]] bool visible() const
-    {
-        return _high_hblank_effect_ptr.visible();
-    }
-
-    /**
-     * @brief Sets if this H-Blank effect must be committed to the GBA or not.
-     */
-    void set_visible(bool visible);
-
-    /**
      * @brief Returns the affine background modified by this H-Blank effect.
      */
     [[nodiscard]] const affine_bg_ptr& bg() const
     {
-        return _high_hblank_effect_ptr.bg();
+        return _bg;
     }
 
     /**
@@ -173,59 +152,10 @@ public:
         a.swap(b);
     }
 
-    /**
-     * @brief Equal operator.
-     * @param a First affine_bg_pivot_position_hblank_effect_ptr to compare.
-     * @param b Second affine_bg_pivot_position_hblank_effect_ptr to compare.
-     * @return `true` if the first affine_bg_pivot_position_hblank_effect_ptr is equal to the second one,
-     * otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator==(const affine_bg_pivot_position_hblank_effect_ptr& a,
-                                         const affine_bg_pivot_position_hblank_effect_ptr& b)
-    {
-        return a._high_hblank_effect_ptr == b._high_hblank_effect_ptr;
-    }
-
-    /**
-     * @brief Not equal operator.
-     * @param a First affine_bg_pivot_position_hblank_effect_ptr to compare.
-     * @param b Second affine_bg_pivot_position_hblank_effect_ptr to compare.
-     * @return `true` if the first affine_bg_pivot_position_hblank_effect_ptr is not equal to the second one,
-     * otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const affine_bg_pivot_position_hblank_effect_ptr& a,
-                                         const affine_bg_pivot_position_hblank_effect_ptr& b)
-    {
-        return ! (a == b);
-    }
-
 private:
-    affine_bg_pivot_position_high_hblank_effect_ptr _high_hblank_effect_ptr;
-    affine_bg_pivot_position_low_hblank_effect_ptr _low_hblank_effect_ptr;
+    affine_bg_ptr _bg;
 
-    affine_bg_pivot_position_hblank_effect_ptr(
-            affine_bg_pivot_position_high_hblank_effect_ptr&& high_hblank_effect_ptr,
-            affine_bg_pivot_position_low_hblank_effect_ptr&& low_hblank_effect_ptr);
-};
-
-
-/**
- * @brief Hash support for affine_bg_pivot_position_hblank_effect_ptr.
- *
- * @ingroup affine_bg
- * @ingroup hblank_effect
- * @ingroup functional
- */
-template<>
-struct hash<affine_bg_pivot_position_hblank_effect_ptr>
-{
-    /**
-     * @brief Returns the hash of the given affine_bg_pivot_position_hblank_effect_ptr.
-     */
-    [[nodiscard]] unsigned operator()(const affine_bg_pivot_position_hblank_effect_ptr& value) const
-    {
-        return make_hash(value.id());
-    }
+    affine_bg_pivot_position_hblank_effect_ptr(int id, affine_bg_ptr&& bg);
 };
 
 }

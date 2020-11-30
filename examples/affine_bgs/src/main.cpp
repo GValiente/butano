@@ -17,10 +17,8 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "bn_affine_bg_attributes_hblank_effect_ptr.h"
-#include "bn_affine_bg_pa_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_pb_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_dx_register_hblank_effect_ptr.h"
 #include "bn_affine_bg_pivot_position_hblank_effect_ptr.h"
+#include "bn_affine_bg_mat_attributes_hblank_effect_ptr.h"
 
 #include "bn_sprite_items_pivot.h"
 #include "bn_sprite_items_turtle.h"
@@ -444,12 +442,8 @@ namespace
             attributes[index] = base_attributes;
         }
 
-        bn::affine_bg_pa_register_hblank_effect_ptr pa_hblank_effect =
-                bn::affine_bg_pa_register_hblank_effect_ptr::create(blue_bg, attributes);
-        bn::affine_bg_pb_register_hblank_effect_ptr pb_hblank_effect =
-                bn::affine_bg_pb_register_hblank_effect_ptr::create(blue_bg, attributes);
-        bn::affine_bg_dx_register_hblank_effect_ptr dx_hblank_effect =
-                bn::affine_bg_dx_register_hblank_effect_ptr::create(blue_bg, attributes);
+        bn::affine_bg_mat_attributes_hblank_effect_ptr hblank_effect =
+                bn::affine_bg_mat_attributes_hblank_effect_ptr::create(blue_bg, attributes);
 
         bn::fixed base_degrees_angle;
 
@@ -473,14 +467,12 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed scale_inc = bn::degrees_sin(degrees_angle) / 4;
-                attributes[(bn::display::height() / 2) + index].set_horizontal_scale(1.5 + scale_inc);
-                attributes[(bn::display::height() / 2) - index - 1].set_horizontal_scale(1.5 + scale_inc);
+                bn::fixed rotation_inc = bn::degrees_sin(degrees_angle) * 4;
+                attributes[(bn::display::height() / 2) + index].set_rotation_angle(45 + rotation_inc);
+                attributes[(bn::display::height() / 2) - index - 1].set_rotation_angle(45 + rotation_inc);
             }
 
-            pa_hblank_effect.reload_attributes_ref();
-            pb_hblank_effect.reload_attributes_ref();
-            dx_hblank_effect.reload_attributes_ref();
+            hblank_effect.reload_attributes_ref();
             info.update();
             bn::core::update();
         }

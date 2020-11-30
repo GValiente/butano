@@ -59,6 +59,7 @@
 #include "bn_affine_bg_pd_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_dx_register_hblank_effect_ptr.cpp.h"
 #include "bn_affine_bg_dy_register_hblank_effect_ptr.cpp.h"
+#include "bn_affine_bg_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pa_register_hblank_effect_ptr.cpp.h"
 #include "bn_sprite_affine_mat_pb_register_hblank_effect_ptr.cpp.h"

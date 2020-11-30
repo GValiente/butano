@@ -44,15 +44,18 @@ void _intr()
 
     entries* entries_ptr = data.entries_ptr;
     uint16_entry* uint16_entries = entries_ptr->uint16_entries;
-    uint32_entry* uint32_entries = entries_ptr->uint32_entries;
+    int uint16_entries_count = entries_ptr->uint16_entries_count;
 
-    for(int index = 0, limit = entries_ptr->uint16_entries_count; index < limit; ++index)
+    for(int index = 0; index < uint16_entries_count; ++index)
     {
         uint16_entry& entry = uint16_entries[index];
         *entry.dest = entry.src[vcount];
     }
 
-    for(int index = 0, limit = entries_ptr->uint32_entries_count; index < limit; ++index)
+    uint32_entry* uint32_entries = entries_ptr->uint32_entries;
+    int uint32_entries_count = entries_ptr->uint32_entries_count;
+
+    for(int index = 0; index < uint32_entries_count; ++index)
     {
         uint32_entry& entry = uint32_entries[index];
         *entry.dest = entry.src[vcount];

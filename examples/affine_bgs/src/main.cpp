@@ -9,6 +9,7 @@
 #include "bn_display.h"
 #include "bn_blending.h"
 #include "bn_bgs_mosaic.h"
+#include "bn_rect_window.h"
 #include "bn_bg_palettes.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_builder.h"
@@ -434,6 +435,12 @@ namespace
         info info("Affine BGs matrix H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+
+        bn::rect_window internal_window = bn::rect_window::internal();
+        internal_window.set_top_left(-(bn::display::height() / 2) + 2, -1000);
+        internal_window.set_bottom_right((bn::display::height() / 2) - 2, 1000);
+        bn::window::outside().set_show_bg(blue_bg, false);
+
         const bn::affine_bg_mat_attributes& base_attributes = blue_bg.mat_attributes();
         bn::affine_bg_mat_attributes attributes[bn::display::height()];
 

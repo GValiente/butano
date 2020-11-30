@@ -1411,6 +1411,9 @@ void commit_big_maps()
                 }
             }
 
+            new_map_x = min(new_map_x, (item->half_dimensions.width() / 4) - 32);
+            new_map_y = min(new_map_y, (item->half_dimensions.height() / 4) - 22);
+
             int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
             bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
             bool commit_big_map = full_commit_big_map;

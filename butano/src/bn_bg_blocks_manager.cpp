@@ -2231,6 +2231,9 @@ void update_regular_map_col(int id, int x, int y)
         return;
     }
 
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
+
     int map_width = item.width;
     source_data += ((y * map_width) + x);
 
@@ -2326,6 +2329,9 @@ void update_affine_map_col(int id, int x, int y)
     {
         return;
     }
+
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
 
     int map_width = item.width;
     source_data += ((y * map_width) + x);
@@ -2440,6 +2446,9 @@ void update_regular_map_row(int id, int x, int y)
         return;
     }
 
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
+
     source_data += ((y * item.width) + x);
 
     int x_separator = x & 31;
@@ -2525,6 +2534,9 @@ void update_affine_map_row(int id, int x, int y)
         return;
     }
 
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
+
     source_data += ((y * item.width) + x);
 
     int x_separator = x & 31;
@@ -2572,6 +2584,9 @@ void set_regular_map_position(int id, int x, int y)
     {
         return;
     }
+
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
 
     uint16_t* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
@@ -2681,6 +2696,9 @@ void set_affine_map_position(int id, int x, int y)
     {
         return;
     }
+
+    BN_ASSERT(x >= 0 && x < item.width, "Invalid x: ", x, " - ", item.width);
+    BN_ASSERT(y >= 0 && y < item.height, "Invalid y: ", y, " - ", item.height);
 
     auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     int map_width = item.width;

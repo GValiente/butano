@@ -179,6 +179,20 @@ namespace bn
 
         return fixed::from_data(sin_lut[(lut_angle + 128) & 0x1FF]);
     }
+
+    /**
+     * @brief Calculates the reciprocal of a value using a LUT.
+     * @param lut_value Value in the range [1, 1024].
+     * @return Reciprocal of the given value (1 / value).
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed lut_reciprocal(int lut_value)
+    {
+        BN_ASSERT(lut_value >= 1 && lut_value <= 1024, "Value must be in the range [1, 1024]: ", lut_value);
+
+        return reciprocal_lut[lut_value];
+    }
 }
 
 #endif

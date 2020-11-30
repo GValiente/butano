@@ -1042,6 +1042,7 @@
  * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item.
  * * bn::affine_mat_scale_lut replaced with bn::reciprocal_lut.
  * * Floating point methods of bn::fixed_t are only allowed at build time.
+ * * bn::lut_reciprocal() added.
  * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.
  *
  *

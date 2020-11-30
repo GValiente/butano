@@ -38,7 +38,7 @@ namespace bn
 }
 
 /**
- * @brief LUT used to invert scale values in an affine transformation matrix.
+ * @brief LUT used to calculate the reciprocal of the given value (1 / value).
  *
  * @ingroup math
  */

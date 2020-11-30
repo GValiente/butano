@@ -27,15 +27,11 @@ namespace
     constexpr const int open_frames = 50;
     constexpr const int close_frames = 130;
 
-    [[nodiscard]] constexpr bn::array<bn::fixed, bn::display::height()> _create_wave_hblank_effect_deltas()
-    {
+    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hblank_effect_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;
-    }
-
-    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hblank_effect_deltas =
-            _create_wave_hblank_effect_deltas();
+    }();
 }
 
 void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const bn::camera_ptr& camera, hero& hero,

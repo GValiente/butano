@@ -73,8 +73,7 @@ namespace
         return result;
     }
 
-    [[nodiscard]] constexpr bn::array<bn::fixed, bn::display::height()> _create_butano_character_hblank_effect_deltas()
-    {
+    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         int start = 64;
 
@@ -84,14 +83,9 @@ namespace
         }
 
         return result;
-    }
+    }();
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas =
-            _create_butano_character_hblank_effect_deltas();
-
-    [[nodiscard]] constexpr bn::array<bn::affine_mat_attributes, bn::display::height()>
-    _create_fighter_character_hblank_effect_attributes()
-    {
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 
@@ -102,10 +96,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes =
-            _create_fighter_character_hblank_effect_attributes();
+    }();
 }
 
 title::title(const status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background) :

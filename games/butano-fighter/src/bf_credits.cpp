@@ -233,8 +233,7 @@ namespace
         { &bn::sprite_items::stage_4_meteors_small, 2, 2, 2, 2 },
     };
 
-    [[nodiscard]] constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> _create_hblank_effect_attributes()
-    {
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
 
         for(int index = 0; index < bn::display::height(); ++index)
@@ -246,10 +245,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes =
-            _create_hblank_effect_attributes();
+    }();
 }
 
 credits::credits(bn::sprite_text_generator& text_generator, butano_background& butano_background) :

@@ -19,8 +19,7 @@ namespace
 {
     constexpr const int show_hide_frames = 10;
 
-    [[nodiscard]] constexpr bn::array<bn::color, bn::display::height()> _create_palette_hblank_effect_colors()
-    {
+    constexpr const bn::array<bn::color, bn::display::height()> palette_hblank_effect_colors = []{
         bn::array<bn::color, bn::display::height()> result;
         bn::color color(14, 0, 0);
         int redInc = 16;
@@ -54,10 +53,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::color, bn::display::height()> palette_hblank_effect_colors =
-            _create_palette_hblank_effect_colors();
+    }();
 }
 
 void butano_background::show(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera)

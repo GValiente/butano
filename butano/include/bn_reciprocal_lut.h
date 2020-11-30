@@ -24,7 +24,7 @@ namespace bn
  *
  * @ingroup math
  */
-constexpr const array<fixed, 1025> reciprocal_lut = []() -> auto {
+constexpr const array<fixed, 1025> reciprocal_lut = []{
     array<fixed, 1025> result;
     int one = fixed(1).data() * fixed::scale();
 

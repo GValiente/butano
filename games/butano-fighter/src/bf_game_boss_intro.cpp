@@ -32,8 +32,7 @@ namespace
         return builder.release_build();
     }
 
-    [[nodiscard]] constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> _create_hblank_effect_attributes()
-    {
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes = []{
         bn::affine_mat_attributes base_attributes;
         base_attributes.set_scale(0.001);
 
@@ -54,10 +53,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes =
-            _create_hblank_effect_attributes();
+    }();
 }
 
 void boss_intro::enable()

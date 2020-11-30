@@ -15,6 +15,7 @@
 
 #include "bn_fixed.h"
 #include "bn_sin_lut.h"
+#include "bn_reciprocal_lut.h"
 #include "bn_rule_of_three_approximation.h"
 
 /// @cond DO_NOT_DOCUMENT

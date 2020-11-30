@@ -2068,10 +2068,6 @@
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="group__affine__mat.html#ga4c50bfc9853750732dc393e0bd89eef6" class="m-doc">create_affine_mat_scale_lut</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;uint16_t, 1025&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns the LUT used to invert scale values in an affine transformation matrix.</dd>
-            <dt>
               <div class="m-doc-template">template&lt;int Bytes&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__memory.html#ga6886f0fcbb7a746ce13e7929cc43f65b" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const void* pointer) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -2196,6 +2192,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga312ac8ea549b0f7666489a2070c92985" class="m-doc">power_of_two</a>(</span><span class="m-doc-wrap">Type value) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if the given value is a power of two or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga8f11a21a0bafc54dd458ad9e06c06a59" class="m-doc">create_reciprocal_lut</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;<a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a>, 1025&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the LUT used to calculate the reciprocal of the given value (1 / value).</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__sprite.html#ga3b8b5bafc20468b4d8a7a53ab047e241" class="m-doc">create_sprite_animate_action_once</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
@@ -2364,13 +2364,13 @@
           <h2><a href="#var-members">Variables</a></h2>
           <dl class="m-doc">
             <dt>
-              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;uint16_t, 1025&gt; <a href="group__affine__mat.html#ga4794bfc08fa2f1dc923426b8fd560006" class="m-doc">affine_mat_scale_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
-            </dt>
-            <dd>LUT used to invert scale values in an affine transformation matrix.</dd>
-            <dt>
               const <a href="classbn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a> <a href="#a850f005ae3a402328e48dfb60e5de6a4" class="m-doc">nullopt</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
             <dd>Constant of type <a href="classbn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a> used to indicate an optional type with uninitialized state.</dd>
+            <dt>
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;<a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a>, 1025&gt; <a href="group__math.html#gad79a3d97fe687dfcb7c626b2ec3e7e19" class="m-doc">reciprocal_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>LUT used to invert scale values in an affine transformation matrix.</dd>
             <dt>
               const int16_t <a href="group__math.html#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>

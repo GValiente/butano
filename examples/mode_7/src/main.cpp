@@ -19,8 +19,6 @@
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
-#include "../../butano/hw/include/bn_hw_tonc.h"
-
 namespace
 {
     struct camera
@@ -107,7 +105,8 @@ namespace
 
         for(int index = 0; index < bn::display::height(); ++index)
         {
-            int lam = camera_y * lu_div(index) >> 12;
+            int reciprocal = bn::reciprocal_lut[index].data() >> 8;
+            int lam = camera_y * reciprocal >> 12;
             int lcf = lam * camera_cos >> 8;
             int lsf = lam * camera_sin >> 8;
 

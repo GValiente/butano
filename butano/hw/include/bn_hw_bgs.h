@@ -210,7 +210,7 @@ namespace bn::hw::bgs
         REG_BG_AFFINE[3] = bg3.affine;
     }
 
-    [[nodiscard]] inline void stop()
+    inline void stop()
     {
         REG_BG_AFFINE[2] = handle().affine;
     }

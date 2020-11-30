@@ -14,7 +14,6 @@
  */
 
 #include "bn_math.h"
-#include "bn_affine_mat_scale_lut.h"
 
 namespace bn
 {
@@ -322,9 +321,10 @@ private:
         fixed_t<8> scale_8(scale);
         int scale_8_data = scale_8.data();
 
-        if(scale_8_data < affine_mat_scale_lut.size())
+        if(scale_8_data < reciprocal_lut.size())
         {
-            return affine_mat_scale_lut.data()[scale_8_data];
+            fixed reciprocal = reciprocal_lut[scale_8_data];
+            return uint16_t(reciprocal.data() >> 8);
         }
 
         int one = fixed_t<8>(1).data() * fixed_t<8>::scale();

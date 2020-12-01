@@ -23,9 +23,9 @@ namespace
 {
     struct camera
     {
-        bn::fixed x = 400;
+        bn::fixed x = 440;
         bn::fixed y = 128;
-        bn::fixed z = 280;
+        bn::fixed z = 320;
         int phi = 10;
         int cos = 0;
         int sin = 0;

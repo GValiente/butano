@@ -22,7 +22,9 @@ extern "C"
     {
         BN_ERROR("Pure virtual function call");
 
-        for(;;);
+        while(true)
+        {
+        }
     }
 
     // Provides a trap for when a division by 0 is detected:
@@ -31,6 +33,8 @@ extern "C"
     {
         BN_ERROR("Division by zero detected");
 
-        for(;;);
+        while(true)
+        {
+        }
     }
 }

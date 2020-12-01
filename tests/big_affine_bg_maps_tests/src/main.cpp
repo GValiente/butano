@@ -68,7 +68,7 @@ int main()
 
     while(true)
     {
-        big_map_scene("512x1024 affine BG", bn::affine_bg_items::big_map, text_generator);
+        big_map_scene("4096x4096 affine BG", bn::affine_bg_items::big_map, text_generator);
         bn::core::update();
     }
 }

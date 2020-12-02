@@ -12,7 +12,7 @@ void load_attributes(bn::affine_bg_mat_attributes base_attributes, bn::affine_bg
     for(int index = 0; index < bn::display::height(); ++index)
     {
         base_attributes.set_scale(horizontal_scale);
-        horizontal_scale += 0.002;
+        horizontal_scale += 0.003;
         attributes[index] = base_attributes;
     }
 }

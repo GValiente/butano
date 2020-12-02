@@ -839,6 +839,12 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
+ * <td> **World map**
+ *
+ * @image html examples_world_map.png
+ *
+ * Showcase of a 4096x4096 world map with a perspective effect.
+ *
  * </table>
  */
 

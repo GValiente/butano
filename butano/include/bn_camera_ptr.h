@@ -183,8 +183,8 @@ public:
 private:
     int8_t _id;
 
-    explicit camera_ptr(int8_t id) :
-        _id(id)
+    explicit camera_ptr(int id) :
+        _id(int8_t(id))
     {
     }
 

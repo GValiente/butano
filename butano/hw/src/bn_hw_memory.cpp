@@ -20,7 +20,7 @@ int used_static_iwram()
 {
     auto iwram_start = reinterpret_cast<uint8_t*>(&__iwram_start__);
     auto iwram_end = reinterpret_cast<uint8_t*>(&__fini_array_end);
-    int result = iwram_end - iwram_start;
+    ptrdiff_t result = iwram_end - iwram_start;
     BN_ASSERT(result >= 0, "Invalid used static iwram: ", result);
 
     return result;
@@ -30,7 +30,7 @@ int used_static_ewram()
 {
     auto ewram_start = reinterpret_cast<uint8_t*>(&__ewram_start);
     auto ewram_end = reinterpret_cast<uint8_t*>(&__ewram_end);
-    int result = ewram_end - ewram_start;
+    ptrdiff_t result = ewram_end - ewram_start;
     BN_ASSERT(result >= 0, "Invalid used static ewram: ", result);
 
     return result;

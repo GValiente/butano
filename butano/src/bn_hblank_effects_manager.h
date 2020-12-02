@@ -65,9 +65,10 @@ namespace bn::hblank_effects_manager
 
     void disable();
 
-    [[nodiscard]] int create(const void* values_ptr, int values_count, int target_id, handler_type handler);
+    [[nodiscard]] int create(const void* values_ptr, int values_count, intptr_t target_id, handler_type handler);
 
-    [[nodiscard]] int create_optional(const void* values_ptr, int values_count, int target_id, handler_type handler);
+    [[nodiscard]] int create_optional(const void* values_ptr, int values_count, intptr_t target_id,
+                                      handler_type handler);
 
     void increase_usages(int id);
 

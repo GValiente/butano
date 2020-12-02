@@ -65,7 +65,7 @@ public:
     [[nodiscard]] static sprites_manager_item& affine_mat_attach_node_item(
             sprite_affine_mat_attach_node_type& attach_node)
     {
-        auto item_address = reinterpret_cast<int>(&attach_node);
+        auto item_address = reinterpret_cast<intptr_t>(&attach_node);
         item_address -= sizeof(intrusive_list_node_type);
 
         auto item = reinterpret_cast<sprites_manager_item*>(item_address);

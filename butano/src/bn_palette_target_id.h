@@ -20,7 +20,7 @@ struct palette_target_id
             int16_t palette_id;
             int16_t final_color_index;
         } params;
-        int target_id;
+        intptr_t target_id;
     };
 
     palette_target_id(int palette_id, int color_index) :

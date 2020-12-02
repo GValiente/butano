@@ -17,7 +17,7 @@ namespace bn
 affine_bg_pb_register_hbe_ptr affine_bg_pb_register_hbe_ptr::create(
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                                             hblank_effects_manager::handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES);
     return affine_bg_pb_register_hbe_ptr(id, true, move(bg));
 }
@@ -25,7 +25,7 @@ affine_bg_pb_register_hbe_ptr affine_bg_pb_register_hbe_ptr::create(
 affine_bg_pb_register_hbe_ptr affine_bg_pb_register_hbe_ptr::create(
         affine_bg_ptr bg, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::create(values_ref.data(), values_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create(values_ref.data(), values_ref.size(), intptr_t(bg.handle()),
                                             hblank_effects_manager::handler_type::AFFINE_BG_PB_REGISTER_VALUES);
     return affine_bg_pb_register_hbe_ptr(id, false, move(bg));
 }
@@ -33,7 +33,7 @@ affine_bg_pb_register_hbe_ptr affine_bg_pb_register_hbe_ptr::create(
 optional<affine_bg_pb_register_hbe_ptr> affine_bg_pb_register_hbe_ptr::create_optional(
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                                                      hblank_effects_manager::handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES);
     optional<affine_bg_pb_register_hbe_ptr> result;
 
@@ -48,7 +48,7 @@ optional<affine_bg_pb_register_hbe_ptr> affine_bg_pb_register_hbe_ptr::create_op
 optional<affine_bg_pb_register_hbe_ptr> affine_bg_pb_register_hbe_ptr::create_optional(
         affine_bg_ptr bg, const span<const int16_t>& values_ref)
 {
-    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(values_ref.data(), values_ref.size(), intptr_t(bg.handle()),
                                                      hblank_effects_manager::handler_type::AFFINE_BG_PB_REGISTER_VALUES);
     optional<affine_bg_pb_register_hbe_ptr> result;
 

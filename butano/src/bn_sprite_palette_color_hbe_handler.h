@@ -19,16 +19,16 @@ class sprite_palette_color_hbe_handler
 {
 
 public:
-    static void setup_target(int, iany&)
+    static void setup_target(intptr_t, iany&)
     {
     }
 
-    [[nodiscard]] static bool target_visible(int)
+    [[nodiscard]] static bool target_visible(intptr_t)
     {
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(int target_id, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, iany&)
     {
         if(optional<palettes_bank::commit_data> commit_data =
                 palettes_manager::sprite_palettes_bank().retrieve_commit_data())
@@ -43,13 +43,13 @@ public:
         return false;
     }
 
-    [[nodiscard]] static uint16_t* output_register(int target_id)
+    [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         palette_target_id palette_target_id(target_id);
         return hw::palettes::sprite_color_register(palette_target_id.params.final_color_index);
     }
 
-    static void write_output_values(int target_id, const iany&, const void* input_values_ptr,
+    static void write_output_values(intptr_t target_id, const iany&, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
         palette_target_id palette_target_id(target_id);
@@ -58,11 +58,11 @@ public:
                     palette_id, reinterpret_cast<const color*>(input_values_ptr), output_values_ptr);
     }
 
-    static void show(int)
+    static void show(intptr_t)
     {
     }
 
-    static void cleanup(int target_id)
+    static void cleanup(intptr_t target_id)
     {
         palette_target_id palette_target_id(target_id);
         int palette_id = palette_target_id.params.palette_id;

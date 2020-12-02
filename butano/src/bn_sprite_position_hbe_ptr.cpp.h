@@ -17,7 +17,7 @@ namespace bn
 sprite_position_hbe_ptr sprite_position_hbe_ptr::create_horizontal(
         sprite_ptr sprite, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), intptr_t(sprite.handle()),
                                             hblank_effects_manager::handler_type::SPRITE_HORIZONTAL_POSITION);
     return sprite_position_hbe_ptr(id, move(sprite));
 }
@@ -25,7 +25,7 @@ sprite_position_hbe_ptr sprite_position_hbe_ptr::create_horizontal(
 sprite_position_hbe_ptr sprite_position_hbe_ptr::create_vertical(
         sprite_ptr sprite, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), intptr_t(sprite.handle()),
                                             hblank_effects_manager::handler_type::SPRITE_VERTICAL_POSITION);
     return sprite_position_hbe_ptr(id, move(sprite));
 }
@@ -33,7 +33,7 @@ sprite_position_hbe_ptr sprite_position_hbe_ptr::create_vertical(
 optional<sprite_position_hbe_ptr> sprite_position_hbe_ptr::create_horizontal_optional(
         sprite_ptr sprite, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), intptr_t(sprite.handle()),
                                                      hblank_effects_manager::handler_type::SPRITE_HORIZONTAL_POSITION);
     optional<sprite_position_hbe_ptr> result;
 
@@ -48,7 +48,7 @@ optional<sprite_position_hbe_ptr> sprite_position_hbe_ptr::create_horizontal_opt
 optional<sprite_position_hbe_ptr> sprite_position_hbe_ptr::create_vertical_optional(
         sprite_ptr sprite, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), intptr_t(sprite.handle()),
                                                      hblank_effects_manager::handler_type::SPRITE_VERTICAL_POSITION);
     optional<sprite_position_hbe_ptr> result;
 

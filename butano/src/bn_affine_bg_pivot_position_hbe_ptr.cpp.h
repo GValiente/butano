@@ -18,7 +18,7 @@ affine_bg_pivot_position_hbe_ptr affine_bg_pivot_position_hbe_ptr::create_horizo
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+                deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION);
 
     return affine_bg_pivot_position_hbe_ptr(id, move(bg));
@@ -28,7 +28,7 @@ affine_bg_pivot_position_hbe_ptr affine_bg_pivot_position_hbe_ptr::create_vertic
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+                deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION);
 
     return affine_bg_pivot_position_hbe_ptr(id, move(bg));
@@ -38,7 +38,7 @@ optional<affine_bg_pivot_position_hbe_ptr> affine_bg_pivot_position_hbe_ptr::cre
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create_optional(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+                deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION);
 
     optional<affine_bg_pivot_position_hbe_ptr> result;
@@ -55,7 +55,7 @@ optional<affine_bg_pivot_position_hbe_ptr> affine_bg_pivot_position_hbe_ptr::cre
         affine_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
     int id = hblank_effects_manager::create_optional(
-                deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+                deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION);
 
     optional<affine_bg_pivot_position_hbe_ptr> result;

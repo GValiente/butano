@@ -17,7 +17,7 @@ namespace bn
 regular_bg_attributes_hbe_ptr regular_bg_attributes_hbe_ptr::create(
         regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                                             hblank_effects_manager::handler_type::REGULAR_BG_ATTRIBUTES);
     return regular_bg_attributes_hbe_ptr(id, move(bg));
 }
@@ -25,7 +25,7 @@ regular_bg_attributes_hbe_ptr regular_bg_attributes_hbe_ptr::create(
 optional<regular_bg_attributes_hbe_ptr> regular_bg_attributes_hbe_ptr::create_optional(
         regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                                                      hblank_effects_manager::handler_type::REGULAR_BG_ATTRIBUTES);
     optional<regular_bg_attributes_hbe_ptr> result;
 

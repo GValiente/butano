@@ -17,18 +17,18 @@ class sprite_vertical_position_hbe_handler
 {
 
 public:
-    static void setup_target(int, iany& target_last_value)
+    static void setup_target(intptr_t, iany& target_last_value)
     {
         target_last_value = 0;
     }
 
-    [[nodiscard]] static bool target_visible(int target_id)
+    [[nodiscard]] static bool target_visible(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
         return sprites_manager::hw_id(handle).has_value();
     }
 
-    [[nodiscard]] static bool target_updated(int target_id, iany& target_last_value)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
     {
         int& last_value = target_last_value.value<int>();
         auto handle = reinterpret_cast<void*>(target_id);
@@ -38,13 +38,13 @@ public:
         return updated;
     }
 
-    [[nodiscard]] static uint16_t* output_register(int target_id)
+    [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
         return hw::sprites::first_attributes_register(*sprites_manager::hw_id(handle));
     }
 
-    static void write_output_values(int target_id, const iany& target_last_value, const void* input_values_ptr,
+    static void write_output_values(intptr_t target_id, const iany& target_last_value, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
         auto handle = reinterpret_cast<void*>(target_id);
@@ -54,11 +54,11 @@ public:
                                                                output_values_ptr);
     }
 
-    static void show(int)
+    static void show(intptr_t)
     {
     }
 
-    static void cleanup(int target_id)
+    static void cleanup(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
         sprites_manager::reload(handle);

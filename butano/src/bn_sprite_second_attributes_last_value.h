@@ -28,7 +28,7 @@ public:
     {
     }
 
-    explicit sprite_second_attributes_last_value(int target_id) :
+    explicit sprite_second_attributes_last_value(intptr_t target_id) :
         sprite_second_attributes_last_value(reinterpret_cast<void*>(target_id))
     {
     }

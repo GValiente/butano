@@ -17,36 +17,36 @@ class green_swap_hbe_handler
 {
 
 public:
-    static void setup_target(int, iany&)
+    static void setup_target(intptr_t, iany&)
     {
     }
 
-    [[nodiscard]] static bool target_visible(int)
+    [[nodiscard]] static bool target_visible(intptr_t)
     {
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(int, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
         return false;
     }
 
-    [[nodiscard]] static uint16_t* output_register(int)
+    [[nodiscard]] static uint16_t* output_register(intptr_t)
     {
         return hw::display::green_swap_register();
     }
 
-    static void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
+    static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
         auto states_ptr = reinterpret_cast<const bool*>(input_values_ptr);
         display_manager::fill_green_swap_hblank_effect_states(states_ptr, output_values_ptr);
     }
 
-    static void show(int)
+    static void show(intptr_t)
     {
     }
 
-    static void cleanup(int)
+    static void cleanup(intptr_t)
     {
         display_manager::reload_green_swap();
     }

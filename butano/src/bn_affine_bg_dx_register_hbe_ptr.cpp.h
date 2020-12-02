@@ -18,7 +18,7 @@ affine_bg_dx_register_hbe_ptr affine_bg_dx_register_hbe_ptr::create(
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create(
-                attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+                attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES);
 
     return affine_bg_dx_register_hbe_ptr(id, true, move(bg));
@@ -28,7 +28,7 @@ affine_bg_dx_register_hbe_ptr affine_bg_dx_register_hbe_ptr::create(
         affine_bg_ptr bg, const span<const int>& values_ref)
 {
     int id = hblank_effects_manager::create(
-                values_ref.data(), values_ref.size(), int(bg.handle()),
+                values_ref.data(), values_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_VALUES);
 
     return affine_bg_dx_register_hbe_ptr(id, false, move(bg));
@@ -38,7 +38,7 @@ optional<affine_bg_dx_register_hbe_ptr> affine_bg_dx_register_hbe_ptr::create_op
         affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create_optional(
-                attributes_ref.data(), attributes_ref.size(), int(bg.handle()),
+                attributes_ref.data(), attributes_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES);
 
     optional<affine_bg_dx_register_hbe_ptr> result;
@@ -55,7 +55,7 @@ optional<affine_bg_dx_register_hbe_ptr> affine_bg_dx_register_hbe_ptr::create_op
         affine_bg_ptr bg, const span<const int>& values_ref)
 {
     int id = hblank_effects_manager::create_optional(
-                values_ref.data(), values_ref.size(), int(bg.handle()),
+                values_ref.data(), values_ref.size(), intptr_t(bg.handle()),
                 hblank_effects_manager::handler_type::AFFINE_BG_DX_REGISTER_VALUES);
 
     optional<affine_bg_dx_register_hbe_ptr> result;

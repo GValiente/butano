@@ -129,7 +129,7 @@ protected:
     [[nodiscard]] bool _contains(const Type& value) const
     {
         auto ptr = reinterpret_cast<const char*>(&value);
-        size_type index = ptr - _buffer;
+        ptrdiff_t index = ptr - _buffer;
         return index >= 0 && index <= (MaxElementSize * _max_size) - MaxElementSize;
     }
 

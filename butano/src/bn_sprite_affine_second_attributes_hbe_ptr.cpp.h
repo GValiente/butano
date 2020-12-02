@@ -17,7 +17,7 @@ namespace bn
 sprite_affine_second_attributes_hbe_ptr sprite_affine_second_attributes_hbe_ptr::create(
         sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), intptr_t(sprite.handle()),
                                             hblank_effects_manager::handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES);
     return sprite_affine_second_attributes_hbe_ptr(id, move(sprite));
 }
@@ -25,7 +25,7 @@ sprite_affine_second_attributes_hbe_ptr sprite_affine_second_attributes_hbe_ptr:
 optional<sprite_affine_second_attributes_hbe_ptr> sprite_affine_second_attributes_hbe_ptr::create_optional(
         sprite_ptr sprite, const span<const sprite_affine_second_attributes>& attributes_ref)
 {
-    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), int(sprite.handle()),
+    int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), intptr_t(sprite.handle()),
                                                      hblank_effects_manager::handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES);
     optional<sprite_affine_second_attributes_hbe_ptr> result;
 

@@ -17,7 +17,7 @@ namespace bn
 regular_bg_position_hbe_ptr regular_bg_position_hbe_ptr::create_horizontal(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                                             hblank_effects_manager::handler_type::REGULAR_BG_HORIZONTAL_POSITION);
     return regular_bg_position_hbe_ptr(id, move(bg));
 }
@@ -25,7 +25,7 @@ regular_bg_position_hbe_ptr regular_bg_position_hbe_ptr::create_horizontal(
 regular_bg_position_hbe_ptr regular_bg_position_hbe_ptr::create_vertical(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create(deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                                             hblank_effects_manager::handler_type::REGULAR_BG_VERTICAL_POSITION);
     return regular_bg_position_hbe_ptr(id, move(bg));
 }
@@ -33,7 +33,7 @@ regular_bg_position_hbe_ptr regular_bg_position_hbe_ptr::create_vertical(
 optional<regular_bg_position_hbe_ptr> regular_bg_position_hbe_ptr::create_horizontal_optional(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                                                      hblank_effects_manager::handler_type::REGULAR_BG_HORIZONTAL_POSITION);
     optional<regular_bg_position_hbe_ptr> result;
 
@@ -48,7 +48,7 @@ optional<regular_bg_position_hbe_ptr> regular_bg_position_hbe_ptr::create_horizo
 optional<regular_bg_position_hbe_ptr> regular_bg_position_hbe_ptr::create_vertical_optional(
         regular_bg_ptr bg, const span<const fixed>& deltas_ref)
 {
-    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), int(bg.handle()),
+    int id = hblank_effects_manager::create_optional(deltas_ref.data(), deltas_ref.size(), intptr_t(bg.handle()),
                                                      hblank_effects_manager::handler_type::REGULAR_BG_VERTICAL_POSITION);
     optional<regular_bg_position_hbe_ptr> result;
 

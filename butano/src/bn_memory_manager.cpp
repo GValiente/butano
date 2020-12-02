@@ -159,7 +159,7 @@ void* ewram_alloc(int bytes)
     item.used = true;
     data.free_items.erase(free_items_it);
 
-    auto items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
+    items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
     *items_it_ptr = items_it;
     data.free_bytes_count -= bytes;
     return items_it_ptr + 1;
@@ -169,7 +169,7 @@ void ewram_free(void* ptr)
 {
     if(ptr)
     {
-        auto items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
+        items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
         items_iterator items_it = *items_it_ptr;
         item_type& item = *items_it;
         BN_ASSERT(item.used, "Item is not used: ", item.size);

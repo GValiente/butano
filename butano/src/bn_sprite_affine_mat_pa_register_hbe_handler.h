@@ -19,27 +19,27 @@ class sprite_affine_mat_pa_register_attributes_hbe_handler
 {
 
 public:
-    static void setup_target(int, iany&)
+    static void setup_target(intptr_t, iany&)
     {
     }
 
-    [[nodiscard]] static bool target_visible(int)
+    [[nodiscard]] static bool target_visible(intptr_t)
     {
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(int, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
         return false;
     }
 
-    [[nodiscard]] static uint16_t* output_register(int target_id)
+    [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         int16_t* result = hw::sprite_affine_mats::pa_register(target_id);
         return reinterpret_cast<uint16_t*>(result);
     }
 
-    static void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
+    static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
         auto attributes_ptr = reinterpret_cast<const affine_mat_attributes*>(input_values_ptr);
 
@@ -49,11 +49,11 @@ public:
         }
     }
 
-    static void show(int)
+    static void show(intptr_t)
     {
     }
 
-    static void cleanup(int target_id)
+    static void cleanup(intptr_t target_id)
     {
         sprite_affine_mats_manager::reload(target_id);
     }
@@ -64,38 +64,38 @@ class sprite_affine_mat_pa_register_values_hbe_handler
 {
 
 public:
-    static void setup_target(int, iany&)
+    static void setup_target(intptr_t, iany&)
     {
     }
 
-    [[nodiscard]] static bool target_visible(int)
+    [[nodiscard]] static bool target_visible(intptr_t)
     {
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(int, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
         return false;
     }
 
-    [[nodiscard]] static uint16_t* output_register(int target_id)
+    [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         int16_t* result = hw::sprite_affine_mats::pa_register(target_id);
         return reinterpret_cast<uint16_t*>(result);
     }
 
-    static void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
+    static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
         auto int_source = static_cast<const unsigned*>(input_values_ptr);
         auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
         memory::copy(*int_source, display::height() / 2, *int_destination);
     }
 
-    static void show(int)
+    static void show(intptr_t)
     {
     }
 
-    static void cleanup(int target_id)
+    static void cleanup(intptr_t target_id)
     {
         sprite_affine_mats_manager::reload(target_id);
     }

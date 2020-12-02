@@ -90,7 +90,7 @@ namespace
     public:
         last_value_type target_last_value;
         const void* values_ptr = nullptr;
-        int target_id = 0;
+        intptr_t target_id = 0;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
         alignas(int) uint16_t output_values_a[display::height() * 2] = {};
@@ -1015,7 +1015,7 @@ namespace
         }
     }
 
-    [[nodiscard]] int _create(const void* values_ptr, int target_id, handler_type handler)
+    [[nodiscard]] int _create(const void* values_ptr, intptr_t target_id, handler_type handler)
     {
         int item_index = external_data.free_item_indexes.back();
         external_data.free_item_indexes.pop_back();
@@ -1075,7 +1075,7 @@ void disable()
     }
 }
 
-int create(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
+int create(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id, handler_type handler)
 {
     BN_ASSERT(values_ptr, "Values ptr is null");
     BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
@@ -1085,7 +1085,8 @@ int create(const void* values_ptr, [[maybe_unused]] int values_count, int target
     return _create(values_ptr, target_id, handler);
 }
 
-int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, int target_id, handler_type handler)
+int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id,
+                    handler_type handler)
 {
     BN_ASSERT(values_ptr, "Values ptr is null");
     BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");

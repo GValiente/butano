@@ -363,7 +363,7 @@ void how_to_play::entry_type::animate()
     bomb_halo_palette.set_fade_color(bn::color(31, 31, 31));
     result.sprites.push_back(bn::move(bomb_halo_sprite));
     result.sprites.push_back(bn::sprite_items::hero_bomb_icon.create_sprite(bomb_position));
-    result.palette_fade_action.emplace(bn::move(bomb_halo_palette), 15, 0.125);
+    result.palette_fade_action.emplace(bn::move(bomb_halo_palette), 15, bn::fixed(0.125));
 
     result.setup(-right_move_x, 24);
     return result;

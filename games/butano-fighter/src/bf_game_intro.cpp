@@ -243,7 +243,8 @@ void intro::update(const butano_background& butano_background)
 
             if(actions_count < sprites_count)
             {
-                _text_sprite_vertical_scale_actions.emplace_back(_text_sprites[actions_count], scale_frames / 2, 0.01);
+                _text_sprite_vertical_scale_actions.emplace_back(
+                            _text_sprites[actions_count], scale_frames / 2, bn::fixed(0.01));
             }
         }
 
@@ -251,7 +252,7 @@ void intro::update(const butano_background& butano_background)
         {
             for(bn::sprite_ptr& background_sprite : _background_sprites)
             {
-                _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, 0.1);
+                _background_sprite_vertical_scale_actions.emplace_back(background_sprite, scale_frames, bn::fixed(0.1));
             }
 
             for(auto& background_sprite_palette_action : _background_sprite_palette_actions)

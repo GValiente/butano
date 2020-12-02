@@ -19,8 +19,7 @@ namespace
 {
     constexpr const int show_hide_frames = 10;
 
-    [[nodiscard]] constexpr bn::array<bn::color, bn::display::height()> _create_palette_hblank_effect_colors()
-    {
+    constexpr const bn::array<bn::color, bn::display::height()> palette_hblank_effect_colors = []{
         bn::array<bn::color, bn::display::height()> result;
         bn::color color(14, 0, 0);
         int redInc = 16;
@@ -54,10 +53,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::color, bn::display::height()> palette_hblank_effect_colors =
-            _create_palette_hblank_effect_colors();
+    }();
 }
 
 void butano_background::show(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera)
@@ -76,7 +72,7 @@ void butano_background::show(const bn::fixed_point& silhouette_position, const b
 
     bn::sprite_ptr silhouette_up_sprite = builder.release_build();
     _silhouette_up_sprite_move_action.emplace(silhouette_up_sprite, show_hide_frames, silhouette_position);
-    _silhouette_up_sprite_scale_action.emplace(bn::move(silhouette_up_sprite), show_hide_frames, 0.01);
+    _silhouette_up_sprite_scale_action.emplace(bn::move(silhouette_up_sprite), show_hide_frames, bn::fixed(0.01));
 
     builder = bn::sprite_builder(bn::sprite_items::butano_big_silhouette, 1);
     builder.set_position(silhouette_position.x(), silhouette_position.y() + 63);
@@ -86,7 +82,7 @@ void butano_background::show(const bn::fixed_point& silhouette_position, const b
 
     bn::sprite_ptr silhouette_down_sprite = builder.release_build();
     _silhouette_down_sprite_move_action.emplace(silhouette_down_sprite, show_hide_frames, silhouette_position);
-    _silhouette_down_sprite_scale_action.emplace(bn::move(silhouette_down_sprite), show_hide_frames, 0.01);
+    _silhouette_down_sprite_scale_action.emplace(bn::move(silhouette_down_sprite), show_hide_frames, bn::fixed(0.01));
 }
 
 void butano_background::hide(const bn::fixed_point& silhouette_position, const bn::camera_ptr& camera)

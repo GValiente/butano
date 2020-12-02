@@ -13,7 +13,7 @@
 namespace bn
 {
 
-class alignas(int) sprite_second_attributes_last_value
+class sprite_second_attributes_last_value
 {
 
 public:

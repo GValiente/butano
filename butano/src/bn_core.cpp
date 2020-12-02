@@ -101,6 +101,7 @@ namespace
         audio_manager::enable_vblank_handler();
 
         palettes_manager::stop();
+        bgs_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
 

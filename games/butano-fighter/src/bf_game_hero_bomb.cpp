@@ -27,15 +27,11 @@ namespace
     constexpr const int open_frames = 50;
     constexpr const int close_frames = 130;
 
-    [[nodiscard]] constexpr bn::array<bn::fixed, bn::display::height()> _create_wave_hblank_effect_deltas()
-    {
+    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hblank_effect_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;
-    }
-
-    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hblank_effect_deltas =
-            _create_wave_hblank_effect_deltas();
+    }();
 }
 
 void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const bn::camera_ptr& camera, hero& hero,
@@ -59,7 +55,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
 
                 bn::regular_bg_ptr bg = builder.release_build();
                 bn::window::outside().set_show_bg(bg, false);
-                _bg_move_action.emplace(bg, -0.5, 4);
+                _bg_move_action.emplace(bg, bn::fixed(-0.5), 4);
 
                 bn::rect_window internal_window = bn::rect_window::internal();
                 internal_window.set_boundaries(hero_position, hero_position);
@@ -121,7 +117,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
 
             internal_window.set_show_blending(true);
             bn::blending::set_transparency_alpha(1);
-            _intensity_blending_action.emplace(30, 0.5);
+            _intensity_blending_action.emplace(30, bn::fixed(0.5));
             background.show_bomb_close(close_frames - 30);
 
             _status = status_type::CLOSE;

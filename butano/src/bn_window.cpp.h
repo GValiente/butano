@@ -5,6 +5,7 @@
 
 #include "bn_window.h"
 
+#include "bn_affine_bg_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_display_manager.h"
 
@@ -17,9 +18,21 @@ bool window::show_bg(const regular_bg_ptr& regular_bg) const
     return display_manager::show_bg_in_window(_id, bg_handle);
 }
 
+bool window::show_bg(const affine_bg_ptr& affine_bg) const
+{
+    auto bg_handle = const_cast<void*>(affine_bg.handle());
+    return display_manager::show_bg_in_window(_id, bg_handle);
+}
+
 void window::set_show_bg(const regular_bg_ptr& regular_bg, bool show)
 {
     auto bg_handle = const_cast<void*>(regular_bg.handle());
+    display_manager::set_show_bg_in_window(_id, bg_handle, show);
+}
+
+void window::set_show_bg(const affine_bg_ptr& affine_bg, bool show)
+{
+    auto bg_handle = const_cast<void*>(affine_bg.handle());
     display_manager::set_show_bg_in_window(_id, bg_handle, show);
 }
 

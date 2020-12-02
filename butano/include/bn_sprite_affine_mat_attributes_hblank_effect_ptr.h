@@ -39,7 +39,7 @@ public:
      * @brief Creates a sprite_affine_mat_attributes_hblank_effect_ptr which changes
      * the attributes of a sprite_affine_mat_ptr in each screen horizontal line.
      * @param affine_mat sprite_affine_mat_ptr to be modified.
-     * @param attributes_ref Reference to an array of 160 sprite_affine_mat_attributes objects
+     * @param attributes_ref Reference to an array of 160 affine_mat_attributes objects
      * with the attributes to set to the given sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
@@ -48,13 +48,13 @@ public:
      * @return The requested sprite_affine_mat_attributes_hblank_effect_ptr.
      */
     [[nodiscard]] static sprite_affine_mat_attributes_hblank_effect_ptr create(
-            const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            const sprite_affine_mat_ptr& affine_mat, const span<const affine_mat_attributes>& attributes_ref);
 
     /**
      * @brief Creates a sprite_affine_mat_attributes_hblank_effect_ptr which changes
      * the attributes of a sprite_affine_mat_ptr in each screen horizontal line.
      * @param affine_mat sprite_affine_mat_ptr to be modified.
-     * @param attributes_ref Reference to an array of 160 sprite_affine_mat_attributes objects
+     * @param attributes_ref Reference to an array of 160 affine_mat_attributes objects
      * with the attributes to set to the given sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
@@ -64,7 +64,7 @@ public:
      * `nullopt` otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_attributes_hblank_effect_ptr> create_optional(
-            const sprite_affine_mat_ptr& affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref);
+            const sprite_affine_mat_ptr& affine_mat, const span<const affine_mat_attributes>& attributes_ref);
 
     /**
      * @brief Returns the internal id.
@@ -96,22 +96,22 @@ public:
     }
 
     /**
-     * @brief Returns the referenced array of 160 sprite_affine_mat_attributes objects
+     * @brief Returns the referenced array of 160 affine_mat_attributes objects
      * to set to the given sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
      * sprite_affine_mat_attributes_hblank_effect_ptr to avoid dangling references.
      */
-    [[nodiscard]] span<const sprite_affine_mat_attributes> attributes_ref() const;
+    [[nodiscard]] span<const affine_mat_attributes> attributes_ref() const;
 
     /**
-     * @brief Sets the reference to an array of 160 sprite_affine_mat_attributes objects
+     * @brief Sets the reference to an array of 160 affine_mat_attributes objects
      * to set to the given sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
      * sprite_affine_mat_attributes_hblank_effect_ptr to avoid dangling references.
      */
-    void set_attributes_ref(const span<const sprite_affine_mat_attributes>& attributes_ref);
+    void set_attributes_ref(const span<const affine_mat_attributes>& attributes_ref);
 
     /**
      * @brief Rereads the content of the referenced attributes to set to the given sprite_affine_mat_ptr

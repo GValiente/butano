@@ -25,7 +25,7 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO BIGMT
+ROMTITLE    :=  BUTANO BGRMT
 ROMCODE     :=  SBTP
 USERFLAGS   :=  
 

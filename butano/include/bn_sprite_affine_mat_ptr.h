@@ -22,7 +22,7 @@
 namespace bn
 {
 
-class sprite_affine_mat_attributes;
+class affine_mat_attributes;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a sprite affine transformation matrix.
@@ -47,10 +47,10 @@ public:
 
     /**
      * @brief Creates an affine transformation matrix with the specified attributes.
-     * @param attributes sprite_affine_mat_attributes of the output matrix.
+     * @param attributes affine_mat_attributes of the output matrix.
      * @return The requested sprite_affine_mat_ptr.
      */
-    [[nodiscard]] static sprite_affine_mat_ptr create(const sprite_affine_mat_attributes& attributes);
+    [[nodiscard]] static sprite_affine_mat_ptr create(const affine_mat_attributes& attributes);
 
     /**
      * @brief Creates an identity affine transformation matrix.
@@ -60,10 +60,10 @@ public:
 
     /**
      * @brief Creates an affine transformation matrix with the specified attributes.
-     * @param attributes sprite_affine_mat_attributes of the output matrix.
+     * @param attributes affine_mat_attributes of the output matrix.
      * @return The requested sprite_affine_mat_ptr if it could be allocated; `nullopt` otherwise.
      */
-    [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional(const sprite_affine_mat_attributes& attributes);
+    [[nodiscard]] static optional<sprite_affine_mat_ptr> create_optional(const affine_mat_attributes& attributes);
 
     /**
      * @brief Copy constructor.
@@ -185,12 +185,12 @@ public:
     /**
      * @brief Returns the attributes of this matrix.
      */
-    [[nodiscard]] const sprite_affine_mat_attributes& attributes() const;
+    [[nodiscard]] const affine_mat_attributes& attributes() const;
 
     /**
      * @brief Sets the attributes of this matrix.
      */
-    void set_attributes(const sprite_affine_mat_attributes& attributes);
+    void set_attributes(const affine_mat_attributes& attributes);
 
     /**
      * @brief Indicates if this matrix is equal to the identity matrix or not.

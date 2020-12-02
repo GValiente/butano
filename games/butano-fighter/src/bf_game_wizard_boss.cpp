@@ -400,7 +400,7 @@ bool wizard_boss::_update_dead(const bn::fixed_point& hero_position, const bn::c
         }
 
         _palette.set_fade(bn::colors::red, 0);
-        _palette_action.emplace(_palette, 15, 0.6);
+        _palette_action.emplace(_palette, 15, bn::fixed(0.6));
     }
 
     _wizard_position += _delta_position;
@@ -499,7 +499,7 @@ void wizard_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_pale
             _mini_explosions.push_back(_create_mini_explosion(x + 24, y + 24, camera));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
             _palette.set_fade(bn::colors::red, 0);
-            _palette_action.emplace(_palette, 25, 0.4);
+            _palette_action.emplace(_palette, 25, bn::fixed(0.4));
             bn::sound_items::explosion_3.play();
         }
         break;
@@ -530,7 +530,7 @@ void wizard_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_pale
             _mini_explosions.push_back(_create_mini_explosion(x - 24, y + 24, camera));
             _mini_explosions.push_back(_create_mini_explosion(x, y - 16, camera));
             _palette.set_fade(bn::colors::red, 0);
-            _palette_action.emplace(_palette, 20, 0.5);
+            _palette_action.emplace(_palette, 20, bn::fixed(0.5));
             bn::sound_items::explosion_1.play();
             bn::sound_items::explosion_3.play();
         }
@@ -599,7 +599,7 @@ void wizard_boss::_shoot_random_bullet(const bn::fixed_point& hero_position, con
     }
 
     enemy_bullet_type bullet_type = _random.get() % 8 == 0 ? enemy_bullet_type::BIG : enemy_bullet_type::SMALL;
-    bn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? 0.9 : 1.0;
+    bn::fixed bullet_speed = bullet_type == enemy_bullet_type::BIG ? bn::fixed(0.9) : bn::fixed(1.0);
     bn::fixed bullet_x = bn::fixed::from_data(int(_random.get() % bn::fixed(2).data())) - 1;
     bn::fixed bullet_y = bn::fixed::from_data(int(_random.get() % bn::fixed(2).data())) - 1;
 

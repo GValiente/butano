@@ -328,6 +328,103 @@ class RegularBgItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
+class AffineBgItem:
+
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
+        bmp = BMP(file_path)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = bmp.colors_count
+
+        width = bmp.width
+        height = bmp.height
+
+        if width != 128 and width % 256 != 0:
+            raise ValueError('Affine BGs width must be 128 or divisible by 256: ' + str(width))
+
+        if height != 128 and height % 256 != 0:
+            raise ValueError('Affine BGs height must be 128 or divisible by 256: ' + str(height))
+
+        self.__width = int(width / 8)
+        self.__height = int(height / 8)
+
+        try:
+            self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])
+        except KeyError:
+            self.__repeated_tiles_reduction = True
+
+    def write_header(self):
+        name = self.__file_name_no_ext
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        header_file_path = self.__build_folder_path + '/bn_affine_bg_items_' + name + '.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
+            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('unsigned char', 'bn::affine_bg_map_cell', 1)
+            grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
+
+            for grit_line in grit_data.splitlines():
+                if ' tiles ' in grit_line:
+                    for grit_word in grit_line.split():
+                        try:
+                            tiles_count = int(grit_word)
+                            break
+                        except ValueError:
+                            pass
+
+                    if tiles_count > 256:
+                        raise ValueError('Affine BGs with more than 256 tiles not supported: ' + str(tiles_count))
+
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+                    break
+
+        remove_file(grit_file_path)
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BN_AFFINE_BG_ITEMS_' + name.upper() + '_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "bn_affine_bg_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace bn::affine_bg_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr const affine_bg_item ' + name + '(' +
+                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
+                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
+                              name + '_bn_graphicsMap[0], ' +
+                              'size(' + str(self.__width) + ', ' + str(self.__height) + '));' + '\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        print('    Graphics size: ' + str(total_size) + ' bytes')
+        print('    affine_bg_item file written in ' + header_file_path)
+        return total_size
+
+    def process(self):
+        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8']
+
+        if self.__repeated_tiles_reduction:
+            command.append('-mRt')
+        else:
+            command.append('-mR!')
+
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
 class GraphicsFileInfo:
 
     def __init__(self, graphics_type, info, file_path, file_name, file_name_no_ext, new_file_info,
@@ -348,8 +445,10 @@ class GraphicsFileInfo:
 
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        else:
+        elif self.__graphics_type == 'regular_bg':
             item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
+        else:
+            item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
 
         item.process()
         file_size = item.write_header()
@@ -363,6 +462,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     graphics_file_infos = []
     sprite_file_names_set = set()
     regular_bg_file_names_set = set()
+    affine_bg_file_names_set = set()
 
     for graphics_folder_path in graphics_folder_path_list:
         graphics_file_names = sorted(os.listdir(graphics_folder_path))
@@ -396,6 +496,8 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                         file_names_set = sprite_file_names_set
                     elif graphics_type == 'regular_bg':
                         file_names_set = regular_bg_file_names_set
+                    elif graphics_type == 'affine_bg':
+                        file_names_set = affine_bg_file_names_set
                     else:
                         raise ValueError('Unknown type (' + graphics_type + ') in graphics json file: ' +
                                          json_file_path)

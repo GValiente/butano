@@ -364,7 +364,8 @@ public:
  * @ingroup sprite
  * @ingroup action
  */
-class sprite_move_toggle_action : public toggle_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
+class sprite_move_toggle_action :
+        public toggle_value_template_action<sprite_ptr, fixed_point, sprite_position_manager>
 {
 
 public:
@@ -758,7 +759,8 @@ public:
      * until the horizontal scale of the given sprite_ptr is equal to final_horizontal_scale.
      * @param final_horizontal_scale Horizontal scale when the action is updated duration_updates times.
      */
-    sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
+    sprite_horizontal_scale_to_action(const sprite_ptr& sprite, int duration_updates,
+                                      fixed final_horizontal_scale) :
         to_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
         BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
@@ -816,7 +818,8 @@ public:
      * @param final_horizontal_scale When the horizontal scale of the given sprite_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
      */
-    sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_updates, fixed final_horizontal_scale) :
+    sprite_horizontal_scale_loop_action(const sprite_ptr& sprite, int duration_updates,
+                                        fixed final_horizontal_scale) :
         loop_value_template_action(sprite, duration_updates, final_horizontal_scale)
     {
         BN_ASSERT(final_horizontal_scale > 0, "Invalid final horizontal scale: ", final_horizontal_scale);
@@ -874,7 +877,8 @@ public:
      * of the given sprite_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
-    sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_updates, fixed new_horizontal_scale) :
+    sprite_horizontal_scale_toggle_action(const sprite_ptr& sprite, int duration_updates,
+                                          fixed new_horizontal_scale) :
         toggle_value_template_action(sprite, duration_updates, new_horizontal_scale)
     {
         BN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);
@@ -887,7 +891,8 @@ public:
      * of the given sprite_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
-    sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_updates, fixed new_horizontal_scale) :
+    sprite_horizontal_scale_toggle_action(sprite_ptr&& sprite, int duration_updates,
+                                          fixed new_horizontal_scale) :
         toggle_value_template_action(move(sprite), duration_updates, new_horizontal_scale)
     {
         BN_ASSERT(new_horizontal_scale > 0, "Invalid new horizontal scale: ", new_horizontal_scale);

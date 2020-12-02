@@ -82,6 +82,8 @@
             <dd></dd>
             <dt>file <a href="bn__power__of__two_8h.html" class="m-doc">bn_power_of_two.h</a></dt>
             <dd></dd>
+            <dt>file <a href="bn__reciprocal__lut_8h.html" class="m-doc">bn_reciprocal_lut.h</a></dt>
+            <dd></dd>
             <dt>file <a href="bn__rect_8h.html" class="m-doc">bn_rect.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__rule__of__three__approximation_8h.html" class="m-doc">bn_rule_of_three_approximation.h</a></dt>
@@ -204,6 +206,10 @@
             </dt>
             <dd>Calculates the cosine value of an angle using a LUT.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the reciprocal of a value using a LUT.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ga312ac8ea549b0f7666489a2070c92985" class="m-doc">power_of_two</a>(</span><span class="m-doc-wrap">Type value) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -213,6 +219,10 @@
         <section id="var-members">
           <h2><a href="#var-members">Variables</a></h2>
           <dl class="m-doc">
+            <dt>
+              const array&lt;fixed, 1025&gt; <a href="#gad79a3d97fe687dfcb7c626b2ec3e7e19" class="m-doc">reciprocal_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>LUT used to calculate the reciprocal of the given value (1 / value).</dd>
             <dt>
               const int16_t <a href="#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
@@ -356,6 +366,30 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="gae167fb45b236d70a84fc2b17810eaaf4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc-self">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the reciprocal of a value using a LUT.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lut_value</td>
+                  <td>Value in the range [1, 1024].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reciprocal of the given value (1 / value).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga312ac8ea549b0f7666489a2070c92985"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__power__of__two_8h.html">&lt;bn_power_of_two.h&gt;</a></div>
@@ -369,6 +403,13 @@
         </section>
         <section>
           <h2>Variable documentation</h2>
+          <section class="m-doc-details" id="gad79a3d97fe687dfcb7c626b2ec3e7e19"><div>
+            <h3>
+              const array&lt;fixed, 1025&gt; <a href="#gad79a3d97fe687dfcb7c626b2ec3e7e19" class="m-doc-self">reciprocal_lut</a> <span class="m-label m-primary">constexpr</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__reciprocal__lut_8h.html">&lt;bn_reciprocal_lut.h&gt;</a></div>
+            </h3>
+            <p>LUT used to calculate the reciprocal of the given value (1 / value).</p>
+          </div></section>
           <section class="m-doc-details" id="ga79e52926b2cd38f73a239cec356b0c84"><div>
             <h3>
               const int16_t <a href="#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc-self">sin_lut</a> <span class="m-label m-primary">constexpr</span>

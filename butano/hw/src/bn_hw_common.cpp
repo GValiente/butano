@@ -22,18 +22,19 @@ extern "C"
     {
         BN_ERROR("Pure virtual function call");
 
-        for(;;);
+        while(true)
+        {
+        }
     }
 
     // Provides a trap for when a division by 0 is detected:
     // https://github.com/JoaoBaptMG/gba-modern/blob/5720c35a2e01cb56dbf17add8b086d580e7096b8/source/math/trapdiv0.cpp
-    extern "C"
+    [[noreturn]] int __aeabi_idiv0()
     {
-        [[noreturn]] int __aeabi_idiv0()
-        {
-            BN_ERROR("Division by zero detected");
+        BN_ERROR("Division by zero detected");
 
-            for(;;);
+        while(true)
+        {
         }
     }
 }

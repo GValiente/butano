@@ -461,7 +461,7 @@ bn::optional<scene_type> hero::_animate_dead(const bn::camera_ptr& camera, backg
         bn::sprite_palette_ptr body_palette = body_sprite.palette();
         body_palette.set_fade(bn::colors::yellow, 0.75);
         _body_palette_fade_action.emplace(bn::move(body_palette), 30, 0);
-        _body_rotate_action.emplace(body_sprite, 0.5);
+        _body_rotate_action.emplace(body_sprite, bn::fixed(0.5));
 
         bn::sprite_palette_ptr weapon_palette = _weapon_sprite.palette();
         weapon_palette.set_fade(bn::colors::yellow, 0.75);

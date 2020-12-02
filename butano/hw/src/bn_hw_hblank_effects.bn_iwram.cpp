@@ -14,22 +14,18 @@ namespace
     {
 
     public:
-        entry* entries_ptr = nullptr;
+        entries* entries_ptr = nullptr;
     };
 
     static_data data;
 }
 
-void commit_entries_ptr(entry* entries_ptr)
+void commit_entries(entries& entries_ref)
 {
-    data.entries_ptr = entries_ptr;
+    data.entries_ptr = &entries_ref;
 }
 
-void _intr_0()
-{
-}
-
-void _intr_1()
+void _intr()
 {
     unsigned vcount = REG_VCOUNT;
 
@@ -46,197 +42,24 @@ void _intr_1()
         return;
     }
 
-    entry* entries_ptr = data.entries_ptr;
-    *entries_ptr[0].dest = entries_ptr[0].src[vcount];
+    entries* entries_ptr = data.entries_ptr;
+    uint16_entry* uint16_entries = entries_ptr->uint16_entries;
+    int uint16_entries_count = entries_ptr->uint16_entries_count;
+
+    for(int index = 0; index < uint16_entries_count; ++index)
+    {
+        uint16_entry& entry = uint16_entries[index];
+        *entry.dest = entry.src[vcount];
+    }
+
+    uint32_entry* uint32_entries = entries_ptr->uint32_entries;
+    int uint32_entries_count = entries_ptr->uint32_entries_count;
+
+    for(int index = 0; index < uint32_entries_count; ++index)
+    {
+        uint32_entry& entry = uint32_entries[index];
+        *entry.dest = entry.src[vcount];
+    }
 }
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 2
-    void _intr_2()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 3
-    void _intr_3()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 4
-    void _intr_4()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-        *entries_ptr[3].dest = entries_ptr[3].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 5
-    void _intr_5()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-        *entries_ptr[3].dest = entries_ptr[3].src[vcount];
-        *entries_ptr[4].dest = entries_ptr[4].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 6
-    void _intr_6()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-        *entries_ptr[3].dest = entries_ptr[3].src[vcount];
-        *entries_ptr[4].dest = entries_ptr[4].src[vcount];
-        *entries_ptr[5].dest = entries_ptr[5].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 7
-    void _intr_7()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-        *entries_ptr[3].dest = entries_ptr[3].src[vcount];
-        *entries_ptr[4].dest = entries_ptr[4].src[vcount];
-        *entries_ptr[5].dest = entries_ptr[5].src[vcount];
-        *entries_ptr[6].dest = entries_ptr[6].src[vcount];
-    }
-#endif
-
-#if BN_CFG_HBLANK_EFFECTS_MAX_ITEMS >= 8
-    void _intr_8()
-    {
-        unsigned vcount = REG_VCOUNT;
-
-        if(vcount < 159)
-        {
-            ++vcount;
-        }
-        else if(vcount > 226)
-        {
-            vcount = 0;
-        }
-        else
-        {
-            return;
-        }
-
-        entry* entries_ptr = data.entries_ptr;
-        *entries_ptr[0].dest = entries_ptr[0].src[vcount];
-        *entries_ptr[1].dest = entries_ptr[1].src[vcount];
-        *entries_ptr[2].dest = entries_ptr[2].src[vcount];
-        *entries_ptr[3].dest = entries_ptr[3].src[vcount];
-        *entries_ptr[4].dest = entries_ptr[4].src[vcount];
-        *entries_ptr[5].dest = entries_ptr[5].src[vcount];
-        *entries_ptr[6].dest = entries_ptr[6].src[vcount];
-        *entries_ptr[7].dest = entries_ptr[7].src[vcount];
-    }
-#endif
 
 }

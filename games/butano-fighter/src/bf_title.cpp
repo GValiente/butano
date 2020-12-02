@@ -13,11 +13,11 @@
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_items_hero_head.h"
 #include "bn_sprite_items_butano_font.h"
 #include "bn_sprite_items_fighter_font.h"
-#include "bn_sprite_affine_mat_attributes.h"
 #include "bn_sprite_items_butano_big_sprite.h"
 #include "bf_status.h"
 #include "bf_scene_type.h"
@@ -73,8 +73,7 @@ namespace
         return result;
     }
 
-    [[nodiscard]] constexpr bn::array<bn::fixed, bn::display::height()> _create_butano_character_hblank_effect_deltas()
-    {
+    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         int start = 64;
 
@@ -84,15 +83,10 @@ namespace
         }
 
         return result;
-    }
+    }();
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas =
-            _create_butano_character_hblank_effect_deltas();
-
-    [[nodiscard]] constexpr bn::array<bn::sprite_affine_mat_attributes, bn::display::height()>
-    _create_fighter_character_hblank_effect_attributes()
-    {
-        bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> result;
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes = []{
+        bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 
         for(int index = start; index < bn::display::height(); ++index)
@@ -102,10 +96,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes =
-            _create_fighter_character_hblank_effect_attributes();
+    }();
 }
 
 title::title(const status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background) :
@@ -386,7 +377,7 @@ bn::optional<scene_type> title::_menu()
                 _blending_intensity_action.emplace(cursor_scale_frames, 0);
             }
 
-            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, 0.01);
+            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, bn::fixed(0.01));
 
             if(_menu_index == 0)
             {

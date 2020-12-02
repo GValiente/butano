@@ -5,8 +5,8 @@
 
 #include "bn_sprite_affine_mat_ptr.h"
 
+#include "bn_fixed.h"
 #include "bn_optional.h"
-#include "bn_sprite_affine_mat_attributes.h"
 #include "bn_sprite_affine_mats_manager.h"
 
 namespace bn
@@ -17,7 +17,7 @@ sprite_affine_mat_ptr sprite_affine_mat_ptr::create()
     return sprite_affine_mat_ptr(sprite_affine_mats_manager::create());
 }
 
-sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const sprite_affine_mat_attributes& attributes)
+sprite_affine_mat_ptr sprite_affine_mat_ptr::create(const affine_mat_attributes& attributes)
 {
     return sprite_affine_mat_ptr(sprite_affine_mats_manager::create(attributes));
 }
@@ -35,7 +35,7 @@ optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional()
     return result;
 }
 
-optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const sprite_affine_mat_attributes& attributes)
+optional<sprite_affine_mat_ptr> sprite_affine_mat_ptr::create_optional(const affine_mat_attributes& attributes)
 {
     int id = sprite_affine_mats_manager::create_optional(attributes);
     optional<sprite_affine_mat_ptr> result;
@@ -130,12 +130,12 @@ void sprite_affine_mat_ptr::set_vertical_flip(bool vertical_flip)
     sprite_affine_mats_manager::set_vertical_flip(_id, vertical_flip);
 }
 
-const sprite_affine_mat_attributes& sprite_affine_mat_ptr::attributes() const
+const affine_mat_attributes& sprite_affine_mat_ptr::attributes() const
 {
     return sprite_affine_mats_manager::attributes(_id);
 }
 
-void sprite_affine_mat_ptr::set_attributes(const sprite_affine_mat_attributes& attributes)
+void sprite_affine_mat_ptr::set_attributes(const affine_mat_attributes& attributes)
 {
     sprite_affine_mats_manager::set_attributes(_id, attributes);
 }

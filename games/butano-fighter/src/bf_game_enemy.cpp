@@ -337,7 +337,7 @@ void enemy::_add_damage(const bn::fixed_point& enemy_position, bn::fixed attack_
                 _move_event_counter = 30;
                 _move_action = bn::sprite_move_by_action(_sprite, 0, constants::background_speed);
                 _move_action.update();
-                _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, bn::fixed(0.1));
                 _horizontal_scale_action->update();
             }
             break;
@@ -348,7 +348,7 @@ void enemy::_add_damage(const bn::fixed_point& enemy_position, bn::fixed attack_
                 _move_event_counter = 30;
                 _move_action = bn::sprite_move_by_action(_sprite, 0, constants::background_speed);
                 _move_action.update();
-                _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+                _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, bn::fixed(0.1));
                 _vertical_scale_action->update();
             }
             break;
@@ -387,9 +387,9 @@ void enemy::_show_rotate_death(const bn::fixed_point& enemy_position, bn::fixed 
         bn::fixed rotation_angle = attack_x < enemy_position.x() ? -1 : 1;
         _rotate_action.emplace(_sprite, rotation_angle);
         _rotate_action->update();
-        _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _horizontal_scale_action.emplace(_sprite, _move_event_counter + 1, bn::fixed(0.1));
         _horizontal_scale_action->update();
-        _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, 0.1);
+        _vertical_scale_action.emplace(_sprite, _move_event_counter + 1, bn::fixed(0.1));
         _vertical_scale_action->update();
     }
 }

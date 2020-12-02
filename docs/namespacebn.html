@@ -129,6 +129,230 @@
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
+              class <a href="classbn_1_1affine__bg__attributes.html" class="m-doc">affine_bg_attributes</a>
+            </dt>
+            <dd>Manages the attributes to commit to the GBA register of an affine background.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__attributes__hblank__effect__ptr.html" class="m-doc">affine_bg_attributes_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes to commit to the GBA register of an affine background in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__blending__manager.html" class="m-doc">affine_bg_blending_manager</a>
+            </dt>
+            <dd>Manages if blending must be applied to an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__blending__toggle__action.html" class="m-doc">affine_bg_blending_toggle_action</a>
+            </dt>
+            <dd>Toggles if blending must be applied to an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_bg_builder</a>
+            </dt>
+            <dd>Creates <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> objects with custom attributes.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__dx__register__hblank__effect__ptr.html" class="m-doc">affine_bg_dx_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the the fifth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__dy__register__hblank__effect__ptr.html" class="m-doc">affine_bg_dy_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the the sixth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__flip__manager.html" class="m-doc">affine_bg_horizontal_flip_manager</a>
+            </dt>
+            <dd>Manages if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> is flipped in its horizontal axis or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__flip__toggle__action.html" class="m-doc">affine_bg_horizontal_flip_toggle_action</a>
+            </dt>
+            <dd>Toggles if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> must be flipped in the horizontal axis or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__scale__loop__action.html" class="m-doc">affine_bg_horizontal_scale_loop_action</a>
+            </dt>
+            <dd>Modifies the horizontal scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the horizontal scale is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__scale__manager.html" class="m-doc">affine_bg_horizontal_scale_manager</a>
+            </dt>
+            <dd>Manages the horizontal scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__scale__to__action.html" class="m-doc">affine_bg_horizontal_scale_to_action</a>
+            </dt>
+            <dd>Modifies the horizontal scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__horizontal__scale__toggle__action.html" class="m-doc">affine_bg_horizontal_scale_toggle_action</a>
+            </dt>
+            <dd>Changes the horizontal scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__item.html" class="m-doc">affine_bg_item</a>
+            </dt>
+            <dd>Contains the required information to generate affine backgrounds and their maps.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_bg_map_item</a>
+            </dt>
+            <dd>Contains the required information to generate affine background maps.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_bg_map_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of an affine background map.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_bg_mat_attributes</a>
+            </dt>
+            <dd>Contains the attributes which define the position and the transformation matrix of an affine background.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__mat__attributes__hblank__effect__ptr.html" class="m-doc">affine_bg_mat_attributes_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes which define the position and the transformation matrix of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__mosaic__manager.html" class="m-doc">affine_bg_mosaic_manager</a>
+            </dt>
+            <dd>Manages if the mosaic effect must be applied to an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__mosaic__toggle__action.html" class="m-doc">affine_bg_mosaic_toggle_action</a>
+            </dt>
+            <dd>Toggles if the mosaic effect must be applied to an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__by__action.html" class="m-doc">affine_bg_move_by_action</a>
+            </dt>
+            <dd>Modifies the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> by a given delta.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__loop__action.html" class="m-doc">affine_bg_move_loop_action</a>
+            </dt>
+            <dd>Modifies the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the position is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__pivot__by__action.html" class="m-doc">affine_bg_move_pivot_by_action</a>
+            </dt>
+            <dd>Modifies the position of the pivot of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> by a given delta.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__pivot__loop__action.html" class="m-doc">affine_bg_move_pivot_loop_action</a>
+            </dt>
+            <dd>Modifies the position of the pivot of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the position is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__pivot__to__action.html" class="m-doc">affine_bg_move_pivot_to_action</a>
+            </dt>
+            <dd>Modifies the position of the pivot of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__pivot__toggle__action.html" class="m-doc">affine_bg_move_pivot_toggle_action</a>
+            </dt>
+            <dd>Changes the position of the pivot of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__to__action.html" class="m-doc">affine_bg_move_to_action</a>
+            </dt>
+            <dd>Modifies the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__move__toggle__action.html" class="m-doc">affine_bg_move_toggle_action</a>
+            </dt>
+            <dd>Changes the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__pa__register__hblank__effect__ptr.html" class="m-doc">affine_bg_pa_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the first GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__pb__register__hblank__effect__ptr.html" class="m-doc">affine_bg_pb_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the second GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__pc__register__hblank__effect__ptr.html" class="m-doc">affine_bg_pc_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the third GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__pd__register__hblank__effect__ptr.html" class="m-doc">affine_bg_pd_register_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes or the values to commit to the fourth GBA register of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__pivot__position__hblank__effect__ptr.html" class="m-doc">affine_bg_pivot_position_hblank_effect_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the position of the affine transformations pivot point of an affine background in each screen horizontal line.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_bg_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of an affine background.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__rotate__by__action.html" class="m-doc">affine_bg_rotate_by_action</a>
+            </dt>
+            <dd>Modifies the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> by delta_rotation_angle. When the rotation angle is over 360, it goes back to 0 and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__rotate__loop__action.html" class="m-doc">affine_bg_rotate_loop_action</a>
+            </dt>
+            <dd>Modifies the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the rotation angle is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__rotate__to__action.html" class="m-doc">affine_bg_rotate_to_action</a>
+            </dt>
+            <dd>Modifies the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__rotate__toggle__action.html" class="m-doc">affine_bg_rotate_toggle_action</a>
+            </dt>
+            <dd>Changes the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__rotation__manager.html" class="m-doc">affine_bg_rotation_manager</a>
+            </dt>
+            <dd>Manages the rotation angle of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__scale__loop__action.html" class="m-doc">affine_bg_scale_loop_action</a>
+            </dt>
+            <dd>Modifies the scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the scale is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__scale__manager.html" class="m-doc">affine_bg_scale_manager</a>
+            </dt>
+            <dd>Manages the scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__scale__to__action.html" class="m-doc">affine_bg_scale_to_action</a>
+            </dt>
+            <dd>Modifies the scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__scale__toggle__action.html" class="m-doc">affine_bg_scale_toggle_action</a>
+            </dt>
+            <dd>Changes the scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_bg_tiles_item</a>
+            </dt>
+            <dd>Contains the required information to generate affine background tiles.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_bg_tiles_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of the tiles of an affine background.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__flip__manager.html" class="m-doc">affine_bg_vertical_flip_manager</a>
+            </dt>
+            <dd>Manages if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> is flipped in its vertical axis or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__flip__toggle__action.html" class="m-doc">affine_bg_vertical_flip_toggle_action</a>
+            </dt>
+            <dd>Toggles if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> must be flipped in the vertical axis or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__scale__loop__action.html" class="m-doc">affine_bg_vertical_scale_loop_action</a>
+            </dt>
+            <dd>Modifies the vertical scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> from a minimum to a maximum. When the vertical scale is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__scale__manager.html" class="m-doc">affine_bg_vertical_scale_manager</a>
+            </dt>
+            <dd>Manages the vertical scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__scale__to__action.html" class="m-doc">affine_bg_vertical_scale_to_action</a>
+            </dt>
+            <dd>Modifies the vertical scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> until it has a given state.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__vertical__scale__toggle__action.html" class="m-doc">affine_bg_vertical_scale_toggle_action</a>
+            </dt>
+            <dd>Changes the vertical scale of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__visible__manager.html" class="m-doc">affine_bg_visible_manager</a>
+            </dt>
+            <dd>Manages if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> must be committed to the GBA or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__visible__toggle__action.html" class="m-doc">affine_bg_visible_toggle_action</a>
+            </dt>
+            <dd>Toggles if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> must be committed to the GBA or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__wrapping__manager.html" class="m-doc">affine_bg_wrapping_manager</a>
+            </dt>
+            <dd>Manages if an affine background must wrap around at the edges or not.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__bg__wrapping__toggle__action.html" class="m-doc">affine_bg_wrapping_toggle_action</a>
+            </dt>
+            <dd>Toggles if an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> must wrap around at the edges or not when the action is updated a given number of times.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_mat_attributes</a>
+            </dt>
+            <dd>Contains the attributes which define an affine transformation matrix.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;int MaxSize, int MaxAlignment&gt;</div>
               class <a href="classbn_1_1any.html" class="m-doc">any</a>
             </dt>
@@ -303,17 +527,13 @@
             </dt>
             <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the transparent color of the backgrounds in each screen horizontal line.</dd>
             <dt>
+              class <a href="classbn_1_1bg__pivot__position__manager.html" class="m-doc">bg_pivot_position_manager</a>
+            </dt>
+            <dd>Manages the position of the pivot of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
               class <a href="classbn_1_1bg__position__manager.html" class="m-doc">bg_position_manager</a>
             </dt>
-            <dd>Manages the position of a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1bg__tiles__item.html" class="m-doc">bg_tiles_item</a>
-            </dt>
-            <dd>Contains the required information to generate background tiles.</dd>
-            <dt>
-              class <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_tiles_ptr</a>
-            </dt>
-            <dd>std::shared_ptr like smart pointer that retains shared ownership of the tiles of a background.</dd>
+            <dd>Manages the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
             <dt>
               class <a href="classbn_1_1bgs__mosaic__horizontal__stretch__loop__action.html" class="m-doc">bgs_mosaic_horizontal_stretch_loop_action</a>
             </dt>
@@ -565,14 +785,29 @@
             <dd>Hash function object.</dd>
             <dt>
               <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbn_1_1hash_3_01affine__bg__map__ptr_01_4.html" class="m-doc">hash&lt;affine_bg_map_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbn_1_1hash_3_01affine__bg__mat__attributes__hblank__effect__ptr_01_4.html" class="m-doc">hash&lt;affine_bg_mat_attributes_hblank_effect_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1affine__bg__mat__attributes__hblank__effect__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes_<wbr />hblank_<wbr />effect_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbn_1_1hash_3_01affine__bg__ptr_01_4.html" class="m-doc">hash&lt;affine_bg_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbn_1_1hash_3_01affine__bg__tiles__ptr_01_4.html" class="m-doc">hash&lt;affine_bg_tiles_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
               struct <a href="structbn_1_1hash_3_01bg__palette__ptr_01_4.html" class="m-doc">hash&lt;bg_palette_ptr&gt;</a>
             </dt>
             <dd>Hash support for <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01bg__tiles__ptr_01_4.html" class="m-doc">hash&lt;bg_tiles_ptr&gt;</a>
-            </dt>
-            <dd>Hash support for <a href="classbn_1_1bg__tiles__ptr.html" class="m-doc">bg_<wbr />tiles_<wbr />ptr</a>.</dd>
             <dt>
               <div class="m-doc-template">template&lt;&gt;</div>
               struct <a href="structbn_1_1hash_3_01bool_01_4.html" class="m-doc">hash&lt;bool&gt;</a>
@@ -688,6 +923,11 @@
               struct <a href="structbn_1_1hash_3_01regular__bg__ptr_01_4.html" class="m-doc">hash&lt;regular_bg_ptr&gt;</a>
             </dt>
             <dd>Hash support for <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;&gt;</div>
+              struct <a href="structbn_1_1hash_3_01regular__bg__tiles__ptr_01_4.html" class="m-doc">hash&lt;regular_bg_tiles_ptr&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>.</dd>
             <dt>
               <div class="m-doc-template">template&lt;&gt;</div>
               struct <a href="structbn_1_1hash_3_01size_01_4.html" class="m-doc">hash&lt;size&gt;</a>
@@ -1141,6 +1381,14 @@
             </dt>
             <dd>std::shared_ptr like smart pointer that retains shared ownership of a regular background.</dd>
             <dt>
+              class <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_bg_tiles_item</a>
+            </dt>
+            <dd>Contains the required information to generate regular background tiles.</dd>
+            <dt>
+              class <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_bg_tiles_ptr</a>
+            </dt>
+            <dd>std::shared_ptr like smart pointer that retains shared ownership of the tiles of a regular background.</dd>
+            <dt>
               class <a href="classbn_1_1regular__bg__visible__manager.html" class="m-doc">regular_bg_visible_manager</a>
             </dt>
             <dd>Manages if a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> must be committed to the GBA or not.</dd>
@@ -1165,10 +1413,6 @@
               class <a href="classbn_1_1span.html" class="m-doc">span</a>
             </dt>
             <dd>Refers to a contiguous sequence of elements with the first element of the sequence at position zero.</dd>
-            <dt>
-              class <a href="classbn_1_1sprite__affine__mat__attributes.html" class="m-doc">sprite_affine_mat_attributes</a>
-            </dt>
-            <dd>Contains the attributes which define a sprite affine transformation matrix (created with <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> static constructors).</dd>
             <dt>
               class <a href="classbn_1_1sprite__affine__mat__attributes__hblank__effect__ptr.html" class="m-doc">sprite_affine_mat_attributes_hblank_effect_ptr</a>
             </dt>
@@ -1803,6 +2047,10 @@
           <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
             <dt>
+              using <a href="#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_bg_map_cell</a> = uint8_t
+            </dt>
+            <dd>Affine background map cell type alias.</dd>
+            <dt>
               using <a href="#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> = <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;12&gt;
             </dt>
             <dd>Default precision <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> alias.</dd>
@@ -1819,10 +2067,6 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="group__affine__mat.html#ga4c50bfc9853750732dc393e0bd89eef6" class="m-doc">create_affine_mat_scale_lut</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;uint16_t, 1025&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns the LUT used to invert scale values in an affine transformation matrix.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int Bytes&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__memory.html#ga6886f0fcbb7a746ce13e7929cc43f65b" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const void* pointer) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -1933,6 +2177,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga98f2967b1d885540c4cd2a141a8bd6e2" class="m-doc">lut_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle using a LUT.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the reciprocal of a value using a LUT.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type, class... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__unique__ptr.html#gabb3bd50b9e50580a3ccf56fd4a8d91cd" class="m-doc">make_unique</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;Type&gt;</span>
@@ -2116,13 +2364,13 @@
           <h2><a href="#var-members">Variables</a></h2>
           <dl class="m-doc">
             <dt>
-              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;uint16_t, 1025&gt; <a href="group__affine__mat.html#ga4794bfc08fa2f1dc923426b8fd560006" class="m-doc">affine_mat_scale_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
-            </dt>
-            <dd>LUT used to invert scale values in an affine transformation matrix.</dd>
-            <dt>
               const <a href="classbn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a> <a href="#a850f005ae3a402328e48dfb60e5de6a4" class="m-doc">nullopt</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
             <dd>Constant of type <a href="classbn_1_1nullopt__t.html" class="m-doc">nullopt_<wbr />t</a> used to indicate an optional type with uninitialized state.</dd>
+            <dt>
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;<a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a>, 1025&gt; <a href="group__math.html#gad79a3d97fe687dfcb7c626b2ec3e7e19" class="m-doc">reciprocal_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>LUT used to calculate the reciprocal of the given value (1 / value).</dd>
             <dt>
               const int16_t <a href="group__math.html#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
@@ -2131,6 +2379,13 @@
         </section>
         <section>
           <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="a840f0a4392c5ec4f3b82f1066f811066"><div>
+            <h3>
+              using bn::<wbr /><a href="#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc-self">affine_bg_map_cell</a> = uint8_t
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__map__cell_8h.html">&lt;bn_affine_bg_map_cell.h&gt;</a></div>
+            </h3>
+            <p>Affine background map cell type alias.</p>
+          </div></section>
           <section class="m-doc-details" id="a5af5ad0ce2b28e24d6d5d758be12b6da"><div>
             <h3>
               typedef <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;12&gt; bn::<wbr /><a href="#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc-self">fixed</a>

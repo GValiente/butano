@@ -7,7 +7,7 @@
 #define BN_REGULAR_BG_ATTRIBUTES_HBLANK_EFFECT_HANDLER_H
 
 #include "bn_any.h"
-#include "bn_bg_tiles_ptr.h"
+#include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_bgs_manager.h"
 #include "../hw/include/bn_hw_bgs.h"
@@ -64,7 +64,7 @@ public:
     }
 
 private:
-    class alignas(int) last_value_type
+    class last_value_type
     {
 
     public:
@@ -76,7 +76,7 @@ private:
         }
 
         explicit last_value_type(void* handle) :
-            last_value_type(bgs_manager::map(handle))
+            last_value_type(bgs_manager::regular_map(handle))
         {
         }
 

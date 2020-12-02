@@ -11,8 +11,8 @@
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
 #include "bn_sprite_palettes.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_items_boss_intro.h"
-#include "bn_sprite_affine_mat_attributes.h"
 
 namespace bf::game
 {
@@ -32,13 +32,11 @@ namespace
         return builder.release_build();
     }
 
-    [[nodiscard]] constexpr bn::array<bn::sprite_affine_mat_attributes, bn::display::height()>
-    _create_hblank_effect_attributes()
-    {
-        bn::sprite_affine_mat_attributes base_attributes;
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes = []{
+        bn::affine_mat_attributes base_attributes;
         base_attributes.set_scale(0.001);
 
-        bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> result;
+        bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         result.fill(base_attributes);
 
         bn::fixed scale = 1;
@@ -55,10 +53,7 @@ namespace
         }
 
         return result;
-    }
-
-    constexpr const bn::array<bn::sprite_affine_mat_attributes, bn::display::height()> _hblank_effect_attributes =
-            _create_hblank_effect_attributes();
+    }();
 }
 
 void boss_intro::enable()

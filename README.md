@@ -54,11 +54,7 @@ The full source code and the creative commons assets of this game are in [its pr
 
 Get the latest Butano Fighter ROM from [itch.io](https://gvaliente.itch.io/butano-fighter).
 
-![](docs_tools/images/bf_title.gif)
-
-![](docs_tools/images/bf_intro.gif)
-
-![](docs_tools/images/bf_bomb.gif)
+![](docs_tools/images/bf_title.gif) ![](docs_tools/images/bf_intro.gif) ![](docs_tools/images/bf_bomb.gif)
 
 
 ## Related projects

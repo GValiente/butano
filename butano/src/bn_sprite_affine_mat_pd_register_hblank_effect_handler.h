@@ -41,7 +41,7 @@ public:
 
     static void write_output_values(int, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
-        auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(input_values_ptr);
+        auto attributes_ptr = reinterpret_cast<const affine_mat_attributes*>(input_values_ptr);
 
         for(int index = 0; index < display::height(); ++index)
         {

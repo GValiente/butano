@@ -69,7 +69,7 @@ namespace
         bn::fixed_point cannon_position = _cannon_end_position(cannon_rotation_angle, y);
         bn::fixed_point bullet_position = _cannon_end_position(bullet_rotation_angle, y);
         bn::fixed_point distance = bullet_position - base_position;
-        bn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? 0.9 : 1;
+        bn::fixed bullet_speed = bullet_type == enemy_bullet_type::HUGE ? bn::fixed(0.9) : bn::fixed(1);
         bn::fixed_point delta_position = direction_vector(distance.x(), distance.y(), bullet_speed);
         enemy_bullets.add_bullet(hero_position, cannon_position, enemy_bullet_event(bullet_type, delta_position, 1),
                                  camera);
@@ -95,7 +95,7 @@ tank_boss::tank_boss(const bn::fixed_point& hero_position, const bn::sprite_pale
     _jelly_palette(bn::sprite_items::tank_jelly.palette_item().create_palette()),
     _cannon_palette(bn::sprite_items::tank_cannon.palette_item().create_palette()),
     _y(-125),
-    _y_inc(1.1)
+    _y_inc(bn::fixed(1.1))
 {
     bn::fixed footprint_y = 16 - (bn::display::height() / 2);
 
@@ -292,9 +292,9 @@ bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::cam
 
         _jelly_sprite->set_z_order(constants::intro_sprites_z_order);
         _base_palette.set_fade(bn::colors::red, 0);
-        _base_palette_action.emplace(_base_palette, 15, 0.5);
+        _base_palette_action.emplace(_base_palette, 15, bn::fixed(0.5));
         _cannon_palette.set_fade(bn::colors::red, 0);
-        _cannon_palette_action.emplace(_cannon_palette, 15, 0.5);
+        _cannon_palette_action.emplace(_cannon_palette, 15, bn::fixed(0.5));
     }
 
     if(_death_flash())
@@ -380,9 +380,9 @@ void tank_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_palett
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
             _base_palette.set_fade(bn::colors::red, 0);
-            _base_palette_action.emplace(_base_palette, 30, 0.2);
+            _base_palette_action.emplace(_base_palette, 30, bn::fixed(0.2));
             _cannon_palette.set_fade(bn::colors::red, 0);
-            _cannon_palette_action.emplace(_cannon_palette, 30, 0.2);
+            _cannon_palette_action.emplace(_cannon_palette, 30, bn::fixed(0.2));
             bn::sound_items::explosion_3.play();
         }
         break;
@@ -399,9 +399,9 @@ void tank_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_palett
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 24, camera));
             _base_palette.set_fade(bn::colors::red, 0);
-            _base_palette_action.emplace(_base_palette, 25, 0.3);
+            _base_palette_action.emplace(_base_palette, 25, bn::fixed(0.3));
             _cannon_palette.set_fade(bn::colors::red, 0);
-            _cannon_palette_action.emplace(_cannon_palette, 25, 0.3);
+            _cannon_palette_action.emplace(_cannon_palette, 25, bn::fixed(0.3));
             bn::sound_items::explosion_1.play();
             bn::sound_items::explosion_3.play();
         }
@@ -422,9 +422,9 @@ void tank_boss::_show_damage_palette(const bn::sprite_palette_ptr& damage_palett
             _mini_explosions.push_back(_create_mini_explosion(-24, _y + 8, camera));
             _mini_explosions.push_back(_create_mini_explosion(24, _y + 24, camera));
             _base_palette.set_fade(bn::colors::red, 0);
-            _base_palette_action.emplace(_base_palette, 20, 0.4);
+            _base_palette_action.emplace(_base_palette, 20, bn::fixed(0.4));
             _cannon_palette.set_fade(bn::colors::red, 0);
-            _cannon_palette_action.emplace(_cannon_palette, 20, 0.4);
+            _cannon_palette_action.emplace(_cannon_palette, 20, bn::fixed(0.4));
             _arrow_sprite->set_visible(false);
             bn::sound_items::explosion_1.play();
             bn::sound_items::explosion_3.play();

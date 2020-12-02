@@ -12,7 +12,7 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_double_size_mode.h"
 #include "bn_sprite_affine_mat_actions.h"
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
 
 #include "bn_sprite_items_red_sprite.h"
@@ -234,7 +234,7 @@ namespace
 
         while(! bn::keypad::start_pressed())
         {
-            bn::sprite_affine_mat_attributes attributes = affine_mat.attributes();
+            bn::affine_mat_attributes attributes = affine_mat.attributes();
             bn::fixed horizontal_scale = attributes.horizontal_scale();
             bn::fixed vertical_scale = attributes.vertical_scale();
             bn::fixed rotation_angle = attributes.rotation_angle();
@@ -271,7 +271,7 @@ namespace
             bn::core::update();
         }
 
-        affine_mat.set_attributes(bn::sprite_affine_mat_attributes());
+        affine_mat.set_attributes(bn::affine_mat_attributes());
     }
 
     void sprite_affine_mats_attributes_hblank_effect_scene(bn::sprite_affine_mat_ptr& affine_mat,
@@ -283,7 +283,7 @@ namespace
 
         info info("Attributes H-Blank effect", info_text_lines, text_generator);
 
-        bn::sprite_affine_mat_attributes attributes[bn::display::height()];
+        bn::affine_mat_attributes attributes[bn::display::height()];
 
         bn::sprite_affine_mat_attributes_hblank_effect_ptr hblank_effect =
                 bn::sprite_affine_mat_attributes_hblank_effect_ptr::create(affine_mat, attributes);

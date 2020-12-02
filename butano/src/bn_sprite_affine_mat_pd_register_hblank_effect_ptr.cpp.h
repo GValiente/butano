@@ -8,14 +8,14 @@
 #include "bn_span.h"
 #include "bn_display.h"
 #include "bn_optional.h"
-#include "bn_sprite_affine_mat_attributes.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_hblank_effects_manager.h"
 
 namespace bn
 {
 
 sprite_affine_mat_pd_register_hblank_effect_ptr sprite_affine_mat_pd_register_hblank_effect_ptr::create(
-        sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        sprite_affine_mat_ptr affine_mat, const span<const affine_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                             hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES);
@@ -31,7 +31,7 @@ sprite_affine_mat_pd_register_hblank_effect_ptr sprite_affine_mat_pd_register_hb
 }
 
 optional<sprite_affine_mat_pd_register_hblank_effect_ptr> sprite_affine_mat_pd_register_hblank_effect_ptr::create_optional(
-        sprite_affine_mat_ptr affine_mat, const span<const sprite_affine_mat_attributes>& attributes_ref)
+        sprite_affine_mat_ptr affine_mat, const span<const affine_mat_attributes>& attributes_ref)
 {
     int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), affine_mat.id(),
                                                      hblank_effects_manager::handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES);
@@ -60,12 +60,12 @@ optional<sprite_affine_mat_pd_register_hblank_effect_ptr> sprite_affine_mat_pd_r
     return result;
 }
 
-span<const sprite_affine_mat_attributes> sprite_affine_mat_pd_register_hblank_effect_ptr::attributes_ref() const
+span<const affine_mat_attributes> sprite_affine_mat_pd_register_hblank_effect_ptr::attributes_ref() const
 {
     BN_ASSERT(_from_attributes, "Built from values");
 
-    auto attributes_ptr = reinterpret_cast<const sprite_affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
-    return span<const sprite_affine_mat_attributes>(attributes_ptr, display::height());
+    auto attributes_ptr = reinterpret_cast<const affine_mat_attributes*>(hblank_effects_manager::values_ref(id()));
+    return span<const affine_mat_attributes>(attributes_ptr, display::height());
 }
 
 span<const int16_t> sprite_affine_mat_pd_register_hblank_effect_ptr::values_ref() const
@@ -77,7 +77,7 @@ span<const int16_t> sprite_affine_mat_pd_register_hblank_effect_ptr::values_ref(
 }
 
 void sprite_affine_mat_pd_register_hblank_effect_ptr::set_attributes_ref(
-        const span<const sprite_affine_mat_attributes>& attributes_ref)
+        const span<const affine_mat_attributes>& attributes_ref)
 {
     BN_ASSERT(_from_attributes, "Built from values");
 

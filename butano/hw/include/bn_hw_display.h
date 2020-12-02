@@ -7,7 +7,7 @@
 #define BN_HW_DISPLAY_H
 
 #include "bn_point.h"
-#include "bn_hw_tonc.h"
+#include "bn_hw_bgs.h"
 
 #define REG_DISPCNT_U16     *(u16*)(REG_BASE+0x0000)
 #define REG_DISPCNT_U16_2   *(u16*)(REG_BASE+0x0002)
@@ -41,21 +41,27 @@ namespace bn::hw::display
         return 2;
     }
 
-    inline void init()
+    inline void setup(int mode, const bool* enabled_bgs, const bool* enabled_inside_windows)
     {
-        REG_DISPCNT_U16 = DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
-    }
+        unsigned dispcnt = unsigned(mode) | DCNT_OBJ | DCNT_OBJ_1D;
 
-    inline void set_bg_enabled(int bg, bool enabled)
-    {
-        if(enabled)
+        for(int index = 0; index < bgs::count(); ++index)
         {
-            REG_DISPCNT_U16 |= unsigned(DCNT_BG0 << bg);
+            if(enabled_bgs[index])
+            {
+                dispcnt |= unsigned(DCNT_BG0 << index);
+            }
         }
-        else
+
+        for(int index = 0; index < inside_windows_count(); ++index)
         {
-            REG_DISPCNT_U16 &= ~unsigned(DCNT_BG0 << bg);
+            if(enabled_inside_windows[index])
+            {
+                dispcnt |= unsigned(DCNT_WIN0 << index);
+            }
         }
+
+        REG_DISPCNT_U16 = dispcnt;
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
@@ -135,18 +141,6 @@ namespace bn::hw::display
     [[nodiscard]] inline uint16_t* blending_fade_register()
     {
         return const_cast<uint16_t*>(&REG_BLDY);
-    }
-
-    inline void set_inside_window_enabled(int window, bool enabled)
-    {
-        if(enabled)
-        {
-            REG_DISPCNT_U16 |= unsigned(DCNT_WIN0 << window);
-        }
-        else
-        {
-            REG_DISPCNT_U16 &= ~unsigned(DCNT_WIN0 << window);
-        }
     }
 
     inline void set_windows_flags(const unsigned* flags_ptr)

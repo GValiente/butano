@@ -332,8 +332,8 @@ public:
     [[nodiscard]] regular_bg_ptr release_build();
 
     /**
-     * @brief Generates and returns a regular_bg_ptr without releasing the acquired resources if it could be allocated;
-     * `nullopt` otherwise.
+     * @brief Generates and returns a regular_bg_ptr
+     * without releasing the acquired resources if it could be allocated; `nullopt` otherwise.
      */
     [[nodiscard]] optional<regular_bg_ptr> build_optional() const;
 

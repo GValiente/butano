@@ -719,7 +719,13 @@
  *
  * <table>
  *
- * <tr><td> @ref audio
+ * <tr><td> @ref affine_bg
+ *
+ * @image html examples_affine_bgs.png
+ *
+ * Demonstrates usage of backgrounds with affine transformations.
+ *
+ * <td> @ref audio
  *
  * @image html examples_audio.png
  *
@@ -731,13 +737,13 @@
  *
  * Demonstrates usage of transparency, intensity and fade blending.
  *
- * <td> @ref camera
+ * <tr><td> @ref camera
  *
  * @image html examples_cameras.png
  *
  * Shows how a camera affects the displayed elements.
  *
- * <tr><td> @ref core
+ * <td> @ref core
  *
  * @image html examples_core.png
  *
@@ -749,13 +755,13 @@
  *
  * See how it looks this undocumented graphic effect.
  *
- * <td> @ref keypad
+ * <tr><td> @ref keypad
  *
  * @image html examples_keypad.png
  *
  * Simple keypad status demo.
  *
- * <tr><td> @ref link
+ * <td> @ref link
  *
  * @image html examples_link.png
  *
@@ -767,19 +773,25 @@
  *
  * Integration of emulator logging into Butano.
  *
+ * <tr><td> **Mode 7**
+ *
+ * @image html examples_mode_7.png
+ *
+ * Basic SNES mode 7 like background example.
+ *
  * <td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <tr><td> @ref palette
+ * <td> @ref palette
  *
  * @image html examples_palettes.png
  *
  * Showcases multiple color palette effects.
  *
- * <td> **Polygons**
+ * <tr><td> **Polygons**
  *
  * @image html examples_polygons.png
  *
@@ -791,13 +803,13 @@
  *
  * Basic code blocks profiling.
  *
- * <tr><td> @ref regular_bg
+ * <td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -809,13 +821,13 @@
  *
  * Simple sprites examples.
  *
- * <tr><td> @ref sram
+ * <td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *
@@ -826,6 +838,12 @@
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
+ *
+ * <td> **World map**
+ *
+ * @image html examples_world_map.png
+ *
+ * Showcase of a 4096x4096 world map with a perspective effect.
  *
  * </table>
  */
@@ -934,6 +952,8 @@
  *
  * The fields for regular background images are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
+ * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
+ * * `"flipped_tiles_reduction"`: specifies if flipped tiles must be reduced or not (`true` by default).
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
@@ -954,7 +974,17 @@
  *
  * @subsection import_affine_bg Affine backgrounds
  *
- * Soon?
+ * The fields for affine background images are the following:
+ * * `"type"`: must be `"affine_bg"` for affine backgrounds.
+ * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
+ *
+ * If the conversion process has finished successfully,
+ * a bn::affine_bg_item should have been generated in the `build` folder.
+ * You can use this item to create an affine background with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * bn::affine_bg_ptr affine_bg = bn::affine_bg_items::image.create_bg(0, 0);
+ * @endcode
  *
  *
  * @section import_audio Audio
@@ -1009,6 +1039,17 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_4_0_0 4.0.0 (next release)
+ *
+ * * bn::sprite_affine_mat_attributes renamed to bn::affine_mat_attributes.
+ * * bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.
+ * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item.
+ * * bn::affine_mat_scale_lut replaced with bn::reciprocal_lut.
+ * * Floating point methods of bn::fixed_t are only allowed at build time.
+ * * bn::lut_reciprocal() added.
+ * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.
  *
  *
  * @section changelog_3_3_0 3.3.0

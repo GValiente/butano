@@ -15,6 +15,7 @@
 
 #include "bn_fixed.h"
 #include "bn_sin_lut.h"
+#include "bn_reciprocal_lut.h"
 #include "bn_rule_of_three_approximation.h"
 
 /// @cond DO_NOT_DOCUMENT
@@ -177,6 +178,20 @@ namespace bn
         BN_ASSERT(lut_angle >= 0 && lut_angle <= 512, "Angle must be in the range [0, 512]: ", lut_angle);
 
         return fixed::from_data(sin_lut[(lut_angle + 128) & 0x1FF]);
+    }
+
+    /**
+     * @brief Calculates the reciprocal of a value using a LUT.
+     * @param lut_value Value in the range [1, 1024].
+     * @return Reciprocal of the given value (1 / value).
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed lut_reciprocal(int lut_value)
+    {
+        BN_ASSERT(lut_value >= 1 && lut_value <= 1024, "Value must be in the range [1, 1024]: ", lut_value);
+
+        return reciprocal_lut[lut_value];
     }
 }
 

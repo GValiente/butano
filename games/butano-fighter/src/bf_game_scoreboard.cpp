@@ -201,7 +201,7 @@ void scoreboard::update(const hero& hero)
         else
         {
             _bombs_affine_mat.set_scale(1);
-            _bombs_affine_mat_scale_action.emplace(_bombs_affine_mat, 16, 0.01);
+            _bombs_affine_mat_scale_action.emplace(_bombs_affine_mat, 16, bn::fixed(0.01));
 
             for(int index = bombs_count; index < last_bombs_count; ++index)
             {

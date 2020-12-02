@@ -50,7 +50,7 @@ public:
     {
         int last_value = target_last_value.value<int>();
         auto fixed_values_ptr = reinterpret_cast<const fixed*>(input_values_ptr);
-        bgs_manager::fill_hblank_effect_vertical_positions(last_value, fixed_values_ptr, output_values_ptr);
+        bgs_manager::fill_hblank_effect_regular_positions(last_value, fixed_values_ptr, output_values_ptr);
     }
 
     static void show(int)

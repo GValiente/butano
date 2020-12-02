@@ -12,14 +12,11 @@
 
 namespace
 {
-    [[nodiscard]] constexpr bn::array<bn::fixed, bn::display::height()> _create_hblank_effect_deltas()
-    {
+    constexpr const bn::array<bn::fixed, bn::display::height()> hblank_effect_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;
-    }
-
-    constexpr const bn::array<bn::fixed, bn::display::height()> hblank_effect_deltas = _create_hblank_effect_deltas();
+    }();
 }
 
 int main()

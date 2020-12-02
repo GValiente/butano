@@ -58,8 +58,6 @@
                 <li><a href="#files">Files</a></li>
                 <li><a href="#namespaces">Namespaces</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#func-members">Functions</a></li>
-                <li><a href="#var-members">Variables</a></li>
               </ul>
             </li>
           </ul>
@@ -68,11 +66,11 @@
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__affine__mat__scale__lut_8h.html" class="m-doc">bn_affine_mat_scale_lut.h</a></dt>
+            <dt>file <a href="bn__affine__bg__mat__attributes_8h.html" class="m-doc">bn_affine_bg_mat_attributes.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__affine__mat__attributes_8h.html" class="m-doc">bn_affine_mat_attributes.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__sprite__affine__mat__actions_8h.html" class="m-doc">bn_sprite_affine_mat_actions.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sprite__affine__mat__attributes_8h.html" class="m-doc">bn_sprite_affine_mat_attributes.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__sprite__affine__mat__attributes__hblank__effect__ptr_8h.html" class="m-doc">bn_sprite_affine_mat_attributes_hblank_effect_ptr.h</a></dt>
             <dd></dd>
@@ -102,6 +100,14 @@
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
+            <dt>
+              class <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">bn::affine_bg_mat_attributes</a>
+            </dt>
+            <dd>Contains the attributes which define the position and the transformation matrix of an affine background.</dd>
+            <dt>
+              class <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">bn::affine_mat_attributes</a>
+            </dt>
+            <dd>Contains the attributes which define an affine transformation matrix.</dd>
             <dt>
               class <a href="classbn_1_1sprite__affine__mat__rotation__manager.html" class="m-doc">bn::sprite_affine_mat_rotation_manager</a>
             </dt>
@@ -187,10 +193,6 @@
             </dt>
             <dd>Toggles if a <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> must be flipped in the vertical axis or not when the action is updated a given number of times.</dd>
             <dt>
-              class <a href="classbn_1_1sprite__affine__mat__attributes.html" class="m-doc">bn::sprite_affine_mat_attributes</a>
-            </dt>
-            <dd>Contains the attributes which define a sprite affine transformation matrix (created with <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> static constructors).</dd>
-            <dt>
               class <a href="classbn_1_1sprite__affine__mat__attributes__hblank__effect__ptr.html" class="m-doc">bn::sprite_affine_mat_attributes_hblank_effect_ptr</a>
             </dt>
             <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the attributes of a <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a> in each screen horizontal line.</dd>
@@ -225,44 +227,6 @@
             </dt>
             <dd>Hash support for <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>.</dd>
           </dl>
-        </section>
-        <section id="func-members">
-          <h2><a href="#func-members">Functions</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga4c50bfc9853750732dc393e0bd89eef6" class="m-doc">create_affine_mat_scale_lut</a>(</span><span class="m-doc-wrap">) -&gt; array&lt;uint16_t, 1025&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns the LUT used to invert scale values in an affine transformation matrix.</dd>
-          </dl>
-        </section>
-        <section id="var-members">
-          <h2><a href="#var-members">Variables</a></h2>
-          <dl class="m-doc">
-            <dt>
-              const array&lt;uint16_t, 1025&gt; <a href="#ga4794bfc08fa2f1dc923426b8fd560006" class="m-doc">affine_mat_scale_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
-            </dt>
-            <dd>LUT used to invert scale values in an affine transformation matrix.</dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga4c50bfc9853750732dc393e0bd89eef6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">array&lt;uint16_t, 1025&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4c50bfc9853750732dc393e0bd89eef6" class="m-doc-self">create_affine_mat_scale_lut</a>(</span><span class="m-doc-wrap">) <span class="m-label m-primary">constexpr</span></span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__mat__scale__lut_8h.html">&lt;bn_affine_mat_scale_lut.h&gt;</a></div>
-            </h3>
-            <p>Returns the LUT used to invert scale values in an affine transformation matrix.</p>
-          </div></section>
-        </section>
-        <section>
-          <h2>Variable documentation</h2>
-          <section class="m-doc-details" id="ga4794bfc08fa2f1dc923426b8fd560006"><div>
-            <h3>
-              const array&lt;uint16_t, 1025&gt; <a href="#ga4794bfc08fa2f1dc923426b8fd560006" class="m-doc-self">affine_mat_scale_lut</a> <span class="m-label m-primary">constexpr</span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__mat__scale__lut_8h.html">&lt;bn_affine_mat_scale_lut.h&gt;</a></div>
-            </h3>
-            <p>LUT used to invert scale values in an affine transformation matrix.</p>
-          </div></section>
         </section>
       </div>
     </div>

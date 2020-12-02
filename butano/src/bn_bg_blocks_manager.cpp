@@ -466,7 +466,8 @@ namespace
             } while(false)
     #endif
 
-    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words)
+    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words,
+                                       [[maybe_unused]] bool affine)
     {
         auto items_map_iterator = data.items_map.find(tiles_data);
 
@@ -478,6 +479,8 @@ namespace
                       tiles_data, " - ", item.data);
             BN_ASSERT(half_words == item.width, "Tiles count does not match item tiles count: ",
                       _half_words_to_tiles(half_words), " - ", item.tiles_count());
+            BN_ASSERT(affine && ! item.is_affine, "Item has regular tiles");
+            BN_ASSERT(! affine && item.is_affine, "Item has affine tiles");
 
             switch(item.status())
             {
@@ -1154,7 +1157,7 @@ int find_regular_tiles(const regular_bg_tiles_item& tiles_item)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR TILES: ", tiles_data, " - ", tiles_count);
 
     int half_words = _tiles_to_half_words(tiles_count);
-    return _find_tiles_impl(tiles_data, half_words);
+    return _find_tiles_impl(tiles_data, half_words, false);
 }
 
 int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
@@ -1166,7 +1169,7 @@ int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE TILES: ", tiles_data, " - ", tiles_count);
 
     int half_words = _tiles_to_half_words(tiles_count);
-    return _find_tiles_impl(tiles_data, half_words);
+    return _find_tiles_impl(tiles_data, half_words, true);
 }
 
 int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
@@ -1198,7 +1201,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
 
-    int result = _find_tiles_impl(tiles_data, half_words);
+    int result = _find_tiles_impl(tiles_data, half_words, false);
 
     if(result != -1)
     {
@@ -1246,7 +1249,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
 
-    int result = _find_tiles_impl(tiles_data, half_words);
+    int result = _find_tiles_impl(tiles_data, half_words, true);
 
     if(result != -1)
     {

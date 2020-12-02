@@ -27,7 +27,7 @@ namespace
     constexpr const int open_frames = 50;
     constexpr const int close_frames = 130;
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hblank_effect_deltas = []{
+    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hbe_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;
@@ -66,12 +66,11 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
 
                 _circle_generator.set_origin_y(hero_position.y());
                 _circle_generator.set_radius(0);
-                _circle_generator.generate(_circle_hblank_effect_deltas);
-                _circle_hblank_effect = bn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
-                            internal_window, _circle_hblank_effect_deltas);
+                _circle_generator.generate(_circle_hbe_deltas);
+                _circle_hbe = bn::rect_window_boundaries_hbe_ptr::create_horizontal(
+                            internal_window, _circle_hbe_deltas);
 
-                _wave_hblank_effect = bn::regular_bg_position_hblank_effect_ptr::create_horizontal(
-                            move(bg), wave_hblank_effect_deltas);
+                _wave_hbe = bn::regular_bg_position_hbe_ptr::create_horizontal(move(bg), wave_hbe_deltas);
 
                 background.show_bomb_open(open_frames);
                 bn::sound_items::explosion_2.play();
@@ -100,8 +99,8 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
             int integer_radius = fixed_radius.right_shift_integer();
             enemies.check_hero_bomb(_center, integer_radius * integer_radius, camera);
             _circle_generator.set_radius(fixed_radius);
-            _circle_generator.generate(_circle_hblank_effect_deltas);
-            _circle_hblank_effect->reload_deltas_ref();
+            _circle_generator.generate(_circle_hbe_deltas);
+            _circle_hbe->reload_deltas_ref();
 
             _play_flame_sound();
         }
@@ -112,7 +111,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
 
             bn::rect_window internal_window = bn::rect_window::internal();
             internal_window.set_boundaries(-1000, -1000, 1000, 1000);
-            _circle_hblank_effect.reset();
+            _circle_hbe.reset();
             enemy_bullets.clear();
 
             internal_window.set_show_blending(true);
@@ -171,7 +170,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
                 internal_window.remove_camera();
                 background.show_top(30);
                 _bg_move_action.reset();
-                _wave_hblank_effect.reset();
+                _wave_hbe.reset();
             }
 
             if(_counter > 40)

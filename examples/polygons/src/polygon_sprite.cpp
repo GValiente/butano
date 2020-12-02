@@ -18,15 +18,15 @@ namespace
 polygon_sprite::polygon_sprite(const polygon& polygon, int graphics_index, int z_order) :
     _polygons(1, &polygon),
     _sprite(_create_sprite(graphics_index, z_order)),
-    _vertical_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
-    _horizontal_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
+    _vertical_hbe(bn::sprite_position_hbe_ptr::create_vertical(_sprite, _vertical_values)),
+    _horizontal_hbe(bn::sprite_position_hbe_ptr::create_horizontal(_sprite, _horizontal_values))
 {
 }
 
 polygon_sprite::polygon_sprite(const bn::span<const polygon*>& polygons, int graphics_index, int z_order) :
     _sprite(_create_sprite(graphics_index, z_order)),
-    _vertical_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_vertical(_sprite, _vertical_values)),
-    _horizontal_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(_sprite, _horizontal_values))
+    _vertical_hbe(bn::sprite_position_hbe_ptr::create_vertical(_sprite, _vertical_values)),
+    _horizontal_hbe(bn::sprite_position_hbe_ptr::create_horizontal(_sprite, _horizontal_values))
 {
     for(const polygon* polygon : polygons)
     {
@@ -136,7 +136,7 @@ void polygon_sprite::update()
         }
 
         _setup_attributes(hlines_data, _vertical_values.data(), _horizontal_values.data());
-        _vertical_hblank_effect.reload_deltas_ref();
-        _horizontal_hblank_effect.reload_deltas_ref();
+        _vertical_hbe.reload_deltas_ref();
+        _horizontal_hbe.reload_deltas_ref();
     }
 }

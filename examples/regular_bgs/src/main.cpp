@@ -14,8 +14,8 @@
 #include "bn_regular_bg_builder.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
-#include "bn_regular_bg_position_hblank_effect_ptr.h"
-#include "bn_regular_bg_attributes_hblank_effect_ptr.h"
+#include "bn_regular_bg_position_hbe_ptr.h"
+#include "bn_regular_bg_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_turtle.h"
 #include "bn_regular_bg_items_red.h"
@@ -128,7 +128,7 @@ namespace
         }
     }
 
-    void regular_bgs_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void regular_bgs_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -139,9 +139,8 @@ namespace
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
         bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
-
-        bn::regular_bg_position_hblank_effect_ptr horizontal_hblank_effect =
-                bn::regular_bg_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
+        bn::regular_bg_position_hbe_ptr horizontal_deltas_hbe =
+                bn::regular_bg_position_hbe_ptr::create_horizontal(red_bg, horizontal_deltas);
 
         bn::fixed base_degrees_angle;
 
@@ -170,7 +169,7 @@ namespace
                 horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }
 
-            horizontal_hblank_effect.reload_deltas_ref();
+            horizontal_deltas_hbe.reload_deltas_ref();
             info.update();
             bn::core::update();
         }
@@ -355,7 +354,7 @@ namespace
         }
     }
 
-    void regular_bgs_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void regular_bgs_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -384,8 +383,8 @@ namespace
         }
 
         bn::span<const bn::regular_bg_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::regular_bg_attributes_hblank_effect_ptr hblank_effect =
-                bn::regular_bg_attributes_hblank_effect_ptr::create(red_bg, attributes_ref);
+        bn::regular_bg_attributes_hbe_ptr attributes_hbe =
+                bn::regular_bg_attributes_hbe_ptr::create(red_bg, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -445,7 +444,7 @@ int main()
         regular_bgs_position_actions_scene(text_generator);
         bn::core::update();
 
-        regular_bgs_position_hblank_effect_scene(text_generator);
+        regular_bgs_position_hbe_scene(text_generator);
         bn::core::update();
 
         regular_bgs_priority_scene(text_generator);
@@ -460,7 +459,7 @@ int main()
         regular_bgs_attributes_scene(text_generator);
         bn::core::update();
 
-        regular_bgs_attributes_hblank_effect_scene(text_generator);
+        regular_bgs_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         regular_bg_builder_scene(text_generator);

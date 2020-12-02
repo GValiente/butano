@@ -9,7 +9,7 @@
 #include "bn_optional.h"
 #include "bn_sprite_actions.h"
 #include "bn_regular_bg_actions.h"
-#include "bn_bg_palette_color_hblank_effect_ptr.h"
+#include "bn_bg_palette_color_hbe_ptr.h"
 
 namespace bf
 {
@@ -38,7 +38,7 @@ public:
 
 private:
     bn::optional<bn::regular_bg_move_by_action> _move_action;
-    bn::optional<bn::bg_palette_color_hblank_effect_ptr> _palette_hblank_effect;
+    bn::optional<bn::bg_palette_color_hbe_ptr> _palette_hbe;
     bn::optional<bn::sprite_move_to_action> _silhouette_up_sprite_move_action;
     bn::optional<bn::sprite_move_to_action> _silhouette_down_sprite_move_action;
     bn::optional<bn::sprite_scale_to_action> _silhouette_up_sprite_scale_action;

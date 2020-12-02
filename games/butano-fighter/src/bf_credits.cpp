@@ -233,7 +233,7 @@ namespace
         { &bn::sprite_items::stage_4_meteors_small, 2, 2, 2, 2 },
     };
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes = []{
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
 
         for(int index = 0; index < bn::display::height(); ++index)
@@ -250,8 +250,7 @@ namespace
 
 credits::credits(bn::sprite_text_generator& text_generator, butano_background& butano_background) :
     _text_generator(text_generator),
-    _hblank_effect(bn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
-                       bn::sprite_affine_mat_ptr::create(), _hblank_effect_attributes))
+    _hbe(bn::sprite_affine_mat_attributes_hbe_ptr::create(bn::sprite_affine_mat_ptr::create(), _hbe_attributes))
 {
     bn::blending::set_transparency_alpha(0);
     _blending_action.emplace(blending_frames, bn::fixed(0.5));
@@ -296,7 +295,7 @@ bn::optional<scene_type> credits::update()
         int x = (_random.get() % bn::display::width()) - (bn::display::width() / 2);
         int y_limit = (bn::display::height() + 64) / 2;
         bn::sprite_ptr sprite = background_item.sprite_item->create_sprite(x, y_limit);
-        sprite.set_affine_mat(_hblank_effect.affine_mat());
+        sprite.set_affine_mat(_hbe.affine_mat());
         sprite.set_double_size_mode(bn::sprite_double_size_mode::ENABLED);
         sprite.set_blending_enabled(true);
         x = (_random.get() % bn::display::width()) - (bn::display::width() / 2);

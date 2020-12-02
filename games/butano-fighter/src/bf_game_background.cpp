@@ -42,12 +42,11 @@ namespace
 background::background(const stage& stage, const bn::camera_ptr& camera) :
     _bottom_move_action(_create_bottom_bg(stage, camera), stage.background_bottom_bg_delta_position),
     _top_move_action(_create_top_bg(stage, camera), stage.background_top_bg_delta_position),
-    _hblank_effect(bn::regular_bg_position_hblank_effect_ptr::create_horizontal(
-                       _bottom_move_action.bg(), _hblank_effect_deltas))
+    _hbe(bn::regular_bg_position_hbe_ptr::create_horizontal(_bottom_move_action.bg(), _hbe_deltas))
 {
     bn::blending::set_transparency_alpha(blending_transparency);
     bn::window::internal().set_show_bg(_top_move_action.bg(), false);
-    _hblank_effect.set_visible(false);
+    _hbe.set_visible(false);
 }
 
 void background::set_visible(bool visible)
@@ -74,7 +73,7 @@ void background::show_bomb_close(int frames)
     bn::bgs_mosaic::set_stretch(0);
     _mosaic_action.reset();
 
-    _hblank_effect.set_visible(true);
+    _hbe.set_visible(true);
     _fade_frames = frames;
 }
 
@@ -124,7 +123,7 @@ void background::show_explosion_close(int frames)
     external_window.set_show_bg(bottom_bg, true);
     external_window.set_show_bg(top_bg, true);
 
-    _hblank_effect.set_visible(true);
+    _hbe.set_visible(true);
     _fade_frames = frames;
 }
 
@@ -227,51 +226,51 @@ void background::update()
         if(_fade_frames)
         {
             wave_generator wave_generator;
-            int hblank_effect_speed_multiplier;
-            int hblank_effect_amplitude;
+            int hbe_speed_multiplier;
+            int hbe_amplitude;
 
             switch(_fade_frames)
             {
 
             case 1:
-                hblank_effect_speed_multiplier = 1;
-                hblank_effect_amplitude = 1;
+                hbe_speed_multiplier = 1;
+                hbe_amplitude = 1;
                 break;
 
             case 2:
-                hblank_effect_speed_multiplier = 2;
-                hblank_effect_amplitude = 1;
+                hbe_speed_multiplier = 2;
+                hbe_amplitude = 1;
                 break;
 
             case 3:
-                hblank_effect_speed_multiplier = 4;
-                hblank_effect_amplitude = 2;
+                hbe_speed_multiplier = 4;
+                hbe_amplitude = 2;
                 break;
 
             case 4:
-                hblank_effect_speed_multiplier = 8;
-                hblank_effect_amplitude = 2;
+                hbe_speed_multiplier = 8;
+                hbe_amplitude = 2;
                 break;
 
             case 5:
-                hblank_effect_speed_multiplier = 16;
-                hblank_effect_amplitude = 3;
+                hbe_speed_multiplier = 16;
+                hbe_amplitude = 3;
                 break;
 
             default:
-                hblank_effect_speed_multiplier = 32;
-                hblank_effect_amplitude = 3;
+                hbe_speed_multiplier = 32;
+                hbe_amplitude = 3;
                 break;
             }
 
-            wave_generator.set_speed(_fade_frames * hblank_effect_speed_multiplier);
-            wave_generator.set_amplitude(hblank_effect_amplitude);
-            wave_generator.generate(_hblank_effect_deltas);
-            _hblank_effect.reload_deltas_ref();
+            wave_generator.set_speed(_fade_frames * hbe_speed_multiplier);
+            wave_generator.set_amplitude(hbe_amplitude);
+            wave_generator.generate(_hbe_deltas);
+            _hbe.reload_deltas_ref();
         }
         else
         {
-            _hblank_effect.set_visible(false);
+            _hbe.set_visible(false);
         }
     }
 }

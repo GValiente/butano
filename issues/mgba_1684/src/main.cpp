@@ -7,12 +7,12 @@
 #include "bn_display.h"
 #include "bn_bgs_mosaic.h"
 #include "bn_regular_bg_items_stage_1.h"
-#include "bn_regular_bg_position_hblank_effect_ptr.h"
+#include "bn_regular_bg_position_hbe_ptr.h"
 #include "wave_generator.h"
 
 namespace
 {
-    constexpr const bn::array<bn::fixed, bn::display::height()> hblank_effect_deltas = []{
+    constexpr const bn::array<bn::fixed, bn::display::height()> hbe_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;
@@ -27,8 +27,7 @@ int main()
     bg.set_mosaic_enabled(true);
     bn::bgs_mosaic::set_stretch(0.2);
 
-    bn::regular_bg_position_hblank_effect_ptr hblank_effect =
-            bn::regular_bg_position_hblank_effect_ptr::create_horizontal(move(bg), hblank_effect_deltas);
+    bn::regular_bg_position_hbe_ptr hbe = bn::regular_bg_position_hbe_ptr::create_horizontal(move(bg), hbe_deltas);
 
     while(true)
     {

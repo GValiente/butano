@@ -13,7 +13,7 @@
 #include "bn_bgs_mosaic_actions.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprites_mosaic_actions.h"
-#include "bn_mosaic_attributes_hblank_effect_ptr.h"
+#include "bn_mosaic_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_blonde.h"
 #include "bn_regular_bg_items_land.h"
@@ -165,7 +165,7 @@ namespace
         bn::bgs_mosaic::set_stretch(0);
     }
 
-    void mosaic_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void mosaic_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -189,8 +189,7 @@ namespace
             mosaic_attributes[(bn::display::height() / 2) - index - 1].set_horizontal_stretch(stretch);
         }
 
-        bn::mosaic_attributes_hblank_effect_ptr mosaic_hblank_effect =
-                bn::mosaic_attributes_hblank_effect_ptr::create(mosaic_attributes);
+        bn::mosaic_attributes_hbe_ptr mosaic_attributes_hbe = bn::mosaic_attributes_hbe_ptr::create(mosaic_attributes);
 
         while(! bn::keypad::start_pressed())
         {
@@ -221,7 +220,7 @@ int main()
         bgs_mosaic_actions_scene(text_generator);
         bn::core::update();
 
-        mosaic_hblank_effect_scene(text_generator);
+        mosaic_hbe_scene(text_generator);
         bn::core::update();
     }
 }

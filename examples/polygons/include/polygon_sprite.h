@@ -5,7 +5,7 @@
 #include "bn_fixed.h"
 #include "bn_vector.h"
 #include "bn_display.h"
-#include "bn_sprite_position_hblank_effect_ptr.h"
+#include "bn_sprite_position_hbe_ptr.h"
 
 class polygon;
 
@@ -38,9 +38,9 @@ private:
     bn::vector<const polygon*, 2> _polygons;
     bn::sprite_ptr _sprite;
     bn::array<bn::fixed, bn::display::height()> _vertical_values;
-    bn::sprite_position_hblank_effect_ptr _vertical_hblank_effect;
+    bn::sprite_position_hbe_ptr _vertical_hbe;
     bn::array<bn::fixed, bn::display::height()> _horizontal_values;
-    bn::sprite_position_hblank_effect_ptr _horizontal_hblank_effect;
+    bn::sprite_position_hbe_ptr _horizontal_hbe;
     bool _update = true;
 
     static void _draw_not_horizontal_line(bool left, int x0, int y0, int x1, int y1, hline* hlines);

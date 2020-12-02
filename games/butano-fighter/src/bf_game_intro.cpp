@@ -49,9 +49,9 @@ namespace
         return result;
     }
 
-    bn::sprite_third_attributes_hblank_effect_ptr _create_hblank_effect(
+    bn::sprite_third_attributes_hbe_ptr _create_hbe(
             const bn::sprite_ptr& sprite, const bn::sprite_palette_ptr& second_palette,
-            bn::ivector<bn::sprite_third_attributes>& hblank_effect_attributes)
+            bn::ivector<bn::sprite_third_attributes>& hbe_attributes)
     {
         bn::sprite_third_attributes attributes = sprite.third_attributes();
         bn::sprite_third_attributes alt_attributes = attributes;
@@ -59,13 +59,12 @@ namespace
 
         for(int index = 0; index < bn::display::height(); index += 2)
         {
-            hblank_effect_attributes.push_back(attributes);
-            hblank_effect_attributes.push_back(alt_attributes);
+            hbe_attributes.push_back(attributes);
+            hbe_attributes.push_back(alt_attributes);
         }
 
-        bn::span<const bn::sprite_third_attributes> attributes_span(
-                    hblank_effect_attributes.data(), bn::display::height());
-        return bn::sprite_third_attributes_hblank_effect_ptr::create(sprite, attributes_span);
+        bn::span<const bn::sprite_third_attributes> attributes_span(hbe_attributes.data(), bn::display::height());
+        return bn::sprite_third_attributes_hbe_ptr::create(sprite, attributes_span);
     }
 }
 
@@ -133,12 +132,10 @@ void intro::update(const butano_background& butano_background)
             second_palette.set_fade(bn::colors::black, 0.5);
             _background_sprite_palette_actions.emplace_back(first_palette, scale_frames, 0);
             _background_sprite_palette_actions.emplace_back(second_palette, scale_frames, 0);
-            _background_sprite_hblank_effects.push_back(
-                        _create_hblank_effect(
-                            _background_sprites[0], second_palette, _background_sprite_hblank_effect_attributes_1));
-            _background_sprite_hblank_effects.push_back(
-                        _create_hblank_effect(
-                            _background_sprites[1], second_palette, _background_sprite_hblank_effect_attributes_2));
+            _background_sprite_hbes.push_back(
+                        _create_hbe(_background_sprites[0], second_palette, _background_sprite_hbe_attributes_1));
+            _background_sprite_hbes.push_back(
+                        _create_hbe(_background_sprites[1], second_palette, _background_sprite_hbe_attributes_2));
 
             bn::rect_window internal_window = bn::rect_window::internal();
             internal_window.set_boundaries(0, -128, 0, 128);
@@ -314,9 +311,9 @@ void intro::update(const butano_background& butano_background)
             _background_sprite_palette_actions.clear();
             _window_move_top_action.reset();
             _window_move_bottom_action.reset();
-            _background_sprite_hblank_effects.clear();
-            _background_sprite_hblank_effect_attributes_1.clear();
-            _background_sprite_hblank_effect_attributes_2.clear();
+            _background_sprite_hbes.clear();
+            _background_sprite_hbe_attributes_1.clear();
+            _background_sprite_hbe_attributes_2.clear();
             _background_sprites.clear();
             _alt_palette.reset();
             _text_sprites.clear();

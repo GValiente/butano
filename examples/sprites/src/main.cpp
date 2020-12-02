@@ -17,13 +17,13 @@
 #include "bn_sprite_animate_actions.h"
 #include "bn_sprite_first_attributes.h"
 #include "bn_sprite_third_attributes.h"
+#include "bn_sprite_position_hbe_ptr.h"
+#include "bn_sprite_first_attributes_hbe_ptr.h"
+#include "bn_sprite_third_attributes_hbe_ptr.h"
 #include "bn_sprite_affine_second_attributes.h"
 #include "bn_sprite_regular_second_attributes.h"
-#include "bn_sprite_position_hblank_effect_ptr.h"
-#include "bn_sprite_first_attributes_hblank_effect_ptr.h"
-#include "bn_sprite_third_attributes_hblank_effect_ptr.h"
-#include "bn_sprite_affine_second_attributes_hblank_effect_ptr.h"
-#include "bn_sprite_regular_second_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_affine_second_attributes_hbe_ptr.h"
+#include "bn_sprite_regular_second_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_ninja.h"
 #include "bn_sprite_items_caveman.h"
@@ -141,7 +141,7 @@ namespace
         }
     }
 
-    void sprites_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void sprites_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -153,8 +153,8 @@ namespace
 
         bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
 
-        bn::sprite_position_hblank_effect_ptr horizontal_hblank_effect =
-                bn::sprite_position_hblank_effect_ptr::create_horizontal(red_sprite, horizontal_deltas);
+        bn::sprite_position_hbe_ptr horizontal_position_hbe =
+                bn::sprite_position_hbe_ptr::create_horizontal(red_sprite, horizontal_deltas);
 
         bn::fixed base_degrees_angle;
 
@@ -183,7 +183,7 @@ namespace
                 horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }
 
-            horizontal_hblank_effect.reload_deltas_ref();
+            horizontal_position_hbe.reload_deltas_ref();
             info.update();
             bn::core::update();
         }
@@ -669,7 +669,7 @@ namespace
         bn::sprites_mosaic::set_stretch(0);
     }
 
-    void sprites_first_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void sprites_first_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -703,8 +703,8 @@ namespace
         }
 
         bn::span<const bn::sprite_first_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::sprite_first_attributes_hblank_effect_ptr hblank_effect =
-                bn::sprite_first_attributes_hblank_effect_ptr::create(red_sprite, attributes_ref);
+        bn::sprite_first_attributes_hbe_ptr attributes_hbe =
+                bn::sprite_first_attributes_hbe_ptr::create(red_sprite, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -764,7 +764,7 @@ namespace
         }
     }
 
-    void sprites_regular_second_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void sprites_regular_second_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -793,8 +793,8 @@ namespace
         }
 
         bn::span<const bn::sprite_regular_second_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::sprite_regular_second_attributes_hblank_effect_ptr hblank_effect =
-                bn::sprite_regular_second_attributes_hblank_effect_ptr::create(red_sprite, attributes_ref);
+        bn::sprite_regular_second_attributes_hbe_ptr attributes_hbe =
+                bn::sprite_regular_second_attributes_hbe_ptr::create(red_sprite, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -854,7 +854,7 @@ namespace
         }
     }
 
-    void sprites_affine_second_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void sprites_affine_second_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -887,8 +887,8 @@ namespace
         }
 
         bn::span<const bn::sprite_affine_second_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::sprite_affine_second_attributes_hblank_effect_ptr hblank_effect =
-                bn::sprite_affine_second_attributes_hblank_effect_ptr::create(red_sprite, attributes_ref);
+        bn::sprite_affine_second_attributes_hbe_ptr attributes_hbe =
+                bn::sprite_affine_second_attributes_hbe_ptr::create(red_sprite, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -943,7 +943,7 @@ namespace
         }
     }
 
-    void sprites_third_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void sprites_third_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -974,8 +974,8 @@ namespace
         }
 
         bn::span<const bn::sprite_third_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::sprite_third_attributes_hblank_effect_ptr hblank_effect =
-                bn::sprite_third_attributes_hblank_effect_ptr::create(red_sprite, attributes_ref);
+        bn::sprite_third_attributes_hbe_ptr attributes_hbe =
+                bn::sprite_third_attributes_hbe_ptr::create(red_sprite, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -1038,7 +1038,7 @@ int main()
         sprites_position_actions_scene(text_generator);
         bn::core::update();
 
-        sprites_position_hblank_effect_scene(text_generator);
+        sprites_position_hbe_scene(text_generator);
         bn::core::update();
 
         sprites_animation_scene(text_generator);
@@ -1080,25 +1080,25 @@ int main()
         sprites_first_attributes_scene(text_generator);
         bn::core::update();
 
-        sprites_first_attributes_hblank_effect_scene(text_generator);
+        sprites_first_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         sprites_regular_second_attributes_scene(text_generator);
         bn::core::update();
 
-        sprites_regular_second_attributes_hblank_effect_scene(text_generator);
+        sprites_regular_second_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         sprites_affine_second_attributes_scene(text_generator);
         bn::core::update();
 
-        sprites_affine_second_attributes_hblank_effect_scene(text_generator);
+        sprites_affine_second_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         sprites_third_attributes_scene(text_generator);
         bn::core::update();
 
-        sprites_third_attributes_hblank_effect_scene(text_generator);
+        sprites_third_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         sprite_builder_scene(text_generator);

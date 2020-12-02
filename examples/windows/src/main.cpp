@@ -11,7 +11,7 @@
 #include "bn_regular_bg_ptr.h"
 #include "bn_rect_window_actions.h"
 #include "bn_sprite_text_generator.h"
-#include "bn_rect_window_boundaries_hblank_effect_ptr.h"
+#include "bn_rect_window_boundaries_hbe_ptr.h"
 
 #include "bn_sprite_items_circle.h"
 #include "bn_regular_bg_items_land.h"
@@ -161,7 +161,7 @@ namespace
         internal_window.set_boundaries(0, 0, 0, 0);
     }
 
-    void window_hblank_effect_scene(bn::regular_bg_ptr& clouds_bg, bn::sprite_text_generator& text_generator)
+    void window_hbe_scene(bn::regular_bg_ptr& clouds_bg, bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -175,8 +175,8 @@ namespace
         internal_window.set_bottom(amplitude);
 
         bn::array<bn::pair<bn::fixed, bn::fixed>, bn::display::height()> horizontal_boundaries;
-        bn::rect_window_boundaries_hblank_effect_ptr horizontal_hblank_effect =
-                bn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(internal_window, horizontal_boundaries);
+        bn::rect_window_boundaries_hbe_ptr horizontal_boundaries_hbe =
+                bn::rect_window_boundaries_hbe_ptr::create_horizontal(internal_window, horizontal_boundaries);
         bn::fixed base_degrees_angle;
 
         while(! bn::keypad::start_pressed())
@@ -206,7 +206,7 @@ namespace
                 horizontal_boundaries[(bn::display::height() / 2) - index - 1] = left_right;
             }
 
-            horizontal_hblank_effect.reload_deltas_ref();
+            horizontal_boundaries_hbe.reload_deltas_ref();
             clouds_bg.set_position(clouds_bg.x() + 0.5, clouds_bg.y() + 0.5);
             info.update();
             bn::core::update();
@@ -247,7 +247,7 @@ int main()
         window_actions_scene(text_generator);
         bn::core::update();
 
-        window_hblank_effect_scene(clouds_bg, text_generator);
+        window_hbe_scene(clouds_bg, text_generator);
         bn::core::update();
     }
 }

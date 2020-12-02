@@ -14,8 +14,8 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_palette_actions.h"
 #include "bn_sprite_palettes_actions.h"
-#include "bn_bg_palette_color_hblank_effect_ptr.h"
-#include "bn_bg_palettes_transparent_color_hblank_effect_ptr.h"
+#include "bn_bg_palette_color_hbe_ptr.h"
+#include "bn_bg_palettes_transparent_color_hbe_ptr.h"
 
 #include "bn_sprite_items_cavegirl.h"
 #include "bn_regular_bg_items_village.h"
@@ -434,7 +434,7 @@ namespace
         bn::sprite_palettes::set_intensity(0);
     }
 
-    void transparent_color_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void transparent_color_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -453,8 +453,8 @@ namespace
             colors[(bn::display::height() / 2) - index - 1] = color;
         }
 
-        bn::bg_palettes_transparent_color_hblank_effect_ptr hblank_effect =
-                bn::bg_palettes_transparent_color_hblank_effect_ptr::create(colors);
+        bn::bg_palettes_transparent_color_hbe_ptr colors_hbe =
+                bn::bg_palettes_transparent_color_hbe_ptr::create(colors);
 
         while(! bn::keypad::start_pressed())
         {
@@ -463,7 +463,7 @@ namespace
         }
     }
 
-    void palette_color_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void palette_color_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -483,8 +483,8 @@ namespace
             colors[(bn::display::height() / 2) - index - 1] = color;
         }
 
-        bn::bg_palette_color_hblank_effect_ptr hblank_effect =
-                bn::bg_palette_color_hblank_effect_ptr::create(village_bg.palette(), 1, colors);
+        bn::bg_palette_color_hbe_ptr colors_hbe =
+                bn::bg_palette_color_hbe_ptr::create(village_bg.palette(), 1, colors);
 
         while(! bn::keypad::start_pressed())
         {
@@ -548,10 +548,10 @@ int main()
         global_intensity_actions_scene(text_generator);
         bn::core::update();
 
-        transparent_color_hblank_effect_scene(text_generator);
+        transparent_color_hbe_scene(text_generator);
         bn::core::update();
 
-        palette_color_hblank_effect_scene(text_generator);
+        palette_color_hbe_scene(text_generator);
         bn::core::update();
     }
 }

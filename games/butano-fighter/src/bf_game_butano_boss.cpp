@@ -397,9 +397,8 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
             _move_window_bottom_action.emplace(external_window, 4);
 
             _circle_generator.set_radius(0);
-            _circle_generator.generate(_circle_hblank_effect_deltas);
-            _circle_hblank_effect = bn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(
-                        external_window, _circle_hblank_effect_deltas);
+            _circle_generator.generate(_circle_hbe_deltas);
+            _circle_hbe = bn::rect_window_boundaries_hbe_ptr::create_horizontal(external_window, _circle_hbe_deltas);
 
             _explosion_counter = 50;
             _flame_sound_counter = 0;
@@ -418,8 +417,8 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
                 _move_window_bottom_action->update();
 
                 _circle_generator.set_radius(_circle_generator.radius() + 4);
-                _circle_generator.generate(_circle_hblank_effect_deltas);
-                _circle_hblank_effect->reload_deltas_ref();
+                _circle_generator.generate(_circle_hbe_deltas);
+                _circle_hbe->reload_deltas_ref();
             }
             else
             {
@@ -429,7 +428,7 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
                 _move_window_top_action.reset();
                 _move_window_bottom_action.reset();
 
-                _circle_hblank_effect.reset();
+                _circle_hbe.reset();
                 ++_state_index;
 
                 _explosion_counter = 130;

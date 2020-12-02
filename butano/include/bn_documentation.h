@@ -1043,6 +1043,9 @@
  *
  * @section changelog_4_0_0 4.0.0 (next release)
  *
+ * * Affine backgrounds support.
+ *   See \ref affine_bg and the `affine_bgs`, `mode_7` and `world_map` examples for more.
+ * * bn::hblank_effect_ptr renamed to bn::hbe_ptr (all child classes have been renamed too).
  * * bn::sprite_affine_mat_attributes renamed to bn::affine_mat_attributes.
  * * bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.
  * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item.

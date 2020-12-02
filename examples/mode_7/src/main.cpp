@@ -9,10 +9,10 @@
 #include "bn_display.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
-#include "bn_affine_bg_pa_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_pc_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_dx_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_dy_register_hblank_effect_ptr.h"
+#include "bn_affine_bg_pa_register_hbe_ptr.h"
+#include "bn_affine_bg_pc_register_hbe_ptr.h"
+#include "bn_affine_bg_dx_register_hbe_ptr.h"
+#include "bn_affine_bg_dy_register_hbe_ptr.h"
 
 #include "bn_affine_bg_items_land.h"
 
@@ -93,8 +93,8 @@ namespace
         camera.z += (dir_x * camera.sin) + (dir_z * camera.cos);
     }
 
-    void update_hblank_effect_values(const camera& camera, int16_t* pa_values, int16_t* pc_values, int* dx_values,
-                                     int* dy_values)
+    void update_hbe_values(const camera& camera, int16_t* pa_values, int16_t* pc_values, int* dx_values,
+                           int* dy_values)
     {
         int camera_x = camera.x.data();
         int camera_y = camera.y.data() >> 4;
@@ -142,31 +142,27 @@ int main()
     bn::affine_bg_ptr bg = bn::affine_bg_items::land.create_bg(-376, -336);
 
     int16_t pa_values[bn::display::height()];
-    bn::affine_bg_pa_register_hblank_effect_ptr pa_hblank_effect =
-            bn::affine_bg_pa_register_hblank_effect_ptr::create(bg, pa_values);
+    bn::affine_bg_pa_register_hbe_ptr pa_hbe = bn::affine_bg_pa_register_hbe_ptr::create(bg, pa_values);
 
     int16_t pc_values[bn::display::height()];
-    bn::affine_bg_pc_register_hblank_effect_ptr pc_hblank_effect =
-            bn::affine_bg_pc_register_hblank_effect_ptr::create(bg, pc_values);
+    bn::affine_bg_pc_register_hbe_ptr pc_hbe = bn::affine_bg_pc_register_hbe_ptr::create(bg, pc_values);
 
     int dx_values[bn::display::height()];
-    bn::affine_bg_dx_register_hblank_effect_ptr dx_hblank_effect =
-            bn::affine_bg_dx_register_hblank_effect_ptr::create(bg, dx_values);
+    bn::affine_bg_dx_register_hbe_ptr dx_hbe = bn::affine_bg_dx_register_hbe_ptr::create(bg, dx_values);
 
     int dy_values[bn::display::height()];
-    bn::affine_bg_dy_register_hblank_effect_ptr dy_hblank_effect =
-            bn::affine_bg_dy_register_hblank_effect_ptr::create(bg, dy_values);
+    bn::affine_bg_dy_register_hbe_ptr dy_hbe = bn::affine_bg_dy_register_hbe_ptr::create(bg, dy_values);
 
     camera camera;
 
     while(true)
     {
         update_camera(camera);
-        update_hblank_effect_values(camera, pa_values, pc_values, dx_values, dy_values);
-        pa_hblank_effect.reload_values_ref();
-        pc_hblank_effect.reload_values_ref();
-        dx_hblank_effect.reload_values_ref();
-        dy_hblank_effect.reload_values_ref();
+        update_hbe_values(camera, pa_values, pc_values, dx_values, dy_values);
+        pa_hbe.reload_values_ref();
+        pc_hbe.reload_values_ref();
+        dx_hbe.reload_values_ref();
+        dy_hbe.reload_values_ref();
         info.update();
         bn::core::update();
     }

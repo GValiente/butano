@@ -9,11 +9,11 @@
 #include "bn_display.h"
 #include "bn_optional.h"
 #include "bn_bg_palettes.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_double_size_mode.h"
 #include "bn_sprite_affine_mat_actions.h"
-#include "bn_affine_mat_attributes.h"
-#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_red_sprite.h"
 #include "bn_sprite_items_blue_sprite.h"
@@ -274,8 +274,8 @@ namespace
         affine_mat.set_attributes(bn::affine_mat_attributes());
     }
 
-    void sprite_affine_mats_attributes_hblank_effect_scene(bn::sprite_affine_mat_ptr& affine_mat,
-                                                           bn::sprite_text_generator& text_generator)
+    void sprite_affine_mats_attributes_hbe_scene(bn::sprite_affine_mat_ptr& affine_mat,
+                                                 bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -285,8 +285,8 @@ namespace
 
         bn::affine_mat_attributes attributes[bn::display::height()];
 
-        bn::sprite_affine_mat_attributes_hblank_effect_ptr hblank_effect =
-                bn::sprite_affine_mat_attributes_hblank_effect_ptr::create(affine_mat, attributes);
+        bn::sprite_affine_mat_attributes_hbe_ptr attributes_hbe =
+                bn::sprite_affine_mat_attributes_hbe_ptr::create(affine_mat, attributes);
 
         bn::fixed base_degrees_angle;
 
@@ -315,7 +315,7 @@ namespace
                 attributes[(bn::display::height() / 2) - index - 1].set_horizontal_scale(1.5 + scale_inc);
             }
 
-            hblank_effect.reload_attributes_ref();
+            attributes_hbe.reload_attributes_ref();
             info.update();
             bn::core::update();
         }
@@ -370,7 +370,7 @@ int main()
         sprite_affine_mats_attributes_scene(affine_mat, text_generator);
         bn::core::update();
 
-        sprite_affine_mats_attributes_hblank_effect_scene(affine_mat, text_generator);
+        sprite_affine_mats_attributes_hbe_scene(affine_mat, text_generator);
         bn::core::update();
     }
 }

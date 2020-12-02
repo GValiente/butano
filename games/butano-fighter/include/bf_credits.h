@@ -13,7 +13,7 @@
 #include "bn_sprite_actions.h"
 #include "bn_blending_actions.h"
 #include "bn_sprite_animate_actions.h"
-#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_attributes_hbe_ptr.h"
 #include "bf_scene.h"
 
 namespace bn
@@ -48,7 +48,7 @@ private:
     };
 
     bn::sprite_text_generator& _text_generator;
-    bn::sprite_affine_mat_attributes_hblank_effect_ptr _hblank_effect;
+    bn::sprite_affine_mat_attributes_hbe_ptr _hbe;
     bn::deque<text_entry, 16> _text_entries;
     bn::deque<background_sprite, 8> _background_sprites;
     bn::optional<bn::blending_transparency_alpha_to_action> _blending_action;

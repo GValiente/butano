@@ -32,7 +32,7 @@ namespace
         return builder.release_build();
     }
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hblank_effect_attributes = []{
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
         bn::affine_mat_attributes base_attributes;
         base_attributes.set_scale(0.001);
 
@@ -74,8 +74,7 @@ void boss_intro::enable()
     x += 30;
     _sprites.push_back(_create_sprite(x, 6, affine_mat));
     _music_volume_action.emplace(amplitude * 2, 0);
-    _hblank_effect = bn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
-                bn::move(affine_mat), _hblank_effect_attributes);
+    _hbe = bn::sprite_affine_mat_attributes_hbe_ptr::create(bn::move(affine_mat), _hbe_attributes);
 
     _state = state::ACTIVE;
     _loops = 5;
@@ -107,7 +106,7 @@ void boss_intro::update()
                 bn::bg_palettes::set_contrast(0);
                 bn::sprite_palettes::set_contrast(0);
                 _sprites.clear();
-                _hblank_effect.reset();
+                _hbe.reset();
                 _loops = 0;
                 _state = state::DONE;
             }

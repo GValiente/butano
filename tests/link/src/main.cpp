@@ -17,7 +17,7 @@
 #include "bn_regular_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
-#include "bn_rect_window_boundaries_hblank_effect_ptr.h"
+#include "bn_rect_window_boundaries_hbe_ptr.h"
 
 #include "bn_music_items.h"
 #include "bn_sprite_items_ninja.h"
@@ -190,8 +190,8 @@ int main()
     internal_window.set_bottom(amplitude);
 
     bn::array<bn::pair<bn::fixed, bn::fixed>, bn::display::height()> horizontal_boundaries;
-    bn::rect_window_boundaries_hblank_effect_ptr horizontal_hblank_effect =
-            bn::rect_window_boundaries_hblank_effect_ptr::create_horizontal(internal_window, horizontal_boundaries);
+    bn::rect_window_boundaries_hbe_ptr horizontal_hblank_effect =
+            bn::rect_window_boundaries_hbe_ptr::create_horizontal(internal_window, horizontal_boundaries);
     bn::fixed base_degrees_angle;
 
     bn::music_items::soda7_xcopy_ohc.play();

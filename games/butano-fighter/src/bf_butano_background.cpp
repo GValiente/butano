@@ -19,7 +19,7 @@ namespace
 {
     constexpr const int show_hide_frames = 10;
 
-    constexpr const bn::array<bn::color, bn::display::height()> palette_hblank_effect_colors = []{
+    constexpr const bn::array<bn::color, bn::display::height()> palette_hbe_colors = []{
         bn::array<bn::color, bn::display::height()> result;
         bn::color color(14, 0, 0);
         int redInc = 16;
@@ -142,7 +142,7 @@ void butano_background::update()
                 if(_silhouette_up_sprite_move_action->sprite().horizontal_scale() > 1)
                 {
                     _move_action.reset();
-                    _palette_hblank_effect.reset();
+                    _palette_hbe.reset();
                 }
 
                 _silhouette_up_sprite_move_action.reset();
@@ -159,8 +159,7 @@ void butano_background::_set_visible()
     if(! _move_action)
     {
         bn::regular_bg_ptr bg = bn::regular_bg_items::butano_background.create_bg(0, 0);
-        _palette_hblank_effect = bn::bg_palette_color_hblank_effect_ptr::create(
-                    bg.palette(), 1, palette_hblank_effect_colors);
+        _palette_hbe = bn::bg_palette_color_hbe_ptr::create(bg.palette(), 1, palette_hbe_colors);
         _move_action.emplace(bn::move(bg), 1, -1);
     }
 }

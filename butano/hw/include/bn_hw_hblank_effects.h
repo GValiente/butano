@@ -6,7 +6,7 @@
 #ifndef BN_HW_HBLANK_EFFECTS_H
 #define BN_HW_HBLANK_EFFECTS_H
 
-#include "bn_config_hblank_effects.h"
+#include "bn_config_hbes.h"
 #include "bn_hw_irq.h"
 
 namespace bn::hw::hblank_effects
@@ -31,8 +31,8 @@ namespace bn::hw::hblank_effects
     {
 
     public:
-        uint16_entry uint16_entries[BN_CFG_HBLANK_EFFECTS_MAX_ITEMS];
-        uint32_entry uint32_entries[BN_CFG_HBLANK_EFFECTS_MAX_ITEMS];
+        uint16_entry uint16_entries[BN_CFG_HBES_MAX_ITEMS];
+        uint32_entry uint32_entries[BN_CFG_HBES_MAX_ITEMS];
         int uint16_entries_count = 0;
         int uint32_entries_count = 0;
     };

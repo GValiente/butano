@@ -13,8 +13,8 @@
 #include "bn_music_actions.h"
 #include "bn_sprite_actions.h"
 #include "bn_blending_actions.h"
-#include "bn_sprite_position_hblank_effect_ptr.h"
-#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_position_hbe_ptr.h"
+#include "bn_sprite_affine_mat_attributes_hbe_ptr.h"
 #include "bf_scene.h"
 
 namespace bn
@@ -63,11 +63,11 @@ private:
     bn::vector<bn::sprite_ptr, 2> _credits_text_sprites;
     bn::sprite_ptr _cursor_sprite;
     bn::fixed _butano_y_inc = -4.05;
-    bn::array<bn::fixed, bn::display::height()> _butano_x_hblank_effect_deltas;
-    bn::optional<bn::sprite_position_hblank_effect_ptr> _butano_up_x_hblank_effect;
-    bn::optional<bn::sprite_position_hblank_effect_ptr> _butano_down_x_hblank_effect;
+    bn::array<bn::fixed, bn::display::height()> _butano_x_hbe_deltas;
+    bn::optional<bn::sprite_position_hbe_ptr> _butano_up_x_hbe;
+    bn::optional<bn::sprite_position_hbe_ptr> _butano_down_x_hbe;
     bn::optional<bn::sprite_move_to_action> _butano_character_move_action;
-    bn::optional<bn::sprite_position_hblank_effect_ptr> _butano_character_hblank_effect;
+    bn::optional<bn::sprite_position_hbe_ptr> _butano_character_hbe;
     bn::optional<bn::sprite_move_to_action> _fighter_character_move_action;
     bn::optional<bn::sprite_move_to_action> _cursor_move_action;
     bn::optional<bn::sprite_scale_to_action> _cursor_scale_action;
@@ -76,8 +76,8 @@ private:
     bn::optional<bn::blending_transparency_alpha_to_action> _blending_transparency_action;
     state _state = state::START;
     int _menu_index = 0;
-    int _butano_x_hblank_effect_speed = 64 * 32;
-    bn::optional<bn::sprite_affine_mat_attributes_hblank_effect_ptr> _fighter_character_hblank_effect;
+    int _butano_x_hbe_speed = 64 * 32;
+    bn::optional<bn::sprite_affine_mat_attributes_hbe_ptr> _fighter_character_hbe;
     bool _butano_y_up = true;
 
     void _animate_butano_x();

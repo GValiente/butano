@@ -73,7 +73,7 @@ namespace
         return result;
     }
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hblank_effect_deltas = []{
+    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hbe_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         int start = 64;
 
@@ -85,7 +85,7 @@ namespace
         return result;
     }();
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hblank_effect_attributes = []{
+    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hbe_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 
@@ -106,10 +106,8 @@ title::title(const status& status, bn::sprite_text_generator& text_generator, bu
     _butano_characters(_create_butano_characters()),
     _fighter_characters(_create_fighter_characters()),
     _cursor_sprite(bn::sprite_items::hero_head.create_sprite(0, 0)),
-    _butano_up_x_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(
-                                   _butano_up_sprite, _butano_x_hblank_effect_deltas)),
-    _butano_down_x_hblank_effect(bn::sprite_position_hblank_effect_ptr::create_horizontal(
-                                     _butano_down_sprite, _butano_x_hblank_effect_deltas))
+    _butano_up_x_hbe(bn::sprite_position_hbe_ptr::create_horizontal(_butano_up_sprite, _butano_x_hbe_deltas)),
+    _butano_down_x_hbe(bn::sprite_position_hbe_ptr::create_horizontal(_butano_down_sprite, _butano_x_hbe_deltas))
 {
     bn::string<20> high_experience_text("HIGH EXP: ");
     high_experience_text.append(bn::to_string<8>(status.high_experience()));
@@ -162,32 +160,32 @@ bn::optional<scene_type> title::update()
 
 void title::_animate_butano_x()
 {
-    if(_butano_x_hblank_effect_speed)
+    if(_butano_x_hbe_speed)
     {
         wave_generator generator;
-        generator.set_speed(_butano_x_hblank_effect_speed);
+        generator.set_speed(_butano_x_hbe_speed);
 
-        if(_butano_x_hblank_effect_speed > 32)
+        if(_butano_x_hbe_speed > 32)
         {
             generator.set_amplitude(2);
-            _butano_x_hblank_effect_speed -= 32;
+            _butano_x_hbe_speed -= 32;
         }
         else
         {
             generator.set_amplitude(1);
-            _butano_x_hblank_effect_speed /= 2;
+            _butano_x_hbe_speed /= 2;
         }
 
-        generator.generate(_butano_x_hblank_effect_deltas);
-        _butano_up_x_hblank_effect->reload_deltas_ref();
-        _butano_down_x_hblank_effect->reload_deltas_ref();
+        generator.generate(_butano_x_hbe_deltas);
+        _butano_up_x_hbe->reload_deltas_ref();
+        _butano_down_x_hbe->reload_deltas_ref();
     }
     else
     {
-        if(_butano_up_x_hblank_effect)
+        if(_butano_up_x_hbe)
         {
-            _butano_up_x_hblank_effect.reset();
-            _butano_down_x_hblank_effect.reset();
+            _butano_up_x_hbe.reset();
+            _butano_down_x_hbe.reset();
         }
     }
 }
@@ -254,7 +252,7 @@ void title::_animate_butano_characters()
         if(_butano_character_move_action->done())
         {
             _butano_character_move_action.reset();
-            _butano_character_hblank_effect.reset();
+            _butano_character_hbe.reset();
         }
     }
     else
@@ -267,8 +265,8 @@ void title::_animate_butano_characters()
                 butano_character.set_y(0);
                 butano_character.set_visible(true);
                 _butano_character_move_action.emplace(butano_character, 12, position);
-                _butano_character_hblank_effect = bn::sprite_position_hblank_effect_ptr::create_vertical(
-                            butano_character, butano_character_hblank_effect_deltas);
+                _butano_character_hbe = bn::sprite_position_hbe_ptr::create_vertical(
+                            butano_character, butano_character_hbe_deltas);
                 return;
             }
         }
@@ -291,7 +289,7 @@ void title::_animate_fighter_characters()
         if(_fighter_character_move_action->done())
         {
             _fighter_character_move_action.reset();
-            _fighter_character_hblank_effect.reset();
+            _fighter_character_hbe.reset();
 
             for(bn::sprite_ptr& fighter_character : _fighter_characters)
             {
@@ -316,8 +314,8 @@ void title::_animate_fighter_characters()
                 bn::sprite_affine_mat_ptr affine_mat = bn::sprite_affine_mat_ptr::create();
                 fighter_character.set_affine_mat(affine_mat);
                 fighter_character.set_double_size_mode(bn::sprite_double_size_mode::ENABLED);
-                _fighter_character_hblank_effect = bn::sprite_affine_mat_attributes_hblank_effect_ptr::create(
-                            affine_mat, fighter_character_hblank_effect_attributes);
+                _fighter_character_hbe = bn::sprite_affine_mat_attributes_hbe_ptr::create(
+                            affine_mat, fighter_character_hbe_attributes);
                 return;
             }
         }

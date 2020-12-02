@@ -10,7 +10,7 @@
 #include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_music_actions.h"
-#include "bn_sprite_affine_mat_attributes_hblank_effect_ptr.h"
+#include "bn_sprite_affine_mat_attributes_hbe_ptr.h"
 
 namespace bf::game
 {
@@ -43,7 +43,7 @@ private:
 
     bn::vector<bn::sprite_ptr, 7> _sprites;
     bn::optional<bn::music_volume_to_action> _music_volume_action;
-    bn::optional<bn::sprite_affine_mat_attributes_hblank_effect_ptr> _hblank_effect;
+    bn::optional<bn::sprite_affine_mat_attributes_hbe_ptr> _hbe;
     state _state = state::INIT;
     int _loops = 0;
     int _counter = 0;

@@ -10,9 +10,9 @@
 #include "bn_blending_actions.h"
 #include "bn_blending_fade_alpha.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_blending_fade_alpha_hbe_ptr.h"
 #include "bn_blending_transparency_attributes.h"
-#include "bn_blending_fade_alpha_hblank_effect_ptr.h"
-#include "bn_blending_transparency_attributes_hblank_effect_ptr.h"
+#include "bn_blending_transparency_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_dinosaur.h"
 #include "bn_regular_bg_items_mountain.h"
@@ -220,8 +220,8 @@ namespace
         bn::blending::set_fade_alpha(0);
     }
 
-    void transparency_hblank_effect_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
-                                          bn::sprite_text_generator& text_generator)
+    void transparency_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -241,8 +241,8 @@ namespace
             transparency_attributes[(bn::display::height() / 2) - index - 1].set_transparency_alpha(transparency_alpha);
         }
 
-        bn::blending_transparency_attributes_hblank_effect_ptr transparency_hblank_effect =
-                bn::blending_transparency_attributes_hblank_effect_ptr::create(transparency_attributes);
+        bn::blending_transparency_attributes_hbe_ptr transparency_attributes_hbe =
+                bn::blending_transparency_attributes_hbe_ptr::create(transparency_attributes);
 
         while(! bn::keypad::start_pressed())
         {
@@ -251,8 +251,8 @@ namespace
         }
     }
 
-    void fade_hblank_effect_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
-                                          bn::sprite_text_generator& text_generator)
+    void fade_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                        bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -272,8 +272,7 @@ namespace
             fade_alphas[(bn::display::height() / 2) - index - 1].set_value(fade_alpha);
         }
 
-        bn::blending_fade_alpha_hblank_effect_ptr fade_hblank_effect =
-                bn::blending_fade_alpha_hblank_effect_ptr::create(fade_alphas);
+        bn::blending_fade_alpha_hbe_ptr fade_alphas_hbe = bn::blending_fade_alpha_hbe_ptr::create(fade_alphas);
 
         while(! bn::keypad::start_pressed())
         {
@@ -313,10 +312,10 @@ int main()
         fade_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
-        transparency_hblank_effect_scene(mountain_bg, dinosaur_sprite, text_generator);
+        transparency_hbe_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
-        fade_hblank_effect_scene(mountain_bg, dinosaur_sprite, text_generator);
+        fade_hbe_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
     }
 }

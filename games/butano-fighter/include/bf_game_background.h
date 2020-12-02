@@ -13,7 +13,7 @@
 #include "bn_bg_palette_actions.h"
 #include "bn_bgs_mosaic_actions.h"
 #include "bn_green_swap_actions.h"
-#include "bn_regular_bg_position_hblank_effect_ptr.h"
+#include "bn_regular_bg_position_hbe_ptr.h"
 
 namespace bf::game
 {
@@ -59,8 +59,8 @@ private:
     bn::regular_bg_move_by_action _top_move_action;
     bn::optional<bn::bgs_mosaic_stretch_loop_action> _mosaic_action;
     bn::optional<bn::blending_transparency_alpha_to_action> _blending_action;
-    bn::fixed _hblank_effect_deltas[bn::display::height()];
-    bn::regular_bg_position_hblank_effect_ptr _hblank_effect;
+    bn::fixed _hbe_deltas[bn::display::height()];
+    bn::regular_bg_position_hbe_ptr _hbe;
     bn::optional<bn::bg_palette_fade_to_action> _bottom_palette_fade_action;
     bn::optional<bn::bg_palette_fade_to_action> _top_palette_fade_action;
     bn::optional<bn::bg_palette_grayscale_to_action> _bottom_palette_grayscale_action;

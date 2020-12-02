@@ -17,9 +17,9 @@
 #include "bn_affine_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_mat_attributes.h"
-#include "bn_affine_bg_attributes_hblank_effect_ptr.h"
-#include "bn_affine_bg_pivot_position_hblank_effect_ptr.h"
-#include "bn_affine_bg_mat_attributes_hblank_effect_ptr.h"
+#include "bn_affine_bg_attributes_hbe_ptr.h"
+#include "bn_affine_bg_pivot_position_hbe_ptr.h"
+#include "bn_affine_bg_mat_attributes_hbe_ptr.h"
 
 #include "bn_sprite_items_pivot.h"
 #include "bn_sprite_items_turtle.h"
@@ -377,7 +377,7 @@ namespace
         }
     }
 
-    void affine_bgs_pivot_position_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_pivot_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -389,9 +389,8 @@ namespace
         red_bg.set_rotation_angle(45);
 
         bn::array<bn::fixed, bn::display::height()> horizontal_deltas;
-
-        bn::affine_bg_pivot_position_hblank_effect_ptr horizontal_hblank_effect =
-                bn::affine_bg_pivot_position_hblank_effect_ptr::create_horizontal(red_bg, horizontal_deltas);
+        bn::affine_bg_pivot_position_hbe_ptr horizontal_hbe =
+                bn::affine_bg_pivot_position_hbe_ptr::create_horizontal(red_bg, horizontal_deltas);
 
         bn::fixed base_degrees_angle;
 
@@ -420,13 +419,13 @@ namespace
                 horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }
 
-            horizontal_hblank_effect.reload_deltas_ref();
+            horizontal_hbe.reload_deltas_ref();
             info.update();
             bn::core::update();
         }
     }
 
-    void affine_bgs_mat_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_mat_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -449,8 +448,8 @@ namespace
             attributes[index] = base_attributes;
         }
 
-        bn::affine_bg_mat_attributes_hblank_effect_ptr hblank_effect =
-                bn::affine_bg_mat_attributes_hblank_effect_ptr::create(blue_bg, attributes);
+        bn::affine_bg_mat_attributes_hbe_ptr attributes_hbe =
+                bn::affine_bg_mat_attributes_hbe_ptr::create(blue_bg, attributes);
 
         bn::fixed base_degrees_angle;
 
@@ -479,7 +478,7 @@ namespace
                 attributes[(bn::display::height() / 2) - index - 1].set_rotation_angle(45 + rotation_inc);
             }
 
-            hblank_effect.reload_attributes_ref();
+            attributes_hbe.reload_attributes_ref();
             info.update();
             bn::core::update();
         }
@@ -666,7 +665,7 @@ namespace
         }
     }
 
-    void affine_bgs_attributes_hblank_effect_scene(bn::sprite_text_generator& text_generator)
+    void affine_bgs_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
             "START: go to next scene",
@@ -696,8 +695,8 @@ namespace
         }
 
         bn::span<const bn::affine_bg_attributes> attributes_ref(attributes.data(), attributes.size());
-        bn::affine_bg_attributes_hblank_effect_ptr hblank_effect =
-                bn::affine_bg_attributes_hblank_effect_ptr::create(red_bg, attributes_ref);
+        bn::affine_bg_attributes_hbe_ptr attributes_hbe =
+                bn::affine_bg_attributes_hbe_ptr::create(red_bg, attributes_ref);
 
         while(! bn::keypad::start_pressed())
         {
@@ -823,10 +822,10 @@ int main()
         affine_bgs_pivot_position_actions_scene(text_generator);
         bn::core::update();
 
-        affine_bgs_pivot_position_hblank_effect_scene(text_generator);
+        affine_bgs_pivot_position_hbe_scene(text_generator);
         bn::core::update();
 
-        affine_bgs_mat_attributes_hblank_effect_scene(text_generator);
+        affine_bgs_mat_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         affine_bgs_wrapping_scene(text_generator);
@@ -847,7 +846,7 @@ int main()
         affine_bgs_attributes_scene(text_generator);
         bn::core::update();
 
-        affine_bgs_attributes_hblank_effect_scene(text_generator);
+        affine_bgs_attributes_hbe_scene(text_generator);
         bn::core::update();
 
         affine_bgs_mat_attributes_scene(text_generator);

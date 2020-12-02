@@ -12,7 +12,7 @@
 #include "bn_fixed_rect.h"
 #include "bn_rect_window_actions.h"
 #include "bn_sprite_animate_actions.h"
-#include "bn_rect_window_boundaries_hblank_effect_ptr.h"
+#include "bn_rect_window_boundaries_hbe_ptr.h"
 #include "bf_game_boss.h"
 #include "bf_circle_generator.h"
 
@@ -71,9 +71,9 @@ private:
 
     bn::optional<bn::rect_window_move_top_by_action> _move_window_top_action;
     bn::optional<bn::rect_window_move_bottom_by_action> _move_window_bottom_action;
-    bn::pair<bn::fixed, bn::fixed> _circle_hblank_effect_deltas[bn::display::height()];
+    bn::pair<bn::fixed, bn::fixed> _circle_hbe_deltas[bn::display::height()];
     circle_generator _circle_generator;
-    bn::optional<bn::rect_window_boundaries_hblank_effect_ptr> _circle_hblank_effect;
+    bn::optional<bn::rect_window_boundaries_hbe_ptr> _circle_hbe;
     int _explosion_counter = 0;
     int _flame_sound_counter = 0;
 

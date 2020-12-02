@@ -12,10 +12,10 @@
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
-#include "bn_affine_bg_pa_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_pd_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_dx_register_hblank_effect_ptr.h"
-#include "bn_affine_bg_dy_register_hblank_effect_ptr.h"
+#include "bn_affine_bg_pa_register_hbe_ptr.h"
+#include "bn_affine_bg_pd_register_hbe_ptr.h"
+#include "bn_affine_bg_dx_register_hbe_ptr.h"
+#include "bn_affine_bg_dy_register_hbe_ptr.h"
 
 #include "info.h"
 #include "load_attributes.h"
@@ -53,26 +53,26 @@ int main()
     bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> land_attributes_ptr(
             new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
     bn::array<bn::affine_bg_mat_attributes, bn::display::height()>& land_attributes = *land_attributes_ptr;
-    bn::affine_bg_pa_register_hblank_effect_ptr land_pa_hblank_effect =
-            bn::affine_bg_pa_register_hblank_effect_ptr::create(land_bg, land_attributes._data);
-    bn::affine_bg_pd_register_hblank_effect_ptr land_pd_hblank_effect =
-            bn::affine_bg_pd_register_hblank_effect_ptr::create(land_bg, land_attributes._data);
-    bn::affine_bg_dx_register_hblank_effect_ptr land_dx_hblank_effect =
-            bn::affine_bg_dx_register_hblank_effect_ptr::create(land_bg, land_attributes._data);
-    bn::affine_bg_dy_register_hblank_effect_ptr land_dy_hblank_effect =
-            bn::affine_bg_dy_register_hblank_effect_ptr::create(land_bg, land_attributes._data);
+    bn::affine_bg_pa_register_hbe_ptr land_pa_hbe =
+            bn::affine_bg_pa_register_hbe_ptr::create(land_bg, land_attributes._data);
+    bn::affine_bg_pd_register_hbe_ptr land_pd_hbe =
+            bn::affine_bg_pd_register_hbe_ptr::create(land_bg, land_attributes._data);
+    bn::affine_bg_dx_register_hbe_ptr land_dx_hbe =
+            bn::affine_bg_dx_register_hbe_ptr::create(land_bg, land_attributes._data);
+    bn::affine_bg_dy_register_hbe_ptr land_dy_hbe =
+            bn::affine_bg_dy_register_hbe_ptr::create(land_bg, land_attributes._data);
 
     bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> clouds_attributes_ptr(
             new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
     bn::array<bn::affine_bg_mat_attributes, bn::display::height()>& clouds_attributes = *clouds_attributes_ptr;
-    bn::affine_bg_pa_register_hblank_effect_ptr clouds_pa_hblank_effect =
-            bn::affine_bg_pa_register_hblank_effect_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_pd_register_hblank_effect_ptr clouds_pd_hblank_effect =
-            bn::affine_bg_pd_register_hblank_effect_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dx_register_hblank_effect_ptr clouds_dx_hblank_effect =
-            bn::affine_bg_dx_register_hblank_effect_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dy_register_hblank_effect_ptr clouds_dy_hblank_effect =
-            bn::affine_bg_dy_register_hblank_effect_ptr::create(clouds_bg, clouds_attributes._data);
+    bn::affine_bg_pa_register_hbe_ptr clouds_pa_hbe =
+            bn::affine_bg_pa_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
+    bn::affine_bg_pd_register_hbe_ptr clouds_pd_hbe =
+            bn::affine_bg_pd_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
+    bn::affine_bg_dx_register_hbe_ptr clouds_dx_hbe =
+            bn::affine_bg_dx_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
+    bn::affine_bg_dy_register_hbe_ptr clouds_dy_hbe =
+            bn::affine_bg_dy_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
 
     bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
     bn::sprite_animate_action<4> ninja_animate_action = bn::create_sprite_animate_action_forever(
@@ -137,17 +137,17 @@ int main()
 
         if(first_frame)
         {
-            land_pa_hblank_effect.reload_attributes_ref();
-            land_pd_hblank_effect.reload_attributes_ref();
-            clouds_pa_hblank_effect.reload_attributes_ref();
-            clouds_pd_hblank_effect.reload_attributes_ref();
+            land_pa_hbe.reload_attributes_ref();
+            land_pd_hbe.reload_attributes_ref();
+            clouds_pa_hbe.reload_attributes_ref();
+            clouds_pd_hbe.reload_attributes_ref();
             first_frame = false;
         }
 
-        land_dx_hblank_effect.reload_attributes_ref();
-        land_dy_hblank_effect.reload_attributes_ref();
-        clouds_dx_hblank_effect.reload_attributes_ref();
-        clouds_dy_hblank_effect.reload_attributes_ref();
+        land_dx_hbe.reload_attributes_ref();
+        land_dy_hbe.reload_attributes_ref();
+        clouds_dx_hbe.reload_attributes_ref();
+        clouds_dy_hbe.reload_attributes_ref();
 
         if(key_held && last_direction.data != new_direction.data)
         {

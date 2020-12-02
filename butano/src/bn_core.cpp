@@ -79,10 +79,13 @@ namespace
         hblank_effects_manager::enable();
         link_manager::enable();
         audio_manager::enable();
+        hdma_manager::enable();
     }
 
     void disable(bool disable_audio)
     {
+        hdma_manager::disable();
+
         if(disable_audio)
         {
             audio_manager::disable();

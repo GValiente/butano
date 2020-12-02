@@ -10,6 +10,10 @@
 
 namespace bn::hdma_manager
 {
+    void enable();
+
+    void disable();
+
     void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref);
 
     void stop();

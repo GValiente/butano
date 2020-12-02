@@ -45,6 +45,16 @@ namespace
     }
 }
 
+void enable()
+{
+    commit();
+}
+
+void disable()
+{
+    hw::hdma::stop();
+}
+
 void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
     state& next_state = _next_state();
@@ -82,7 +92,7 @@ void update()
 
 void commit()
 {
-    state& current_state = _current_state();
+    const state& current_state = _current_state();
 
     if(int elements = current_state.elements)
     {

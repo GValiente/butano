@@ -83,7 +83,7 @@ public:
      * @param tiles Referenced tiles of the map to search.
      * @param palette Referenced color palette of the map to search.
      * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> find_map(
             const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette) const;
@@ -129,7 +129,7 @@ public:
      * @param palette Referenced color palette of the map to search or handle.
      * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
      * otherwise it returns an affine_bg_map_ptr which references it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_map_optional(
             affine_bg_tiles_ptr tiles, bg_palette_ptr palette) const;
@@ -147,7 +147,7 @@ public:
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
      * @return affine_bg_map_ptr which references the information provided by this item
-     * if the affine_bg_map_ptr can be allocated; `nullopt` otherwise.
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional(
             affine_bg_tiles_ptr tiles, bg_palette_ptr palette) const;

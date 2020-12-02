@@ -59,7 +59,7 @@ public:
      * the blending_transparency_attributes_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested blending_transparency_attributes_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<blending_transparency_attributes_hblank_effect_ptr> create_optional(
             const span<const blending_transparency_attributes>& attributes_ref);

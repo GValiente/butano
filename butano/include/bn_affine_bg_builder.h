@@ -66,7 +66,7 @@ public:
 
     /**
      * @brief Returns the affine_bg_item containing the required information to generate affine backgrounds
-     * if it has one; `nullopt` otherwise.
+     * if it has one; bn::nullopt otherwise.
      */
     [[nodiscard]] const optional<affine_bg_item>& item() const
     {
@@ -559,13 +559,13 @@ public:
 
     /**
      * @brief Generates and returns an affine_bg_ptr
-     * without releasing the acquired resources if it could be allocated; `nullopt` otherwise.
+     * without releasing the acquired resources if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_ptr> build_optional() const;
 
     /**
      * @brief Generates and returns an affine_bg_ptr releasing the acquired resources if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      *
      * This method must be called once at most.
      */
@@ -578,7 +578,7 @@ public:
 
     /**
      * @brief Generates and returns an affine_bg_map_ptr without releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> map_optional() const;
 
@@ -591,7 +591,7 @@ public:
 
     /**
      * @brief Generates and returns an affine_bg_map_ptr releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      *
      * This method must be called once at most.
      */

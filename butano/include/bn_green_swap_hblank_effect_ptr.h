@@ -53,7 +53,7 @@ public:
      * The states are not copied but referenced, so they should outlive
      * the green_swap_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested green_swap_hblank_effect_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested green_swap_hblank_effect_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<green_swap_hblank_effect_ptr> create_optional(const span<const bool>& states_ref);
 

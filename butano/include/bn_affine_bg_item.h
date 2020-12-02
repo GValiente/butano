@@ -126,21 +126,21 @@ public:
      * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(fixed x, fixed y) const;
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param position Position of the affine background.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(const fixed_point& position) const;
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
      * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> find_map() const;
 
@@ -179,7 +179,7 @@ public:
      *
      * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
      * otherwise it returns an affine_bg_map_ptr which references it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_map_optional() const;
 
@@ -194,7 +194,7 @@ public:
      * so they should outlive the affine_bg_map_ptr to avoid dangling references.
      *
      * @return affine_bg_map_ptr which references the information provided by this item
-     * if the affine_bg_map_ptr can be allocated; `nullopt` otherwise.
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional() const;
 

@@ -84,7 +84,7 @@ public:
      * @param x Horizontal position of the regular background.
      * @param y Vertical position of the regular background.
      * @param item regular_bg_item containing the required information to generate the regular background.
-     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_ptr> create_optional(fixed x, fixed y, const regular_bg_item& item);
 
@@ -92,7 +92,7 @@ public:
      * @brief Creates a regular_bg_ptr from the given regular_bg_item.
      * @param position Position of the regular background.
      * @param item regular_bg_item containing the required information to generate the regular background.
-     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
                                                                   const regular_bg_item& item);
@@ -100,14 +100,14 @@ public:
     /**
      * @brief Creates a regular_bg_ptr from a regular_bg_builder reference.
      * @param builder regular_bg_builder reference.
-     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_ptr> create_optional(const regular_bg_builder& builder);
 
     /**
      * @brief Creates a regular_bg_ptr from a moved regular_bg_builder.
      * @param builder regular_bg_builder to move.
-     * @return The requested regular_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_ptr> create_optional(regular_bg_builder&& builder);
 

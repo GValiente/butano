@@ -51,7 +51,7 @@ public:
      * @param tiles Referenced tiles of the map to search.
      * @param palette Referenced color palette of the map to search.
      * @return affine_bg_map_ptr which references the given information if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> find(
             const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
@@ -60,7 +60,7 @@ public:
      * @brief Searches for an affine_bg_map_ptr which references the given information.
      * @param item affine_bg_item which references the tiles, the color palette and the map cells to search.
      * @return affine_bg_map_ptr which references the given information if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> find(const affine_bg_item& item);
 
@@ -149,7 +149,7 @@ public:
      * @param palette Referenced color palette of the map to search or handle.
      * @return affine_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns an affine_bg_map_ptr which references it if the affine_bg_map_ptr can be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> create_optional(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -165,7 +165,7 @@ public:
      * the color palette and the map cells to search or handle.
      * @return affine_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns an affine_bg_map_ptr which references it if the affine_bg_map_ptr can be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> create_optional(const affine_bg_item& item);
 
@@ -183,7 +183,7 @@ public:
      * @param tiles Referenced tiles of the map to handle.
      * @param palette Referenced color palette of the map to handle.
      * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; `nullopt` otherwise.
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -200,7 +200,7 @@ public:
      *
      * @param item affine_bg_item which references the tiles, the color palette and the map cells to handle.
      * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; `nullopt` otherwise.
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(const affine_bg_item& item);
 
@@ -210,7 +210,7 @@ public:
      * @param tiles Referenced tiles of the map to allocate.
      * @param palette Referenced color palette of the map to allocate.
      * @return affine_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen
-     * if the affine_bg_map_ptr can be allocated; `nullopt` otherwise.
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> allocate_optional(
             const size& dimensions, affine_bg_tiles_ptr tiles, bg_palette_ptr palette);
@@ -277,7 +277,7 @@ public:
 
     /**
      * @brief Returns the referenced map cells unless it was created with allocate or allocate_optional.
-     * In that case, it returns `nullopt`.
+     * In that case, it returns bn::nullopt.
      */
     [[nodiscard]] optional<span<const affine_bg_map_cell>> cells_ref() const;
 
@@ -354,7 +354,7 @@ public:
 
     /**
      * @brief Returns the allocated memory in VRAM
-     * if this affine_bg_map_cell was created with allocate or allocate_optional; `nullopt` otherwise.
+     * if this affine_bg_map_cell was created with allocate or allocate_optional; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<span<affine_bg_map_cell>> vram();
 

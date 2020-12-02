@@ -85,7 +85,7 @@ public:
     /**
      * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> find_palette() const;
 
@@ -108,14 +108,14 @@ public:
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;
      * otherwise it returns a new sprite_palette_ptr which contains them it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> create_palette_optional() const;
 
     /**
      * @brief Creates a new sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> create_new_palette_optional() const;
 

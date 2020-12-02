@@ -86,7 +86,7 @@ public:
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(fixed x, fixed y, const affine_bg_item& item);
 
@@ -94,7 +94,7 @@ public:
      * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param position Position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(
             const fixed_point& position, const affine_bg_item& item);
@@ -102,14 +102,14 @@ public:
     /**
      * @brief Creates an affine_bg_ptr from an affine_bg_builder reference.
      * @param builder affine_bg_builder reference.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(const affine_bg_builder& builder);
 
     /**
      * @brief Creates an affine_bg_ptr from a moved affine_bg_builder.
      * @param builder affine_bg_builder to move.
-     * @return The requested affine_bg_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(affine_bg_builder&& builder);
 

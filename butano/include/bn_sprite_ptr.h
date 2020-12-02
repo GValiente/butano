@@ -129,7 +129,7 @@ public:
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(fixed x, fixed y, const sprite_item& item);
 
@@ -139,7 +139,7 @@ public:
      * @param y Vertical position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
      * @param graphics_index Index of the tile set to reference in item.tiles_item().
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(fixed x, fixed y, const sprite_item& item,
                                                               int graphics_index);
@@ -148,7 +148,7 @@ public:
      * @brief Creates a sprite_ptr from the given sprite_item.
      * @param position Position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(const fixed_point& position, const sprite_item& item);
 
@@ -157,7 +157,7 @@ public:
      * @param position Position of the sprite.
      * @param item sprite_item containing the required information to generate the sprite.
      * @param graphics_index Index of the tile set to reference in item.tiles_item().
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(const fixed_point& position, const sprite_item& item,
                                                               int graphics_index);
@@ -169,7 +169,7 @@ public:
      * @param shape_size Shape and size of the sprite.
      * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(
             fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette);
@@ -180,7 +180,7 @@ public:
      * @param shape_size Shape and size of the sprite.
      * @param tiles Smart pointer to a sprite tile set.
      * @param palette Smart pointer to a sprite color palette.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(
             const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
@@ -189,14 +189,14 @@ public:
     /**
      * @brief Creates a sprite_ptr from a sprite_builder reference.
      * @param builder sprite_builder reference.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(const sprite_builder& builder);
 
     /**
      * @brief Creates a sprite_ptr from a moved sprite_builder.
      * @param builder sprite_builder to move.
-     * @return The requested sprite_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_ptr> create_optional(sprite_builder&& builder);
 

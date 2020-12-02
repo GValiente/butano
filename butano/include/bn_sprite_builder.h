@@ -63,7 +63,7 @@ public:
 
     /**
      * @brief Returns the sprite_item containing the required information to generate sprites if it has one;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] const optional<sprite_item>& item() const
     {
@@ -503,13 +503,13 @@ public:
 
     /**
      * @brief Generates and returns a sprite_ptr without releasing the acquired resources if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_ptr> build_optional() const;
 
     /**
      * @brief Generates and returns a sprite_ptr releasing the acquired resources if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      *
      * This method must be called once at most.
      */
@@ -527,13 +527,13 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr without releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> tiles_optional() const;
 
     /**
      * @brief Generates and returns a sprite_palette_ptr without releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<sprite_palette_ptr> palette_optional() const;
 
@@ -553,7 +553,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_tiles_ptr releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      *
      * This method must be called once at most.
      */
@@ -561,7 +561,7 @@ public:
 
     /**
      * @brief Generates and returns a sprite_palette_ptr releasing the acquired resources
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      *
      * This method must be called once at most.
      */

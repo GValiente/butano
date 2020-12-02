@@ -45,7 +45,7 @@ public:
      * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors to search.
      * @return sprite_palette_ptr which contains the referenced colors by palette_item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> find(const sprite_palette_item& palette_item);
 
@@ -68,14 +68,14 @@ public:
      * @brief Searches for a sprite_palette_ptr which contains the given colors.
      * If it is not found, it creates a sprite_palette_ptr which contains them.
      * @param palette_item sprite_palette_item which references the colors of the palette to search or create.
-     * @return The requested sprite_palette_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_optional(const sprite_palette_item& palette_item);
 
     /**
      * @brief Creates a sprite_palette_ptr which contains the given colors.
      * @param palette_item sprite_palette_item which references the colors of the new palette.
-     * @return The requested sprite_palette_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested sprite_palette_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_palette_ptr> create_new_optional(const sprite_palette_item& palette_item);
 

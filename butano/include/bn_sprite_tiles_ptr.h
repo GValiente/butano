@@ -46,7 +46,7 @@ public:
      * @brief Searches for a sprite_tiles_ptr which references the given tiles.
      * @param tiles_item sprite_tiles_item which references the tiles to search.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item);
 
@@ -55,7 +55,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to search.
      * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> find(const sprite_tiles_item& tiles_item, int graphics_index);
 
@@ -134,7 +134,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; `nullopt` otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item);
 
@@ -148,7 +148,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to search or handle.
      * @param graphics_index Index of the tile set to search in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index) if it has been found;
-     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; `nullopt` otherwise.
+     * otherwise it returns a sprite_tiles_ptr which references them if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item,
                                                                     int graphics_index);
@@ -165,7 +165,7 @@ public:
      *
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item);
 
@@ -182,7 +182,7 @@ public:
      * @param tiles_item sprite_tiles_item which references the tiles to handle.
      * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
      * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index)
-     * if it could be allocated; `nullopt` otherwise.
+     * if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item,
                                                                         int graphics_index);
@@ -192,7 +192,7 @@ public:
      * @param tiles_count Number of tiles to allocate.
      * @param bpp Bits per pixel of the tiles to allocate.
      * @return sprite_tiles_ptr which references a chunk of VRAM tiles
-     * not visible on the screen if it could be allocated; `nullopt` otherwise.
+     * not visible on the screen if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_tiles_ptr> allocate_optional(int tiles_count, bpp_mode bpp);
 
@@ -253,7 +253,7 @@ public:
 
     /**
      * @brief Returns the referenced tiles unless it was created with allocate or allocate_optional.
-     * In that case, it returns `nullopt`.
+     * In that case, it returns bn::nullopt.
      */
     [[nodiscard]] optional<span<const tile>> tiles_ref() const;
 
@@ -291,7 +291,7 @@ public:
 
     /**
      * @brief Returns the allocated memory in VRAM
-     * if this sprite_tiles_ptr was created with allocate or allocate_optional; `nullopt` otherwise.
+     * if this sprite_tiles_ptr was created with allocate or allocate_optional; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<span<tile>> vram();
 

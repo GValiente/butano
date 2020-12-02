@@ -43,7 +43,7 @@ namespace bn::bg_palettes
     [[nodiscard]] int available_colors_count();
 
     /**
-     * @brief Returns the overridden transparent color of the backgrounds if any, `nullopt` otherwise.
+     * @brief Returns the overridden transparent color of the backgrounds if any, bn::nullopt otherwise.
      */
     [[nodiscard]] const optional<color>& transparent_color();
 

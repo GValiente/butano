@@ -94,7 +94,7 @@ public:
     /**
      * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
      * @return regular_bg_tiles_ptr which reference the background tiles if they have been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<regular_bg_tiles_ptr> find_tiles() const;
 
@@ -133,7 +133,7 @@ public:
      *
      * @return regular_bg_tiles_ptr which reference the background tiles if they have been found;
      * otherwise it returns a new regular_bg_tiles_ptr which reference them if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<regular_bg_tiles_ptr> create_tiles_optional() const;
 
@@ -148,7 +148,7 @@ public:
      * to avoid dangling references.
      *
      * @return regular_bg_tiles_ptr which reference the background tiles if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<regular_bg_tiles_ptr> create_new_tiles_optional() const;
 

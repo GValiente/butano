@@ -83,7 +83,7 @@ public:
     /**
      * @brief Searches for a bg_palette_ptr which contains the colors referenced by this item.
      * @return bg_palette_ptr which contains the colors referenced by this item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<bg_palette_ptr> find_palette() const;
 
@@ -106,14 +106,14 @@ public:
      * If it is not found, it creates a bg_palette_ptr which contains them.
      * @return bg_palette_ptr which contains the colors referenced by this item if it has been found;
      * otherwise it returns a new bg_palette_ptr which contains them it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<bg_palette_ptr> create_palette_optional() const;
 
     /**
      * @brief Creates a new bg_palette_ptr which contains the colors referenced by this item.
      * @return bg_palette_ptr which contains the colors referenced by this item it if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<bg_palette_ptr> create_new_palette_optional() const;
 

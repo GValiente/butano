@@ -75,7 +75,7 @@ public:
      * affine_bg_dx_register_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_dx_register_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_dx_register_hblank_effect_ptr> create_optional(
             affine_bg_ptr bg, const span<const affine_bg_mat_attributes>& attributes_ref);
@@ -91,7 +91,7 @@ public:
      * affine_bg_dx_register_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_dx_register_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_dx_register_hblank_effect_ptr> create_optional(
             affine_bg_ptr bg, const span<const int>& values_ref);

@@ -77,7 +77,7 @@ public:
      * sprite_affine_mat_pd_register_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pd_register_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_pd_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const affine_mat_attributes>& attributes_ref);
@@ -93,7 +93,7 @@ public:
      * sprite_affine_mat_pd_register_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pd_register_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_affine_mat_pd_register_hblank_effect_ptr> create_optional(
             sprite_affine_mat_ptr affine_mat, const span<const int16_t>& values_ref);

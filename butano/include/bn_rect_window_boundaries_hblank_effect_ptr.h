@@ -58,7 +58,7 @@ public:
      * to avoid dangling references.
      *
      * @return The requested rect_window_boundaries_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_horizontal_optional(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);
@@ -89,7 +89,7 @@ public:
      * to avoid dangling references.
      *
      * @return The requested rect_window_boundaries_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<rect_window_boundaries_hblank_effect_ptr> create_vertical_optional(
             rect_window window, const span<const pair<fixed, fixed>>& deltas_ref);

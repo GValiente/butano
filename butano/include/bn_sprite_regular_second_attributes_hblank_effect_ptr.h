@@ -66,7 +66,7 @@ public:
      * sprite_regular_second_attributes_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested sprite_regular_second_attributes_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<sprite_regular_second_attributes_hblank_effect_ptr> create_optional(
             sprite_ptr sprite, const span<const sprite_regular_second_attributes>& attributes_ref);

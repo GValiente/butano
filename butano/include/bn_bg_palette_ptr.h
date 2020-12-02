@@ -53,7 +53,7 @@ public:
      * @brief Searches for a bg_palette_ptr which contains the given colors.
      * @param palette_item bg_palette_item which references the colors to search.
      * @return bg_palette_ptr which contains the referenced colors by palette_item if it has been found;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<bg_palette_ptr> find(const bg_palette_item& palette_item);
 
@@ -76,14 +76,14 @@ public:
      * @brief Searches for a bg_palette_ptr which contains the given colors.
      * If it is not found, it creates a bg_palette_ptr which contains them.
      * @param palette_item bg_palette_item which references the colors of the palette to search or create.
-     * @return The requested bg_palette_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested bg_palette_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<bg_palette_ptr> create_optional(const bg_palette_item& palette_item);
 
     /**
      * @brief Creates a bg_palette_ptr which contains the given colors.
      * @param palette_item bg_palette_item which references the colors of the new palette.
-     * @return The requested bg_palette_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested bg_palette_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<bg_palette_ptr> create_new_optional(const bg_palette_item& palette_item);
 

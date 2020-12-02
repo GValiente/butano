@@ -59,7 +59,7 @@ public:
      * the bg_palettes_transparent_color_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested bg_palettes_transparent_color_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<bg_palettes_transparent_color_hblank_effect_ptr> create_optional(
             const span<const color>& colors_ref);

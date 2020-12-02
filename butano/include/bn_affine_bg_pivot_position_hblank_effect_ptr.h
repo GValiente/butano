@@ -60,7 +60,7 @@ public:
      * so they should outlive the affine_bg_pivot_position_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pivot_position_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_pivot_position_hblank_effect_ptr> create_horizontal_optional(
             affine_bg_ptr bg, const span<const fixed>& deltas_ref);
@@ -93,7 +93,7 @@ public:
      * so they should outlive the affine_bg_pivot_position_hblank_effect_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pivot_position_hblank_effect_ptr if it could be allocated;
-     * `nullopt` otherwise.
+     * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_pivot_position_hblank_effect_ptr> create_vertical_optional(
             affine_bg_ptr bg, const span<const fixed>& deltas_ref);

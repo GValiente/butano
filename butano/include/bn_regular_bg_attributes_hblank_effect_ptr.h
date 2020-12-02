@@ -58,7 +58,7 @@ public:
      * The attributes are not copied but referenced, so they should outlive
      * the regular_bg_attributes_hblank_effect_ptr to avoid dangling references.
      *
-     * @return The requested regular_bg_attributes_hblank_effect_ptr if it could be allocated; `nullopt` otherwise.
+     * @return The requested regular_bg_attributes_hblank_effect_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_attributes_hblank_effect_ptr> create_optional(
             regular_bg_ptr bg, const span<const regular_bg_attributes>& attributes_ref);

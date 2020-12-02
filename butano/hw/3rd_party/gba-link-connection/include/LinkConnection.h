@@ -1,7 +1,6 @@
 #ifndef LINK_CONNECTION_H
 #define LINK_CONNECTION_H
 
-#include <tonc_bios.h>
 #include <tonc_core.h>
 #include <tonc_memdef.h>
 #include <tonc_memmap.h>
@@ -16,18 +15,10 @@ static_assert(BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_9600_BPS ||
 
 static_assert(BN_CFG_LINK_SEND_WAIT > 0);
 
-static_assert(BN_CFG_LINK_RECV_WAIT >= 0);
-
 static_assert(bn::power_of_two(BN_CFG_LINK_MAX_MESSAGES));
 
 static_assert(BN_CFG_LINK_MAX_MISSING_MESSAGES >= 0);
 
-
-
-#if BN_CFG_LINK_RECV_WAIT > 0
-    #include "bn_timer.h"
-    #include "bn_timers.h"
-#endif
 
 #define LINK_MAX_PLAYERS 4
 #define LINK_DISCONNECTED 0xFFFF
@@ -38,7 +29,6 @@ static_assert(BN_CFG_LINK_MAX_MISSING_MESSAGES >= 0);
 #define LINK_DEFAULT_BUFFER_SIZE BN_CFG_LINK_MAX_MESSAGES
 #define LINK_DEFAULT_INTERVAL BN_CFG_LINK_SEND_WAIT
 #define LINK_DEFAULT_SEND_TIMER_ID 1
-#define LINK_TRANSFER_WAIT_CYCLES BN_CFG_LINK_RECV_WAIT
 #define LINK_BASE_FREQUENCY TM_FREQ_1024
 #define LINK_REMOTE_TIMEOUT_OFFLINE -1
 
@@ -171,8 +161,6 @@ public:
         if (!isEnabled || isBlocked)
             return;
         
-        wait();
-        
         if (resetIfNeeded())
             return;
         
@@ -184,7 +172,7 @@ public:
             u16 data = REG_SIOMULTI[i];
             
             if (data != LINK_DISCONNECTED) {
-                if (data != LINK_NO_DATA)
+                if (data != LINK_NO_DATA && i != linkState.currentPlayerId)
                     push(linkState._incomingMessages[i], data);
                 newPlayerCount++;
                 linkState._timeouts[i] = 0;
@@ -227,7 +215,6 @@ private:
         REG_SIOMLT_SEND = data;
         
         if (isMaster()) {
-            wait();
             setBitHigh(LINK_BIT_START);
         }
     }
@@ -290,16 +277,6 @@ private:
             q.pop_front();
         
         q.push_back(value);
-    }
-    
-    void wait() {
-        #if LINK_TRANSFER_WAIT_CYCLES > 0
-            bn::timer timer;
-
-            while(timer.elapsed_ticks() < (LINK_TRANSFER_WAIT_CYCLES / bn::timers::cpu_clocks_per_tick()) + 1)
-            {
-            }
-        #endif
     }
     
     bool isBitHigh(unsigned bit) { return (REG_SIOCNT >> bit) & 1; }

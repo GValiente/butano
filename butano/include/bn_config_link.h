@@ -39,20 +39,7 @@
  * @ingroup link
  */
 #ifndef BN_CFG_LINK_SEND_WAIT
-    #define BN_CFG_LINK_SEND_WAIT 100
-#endif
-
-/**
- * @def BN_CFG_LINK_RECV_WAIT
- *
- * Specifies how much time the GBA has to wait before receiving messages.
- *
- * You should probably leave this at 0.
- *
- * @ingroup link
- */
-#ifndef BN_CFG_LINK_RECV_WAIT
-    #define BN_CFG_LINK_RECV_WAIT 0
+    #define BN_CFG_LINK_SEND_WAIT 50
 #endif
 
 /**

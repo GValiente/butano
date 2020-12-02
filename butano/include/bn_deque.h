@@ -1334,7 +1334,6 @@ protected:
         {
             value_type& other_value = other_data[other._real_index(index)];
             ::new(data + index) value_type(move(other_value));
-            other_value.~value_type();
         }
 
         other._size = 0;

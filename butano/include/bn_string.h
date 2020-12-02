@@ -65,16 +65,6 @@ public:
     }
 
     /**
-     * @brief Returns a non-modifiable string_view of this istring.
-     *
-     * It is not ensured that the resulting string_view does not outlive the contents of this istring.
-     */
-    [[nodiscard]] constexpr operator string_view() const
-    {
-        return string_view(_data, _size);
-    }
-
-    /**
      * @brief Returns a const reverse iterator to the end of the characters data.
      */
     [[nodiscard]] constexpr const_reverse_iterator rbegin() const

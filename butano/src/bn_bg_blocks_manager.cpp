@@ -125,7 +125,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = unsigned(status);
+            _status = unsigned(status) & 3;
         }
 
         [[nodiscard]] int tiles_count() const
@@ -776,7 +776,7 @@ namespace
 
             if(create_item_at_back)
             {
-                item->blocks_count -= blocks_count;
+                item->blocks_count -= uint8_t(blocks_count);
 
                 item_type new_item;
                 new_item.start_block = uint8_t(start_block + item->blocks_count);
@@ -2350,7 +2350,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                uint16_t joined_value = (uint16_t(*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF);
+                auto joined_value = uint16_t(((*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2361,7 +2361,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                uint16_t joined_value = (uint16_t(*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF);
+                auto joined_value = uint16_t(((*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2372,7 +2372,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = (*u16_dest_data & 0xFF00) | (*source_data + tiles_offset);
+                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*source_data + tiles_offset));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2383,7 +2383,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = (*u16_dest_data & 0xFF00) | (*source_data + tiles_offset);
+                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*source_data + tiles_offset));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2397,7 +2397,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                uint16_t joined_value = (uint16_t(*source_data) << 8) | (*u16_dest_data & 0xFF);
+                auto joined_value = uint16_t((unsigned(*source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2408,7 +2408,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                uint16_t joined_value = (uint16_t(*source_data) << 8) | (*u16_dest_data & 0xFF);
+                uint16_t joined_value = uint16_t((unsigned(*source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2419,7 +2419,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = (*u16_dest_data & 0xFF00) | *source_data;
+                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *source_data);
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;
@@ -2430,7 +2430,7 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = (*u16_dest_data & 0xFF00) | *source_data;
+                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *source_data);
                 *u16_dest_data = joined_value;
                 dest_data += 32;
                 source_data += map_width;

@@ -74,7 +74,7 @@ void bg_palette_color_hbe_ptr::swap(bg_palette_color_hbe_ptr& other)
 bg_palette_color_hbe_ptr::bg_palette_color_hbe_ptr(int id, int color_index, bg_palette_ptr&& palette) :
     hbe_ptr(id),
     _palette(move(palette)),
-    _color_index(color_index)
+    _color_index(int16_t(color_index))
 {
 }
 

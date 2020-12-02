@@ -74,7 +74,7 @@ void sprite_palette_color_hbe_ptr::swap(sprite_palette_color_hbe_ptr& other)
 sprite_palette_color_hbe_ptr::sprite_palette_color_hbe_ptr(int id, int color_index, sprite_palette_ptr&& palette) :
     hbe_ptr(id),
     _palette(move(palette)),
-    _color_index(color_index)
+    _color_index(int16_t(color_index))
 {
 }
 

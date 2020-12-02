@@ -45,7 +45,7 @@ sprite_palette_ptr sprite_palette_ptr::create(const sprite_palette_item& palette
 
     if(palette_item.bpp() == bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_hash(colors);
+        uint16_t hash = palettes_bank::colors_hash(colors);
         id = sprite_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)
@@ -92,7 +92,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const sprite_pa
 
     if(palette_item.bpp() == bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_hash(colors);
+        uint16_t hash = palettes_bank::colors_hash(colors);
         id = sprite_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)

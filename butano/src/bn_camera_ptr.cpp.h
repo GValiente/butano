@@ -14,12 +14,14 @@ namespace bn
 
 camera_ptr camera_ptr::create(fixed x, fixed y)
 {
-    return camera_ptr(cameras_manager::create(fixed_point(x, y)));
+    int id = cameras_manager::create(fixed_point(x, y));
+    return camera_ptr(id);
 }
 
 camera_ptr camera_ptr::create(const fixed_point& position)
 {
-    return camera_ptr(cameras_manager::create(position));
+    int id = cameras_manager::create(position);
+    return camera_ptr(id);
 }
 
 optional<camera_ptr> camera_ptr::create_optional(fixed x, fixed y)

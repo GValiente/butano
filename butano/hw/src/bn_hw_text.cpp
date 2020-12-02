@@ -36,12 +36,12 @@ namespace
         {
             auto digit = int(value % 10);
             value /= 10;
-            *current_output_data = '0' + digit;
+            *current_output_data = char('0' + digit);
             ++current_output_data;
         }
 
         auto digit = int(value);
-        *current_output_data = '0' + digit;
+        *current_output_data = char('0' + digit);
         ++current_output_data;
         std::reverse(output_data, current_output_data);
         return current_output_data - output_data;

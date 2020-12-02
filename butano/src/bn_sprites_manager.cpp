@@ -1052,7 +1052,7 @@ void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* po
     }
 }
 
-void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode bpp_mode, int view_mode,
+void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode bpp, int view_mode,
         const sprite_first_attributes* first_attributes_ptr, uint16_t* dest_ptr)
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
@@ -1067,7 +1067,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
             {
                 int y = first_attributes.y().right_shift_integer();
                 int dest_value = hw::sprites::first_attributes(
-                            y, shape, bpp_mode, view_mode, first_attributes.mosaic_enabled(),
+                            y, shape, bpp, view_mode, first_attributes.mosaic_enabled(),
                             first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }
@@ -1087,7 +1087,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
             {
                 int y = hw_y + first_attributes.y().right_shift_integer();
                 int dest_value = hw::sprites::first_attributes(
-                            y, shape, bpp_mode, view_mode, first_attributes.mosaic_enabled(),
+                            y, shape, bpp, view_mode, first_attributes.mosaic_enabled(),
                             first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }

@@ -45,8 +45,8 @@ public:
         _rotation_angle(rotation_angle),
         _horizontal_scale(horizontal_scale),
         _vertical_scale(vertical_scale),
-        _hflip(1 - (2 * horizontal_flip)),
-        _vflip(1 - (2 * vertical_flip))
+        _hflip(int8_t(1 - (2 * horizontal_flip))),
+        _vflip(int8_t(1 - (2 * vertical_flip)))
     {
         BN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
         BN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
@@ -177,7 +177,7 @@ public:
      */
     constexpr void set_horizontal_flip(bool horizontal_flip)
     {
-        _hflip = 1 - (2 * horizontal_flip);
+        _hflip = int8_t(1 - (2 * horizontal_flip));
         _update_pa();
         _update_pb();
     }
@@ -195,7 +195,7 @@ public:
      */
     constexpr void set_vertical_flip(bool vertical_flip)
     {
-        _vflip = 1 - (2 * vertical_flip);
+        _vflip = int8_t(1 - (2 * vertical_flip));
         _update_pc();
         _update_pd();
     }

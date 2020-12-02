@@ -32,7 +32,7 @@ public:
         int count;
     };
 
-    [[nodiscard]] static unsigned colors_hash(const span<const color>& colors);
+    [[nodiscard]] static uint16_t colors_hash(const span<const color>& colors);
 
     [[nodiscard]] int used_colors_count() const;
 
@@ -45,11 +45,11 @@ public:
         void log_status() const;
     #endif
 
-    [[nodiscard]] int find_bpp_4(const span<const color>& colors, unsigned hash);
+    [[nodiscard]] int find_bpp_4(const span<const color>& colors, uint16_t hash);
 
     [[nodiscard]] int find_bpp_8(const span<const color>& colors);
 
-    [[nodiscard]] int create_bpp_4(const span<const color>& colors, unsigned hash, bool required);
+    [[nodiscard]] int create_bpp_4(const span<const color>& colors, uint16_t hash, bool required);
 
     [[nodiscard]] int create_bpp_8(const span<const color>& colors, bool required);
 

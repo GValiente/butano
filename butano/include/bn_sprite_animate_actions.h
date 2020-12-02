@@ -218,7 +218,7 @@ private:
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
-        for(int graphics_index : graphics_indexes)
+        for(uint16_t graphics_index : graphics_indexes)
         {
             _graphics_indexes.push_back(graphics_index);
         }
@@ -237,7 +237,7 @@ private:
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
 
-        for(int graphics_index : graphics_indexes)
+        for(uint16_t graphics_index : graphics_indexes)
         {
             _graphics_indexes.push_back(graphics_index);
         }

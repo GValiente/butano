@@ -55,7 +55,7 @@ public:
 private:
     id_type* _id = nullptr;
 
-    constexpr type_id_t(id_type* id) :
+    constexpr explicit type_id_t(id_type* id) :
         _id(id)
     {
     }
@@ -68,7 +68,7 @@ private:
 template<typename Type>
 [[nodiscard]] type_id_t type_id()
 {
-    return &type_id<Type>;
+    return type_id_t(&type_id<Type>);
 }
 
 }

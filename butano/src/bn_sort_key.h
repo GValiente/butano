@@ -49,7 +49,7 @@ public:
     {
         BN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
 
-        _fields.priority = priority;
+        _fields.priority = uint16_t(priority);
     }
 
     [[nodiscard]] constexpr int z_order() const
@@ -61,7 +61,7 @@ public:
     {
         BN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
 
-        _fields.z_order = z_order + numeric_limits<int16_t>::max();
+        _fields.z_order = uint16_t(z_order + numeric_limits<int16_t>::max());
     }
 
     [[nodiscard]] constexpr friend bool operator==(sort_key a, sort_key b)

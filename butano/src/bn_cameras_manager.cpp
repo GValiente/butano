@@ -47,7 +47,7 @@ namespace
 
 void init()
 {
-    for(int index = max_items - 1; index >= 0; --index)
+    for(int8_t index = max_items - 1; index >= 0; --index)
     {
         data.free_item_indexes.push_back(index);
     }
@@ -105,7 +105,7 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        data.free_item_indexes.push_back(id);
+        data.free_item_indexes.push_back(int8_t(id));
     }
 }
 

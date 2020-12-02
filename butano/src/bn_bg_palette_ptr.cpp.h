@@ -45,7 +45,7 @@ bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
 
     if(palette_item.bpp() == bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_hash(colors);
+        uint16_t hash = palettes_bank::colors_hash(colors);
         id = bg_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)
@@ -92,7 +92,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& 
 
     if(palette_item.bpp() == bpp_mode::BPP_4)
     {
-        unsigned hash = palettes_bank::colors_hash(colors);
+        uint16_t hash = palettes_bank::colors_hash(colors);
         id = bg_palettes_bank.find_bpp_4(colors, hash);
 
         if(id < 0)

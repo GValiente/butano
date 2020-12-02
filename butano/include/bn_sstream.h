@@ -286,7 +286,7 @@ public:
                         zeros *= 10;
                     }
 
-                    unsigned fraction_result = (uint64_t(fraction) * zeros) / unsigned(value.scale());
+                    auto fraction_result = unsigned((uint64_t(fraction) * zeros) / value.scale());
 
                     if(fraction_result)
                     {

@@ -30,7 +30,7 @@ namespace
     }
 }
 
-unsigned palettes_bank::colors_hash(const span<const color>& colors)
+uint16_t palettes_bank::colors_hash(const span<const color>& colors)
 {
     auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
     auto result = unsigned(colors.size());
@@ -39,10 +39,9 @@ unsigned palettes_bank::colors_hash(const span<const color>& colors)
     result += int_colors[2];
     result += int_colors[3];
     result += result >> 16;
-    result = unsigned(uint16_t(result));
 
     // Active palettes hash > 0:
-    return max(result, unsigned(1));
+    return max(uint16_t(result), uint16_t(1));
 }
 
 int palettes_bank::used_colors_count() const
@@ -80,7 +79,7 @@ int palettes_bank::used_colors_count() const
     }
 #endif
 
-int palettes_bank::find_bpp_4(const span<const color>& colors, unsigned hash)
+int palettes_bank::find_bpp_4(const span<const color>& colors, uint16_t hash)
 {
     auto bpp_4_indexes_map_it = _bpp_4_indexes_map.find(hash);
 
@@ -125,7 +124,7 @@ int palettes_bank::find_bpp_8(const span<const color>& colors)
     return -1;
 }
 
-int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, bool required)
+int palettes_bank::create_bpp_4(const span<const color>& colors, uint16_t hash, bool required)
 {
     int colors_count = colors.size();
     int required_slots_count = colors_count / hw::palettes::colors_per_palette();
@@ -156,7 +155,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, unsigned hash, 
                 }
 
                 _set_colors_bpp_impl(index, colors);
-                _bpp_4_indexes_map.insert_or_assign(hash, index);
+                _bpp_4_indexes_map.insert_or_assign(hash, int16_t(index));
                 return index;
             }
         }
@@ -279,13 +278,13 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 
     if(! pal.bpp_8)
     {
-        unsigned old_hash = pal.hash;
-        unsigned new_hash = colors_hash(colors);
+        uint16_t old_hash = pal.hash;
+        uint16_t new_hash = colors_hash(colors);
 
         if(old_hash != new_hash)
         {
             _bpp_4_indexes_map.erase(old_hash);
-            _bpp_4_indexes_map.insert_or_assign(new_hash, id);
+            _bpp_4_indexes_map.insert_or_assign(new_hash, int16_t(id));
             pal.hash = new_hash;
         }
     }

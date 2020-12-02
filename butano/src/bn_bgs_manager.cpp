@@ -266,6 +266,19 @@ namespace
             }
         }
 
+        [[nodiscard]] point affine_map_position() const
+        {
+            int map_x2 = (half_dimensions.width() - (bn::display::width() / 2) -
+                          affine_mat_attributes.x().right_shift_integer() +
+                          affine_mat_attributes.pivot_x().right_shift_integer()) >> 3;
+
+            int map_y2 = (half_dimensions.height() - (bn::display::height() / 2) -
+                          affine_mat_attributes.y().right_shift_integer() +
+                          affine_mat_attributes.pivot_y().right_shift_integer()) >> 3;
+
+            return point(map_x2, map_y2);
+        }
+
         void update_affine_hw_x()
         {
             int dx = affine_mat_attributes.dx_register_value();
@@ -274,10 +287,10 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(dx >= 0 && dx >> hw::bgs::affine_precision <
-                          (half_dimensions.width() * 2) - display::width(),
+                BN_ASSERT(affine_map_position().x() >= 0 && affine_map_position().x() <
+                          (half_dimensions.width() / 4) - (display::width() / 8),
                           "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          dx >> hw::bgs::affine_precision, " - ", (half_dimensions.width() * 2) - display::width());
+                          affine_map_position().x(), " - ", (half_dimensions.width() / 4) - (display::width() / 8));
 
                 commit_big_map = true;
             }
@@ -291,10 +304,10 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(dy >= 0 && dy >> hw::bgs::affine_precision <
-                          (half_dimensions.height() * 2) - display::height(),
+                BN_ASSERT(affine_map_position().y() >= 0 && affine_map_position().y() <
+                          (half_dimensions.height() / 4) - (display::height() / 8),
                           "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          dy >> hw::bgs::affine_precision, " - ", (half_dimensions.height() * 2) - display::height());
+                          affine_map_position().y(), " - ", (half_dimensions.height() / 4) - (display::height() / 8));
 
                 commit_big_map = true;
             }
@@ -1402,8 +1415,9 @@ void commit_big_maps()
             }
             else
             {
-                new_map_x = item->hw_position.x() >> (hw::bgs::affine_precision + 3);
-                new_map_y = item->hw_position.y() >> (hw::bgs::affine_precision + 3);
+                point affine_map_position = item->affine_map_position();
+                new_map_x = affine_map_position.x();
+                new_map_y = affine_map_position.y();
 
                 if(new_map_x % 2)
                 {

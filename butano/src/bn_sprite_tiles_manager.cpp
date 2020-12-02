@@ -350,12 +350,12 @@ namespace
     #endif
 
 
-    constexpr const auto lower_bound_comparator = [](int item_index, int tiles_count)
+    constexpr const auto lower_bound_comparator = [](int item_index, unsigned tiles_count)
     {
         return data.items.item(item_index).tiles_count < tiles_count;
     };
 
-    constexpr const auto upper_bound_comparator = [](int tiles_count, int item_index)
+    constexpr const auto upper_bound_comparator = [](unsigned tiles_count, int item_index)
     {
         return tiles_count < data.items.item(item_index).tiles_count;
     };

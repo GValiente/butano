@@ -36,7 +36,7 @@ void circle_generator::generate(bn::span<bn::pair<bn::fixed, bn::fixed>> values)
     bn::fixed d = 1 - _radius;
 
     bn::pair<bn::fixed, bn::fixed>* values_data = values.data();
-    bn::memclear(values_data, unsigned(values_count) * sizeof(bn::pair<bn::fixed, bn::fixed>));
+    bn::memclear(values_data, values_count * int(sizeof(bn::pair<bn::fixed, bn::fixed>)));
 
     while(y >= x)
     {

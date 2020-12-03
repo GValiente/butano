@@ -1041,7 +1041,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_4_0_0 4.0.0 (next release)
+ * @section changelog_4_0_0 4.0.0
  *
  * * Affine backgrounds support.
  *   See \ref affine_bg and the `affine_bgs`, `mode_7` and `world_map` examples for more.

@@ -96,13 +96,9 @@ public:
 
     static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
-        auto values_ptr = reinterpret_cast<const int*>(input_values_ptr);
-        auto result_ptr = reinterpret_cast<unsigned*>(output_values_ptr);
-
-        for(int index = 0; index < display::height(); ++index)
-        {
-            result_ptr[index] = unsigned(values_ptr[index]);
-        }
+        auto int_source = static_cast<const unsigned*>(input_values_ptr);
+        auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
+        memory::copy(*int_source, display::height(), *int_destination);
     }
 
     static void show(intptr_t)

@@ -12,9 +12,9 @@ namespace bn::hw::sram
 {
     void init();
 
-    BN_CODE_EWRAM void write(const void* source, int size, int offset);
+    void write(const void* source, int size, int offset);
 
-    BN_CODE_EWRAM void read(void* destination, int size, int offset);
+    void read(void* destination, int size, int offset);
 }
 
 #endif

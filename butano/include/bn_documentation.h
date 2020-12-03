@@ -1041,6 +1041,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_4_0_1 4.0.1 (next release)
+ *
+ * SRAM code moved from EWRAM to ROM to avoid a No$gba crash.
+ *
+ *
  * @section changelog_4_0_0 4.0.0
  *
  * * Affine backgrounds support.

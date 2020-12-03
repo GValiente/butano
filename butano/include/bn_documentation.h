@@ -1054,6 +1054,7 @@
  *   bn::core::last_cpu_usage() and bn::core::last_vblank_usage().
  * * Floating point methods of bn::fixed_t are only allowed at build time.
  * * bn::lut_reciprocal() added.
+ * * bn::core::current_cpu_usage() added.
  * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> updated to v2.1.4.
  * * bn::hdma is disabled when needed, like before sleeping or before an assert screen.
  * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.

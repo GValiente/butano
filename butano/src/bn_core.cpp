@@ -335,6 +335,12 @@ void reset()
     hw::core::reset();
 }
 
+fixed current_cpu_usage()
+{
+    int current_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+    return fixed(current_cpu_usage_ticks) / timers::ticks_per_frame();
+}
+
 fixed last_cpu_usage()
 {
     return fixed(data.last_cpu_usage_ticks) / timers::ticks_per_frame();

@@ -11,6 +11,7 @@
  * bn::affine_bg_pd_register_hbe_ptr header file.
  *
  * @ingroup affine_bg
+ * @ingroup affine_mat
  * @ingroup hblank_effect
  */
 

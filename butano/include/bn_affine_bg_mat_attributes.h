@@ -10,6 +10,7 @@
  * @file
  * bn::affine_bg_mat_attributes header file.
  *
+ * @ingroup affine_bg
  * @ingroup affine_mat
  */
 

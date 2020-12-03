@@ -11,6 +11,7 @@
  * bn::affine_bg_mat_attributes_hbe_ptr header file.
  *
  * @ingroup affine_bg
+ * @ingroup affine_mat
  * @ingroup hblank_effect
  */
 
@@ -186,6 +187,7 @@ private:
  * @brief Hash support for affine_bg_mat_attributes_hbe_ptr.
  *
  * @ingroup affine_bg
+ * @ingroup affine_mat
  * @ingroup hblank_effect
  * @ingroup functional
  */

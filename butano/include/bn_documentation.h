@@ -1052,7 +1052,6 @@
  * * bn::affine_mat_scale_lut replaced with bn::reciprocal_lut.
  * * bn::core::cpu_usage() and bn::core::vblank_usage() renamed to
  *   bn::core::last_cpu_usage() and bn::core::last_vblank_usage().
- * * Floating point methods of bn::fixed_t are only allowed at build time.
  * * bn::lut_reciprocal() added.
  * * bn::core::current_cpu_usage() added.
  * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> updated to v2.1.4.

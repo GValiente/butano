@@ -92,7 +92,7 @@ public:
      * @brief Constructor.
      * @param value Single precision floating point value.
      */
-    consteval fixed_t(float value) :
+    constexpr fixed_t(float value) :
         _data(int(value * scale()))
     {
     }
@@ -101,7 +101,7 @@ public:
      * @brief Constructor.
      * @param value Double precision floating point value.
      */
-    consteval fixed_t(double value) :
+    constexpr fixed_t(double value) :
         _data(int(value * scale()))
     {
     }
@@ -178,7 +178,7 @@ public:
     /**
      * @brief Returns the nearest single precision floating point value.
      */
-    [[nodiscard]] consteval float to_float() const
+    [[nodiscard]] constexpr float to_float() const
     {
         return float(_data) / scale();
     }
@@ -186,7 +186,7 @@ public:
     /**
      * @brief Returns the nearest double precision floating point value.
      */
-    [[nodiscard]] consteval double to_double() const
+    [[nodiscard]] constexpr double to_double() const
     {
         return double(_data) / scale();
     }

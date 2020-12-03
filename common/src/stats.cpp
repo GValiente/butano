@@ -91,7 +91,7 @@ void stats::update()
         break;
     }
 
-    _max_cpu_usage = bn::max(_max_cpu_usage, bn::core::cpu_usage());
+    _max_cpu_usage = bn::max(_max_cpu_usage, bn::core::last_cpu_usage());
 
     if(! _counter)
     {

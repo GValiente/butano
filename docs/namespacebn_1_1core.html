@@ -90,13 +90,13 @@
             </dt>
             <dd>Resets the GBA, going back to the start of main().</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a62e7a7b6a781ebc70130f70a8857172b" class="m-doc">cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc">last_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
-            <dd>Returns the current CPU usage.</dd>
+            <dd>Returns the CPU usage of the last elapsed frame.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2f118cd6b2fa7a8ea81f2afe3bdb2646" class="m-doc">vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
-            <dd>Returns the current V-Blank usage.</dd>
+            <dd>Returns the V-Blank usage of the last elapsed frame.</dd>
           </dl>
         </section>
         <section>
@@ -126,18 +126,18 @@
             <p>Resets the GBA, going back to the start of main().</p>
 <p>Keep in mind that it doesn&#x27;t rewind the stack, so alive objects are not destroyed.</p>
           </div></section>
-          <section class="m-doc-details" id="a62e7a7b6a781ebc70130f70a8857172b"><div>
+          <section class="m-doc-details" id="a5c36ceb40cf617f8ffa442bbf15126c1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62e7a7b6a781ebc70130f70a8857172b" class="m-doc-self">cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc-self">last_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Returns the current CPU usage.</p>
+            <p>Returns the CPU usage of the last elapsed frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh has been missed.</p>
           </div></section>
-          <section class="m-doc-details" id="a2f118cd6b2fa7a8ea81f2afe3bdb2646"><div>
+          <section class="m-doc-details" id="aace6487154c238af8d207e0e400f6fcf"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2f118cd6b2fa7a8ea81f2afe3bdb2646" class="m-doc-self">vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Returns the current V-Blank usage.</p>
+            <p>Returns the V-Blank usage of the last elapsed frame.</p>
 <p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components being updated.</p>
           </div></section>
         </section>

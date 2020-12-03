@@ -68,8 +68,8 @@ namespace
 
     public:
         timer cpu_usage_timer;
-        int cpu_usage_ticks = 0;
-        int vblank_usage_ticks = 0;
+        int last_cpu_usage_ticks = 0;
+        int last_vblank_usage_ticks = 0;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -204,7 +204,7 @@ void update()
     BN_PROFILER_ENGINE_STOP();
 
     BN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+    data.last_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     BN_PROFILER_ENGINE_STOP();
 
     audio_manager::disable_vblank_handler();
@@ -247,7 +247,7 @@ void update()
     BN_PROFILER_ENGINE_STOP();
 
     BN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+    data.last_vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     BN_PROFILER_ENGINE_STOP();
 
     BN_PROFILER_ENGINE_START("eng_audio_commit");
@@ -335,14 +335,14 @@ void reset()
     hw::core::reset();
 }
 
-fixed cpu_usage()
+fixed last_cpu_usage()
 {
-    return fixed(data.cpu_usage_ticks) / timers::ticks_per_frame();
+    return fixed(data.last_cpu_usage_ticks) / timers::ticks_per_frame();
 }
 
-fixed vblank_usage()
+fixed last_vblank_usage()
 {
-    return fixed(data.vblank_usage_ticks) / timers::ticks_per_vblank();
+    return fixed(data.last_vblank_usage_ticks) / timers::ticks_per_vblank();
 }
 
 }

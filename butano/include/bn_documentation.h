@@ -1050,6 +1050,8 @@
  * * bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.
  * * bn::bg_tiles_item renamed to bn::regular_bg_tiles_item.
  * * bn::affine_mat_scale_lut replaced with bn::reciprocal_lut.
+ * * bn::core::cpu_usage() and bn::core::vblank_usage() renamed to
+ *   bn::core::last_cpu_usage() and bn::core::last_vblank_usage().
  * * Floating point methods of bn::fixed_t are only allowed at build time.
  * * bn::lut_reciprocal() added.
  * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> updated to v2.1.4.

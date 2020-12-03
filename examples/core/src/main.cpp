@@ -33,7 +33,7 @@ namespace
 
         while(! bn::keypad::start_pressed())
         {
-            max_cpu_usage = bn::max(max_cpu_usage, bn::core::cpu_usage());
+            max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
             --counter;
 
             if(! counter)

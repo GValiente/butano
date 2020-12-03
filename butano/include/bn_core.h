@@ -69,19 +69,19 @@ namespace bn::core
     [[noreturn]] void reset();
 
     /**
-     * @brief Returns the current CPU usage.
+     * @brief Returns the CPU usage of the last elapsed frame.
      *
      * A CPU usage greater than 1 means that at least one screen refresh has been missed.
      */
-    [[nodiscard]] fixed cpu_usage();
+    [[nodiscard]] fixed last_cpu_usage();
 
     /**
-     * @brief Returns the current V-Blank usage.
+     * @brief Returns the V-Blank usage of the last elapsed frame.
      *
      * A V-Blank usage greater than 1 means that the screen is being redrawn
      * before all of GBA display components being updated.
      */
-    [[nodiscard]] fixed vblank_usage();
+    [[nodiscard]] fixed last_vblank_usage();
 }
 
 #endif

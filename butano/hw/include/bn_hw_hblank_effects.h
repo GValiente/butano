@@ -17,6 +17,11 @@ namespace bn::hw::hblank_effects
     public:
         const uint16_t* src;
         volatile uint16_t* dest;
+
+        void update(unsigned vcount)
+        {
+            *dest = src[vcount];
+        }
     };
 
     class uint32_entry
@@ -25,6 +30,11 @@ namespace bn::hw::hblank_effects
     public:
         const unsigned* src;
         volatile unsigned* dest;
+
+        void update(unsigned vcount)
+        {
+            *dest = src[vcount];
+        }
     };
 
     class entries

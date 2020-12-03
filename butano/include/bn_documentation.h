@@ -1041,9 +1041,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_4_0_1 4.0.1 (next release)
+ * @section changelog_4_1_0 4.1.0 (next release)
  *
- * SRAM code moved from EWRAM to ROM to avoid a No$gba crash.
+ * * H-Blank effects optimized (it fixes `world_map` example flickering).
+ * * SRAM code moved from EWRAM to ROM to avoid a No$gba crash.
  *
  *
  * @section changelog_4_0_0 4.0.0

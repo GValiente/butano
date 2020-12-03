@@ -1262,6 +1262,8 @@ void update()
             }
         }
 
+        BN_ASSERT(entries->uint32_entries_count <= 4, "Too much 32 bits entries: ", entries->uint32_entries_count);
+
         external_data.visible_entries = visible_entries;
         external_data.commit = true;
     }

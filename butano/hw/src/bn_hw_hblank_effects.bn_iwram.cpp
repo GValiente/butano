@@ -44,21 +44,109 @@ void _intr()
 
     entries* entries_ptr = data.entries_ptr;
     uint16_entry* uint16_entries = entries_ptr->uint16_entries;
-    int uint16_entries_count = entries_ptr->uint16_entries_count;
 
-    for(int index = 0; index < uint16_entries_count; ++index)
+    switch(entries_ptr->uint16_entries_count)
     {
-        uint16_entry& entry = uint16_entries[index];
-        *entry.dest = entry.src[vcount];
+
+    case 0:
+        break;
+
+    case 1:
+        uint16_entries[0].update(vcount);
+        break;
+
+    case 2:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        break;
+
+    case 3:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        break;
+
+    case 4:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        uint16_entries[3].update(vcount);
+        break;
+
+    case 5:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        uint16_entries[3].update(vcount);
+        uint16_entries[4].update(vcount);
+        break;
+
+    case 6:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        uint16_entries[3].update(vcount);
+        uint16_entries[4].update(vcount);
+        uint16_entries[5].update(vcount);
+        break;
+
+    case 7:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        uint16_entries[3].update(vcount);
+        uint16_entries[4].update(vcount);
+        uint16_entries[5].update(vcount);
+        uint16_entries[6].update(vcount);
+        break;
+
+    case 8:
+        uint16_entries[0].update(vcount);
+        uint16_entries[1].update(vcount);
+        uint16_entries[2].update(vcount);
+        uint16_entries[3].update(vcount);
+        uint16_entries[4].update(vcount);
+        uint16_entries[5].update(vcount);
+        uint16_entries[6].update(vcount);
+        uint16_entries[7].update(vcount);
+        break;
+
+    default:
+        break;
     }
 
     uint32_entry* uint32_entries = entries_ptr->uint32_entries;
-    int uint32_entries_count = entries_ptr->uint32_entries_count;
 
-    for(int index = 0; index < uint32_entries_count; ++index)
+    switch(entries_ptr->uint32_entries_count)
     {
-        uint32_entry& entry = uint32_entries[index];
-        *entry.dest = entry.src[vcount];
+
+    case 0:
+        break;
+
+    case 1:
+        uint32_entries[0].update(vcount);
+        break;
+
+    case 2:
+        uint32_entries[0].update(vcount);
+        uint32_entries[1].update(vcount);
+        break;
+
+    case 3:
+        uint32_entries[0].update(vcount);
+        uint32_entries[1].update(vcount);
+        uint32_entries[2].update(vcount);
+        break;
+
+    case 4:
+        uint32_entries[0].update(vcount);
+        uint32_entries[1].update(vcount);
+        uint32_entries[2].update(vcount);
+        uint32_entries[3].update(vcount);
+        break;
+
+    default:
+        break;
     }
 }
 

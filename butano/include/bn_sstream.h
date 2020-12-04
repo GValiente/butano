@@ -13,7 +13,6 @@
  * @ingroup string
  */
 
-#include "bn_cstddef.h"
 #include "bn_fixed_fwd.h"
 #include "bn_string_fwd.h"
 

@@ -16,7 +16,6 @@
 
 #include <memory>
 #include "bn_assert.h"
-#include "bn_cstddef.h"
 #include "bn_utility.h"
 #include "bn_alignment.h"
 #include "bn_functional.h"

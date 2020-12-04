@@ -14,6 +14,7 @@
  */
 
 #include <cstdint>
+#include <cstddef>
 #include "../hw/include/bn_hw_common.h"
 
 /**
@@ -24,5 +25,10 @@
  * @ingroup other
  */
 #define BN_UNREACHABLE __builtin_unreachable
+
+namespace bn
+{
+    using std::nullptr_t;
+}
 
 #endif

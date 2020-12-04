@@ -1041,6 +1041,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_4_2_0 4.2.0 (next release)
+ *
+ * `<cstddef>` is always included (bn_cstddef.h header file removed).
+ *
+ *
  * @section changelog_4_1_0 4.1.0
  *
  * * H-Blank effects optimized (it fixes `world_map` example flickering).

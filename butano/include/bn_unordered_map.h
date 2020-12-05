@@ -1108,7 +1108,7 @@ public:
             _last_valid_index = last_valid_index;
 
             int other_max_size = other.max_size();
-            memory::clear(other_max_size, *other.allocated);
+            memory::clear(other_max_size, *other._allocated);
             other._first_valid_index = other_max_size;
             other._last_valid_index = 0;
             other._size = 0;
@@ -1355,16 +1355,6 @@ protected:
         BN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
 
-    /// @endcond
-
-private:
-    pointer _storage;
-    bool* _allocated;
-    size_type _max_size_minus_one;
-    size_type _first_valid_index;
-    size_type _last_valid_index = 0;
-    size_type _size = 0;
-
     void _assign(const iunordered_map& other)
     {
         const_pointer other_storage = other._storage;
@@ -1410,11 +1400,21 @@ private:
         _last_valid_index = other._last_valid_index;
         _size = other._size;
 
-        memory::clear(other_max_size, *other.allocated);
+        memory::clear(other_max_size, *other._allocated);
         other._first_valid_index = other_max_size;
         other._last_valid_index = 0;
         other._size = 0;
     }
+
+    /// @endcond
+
+private:
+    pointer _storage;
+    bool* _allocated;
+    size_type _max_size_minus_one;
+    size_type _first_valid_index;
+    size_type _last_valid_index = 0;
+    size_type _size = 0;
 
     [[nodiscard]] size_type _index(hash_type key_hash) const
     {

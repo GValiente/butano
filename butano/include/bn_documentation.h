@@ -1086,7 +1086,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_4_2_0 4.2.0 (next release)
+ * @section changelog_4_2_0 4.2.0
  *
  * * Sprite and background palettes can be generated from images alone, without tiles nor maps.
  * * `<cstddef>` is always included (`bn_cstddef.h` header file removed).

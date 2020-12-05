@@ -36,7 +36,7 @@
  * @ingroup log
  */
 #ifndef BN_CFG_LOG_BACKEND
-    #define BN_CFG_LOG_BACKEND BN_LOG_BACKEND_MGBA
+    #define BN_CFG_LOG_BACKEND BN_LOG_BACKEND_VBA
 #endif
 
 /**

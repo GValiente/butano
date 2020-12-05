@@ -36,7 +36,7 @@
  * @ingroup bg
  */
 #ifndef BN_CFG_BG_BLOCKS_LOG_ENABLED
-    #define BN_CFG_BG_BLOCKS_LOG_ENABLED false
+    #define BN_CFG_BG_BLOCKS_LOG_ENABLED true
 #endif
 
 #endif

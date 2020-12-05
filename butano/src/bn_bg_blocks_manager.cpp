@@ -876,6 +876,9 @@ namespace
         int blocks_count = create_data.blocks_count;
         bool check_to_remove_blocks = blocks_count <= data.to_remove_blocks_count;
 
+        // BN_BG_BLOCKS_LOG(__LINE__, " - blocks_count: ", blocks_count);
+        // BN_BG_BLOCKS_LOG(__LINE__, " - check_to_remove_blocks: ", check_to_remove_blocks);
+
         if(check_to_remove_blocks)
         {
             for(auto iterator = begin; iterator != end; ++iterator)
@@ -895,8 +898,12 @@ namespace
             }
         }
 
+        // BN_BG_BLOCKS_LOG(__LINE__, " - data.free_blocks_count: ", data.free_blocks_count);
+
         if(blocks_count <= data.free_blocks_count)
         {
+            // BN_BG_BLOCKS_LOG(__LINE__, " - in blocks_count <= data.free_blocks_count");
+
             auto smallest_iterator = end;
             int smallest_blocks_count = numeric_limits<int>::max();
             int smallest_padding_blocks_count = 0;
@@ -905,16 +912,27 @@ namespace
             {
                 const item_type& item = *iterator;
 
+                // BN_BG_BLOCKS_LOG(__LINE__, " - item.status(): ", int(item.status()));
+
                 if(item.status() == status_type::FREE)
                 {
+                    // BN_BG_BLOCKS_LOG(__LINE__, " - item.status() == status_type::FREE");
+
                     int padding_blocks_count = _padding_blocks_count<tiles, affine>(
                                 item.start_block, blocks_count, create_data.bpp);
                     int requested_blocks_count = blocks_count + padding_blocks_count;
 
+                    // BN_BG_BLOCKS_LOG(__LINE__, " - padding_blocks_count: ", padding_blocks_count);
+                    // BN_BG_BLOCKS_LOG(__LINE__, " - requested_blocks_count: ", requested_blocks_count);
+
                     if(item.blocks_count > requested_blocks_count)
                     {
+                        // BN_BG_BLOCKS_LOG(__LINE__, " - in item.blocks_count > requested_blocks_count");
+
                         if(item.blocks_count < smallest_blocks_count)
                         {
+                            // BN_BG_BLOCKS_LOG(__LINE__, " - in item.blocks_count < smallest_blocks_count");
+
                             smallest_iterator = iterator;
                             smallest_blocks_count = item.blocks_count;
                             smallest_padding_blocks_count = padding_blocks_count;
@@ -929,6 +947,8 @@ namespace
 
             if(smallest_iterator != end)
             {
+                BN_BG_BLOCKS_LOG(__LINE__, " - in smallest_iterator != end");
+
                 return _create_item(smallest_iterator.id(), smallest_padding_blocks_count, data.delay_commit,
                                     move(create_data));
             }
@@ -940,6 +960,8 @@ namespace
             data.delay_commit = true;
             return _create_impl<tiles, affine>(move(create_data));
         }
+
+        BN_BG_BLOCKS_LOG(__LINE__, " - we shouldn't be here!");
 
         return -1;
     }

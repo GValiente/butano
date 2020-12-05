@@ -1,6 +1,6 @@
 # Butano
 
-Butano is a modern C++ high level engine for the GBA.
+Butano is a modern C++ high level engine for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance).
 
 ![](docs_tools/images/examples_mode_7.gif) ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/examples_world_map.gif)
 

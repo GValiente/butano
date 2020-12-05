@@ -936,6 +936,28 @@
  * @endcode
  *
  *
+ * @subsection import_sprite_palette Sprite palettes
+ *
+ * An example of the `*.json` files required for sprite palettes is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "sprite_palette"
+ * }
+ * @endcode
+ *
+ * The fields for sprite palettes are the following:
+ * * `"type"`: must be `"sprite_palette"` for sprites.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::sprite_palette_item should have been generated in the `build` folder.
+ * You can use this item to create a sprite palette with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * bn::sprite_palette_ptr sprite_palette = bn::sprite_palette_items::image.create_palette();
+ * @endcode
+ *
+ *
  * @subsection import_regular_bg Regular backgrounds
  *
  * An image file can contain only one regular background.
@@ -984,6 +1006,28 @@
  *
  * @code{.cpp}
  * bn::affine_bg_ptr affine_bg = bn::affine_bg_items::image.create_bg(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection import_bg_palette Background palettes
+ *
+ * An example of the `*.json` files required for background palettes is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "bg_palette"
+ * }
+ * @endcode
+ *
+ * The fields for background palettes are the following:
+ * * `"type"`: must be `"bg_palette"` for background palettes.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::bg_palette_item should have been generated in the `build` folder.
+ * You can use this item to create a background palette with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * bn::bg_palette_ptr bg_palette = bn::bg_palette_items::image.create_palette();
  * @endcode
  *
  *
@@ -1043,6 +1087,7 @@
  *
  * @section changelog_4_2_0 4.2.0 (next release)
  *
+ * * Sprite and background palettes can be generated from images alone, without tiles nor maps.
  * * `<cstddef>` is always included (`bn_cstddef.h` header file removed).
  * * bn::unordered_map and bn::unordered_set assignment fixed.
  *

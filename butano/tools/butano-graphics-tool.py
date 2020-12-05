@@ -174,6 +174,71 @@ class SpriteItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
+class SpritePaletteItem:
+
+    def __init__(self, file_path, file_name_no_ext, build_folder_path):
+        bmp = BMP(file_path)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = bmp.colors_count
+        self.__bpp_8 = self.__colors_count > 16
+
+    def write_header(self):
+        name = self.__file_name_no_ext
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        header_file_path = self.__build_folder_path + '/bn_sprite_palette_items_' + name + '.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned short', 'bn::color')
+
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+                    break
+
+        remove_file(grit_file_path)
+
+        if self.__bpp_8:
+            bpp_mode_label = 'bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BN_SPRITE_PALETTE_ITEMS_' + name.upper() + '_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "bn_sprite_palette_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace bn::sprite_palette_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr const sprite_palette_item ' + name + '(' +
+                              'span<const color>(' + name + '_bn_graphicsPal, ' +
+                              str(self.__colors_count) + '), ' + '\n            ' +
+                              bpp_mode_label + ');' + '\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        print('    Graphics size: ' + str(total_size) + ' bytes')
+        print('    sprite_palette_item file written in ' + header_file_path)
+        return total_size
+
+    def process(self):
+        command = ['grit', self.__file_path, '-g!',
+                   '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
 class RegularBgItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
@@ -425,6 +490,71 @@ class AffineBgItem:
             raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
+class BgPaletteItem:
+
+    def __init__(self, file_path, file_name_no_ext, build_folder_path):
+        bmp = BMP(file_path)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = bmp.colors_count
+        self.__bpp_8 = self.__colors_count > 16
+
+    def write_header(self):
+        name = self.__file_name_no_ext
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        header_file_path = self.__build_folder_path + '/bn_bg_palette_items_' + name + '.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
+
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+                    break
+
+        remove_file(grit_file_path)
+
+        if self.__bpp_8:
+            bpp_mode_label = 'bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BN_BG_PALETTE_ITEMS_' + name.upper() + '_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "bn_bg_palette_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace bn::bg_palette_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr const bg_palette_item ' + name + '(' +
+                              'span<const color>(' + name + '_bn_graphicsPal, ' +
+                              str(self.__colors_count) + '), ' + '\n            ' +
+                              bpp_mode_label + ');' + '\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        print('    Graphics size: ' + str(total_size) + ' bytes')
+        print('    bg_palette_item file written in ' + header_file_path)
+        return total_size
+
+    def process(self):
+        command = ['grit', self.__file_path, '-g!',
+                   '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
 class GraphicsFileInfo:
 
     def __init__(self, graphics_type, info, file_path, file_name, file_name_no_ext, new_file_info,
@@ -445,10 +575,16 @@ class GraphicsFileInfo:
 
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
+        elif self.__graphics_type == 'sprite_palette':
+            item = SpritePaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path)
         elif self.__graphics_type == 'regular_bg':
             item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        else:
+        elif self.__graphics_type == 'affine_bg':
             item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
+        elif self.__graphics_type == 'bg_palette':
+            item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path)
+        else:
+            raise ValueError('Unknown graphics type: ' + str(self.__graphics_type))
 
         item.process()
         file_size = item.write_header()
@@ -461,8 +597,10 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
     graphics_file_infos = []
     sprite_file_names_set = set()
+    sprite_palette_file_names_set = set()
     regular_bg_file_names_set = set()
     affine_bg_file_names_set = set()
+    bg_palette_file_names_set = set()
 
     for graphics_folder_path in graphics_folder_path_list:
         graphics_file_names = sorted(os.listdir(graphics_folder_path))
@@ -494,10 +632,14 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 
                     if graphics_type == 'sprite':
                         file_names_set = sprite_file_names_set
+                    elif graphics_type == 'sprite_palette':
+                        file_names_set = sprite_palette_file_names_set
                     elif graphics_type == 'regular_bg':
                         file_names_set = regular_bg_file_names_set
                     elif graphics_type == 'affine_bg':
                         file_names_set = affine_bg_file_names_set
+                    elif graphics_type == 'bg_palette':
+                        file_names_set = bg_palette_file_names_set
                     else:
                         raise ValueError('Unknown type (' + graphics_type + ') in graphics json file: ' +
                                          json_file_path)

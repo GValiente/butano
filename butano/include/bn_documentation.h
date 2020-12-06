@@ -1088,7 +1088,8 @@
  *
  * @section changelog_4_3_0 4.3.0 (next release)
  *
- * H-Blank effects EWRAM usage reduced (more than 2KB by default).
+ * * H-Blank effects EWRAM usage reduced (more than 2KB by default).
+ * * Optimization level changed to `-O2` to avoid another No$gba crash.
  *
  *
  * @section changelog_4_2_0 4.2.0

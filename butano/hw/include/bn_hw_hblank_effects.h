@@ -28,8 +28,8 @@ namespace bn::hw::hblank_effects
     {
 
     public:
-        const unsigned* src;
-        volatile unsigned* dest;
+        const uint32_t* src;
+        volatile uint32_t* dest;
 
         void update(unsigned vcount)
         {

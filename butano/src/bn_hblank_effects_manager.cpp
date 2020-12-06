@@ -81,8 +81,163 @@ namespace
 
     static_assert(max_items > 0 && max_items <= 8);
 
+    constexpr const int max_uint32_output_values = min(max_items, 4);
+    constexpr const int max_uint16_output_values = max(max_items - max_uint32_output_values, 1);
+
     using last_value_type = any<4 * sizeof(int)>;
     using hw_entries = hw::hblank_effects::entries;
+
+    [[nodiscard]] bool _is_uint32(handler_type handler)
+    {
+        switch(handler)
+        {
+
+        case handler_type::BG_PALETTE_COLOR:
+            return false;
+
+        case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
+            return false;
+
+        case handler_type::BLENDING_FADE_ALPHA:
+            return false;
+
+        case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
+            return false;
+
+        case handler_type::GREEN_SWAP:
+            return false;
+
+        case handler_type::MOSAIC_ATTRIBUTES:
+            return false;
+
+        case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
+            return false;
+
+        case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
+            return false;
+
+        case handler_type::REGULAR_BG_ATTRIBUTES:
+            return false;
+
+        case handler_type::AFFINE_BG_ATTRIBUTES:
+            return false;
+
+        case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
+            return false;
+
+        case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
+            return true;
+
+        case handler_type::REGULAR_BG_VERTICAL_POSITION:
+            return false;
+
+        case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
+            return true;
+
+        case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
+            return false;
+
+        case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
+            return false;
+
+        case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
+            return false;
+
+        case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
+            return false;
+
+        case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
+            return true;
+
+        case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
+            return true;
+
+        case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
+            return true;
+
+        case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
+            return true;
+
+        case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
+            return false;
+
+        case handler_type::SPRITE_FIRST_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_THIRD_ATTRIBUTES:
+            return false;
+
+        case handler_type::SPRITE_HORIZONTAL_POSITION:
+            return false;
+
+        case handler_type::SPRITE_VERTICAL_POSITION:
+            return false;
+
+        case handler_type::SPRITE_PALETTE_COLOR:
+            return false;
+
+        default:
+            BN_ERROR("Unknown handler: ", int(handler));
+            return false;
+        }
+    }
+
+    class uint16_output_values_type
+    {
+
+    public:
+        alignas(int) uint16_t a[display::height()];
+        alignas(int) uint16_t b[display::height()];
+        bool a_active = false;
+    };
+
+    class uint32_output_values_type
+    {
+
+    public:
+        alignas(int) uint16_t a[display::height() * 2];
+        alignas(int) uint16_t b[display::height() * 2];
+        bool a_active = false;
+    };
 
     class item_type
     {
@@ -93,13 +248,12 @@ namespace
         intptr_t target_id = 0;
         unsigned usages = 0;
         uint16_t* output_register = nullptr;
-        alignas(int) uint16_t output_values_a[display::height() * 2] = {};
-        alignas(int) uint16_t output_values_b[display::height() * 2] = {};
+        uint16_output_values_type* uint16_output_values = nullptr;
+        uint32_output_values_type* uint32_output_values = nullptr;
         handler_type handler;
         bool visible: 1 = false;
         bool update: 1 = false;
         bool on_screen: 1 = false;
-        bool output_values_a_active: 1 = false;
         bool output_values_written: 1 = false;
 
         void setup_target()
@@ -411,157 +565,30 @@ namespace
             }
         }
 
-        [[nodiscard]] bool is_unsigned() const
-        {
-            switch(handler)
-            {
-
-            case handler_type::BG_PALETTE_COLOR:
-                return false;
-
-            case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
-                return false;
-
-            case handler_type::BLENDING_FADE_ALPHA:
-                return false;
-
-            case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
-                return false;
-
-            case handler_type::GREEN_SWAP:
-                return false;
-
-            case handler_type::MOSAIC_ATTRIBUTES:
-                return false;
-
-            case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
-                return false;
-
-            case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
-                return false;
-
-            case handler_type::REGULAR_BG_ATTRIBUTES:
-                return false;
-
-            case handler_type::AFFINE_BG_ATTRIBUTES:
-                return false;
-
-            case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
-                return false;
-
-            case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
-                return true;
-
-            case handler_type::REGULAR_BG_VERTICAL_POSITION:
-                return false;
-
-            case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
-                return true;
-
-            case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
-                return false;
-
-            case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
-                return false;
-
-            case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
-                return false;
-
-            case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
-                return false;
-
-            case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
-                return true;
-
-            case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
-                return true;
-
-            case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
-                return true;
-
-            case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
-                return true;
-
-            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
-                return false;
-
-            case handler_type::SPRITE_FIRST_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_THIRD_ATTRIBUTES:
-                return false;
-
-            case handler_type::SPRITE_HORIZONTAL_POSITION:
-                return false;
-
-            case handler_type::SPRITE_VERTICAL_POSITION:
-                return false;
-
-            case handler_type::SPRITE_PALETTE_COLOR:
-                return false;
-
-            default:
-                BN_ERROR("Unknown handler: ", int(handler));
-                return false;
-            }
-        }
-
         void setup_entry(hw_entries& entries) const
         {
-            const uint16_t* src = output_values_a_active ? output_values_a : output_values_b;
-            uint16_t* dest = output_register;
-
-            if(is_unsigned())
+            if(_is_uint32(handler))
             {
                 hw::hblank_effects::uint32_entry& uint32_entry = entries.uint32_entries[entries.uint32_entries_count];
-                uint32_entry.src = reinterpret_cast<const unsigned*>(src);
-                uint32_entry.dest = reinterpret_cast<unsigned*>(dest);
+                const uint16_t* src = uint32_output_values->a_active ? uint32_output_values->a : uint32_output_values->b;
+                uint32_entry.src = reinterpret_cast<const uint32_t*>(src);
+                uint32_entry.dest = reinterpret_cast<uint32_t*>(output_register);
                 ++entries.uint32_entries_count;
             }
             else
             {
                 hw::hblank_effects::uint16_entry& uint16_entry = entries.uint16_entries[entries.uint16_entries_count];
-                uint16_entry.src = src;
-                uint16_entry.dest = dest;
+
+                if(uint16_output_values)
+                {
+                    uint16_entry.src = uint16_output_values->a_active ? uint16_output_values->a : uint16_output_values->b;
+                }
+                else
+                {
+                    uint16_entry.src = uint32_output_values->a_active ? uint32_output_values->a : uint32_output_values->b;
+                }
+
+                uint16_entry.dest = output_register;
                 ++entries.uint16_entries_count;
             }
         }
@@ -941,15 +968,31 @@ namespace
                 {
                     uint16_t* output_values_ptr;
 
-                    if(output_values_a_active)
+                    if(uint16_output_values)
                     {
-                        output_values_ptr = output_values_b;
-                        output_values_a_active = false;
+                        if(uint16_output_values->a_active)
+                        {
+                            output_values_ptr = uint16_output_values->b;
+                            uint16_output_values->a_active = false;
+                        }
+                        else
+                        {
+                            output_values_ptr = uint16_output_values->a;
+                            uint16_output_values->a_active = true;
+                        }
                     }
                     else
                     {
-                        output_values_ptr = output_values_a;
-                        output_values_a_active = true;
+                        if(uint32_output_values->a_active)
+                        {
+                            output_values_ptr = uint32_output_values->b;
+                            uint32_output_values->a_active = false;
+                        }
+                        else
+                        {
+                            output_values_ptr = uint32_output_values->a;
+                            uint32_output_values->a_active = true;
+                        }
                     }
 
                     Handler::write_output_values(target_id, target_last_value, values_ptr, output_values_ptr);
@@ -970,7 +1013,11 @@ namespace
 
     public:
         item_type items[max_items];
+        uint16_output_values_type uint16_output_values_array[max_uint16_output_values];
+        uint32_output_values_type uint32_output_values_array[max_uint32_output_values];
         vector<int8_t, max_items> free_item_indexes;
+        vector<int8_t, max_uint16_output_values> free_uint16_output_values_indexes;
+        vector<int8_t, max_uint32_output_values> free_uint32_output_values_indexes;
         int8_t first_visible_item_index = max_items - 1;
         int8_t last_visible_item_index = 0;
         bool visible_entries = false;
@@ -1015,8 +1062,55 @@ namespace
         }
     }
 
-    [[nodiscard]] int _create(const void* values_ptr, intptr_t target_id, handler_type handler)
+    [[nodiscard]] int _create(const void* values_ptr, intptr_t target_id, handler_type handler, bool optional)
     {
+        BN_ASSERT(values_ptr, "Values ptr is null");
+        BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+
+        if(external_data.free_item_indexes.empty())
+        {
+            BN_ASSERT(optional, "No more available H-Blank effects");
+            return -1;
+        }
+
+        uint16_output_values_type* uint16_output_values = nullptr;
+        uint32_output_values_type* uint32_output_values = nullptr;
+
+        if(_is_uint32(handler))
+        {
+            if(! external_data.free_uint32_output_values_indexes.empty())
+            {
+                int output_values_index = external_data.free_uint32_output_values_indexes.back();
+                external_data.free_uint32_output_values_indexes.pop_back();
+                uint32_output_values = &external_data.uint32_output_values_array[output_values_index];
+            }
+            else
+            {
+                BN_ASSERT(optional, "No more available 32 bits H-Blank effects");
+                return -1;
+            }
+        }
+        else
+        {
+            if(! external_data.free_uint16_output_values_indexes.empty())
+            {
+                int output_values_index = external_data.free_uint16_output_values_indexes.back();
+                external_data.free_uint16_output_values_indexes.pop_back();
+                uint16_output_values = &external_data.uint16_output_values_array[output_values_index];
+            }
+            else if(! external_data.free_uint32_output_values_indexes.empty())
+            {
+                int output_values_index = external_data.free_uint32_output_values_indexes.back();
+                external_data.free_uint32_output_values_indexes.pop_back();
+                uint32_output_values = &external_data.uint32_output_values_array[output_values_index];
+            }
+            else
+            {
+                BN_ASSERT(optional, "No more available 32 bits H-Blank effects");
+                return -1;
+            }
+        }
+
         int item_index = external_data.free_item_indexes.back();
         external_data.free_item_indexes.pop_back();
 
@@ -1025,6 +1119,8 @@ namespace
         new_item.target_id = target_id;
         new_item.usages = 1;
         new_item.output_register = nullptr;
+        new_item.uint16_output_values = uint16_output_values;
+        new_item.uint32_output_values = uint32_output_values;
         new_item.handler = handler;
         new_item.visible = true;
         new_item.update = true;
@@ -1046,6 +1142,16 @@ void init()
     for(int index = max_items - 1; index >= 0; --index)
     {
         external_data.free_item_indexes.push_back(int8_t(index));
+    }
+
+    for(int index = max_uint16_output_values - 1; index >= 0; --index)
+    {
+        external_data.free_uint16_output_values_indexes.push_back(int8_t(index));
+    }
+
+    for(int index = max_uint32_output_values - 1; index >= 0; --index)
+    {
+        external_data.free_uint32_output_values_indexes.push_back(int8_t(index));
     }
 }
 
@@ -1077,27 +1183,17 @@ void disable()
 
 int create(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id, handler_type handler)
 {
-    BN_ASSERT(values_ptr, "Values ptr is null");
-    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
     BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
-    BN_ASSERT(! external_data.free_item_indexes.empty(), "No more available HBlank effects");
 
-    return _create(values_ptr, target_id, handler);
+    return _create(values_ptr, target_id, handler, false);
 }
 
 int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id,
                     handler_type handler)
 {
-    BN_ASSERT(values_ptr, "Values ptr is null");
-    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
     BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
-    if(external_data.free_item_indexes.empty())
-    {
-        return -1;
-    }
-
-    return _create(values_ptr, target_id, handler);
+    return _create(values_ptr, target_id, handler, true);
 }
 
 void increase_usages(int id)
@@ -1119,6 +1215,17 @@ void decrease_usages(int id)
 
             _update_hidden_item_index(id);
             external_data.update = true;
+        }
+
+        if(item.uint16_output_values)
+        {
+            int output_values_index = item.uint16_output_values - external_data.uint16_output_values_array;
+            external_data.free_uint16_output_values_indexes.push_back(int8_t(output_values_index));
+        }
+        else
+        {
+            int output_values_index = item.uint32_output_values - external_data.uint32_output_values_array;
+            external_data.free_uint32_output_values_indexes.push_back(int8_t(output_values_index));
         }
 
         external_data.free_item_indexes.push_back(int8_t(id));

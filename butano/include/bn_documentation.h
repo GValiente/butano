@@ -1086,6 +1086,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_4_3_0 4.3.0 (next release)
+ *
+ * H-Blank effects EWRAM usage reduced (more than 2KB by default).
+ *
+ *
  * @section changelog_4_2_0 4.2.0
  *
  * * Sprite and background palettes can be generated from images alone, without tiles nor maps.

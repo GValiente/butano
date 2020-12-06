@@ -129,7 +129,7 @@ void init(const string_view& keypad_commands)
     // Init irq system:
     hw::irq::init();
 
-    // Init hblank effects system:
+    // Init H-Blank effects system:
     hblank_effects_manager::init();
 
     // Init audio system:

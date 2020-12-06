@@ -1090,6 +1090,7 @@
  *
  * * H-Blank effects EWRAM usage reduced (more than 2KB by default).
  * * Optimization level changed to `-O2` to avoid another No$gba crash.
+ * * SRAM code moved back from ROM to EWRAM, since doing that doesn't make No$gba crash anymore.
  *
  *
  * @section changelog_4_2_0 4.2.0

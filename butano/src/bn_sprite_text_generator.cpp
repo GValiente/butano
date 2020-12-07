@@ -82,7 +82,8 @@ namespace
     {
 
     public:
-        explicit fixed_width_painter(const sprite_text_generator&)
+        explicit fixed_width_painter(const sprite_text_generator& generator) :
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
@@ -93,21 +94,22 @@ namespace
 
         void paint_space()
         {
-            _width += fixed_character_width;
+            _width += fixed_character_width + _space_between_characters;
         }
 
         void paint_tab()
         {
-            _width += (fixed_character_width * 4);
+            _width += (fixed_character_width * 4) + _space_between_characters;
         }
 
         [[nodiscard]] bool paint_character([[maybe_unused]] int graphics_index)
         {
-            _width += fixed_character_width;
+            _width += fixed_character_width + _space_between_characters;
             return true;
         }
 
     private:
+        int _space_between_characters;
         int _width = 0;
     };
 
@@ -117,7 +119,8 @@ namespace
 
     public:
         explicit variable_width_painter(const sprite_text_generator& generator) :
-            _character_widths(generator.font().character_widths_ref().data())
+            _character_widths(generator.font().character_widths_ref().data()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
@@ -128,22 +131,23 @@ namespace
 
         void paint_space()
         {
-            _width += _character_widths[0];
+            _width += _character_widths[0] + _space_between_characters;
         }
 
         void paint_tab()
         {
-            _width += _character_widths[0] * 4;
+            _width += (_character_widths[0] * 4) + _space_between_characters;
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
-            _width += _character_widths[graphics_index + 1];
+            _width += _character_widths[graphics_index + 1] + _space_between_characters;
             return true;
         }
 
     private:
         const int8_t* _character_widths;
+        int _space_between_characters;
         int _width = 0;
     };
 
@@ -159,18 +163,19 @@ namespace
             _generator(generator),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (fixed_character_width / 2), position.y())
+            _current_position(position.x() + (fixed_character_width / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
         void paint_space()
         {
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
         }
 
         void paint_tab()
         {
-            _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
+            _current_position.set_x(_current_position.x() + (fixed_character_width * 4) + _space_between_characters);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
@@ -227,7 +232,7 @@ namespace
                 _output_sprites.push_back(sprite_ptr::create(move(builder)));
             }
 
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
             return true;
         }
 
@@ -236,6 +241,7 @@ namespace
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette;
         fixed_point _current_position;
+        int _space_between_characters;
     };
 
 
@@ -251,18 +257,19 @@ namespace
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (fixed_character_width / 2), position.y())
+            _current_position(position.x() + (fixed_character_width / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
         void paint_space()
         {
-            _current_position.set_x(_current_position.x() + _character_widths[0]);
+            _current_position.set_x(_current_position.x() + _character_widths[0] + _space_between_characters);
         }
 
         void paint_tab()
         {
-            _current_position.set_x(_current_position.x() + (_character_widths[0] * 4));
+            _current_position.set_x(_current_position.x() + (_character_widths[0] * 4) + _space_between_characters);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
@@ -321,7 +328,11 @@ namespace
                     _output_sprites.push_back(sprite_ptr::create(move(builder)));
                 }
 
-                _current_position.set_x(_current_position.x() + character_width);
+                _current_position.set_x(_current_position.x() + character_width + _space_between_characters);
+            }
+            else
+            {
+                _current_position.set_x(_current_position.x() + _space_between_characters);
             }
 
             return true;
@@ -333,6 +344,7 @@ namespace
         ivector<sprite_ptr>& _output_sprites;
         sprite_palette_ptr _palette;
         fixed_point _current_position;
+        int _space_between_characters;
     };
 
 
@@ -346,7 +358,8 @@ namespace
             _generator(generator),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
@@ -363,13 +376,13 @@ namespace
                 ++_sprite_character_index;
             }
 
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
         }
 
         void paint_tab()
         {
             _clear_left();
-            _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
+            _current_position.set_x(_current_position.x() + (fixed_character_width * 4) + _space_between_characters);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
@@ -390,7 +403,7 @@ namespace
             const sprite_item& item = _generator.font().item();
             const tile* source_tiles_data = item.tiles_item().graphics_tiles_ref(graphics_index).data();
             hw::sprite_tiles::copy_tiles(source_tiles_data, 1, _tiles_vram + _sprite_character_index);
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
             ++_sprite_character_index;
             return true;
         }
@@ -402,6 +415,7 @@ namespace
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = fixed_max_characters_per_sprite;
+        int _space_between_characters;
 
         void _clear(int characters) const
         {
@@ -430,29 +444,32 @@ namespace
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
         void paint_space()
         {
-            int width = _character_widths[0];
-            _sprite_column += width;
-            _current_position.set_x(_current_position.x() + width);
+            int width_with_space = _character_widths[0] + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
         }
 
         void paint_tab()
         {
-            int width = _character_widths[0] * 4;
-            _sprite_column += width;
-            _current_position.set_x(_current_position.x() + width);
+            int width_with_space = (_character_widths[0] * 4) + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
             if(int width = _character_widths[graphics_index + 1])
             {
-                if(_sprite_column + width > max_columns_per_sprite)
+                int width_with_space = width + _space_between_characters;
+
+                if(_sprite_column + width_with_space > max_columns_per_sprite)
                 {
                     _tiles_vram = _build_sprite<sprite_size::NORMAL, _tiles, allow_failure>(
                                 _generator, _palette, _current_position, _output_sprites);
@@ -472,8 +489,13 @@ namespace
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height, source_y, _sprite_column,
                                              _tiles_vram);
-                _current_position.set_x(_current_position.x() + width);
-                _sprite_column += width;
+                _current_position.set_x(_current_position.x() + width_with_space);
+                _sprite_column += width_with_space;
+            }
+            else
+            {
+                _current_position.set_x(_current_position.x() + _space_between_characters);
+                _sprite_column += _space_between_characters;
             }
 
             return true;
@@ -489,6 +511,7 @@ namespace
         sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
+        int _space_between_characters;
         int _sprite_column = max_columns_per_sprite;
     };
 
@@ -503,7 +526,8 @@ namespace
             _generator(generator),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
@@ -520,13 +544,13 @@ namespace
                 ++_sprite_character_index;
             }
 
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
         }
 
         void paint_tab()
         {
             _clear_left();
-            _current_position.set_x(_current_position.x() + (fixed_character_width * 4));
+            _current_position.set_x(_current_position.x() + (fixed_character_width * 4) + _space_between_characters);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
@@ -552,7 +576,7 @@ namespace
             tile* down_tiles_vram_ptr = up_tiles_vram_ptr + fixed_max_characters_per_sprite;
             hw::sprite_tiles::copy_tiles(source_tiles_data + 1, 1, down_tiles_vram_ptr);
 
-            _current_position.set_x(_current_position.x() + fixed_character_width);
+            _current_position.set_x(_current_position.x() + fixed_character_width + _space_between_characters);
             ++_sprite_character_index;
             return true;
         }
@@ -563,6 +587,7 @@ namespace
         sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
+        int _space_between_characters;
         int _sprite_character_index = fixed_max_characters_per_sprite;
 
         void _clear(int characters) const
@@ -596,29 +621,32 @@ namespace
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
             _palette(move(palette)),
-            _current_position(position.x() + (max_columns_per_sprite / 2), position.y())
+            _current_position(position.x() + (max_columns_per_sprite / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
         {
         }
 
         void paint_space()
         {
-            int width = _character_widths[0];
-            _sprite_column += width;
-            _current_position.set_x(_current_position.x() + width);
+            int width_with_space = _character_widths[0] + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
         }
 
         void paint_tab()
         {
-            int width = _character_widths[0] * 4;
-            _sprite_column += width;
-            _current_position.set_x(_current_position.x() + width);
+            int width_with_space = (_character_widths[0] * 4) + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
         }
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
             if(int width = _character_widths[graphics_index + 1])
             {
-                if(_sprite_column + width > max_columns_per_sprite)
+                int width_with_space = width + _space_between_characters;
+
+                if(_sprite_column + width_with_space > max_columns_per_sprite)
                 {
                     _tiles_vram = _build_sprite<sprite_size::BIG, _tiles, allow_failure>(
                                 _generator, _palette, _current_position, _output_sprites);
@@ -642,8 +670,13 @@ namespace
                 hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
                                              source_y + (_character_height / 2),
                                              _sprite_column + (_character_height * 2), _tiles_vram);
-                _current_position.set_x(_current_position.x() + width);
-                _sprite_column += width;
+                _current_position.set_x(_current_position.x() + width_with_space);
+                _sprite_column += width_with_space;
+            }
+            else
+            {
+                _current_position.set_x(_current_position.x() + _space_between_characters);
+                _sprite_column += _space_between_characters;
             }
 
             return true;
@@ -659,6 +692,7 @@ namespace
         sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
+        int _space_between_characters;
         int _sprite_column = max_columns_per_sprite;
     };
 

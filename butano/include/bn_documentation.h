@@ -1086,6 +1086,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_4_4_0 4.4.0 (next release)
+ *
+ * bn::sprite_font allows to specify space between characters with bn::sprite_font::space_between_characters().
+ *
+ *
  * @section changelog_4_3_0 4.3.0
  *
  * * H-Blank effects EWRAM usage reduced (more than 2KB by default).

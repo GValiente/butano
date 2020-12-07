@@ -88,6 +88,13 @@
               const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int8_t&gt;&amp; character_widths_ref) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a43d1888cbb80df3e7880f2987b630ef0" class="m-doc">sprite_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&gt;&amp; utf8_characters_ref,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int8_t&gt;&amp; character_widths_ref,
+              int space_between_characters) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -105,6 +112,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a56529385199bd78063c6c89a28b70e08" class="m-doc">character_widths_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int8_t&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the reference to the width in pixels of each supported character.</dd>
+            <dt id="a5531a32b6b4477776150a4b6a977df52">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5531a32b6b4477776150a4b6a977df52" class="m-doc-self">space_between_characters</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the space between two consecutive characters in pixels (it can be negative).</dd>
           </dl>
         </section>
         <section>
@@ -158,7 +169,40 @@
                 </tr>
               </tbody>
             </table>
-<p>They should appear in the tile sets referenced by item just after ASCII characters.</p><p>UTF-8 characters are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p><p>Characters width are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p>
+<p>They should appear in the tile sets referenced by item just after ASCII characters.</p><p>UTF-8 characters are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p><p>Character widths are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a43d1888cbb80df3e7880f2987b630ef0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_font::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43d1888cbb80df3e7880f2987b630ef0" class="m-doc-self">sprite_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a>&amp; item,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&gt;&amp; utf8_characters_ref,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int8_t&gt;&amp; character_widths_ref,
+              int space_between_characters) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">item</td>
+                  <td><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> used to generate text sprites.</td>
+                </tr>
+                <tr>
+                  <td>utf8_characters_ref</td>
+                  <td>Reference to a list of supported UTF-8 characters.</td>
+                </tr>
+                <tr>
+                  <td>character_widths_ref</td>
+                  <td>Reference to the width in pixels of each supported character.</td>
+                </tr>
+                <tr>
+                  <td>space_between_characters</td>
+                  <td>Space between two consecutive characters in pixels (it can be negative).</td>
+                </tr>
+              </tbody>
+            </table>
+<p>They should appear in the tile sets referenced by item just after ASCII characters.</p><p>UTF-8 characters are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p><p>Character widths are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="ab6e218e3dcbdd509710ef06fe3cdb41d"><div>
             <h3>
@@ -172,7 +216,7 @@
               <span class="m-doc-wrap-bumper">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const int8_t&gt;&amp; bn::<wbr />sprite_font::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56529385199bd78063c6c89a28b70e08" class="m-doc-self">character_widths_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the reference to the width in pixels of each supported character.</p>
-<p>Characters width are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p>
+<p>Character widths are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a> to avoid dangling references.</p>
           </div></section>
         </section>
       </div>

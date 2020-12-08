@@ -295,24 +295,33 @@ const sprite_palette_ptr& sprite_ptr::palette() const
 
 void sprite_ptr::set_palette(const sprite_palette_ptr& palette)
 {
-    sprites_manager::set_palette(_handle, palette);
+    sprites_manager::set_palette(_handle, this->palette().bpp(), palette);
 }
 
 void sprite_ptr::set_palette(sprite_palette_ptr&& palette)
 {
-    sprites_manager::set_palette(_handle, move(palette));
+    sprites_manager::set_palette(_handle, this->palette().bpp(), move(palette));
 }
 
 void sprite_ptr::set_palette(const sprite_palette_item& palette_item)
 {
-    if(optional<sprite_palette_ptr> palette = palette_item.find_palette())
+    bpp_mode old_bpp = palette().bpp();
+
+    if(palette_item.bpp() == bpp_mode::BPP_4 || old_bpp == bpp_mode::BPP_4)
     {
-        sprites_manager::set_palette(_handle, move(*palette));
+        if(optional<sprite_palette_ptr> palette = palette_item.find_palette())
+        {
+            sprites_manager::set_palette(_handle, old_bpp, move(*palette));
+        }
+        else
+        {
+            sprites_manager::remove_palette(_handle);
+            sprites_manager::set_palette(_handle, old_bpp, palette_item.create_new_palette());
+        }
     }
     else
     {
-        sprites_manager::remove_palette(_handle);
-        sprites_manager::set_palette(_handle, palette_item.create_new_palette());
+        sprites_manager::set_palette(_handle, old_bpp, palette_item.create_palette());
     }
 }
 
@@ -343,7 +352,11 @@ void sprite_ptr::set_item(const sprite_item& item)
 
     if(! palette)
     {
-        sprites_manager::remove_palette(_handle);
+        if(palette_item.bpp() == bpp_mode::BPP_4 || this->palette().bpp() == bpp_mode::BPP_4)
+        {
+            sprites_manager::remove_palette(_handle);
+        }
+
         palette = palette_item.create_new_palette();
     }
 
@@ -366,7 +379,11 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
 
     if(! palette)
     {
-        sprites_manager::remove_palette(_handle);
+        if(palette_item.bpp() == bpp_mode::BPP_4 || this->palette().bpp() == bpp_mode::BPP_4)
+        {
+            sprites_manager::remove_palette(_handle);
+        }
+
         palette = palette_item.create_new_palette();
     }
 

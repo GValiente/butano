@@ -1088,7 +1088,9 @@
  *
  * @section changelog_4_4_0 4.4.0 (next release)
  *
- * bn::sprite_font allows to specify space between characters with bn::sprite_font::space_between_characters().
+ * * bn::sprite_font allows to specify space between characters.
+ * * Palettes change optimized.
+ * * bn::sprite_ptr::set_tiles() validation fixed.
  *
  *
  * @section changelog_4_3_0 4.3.0

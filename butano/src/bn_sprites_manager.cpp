@@ -333,10 +333,12 @@ void set_tiles(id_type id, const sprite_tiles_ptr& tiles)
 
     if(tiles != item->tiles)
     {
-        BN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
-                   "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
+        hw::sprites::handle_type& handle = item->handle;
+        BN_ASSERT(tiles.tiles_count() == hw::sprites::shape_size(handle).tiles_count(item->palette->bpp()),
+                  "Invalid tiles count: ", tiles.tiles_count(), " - ",
+                  hw::sprites::shape_size(handle).tiles_count(item->palette->bpp()));
 
-        hw::sprites::set_tiles(tiles.id(), item->handle);
+        hw::sprites::set_tiles(tiles.id(), handle);
         item->tiles = tiles;
         _update_indexes_to_commit(*item);
     }
@@ -348,10 +350,12 @@ void set_tiles(id_type id, sprite_tiles_ptr&& tiles)
 
     if(tiles != item->tiles)
     {
-        BN_ASSERT(! item->tiles || item->tiles->tiles_count() == tiles.tiles_count(),
-                   "Invalid tiles count: ", item->tiles->tiles_count(), " - ", tiles.tiles_count());
+        hw::sprites::handle_type& handle = item->handle;
+        BN_ASSERT(tiles.tiles_count() == hw::sprites::shape_size(handle).tiles_count(item->palette->bpp()),
+                  "Invalid tiles count: ", tiles.tiles_count(), " - ",
+                  hw::sprites::shape_size(handle).tiles_count(item->palette->bpp()));
 
-        hw::sprites::set_tiles(tiles.id(), item->handle);
+        hw::sprites::set_tiles(tiles.id(), handle);
         item->tiles = move(tiles);
         _update_indexes_to_commit(*item);
     }
@@ -421,14 +425,13 @@ const sprite_palette_ptr& palette(id_type id)
     return *item->palette;
 }
 
-void set_palette(id_type id, const sprite_palette_ptr& palette)
+void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, const sprite_palette_ptr& palette)
 {
     auto item = static_cast<item_type*>(id);
 
     if(palette != item->palette)
     {
-        BN_ASSERT(! item->palette || item->palette->bpp() == palette.bpp(),
-                  "Palette BPP mode mismatch: ", int(item->palette->bpp()), " - ", int(palette.bpp()));
+        BN_ASSERT(old_bpp == palette.bpp(), "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
@@ -436,14 +439,13 @@ void set_palette(id_type id, const sprite_palette_ptr& palette)
     }
 }
 
-void set_palette(id_type id, sprite_palette_ptr&& palette)
+void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, sprite_palette_ptr&& palette)
 {
     auto item = static_cast<item_type*>(id);
 
     if(palette != item->palette)
     {
-        BN_ASSERT(! item->palette || item->palette->bpp() == palette.bpp(),
-                  "Palette BPP mode mismatch: ", int(item->palette->bpp()), " - ", int(palette.bpp()));
+        BN_ASSERT(old_bpp == palette.bpp(), "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);

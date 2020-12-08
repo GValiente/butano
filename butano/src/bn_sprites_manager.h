@@ -84,9 +84,9 @@ namespace sprites_manager
 
     [[nodiscard]] const sprite_palette_ptr& palette(id_type id);
 
-    void set_palette(id_type id, const sprite_palette_ptr& palette);
+    void set_palette(id_type id, bpp_mode old_bpp, const sprite_palette_ptr& palette);
 
-    void set_palette(id_type id, sprite_palette_ptr&& palette);
+    void set_palette(id_type id, bpp_mode old_bpp, sprite_palette_ptr&& palette);
 
     void remove_palette(id_type id);
 

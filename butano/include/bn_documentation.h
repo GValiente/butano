@@ -1090,6 +1090,7 @@
  *
  * * bn::sprite_font allows to specify space between characters.
  * * Palettes change optimized.
+ * * Unused palette colors are not exported anymore.
  * * bn::sprite_ptr::set_tiles() validation fixed.
  *
  *

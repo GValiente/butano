@@ -32,7 +32,6 @@ class SpriteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
-        self.__bpp_8 = self.__colors_count > 16
 
         try:
             height = int(info['height'])
@@ -127,10 +126,10 @@ class SpriteItem:
 
         remove_file(grit_file_path)
 
-        if self.__bpp_8:
-            bpp_mode_label = 'bpp_mode::BPP_8'
-        else:
+        if self.__colors_count == 16:
             bpp_mode_label = 'bpp_mode::BPP_4'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_8'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_ITEMS_' + name.upper() + '_H'
@@ -158,7 +157,7 @@ class SpriteItem:
         return total_size
 
     def process(self):
-        command = ['grit', self.__file_path, '-gt']
+        command = ['grit', self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
 
         if self.__colors_count == 16:
             command.append('-gB4')
@@ -182,7 +181,6 @@ class SpritePaletteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
-        self.__bpp_8 = self.__colors_count > 16
 
     def write_header(self):
         name = self.__file_name_no_ext
@@ -200,10 +198,10 @@ class SpritePaletteItem:
 
         remove_file(grit_file_path)
 
-        if self.__bpp_8:
-            bpp_mode_label = 'bpp_mode::BPP_8'
-        else:
+        if self.__colors_count == 16:
             bpp_mode_label = 'bpp_mode::BPP_4'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_8'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_PALETTE_ITEMS_' + name.upper() + '_H'
@@ -229,7 +227,7 @@ class SpritePaletteItem:
         return total_size
 
     def process(self):
-        command = ['grit', self.__file_path, '-g!',
+        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count),
                    '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
         command = ' '.join(command)
 
@@ -354,7 +352,7 @@ class RegularBgItem:
         return total_size
 
     def process(self):
-        command = ['grit', self.__file_path]
+        command = ['grit', self.__file_path, '-pe' + str(self.__colors_count)]
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -474,7 +472,7 @@ class AffineBgItem:
         return total_size
 
     def process(self):
-        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8']
+        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8', '-pe' + str(self.__colors_count)]
 
         if self.__repeated_tiles_reduction:
             command.append('-mRt')
@@ -498,7 +496,6 @@ class BgPaletteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
-        self.__bpp_8 = self.__colors_count > 16
 
     def write_header(self):
         name = self.__file_name_no_ext
@@ -516,10 +513,10 @@ class BgPaletteItem:
 
         remove_file(grit_file_path)
 
-        if self.__bpp_8:
-            bpp_mode_label = 'bpp_mode::BPP_8'
-        else:
+        if self.__colors_count == 16:
             bpp_mode_label = 'bpp_mode::BPP_4'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_8'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_BG_PALETTE_ITEMS_' + name.upper() + '_H'
@@ -545,7 +542,7 @@ class BgPaletteItem:
         return total_size
 
     def process(self):
-        command = ['grit', self.__file_path, '-g!',
+        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count),
                    '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
         command = ' '.join(command)
 

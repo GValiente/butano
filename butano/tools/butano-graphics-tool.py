@@ -490,12 +490,24 @@ class AffineBgItem:
 
 class BgPaletteItem:
 
-    def __init__(self, file_path, file_name_no_ext, build_folder_path):
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
+        self.__bpp_8 = False
+
+        if self.__colors_count > 16:
+            try:
+                bpp_mode = str(info['bpp_mode'])
+            except KeyError:
+                bpp_mode = 'bpp_8'
+
+            if bpp_mode == 'bpp_8':
+                self.__bpp_8 = True
+            elif bpp_mode != 'bpp_4':
+                raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
     def write_header(self):
         name = self.__file_name_no_ext
@@ -513,10 +525,10 @@ class BgPaletteItem:
 
         remove_file(grit_file_path)
 
-        if self.__colors_count == 16:
-            bpp_mode_label = 'bpp_mode::BPP_4'
-        else:
+        if self.__bpp_8:
             bpp_mode_label = 'bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_BG_PALETTE_ITEMS_' + name.upper() + '_H'
@@ -579,7 +591,7 @@ class GraphicsFileInfo:
         elif self.__graphics_type == 'affine_bg':
             item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
         elif self.__graphics_type == 'bg_palette':
-            item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path)
+            item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
         else:
             raise ValueError('Unknown graphics type: ' + str(self.__graphics_type))
 

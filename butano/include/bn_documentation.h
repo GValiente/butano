@@ -1016,12 +1016,16 @@
  *
  * @code{.json}
  * {
- *     "type": "bg_palette"
+ *     "type": "bg_palette",
+ *     "bpp_mode": "bpp_8"
  * }
  * @endcode
  *
  * The fields for background palettes are the following:
  * * `"type"`: must be `"bg_palette"` for background palettes.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the background palette:
+ *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  *
  * If the conversion process has finished successfully,
  * a bn::bg_palette_item should have been generated in the `build` folder.
@@ -1089,6 +1093,7 @@
  * @section changelog_4_4_0 4.4.0 (next release)
  *
  * * bn::sprite_font allows to specify space between characters.
+ * * Background palettes bits per pixel mode can be specified by the user.
  * * Palettes change optimized.
  * * Unused palette colors are not exported anymore.
  * * bn::sprite_ptr::set_tiles() validation fixed.

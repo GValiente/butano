@@ -1090,7 +1090,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_4_4_0 4.4.0 (next release)
+ * @section changelog_4_4_0 4.4.0
  *
  * * bn::sprite_font allows to specify space between characters.
  * * Background palettes bits per pixel mode can be specified by the user.

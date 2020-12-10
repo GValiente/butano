@@ -340,8 +340,8 @@ private:
         }
         else
         {
-            _sin = int16_t(degrees_sin(_rotation_angle).data());
-            _cos = int16_t(degrees_cos(_rotation_angle).data());
+            _sin = int16_t(degrees_lut_sin(_rotation_angle).data());
+            _cos = int16_t(degrees_lut_cos(_rotation_angle).data());
         }
     }
 

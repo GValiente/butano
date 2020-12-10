@@ -198,6 +198,10 @@
             </dt>
             <dd>Calculates the sine value of an angle using a LUT.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga5efbddb9091a5e4cff2d8ac4c97992f4" class="m-doc">degrees_lut_sin</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine value of an angle in degrees using a LUT.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga6033befc7142055cf5249bc446ea0f2f" class="m-doc">degrees_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle in degrees.</dd>
@@ -205,6 +209,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ga98f2967b1d885540c4cd2a141a8bd6e2" class="m-doc">lut_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle using a LUT.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga22a19da000f91da1b7ec4bd18e5206fb" class="m-doc">degrees_lut_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -214,6 +222,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ga312ac8ea549b0f7666489a2070c92985" class="m-doc">power_of_two</a>(</span><span class="m-doc-wrap">Type value) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if the given value is a power of two or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga4c036e64410953c285e58b19f523e1f8" class="m-doc">calculate_sin_lut_value</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; int16_t <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the value to store in sin_lut for the given angle.</dd>
           </dl>
         </section>
         <section id="var-members">
@@ -224,9 +236,9 @@
             </dt>
             <dd>LUT used to calculate the reciprocal of the given value (1 / value).</dd>
             <dt>
-              const int16_t <a href="#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
+              const array&lt;int16_t, 2049&gt; <a href="#ga0752064954a5d4bcc95f1a66a0bca5ac" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
-            <dd>A 514 long sin LUT of 16bit values in 4.12 format.</dd>
+            <dd>A sine LUT of 16bit values in 4.12 format.</dd>
           </dl>
         </section>
         <section>
@@ -283,7 +295,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in the range [0, 360].</td>
+                  <td>Angle in degrees.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -307,7 +319,31 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">lut_angle</td>
-                  <td>Angle in the range [0, 512].</td>
+                  <td>Angle in the range [0, 2048].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga5efbddb9091a5e4cff2d8ac4c97992f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga5efbddb9091a5e4cff2d8ac4c97992f4" class="m-doc-self">degrees_lut_sin</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine value of an angle in degrees using a LUT.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">degrees_angle</td>
+                  <td>Angle in degrees in the range [0, 360].</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -331,7 +367,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in the range [0, 360].</td>
+                  <td>Angle in degrees.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -355,7 +391,31 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">lut_angle</td>
-                  <td>Angle in the range [0, 512].</td>
+                  <td>Angle in the range [0, 2048].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Cosine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga22a19da000f91da1b7ec4bd18e5206fb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga22a19da000f91da1b7ec4bd18e5206fb" class="m-doc-self">degrees_lut_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the cosine value of an angle in degrees using a LUT.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">degrees_angle</td>
+                  <td>Angle in degrees the range [0, 360].</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -400,6 +460,30 @@
             </h3>
             <p>Indicates if the given value is a power of two or not.</p>
           </div></section>
+          <section class="m-doc-details" id="ga4c036e64410953c285e58b19f523e1f8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int16_t </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4c036e64410953c285e58b19f523e1f8" class="m-doc-self">calculate_sin_lut_value</a>(</span><span class="m-doc-wrap">int lut_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sin__lut_8h.html">&lt;bn_sin_lut.h&gt;</a></div>
+            </h3>
+            <p>Calculates the value to store in sin_lut for the given angle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lut_angle</td>
+                  <td>sin_lut angle (360 degrees = 65536).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine value in the range [-4096, 4096].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
         <section>
           <h2>Variable documentation</h2>
@@ -410,13 +494,12 @@
             </h3>
             <p>LUT used to calculate the reciprocal of the given value (1 / value).</p>
           </div></section>
-          <section class="m-doc-details" id="ga79e52926b2cd38f73a239cec356b0c84"><div>
+          <section class="m-doc-details" id="ga0752064954a5d4bcc95f1a66a0bca5ac"><div>
             <h3>
-              const int16_t <a href="#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc-self">sin_lut</a> <span class="m-label m-primary">constexpr</span>
+              const array&lt;int16_t, 2049&gt; <a href="#ga0752064954a5d4bcc95f1a66a0bca5ac" class="m-doc-self">sin_lut</a> <span class="m-label m-primary">constexpr</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sin__lut_8h.html">&lt;bn_sin_lut.h&gt;</a></div>
             </h3>
-            <p>A 514 long sin LUT of 16bit values in 4.12 format.</p>
-<p>From Tonc&#x27;s sin_lut.s</p>
+            <p>A sine LUT of 16bit values in 4.12 format.</p>
           </div></section>
         </section>
       </div>

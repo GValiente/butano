@@ -164,7 +164,7 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+                bn::fixed desp = bn::degrees_lut_sin(degrees_angle) * 8;
                 horizontal_deltas[(bn::display::height() / 2) + index] = desp;
                 horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }

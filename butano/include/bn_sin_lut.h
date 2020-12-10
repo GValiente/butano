@@ -13,92 +13,64 @@
  * @ingroup math
  */
 
-#include "bn_common.h"
+#include "bn_array.h"
 
 namespace bn
 {
 
 /**
- * @brief A 514 long sin LUT of 16bit values in 4.12 format.
- *
- * From Tonc's sin_lut.s
+ * @brief Calculates the value to store in sin_lut for the given angle.
+ * @param lut_angle sin_lut angle (360 degrees = 65536).
+ * @return Sine value in the range [-4096, 4096].
  *
  * @ingroup math
  */
-constexpr const int16_t sin_lut[514] = {
-    int16_t(0x0000), int16_t(0x0032), int16_t(0x0064), int16_t(0x0096), int16_t(0x00C8), int16_t(0x00FB), int16_t(0x012D), int16_t(0x015F),
-    int16_t(0x0191), int16_t(0x01C3), int16_t(0x01F5), int16_t(0x0227), int16_t(0x0259), int16_t(0x028A), int16_t(0x02BC), int16_t(0x02ED),
-    int16_t(0x031F), int16_t(0x0350), int16_t(0x0381), int16_t(0x03B2), int16_t(0x03E3), int16_t(0x0413), int16_t(0x0444), int16_t(0x0474),
-    int16_t(0x04A5), int16_t(0x04D5), int16_t(0x0504), int16_t(0x0534), int16_t(0x0563), int16_t(0x0593), int16_t(0x05C2), int16_t(0x05F0),
-    int16_t(0x061F), int16_t(0x064D), int16_t(0x067B), int16_t(0x06A9), int16_t(0x06D7), int16_t(0x0704), int16_t(0x0731), int16_t(0x075E),
-    int16_t(0x078A), int16_t(0x07B7), int16_t(0x07E2), int16_t(0x080E), int16_t(0x0839), int16_t(0x0864), int16_t(0x088F), int16_t(0x08B9),
-    int16_t(0x08E3), int16_t(0x090D), int16_t(0x0936), int16_t(0x095F), int16_t(0x0987), int16_t(0x09B0), int16_t(0x09D7), int16_t(0x09FF),
-    int16_t(0x0A26), int16_t(0x0A4D), int16_t(0x0A73), int16_t(0x0A99), int16_t(0x0ABE), int16_t(0x0AE3), int16_t(0x0B08), int16_t(0x0B2C),
+[[nodiscard]] constexpr int16_t calculate_sin_lut_value(int lut_angle)
+{
+    // https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/
 
-    int16_t(0x0B50), int16_t(0x0B73), int16_t(0x0B96), int16_t(0x0BB8), int16_t(0x0BDA), int16_t(0x0BFC), int16_t(0x0C1D), int16_t(0x0C3E),
-    int16_t(0x0C5E), int16_t(0x0C7D), int16_t(0x0C9D), int16_t(0x0CBB), int16_t(0x0CD9), int16_t(0x0CF7), int16_t(0x0D14), int16_t(0x0D31),
-    int16_t(0x0D4D), int16_t(0x0D69), int16_t(0x0D84), int16_t(0x0D9F), int16_t(0x0DB9), int16_t(0x0DD2), int16_t(0x0DEB), int16_t(0x0E04),
-    int16_t(0x0E1C), int16_t(0x0E33), int16_t(0x0E4A), int16_t(0x0E60), int16_t(0x0E76), int16_t(0x0E8B), int16_t(0x0EA0), int16_t(0x0EB4),
-    int16_t(0x0EC8), int16_t(0x0EDB), int16_t(0x0EED), int16_t(0x0EFF), int16_t(0x0F10), int16_t(0x0F21), int16_t(0x0F31), int16_t(0x0F40),
-    int16_t(0x0F4F), int16_t(0x0F5D), int16_t(0x0F6B), int16_t(0x0F78), int16_t(0x0F85), int16_t(0x0F91), int16_t(0x0F9C), int16_t(0x0FA7),
-    int16_t(0x0FB1), int16_t(0x0FBA), int16_t(0x0FC3), int16_t(0x0FCB), int16_t(0x0FD3), int16_t(0x0FDA), int16_t(0x0FE1), int16_t(0x0FE7),
-    int16_t(0x0FEC), int16_t(0x0FF0), int16_t(0x0FF4), int16_t(0x0FF8), int16_t(0x0FFB), int16_t(0x0FFD), int16_t(0x0FFE), int16_t(0x0FFF),
+    auto i = int16_t(lut_angle);
+    bool c = i < 0;
 
-    int16_t(0x1000), int16_t(0x0FFF), int16_t(0x0FFE), int16_t(0x0FFD), int16_t(0x0FFB), int16_t(0x0FF8), int16_t(0x0FF4), int16_t(0x0FF0),
-    int16_t(0x0FEC), int16_t(0x0FE7), int16_t(0x0FE1), int16_t(0x0FDA), int16_t(0x0FD3), int16_t(0x0FCB), int16_t(0x0FC3), int16_t(0x0FBA),
-    int16_t(0x0FB1), int16_t(0x0FA7), int16_t(0x0F9C), int16_t(0x0F91), int16_t(0x0F85), int16_t(0x0F78), int16_t(0x0F6B), int16_t(0x0F5D),
-    int16_t(0x0F4F), int16_t(0x0F40), int16_t(0x0F31), int16_t(0x0F21), int16_t(0x0F10), int16_t(0x0EFF), int16_t(0x0EED), int16_t(0x0EDB),
-    int16_t(0x0EC8), int16_t(0x0EB4), int16_t(0x0EA0), int16_t(0x0E8B), int16_t(0x0E76), int16_t(0x0E60), int16_t(0x0E4A), int16_t(0x0E33),
-    int16_t(0x0E1C), int16_t(0x0E04), int16_t(0x0DEB), int16_t(0x0DD2), int16_t(0x0DB9), int16_t(0x0D9F), int16_t(0x0D84), int16_t(0x0D69),
-    int16_t(0x0D4D), int16_t(0x0D31), int16_t(0x0D14), int16_t(0x0CF7), int16_t(0x0CD9), int16_t(0x0CBB), int16_t(0x0C9D), int16_t(0x0C7D),
-    int16_t(0x0C5E), int16_t(0x0C3E), int16_t(0x0C1D), int16_t(0x0BFC), int16_t(0x0BDA), int16_t(0x0BB8), int16_t(0x0B96), int16_t(0x0B73),
+    if(i == (i | 0x4000))
+    {
+        i = (1 << 15) - i;
+    }
 
-    int16_t(0x0B50), int16_t(0x0B2C), int16_t(0x0B08), int16_t(0x0AE3), int16_t(0x0ABE), int16_t(0x0A99), int16_t(0x0A73), int16_t(0x0A4D),
-    int16_t(0x0A26), int16_t(0x09FF), int16_t(0x09D7), int16_t(0x09B0), int16_t(0x0987), int16_t(0x095F), int16_t(0x0936), int16_t(0x090D),
-    int16_t(0x08E3), int16_t(0x08B9), int16_t(0x088F), int16_t(0x0864), int16_t(0x0839), int16_t(0x080E), int16_t(0x07E2), int16_t(0x07B7),
-    int16_t(0x078A), int16_t(0x075E), int16_t(0x0731), int16_t(0x0704), int16_t(0x06D7), int16_t(0x06A9), int16_t(0x067B), int16_t(0x064D),
-    int16_t(0x061F), int16_t(0x05F0), int16_t(0x05C2), int16_t(0x0593), int16_t(0x0563), int16_t(0x0534), int16_t(0x0504), int16_t(0x04D5),
-    int16_t(0x04A5), int16_t(0x0474), int16_t(0x0444), int16_t(0x0413), int16_t(0x03E3), int16_t(0x03B2), int16_t(0x0381), int16_t(0x0350),
-    int16_t(0x031F), int16_t(0x02ED), int16_t(0x02BC), int16_t(0x028A), int16_t(0x0259), int16_t(0x0227), int16_t(0x01F5), int16_t(0x01C3),
-    int16_t(0x0191), int16_t(0x015F), int16_t(0x012D), int16_t(0x00FB), int16_t(0x00C8), int16_t(0x0096), int16_t(0x0064), int16_t(0x0032),
+    i = (i & 0x7FFF) >> 1;
 
-    int16_t(0x0000), int16_t(0xFFCE), int16_t(0xFF9C), int16_t(0xFF6A), int16_t(0xFF38), int16_t(0xFF05), int16_t(0xFED3), int16_t(0xFEA1),
-    int16_t(0xFE6F), int16_t(0xFE3D), int16_t(0xFE0B), int16_t(0xFDD9), int16_t(0xFDA7), int16_t(0xFD76), int16_t(0xFD44), int16_t(0xFD13),
-    int16_t(0xFCE1), int16_t(0xFCB0), int16_t(0xFC7F), int16_t(0xFC4E), int16_t(0xFC1D), int16_t(0xFBED), int16_t(0xFBBC), int16_t(0xFB8C),
-    int16_t(0xFB5B), int16_t(0xFB2B), int16_t(0xFAFC), int16_t(0xFACC), int16_t(0xFA9D), int16_t(0xFA6D), int16_t(0xFA3E), int16_t(0xFA10),
-    int16_t(0xF9E1), int16_t(0xF9B3), int16_t(0xF985), int16_t(0xF957), int16_t(0xF929), int16_t(0xF8FC), int16_t(0xF8CF), int16_t(0xF8A2),
-    int16_t(0xF876), int16_t(0xF849), int16_t(0xF81E), int16_t(0xF7F2), int16_t(0xF7C7), int16_t(0xF79C), int16_t(0xF771), int16_t(0xF747),
-    int16_t(0xF71D), int16_t(0xF6F3), int16_t(0xF6CA), int16_t(0xF6A1), int16_t(0xF679), int16_t(0xF650), int16_t(0xF629), int16_t(0xF601),
-    int16_t(0xF5DA), int16_t(0xF5B3), int16_t(0xF58D), int16_t(0xF567), int16_t(0xF542), int16_t(0xF51D), int16_t(0xF4F8), int16_t(0xF4D4),
+    enum { A1 = 3370945099UL, B1 = 2746362156UL, C1 = 292421UL };
+    enum { n = 13, p = 32, q = 31, r = 3, a = 12 };
 
-    int16_t(0xF4B0), int16_t(0xF48D), int16_t(0xF46A), int16_t(0xF448), int16_t(0xF426), int16_t(0xF404), int16_t(0xF3E3), int16_t(0xF3C2),
-    int16_t(0xF3A2), int16_t(0xF383), int16_t(0xF363), int16_t(0xF345), int16_t(0xF327), int16_t(0xF309), int16_t(0xF2EC), int16_t(0xF2CF),
-    int16_t(0xF2B3), int16_t(0xF297), int16_t(0xF27C), int16_t(0xF261), int16_t(0xF247), int16_t(0xF22E), int16_t(0xF215), int16_t(0xF1FC),
-    int16_t(0xF1E4), int16_t(0xF1CD), int16_t(0xF1B6), int16_t(0xF1A0), int16_t(0xF18A), int16_t(0xF175), int16_t(0xF160), int16_t(0xF14C),
-    int16_t(0xF138), int16_t(0xF125), int16_t(0xF113), int16_t(0xF101), int16_t(0xF0F0), int16_t(0xF0DF), int16_t(0xF0CF), int16_t(0xF0C0),
-    int16_t(0xF0B1), int16_t(0xF0A3), int16_t(0xF095), int16_t(0xF088), int16_t(0xF07B), int16_t(0xF06F), int16_t(0xF064), int16_t(0xF059),
-    int16_t(0xF04F), int16_t(0xF046), int16_t(0xF03D), int16_t(0xF035), int16_t(0xF02D), int16_t(0xF026), int16_t(0xF01F), int16_t(0xF019),
-    int16_t(0xF014), int16_t(0xF010), int16_t(0xF00C), int16_t(0xF008), int16_t(0xF005), int16_t(0xF003), int16_t(0xF002), int16_t(0xF001),
+    unsigned ui(i);
+    unsigned y = (C1 * ui) >> n;
+    y = B1 - ((ui * y) >> r);
+    y = ui * (y >> n);
+    y = ui * (y >> n);
+    y = A1 - (y >> (p - q));
+    y = ui * (y >> n);
+    y = (y + (1UL << (q - a - 1))) >> (q - a);
 
-    int16_t(0xF000), int16_t(0xF001), int16_t(0xF002), int16_t(0xF003), int16_t(0xF005), int16_t(0xF008), int16_t(0xF00C), int16_t(0xF010),
-    int16_t(0xF014), int16_t(0xF019), int16_t(0xF01F), int16_t(0xF026), int16_t(0xF02D), int16_t(0xF035), int16_t(0xF03D), int16_t(0xF046),
-    int16_t(0xF04F), int16_t(0xF059), int16_t(0xF064), int16_t(0xF06F), int16_t(0xF07B), int16_t(0xF088), int16_t(0xF095), int16_t(0xF0A3),
-    int16_t(0xF0B1), int16_t(0xF0C0), int16_t(0xF0CF), int16_t(0xF0DF), int16_t(0xF0F0), int16_t(0xF101), int16_t(0xF113), int16_t(0xF125),
-    int16_t(0xF138), int16_t(0xF14C), int16_t(0xF160), int16_t(0xF175), int16_t(0xF18A), int16_t(0xF1A0), int16_t(0xF1B6), int16_t(0xF1CD),
-    int16_t(0xF1E4), int16_t(0xF1FC), int16_t(0xF215), int16_t(0xF22E), int16_t(0xF247), int16_t(0xF261), int16_t(0xF27C), int16_t(0xF297),
-    int16_t(0xF2B3), int16_t(0xF2CF), int16_t(0xF2EC), int16_t(0xF309), int16_t(0xF327), int16_t(0xF345), int16_t(0xF363), int16_t(0xF383),
-    int16_t(0xF3A2), int16_t(0xF3C2), int16_t(0xF3E3), int16_t(0xF404), int16_t(0xF426), int16_t(0xF448), int16_t(0xF46A), int16_t(0xF48D),
+    return c ? -y : y;
+}
 
-    int16_t(0xF4B0), int16_t(0xF4D4), int16_t(0xF4F8), int16_t(0xF51D), int16_t(0xF542), int16_t(0xF567), int16_t(0xF58D), int16_t(0xF5B3),
-    int16_t(0xF5DA), int16_t(0xF601), int16_t(0xF629), int16_t(0xF650), int16_t(0xF679), int16_t(0xF6A1), int16_t(0xF6CA), int16_t(0xF6F3),
-    int16_t(0xF71D), int16_t(0xF747), int16_t(0xF771), int16_t(0xF79C), int16_t(0xF7C7), int16_t(0xF7F2), int16_t(0xF81E), int16_t(0xF849),
-    int16_t(0xF876), int16_t(0xF8A2), int16_t(0xF8CF), int16_t(0xF8FC), int16_t(0xF929), int16_t(0xF957), int16_t(0xF985), int16_t(0xF9B3),
-    int16_t(0xF9E1), int16_t(0xFA10), int16_t(0xFA3E), int16_t(0xFA6D), int16_t(0xFA9D), int16_t(0xFACC), int16_t(0xFAFC), int16_t(0xFB2B),
-    int16_t(0xFB5B), int16_t(0xFB8C), int16_t(0xFBBC), int16_t(0xFBED), int16_t(0xFC1D), int16_t(0xFC4E), int16_t(0xFC7F), int16_t(0xFCB0),
-    int16_t(0xFCE1), int16_t(0xFD13), int16_t(0xFD44), int16_t(0xFD76), int16_t(0xFDA7), int16_t(0xFDD9), int16_t(0xFE0B), int16_t(0xFE3D),
-    int16_t(0xFE6F), int16_t(0xFEA1), int16_t(0xFED3), int16_t(0xFF05), int16_t(0xFF38), int16_t(0xFF6A), int16_t(0xFF9C), int16_t(0xFFCE),
-    int16_t(0x0000), int16_t(0x0032)
-};
+/**
+ * @brief A sine LUT of 16bit values in 4.12 format.
+ *
+ * @ingroup math
+ */
+constexpr const array<int16_t, 2049> sin_lut = []{
+    array<int16_t, 2049> result;
+    int lut_angle = 0;
+
+    for(int index = 0; index < 2049; ++index)
+    {
+        result[index] = calculate_sin_lut_value(lut_angle);
+        lut_angle += 65536 / 2048;
+    }
+
+    return result;
+}();
 
 }
 

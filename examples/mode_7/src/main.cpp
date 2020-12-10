@@ -70,20 +70,20 @@ namespace
 
         if(bn::keypad::l_held())
         {
-            camera.phi -= 1;
+            camera.phi -= 4;
 
             if(camera.phi < 0)
             {
-                camera.phi = 511;
+                camera.phi += 2048;
             }
         }
         else if(bn::keypad::r_held())
         {
-            camera.phi += 1;
+            camera.phi += 4;
 
-            if(camera.phi > 511)
+            if(camera.phi >= 2048)
             {
-                camera.phi = 0;
+                camera.phi -= 2048;
             }
         }
 

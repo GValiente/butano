@@ -199,7 +199,7 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+                bn::fixed desp = bn::degrees_lut_sin(degrees_angle) * 8;
                 bn::fixed stretch = amplitude - index;
                 bn::pair<bn::fixed, bn::fixed> left_right(desp - stretch, desp + stretch);
                 horizontal_boundaries[(bn::display::height() / 2) + index] = left_right;

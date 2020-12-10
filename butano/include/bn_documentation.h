@@ -1090,6 +1090,14 @@
  * @tableofcontents
  *
  *
+ * @section changelog_5_0_0 5.0.0 (next release)
+ *
+ * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
+ *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
+ * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].
+ * * bn::rule_of_three_approximation overflow fixed.
+ *
+ *
  * @section changelog_4_4_0 4.4.0
  *
  * * bn::sprite_font allows to specify space between characters.

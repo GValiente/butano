@@ -310,7 +310,7 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed scale_inc = bn::degrees_sin(degrees_angle) / 2;
+                bn::fixed scale_inc = bn::degrees_lut_sin(degrees_angle) / 2;
                 attributes[(bn::display::height() / 2) + index].set_horizontal_scale(1.5 + scale_inc);
                 attributes[(bn::display::height() / 2) - index - 1].set_horizontal_scale(1.5 + scale_inc);
             }

@@ -2170,6 +2170,10 @@
             </dt>
             <dd>Calculates the sine value of an angle using a LUT.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga5efbddb9091a5e4cff2d8ac4c97992f4" class="m-doc">degrees_lut_sin</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> degrees_angle) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine value of an angle in degrees using a LUT.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga6033befc7142055cf5249bc446ea0f2f" class="m-doc">degrees_cos</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> degrees_angle) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle in degrees.</dd>
@@ -2177,6 +2181,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga98f2967b1d885540c4cd2a141a8bd6e2" class="m-doc">lut_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle using a LUT.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga22a19da000f91da1b7ec4bd18e5206fb" class="m-doc">degrees_lut_cos</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> degrees_angle) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -2196,6 +2204,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga312ac8ea549b0f7666489a2070c92985" class="m-doc">power_of_two</a>(</span><span class="m-doc-wrap">Type value) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if the given value is a power of two or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga4c036e64410953c285e58b19f523e1f8" class="m-doc">calculate_sin_lut_value</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; int16_t <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the value to store in sin_lut for the given angle.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__sprite.html#ga3b8b5bafc20468b4d8a7a53ab047e241" class="m-doc">create_sprite_animate_action_once</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp; sprite,
@@ -2372,9 +2384,9 @@
             </dt>
             <dd>LUT used to calculate the reciprocal of the given value (1 / value).</dd>
             <dt>
-              const int16_t <a href="group__math.html#ga79e52926b2cd38f73a239cec356b0c84" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;int16_t, 2049&gt; <a href="group__math.html#ga0752064954a5d4bcc95f1a66a0bca5ac" class="m-doc">sin_lut</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
-            <dd>A 514 long sin LUT of 16bit values in 4.12 format.</dd>
+            <dd>A sine LUT of 16bit values in 4.12 format.</dd>
           </dl>
         </section>
         <section>

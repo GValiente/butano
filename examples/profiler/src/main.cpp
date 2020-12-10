@@ -80,7 +80,7 @@ int main()
 
     for(int i = 0; i < its; ++i)
     {
-        integer += bn::lut_sin(i % 512).data();
+        integer += bn::lut_sin(i % 2048).data();
     }
 
     BN_PROFILER_STOP();

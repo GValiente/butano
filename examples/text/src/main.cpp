@@ -169,7 +169,7 @@ namespace
                     local_angle -= 360;
                 }
 
-                character_sprite.set_y(bn::degrees_sin(local_angle) * 16);
+                character_sprite.set_y(bn::degrees_lut_sin(local_angle) * 16);
             }
 
             bn::core::update();

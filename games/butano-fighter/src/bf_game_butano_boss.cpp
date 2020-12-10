@@ -138,7 +138,7 @@ void butano_boss::_update_alive(const bn::fixed_point& hero_position, const hero
         _movement_counter = (_movement_counter + 4) % 512;
 
         {
-            bn::fixed movement_sin = bn::lut_sin(_movement_counter);
+            bn::fixed movement_sin = bn::lut_sin(_movement_counter * 4);
             _butano_position.set_y((movement_sin * 4) - 90);
             _scale = 1 - (bn::abs(movement_sin) * (scale_margin * 2));
         }

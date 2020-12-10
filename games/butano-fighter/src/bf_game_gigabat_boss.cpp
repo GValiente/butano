@@ -115,7 +115,7 @@ void gigabat_boss::_update_alive(const bn::fixed_point& hero_position, const her
         }
 
         _movement_counter = (_movement_counter + 8) % 512;
-        _gigabat_position.set_y((bn::lut_sin(_movement_counter) * 5) - 50);
+        _gigabat_position.set_y((bn::lut_sin(_movement_counter * 4) * 5) - 50);
         break;
 
     case 2:

@@ -239,7 +239,7 @@ namespace
         for(int index = 0; index < bn::display::height(); ++index)
         {
             bn::affine_mat_attributes& attributes = result[index];
-            bn::fixed sin = bn::lut_sin((index * 256) / bn::display::height());
+            bn::fixed sin = bn::lut_sin((index * 1024) / bn::display::height());
             attributes.set_rotation_angle((index * 360) / bn::display::height());
             attributes.set_scale(1 + (sin / 2));
         }

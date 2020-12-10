@@ -414,7 +414,7 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed desp = bn::degrees_sin(degrees_angle) * 8;
+                bn::fixed desp = bn::degrees_lut_sin(degrees_angle) * 8;
                 horizontal_deltas[(bn::display::height() / 2) + index] = desp;
                 horizontal_deltas[(bn::display::height() / 2) - index - 1] = desp;
             }
@@ -473,7 +473,7 @@ namespace
                     degrees_angle -= 360;
                 }
 
-                bn::fixed rotation_inc = bn::degrees_sin(degrees_angle) * 4;
+                bn::fixed rotation_inc = bn::degrees_lut_sin(degrees_angle) * 4;
                 attributes[(bn::display::height() / 2) + index].set_rotation_angle(45 + rotation_inc);
                 attributes[(bn::display::height() / 2) - index - 1].set_rotation_angle(45 + rotation_inc);
             }

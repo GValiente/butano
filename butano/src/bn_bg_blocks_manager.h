@@ -23,7 +23,7 @@ namespace bn
     class regular_bg_map_item;
     class regular_bg_tiles_ptr;
     class regular_bg_tiles_item;
-    enum class bpp_mode;
+    enum class bpp_mode : uint8_t;
 }
 
 namespace bn::bg_blocks_manager

@@ -36,7 +36,7 @@ class sprite_first_attributes;
 class sprite_third_attributes;
 class sprite_affine_second_attributes;
 class sprite_regular_second_attributes;
-enum class sprite_double_size_mode;
+enum class sprite_double_size_mode : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a sprite.

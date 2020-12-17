@@ -23,7 +23,7 @@ namespace bn
  *
  * @ingroup sprite
  */
-enum class sprite_double_size_mode
+enum class sprite_double_size_mode : uint8_t
 {
     AUTO, //!< The sprite uses 2x the area specified by its shape and size only when its sprite_affine_mat_ptr requires it.
     ENABLED, //!< The sprite always uses 2x the area specified by its shape and size.

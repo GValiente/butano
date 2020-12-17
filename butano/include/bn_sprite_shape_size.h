@@ -24,7 +24,7 @@ namespace bn
  *
  * @ingroup sprite
  */
-enum class sprite_shape
+enum class sprite_shape : uint8_t
 {
     SQUARE,
     WIDE,
@@ -37,7 +37,7 @@ enum class sprite_shape
  *
  * @ingroup sprite
  */
-enum class sprite_size
+enum class sprite_size : uint8_t
 {
     SMALL,
     NORMAL,

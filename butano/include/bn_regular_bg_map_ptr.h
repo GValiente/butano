@@ -30,7 +30,7 @@ class regular_bg_item;
 class regular_bg_map_item;
 class regular_bg_tiles_ptr;
 class regular_bg_tiles_item;
-enum class bpp_mode;
+enum class bpp_mode : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a regular background map.

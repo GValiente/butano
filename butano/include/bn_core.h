@@ -23,7 +23,7 @@ namespace bn
 
 namespace bn::keypad
 {
-    enum class key_type;
+    enum class key_type : uint16_t;
 }
 
 /**

@@ -1095,6 +1095,7 @@
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
  *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
  * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].
+ * * Enum classes size reduced.
  * * bn::rule_of_three_approximation overflow fixed.
  *
  *

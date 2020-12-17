@@ -45,7 +45,7 @@ public:
     /**
      * @brief Available horizontal alignment types.
      */
-    enum class alignment_type
+    enum class alignment_type : uint8_t
     {
         LEFT, //!< Aligns with the left text edge.
         CENTER, //!< Aligns with the middle of the text.
@@ -274,9 +274,9 @@ private:
     sprite_font _font;
     sprite_palette_item _palette_item;
     unordered_map<int, int, BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
-    alignment_type _alignment = alignment_type::LEFT;
     int _bg_priority = 3;
     int _z_order = 0;
+    alignment_type _alignment = alignment_type::LEFT;
     bool _one_sprite_per_character = false;
 
     void _build_utf8_characters_map();

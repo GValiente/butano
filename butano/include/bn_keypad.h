@@ -25,7 +25,7 @@ namespace bn::keypad
     /**
      * @brief Available key types.
      */
-    enum class key_type
+    enum class key_type : uint16_t
     {
         A =         0x0001, //!< `A` key.
         B =         0x0002, //!< `B` key.

@@ -23,7 +23,7 @@ namespace bn
  *
  * @ingroup color
  */
-enum class bpp_mode
+enum class bpp_mode : uint8_t
 {
     BPP_4, //!< 4 bits per pixel (16 colors).
     BPP_8 //!< 8 bits per pixel (256 colors).

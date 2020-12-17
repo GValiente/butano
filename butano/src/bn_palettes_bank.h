@@ -17,7 +17,7 @@
 namespace bn
 {
 
-enum class bpp_mode;
+enum class bpp_mode : uint8_t;
 
 class palettes_bank
 {

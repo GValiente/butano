@@ -26,10 +26,10 @@ class sprite_first_attributes;
 class sprite_third_attributes;
 class sprite_regular_second_attributes;
 class sprite_affine_second_attributes;
-enum class bpp_mode;
-enum class sprite_size;
-enum class sprite_shape;
-enum class sprite_double_size_mode;
+enum class bpp_mode : uint8_t;
+enum class sprite_size : uint8_t;
+enum class sprite_shape : uint8_t;
+enum class sprite_double_size_mode : uint8_t;
 
 namespace sorted_sprites
 {

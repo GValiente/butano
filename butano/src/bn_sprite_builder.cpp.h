@@ -14,15 +14,15 @@ namespace bn
 
 sprite_builder::sprite_builder(const sprite_item& item) :
     _item(item),
-    _shape_size(item.shape_size()),
-    _graphics_index(0)
+    _graphics_index(0),
+    _shape_size(item.shape_size())
 {
 }
 
 sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _item(item),
-    _shape_size(item.shape_size()),
-    _graphics_index(graphics_index)
+    _graphics_index(graphics_index),
+    _shape_size(item.shape_size())
 {
     BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
     BN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
@@ -31,10 +31,10 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
 
 sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
                                sprite_palette_ptr palette) :
-    _shape_size(shape_size),
     _graphics_index(0),
     _tiles(move(tiles)),
-    _palette(move(palette))
+    _palette(move(palette)),
+    _shape_size(shape_size)
 {
     BN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp()),
               "Invalid tiles count: ", _tiles->tiles_count(), " - ", _shape_size.tiles_count(_palette->bpp()));

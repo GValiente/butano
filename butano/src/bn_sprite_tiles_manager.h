@@ -13,7 +13,7 @@
 namespace bn
 {
     class tile;
-    enum class bpp_mode;
+    enum class bpp_mode : uint8_t;
 }
 
 namespace bn::sprite_tiles_manager

@@ -31,7 +31,7 @@ namespace bn::blending
     /**
      * @brief Available fade colors.
      */
-    enum class fade_color_type
+    enum class fade_color_type : uint8_t
     {
         BLACK, //!< Black fade color.
         WHITE //!< White fade color.

@@ -25,7 +25,7 @@ namespace bn
 
 class color;
 class sprite_palette_item;
-enum class bpp_mode;
+enum class bpp_mode : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a sprite color palette.

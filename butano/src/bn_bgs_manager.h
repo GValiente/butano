@@ -25,7 +25,7 @@ class affine_bg_attributes;
 class regular_bg_attributes;
 class affine_mat_attributes;
 class affine_bg_mat_attributes;
-enum class bpp_mode;
+enum class bpp_mode : uint8_t;
 
 namespace bgs_manager
 {

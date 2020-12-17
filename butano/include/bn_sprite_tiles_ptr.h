@@ -24,7 +24,7 @@ namespace bn
 
 class tile;
 class sprite_tiles_item;
-enum class bpp_mode;
+enum class bpp_mode : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of the tiles of a sprite.

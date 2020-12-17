@@ -663,8 +663,6 @@ public:
 
 private:
     optional<sprite_item> _item;
-    sprite_shape_size _shape_size;
-    sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     fixed_point _position;
     int _graphics_index;
     int _bg_priority = 3;
@@ -673,6 +671,8 @@ private:
     optional<sprite_palette_ptr> _palette;
     optional<sprite_affine_mat_ptr> _affine_mat;
     optional<camera_ptr> _camera;
+    sprite_shape_size _shape_size;
+    sprite_double_size_mode _double_size_mode = sprite_double_size_mode::AUTO;
     bool _horizontal_flip = false;
     bool _vertical_flip = false;
     bool _mosaic_enabled = false;

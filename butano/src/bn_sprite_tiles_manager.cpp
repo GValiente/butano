@@ -457,7 +457,7 @@ namespace
                 item.usages = 1;
                 item.set_status(status_type::USED);
                 _erase_to_remove_item(id);
-                data.to_remove_tiles_count -= item.tiles_count;
+                data.to_remove_tiles_count -= int(item.tiles_count);
                 break;
 
             default:
@@ -487,7 +487,7 @@ namespace
         }
         else
         {
-            hw::sprite_tiles::commit(tiles_data, item.compression(), item.start_tile, item.tiles_count);
+            hw::sprite_tiles::commit(tiles_data, item.compression(), int(item.start_tile), int(item.tiles_count));
         }
     }
 
@@ -495,7 +495,7 @@ namespace
                                              int tiles_count, bool delay_commit)
     {
         item_type& item = data.items.item(id);
-        int new_item_tiles_count = item.tiles_count - tiles_count;
+        int new_item_tiles_count = int(item.tiles_count) - tiles_count;
 
         switch(item.status())
         {
@@ -562,7 +562,7 @@ namespace
                 int id = *to_remove_items_it;
                 const item_type& item = data.items.item(id);
 
-                if(item.tiles_count == tiles_count)
+                if(int(item.tiles_count) == tiles_count)
                 {
                     data.to_remove_items.erase(to_remove_items_it);
 
@@ -651,7 +651,7 @@ void init()
     data.items.init();
     data.items.push_front(new_item);
     data.free_items.push_back(data.items.begin().id());
-    data.free_tiles_count = new_item.tiles_count;
+    data.free_tiles_count = int(new_item.tiles_count);
 
     BN_SPRITE_TILES_LOG_STATUS();
 }
@@ -931,7 +931,7 @@ void decrease_usages(int id)
     {
         item.set_status(status_type::TO_REMOVE);
         _insert_to_remove_item(id);
-        data.to_remove_tiles_count += item.tiles_count;
+        data.to_remove_tiles_count += int(item.tiles_count);
     }
 
     BN_SPRITE_TILES_LOG_STATUS();
@@ -939,12 +939,12 @@ void decrease_usages(int id)
 
 int start_tile(int id)
 {
-    return data.items.item(id).start_tile;
+    return int(data.items.item(id).start_tile);
 }
 
 int tiles_count(int id)
 {
-    return data.items.item(id).tiles_count;
+    return int(data.items.item(id).tiles_count);
 }
 
 compression_type compression(int id)
@@ -969,15 +969,13 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
 {
     item_type& item = data.items.item(id);
     const tile* old_tiles_data = item.data;
-    [[maybe_unused]] int old_tiles_count = item.tiles_count;
     const tile* new_tiles_data = tiles_ref.data();
-    [[maybe_unused]] int new_tiles_count = tiles_ref.size();
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
-                        " - ", new_tiles_count, " - ", int(compression));
+                        " - ", tiles_ref.size(), " - ", int(compression));
 
-    BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
-              old_tiles_count, " - ", new_tiles_count);
+    BN_ASSERT(int(item.tiles_count) == tiles_ref.size(), "Tiles count does not match item tiles count: ",
+              int(item.tiles_count), " - ", tiles_ref.size());
 
     if(old_tiles_data != new_tiles_data)
     {
@@ -1021,7 +1019,7 @@ optional<span<tile>> vram(int id)
 
     if(! item.data)
     {
-        result.emplace(hw::sprite_tiles::vram(item.start_tile), item.tiles_count);
+        result.emplace(hw::sprite_tiles::vram(int(item.start_tile)), int(item.tiles_count));
     }
 
     return result;
@@ -1049,7 +1047,7 @@ void update()
             item.data = nullptr;
             item.set_status(status_type::FREE);
             item.commit = false;
-            data.free_tiles_count += item.tiles_count;
+            data.free_tiles_count += int(item.tiles_count);
 
             auto next_iterator = iterator;
             ++next_iterator;
@@ -1110,7 +1108,7 @@ void commit()
 
                 if(item.status() == status_type::USED)
                 {
-                    hw::sprite_tiles::commit(item.data, item.compression(), item.start_tile, item.tiles_count);
+                    hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
                 }
             }
         }

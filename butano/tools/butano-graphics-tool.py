@@ -53,12 +53,11 @@ class SpriteItem:
 
         try:
             height = int(info['height'])
-
-            if bmp.height % height:
-                raise ValueError('File height is not divisible by item height: ' +
-                                 str(bmp.height) + ' - ' + str(height))
         except KeyError:
-            height = bmp.height
+            raise ValueError('height field not found in graphics json file: ' + file_name_no_ext + '.json')
+
+        if bmp.height % height:
+            raise ValueError('File height is not divisible by item height: ' + str(bmp.height) + ' - ' + str(height))
 
         self.__graphics = int(bmp.height / height)
         width = bmp.width
@@ -842,18 +841,18 @@ class BgPaletteItem:
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
-        self.__bpp_8 = False
 
-        if self.__colors_count > 16:
-            try:
-                bpp_mode = str(info['bpp_mode'])
-            except KeyError:
-                bpp_mode = 'bpp_8'
+        try:
+            bpp_mode = str(info['bpp_mode'])
+        except KeyError:
+            raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
 
-            if bpp_mode == 'bpp_8':
-                self.__bpp_8 = True
-            elif bpp_mode != 'bpp_4':
-                raise ValueError('Invalid BPP mode: ' + bpp_mode)
+        if bpp_mode == 'bpp_8':
+            self.__bpp_8 = True
+        elif bpp_mode == 'bpp_4':
+            self.__bpp_8 = False
+        else:
+            raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
         try:
             self.__compression = info['compression']
@@ -1018,7 +1017,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                     try:
                         graphics_type = str(info['type'])
                     except KeyError:
-                        raise ValueError('type filed not found in graphics json file: ' + json_file_path)
+                        raise ValueError('type field not found in graphics json file: ' + json_file_path)
 
                     if graphics_type == 'sprite':
                         file_names_set = sprite_file_names_set

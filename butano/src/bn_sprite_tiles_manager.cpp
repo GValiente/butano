@@ -947,6 +947,11 @@ int tiles_count(int id)
     return data.items.item(id).tiles_count;
 }
 
+compression_type compression(int id)
+{
+    return data.items.item(id).compression();
+}
+
 optional<span<const tile>> tiles_ref(int id)
 {
     const item_type& item = data.items.item(id);
@@ -971,12 +976,13 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
                         " - ", new_tiles_count, " - ", int(compression));
 
+    BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
+              old_tiles_count, " - ", new_tiles_count);
+
     if(old_tiles_data != new_tiles_data)
     {
         BN_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
                   "Multiple copies of the same tiles data not supported");
-        BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
-                  old_tiles_count, " - ", new_tiles_count);
 
         data.items_map.erase(old_tiles_data);
         item.set_compression(compression);
@@ -987,9 +993,6 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
     }
     else if(compression != item.compression())
     {
-        BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
-                  old_tiles_count, " - ", new_tiles_count);
-
         item.set_compression(compression);
         _commit_item(new_tiles_data, true, item);
 

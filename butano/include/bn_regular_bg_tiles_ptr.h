@@ -25,6 +25,7 @@ namespace bn
 class tile;
 class regular_bg_tiles_item;
 enum class bpp_mode : uint8_t;
+enum class compression_type : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of the tiles of a regular background.
@@ -188,6 +189,11 @@ public:
      * @brief Returns the referenced number of tiles.
      */
     [[nodiscard]] int tiles_count() const;
+
+    /**
+     * @brief Returns the compression of the referenced tiles.
+     */
+    [[nodiscard]] compression_type compression() const;
 
     /**
      * @brief Returns the referenced tiles unless it was created with allocate or allocate_optional.

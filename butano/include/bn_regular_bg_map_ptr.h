@@ -31,6 +31,7 @@ class regular_bg_map_item;
 class regular_bg_tiles_ptr;
 class regular_bg_tiles_item;
 enum class bpp_mode : uint8_t;
+enum class compression_type : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a regular background map.
@@ -285,6 +286,11 @@ public:
      * @brief Returns how much palette banks to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int palette_banks_offset() const;
+
+    /**
+     * @brief Returns the compression of the referenced map cells.
+     */
+    [[nodiscard]] compression_type compression() const;
 
     /**
      * @brief Returns the referenced map cells unless it was created with allocate or allocate_optional.

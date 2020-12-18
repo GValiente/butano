@@ -73,6 +73,12 @@
               const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ad09e9b5368b4e8682546397a6de33659" class="m-doc">regular_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -86,6 +92,15 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a76d8bc79ca95f81f150bee93d20390a0" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the size in map cells of the referenced map cells.</dd>
+            <dt id="ae5c50c9feefa99ace9cdfc691c0abdc1">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5c50c9feefa99ace9cdfc691c0abdc1" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the compression type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aff01deaadb93e66d76e13ab1a158cce5" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; uncompressed_cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; uncompressed_dimensions) const -&gt; <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a></span>
+            </dt>
+            <dd>Uncompresses the stored data in the map cells referenced by uncompressed_cells_ref.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a0d5994c209ad5c672c16b1abf7094324" class="m-doc">find_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles,
               const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
@@ -147,6 +162,63 @@
               </tbody>
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad09e9b5368b4e8682546397a6de33659"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad09e9b5368b4e8682546397a6de33659" class="m-doc-self">regular_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">cells_ref</td>
+                  <td>Reference to one or more regular background map cells.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in map cells of the referenced map cells.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="aff01deaadb93e66d76e13ab1a158cce5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> bn::<wbr />regular_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff01deaadb93e66d76e13ab1a158cce5" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; uncompressed_cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; uncompressed_dimensions) const</span></span>
+            </h3>
+            <p>Uncompresses the stored data in the map cells referenced by uncompressed_cells_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">uncompressed_cells_ref</td>
+                  <td>Destination of the uncompressed map cells.</td>
+                </tr>
+                <tr>
+                  <td>uncompressed_dimensions</td>
+                  <td>Size in map cells of the destination data.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> pointing to the uncompressed map cells.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination map cells overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="a0d5994c209ad5c672c16b1abf7094324"><div>
             <h3>

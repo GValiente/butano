@@ -9,7 +9,6 @@
 #include "bn_tile.h"
 #include "bn_memory.h"
 #include "bn_compression_type.h"
-#include "bn_hw_tonc.h"
 #include "bn_hw_uncompress.h"
 
 namespace bn::hw::sprite_tiles

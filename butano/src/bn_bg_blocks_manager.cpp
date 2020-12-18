@@ -120,6 +120,7 @@ namespace
 
     private:
         unsigned _status: 2 = unsigned(status_type::FREE);
+        unsigned _compression: 2 = unsigned(compression_type::NONE);
 
     public:
         bool is_tiles: 1 = false;
@@ -134,6 +135,16 @@ namespace
         void set_status(status_type status)
         {
             _status = unsigned(status) & 3;
+        }
+
+        [[nodiscard]] compression_type compression() const
+        {
+            return static_cast<compression_type>(_compression);
+        }
+
+        void set_compression(compression_type compression)
+        {
+            _compression = unsigned(compression);
         }
 
         [[nodiscard]] int tiles_count() const
@@ -315,26 +326,31 @@ namespace
         int blocks_count;
         int width;
         int height;
-        bpp_mode bpp;
         optional<regular_bg_tiles_ptr> regular_tiles;
         optional<affine_bg_tiles_ptr> affine_tiles;
         optional<bg_palette_ptr> palette;
+        bpp_mode bpp;
+        compression_type compression;
         bool is_affine;
 
-        static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp)
+        static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp,
+                                              compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            return create_data{ data_ptr, blocks_count, half_words, 1, bpp, nullopt, nullopt, nullopt, false };
+            return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt, bpp,
+                        compression, false };
         }
 
-        static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words)
+        static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            return create_data{ data_ptr, blocks_count, half_words, 1, bpp_mode::BPP_8, nullopt, nullopt, nullopt, true };
+            return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt, bpp_mode::BPP_8,
+                        compression, true };
         }
 
-        static create_data from_regular_map(const uint16_t* data_ptr, const size& dimensions,
-                                            regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
+        static create_data from_regular_map(
+                const uint16_t* data_ptr, const size& dimensions, compression_type compression,
+                regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
         {
             int width = dimensions.width();
             int height = dimensions.height();
@@ -349,12 +365,15 @@ namespace
                 blocks_count = _ceil_half_words_to_blocks(width * height);
             }
 
-            return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), move(tiles), nullopt,
-                        move(palette), false };
+            bpp_mode palette_bpp = palette.bpp();
+
+            return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
+                        palette_bpp, compression, false };
         }
 
-        static create_data from_affine_map(const uint16_t* data_ptr, const size& dimensions,
-                                            affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
+        static create_data from_affine_map(
+                const uint16_t* data_ptr, const size& dimensions, compression_type compression,
+                affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
         {
             int width = dimensions.width();
             int height = dimensions.height();
@@ -369,8 +388,10 @@ namespace
                 blocks_count = _ceil_half_words_to_blocks((width * height) / 2);
             }
 
-            return create_data{ data_ptr, blocks_count, width, height, palette.bpp(), nullopt, move(tiles),
-                        move(palette), true };
+            bpp_mode palette_bpp = palette.bpp();
+
+            return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles),
+                        move(palette), palette_bpp, compression, true };
         }
     };
 
@@ -415,6 +436,7 @@ namespace
                             " - data: ", item.data,
                             " - usages: ", item.usages,
                             " - tiles: ", item.tiles_count(),
+                            " - compression: ", int(item.compression()),
                             (item.commit ? " - commit" : " - no_commit"));
                 }
                 else
@@ -428,6 +450,7 @@ namespace
                             " - usages: ", item.usages,
                             " - width: ", item.width,
                             " - height: ", item.height,
+                            " - compression: ", int(item.compression()),
                             " - tiles: ", (item.is_affine ? (item.affine_tiles ? item.affine_tiles->id() : -1) :
                                                             (item.regular_tiles ? item.regular_tiles->id() : -1)),
                             " - palette: ", (item.palette ? item.palette->id() : -1),
@@ -474,8 +497,8 @@ namespace
             } while(false)
     #endif
 
-    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] int half_words,
-                                       [[maybe_unused]] bool affine)
+    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] compression_type compression,
+                                       [[maybe_unused]] int half_words, [[maybe_unused]] bool affine)
     {
         auto items_map_iterator = data.items_map.find(tiles_data);
 
@@ -485,6 +508,8 @@ namespace
             item_type& item = data.items.item(id);
             BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
                       tiles_data, " - ", item.data);
+            BN_ASSERT(compression == item.compression(), "Tiles compression does not match item tiles compression: ",
+                      int(compression), " - ", int(item.compression()));
             BN_ASSERT(half_words == item.width, "Tiles count does not match item tiles count: ",
                       _half_words_to_tiles(half_words), " - ", item.tiles_count());
             BN_ASSERT(affine && ! item.is_affine, "Item has regular tiles");
@@ -536,6 +561,9 @@ namespace
                       map_item.dimensions().width(), " - ", item.width);
             BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
                       map_item.dimensions().height(), " - ", item.height);
+            BN_ASSERT(map_item.compression() == item.compression(),
+                      "Map compression does not match item map compression: ",
+                      int(map_item.compression()), " - ", int(item.compression()));
             BN_ASSERT(! item.is_affine, "Item is an affine map");
             BN_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
                       "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
@@ -594,6 +622,9 @@ namespace
                       map_item.dimensions().width(), " - ", item.width);
             BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
                       map_item.dimensions().height(), " - ", item.height);
+            BN_ASSERT(map_item.compression() == item.compression(),
+                      "Map compression does not match item map compression: ",
+                      int(map_item.compression()), " - ", int(item.compression()));
             BN_ASSERT(item.is_affine, "Item is a regular map");
             BN_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
                       "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
@@ -649,7 +680,7 @@ namespace
         if(item.is_tiles)
         {
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
-            memory::copy(*source_data_ptr, item.width, *destination_vram_ptr);
+            hw::bg_blocks::commit(source_data_ptr, item.compression(), item.width, destination_vram_ptr);
             return;
         }
 
@@ -661,24 +692,31 @@ namespace
                 return;
             }
 
+            compression_type compression = item.compression();
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
             auto tiles_offset = unsigned(item.affine_tiles_offset());
             int half_words = (item.width * item.height) / 2;
 
             if(tiles_offset)
             {
-                auto affine_map_cells = reinterpret_cast<const affine_bg_map_cell*>(source_data_ptr);
+                if(compression != compression_type::NONE)
+                {
+                    hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                    source_data_ptr = destination_vram_ptr;
+                }
 
                 for(int index = 0; index < half_words; ++index)
                 {
+                    uint16_t source_half_word = source_data_ptr[index];
+                    unsigned first_source_cell = source_half_word >> 8;
+                    unsigned second_source_cell = source_half_word & 0xff;
                     hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                                affine_map_cells[0], affine_map_cells[1], tiles_offset, destination_vram_ptr[index]);
-                    affine_map_cells += 2;
+                                first_source_cell, second_source_cell, tiles_offset, destination_vram_ptr[index]);
                 }
             }
             else
             {
-                memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
             }
         }
         else
@@ -689,10 +727,17 @@ namespace
                 return;
             }
 
+            compression_type compression = item.compression();
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
             auto tiles_offset = unsigned(item.regular_tiles_offset());
             auto palette_offset = unsigned(item.palette_offset());
             int half_words = item.width * item.height;
+
+            if(compression != compression_type::NONE && (tiles_offset || palette_offset))
+            {
+                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                source_data_ptr = destination_vram_ptr;
+            }
 
             if(tiles_offset)
             {
@@ -726,7 +771,7 @@ namespace
                 }
                 else
                 {
-                    memory::copy(*source_data_ptr, half_words, *destination_vram_ptr);
+                    hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
                 }
             }
         }
@@ -736,7 +781,6 @@ namespace
     {
         item_type& item = data.items.item(id);
         item.data = data_ptr;
-        data.items_map.insert(data_ptr, id);
 
         if(delay_commit)
         {
@@ -826,6 +870,7 @@ namespace
         const uint16_t* data_ptr = create_data.data_ptr;
         item->data = data_ptr;
         item->blocks_count = uint8_t(blocks_count);
+        item->set_compression(create_data.compression);
         item->regular_tiles = move(create_data.regular_tiles);
         item->affine_tiles = move(create_data.affine_tiles);
         item->palette = move(create_data.palette);
@@ -839,6 +884,7 @@ namespace
 
         if(data_ptr)
         {
+            data.items_map.insert(data_ptr, id);
             _check_commit_item(id, data_ptr, delay_commit);
         }
 
@@ -1161,11 +1207,12 @@ int find_regular_tiles(const regular_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
+    compression_type compression = tiles_item.compression();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR TILES: ", tiles_data, " - ", tiles_count);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR TILES: ", tiles_data, " - ", tiles_count, " - ",
+                     int(compression));
 
-    int half_words = _tiles_to_half_words(tiles_count);
-    return _find_tiles_impl(tiles_data, half_words, false);
+    return _find_tiles_impl(tiles_data, compression, _tiles_to_half_words(tiles_count), false);
 }
 
 int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
@@ -1173,18 +1220,20 @@ int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
+    compression_type compression = tiles_item.compression();
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE TILES: ", tiles_data, " - ", tiles_count);
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE TILES: ", tiles_data, " - ", tiles_count, " - ",
+                     int(compression));
 
-    int half_words = _tiles_to_half_words(tiles_count);
-    return _find_tiles_impl(tiles_data, half_words, true);
+    return _find_tiles_impl(tiles_data, compression, _tiles_to_half_words(tiles_count), true);
 }
 
 int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
                      const bg_palette_ptr& palette)
 {
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", &map_item.cells_ref(), " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", palette.id());
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+                     palette.id(), " - ", int(map_item.compression()));
 
     return _find_regular_map_impl(map_item, tiles, palette);
 }
@@ -1193,7 +1242,8 @@ int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_tiles_pt
                     const bg_palette_ptr& palette)
 {
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE MAP: ", &map_item.cells_ref(), " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", palette.id());
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+                     palette.id(), " - ", int(map_item.compression()));
 
     return _find_affine_map_impl(map_item, tiles, palette);
 }
@@ -1205,18 +1255,21 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
-                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
+                     int(bpp), " - ", int(compression));
 
-    int result = _find_tiles_impl(tiles_data, half_words, false);
+    int result = _find_tiles_impl(tiles_data, compression, half_words, false);
 
     if(result != -1)
     {
         return result;
     }
 
-    result = _create_impl<create_type::REGULAR_TILES>(create_data::from_regular_tiles(tiles_data, half_words, bpp));
+    result = _create_impl<create_type::REGULAR_TILES>(
+                create_data::from_regular_tiles(tiles_data, half_words, bpp, compression));
 
     if(result != -1)
     {
@@ -1253,18 +1306,21 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
-                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+                     tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
+                     int(compression));
 
-    int result = _find_tiles_impl(tiles_data, half_words, true);
+    int result = _find_tiles_impl(tiles_data, compression, half_words, true);
 
     if(result != -1)
     {
         return result;
     }
 
-    result = _create_impl<create_type::AFFINE_TILES>(create_data::from_affine_tiles(tiles_data, half_words));
+    result = _create_impl<create_type::AFFINE_TILES>(
+                create_data::from_affine_tiles(tiles_data, half_words, compression));
 
     if(result != -1)
     {
@@ -1300,8 +1356,11 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
+    compression_type compression = map_item.compression();
+
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
-                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
+                     int(compression));
 
     int result = _find_regular_map_impl(map_item, tiles, palette);
 
@@ -1312,9 +1371,11 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
+    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
+              "Compressed big regular maps are not supported");
 
     result = _create_impl<create_type::MAP>(
-                create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
+                create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1352,8 +1413,11 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
 {
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
     const size& dimensions = map_item.dimensions();
+    compression_type compression = map_item.compression();
+
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
-                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
+                     int(compression));
 
     int result = _find_affine_map_impl(map_item, tiles, palette);
 
@@ -1363,9 +1427,11 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
     }
 
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
+              "Compressed big affine maps are not supported");
 
     result = _create_impl<create_type::MAP>(
-                create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+                create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1405,14 +1471,17 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
     bpp_mode bpp = tiles_item.bpp();
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
-                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
+                     int(bpp), " - ", int(compression));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<create_type::REGULAR_TILES>(create_data::from_regular_tiles(data_ptr, half_words, bpp));
+    int result = _create_impl<create_type::REGULAR_TILES>(
+                create_data::from_regular_tiles(data_ptr, half_words, bpp, compression));
 
     if(result != -1)
     {
@@ -1449,14 +1518,17 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     int tiles_count = tiles_ref.size();
     int half_words = _tiles_to_half_words(tiles_count);
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
-                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+                     data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
+                     int(compression));
 
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
-    int result = _create_impl<create_type::AFFINE_TILES>(create_data::from_affine_tiles(data_ptr, half_words));
+    int result = _create_impl<create_type::AFFINE_TILES>(
+                create_data::from_affine_tiles(data_ptr, half_words, compression));
 
     if(result != -1)
     {
@@ -1492,17 +1564,21 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
     const size& dimensions = map_item.dimensions();
+    compression_type compression = map_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
-                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
+                     int(compression));
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
+    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
+              "Compressed big regular maps are not supported");
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
     int result = _create_impl<create_type::MAP>(
-                create_data::from_regular_map(data_ptr, dimensions, move(tiles), move(palette)));
+                create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1540,15 +1616,20 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
 {
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
     const size& dimensions = map_item.dimensions();
+    compression_type compression = map_item.compression();
+
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
-                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id());
+                     dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
+                     int(compression));
 
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
+              "Compressed big affine maps are not supported");
     BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
               "Multiple copies of the same data not supported");
 
     int result = _create_impl<create_type::MAP>(
-                create_data::from_affine_map(data_ptr, dimensions, move(tiles), move(palette)));
+                create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1591,7 +1672,8 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
               "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
-    int result = _allocate_impl<create_type::REGULAR_TILES>(create_data::from_regular_tiles(nullptr, half_words, bpp));
+    int result = _allocate_impl<create_type::REGULAR_TILES>(
+                create_data::from_regular_tiles(nullptr, half_words, bpp, compression_type::NONE));
 
     if(result != -1)
     {
@@ -1627,7 +1709,8 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 
     BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
-    int result = _allocate_impl<create_type::AFFINE_TILES>(create_data::from_affine_tiles(nullptr, half_words));
+    int result = _allocate_impl<create_type::AFFINE_TILES>(
+                create_data::from_affine_tiles(nullptr, half_words, compression_type::NONE));
 
     if(result != -1)
     {
@@ -1668,7 +1751,8 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
     int result = _allocate_impl<create_type::MAP>(
-                create_data::from_regular_map(nullptr, map_dimensions, move(tiles), move(palette)));
+                create_data::from_regular_map(nullptr, map_dimensions, compression_type::NONE,
+                                              move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1713,7 +1797,8 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
 
     int result = _allocate_impl<create_type::MAP>(
-                create_data::from_affine_map(nullptr, map_dimensions, move(tiles), move(palette)));
+                create_data::from_affine_map(nullptr, map_dimensions, compression_type::NONE,
+                                             move(tiles), move(palette)));
 
     if(result != -1)
     {
@@ -1787,8 +1872,7 @@ int hw_tiles_cbb(int id)
 
 int tiles_count(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.tiles_count();
+    return data.items.item(id).tiles_count();
 }
 
 size map_dimensions(int id)
@@ -1799,20 +1883,22 @@ size map_dimensions(int id)
 
 int regular_tiles_offset(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.regular_tiles_offset();
+    return data.items.item(id).regular_tiles_offset();
 }
 
 int affine_tiles_offset(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.affine_tiles_offset();
+    return data.items.item(id).affine_tiles_offset();
 }
 
 int palette_offset(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.palette_offset();
+    return data.items.item(id).palette_offset();
+}
+
+compression_type compression(int id)
+{
+    return data.items.item(id).compression();
 }
 
 [[nodiscard]] optional<span<const tile>> tiles_ref(int id)
@@ -1859,9 +1945,11 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR TILES REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size());
+                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size(), " - ",
+                     int(compression));
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
@@ -1874,6 +1962,15 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
                   "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
+        data.items_map.insert(data_ptr, id);
+        item.set_compression(compression);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else if(compression != item.compression())
+    {
+        item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
 
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1884,9 +1981,11 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
+    compression_type compression = tiles_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE TILES REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size());
+                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size(), " - ",
+                     int(compression));
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
@@ -1899,6 +1998,15 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
                   "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
+        data.items_map.insert(data_ptr, id);
+        item.set_compression(compression);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else if(compression != item.compression())
+    {
+        item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
 
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1908,13 +2016,20 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
 {
     const uint16_t* data_ptr = &map_item.cells_ref();
+    compression_type compression = map_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ",
                      data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height());
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
+              map_item.dimensions().width(), " - ", item.width);
+    BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
+              map_item.dimensions().height(), " - ", item.height);
+    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(item.width, item.height),
+              "Compressed big regular maps are not supported");
 
     if(item.data != data_ptr)
     {
@@ -1922,6 +2037,15 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
                   "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
+        data.items_map.insert(data_ptr, id);
+        item.set_compression(compression);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else if(compression != item.compression())
+    {
+        item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
 
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1931,13 +2055,20 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
 void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
 {
     auto data_ptr = reinterpret_cast<const uint16_t*>(&map_item.cells_ref());
+    compression_type compression = map_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ",
                      data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height());
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
 
     item_type& item = data.items.item(id);
     BN_ASSERT(item.data, "Item has no data");
+    BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
+              map_item.dimensions().width(), " - ", item.width);
+    BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
+              map_item.dimensions().height(), " - ", item.height);
+    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
+              "Compressed big affine maps are not supported");
 
     if(item.data != data_ptr)
     {
@@ -1945,6 +2076,15 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
                   "Multiple copies of the same data not supported");
 
         data.items_map.erase(item.data);
+        data.items_map.insert(data_ptr, id);
+        item.set_compression(compression);
+        _check_commit_item(id, data_ptr, true);
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else if(compression != item.compression())
+    {
+        item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
 
         BN_BG_BLOCKS_LOG_STATUS();

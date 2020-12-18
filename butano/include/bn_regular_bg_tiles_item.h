@@ -19,6 +19,7 @@
 #include "bn_tile.h"
 #include "bn_bpp_mode.h"
 #include "bn_optional_fwd.h"
+#include "bn_compression_type.h"
 
 namespace bn
 {
@@ -65,8 +66,24 @@ public:
      * @param bpp tiles_ref bits per pixel.
      */
     constexpr regular_bg_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp) :
+        regular_bg_tiles_item(tiles_ref, bpp, compression_type::NONE)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param tiles_ref Reference to one or more background tiles.
+     *
+     * The tiles are not copied but referenced, so they should outlive the regular_bg_tiles_item
+     * to avoid dangling references.
+     *
+     * @param bpp tiles_ref bits per pixel.
+     * @param compression Compression type.
+     */
+    constexpr regular_bg_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, compression_type compression) :
         _tiles_ref(tiles_ref),
-        _bpp(bpp)
+        _bpp(bpp),
+        _compression(compression)
     {
         BN_ASSERT(valid_tiles_count(tiles_ref.size(), bpp),
                   "Invalid tiles count: ", _tiles_ref.size(), " - ", int(bpp));
@@ -90,6 +107,24 @@ public:
     {
         return _bpp;
     }
+
+    /**
+     * @brief Returns the compression type.
+     */
+    [[nodiscard]] constexpr compression_type compression() const
+    {
+        return _compression;
+    }
+
+    /**
+     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.
+     *
+     * If the source and destination tiles overlap, the behavior is undefined.
+     *
+     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
+     * @return A regular_bg_tiles_item pointing to the uncompressed tiles.
+     */
+    [[nodiscard]] regular_bg_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const;
 
     /**
      * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
@@ -178,6 +213,7 @@ public:
 private:
     span<const tile> _tiles_ref;
     bpp_mode _bpp;
+    compression_type _compression;
 };
 
 }

@@ -18,6 +18,7 @@
 #include "bn_span.h"
 #include "bn_tile.h"
 #include "bn_optional_fwd.h"
+#include "bn_compression_type.h"
 
 namespace bn
 {
@@ -57,10 +58,43 @@ public:
      * to avoid dangling references.
      */
     constexpr explicit affine_bg_tiles_item(const span<const tile>& tiles_ref) :
-        _tiles_ref(tiles_ref)
+        affine_bg_tiles_item(tiles_ref, compression_type::NONE)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param tiles_ref Reference to one or more background tiles.
+     *
+     * The tiles are not copied but referenced, so they should outlive the affine_bg_tiles_item
+     * to avoid dangling references.
+     *
+     * @param compression Compression type.
+     */
+    constexpr affine_bg_tiles_item(const span<const tile>& tiles_ref, compression_type compression) :
+        _tiles_ref(tiles_ref),
+        _compression(compression)
     {
         BN_ASSERT(valid_tiles_count(tiles_ref.size()), "Invalid tiles count: ", _tiles_ref.size());
     }
+
+    /**
+     * @brief Returns the compression type.
+     */
+    [[nodiscard]] constexpr compression_type compression() const
+    {
+        return _compression;
+    }
+
+    /**
+     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.
+     *
+     * If the source and destination tiles overlap, the behavior is undefined.
+     *
+     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
+     * @return An affine_bg_tiles_item pointing to the uncompressed tiles.
+     */
+    [[nodiscard]] affine_bg_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const;
 
     /**
      * @brief Returns the reference to one or more background tiles.
@@ -158,6 +192,7 @@ public:
 
 private:
     span<const tile> _tiles_ref;
+    compression_type _compression;
 };
 
 }

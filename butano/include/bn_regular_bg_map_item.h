@@ -16,7 +16,9 @@
  */
 
 #include "bn_size.h"
+#include "bn_alignment.h"
 #include "bn_optional_fwd.h"
+#include "bn_compression_type.h"
 #include "bn_regular_bg_map_cell.h"
 
 namespace bn
@@ -53,9 +55,27 @@ public:
      * @param dimensions Size in map cells of the referenced map cells.
      */
     constexpr regular_bg_map_item(const regular_bg_map_cell& cells_ref, const size& dimensions) :
-        _cells_ptr(&cells_ref),
-        _dimensions(dimensions)
+        regular_bg_map_item(cells_ref, dimensions, compression_type::NONE)
     {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param cells_ref Reference to one or more regular background map cells.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param dimensions Size in map cells of the referenced map cells.
+     * @param compression Compression type.
+     */
+    constexpr regular_bg_map_item(const regular_bg_map_cell& cells_ref, const size& dimensions,
+                                  compression_type compression) :
+        _cells_ptr(&cells_ref),
+        _dimensions(dimensions),
+        _compression(compression)
+    {
+        BN_ASSERT(aligned<alignof(int)>(&cells_ref), "Map cells are not aligned");
         BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
                   "Invalid width: ", dimensions.width());
         BN_ASSERT(dimensions.height() >= 32 && dimensions.height() % 32 == 0,
@@ -77,6 +97,26 @@ public:
     {
         return _dimensions;
     }
+
+    /**
+     * @brief Returns the compression type.
+     */
+    [[nodiscard]] constexpr compression_type compression() const
+    {
+        return _compression;
+    }
+
+    /**
+     * @brief Uncompresses the stored data in the map cells referenced by uncompressed_cells_ref.
+     *
+     * If the source and destination map cells overlap, the behavior is undefined.
+     *
+     * @param uncompressed_cells_ref Destination of the uncompressed map cells.
+     * @param uncompressed_dimensions Size in map cells of the destination data.
+     * @return A regular_bg_map_item pointing to the uncompressed map cells.
+     */
+    [[nodiscard]] regular_bg_map_item uncompress(regular_bg_map_cell& uncompressed_cells_ref,
+                                                 const size& uncompressed_dimensions) const;
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the information provided by this item.
@@ -161,6 +201,7 @@ public:
 private:
     const regular_bg_map_cell* _cells_ptr;
     size _dimensions;
+    compression_type _compression;
 };
 
 }

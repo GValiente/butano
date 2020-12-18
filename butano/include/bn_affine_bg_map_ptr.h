@@ -30,6 +30,7 @@ class bg_palette_item;
 class affine_bg_map_item;
 class affine_bg_tiles_ptr;
 class affine_bg_tiles_item;
+enum class compression_type : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of an affine background map.
@@ -274,6 +275,11 @@ public:
      * @brief Returns how much tiles to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int tiles_offset() const;
+
+    /**
+     * @brief Returns the compression of the referenced map cells.
+     */
+    [[nodiscard]] compression_type compression() const;
 
     /**
      * @brief Returns the referenced map cells unless it was created with allocate or allocate_optional.

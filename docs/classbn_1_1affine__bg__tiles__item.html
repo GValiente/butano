@@ -82,11 +82,24 @@
               <span class="m-doc-wrap-bumper"><a href="#a1372222dc070d41ed67887ed676e80d6" class="m-doc">affine_bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#abfb875228e96d6d117f8139bd83a370e" class="m-doc">affine_bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
+            <dt id="aff6f09ef7391b3ee29af14b4ff880b76">
+              <span class="m-doc-wrap-bumper">auto <a href="#aff6f09ef7391b3ee29af14b4ff880b76" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the compression type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aebb80b6d9c4e9bcb55805ccdf2c7a19e" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const -&gt; <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a></span>
+            </dt>
+            <dd>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ad70654b3dae582f68c4ea4b7c5a875a9" class="m-doc">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -147,6 +160,53 @@
               </tbody>
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="abfb875228e96d6d117f8139bd83a370e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abfb875228e96d6d117f8139bd83a370e" class="m-doc-self">affine_bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_ref</td>
+                  <td>Reference to one or more background tiles.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="aebb80b6d9c4e9bcb55805ccdf2c7a19e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> bn::<wbr />affine_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aebb80b6d9c4e9bcb55805ccdf2c7a19e" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const</span></span>
+            </h3>
+            <p>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">uncompressed_tiles_ref</td>
+                  <td>Destination of the uncompressed tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>An <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> pointing to the uncompressed tiles.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination tiles overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="ad70654b3dae582f68c4ea4b7c5a875a9"><div>
             <h3>

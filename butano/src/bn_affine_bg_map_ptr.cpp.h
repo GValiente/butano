@@ -198,6 +198,11 @@ int affine_bg_map_ptr::tiles_offset() const
     return bg_blocks_manager::affine_tiles_offset(_handle);
 }
 
+compression_type affine_bg_map_ptr::compression() const
+{
+    return bg_blocks_manager::compression(_handle);
+}
+
 optional<span<const affine_bg_map_cell>> affine_bg_map_ptr::cells_ref() const
 {
     return bg_blocks_manager::affine_map_cells_ref(_handle);

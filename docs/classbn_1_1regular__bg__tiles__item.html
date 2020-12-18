@@ -84,6 +84,12 @@
               <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#af4b5643cca3d4cecf4bd25bdd45b49cc" class="m-doc">regular_bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -97,6 +103,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ab7aab3a0cc0c2fa84e897ffe923d212a" class="m-doc-self">bpp</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the bits per pixel of the referenced tiles.</dd>
+            <dt id="ab2af6452c4ddbc8a442e5804cf4cf8a1">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab2af6452c4ddbc8a442e5804cf4cf8a1" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the compression type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaddd4c6a6213f9819d74735fdde03ebb" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const -&gt; <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a></span>
+            </dt>
+            <dd>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5d000a9c0a317199e9cb8723d1fef5a8" class="m-doc">find_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
@@ -159,12 +173,64 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="af4b5643cca3d4cecf4bd25bdd45b49cc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4b5643cca3d4cecf4bd25bdd45b49cc" class="m-doc-self">regular_bg_tiles_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; tiles_ref,
+              <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_ref</td>
+                  <td>Reference to one or more background tiles.</td>
+                </tr>
+                <tr>
+                  <td>bpp</td>
+                  <td>tiles_ref bits per pixel.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="ae6d3bf53ee1d00f02fb53ae16b78cc74"><div>
             <h3>
               <span class="m-doc-wrap-bumper">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae6d3bf53ee1d00f02fb53ae16b78cc74" class="m-doc-self">tiles_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the reference to one or more background tiles.</p>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="aaddd4c6a6213f9819d74735fdde03ebb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaddd4c6a6213f9819d74735fdde03ebb" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const</span></span>
+            </h3>
+            <p>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">uncompressed_tiles_ref</td>
+                  <td>Destination of the uncompressed tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> pointing to the uncompressed tiles.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination tiles overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="a5d000a9c0a317199e9cb8723d1fef5a8"><div>
             <h3>

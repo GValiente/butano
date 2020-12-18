@@ -919,8 +919,7 @@
  * @code{.json}
  * {
  *     "type": "sprite",
- *     "height": 64,
- *     "compression": "none"
+ *     "height": 64
  * }
  * @endcode
  *
@@ -959,8 +958,7 @@
  *
  * @code{.json}
  * {
- *     "type": "sprite_palette",
- *     "compression": "none"
+ *     "type": "sprite_palette"
  * }
  * @endcode
  *
@@ -984,21 +982,23 @@
  * @subsection import_regular_bg Regular backgrounds
  *
  * An image file can contain only one regular background.
- * Its size must be 256x256, 256x512, 512x256 or 512x512 pixels.
+ * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
+ * Big regular backgrounds (which are slower) can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for regular backgrounds is the following:
  *
  * @code{.json}
  * {
- *     "type": "regular_bg",
- *     "bpp_mode": "bpp_8"
+ *     "type": "regular_bg"
  * }
  * @endcode
  *
  * The fields for regular background images are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
- * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
- * * `"flipped_tiles_reduction"`: specifies if flipped tiles must be reduced or not (`true` by default).
+ * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
+ * (`true` by default).
+ * * `"flipped_tiles_reduction"`: optional field which specifies if flipped tiles must be reduced or not
+ * (`true` by default).
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
@@ -1007,6 +1007,26 @@
  * Butano expects that the image color palette is already valid for this mode.
  *
  * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
+ * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"map_compression"`: optional field which specifies the compression of the map data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::regular_bg_item should have been generated in the `build` folder.
@@ -1019,9 +1039,42 @@
  *
  * @subsection import_affine_bg Affine backgrounds
  *
+ * An image file can contain only one affine background.
+ * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
+ * Big affine backgrounds (which are slower) can have any width or height multiple of 256 pixels.
+ *
+ * An example of the `*.json` files required for affine backgrounds is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "affine_bg"
+ * }
+ * @endcode
+ *
  * The fields for affine background images are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
- * * `"repeated_tiles_reduction"`: specifies if repeated tiles must be reduced or not (`true` by default).
+ * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
+ * (`true` by default).
+ * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"map_compression"`: optional field which specifies the compression of the map data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_item should have been generated in the `build` folder.
@@ -1045,9 +1098,14 @@
  *
  * The fields for background palettes are the following:
  * * `"type"`: must be `"bg_palette"` for background palettes.
- * * `"bpp_mode"`: optional field which specifies the bits per pixel of the background palette:
+ * * `"bpp_mode"`: specifies the bits per pixel of the background palette:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
+ * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::bg_palette_item should have been generated in the `build` folder.
@@ -1114,7 +1172,7 @@
  *
  * @section changelog_5_0_0 5.0.0 (next release)
  *
- * * Sprites compression (see \ref import for more information).
+ * * Compressed sprites and backgrounds support (see \ref import to learn how to generate them).
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
  *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
  * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].

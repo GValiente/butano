@@ -172,6 +172,11 @@ int sprite_tiles_ptr::tiles_count() const
     return sprite_tiles_manager::tiles_count(_handle);
 }
 
+compression_type sprite_tiles_ptr::compression() const
+{
+    return sprite_tiles_manager::compression(_handle);
+}
+
 optional<span<const tile>> sprite_tiles_ptr::tiles_ref() const
 {
     return sprite_tiles_manager::tiles_ref(_handle);

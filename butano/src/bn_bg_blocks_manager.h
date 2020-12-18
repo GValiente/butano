@@ -24,6 +24,7 @@ namespace bn
     class regular_bg_tiles_ptr;
     class regular_bg_tiles_item;
     enum class bpp_mode : uint8_t;
+    enum class compression_type : uint8_t;
 }
 
 namespace bn::bg_blocks_manager
@@ -107,6 +108,8 @@ namespace bn::bg_blocks_manager
     [[nodiscard]] int affine_tiles_offset(int id);
 
     [[nodiscard]] int palette_offset(int id);
+
+    [[nodiscard]] compression_type compression(int id);
 
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
 

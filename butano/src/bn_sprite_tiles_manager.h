@@ -55,6 +55,8 @@ namespace bn::sprite_tiles_manager
 
     [[nodiscard]] int tiles_count(int id);
 
+    [[nodiscard]] compression_type compression(int id);
+
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
 
     void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type compression);

@@ -6,7 +6,9 @@
 #ifndef BN_HW_BG_BLOCKS_H
 #define BN_HW_BG_BLOCKS_H
 
-#include "bn_hw_tonc.h"
+#include "bn_memory.h"
+#include "bn_compression_type.h"
+#include "bn_hw_uncompress.h"
 #include "bn_hw_bg_blocks_constants.h"
 
 namespace bn::hw::bg_blocks
@@ -44,6 +46,29 @@ namespace bn::hw::bg_blocks
     [[nodiscard]] inline uint16_t* vram(int block_index)
     {
         return reinterpret_cast<uint16_t*>(MEM_VRAM) + (block_index * half_words_per_block());
+    }
+
+    inline void commit(const uint16_t* source_ptr, compression_type compression, int count, uint16_t* destination_ptr)
+    {
+        switch(compression)
+        {
+
+        case compression_type::NONE:
+            memory::copy(*source_ptr, count, *destination_ptr);
+            break;
+
+        case compression_type::LZ77:
+            hw::uncompress::lz77_vram(source_ptr, destination_ptr);
+            break;
+
+        case compression_type::RUN_LENGTH:
+            hw::uncompress::rl_vram(source_ptr, destination_ptr);
+            break;
+
+        default:
+            BN_ERROR("Unknown compression type: ", int(compression));
+            break;
+        }
     }
 
     inline void copy_regular_bg_map_cell_tiles_offset(unsigned source_cell, unsigned tiles_offset,

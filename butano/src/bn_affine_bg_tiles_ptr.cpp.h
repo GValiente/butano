@@ -116,6 +116,11 @@ int affine_bg_tiles_ptr::tiles_count() const
     return bg_blocks_manager::tiles_count(_handle);
 }
 
+compression_type affine_bg_tiles_ptr::compression() const
+{
+    return bg_blocks_manager::compression(_handle);
+}
+
 optional<span<const tile>> affine_bg_tiles_ptr::tiles_ref() const
 {
     return bg_blocks_manager::tiles_ref(_handle);

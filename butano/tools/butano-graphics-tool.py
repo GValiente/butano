@@ -427,11 +427,88 @@ class RegularBgItem:
             elif bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
-    def process(self):
-        self.__execute_command()
-        return self.__write_header()
+        try:
+            self.__tiles_compression = info['tiles_compression']
+            validate_compression(self.__tiles_compression)
+        except KeyError:
+            try:
+                self.__tiles_compression = info['compression']
+                validate_compression(self.__tiles_compression)
+            except KeyError:
+                self.__tiles_compression = 'none'
 
-    def __write_header(self):
+        try:
+            self.__palette_compression = info['palette_compression']
+            validate_compression(self.__palette_compression)
+        except KeyError:
+            try:
+                self.__palette_compression = info['compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+
+        try:
+            self.__map_compression = info['map_compression']
+            validate_compression(self.__map_compression)
+        except KeyError:
+            try:
+                self.__map_compression = info['compression']
+                validate_compression(self.__map_compression)
+            except KeyError:
+                self.__map_compression = 'none'
+
+    def process(self):
+        tiles_compression = self.__tiles_compression
+        palette_compression = self.__palette_compression
+        map_compression = self.__map_compression
+
+        if tiles_compression == 'auto':
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+
+        if palette_compression == 'auto':
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+                                                                             file_size)
+
+        if map_compression == 'auto':
+            map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
+
+        self.__execute_command(tiles_compression, palette_compression, map_compression)
+        return self.__write_header(tiles_compression, palette_compression, map_compression, False)
+
+    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(new_tiles_compression, 'none', 'none')
+        new_file_size = self.__write_header(new_tiles_compression, 'none', 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_tiles_compression, new_file_size
+
+        return best_tiles_compression, best_file_size
+
+    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command('none', new_palette_compression, 'none')
+        new_file_size = self.__write_header('none', new_palette_compression, 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_palette_compression, new_file_size
+
+        return best_palette_compression, best_file_size
+
+    def __test_map_compression(self, best_map_compression, new_map_compression, best_file_size):
+        self.__execute_command('none', 'none', new_map_compression)
+        new_file_size = self.__write_header('none', 'none', new_map_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_map_compression, new_file_size
+
+        return best_map_compression, best_file_size
+
+    def __write_header(self, tiles_compression, palette_compression, map_compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_regular_bg_items_' + name + '.h'
@@ -457,12 +534,17 @@ class RegularBgItem:
 
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
-                    break
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
 
         remove_file(grit_file_path)
 
         if self.__bpp_8:
             bpp_mode_label = 'bpp_mode::BPP_8'
+            tiles_count *= 2
         else:
             bpp_mode_label = 'bpp_mode::BPP_4'
 
@@ -476,12 +558,16 @@ class RegularBgItem:
             header_file.write('\n')
             header_file.write('namespace bn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const regular_bg_item ' + name + '(' +
-                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
-                              bpp_mode_label + ', ' + '\n            ' +
-                              name + '_bn_graphicsMap[0], ' +
-                              'size(' + str(self.__width) + ', ' + str(self.__height) + '));' + '\n')
+            header_file.write('    constexpr const regular_bg_item ' + name + '(' + '\n            ' +
+                              'regular_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
+                              '), ' + '\n            ' +
+                              'bg_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
+                              compression_label(palette_compression) + '),' + '\n            ' +
+                              'regular_bg_map_item(' + name + '_bn_graphicsMap[0], ' +
+                              'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
+                              compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -491,7 +577,7 @@ class RegularBgItem:
         print('    regular_bg_item file written in ' + header_file_path)
         return total_size
 
-    def __execute_command(self):
+    def __execute_command(self, tiles_compression, palette_compression, map_compression):
         command = ['grit', self.__file_path, '-pe' + str(self.__colors_count)]
 
         if self.__bpp_8:
@@ -521,6 +607,21 @@ class RegularBgItem:
             command.append('-mLs')
         else:
             command.append('-mLf')
+
+        if tiles_compression == 'lz77':
+            command.append('-gzl')
+        elif tiles_compression == 'run_length':
+            command.append('-gzr')
+
+        if palette_compression == 'lz77':
+            command.append('-pzl')
+        elif palette_compression == 'run_length':
+            command.append('-pzr')
+
+        if map_compression == 'lz77':
+            command.append('-mzl')
+        elif map_compression == 'run_length':
+            command.append('-mzr')
 
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
@@ -557,11 +658,88 @@ class AffineBgItem:
         except KeyError:
             self.__repeated_tiles_reduction = True
 
-    def process(self):
-        self.__execute_command()
-        return self.__write_header()
+        try:
+            self.__tiles_compression = info['tiles_compression']
+            validate_compression(self.__tiles_compression)
+        except KeyError:
+            try:
+                self.__tiles_compression = info['compression']
+                validate_compression(self.__tiles_compression)
+            except KeyError:
+                self.__tiles_compression = 'none'
 
-    def __write_header(self):
+        try:
+            self.__palette_compression = info['palette_compression']
+            validate_compression(self.__palette_compression)
+        except KeyError:
+            try:
+                self.__palette_compression = info['compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+
+        try:
+            self.__map_compression = info['map_compression']
+            validate_compression(self.__map_compression)
+        except KeyError:
+            try:
+                self.__map_compression = info['compression']
+                validate_compression(self.__map_compression)
+            except KeyError:
+                self.__map_compression = 'none'
+
+    def process(self):
+        tiles_compression = self.__tiles_compression
+        palette_compression = self.__palette_compression
+        map_compression = self.__map_compression
+
+        if tiles_compression == 'auto':
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+
+        if palette_compression == 'auto':
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+                                                                             file_size)
+
+        if map_compression == 'auto':
+            map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
+
+        self.__execute_command(tiles_compression, palette_compression, map_compression)
+        return self.__write_header(tiles_compression, palette_compression, map_compression, False)
+
+    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(new_tiles_compression, 'none', 'none')
+        new_file_size = self.__write_header(new_tiles_compression, 'none', 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_tiles_compression, new_file_size
+
+        return best_tiles_compression, best_file_size
+
+    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command('none', new_palette_compression, 'none')
+        new_file_size = self.__write_header('none', new_palette_compression, 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_palette_compression, new_file_size
+
+        return best_palette_compression, best_file_size
+
+    def __test_map_compression(self, best_map_compression, new_map_compression, best_file_size):
+        self.__execute_command('none', 'none', new_map_compression)
+        new_file_size = self.__write_header('none', 'none', new_map_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_map_compression, new_file_size
+
+        return best_map_compression, best_file_size
+
+    def __write_header(self, tiles_compression, palette_compression, map_compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_affine_bg_items_' + name + '.h'
@@ -587,7 +765,11 @@ class AffineBgItem:
 
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
-                    break
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
 
         remove_file(grit_file_path)
 
@@ -601,11 +783,16 @@ class AffineBgItem:
             header_file.write('\n')
             header_file.write('namespace bn::affine_bg_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const affine_bg_item ' + name + '(' +
-                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
-                              name + '_bn_graphicsMap[0], ' +
-                              'size(' + str(self.__width) + ', ' + str(self.__height) + '));' + '\n')
+            header_file.write('    constexpr const affine_bg_item ' + name + '(' + '\n            ' +
+                              'affine_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              str(tiles_count * 2) + '), ' + compression_label(tiles_compression) +
+                              '), ' + '\n            ' +
+                              'bg_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              str(self.__colors_count) + '), bpp_mode::BPP_8, ' +
+                              compression_label(palette_compression) + '),' + '\n            ' +
+                              'affine_bg_map_item(' + name + '_bn_graphicsMap[0], ' +
+                              'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
+                              compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -615,13 +802,28 @@ class AffineBgItem:
         print('    affine_bg_item file written in ' + header_file_path)
         return total_size
 
-    def __execute_command(self):
+    def __execute_command(self, tiles_compression, palette_compression, map_compression):
         command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8', '-pe' + str(self.__colors_count)]
 
         if self.__repeated_tiles_reduction:
             command.append('-mRt')
         else:
             command.append('-mR!')
+
+        if tiles_compression == 'lz77':
+            command.append('-gzl')
+        elif tiles_compression == 'run_length':
+            command.append('-gzr')
+
+        if palette_compression == 'lz77':
+            command.append('-pzl')
+        elif palette_compression == 'run_length':
+            command.append('-pzr')
+
+        if map_compression == 'lz77':
+            command.append('-mzl')
+        elif map_compression == 'run_length':
+            command.append('-mzr')
 
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
@@ -653,11 +855,33 @@ class BgPaletteItem:
             elif bpp_mode != 'bpp_4':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
-    def process(self):
-        self.__execute_command()
-        return self.__write_header()
+        try:
+            self.__compression = info['compression']
+            validate_compression(self.__compression)
+        except KeyError:
+            self.__compression = 'none'
 
-    def __write_header(self):
+    def process(self):
+        compression = self.__compression
+
+        if compression == 'auto':
+            compression, file_size = self.__test_compression(compression, 'none', None)
+            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
+
+        self.__execute_command(compression)
+        return self.__write_header(compression, False)
+
+    def __test_compression(self, best_compression, new_compression, best_file_size):
+        self.__execute_command(new_compression)
+        new_file_size = self.__write_header(new_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_compression, new_file_size
+
+        return best_compression, best_file_size
+
+    def __write_header(self, compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_bg_palette_items_' + name + '.h'
@@ -669,7 +893,11 @@ class BgPaletteItem:
             for grit_line in grit_data.splitlines():
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
-                    break
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
 
         remove_file(grit_file_path)
 
@@ -691,7 +919,7 @@ class BgPaletteItem:
             header_file.write('    constexpr const bg_palette_item ' + name + '(' +
                               'span<const color>(' + name + '_bn_graphicsPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
-                              bpp_mode_label + ');' + '\n')
+                              bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -701,9 +929,15 @@ class BgPaletteItem:
         print('    bg_palette_item file written in ' + header_file_path)
         return total_size
 
-    def __execute_command(self):
-        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count),
-                   '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
+    def __execute_command(self, compression):
+        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
+
+        if compression == 'lz77':
+            command.append('-pzl')
+        elif compression == 'run_length':
+            command.append('-pzr')
+
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
 
         try:

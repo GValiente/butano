@@ -108,6 +108,22 @@ public:
     }
 
     /**
+     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref,
+     * the colors referenced by uncompressed_colors_ref and the map cells referenced by uncompressed_cells_ref.
+     *
+     * If the source and destination tiles, colors or map cells overlap, the behavior is undefined.
+     *
+     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
+     * @param uncompressed_colors_ref Destination of the uncompressed colors.
+     * @param uncompressed_cells_ref Destination of the uncompressed map cells.
+     * @param uncompressed_dimensions Size in map cells of the destination data.
+     * @return An affine_bg_item pointing to the uncompressed tiles, colors and map cells.
+     */
+    [[nodiscard]] affine_bg_item uncompress(
+            span<tile> uncompressed_tiles_ref, span<color> uncompressed_colors_ref,
+            affine_bg_map_cell& uncompressed_cells_ref, const size& uncompressed_dimensions) const;
+
+    /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.

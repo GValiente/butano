@@ -208,6 +208,11 @@ int regular_bg_map_ptr::palette_banks_offset() const
     return bg_blocks_manager::palette_offset(_handle);
 }
 
+compression_type regular_bg_map_ptr::compression() const
+{
+    return bg_blocks_manager::compression(_handle);
+}
+
 optional<span<const regular_bg_map_cell>> regular_bg_map_ptr::cells_ref() const
 {
     return bg_blocks_manager::regular_map_cells_ref(_handle);

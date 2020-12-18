@@ -1170,7 +1170,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_0_0 5.0.0 (next release)
+ * @section changelog_5_0_0 5.0.0
  *
  * * Compressed sprites and backgrounds support (see \ref import to learn how to generate them).
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,

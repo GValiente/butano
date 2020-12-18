@@ -27,7 +27,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int major()
     {
-        return 4;
+        return 5;
     }
 
     /**
@@ -35,7 +35,7 @@ namespace bn::version
      */
     [[nodiscard]] constexpr int minor()
     {
-        return 4;
+        return 0;
     }
 
     /**

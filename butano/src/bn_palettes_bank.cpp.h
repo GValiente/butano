@@ -12,6 +12,8 @@
 #include "bn_display.h"
 #include "bn_bpp_mode.h"
 #include "bn_algorithm.h"
+#include "bn_compression_type.h"
+#include "../hw/include/bn_hw_uncompress.h"
 
 #if BN_CFG_LOG_ENABLED
     #include "bn_log.h"
@@ -176,7 +178,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, uint16_t hash, 
     return -1;
 }
 
-int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
+int palettes_bank::create_bpp_8(const span<const color>& colors, compression_type compression, bool required)
 {
     palette& first_pal = _palettes[0];
     int colors_count = colors.size();
@@ -210,7 +212,32 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, bool required)
                 _palettes[slot].locked = true;
             }
 
-            _set_colors_bpp_impl(0, colors);
+            color dest_colors_array[hw::palettes::colors()];
+            span<const color> dest_colors_span;
+
+            switch(compression)
+            {
+
+            case compression_type::NONE:
+                dest_colors_span = colors;
+                break;
+
+            case compression_type::LZ77:
+                hw::uncompress::lz77_wram(colors.data(), dest_colors_array);
+                dest_colors_span = span<const color>(dest_colors_array, colors_count);
+                break;
+
+            case compression_type::RUN_LENGTH:
+                hw::uncompress::rl_wram(colors.data(), dest_colors_array);
+                dest_colors_span = span<const color>(dest_colors_array, colors_count);
+                break;
+
+            default:
+                BN_ERROR("Unknown compression type: ", int(compression));
+                break;
+            }
+
+            _set_colors_bpp_impl(0, dest_colors_span);
             return 0;
         }
     }

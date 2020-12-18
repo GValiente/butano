@@ -8,7 +8,9 @@
 
 #include "bn_tile.h"
 #include "bn_memory.h"
+#include "bn_compression_type.h"
 #include "bn_hw_tonc.h"
+#include "bn_hw_uncompress.h"
 
 namespace bn::hw::sprite_tiles
 {
@@ -38,13 +40,33 @@ namespace bn::hw::sprite_tiles
         return tile_vram(index);
     }
 
-    inline void commit(const tile* source_tiles_ptr, int index, int count)
+    inline void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count)
     {
-        memory::copy(*source_tiles_ptr, count, *tile_vram(index));
+        tile* destination_tiles_ptr = tile_vram(index);
+
+        switch(compression)
+        {
+
+        case compression_type::NONE:
+            memory::copy(*source_tiles_ptr, count, *destination_tiles_ptr);
+            break;
+
+        case compression_type::LZ77:
+            hw::uncompress::lz77_vram(source_tiles_ptr, destination_tiles_ptr);
+            break;
+
+        case compression_type::RUN_LENGTH:
+            hw::uncompress::rl_vram(source_tiles_ptr, destination_tiles_ptr);
+            break;
+
+        default:
+            BN_ERROR("Unknown compression type: ", int(compression));
+            break;
+        }
     }
 
     BN_CODE_IWRAM void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y,
-                                   int destination_y, tile* destination_tiles_ptr);
+                                  int destination_y, tile* destination_tiles_ptr);
 }
 
 #endif

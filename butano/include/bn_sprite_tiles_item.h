@@ -19,6 +19,7 @@
 #include "bn_tile.h"
 #include "bn_bpp_mode.h"
 #include "bn_optional_fwd.h"
+#include "bn_compression_type.h"
 
 namespace bn
 {
@@ -66,10 +67,26 @@ public:
      * @param bpp tiles_ref bits per pixel.
      */
     constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp) :
+        sprite_tiles_item(tiles_ref, bpp, compression_type::NONE)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param tiles_ref Reference to one or more sprite tile sets.
+     *
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
+     * to avoid dangling references.
+     *
+     * @param bpp tiles_ref bits per pixel.
+     * @param compression Compression type.
+     */
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, compression_type compression) :
         _tiles_ref(tiles_ref),
-        _bpp(bpp),
         _graphics_count(1),
-        _tiles_count_per_graphic(tiles_ref.size())
+        _tiles_count_per_graphic(tiles_ref.size()),
+        _bpp(bpp),
+        _compression(compression)
     {
         BN_ASSERT(valid_tiles_count(_tiles_count_per_graphic, bpp),
                   "Invalid tiles count per graphic: ", _tiles_count_per_graphic, " - ", int(bpp));
@@ -86,10 +103,28 @@ public:
      * @param graphics_count Number of sprite tile sets contained in tiles_ref.
      */
     constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, int graphics_count) :
+        sprite_tiles_item(tiles_ref, bpp, compression_type::NONE, graphics_count)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param tiles_ref Reference to one or more sprite tile sets.
+     *
+     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_item
+     * to avoid dangling references.
+     *
+     * @param bpp tiles_ref bits per pixel.
+     * @param graphics_count Number of sprite tile sets contained in tiles_ref.
+     * @param compression Compression type.
+     */
+    constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, compression_type compression,
+                                int graphics_count) :
         _tiles_ref(tiles_ref),
-        _bpp(bpp),
         _graphics_count(graphics_count),
-        _tiles_count_per_graphic(0)
+        _tiles_count_per_graphic(0),
+        _bpp(bpp),
+        _compression(compression)
     {
         BN_ASSERT(graphics_count > 0, "Invalid graphics count: ", graphics_count);
         BN_ASSERT(graphics_count <= tiles_ref.size(),
@@ -142,6 +177,9 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
     {
+        BN_ASSERT(_compression == compression_type::NONE || _graphics_count == 1,
+                  "Compressed tiles with multiple graphics not supported");
+
         return span<const tile>(_tiles_ref.data(), _tiles_count_per_graphic);
     }
 
@@ -150,6 +188,8 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
+        BN_ASSERT(_compression == compression_type::NONE || _graphics_count == 1,
+                  "Compressed tiles with multiple graphics not supported");
         BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
         BN_ASSERT(graphics_index < _graphics_count,
                   "Invalid graphics index: ", graphics_index, " - ", _graphics_count);
@@ -157,6 +197,24 @@ public:
         int tiles_count = _tiles_count_per_graphic;
         return span<const tile>(_tiles_ref.data() + (graphics_index * tiles_count), tiles_count);
     }
+
+    /**
+     * @brief Returns the compression type.
+     */
+    [[nodiscard]] constexpr compression_type compression() const
+    {
+        return _compression;
+    }
+
+    /**
+     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.
+     *
+     * If the source and destination tiles overlap, the behavior is undefined.
+     *
+     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
+     * @return A sprite_tiles_item pointing to the uncompressed tiles.
+     */
+    [[nodiscard]] sprite_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const;
 
     /**
      * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
@@ -306,9 +364,10 @@ public:
 
 private:
     span<const tile> _tiles_ref;
-    bpp_mode _bpp;
     int _graphics_count;
     int _tiles_count_per_graphic;
+    bpp_mode _bpp;
+    compression_type _compression;
 };
 
 }

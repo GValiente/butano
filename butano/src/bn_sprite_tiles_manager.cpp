@@ -66,6 +66,7 @@ namespace
 
     private:
         unsigned _status: 2 = unsigned(status_type::FREE);
+        unsigned _compression: 2 = unsigned(compression_type::NONE);
 
     public:
         bool commit: 1 = false;
@@ -78,6 +79,16 @@ namespace
         void set_status(status_type status)
         {
             _status = unsigned(status);
+        }
+
+        [[nodiscard]] compression_type compression() const
+        {
+            return static_cast<compression_type>(_compression);
+        }
+
+        void set_compression(compression_type compression)
+        {
+            _compression = unsigned(compression);
         }
     };
 
@@ -279,6 +290,7 @@ namespace
                         " - data: ", item.data,
                         " - start_tile: ", item.start_tile,
                         " - tiles_count: ", item.tiles_count,
+                        " - compression: ", int(item.compression()),
                         " - usages: ", item.usages,
                         (item.commit ? " - commit" : " - no_commit"));
             }
@@ -413,7 +425,8 @@ namespace
         data.to_remove_items.erase(to_remove_items_it);
     }
 
-    [[nodiscard]] int _find_impl(const tile* tiles_data, [[maybe_unused]] int tiles_count)
+    [[nodiscard]] int _find_impl(const tile* tiles_data, [[maybe_unused]] compression_type compression,
+                                 [[maybe_unused]] int tiles_count)
     {
         auto items_map_iterator = data.items_map.find(tiles_data);
 
@@ -424,6 +437,8 @@ namespace
 
             BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
                       tiles_data, " - ", item.data);
+            BN_ASSERT(compression == item.compression(), "Tiles compression does not match item tiles compression: ",
+                      int(compression), " - ", int(item.compression()));
             BN_ASSERT(tiles_count == item.tiles_count, "Tiles count does not match item tiles count: ",
                       tiles_count, " - ", item.tiles_count);
 
@@ -472,11 +487,12 @@ namespace
         }
         else
         {
-            hw::sprite_tiles::commit(tiles_data, item.start_tile, item.tiles_count);
+            hw::sprite_tiles::commit(tiles_data, item.compression(), item.start_tile, item.tiles_count);
         }
     }
 
-    [[nodiscard]] optional<int> _create_item(int id, const tile* tiles_data, int tiles_count, bool delay_commit)
+    [[nodiscard]] optional<int> _create_item(int id, const tile* tiles_data, compression_type compression,
+                                             int tiles_count, bool delay_commit)
     {
         item_type& item = data.items.item(id);
         int new_item_tiles_count = item.tiles_count - tiles_count;
@@ -503,6 +519,7 @@ namespace
         }
 
         item.data = tiles_data;
+        item.set_compression(compression);
         item.tiles_count = uint16_t(tiles_count);
         item.usages = 1;
         item.commit = false;
@@ -530,15 +547,15 @@ namespace
         return new_free_item_id;
     }
 
-    [[nodiscard]] int _create_impl(const tile* tiles_data, int tiles_count)
+    [[nodiscard]] int _create_impl(const tile* tiles_data, compression_type compression, int tiles_count)
     {
         bool check_to_remove_tiles = tiles_count <= data.to_remove_tiles_count;
 
         if(check_to_remove_tiles)
         {
             auto to_remove_items_end = data.to_remove_items.end();
-            auto to_remove_items_it = lower_bound(data.to_remove_items.begin(), to_remove_items_end, tiles_count,
-                                                  lower_bound_comparator);
+            auto to_remove_items_it = lower_bound(
+                        data.to_remove_items.begin(), to_remove_items_end, tiles_count, lower_bound_comparator);
 
             if(to_remove_items_it != to_remove_items_end)
             {
@@ -549,7 +566,8 @@ namespace
                 {
                     data.to_remove_items.erase(to_remove_items_it);
 
-                    if(optional<int> new_free_item_id = _create_item(id, tiles_data, tiles_count, true))
+                    if(optional<int> new_free_item_id = _create_item(
+                                id, tiles_data, compression, tiles_count, true))
                     {
                         _insert_free_item(*new_free_item_id);
                     }
@@ -569,7 +587,8 @@ namespace
             {
                 int id = *free_items_it;
 
-                if(optional<int> new_free_item_id = _create_item(id, tiles_data, tiles_count, data.delay_commit))
+                if(optional<int> new_free_item_id = _create_item(
+                            id, tiles_data, compression, tiles_count, data.delay_commit))
                 {
                     _insert_free_item(*new_free_item_id, free_items_it);
                     ++free_items_it;
@@ -584,7 +603,7 @@ namespace
         {
             update();
             data.delay_commit = true;
-            return _create_impl(tiles_data, tiles_count);
+            return _create_impl(tiles_data, compression, tiles_count);
         }
 
         return -1;
@@ -607,7 +626,8 @@ namespace
             {
                 int id = *free_items_it;
 
-                if(optional<int> new_free_item_id = _create_item(id, nullptr, tiles_count, false))
+                if(optional<int> new_free_item_id = _create_item(
+                            id, nullptr, compression_type::NONE, tiles_count, false))
                 {
                     _insert_free_item(*new_free_item_id, free_items_it);
                     ++free_items_it;
@@ -684,31 +704,31 @@ int available_items_count()
     }
 #endif
 
-int find(const span<const tile>& tiles_ref)
+int find(const span<const tile>& tiles_ref, compression_type compression)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND: ", tiles_data, " - ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - FIND: ", tiles_data, " - ", tiles_count, " - ", int(compression));
 
-    return _find_impl(tiles_data, tiles_count);
+    return _find_impl(tiles_data, compression, tiles_count);
 }
 
-int create(const span<const tile>& tiles_ref)
+int create(const span<const tile>& tiles_ref, compression_type compression)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_data, " - ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE: ", tiles_data, " - ", tiles_count, " - ", int(compression));
 
-    int result = _find_impl(tiles_data, tiles_count);
+    int result = _find_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
         return result;
     }
 
-    result = _create_impl(tiles_data, tiles_count);
+    result = _create_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
@@ -736,17 +756,18 @@ int create(const span<const tile>& tiles_ref)
     return result;
 }
 
-int create_new(const span<const tile>& tiles_ref)
+int create_new(const span<const tile>& tiles_ref, compression_type compression)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count, " - ",
+                        int(compression));
 
     BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
               "Multiple copies of the same tiles data not supported");
 
-    int result = _create_impl(tiles_data, tiles_count);
+    int result = _create_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
@@ -805,21 +826,22 @@ int allocate(int tiles_count, bpp_mode bpp)
     return result;
 }
 
-int create_optional(const span<const tile>& tiles_ref)
+int create_optional(const span<const tile>& tiles_ref, compression_type compression)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE OPTIONAL: ", tiles_data, " - ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
+                        int(compression));
 
-    int result = _find_impl(tiles_data, tiles_count);
+    int result = _find_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
         return result;
     }
 
-    result = _create_impl(tiles_data, tiles_count);
+    result = _create_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
@@ -836,17 +858,18 @@ int create_optional(const span<const tile>& tiles_ref)
     return result;
 }
 
-int create_new_optional(const span<const tile>& tiles_ref)
+int create_new_optional(const span<const tile>& tiles_ref, compression_type compression)
 {
     const tile* tiles_data = tiles_ref.data();
     int tiles_count = tiles_ref.size();
 
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count);
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
+                        int(compression));
 
     BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
               "Multiple copies of the same tiles data not supported");
 
-    int result = _create_impl(tiles_data, tiles_count);
+    int result = _create_impl(tiles_data, compression, tiles_count);
 
     if(result != -1)
     {
@@ -937,7 +960,7 @@ optional<span<const tile>> tiles_ref(int id)
     return result;
 }
 
-void set_tiles_ref(int id, const span<const tile>& tiles_ref)
+void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type compression)
 {
     item_type& item = data.items.item(id);
     const tile* old_tiles_data = item.data;
@@ -946,7 +969,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
     [[maybe_unused]] int new_tiles_count = tiles_ref.size();
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
-                        " - ", new_tiles_count);
+                        " - ", new_tiles_count, " - ", int(compression));
 
     if(old_tiles_data != new_tiles_data)
     {
@@ -956,8 +979,19 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref)
                   old_tiles_count, " - ", new_tiles_count);
 
         data.items_map.erase(old_tiles_data);
+        item.set_compression(compression);
         _commit_item(new_tiles_data, true, item);
         data.items_map.insert(new_tiles_data, id);
+
+        BN_SPRITE_TILES_LOG_STATUS();
+    }
+    else if(compression != item.compression())
+    {
+        BN_ASSERT(old_tiles_count == new_tiles_count, "Tiles count does not match item tiles count: ",
+                  old_tiles_count, " - ", new_tiles_count);
+
+        item.set_compression(compression);
+        _commit_item(new_tiles_data, true, item);
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
@@ -1073,7 +1107,7 @@ void commit()
 
                 if(item.status() == status_type::USED)
                 {
-                    hw::sprite_tiles::commit(item.data, item.start_tile, item.tiles_count);
+                    hw::sprite_tiles::commit(item.data, item.compression(), item.start_tile, item.tiles_count);
                 }
             }
         }

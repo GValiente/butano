@@ -104,6 +104,7 @@ public:
         BN_ASSERT(item.shape_size() == sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL) ||
                    item.shape_size() == sprite_shape_size(sprite_shape::TALL, sprite_size::SMALL),
                    "Invalid shape size");
+        BN_ASSERT(item.tiles_item().compression() == compression_type::NONE, "Compressed tiles not supported");
         BN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters_ref.size(),
                    "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());

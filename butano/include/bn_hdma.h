@@ -24,7 +24,7 @@ namespace bn::hdma
 {
     /**
      * @brief Start copying each frame the given amount of elements from the memory location referenced by source_ref
-     * to the memory location referenced to by destination_ref.
+     * to the memory location referenced by destination_ref.
      *
      * The elements are not copied but referenced,
      * so they should be alive while HDMA is running to avoid dangling references.

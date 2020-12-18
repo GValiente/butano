@@ -8,30 +8,90 @@
 #include "bn_bg_palette_item.h"
 #include "bn_palettes_bank.h"
 #include "bn_palettes_manager.h"
+#include "../hw/include/bn_hw_palettes.h"
 
 namespace bn
 {
 
+namespace
+{
+    [[nodiscard]] int _create_impl(const bg_palette_item& palette_item, bool required)
+    {
+        const span<const color>& colors = palette_item.colors_ref();
+        palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+        int id;
+
+        if(palette_item.bpp() == bpp_mode::BPP_4)
+        {
+            uint16_t hash = palettes_bank::colors_hash(colors);
+            id = bg_palettes_bank.find_bpp_4(colors, hash);
+
+            if(id < 0)
+            {
+                id = bg_palettes_bank.create_bpp_4(colors, hash, required);
+            }
+        }
+        else
+        {
+            id = bg_palettes_bank.find_bpp_8(colors);
+
+            if(id < 0)
+            {
+                id = bg_palettes_bank.create_bpp_8(colors, palette_item.compression(), required);
+            }
+        }
+
+        return id;
+    }
+
+    [[nodiscard]] int _create_new_impl(const bg_palette_item& palette_item, bool required)
+    {
+        const span<const color>& colors = palette_item.colors_ref();
+        palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+        int id;
+
+        if(palette_item.bpp() == bpp_mode::BPP_4)
+        {
+            id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), required);
+        }
+        else
+        {
+            id = bg_palettes_bank.create_bpp_8(colors, palette_item.compression(), required);
+        }
+
+        return id;
+    }
+}
+
 optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_item)
 {
-    const span<const color>& colors = palette_item.colors_ref();
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
-    int id;
+    optional<bg_palette_ptr> result;
+    bool bpp_4 = palette_item.bpp() == bpp_mode::BPP_4;
 
-    if(palette_item.bpp() == bpp_mode::BPP_4)
+    if(palette_item.compression() == compression_type::NONE || ! bpp_4)
     {
-        id = bg_palettes_bank.find_bpp_4(colors, palettes_bank::colors_hash(colors));
+        const span<const color>& colors = palette_item.colors_ref();
+        palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+        int id;
+
+        if(bpp_4)
+        {
+            id = bg_palettes_bank.find_bpp_4(colors, palettes_bank::colors_hash(colors));
+        }
+        else
+        {
+            id = bg_palettes_bank.find_bpp_8(colors);
+        }
+
+        if(id >= 0)
+        {
+            result = bg_palette_ptr(id);
+        }
     }
     else
     {
-        id = bg_palettes_bank.find_bpp_8(colors);
-    }
-
-    optional<bg_palette_ptr> result;
-
-    if(id >= 0)
-    {
-        result = bg_palette_ptr(id);
+        color uncompressed_colors[hw::palettes::colors()];
+        result = find(palette_item.uncompress(uncompressed_colors));
     }
 
     return result;
@@ -39,28 +99,16 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_ite
 
 bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
 {
-    const span<const color>& colors = palette_item.colors_ref();
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(palette_item.bpp() == bpp_mode::BPP_4)
+    if(palette_item.compression() == compression_type::NONE || palette_item.bpp() == bpp_mode::BPP_8)
     {
-        uint16_t hash = palettes_bank::colors_hash(colors);
-        id = bg_palettes_bank.find_bpp_4(colors, hash);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_4(colors, hash, true);
-        }
+        id = _create_impl(palette_item, true);
     }
     else
     {
-        id = bg_palettes_bank.find_bpp_8(colors);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_8(colors, true);
-        }
+        color uncompressed_colors[hw::palettes::colors()];
+        id = _create_impl(palette_item.uncompress(uncompressed_colors), true);
     }
 
     return bg_palette_ptr(id);
@@ -68,17 +116,16 @@ bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
 
 bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
 {
-    const span<const color>& colors = palette_item.colors_ref();
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(palette_item.bpp() == bpp_mode::BPP_4)
+    if(palette_item.compression() == compression_type::NONE || palette_item.bpp() == bpp_mode::BPP_8)
     {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), true);
+        id = _create_new_impl(palette_item, true);
     }
     else
     {
-        id = bg_palettes_bank.create_bpp_8(colors, true);
+        color uncompressed_colors[hw::palettes::colors()];
+        id = _create_new_impl(palette_item.uncompress(uncompressed_colors), true);
     }
 
     return bg_palette_ptr(id);
@@ -86,28 +133,16 @@ bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
 
 optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& palette_item)
 {
-    const span<const color>& colors = palette_item.colors_ref();
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(palette_item.bpp() == bpp_mode::BPP_4)
+    if(palette_item.compression() == compression_type::NONE || palette_item.bpp() == bpp_mode::BPP_8)
     {
-        uint16_t hash = palettes_bank::colors_hash(colors);
-        id = bg_palettes_bank.find_bpp_4(colors, hash);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_4(colors, hash, false);
-        }
+        id = _create_impl(palette_item, false);
     }
     else
     {
-        id = bg_palettes_bank.find_bpp_8(colors);
-
-        if(id < 0)
-        {
-            id = bg_palettes_bank.create_bpp_8(colors, false);
-        }
+        color uncompressed_colors[hw::palettes::colors()];
+        id = _create_impl(palette_item.uncompress(uncompressed_colors), false);
     }
 
     optional<bg_palette_ptr> result;
@@ -122,17 +157,16 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& 
 
 optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_item& palette_item)
 {
-    const span<const color>& colors = palette_item.colors_ref();
-    palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
     int id;
 
-    if(palette_item.bpp() == bpp_mode::BPP_4)
+    if(palette_item.compression() == compression_type::NONE || palette_item.bpp() == bpp_mode::BPP_8)
     {
-        id = bg_palettes_bank.create_bpp_4(colors, palettes_bank::colors_hash(colors), false);
+        id = _create_new_impl(palette_item, false);
     }
     else
     {
-        id = bg_palettes_bank.create_bpp_8(colors, false);
+        color uncompressed_colors[hw::palettes::colors()];
+        id = _create_new_impl(palette_item.uncompress(uncompressed_colors), false);
     }
 
     optional<bg_palette_ptr> result;
@@ -179,7 +213,15 @@ span<const color> bg_palette_ptr::colors() const
 
 void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
 {
-    palettes_manager::bg_palettes_bank().set_colors(_id, palette_item.colors_ref());
+    if(palette_item.compression() == compression_type::NONE)
+    {
+        palettes_manager::bg_palettes_bank().set_colors(_id, palette_item.colors_ref());
+    }
+    else
+    {
+        color uncompressed_colors[hw::palettes::colors()];
+        set_colors(palette_item.uncompress(uncompressed_colors));
+    }
 }
 
 bpp_mode bg_palette_ptr::bpp() const

@@ -18,6 +18,7 @@ namespace bn
 {
 
 enum class bpp_mode : uint8_t;
+enum class compression_type : uint8_t;
 
 class palettes_bank
 {
@@ -51,7 +52,7 @@ public:
 
     [[nodiscard]] int create_bpp_4(const span<const color>& colors, uint16_t hash, bool required);
 
-    [[nodiscard]] int create_bpp_8(const span<const color>& colors, bool required);
+    [[nodiscard]] int create_bpp_8(const span<const color>& colors, compression_type compression, bool required);
 
     void increase_usages(int id);
 

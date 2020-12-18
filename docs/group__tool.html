@@ -56,6 +56,7 @@
               <ul>
                 <li><a href="#files">Files</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
               </ul>
             </li>
           </ul>
@@ -71,6 +72,8 @@
             <dt>file <a href="bn__affine__bg__tiles__item_8h.html" class="m-doc">bn_affine_bg_tiles_item.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__bg__palette__item_8h.html" class="m-doc">bn_bg_palette_item.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__compression__type_8h.html" class="m-doc">bn_compression_type.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__music__item_8h.html" class="m-doc">bn_music_item.h</a></dt>
             <dd></dd>
@@ -142,6 +145,50 @@
             </dt>
             <dd>Contains the required information to generate sprite tiles.</dd>
           </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum class <a href="#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_type</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#ggabe5512b25aeba41d12da5c555ed129aeab50339a10e1de285ac99d4c3990b8693" class="m-doc">NONE</a>,
+              <a href="#ggabe5512b25aeba41d12da5c555ed129aeaf6b1e796b8ffae4172e2752c26dd404c" class="m-doc">LZ77</a>,
+              <a href="#ggabe5512b25aeba41d12da5c555ed129aeaa89143703046170452146c76d68f05fb" class="m-doc">RUN_LENGTH</a> }</span>
+            </dt>
+            <dd>Specifies the available compression types.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="gabe5512b25aeba41d12da5c555ed129ae"><div>
+            <h3>
+              enum class <a href="#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc-self">compression_type</a>: uint8_t
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__compression__type_8h.html">&lt;bn_compression_type.h&gt;</a></div>
+            </h3>
+            <p>Specifies the available compression types.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#ggabe5512b25aeba41d12da5c555ed129aeab50339a10e1de285ac99d4c3990b8693" class="m-doc-self" id="ggabe5512b25aeba41d12da5c555ed129aeab50339a10e1de285ac99d4c3990b8693">NONE</a></td>
+                  <td>
+                  <p>Uncompressed data.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggabe5512b25aeba41d12da5c555ed129aeaf6b1e796b8ffae4172e2752c26dd404c" class="m-doc-self" id="ggabe5512b25aeba41d12da5c555ed129aeaf6b1e796b8ffae4172e2752c26dd404c">LZ77</a></td>
+                  <td>
+                  <p>LZ77 compressed data.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggabe5512b25aeba41d12da5c555ed129aeaa89143703046170452146c76d68f05fb" class="m-doc-self" id="ggabe5512b25aeba41d12da5c555ed129aeaa89143703046170452146c76d68f05fb">RUN_LENGTH</a></td>
+                  <td>
+                  <p>Run-length compressed data.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

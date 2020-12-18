@@ -100,6 +100,11 @@
             </dt>
             <dd>Returns the item used to create the color palette of the output sprites.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae4d9c40faeb1ee53de7bea4733ed1a80" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref) const -&gt; <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a></span>
+            </dt>
+            <dd>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref and the colors referenced by uncompressed_colors_ref.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ac4ac0ab20ca70203d1afd70f6a48720e" class="m-doc">create_sprite</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y) const -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
             </dt>
@@ -217,6 +222,35 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ae4d9c40faeb1ee53de7bea4733ed1a80"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae4d9c40faeb1ee53de7bea4733ed1a80" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref) const</span></span>
+            </h3>
+            <p>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref and the colors referenced by uncompressed_colors_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">uncompressed_tiles_ref</td>
+                  <td>Destination of the uncompressed tiles.</td>
+                </tr>
+                <tr>
+                  <td>uncompressed_colors_ref</td>
+                  <td>Destination of the uncompressed colors.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="classbn_1_1sprite__item.html" class="m-doc">sprite_<wbr />item</a> pointing to the uncompressed tiles and colors.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination tiles or colors overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="ac4ac0ab20ca70203d1afd70f6a48720e"><div>
             <h3>

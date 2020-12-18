@@ -104,6 +104,18 @@ public:
     }
 
     /**
+     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref and
+     * the colors referenced by uncompressed_colors_ref.
+     *
+     * If the source and destination tiles or colors overlap, the behavior is undefined.
+     *
+     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
+     * @param uncompressed_colors_ref Destination of the uncompressed colors.
+     * @return A sprite_item pointing to the uncompressed tiles and colors.
+     */
+    [[nodiscard]] sprite_item uncompress(span<tile> uncompressed_tiles_ref, span<color> uncompressed_colors_ref) const;
+
+    /**
      * @brief Creates a sprite_ptr using the information contained in this item.
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.

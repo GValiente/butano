@@ -15,9 +15,27 @@ from bmp import BMP
 from file_info import FileInfo
 
 
+def validate_compression(compression):
+    if compression != 'none' and compression != 'lz77' and compression != 'run_length' and compression != 'auto':
+        raise ValueError('Unknown compression: ' + str(compression))
+
+
 def remove_file(file_path):
     if os.path.exists(file_path):
         os.remove(file_path)
+
+
+def compression_label(compression):
+    if compression == 'none':
+        return 'compression_type::NONE'
+
+    if compression == 'lz77':
+        return 'compression_type::LZ77'
+
+    if compression == 'run_length':
+        return 'compression_type::RUN_LENGTH'
+
+    raise ValueError('Unknown compression: ' + str(compression))
 
 
 class SpriteItem:
@@ -108,7 +126,63 @@ class SpriteItem:
         else:
             raise ValueError('Invalid sprite width: ' + str(width) + SpriteItem.valid_sizes_message())
 
-    def write_header(self):
+        try:
+            self.__tiles_compression = info['tiles_compression']
+            validate_compression(self.__tiles_compression)
+        except KeyError:
+            try:
+                self.__tiles_compression = info['compression']
+                validate_compression(self.__tiles_compression)
+            except KeyError:
+                self.__tiles_compression = 'none'
+
+        try:
+            self.__palette_compression = info['palette_compression']
+            validate_compression(self.__palette_compression)
+        except KeyError:
+            try:
+                self.__palette_compression = info['compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+
+    def process(self):
+        tiles_compression = self.__tiles_compression
+        palette_compression = self.__palette_compression
+
+        if tiles_compression == 'auto':
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+
+        if palette_compression == 'auto':
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+                                                                             file_size)
+
+        self.__execute_command(tiles_compression, palette_compression)
+        return self.__write_header(tiles_compression, palette_compression, False)
+
+    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(new_tiles_compression, 'none')
+        new_file_size = self.__write_header(new_tiles_compression, 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_tiles_compression, new_file_size
+
+        return best_tiles_compression, best_file_size
+
+    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command('none', new_palette_compression)
+        new_file_size = self.__write_header('none', new_palette_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_palette_compression, new_file_size
+
+        return best_palette_compression, best_file_size
+
+    def __write_header(self, tiles_compression, palette_compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_sprite_items_' + name + '.h'
@@ -120,9 +194,21 @@ class SpriteItem:
             grit_data = grit_data.replace('unsigned short', 'bn::color')
 
             for grit_line in grit_data.splitlines():
+                if ' tiles ' in grit_line:
+                    for grit_word in grit_line.split():
+                        try:
+                            tiles_count = int(grit_word)
+                            break
+                        except ValueError:
+                            pass
+
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
-                    break
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
 
         remove_file(grit_file_path)
 
@@ -130,6 +216,7 @@ class SpriteItem:
             bpp_mode_label = 'bpp_mode::BPP_4'
         else:
             bpp_mode_label = 'bpp_mode::BPP_8'
+            tiles_count *= 2
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_ITEMS_' + name.upper() + '_H'
@@ -144,9 +231,12 @@ class SpriteItem:
             header_file.write('    constexpr const sprite_item ' + name + '(' +
                               'sprite_shape_size(sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + '), ' + '\n            ' +
-                              'span<const tile>(' + name + '_bn_graphicsTiles), ' + '\n            ' +
-                              'span<const color>(' + name + '_bn_graphicsPal, ' + str(self.__colors_count) + '), ' +
-                              bpp_mode_label + ', ' + str(self.__graphics) + ');' + '\n')
+                              'sprite_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
+                              ', ' + str(self.__graphics) + '), ' + '\n            ' +
+                              'sprite_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
+                              compression_label(palette_compression) + '));\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -156,13 +246,23 @@ class SpriteItem:
         print('    sprite_item file written in ' + header_file_path)
         return total_size
 
-    def process(self):
+    def __execute_command(self, tiles_compression, palette_compression):
         command = ['grit', self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
 
         if self.__colors_count == 16:
             command.append('-gB4')
         else:
             command.append('-gB8')
+
+        if tiles_compression == 'lz77':
+            command.append('-gzl')
+        elif tiles_compression == 'run_length':
+            command.append('-gzr')
+
+        if palette_compression == 'lz77':
+            command.append('-pzl')
+        elif palette_compression == 'run_length':
+            command.append('-pzr')
 
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
@@ -175,14 +275,40 @@ class SpriteItem:
 
 class SpritePaletteItem:
 
-    def __init__(self, file_path, file_name_no_ext, build_folder_path):
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
         bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__colors_count = bmp.colors_count
 
-    def write_header(self):
+        try:
+            self.__compression = info['compression']
+            validate_compression(self.__compression)
+        except KeyError:
+            self.__compression = 'none'
+
+    def process(self):
+        compression = self.__compression
+
+        if compression == 'auto':
+            compression, file_size = self.__test_compression(compression, 'none', None)
+            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
+
+        self.__execute_command(compression)
+        return self.__write_header(compression, False)
+
+    def __test_compression(self, best_compression, new_compression, best_file_size):
+        self.__execute_command(new_compression)
+        new_file_size = self.__write_header(new_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_compression, new_file_size
+
+        return best_compression, best_file_size
+
+    def __write_header(self, compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_sprite_palette_items_' + name + '.h'
@@ -194,7 +320,11 @@ class SpritePaletteItem:
             for grit_line in grit_data.splitlines():
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
-                    break
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
 
         remove_file(grit_file_path)
 
@@ -216,7 +346,7 @@ class SpritePaletteItem:
             header_file.write('    constexpr const sprite_palette_item ' + name + '(' +
                               'span<const color>(' + name + '_bn_graphicsPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
-                              bpp_mode_label + ');' + '\n')
+                              bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -226,9 +356,15 @@ class SpritePaletteItem:
         print('    sprite_palette_item file written in ' + header_file_path)
         return total_size
 
-    def process(self):
-        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count),
-                   '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
+    def __execute_command(self, compression):
+        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
+
+        if compression == 'lz77':
+            command.append('-pzl')
+        elif compression == 'run_length':
+            command.append('-pzr')
+
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
         command = ' '.join(command)
 
         try:
@@ -291,7 +427,11 @@ class RegularBgItem:
             elif bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
-    def write_header(self):
+    def process(self):
+        self.__execute_command()
+        return self.__write_header()
+
+    def __write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_regular_bg_items_' + name + '.h'
@@ -351,7 +491,7 @@ class RegularBgItem:
         print('    regular_bg_item file written in ' + header_file_path)
         return total_size
 
-    def process(self):
+    def __execute_command(self):
         command = ['grit', self.__file_path, '-pe' + str(self.__colors_count)]
 
         if self.__bpp_8:
@@ -417,7 +557,11 @@ class AffineBgItem:
         except KeyError:
             self.__repeated_tiles_reduction = True
 
-    def write_header(self):
+    def process(self):
+        self.__execute_command()
+        return self.__write_header()
+
+    def __write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_affine_bg_items_' + name + '.h'
@@ -471,7 +615,7 @@ class AffineBgItem:
         print('    affine_bg_item file written in ' + header_file_path)
         return total_size
 
-    def process(self):
+    def __execute_command(self):
         command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8', '-pe' + str(self.__colors_count)]
 
         if self.__repeated_tiles_reduction:
@@ -509,7 +653,11 @@ class BgPaletteItem:
             elif bpp_mode != 'bpp_4':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
-    def write_header(self):
+    def process(self):
+        self.__execute_command()
+        return self.__write_header()
+
+    def __write_header(self):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
         header_file_path = self.__build_folder_path + '/bn_bg_palette_items_' + name + '.h'
@@ -553,7 +701,7 @@ class BgPaletteItem:
         print('    bg_palette_item file written in ' + header_file_path)
         return total_size
 
-    def process(self):
+    def __execute_command(self):
         command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count),
                    '-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics']
         command = ' '.join(command)
@@ -585,7 +733,7 @@ class GraphicsFileInfo:
         if self.__graphics_type == 'sprite':
             item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
         elif self.__graphics_type == 'sprite_palette':
-            item = SpritePaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path)
+            item = SpritePaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
         elif self.__graphics_type == 'regular_bg':
             item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
         elif self.__graphics_type == 'affine_bg':
@@ -595,8 +743,7 @@ class GraphicsFileInfo:
         else:
             raise ValueError('Unknown graphics type: ' + str(self.__graphics_type))
 
-        item.process()
-        file_size = item.write_header()
+        file_size = item.process()
         self.__new_file_info.write(self.__file_info_path)
         self.__new_json_file_info.write(self.__json_file_info_path)
         return file_size

@@ -14,6 +14,7 @@ namespace bn
 {
     class tile;
     enum class bpp_mode : uint8_t;
+    enum class compression_type : uint8_t;
 }
 
 namespace bn::sprite_tiles_manager
@@ -32,17 +33,17 @@ namespace bn::sprite_tiles_manager
         void log_status();
     #endif
 
-    [[nodiscard]] int find(const span<const tile>& tiles_ref);
+    [[nodiscard]] int find(const span<const tile>& tiles_ref, compression_type compression);
 
-    [[nodiscard]] int create(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create(const span<const tile>& tiles_ref, compression_type compression);
 
-    [[nodiscard]] int create_new(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_new(const span<const tile>& tiles_ref, compression_type compression);
 
     [[nodiscard]] int allocate(int tiles_count, bpp_mode bpp);
 
-    [[nodiscard]] int create_optional(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_optional(const span<const tile>& tiles_ref, compression_type compression);
 
-    [[nodiscard]] int create_new_optional(const span<const tile>& tiles_ref);
+    [[nodiscard]] int create_new_optional(const span<const tile>& tiles_ref, compression_type compression);
 
     [[nodiscard]] int allocate_optional(int tiles_count, bpp_mode bpp);
 
@@ -56,7 +57,7 @@ namespace bn::sprite_tiles_manager
 
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);
 
-    void set_tiles_ref(int id, const span<const tile>& tiles_ref);
+    void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type compression);
 
     void reload_tiles_ref(int id);
 

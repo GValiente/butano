@@ -500,7 +500,7 @@ namespace bn::memory
 
     /**
      * @brief Copies the given amount of elements from the object referenced by source_ref
-     * to the object referenced to by destination_ref.
+     * to the object referenced by destination_ref.
      *
      * If the objects overlap, the behavior is undefined.
      *
@@ -532,7 +532,7 @@ namespace bn::memory
 
     /**
      * @brief Clears (set to zero) the memory of the given amount of elements
-     * from the object referenced to by destination_ref.
+     * from the object referenced by destination_ref.
      * @param elements Number of elements to clear (not bytes).
      * @param destination_ref Reference to the memory location to clear.
      */

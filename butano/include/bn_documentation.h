@@ -919,7 +919,8 @@
  * @code{.json}
  * {
  *     "type": "sprite",
- *     "height": 64
+ *     "height": 64,
+ *     "compression": "none"
  * }
  * @endcode
  *
@@ -927,6 +928,21 @@
  * * `"type"`: must be `"sprite"` for sprites.
  * * `"height"`: height of each sprite image in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
+ * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_item should have been generated in the `build` folder.
@@ -943,12 +959,18 @@
  *
  * @code{.json}
  * {
- *     "type": "sprite_palette"
+ *     "type": "sprite_palette",
+ *     "compression": "none"
  * }
  * @endcode
  *
  * The fields for sprite palettes are the following:
  * * `"type"`: must be `"sprite_palette"` for sprites.
+ * * `"compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_palette_item should have been generated in the `build` folder.
@@ -1092,6 +1114,7 @@
  *
  * @section changelog_5_0_0 5.0.0 (next release)
  *
+ * * Sprites compression (see \ref import for more information).
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
  *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
  * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].

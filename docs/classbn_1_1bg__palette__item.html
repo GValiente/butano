@@ -73,6 +73,12 @@
               <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a3c130d8e8633e411e8194562aa2ea2ae" class="m-doc">bg_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
+              <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -86,6 +92,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a49e0fbd5a0756bf08bed7b0887da809c" class="m-doc-self">bpp</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the bits per pixel of the color palettes to create.</dd>
+            <dt id="a76ebbd31a28fadf0f0213afb987447b4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a76ebbd31a28fadf0f0213afb987447b4" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the compression type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae933b651afb1a1594a6460dadf37ac73" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref) const -&gt; <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a></span>
+            </dt>
+            <dd>Uncompresses the stored data in the colors referenced by uncompressed_colors_ref.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ad5f600b7ef97bbc40653ad5fe9dfc29a" class="m-doc">find_palette</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&gt;</span>
             </dt>
@@ -143,12 +157,64 @@
             </table>
 <p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="a3c130d8e8633e411e8194562aa2ea2ae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bg_palette_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c130d8e8633e411e8194562aa2ea2ae" class="m-doc-self">bg_palette_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; colors_ref,
+              <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors_ref</td>
+                  <td>Reference to an array of multiples of 16 colors.</td>
+                </tr>
+                <tr>
+                  <td>bpp</td>
+                  <td>Bits per pixel of the color palettes to create.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="abdb1200c215905a391575771548cd034"><div>
             <h3>
               <span class="m-doc-wrap-bumper">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; bn::<wbr />bg_palette_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abdb1200c215905a391575771548cd034" class="m-doc-self">colors_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the referenced array of multiples of 16 colors.</p>
 <p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae933b651afb1a1594a6460dadf37ac73"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> bn::<wbr />bg_palette_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae933b651afb1a1594a6460dadf37ac73" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref) const</span></span>
+            </h3>
+            <p>Uncompresses the stored data in the colors referenced by uncompressed_colors_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">uncompressed_colors_ref</td>
+                  <td>Destination of the uncompressed colors.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a> pointing to the uncompressed colors.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination colors overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="ad5f600b7ef97bbc40653ad5fe9dfc29a"><div>
             <h3>

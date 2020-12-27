@@ -48,6 +48,8 @@ Butano would have not been possible without these libraries:
 [Universal GBA Library](https://github.com/AntonioND/ugba).
 * Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
 * SuperCard SD detection provided by [DLDI](http://www.chishm.com/DLDI/).
+* Pool containers provided by [ETL](https://www.etlcpp.com/).
+* Unique type ID generation without RTTI provided by [CTTI](https://github.com/Manu343726/ctti).
 
 
 ## Butano Fighter

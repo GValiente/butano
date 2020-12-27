@@ -255,8 +255,6 @@ public:
 
     /**
      * @brief Appends the character representation of the given fixed point value to the managed string.
-     *
-     * See https://stackoverflow.com/questions/57452174/how-to-correctly-print-a-2-30-fixed-point-variable
      */
     template<int Precision>
     void append(fixed_t<Precision> value)

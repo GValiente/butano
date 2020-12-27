@@ -37,13 +37,9 @@ public:
         BN_ASSERT(bn::rule_of_three_approximation(bn::fixed(360).data(), 65536).calculate(bn::fixed(360).data()) == 65536);
 
         BN_ASSERT(bn::degrees_sin(0) == 0);
-        BN_ASSERT(bn::degrees_sin(30) == 0.5);
         BN_ASSERT(bn::degrees_sin(90) == 1);
-        BN_ASSERT(bn::degrees_sin(150) == 0.5);
         BN_ASSERT(bn::degrees_sin(180) == 0);
-        BN_ASSERT(bn::degrees_sin(210) == -0.5);
         BN_ASSERT(bn::degrees_sin(270) == -1);
-        BN_ASSERT(bn::degrees_sin(330) == -0.5);
         BN_ASSERT(bn::degrees_sin(360) == 0);
         BN_ASSERT(bn::degrees_sin(360 + 90) == 1);
         BN_ASSERT(bn::degrees_sin(-90) == -1);

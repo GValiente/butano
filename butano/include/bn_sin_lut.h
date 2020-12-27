@@ -51,56 +51,45 @@ namespace bn
 {
     // https://github.com/AntonioND/ugba/blob/master/libugba/source/fp_math.c
 
-    // Inspired by: https://www.coranac.com/2009/07/sines/
+    constexpr const int FP_PI = 0x8000;
+    constexpr const int FP_PI_2 = FP_PI / 2;
+    constexpr const int FP_2_PI = 2 * FP_PI;
 
-    // Use symmetry to clamp to -pi/2 to +pi/2 (-0x4000 to 0x4000)
+    // First, use symmetry to clamp to -pi/2 to +pi/2 (-0x4000 to 0x4000)
 
     int x = lut_angle;
-    x &= 0xFFFF;
+    x &= FP_2_PI - 1;
 
-    // sin(pi + x) = -sin(x)
-
-    bool greather_than_pi = x > 0x8000;
-
-    if(greather_than_pi)
-    {
-        x -= 0x8000;
-    }
-
-    if (((x & 0x4000) << 1) ^ (x & 0x8000)) // pi/2 to 3*pi/2
-        x = 0x8000 - x;
+    if ((x > FP_PI_2) && (x < (3 * FP_PI_2))) // pi/2 to 3*pi/2
+        x = FP_PI - x;
+    else if (x >= (3 * FP_PI_2)) // 3*pi/2 to 2*pi
+        x = x - FP_2_PI;
 
     // Calculate result
 
     constexpr const double pi = 3.1415926535897932384626433832795;
-    constexpr const auto A = int64_t((2.0 * pi) * (1 << 24)); // 8.24
-    constexpr const auto B = int64_t((2.0 * pi - 5.0) * (1 << 24)); // 8.24
-    constexpr const auto C = int64_t((pi - 3.0) * (1 << 24)); // 0.24
+
+    constexpr const auto A = int64_t(((2.0 * pi) * (1 << 24))); // 8.24
+    constexpr const auto B = int64_t(((12.0 / pi - 1.0 - pi) * (1 << 24))); // 0.24
+    constexpr const auto C = int64_t((3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24))); // 0.24
 
     int64_t X2 = x; // 16.0
     X2 = X2 * X2; // 32.0
 
     int64_t T1 = X2 * C; // 32.24
-    T1 >>= 28; // 4.24
+    T1 >>= 30; // 2.24
 
-    int64_t T2 = B - T1; // 8.24
-    T2 *= X2; // 40.24
-    T2 >>= 27; // 13.24
+    int64_t T2 = B + T1; // 2.24
+    T2 *= X2; // 34.24
+    T2 >>= 25; // 9.24
 
-    int64_t result = A - T2; // 13.24
-    result *= x; // 29.24
-    result >>= 24; // 29.0
+    int64_t result = A + T2; // 9.24
+    result *= x; // 25.24
+    // Add 0.5 to round up before the final shift
+    result += (1 << 24) / 2; // 25.24
+    result >>= 24; // 25.0
 
-    int sin = (int(result) + 1) >> 4;
-
-    // sin(pi + x) = -sin(x)
-
-    if(greather_than_pi)
-    {
-        sin = -sin;
-    }
-
-    return sin;
+    return int(result >> 4);
 }
 
 /**

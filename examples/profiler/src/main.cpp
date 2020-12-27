@@ -76,11 +76,20 @@ int main()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("sin");
+    BN_PROFILER_START("lut_sin");
 
     for(int i = 0; i < its; ++i)
     {
         integer += bn::lut_sin(i % 2048).data();
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("calculate_sin_lut_value");
+
+    for(int i = 0; i < its; ++i)
+    {
+        integer += bn::calculate_sin_lut_value(i % 65536);
     }
 
     BN_PROFILER_STOP();

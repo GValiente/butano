@@ -73,9 +73,9 @@ namespace bn
     // Calculate result
 
     constexpr const double pi = 3.1415926535897932384626433832795;
-    constexpr const int64_t A = (2.0 * pi) * (1 << 24); // 8.24
-    constexpr const int64_t B = (2.0 * pi - 5.0) * (1 << 24); // 8.24
-    constexpr const int64_t C = (pi - 3.0) * (1 << 24); // 0.24
+    constexpr const auto A = int64_t((2.0 * pi) * (1 << 24)); // 8.24
+    constexpr const auto B = int64_t((2.0 * pi - 5.0) * (1 << 24)); // 8.24
+    constexpr const auto C = int64_t((pi - 3.0) * (1 << 24)); // 0.24
 
     int64_t X2 = x; // 16.0
     X2 = X2 * X2; // 32.0
@@ -114,7 +114,7 @@ constexpr const array<int16_t, 2049> sin_lut = []{
 
     for(int index = 0; index < 2049; ++index)
     {
-        result[index] = calculate_sin_lut_value(lut_angle);
+        result[index] = int16_t(calculate_sin_lut_value(lut_angle));
         lut_angle += 65536 / 2048;
     }
 

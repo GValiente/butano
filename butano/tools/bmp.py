@@ -16,19 +16,15 @@ class BMP:
         self.__file_path = file_path
 
         with open(file_path, 'rb') as file:
-            # https://stackoverflow.com/questions/47003833/how-to-read-bmp-file-header-in-python
+            def read_int():
+                return struct.unpack('I', file.read(4))[0]
 
-            file_type = file.read(2).decode()
+            def read_short():
+                return struct.unpack('H', file.read(2))[0]
 
-            if file_type != 'BM':
-                raise ValueError('Invalid file type: ' + file_type)
-
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('H', file.read(2))
-            _ = struct.unpack('H', file.read(2))
-            self.__pixels_offset = struct.unpack('I', file.read(4))[0]
-
-            header_size = struct.unpack('I', file.read(4))[0]
+            file.read(10)
+            self.__pixels_offset = read_int()
+            header_size = read_int()
 
             if header_size == 108:
                 raise ValueError('Invalid header size: ' + str(header_size) +
@@ -37,32 +33,28 @@ class BMP:
             if header_size != 40:
                 raise ValueError('Invalid header size: ' + str(header_size))
 
-            self.width = struct.unpack('I', file.read(4))[0]
+            self.width = read_int()
 
             if self.width == 0 or self.width % 8 != 0:
                 raise ValueError('Invalid width: ' + str(self.width))
 
-            self.height = struct.unpack('I', file.read(4))[0]
+            self.height = read_int()
 
             if self.height == 0 or self.height % 8 != 0:
                 raise ValueError('Invalid height: ' + str(self.height))
 
-            _ = struct.unpack('H', file.read(2))
-            bits_per_pixel = struct.unpack('H', file.read(2))[0]
+            file.read(2)
+            bits_per_pixel = read_short()
 
             if bits_per_pixel != 4 and bits_per_pixel != 8:
                 raise ValueError('Invalid bits per pixel: ' + str(bits_per_pixel))
 
-            compression_method = struct.unpack('I', file.read(4))[0]
+            compression_method = read_int()
 
             if compression_method != 0:
                 raise ValueError('Compression method not supported: ' + str(compression_method))
 
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('I', file.read(4))
-            _ = struct.unpack('I', file.read(4))[0]
-            _ = struct.unpack('I', file.read(4))
+            file.read(20)
             self.__colors_offset = file.tell()
 
             if bits_per_pixel == 4:

@@ -56,6 +56,16 @@
 #define BN_GAME_PAK_WAIT_STATE_FIRST_8     0x000C
 
 /**
+ * @def BN_GAME_PAK_WAIT_STATE_FIRST_AUTO
+ *
+ * Game Pak access time is 4+1 clock cycles for non-sequential accesses if a SuperCard SD has been detected;
+ * 3+1 otherwise.
+ *
+ * @ingroup game_pak
+ */
+#define BN_GAME_PAK_WAIT_STATE_FIRST_AUTO   -1
+
+/**
  * @def BN_GAME_PAK_WAIT_STATE_SECOND_2
  *
  * Game Pak access time is 2+1 clock cycles for sequential accesses.
@@ -74,5 +84,15 @@
  * @ingroup game_pak
  */
 #define BN_GAME_PAK_WAIT_STATE_SECOND_1    0x0010
+
+/**
+ * @def BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
+ *
+ * Game Pak access time is 2+1 clock cycles for sequential accesses if a SuperCard SD has been detected;
+ * 1+1 otherwise.
+ *
+ * @ingroup game_pak
+ */
+#define BN_GAME_PAK_WAIT_STATE_SECOND_AUTO  -1
 
 #endif

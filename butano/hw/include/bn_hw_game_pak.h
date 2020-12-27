@@ -8,21 +8,62 @@
 
 #include "bn_config_game_pak.h"
 #include "bn_hw_tonc.h"
+#include "../3rd_party/dldi/include/io_scsd.h"
 
 namespace bn::hw::game_pak
 {
     static_assert(BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_4 ||
             BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_3 ||
             BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_2 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_8);
+            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_8 ||
+            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_AUTO);
 
     static_assert(BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_2 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_1);
+            BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_1 ||
+            BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_AUTO);
 
     inline void init()
     {
-        BIT_SET(REG_WAITCNT_NV, BN_CFG_GAME_PAK_WAIT_STATE_FIRST);
-        BIT_SET(REG_WAITCNT_NV, BN_CFG_GAME_PAK_WAIT_STATE_SECOND);
+        bool first_auto = BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_AUTO;
+        bool second_auto = BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_AUTO;
+        bool supercard_sd_inserted = false;
+
+        if(first_auto || second_auto)
+        {
+            supercard_sd_inserted = _SCSD_isInserted();
+        }
+
+        if(first_auto)
+        {
+            if(supercard_sd_inserted)
+            {
+                BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_FIRST_4);
+            }
+            else
+            {
+                BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_FIRST_3);
+            }
+        }
+        else
+        {
+            BIT_SET(REG_WAITCNT_NV, BN_CFG_GAME_PAK_WAIT_STATE_FIRST);
+        }
+
+        if(second_auto)
+        {
+            if(supercard_sd_inserted)
+            {
+                BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_SECOND_2);
+            }
+            else
+            {
+                BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_SECOND_1);
+            }
+        }
+        else
+        {
+            BIT_SET(REG_WAITCNT_NV, BN_CFG_GAME_PAK_WAIT_STATE_SECOND);
+        }
 
         if(BN_CFG_GAME_PAK_PREFETCH_ENABLED)
         {

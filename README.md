@@ -46,6 +46,7 @@ Butano would have not been possible without these libraries:
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern).
 * Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
+* SuperCard SD detection provided by [DLDI](http://www.chishm.com/DLDI/).
 
 
 ## Butano Fighter

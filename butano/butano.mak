@@ -59,9 +59,13 @@ LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA)
 # List of directories containing all butano source files:
 #---------------------------------------------------------------------------------------------------------------------
 BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
-				$(LIBBUTANOABS)/hw/3rd_party/libtonc/asm $(LIBBUTANOABS)/hw/3rd_party/libtonc/src \
-				$(LIBBUTANOABS)/hw/3rd_party/libtonc/src/font $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
-				$(LIBBUTANOABS)/hw/3rd_party/posprintf/src $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src
+                                $(LIBBUTANOABS)/hw/3rd_party/libtonc/asm \
+                                $(LIBBUTANOABS)/hw/3rd_party/libtonc/src \
+                                $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/font \
+                                $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
+                                $(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
+                                $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
+                                $(LIBBUTANOABS)/hw/3rd_party/dldi/src
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once):

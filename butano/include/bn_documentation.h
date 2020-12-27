@@ -1170,6 +1170,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_5_1_0 5.1.0 (next release)
+ *
+ * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
+ * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
+ *
+ *
  * @section changelog_5_0_0 5.0.0
  *
  * * Compressed sprites and backgrounds support (see \ref import to learn how to generate them).

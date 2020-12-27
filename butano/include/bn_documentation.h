@@ -1175,6 +1175,7 @@
  * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
  * * bn::calculate_sin_lut_value precision improved.
+ * * Missing third party license files included.
  *
  *
  * @section changelog_5_0_0 5.0.0

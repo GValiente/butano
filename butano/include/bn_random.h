@@ -23,7 +23,7 @@ namespace bn
  *
  * Its current implementation is a Marsaglia's xorshf generator.
  *
- * See https://stackoverflow.com/questions/1640258/need-a-fast-random-generator-for-c
+ * See https://github.com/raylee/xorshf96/blob/master/xorshf96.c
  *
  * @ingroup other
  */

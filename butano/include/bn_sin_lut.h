@@ -3,6 +3,28 @@
  * zlib License, see LICENSE file.
  */
 
+/*
+ * Copyright (c) 2011-2015, 2019-2020 Antonio Niño Díaz <antonio_nd@outlook.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #ifndef BN_SIN_LUT_H
 #define BN_SIN_LUT_H
 
@@ -25,33 +47,60 @@ namespace bn
  *
  * @ingroup math
  */
-[[nodiscard]] constexpr int16_t calculate_sin_lut_value(int lut_angle)
+[[nodiscard]] constexpr int calculate_sin_lut_value(int lut_angle)
 {
-    // https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/
+    // https://github.com/AntonioND/ugba/blob/master/libugba/source/fp_math.c
 
-    auto i = int16_t(lut_angle);
-    bool c = i < 0;
+    // Inspired by: https://www.coranac.com/2009/07/sines/
 
-    if(i == (i | 0x4000))
+    // Use symmetry to clamp to -pi/2 to +pi/2 (-0x4000 to 0x4000)
+
+    int x = lut_angle;
+    x &= 0xFFFF;
+
+    // sin(pi + x) = -sin(x)
+
+    bool greather_than_pi = x > 0x8000;
+
+    if(greather_than_pi)
     {
-        i = (1 << 15) - i;
+        x -= 0x8000;
     }
 
-    i = (i & 0x7FFF) >> 1;
+    if (((x & 0x4000) << 1) ^ (x & 0x8000)) // pi/2 to 3*pi/2
+        x = 0x8000 - x;
 
-    enum { A1 = 3370945099UL, B1 = 2746362156UL, C1 = 292421UL };
-    enum { n = 13, p = 32, q = 31, r = 3, a = 12 };
+    // Calculate result
 
-    unsigned ui(i);
-    unsigned y = (C1 * ui) >> n;
-    y = B1 - ((ui * y) >> r);
-    y = ui * (y >> n);
-    y = ui * (y >> n);
-    y = A1 - (y >> (p - q));
-    y = ui * (y >> n);
-    y = (y + (1UL << (q - a - 1))) >> (q - a);
+    constexpr const double pi = 3.1415926535897932384626433832795;
+    constexpr const int64_t A = (2.0 * pi) * (1 << 24); // 8.24
+    constexpr const int64_t B = (2.0 * pi - 5.0) * (1 << 24); // 8.24
+    constexpr const int64_t C = (pi - 3.0) * (1 << 24); // 0.24
 
-    return c ? -y : y;
+    int64_t X2 = x; // 16.0
+    X2 = X2 * X2; // 32.0
+
+    int64_t T1 = X2 * C; // 32.24
+    T1 >>= 28; // 4.24
+
+    int64_t T2 = B - T1; // 8.24
+    T2 *= X2; // 40.24
+    T2 >>= 27; // 13.24
+
+    int64_t result = A - T2; // 13.24
+    result *= x; // 29.24
+    result >>= 24; // 29.0
+
+    int sin = (int(result) + 1) >> 4;
+
+    // sin(pi + x) = -sin(x)
+
+    if(greather_than_pi)
+    {
+        sin = -sin;
+    }
+
+    return sin;
 }
 
 /**

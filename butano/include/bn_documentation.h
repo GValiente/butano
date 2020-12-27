@@ -1172,8 +1172,9 @@
  *
  * @section changelog_5_1_0 5.1.0 (next release)
  *
- * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
+ * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
+ * * bn::calculate_sin_lut_value precision improved.
  *
  *
  * @section changelog_5_0_0 5.0.0

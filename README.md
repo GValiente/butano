@@ -44,7 +44,8 @@ Butano would have not been possible without these libraries:
 * GBA hardware access and more provided by [Tonclib](https://www.coranac.com/projects/#tonc).
 * Music and sound effects provided by [Maxmod](https://maxmod.devkitpro.org).
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
-* Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern).
+* Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern) and
+[Universal GBA Library](https://github.com/AntonioND/ugba).
 * Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
 * SuperCard SD detection provided by [DLDI](http://www.chishm.com/DLDI/).
 

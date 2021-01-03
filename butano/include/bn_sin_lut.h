@@ -60,34 +60,35 @@ namespace bn
     int x = lut_angle;
     x &= FP_2_PI - 1;
 
-    if ((x > FP_PI_2) && (x < (3 * FP_PI_2))) // pi/2 to 3*pi/2
-        x = FP_PI - x;
-    else if (x >= (3 * FP_PI_2)) // 3*pi/2 to 2*pi
+    if (x >= (3 * FP_PI_2)) // 3*pi/2 to 2*pi
         x = x - FP_2_PI;
+    else if (x > FP_PI_2) // pi/2 to 3*pi/2
+        x = FP_PI - x;
 
     // Calculate result
 
     constexpr const double pi = 3.1415926535897932384626433832795;
-
-    constexpr const auto A = int64_t(((2.0 * pi) * (1 << 24))); // 8.24
-    constexpr const auto B = int64_t(((12.0 / pi - 1.0 - pi) * (1 << 24))); // 0.24
-    constexpr const auto C = int64_t((3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24))); // 0.24
+    constexpr const auto A = int32_t(((2.0 * pi) * (1 << 24))); // 8.24
+    constexpr const auto B = int32_t((1 << 7) * (12.0 / pi - 1.0 - pi) * (1 << 24)); // 8.24
+    constexpr const auto C = int32_t((1 << 9) * 3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24)); // 8.24
 
     int64_t X2 = x; // 16.0
     X2 = X2 * X2; // 32.0
 
-    int64_t T1 = X2 * C; // 32.24
-    T1 >>= 30; // 2.24
+    int32_t T1 = (X2 * C) >> 32; // (32.0 * 8.24) >> 32 = 40.24 >> 32 = 8.24
 
-    int64_t T2 = B + T1; // 2.24
-    T2 *= X2; // 34.24
-    T2 >>= 25; // 9.24
+    // ((32.0 + 32.0) * 8.24) >> 32 = (32.0 * 8.24) >> 32 = 40.24 >> 32 = 8.24
+    int32_t T2 = ((B + T1) * X2) >> 32;
 
-    int64_t result = A + T2; // 9.24
-    result *= x; // 25.24
+    // Prepare X so that the final shift is by 32
+    x = x << 8; // 16.8
+
+    int64_t result = A + T2; // 8.24
+    result *= x; // 24.32
+
     // Add 0.5 to round up before the final shift
-    result += (1 << 24) / 2; // 25.24
-    result >>= 24; // 25.0
+    result += (1U << 31); // 24.32
+    result >>= 32; // 24.0
 
     return int(result >> 4);
 }

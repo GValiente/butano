@@ -587,7 +587,8 @@
  * \ref getting_started "guide to download, install and start using Butano".
  * After that, there are various \ref examples "examples" explaining most aspects of the engine.
  * At last, check how to \ref import "import" your own assets in a game and
- * take a look at the <a href="modules.html">modules page</a>.
+ * take a look at the <a href="modules.html">modules</a> page.
+ * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
  *
  *
  * @section main_contact_support Contact and support
@@ -694,7 +695,8 @@
  *
  * If everything went as expected, a `*.gba` file should have been generated in the project folder!
  * Now learn how to \ref import "import your assets" in the game and
- * also take a look at the <a href="modules.html">modules page</a>.
+ * also take a look at the <a href="modules.html">modules</a> page.
+ * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
  */
 
 
@@ -983,7 +985,7 @@
  *
  * An image file can contain only one regular background.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
- * Big backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
+ * Big regular backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
  * but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for regular backgrounds is the following:
@@ -1042,7 +1044,7 @@
  *
  * An image file can contain only one affine background.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
- * Big backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
+ * Big affine backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
  * but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for affine backgrounds is the following:
@@ -1167,6 +1169,92 @@
 
 
 /**
+ * @page faq Frequently asked questions (FAQ)
+ *
+ * @tableofcontents
+ *
+ *
+ * @section faq_how_do_i How do I-
+ *
+ * The best way to get started is to read the
+ * \ref getting_started "guide to download, install and start using Butano".
+ *
+ * After that, there are various \ref examples "examples" explaining most aspects of the engine.
+ *
+ * At last, check how to \ref import "import" your own assets in a game and
+ * take a look at the <a href="modules.html">modules</a> page.
+ *
+ * This page is worth a look too.
+ *
+ *
+ * @section faq_transparent_color Which color is the transparent one?
+ *
+ * Butano supports 16 or 256 color images only, so they must have a color palette.
+ *
+ * The transparent color is the first one in the color palette,
+ * so in order to change it you should use a bitmap editor with color palette manipulation tools,
+ * like <a href="https://www.coranac.com/projects/usenti/">Usenti</a>:
+ *
+ * @image html import_usenti.png
+ *
+ *
+ * @section faq_bg_wrapping Why some backgrounds don't allow wrapping?
+ *
+ * If you try to move a big background beyond its boundaries, an error like this one should be displayed:
+ *
+ * @image html faq_bg_wrapping.png
+ *
+ * That's because big backgrounds don't allow wrapping, so if you are using a big background,
+ * avoid moving it beyond its boundaries (or avoid using big backgrounds).
+ *
+ *
+ * @section faq_big_background What's a big background?
+ *
+ * The GBA only supports some fixed sizes for background maps.
+ *
+ * However, Butano allows to manage background maps with any size multiple of 256 pixels.
+ * These special background maps and the backgrounds that display them are called big maps/backgrounds.
+ *
+ * Try to avoid big backgrounds whenever possible, because they are slower CPU wise and
+ * don't support wrapping (they can't be moved beyond their boundaries).
+ *
+ *
+ * @section faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?
+ *
+ * It seems it is always better to use affine backgrounds, since they can be rotated, scaled, etc.
+ * and its size can be up to 1024x1024 pixels without becoming big backgrounds.
+ *
+ * However, compared to regular backgrounds, affine backgrounds have these limitations:
+ * * Only two of them can be displayed at the same time, instead of four.
+ * * They don't support 16 color tiles, only 256 color ones.
+ * * They only support up to 256 different tiles, instead of 1024.
+ *
+ * Because of these limitations, you should avoid affine backgrounds whenever possible.
+ *
+ *
+ * @section faq_music_crash Why the game crashes when a song is played?
+ *
+ * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library for audio support.
+ *
+ * It provides excellent performance and support for lots of module music formats,
+ * but unfortunately it crashes with some songs.
+ *
+ * You could try to create a new issue in its
+ * <a href="https://github.com/devkitPro/maxmod/issues">GitHub issues</a> page,
+ * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
+ *
+ *
+ * @section faq_sell_money Would I be able to sell my game made with Butano for money?
+ *
+ * Sure!
+ *
+ * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
+ * and <a href="https://github.com/GValiente/butano/tree/master/3rd_party_licenses">third party libraries licenses</a>
+ * used by Butano you can sell your game without issues.
+ */
+
+
+/**
  * @page changelog Changelog
  *
  * @tableofcontents
@@ -1178,6 +1266,7 @@
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
  * * bn::calculate_sin_lut_value precision improved.
  * * Some methods added to indicate if a background or a map is big or not.
+ * * \ref faq page added.
  * * Missing third party license files included.
  *
  *

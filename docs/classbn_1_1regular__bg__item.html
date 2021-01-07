@@ -100,6 +100,10 @@
             </dt>
             <dd>Returns the item used to create the map of the output regular backgrounds.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac5714e7a707009424755fb0440a42364" class="m-doc">big</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if backgrounds generated with this item are big or not.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5229174cc45724e03663f38f1cb44eb1" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref,
               <a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; uncompressed_cells_ref,
@@ -222,6 +226,13 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ac5714e7a707009424755fb0440a42364"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5714e7a707009424755fb0440a42364" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if backgrounds generated with this item are big or not.</p>
+<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="a5229174cc45724e03663f38f1cb44eb1"><div>
             <h3>

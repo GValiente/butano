@@ -983,7 +983,8 @@
  *
  * An image file can contain only one regular background.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
- * Big regular backgrounds (which are slower) can have any width or height multiple of 256 pixels.
+ * Big backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
+ * but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for regular backgrounds is the following:
  *
@@ -1041,7 +1042,8 @@
  *
  * An image file can contain only one affine background.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
- * Big affine backgrounds (which are slower) can have any width or height multiple of 256 pixels.
+ * Big backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
+ * but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for affine backgrounds is the following:
  *
@@ -1175,6 +1177,7 @@
  * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
  * * bn::calculate_sin_lut_value precision improved.
+ * * Some methods added to indicate if a background or a map is big or not.
  * * Missing third party license files included.
  *
  *

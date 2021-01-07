@@ -51,6 +51,8 @@ namespace bgs_manager
 
     [[nodiscard]] size dimensions(id_type id);
 
+    [[nodiscard]] bool big(id_type id);
+
     [[nodiscard]] const regular_bg_map_ptr& regular_map(id_type id);
 
     [[nodiscard]] const affine_bg_map_ptr& affine_map(id_type id);

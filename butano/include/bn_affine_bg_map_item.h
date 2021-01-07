@@ -76,9 +76,11 @@ public:
         _compression(compression)
     {
         BN_ASSERT(aligned<alignof(int)>(&cells_ref), "Map cells are not aligned");
-        BN_ASSERT(dimensions.width() == 16 || (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
+        BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
+                  (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
                   "Invalid width: ", dimensions.width());
-        BN_ASSERT(dimensions.height() == 16 || (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
+        BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
+                  (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
                   "Invalid height: ", dimensions.height());
     }
 
@@ -96,6 +98,18 @@ public:
     [[nodiscard]] constexpr const size& dimensions() const
     {
         return _dimensions;
+    }
+
+    /**
+     * @brief Indicates if maps generated with this item are big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] constexpr bool big() const
+    {
+        int width = _dimensions.width();
+        return width != _dimensions.height() || (width != 16 && width != 32 && width != 64 && width != 128);
     }
 
     /**

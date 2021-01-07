@@ -119,6 +119,11 @@ size affine_bg_ptr::dimensions() const
     return bgs_manager::dimensions(_handle);
 }
 
+bool affine_bg_ptr::big() const
+{
+    return bgs_manager::big(_handle);
+}
+
 const affine_bg_tiles_ptr& affine_bg_ptr::tiles() const
 {
     return bgs_manager::affine_map(_handle).tiles();

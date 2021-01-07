@@ -99,6 +99,17 @@ public:
     }
 
     /**
+     * @brief Indicates if maps generated with this item are big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] constexpr bool big() const
+    {
+        return _dimensions.width() > 64 || _dimensions.height() > 64;
+    }
+
+    /**
      * @brief Returns the compression type.
      */
     [[nodiscard]] constexpr compression_type compression() const

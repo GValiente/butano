@@ -164,6 +164,14 @@ public:
     [[nodiscard]] size dimensions() const;
 
     /**
+     * @brief Indicates if this affine background is big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] bool big() const;
+
+    /**
      * @brief Returns the tiles used by this affine background.
      */
     [[nodiscard]] const affine_bg_tiles_ptr& tiles() const;
@@ -271,6 +279,8 @@ public:
 
     /**
      * @brief Sets the horizontal position of the affine background (relative to its camera, if it has one).
+     *
+     * Remember that big backgrounds don't support wrapping (they can't be moved beyond their boundaries).
      */
     void set_x(fixed x);
 
@@ -281,6 +291,8 @@ public:
 
     /**
      * @brief Sets the vertical position of the affine background (relative to its camera, if it has one).
+     *
+     * Remember that big backgrounds don't support wrapping (they can't be moved beyond their boundaries).
      */
     void set_y(fixed y);
 
@@ -291,6 +303,9 @@ public:
 
     /**
      * @brief Sets the position of the affine background (relative to its camera, if it has one).
+     *
+     * Remember that big backgrounds don't support wrapping (they can't be moved beyond their boundaries).
+     *
      * @param x Horizontal position of the affine background (relative to its camera, if it has one).
      * @param y Vertical position of the affine background (relative to its camera, if it has one).
      */
@@ -298,6 +313,8 @@ public:
 
     /**
      * @brief Sets the position of the affine background (relative to its camera, if it has one).
+     *
+     * Remember that big backgrounds don't support wrapping (they can't be moved beyond their boundaries).
      */
     void set_position(const fixed_point& position);
 

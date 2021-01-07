@@ -92,6 +92,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a76d8bc79ca95f81f150bee93d20390a0" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the size in map cells of the referenced map cells.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a07d9ff38d876c5ae66717baf20717124" class="m-doc">big</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if maps generated with this item are big or not.</dd>
             <dt id="ae5c50c9feefa99ace9cdfc691c0abdc1">
               <span class="m-doc-wrap-bumper">auto <a href="#ae5c50c9feefa99ace9cdfc691c0abdc1" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -190,6 +194,13 @@
               </tbody>
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a07d9ff38d876c5ae66717baf20717124"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />regular_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a07d9ff38d876c5ae66717baf20717124" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if maps generated with this item are big or not.</p>
+<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="aff01deaadb93e66d76e13ab1a158cce5"><div>
             <h3>

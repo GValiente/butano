@@ -99,6 +99,10 @@
             </dt>
             <dd>Returns the item used to create the map of the output affine backgrounds.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a9b17b15c91afae3eef035dacf184ea" class="m-doc">big</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if backgrounds generated with this item are big or not.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a3b76a10855aa70a4382e103d2f5a846d" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; uncompressed_colors_ref,
               <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; uncompressed_cells_ref,
@@ -216,6 +220,13 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="a0a9b17b15c91afae3eef035dacf184ea"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />affine_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0a9b17b15c91afae3eef035dacf184ea" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if backgrounds generated with this item are big or not.</p>
+<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="a3b76a10855aa70a4382e103d2f5a846d"><div>
             <h3>

@@ -108,6 +108,17 @@ public:
     }
 
     /**
+     * @brief Indicates if backgrounds generated with this item are big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] constexpr bool big() const
+    {
+        return _map_item.big();
+    }
+
+    /**
      * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref,
      * the colors referenced by uncompressed_colors_ref and the map cells referenced by uncompressed_cells_ref.
      *

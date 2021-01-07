@@ -548,6 +548,12 @@ size dimensions(id_type id)
     return item->half_dimensions * 2;
 }
 
+bool big(id_type id)
+{
+    auto item = static_cast<const item_type*>(id);
+    return item->big_map;
+}
+
 const regular_bg_map_ptr& regular_map(id_type id)
 {
     auto item = static_cast<const item_type*>(id);

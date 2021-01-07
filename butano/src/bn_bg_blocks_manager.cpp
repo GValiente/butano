@@ -78,8 +78,7 @@ namespace
 
     [[nodiscard]] constexpr bool _big_affine_map(int width, int height)
     {
-        bool native_map = (width == height) && (width == 16 || width == 32 || width == 64 || width == 128);
-        return ! native_map;
+        return width != height || (width != 16 && width != 32 && width != 64 && width != 128);
     }
 
 
@@ -1879,6 +1878,18 @@ size map_dimensions(int id)
 {
     const item_type& item = data.items.item(id);
     return size(item.width, item.height);
+}
+
+bool regular_big_map(int id)
+{
+    const item_type& item = data.items.item(id);
+    return _big_regular_map(item.width, item.height);
+}
+
+bool affine_big_map(int id)
+{
+    const item_type& item = data.items.item(id);
+    return _big_affine_map(item.width, item.height);
 }
 
 int regular_tiles_offset(int id)

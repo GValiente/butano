@@ -273,6 +273,14 @@ public:
     [[nodiscard]] size dimensions() const;
 
     /**
+     * @brief Indicates if this map is big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] bool big() const;
+
+    /**
      * @brief Returns the bits per pixel of the referenced color palette.
      */
     [[nodiscard]] bpp_mode bpp() const;

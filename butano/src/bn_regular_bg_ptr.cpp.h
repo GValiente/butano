@@ -119,6 +119,11 @@ size regular_bg_ptr::dimensions() const
     return bgs_manager::dimensions(_handle);
 }
 
+bool regular_bg_ptr::big() const
+{
+    return bgs_manager::big(_handle);
+}
+
 const regular_bg_tiles_ptr& regular_bg_ptr::tiles() const
 {
     return bgs_manager::regular_map(_handle).tiles();

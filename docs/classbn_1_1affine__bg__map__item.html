@@ -92,6 +92,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the size in map cells of the referenced map cells.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afe1d2248ff3fe4acbe465a66c3647c88" class="m-doc">big</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if maps generated with this item are big or not.</dd>
             <dt id="aa3c9a11c924f960bbc79db53804928de">
               <span class="m-doc-wrap-bumper">auto <a href="#aa3c9a11c924f960bbc79db53804928de" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -190,6 +194,13 @@
               </tbody>
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="afe1d2248ff3fe4acbe465a66c3647c88"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe1d2248ff3fe4acbe465a66c3647c88" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if maps generated with this item are big or not.</p>
+<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="addec7bdbc9d8ce5f6963abb0f69b72e4"><div>
             <h3>

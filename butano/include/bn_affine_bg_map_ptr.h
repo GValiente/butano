@@ -272,6 +272,14 @@ public:
     [[nodiscard]] size dimensions() const;
 
     /**
+     * @brief Indicates if this map is big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    [[nodiscard]] bool big() const;
+
+    /**
      * @brief Returns how much tiles to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int tiles_offset() const;

@@ -193,6 +193,11 @@ size regular_bg_map_ptr::dimensions() const
     return bg_blocks_manager::map_dimensions(_handle);
 }
 
+bool regular_bg_map_ptr::big() const
+{
+    return bg_blocks_manager::regular_big_map(_handle);
+}
+
 bpp_mode regular_bg_map_ptr::bpp() const
 {
     return palette().bpp();

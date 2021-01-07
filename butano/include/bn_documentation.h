@@ -1260,7 +1260,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_1_0 5.1.0 (next release)
+ * @section changelog_5_1_0 5.1.0
  *
  * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).

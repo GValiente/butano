@@ -15,6 +15,7 @@
 #include "math_tests.h"
 #include "sqrt_tests.h"
 #include "any_tests.h"
+#include "format_tests.h"
 #include "malloc_tests.h"
 #include "sram_tests.h"
 #include "variable_8x16_sprite_font.h"
@@ -38,6 +39,7 @@ int main()
     math_tests();
     sqrt_tests();
     any_tests();
+    format_tests();
     malloc_tests();
     sram_tests sram_tests;
 

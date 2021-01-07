@@ -834,7 +834,7 @@ private:
  * @ingroup string
  */
 template<int MaxSize>
-string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
+[[nodiscard]] constexpr string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
 {
     return string<MaxSize - 1>(char_array, MaxSize - 1);
 }
@@ -849,7 +849,7 @@ string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
  * @ingroup string
  */
 template<int MaxSize, typename Type>
-string<MaxSize> to_string(const Type& value)
+[[nodiscard]] string<MaxSize> to_string(const Type& value)
 {
     string<MaxSize> result;
     ostringstream stream(result);

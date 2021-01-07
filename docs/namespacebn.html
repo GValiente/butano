@@ -2129,6 +2129,19 @@
             </dt>
             <dd>Copies the value <code>0</code> into each of the first given bytes of the object pointed to by destination.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;int MaxSize, class... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="group__string.html#gaf140ba6af6aed89c747d1527b634ff06" class="m-doc">format</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; format,
+              const Args&amp;... args) -&gt; <a href="classbn_1_1string.html" class="m-doc">string</a>&lt;MaxSize&gt;</span>
+            </dt>
+            <dd>Format the given arguments according to the given format string, and return the result as a string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="group__string.html#gafef1d73c4b31530dae4dccf010a2acbe" class="m-doc">format_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; string,
+              const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; format,
+              const Args&amp;... args)</span>
+            </dt>
+            <dd>Format the given arguments according to the given format string, storing the result in the given string.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="group__functional.html#ga2af0ea22d63824a172c95cfdd4b6cefb" class="m-doc">hash_combine</a>(</span><span class="m-doc-wrap">const Type&amp; value,
               unsigned&amp; result) <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -2357,7 +2370,7 @@
             <dd>Appends the character representation of the given fixed point value to the given ostringstream.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="group__string.html#ga37346476d34ee7d330266406f9cd0460" class="m-doc">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) -&gt; <a href="classbn_1_1string.html" class="m-doc">string</a>&lt;MaxSize - 1&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="group__string.html#gab3464736c27203f5e01962cf52325157" class="m-doc">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) -&gt; <a href="classbn_1_1string.html" class="m-doc">string</a>&lt;MaxSize - 1&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Creates a string deducing its size from the size of the argument.</dd>
             <dt>

@@ -67,6 +67,8 @@
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
+            <dt>file <a href="bn__format_8h.html" class="m-doc">bn_format.h</a></dt>
+            <dd></dd>
             <dt>file <a href="bn__istring__base_8h.html" class="m-doc">bn_istring_base.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__sstream_8h.html" class="m-doc">bn_sstream.h</a></dt>
@@ -118,6 +120,19 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize, class... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaf140ba6af6aed89c747d1527b634ff06" class="m-doc">format</a>(</span><span class="m-doc-wrap">const string_view&amp; format,
+              const Args&amp;... args) -&gt; string&lt;MaxSize&gt;</span>
+            </dt>
+            <dd>Format the given arguments according to the given format string, and return the result as a string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#gafef1d73c4b31530dae4dccf010a2acbe" class="m-doc">format_ref</a>(</span><span class="m-doc-wrap">istring_base&amp; string,
+              const string_view&amp; format,
+              const Args&amp;... args)</span>
+            </dt>
+            <dd>Format the given arguments according to the given format string, storing the result in the given string.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#gae013627e085dd2f317be0574281367af" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
               char character) -&gt; ostringstream&amp;</span>
@@ -197,7 +212,7 @@
             <dd>Appends the character representation of the given fixed point value to the given ostringstream.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga37346476d34ee7d330266406f9cd0460" class="m-doc">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) -&gt; string&lt;MaxSize - 1&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gab3464736c27203f5e01962cf52325157" class="m-doc">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) -&gt; string&lt;MaxSize - 1&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Creates a string deducing its size from the size of the argument.</dd>
             <dt>
@@ -209,6 +224,84 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="gaf140ba6af6aed89c747d1527b634ff06"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__format_8h.html">&lt;bn_format.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;int MaxSize, class... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">string&lt;MaxSize&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf140ba6af6aed89c747d1527b634ff06" class="m-doc-self">format</a>(</span><span class="m-doc-wrap">const string_view&amp; format,
+              const Args&amp;... args)</span></span>
+            </h3>
+            <p>Format the given arguments according to the given format string, and return the result as a string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">MaxSize</td>
+                  <td>Maximum number of characters that can be stored in the output string.</td>
+                </tr>
+                <tr>
+                  <td>Args</td>
+                  <td>Types of the arguments to be formatted.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>format</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> representing the format string.</td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td>Arguments to be formatted. They are used in order when processing the format string.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>A string holding the formatted result.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The format string consists of:</p><ul><li>Ordinary characters (except <code>{</code> and <code>}</code>), which are copied unchanged to the output.</li><li>Escape sequences <code>{{</code> and <code>}}</code>, which are replaced with <code>{</code> and <code>}</code> respectively in the output.</li><li>Replacement fields, with the following format: <code>{}</code>.</li></ul>
+          </div></section>
+          <section class="m-doc-details" id="gafef1d73c4b31530dae4dccf010a2acbe"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__format_8h.html">&lt;bn_format.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;class... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafef1d73c4b31530dae4dccf010a2acbe" class="m-doc-self">format_ref</a>(</span><span class="m-doc-wrap">istring_base&amp; string,
+              const string_view&amp; format,
+              const Args&amp;... args)</span></span>
+            </h3>
+            <p>Format the given arguments according to the given format string, storing the result in the given string.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>The result of the formatting is stored in this string.</td>
+                </tr>
+                <tr>
+                  <td>format</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> representing the format string.</td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td>Arguments to be formatted. They are used in order when processing the format string.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The format string consists of:</p><ul><li>Ordinary characters (except <code>{</code> and <code>}</code>), which are copied unchanged to the output.</li><li>Escape sequences <code>{{</code> and <code>}}</code>, which are replaced with <code>{</code> and <code>}</code> respectively in the output.</li><li>Replacement fields, with the following format: <code>{}</code>.</li></ul>
+          </div></section>
           <section class="m-doc-details" id="gae013627e085dd2f317be0574281367af"><div>
             <h3>
               <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae013627e085dd2f317be0574281367af" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
@@ -650,13 +743,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga37346476d34ee7d330266406f9cd0460"><div>
+          <section class="m-doc-details" id="gab3464736c27203f5e01962cf52325157"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__string_8h.html">&lt;bn_string.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int MaxSize&gt;
               </div>
-              <span class="m-doc-wrap-bumper">string&lt;MaxSize - 1&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga37346476d34ee7d330266406f9cd0460" class="m-doc-self">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize])</span></span>
+              <span class="m-doc-wrap-bumper">string&lt;MaxSize - 1&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab3464736c27203f5e01962cf52325157" class="m-doc-self">make_string</a>(</span><span class="m-doc-wrap">const char(&amp;char_array)[MaxSize]) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Creates a string deducing its size from the size of the argument.</p>
             <table class="m-table m-fullwidth m-flat">

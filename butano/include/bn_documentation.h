@@ -1264,8 +1264,9 @@
  *
  * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
  * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
+ * * bn::format and bn::format_ref functions added.
+ * * Some methods to indicate if a background or a background map are big or not have been added.
  * * bn::calculate_sin_lut_value precision improved.
- * * Some methods added to indicate if a background or a map is big or not.
  * * \ref faq page added.
  * * Missing third party license files included.
  *

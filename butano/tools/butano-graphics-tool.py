@@ -8,7 +8,7 @@ import json
 import argparse
 import subprocess
 import sys
-import time
+from multiprocessing import Pool
 import traceback
 
 from bmp import BMP
@@ -241,9 +241,7 @@ class SpriteItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('    Graphics size: ' + str(total_size) + ' bytes')
-        print('    sprite_item file written in ' + header_file_path)
-        return total_size
+        return total_size, header_file_path
 
     def __execute_command(self, tiles_compression, palette_compression):
         command = ['grit', self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
@@ -351,9 +349,7 @@ class SpritePaletteItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('    Graphics size: ' + str(total_size) + ' bytes')
-        print('    sprite_palette_item file written in ' + header_file_path)
-        return total_size
+        return total_size, header_file_path
 
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
@@ -416,13 +412,7 @@ class RegularBgItem:
                 self.__bpp_8 = True
             elif bpp_mode == 'bpp_4_auto':
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.bn_quantized.bmp'
-                print('    Generating bpp4 image in ' + self.__file_path + '...')
-                sys.stdout.flush()
-                start = time.time()
                 self.__colors_count = bmp.quantize(self.__file_path)
-                end = time.time()
-                print('    bpp4 image with ' + str(self.__colors_count) + ' colors generated in ' +
-                      str(int((end - start) * 1000)) + ' milliseconds')
             elif bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
@@ -572,9 +562,7 @@ class RegularBgItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('    Graphics size: ' + str(total_size) + ' bytes')
-        print('    regular_bg_item file written in ' + header_file_path)
-        return total_size
+        return total_size, header_file_path
 
     def __execute_command(self, tiles_compression, palette_compression, map_compression):
         command = ['grit', self.__file_path, '-pe' + str(self.__colors_count)]
@@ -797,9 +785,7 @@ class AffineBgItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('    Graphics size: ' + str(total_size) + ' bytes')
-        print('    affine_bg_item file written in ' + header_file_path)
-        return total_size
+        return total_size, header_file_path
 
     def __execute_command(self, tiles_compression, palette_compression, map_compression):
         command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8', '-pe' + str(self.__colors_count)]
@@ -924,9 +910,7 @@ class BgPaletteItem:
             header_file.write('#endif' + '\n')
             header_file.write('\n')
 
-        print('    Graphics size: ' + str(total_size) + ' bytes')
-        print('    bg_palette_item file written in ' + header_file_path)
-        return total_size
+        return total_size, header_file_path
 
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
@@ -947,10 +931,9 @@ class BgPaletteItem:
 
 class GraphicsFileInfo:
 
-    def __init__(self, graphics_type, info, file_path, file_name, file_name_no_ext, new_file_info,
+    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, new_file_info,
                  file_info_path, new_json_file_info, json_file_info_path):
-        self.__graphics_type = graphics_type
-        self.__info = info
+        self.__json_file_path = json_file_path
         self.__file_path = file_path
         self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
@@ -959,37 +942,57 @@ class GraphicsFileInfo:
         self.__new_json_file_info = new_json_file_info
         self.__json_file_info_path = json_file_info_path
 
-    def process(self, build_folder_path):
+    def print_file_name(self):
         print(self.__file_name)
-        sys.stdout.flush()
 
-        if self.__graphics_type == 'sprite':
-            item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        elif self.__graphics_type == 'sprite_palette':
-            item = SpritePaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        elif self.__graphics_type == 'regular_bg':
-            item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        elif self.__graphics_type == 'affine_bg':
-            item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        elif self.__graphics_type == 'bg_palette':
-            item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, self.__info)
-        else:
-            raise ValueError('Unknown graphics type: ' + str(self.__graphics_type))
+    def process(self, build_folder_path):
+        try:
+            try:
+                with open(self.__json_file_path) as json_file:
+                    info = json.load(json_file)
+            except Exception as exception:
+                raise ValueError(self.__json_file_path + ' graphics json file parse failed: ' + str(exception))
 
-        file_size = item.process()
-        self.__new_file_info.write(self.__file_info_path)
-        self.__new_json_file_info.write(self.__json_file_info_path)
-        return file_size
+            try:
+                graphics_type = str(info['type'])
+            except KeyError:
+                raise ValueError('type field not found in graphics json file: ' + self.__json_file_path)
+
+            if graphics_type == 'sprite':
+                item = SpriteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'sprite_palette':
+                item = SpritePaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'regular_bg':
+                item = RegularBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'affine_bg':
+                item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'bg_palette':
+                item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            else:
+                raise ValueError('Unknown graphics type "' + graphics_type +
+                                 '" found in graphics json file: ' + self.__json_file_path)
+
+            total_size, header_file_path = item.process()
+            self.__new_file_info.write(self.__file_info_path)
+            self.__new_json_file_info.write(self.__json_file_info_path)
+            return [self.__file_name, header_file_path, total_size]
+        except Exception as exc:
+            return [self.__file_name, exc]
+
+
+class GraphicsFileInfoProcessor:
+
+    def __init__(self, build_folder_path):
+        self.__build_folder_path = build_folder_path
+
+    def __call__(self, graphics_file_info):
+        return graphics_file_info.process(self.__build_folder_path)
 
 
 def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     graphics_folder_path_list = graphics_folder_paths.split(' ')
     graphics_file_infos = []
-    sprite_file_names_set = set()
-    sprite_palette_file_names_set = set()
-    regular_bg_file_names_set = set()
-    affine_bg_file_names_set = set()
-    bg_palette_file_names_set = set()
+    file_names_set = set()
 
     for graphics_folder_path in graphics_folder_path_list:
         graphics_file_names = sorted(os.listdir(graphics_folder_path))
@@ -1003,45 +1006,19 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                 graphics_file_name_ext = graphics_file_name_split[1]
 
                 if graphics_file_name_ext == '.bmp':
+                    if graphics_file_name_no_ext in file_names_set:
+                        raise ValueError('There\'s two or more graphics files with the same name: ' +
+                                         graphics_file_name_no_ext)
+
+                    file_names_set.add(graphics_file_name_no_ext)
                     json_file_path = graphics_folder_path + '/' + graphics_file_name_no_ext + '.json'
 
                     if not os.path.isfile(json_file_path):
                         raise ValueError('Graphics json file not found: ' + json_file_path)
 
-                    try:
-                        with open(json_file_path) as json_file:
-                            info = json.load(json_file)
-                    except Exception as exception:
-                        raise ValueError(json_file_path + ' graphics json file parse failed: ' + str(exception))
-
-                    try:
-                        graphics_type = str(info['type'])
-                    except KeyError:
-                        raise ValueError('type field not found in graphics json file: ' + json_file_path)
-
-                    if graphics_type == 'sprite':
-                        file_names_set = sprite_file_names_set
-                    elif graphics_type == 'sprite_palette':
-                        file_names_set = sprite_palette_file_names_set
-                    elif graphics_type == 'regular_bg':
-                        file_names_set = regular_bg_file_names_set
-                    elif graphics_type == 'affine_bg':
-                        file_names_set = affine_bg_file_names_set
-                    elif graphics_type == 'bg_palette':
-                        file_names_set = bg_palette_file_names_set
-                    else:
-                        raise ValueError('Unknown type (' + graphics_type + ') in graphics json file: ' +
-                                         json_file_path)
-
-                    if graphics_file_name_no_ext in file_names_set:
-                        raise ValueError('There\'s two or more ' + graphics_type +
-                                         ' graphics files with the same name: ' + graphics_file_name_no_ext)
-
-                    file_names_set.add(graphics_file_name_no_ext)
-
                     file_info_path_prefix = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_'
-                    file_info_path = file_info_path_prefix + graphics_type + '_file_info.txt'
-                    json_file_info_path = file_info_path_prefix + graphics_type + '_json_file_info.txt'
+                    file_info_path = file_info_path_prefix + '_file_info.txt'
+                    json_file_info_path = file_info_path_prefix + '_json_file_info.txt'
                     old_file_info = FileInfo.read(file_info_path)
                     new_file_info = FileInfo.build_from_file(graphics_file_path)
                     old_json_file_info = FileInfo.read(json_file_info_path)
@@ -1049,7 +1026,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 
                     if old_file_info != new_file_info or old_json_file_info != new_json_file_info:
                         graphics_file_infos.append(GraphicsFileInfo(
-                            graphics_type, info, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
+                            json_file_path, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
                             new_file_info, file_info_path, new_json_file_info, json_file_info_path))
 
     return graphics_file_infos
@@ -1059,10 +1036,32 @@ def process(graphics_folder_paths, build_folder_path):
     graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
 
     if len(graphics_file_infos) > 0:
-        total_size = 0
-
         for graphics_file_info in graphics_file_infos:
-            total_size += graphics_file_info.process(build_folder_path)
+            graphics_file_info.print_file_name()
+
+        sys.stdout.flush()
+
+        pool = Pool()
+        process_results = pool.map(GraphicsFileInfoProcessor(build_folder_path), graphics_file_infos)
+        pool.close()
+
+        total_size = 0
+        process_exc = None
+
+        for process_result in process_results:
+            if len(process_result) == 3:
+                file_size = process_result[2]
+                total_size += file_size
+                print('    ' + str(process_result[0]) + ' item header written in ' + str(process_result[1]) +
+                      ' (graphics size: ' + str(file_size) + ' bytes)')
+            else:
+                process_exc = process_result
+
+        sys.stdout.flush()
+
+        if process_exc is not None:
+            sys.stderr.write(str(process_exc[0]) + ' processing failed!\n')
+            raise process_exc[1]
 
         print('    ' + 'Processed graphics size: ' + str(total_size) + ' bytes')
 

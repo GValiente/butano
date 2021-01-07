@@ -1268,6 +1268,7 @@
  * * Some methods to indicate if a background or a background map are big or not have been added.
  * * bn::calculate_sin_lut_value precision improved.
  * * \ref faq page added.
+ * * butano-graphics-tool.py now uses all CPU cores.
  * * Missing third party license files included.
  *
  *

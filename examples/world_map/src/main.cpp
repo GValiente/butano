@@ -6,9 +6,6 @@
 #include "bn_core.h"
 #include "bn_keypad.h"
 #include "bn_display.h"
-#include "bn_optional.h"
-#include "bn_blending.h"
-#include "bn_fixed_point.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
@@ -23,7 +20,6 @@
 
 #include "bn_sprite_items_ninja.h"
 #include "bn_affine_bg_items_land.h"
-#include "bn_affine_bg_items_clouds.h"
 
 int main()
 {
@@ -45,11 +41,6 @@ int main()
     int x_limit = (land_bg.dimensions().width() - bn::display::width()) / 2;
     int y_limit = (land_bg.dimensions().height() - bn::display::height()) / 2;
 
-    bn::affine_bg_ptr clouds_bg = bn::affine_bg_items::clouds.create_bg(0, 0);
-    clouds_bg.set_priority(2);
-    clouds_bg.set_blending_enabled(true);
-    bn::blending::set_transparency_alpha(0.5);
-
     bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> land_attributes_ptr(
             new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
     bn::array<bn::affine_bg_mat_attributes, bn::display::height()>& land_attributes = *land_attributes_ptr;
@@ -61,18 +52,6 @@ int main()
             bn::affine_bg_dx_register_hbe_ptr::create(land_bg, land_attributes._data);
     bn::affine_bg_dy_register_hbe_ptr land_dy_hbe =
             bn::affine_bg_dy_register_hbe_ptr::create(land_bg, land_attributes._data);
-
-    bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> clouds_attributes_ptr(
-            new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
-    bn::array<bn::affine_bg_mat_attributes, bn::display::height()>& clouds_attributes = *clouds_attributes_ptr;
-    bn::affine_bg_pa_register_hbe_ptr clouds_pa_hbe =
-            bn::affine_bg_pa_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_pd_register_hbe_ptr clouds_pd_hbe =
-            bn::affine_bg_pd_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dx_register_hbe_ptr clouds_dx_hbe =
-            bn::affine_bg_dx_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dy_register_hbe_ptr clouds_dy_hbe =
-            bn::affine_bg_dy_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
 
     bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
     bn::sprite_animate_action<4> ninja_animate_action = bn::create_sprite_animate_action_forever(
@@ -97,10 +76,8 @@ int main()
 
     while(true)
     {
-        bn::fixed_point old_pivot_position = land_bg.pivot_position();
-        int inc = bn::keypad::a_held() ? 4 : 1;
-
         direction new_direction;
+        int inc = bn::keypad::a_held() ? 4 : 1;
         bool key_held = false;
 
         if(bn::keypad::left_held())
@@ -129,25 +106,17 @@ int main()
             key_held = true;
         }
 
-        clouds_bg.set_pivot_position(clouds_bg.pivot_position() + land_bg.pivot_position() - old_pivot_position +
-                                     bn::fixed_point(0.1, 0.1));
-
         load_attributes(land_bg.mat_attributes(), land_attributes._data);
-        load_attributes(clouds_bg.mat_attributes(), clouds_attributes._data);
 
         if(first_frame)
         {
             land_pa_hbe.reload_attributes_ref();
             land_pd_hbe.reload_attributes_ref();
-            clouds_pa_hbe.reload_attributes_ref();
-            clouds_pd_hbe.reload_attributes_ref();
             first_frame = false;
         }
 
         land_dx_hbe.reload_attributes_ref();
         land_dy_hbe.reload_attributes_ref();
-        clouds_dx_hbe.reload_attributes_ref();
-        clouds_dy_hbe.reload_attributes_ref();
 
         if(key_held && last_direction.data != new_direction.data)
         {
@@ -174,7 +143,6 @@ int main()
             }
 
             last_direction = new_direction;
-
         }
 
         for(int index = 0; index < inc; ++index)

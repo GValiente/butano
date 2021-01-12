@@ -47,106 +47,72 @@ void _intr()
 
     switch(entries_ptr->uint16_entries_count)
     {
+        case 8:
+            uint16_entries[7].update(vcount);
+            [[fallthrough]];
 
-    case 0:
-        break;
+        case 7:
+            uint16_entries[6].update(vcount);
+            [[fallthrough]];
 
-    case 1:
-        uint16_entries[0].update(vcount);
-        break;
+        case 6:
+            uint16_entries[5].update(vcount);
+            [[fallthrough]];
 
-    case 2:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        break;
+        case 5:
+            uint16_entries[4].update(vcount);
+            [[fallthrough]];
 
-    case 3:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        break;
+        case 4:
+            uint16_entries[3].update(vcount);
+            [[fallthrough]];
 
-    case 4:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        uint16_entries[3].update(vcount);
-        break;
+        case 3:
+            uint16_entries[2].update(vcount);
+            [[fallthrough]];
 
-    case 5:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        uint16_entries[3].update(vcount);
-        uint16_entries[4].update(vcount);
-        break;
+        case 2:
+            uint16_entries[1].update(vcount);
+            [[fallthrough]];
 
-    case 6:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        uint16_entries[3].update(vcount);
-        uint16_entries[4].update(vcount);
-        uint16_entries[5].update(vcount);
-        break;
+        case 1:
+            uint16_entries[0].update(vcount);
+            [[fallthrough]];
 
-    case 7:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        uint16_entries[3].update(vcount);
-        uint16_entries[4].update(vcount);
-        uint16_entries[5].update(vcount);
-        uint16_entries[6].update(vcount);
-        break;
+        case 0:
+            asm("");
+            break;
 
-    case 8:
-        uint16_entries[0].update(vcount);
-        uint16_entries[1].update(vcount);
-        uint16_entries[2].update(vcount);
-        uint16_entries[3].update(vcount);
-        uint16_entries[4].update(vcount);
-        uint16_entries[5].update(vcount);
-        uint16_entries[6].update(vcount);
-        uint16_entries[7].update(vcount);
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 
     uint32_entry* uint32_entries = entries_ptr->uint32_entries;
 
     switch(entries_ptr->uint32_entries_count)
     {
+        case 4:
+            uint32_entries[3].update(vcount);
+            [[fallthrough]];
 
-    case 0:
-        break;
+        case 3:
+            uint32_entries[2].update(vcount);
+            [[fallthrough]];
 
-    case 1:
-        uint32_entries[0].update(vcount);
-        break;
+        case 2:
+            uint32_entries[1].update(vcount);
+            [[fallthrough]];
 
-    case 2:
-        uint32_entries[0].update(vcount);
-        uint32_entries[1].update(vcount);
-        break;
+        case 1:
+            uint32_entries[0].update(vcount);
+            [[fallthrough]];
 
-    case 3:
-        uint32_entries[0].update(vcount);
-        uint32_entries[1].update(vcount);
-        uint32_entries[2].update(vcount);
-        break;
+        case 0:
+            asm("");
+            break;
 
-    case 4:
-        uint32_entries[0].update(vcount);
-        uint32_entries[1].update(vcount);
-        uint32_entries[2].update(vcount);
-        uint32_entries[3].update(vcount);
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 

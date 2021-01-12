@@ -1260,6 +1260,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_5_2_0 5.2.0 (next release)
+ *
+ * H-Blank effects IWRAM usage reduced.
+ *
+ *
  * @section changelog_5_1_0 5.1.0
  *
  * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and

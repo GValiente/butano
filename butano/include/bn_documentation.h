@@ -1260,7 +1260,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_2_0 5.2.0 (next release)
+ * @section changelog_5_2_0 5.2.0
  *
  * * bn::sprite_ptr::put_below, bn::regular_bg_ptr::put_below and bn::affine_bg_ptr::put_below added.
  * * H-Blank effects IWRAM usage reduced.

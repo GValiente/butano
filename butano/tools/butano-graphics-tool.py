@@ -1046,7 +1046,7 @@ def process(graphics_folder_paths, build_folder_path):
         pool.close()
 
         total_size = 0
-        process_exc = None
+        process_excs = []
 
         for process_result in process_results:
             if len(process_result) == 3:
@@ -1055,13 +1055,15 @@ def process(graphics_folder_paths, build_folder_path):
                 print('    ' + str(process_result[0]) + ' item header written in ' + str(process_result[1]) +
                       ' (graphics size: ' + str(file_size) + ' bytes)')
             else:
-                process_exc = process_result
+                process_excs.append(process_result)
 
         sys.stdout.flush()
 
-        if process_exc is not None:
-            sys.stderr.write(str(process_exc[0]) + ' processing failed!\n')
-            raise process_exc[1]
+        if len(process_excs) > 0:
+            for process_exc in process_excs:
+                sys.stderr.write(str(process_exc[0]) + ' error: ' + str(process_exc[1]) + '\n')
+                
+            exit(-1)
 
         print('    ' + 'Processed graphics size: ' + str(total_size) + ' bytes')
 

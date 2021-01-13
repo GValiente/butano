@@ -1264,6 +1264,7 @@
  *
  * * bn::sprite_ptr::put_below, bn::regular_bg_ptr::put_below and bn::affine_bg_ptr::put_below added.
  * * H-Blank effects IWRAM usage reduced.
+ * * butano-graphics-tool.py errors reporting improved.
  *
  *
  * @section changelog_5_1_0 5.1.0

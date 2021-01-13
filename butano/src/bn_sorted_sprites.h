@@ -112,6 +112,21 @@ namespace bn::sorted_sprites
             return sort;
         }
 
+        [[nodiscard]] static bool put_in_back_of_layer(sprites_manager_item& item)
+        {
+            layer* layer = item.sort_layer_ptr;
+            intrusive_list<sprites_manager_item>& layer_items = layer->items();
+            bool sort = &layer_items.back() != &item;
+
+            if(sort)
+            {
+                layer_items.erase(item);
+                layer_items.push_back(item);
+            }
+
+            return sort;
+        }
+
     private:
         pool<layer, BN_CFG_SPRITES_MAX_SORT_LAYERS> _layer_pool;
         layers_type _layer_ptrs;

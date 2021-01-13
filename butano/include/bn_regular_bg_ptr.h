@@ -384,6 +384,11 @@ public:
     void put_above();
 
     /**
+     * @brief Modify this regular background to be drawn below all of the other backgrounds with the same priorities.
+     */
+    void put_below();
+
+    /**
      * @brief Indicates if the mosaic effect must be applied to this regular background or not.
      */
     [[nodiscard]] bool mosaic_enabled() const;

@@ -563,6 +563,11 @@ public:
     void put_above();
 
     /**
+     * @brief Modify this sprite to be drawn below all of the other sprites with the same priorities.
+     */
+    void put_below();
+
+    /**
      * @brief Indicates if this sprite is flipped in the horizontal axis or not.
      */
     [[nodiscard]] bool horizontal_flip() const;

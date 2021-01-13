@@ -289,6 +289,11 @@ void regular_bg_ptr::put_above()
     bgs_manager::put_above(_handle);
 }
 
+void regular_bg_ptr::put_below()
+{
+    bgs_manager::put_below(_handle);
+}
+
 bool regular_bg_ptr::mosaic_enabled() const
 {
     return bgs_manager::mosaic_enabled(_handle);

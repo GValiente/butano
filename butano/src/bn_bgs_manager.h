@@ -129,9 +129,9 @@ namespace bgs_manager
 
     void set_z_order(id_type id, int z_order);
 
-    [[nodiscard]] bool above(id_type id, id_type other_id);
-
     void put_above(id_type id);
+
+    void put_below(id_type id);
 
     [[nodiscard]] bool wrapping_enabled(id_type id);
 

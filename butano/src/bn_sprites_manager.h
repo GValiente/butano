@@ -113,6 +113,8 @@ namespace sprites_manager
 
     void put_above(id_type id);
 
+    void put_below(id_type id);
+
     [[nodiscard]] bool horizontal_flip(id_type id);
 
     void set_horizontal_flip(id_type id, bool horizontal_flip);

@@ -565,6 +565,11 @@ void sprite_ptr::put_above()
     sprites_manager::put_above(_handle);
 }
 
+void sprite_ptr::put_below()
+{
+    sprites_manager::put_below(_handle);
+}
+
 bool sprite_ptr::horizontal_flip() const
 {
     return sprites_manager::horizontal_flip(_handle);

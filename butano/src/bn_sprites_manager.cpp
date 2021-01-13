@@ -637,6 +637,16 @@ void put_above(id_type id)
     }
 }
 
+void put_below(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(sorted_sprites::sorter::put_in_back_of_layer(*item))
+    {
+        data.rebuild_handles = true;
+    }
+}
+
 bool horizontal_flip(id_type id)
 {
     auto item = static_cast<const item_type*>(id);

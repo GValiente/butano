@@ -469,6 +469,11 @@ public:
     void put_above();
 
     /**
+     * @brief Modify this affine background to be drawn below all of the other backgrounds with the same priorities.
+     */
+    void put_below();
+
+    /**
      * @brief Indicates if this affine background wraps around at the edges or not.
      */
     [[nodiscard]] bool wrapping_enabled() const;

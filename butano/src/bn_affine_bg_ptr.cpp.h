@@ -381,6 +381,11 @@ void affine_bg_ptr::put_above()
     bgs_manager::put_above(_handle);
 }
 
+void affine_bg_ptr::put_below()
+{
+    bgs_manager::put_below(_handle);
+}
+
 bool affine_bg_ptr::wrapping_enabled() const
 {
     return bgs_manager::wrapping_enabled(_handle);

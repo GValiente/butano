@@ -1044,6 +1044,38 @@ void put_above(id_type id)
     }
 }
 
+void put_below(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    sort_key this_sort_key = item->bg_sort_key;
+    bool order_modified = false;
+
+    for(int index = data.items_vector.size() - 1; index > 0; --index)
+    {
+        item_type*& current_item_ptr = data.items_vector[index];
+
+        if(current_item_ptr == item)
+        {
+            item_type*& previous_item_ptr = data.items_vector[index - 1];
+
+            if(previous_item_ptr->bg_sort_key == this_sort_key)
+            {
+                swap(current_item_ptr, previous_item_ptr);
+                order_modified = true;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    if(order_modified && item->visible)
+    {
+        data.rebuild_handles = true;
+    }
+}
+
 bool wrapping_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);

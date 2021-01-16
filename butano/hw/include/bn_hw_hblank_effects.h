@@ -38,24 +38,22 @@ namespace bn::hw::hblank_effects
         }
     };
 
-
-    [[nodiscard]] constexpr int max_uint32_entries()
-    {
-        return 4;
-    }
-
-
     class entries
     {
 
     public:
-        uint16_entry uint16_entries[BN_CFG_HBES_MAX_ITEMS];
-        uint32_entry uint32_entries[min(BN_CFG_HBES_MAX_ITEMS, max_uint32_entries())];
         int uint16_entries_count = 0;
+        uint16_entry uint16_entries[BN_CFG_HBES_MAX_ITEMS];
         int uint32_entries_count = 0;
+        uint32_entry uint32_entries[BN_CFG_HBES_MAX_ITEMS_32];
     };
 
-    BN_CODE_IWRAM void commit_entries(entries& entries_ref);
+    extern entries* data;
+
+    inline void commit_entries(entries& entries_ref)
+    {
+        data = &entries_ref;
+    }
 
     BN_CODE_IWRAM void _intr();
 

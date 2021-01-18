@@ -19,7 +19,7 @@ _ZN2bn2hw14hblank_effects5_intrEv:  @ That's the mangled name of bn::hw::hblank_
 
     @ this implement if (vcount < 159) vcount++; else if (vcount > 226) vcount = 0; else return;
     cmp     r0, #226                @ if it's > 226, set it to -1
-    mvnhi   r0, #0                  @ now vcount = -1 or original vcount
+    movhi   r0, #-1                 @ now vcount = -1 or original vcount
     add     r0, r0, #1              @ add 1 to it (r0 = vcount+1 or 0)
     cmp     r0, #160                @ if vcount + 1 >= 160
     bxhs    lr                      @ bail out

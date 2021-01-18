@@ -81,7 +81,7 @@ namespace
 
     static_assert(max_items > 0 && max_items <= 8);
 
-    constexpr const int max_uint32_output_values = BN_CFG_HBES_MAX_ITEMS_32;
+    constexpr const int max_uint32_output_values = hw::hblank_effects::max_uint32_entries();
     constexpr const int max_uint16_output_values = max(max_items - max_uint32_output_values, 1);
 
     using last_value_type = any<4 * sizeof(int)>;
@@ -569,7 +569,7 @@ namespace
         {
             if(_is_uint32(handler))
             {
-                BN_ASSERT(entries.uint32_entries_count < BN_CFG_HBES_MAX_ITEMS_32, "Too much 32 bits entries");
+                BN_ASSERT(entries.uint32_entries_count < max_uint32_output_values, "Too much 32 bits entries");
 
                 hw::hblank_effects::uint32_entry& uint32_entry = entries.uint32_entries[entries.uint32_entries_count];
                 const uint16_t* src = uint32_output_values->a_active ? uint32_output_values->a : uint32_output_values->b;

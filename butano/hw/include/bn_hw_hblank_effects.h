@@ -18,11 +18,6 @@ namespace bn::hw::hblank_effects
     public:
         const uint16_t* src;
         volatile uint16_t* dest;
-
-        void update(unsigned vcount)
-        {
-            *dest = src[vcount];
-        }
     };
 
     class uint32_entry
@@ -31,12 +26,12 @@ namespace bn::hw::hblank_effects
     public:
         const uint32_t* src;
         volatile uint32_t* dest;
-
-        void update(unsigned vcount)
-        {
-            *dest = src[vcount];
-        }
     };
+
+    [[nodiscard]] constexpr int max_uint32_entries()
+    {
+        return 4;
+    }
 
     class entries
     {
@@ -45,17 +40,17 @@ namespace bn::hw::hblank_effects
         int uint16_entries_count = 0;
         uint16_entry uint16_entries[BN_CFG_HBES_MAX_ITEMS];
         int uint32_entries_count = 0;
-        uint32_entry uint32_entries[BN_CFG_HBES_MAX_ITEMS_32];
+        uint32_entry uint32_entries[max_uint32_entries()];
     };
 
     extern entries* data;
+
+    BN_CODE_IWRAM void _intr();
 
     inline void commit_entries(entries& entries_ref)
     {
         data = &entries_ref;
     }
-
-    BN_CODE_IWRAM void _intr();
 
     inline void init(entries& entries_ref)
     {

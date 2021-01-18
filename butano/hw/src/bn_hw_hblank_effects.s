@@ -19,7 +19,7 @@ _ZN2bn2hw14hblank_effects5_intrEv:  @ That's the mangled name of bn::hw::hblank_
 
     @ this implement if (vcount < 159) vcount++; else if (vcount > 226) vcount = 0; else return;
     cmp     r0, #226                @ if it's > 226, set it to -1
-    movhi   r0, #-1                 @ now vcount = -1 or original vcount
+    mvnhi   r0, #-1                 @ now vcount = -1 or original vcount
     add     r0, r0, #1              @ add 1 to it (r0 = vcount+1 or 0)
     cmp     r0, #160                @ if vcount + 1 >= 160
     bxhs    lr                      @ bail out
@@ -48,7 +48,7 @@ _ZN2bn2hw14hblank_effects5_intrEv:  @ That's the mangled name of bn::hw::hblank_
     adr     r1, .dataTransferEnd32                  @ pick up the address
     add     r2, r2, r2, lsl #1                      @ multiply the count by 3
     sub     pc, r1, r2, lsl #2                      @ and set pc = label - count*12
-    .rept   BN_CFG_HBES_MAX_ITEMS_32
+    .rept   4
     ldmdb   r3!, {r1, r2}           @ r1 = src (const uint32_t*), r2 = dest (volatile uint32_t*)
     ldr     r1, [r1, r0, lsl #1]    @ r1 = src[vcount] (r0 = vcount*2, r0, lsl #1 = vcount*4)
     str     r1, [r2]                @ *dest = r1

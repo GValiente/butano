@@ -1174,7 +1174,10 @@
  * @tableofcontents
  *
  *
- * @section faq_how_do_i How do I-
+ * @section faq_general General
+ *
+ *
+ * @subsection faq_how_do_i How do I-
  *
  * The best way to get started is to read the
  * \ref getting_started "guide to download, install and start using Butano".
@@ -1187,7 +1190,59 @@
  * This page is worth a look too.
  *
  *
- * @section faq_transparent_color Which color is the transparent one?
+ * @subsection faq_sell_money Would I be able to sell my game made with Butano for money?
+ *
+ * Sure!
+ *
+ * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
+ * and <a href="https://github.com/GValiente/butano/tree/master/3rd_party_licenses">third party libraries licenses</a>
+ * used by Butano you can sell your game without issues.
+ *
+ *
+ * @section faq_memory Memory
+ *
+ *
+ * @subsection faq_containers Why there's std like containers included with Butano?
+ *
+ * Butano containers differ from the standard library ones in two important points:
+ * * They don't use the heap, their content is always on the stack.
+ * * They don't throw exceptions. @ref assert are used instead.
+ *
+ * Since avoiding heap usage and exceptions is usually good for GBA development,
+ * use Butano containers whenever possible.
+ *
+ *
+ * @subsection faq_heap So I shouldn't use the heap?
+ *
+ * Since heap usage is slow and the heap allocator included with Butano is very limited,
+ * avoid heap usage whenever possible.
+ *
+ *
+ * @subsection faq_memory_types Why I run out of memory so often?
+ *
+ * The GBA provides two memory banks:
+ * * IWRAM: 32KB fast RAM.
+ * * EWRAM: 256KB slow RAM.
+ *
+ * By default data is allocated in IWRAM, so it is normal to run out of memory if you don't use EWRAM.
+ *
+ * To place data in EWRAM, you can:
+ * * Allocate memory in the heap, since it is in EWRAM.
+ * * Declare static data with the BN_DATA_EWRAM macro:
+ * @code{.cpp}
+ * BN_DATA_EWRAM static_data data;
+ * @endcode
+ *
+ *
+ * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
+ *
+ * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
+ *
+ *
+ * @section faq_color Colors
+ *
+ *
+ * @subsection faq_transparent_color Which color is the transparent one?
  *
  * Butano supports 16 or 256 color images only, so they must have a color palette.
  *
@@ -1198,7 +1253,10 @@
  * @image html import_usenti.png
  *
  *
- * @section faq_bg_wrapping Why some backgrounds don't allow wrapping?
+ * @section faq_backgrounds Backgrounds
+ *
+ *
+ * @subsection faq_bg_wrapping Why some backgrounds don't allow wrapping?
  *
  * If you try to move a big background beyond its boundaries, an error like this one should be displayed:
  *
@@ -1208,7 +1266,7 @@
  * avoid moving it beyond its boundaries (or avoid using big backgrounds).
  *
  *
- * @section faq_big_background What's a big background?
+ * @subsection faq_big_background What's a big background?
  *
  * The GBA only supports some fixed sizes for background maps.
  *
@@ -1219,7 +1277,7 @@
  * don't support wrapping (they can't be moved beyond their boundaries).
  *
  *
- * @section faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?
+ * @subsection faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?
  *
  * It seems it is always better to use affine backgrounds, since they can be rotated, scaled, etc.
  * and its size can be up to 1024x1024 pixels without becoming big backgrounds.
@@ -1232,25 +1290,19 @@
  * Because of these limitations, you should avoid affine backgrounds whenever possible.
  *
  *
- * @section faq_music_crash Why the game crashes when a song is played?
+ * @section faq_audio Audio
+ *
+ *
+ * @subsection faq_music_crash Why the game crashes when a song is played?
  *
  * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library for audio support.
  *
- * It provides excellent performance and support for lots of module music formats,
+ * It provides impressive performance and support for lots of module music formats,
  * but unfortunately it crashes with some songs.
  *
  * You could try to create a new issue in its
  * <a href="https://github.com/devkitPro/maxmod/issues">GitHub issues</a> page,
  * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
- *
- *
- * @section faq_sell_money Would I be able to sell my game made with Butano for money?
- *
- * Sure!
- *
- * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
- * and <a href="https://github.com/GValiente/butano/tree/master/3rd_party_licenses">third party libraries licenses</a>
- * used by Butano you can sell your game without issues.
  */
 
 
@@ -1262,7 +1314,8 @@
  *
  * @section changelog_5_3_0 5.3.0 (next release)
  *
- * H-Blank effects optimized (thanks JoaoBaptMG).
+ * * H-Blank effects optimized (thanks JoaoBaptMG).
+ * * \ref faq page improved.
  *
  *
  * @section changelog_5_2_0 5.2.0

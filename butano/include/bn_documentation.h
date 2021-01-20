@@ -1315,6 +1315,7 @@
  * @section changelog_5_3_0 5.3.0 (next release)
  *
  * * H-Blank effects optimized (thanks JoaoBaptMG).
+ * * bn::calculate_sin_lut_value optimized.
  * * \ref faq page improved.
  *
  *

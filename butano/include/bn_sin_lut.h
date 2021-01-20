@@ -72,8 +72,7 @@ namespace bn
     constexpr const auto B = int32_t((1 << 7) * (12.0 / pi - 1.0 - pi) * (1 << 24)); // 8.24
     constexpr const auto C = int32_t((1 << 9) * 3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24)); // 8.24
 
-    int64_t X2 = x; // 16.0
-    X2 = X2 * X2; // 32.0
+    int64_t X2 = x * x; // 16.0 * 16.0 = 32.0
 
     int32_t T1 = (X2 * C) >> 32; // (32.0 * 8.24) >> 32 = 40.24 >> 32 = 8.24
 

@@ -44,6 +44,7 @@ namespace bn
     using std::remove_if;
 
     using std::sort;
+    using std::stable_sort;
 
     using std::reverse;
 }

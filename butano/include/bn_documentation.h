@@ -1316,6 +1316,7 @@
  *
  * * H-Blank effects optimized (thanks JoaoBaptMG).
  * * bn::calculate_sin_lut_value optimized.
+ * * bn::lut_reciprocal optimized.
  * * \ref faq page improved.
  *
  *

@@ -220,7 +220,7 @@ namespace bn
     {
         BN_ASSERT(lut_value >= 1 && lut_value <= 1024, "Value must be in the range [1, 1024]: ", lut_value);
 
-        return reciprocal_lut[lut_value];
+        return reciprocal_lut._data[lut_value];
     }
 }
 

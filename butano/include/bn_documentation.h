@@ -1314,6 +1314,7 @@
  *
  * @section changelog_5_3_0 5.3.0 (next release)
  *
+ * * bn::sin, bn::cos, bn::atan2 and bn::degrees_atan2 added.
  * * H-Blank effects optimized (thanks JoaoBaptMG).
  * * bn::calculate_sin_lut_value optimized.
  * * bn::lut_reciprocal optimized.

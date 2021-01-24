@@ -190,6 +190,10 @@
             </dt>
             <dd>Returns the square root of the given value using the Newton–Raphson method.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga589ed853116ac004d9ecc481fc283438" class="m-doc">sin</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine value of an angle.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga8f5501ff7b8ffc25e2a692796dea56b9" class="m-doc">degrees_sin</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the sine value of an angle in degrees.</dd>
@@ -202,6 +206,10 @@
             </dt>
             <dd>Calculates the sine value of an angle in degrees using a LUT.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gacb83d14734a56f9da47034ce80459b34" class="m-doc">cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the cosine value of an angle.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga6033befc7142055cf5249bc446ea0f2f" class="m-doc">degrees_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle in degrees.</dd>
@@ -213,6 +221,16 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ga22a19da000f91da1b7ec4bd18e5206fb" class="m-doc">degrees_lut_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga7293aa424a78f6b737311789b864253f" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">fixed y,
+              fixed x) -&gt; fixed_t&lt;16&gt;</span>
+            </dt>
+            <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga2f6859315cd28e65bd554977778937f6" class="m-doc">degrees_atan2</a>(</span><span class="m-doc-wrap">fixed y,
+              fixed x) -&gt; fixed</span>
+            </dt>
+            <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#gae167fb45b236d70a84fc2b17810eaaf4" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -281,6 +299,30 @@
             </h3>
             <p>Returns the square root of the given value using the Newton–Raphson method.</p>
 <p>See <a href="https://en.wikipedia.org/wiki/Newton%27s_method#Square_root">https://en.wikipedia.org/wiki/Newton%27s_<wbr />method#Square_<wbr />root</a></p>
+          </div></section>
+          <section class="m-doc-details" id="ga589ed853116ac004d9ecc481fc283438"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga589ed853116ac004d9ecc481fc283438" class="m-doc-self">sin</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine value of an angle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">angle</td>
+                  <td>Angle (2π = 1).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
           <section class="m-doc-details" id="ga8f5501ff7b8ffc25e2a692796dea56b9"><div>
             <h3>
@@ -354,6 +396,30 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="gacb83d14734a56f9da47034ce80459b34"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacb83d14734a56f9da47034ce80459b34" class="m-doc-self">cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the cosine value of an angle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">angle</td>
+                  <td>Angle (2π = 1).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Cosine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ga6033befc7142055cf5249bc446ea0f2f"><div>
             <h3>
               <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6033befc7142055cf5249bc446ea0f2f" class="m-doc-self">degrees_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
@@ -415,13 +481,71 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in degrees the range [0, 360].</td>
+                  <td>Angle in degrees in the range [0, 360].</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
                   <td>Cosine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga7293aa424a78f6b737311789b864253f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7293aa424a78f6b737311789b864253f" class="m-doc-self">atan2</a>(</span><span class="m-doc-wrap">fixed y,
+              fixed x)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">y</td>
+                  <td>Vertical value.</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>Horizontal value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga2f6859315cd28e65bd554977778937f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2f6859315cd28e65bd554977778937f6" class="m-doc-self">degrees_atan2</a>(</span><span class="m-doc-wrap">fixed y,
+              fixed x)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">y</td>
+                  <td>Vertical value.</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>Horizontal value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Arc tangent of y/x in degrees in the range [-180, 180].</td>
                 </tr>
               </tfoot>
             </table>

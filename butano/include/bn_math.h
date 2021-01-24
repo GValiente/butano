@@ -121,6 +121,19 @@ namespace bn
     }
 
     /**
+     * @brief Calculates the sine value of an angle.
+     * @param angle Angle (2π = 1).
+     * @return Sine value in the range [-1, 1].
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed sin(fixed_t<16> angle)
+    {
+        int lut_angle = angle.data();
+        return fixed::from_data(calculate_sin_lut_value(lut_angle));
+    }
+
+    /**
      * @brief Calculates the sine value of an angle in degrees.
      * @param degrees_angle Angle in degrees.
      * @return Sine value in the range [-1, 1].
@@ -165,6 +178,19 @@ namespace bn
     }
 
     /**
+     * @brief Calculates the cosine value of an angle.
+     * @param angle Angle (2π = 1).
+     * @return Cosine value in the range [-1, 1].
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed cos(fixed_t<16> angle)
+    {
+        int lut_angle = angle.data() + 16384;
+        return fixed::from_data(calculate_sin_lut_value(lut_angle));
+    }
+
+    /**
      * @brief Calculates the cosine value of an angle in degrees.
      * @param degrees_angle Angle in degrees.
      * @return Cosine value in the range [-1, 1].
@@ -174,8 +200,7 @@ namespace bn
     [[nodiscard]] constexpr fixed degrees_cos(fixed degrees_angle)
     {
         constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), 65536);
-        int lut_angle = rule_of_three.calculate(degrees_angle.data());
-        lut_angle = lut_angle + 16384;
+        int lut_angle = rule_of_three.calculate(degrees_angle.data()) + 16384;
         return fixed::from_data(calculate_sin_lut_value(lut_angle));
     }
 
@@ -196,7 +221,7 @@ namespace bn
 
     /**
      * @brief Calculates the cosine value of an angle in degrees using a LUT.
-     * @param degrees_angle Angle in degrees the range [0, 360].
+     * @param degrees_angle Angle in degrees in the range [0, 360].
      * @return Cosine value in the range [-1, 1].
      *
      * @ingroup math
@@ -207,6 +232,29 @@ namespace bn
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
         lut_angle = (lut_angle + 512) & (2048 - 1);
         return fixed::from_data(sin_lut._data[lut_angle]);
+    }
+
+    /**
+     * @brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
+     * @param y Vertical value.
+     * @param x Horizontal value.
+     * @return Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] fixed_t<16> atan2(fixed y, fixed x);
+
+    /**
+     * @brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
+     * @param y Vertical value.
+     * @param x Horizontal value.
+     * @return Arc tangent of y/x in degrees in the range [-180, 180].
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] inline fixed degrees_atan2(fixed y, fixed x)
+    {
+        return fixed::from_data((atan2(y, x).data() * 360) / (1 << 4));
     }
 
     /**

@@ -36,6 +36,14 @@ public:
         BN_ASSERT(bn::rule_of_three_approximation(bn::fixed(360).data(), 65536).calculate(bn::fixed(270).data()) == 49152);
         BN_ASSERT(bn::rule_of_three_approximation(bn::fixed(360).data(), 65536).calculate(bn::fixed(360).data()) == 65536);
 
+        BN_ASSERT(bn::sin(0) == 0);
+        BN_ASSERT(bn::sin(0.25) == 1);
+        BN_ASSERT(bn::sin(0.5) == 0);
+        BN_ASSERT(bn::sin(0.75) == -1);
+        BN_ASSERT(bn::sin(1) == 0);
+        BN_ASSERT(bn::sin(1.25) == 1);
+        BN_ASSERT(bn::sin(-0.25) == -1);
+
         BN_ASSERT(bn::degrees_sin(0) == 0);
         BN_ASSERT(bn::degrees_sin(90) == 1);
         BN_ASSERT(bn::degrees_sin(180) == 0);
@@ -43,6 +51,14 @@ public:
         BN_ASSERT(bn::degrees_sin(360) == 0);
         BN_ASSERT(bn::degrees_sin(360 + 90) == 1);
         BN_ASSERT(bn::degrees_sin(-90) == -1);
+
+        BN_ASSERT(bn::cos(0) == 1);
+        BN_ASSERT(bn::cos(0.25) == 0);
+        BN_ASSERT(bn::cos(0.5) == -1);
+        BN_ASSERT(bn::cos(0.75) == 0);
+        BN_ASSERT(bn::cos(1) == 1);
+        BN_ASSERT(bn::cos(1.25) == 0);
+        BN_ASSERT(bn::cos(-0.25) == 0);
 
         BN_ASSERT(bn::degrees_cos(0) == 1);
         BN_ASSERT(bn::degrees_cos(90) == 0);
@@ -75,6 +91,18 @@ public:
         BN_ASSERT(bn::degrees_lut_cos(180) == -1);
         BN_ASSERT(bn::degrees_lut_cos(270) == 0);
         BN_ASSERT(bn::degrees_lut_cos(360) == 1);
+
+        BN_ASSERT(bn::atan2(1, 1) == 0.125);
+        BN_ASSERT(bn::atan2(1, -1) == 0.125 * 3);
+        BN_ASSERT(bn::atan2(-1, -1) == -0.125 * 3);
+        BN_ASSERT(bn::atan2(-1, 1) == -0.125);
+        BN_ASSERT(bn::atan2(0, 0) == 0);
+
+        BN_ASSERT(bn::degrees_atan2(1, 1) == 45);
+        BN_ASSERT(bn::degrees_atan2(1, -1) == 45 * 3);
+        BN_ASSERT(bn::degrees_atan2(-1, -1) == -45 * 3);
+        BN_ASSERT(bn::degrees_atan2(-1, 1) == -45);
+        BN_ASSERT(bn::degrees_atan2(0, 0) == 0);
     }
 };
 

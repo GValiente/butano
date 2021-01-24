@@ -1312,7 +1312,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_3_0 5.3.0 (next release)
+ * @section changelog_5_3_0 5.3.0
  *
  * * bn::sin, bn::cos, bn::atan2 and bn::degrees_atan2 added.
  * * H-Blank effects optimized (thanks JoaoBaptMG).

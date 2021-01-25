@@ -1312,7 +1312,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_3_1 5.3.1 (next release)
+ * @section changelog_5_3_1 5.3.1
  *
  * bn::atan2 and bn::degrees_atan2 fixed.
  *

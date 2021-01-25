@@ -1312,6 +1312,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_5_3_1 5.3.1 (next release)
+ *
+ * bn::atan2 and bn::degrees_atan2 fixed.
+ *
+ *
  * @section changelog_5_3_0 5.3.0
  *
  * * bn::sin, bn::cos, bn::atan2 and bn::degrees_atan2 added.

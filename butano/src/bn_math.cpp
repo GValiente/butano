@@ -7,8 +7,6 @@
 
 #include "../hw/include/bn_hw_math.h"
 
-#include "bn_log.h"
-
 namespace _bn
 {
 
@@ -22,9 +20,12 @@ int sqrt_impl(int value)
 namespace bn
 {
 
-fixed_t<16> atan2(fixed y, fixed x)
+fixed_t<16> atan2(int y, int x)
 {
-    int result = hw::math::atan2(y.data(), x.data());
+    BN_ASSERT(y >= -32767 && y <= 32767, "Invalid y: ", y);
+    BN_ASSERT(x >= -32767 && x <= 32767, "Invalid x: ", x);
+
+    int result = hw::math::atan2(y, x);
 
     if(result > 32768)
     {

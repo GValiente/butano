@@ -236,23 +236,23 @@ namespace bn
 
     /**
      * @brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
-     * @param y Vertical value.
-     * @param x Horizontal value.
+     * @param y Vertical value in the range [-32767, 32767].
+     * @param x Horizontal value in the range [-32767, 32767].
      * @return Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).
      *
      * @ingroup math
      */
-    [[nodiscard]] fixed_t<16> atan2(fixed y, fixed x);
+    [[nodiscard]] fixed_t<16> atan2(int y, int x);
 
     /**
      * @brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
-     * @param y Vertical value.
-     * @param x Horizontal value.
+     * @param y Vertical value in the range [-32767, 32767].
+     * @param x Horizontal value in the range [-32767, 32767].
      * @return Arc tangent of y/x in degrees in the range [-180, 180].
      *
      * @ingroup math
      */
-    [[nodiscard]] inline fixed degrees_atan2(fixed y, fixed x)
+    [[nodiscard]] inline fixed degrees_atan2(int y, int x)
     {
         return fixed::from_data((atan2(y, x).data() * 360) / (1 << 4));
     }

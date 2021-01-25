@@ -222,13 +222,13 @@
             </dt>
             <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga7293aa424a78f6b737311789b864253f" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">fixed y,
-              fixed x) -&gt; fixed_t&lt;16&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga0c2a616ce1ea66acfb550ef739db8018" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">int y,
+              int x) -&gt; fixed_t&lt;16&gt;</span>
             </dt>
             <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga2f6859315cd28e65bd554977778937f6" class="m-doc">degrees_atan2</a>(</span><span class="m-doc-wrap">fixed y,
-              fixed x) -&gt; fixed</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaf240dbc359b50e4c646705f2a494aab2" class="m-doc">degrees_atan2</a>(</span><span class="m-doc-wrap">int y,
+              int x) -&gt; fixed</span>
             </dt>
             <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
@@ -492,10 +492,10 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga7293aa424a78f6b737311789b864253f"><div>
+          <section class="m-doc-details" id="ga0c2a616ce1ea66acfb550ef739db8018"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7293aa424a78f6b737311789b864253f" class="m-doc-self">atan2</a>(</span><span class="m-doc-wrap">fixed y,
-              fixed x)</span></span>
+              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0c2a616ce1ea66acfb550ef739db8018" class="m-doc-self">atan2</a>(</span><span class="m-doc-wrap">int y,
+              int x)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
@@ -506,11 +506,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">y</td>
-                  <td>Vertical value.</td>
+                  <td>Vertical value in the range [-32767, 32767].</td>
                 </tr>
                 <tr>
                   <td>x</td>
-                  <td>Horizontal value.</td>
+                  <td>Horizontal value in the range [-32767, 32767].</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -521,10 +521,10 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga2f6859315cd28e65bd554977778937f6"><div>
+          <section class="m-doc-details" id="gaf240dbc359b50e4c646705f2a494aab2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga2f6859315cd28e65bd554977778937f6" class="m-doc-self">degrees_atan2</a>(</span><span class="m-doc-wrap">fixed y,
-              fixed x)</span></span>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf240dbc359b50e4c646705f2a494aab2" class="m-doc-self">degrees_atan2</a>(</span><span class="m-doc-wrap">int y,
+              int x)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
@@ -535,11 +535,11 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">y</td>
-                  <td>Vertical value.</td>
+                  <td>Vertical value in the range [-32767, 32767].</td>
                 </tr>
                 <tr>
                   <td>x</td>
-                  <td>Horizontal value.</td>
+                  <td>Horizontal value in the range [-32767, 32767].</td>
                 </tr>
               </tbody>
               <tfoot>

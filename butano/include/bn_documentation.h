@@ -657,7 +657,8 @@
  * To execute some of the tools needed to include image and audio files in your project,
  * you are going to need <a href="https://www.python.org/">Python</a>.
  *
- * If you are going to install Python on Windows, remember to add it to the PATH:
+ * If you are going to install Python on Windows,
+ * remember to add it to the PATH and to close all command line windows before installing it:
  *
  * @image html python_windows.png
  *
@@ -1318,7 +1319,8 @@
  *
  * @section changelog_5_4_0 5.4.0 (next release)
  *
- * Python install guide improved.
+ * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
+ * * Python install guide improved.
  *
  *
  * @section changelog_5_3_1 5.3.1

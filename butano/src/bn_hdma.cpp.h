@@ -15,12 +15,24 @@ void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
     BN_ASSERT(elements > 0, "Invalid elements: ", elements);
 
-    hdma_manager::start(source_ref, elements, destination_ref);
+    hdma_manager::low_priority_start(source_ref, elements, destination_ref);
 }
 
 void stop()
 {
-    hdma_manager::stop();
+    hdma_manager::low_priority_stop();
+}
+
+void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
+{
+    BN_ASSERT(elements > 0, "Invalid elements: ", elements);
+
+    hdma_manager::high_priority_start(source_ref, elements, destination_ref);
+}
+
+void high_priority_stop()
+{
+    hdma_manager::high_priority_stop();
 }
 
 }

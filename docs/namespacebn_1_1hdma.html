@@ -75,6 +75,16 @@
               <span class="m-doc-wrap-bumper">void <a href="#a5aab39ced9c0980a5002e60bfddc639a" class="m-doc-self">stop</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Stops copying elements each frame.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af21b0e303b1ff0da00da161e87f774b8" class="m-doc">high_priority_start</a>(</span><span class="m-doc-wrap">const uint16_t&amp; source_ref,
+              int elements,
+              uint16_t&amp; destination_ref)</span>
+            </dt>
+            <dd>Start copying each frame with high priority the given amount of elements from the memory location referenced by source_ref to the memory location referenced by destination_ref.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad02fcb488caae5edd2633e5dbc7e72d8" class="m-doc">high_priority_stop</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Stops copying elements each frame with high priority.</dd>
           </dl>
         </section>
         <section>
@@ -106,6 +116,41 @@
               </tbody>
             </table>
 <p>The elements are not copied but referenced, so they should be alive while HDMA is running to avoid dangling references.</p><p>If the elements overlap, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="af21b0e303b1ff0da00da161e87f774b8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />hdma::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af21b0e303b1ff0da00da161e87f774b8" class="m-doc-self">high_priority_start</a>(</span><span class="m-doc-wrap">const uint16_t&amp; source_ref,
+              int elements,
+              uint16_t&amp; destination_ref)</span></span>
+            </h3>
+            <p>Start copying each frame with high priority the given amount of elements from the memory location referenced by source_ref to the memory location referenced by destination_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_ref</td>
+                  <td>Const reference to the memory location to copy from.</td>
+                </tr>
+                <tr>
+                  <td>elements</td>
+                  <td>Number of elements to copy (not bytes).</td>
+                </tr>
+                <tr>
+                  <td>destination_ref</td>
+                  <td>Reference to the memory location to copy to.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The elements are not copied but referenced, so they should be alive while HDMA is running to avoid dangling references.</p><p>If the elements overlap, the behavior is undefined.</p><p>High priority HDMA can cause issues with audio, so avoid it unless necessary.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad02fcb488caae5edd2633e5dbc7e72d8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />hdma::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad02fcb488caae5edd2633e5dbc7e72d8" class="m-doc-self">high_priority_stop</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Stops copying elements each frame with high priority.</p>
+<p>High priority HDMA can cause issues with audio, so avoid it unless necessary.</p>
           </div></section>
         </section>
       </div>

@@ -23,26 +23,95 @@ namespace
         int elements = 0;
     };
 
+    class entry
+    {
+
+    public:
+        explicit entry(int channel) :
+            _channel(channel)
+        {
+        }
+
+        void disable()
+        {
+            hw::hdma::stop(_channel);
+        }
+
+        void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
+        {
+            state& next_state = _next_state();
+            next_state.source_ptr = &source_ref;
+            next_state.destination_ptr = &destination_ref;
+            next_state.elements = elements;
+            _updated = true;
+        }
+
+        void stop()
+        {
+            state& next_state = _next_state();
+            next_state.elements = 0;
+            _updated = true;
+        }
+
+        void update()
+        {
+            if(_updated)
+            {
+                _updated = false;
+
+                if(_current_state_index)
+                {
+                    _current_state_index = 0;
+                    _states[1] = _states[0];
+                }
+                else
+                {
+                    _current_state_index = 1;
+                    _states[0] = _states[1];
+                }
+            }
+        }
+
+        void commit()
+        {
+            const state& current_state = _current_state();
+
+            if(int elements = current_state.elements)
+            {
+                hw::hdma::start(_channel, current_state.source_ptr, elements, current_state.destination_ptr);
+            }
+            else
+            {
+                hw::hdma::stop(_channel);
+            }
+        }
+
+    private:
+        state _states[2];
+        int8_t _channel = 0;
+        int8_t _current_state_index = 0;
+        bool _updated = false;
+
+        [[nodiscard]] state& _current_state()
+        {
+            return _states[_current_state_index];
+        }
+
+        [[nodiscard]] state& _next_state()
+        {
+            return _states[(_current_state_index + 1) % 2];
+        }
+    };
+
     class static_data
     {
 
     public:
-        state states[2];
-        int8_t current_state_index = 0;
-        bool updated = false;
+        entry low_priority_entry = entry(hw::hdma::low_priority_channel());
+        entry high_priority_entry = entry(hw::hdma::high_priority_channel());
     };
 
     BN_DATA_EWRAM static_data data;
-
-    [[nodiscard]] state& _current_state()
-    {
-        return data.states[data.current_state_index];
-    }
-
-    [[nodiscard]] state& _next_state()
-    {
-        return data.states[(data.current_state_index + 1) % 2];
-    }
 }
 
 void enable()
@@ -52,56 +121,40 @@ void enable()
 
 void disable()
 {
-    hw::hdma::stop();
+    data.low_priority_entry.disable();
+    data.high_priority_entry.disable();
 }
 
-void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
+void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
-    state& next_state = _next_state();
-    next_state.source_ptr = &source_ref;
-    next_state.destination_ptr = &destination_ref;
-    next_state.elements = elements;
-    data.updated = true;
+    data.low_priority_entry.start(source_ref, elements, destination_ref);
 }
 
-void stop()
+void low_priority_stop()
 {
-    state& next_state = _next_state();
-    next_state.elements = 0;
-    data.updated = true;
+    data.low_priority_entry.stop();
+}
+
+void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
+{
+    data.high_priority_entry.start(source_ref, elements, destination_ref);
+}
+
+void high_priority_stop()
+{
+    data.high_priority_entry.stop();
 }
 
 void update()
 {
-    if(data.updated)
-    {
-        data.updated = false;
-
-        if(data.current_state_index)
-        {
-            data.current_state_index = 0;
-            data.states[1] = data.states[0];
-        }
-        else
-        {
-            data.current_state_index = 1;
-            data.states[0] = data.states[1];
-        }
-    }
+    data.low_priority_entry.update();
+    data.high_priority_entry.update();
 }
 
 void commit()
 {
-    const state& current_state = _current_state();
-
-    if(int elements = current_state.elements)
-    {
-        hw::hdma::start(current_state.source_ptr, elements, current_state.destination_ptr);
-    }
-    else
-    {
-        hw::hdma::stop();
-    }
+    data.low_priority_entry.commit();
+    data.high_priority_entry.commit();
 }
 
 }

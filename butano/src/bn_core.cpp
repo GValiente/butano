@@ -108,6 +108,10 @@ namespace
         display_manager::stop();
         keypad_manager::stop();
 
+        hdma_manager::low_priority_stop();
+        hdma_manager::high_priority_stop();
+        hdma_manager::update();
+
         disable(disable_audio);
     }
 }

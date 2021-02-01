@@ -1319,6 +1319,7 @@
  *
  * @section changelog_5_4_0 5.4.0 (next release)
  *
+ * * bn::sprites::reload added.
  * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
  * * HDMA disable when an assert or the profiler are shown fixed.
  * * Python install guide improved.

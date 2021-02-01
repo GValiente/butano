@@ -1014,6 +1014,12 @@ void reload_blending()
     }
 }
 
+void reload_all()
+{
+    data.last_visible_items_count = hw::sprites::count() - 1;
+    data.rebuild_handles = true;
+}
+
 void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)
 {
     auto item = static_cast<item_type*>(id);

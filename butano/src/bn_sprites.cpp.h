@@ -20,4 +20,9 @@ int available_items_count()
     return sprites_manager::available_items_count();
 }
 
+void reload()
+{
+    sprites_manager::reload_all();
+}
+
 }

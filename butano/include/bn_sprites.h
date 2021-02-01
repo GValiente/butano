@@ -69,6 +69,13 @@ namespace bn::sprites
     {
         return 32767;
     }
+
+    /**
+     * @brief Reloads the internal attributes of all sprites.
+     *
+     * Normally you should not call this function, but it can be useful after messing with HDMA for example.
+     */
+    void reload();
 }
 
 #endif

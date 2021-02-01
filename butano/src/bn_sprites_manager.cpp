@@ -1016,7 +1016,7 @@ void reload_blending()
 
 void reload_all()
 {
-    data.last_visible_items_count = hw::sprites::count() - 1;
+    data.last_visible_items_count = hw::sprites::count();
     data.rebuild_handles = true;
 }
 

@@ -1322,6 +1322,7 @@
  * * bn::sprites::reload added.
  * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
  * * HDMA disable when an assert or the profiler are shown fixed.
+ * * HDMA first screen horizontal line fixed.
  * * Python install guide improved.
  *
  *

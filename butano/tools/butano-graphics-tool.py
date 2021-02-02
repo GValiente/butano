@@ -1000,7 +1000,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
         for graphics_file_name in graphics_file_names:
             graphics_file_path = graphics_folder_path + '/' + graphics_file_name
 
-            if FileInfo.validate(graphics_file_name):
+            if os.path.isfile(graphics_file_path) and FileInfo.validate(graphics_file_name):
                 graphics_file_name_split = os.path.splitext(graphics_file_name)
                 graphics_file_name_no_ext = graphics_file_name_split[0]
                 graphics_file_name_ext = graphics_file_name_split[1]

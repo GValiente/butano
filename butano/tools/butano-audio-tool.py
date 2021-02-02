@@ -22,15 +22,14 @@ def list_audio_files(audio_folder_paths):
         folder_audio_file_names = sorted(os.listdir(audio_folder_path))
 
         for audio_file_name in folder_audio_file_names:
-            if FileInfo.validate(audio_file_name):
-                audio_file_path = audio_folder_path + '/' + audio_file_name
+            audio_file_path = audio_folder_path + '/' + audio_file_name
 
-                if os.path.isfile(audio_file_path):
-                    audio_file_name_split = os.path.splitext(audio_file_name)
-                    audio_file_name_no_ext = audio_file_name_split[0]
-                    audio_file_names.append(audio_file_name)
-                    audio_file_names_no_ext.append(audio_file_name_no_ext)
-                    audio_file_paths.append(audio_file_path)
+            if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
+                audio_file_name_split = os.path.splitext(audio_file_name)
+                audio_file_name_no_ext = audio_file_name_split[0]
+                audio_file_names.append(audio_file_name)
+                audio_file_names_no_ext.append(audio_file_name_no_ext)
+                audio_file_paths.append(audio_file_path)
 
     return audio_file_names, audio_file_names_no_ext, audio_file_paths
 

@@ -1363,6 +1363,7 @@
  * * Graphics and audio subfolders supported.
  * * HDMA disable when an assert or the profiler are shown fixed.
  * * HDMA first screen horizontal line fixed.
+ * * bn::newton_raphson_sqrt recursion avoided.
  * * Python install guide improved.
  *
  *

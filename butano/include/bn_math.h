@@ -25,26 +25,28 @@ namespace _bn
     template<typename Type>
     [[nodiscard]] constexpr Type newton_raphson_sqrt_impl(Type value, Type current_result, Type previous_result)
     {
-        if(current_result == previous_result)
+        while(current_result != previous_result)
         {
-            return current_result;
+            Type new_result = (current_result + (value / current_result)) / 2;
+            previous_result = current_result;
+            current_result = new_result;
         }
 
-        Type new_result = (current_result + (value / current_result)) / 2;
-        return newton_raphson_sqrt_impl(value, new_result, current_result);
+        return current_result;
     }
 
     template<>
     [[nodiscard]] constexpr bn::fixed newton_raphson_sqrt_impl(bn::fixed value, bn::fixed current_result,
-                                                                bn::fixed previous_result)
+                                                               bn::fixed previous_result)
     {
-        if(current_result == previous_result)
+        while(current_result != previous_result)
         {
-            return current_result;
+            bn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
+            previous_result = current_result;
+            current_result = new_result;
         }
 
-        bn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
-        return newton_raphson_sqrt_impl(value, new_result, current_result);
+        return current_result;
     }
 
     [[nodiscard]] int sqrt_impl(int value);

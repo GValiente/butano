@@ -930,7 +930,7 @@
  * }
  * @endcode
  *
- * The fields for sprite images are the following:
+ * The fields for sprites are the following:
  * * `"type"`: must be `"sprite"` for sprites.
  * * `"height"`: height of each sprite image in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
@@ -956,6 +956,44 @@
  *
  * @code{.cpp}
  * bn::sprite_ptr sprite = bn::sprite_items::image.create_sprite(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection import_sprite_tiles Sprite tiles
+ *
+ * An image file can contain multiple sprite tiles sets.
+ * If it only contains one sprite tiles set,
+ * the size of the image must be one of the specified by @ref bn::sprite_shape_size.
+ *
+ * Multiple sprite tiles sets are allowed by layering them down on the vertical axis:
+ *
+ * @image html import_sprite.png
+ *
+ * An example of the `*.json` files required for sprite tiles is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "sprite_tiles",
+ *     "height": 64
+ * }
+ * @endcode
+ *
+ * The fields for sprite tiles are the following:
+ * * `"type"`: must be `"sprite_tiles"` for sprite tiles.
+ * * `"height"`: height of each sprite tiles set in pixels.
+ * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tiles sets.
+ * * `"compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::sprite_tiles_item should have been generated in the `build` folder.
+ * You can use this item to create sprite tiles with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * bn::sprite_tiles_ptr sprite_tiles = bn::sprite_tiles_item::image.create_tiles();
  * @endcode
  *
  *
@@ -1001,7 +1039,7 @@
  * }
  * @endcode
  *
- * The fields for regular background images are the following:
+ * The fields for regular backgrounds are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
@@ -1060,7 +1098,7 @@
  * }
  * @endcode
  *
- * The fields for affine background images are the following:
+ * The fields for affine backgrounds are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
@@ -1321,6 +1359,7 @@
  *
  * * bn::sprites::reload added.
  * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
+ * * Sprite tiles can be generated from images alone, without palettes.
  * * Graphics and audio subfolders supported.
  * * HDMA disable when an assert or the profiler are shown fixed.
  * * HDMA first screen horizontal line fixed.

@@ -629,6 +629,11 @@
  *
  * @tableofcontents
  *
+ * @section getting_started_supported_platforms Supported platforms
+ *
+ * Butano is built on top of the <a href="https://devkitpro.org/">devkitARM</a> toolchain,
+ * so it supports Windows, macOS and Unix-like platforms.
+ *
  * @section getting_started_emulator GBA emulator
  *
  * Before anything, it is convenient to have a GBA emulator at hand,

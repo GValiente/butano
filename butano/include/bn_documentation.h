@@ -1379,7 +1379,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_0_0 6.0.0 (next release)
+ * @section changelog_6_0_0 6.0.0
  *
  * * Rumble support (if your cart supports it). See @ref rumble and the `rumble` example.
  * * bn::sprites::reload added.

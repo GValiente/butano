@@ -656,11 +656,14 @@
  * * Install the `GBA Development` component.
  * * Install **all members** in the `gba-dev` group if the installer asks for which members to install.
  * * Make sure that **with the console** you are able to build and run some of the examples
- *   located in `/path/to/devkitpro/examples/gba`.
+ *   located in `/path/to/devkitpro/examples/gba`. By default, devkitARM is installed in `C:\devkitPro\`
+ *   on Windows and in `/opt/devkitpro/` on Ubuntu.
  * * In particular, you should build and run the Maxmod example located in
  *   `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
  *
  * @image html devkitpro.png
+ *
+ * @image html devkitpro_ubuntu.png
  *
  *
  * @section getting_started_python Python
@@ -674,9 +677,11 @@
  * @image html python_windows.png
  *
  * Both Python 2 and Python 3 are supported for now, but Python 2 is not going to be supported for too long.
- * Make sure you can execute Python from the command line.
+ * Make sure you can execute Python from the command line:
  *
  * @image html python.png
+ *
+ * @image html python_ubuntu.png
  *
  *
  * @section getting_started_butano Butano
@@ -698,6 +703,8 @@
  * and the console should show something like this:
  *
  * @image html example_build.png
+ *
+ * @image html example_build_ubuntu.png
  *
  *
  * @section getting_started_template Make your own GBA game!

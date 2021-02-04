@@ -31,10 +31,10 @@ ending::ending(bn::sprite_text_generator& text_generator, butano_background& but
     _bg.set_blending_enabled(true);
 
     text_generator.set_center_alignment();
-    text_generator.generate(0, -32, "YOU DID IT!", _text_sprites);
-    text_generator.generate(0, 0, "Now make your own", _text_sprites);
-    text_generator.generate(0, 16, "GBA games with BUTANO", _text_sprites);
-    text_generator.generate(0, 32, "github.com/GValiente/butano", _text_sprites);
+    text_generator.generate(0, -40, "YOU DID IT!", _text_sprites);
+    text_generator.generate(0, -8, "Now make your own", _text_sprites);
+    text_generator.generate(0, 8, "GBA games with BUTANO", _text_sprites);
+    text_generator.generate(0, 40, "github.com/GValiente/butano", _text_sprites);
 
     for(bn::sprite_ptr& text_sprite : _text_sprites)
     {

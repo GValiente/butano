@@ -6,6 +6,7 @@
 #include "bf_game_tank_boss.h"
 
 #include "bn_math.h"
+#include "bn_rumble.h"
 #include "bn_colors.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -328,6 +329,7 @@ bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::cam
                 _explosion.emplace(bn::sprite_items::enemy_explosion, bn::fixed_point(0, bn::display::height() / 2),
                                    6, constants::enemy_explosions_z_order, true, camera);
                 bn::sound_items::explosion_2.play();
+                bn::rumble::set_enabled(true);
             }
         }
         else if(_state_index == 16)
@@ -344,6 +346,7 @@ bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::cam
             }
             else
             {
+                bn::rumble::set_enabled(false);
                 done = true;
             }
         }

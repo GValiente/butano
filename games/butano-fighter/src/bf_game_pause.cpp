@@ -7,6 +7,7 @@
 
 #include "bn_music.h"
 #include "bn_keypad.h"
+#include "bn_rumble.h"
 #include "bn_green_swap.h"
 #include "bn_sound_items.h"
 #include "bn_bg_palettes.h"
@@ -31,6 +32,7 @@ void pause::update(const butano_background& butano_background)
             bn::sprite_palettes::set_fade_intensity(_fade_intensity);
             bn::sprite_palettes::set_grayscale_intensity(0);
             bn::green_swap::set_enabled(_green_swap);
+            bn::rumble::set_enabled(_rumble);
             bn::sound_items::pause_out.play();
 
             if(bn::music::paused())
@@ -51,12 +53,14 @@ void pause::update(const butano_background& butano_background)
             _contrast = bn::bg_palettes::contrast();
             _fade_intensity = bn::bg_palettes::fade_intensity();
             _green_swap = bn::green_swap::enabled();
+            _rumble = bn::rumble::enabled();
             bn::bg_palettes::set_contrast(0);
             bn::bg_palettes::set_grayscale_intensity(1);
             bn::sprite_palettes::set_contrast(0);
             bn::sprite_palettes::set_fade_intensity(0);
             bn::sprite_palettes::set_grayscale_intensity(1);
             bn::green_swap::set_enabled(false);
+            bn::rumble::set_enabled(false);
             bn::sound_items::pause_in.play();
 
             if(bn::music::playing())

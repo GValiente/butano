@@ -7,6 +7,7 @@
 
 #include "bn_string.h"
 #include "bn_keypad.h"
+#include "bn_rumble.h"
 #include "bn_display.h"
 #include "bn_optional.h"
 #include "bn_blending.h"
@@ -380,6 +381,7 @@ bn::optional<scene_type> title::_menu()
             if(_menu_index == 0)
             {
                 bn::sound_items::start.play();
+                bn::rumble::set_enabled(true);
 
                 if(_status.how_to_play_viewed())
                 {
@@ -489,6 +491,7 @@ bn::optional<scene_type> title::_menu()
 
                 _cursor_sprite.set_visible(false);
                 _blending_transparency_action.emplace(sprites_hide_frames, 0);
+                bn::rumble::set_enabled(false);
                 _state = state::HIDE_SPRITES;
             }
         }

@@ -5,6 +5,7 @@
 
 #include "bf_game_butano_boss.h"
 
+#include "bn_rumble.h"
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -406,6 +407,7 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
             _sprites.clear();
             _mini_explosions.clear();
             bn::sound_items::explosion_2.play();
+            bn::rumble::set_enabled(true);
         }
         else if(_state_index == 16)
         {
@@ -440,6 +442,11 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
             if(_explosion_counter)
             {
                 --_explosion_counter;
+
+                if(_explosion_counter == 60)
+                {
+                    bn::rumble::set_enabled(false);
+                }
             }
             else
             {

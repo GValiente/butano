@@ -5,6 +5,7 @@
 
 #include "bf_game_wizard_boss.h"
 
+#include "bn_rumble.h"
 #include "bn_colors.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -443,6 +444,7 @@ bool wizard_boss::_update_dead(const bn::fixed_point& hero_position, const bn::c
                 _explosion.emplace(bn::sprite_items::hero_death, bn::fixed_point(), 6,
                                    constants::enemy_explosions_z_order, true, camera);
                 bn::sound_items::explosion_2.play();
+                bn::rumble::set_enabled(true);
             }
         }
         else if(_state_index == 16)
@@ -456,6 +458,7 @@ bool wizard_boss::_update_dead(const bn::fixed_point& hero_position, const bn::c
             }
             else
             {
+                bn::rumble::set_enabled(false);
                 done = true;
             }
         }

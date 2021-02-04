@@ -35,6 +35,7 @@ private:
     bn::fixed _fade_intensity;
     bool _active = false;
     bool _green_swap = false;
+    bool _rumble = false;
 };
 
 }

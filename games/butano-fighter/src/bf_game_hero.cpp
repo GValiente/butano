@@ -5,6 +5,7 @@
 
 #include "bf_game_hero.h"
 
+#include "bn_rumble.h"
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_fixed_rect.h"
@@ -171,6 +172,7 @@ bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies&
                 if(enemies.check_hero(new_body_rect) || enemy_bullets.check_hero(new_body_rect))
                 {
                     int old_bombs_count = _status.bombs_count();
+                    bn::rumble::set_enabled(true);
 
                     if(_status.throw_shield())
                     {
@@ -431,6 +433,10 @@ void hero::_animate_shield(background& background)
             _bomb_sprite_move_actions.clear();
             background.show_hero_alive();
         }
+        else if(shield_counter == 135)
+        {
+            bn::rumble::set_enabled(false);
+        }
         else if(shield_counter < 60)
         {
             _shield_sprite.set_scale(shield_counter * bn::fixed(1.0 / 60));
@@ -483,6 +489,10 @@ bn::optional<scene_type> hero::_animate_dead(const bn::camera_ptr& camera, backg
         _weapon_rotate_action.emplace(_weapon_sprite, -5);
         background.show_hero_dead();
         bn::sound_items::death.play();
+    }
+    else if(_death_counter == 100)
+    {
+        bn::rumble::set_enabled(false);
     }
     else if(_death_counter == 220)
     {

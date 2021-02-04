@@ -5,6 +5,7 @@
 
 #include "bf_game_hero_bomb.h"
 
+#include "bn_rumble.h"
 #include "bn_keypad.h"
 #include "bn_blending.h"
 #include "bn_sound_items.h"
@@ -74,6 +75,7 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
 
                 background.show_bomb_open(open_frames);
                 bn::sound_items::explosion_2.play();
+                bn::rumble::set_enabled(true);
                 _status = status_type::OPEN;
                 _counter = open_frames;
                 _flame_sound_counter = 0;
@@ -162,6 +164,10 @@ void hero_bomb::update(const intro& intro, const boss_intro& boss_intro, const b
             else if(_counter == close_frames - 60)
             {
                 background.hide_bomb_close(close_frames - 90);
+            }
+            else if(_counter == 60)
+            {
+                bn::rumble::set_enabled(false);
             }
             else if(_counter == 30)
             {

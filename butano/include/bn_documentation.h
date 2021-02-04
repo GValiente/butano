@@ -1359,6 +1359,7 @@
  *
  * * bn::sprites::reload added.
  * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
+ * * bn::hdma::running and bn::hdma::high_priority_running added.
  * * Sprite tiles can be generated from images alone, without palettes.
  * * Graphics and audio subfolders supported.
  * * HDMA disable when an assert or the profiler are shown fixed.

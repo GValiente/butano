@@ -34,6 +34,11 @@ namespace
         {
         }
 
+        [[nodiscard]] bool running() const
+        {
+            return _next_state().elements;
+        }
+
         void disable()
         {
             hw::hdma::stop(_channel);
@@ -97,9 +102,19 @@ namespace
         int8_t _current_state_index = 0;
         bool _updated = false;
 
+        [[nodiscard]] const state& _current_state() const
+        {
+            return _states[_current_state_index];
+        }
+
         [[nodiscard]] state& _current_state()
         {
             return _states[_current_state_index];
+        }
+
+        [[nodiscard]] const state& _next_state() const
+        {
+            return _states[(_current_state_index + 1) % 2];
         }
 
         [[nodiscard]] state& _next_state()
@@ -130,6 +145,11 @@ void disable()
     data.high_priority_entry.disable();
 }
 
+bool low_priority_running()
+{
+    return data.low_priority_entry.running();
+}
+
 void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
     data.low_priority_entry.start(source_ref, elements, destination_ref);
@@ -138,6 +158,11 @@ void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& dest
 void low_priority_stop()
 {
     data.low_priority_entry.stop();
+}
+
+bool high_priority_running()
+{
+    return data.high_priority_entry.running();
 }
 
 void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)

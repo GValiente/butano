@@ -65,6 +65,10 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
+            <dt id="af7f3a317f1cddff57aad63efbbdb4cc2">
+              <span class="m-doc-wrap-bumper">auto <a href="#af7f3a317f1cddff57aad63efbbdb4cc2" class="m-doc-self">running</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if HDMA is active or not.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a638d0cedbafe3ca7f5210061cd73aa80" class="m-doc">start</a>(</span><span class="m-doc-wrap">const uint16_t&amp; source_ref,
               int elements,
@@ -75,6 +79,10 @@
               <span class="m-doc-wrap-bumper">void <a href="#a5aab39ced9c0980a5002e60bfddc639a" class="m-doc-self">stop</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Stops copying elements each frame.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a70ff40c328afff22c8a6b71ef5a2f507" class="m-doc">high_priority_running</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if high priority HDMA is active or not.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#af21b0e303b1ff0da00da161e87f774b8" class="m-doc">high_priority_start</a>(</span><span class="m-doc-wrap">const uint16_t&amp; source_ref,
               int elements,
@@ -116,6 +124,13 @@
               </tbody>
             </table>
 <p>The elements are not copied but referenced, so they should be alive while HDMA is running to avoid dangling references.</p><p>If the elements overlap, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="a70ff40c328afff22c8a6b71ef5a2f507"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />hdma::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a70ff40c328afff22c8a6b71ef5a2f507" class="m-doc-self">high_priority_running</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Indicates if high priority HDMA is active or not.</p>
+<p>High priority HDMA can cause issues with audio, so avoid it unless necessary.</p>
           </div></section>
           <section class="m-doc-details" id="af21b0e303b1ff0da00da161e87f774b8"><div>
             <h3>

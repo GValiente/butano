@@ -23,6 +23,11 @@
 namespace bn::hdma
 {
     /**
+     * @brief Indicates if HDMA is active or not.
+     */
+    [[nodiscard]] bool running();
+
+    /**
      * @brief Start copying each frame the given amount of elements
      * from the memory location referenced by source_ref to the memory location referenced by destination_ref.
      *
@@ -41,6 +46,13 @@ namespace bn::hdma
      * @brief Stops copying elements each frame.
      */
     void stop();
+
+    /**
+     * @brief Indicates if high priority HDMA is active or not.
+     *
+     * High priority HDMA can cause issues with audio, so avoid it unless necessary.
+     */
+    [[nodiscard]] bool high_priority_running();
 
     /**
      * @brief Start copying each frame with high priority the given amount of elements

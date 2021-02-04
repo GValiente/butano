@@ -285,6 +285,12 @@
  */
 
 /**
+ * @defgroup rumble Rumble
+ *
+ * It allows your GBA to vibrate, if the cart supports it.
+ */
+
+/**
  * @defgroup camera Cameras
  *
  * They allow to set the position of sprites, backgrounds and rectangle windows relative to another position.
@@ -578,15 +584,15 @@
  *
  * @section main_whats_new What's new?
  *
- * Check out the \ref changelog "changelog".
+ * Check out the @ref changelog "changelog".
  *
  *
  * @section main_getting_started Getting started
  *
  * The best way to get started is to read the
- * \ref getting_started "guide to download, install and start using Butano".
- * After that, there are various \ref examples "examples" explaining most aspects of the engine.
- * At last, check how to \ref import "import" your own assets in a game and
+ * @ref getting_started "guide to download, install and start using Butano".
+ * After that, there are various @ref examples "examples" explaining most aspects of the engine.
+ * At last, check how to @ref import "import" your own assets in a game and
  * take a look at the <a href="modules.html">modules</a> page.
  * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
  *
@@ -681,7 +687,7 @@
  *
  * @section getting_started_examples Butano examples
  *
- * Butano contains multiple \ref examples "examples" of most aspects of the engine.
+ * Butano contains multiple @ref examples "examples" of most aspects of the engine.
  *
  * Make sure that you are able to build and run some of them. They are located in `/path/to/butano/examples/`.
  * To build an example, open the console, `cd` to the folder of the example you want to build and type
@@ -704,7 +710,7 @@
  * * Type `make -j#cpu_cores#` again.
  *
  * If everything went as expected, a `*.gba` file should have been generated in the project folder!
- * Now learn how to \ref import "import your assets" in the game and
+ * Now learn how to @ref import "import your assets" in the game and
  * also take a look at the <a href="modules.html">modules</a> page.
  * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
  */
@@ -822,7 +828,13 @@
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref rumble
+ *
+ * @image html examples_rumble.png
+ *
+ * Vibration showcase (if your cart supports it).
+ *
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -834,13 +846,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -852,7 +864,7 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <td> **World map**
+ * <tr><td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -1228,11 +1240,11 @@
  * @subsection faq_how_do_i How do I-
  *
  * The best way to get started is to read the
- * \ref getting_started "guide to download, install and start using Butano".
+ * @ref getting_started "guide to download, install and start using Butano".
  *
- * After that, there are various \ref examples "examples" explaining most aspects of the engine.
+ * After that, there are various @ref examples "examples" explaining most aspects of the engine.
  *
- * At last, check how to \ref import "import" your own assets in a game and
+ * At last, check how to @ref import "import" your own assets in a game and
  * take a look at the <a href="modules.html">modules</a> page.
  *
  * This page is worth a look too.
@@ -1360,8 +1372,9 @@
  * @tableofcontents
  *
  *
- * @section changelog_5_4_0 5.4.0 (next release)
+ * @section changelog_6_0_0 6.0.0 (next release)
  *
+ * * Rumble support (if your cart supports it). See @ref rumble and the `rumble` example.
  * * bn::sprites::reload added.
  * * bn::hdma::high_priority_start and bn::hdma::high_priority_stop added.
  * * bn::hdma::running and bn::hdma::high_priority_running added.
@@ -1384,7 +1397,7 @@
  * * H-Blank effects optimized (thanks JoaoBaptMG).
  * * bn::calculate_sin_lut_value optimized.
  * * bn::lut_reciprocal optimized.
- * * \ref faq page improved.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_5_2_0 5.2.0
@@ -1396,19 +1409,19 @@
  *
  * @section changelog_5_1_0 5.1.0
  *
- * * Automatic game pak wait states setup (see \ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
- * \ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
+ * * Automatic game pak wait states setup (see @ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and
+ *   @ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO for more information).
  * * bn::format and bn::format_ref functions added.
  * * Some methods to indicate if a background or a background map are big or not have been added.
  * * bn::calculate_sin_lut_value precision improved.
- * * \ref faq page added.
+ * * @ref faq page added.
  * * butano-graphics-tool.py now uses all CPU cores.
  * * Missing third party license files included.
  *
  *
  * @section changelog_5_0_0 5.0.0
  *
- * * Compressed sprites and backgrounds support (see \ref import to learn how to generate them).
+ * * Compressed sprites and backgrounds support (see @ref import to learn how to generate them).
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
  *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
  * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].
@@ -1450,7 +1463,7 @@
  * @section changelog_4_0_0 4.0.0
  *
  * * Affine backgrounds support.
- *   See \ref affine_bg and the `affine_bgs`, `mode_7` and `world_map` examples for more.
+ *   See @ref affine_bg and the `affine_bgs`, `mode_7` and `world_map` examples for more.
  * * bn::hblank_effect_ptr renamed to bn::hbe_ptr (all child classes have been renamed too).
  * * bn::sprite_affine_mat_attributes renamed to bn::affine_mat_attributes.
  * * bn::bg_tiles_ptr renamed to bn::regular_bg_tiles_ptr.

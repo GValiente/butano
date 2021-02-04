@@ -16,6 +16,7 @@
 #include "bn_bgs_manager.h"
 #include "bn_hdma_manager.h"
 #include "bn_link_manager.h"
+#include "bn_gpio_manager.h"
 #include "bn_audio_manager.h"
 #include "bn_keypad_manager.h"
 #include "bn_memory_manager.h"
@@ -107,6 +108,7 @@ namespace
         bgs_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
+        gpio_manager::stop();
 
         hdma_manager::low_priority_stop();
         hdma_manager::high_priority_stop();
@@ -260,6 +262,10 @@ void update()
 
     audio_manager::enable_vblank_handler();
 
+    BN_PROFILER_ENGINE_START("eng_gpio_commit");
+    gpio_manager::commit();
+    BN_PROFILER_ENGINE_STOP();
+
     BN_PROFILER_ENGINE_START("eng_keypad");
     keypad_manager::update();
     BN_PROFILER_ENGINE_STOP();
@@ -299,6 +305,9 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
         }
     }
 
+    // Sleep gpio:
+    gpio_manager::sleep();
+
     // Sleep display:
     display_manager::sleep();
 
@@ -331,6 +340,9 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
     // Wake up display:
     display_manager::wake_up();
+
+    // Wake up gpio:
+    gpio_manager::wake_up();
 }
 
 void reset()

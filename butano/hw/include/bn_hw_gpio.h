@@ -1,0 +1,29 @@
+/*
+ * Copyright (c) 2020-2021 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
+#ifndef BN_HW_GPIO_H
+#define BN_HW_GPIO_H
+
+#include "bn_common.h"
+
+namespace bn::hw::gpio
+{
+    inline void set_rumble_enabled(bool enabled)
+    {
+        volatile uint16_t& gpio_data_register = *reinterpret_cast<uint16_t*>(0x80000C4);
+        uint16_t gpio_data = gpio_data_register;
+
+        if(enabled)
+        {
+            gpio_data_register = gpio_data | (1 << 3);
+        }
+        else
+        {
+            gpio_data_register = gpio_data & ~(1 << 3);
+        }
+    }
+}
+
+#endif

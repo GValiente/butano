@@ -12,6 +12,7 @@ void* operator new(unsigned bytes)
 {
     void* ptr = bn::memory_manager::ewram_alloc(bytes);
     BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+
     return ptr;
 }
 
@@ -29,6 +30,7 @@ void* operator new[](unsigned bytes)
 {
     void* ptr = bn::memory_manager::ewram_alloc(bytes);
     BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+
     return ptr;
 }
 

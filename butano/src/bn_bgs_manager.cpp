@@ -981,12 +981,12 @@ int priority(id_type id)
 
 void set_priority(id_type id, int priority)
 {
-    BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
-
     auto item = static_cast<item_type*>(id);
 
     if(item->bg_sort_key.priority() != priority)
     {
+        BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
+
         item->bg_sort_key.set_priority(priority);
         hw::bgs::set_priority(priority, item->handle);
         erase(data.items_vector, item);
@@ -1006,6 +1006,8 @@ void set_z_order(id_type id, int z_order)
 
     if(item->bg_sort_key.z_order() != z_order)
     {
+        BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
+
         item->bg_sort_key.set_z_order(z_order);
         erase(data.items_vector, item);
         _insert_item(*item);

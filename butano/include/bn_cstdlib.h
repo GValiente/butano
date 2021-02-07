@@ -27,10 +27,12 @@ namespace bn
     [[nodiscard]] void* malloc(int bytes);
 
     /**
-     * @brief Deallocates the space previously allocated in the EWRAM by bn::malloc.
+     * @brief Deallocates the space previously allocated by bn::malloc.
      * @param ptr Pointer to the memory to deallocate.
      *
      * If ptr is a null pointer, the function does nothing.
+     *
+     * If ptr was not previously allocated by bn::malloc, the behavior is undefined.
      *
      * @ingroup std
      */

@@ -6,6 +6,7 @@
 #include "bn_music.h"
 
 #include "bn_fixed.h"
+#include "bn_assert.h"
 #include "bn_music_item.h"
 #include "bn_audio_manager.h"
 
@@ -24,11 +25,15 @@ void play(music_item item)
 
 void play(music_item item, fixed volume)
 {
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
     audio_manager::play_music(item, volume, true);
 }
 
 void play(music_item item, fixed volume, bool loop)
 {
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
     audio_manager::play_music(item, volume, loop);
 }
 
@@ -59,6 +64,8 @@ int position()
 
 void set_position(int position)
 {
+    BN_ASSERT(position >= 0, "Invalid position: ", position);
+
     audio_manager::set_music_position(position);
 }
 
@@ -69,6 +76,8 @@ fixed volume()
 
 void set_volume(fixed volume)
 {
+    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
     audio_manager::set_music_volume(volume);
 }
 

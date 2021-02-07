@@ -175,11 +175,8 @@ namespace
     }
 }
 
-void init([[maybe_unused]] int handles_size, void* handles)
+void init(void* handles)
 {
-    BN_ASSERT(handles_size == sizeof(hw::sprite_affine_mats::handle) * max_items,
-               "Invalid handles size: ", handles_size, sizeof(hw::sprite_affine_mats::handle) * max_items);
-
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 
     for(int index = max_items - 1; index >= 0; --index)
@@ -245,8 +242,6 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        BN_ASSERT(item.attached_nodes.empty(), "There's still attached nodes");
-
         item.remove_if_not_needed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }

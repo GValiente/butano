@@ -102,7 +102,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
             </dt>
-            <dd>Deallocates the space previously allocated in the EWRAM by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</dd>
+            <dd>Deallocates the space previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga83ace66ec8ad6ad00ab775e4797fefa0" class="m-doc">memcpy</a>(</span><span class="m-doc-wrap">void* destination,
               const void* source,
@@ -153,7 +153,7 @@
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6f8bf32a45558fc595672345f903ddce" class="m-doc-self">free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
             </h3>
-            <p>Deallocates the space previously allocated in the EWRAM by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</p>
+            <p>Deallocates the space previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -165,7 +165,7 @@
                 </tr>
               </tbody>
             </table>
-<p>If ptr is a null pointer, the function does nothing.</p>
+<p>If ptr is a null pointer, the function does nothing.</p><p>If ptr was not previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="ga83ace66ec8ad6ad00ab775e4797fefa0"><div>
             <h3>

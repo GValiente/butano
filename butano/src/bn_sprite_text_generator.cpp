@@ -51,7 +51,6 @@ namespace
 
         sprite_tiles_ptr& tiles_ptr_ref = *tiles_ptr;
         optional<span<tile>> tiles_vram = tiles_ptr_ref.vram();
-        BN_ASSERT(tiles_vram, "Tiles VRAM retrieve failed");
 
         sprite_builder builder(sprite_shape_size(sprite_shape::WIDE, size), move(tiles_ptr_ref), palette);
         builder.set_position(current_position);
@@ -882,7 +881,7 @@ void sprite_text_generator::set_palette_item(const sprite_palette_item& palette_
 
 void sprite_text_generator::set_bg_priority(int bg_priority)
 {
-    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
 
     _bg_priority = bg_priority;
 }

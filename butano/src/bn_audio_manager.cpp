@@ -213,7 +213,6 @@ bool music_playing()
 
 void play_music(music_item item, fixed volume, bool loop)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_play(item, loop, _hw_music_volume(volume)));
@@ -265,7 +264,6 @@ int music_position()
 
 void set_music_position(int position)
 {
-    BN_ASSERT(position >= 0, "Invalid position: ", position);
     BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
@@ -282,7 +280,6 @@ fixed music_volume()
 
 void set_music_volume(fixed volume)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
     BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
@@ -292,7 +289,6 @@ void set_music_volume(fixed volume)
 
 void play_sound(int priority, sound_item item)
 {
-    BN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::sound_play(priority, item));
@@ -300,10 +296,6 @@ void play_sound(int priority, sound_item item)
 
 void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning)
 {
-    BN_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
-    BN_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0..64]: ", speed);
-    BN_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1..1]: ", panning);
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::sound_play(priority, item, _hw_sound_volume(volume), _hw_sound_speed(speed),

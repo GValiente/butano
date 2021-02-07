@@ -28,7 +28,7 @@ namespace bn::sprite_affine_mats_manager
     };
 
 
-    void init(int handles_size, void* handles);
+    void init(void* handles);
 
     [[nodiscard]] int used_count();
 

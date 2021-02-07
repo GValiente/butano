@@ -109,7 +109,7 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
             if(item.on_screen)
             {
                 BN_ASSERT(BN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
-                           visible_items_count <= hw::sprites::count(), "Too much sprites on screen");
+                           visible_items_count <= hw::sprites::count(), "Too much on screen sprites");
 
                 hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
                 item.handles_index = int8_t(visible_items_count);

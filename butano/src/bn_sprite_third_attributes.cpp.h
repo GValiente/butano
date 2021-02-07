@@ -16,12 +16,12 @@ sprite_third_attributes::sprite_third_attributes(sprite_tiles_ptr tiles, sprite_
     _palette(move(palette)),
     _bg_priority(int8_t(bg_priority))
 {
-    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
 }
 
 void sprite_third_attributes::set_bg_priority(int bg_priority)
 {
-    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid bg priority: ", bg_priority);
+    BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
 
     _bg_priority = int8_t(bg_priority);
 }

@@ -58,13 +58,11 @@ int parse(int value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", value);
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -84,13 +82,11 @@ int parse(long value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", value);
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -110,13 +106,11 @@ int parse(int64_t value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(abs_value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -135,13 +129,11 @@ int parse(unsigned value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -160,13 +152,11 @@ int parse(unsigned long value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -185,13 +175,11 @@ int parse(uint64_t value, array<char, 32>& output)
     {
         posprintf(output_data, "%d", int(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else if(value < 500000000)
     {
         posprintf(output_data, "%l", long(value));
         size = string_view(output_data).size();
-        BN_ASSERT(size > 0, "posprintf call failed");
     }
     else
     {
@@ -205,11 +193,7 @@ int parse(const void* ptr, array<char, 32>& output)
 {
     char* output_data = output.data();
     posprintf(output_data, "0x%x", ptr);
-
-    int size = string_view(output_data).size();
-    BN_ASSERT(size > 0, "posprintf call failed");
-
-    return size;
+    return string_view(output_data).size();
 }
 
 }

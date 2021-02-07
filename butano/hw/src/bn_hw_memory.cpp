@@ -5,8 +5,6 @@
 
 #include "../include/bn_hw_memory.h"
 
-#include "bn_assert.h"
-
 extern unsigned __iwram_start__;
 extern unsigned __fini_array_end;
 extern unsigned __ewram_start;
@@ -20,20 +18,14 @@ int used_static_iwram()
 {
     auto iwram_start = reinterpret_cast<uint8_t*>(&__iwram_start__);
     auto iwram_end = reinterpret_cast<uint8_t*>(&__fini_array_end);
-    ptrdiff_t result = iwram_end - iwram_start;
-    BN_ASSERT(result >= 0, "Invalid used static iwram: ", result);
-
-    return result;
+    return iwram_end - iwram_start;
 }
 
 int used_static_ewram()
 {
     auto ewram_start = reinterpret_cast<uint8_t*>(&__ewram_start);
     auto ewram_end = reinterpret_cast<uint8_t*>(&__ewram_end);
-    ptrdiff_t result = ewram_end - ewram_start;
-    BN_ASSERT(result >= 0, "Invalid used static ewram: ", result);
-
-    return result;
+    return ewram_end - ewram_start;
 }
 
 char* ewram_heap_start()

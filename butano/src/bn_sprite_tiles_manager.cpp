@@ -391,7 +391,6 @@ namespace
         auto free_items_end = data.free_items.end();
         auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, item.tiles_count,
                                          lower_bound_comparator);
-        BN_ASSERT(free_items_it != free_items_end, "Free item not found: ", id);
 
         while(*free_items_it != id)
         {
@@ -415,7 +414,6 @@ namespace
         auto to_remove_items_end = data.to_remove_items.end();
         auto to_remove_items_it = lower_bound(data.to_remove_items.begin(), to_remove_items_end, item.tiles_count,
                                               lower_bound_comparator);
-        BN_ASSERT(to_remove_items_it != to_remove_items_end, "To remove item not found: ", id);
 
         while(*to_remove_items_it != id)
         {

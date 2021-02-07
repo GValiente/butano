@@ -81,7 +81,6 @@ namespace
         auto free_items_end = data.free_items.end();
         auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, items_it->size,
                                          lower_bound_comparator);
-        BN_ASSERT(free_items_it != free_items_end, "Free item not found: ", static_cast<void*>(items_it->data));
 
         while(*free_items_it != items_it)
         {
@@ -97,8 +96,6 @@ void init()
     char* start = hw::memory::ewram_heap_start();
     char* end = hw::memory::ewram_heap_end();
     data.total_bytes_count = end - start;
-    BN_ASSERT(data.total_bytes_count >= 0, "Invalid heap size: ",
-               static_cast<void*>(start), " - ", static_cast<void*>(end));
 
     item_type new_item;
     new_item.data = start;
@@ -136,7 +133,6 @@ void* ewram_alloc(int bytes)
 
     items_iterator items_it = *free_items_it;
     item_type& item = *items_it;
-    BN_ASSERT(! item.used, "Item is not free: ", item.size);
 
     if(int new_item_size = item.size - bytes)
     {
@@ -172,7 +168,6 @@ void ewram_free(void* ptr)
         items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
         items_iterator items_it = *items_it_ptr;
         item_type& item = *items_it;
-        BN_ASSERT(item.used, "Item is not used: ", item.size);
 
         item.used = false;
         data.free_bytes_count += item.size;

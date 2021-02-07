@@ -1379,6 +1379,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_1_0 6.1.0 (next release)
+ *
+ * Some internal asserts removed.
+ *
+ *
  * @section changelog_6_0_0 6.0.0
  *
  * * Rumble support (if your cart supports it). See @ref rumble and the `rumble` example.

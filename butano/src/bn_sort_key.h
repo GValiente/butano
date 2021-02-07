@@ -6,7 +6,6 @@
 #ifndef BN_SORT_KEY_H
 #define BN_SORT_KEY_H
 
-#include "bn_assert.h"
 #include "bn_limits.h"
 
 namespace bn
@@ -36,8 +35,6 @@ public:
     constexpr sort_key(int priority, int z_order) :
         _fields({ uint16_t(z_order + numeric_limits<int16_t>::max()), uint16_t(priority) })
     {
-        BN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
-        BN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
     }
 
     [[nodiscard]] constexpr int priority() const
@@ -47,8 +44,6 @@ public:
 
     constexpr void set_priority(int priority)
     {
-        BN_ASSERT(priority >= 0 && priority <= max_priority(), "Invalid priority: ", priority);
-
         _fields.priority = uint16_t(priority);
     }
 
@@ -59,8 +54,6 @@ public:
 
     constexpr void set_z_order(int z_order)
     {
-        BN_ASSERT(z_order >= min_z_order() && z_order <= max_z_order(), "Invalid z order: ", z_order);
-
         _fields.z_order = uint16_t(z_order + numeric_limits<int16_t>::max());
     }
 

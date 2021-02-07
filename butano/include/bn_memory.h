@@ -457,14 +457,18 @@ namespace bn::memory
      * @brief Allocates uninitialized storage in EWRAM.
      * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
-     * To avoid a memory leak, the returned pointer must be deallocated with ewram_free.
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::ewram_free.
      * On failure, returns a null pointer.
      */
     [[nodiscard]] void* ewram_alloc(int bytes);
 
     /**
-     * @brief Deallocates the space previously allocated by ewram_alloc.
-     * @param ptr Pointer to the memory to deallocate (it can be null).
+     * @brief Deallocates the space previously allocated by bn::ewram_alloc.
+     * @param ptr Pointer to the memory to deallocate.
+     *
+     * If ptr is a null pointer, the function does nothing.
+     *
+     * If ptr was not previously allocated by bn::ewram_alloc, the behavior is undefined.
      */
     void ewram_free(void* ptr);
 

@@ -162,7 +162,7 @@ void init()
         hw::sprites::hide_and_destroy(handle);
     }
 
-    sprite_affine_mats_manager::init(sizeof(data.handles), data.handles);
+    sprite_affine_mats_manager::init(data.handles);
 }
 
 int used_items_count()
@@ -598,7 +598,8 @@ void set_bg_priority(id_type id, int bg_priority)
 
     if(bg_priority != item->bg_priority())
     {
-        BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);
+        BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(),
+                  "Invalid BG priority: ", bg_priority);
 
         hw::sprites::set_bg_priority(bg_priority, item->handle);
         data.sorter.erase(*item);
@@ -620,6 +621,9 @@ void set_z_order(id_type id, int z_order)
 
     if(z_order != item->z_order())
     {
+        BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(),
+                  "Invalid z order: ", z_order);
+
         data.sorter.erase(*item);
         item->set_z_order(z_order);
         data.sorter.insert(*item);

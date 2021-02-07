@@ -21,7 +21,7 @@ affine_bg_builder& affine_bg_builder::set_priority(int priority)
 
 affine_bg_builder& affine_bg_builder::set_z_order(int z_order)
 {
-    BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid Z order: ", z_order);
+    BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
     return *this;
@@ -54,7 +54,7 @@ affine_bg_map_ptr affine_bg_builder::map() const
         return _item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has been already released");
+    BN_ASSERT(_map, "Map has already been released");
 
     return *_map;
 }
@@ -82,7 +82,7 @@ affine_bg_map_ptr affine_bg_builder::release_map()
         return _item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has been already released");
+    BN_ASSERT(_map, "Map has already been released");
 
     affine_bg_map_ptr result = move(*_map);
     _map.reset();

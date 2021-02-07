@@ -140,7 +140,7 @@ sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 
 sprite_builder& sprite_builder::set_z_order(int z_order)
 {
-    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid Z order: ", z_order);
+    BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = z_order;
     return *this;
@@ -213,7 +213,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles have been already released");
+    BN_ASSERT(_tiles, "Tiles have already been released");
 
     return *_tiles;
 }
@@ -225,7 +225,7 @@ sprite_palette_ptr sprite_builder::palette() const
         return _item->palette_item().create_palette();
     }
 
-    BN_ASSERT(_palette, "Palette has been already released");
+    BN_ASSERT(_palette, "Palette has already been released");
 
     return *_palette;
 }
@@ -269,7 +269,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
         return _item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles have been already released");
+    BN_ASSERT(_tiles, "Tiles have already been released");
 
     sprite_tiles_ptr result = move(*_tiles);
     _tiles.reset();
@@ -283,7 +283,7 @@ sprite_palette_ptr sprite_builder::release_palette()
         return _item->palette_item().create_palette();
     }
 
-    BN_ASSERT(_palette, "Palette has been already released");
+    BN_ASSERT(_palette, "Palette has already been released");
 
     sprite_palette_ptr result = move(*_palette);
     _palette.reset();

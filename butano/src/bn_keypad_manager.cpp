@@ -80,7 +80,7 @@ namespace
 
 void init(const string_view& commands)
 {
-    BN_ASSERT(commands.empty() || commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
+    BN_ASSERT(commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
 
     data.commands = commands;
     data.read_commands = ! commands.empty();

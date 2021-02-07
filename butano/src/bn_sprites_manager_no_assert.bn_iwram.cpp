@@ -5,6 +5,10 @@
 
 #include "bn_sprites_manager.h"
 
+#define BN_ASSERT(condition, ...)
+
+#define BN_ERROR(...)
+
 #include "bn_sorted_sprites.h"
 
 namespace bn::sprites_manager
@@ -94,40 +98,6 @@ bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites
     first_index_to_commit = first_index;
     last_index_to_commit = last_index;
     return rebuild_handles;
-}
-
-int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
-                          intrusive_list<sorted_sprites::layer>& layers)
-{
-    auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
-    int visible_items_count = 0;
-
-    for(sorted_sprites::layer& layer : layers)
-    {
-        for(sprites_manager_item& item : layer.items())
-        {
-            if(item.on_screen)
-            {
-                BN_ASSERT(BN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
-                           visible_items_count <= hw::sprites::count(), "Too much on screen sprites");
-
-                hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
-                item.handles_index = int8_t(visible_items_count);
-                ++visible_items_count;
-            }
-            else
-            {
-                item.handles_index = -1;
-            }
-        }
-    }
-
-    for(int index = visible_items_count; index < last_visible_items_count; ++index)
-    {
-        hw::sprites::hide_and_destroy(handles[index]);
-    }
-
-    return visible_items_count;
 }
 
 bool _update_cameras_impl(intrusive_list<sorted_sprites::layer>& layers)

@@ -86,36 +86,44 @@
     #include "bn_sstream.h"
     #include "bn_istring_base.h"
 
-    #define BN_ASSERT(condition, ...) \
-        do \
-        { \
-            if(bn::is_constant_evaluated()) \
+    #ifndef BN_ASSERT
+
+        #define BN_ASSERT(condition, ...) \
+            do \
             { \
-                assert(condition); \
-            } \
-            else \
-            { \
-                if(! (condition)) [[unlikely]] \
+                if(bn::is_constant_evaluated()) \
                 { \
-                    _bn::assert::constexpr_check(true, #condition, _bn::assert::base_name(__FILE__), __func__, \
+                    assert(condition); \
+                } \
+                else \
+                { \
+                    if(! (condition)) [[unlikely]] \
+                    { \
+                        _bn::assert::constexpr_check(true, #condition, _bn::assert::base_name(__FILE__), __func__, \
+                                __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                    } \
+                } \
+            } while(false)
+
+    #endif
+
+    #ifndef BN_ERROR
+
+        #define BN_ERROR(...) \
+            do \
+            { \
+                if(bn::is_constant_evaluated()) \
+                { \
+                    assert(false); \
+                } \
+                else \
+                { \
+                    _bn::assert::constexpr_check(true, "", _bn::assert::base_name(__FILE__), __func__, \
                             __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                 } \
-            } \
-        } while(false)
+            } while(false)
 
-    #define BN_ERROR(...) \
-        do \
-        { \
-            if(bn::is_constant_evaluated()) \
-            { \
-                assert(false); \
-            } \
-            else \
-            { \
-                _bn::assert::constexpr_check(true, "", _bn::assert::base_name(__FILE__), __func__, \
-                        __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
-            } \
-        } while(false)
+    #endif
 
     /// @cond DO_NOT_DOCUMENT
 
@@ -169,23 +177,31 @@
 
     /// @endcond
 #else
-    #define BN_ASSERT(condition, ...) \
-        do \
-        { \
-            if(bn::is_constant_evaluated()) \
-            { \
-                assert(condition); \
-            } \
-        } while(false)
+    #ifndef BN_ASSERT
 
-    #define BN_ERROR(...) \
-        do \
-        { \
-            if(bn::is_constant_evaluated()) \
+        #define BN_ASSERT(condition, ...) \
+            do \
             { \
-                assert(false); \
-            } \
-        } while(false)
+                if(bn::is_constant_evaluated()) \
+                { \
+                    assert(condition); \
+                } \
+            } while(false)
+
+    #endif
+
+    #ifndef BN_ERROR
+
+        #define BN_ERROR(...) \
+            do \
+            { \
+                if(bn::is_constant_evaluated()) \
+                { \
+                    assert(false); \
+                } \
+            } while(false)
+
+    #endif
 #endif
 
 #endif

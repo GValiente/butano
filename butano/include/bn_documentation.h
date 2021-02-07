@@ -1381,7 +1381,8 @@
  *
  * @section changelog_6_1_0 6.1.0 (next release)
  *
- * Some internal asserts removed.
+ * * @ref BN_ASSERT and @ref BN_ERROR can be modified or disabled for specific code sections.
+ * * Some internal asserts removed.
  *
  *
  * @section changelog_6_0_0 6.0.0

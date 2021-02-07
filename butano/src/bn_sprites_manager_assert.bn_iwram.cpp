@@ -5,6 +5,14 @@
 
 #include "bn_sprites_manager.h"
 
+#include "bn_config_sprites.h"
+
+#if BN_CFG_SPRITES_MAX_ITEMS <= 128
+    #define BN_ASSERT(condition, ...)
+
+    #define BN_ERROR(...)
+#endif
+
 #include "bn_sorted_sprites.h"
 
 namespace bn::sprites_manager
@@ -22,8 +30,7 @@ int _rebuild_handles_impl(int last_visible_items_count, void* hw_handles,
         {
             if(item.on_screen)
             {
-                BN_ASSERT(BN_CFG_SPRITES_MAX_ITEMS <= hw::sprites::count() ||
-                          visible_items_count <= hw::sprites::count(), "Too much on screen sprites");
+                BN_ASSERT(visible_items_count <= hw::sprites::count(), "Too much on screen sprites");
 
                 hw::sprites::copy_handle(item.handle, handles[visible_items_count]);
                 item.handles_index = int8_t(visible_items_count);

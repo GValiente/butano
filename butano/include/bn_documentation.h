@@ -1295,9 +1295,14 @@
  *
  * To place data in EWRAM, you can:
  * * Allocate memory in the heap, since it is in EWRAM.
- * * Declare static data with the BN_DATA_EWRAM macro:
+ * * Declare static data with the `BN_DATA_EWRAM` macro:
  * @code{.cpp}
  * BN_DATA_EWRAM static_data data;
+ * @endcode
+ *
+ * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `const` qualifier:
+ * @code{.cpp}
+ * const const_data data;
  * @endcode
  *
  *
@@ -1384,6 +1389,7 @@
  * * @ref BN_ASSERT and @ref BN_ERROR can be modified or disabled for specific code sections.
  * * Sprites IWRAM usage reduced.
  * * Some internal asserts removed.
+ * * Documentation explains how to place data in ROM.
  *
  *
  * @section changelog_6_0_0 6.0.0

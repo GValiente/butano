@@ -1287,11 +1287,11 @@
  *
  * @subsection faq_memory_types Why I run out of memory so often?
  *
- * The GBA provides two memory banks:
+ * Besides VRAM and such, the GBA provides two memory banks:
  * * IWRAM: 32KB fast RAM.
  * * EWRAM: 256KB slow RAM.
  *
- * By default data is allocated in IWRAM, so it is normal to run out of memory if you don't use EWRAM.
+ * Data is allocated in IWRAM by default, so it is common to run out of memory if you don't use EWRAM.
  *
  * To place data in EWRAM, you can:
  * * Allocate memory in the heap, since it is in EWRAM.

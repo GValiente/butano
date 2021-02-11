@@ -351,6 +351,7 @@ class SpriteTilesItem:
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
             header_file.write('#include "bn_sprite_tiles_item.h"' + '\n')
+            header_file.write('#include "bn_sprite_shape_size.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
             header_file.write('namespace bn::sprite_tiles_items' + '\n')
@@ -358,7 +359,11 @@ class SpriteTilesItem:
             header_file.write('    constexpr const sprite_tiles_item ' + name + '(span<const tile>(' +
                               name + '_bn_graphicsTiles, ' + str(tiles_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ', ' +
-                              str(self.__graphics) + ');\n')
+                              str(self.__graphics) + ');' + '\n')
+            header_file.write('\n')
+            header_file.write('    constexpr const sprite_shape_size ' + name +
+                              '_shape_size(sprite_shape::' + self.__shape + ', ' +
+                              'sprite_size::' + self.__size + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')

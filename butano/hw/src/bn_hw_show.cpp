@@ -156,7 +156,8 @@ namespace
             constexpr const int index_margin = 4;
             constexpr const int max_visible_entries = 8;
             int current_index = 0;
-            int init_x, init_y;
+            int init_x;
+            int init_y;
             tte_get_pos(&init_x, &init_y);
 
             while(true)
@@ -233,7 +234,8 @@ namespace
                 for(int index = current_index, limit = min(current_index + max_visible_entries, num_entries);
                     index < limit; ++index)
                 {
-                    int x, y;
+                    int x;
+                    int y;
                     tte_get_pos(&x, &y);
 
                     const entry& entry = entries[index];

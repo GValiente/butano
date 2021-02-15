@@ -1558,6 +1558,8 @@ void commit_big_maps()
 
 void stop()
 {
+    data.rebuild_handles = false;
+    data.commit = false;
     hw::bgs::stop();
 }
 

@@ -14,6 +14,8 @@ namespace bn::hdma_manager
 
     void disable();
 
+    void force_stop();
+
     [[nodiscard]] bool low_priority_running();
 
     void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref);

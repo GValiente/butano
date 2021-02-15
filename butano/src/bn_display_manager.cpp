@@ -867,6 +867,10 @@ void wake_up()
 
 void stop()
 {
+    data.update_blending_mode = false;
+    data.update_blending_layers = false;
+    data.update_windows_visible_bgs = false;
+    data.commit = false;
     hw::display::stop();
 }
 

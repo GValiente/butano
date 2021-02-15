@@ -62,6 +62,8 @@ void commit()
 
 void stop()
 {
+    data.sprite_palettes_bank.stop();
+    data.bg_palettes_bank.stop();
     *hw::palettes::bg_transparent_color_register() = 0;
 }
 

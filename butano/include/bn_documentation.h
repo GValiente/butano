@@ -1390,6 +1390,7 @@
  * * @ref BN_ASSERT and @ref BN_ERROR can be modified or disabled for specific code sections.
  * * Sprites IWRAM usage reduced.
  * * Some internal asserts removed.
+ * * Profiler screen fixed.
  * * Documentation explains how to place data in ROM.
  *
  *

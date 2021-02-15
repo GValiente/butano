@@ -176,6 +176,11 @@ public:
 
     void fill_hblank_effect_colors(const color* source_colors_ptr, uint16_t* dest_ptr) const;
 
+    void stop()
+    {
+        _update = false;
+    }
+
 private:
     class palette
     {

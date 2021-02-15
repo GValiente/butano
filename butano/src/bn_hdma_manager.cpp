@@ -60,6 +60,14 @@ namespace
             _updated = true;
         }
 
+        void force_stop()
+        {
+            _states[0].elements = 0;
+            _states[1].elements = 0;
+            _updated = false;
+            disable();
+        }
+
         void update()
         {
             if(_updated)
@@ -143,6 +151,12 @@ void disable()
 {
     data.low_priority_entry.disable();
     data.high_priority_entry.disable();
+}
+
+void force_stop()
+{
+    data.low_priority_entry.force_stop();
+    data.high_priority_entry.force_stop();
 }
 
 bool low_priority_running()

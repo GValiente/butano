@@ -104,15 +104,13 @@ namespace
         audio_manager::commit();
         audio_manager::enable_vblank_handler();
 
+        hdma_manager::force_stop();
+
         palettes_manager::stop();
         bgs_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
         gpio_manager::stop();
-
-        hdma_manager::low_priority_stop();
-        hdma_manager::high_priority_stop();
-        hdma_manager::update();
 
         disable(disable_audio);
     }

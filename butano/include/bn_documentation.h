@@ -1384,7 +1384,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_1_0 6.1.0 (next release)
+ * @section changelog_6_1_0 6.1.0
  *
  * * Sprite tiles generation outputs sprite shape and size.
  * * @ref BN_ASSERT and @ref BN_ERROR can be modified or disabled for specific code sections.

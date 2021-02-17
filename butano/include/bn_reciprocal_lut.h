@@ -24,13 +24,13 @@ namespace bn
  *
  * @ingroup math
  */
-constexpr const array<fixed_t<16>, 1025> reciprocal_lut = []{
-    array<fixed_t<16>, 1025> result;
-    int one = fixed_t<16>(1).data();
+constexpr const array<fixed_t<20>, 1025> reciprocal_lut = []{
+    array<fixed_t<20>, 1025> result;
+    int one = fixed_t<20>(1).data();
 
     for(int index = 1; index < 1025; ++index)
     {
-        result[index] = fixed_t<16>::from_data(one / index);
+        result[index] = fixed_t<20>::from_data(one / index);
     }
 
     return result;

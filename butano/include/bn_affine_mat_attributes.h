@@ -323,7 +323,7 @@ private:
 
         if(scale_8_data < reciprocal_lut.size())
         {
-            return uint16_t(reciprocal_lut[scale_8_data].data());
+            return uint16_t(reciprocal_lut[scale_8_data].data() >> 4);
         }
 
         return uint16_t(fixed_t<16>(1).data() / scale_8_data);

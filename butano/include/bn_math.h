@@ -266,7 +266,7 @@ namespace bn
      *
      * @ingroup math
      */
-    [[nodiscard]] constexpr fixed_t<16> lut_reciprocal(int lut_value)
+    [[nodiscard]] constexpr fixed_t<20> lut_reciprocal(int lut_value)
     {
         BN_ASSERT(lut_value >= 1 && lut_value <= 1024, "Value must be in the range [1, 1024]: ", lut_value);
 

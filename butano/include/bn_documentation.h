@@ -1384,6 +1384,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_2_0 6.2.0 (next release)
+ *
+ * bn::sprite_font usability improved.
+ *
+ *
  * @section changelog_6_1_0 6.1.0
  *
  * * Sprite tiles generation outputs sprite shape and size.

@@ -44,7 +44,7 @@ namespace
         }
         else
         {
-            BN_ASSERT(! output_sprites.full(), "No more output sprites available");
+            BN_ASSERT(! output_sprites.full(), "output_sprites vector is full, can't hold more sprites");
 
             tiles_ptr = sprite_tiles_ptr::allocate(max_tiles_per_sprite, bpp_mode::BPP_4);
         }
@@ -188,7 +188,7 @@ namespace
             }
             else
             {
-                BN_ASSERT(! _output_sprites.full(), "No more output sprites available");
+                BN_ASSERT(! _output_sprites.full(), "output_sprites vector is full, can't hold more sprites");
             }
 
             const sprite_item& item = _generator.font().item();
@@ -284,7 +284,7 @@ namespace
                 }
                 else
                 {
-                    BN_ASSERT(! _output_sprites.full(), "No more output sprites available");
+                    BN_ASSERT(! _output_sprites.full(), "output_sprites vector is full, can't hold more sprites");
                 }
 
                 const sprite_item& item = _generator.font().item();

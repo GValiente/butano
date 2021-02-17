@@ -44,6 +44,15 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
+     */
+    constexpr explicit sprite_font(const sprite_item& item) :
+        sprite_font(item, span<const string_view>(), span<const int8_t>(), 0)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param item sprite_item used to generate text sprites.
      * @param utf8_characters_ref Reference to a list of supported UTF-8 characters.
      *
      * They should appear in the tile sets referenced by item just after ASCII characters.

@@ -105,13 +105,13 @@ namespace
 
         for(int index = 0; index < bn::display::height(); ++index)
         {
-            int reciprocal = bn::reciprocal_lut[index].data() >> 8;
+            int reciprocal = bn::reciprocal_lut[index].data();
             int lam = camera_y * reciprocal >> 12;
             int lcf = lam * camera_cos >> 8;
             int lsf = lam * camera_sin >> 8;
 
-            pa_values[index] = lcf >> 4;
-            pc_values[index] = lsf >> 4;
+            pa_values[index] = int16_t(lcf >> 4);
+            pc_values[index] = int16_t(lsf >> 4);
 
             int lxr = (bn::display::width() / 2) * lcf;
             int lyr = y_shift * lsf;

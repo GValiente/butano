@@ -323,12 +323,10 @@ private:
 
         if(scale_8_data < reciprocal_lut.size())
         {
-            fixed reciprocal = reciprocal_lut[scale_8_data];
-            return uint16_t(reciprocal.data() >> 8);
+            return uint16_t(reciprocal_lut[scale_8_data].data());
         }
 
-        int one = fixed_t<8>(1).data() * fixed_t<8>::scale();
-        return uint16_t(one / scale_8_data);
+        return uint16_t(fixed_t<16>(1).data() / scale_8_data);
     }
 
     constexpr void _update_rotation_angle()

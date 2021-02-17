@@ -1386,7 +1386,8 @@
  *
  * @section changelog_6_2_0 6.2.0 (next release)
  *
- * bn::sprite_font usability improved.
+ * * bn::sprite_font usability improved.
+ * * bn::reciprocal_lut and bn::lut_reciprocal fixed.
  *
  *
  * @section changelog_6_1_0 6.1.0

@@ -64,13 +64,22 @@ namespace bn::core
 
 namespace
 {
+    class ticks
+    {
+
+    public:
+        int cpu_usage_ticks = 0;
+        int vblank_usage_ticks = 0;
+    };
+
     class static_data
     {
 
     public:
         timer cpu_usage_timer;
-        int last_cpu_usage_ticks = 0;
-        int last_vblank_usage_ticks = 0;
+        ticks last_ticks;
+        int skip_frames = 0;
+        int last_update_frames = 1;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -113,6 +122,110 @@ namespace
         gpio_manager::stop();
 
         disable(disable_audio);
+    }
+
+    [[nodiscard]] ticks update_impl()
+    {
+        ticks result;
+
+        BN_PROFILER_ENGINE_START("eng_cameras_update");
+        cameras_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_sprites_update");
+        sprites_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_spr_tiles_update");
+        sprite_tiles_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_bgs_update");
+        bgs_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_bg_blocks_update");
+        bg_blocks_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_palettes_update");
+        palettes_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_display_update");
+        display_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_hblank_fx_update");
+        hblank_effects_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_hdma_update");
+        hdma_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_cpu_usage");
+        result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+        BN_PROFILER_ENGINE_STOP();
+
+        audio_manager::disable_vblank_handler();
+        hw::core::wait_for_vblank();
+
+        BN_PROFILER_ENGINE_START("eng_cpu_usage");
+        data.cpu_usage_timer.restart();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
+        hblank_effects_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_display_commit");
+        display_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_sprites_commit");
+        sprites_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_bgs_commit");
+        bgs_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_palettes_commit");
+        palettes_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
+        sprite_tiles_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_big_maps_commit");
+        bgs_manager::commit_big_maps();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
+        bg_blocks_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_cpu_usage");
+        result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_audio_commit");
+        audio_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        audio_manager::enable_vblank_handler();
+
+        BN_PROFILER_ENGINE_START("eng_gpio_commit");
+        gpio_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_keypad");
+        keypad_manager::update();
+        BN_PROFILER_ENGINE_STOP();
+
+        return result;
     }
 }
 
@@ -169,104 +282,41 @@ void init(const string_view& keypad_commands)
     BN_PROFILER_RESET();
 }
 
+int skip_frames()
+{
+    return data.skip_frames;
+}
+
+void set_skip_frames(int skip_frames)
+{
+    BN_ASSERT(skip_frames >= 0, "Invalid skip frames: ", skip_frames);
+
+    data.skip_frames = skip_frames;
+}
+
 void update()
 {
-    BN_PROFILER_ENGINE_START("eng_cameras_update");
-    cameras_manager::update();
-    BN_PROFILER_ENGINE_STOP();
+    int update_frames = data.skip_frames + 1;
+    data.last_update_frames = update_frames;
 
-    BN_PROFILER_ENGINE_START("eng_sprites_update");
-    sprites_manager::update();
-    BN_PROFILER_ENGINE_STOP();
+    if(update_frames == 1)
+    {
+        data.last_ticks = update_impl();
+    }
+    else
+    {
+        ticks total_ticks;
 
-    BN_PROFILER_ENGINE_START("eng_spr_tiles_update");
-    sprite_tiles_manager::update();
-    BN_PROFILER_ENGINE_STOP();
+        for(int frame_index = 0; frame_index < update_frames; ++frame_index)
+        {
+            ticks frame_ticks = update_impl();
+            frame_index += frame_ticks.cpu_usage_ticks / timers::ticks_per_frame();
+            total_ticks.cpu_usage_ticks += frame_ticks.cpu_usage_ticks;
+            total_ticks.vblank_usage_ticks += frame_ticks.vblank_usage_ticks;
+        }
 
-    BN_PROFILER_ENGINE_START("eng_bgs_update");
-    bgs_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_bg_blocks_update");
-    bg_blocks_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_palettes_update");
-    palettes_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_display_update");
-    display_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_hblank_fx_update");
-    hblank_effects_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_hdma_update");
-    hdma_manager::update();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.last_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-    BN_PROFILER_ENGINE_STOP();
-
-    audio_manager::disable_vblank_handler();
-    hw::core::wait_for_vblank();
-
-    BN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.cpu_usage_timer.restart();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
-    hblank_effects_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_display_commit");
-    display_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_sprites_commit");
-    sprites_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_bgs_commit");
-    bgs_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_palettes_commit");
-    palettes_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
-    sprite_tiles_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_big_maps_commit");
-    bgs_manager::commit_big_maps();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
-    bg_blocks_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_cpu_usage");
-    data.last_vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_audio_commit");
-    audio_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    audio_manager::enable_vblank_handler();
-
-    BN_PROFILER_ENGINE_START("eng_gpio_commit");
-    gpio_manager::commit();
-    BN_PROFILER_ENGINE_STOP();
-
-    BN_PROFILER_ENGINE_START("eng_keypad");
-    keypad_manager::update();
-    BN_PROFILER_ENGINE_STOP();
+        data.last_ticks = total_ticks;
+    }
 }
 
 void sleep(keypad::key_type wake_up_key)
@@ -357,12 +407,12 @@ fixed current_cpu_usage()
 
 fixed last_cpu_usage()
 {
-    return fixed(data.last_cpu_usage_ticks) / timers::ticks_per_frame();
+    return fixed(data.last_ticks.cpu_usage_ticks) / (timers::ticks_per_frame() * data.last_update_frames);
 }
 
 fixed last_vblank_usage()
 {
-    return fixed(data.last_vblank_usage_ticks) / timers::ticks_per_vblank();
+    return fixed(data.last_ticks.vblank_usage_ticks) / (timers::ticks_per_vblank() * data.last_update_frames);
 }
 
 }

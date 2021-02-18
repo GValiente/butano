@@ -1386,6 +1386,7 @@
  *
  * @section changelog_6_2_0 6.2.0 (next release)
  *
+ * * bn::core::skip_frames and bn::core::set_skip_frames added.
  * * bn::sprite_font usability improved.
  * * bn::reciprocal_lut and bn::lut_reciprocal fixed.
  *

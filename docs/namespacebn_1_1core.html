@@ -73,6 +73,14 @@
               <span class="m-doc-wrap-bumper">void <a href="#a5af341bebc6d65fcf821c8109c3b474c" class="m-doc">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span>
             </dt>
             <dd>This function must be called before using butano, and it must be called only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac8686039150e9c214ff65d1d5cfbdedf" class="m-doc">skip_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the number of frames to skip.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4f662445a2e8ff6d2b370cb0a27b2ff0" class="m-doc">set_skip_frames</a>(</span><span class="m-doc-wrap">int skip_frames)</span>
+            </dt>
+            <dd>Sets the number of frames to skip.</dd>
             <dt id="aa849bfe482eb6964e3a29f9eba78f7b6">
               <span class="m-doc-wrap-bumper">void <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
@@ -122,6 +130,20 @@
               </tbody>
             </table>
 <p>Instead of reading the keypad of the GBA, these keypad commands are replayed.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac8686039150e9c214ff65d1d5cfbdedf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac8686039150e9c214ff65d1d5cfbdedf" class="m-doc-self">skip_frames</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the number of frames to skip.</p>
+<p>0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4f662445a2e8ff6d2b370cb0a27b2ff0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4f662445a2e8ff6d2b370cb0a27b2ff0" class="m-doc-self">set_skip_frames</a>(</span><span class="m-doc-wrap">int skip_frames)</span></span>
+            </h3>
+            <p>Sets the number of frames to skip.</p>
+<p>0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.</p>
           </div></section>
           <section class="m-doc-details" id="adab0aa2898c9c07fe9e8cfb75ab820ec"><div>
             <h3>

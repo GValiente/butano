@@ -47,6 +47,20 @@ namespace bn::core
     void init(const string_view& keypad_commands);
 
     /**
+     * @brief Returns the number of frames to skip.
+     *
+     * 0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.
+     */
+    [[nodiscard]] int skip_frames();
+
+    /**
+     * @brief Sets the number of frames to skip.
+     *
+     * 0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.
+     */
+    void set_skip_frames(int skip_frames);
+
+    /**
      * @brief Updates the screen and all of butano's subsystems.
      */
     void update();

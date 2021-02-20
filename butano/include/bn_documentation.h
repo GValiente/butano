@@ -1386,7 +1386,8 @@
  *
  * @section changelog_6_3_0 6.3.0 (next release)
  *
- * @ref BN_VERSION_MAJOR, @ref BN_VERSION_MINOR and @ref BN_VERSION_PATCH added.
+ * * @ref BN_VERSION_MAJOR, @ref BN_VERSION_MINOR and @ref BN_VERSION_PATCH added.
+ * * bn::core::current_cpu_usage, bn::core::last_cpu_usage and bn::core::last_vblank_usage accuracy improved.
  *
  *
  * @section changelog_6_2_0 6.2.0

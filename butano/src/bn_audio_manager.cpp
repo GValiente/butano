@@ -7,8 +7,6 @@
 
 #include "bn_vector.h"
 #include "bn_config_audio.h"
-#include "bn_hdma_manager.h"
-#include "bn_link_manager.h"
 #include "../hw/include/bn_hw_audio.h"
 
 #include "bn_music.cpp.h"
@@ -191,9 +189,9 @@ namespace
     }
 }
 
-void init()
+void init(func_type hp_vblank_function, func_type lp_vblank_function)
 {
-    hw::audio::init(hdma_manager::commit, link_manager::commit);
+    hw::audio::init(hp_vblank_function, lp_vblank_function);
 }
 
 void enable()

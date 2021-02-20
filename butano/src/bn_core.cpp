@@ -80,9 +80,21 @@ namespace
         ticks last_ticks;
         int skip_frames = 0;
         int last_update_frames = 1;
+        bool restart_cpu_usage_timer = false;
     };
 
     BN_DATA_EWRAM static_data data;
+
+    void hp_vblank_function()
+    {
+        if(data.restart_cpu_usage_timer)
+        {
+            data.cpu_usage_timer.restart();
+            data.restart_cpu_usage_timer = false;
+        }
+
+        hdma_manager::commit();
+    }
 
     void enable()
     {
@@ -164,16 +176,12 @@ namespace
         hdma_manager::update();
         BN_PROFILER_ENGINE_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_cpu_usage");
-        result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-        BN_PROFILER_ENGINE_STOP();
-
         audio_manager::disable_vblank_handler();
-        hw::core::wait_for_vblank();
 
-        BN_PROFILER_ENGINE_START("eng_cpu_usage");
-        data.cpu_usage_timer.restart();
-        BN_PROFILER_ENGINE_STOP();
+        result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+        data.restart_cpu_usage_timer = true;
+
+        hw::core::wait_for_vblank();
 
         BN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
         hblank_effects_manager::commit();
@@ -250,7 +258,7 @@ void init(const string_view& keypad_commands)
     hblank_effects_manager::init();
 
     // Init audio system:
-    audio_manager::init();
+    audio_manager::init(hp_vblank_function, link_manager::commit);
 
     // Init link system:
     link_manager::init();

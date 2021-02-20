@@ -1384,7 +1384,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_2_0 6.2.0 (next release)
+ * @section changelog_6_2_0 6.2.0
  *
  * * bn::core::skip_frames and bn::core::set_skip_frames added.
  * * bn::sprite_font usability improved.

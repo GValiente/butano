@@ -16,6 +16,39 @@
 #include "bn_common.h"
 
 /**
+ * @def BN_VERSION_MAJOR
+ *
+ * Specifies the current major version of Butano.
+ *
+ * @ingroup other
+ */
+#ifndef BN_VERSION_MAJOR
+    #define BN_VERSION_MAJOR 6
+#endif
+
+/**
+ * @def BN_VERSION_MINOR
+ *
+ * Specifies the current minor version of Butano.
+ *
+ * @ingroup other
+ */
+#ifndef BN_VERSION_MINOR
+    #define BN_VERSION_MINOR 2
+#endif
+
+/**
+ * @def BN_VERSION_PATCH
+ *
+ * Specifies the current patch version of Butano.
+ *
+ * @ingroup other
+ */
+#ifndef BN_VERSION_PATCH
+    #define BN_VERSION_PATCH 0
+#endif
+
+/**
  * @brief Current version of Butano.
  *
  * @ingroup other
@@ -23,27 +56,27 @@
 namespace bn::version
 {
     /**
-     * @brief Returns the current major version.
+     * @brief Returns the current major version of Butano.
      */
     [[nodiscard]] constexpr int major()
     {
-        return 6;
+        return BN_VERSION_MAJOR;
     }
 
     /**
-     * @brief Returns the current minor version.
+     * @brief Returns the current minor version of Butano.
      */
     [[nodiscard]] constexpr int minor()
     {
-        return 2;
+        return BN_VERSION_MINOR;
     }
 
     /**
-     * @brief Returns the current patch version.
+     * @brief Returns the current patch version of Butano.
      */
     [[nodiscard]] constexpr int patch()
     {
-        return 0;
+        return BN_VERSION_PATCH;
     }
 }
 

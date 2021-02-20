@@ -146,7 +146,7 @@ def process(audio_folder_paths, build_folder_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='butano audio tool.')
+    parser = argparse.ArgumentParser(description='Butano audio tool.')
     parser.add_argument('--audio', required=True, help='audio folder paths')
     parser.add_argument('--build', required=True, help='build folder path')
 

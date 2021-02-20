@@ -31,7 +31,7 @@ public:
         bn::unique_ptr<test_data> expected = bn::make_unique<test_data>();
         bn::istring_base begin_istring(expected->begin._data);
         bn::ostringstream begin_stream(begin_istring);
-        begin_stream.append("butano SRAM test");
+        begin_stream.append("SRAM test");
 
         bn::istring_base end_istring(expected->end._data);
         bn::ostringstream end_stream(end_istring);

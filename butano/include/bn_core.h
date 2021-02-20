@@ -34,12 +34,12 @@ namespace bn::keypad
 namespace bn::core
 {
     /**
-     * @brief This function must be called before using butano, and it must be called only once.
+     * @brief This function must be called before using Butano, and it must be called only once.
      */
     void init();
 
     /**
-     * @brief This function must be called before using butano, and it must be called only once.
+     * @brief This function must be called before using Butano, and it must be called only once.
      * @param keypad_commands Keypad commands recorded with the keypad logger.
      *
      * Instead of reading the keypad of the GBA, these keypad commands are replayed.
@@ -61,7 +61,7 @@ namespace bn::core
     void set_skip_frames(int skip_frames);
 
     /**
-     * @brief Updates the screen and all of butano's subsystems.
+     * @brief Updates the screen and all of Butano's subsystems.
      */
     void update();
 

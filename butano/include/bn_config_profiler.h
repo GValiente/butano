@@ -29,7 +29,7 @@
 /**
  * @def BN_CFG_PROFILER_LOG_ENGINE
  *
- * Specifies if butano subsystems must be profiled or not.
+ * Specifies if Butano subsystems must be profiled or not.
  *
  * @ingroup profiler
  */

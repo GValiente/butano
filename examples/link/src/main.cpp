@@ -18,14 +18,6 @@
 #include "info.h"
 #include "variable_8x16_sprite_font.h"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wvolatile"
-#pragma GCC diagnostic ignored "-Wpedantic"
-
-#include "../../butano/hw/3rd_party/gba-link-connection/include/LinkConnection.h"
-
-#pragma GCC diagnostic pop
-
 namespace
 {
     union direction

@@ -1194,7 +1194,7 @@ def process(graphics_folder_paths, build_folder_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='butano graphics tool.')
+    parser = argparse.ArgumentParser(description='Butano graphics tool.')
     parser.add_argument('--graphics', required=True, help='graphics folder paths')
     parser.add_argument('--build', required=True, help='build folder path')
 

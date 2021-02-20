@@ -16,7 +16,7 @@
 #include "bn_common.h"
 
 /**
- * @brief Current version of butano.
+ * @brief Current version of Butano.
  *
  * @ingroup other
  */

@@ -54,8 +54,6 @@ namespace bn::audio_manager
 
     void commit();
 
-    void enable_vblank_handler();
-
     void stop();
 }
 

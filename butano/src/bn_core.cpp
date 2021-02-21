@@ -123,7 +123,6 @@ namespace
         audio_manager::disable_vblank_handler();
         hw::core::wait_for_vblank();
         audio_manager::commit();
-        audio_manager::enable_vblank_handler();
 
         hdma_manager::force_stop();
 
@@ -222,8 +221,6 @@ namespace
         BN_PROFILER_ENGINE_START("eng_audio_commit");
         audio_manager::commit();
         BN_PROFILER_ENGINE_STOP();
-
-        audio_manager::enable_vblank_handler();
 
         BN_PROFILER_ENGINE_START("eng_gpio_commit");
         gpio_manager::commit();

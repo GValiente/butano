@@ -327,10 +327,7 @@ void commit()
     {
         data.music_position = hw::audio::music_position();
     }
-}
 
-void enable_vblank_handler()
-{
     hw::audio::enable_vblank_handler();
 }
 

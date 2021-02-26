@@ -81,6 +81,26 @@ namespace
         return width != height || (width != 16 && width != 32 && width != 64 && width != 128);
     }
 
+    [[nodiscard]] constexpr int _regular_map_blocks_count(int width, int height)
+    {
+        if(_big_regular_map(width, height))
+        {
+            return _ceil_half_words_to_blocks(32 * 32);
+        }
+
+        return _ceil_half_words_to_blocks(width * height);
+    }
+
+    [[nodiscard]] constexpr int _affine_map_blocks_count(int width, int height)
+    {
+        if(_big_affine_map(width, height))
+        {
+            return _ceil_half_words_to_blocks((32 * 32) / 2);
+        }
+
+        return _ceil_half_words_to_blocks((width * height) / 2);
+    }
+
 
     constexpr const int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr const int max_list_items = max_items + 1;
@@ -353,21 +373,10 @@ namespace
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count;
-
-            if(_big_regular_map(width, height))
-            {
-                blocks_count = _ceil_half_words_to_blocks(32 * 32);
-            }
-            else
-            {
-                blocks_count = _ceil_half_words_to_blocks(width * height);
-            }
-
-            bpp_mode palette_bpp = palette.bpp();
+            int blocks_count = _regular_map_blocks_count(width, height);
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
-                        palette_bpp, compression, false };
+                        palette.bpp(), compression, false };
         }
 
         static create_data from_affine_map(
@@ -376,21 +385,10 @@ namespace
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count;
-
-            if(_big_affine_map(width, height))
-            {
-                blocks_count = _ceil_half_words_to_blocks((32 * 32) / 2);
-            }
-            else
-            {
-                blocks_count = _ceil_half_words_to_blocks((width * height) / 2);
-            }
-
-            bpp_mode palette_bpp = palette.bpp();
+            int blocks_count = _affine_map_blocks_count(width, height);
 
             return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles),
-                        move(palette), palette_bpp, compression, true };
+                        move(palette), palette.bpp(), compression, true };
         }
     };
 
@@ -1285,13 +1283,15 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
                 log_status();
 
                 BN_ERROR("Regular BG tiles create failed:",
-                          "\n\tTiles data: ", tiles_data,
-                          "\n\tTiles count: ", tiles_count,
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tTiles data: ", tiles_data,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Regular BG tiles create failed:",
-                          "\n\tTiles data: ", tiles_data,
-                          "\n\tTiles count: ", tiles_count);
+                         "\n\tTiles data: ", tiles_data,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1336,13 +1336,15 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
                 log_status();
 
                 BN_ERROR("Affine BG tiles create failed:",
-                          "\n\tTiles data: ", tiles_data,
-                          "\n\tTiles count: ", tiles_count,
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tTiles data: ", tiles_data,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Affine BG tiles create failed:",
-                          "\n\tTiles data: ", tiles_data,
-                          "\n\tTiles count: ", tiles_count);
+                         "\n\tTiles data: ", tiles_data,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1391,15 +1393,17 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
                 log_status();
 
                 BN_ERROR("Regular BG map create failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Regular BG map create failed:",
                          "\n\tMap data: ", data_ptr,
                          "\n\tMap width: ", dimensions.width(),
-                 "\n\tMap height: ", dimensions.height());
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()));
             #endif
         }
     }
@@ -1447,15 +1451,17 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
                 log_status();
 
                 BN_ERROR("Affine BG map create failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Affine BG map create failed:",
                          "\n\tMap data: ", data_ptr,
                          "\n\tMap width: ", dimensions.width(),
-                         "\n\tMap height: ", dimensions.height());
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()));
             #endif
         }
     }
@@ -1497,13 +1503,15 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
                 log_status();
 
                 BN_ERROR("Regular BG tiles create new failed:",
-                          "\n\tTiles data: ", data_ptr,
-                          "\n\tTiles count: ", tiles_count,
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tTiles data: ", data_ptr,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Regular BG tiles create new failed:",
-                          "\n\tTiles data: ", data_ptr,
-                          "\n\tTiles count: ", tiles_count);
+                         "\n\tTiles data: ", data_ptr,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1544,13 +1552,15 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
                 log_status();
 
                 BN_ERROR("Affine BG tiles create new failed:",
-                          "\n\tTiles data: ", data_ptr,
-                          "\n\tTiles count: ", tiles_count,
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tTiles data: ", data_ptr,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Affine BG tiles create new failed:",
-                          "\n\tTiles data: ", data_ptr,
-                          "\n\tTiles count: ", tiles_count);
+                         "\n\tTiles data: ", data_ptr,
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1594,15 +1604,17 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
                 log_status();
 
                 BN_ERROR("Regular BG map create new failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Regular BG map create new failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height());
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()));
             #endif
         }
     }
@@ -1645,15 +1657,17 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
                 log_status();
 
                 BN_ERROR("Affine BG map create new failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Affine BG map create new failed:",
-                          "\n\tMap data: ", data_ptr,
-                          "\n\tMap width: ", dimensions.width(),
-                          "\n\tMap height: ", dimensions.height());
+                         "\n\tMap data: ", data_ptr,
+                         "\n\tMap width: ", dimensions.width(),
+                         "\n\tMap height: ", dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()));
             #endif
         }
     }
@@ -1688,10 +1702,14 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
             #if BN_CFG_LOG_ENABLED
                 log_status();
 
-                BN_ERROR("Regular BG tiles allocate failed. Tiles count: ", tiles_count,
-                          "\n\nBG blocks manager status has been logged.");
+                BN_ERROR("Regular BG tiles allocate failed:"
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                         "\n\nBG blocks manager status has been logged.");
             #else
-                BN_ERROR("Regular BG tiles allocate failed. Tiles count: ", tiles_count);
+                BN_ERROR("Regular BG tiles allocate failed:"
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1725,10 +1743,14 @@ int allocate_affine_tiles(int tiles_count, bool optional)
             #if BN_CFG_LOG_ENABLED
                 log_status();
 
-                BN_ERROR("Affine BG tiles allocate failed. Tiles count: ", tiles_count,
+                BN_ERROR("Affine BG tiles allocate failed:"
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
                          "\n\nBG blocks manager status has been logged.");
             #else
-                BN_ERROR("Affine BG tiles allocate failed. Tiles count: ", tiles_count);
+                BN_ERROR("Affine BG tiles allocate failed:"
+                         "\n\tTiles count: ", tiles_count,
+                         "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words));
             #endif
         }
     }
@@ -1768,13 +1790,15 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
                 log_status();
 
                 BN_ERROR("Regular BG map allocate failed:",
-                          "\n\tMap width: ", map_dimensions.width(),
-                          "\n\tMap height: ", map_dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap width: ", map_dimensions.width(),
+                         "\n\tMap height: ", map_dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Regular BG map allocate failed:",
-                          "\n\tMap width: ", map_dimensions.width(),
-                          "\n\tMap height: ", map_dimensions.height());
+                         "\n\tMap width: ", map_dimensions.width(),
+                         "\n\tMap height: ", map_dimensions.height(),
+                         "\n\tBlocks count: ", _regular_map_blocks_count(map_dimensions.width(), map_dimensions.height()));
             #endif
         }
     }
@@ -1814,13 +1838,15 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
                 log_status();
 
                 BN_ERROR("Affine BG map allocate failed:",
-                          "\n\tMap width: ", map_dimensions.width(),
-                          "\n\tMap height: ", map_dimensions.height(),
-                          "\n\nBG blocks manager status has been logged.");
+                         "\n\tMap width: ", map_dimensions.width(),
+                         "\n\tMap height: ", map_dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
+                         "\n\nBG blocks manager status has been logged.");
             #else
                 BN_ERROR("Affine BG map allocate failed:",
-                          "\n\tMap width: ", map_dimensions.width(),
-                          "\n\tMap height: ", map_dimensions.height());
+                         "\n\tMap width: ", map_dimensions.width(),
+                         "\n\tMap height: ", map_dimensions.height(),
+                         "\n\tBlocks count: ", _affine_map_blocks_count(map_dimensions.width(), map_dimensions.height()));
             #endif
         }
     }

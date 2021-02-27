@@ -1306,6 +1306,19 @@
  * @endcode
  *
  *
+ * @subsection faq_destroy_ptr How to destroy sprites and backgrounds?
+ *
+ * bn::sprite_ptr, bn::regular_bg_ptr and all Butano classes that end with the `_ptr` suffix are
+ * `std::shared_ptr` like smart pointers that retains shared ownership of a hardware resource.
+ *
+ * In the case of bn::sprite_ptr, several bn::sprite_ptr objects may own the same sprite.
+ * The sprite is released when the last remaining bn::sprite_ptr owning it is destroyed.
+ *
+ * If you want to learn more about `std::shared_ptr`, you can read:
+ * * <a href="https://www.geeksforgeeks.org/auto_ptr-unique_ptr-shared_ptr-weak_ptr-2">A basic introduction of standard smart pointers</a>.
+ * * <a href="https://docs.microsoft.com/en-us/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=msvc-160">A std::shared_ptr usage guide</a>.
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
@@ -1382,6 +1395,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_6_4_0 6.4.0 (next release)
+ *
+ * More questions added to @ref faq page.
  *
  *
  * @section changelog_6_3_0 6.3.0

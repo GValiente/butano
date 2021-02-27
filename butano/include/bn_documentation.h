@@ -1389,6 +1389,7 @@
  * * @ref BN_VERSION_MAJOR, @ref BN_VERSION_MINOR and @ref BN_VERSION_PATCH added.
  * * bn::core::current_cpu_usage, bn::core::last_cpu_usage and bn::core::last_vblank_usage accuracy improved.
  * * Signed division fixed.
+ * * BG blocks manager and sprite tiles manager allocation fixed.
  * * BG blocks manager prints requested blocks count when an allocation fails.
  *
  *

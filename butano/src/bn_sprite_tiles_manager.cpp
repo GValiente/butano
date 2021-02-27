@@ -547,9 +547,9 @@ namespace
 
     [[nodiscard]] int _create_impl(const tile* tiles_data, compression_type compression, int tiles_count)
     {
-        bool check_to_remove_tiles = tiles_count <= data.to_remove_tiles_count;
+        int to_remove_tiles_count = data.to_remove_tiles_count;
 
-        if(check_to_remove_tiles)
+        if(tiles_count <= to_remove_tiles_count)
         {
             auto to_remove_items_end = data.to_remove_items.end();
             auto to_remove_items_it = lower_bound(
@@ -597,7 +597,7 @@ namespace
             }
         }
 
-        if(check_to_remove_tiles && ! data.delay_commit)
+        if(to_remove_tiles_count && ! data.delay_commit)
         {
             update();
             data.delay_commit = true;

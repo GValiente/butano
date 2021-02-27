@@ -925,9 +925,9 @@ namespace
         auto begin = data.items.begin();
         auto end = data.items.end();
         int blocks_count = create_data.blocks_count;
-        bool check_to_remove_blocks = blocks_count <= data.to_remove_blocks_count;
+        int to_remove_blocks_count = data.to_remove_blocks_count;
 
-        if(check_to_remove_blocks)
+        if(blocks_count <= to_remove_blocks_count)
         {
             for(auto iterator = begin; iterator != end; ++iterator)
             {
@@ -985,7 +985,7 @@ namespace
             }
         }
 
-        if(check_to_remove_blocks && ! data.delay_commit)
+        if(to_remove_blocks_count && ! data.delay_commit)
         {
             update();
             data.delay_commit = true;

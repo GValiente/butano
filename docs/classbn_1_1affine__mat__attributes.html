@@ -79,6 +79,16 @@
               bool vertical_flip) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a36f38b0e7a41c74f6e4027858db84c32" class="m-doc">affine_mat_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear,
+              bool horizontal_flip,
+              bool vertical_flip) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -117,6 +127,27 @@
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Sets the scale.</dd>
+            <dt id="a9f4f67ecf2addd6f32ee20b1c3a2cded">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f4f67ecf2addd6f32ee20b1c3a2cded" class="m-doc-self">horizontal_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal shear.</dd>
+            <dt id="a7c488c8236105a3fa72d39940e284111">
+              <span class="m-doc-wrap-bumper">void <a href="#a7c488c8236105a3fa72d39940e284111" class="m-doc-self">set_horizontal_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the horizontal shear.</dd>
+            <dt id="a0bb79ff0d5a2c2443e96ad4c22b36301">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0bb79ff0d5a2c2443e96ad4c22b36301" class="m-doc-self">vertical_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the vertical shear.</dd>
+            <dt id="a629b3b8d07f3a6e85790df172057adc8">
+              <span class="m-doc-wrap-bumper">void <a href="#a629b3b8d07f3a6e85790df172057adc8" class="m-doc-self">set_vertical_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the vertical shear.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af389bba3128f34c153bbd94cad1ef4d6" class="m-doc">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the shear.</dd>
             <dt id="aa3d30c47e104c0bc8a45d3c44a367186">
               <span class="m-doc-wrap-bumper">auto <a href="#aa3d30c47e104c0bc8a45d3c44a367186" class="m-doc-self">horizontal_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -161,6 +192,13 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ad3376761eebfb3bf179d86ff7434dff2" class="m-doc-self">pd_register_value</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the value to commit to the fourth GBA register of an affine transformation matrix with these attributes.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9532472e1c1f7b4c54cf46e210a3de27" class="m-doc">unsafe_set_register_values</a>(</span><span class="m-doc-wrap">int pa,
+              int pb,
+              int pc,
+              int pd) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>UNSAFE: sets the values to commit to the GBA registers of an affine transformation matrix bypassing the rest of the parameters.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -217,6 +255,53 @@
               </tbody>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a36f38b0e7a41c74f6e4027858db84c32"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a36f38b0e7a41c74f6e4027858db84c32" class="m-doc-self">affine_mat_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear,
+              bool horizontal_flip,
+              bool vertical_flip) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+                <tr>
+                  <td>horizontal_scale</td>
+                  <td>Horizontal scale.</td>
+                </tr>
+                <tr>
+                  <td>vertical_scale</td>
+                  <td>Vertical scale.</td>
+                </tr>
+                <tr>
+                  <td>horizontal_shear</td>
+                  <td>Horizontal shear.</td>
+                </tr>
+                <tr>
+                  <td>vertical_shear</td>
+                  <td>Vertical shear.</td>
+                </tr>
+                <tr>
+                  <td>horizontal_flip</td>
+                  <td>Indicates if this matrix is flipped in the horizontal axis or not.</td>
+                </tr>
+                <tr>
+                  <td>vertical_flip</td>
+                  <td>Indicates if this matrix is flipped in the vertical axis or not.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="a6c42c6afdaca0e5532d99ed7e810855b"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c42c6afdaca0e5532d99ed7e810855b" class="m-doc-self">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> rotation_angle) <span class="m-label m-primary">constexpr</span></span></span>
@@ -255,6 +340,38 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="af389bba3128f34c153bbd94cad1ef4d6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af389bba3128f34c153bbd94cad1ef4d6" class="m-doc-self">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the shear.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_shear</td>
+                  <td>Horizontal shear.</td>
+                </tr>
+                <tr>
+                  <td>vertical_shear</td>
+                  <td>Vertical shear.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9532472e1c1f7b4c54cf46e210a3de27"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9532472e1c1f7b4c54cf46e210a3de27" class="m-doc-self">unsafe_set_register_values</a>(</span><span class="m-doc-wrap">int pa,
+              int pb,
+              int pc,
+              int pd) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>UNSAFE: sets the values to commit to the GBA registers of an affine transformation matrix bypassing the rest of the parameters.</p>
+<p>The rest of the parameters are not updated, so the affine transformation matrix ends in an inconsistent state.</p>
           </div></section>
           <section class="m-doc-details" id="abdb1140eff18d55b43f15db70c10b52f"><div>
             <h3>

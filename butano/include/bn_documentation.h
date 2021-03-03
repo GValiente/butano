@@ -1399,7 +1399,10 @@
  *
  * @section changelog_6_4_0 6.4.0 (next release)
  *
- * More questions added to @ref faq page.
+ * * bn::affine_mat_attributes::horizontal_shear, bn::affine_mat_attributes::set_horizontal_shear,
+ *   bn::affine_mat_attributes::vertical_shear and bn::affine_mat_attributes::set_vertical_shear added.
+ * * bn::affine_mat_attributes::unsafe_set_register_values added.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_6_3_0 6.3.0

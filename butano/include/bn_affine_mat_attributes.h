@@ -42,9 +42,28 @@ public:
      */
     constexpr affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
                                     bool horizontal_flip, bool vertical_flip) :
+        affine_mat_attributes(rotation_angle, horizontal_scale, vertical_scale, 0, 0, horizontal_flip, vertical_flip)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param rotation_angle Rotation angle in degrees, in the range [0..360].
+     * @param horizontal_scale Horizontal scale.
+     * @param vertical_scale Vertical scale.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     * @param horizontal_flip Indicates if this matrix is flipped in the horizontal axis or not.
+     * @param vertical_flip Indicates if this matrix is flipped in the vertical axis or not.
+     */
+    constexpr affine_mat_attributes(fixed rotation_angle, fixed horizontal_scale, fixed vertical_scale,
+                                    fixed horizontal_shear, fixed vertical_shear, bool horizontal_flip,
+                                    bool vertical_flip) :
         _rotation_angle(rotation_angle),
         _horizontal_scale(horizontal_scale),
         _vertical_scale(vertical_scale),
+        _horizontal_shear(horizontal_shear),
+        _vertical_shear(vertical_shear),
         _hflip(int8_t(1 - (2 * horizontal_flip))),
         _vflip(int8_t(1 - (2 * vertical_flip)))
     {
@@ -165,6 +184,51 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal shear.
+     */
+    [[nodiscard]] constexpr fixed horizontal_shear() const
+    {
+        return _horizontal_shear;
+    }
+
+    /**
+     * @brief Sets the horizontal shear.
+     */
+    constexpr void set_horizontal_shear(fixed horizontal_shear)
+    {
+        _horizontal_shear = horizontal_shear;
+        _update_pb();
+    }
+
+    /**
+     * @brief Returns the vertical shear.
+     */
+    [[nodiscard]] constexpr fixed vertical_shear() const
+    {
+        return _vertical_shear;
+    }
+
+    /**
+     * @brief Sets the vertical shear.
+     */
+    constexpr void set_vertical_shear(fixed vertical_shear)
+    {
+        _vertical_shear = vertical_shear;
+        _update_pc();
+    }
+
+    /**
+     * @brief Sets the shear.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     */
+    constexpr void set_shear(fixed horizontal_shear, fixed vertical_shear)
+    {
+        set_horizontal_shear(horizontal_shear);
+        set_vertical_shear(vertical_shear);
+    }
+
+    /**
      * @brief Indicates if this matrix is flipped in the horizontal axis or not.
      */
     [[nodiscard]] constexpr bool horizontal_flip() const
@@ -205,7 +269,9 @@ public:
      */
     [[nodiscard]] constexpr bool identity() const
     {
-        return flipped_identity() && _hflip == 1 && _vflip == 1;
+        return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1 &&
+                _horizontal_shear == 0 && _vertical_shear == 0 && _hflip == 1 && _vflip == 1 &&
+                _pa == 256 && _pb == 0 && _pc == 0 && _pd == 256;
     }
 
     /**
@@ -213,7 +279,9 @@ public:
      */
     [[nodiscard]] constexpr bool flipped_identity() const
     {
-        return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1;
+        return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1 &&
+                _horizontal_shear == 0 && _vertical_shear == 0 &&
+                abs(_pa) == 256 && _pb == 0 && _pc == 0 && abs(_pd) == 256;
     }
 
     /**
@@ -222,11 +290,41 @@ public:
      */
     [[nodiscard]] constexpr bool double_size() const
     {
-        fixed max_scale = max(_horizontal_scale, _vertical_scale);
-        int cos = abs(int(_cos));
-        int sin = abs(int(_sin));
-        int size = (cos + sin) * max_scale.data();
-        return size > 256 << 16;
+        int pa = _pa;
+        int pb = _pb;
+        int pc = _pc;
+        int pd = _pd;
+        int divisor = (pa * pd) - (pb * pc);
+
+        if(! divisor)
+        {
+            return true;
+        }
+
+        int ix1 = (-65536 * (pb + pd)) / divisor;
+
+        if(abs(ix1) > 256)
+        {
+            return true;
+        }
+
+        int iy1 = (65536 * (pa + pc)) / divisor;
+
+        if(abs(iy1) > 256)
+        {
+            return true;
+        }
+
+        int ix2 = (-65536 * (pb - pd)) / divisor;
+
+        if(abs(ix2) > 256)
+        {
+            return true;
+        }
+
+        int iy2 = (65536 * (pa - pc)) / divisor;
+
+        return abs(iy2) > 256;
     }
 
     /**
@@ -266,6 +364,20 @@ public:
     }
 
     /**
+     * @brief UNSAFE: sets the values to commit to the GBA registers of an affine transformation matrix
+     * bypassing the rest of the parameters.
+     *
+     * The rest of the parameters are not updated, so the affine transformation matrix ends in an inconsistent state.
+     */
+    constexpr void unsafe_set_register_values(int pa, int pb, int pc, int pd)
+    {
+        _pa = int16_t(pa);
+        _pb = int16_t(pb);
+        _pc = int16_t(pc);
+        _pd = int16_t(pd);
+    }
+
+    /**
      * @brief Equal operator.
      * @param a First affine_mat_attributes to compare.
      * @param b Second affine_mat_attributes to compare.
@@ -273,8 +385,11 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const affine_mat_attributes& a, const affine_mat_attributes& b)
     {
-        return a._rotation_angle == b._rotation_angle && a._horizontal_scale == b._horizontal_scale &&
-                a._vertical_scale == b._vertical_scale && a._hflip == b._hflip && a._vflip == b._vflip;
+        return a._rotation_angle == b._rotation_angle &&
+                a._horizontal_scale == b._horizontal_scale && a._vertical_scale == b._vertical_scale &&
+                a._horizontal_shear == b._horizontal_shear && a._vertical_shear == b._vertical_shear &&
+                a._hflip == b._hflip && a._vflip == b._vflip &&
+                a._pa == b._pa && a._pb == b._pb && a._pc == b._pc && a._pd == b._pd;
     }
 
     /**
@@ -295,6 +410,8 @@ private:
     fixed _rotation_angle = 0;
     fixed _horizontal_scale = 1;
     fixed _vertical_scale = 1;
+    fixed _horizontal_shear = 0;
+    fixed _vertical_shear = 0;
     int8_t _hflip = 1;
     int8_t _vflip = 1;
     int16_t _sin = 0;
@@ -360,12 +477,16 @@ private:
 
     constexpr void _update_pb()
     {
-        _pb = int16_t(-_sin * (_sx * int(_hflip)) >> 12);
+        int rot_scale = -_sin * (_sx * int(_hflip)) >> 12;
+        int shear = _horizontal_shear.data() >> 4;
+        _pb = int16_t(rot_scale + shear);
     }
 
     constexpr void _update_pc()
     {
-        _pc = int16_t(_sin * (_sy * int(_vflip)) >> 12);
+        int rot_scale = _sin * (_sy * int(_vflip)) >> 12;
+        int shear = _vertical_shear.data() >> 4;
+        _pc = int16_t(rot_scale + shear);
     }
 
     constexpr void _update_pd()

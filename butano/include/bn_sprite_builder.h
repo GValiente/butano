@@ -241,6 +241,67 @@ public:
     sprite_builder& set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     /**
+     * @brief Returns the horizontal shear of the sprites to generate.
+     */
+    [[nodiscard]] fixed horizontal_shear() const
+    {
+        return _affine_mat ? _affine_mat->horizontal_shear() : 0;
+    }
+
+    /**
+     * @brief Sets the horizontal shear of the sprites to generate.
+     * @param horizontal_shear Horizontal shear of the sprites to generate.
+     *
+     * If the horizontal shear is != 0 and the builder doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given horizontal shear is attached to it.
+     *
+     * @return Reference to this.
+     */
+    sprite_builder& set_horizontal_shear(fixed horizontal_shear);
+
+    /**
+     * @brief Returns the vertical shear of the sprites to generate.
+     */
+    [[nodiscard]] fixed vertical_shear() const
+    {
+        return _affine_mat ? _affine_mat->vertical_shear() : 0;
+    }
+
+    /**
+     * @brief Sets the vertical shear of the sprites to generate.
+     * @param vertical_shear Vertical shear of the sprites to generate.
+     *
+     * If the vertical shear is != 0 and the builder doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given vertical shear is attached to it.
+     *
+     * @return Reference to this.
+     */
+    sprite_builder& set_vertical_shear(fixed vertical_shear);
+
+    /**
+     * @brief Sets the shear of the sprites to generate.
+     * @param shear Shear of the sprites to generate.
+     *
+     * If the shear is != 0 and the builder doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given vertical shear is attached to it.
+     *
+     * @return Reference to this.
+     */
+    sprite_builder& set_shear(fixed shear);
+
+    /**
+     * @brief Sets the shear of the sprites to generate.
+     * @param horizontal_shear Horizontal shear of the sprites to generate.
+     * @param vertical_shear Vertical shear of the sprites to generate.
+     *
+     * If the horizontal or the vertical shear is != 0 and the builder doesn't have
+     * an attached sprite_affine_mat_ptr, a new one with the given vertical shear is attached to it.
+     *
+     * @return Reference to this.
+     */
+    sprite_builder& set_shear(fixed horizontal_shear, fixed vertical_shear);
+
+    /**
      * @brief Returns the priority of the sprites to generate relative to backgrounds.
      *
      * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).

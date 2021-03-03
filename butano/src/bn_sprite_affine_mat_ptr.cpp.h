@@ -110,6 +110,36 @@ void sprite_affine_mat_ptr::set_scale(fixed horizontal_scale, fixed vertical_sca
     sprite_affine_mats_manager::set_scale(_id, horizontal_scale, vertical_scale);
 }
 
+fixed sprite_affine_mat_ptr::horizontal_shear() const
+{
+    return sprite_affine_mats_manager::horizontal_shear(_id);
+}
+
+void sprite_affine_mat_ptr::set_horizontal_shear(fixed horizontal_shear)
+{
+    sprite_affine_mats_manager::set_horizontal_shear(_id, horizontal_shear);
+}
+
+fixed sprite_affine_mat_ptr::vertical_shear() const
+{
+    return sprite_affine_mats_manager::vertical_shear(_id);
+}
+
+void sprite_affine_mat_ptr::set_vertical_shear(fixed vertical_shear)
+{
+    sprite_affine_mats_manager::set_vertical_shear(_id, vertical_shear);
+}
+
+void sprite_affine_mat_ptr::set_shear(fixed shear)
+{
+    sprite_affine_mats_manager::set_shear(_id, shear);
+}
+
+void sprite_affine_mat_ptr::set_shear(fixed horizontal_shear, fixed vertical_shear)
+{
+    sprite_affine_mats_manager::set_shear(_id, horizontal_shear, vertical_shear);
+}
+
 bool sprite_affine_mat_ptr::horizontal_flip() const
 {
     return sprite_affine_mats_manager::horizontal_flip(_id);

@@ -387,6 +387,72 @@ namespace
         }
     }
 
+    void sprites_shear_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: decrease horizontal shear",
+            "RIGHT: increase horizontal shear",
+            "DOWN: decrease vertical shear",
+            "UP: increase vertical shear",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Sprites shear", info_text_lines, text_generator);
+
+        bn::sprite_ptr yellow_sprite = bn::sprite_items::yellow_sprite.create_sprite(0, 0);
+        yellow_sprite.set_horizontal_shear(0.5);
+        yellow_sprite.set_vertical_shear(-0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed horizontal_shear = yellow_sprite.horizontal_shear();
+            bn::fixed vertical_shear = yellow_sprite.vertical_shear();
+
+            if(bn::keypad::left_held())
+            {
+                yellow_sprite.set_horizontal_shear(horizontal_shear - 0.01);
+            }
+            else if(bn::keypad::right_held())
+            {
+                yellow_sprite.set_horizontal_shear(horizontal_shear + 0.01);
+            }
+
+            if(bn::keypad::down_held())
+            {
+                yellow_sprite.set_vertical_shear(vertical_shear - 0.01);
+            }
+            else if(bn::keypad::up_held())
+            {
+                yellow_sprite.set_vertical_shear(vertical_shear + 0.01);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void sprites_shear_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Sprites shear actions", info_text_lines, text_generator);
+
+        bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
+        red_sprite.set_shear(-0.5);
+
+        bn::sprite_shear_loop_action action(red_sprite, 120, 0.5);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
     void sprites_flip_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
@@ -1057,6 +1123,12 @@ int main()
         bn::core::update();
 
         sprites_scale_actions_scene(text_generator);
+        bn::core::update();
+
+        sprites_shear_scene(text_generator);
+        bn::core::update();
+
+        sprites_shear_actions_scene(text_generator);
         bn::core::update();
 
         sprites_flip_scene(text_generator);

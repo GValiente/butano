@@ -361,6 +361,86 @@ void set_scale(int id, fixed horizontal_scale, fixed vertical_scale)
     }
 }
 
+fixed horizontal_shear(int id)
+{
+    return data.items[id].attributes.horizontal_shear();
+}
+
+void set_horizontal_shear(int id, fixed horizontal_shear)
+{
+    item_type& item = data.items[id];
+
+    if(horizontal_shear != item.attributes.horizontal_shear())
+    {
+        int pb = item.attributes.pb_register_value();
+        item.attributes.set_horizontal_shear(horizontal_shear);
+
+        if(item.attributes.pb_register_value() != pb)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
+    }
+}
+
+fixed vertical_shear(int id)
+{
+    return data.items[id].attributes.vertical_shear();
+}
+
+void set_vertical_shear(int id, fixed vertical_shear)
+{
+    item_type& item = data.items[id];
+
+    if(vertical_shear != item.attributes.vertical_shear())
+    {
+        int pc = item.attributes.pc_register_value();
+        item.attributes.set_vertical_shear(vertical_shear);
+
+        if(item.attributes.pc_register_value() != pc)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
+    }
+}
+
+void set_shear(int id, fixed shear)
+{
+    item_type& item = data.items[id];
+
+    if(shear != item.attributes.horizontal_shear() || shear != item.attributes.vertical_shear())
+    {
+        int pb = item.attributes.pb_register_value();
+        int pc = item.attributes.pc_register_value();
+        item.attributes.set_shear(shear);
+
+        if(item.attributes.pb_register_value() != pb || item.attributes.pc_register_value() != pc)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
+    }
+}
+
+void set_shear(int id, fixed horizontal_shear, fixed vertical_shear)
+{
+    item_type& item = data.items[id];
+
+    if(horizontal_shear != item.attributes.horizontal_shear() || vertical_shear != item.attributes.vertical_shear())
+    {
+        int pb = item.attributes.pb_register_value();
+        int pc = item.attributes.pc_register_value();
+        item.attributes.set_shear(horizontal_shear, vertical_shear);
+
+        if(item.attributes.pb_register_value() != pb || item.attributes.pc_register_value() != pc)
+        {
+            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
+            _update(id);
+        }
+    }
+}
+
 bool horizontal_flip(int id)
 {
     return data.items[id].attributes.horizontal_flip();

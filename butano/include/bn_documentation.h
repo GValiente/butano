@@ -1405,8 +1405,7 @@
  *
  * @section changelog_6_4_0 6.4.0 (next release)
  *
- * * bn::affine_mat_attributes::horizontal_shear, bn::affine_mat_attributes::set_horizontal_shear,
- *   bn::affine_mat_attributes::vertical_shear and bn::affine_mat_attributes::set_vertical_shear added.
+ * * Sprites and affine backgrounds support horizontal and vertical shear.
  * * bn::affine_mat_attributes::unsafe_set_register_values added.
  * * `texture_polygons` example added.
  * * More questions added to @ref faq page.

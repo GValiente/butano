@@ -150,6 +150,76 @@ namespace
         affine_mat.set_scale(1);
     }
 
+    void sprite_affine_mats_shear_scene(bn::sprite_affine_mat_ptr& affine_mat,
+                                        bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: decrease horizontal shear",
+            "RIGHT: increase horizontal shear",
+            "DOWN: decrease vertical shear",
+            "UP: increase vertical shear",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Sprite affine mats shear", info_text_lines, text_generator);
+
+        affine_mat.set_horizontal_shear(0.5);
+        affine_mat.set_vertical_shear(-0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed horizontal_shear = affine_mat.horizontal_shear();
+            bn::fixed vertical_shear = affine_mat.vertical_shear();
+
+            if(bn::keypad::left_held())
+            {
+                affine_mat.set_horizontal_shear(horizontal_shear - 0.01);
+            }
+            else if(bn::keypad::right_held())
+            {
+                affine_mat.set_horizontal_shear(horizontal_shear + 0.01);
+            }
+
+            if(bn::keypad::down_held())
+            {
+                affine_mat.set_vertical_shear(vertical_shear - 0.01);
+            }
+            else if(bn::keypad::up_held())
+            {
+                affine_mat.set_vertical_shear(vertical_shear + 0.01);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        affine_mat.set_shear(0);
+    }
+
+    void sprite_affine_mats_shear_actions_scene(bn::sprite_affine_mat_ptr& affine_mat,
+                                                bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Sprite affine mats shear actions", info_text_lines, text_generator);
+
+        affine_mat.set_shear(-0.5);
+
+        bn::sprite_affine_mat_shear_loop_action action(affine_mat, 120, 0.5);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+
+        affine_mat.set_shear(0);
+    }
+
     void sprite_affine_mats_flip_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                        bn::sprite_text_generator& text_generator)
     {
@@ -359,6 +429,12 @@ int main()
         bn::core::update();
 
         sprite_affine_mats_scale_actions_scene(affine_mat, text_generator);
+        bn::core::update();
+
+        sprite_affine_mats_shear_scene(affine_mat, text_generator);
+        bn::core::update();
+
+        sprite_affine_mats_shear_actions_scene(affine_mat, text_generator);
         bn::core::update();
 
         sprite_affine_mats_flip_scene(affine_mat, text_generator);

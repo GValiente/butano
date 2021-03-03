@@ -130,6 +130,78 @@ sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical
     return *this;
 }
 
+sprite_builder& sprite_builder::set_horizontal_shear(fixed horizontal_shear)
+{
+    if(_affine_mat)
+    {
+        _affine_mat->set_horizontal_shear(horizontal_shear);
+    }
+    else if(horizontal_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_horizontal_shear(horizontal_shear);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_vertical_shear(fixed vertical_shear)
+{
+    if(_affine_mat)
+    {
+        _affine_mat->set_vertical_shear(vertical_shear);
+    }
+    else if(vertical_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_vertical_shear(vertical_shear);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_shear(fixed shear)
+{
+    if(_affine_mat)
+    {
+        _affine_mat->set_shear(shear);
+    }
+    else if(shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_shear(shear);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
+    }
+
+    return *this;
+}
+
+sprite_builder& sprite_builder::set_shear(fixed horizontal_shear, fixed vertical_shear)
+{
+    if(_affine_mat)
+    {
+        _affine_mat->set_shear(horizontal_shear, vertical_shear);
+    }
+    else if(horizontal_shear != 0 || vertical_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_shear(horizontal_shear, vertical_shear);
+        mat_attributes.set_horizontal_flip(_horizontal_flip);
+        mat_attributes.set_vertical_flip(_vertical_flip);
+        _affine_mat = sprite_affine_mat_ptr::create(mat_attributes);
+    }
+
+    return *this;
+}
+
 sprite_builder& sprite_builder::set_bg_priority(int bg_priority)
 {
     BN_ASSERT(bg_priority >= 0 && bg_priority <= sprites::max_bg_priority(), "Invalid BG priority: ", bg_priority);

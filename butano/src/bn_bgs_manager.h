@@ -101,6 +101,18 @@ namespace bgs_manager
 
     void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale);
 
+    [[nodiscard]] fixed horizontal_shear(id_type id);
+
+    void set_horizontal_shear(id_type id, fixed horizontal_shear);
+
+    [[nodiscard]] fixed vertical_shear(id_type id);
+
+    void set_vertical_shear(id_type id, fixed vertical_shear);
+
+    void set_shear(id_type id, fixed shear);
+
+    void set_shear(id_type id, fixed horizontal_shear, fixed vertical_shear);
+
     [[nodiscard]] bool horizontal_flip(id_type id);
 
     void set_horizontal_flip(id_type id, bool horizontal_flip);

@@ -341,6 +341,31 @@
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_scale)</span>
             </dt>
             <dd>Sets the scale of the sprite.</dd>
+            <dt id="abd338057ab0af6ac191d05fd1ca75aab">
+              <span class="m-doc-wrap-bumper">auto <a href="#abd338057ab0af6ac191d05fd1ca75aab" class="m-doc-self">horizontal_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal shear of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1e7d53995432b915f6a91361d06a013f" class="m-doc">set_horizontal_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear)</span>
+            </dt>
+            <dd>Sets the horizontal shear of the sprite.</dd>
+            <dt id="a7dfa280cadbcf32ff58e2eb9e0b5ba52">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7dfa280cadbcf32ff58e2eb9e0b5ba52" class="m-doc-self">vertical_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical shear of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abff0c04eb20c08d1b27ea0b9d2c762d1" class="m-doc">set_vertical_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear)</span>
+            </dt>
+            <dd>Sets the vertical shear of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a95a3b065950fa950ece8144576bea139" class="m-doc">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> shear)</span>
+            </dt>
+            <dd>Sets the shear of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a153052d064ad2188f99dcff91b7ef98d" class="m-doc">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear)</span>
+            </dt>
+            <dd>Sets the shear of the sprite.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aa0c0773bca4cebe5a82080a72a8d19a6" class="m-doc">bg_priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
@@ -1540,6 +1565,50 @@
               </tbody>
             </table>
 <p>If the scale is != 1 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given scale is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1e7d53995432b915f6a91361d06a013f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1e7d53995432b915f6a91361d06a013f" class="m-doc-self">set_horizontal_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear)</span></span>
+            </h3>
+            <p>Sets the horizontal shear of the sprite.</p>
+<p>If the horizontal shear is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given horizontal shear is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="abff0c04eb20c08d1b27ea0b9d2c762d1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abff0c04eb20c08d1b27ea0b9d2c762d1" class="m-doc-self">set_vertical_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear)</span></span>
+            </h3>
+            <p>Sets the vertical shear of the sprite.</p>
+<p>If the vertical shear is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given vertical shear is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a95a3b065950fa950ece8144576bea139"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a95a3b065950fa950ece8144576bea139" class="m-doc-self">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> shear)</span></span>
+            </h3>
+            <p>Sets the shear of the sprite.</p>
+<p>If the shear is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given shear is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a153052d064ad2188f99dcff91b7ef98d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a153052d064ad2188f99dcff91b7ef98d" class="m-doc-self">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> vertical_shear)</span></span>
+            </h3>
+            <p>Sets the shear of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_shear</td>
+                  <td>Horizontal shear.</td>
+                </tr>
+                <tr>
+                  <td>vertical_shear</td>
+                  <td>Vertical shear.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the shear is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given shear is attached to it.</p>
           </div></section>
           <section class="m-doc-details" id="aa0c0773bca4cebe5a82080a72a8d19a6"><div>
             <h3>

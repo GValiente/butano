@@ -1164,7 +1164,7 @@ public:
      */
     static void set(fixed scale, affine_bg_ptr& bg)
     {
-        bg.set_scale(scale, scale);
+        bg.set_scale(scale);
     }
 };
 
@@ -1334,6 +1334,599 @@ public:
      * when the action is updated the given number of times.
      */
     [[nodiscard]] fixed new_scale() const
+    {
+        return new_property();
+    }
+};
+
+
+// horizontal_shear
+
+/**
+ * @brief Manages the horizontal shear of an affine_bg_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_horizontal_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the horizontal shear of the given affine_bg_ptr.
+     */
+    [[nodiscard]] static fixed get(const affine_bg_ptr& bg)
+    {
+        return bg.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the horizontal shear of the given affine_bg_ptr.
+     */
+    static void set(fixed horizontal_shear, affine_bg_ptr& bg)
+    {
+        bg.set_horizontal_shear(horizontal_shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the horizontal shear of an affine_bg_ptr until it has a given state.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_horizontal_shear_to_action :
+        public to_value_template_action<affine_bg_ptr, fixed, affine_bg_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the horizontal shear of the given affine_bg_ptr is equal to final_horizontal_shear.
+     * @param final_horizontal_shear Horizontal shear when the action is updated duration_updates times.
+     */
+    affine_bg_horizontal_shear_to_action(const affine_bg_ptr& bg, int duration_updates,
+                                         fixed final_horizontal_shear) :
+        to_value_template_action(bg, duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the horizontal shear of the given affine_bg_ptr is equal to final_horizontal_shear.
+     * @param final_horizontal_shear Horizontal shear when the action is updated duration_updates times.
+     */
+    affine_bg_horizontal_shear_to_action(affine_bg_ptr&& bg, int duration_updates, fixed final_horizontal_shear) :
+        to_value_template_action(move(bg), duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the horizontal shear of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_horizontal_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the horizontal shear of an affine_bg_ptr from a minimum to a maximum.
+ * When the horizontal shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_horizontal_shear_loop_action :
+        public loop_value_template_action<affine_bg_ptr, fixed, affine_bg_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the horizontal shear delta.
+     * @param final_horizontal_shear When the horizontal shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_horizontal_shear_loop_action(const affine_bg_ptr& bg, int duration_updates,
+                                           fixed final_horizontal_shear) :
+        loop_value_template_action(bg, duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the horizontal shear delta.
+     * @param final_horizontal_shear When the horizontal shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_horizontal_shear_loop_action(affine_bg_ptr&& bg, int duration_updates,
+                                           fixed final_horizontal_shear) :
+        loop_value_template_action(move(bg), duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the horizontal shear of the given affine_bg_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_horizontal_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the horizontal shear of an affine_bg_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_horizontal_shear_toggle_action :
+        public toggle_value_template_action<affine_bg_ptr, fixed, affine_bg_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * of the given affine_bg_ptr.
+     * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
+     */
+    affine_bg_horizontal_shear_toggle_action(const affine_bg_ptr& bg, int duration_updates,
+                                             fixed new_horizontal_shear) :
+        toggle_value_template_action(bg, duration_updates, new_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * of the given affine_bg_ptr.
+     * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
+     */
+    affine_bg_horizontal_shear_toggle_action(affine_bg_ptr&& bg, int duration_updates,
+                                             fixed new_horizontal_shear) :
+        toggle_value_template_action(move(bg), duration_updates, new_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the horizontal shear of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_horizontal_shear() const
+    {
+        return new_property();
+    }
+};
+
+
+// vertical_shear
+
+/**
+ * @brief Manages the vertical shear of an affine_bg_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_vertical_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the vertical shear of the given affine_bg_ptr.
+     */
+    [[nodiscard]] static fixed get(const affine_bg_ptr& bg)
+    {
+        return bg.vertical_shear();
+    }
+
+    /**
+     * @brief Sets the vertical shear of the given affine_bg_ptr.
+     */
+    static void set(fixed vertical_shear, affine_bg_ptr& bg)
+    {
+        bg.set_vertical_shear(vertical_shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the vertical shear of an affine_bg_ptr until it has a given state.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_vertical_shear_to_action :
+        public to_value_template_action<affine_bg_ptr, fixed, affine_bg_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the vertical shear of the given affine_bg_ptr is equal to final_vertical_shear.
+     * @param final_vertical_shear Vertical shear when the action is updated duration_updates times.
+     */
+    affine_bg_vertical_shear_to_action(const affine_bg_ptr& bg, int duration_updates,
+                                       fixed final_vertical_shear) :
+        to_value_template_action(bg, duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the vertical shear of the given affine_bg_ptr is equal to final_vertical_shear.
+     * @param final_vertical_shear Vertical shear when the action is updated duration_updates times.
+     */
+    affine_bg_vertical_shear_to_action(affine_bg_ptr&& bg, int duration_updates, fixed final_vertical_shear) :
+        to_value_template_action(move(bg), duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the vertical shear of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_vertical_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the vertical shear of an affine_bg_ptr from a minimum to a maximum.
+ * When the vertical shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_vertical_shear_loop_action :
+        public loop_value_template_action<affine_bg_ptr, fixed, affine_bg_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the vertical shear delta.
+     * @param final_vertical_shear When the vertical shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_vertical_shear_loop_action(const affine_bg_ptr& bg, int duration_updates,
+                                         fixed final_vertical_shear) :
+        loop_value_template_action(bg, duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the vertical shear delta.
+     * @param final_vertical_shear When the vertical shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_vertical_shear_loop_action(affine_bg_ptr&& bg, int duration_updates, fixed final_vertical_shear) :
+        loop_value_template_action(move(bg), duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the vertical shear of the given affine_bg_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_vertical_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the vertical shear of an affine_bg_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_vertical_shear_toggle_action :
+        public toggle_value_template_action<affine_bg_ptr, fixed, affine_bg_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * of the given affine_bg_ptr.
+     * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
+     */
+    affine_bg_vertical_shear_toggle_action(const affine_bg_ptr& bg, int duration_updates,
+                                           fixed new_vertical_shear) :
+        toggle_value_template_action(bg, duration_updates, new_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * of the given affine_bg_ptr.
+     * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
+     */
+    affine_bg_vertical_shear_toggle_action(affine_bg_ptr&& bg, int duration_updates, fixed new_vertical_shear) :
+        toggle_value_template_action(move(bg), duration_updates, new_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the vertical shear of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_vertical_shear() const
+    {
+        return new_property();
+    }
+};
+
+
+// shear
+
+/**
+ * @brief Manages the shear of an affine_bg_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the horizontal shear of the given affine_bg_ptr.
+     */
+    [[nodiscard]] static fixed get(const affine_bg_ptr& bg)
+    {
+        return bg.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the shear of the given affine_bg_ptr.
+     */
+    static void set(fixed shear, affine_bg_ptr& bg)
+    {
+        bg.set_shear(shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the shear of an affine_bg_ptr until it has a given state.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_shear_to_action : public to_value_template_action<affine_bg_ptr, fixed, affine_bg_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the shear of the given affine_bg_ptr is equal to final_shear.
+     * @param final_shear Shear when the action is updated duration_updates times.
+     */
+    affine_bg_shear_to_action(const affine_bg_ptr& bg, int duration_updates, fixed final_shear) :
+        to_value_template_action(bg, duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the shear of the given affine_bg_ptr is equal to final_shear.
+     * @param final_shear Shear when the action is updated duration_updates times.
+     */
+    affine_bg_shear_to_action(affine_bg_ptr&& bg, int duration_updates, fixed final_shear) :
+        to_value_template_action(move(bg), duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the shear of the given affine_bg_ptr when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the shear of an affine_bg_ptr from a minimum to a maximum.
+ * When the shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_shear_loop_action :
+        public loop_value_template_action<affine_bg_ptr, fixed, affine_bg_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the shear delta.
+     * @param final_shear When the shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_shear_loop_action(const affine_bg_ptr& bg, int duration_updates, fixed final_shear) :
+        loop_value_template_action(bg, duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the shear delta.
+     * @param final_shear When the shear of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_shear_loop_action(affine_bg_ptr&& bg, int duration_updates, fixed final_shear) :
+        loop_value_template_action(move(bg), duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the shear of the given affine_bg_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the shear of an affine_bg_ptr when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_shear_toggle_action :
+        public toggle_value_template_action<affine_bg_ptr, fixed, affine_bg_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the shear
+     * of the given affine_bg_ptr.
+     * @param new_shear New shear when the action is updated duration_updates times.
+     */
+    affine_bg_shear_toggle_action(const affine_bg_ptr& bg, int duration_updates, fixed new_shear) :
+        toggle_value_template_action(bg, duration_updates, new_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the shear
+     * of the given affine_bg_ptr.
+     * @param new_shear New shear when the action is updated duration_updates times.
+     */
+    affine_bg_shear_toggle_action(affine_bg_ptr&& bg, int duration_updates, fixed new_shear) :
+        toggle_value_template_action(move(bg), duration_updates, new_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the shear of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_shear() const
     {
         return new_property();
     }

@@ -362,6 +362,38 @@ public:
     void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     /**
+     * @brief Returns the horizontal shear of the affine background.
+     */
+    [[nodiscard]] fixed horizontal_shear() const;
+
+    /**
+     * @brief Sets the horizontal shear of the affine background.
+     */
+    void set_horizontal_shear(fixed horizontal_shear);
+
+    /**
+     * @brief Returns the vertical shear of the affine background.
+     */
+    [[nodiscard]] fixed vertical_shear() const;
+
+    /**
+     * @brief Sets the vertical shear of the affine background.
+     */
+    void set_vertical_shear(fixed vertical_shear);
+
+    /**
+     * @brief Sets the shear of the affine background.
+     */
+    void set_shear(fixed shear);
+
+    /**
+     * @brief Sets the shear of the affine background.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     */
+    void set_shear(fixed horizontal_shear, fixed vertical_shear);
+
+    /**
      * @brief Indicates if this affine background is flipped in the horizontal axis or not.
      */
     [[nodiscard]] bool horizontal_flip() const;

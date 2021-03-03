@@ -273,6 +273,60 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal shear.
+     */
+    [[nodiscard]] constexpr fixed horizontal_shear() const
+    {
+        return _mat_attributes.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the horizontal shear.
+     */
+    constexpr void set_horizontal_shear(fixed horizontal_shear)
+    {
+        _mat_attributes.set_horizontal_shear(horizontal_shear);
+        _update_dx();
+    }
+
+    /**
+     * @brief Returns the vertical shear.
+     */
+    [[nodiscard]] constexpr fixed vertical_shear() const
+    {
+        return _mat_attributes.vertical_shear();
+    }
+
+    /**
+     * @brief Sets the vertical shear.
+     */
+    constexpr void set_vertical_shear(fixed vertical_shear)
+    {
+        _mat_attributes.set_vertical_shear(vertical_shear);
+        _update_dy();
+    }
+
+    /**
+     * @brief Sets the shear.
+     */
+    constexpr void set_shear(fixed shear)
+    {
+        _mat_attributes.set_shear(shear);
+        _update_dx_and_dy();
+    }
+
+    /**
+     * @brief Sets the shear.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     */
+    constexpr void set_shear(fixed horizontal_shear, fixed vertical_shear)
+    {
+        _mat_attributes.set_shear(horizontal_shear, vertical_shear);
+        _update_dx_and_dy();
+    }
+
+    /**
      * @brief Indicates if this matrix is flipped in the horizontal axis or not.
      */
     [[nodiscard]] constexpr bool horizontal_flip() const

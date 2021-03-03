@@ -230,6 +230,67 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal shear of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed horizontal_shear() const
+    {
+        return _mat_attributes.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the horizontal shear of the affine backgrounds to generate.
+     * @param horizontal_shear Horizontal shear of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_horizontal_shear(fixed horizontal_shear)
+    {
+        _mat_attributes.set_horizontal_shear(horizontal_shear);
+        return *this;
+    }
+
+    /**
+     * @brief Returns the vertical shear of the affine backgrounds to generate.
+     */
+    [[nodiscard]] fixed vertical_shear() const
+    {
+        return _mat_attributes.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the vertical shear of the affine backgrounds to generate.
+     * @param vertical_shear Vertical shear of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_vertical_shear(fixed vertical_shear)
+    {
+        _mat_attributes.set_vertical_shear(vertical_shear);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the shear of the affine backgrounds to generate.
+     * @param shear Shear of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_shear(fixed shear)
+    {
+        _mat_attributes.set_shear(shear);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the shear of the affine backgrounds to generate.
+     * @param horizontal_shear Horizontal shear of the affine backgrounds to generate.
+     * @param vertical_shear Vertical shear of the affine backgrounds to generate.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_shear(fixed horizontal_shear, fixed vertical_shear)
+    {
+        _mat_attributes.set_shear(horizontal_shear, vertical_shear);
+        return *this;
+    }
+
+    /**
      * @brief Indicates if the affine backgrounds to generate are flipped in the horizontal axis or not.
      */
     [[nodiscard]] bool horizontal_flip() const

@@ -66,6 +66,18 @@ namespace bn::sprite_affine_mats_manager
 
     void set_scale(int id, fixed horizontal_scale, fixed vertical_scale);
 
+    [[nodiscard]] fixed horizontal_shear(int id);
+
+    void set_horizontal_shear(int id, fixed horizontal_shear);
+
+    [[nodiscard]] fixed vertical_shear(int id);
+
+    void set_vertical_shear(int id, fixed vertical_shear);
+
+    void set_shear(int id, fixed shear);
+
+    void set_shear(int id, fixed horizontal_shear, fixed vertical_shear);
+
     [[nodiscard]] bool horizontal_flip(int id);
 
     void set_horizontal_flip(int id, bool horizontal_flip);

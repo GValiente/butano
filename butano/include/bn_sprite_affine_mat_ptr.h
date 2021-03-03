@@ -163,6 +163,38 @@ public:
     void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     /**
+     * @brief Returns the horizontal shear.
+     */
+    [[nodiscard]] fixed horizontal_shear() const;
+
+    /**
+     * @brief Sets the horizontal shear.
+     */
+    void set_horizontal_shear(fixed horizontal_shear);
+
+    /**
+     * @brief Returns the vertical shear.
+     */
+    [[nodiscard]] fixed vertical_shear() const;
+
+    /**
+     * @brief Sets the vertical shear.
+     */
+    void set_vertical_shear(fixed vertical_shear);
+
+    /**
+     * @brief Sets the shear.
+     */
+    void set_shear(fixed shear);
+
+    /**
+     * @brief Sets the shear.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     */
+    void set_shear(fixed horizontal_shear, fixed vertical_shear);
+
+    /**
      * @brief Indicates if this matrix is flipped in the horizontal axis or not.
      */
     [[nodiscard]] bool horizontal_flip() const;

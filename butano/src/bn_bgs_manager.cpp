@@ -870,6 +870,88 @@ void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
     }
 }
 
+fixed horizontal_shear(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->affine_mat_attributes.horizontal_shear();
+}
+
+void set_horizontal_shear(id_type id, fixed horizontal_shear)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(horizontal_shear != item->affine_mat_attributes.horizontal_shear())
+    {
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_horizontal_shear(horizontal_shear);
+
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+fixed vertical_shear(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->affine_mat_attributes.vertical_shear();
+}
+
+void set_vertical_shear(id_type id, fixed vertical_shear)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(vertical_shear != item->affine_mat_attributes.vertical_shear())
+    {
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_vertical_shear(vertical_shear);
+
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+void set_shear(id_type id, fixed shear)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(shear != item->affine_mat_attributes.horizontal_shear() ||
+            shear != item->affine_mat_attributes.vertical_shear())
+    {
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_shear(shear);
+
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
+void set_shear(id_type id, fixed horizontal_shear, fixed vertical_shear)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(horizontal_shear != item->affine_mat_attributes.horizontal_shear() ||
+            vertical_shear != item->affine_mat_attributes.vertical_shear())
+    {
+        affine_mat_registers old_registers(item->affine_mat_attributes);
+        item->affine_mat_attributes.set_shear(horizontal_shear, vertical_shear);
+
+        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        {
+            item->update_affine_mat_attributes();
+            _update_item(*item);
+        }
+    }
+}
+
 bool horizontal_flip(id_type id)
 {
     auto item = static_cast<item_type*>(id);

@@ -518,6 +518,50 @@ public:
     void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     /**
+     * @brief Returns the horizontal shear of the sprite.
+     */
+    [[nodiscard]] fixed horizontal_shear() const;
+
+    /**
+     * @brief Sets the horizontal shear of the sprite.
+     *
+     * If the horizontal shear is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given horizontal shear is attached to it.
+     */
+    void set_horizontal_shear(fixed horizontal_shear);
+
+    /**
+     * @brief Returns the vertical shear of the sprite.
+     */
+    [[nodiscard]] fixed vertical_shear() const;
+
+    /**
+     * @brief Sets the vertical shear of the sprite.
+     *
+     * If the vertical shear is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given vertical shear is attached to it.
+     */
+    void set_vertical_shear(fixed vertical_shear);
+
+    /**
+     * @brief Sets the shear of the sprite.
+     *
+     * If the shear is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given shear is attached to it.
+     */
+    void set_shear(fixed shear);
+
+    /**
+     * @brief Sets the shear of the sprite.
+     * @param horizontal_shear Horizontal shear.
+     * @param vertical_shear Vertical shear.
+     *
+     * If the shear is != 0 and the sprite doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given shear is attached to it.
+     */
+    void set_shear(fixed horizontal_shear, fixed vertical_shear);
+
+    /**
      * @brief Returns the priority relative to backgrounds.
      *
      * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).

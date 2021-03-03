@@ -250,6 +250,72 @@ namespace
         }
     }
 
+    void affine_bgs_shear_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "LEFT: decrease horizontal shear",
+            "RIGHT: increase horizontal shear",
+            "DOWN: decrease vertical shear",
+            "UP: increase vertical shear",
+            "",
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs shear", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
+        red_bg.set_horizontal_shear(0.5);
+        red_bg.set_vertical_shear(-0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed horizontal_shear = red_bg.horizontal_shear();
+            bn::fixed vertical_shear = red_bg.vertical_shear();
+
+            if(bn::keypad::left_held())
+            {
+                red_bg.set_horizontal_shear(horizontal_shear - 0.01);
+            }
+            else if(bn::keypad::right_held())
+            {
+                red_bg.set_horizontal_shear(horizontal_shear + 0.01);
+            }
+
+            if(bn::keypad::down_held())
+            {
+                red_bg.set_vertical_shear(vertical_shear - 0.01);
+            }
+            else if(bn::keypad::up_held())
+            {
+                red_bg.set_vertical_shear(vertical_shear + 0.01);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_shear_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr const bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        info info("Affine BGs shear actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
+        blue_bg.set_shear(-0.5);
+
+        bn::affine_bg_shear_loop_action action(blue_bg, 120, 0.5);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
     void affine_bgs_flip_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr const bn::string_view info_text_lines[] = {
@@ -808,6 +874,12 @@ int main()
         bn::core::update();
 
         affine_bgs_scale_actions_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_shear_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_shear_actions_scene(text_generator);
         bn::core::update();
 
         affine_bgs_flip_scene(text_generator);

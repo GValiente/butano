@@ -219,6 +219,15 @@ public:
 
     /**
      * @brief Sets the shear.
+     */
+    constexpr void set_shear(fixed shear)
+    {
+        set_horizontal_shear(shear);
+        set_vertical_shear(shear);
+    }
+
+    /**
+     * @brief Sets the shear.
      * @param horizontal_shear Horizontal shear.
      * @param vertical_shear Vertical shear.
      */

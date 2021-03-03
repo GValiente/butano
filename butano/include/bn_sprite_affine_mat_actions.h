@@ -761,7 +761,7 @@ public:
      */
     static void set(fixed scale, sprite_affine_mat_ptr& affine_mat)
     {
-        affine_mat.set_scale(scale, scale);
+        affine_mat.set_scale(scale);
     }
 };
 
@@ -783,7 +783,7 @@ public:
      * @param affine_mat sprite_affine_mat_ptr to copy.
      * @param duration_updates Number of times that the action must be updated
      * until the scale of the given sprite_affine_mat_ptr is equal to final_scale.
-     * @param final_scale scale when the action is updated duration_updates times.
+     * @param final_scale Scale when the action is updated duration_updates times.
      */
     sprite_affine_mat_scale_to_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
                                       fixed final_scale) :
@@ -938,6 +938,621 @@ public:
      * when the action is updated the given number of times.
      */
     [[nodiscard]] fixed new_scale() const
+    {
+        return new_property();
+    }
+};
+
+
+// horizontal_shear
+
+/**
+ * @brief Manages the horizontal shear of a sprite_affine_mat_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_horizontal_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the horizontal shear of the given sprite_affine_mat_ptr.
+     */
+    [[nodiscard]] static fixed get(const sprite_affine_mat_ptr& affine_mat)
+    {
+        return affine_mat.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the horizontal shear of the given sprite_affine_mat_ptr.
+     */
+    static void set(fixed horizontal_shear, sprite_affine_mat_ptr& affine_mat)
+    {
+        affine_mat.set_horizontal_shear(horizontal_shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the horizontal shear of a sprite_affine_mat_ptr until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_horizontal_shear_to_action :
+        public to_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the horizontal shear of the given sprite_affine_mat_ptr is equal to final_horizontal_shear.
+     * @param final_horizontal_shear Horizontal shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_horizontal_shear_to_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                                 fixed final_horizontal_shear) :
+        to_value_template_action(affine_mat, duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the horizontal shear of the given sprite_affine_mat_ptr is equal to final_horizontal_shear.
+     * @param final_horizontal_shear Horizontal shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_horizontal_shear_to_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                                 fixed final_horizontal_shear) :
+        to_value_template_action(move(affine_mat), duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the horizontal shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_horizontal_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the horizontal shear of a sprite_affine_mat_ptr from a minimum to a maximum.
+ * When the horizontal shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_horizontal_shear_loop_action :
+        public loop_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the horizontal shear delta.
+     * @param final_horizontal_shear When the horizontal shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_horizontal_shear_loop_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                                   fixed final_horizontal_shear) :
+        loop_value_template_action(affine_mat, duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the horizontal shear delta.
+     * @param final_horizontal_shear When the horizontal shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_horizontal_shear_loop_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                                   fixed final_horizontal_shear) :
+        loop_value_template_action(move(affine_mat), duration_updates, final_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the horizontal shear of the given sprite_affine_mat_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_horizontal_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the horizontal shear of a sprite_affine_mat_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_horizontal_shear_toggle_action :
+        public toggle_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_horizontal_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_horizontal_shear_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                                     fixed new_horizontal_shear) :
+        toggle_value_template_action(affine_mat, duration_updates, new_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_horizontal_shear_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                                     fixed new_horizontal_shear) :
+        toggle_value_template_action(move(affine_mat), duration_updates, new_horizontal_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the horizontal shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_horizontal_shear() const
+    {
+        return new_property();
+    }
+};
+
+
+// vertical_shear
+
+/**
+ * @brief Manages the vertical shear of a sprite_affine_mat_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_vertical_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the vertical shear of the given sprite_affine_mat_ptr.
+     */
+    [[nodiscard]] static fixed get(const sprite_affine_mat_ptr& affine_mat)
+    {
+        return affine_mat.vertical_shear();
+    }
+
+    /**
+     * @brief Sets the vertical shear of the given sprite_affine_mat_ptr.
+     */
+    static void set(fixed vertical_shear, sprite_affine_mat_ptr& affine_mat)
+    {
+        affine_mat.set_vertical_shear(vertical_shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the vertical shear of a sprite_affine_mat_ptr until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_vertical_shear_to_action :
+        public to_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the vertical shear of the given sprite_affine_mat_ptr is equal to final_vertical_shear.
+     * @param final_vertical_shear Vertical shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_vertical_shear_to_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                               fixed final_vertical_shear) :
+        to_value_template_action(affine_mat, duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the vertical shear of the given sprite_affine_mat_ptr is equal to final_vertical_shear.
+     * @param final_vertical_shear Vertical shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_vertical_shear_to_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                               fixed final_vertical_shear) :
+        to_value_template_action(move(affine_mat), duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the vertical shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_vertical_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the vertical shear of a sprite_affine_mat_ptr from a minimum to a maximum.
+ * When the vertical shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_vertical_shear_loop_action :
+        public loop_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the vertical shear delta.
+     * @param final_vertical_shear When the vertical shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_vertical_shear_loop_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                                 fixed final_vertical_shear) :
+        loop_value_template_action(affine_mat, duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the vertical shear delta.
+     * @param final_vertical_shear When the vertical shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_vertical_shear_loop_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                                 fixed final_vertical_shear) :
+        loop_value_template_action(move(affine_mat), duration_updates, final_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the vertical shear of the given sprite_affine_mat_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_vertical_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the vertical shear of a sprite_affine_mat_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_vertical_shear_toggle_action :
+        public toggle_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_vertical_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_vertical_shear_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                                   fixed new_vertical_shear) :
+        toggle_value_template_action(affine_mat, duration_updates, new_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_vertical_shear_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates,
+                                                   fixed new_vertical_shear) :
+        toggle_value_template_action(move(affine_mat), duration_updates, new_vertical_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the vertical shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_vertical_shear() const
+    {
+        return new_property();
+    }
+};
+
+
+// shear
+
+/**
+ * @brief Manages the shear of a sprite_affine_mat_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_shear_manager
+{
+
+public:
+    /**
+     * @brief Returns the horizontal shear of the given sprite_affine_mat_ptr.
+     */
+    [[nodiscard]] static fixed get(const sprite_affine_mat_ptr& affine_mat)
+    {
+        return affine_mat.horizontal_shear();
+    }
+
+    /**
+     * @brief Sets the shear of the given sprite_affine_mat_ptr.
+     */
+    static void set(fixed shear, sprite_affine_mat_ptr& affine_mat)
+    {
+        affine_mat.set_shear(shear);
+    }
+};
+
+
+/**
+ * @brief Modifies the shear of a sprite_affine_mat_ptr until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_shear_to_action :
+        public to_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the shear of the given sprite_affine_mat_ptr is equal to final_shear.
+     * @param final_shear Shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_shear_to_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                      fixed final_shear) :
+        to_value_template_action(affine_mat, duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the shear of the given sprite_affine_mat_ptr is equal to final_shear.
+     * @param final_shear Shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_shear_to_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates, fixed final_shear) :
+        to_value_template_action(move(affine_mat), duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the shear of a sprite_affine_mat_ptr from a minimum to a maximum.
+ * When the shear is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_shear_loop_action :
+        public loop_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the shear delta.
+     * @param final_shear When the shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_shear_loop_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                        fixed final_shear) :
+        loop_value_template_action(affine_mat, duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the shear delta.
+     * @param final_shear When the shear of the given sprite_affine_mat_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    sprite_affine_mat_shear_loop_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates, fixed final_shear) :
+        loop_value_template_action(move(affine_mat), duration_updates, final_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the shear of the given sprite_affine_mat_ptr
+     * is equal to this returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_shear() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the shear of a sprite_affine_mat_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup affine_mat
+ * @ingroup action
+ */
+class sprite_affine_mat_shear_toggle_action :
+        public toggle_value_template_action<sprite_affine_mat_ptr, fixed, sprite_affine_mat_shear_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_shear New shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_shear_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates,
+                                          fixed new_shear) :
+        toggle_value_template_action(affine_mat, duration_updates, new_shear)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param affine_mat sprite_affine_mat_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the shear
+     * of the given sprite_affine_mat_ptr.
+     * @param new_shear New shear when the action is updated duration_updates times.
+     */
+    sprite_affine_mat_shear_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates, fixed new_shear) :
+        toggle_value_template_action(move(affine_mat), duration_updates, new_shear)
+    {
+    }
+
+    /**
+     * @brief Returns the sprite_affine_mat_ptr to modify.
+     */
+    [[nodiscard]] const sprite_affine_mat_ptr& affine_mat() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the shear of the given sprite_affine_mat_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_shear() const
     {
         return new_property();
     }

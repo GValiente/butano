@@ -540,6 +540,94 @@ void sprite_ptr::set_scale(fixed horizontal_scale, fixed vertical_scale)
     }
 }
 
+fixed sprite_ptr::horizontal_shear() const
+{
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        return affine_mat->horizontal_shear();
+    }
+
+    return 1;
+}
+
+void sprite_ptr::set_horizontal_shear(fixed horizontal_shear)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        affine_mat->set_horizontal_shear(horizontal_shear);
+    }
+    else if(horizontal_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_horizontal_shear(horizontal_shear);
+        mat_attributes.set_horizontal_flip(horizontal_flip());
+        mat_attributes.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr::create(mat_attributes));
+    }
+}
+
+fixed sprite_ptr::vertical_shear() const
+{
+    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        return affine_mat->vertical_shear();
+    }
+
+    return 1;
+}
+
+void sprite_ptr::set_vertical_shear(fixed vertical_shear)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        affine_mat->set_vertical_shear(vertical_shear);
+    }
+    else if(vertical_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_vertical_shear(vertical_shear);
+        mat_attributes.set_horizontal_flip(horizontal_flip());
+        mat_attributes.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr::create(mat_attributes));
+    }
+}
+
+void sprite_ptr::set_shear(fixed shear)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        affine_mat->set_shear(shear);
+    }
+    else if(shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_shear(shear);
+        mat_attributes.set_horizontal_flip(horizontal_flip());
+        mat_attributes.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr::create(mat_attributes));
+    }
+}
+
+void sprite_ptr::set_shear(fixed horizontal_shear, fixed vertical_shear)
+{
+    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    {
+        affine_mat->set_shear(horizontal_shear, vertical_shear);
+    }
+    else if(horizontal_shear != 0 || vertical_shear != 0)
+    {
+        affine_mat_attributes mat_attributes;
+        mat_attributes.set_shear(horizontal_shear, vertical_shear);
+        mat_attributes.set_horizontal_flip(horizontal_flip());
+        mat_attributes.set_vertical_flip(vertical_flip());
+        set_remove_affine_mat_when_not_needed(true);
+        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr::create(mat_attributes));
+    }
+}
+
 int sprite_ptr::bg_priority() const
 {
     return sprites_manager::bg_priority(_handle);

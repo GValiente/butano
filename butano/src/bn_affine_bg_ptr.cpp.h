@@ -291,6 +291,36 @@ void affine_bg_ptr::set_scale(fixed horizontal_scale, fixed vertical_scale)
     bgs_manager::set_scale(_handle, horizontal_scale, vertical_scale);
 }
 
+fixed affine_bg_ptr::horizontal_shear() const
+{
+    return bgs_manager::horizontal_shear(_handle);
+}
+
+void affine_bg_ptr::set_horizontal_shear(fixed horizontal_shear)
+{
+    bgs_manager::set_horizontal_shear(_handle, horizontal_shear);
+}
+
+fixed affine_bg_ptr::vertical_shear() const
+{
+    return bgs_manager::vertical_shear(_handle);
+}
+
+void affine_bg_ptr::set_vertical_shear(fixed vertical_shear)
+{
+    bgs_manager::set_vertical_shear(_handle, vertical_shear);
+}
+
+void affine_bg_ptr::set_shear(fixed shear)
+{
+    bgs_manager::set_shear(_handle, shear);
+}
+
+void affine_bg_ptr::set_shear(fixed horizontal_shear, fixed vertical_shear)
+{
+    bgs_manager::set_shear(_handle, horizontal_shear, vertical_shear);
+}
+
 bool affine_bg_ptr::horizontal_flip() const
 {
     return bgs_manager::horizontal_flip(_handle);

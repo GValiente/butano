@@ -817,11 +817,11 @@
  *
  * Showcases multiple color palette effects.
  *
- * <tr><td> **Polygons**
+ * <tr><td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
- * Showcases polygon drawing with sprites.
+ * Showcases flat polygons rendering with sprites.
  *
  * <td> @ref profiler
  *
@@ -865,13 +865,19 @@
  *
  * Showcase of Butano sprite text rendering.
  *
- * <td> @ref window
+ * <td> **Textured polygons**
+ *
+ * @image html examples_texture_polygons.png
+ *
+ * Showcases textured polygons rendering with sprites.
+ *
+ * <tr><td> @ref window
  *
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <tr><td> **World map**
+ * <td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -1402,6 +1408,7 @@
  * * bn::affine_mat_attributes::horizontal_shear, bn::affine_mat_attributes::set_horizontal_shear,
  *   bn::affine_mat_attributes::vertical_shear and bn::affine_mat_attributes::set_vertical_shear added.
  * * bn::affine_mat_attributes::unsafe_set_register_values added.
+ * * `texture_polygons` example added.
  * * More questions added to @ref faq page.
  *
  *

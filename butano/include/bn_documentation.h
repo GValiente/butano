@@ -1325,6 +1325,44 @@
  * * <a href="https://docs.microsoft.com/en-us/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=msvc-160">A std::shared_ptr usage guide</a>.
  *
  *
+ * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
+ *
+ * In general, you should not do anything with Butano before calling bn::core::init,
+ * including creating global Butano objects.
+ *
+ * If you want to declare global Butano objects, you can do something like this instead:
+ *
+ * @code{.cpp}
+ * struct global_data
+ * {
+ *     bn::sprite_ptr sprite;
+ *     bn::regular_bg_ptr bg;
+ * };
+ *
+ * global_data* global_ptr;
+ *
+ * int main()
+ * {
+ *     bn::core::init();
+ *
+ *     global_data global_instance = {
+ *         bn::sprite_items::sprite_item.create_sprite(0, 0),
+ *         bn::regular_bg_items::bg_item.create_bg(0, 0)
+ *     };
+ *
+ *     global_ptr = &global_instance;
+ *
+ *     // ...
+ * }
+ * @endcode
+ *
+ * And then you can access global Butano objects from anywhere in your code with something like this:
+ *
+ * @code{.cpp}
+ * global_ptr->sprite.set_position(50, 50);
+ * @endcode
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
@@ -1342,6 +1380,13 @@
  * like <a href="https://www.coranac.com/projects/usenti/">Usenti</a>:
  *
  * @image html import_usenti.png
+ *
+ *
+ * @subsection faq_share_palettes How to share the same color palette between sprites or backgrounds?
+ *
+ * If two sprites or backgrounds have the same colors, by default they share the same color palette.
+ *
+ * Keep in mind that unused colors are also taken into account when deciding if two color palettes are equal or not.
  *
  *
  * @section faq_backgrounds Backgrounds

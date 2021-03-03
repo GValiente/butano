@@ -1448,7 +1448,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_4_0 6.4.0 (next release)
+ * @section changelog_6_4_0 6.4.0
  *
  * * Sprites and affine backgrounds support horizontal and vertical shear.
  * * bn::affine_mat_attributes::unsafe_set_register_values added.

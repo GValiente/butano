@@ -32,6 +32,7 @@ namespace bn
     using std::fill_n;
 
     using std::copy;
+    using std::copy_n;
     using std::copy_backward;
 
     using std::find;
@@ -47,6 +48,8 @@ namespace bn
     using std::stable_sort;
 
     using std::reverse;
+
+    using std::swap_ranges;
 }
 
 #endif

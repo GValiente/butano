@@ -459,6 +459,16 @@
  */
 
 /**
+ * @defgroup bitset Bitset
+ *
+ * A std::bitset like container.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup span Span
  *
  * A std::span like container.
@@ -1446,6 +1456,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_6_5_0 6.5.0 (next release)
+ *
+ * bn::bitset and bn::ibitset added.
  *
  *
  * @section changelog_6_4_0 6.4.0

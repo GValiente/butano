@@ -57,7 +57,7 @@ public:
     }
 
     /**
-     * @brief Returns the current elements count.
+     * @brief Returns the elements count.
      */
     [[nodiscard]] constexpr size_type size() const
     {

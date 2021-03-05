@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_5_0 6.5.0 (next release)
+ * @section changelog_6_5_0 6.5.0
  *
  * * bn::bitset and bn::ibitset added.
  * * BG blocks manager and sprite tiles manager allocation fixed.

@@ -597,7 +597,7 @@ namespace
             }
         }
 
-        if(to_remove_tiles_count && ! data.delay_commit)
+        if(to_remove_tiles_count)
         {
             update();
             data.delay_commit = true;

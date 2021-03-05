@@ -985,7 +985,7 @@ namespace
             }
         }
 
-        if(to_remove_blocks_count && ! data.delay_commit)
+        if(to_remove_blocks_count)
         {
             update();
             data.delay_commit = true;

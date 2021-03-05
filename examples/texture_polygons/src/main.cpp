@@ -138,8 +138,8 @@ namespace
             int u2v0 = u2 * v0;
             int u2v1 = u2 * v1;
 
-            bn::fixed delta_x = (u0v1 * x2) + (u2v0 * x1) + (x0 * u1v2) - (x0 * u2v1) - (u1v0 * x2) - (u0v2 * x1);
-            bn::fixed delta_y = (u0v1 * y2) + (y1 * u2v0) + (y0 * u1v2) - (y0 * u2v1) - (u1v0 * y2) - (u0v2 * y1);
+            int delta_x = (u0v1 * x2) + (u2v0 * x1) + (x0 * u1v2) - (x0 * u2v1) - (u1v0 * x2) - (u0v2 * x1);
+            int delta_y = (u0v1 * y2) + (y1 * u2v0) + (y0 * u1v2) - (y0 * u2v1) - (u1v0 * y2) - (u0v2 * y1);
             int position_divisor = u0v1 + u2v0 + u1v2 - u2v1 - u1v0 - u0v2;
             _sprite.set_position(delta_x / position_divisor, delta_y / position_divisor);
             _sprite.set_visible(true);

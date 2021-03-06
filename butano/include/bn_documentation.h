@@ -1458,6 +1458,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_6_0 6.6.0 (next release)
+ *
+ * SRAM memory usage reduced.
+ *
+ *
  * @section changelog_6_5_0 6.5.0
  *
  * * bn::bitset and bn::ibitset added.

@@ -6,15 +6,27 @@
 #ifndef BN_HW_SRAM_H
 #define BN_HW_SRAM_H
 
-#include "bn_common.h"
+#include "bn_hw_tonc.h"
 
 namespace bn::hw::sram
 {
     void init();
 
-    BN_CODE_EWRAM void write(const void* source, int size, int offset);
+    BN_CODE_EWRAM void _copy(const uint8_t* source, int size, uint8_t* destination);
 
-    BN_CODE_EWRAM void read(void* destination, int size, int offset);
+    inline void write(const void* source, int size, int offset)
+    {
+        auto source_ptr = reinterpret_cast<const uint8_t*>(source);
+        auto destination_ptr = reinterpret_cast<uint8_t*>(MEM_SRAM) + offset;
+        _copy(source_ptr, size, destination_ptr);
+    }
+
+    inline void read(void* destination, int size, int offset)
+    {
+        const uint8_t* source_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
+        auto destination_ptr = reinterpret_cast<uint8_t*>(destination);
+        _copy(source_ptr, size, destination_ptr);
+    }
 }
 
 #endif

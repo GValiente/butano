@@ -15,11 +15,13 @@ namespace bn::hw::bgs
 {
     constexpr const int affine_precision = 8;
 
+    using affine_attributes = BG_AFFINE;
+
     class handle
     {
 
     public:
-        BG_AFFINE affine;
+        affine_attributes affine;
         uint16_t cnt = 0;
         uint16_t hofs = 0;
         uint16_t vofs = 0;
@@ -225,7 +227,7 @@ namespace bn::hw::bgs
         return reinterpret_cast<uint16_t*>(REG_BASE + 0x0012 + (0x0004 * id));
     }
 
-    [[nodiscard]] inline BG_AFFINE* affine_mat_register(int id)
+    [[nodiscard]] inline affine_attributes* affine_mat_register(int id)
     {
         return &REG_BG_AFFINE[id];
     }

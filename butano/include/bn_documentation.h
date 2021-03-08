@@ -1460,7 +1460,8 @@
  *
  * @section changelog_6_6_0 6.6.0 (next release)
  *
- * SRAM memory usage reduced.
+ * * SRAM memory usage reduced.
+ * * `world_map` example frame rate back to 60FPS.
  *
  *
  * @section changelog_6_5_0 6.5.0

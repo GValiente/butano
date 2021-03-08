@@ -62,18 +62,6 @@ int main()
     bn::affine_bg_dy_register_hbe_ptr land_dy_hbe =
             bn::affine_bg_dy_register_hbe_ptr::create(land_bg, land_attributes._data);
 
-    bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> clouds_attributes_ptr(
-            new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
-    bn::array<bn::affine_bg_mat_attributes, bn::display::height()>& clouds_attributes = *clouds_attributes_ptr;
-    bn::affine_bg_pa_register_hbe_ptr clouds_pa_hbe =
-            bn::affine_bg_pa_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_pd_register_hbe_ptr clouds_pd_hbe =
-            bn::affine_bg_pd_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dx_register_hbe_ptr clouds_dx_hbe =
-            bn::affine_bg_dx_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-    bn::affine_bg_dy_register_hbe_ptr clouds_dy_hbe =
-            bn::affine_bg_dy_register_hbe_ptr::create(clouds_bg, clouds_attributes._data);
-
     bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
     bn::sprite_animate_action<4> ninja_animate_action = bn::create_sprite_animate_action_forever(
                 ninja_sprite, 12, bn::sprite_items::ninja.tiles_item(), 0, 1, 2, 3);
@@ -133,21 +121,16 @@ int main()
                                      bn::fixed_point(0.1, 0.1));
 
         load_attributes(land_bg.mat_attributes(), land_attributes._data);
-        load_attributes(clouds_bg.mat_attributes(), clouds_attributes._data);
 
         if(first_frame)
         {
             land_pa_hbe.reload_attributes_ref();
             land_pd_hbe.reload_attributes_ref();
-            clouds_pa_hbe.reload_attributes_ref();
-            clouds_pd_hbe.reload_attributes_ref();
             first_frame = false;
         }
 
         land_dx_hbe.reload_attributes_ref();
         land_dy_hbe.reload_attributes_ref();
-        clouds_dx_hbe.reload_attributes_ref();
-        clouds_dy_hbe.reload_attributes_ref();
 
         if(key_held && last_direction.data != new_direction.data)
         {

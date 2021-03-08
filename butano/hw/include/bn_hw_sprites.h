@@ -108,9 +108,14 @@ namespace bn::hw::sprites
         BFN_SET2(sprite.attr0, ATTR0_REG, ATTR0_MODE);
     }
 
+    inline void show_affine(bool double_size, uint16_t& attr0)
+    {
+        BFN_SET2(attr0, double_size ? ATTR0_AFF_DBL : ATTR0_AFF, ATTR0_MODE);
+    }
+
     inline void show_affine(bool double_size, handle_type& sprite)
     {
-        BFN_SET2(sprite.attr0, double_size ? ATTR0_AFF_DBL : ATTR0_AFF, ATTR0_MODE);
+        show_affine(double_size, sprite.attr0);
     }
 
     inline void hide(uint16_t& attr0)

@@ -197,20 +197,20 @@ public:
     }
 
 private:
-    bool _forever = true;
-    uint16_t _wait_updates = 0;
     sprite_ptr _sprite;
     sprite_tiles_item _tiles_item;
     vector<uint16_t, MaxSize> _graphics_indexes;
+    uint16_t _wait_updates = 0;
     uint16_t _current_graphics_indexes_index = 0;
     uint16_t _current_wait_updates = 0;
+    bool _forever = true;
 
     sprite_animate_action(const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item,
                           bool forever, const span<const uint16_t>& graphics_indexes) :
-        _forever(forever),
-        _wait_updates(uint16_t(wait_updates)),
         _sprite(sprite),
-        _tiles_item(tiles_item)
+        _tiles_item(tiles_item),
+        _wait_updates(uint16_t(wait_updates)),
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
@@ -226,10 +226,10 @@ private:
 
     sprite_animate_action(sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item, bool forever,
                           const span<const uint16_t>& graphics_indexes) :
-        _forever(forever),
-        _wait_updates(uint16_t(wait_updates)),
         _sprite(move(sprite)),
-        _tiles_item(tiles_item)
+        _tiles_item(tiles_item),
+        _wait_updates(uint16_t(wait_updates)),
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
@@ -531,18 +531,18 @@ public:
     }
 
 private:
-    bool _forever = true;
-    uint16_t _wait_updates = 0;
     sprite_ptr _sprite;
     vector<sprite_tiles_ptr, MaxSize> _tiles_list;
+    uint16_t _wait_updates = 0;
     uint16_t _current_tiles_list_index = 0;
     uint16_t _current_wait_updates = 0;
+    bool _forever = true;
 
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item,
                                  bool forever, const span<const uint16_t>& graphics_indexes) :
-        _forever(forever),
+        _sprite(sprite),
         _wait_updates(uint16_t(wait_updates)),
-        _sprite(sprite)
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
@@ -558,9 +558,9 @@ private:
 
     sprite_cached_animate_action(sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item,
                                  bool forever, const span<const uint16_t>& graphics_indexes) :
-        _forever(forever),
+        _sprite(move(sprite)),
         _wait_updates(uint16_t(wait_updates)),
-        _sprite(move(sprite))
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
@@ -576,9 +576,9 @@ private:
 
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_updates, bool forever,
                                  span<sprite_tiles_ptr> tiles_list) :
-        _forever(forever),
+        _sprite(sprite),
         _wait_updates(uint16_t(wait_updates)),
-        _sprite(sprite)
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
@@ -593,9 +593,9 @@ private:
 
     sprite_cached_animate_action(sprite_ptr&& sprite, int wait_updates, bool forever,
                                  span<sprite_tiles_ptr> tiles_list) :
-        _forever(forever),
+        _sprite(move(sprite)),
         _wait_updates(uint16_t(wait_updates)),
-        _sprite(move(sprite))
+        _forever(forever)
     {
         BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
         BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),

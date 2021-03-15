@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_6_0 6.6.0 (next release)
+ * @section changelog_6_6_0 6.6.0
  *
  * * SRAM memory usage reduced.
  * * Sprite animate actions memory usage reduced.

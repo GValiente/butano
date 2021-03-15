@@ -1458,6 +1458,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_6_1 6.6.1 (next release)
+ *
+ * * BG blocks manager use after move fixed.
+ *
+ *
  * @section changelog_6_6_0 6.6.0
  *
  * * SRAM memory usage reduced.

@@ -374,9 +374,10 @@ namespace
             int width = dimensions.width();
             int height = dimensions.height();
             int blocks_count = _regular_map_blocks_count(width, height);
+            bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
-                        palette.bpp(), compression, false };
+                        bpp, compression, false };
         }
 
         static create_data from_affine_map(
@@ -386,9 +387,10 @@ namespace
             int width = dimensions.width();
             int height = dimensions.height();
             int blocks_count = _affine_map_blocks_count(width, height);
+            bpp_mode bpp = palette.bpp();
 
-            return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles),
-                        move(palette), palette.bpp(), compression, true };
+            return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles), move(palette),
+                        bpp, compression, true };
         }
     };
 

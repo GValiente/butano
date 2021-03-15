@@ -491,6 +491,8 @@ public:
     sprite_rotate_by_action(const sprite_ptr& sprite, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(sprite, delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**
@@ -504,6 +506,8 @@ public:
     sprite_rotate_by_action(sprite_ptr&& sprite, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(move(sprite), delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**

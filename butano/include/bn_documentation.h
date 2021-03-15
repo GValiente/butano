@@ -1462,6 +1462,7 @@
  *
  * * SRAM memory usage reduced.
  * * Sprite animate actions memory usage reduced.
+ * * Missing asserts added to some actions.
  * * `world_map` example frame rate back to 60FPS.
  *
  *

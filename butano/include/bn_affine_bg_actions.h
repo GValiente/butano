@@ -504,6 +504,8 @@ public:
     affine_bg_rotate_by_action(const affine_bg_ptr& bg, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(bg, delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**
@@ -517,6 +519,8 @@ public:
     affine_bg_rotate_by_action(affine_bg_ptr&& bg, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(move(bg), delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**

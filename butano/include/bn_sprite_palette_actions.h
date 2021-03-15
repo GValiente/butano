@@ -596,7 +596,10 @@ public:
     sprite_palette_rotate_by_action(const sprite_palette_ptr& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(palette, duration_updates, delta_count, 0, 0)
     {
-        set_after_max_property(this->palette().colors_count() - 1);
+        int colors_count = this->palette().colors_count();
+        BN_ASSERT(abs(delta_count) < colors_count - 1, "Invalid delta count: ", delta_count, " - ", colors_count);
+
+        set_after_max_property(colors_count - 1);
     }
 
     /**
@@ -610,7 +613,10 @@ public:
     sprite_palette_rotate_by_action(sprite_palette_ptr&& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(move(palette), duration_updates, delta_count, 0, 0)
     {
-        set_after_max_property(this->palette().colors_count() - 1);
+        int colors_count = this->palette().colors_count();
+        BN_ASSERT(abs(delta_count) < colors_count - 1, "Invalid delta count: ", delta_count, " - ", colors_count);
+
+        set_after_max_property(colors_count - 1);
     }
 
     /**

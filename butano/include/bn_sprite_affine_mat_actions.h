@@ -79,6 +79,8 @@ public:
     sprite_affine_mat_rotate_by_action(const sprite_affine_mat_ptr& affine_mat, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(affine_mat, delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**
@@ -92,6 +94,8 @@ public:
     sprite_affine_mat_rotate_by_action(sprite_affine_mat_ptr&& affine_mat, fixed delta_rotation_angle) :
         cyclic_by_value_template_action(move(affine_mat), delta_rotation_angle, 0, 360)
     {
+        BN_ASSERT(delta_rotation_angle > -360 && delta_rotation_angle < 360,
+                  "Invalid delta rotation angle: ", delta_rotation_angle);
     }
 
     /**

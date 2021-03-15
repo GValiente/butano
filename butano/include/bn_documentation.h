@@ -1464,6 +1464,7 @@
  * * Sprite animate actions memory usage reduced.
  * * Missing asserts added to some actions.
  * * bn::random is now a trivial class.
+ * * BG blocks manager search fixed.
  * * `world_map` example frame rate back to 60FPS.
  *
  *

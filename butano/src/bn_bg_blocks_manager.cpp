@@ -509,8 +509,7 @@ namespace
                       int(compression), " - ", int(item.compression()));
             BN_ASSERT(half_words == item.width, "Tiles count does not match item tiles count: ",
                       _half_words_to_tiles(half_words), " - ", item.tiles_count());
-            BN_ASSERT(affine && ! item.is_affine, "Item has regular tiles");
-            BN_ASSERT(! affine && item.is_affine, "Item has affine tiles");
+            BN_ASSERT(affine == item.is_affine, "Item regular/affine tiles mismatch: ", affine, " - ", item.is_affine);
 
             switch(item.status())
             {

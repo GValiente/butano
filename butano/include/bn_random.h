@@ -32,16 +32,6 @@ class random
 
 public:
     /**
-     * @brief Default constructor.
-     */
-    constexpr random() :
-        _x(123456789),
-        _y(362436069),
-        _z(521288629)
-    {
-    }
-
-    /**
      * @brief Returns a new random unsigned integer, modifying its internal seed in the process.
      */
     [[nodiscard]] constexpr unsigned get()
@@ -58,9 +48,9 @@ public:
     }
 
 private:
-    unsigned _x;
-    unsigned _y;
-    unsigned _z;
+    unsigned _x = 123456789;
+    unsigned _y = 362436069;
+    unsigned _z = 521288629;
 };
 
 }

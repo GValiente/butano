@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_6_1 6.6.1 (next release)
+ * @section changelog_6_6_1 6.6.1
  *
  * * BG blocks manager use after move fixed.
  *

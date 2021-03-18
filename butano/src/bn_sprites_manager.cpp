@@ -379,6 +379,11 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
         {
             hw::sprites::set_shape_size(shape_size, handle);
             _update_item_dimensions(*item);
+
+            if(item->affine_mat)
+            {
+                update_affine_mat_double_size(id);
+            }
         }
         else
         {
@@ -411,6 +416,11 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
         {
             hw::sprites::set_shape_size(shape_size, handle);
             _update_item_dimensions(*item);
+
+            if(item->affine_mat)
+            {
+                update_affine_mat_double_size(id);
+            }
         }
         else
         {
@@ -491,6 +501,11 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
         {
             hw::sprites::set_shape_size(shape_size, handle);
             _update_item_dimensions(*item);
+
+            if(item->affine_mat)
+            {
+                update_affine_mat_double_size(id);
+            }
         }
         else
         {
@@ -797,17 +812,14 @@ sprite_double_size_mode double_size_mode(id_type id)
 void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 {
     auto item = static_cast<item_type*>(id);
-    item->double_size_mode = unsigned(double_size_mode);
 
-    if(item->affine_mat)
+    if(item->double_size_mode != unsigned(double_size_mode))
     {
-        bool new_double_size = item->new_double_size();
+        item->double_size_mode = unsigned(double_size_mode);
 
-        if(item->double_size != new_double_size)
+        if(item->affine_mat)
         {
-            item->double_size = new_double_size;
-            hw::sprites::show_affine(new_double_size, item->handle);
-            _update_item_dimensions(*item);
+            update_affine_mat_double_size(id);
         }
     }
 }
@@ -1200,18 +1212,16 @@ void remove_identity_affine_mat_if_not_needed(id_type id)
     }
 }
 
-void update_affine_mat_double_size(id_type id, bool new_double_size)
+void update_affine_mat_double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
+    bool new_double_size = item->new_double_size();
 
-    if(sprite_double_size_mode(item->double_size_mode) == sprite_double_size_mode::AUTO)
+    if(item->double_size != new_double_size)
     {
-        if(item->double_size != new_double_size)
-        {
-            item->double_size = new_double_size;
-            hw::sprites::show_affine(new_double_size, item->handle);
-            _update_item_dimensions(*item);
-        }
+        item->double_size = new_double_size;
+        hw::sprites::show_affine(new_double_size, item->handle);
+        _update_item_dimensions(*item);
     }
 }
 

@@ -294,49 +294,6 @@ public:
     }
 
     /**
-     * @brief Indicates if a sprite_ptr attached to a sprite_affine_mat_ptr with these attributes
-     * needs more pixels than the area specified by its shape and size to be drawn without clipping issues.
-     */
-    [[nodiscard]] constexpr bool double_size() const
-    {
-        int pa = _pa;
-        int pb = _pb;
-        int pc = _pc;
-        int pd = _pd;
-        int divisor = (pa * pd) - (pb * pc);
-
-        if(! divisor)
-        {
-            return true;
-        }
-
-        int ix1 = (-65536 * (pb + pd)) / divisor;
-
-        if(abs(ix1) > 256)
-        {
-            return true;
-        }
-
-        int iy1 = (65536 * (pa + pc)) / divisor;
-
-        if(abs(iy1) > 256)
-        {
-            return true;
-        }
-
-        int ix2 = (-65536 * (pb - pd)) / divisor;
-
-        if(abs(ix2) > 256)
-        {
-            return true;
-        }
-
-        int iy2 = (65536 * (pa - pc)) / divisor;
-
-        return abs(iy2) > 256;
-    }
-
-    /**
      * @brief Returns the value to commit to the first GBA register of
      * an affine transformation matrix with these attributes.
      */

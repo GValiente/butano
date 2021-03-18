@@ -1458,9 +1458,14 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_6_2 6.6.2 (next release)
+ *
+ * Automatic sprite double size detection fixed.
+ *
+ *
  * @section changelog_6_6_1 6.6.1
  *
- * * BG blocks manager use after move fixed.
+ * BG blocks manager use after move fixed.
  *
  *
  * @section changelog_6_6_0 6.6.0

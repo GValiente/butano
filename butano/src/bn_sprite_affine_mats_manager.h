@@ -94,7 +94,7 @@ namespace bn::sprite_affine_mats_manager
 
     [[nodiscard]] bool flipped_identity(int id);
 
-    [[nodiscard]] bool double_size(int id);
+    [[nodiscard]] bool sprite_double_size(int id, int sprite_width, int sprite_height);
 
     void reload(int id);
 

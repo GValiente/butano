@@ -30,7 +30,6 @@ namespace
         intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
         bool flipped_identity;
-        bool double_size;
         bool remove_if_not_needed;
 
         void init()
@@ -38,7 +37,6 @@ namespace
             attributes = affine_mat_attributes();
             usages = 1;
             flipped_identity = true;
-            double_size = false;
             remove_if_not_needed = false;
         }
 
@@ -46,18 +44,8 @@ namespace
         {
             attributes = new_attributes;
             usages = 1;
+            flipped_identity = attributes.flipped_identity();
             remove_if_not_needed = false;
-
-            if(attributes.flipped_identity())
-            {
-                flipped_identity = true;
-                double_size = false;
-            }
-            else
-            {
-                flipped_identity = false;
-                double_size = attributes.double_size();
-            }
         }
     };
 
@@ -110,12 +98,9 @@ namespace
     {
         item_type& item = data.items[index];
         const affine_mat_attributes& attributes = item.attributes;
-        bool new_double_size;
 
         if(attributes.flipped_identity())
         {
-            new_double_size = false;
-
             if(! item.flipped_identity)
             {
                 item.flipped_identity = true;
@@ -131,22 +116,16 @@ namespace
         }
         else
         {
-            new_double_size = attributes.double_size();
             item.flipped_identity = false;
             item.remove_if_not_needed = false;
         }
 
         _update_indexes_to_commit(index);
 
-        if(item.double_size != new_double_size)
+        for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
         {
-            item.double_size = new_double_size;
-
-            for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
-            {
-                sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-                sprites_manager::update_affine_mat_double_size(&sprite_item, new_double_size);
-            }
+            sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+            sprites_manager::update_affine_mat_double_size(&sprite_item);
         }
     }
 
@@ -505,10 +484,53 @@ bool flipped_identity(int id)
     return item.flipped_identity;
 }
 
-bool double_size(int id)
+bool sprite_double_size(int id, int sprite_width, int sprite_height)
 {
     const item_type& item = data.items[id];
-    return item.double_size;
+
+    if(item.flipped_identity)
+    {
+        return false;
+    }
+
+    const affine_mat_attributes& attributes = item.attributes;
+    int pa = attributes.pa_register_value();
+    int pb = attributes.pb_register_value();
+    int pc = attributes.pc_register_value();
+    int pd = attributes.pd_register_value();
+    int divisor = (pa * pd) - (pb * pc);
+
+    if(! divisor)
+    {
+        return true;
+    }
+
+    int half_width = sprite_width / 2;
+    int half_height = sprite_height / 2;
+    int ix1 = -((256 * half_height * pb) + (256 * half_width * pd)) / divisor;
+
+    if(abs(ix1) >= half_width)
+    {
+        return true;
+    }
+
+    int iy1 = (256 * ((half_height * pa) + (half_width * pc))) / divisor;
+
+    if(abs(iy1) >= half_height)
+    {
+        return true;
+    }
+
+    int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd)) / divisor;
+
+    if(abs(ix2) >= half_width)
+    {
+        return true;
+    }
+
+    int iy2 = (256 * ((half_height * pa) - (half_width * pc))) / divisor;
+
+    return abs(iy2) >= half_height;
 }
 
 void reload(int id)

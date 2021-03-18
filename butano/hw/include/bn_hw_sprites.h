@@ -153,10 +153,15 @@ namespace bn::hw::sprites
         return sprite_shape_size(shape(sprite), size(sprite));
     }
 
-    [[nodiscard]] inline pair<int, int> dimensions(const handle_type& sprite, bool double_size)
+    [[nodiscard]] inline pair<int, int> base_dimensions(const handle_type& sprite)
     {
         const uint8_t* obj_size = obj_get_size(&sprite);
-        pair<int, int> result(obj_size[0], obj_size[1]);
+        return pair<int, int>(obj_size[0], obj_size[1]);
+    }
+
+    [[nodiscard]] inline pair<int, int> dimensions(const handle_type& sprite, bool double_size)
+    {
+        pair<int, int> result = base_dimensions(sprite);
 
         if(double_size)
         {

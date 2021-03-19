@@ -507,30 +507,30 @@ bool sprite_double_size(int id, int sprite_width, int sprite_height)
 
     int half_width = sprite_width / 2;
     int half_height = sprite_height / 2;
-    int ix1 = -((256 * half_height * pb) + (256 * half_width * pd)) / divisor;
+    int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
 
-    if(abs(ix1) >= half_width)
+    if(abs(ix1) > half_width)
     {
         return true;
     }
 
-    int iy1 = (256 * ((half_height * pa) + (half_width * pc))) / divisor;
+    int iy1 = (256 * ((half_height * pa) + (half_width * pc) - pa)) / divisor;
 
-    if(abs(iy1) >= half_height)
+    if(abs(iy1) > half_height)
     {
         return true;
     }
 
-    int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd)) / divisor;
+    int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd) + (256 * pb) - (256 * pd)) / divisor;
 
-    if(abs(ix2) >= half_width)
+    if(abs(ix2) > half_width)
     {
         return true;
     }
 
-    int iy2 = (256 * ((half_height * pa) - (half_width * pc))) / divisor;
+    int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
 
-    return abs(iy2) >= half_height;
+    return abs(iy2) > half_height;
 }
 
 void reload(int id)

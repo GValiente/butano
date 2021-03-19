@@ -1458,6 +1458,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_7_0 6.7.0 (next release)
+ *
+ * Automatic sprite double size detection improved.
+ *
+ *
  * @section changelog_6_6_2 6.6.2
  *
  * Automatic sprite double size detection fixed.

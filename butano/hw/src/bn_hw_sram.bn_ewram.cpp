@@ -5,8 +5,6 @@
 
 #include "../include/bn_hw_sram.h"
 
-#include "../include/bn_hw_tonc.h"
-
 namespace bn::hw::sram
 {
 

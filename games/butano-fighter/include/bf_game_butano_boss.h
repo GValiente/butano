@@ -39,7 +39,7 @@ protected:
                        const bn::camera_ptr& camera, enemy_bullets& enemy_bullets) final;
 
     [[nodiscard]] bool _update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
-                                    background& background) final;
+                                    background& background, rumble_manager& rumble_manager) final;
 
     void _show_damage_palette(const bn::sprite_palette_ptr& damage_palette, const bn::camera_ptr& camera) final;
 

@@ -11,6 +11,7 @@
 #include "bf_game_background.h"
 #include "bf_game_hero.h"
 #include "bf_game_hero_bomb.h"
+#include "bf_game_rumble_manager.h"
 #include "bf_game_hero_bullets.h"
 #include "bf_game_intro.h"
 #include "bf_game_enemies.h"
@@ -33,6 +34,7 @@ public:
 
 private:
     bn::camera_ptr _camera;
+    rumble_manager _rumble_manager;
     background _background;
     hero _hero;
     hero_bullets _hero_bullets;

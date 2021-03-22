@@ -30,6 +30,8 @@ namespace bf
 
 namespace
 {
+    constexpr const bn::fixed _text_x = -28;
+
     [[nodiscard]] bn::sprite_ptr _create_butano_up_sprite()
     {
         bn::sprite_builder builder(bn::sprite_items::butano_big_sprite, 0);
@@ -100,8 +102,9 @@ namespace
     }();
 }
 
-title::title(const status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background) :
+title::title(status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background) :
     _status(status),
+    _text_generator(text_generator),
     _butano_up_sprite(_create_butano_up_sprite()),
     _butano_down_sprite(_create_butano_down_sprite()),
     _butano_characters(_create_butano_characters()),
@@ -116,9 +119,11 @@ title::title(const status& status, bn::sprite_text_generator& text_generator, bu
     text_generator.set_center_alignment();
     text_generator.generate(0, 12 - (bn::display::height() / 2), high_experience_text, _high_experience_text_sprites);
     text_generator.set_left_alignment();
-    text_generator.generate(-28, 42, "START", _start_text_sprites);
-    text_generator.generate(-28, 42 + 12, "HOW TO PLAY", _how_to_play_sprites);
-    text_generator.generate(-28, 42 + 12 + 12, "CREDITS", _credits_text_sprites);
+    text_generator.generate(_text_x, 34, "START", _start_text_sprites);
+    text_generator.generate(_text_x, 34 + 12, "HOW TO PLAY", _how_to_play_sprites);
+    text_generator.generate(_text_x, 34 + 12 + 12, "CREDITS", _credits_text_sprites);
+    text_generator.generate(_text_x, 34 + 12 + 12 + 12, status.rumble_enabled() ? "RUMBLE: ON" : "RUMBLE: OFF",
+                            _rumble_text_sprites);
     _cursor_sprite.set_position(_how_to_play_sprites[0].x() - 28, _start_text_sprites[0].y());
     _cursor_sprite.set_visible(false);
 
@@ -138,6 +143,11 @@ title::title(const status& status, bn::sprite_text_generator& text_generator, bu
     }
 
     for(bn::sprite_ptr& sprite : _credits_text_sprites)
+    {
+        sprite.set_visible(false);
+    }
+
+    for(bn::sprite_ptr& sprite : _rumble_text_sprites)
     {
         sprite.set_visible(false);
     }
@@ -367,21 +377,23 @@ bn::optional<scene_type> title::_menu()
             {
                 sprite.set_visible(true);
             }
+
+            for(bn::sprite_ptr& sprite : _rumble_text_sprites)
+            {
+                sprite.set_visible(true);
+            }
         }
 
         if(bn::keypad::a_pressed())
         {
-            if(bn::blending::intensity_alpha() > 0)
-            {
-                _blending_intensity_action.emplace(cursor_scale_frames, 0);
-            }
-
-            _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, bn::fixed(0.01));
-
             if(_menu_index == 0)
             {
                 bn::sound_items::start.play();
-                bn::rumble::set_enabled(true);
+
+                if(_status.rumble_enabled())
+                {
+                    bn::rumble::set_enabled(true);
+                }
 
                 if(_status.how_to_play_viewed())
                 {
@@ -396,9 +408,28 @@ bn::optional<scene_type> title::_menu()
                 {
                     _music_volume_action.emplace(cursor_scale_frames + sprites_hide_frames, 0);
                 }
+                else if(_menu_index == 3)
+                {
+                    _status.set_rumble_enabled(! _status.rumble_enabled());
+
+                    bn::fixed text_y = _rumble_text_sprites[0].y();
+                    _rumble_text_sprites.clear();
+                    _text_generator.set_left_alignment();
+                    _text_generator.generate(_text_x, text_y, _status.rumble_enabled() ? "RUMBLE: ON" : "RUMBLE: OFF",
+                                             _rumble_text_sprites);
+                }
             }
 
-            _state = state::HIDE_CURSOR;
+            if(_menu_index != 3)
+            {
+                if(bn::blending::intensity_alpha() > 0)
+                {
+                    _blending_intensity_action.emplace(cursor_scale_frames, 0);
+                }
+
+                _cursor_scale_action.emplace(_cursor_sprite, cursor_scale_frames, bn::fixed(0.01));
+                _state = state::HIDE_CURSOR;
+            }
         }
         else if(bn::keypad::up_pressed() || bn::keypad::down_pressed())
         {
@@ -406,7 +437,7 @@ bn::optional<scene_type> title::_menu()
             {
                 if(_menu_index == 0)
                 {
-                    _menu_index = 2;
+                    _menu_index = 3;
                 }
                 else
                 {
@@ -415,7 +446,7 @@ bn::optional<scene_type> title::_menu()
             }
             else
             {
-                if(_menu_index == 2)
+                if(_menu_index == 3)
                 {
                     _menu_index = 0;
                 }
@@ -438,6 +469,10 @@ bn::optional<scene_type> title::_menu()
 
             case 2:
                 _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _credits_text_sprites[0].y());
+                break;
+
+            case 3:
+                _cursor_move_action.emplace(_cursor_sprite, 3, _cursor_sprite.x(), _rumble_text_sprites[0].y());
                 break;
 
             default:
@@ -489,6 +524,11 @@ bn::optional<scene_type> title::_menu()
                     sprite.set_blending_enabled(true);
                 }
 
+                for(bn::sprite_ptr& sprite : _rumble_text_sprites)
+                {
+                    sprite.set_blending_enabled(true);
+                }
+
                 _cursor_sprite.set_visible(false);
                 _blending_transparency_action.emplace(sprites_hide_frames, 0);
                 bn::rumble::set_enabled(false);
@@ -532,6 +572,7 @@ bn::optional<scene_type> title::_menu()
             _start_text_sprites.clear();
             _how_to_play_sprites.clear();
             _credits_text_sprites.clear();
+            _rumble_text_sprites.clear();
             bn::blending::set_transparency_alpha(1);
 
             if(_menu_index == 0)

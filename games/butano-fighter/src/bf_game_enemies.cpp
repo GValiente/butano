@@ -79,11 +79,11 @@ bool enemies::hero_should_look_down(const bn::fixed_point& hero_position, bool h
 
 void enemies::update(const hero_bomb& hero_bomb, const intro& intro, const bn::camera_ptr& camera, hero& hero,
                      enemy_bullets& enemy_bullets, objects& objects, boss_intro& boss_intro, scoreboard& scoreboard,
-                     background& background)
+                     background& background, rumble_manager& rumble_manager)
 {
     if(_boss)
     {
-        _boss->update(hero_bomb, camera, hero, enemy_bullets, objects, scoreboard, background);
+        _boss->update(hero_bomb, camera, hero, enemy_bullets, objects, scoreboard, background, rumble_manager);
     }
     else
     {

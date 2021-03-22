@@ -122,7 +122,7 @@ bool boss::check_hero_bullet(const check_hero_bullet_data& data)
 }
 
 void boss::update(const hero_bomb& hero_bomb, const bn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
-                  objects& objects, scoreboard& scoreboard, background& background)
+                  objects& objects, scoreboard& scoreboard, background& background, rumble_manager& rumble_manager)
 {
     const bn::fixed_point& hero_position = hero.body_position();
 
@@ -186,7 +186,7 @@ void boss::update(const hero_bomb& hero_bomb, const bn::camera_ptr& camera, hero
             }
         }
 
-        if(_update_dead(hero_position, camera, background))
+        if(_update_dead(hero_position, camera, background, rumble_manager))
         {
             if(_dead_counter)
             {

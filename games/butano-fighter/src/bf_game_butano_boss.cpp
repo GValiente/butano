@@ -5,7 +5,6 @@
 
 #include "bf_game_butano_boss.h"
 
-#include "bn_rumble.h"
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -18,6 +17,7 @@
 #include "bf_game_background.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
+#include "bf_game_rumble_manager.h"
 #include "bf_game_enemy_bullet_event.h"
 
 namespace bf::game
@@ -333,7 +333,8 @@ void butano_boss::_update_alive(const bn::fixed_point& hero_position, const hero
     }
 }
 
-bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& camera, background& background)
+bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& camera, background& background,
+                               rumble_manager& rumble_manager)
 {
     bool done = false;
 
@@ -407,7 +408,7 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
             _sprites.clear();
             _mini_explosions.clear();
             bn::sound_items::explosion_2.play();
-            bn::rumble::set_enabled(true);
+            rumble_manager.set_enabled(true);
         }
         else if(_state_index == 16)
         {
@@ -445,7 +446,7 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
 
                 if(_explosion_counter == 60)
                 {
-                    bn::rumble::set_enabled(false);
+                    rumble_manager.set_enabled(false);
                 }
             }
             else

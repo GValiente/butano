@@ -6,7 +6,6 @@
 #include "bf_game_tank_boss.h"
 
 #include "bn_math.h"
-#include "bn_rumble.h"
 #include "bn_colors.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -19,6 +18,7 @@
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
+#include "bf_game_rumble_manager.h"
 #include "bf_game_enemy_bullet_event.h"
 
 namespace bf::game
@@ -277,7 +277,8 @@ void tank_boss::_update_alive(const bn::fixed_point& hero_position, const hero_b
     }
 }
 
-bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&)
+bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&,
+                             rumble_manager& rumble_manager)
 {
     bool done = false;
     _y += constants::background_speed;
@@ -329,7 +330,7 @@ bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::cam
                 _explosion.emplace(bn::sprite_items::enemy_explosion, bn::fixed_point(0, bn::display::height() / 2),
                                    6, constants::enemy_explosions_z_order, true, camera);
                 bn::sound_items::explosion_2.play();
-                bn::rumble::set_enabled(true);
+                rumble_manager.set_enabled(true);
             }
         }
         else if(_state_index == 16)
@@ -346,7 +347,7 @@ bool tank_boss::_update_dead(const bn::fixed_point& hero_position, const bn::cam
             }
             else
             {
-                bn::rumble::set_enabled(false);
+                rumble_manager.set_enabled(false);
                 done = true;
             }
         }

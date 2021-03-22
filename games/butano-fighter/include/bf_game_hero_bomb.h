@@ -24,6 +24,7 @@ class enemies;
 class background;
 class boss_intro;
 class enemy_bullets;
+class rumble_manager;
 
 class hero_bomb
 {
@@ -46,7 +47,8 @@ public:
     }
 
     void update(const intro& intro, const boss_intro& boss_intro, const bn::camera_ptr& camera, hero& hero,
-                enemies& enemies, enemy_bullets& enemy_bullets, background& background);
+                enemies& enemies, enemy_bullets& enemy_bullets, background& background,
+                rumble_manager& rumble_manager);
 
 private:
     enum class status_type

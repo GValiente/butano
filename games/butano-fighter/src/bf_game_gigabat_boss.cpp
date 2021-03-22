@@ -5,7 +5,6 @@
 
 #include "bf_game_gigabat_boss.h"
 
-#include "bn_rumble.h"
 #include "bn_colors.h"
 #include "bn_sound_items.h"
 #include "bn_sprite_builder.h"
@@ -16,6 +15,7 @@
 #include "bf_game_hero_bomb.h"
 #include "bf_game_bullet_util.h"
 #include "bf_game_enemy_bullets.h"
+#include "bf_game_rumble_manager.h"
 #include "bf_game_enemy_bullet_event.h"
 
 namespace bf::game
@@ -263,7 +263,8 @@ void gigabat_boss::_update_alive(const bn::fixed_point& hero_position, const her
     }
 }
 
-bool gigabat_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&)
+bool gigabat_boss::_update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera, background&,
+                                rumble_manager& rumble_manager)
 {
     bool hide_shadow = false;
     bool done = false;
@@ -329,7 +330,7 @@ bool gigabat_boss::_update_dead(const bn::fixed_point& hero_position, const bn::
                 _explosion.emplace(bn::sprite_items::hero_death, bn::fixed_point(), 6,
                                    constants::enemy_explosions_z_order, true, camera);
                 bn::sound_items::explosion_2.play();
-                bn::rumble::set_enabled(true);
+                rumble_manager.set_enabled(true);
             }
         }
         else if(_state_index == 16)
@@ -344,7 +345,7 @@ bool gigabat_boss::_update_dead(const bn::fixed_point& hero_position, const bn::
             }
             else
             {
-                bn::rumble::set_enabled(false);
+                rumble_manager.set_enabled(false);
                 done = true;
             }
         }

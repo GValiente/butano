@@ -23,11 +23,12 @@ namespace
 {
     struct sram_data
     {
-        constexpr static const char* valid_label = "bf001";
+        constexpr static const char* valid_label = "bf002";
 
         char label[8] = {};
         int high_experience = 0;
         int brightness = 0;
+        bool rumble_enabled = false;
         bool how_to_play_viewed = false;
 
         [[nodiscard]] bool read()
@@ -50,6 +51,7 @@ namespace
         sram_data sram_data_to_write;
         sram_data_to_write.high_experience = status.high_experience();
         sram_data_to_write.brightness = bn::bg_palettes::brightness().data();
+        sram_data_to_write.rumble_enabled = status.rumble_enabled();
         sram_data_to_write.how_to_play_viewed = status.how_to_play_viewed();
         sram_data_to_write.write();
     }
@@ -71,6 +73,7 @@ status::status() :
     if(sram_data_to_read.read())
     {
         _high_experience = sram_data_to_read.high_experience;
+        _rumble_enabled = sram_data_to_read.rumble_enabled;
         _how_to_play_viewed = sram_data_to_read.how_to_play_viewed;
 
         bn::fixed brightness = bn::fixed::from_data(sram_data_to_read.brightness);
@@ -186,6 +189,12 @@ bool status::throw_shield()
 void status::update_high_experience()
 {
     _high_experience = bn::max(_experience, _high_experience);
+    _write_sram(*this);
+}
+
+void status::set_rumble_enabled(bool rumble_enabled)
+{
+    _rumble_enabled = rumble_enabled;
     _write_sram(*this);
 }
 

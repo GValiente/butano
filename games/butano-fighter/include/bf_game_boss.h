@@ -27,6 +27,7 @@ class hero_bomb;
 class scoreboard;
 class background;
 class enemy_bullets;
+class rumble_manager;
 class check_hero_bullet_data;
 
 class boss
@@ -68,7 +69,7 @@ public:
     }
 
     void update(const hero_bomb& hero_bomb, const bn::camera_ptr& camera, hero& hero, enemy_bullets& enemy_bullets,
-                objects& objects, scoreboard& scoreboard, background& background);
+                objects& objects, scoreboard& scoreboard, background& background, rumble_manager& rumble_manager);
 
 protected:
     boss(int life, int experience, const bn::ivector<bn::fixed_rect>& rects,
@@ -80,7 +81,7 @@ protected:
                                const bn::camera_ptr& camera, enemy_bullets& enemy_bullets) = 0;
 
     [[nodiscard]] virtual bool _update_dead(const bn::fixed_point& hero_position, const bn::camera_ptr& camera,
-                                            background& background) = 0;
+                                            background& background, rumble_manager& rumble_manager) = 0;
 
     virtual void _show_damage_palette(const bn::sprite_palette_ptr& damage_palette, const bn::camera_ptr& camera) = 0;
 

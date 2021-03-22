@@ -45,7 +45,7 @@ public:
 
     void update(const hero_bomb& hero_bomb, const intro& intro, const bn::camera_ptr& camera, hero& hero,
                 enemy_bullets& enemy_bullets, objects& objects, boss_intro& boss_intro, scoreboard& scoreboard,
-                background& background);
+                background& background, rumble_manager& rumble_manager);
 
 private:
     const bn::span<const enemy_event>& _events;

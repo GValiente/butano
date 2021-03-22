@@ -5,7 +5,6 @@
 
 #include "bf_game_hero.h"
 
-#include "bn_rumble.h"
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_fixed_rect.h"
@@ -24,6 +23,7 @@
 #include "bf_game_background.h"
 #include "bf_butano_background.h"
 #include "bf_game_enemy_bullets.h"
+#include "bf_game_rumble_manager.h"
 #include "bf_game_hero_bullet_level.h"
 
 namespace bf::game
@@ -117,8 +117,9 @@ void hero::show_shoot(bn::color fade_color)
 }
 
 bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies& enemies,
-                                       enemy_bullets& enemy_bullets, objects& objects, background& background,
-                                       butano_background& butano_background, bn::camera_ptr& camera)
+                                      enemy_bullets& enemy_bullets, objects& objects, background& background,
+                                      butano_background& butano_background, bn::camera_ptr& camera,
+                                      rumble_manager& rumble_manager)
 {
     bn::optional<scene_type> result;
 
@@ -163,7 +164,7 @@ bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies&
 
         if(_shield_counter)
         {
-            _animate_shield(background);
+            _animate_shield(background, rumble_manager);
         }
         else
         {
@@ -172,7 +173,7 @@ bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies&
                 if(enemies.check_hero(new_body_rect) || enemy_bullets.check_hero(new_body_rect))
                 {
                     int old_bombs_count = _status.bombs_count();
-                    bn::rumble::set_enabled(true);
+                    rumble_manager.set_enabled(true);
 
                     if(_status.throw_shield())
                     {
@@ -210,7 +211,7 @@ bn::optional<scene_type> hero::update(const hero_bomb& hero_bomb, const enemies&
     }
     else
     {
-        result = _animate_dead(camera, background, butano_background);
+        result = _animate_dead(camera, background, butano_background, rumble_manager);
         _body_position = _body_sprite_animate_action.sprite().position();
     }
 
@@ -401,7 +402,7 @@ void hero::_show_shield(int old_bombs_count, const bn::camera_ptr& camera, backg
     bn::sound_items::explosion_2.play();
 }
 
-void hero::_animate_shield(background& background)
+void hero::_animate_shield(background& background, rumble_manager& rumble_manager)
 {
     --_shield_counter;
 
@@ -435,7 +436,7 @@ void hero::_animate_shield(background& background)
         }
         else if(shield_counter == 135)
         {
-            bn::rumble::set_enabled(false);
+            rumble_manager.set_enabled(false);
         }
         else if(shield_counter < 60)
         {
@@ -457,7 +458,7 @@ void hero::_animate_shield(background& background)
 }
 
 bn::optional<scene_type> hero::_animate_dead(const bn::camera_ptr& camera, background& background,
-                                              butano_background& butano_background)
+                                             butano_background& butano_background, rumble_manager& rumble_manager)
 {
     bn::sprite_ptr body_sprite = _body_sprite_animate_action.sprite();
     bn::optional<scene_type> result;
@@ -492,7 +493,7 @@ bn::optional<scene_type> hero::_animate_dead(const bn::camera_ptr& camera, backg
     }
     else if(_death_counter == 100)
     {
-        bn::rumble::set_enabled(false);
+        rumble_manager.set_enabled(false);
     }
     else if(_death_counter == 220)
     {

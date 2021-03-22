@@ -32,7 +32,7 @@ class title : public scene
 {
 
 public:
-    title(const status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background);
+    title(status& status, bn::sprite_text_generator& text_generator, butano_background& butano_background);
 
     title(const title& other) = delete;
 
@@ -52,7 +52,8 @@ private:
         END
     };
 
-    const status& _status;
+    status& _status;
+    bn::sprite_text_generator& _text_generator;
     bn::sprite_ptr _butano_up_sprite;
     bn::sprite_ptr _butano_down_sprite;
     bn::vector<bn::sprite_ptr, 6> _butano_characters;
@@ -61,6 +62,7 @@ private:
     bn::vector<bn::sprite_ptr, 2> _start_text_sprites;
     bn::vector<bn::sprite_ptr, 3> _how_to_play_sprites;
     bn::vector<bn::sprite_ptr, 2> _credits_text_sprites;
+    bn::vector<bn::sprite_ptr, 3> _rumble_text_sprites;
     bn::sprite_ptr _cursor_sprite;
     bn::fixed _butano_y_inc = -4.05;
     bn::array<bn::fixed, bn::display::height()> _butano_x_hbe_deltas;

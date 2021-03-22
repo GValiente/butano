@@ -29,6 +29,7 @@ class enemies;
 class hero_bomb;
 class background;
 class enemy_bullets;
+class rumble_manager;
 
 class hero
 {
@@ -99,8 +100,8 @@ public:
     }
 
     bn::optional<scene_type> update(const hero_bomb& hero_bomb, const enemies& enemies, enemy_bullets& enemy_bullets,
-                                     objects& objects, background& background, butano_background& butano_background,
-                                     bn::camera_ptr& camera);
+                                    objects& objects, background& background, butano_background& butano_background,
+                                    bn::camera_ptr& camera, rumble_manager& rumble_manager);
 
 private:
     struct body_snapshot_type
@@ -148,10 +149,10 @@ private:
 
     void _show_shield(int old_bombs_count, const bn::camera_ptr& camera, background& background);
 
-    void _animate_shield(background& background);
+    void _animate_shield(background& background, rumble_manager& rumble_manager);
 
     bn::optional<scene_type> _animate_dead(const bn::camera_ptr& camera, background& background,
-                                            butano_background& butano_background);
+                                           butano_background& butano_background, rumble_manager& rumble_manager);
 };
 
 }

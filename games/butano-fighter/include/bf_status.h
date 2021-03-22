@@ -58,6 +58,13 @@ public:
 
     void update_high_experience();
 
+    [[nodiscard]] bool rumble_enabled() const
+    {
+        return _rumble_enabled;
+    }
+
+    void set_rumble_enabled(bool rumble_enabled);
+
     [[nodiscard]] bool how_to_play_viewed() const
     {
         return _how_to_play_viewed;
@@ -71,6 +78,7 @@ private:
     int _experience = 0;
     int _bombs_count = 2;
     int _high_experience = 0;
+    bool _rumble_enabled = true;
     bool _how_to_play_viewed = false;
 };
 

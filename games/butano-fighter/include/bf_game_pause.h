@@ -18,6 +18,8 @@ namespace bf
 namespace bf::game
 {
 
+class rumble_manager;
+
 class pause
 {
 
@@ -27,7 +29,7 @@ public:
         return _active;
     }
 
-    void update(const butano_background& butano_background);
+    void update(const butano_background& butano_background, rumble_manager& rumble_manager);
 
 private:
     bn::optional<bn::regular_bg_ptr> _bg;

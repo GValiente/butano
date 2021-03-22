@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_7_0 6.7.0 (next release)
+ * @section changelog_6_7_0 6.7.0
  *
  * * Automatic sprite double size detection improved.
  * * Butano Fighter allows to disable rumble in the title menu.

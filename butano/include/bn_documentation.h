@@ -1458,6 +1458,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_7_1 6.7.1 (next release)
+ *
+ * `texture_polygons` example affine parameters fixed.
+ *
+ *
  * @section changelog_6_7_0 6.7.0
  *
  * * Automatic sprite double size detection improved.

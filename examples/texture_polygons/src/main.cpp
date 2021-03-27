@@ -114,11 +114,13 @@ namespace
                 return;
             }
 
-            int multiplier = half_size * 512;
-            int pa = (-multiplier * (y1 - y2)) / affine_divisor;
-            int pb = (multiplier * (x1 - x2)) / affine_divisor;
-            int pc = (-multiplier * (y0 - y1)) / affine_divisor;
-            int pd = (multiplier * (x0 - x1)) / affine_divisor;
+            int pa = (-512*half_size*y1 + 512*half_size*y2 + 256*y1 - 256*y2) / affine_divisor;
+            int pb = (256*(2*half_size*x1 - 2*half_size*x2 - x1 + x2)) / affine_divisor;
+            int pc = (-512*half_size*y0 + 512*half_size*y1 + 256*y0 - 256*y1) / affine_divisor;
+            int pd = (256*(2*half_size*x0 - 2*half_size*x1 - x0 + x1)) / affine_divisor;
+            bn::affine_mat_attributes attributes;
+            attributes.unsafe_set_register_values(pa, pb, pc, pd);
+            _sprite_affine_mat.set_attributes(attributes);
 
             int u0 = -half_size;
             int v0 = half_size;
@@ -143,10 +145,6 @@ namespace
             int position_divisor = u0v1 + u2v0 + u1v2 - u2v1 - u1v0 - u0v2;
             _sprite.set_position(delta_x / position_divisor, delta_y / position_divisor);
             _sprite.set_visible(true);
-
-            bn::affine_mat_attributes attributes;
-            attributes.unsafe_set_register_values(pa, pb, pc, pd);
-            _sprite_affine_mat.set_attributes(attributes);
         }
     };
 }

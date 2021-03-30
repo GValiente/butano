@@ -7,7 +7,6 @@
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_optional.h"
-#include "bn_blending.h"
 #include "bn_fixed_point.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
@@ -23,7 +22,6 @@
 
 #include "bn_sprite_items_ninja.h"
 #include "bn_affine_bg_items_land.h"
-#include "bn_affine_bg_items_clouds.h"
 
 int main()
 {
@@ -44,11 +42,6 @@ int main()
 
     int x_limit = (land_bg.dimensions().width() - bn::display::width()) / 2;
     int y_limit = (land_bg.dimensions().height() - bn::display::height()) / 2;
-
-    bn::affine_bg_ptr clouds_bg = bn::affine_bg_items::clouds.create_bg(0, 0);
-    clouds_bg.set_priority(2);
-    clouds_bg.set_blending_enabled(true);
-    bn::blending::set_transparency_alpha(0.5);
 
     bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> land_attributes_ptr(
             new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());
@@ -85,10 +78,8 @@ int main()
 
     while(true)
     {
-        bn::fixed_point old_pivot_position = land_bg.pivot_position();
-        int inc = bn::keypad::a_held() ? 4 : 1;
-
         direction new_direction;
+        int inc = bn::keypad::a_held() ? 4 : 1;
         bool key_held = false;
 
         if(bn::keypad::left_held())
@@ -116,9 +107,6 @@ int main()
             new_direction.keys.down = true;
             key_held = true;
         }
-
-        clouds_bg.set_pivot_position(clouds_bg.pivot_position() + land_bg.pivot_position() - old_pivot_position +
-                                     bn::fixed_point(0.1, 0.1));
 
         load_attributes(land_bg.mat_attributes(), land_attributes._data);
 

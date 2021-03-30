@@ -1460,7 +1460,8 @@
  *
  * @section changelog_6_7_1 6.7.1 (next release)
  *
- * `texture_polygons` example affine parameters fixed.
+ * * `texture_polygons` example affine parameters fixed.
+ * * Clouds removed from `world_map` example.
  *
  *
  * @section changelog_6_7_0 6.7.0

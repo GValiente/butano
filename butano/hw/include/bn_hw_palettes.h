@@ -7,8 +7,8 @@
 #define BN_HW_PALETTES_H
 
 #include "bn_color.h"
-#include "bn_memory.h"
 #include "bn_hw_tonc.h"
+#include "bn_hw_memory.h"
 
 namespace bn::hw::palettes
 {
@@ -34,7 +34,7 @@ namespace bn::hw::palettes
 
         inline void commit(const color* source_colors_ptr, int offset, int count, color* destination_colors_ptr)
         {
-            memory::copy(source_colors_ptr[offset], count, destination_colors_ptr[offset]);
+            hw::memory::copy_words(source_colors_ptr + offset, count / 2, destination_colors_ptr + offset);
         }
     }
 

@@ -1463,6 +1463,7 @@
  * * Sprites optimized.
  * * Blending optimized.
  * * Mosaic optimized.
+ * * Internal memory transfers optimized.
  * * `texture_polygons` example affine parameters fixed.
  * * Clouds removed from `world_map` example.
  *

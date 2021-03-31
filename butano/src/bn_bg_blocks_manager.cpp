@@ -9,6 +9,7 @@
 #include "bn_bgs_manager.h"
 #include "bn_unordered_map.h"
 #include "bn_config_bg_blocks.h"
+#include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_bg_blocks.h"
 
 #include "bn_bg_maps.cpp.h"
@@ -2696,10 +2697,10 @@ void update_regular_map_row(int id, int x, int y)
         else
         {
             int elements = 32 - x_separator;
-            memory::copy(*source_data, elements, *dest_data);
+            hw::memory::copy_half_words(source_data, elements, dest_data);
             source_data += elements;
             dest_data -= x_separator;
-            memory::copy(*source_data, x_separator, *dest_data);
+            hw::memory::copy_half_words(source_data, x_separator, dest_data);
         }
     }
 }
@@ -2745,10 +2746,10 @@ void update_affine_map_row(int id, int x, int y)
     else
     {
         int elements = 32 - x_separator;
-        memory::copy(*source_data, elements, *dest_data);
+        hw::memory::copy_bytes(source_data, elements, dest_data);
         source_data += elements;
         dest_data -= x_separator;
-        memory::copy(*source_data, x_separator, *dest_data);
+        hw::memory::copy_bytes(source_data, x_separator, dest_data);
     }
 }
 
@@ -2852,10 +2853,10 @@ void set_regular_map_position(int id, int x, int y)
                 const uint16_t* source_data = item_data + ((row * map_width) + x);
                 uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
                 int elements = 32 - x_separator;
-                memory::copy(*source_data, elements, *dest_data);
+                hw::memory::copy_half_words(source_data, elements, dest_data);
                 source_data += elements;
                 dest_data -= x_separator;
-                memory::copy(*source_data, x_separator, *dest_data);
+                hw::memory::copy_half_words(source_data, x_separator, dest_data);
             }
         }
     }
@@ -2909,10 +2910,10 @@ void set_affine_map_position(int id, int x, int y)
             const uint8_t* source_data = item_data + ((row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
             int elements = 32 - x_separator;
-            memory::copy(*source_data, elements, *dest_data);
+            hw::memory::copy_bytes(source_data, elements, dest_data);
             source_data += elements;
             dest_data -= x_separator;
-            memory::copy(*source_data, x_separator, *dest_data);
+            hw::memory::copy_bytes(source_data, x_separator, dest_data);
         }
     }
 }

@@ -6,8 +6,9 @@
 #ifndef BN_HW_BG_BLOCKS_H
 #define BN_HW_BG_BLOCKS_H
 
-#include "bn_memory.h"
+#include "bn_assert.h"
 #include "bn_compression_type.h"
+#include "bn_hw_memory.h"
 #include "bn_hw_uncompress.h"
 #include "bn_hw_bg_blocks_constants.h"
 
@@ -54,7 +55,7 @@ namespace bn::hw::bg_blocks
         {
 
         case compression_type::NONE:
-            memory::copy(*source_ptr, count, *destination_ptr);
+            hw::memory::copy_words(source_ptr, count / 2, destination_ptr);
             break;
 
         case compression_type::LZ77:

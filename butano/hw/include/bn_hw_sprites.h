@@ -6,9 +6,9 @@
 #ifndef BN_HW_SPRITES_H
 #define BN_HW_SPRITES_H
 
-#include "bn_memory.h"
 #include "bn_sprite_builder.h"
 #include "bn_hw_tonc.h"
+#include "bn_hw_memory.h"
 
 namespace bn::hw::sprites
 {
@@ -315,7 +315,7 @@ namespace bn::hw::sprites
 
     inline void commit(const handle_type& sprites_ref, int offset, int count)
     {
-        memory::copy((&sprites_ref)[offset], count, vram()[offset]);
+        hw::memory::copy_words((&sprites_ref) + offset, count * (sizeof(handle_type) / 4), vram() + offset);
     }
 
     [[nodiscard]] inline uint16_t* first_attributes_register(int id)

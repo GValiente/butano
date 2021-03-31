@@ -6,7 +6,7 @@
 #include "../include/bn_hw_sprite_tiles.h"
 
 #include "bn_tile.h"
-#include "bn_memory.h"
+#include "../include/bn_hw_memory.h"
 
 namespace bn::hw::sprite_tiles
 {
@@ -26,7 +26,7 @@ void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int 
 
         for(int ix = 0; ix < width; ix += 8)
         {
-            memory::copy(*srcD, 8, *dstD);
+            hw::memory::copy_words(srcD, 8, dstD);
             srcD += source_height;
             dstD += 8;
         }

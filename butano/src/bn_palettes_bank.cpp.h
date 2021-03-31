@@ -8,11 +8,11 @@
 #include "bn_math.h"
 #include "bn_span.h"
 #include "bn_limits.h"
-#include "bn_memory.h"
 #include "bn_display.h"
 #include "bn_bpp_mode.h"
 #include "bn_algorithm.h"
 #include "bn_compression_type.h"
+#include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_uncompress.h"
 
 #if BN_CFG_LOG_ENABLED
@@ -28,7 +28,7 @@ namespace
     {
         auto int_source = reinterpret_cast<const unsigned*>(source);
         auto int_destination = reinterpret_cast<unsigned*>(destination);
-        memory::copy(*int_source, count / 2, *int_destination);
+        hw::memory::copy_words(int_source, count / 2, int_destination);
     }
 }
 

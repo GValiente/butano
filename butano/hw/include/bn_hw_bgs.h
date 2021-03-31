@@ -6,7 +6,6 @@
 #ifndef BN_HW_BGS_H
 #define BN_HW_BGS_H
 
-#include "bn_memory.h"
 #include "bn_affine_bg_builder.h"
 #include "bn_regular_bg_builder.h"
 #include "bn_hw_tonc.h"

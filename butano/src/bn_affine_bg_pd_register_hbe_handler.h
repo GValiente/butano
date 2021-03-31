@@ -6,12 +6,12 @@
 #ifndef BN_AFFINE_BG_PD_REGISTER_HBE_HANDLER_H
 #define BN_AFFINE_BG_PD_REGISTER_HBE_HANDLER_H
 
-#include "bn_memory.h"
 #include "bn_display.h"
 #include "bn_any_fwd.h"
 #include "bn_bgs_manager.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "../hw/include/bn_hw_bgs.h"
+#include "../hw/include/bn_hw_memory.h"
 
 namespace bn
 {
@@ -95,7 +95,7 @@ public:
     {
         auto int_source = static_cast<const unsigned*>(input_values_ptr);
         auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);
-        memory::copy(*int_source, display::height() / 2, *int_destination);
+        hw::memory::copy_words(int_source, display::height() / 2, int_destination);
     }
 
     static void show(intptr_t)

@@ -6,7 +6,6 @@
 #ifndef BN_HW_MEMORY_H
 #define BN_HW_MEMORY_H
 
-#include <cstring>
 #include "bn_hw_tonc.h"
 
 namespace bn::hw::memory
@@ -21,7 +20,7 @@ namespace bn::hw::memory
 
     inline void copy_bytes(const void* source, int bytes, void* destination)
     {
-        std::memcpy(destination, source, std::size_t(bytes));
+        tonccpy(destination, source, unsigned(bytes));
     }
 
     inline void copy_half_words(const void* source, int half_words, void* destination)
@@ -36,7 +35,7 @@ namespace bn::hw::memory
 
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
-        std::memset(destination, value, std::size_t(bytes));
+        toncset(destination, value, unsigned(bytes));
     }
 
     inline void set_half_words(uint16_t value, int half_words, void* destination)

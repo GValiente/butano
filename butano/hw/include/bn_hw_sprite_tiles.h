@@ -7,8 +7,9 @@
 #define BN_HW_SPRITE_TILES_H
 
 #include "bn_tile.h"
-#include "bn_memory.h"
+#include "bn_assert.h"
 #include "bn_compression_type.h"
+#include "bn_hw_memory.h"
 #include "bn_hw_uncompress.h"
 
 namespace bn::hw::sprite_tiles
@@ -26,12 +27,12 @@ namespace bn::hw::sprite_tiles
 
     inline void copy_tiles(const tile* source_tiles_ptr, int count, tile* destination_tiles_ptr)
     {
-        memory::copy(*source_tiles_ptr, count, *destination_tiles_ptr);
+        hw::memory::copy_words(source_tiles_ptr, count * (sizeof(tile) / 4), destination_tiles_ptr);
     }
 
     inline void clear_tiles(int count, tile* tiles_ptr)
     {
-        memory::clear(count, *tiles_ptr);
+        hw::memory::set_words(0, count * (sizeof(tile) / 4), tiles_ptr);
     }
 
     [[nodiscard]] inline tile* vram(int index)
@@ -47,7 +48,7 @@ namespace bn::hw::sprite_tiles
         {
 
         case compression_type::NONE:
-            memory::copy(*source_tiles_ptr, count, *destination_tiles_ptr);
+            hw::memory::copy_words(source_tiles_ptr, count * (sizeof(tile) / 4), destination_tiles_ptr);
             break;
 
         case compression_type::LZ77:

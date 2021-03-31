@@ -5,9 +5,9 @@
 
 #include "bn_hdma_manager.h"
 
-#include "bn_memory.h"
 #include "bn_display.h"
 #include "../hw/include/bn_hw_hdma.h"
+#include "../hw/include/bn_hw_memory.h"
 
 #include "bn_hdma.cpp.h"
 
@@ -95,7 +95,8 @@ namespace
             {
                 const uint16_t* source_ptr = current_state.source_ptr;
                 uint16_t* destination_ptr = current_state.destination_ptr;
-                memory::copy(source_ptr[(display::height() - 1) * elements], elements, *destination_ptr);
+                hw::memory::copy_half_words(source_ptr + ((display::height() - 1) * elements),
+                                            elements, destination_ptr);
                 hw::hdma::start(_channel, source_ptr, elements, destination_ptr);
             }
             else

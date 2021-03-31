@@ -38,25 +38,23 @@ namespace bn::hw::sprites
             blending_enabled = ! blending_enabled;
         }
 
-        int result = ATTR0_BUILD(y, int(shape), 0, 0, mosaic_enabled, blending_enabled, window_enabled);
-        result |= unsigned(bpp) * ATTR0_8BPP;
-        BFN_SET2(result, view_mode, ATTR0_MODE);
-        return result;
+        return (y & 255) | view_mode | (blending_enabled << 10) | (window_enabled << 11) | (mosaic_enabled << 12) |
+                (int(bpp) << 13) | (int(shape) << 14);
     }
 
     [[nodiscard]] inline int second_attributes(int x, sprite_size size, bool horizontal_flip, bool vertical_flip)
     {
-        return ATTR1_BUILDR(x, int(size), horizontal_flip, vertical_flip);
+        return (x & 511) | (horizontal_flip << 12) | (vertical_flip << 13) | (int(size) << 14);
     }
 
     [[nodiscard]] inline int second_attributes(int x, sprite_size size, int affine_mat_id)
     {
-        return ATTR1_BUILDA(x, int(size), affine_mat_id);
+        return (x & 511) | (affine_mat_id << 9) | (int(size) << 14);
     }
 
     [[nodiscard]] inline int third_attributes(int tiles_id, int palette_id, int bg_priority)
     {
-        return ATTR2_BUILD(tiles_id, palette_id, bg_priority);
+        return tiles_id | (palette_id << 12) | (bg_priority << 10);
     }
 
     inline void setup_regular(const sprite_shape_size& shape_size, int tiles_id, int palette_id, bpp_mode bpp,

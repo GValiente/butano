@@ -61,7 +61,7 @@ namespace bn::hw::display
             }
         }
 
-        REG_DISPCNT_U16 = dispcnt;
+        REG_DISPCNT_U16 = uint16_t(dispcnt);
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,

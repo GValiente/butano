@@ -1460,6 +1460,7 @@
  *
  * @section changelog_6_8_0 6.8.0 (next release)
  *
+ * * Sprites optimized.
  * * Blending optimized.
  * * Mosaic optimized.
  * * `texture_polygons` example affine parameters fixed.

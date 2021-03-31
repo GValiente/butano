@@ -148,8 +148,8 @@ namespace bn::hw::display
 
     inline void set_windows_flags(const unsigned* flags_ptr)
     {
-        REG_WININ = uint16_t(WIN_BUILD(flags_ptr[0], flags_ptr[1]));
-        REG_WINOUT = uint16_t(WIN_BUILD(flags_ptr[3], flags_ptr[2]));
+        REG_WININ = uint16_t((flags_ptr[1] << 8) | flags_ptr[0]);
+        REG_WINOUT = uint16_t((flags_ptr[2] << 8) | flags_ptr[3]);
     }
 
     inline void set_window_boundaries(int first, int second, uint16_t& window_cnt)

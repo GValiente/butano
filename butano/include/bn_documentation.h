@@ -1458,6 +1458,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_8_1 6.8.1 (next release)
+ *
+ * * GPIO direction register setup.
+ *
+ *
  * @section changelog_6_8_0 6.8.0
  *
  * * Sprites optimized.

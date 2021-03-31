@@ -25,6 +25,11 @@ namespace
     BN_DATA_EWRAM static_data data;
 }
 
+void init()
+{
+    hw::gpio::init();
+}
+
 bool rumble_enabled()
 {
     return data.rumble_enabled;

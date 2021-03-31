@@ -245,6 +245,9 @@ void init(const string_view& keypad_commands)
     hw::game_pak::init();
     hw::sram::init();
 
+    // Init gpio:
+    gpio_manager::init();
+
     // Init display:
     display_manager::init();
 

@@ -1458,8 +1458,9 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_7_1 6.7.1 (next release)
+ * @section changelog_6_8_0 6.8.0 (next release)
  *
+ * * Blending optimized.
  * * `texture_polygons` example affine parameters fixed.
  * * Clouds removed from `world_map` example.
  *

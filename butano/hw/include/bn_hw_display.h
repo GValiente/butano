@@ -108,14 +108,18 @@ namespace bn::hw::display
 
     inline void set_blending_cnt(int layers, blending_mode mode)
     {
-        REG_BLDCNT = uint16_t(BLD_BUILD(layers, BLD_ALL | BLD_BACKDROP, unsigned(mode)));
+        int top = layers;
+        int bottom = BLD_ALL | BLD_BACKDROP;
+        REG_BLDCNT = uint16_t((bottom << 8) | (int(mode) << 6) | top);
+
     }
 
     inline void set_blending_transparency(int transparency_alpha, int intensity_alpha,
                                           uint16_t& blending_transparency_cnt)
     {
-        blending_transparency_cnt =
-                uint16_t(BLDA_BUILD(transparency_alpha, max(16 - transparency_alpha, intensity_alpha)));
+        int eva = transparency_alpha;
+        int evb = max(16 - transparency_alpha, intensity_alpha);
+        blending_transparency_cnt = uint16_t(eva | (evb << 8));
     }
 
     inline void set_blending_transparency(int transparency_alpha, int intensity_alpha)
@@ -130,7 +134,7 @@ namespace bn::hw::display
 
     inline void set_blending_fade(int fade_alpha, uint16_t& blending_fade_cnt)
     {
-        blending_fade_cnt = BLDY_BUILD(fade_alpha);
+        blending_fade_cnt = uint16_t(fade_alpha);
     }
 
     inline void set_blending_fade(int fade_alpha)

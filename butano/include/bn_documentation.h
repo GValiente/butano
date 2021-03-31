@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_8_0 6.8.0 (next release)
+ * @section changelog_6_8_0 6.8.0
  *
  * * Sprites optimized.
  * * Blending optimized.

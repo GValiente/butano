@@ -67,8 +67,8 @@ namespace bn::hw::display
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
                            int bgs_horizontal_stretch, int bgs_vertical_stretch, uint16_t& mosaic_cnt)
     {
-        mosaic_cnt = MOS_BUILD(unsigned(bgs_horizontal_stretch), unsigned(bgs_vertical_stretch),
-                               unsigned(sprites_horizontal_stretch), unsigned(sprites_vertical_stretch));
+        mosaic_cnt = uint16_t((sprites_vertical_stretch << 12) | (sprites_horizontal_stretch << 8) |
+                              (bgs_vertical_stretch << 4) | bgs_horizontal_stretch);
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
@@ -111,7 +111,6 @@ namespace bn::hw::display
         int top = layers;
         int bottom = BLD_ALL | BLD_BACKDROP;
         REG_BLDCNT = uint16_t((bottom << 8) | (int(mode) << 6) | top);
-
     }
 
     inline void set_blending_transparency(int transparency_alpha, int intensity_alpha,

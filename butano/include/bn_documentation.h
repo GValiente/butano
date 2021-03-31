@@ -1461,6 +1461,7 @@
  * @section changelog_6_8_0 6.8.0 (next release)
  *
  * * Blending optimized.
+ * * Mosaic optimized.
  * * `texture_polygons` example affine parameters fixed.
  * * Clouds removed from `world_map` example.
  *

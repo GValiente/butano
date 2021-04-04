@@ -70,7 +70,7 @@ public:
      * @param other optional to copy.
      */
     constexpr optional(const optional& other)
-    requires (is_copy_constructible_v<Type> && ! is_trivially_copy_constructible_v<Type>) :
+    requires(is_copy_constructible_v<Type> && ! is_trivially_copy_constructible_v<Type>) :
         _empty(0),
         _valid(other._valid)
     {
@@ -91,7 +91,7 @@ public:
      * @param other optional to move.
      */
     constexpr optional(optional&& other) noexcept
-    requires (is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>) :
+    requires(is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>) :
         _empty(0),
         _valid(other._valid)
     {
@@ -154,9 +154,18 @@ public:
     /**
      * @brief Destructor.
      */
+    constexpr ~optional() = default;
+
+    /**
+     * @brief Destructor.
+     */
     constexpr ~optional()
+    requires(! is_trivially_destructible_v<Type>)
     {
-        _clean();
+        if(_valid)
+        {
+            destroy_at(&_value);
+        }
     }
 
     /**
@@ -182,7 +191,7 @@ public:
      * @return Reference to this.
      */
     constexpr optional& operator=(const optional& other)
-    requires (is_copy_assignable_v<Type> && ! is_trivially_copy_assignable_v<Type>)
+    requires(is_copy_assignable_v<Type> && ! is_trivially_copy_assignable_v<Type>)
     {
         if(other)
         {
@@ -217,7 +226,7 @@ public:
      * @return Reference to this.
      */
     constexpr optional& operator=(optional&& other) noexcept
-    requires (is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>)
+    requires(is_move_constructible_v<Type> && ! is_trivially_move_constructible_v<Type>)
     {
         if(other)
         {
@@ -682,14 +691,6 @@ private:
     };
 
     bool _valid = false;
-
-    constexpr void _clean()
-    {
-        if(_valid)
-        {
-            destroy_at(&_value);
-        }
-    }
 };
 
 

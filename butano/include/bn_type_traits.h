@@ -54,6 +54,9 @@ namespace bn
     using std::is_trivially_move_assignable;
     using std::is_trivially_move_assignable_v;
 
+    using std::is_trivially_destructible;
+    using std::is_trivially_destructible_v;
+
     using std::is_swappable;
     using std::is_swappable_v;
 

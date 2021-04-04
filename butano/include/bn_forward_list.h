@@ -81,8 +81,6 @@ public:
          */
         iterator& operator++()
         {
-            BN_ASSERT(_node, "Node is null");
-
             _node = _node->next;
             return *this;
         }
@@ -92,8 +90,6 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BN_ASSERT(_node, "Node is null");
-
             return static_cast<const value_node_type*>(_node)->value;
         }
 
@@ -102,8 +98,6 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BN_ASSERT(_node, "Node is null");
-
             return static_cast<value_node_type*>(_node)->value;
         }
 
@@ -112,8 +106,6 @@ public:
          */
         const_pointer operator->() const
         {
-            BN_ASSERT(_node, "Node is null");
-
             return &static_cast<const value_node_type*>(_node)->value;
         }
 
@@ -122,8 +114,6 @@ public:
          */
         pointer operator->()
         {
-            BN_ASSERT(_node, "Node is null");
-
             return &static_cast<value_node_type*>(_node)->value;
         }
 
@@ -177,8 +167,6 @@ public:
          */
         const_iterator& operator++()
         {
-            BN_ASSERT(_node, "Node is null");
-
             _node = _node->next;
             return *this;
         }
@@ -188,8 +176,6 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BN_ASSERT(_node, "Node is null");
-
             return static_cast<const value_node_type*>(_node)->value;
         }
 
@@ -198,8 +184,6 @@ public:
          */
         const_pointer operator->() const
         {
-            BN_ASSERT(_node, "Node is null");
-
             return &static_cast<const value_node_type*>(_node)->value;
         }
 

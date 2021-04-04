@@ -1458,8 +1458,9 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_8_1 6.8.1 (next release)
+ * @section changelog_6_9_0 6.9.0 (next release)
  *
+ * * Redundant container asserts removed.
  * * GPIO direction register setup.
  *
  *

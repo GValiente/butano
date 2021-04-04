@@ -100,7 +100,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            return _deque->at(_index);
+            return _deque->_value(_index);
         }
 
         /**
@@ -108,7 +108,7 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            return _deque->at(_index);
+            return _deque->_value(_index);
         }
 
         /**
@@ -116,7 +116,7 @@ public:
          */
         const_pointer operator->() const
         {
-            return &_deque->at(_index);
+            return &_deque->_value(_index);
         }
 
         /**
@@ -124,7 +124,7 @@ public:
          */
         pointer operator->()
         {
-            return &_deque->at(_index);
+            return &_deque->_value(_index);
         }
 
         /**
@@ -316,7 +316,7 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            return _deque->at(_index);
+            return _deque->_value(_index);
         }
 
         /**
@@ -324,7 +324,7 @@ public:
          */
         const_pointer operator->() const
         {
-            return &_deque->at(_index);
+            return &_deque->_value(_index);
         }
 
         /**

@@ -114,8 +114,6 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage[_index];
         }
 
@@ -124,8 +122,6 @@ public:
          */
         [[nodiscard]] reference operator*()
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage[_index];
         }
 
@@ -134,8 +130,6 @@ public:
          */
         const_pointer operator->() const
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage + _index;
         }
 
@@ -144,8 +138,6 @@ public:
          */
         pointer operator->()
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage + _index;
         }
 
@@ -267,8 +259,6 @@ public:
          */
         [[nodiscard]] const_reference operator*() const
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage[_index];
         }
 
@@ -277,8 +267,6 @@ public:
          */
         const_pointer operator->() const
         {
-            BN_ASSERT(_map->_allocated[_index], "Index is not allocated: ", _index);
-
             return _map->_storage + _index;
         }
 
@@ -1352,7 +1340,6 @@ protected:
         _max_size_minus_one(max_size - 1),
         _first_valid_index(max_size)
     {
-        BN_ASSERT(power_of_two(max_size), "Max size is not power of two: ", max_size);
     }
 
     void _assign(const iunordered_map& other)

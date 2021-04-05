@@ -1460,8 +1460,9 @@
  *
  * @section changelog_6_9_0 6.9.0 (next release)
  *
+ * * Trivial type containers destruction optimized.
+ * * Container destructors are always `noexcept`.
  * * Redundant container asserts removed.
- * * Trivial type bn::vector, bn::deque and bn::optional destruction optimized.
  * * GPIO direction register setup.
  *
  *

@@ -1043,12 +1043,12 @@ public:
     /**
      * @brief Destructor.
      */
-    ~vector() = default;
+    ~vector() noexcept = default;
 
     /**
      * @brief Destructor.
      */
-    ~vector()
+    ~vector() noexcept
     requires(! is_trivially_destructible_v<Type>)
     {
         this->clear();

@@ -997,7 +997,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~forward_list()
+    ~forward_list() noexcept
     {
         this->clear();
     }

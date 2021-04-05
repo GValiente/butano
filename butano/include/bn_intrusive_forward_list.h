@@ -240,7 +240,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~intrusive_forward_list()
+    ~intrusive_forward_list() noexcept
     {
         clear();
     }

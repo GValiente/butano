@@ -1279,12 +1279,12 @@ public:
     /**
      * @brief Destructor.
      */
-    ~unordered_set() = default;
+    ~unordered_set() noexcept = default;
 
     /**
      * @brief Destructor.
      */
-    ~unordered_set()
+    ~unordered_set() noexcept
     requires(! is_trivially_destructible_v<value_type>)
     {
         this->clear();

@@ -1116,7 +1116,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~list()
+    ~list() noexcept
     {
         this->clear();
     }

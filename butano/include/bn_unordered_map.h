@@ -1569,12 +1569,12 @@ public:
     /**
      * @brief Destructor.
      */
-    ~unordered_map() = default;
+    ~unordered_map() noexcept = default;
 
     /**
      * @brief Destructor.
      */
-    ~unordered_map()
+    ~unordered_map() noexcept
     requires(! is_trivially_destructible_v<value_type>)
     {
         this->clear();

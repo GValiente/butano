@@ -154,12 +154,12 @@ public:
     /**
      * @brief Destructor.
      */
-    constexpr ~optional() = default;
+    constexpr ~optional() noexcept = default;
 
     /**
      * @brief Destructor.
      */
-    constexpr ~optional()
+    constexpr ~optional() noexcept
     requires(! is_trivially_destructible_v<Type>)
     {
         if(_valid)

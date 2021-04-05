@@ -39,7 +39,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~iany()
+    ~iany() noexcept
     {
         reset();
     }

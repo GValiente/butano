@@ -265,7 +265,7 @@ public:
     /**
      * @brief Destructor.
      */
-    ~intrusive_list()
+    ~intrusive_list() noexcept
     {
         clear();
     }

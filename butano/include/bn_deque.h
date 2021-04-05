@@ -1582,12 +1582,12 @@ public:
     /**
      * @brief Destructor.
      */
-    ~deque() = default;
+    ~deque() noexcept = default;
 
     /**
      * @brief Destructor.
      */
-    ~deque()
+    ~deque() noexcept
     requires(! is_trivially_destructible_v<Type>)
     {
         this->clear();

@@ -60,7 +60,7 @@ public:
      *
      * It doesn't destroy its elements, they must be destroyed manually.
      */
-    ~igeneric_pool()
+    ~igeneric_pool() noexcept
     {
         BN_ASSERT(empty(), "Pool is not empty");
     }

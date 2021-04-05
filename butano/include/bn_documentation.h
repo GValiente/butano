@@ -1461,7 +1461,7 @@
  * @section changelog_6_9_0 6.9.0 (next release)
  *
  * * Redundant container asserts removed.
- * * Trivial type bn::optional destruction optimized.
+ * * Trivial type bn::vector, bn::deque and bn::optional destruction optimized.
  * * GPIO direction register setup.
  *
  *

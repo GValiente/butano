@@ -1158,6 +1158,16 @@ public:
      */
     void clear()
     {
+        _size = 0;
+        _begin = 0;
+    }
+
+    /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    requires(! is_trivially_destructible_v<Type>)
+    {
         pointer data = _data;
 
         for(size_type index = 0, size = _size; index < size; ++index)
@@ -1572,7 +1582,13 @@ public:
     /**
      * @brief Destructor.
      */
+    ~deque() = default;
+
+    /**
+     * @brief Destructor.
+     */
     ~deque()
+    requires(! is_trivially_destructible_v<Type>)
     {
         this->clear();
     }

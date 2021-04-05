@@ -1110,6 +1110,22 @@ public:
     {
         if(_size)
         {
+            size_type max_size = _max_size_minus_one + 1;
+            memory::clear(max_size, *_allocated);
+            _first_valid_index = max_size;
+            _last_valid_index = 0;
+            _size = 0;
+        }
+    }
+
+    /**
+     * @brief Removes all elements.
+     */
+    void clear()
+    requires(! is_trivially_destructible_v<value_type>)
+    {
+        if(_size)
+        {
             pointer storage = _storage;
             bool* allocated = _allocated;
             size_type first_valid_index = _first_valid_index;
@@ -1553,7 +1569,13 @@ public:
     /**
      * @brief Destructor.
      */
+    ~unordered_map() = default;
+
+    /**
+     * @brief Destructor.
+     */
     ~unordered_map()
+    requires(! is_trivially_destructible_v<value_type>)
     {
         this->clear();
     }

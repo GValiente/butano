@@ -25,7 +25,7 @@ namespace bn
 /**
  * @brief Contains the required information to generate text sprites.
  *
- * Currently, it supports 8x8 and 8x16 fixed width AND variable width characters of 16 colors (4 bits per pixel).
+ * Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.
  *
  * Also, UTF-8 characters are supported.
  *
@@ -110,9 +110,6 @@ public:
         _character_widths_ref(character_widths_ref),
         _space_between_characters(space_between_characters)
     {
-        BN_ASSERT(item.shape_size() == sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL) ||
-                   item.shape_size() == sprite_shape_size(sprite_shape::TALL, sprite_size::SMALL),
-                   "Invalid shape size");
         BN_ASSERT(item.tiles_item().compression() == compression_type::NONE, "Compressed tiles not supported");
         BN_ASSERT(item.tiles_item().graphics_count() >= minimum_graphics + utf8_characters_ref.size(),
                    "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
@@ -220,9 +217,11 @@ private:
 
     [[nodiscard]] constexpr bool _validate_character_widths() const
     {
+        int max_character_width = _item.shape_size().width();
+
         for(int character_width : _character_widths_ref)
         {
-            if(character_width < 0 || character_width > 8)
+            if(character_width < 0 || character_width > max_character_width)
             {
                 return false;
             }

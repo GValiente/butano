@@ -1460,6 +1460,7 @@
  *
  * @section changelog_6_9_0 6.9.0 (next release)
  *
+ * * bn::sprite_font supports all sprite shapes and sizes.
  * * Trivial type containers destruction optimized.
  * * Container destructors are always `noexcept`.
  * * Redundant container asserts removed.

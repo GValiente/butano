@@ -14,6 +14,7 @@
 
 #include "fixed_8x8_sprite_font.h"
 #include "fixed_8x16_sprite_font.h"
+#include "fixed_32x64_sprite_font.h"
 #include "variable_8x8_sprite_font.h"
 #include "variable_8x16_sprite_font.h"
 
@@ -176,6 +177,27 @@ namespace
         }
     }
 
+    void huge_text_scene()
+    {
+        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        text_generator.set_center_alignment();
+
+        bn::vector<bn::sprite_ptr, 32> text_sprites;
+        text_generator.generate(0, -text_y_limit, "Huge text", text_sprites);
+        text_generator.generate(0, text_y_limit, "START: go to next scene", text_sprites);
+
+        bn::sprite_text_generator huge_text_generator(fixed_32x64_sprite_font);
+        huge_text_generator.set_center_alignment();
+
+        bn::vector<bn::sprite_ptr, 32> huge_text_sprites;
+        huge_text_generator.generate(0, 0, "HUGE", text_sprites);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::core::update();
+        }
+    }
+
     void utf8_text_scene()
     {
         bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
@@ -214,6 +236,9 @@ int main()
         bn::core::update();
 
         sprite_per_character_text_scene();
+        bn::core::update();
+
+        huge_text_scene();
         bn::core::update();
 
         utf8_text_scene();

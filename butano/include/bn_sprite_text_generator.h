@@ -280,6 +280,7 @@ private:
     bool _one_sprite_per_character = false;
     int8_t _max_character_width;
     int8_t _character_height;
+    bool _font_one_sprite_per_character;
 
     void _init();
 };

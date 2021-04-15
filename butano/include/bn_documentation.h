@@ -1458,7 +1458,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_9_0 6.9.0 (next release)
+ * @section changelog_6_9_0 6.9.0
  *
  * * bn::sprite_font supports all sprite shapes and sizes.
  * * Trivial type containers destruction optimized.

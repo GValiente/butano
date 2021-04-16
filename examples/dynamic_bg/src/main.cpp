@@ -5,7 +5,6 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
-#include "bn_display.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_sprite_text_generator.h"
@@ -52,12 +51,12 @@ namespace
 
     bn::fixed sprite_x(int cursor_x)
     {
-        return (cursor_x * 8) - (bn::display::width() / 2) - 4;
+        return (cursor_x * 8) - (bg_map::columns * 4) + 4;
     }
 
     bn::fixed sprite_y(int cursor_y)
     {
-        return (cursor_y * 8) - (bn::display::height() / 2) - 44;
+        return (cursor_y * 8) - (bg_map::rows * 4) + 4;
     }
 }
 

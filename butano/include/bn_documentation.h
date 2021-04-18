@@ -1464,7 +1464,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_10_0 6.10.0 (next release)
+ * @section changelog_6_10_0 6.10.0
  *
  * * `dynamic_bg` example added.
  * * Affine background tiles offset fixed.

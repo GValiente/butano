@@ -1466,7 +1466,8 @@
  *
  * @section changelog_6_10_0 6.10.0 (next release)
  *
- * `dynamic_bg` example added.
+ * * `dynamic_bg` example added.
+ * * Affine background tiles offset fixed.
  *
  *
  * @section changelog_6_9_0 6.9.0

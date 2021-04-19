@@ -704,13 +704,11 @@ namespace
                     source_data_ptr = destination_vram_ptr;
                 }
 
+                uint16_t half_word_tiles_offset = (tiles_offset << 8) + tiles_offset;
+
                 for(int index = 0; index < half_words; ++index)
                 {
-                    uint16_t source_half_word = source_data_ptr[index];
-                    unsigned first_source_cell = source_half_word & 0xFF;
-                    unsigned second_source_cell = source_half_word >> 8;
-                    hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                                first_source_cell, second_source_cell, tiles_offset, destination_vram_ptr[index]);
+                    destination_vram_ptr[index] = source_data_ptr[index] + half_word_tiles_offset;
                 }
             }
             else

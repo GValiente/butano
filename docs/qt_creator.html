@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Butano Docs</title>
+  <title>Qt Creator setup guide | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -26,7 +26,7 @@
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
-            <li><a href="pages.html" id="m-navbar-current">Pages</a></li>
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="modules.html">Modules</a></li>
           </ol>
           <ol class="m-col-t-6 m-col-m-none" start="3">
@@ -46,31 +46,27 @@
   <div class="m-container m-container-inflatable">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <h1>Pages</h1>
-        <ul class="m-doc">
-          <li><a href="getting_started.html" class="m-doc">Getting started</a> <span class="m-doc"></span></li>
-          <li><a href="examples.html" class="m-doc">Examples</a> <span class="m-doc"></span></li>
-          <li><a href="import.html" class="m-doc">Importing assets</a> <span class="m-doc"></span></li>
-          <li><a href="qt_creator.html" class="m-doc">Qt Creator setup guide</a> <span class="m-doc"></span></li>
-          <li><a href="faq.html" class="m-doc">Frequently asked questions (FAQ)</a> <span class="m-doc"></span></li>
-          <li><a href="changelog.html" class="m-doc">Changelog</a> <span class="m-doc"></span></li>
-        </ul>
-        <script>
-        function toggle(e) {
-            e.parentElement.className = e.parentElement.className == 'm-doc-collapsible' ?
-                'm-doc-expansible' : 'm-doc-collapsible';
-            return false;
-        }
-        /* Collapse all nodes marked as such. Doing it via JS instead of
-           directly in markup so disabling it doesn't harm usability. The list
-           is somehow regenerated on every iteration and shrinks as I change
-           the classes. It's not documented anywhere and I'm not sure if this
-           is the same across browsers, so I am going backwards in that list to
-           be sure. */
-        var collapsed = document.getElementsByClassName("collapsed");
-        for(var i = collapsed.length - 1; i >= 0; --i)
-            collapsed[i].className = 'm-doc-expansible';
-        </script>
+        <h1>
+          Qt Creator setup guide
+        </h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#qt_creator_getting_started">Getting started</a></li>
+            <li><a href="#qt_creator_install">Install Qt Creator</a></li>
+            <li><a href="#qt_creator_compilers">Compilers</a></li>
+            <li><a href="#qt_creator_kit">Kit</a></li>
+            <li><a href="#qt_creator_import">Import template project</a></li>
+            <li><a href="#qt_creator_cpp_20">C++20</a></li>
+            <li><a href="#qt_creator_include_paths">Include paths</a></li>
+            <li><a href="#qt_creator_build_settings">Build settings</a></li>
+            <li><a href="#qt_creator_run_settings">Run settings</a></li>
+            <li><a href="#qt_creator_build_and_run">Build and run</a></li>
+          </ul>
+        </div>
+<p>Qt Creator is a cross-platform integrated development environment (IDE) built for the maximum developer experience. Qt Creator runs on Windows, Linux, and macOS desktop operating systems, and allows developers to create applications across desktop, mobile, and embedded platforms.</p><p>Since it has lots of C++ advanced features for a free IDE, it is a good fit for Butano projects.</p><p>This is a small tutorial for setting up Butano&#x27;s template project in Qt Creator 4.14. Although the guide has been made in Windows, the steps for other operating systems are similar if not the same.</p><section id="qt_creator_getting_started"><h2><a href="#qt_creator_getting_started">Getting started</a></h2><p>Before messing with Qt Creator, make sure that you are able to build and run Butano projects from the command line. The best way to achieve it is to read the <a href="getting_started.html" class="m-doc">guide to download, install and start using Butano</a>.</p></section><section id="qt_creator_install"><h2><a href="#qt_creator_install">Install Qt Creator</a></h2><p>If you don&#x27;t have Qt Creator installed yet, you can get it from <a href="https://www.qt.io/offline-installers">here</a>.</p><img class="m-image" src="qt_0.png" alt="Image" /></section><section id="qt_creator_compilers"><h2><a href="#qt_creator_compilers">Compilers</a></h2><p>Once you have Qt Creator installed, add devkitARM GCC and G++ compilers from <code>Tools -&gt; Options -&gt; Kits -&gt; Compilers</code>:</p><img class="m-image" src="qt_1.png" alt="Image" /><img class="m-image" src="qt_2.png" alt="Image" /></section><section id="qt_creator_kit"><h2><a href="#qt_creator_kit">Kit</a></h2><p>Add a new kit with the previous devkitARM compilers from <code>Tools -&gt; Options -&gt; Kits -&gt; Kits</code>:</p><img class="m-image" src="qt_3.png" alt="Image" /><p>You can ignore the yellow triangle: it is a warning, not an error.</p></section><section id="qt_creator_import"><h2><a href="#qt_creator_import">Import template project</a></h2><p>Now that you have the kit setup, import Butano&#x27;s template project from <code>File -&gt; New File or Project...</code>:</p><img class="m-image" src="qt_4.png" alt="Image" /><img class="m-image" src="qt_5.png" alt="Image" /><img class="m-image" src="qt_6.png" alt="Image" /><img class="m-image" src="qt_7.png" alt="Image" /></section><section id="qt_creator_cpp_20"><h2><a href="#qt_creator_cpp_20">C++20</a></h2><p>Enable C++20 support in the <code>template.cxxflags</code> file with the following line:</p><pre class="m-code"><span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">20</span></pre></section><section id="qt_creator_include_paths"><h2><a href="#qt_creator_include_paths">Include paths</a></h2><p>Add the following paths to the <code>template.includes</code> file:</p><pre class="m-code"><span class="n">include</span>
+<span class="n">build</span>
+<span class="p">..</span><span class="o">/</span><span class="n">butano</span><span class="o">/</span><span class="n">include</span></pre></section><section id="qt_creator_build_settings"><h2><a href="#qt_creator_build_settings">Build settings</a></h2><p>Disable <code>all</code> build target from <code>Projects -&gt; Build Settings -&gt; Build Steps</code>:</p><img class="m-image" src="qt_8.png" alt="Image" /></section><section id="qt_creator_run_settings"><h2><a href="#qt_creator_run_settings">Run settings</a></h2><p>Add your favorite GBA emulator from <code>Projects -&gt; Run Settings -&gt; Run</code>:</p><img class="m-image" src="qt_9.png" alt="Image" /></section><section id="qt_creator_build_and_run"><h2><a href="#qt_creator_build_and_run">Build and run</a></h2><p>Finally, build and run the template project by clicking at the bottom left arrow (the one without the roach please).</p><p>If everything went as expected, your GBA emulator of choice should show a nice black screen. Congrats!</p></section>
       </div>
     </div>
   </div>

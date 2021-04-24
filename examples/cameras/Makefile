@@ -28,6 +28,7 @@ AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO CAMRS
 ROMCODE     :=  SBTP
 USERFLAGS   :=
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

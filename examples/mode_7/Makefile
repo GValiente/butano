@@ -28,6 +28,7 @@ AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO MODE7
 ROMCODE     :=  SBTP
 USERFLAGS   :=
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

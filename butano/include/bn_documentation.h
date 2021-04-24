@@ -785,13 +785,19 @@
  *
  * Shows how to sleep and reset the GBA among other things.
  *
- * <td> **Mode 7**
+ * <td> **Dynamic background**
  *
- * @image html examples_mode_7.png
+ * @image html examples_dynamic_bg.png
  *
- * Basic SNES mode 7 like background example.
+ * Basic dynamic background example.
  *
- * <tr><td> @ref green_swap
+ * <tr><td> **External tool**
+ *
+ * @image html examples_external_tool.png
+ *
+ * Shows how to call an external tool from the project's Makefile.
+ *
+ * <td> @ref green_swap
  *
  * @image html examples_green_swap.png
  *
@@ -803,31 +809,31 @@
  *
  * Simple keypad status demo.
  *
- * <td> @ref link
+ * <tr><td> @ref link
  *
  * @image html examples_link.png
  *
  * Multiplayer communication through a link cable.
  *
- * <tr><td> @ref log
+ * <td> @ref log
  *
  * @image html examples_log.png
  *
  * Integration of emulator logging into Butano.
  *
- * <td> **Dynamic background**
+ * <td> **Mode 7**
  *
- * @image html examples_dynamic_bg.png
+ * @image html examples_mode_7.png
  *
- * Basic dynamic background example.
+ * Basic SNES mode 7 like background example.
  *
- * <td> @ref mosaic
+ * <tr><td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <tr><td> @ref palette
+ * <td> @ref palette
  *
  * @image html examples_palettes.png
  *
@@ -839,13 +845,13 @@
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <td> @ref profiler
+ * <tr><td> @ref profiler
  *
  * @image html examples_profiler.png
  *
  * Basic code blocks profiling.
  *
- * <tr><td> @ref regular_bg
+ * <td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
@@ -857,13 +863,13 @@
  *
  * Vibration showcase (if your cart supports it).
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <tr><td> @ref sprite
+ * <td> @ref sprite
  *
  * @image html examples_sprites.png
  *
@@ -875,13 +881,13 @@
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *
  * Showcase of Butano sprite text rendering.
  *
- * <tr><td> **Textured polygons**
+ * <td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
@@ -893,7 +899,7 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <td> **World map**
+ * <tr><td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -1573,6 +1579,8 @@
  *
  * @section changelog_6_11_0 6.11.0 (next release)
  *
+ * * An external tool can be called from the project's Makefile.
+ * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
  * * @ref qt_creator added.
  *

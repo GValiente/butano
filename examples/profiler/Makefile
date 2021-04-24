@@ -28,6 +28,7 @@ AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO PRFLR
 ROMCODE     :=  SBTP
 USERFLAGS   :=  -DBN_CFG_PROFILER_ENABLED=true -flto
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

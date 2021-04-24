@@ -26,10 +26,10 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO PLGNS
+ROMTITLE    :=  BUTANO CORE
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -flto
-EXTTOOL     :=
+USERFLAGS   :=
+EXTTOOL     :=  @$(PYTHON) -B python-script.py --build=$(BUILD)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

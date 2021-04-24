@@ -28,6 +28,7 @@ AUDIO       :=  audio
 ROMTITLE    :=  MGBA 1871
 ROMCODE     :=  SBTP
 USERFLAGS   :=
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

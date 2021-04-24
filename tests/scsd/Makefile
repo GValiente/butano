@@ -28,6 +28,7 @@ AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO LINKT
 ROMCODE     :=  SBTP
 USERFLAGS   :=  -DBN_CFG_LINK_SEND_WAIT=200
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

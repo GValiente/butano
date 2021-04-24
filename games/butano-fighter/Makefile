@@ -28,6 +28,7 @@ AUDIO       :=  audio
 ROMTITLE    :=  BUTANO FIGHT
 ROMCODE     :=  SBFP
 USERFLAGS   :=  -flto
+EXTTOOL     :=
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

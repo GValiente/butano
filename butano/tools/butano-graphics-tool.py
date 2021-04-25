@@ -179,7 +179,8 @@ class SpriteItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile')
-            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('[', '[bn::max(', 1)
+            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::color')
 
             for grit_line in grit_data.splitlines():
@@ -318,7 +319,8 @@ class SpriteTilesItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile')
-            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('[', '[bn::max(', 1)
+            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -628,7 +630,8 @@ class RegularBgItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
-            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('[', '[bn::max(', 1)
+            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::regular_bg_map_cell', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
@@ -857,7 +860,8 @@ class AffineBgItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
-            grit_data = grit_data.replace(']', ' / (sizeof(bn::tile) / sizeof(uint32_t))]', 1)
+            grit_data = grit_data.replace('[', '[bn::max(', 1)
+            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned char', 'bn::affine_bg_map_cell', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 

@@ -1583,6 +1583,7 @@
  * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
  * * @ref qt_creator added.
+ * * Compressed tiles warning fixed.
  *
  *
  * @section changelog_6_10_0 6.10.0

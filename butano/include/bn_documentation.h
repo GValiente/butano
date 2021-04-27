@@ -1584,6 +1584,7 @@
  * * Affine background tiles offset optimized.
  * * @ref qt_creator added.
  * * Compressed tiles warning fixed.
+ * * Some 8x8 sprite text characters fixed.
  *
  *
  * @section changelog_6_10_0 6.10.0

@@ -1589,6 +1589,7 @@
  * * An external tool can be called from the project's Makefile.
  * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
+ * * 64bit integer division by 0 assert added.
  * * Compressed tiles warning fixed.
  * * Some 8x8 sprite text characters fixed.
  * * @ref qt_creator added.
@@ -1832,7 +1833,7 @@
  * @section changelog_1_0_0 1.0.0
  *
  * * Regular maps bigger than 512x512 supported.
- * * Division by 0 assert added.
+ * * 32bit integer division by 0 assert added.
  * * bn::regular_bg_item maximum tiles check added.
  * * bn::regular_bg_item generation options fixed.
  *

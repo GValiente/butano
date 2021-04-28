@@ -27,11 +27,22 @@ extern "C"
         }
     }
 
-    // Provides a trap for when an integer division by 0 is detected:
+    // Provides a trap for when a 32bit integer division by 0 is detected:
     // https://github.com/JoaoBaptMG/gba-modern/blob/5720c35a2e01cb56dbf17add8b086d580e7096b8/source/math/trapdiv0.cpp
     [[noreturn]] int __aeabi_idiv0()
     {
-        BN_ERROR("Integer division by zero detected");
+        BN_ERROR("32bit integer division by zero detected");
+
+        while(true)
+        {
+        }
+    }
+
+    // Provides a trap for when a 64bit integer division by 0 is detected:
+    // https://github.com/JoaoBaptMG/gba-modern/blob/5720c35a2e01cb56dbf17add8b086d580e7096b8/source/math/trapdiv0.cpp
+    [[noreturn]] long long __aeabi_ldiv0()
+    {
+        BN_ERROR("64bit integer division by zero detected");
 
         while(true)
         {

@@ -9,7 +9,7 @@ endif
 include $(DEVKITARM)/gba_rules
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom IWRAM and EWRAM base rules without flto:
+# Butano custom IWRAM base rules without flto:
 #---------------------------------------------------------------------------------------------------------------------
 %.bn_iwram.o: %.bn_iwram.cpp
 	$(SILENTMSG) $(notdir $<)
@@ -19,6 +19,9 @@ include $(DEVKITARM)/gba_rules
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_iwram.d $(CFLAGS) -fno-lto -marm -c $< -o $@ $(ERROR_FILTER)
 	
+#---------------------------------------------------------------------------------------------------------------------
+# Butano custom EWRAM base rules without flto:
+#---------------------------------------------------------------------------------------------------------------------
 %.bn_ewram.o: %.bn_ewram.cpp
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.bn_ewram.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
@@ -26,6 +29,17 @@ include $(DEVKITARM)/gba_rules
 %.bn_ewram.o: %.bn_ewram.c
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_ewram.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+
+#---------------------------------------------------------------------------------------------------------------------
+# Butano custom ROM base rules without flto:
+#---------------------------------------------------------------------------------------------------------------------
+%.bn_noflto.o: %.bn_noflto.cpp
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.bn_noflto.d $(CXXFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
+
+%.bn_noflto.o: %.bn_noflto.c
+	$(SILENTMSG) $(notdir $<)
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:

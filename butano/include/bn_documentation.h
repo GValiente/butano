@@ -1387,11 +1387,6 @@
  * This page is worth a look too.
  *
  *
- * @subsection faq_ide Is there any good free IDE for Butano projects out there?
- *
- * Take a look at the @ref qt_creator.
- *
- *
  * @subsection faq_sell_money Would I be able to sell my game made with Butano for money?
  *
  * Sure!
@@ -1401,7 +1396,19 @@
  * used by Butano you can sell your game without issues.
  *
  *
- * @section faq_memory Memory
+ * @section faq_programming Programming
+ *
+ *
+ * @subsection faq_ide Is there any good free IDE for Butano projects out there?
+ *
+ * Take a look at the @ref qt_creator.
+ *
+ *
+ * @subsection faq_incomplete_type Why I get an incomplete type error when trying to use a Butano class?
+ *
+ * If you have an incomplete type error it is almost always because of lack of included headers.
+ *
+ * You can find the header of a Butano class in its documentation page.
  *
  *
  * @subsection faq_containers Why there's std like containers included with Butano?
@@ -1582,9 +1589,10 @@
  * * An external tool can be called from the project's Makefile.
  * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
- * * @ref qt_creator added.
  * * Compressed tiles warning fixed.
  * * Some 8x8 sprite text characters fixed.
+ * * @ref qt_creator added.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_6_10_0 6.10.0

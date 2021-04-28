@@ -37,15 +37,4 @@ extern "C"
         {
         }
     }
-
-    // Provides a trap for when a long long division by 0 is detected:
-    // https://code.woboq.org/llvm/compiler-rt/lib/builtins/arm/aeabi_div0.c.html
-    [[noreturn]] long long __aeabi_ldiv0()
-    {
-        BN_ERROR("Long long division by zero detected");
-
-        while(true)
-        {
-        }
-    }
 }

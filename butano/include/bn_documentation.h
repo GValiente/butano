@@ -1589,6 +1589,7 @@
  * * An external tool can be called from the project's Makefile.
  * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
+ * * Big numbers to string conversion optimized.
  * * 64bit integer division by 0 assert added.
  * * Compressed tiles warning fixed.
  * * Some 8x8 sprite text characters fixed.

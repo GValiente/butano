@@ -11,6 +11,7 @@
 #include "bn_config_assert.h"
 #include "bn_sprite_text_generator.h"
 
+#include "string_tests.h"
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
@@ -35,6 +36,7 @@ int main()
     bn::bg_palettes::set_transparent_color(bn::colors::gray);
     bn::core::update();
 
+    string_tests();
     fixed_tests();
     math_tests();
     sqrt_tests();

@@ -7,7 +7,6 @@
 
 #include "bn_math.h"
 #include "bn_array.h"
-#include "bn_memory.h"
 #include "bn_string_view.h"
 
 extern "C"
@@ -30,21 +29,31 @@ namespace
             return _to_string(-value, output_data) + 1;
         }
 
-        char* current_output_data = output_data;
+        array<char, 16> extra_array;
+        char* extra_data = extra_array.data();
+        char* current_extra_data = extra_data;
 
-        while(value > 9)
+        do
         {
             auto digit = int(value % 10);
             value /= 10;
-            *current_output_data = char('0' + digit);
-            ++current_output_data;
+            *current_extra_data = char('0' + digit);
+            ++current_extra_data;
+        }
+        while(value >= 500000000);
+
+        posprintf(output_data, "%l", long(value));
+
+        int size = string_view(output_data).size();
+        int extra_size = current_extra_data - extra_data;
+
+        for(int index = extra_size - 1; index >= 0; --index)
+        {
+            output_data[size] = extra_data[index];
+            ++size;
         }
 
-        auto digit = int(value);
-        *current_output_data = char('0' + digit);
-        ++current_output_data;
-        std::reverse(output_data, current_output_data);
-        return current_output_data - output_data;
+        return size;
     }
 }
 

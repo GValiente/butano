@@ -34,7 +34,11 @@
                 {
                     int characters_to_write = bn::min(characters_left, max_characters_per_line);
                     auto debug_string_register = reinterpret_cast<char*>(0x4FFF600);
-                    std::memcpy(debug_string_register, message_data, characters_to_write);
+
+                    for(int index = 0; index < characters_to_write; ++index)
+                    {
+                        debug_string_register[index] = message_data[index];
+                    }
 
                     volatile uint16_t& debug_flags_register = *reinterpret_cast<uint16_t*>(0x4FFF700);
                     debug_flags_register = 2 | 0x100;

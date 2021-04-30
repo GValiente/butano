@@ -1592,6 +1592,7 @@
  * * Big numbers to string conversion optimized.
  * * 64bit integer division by 0 assert added.
  * * Compressed tiles warning fixed.
+ * * GCC11 warning fixed.
  * * Some 8x8 sprite text characters fixed.
  * * @ref qt_creator added.
  * * More questions added to @ref faq page.

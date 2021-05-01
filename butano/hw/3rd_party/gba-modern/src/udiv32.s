@@ -1,7 +1,7 @@
 @--------------------------------------------------------------------------------
-@ udiv.s
+@ udiv32.s
 @--------------------------------------------------------------------------------
-@ Provides an implementation of unsigned division
+@ Provides an implementation of 32-bit/32-bit unsigned division
 @--------------------------------------------------------------------------------
 
 @ Source code taken from https://www.chiark.greenend.org.uk/~theom/riscos/docs/ultimate/a252div.txt
@@ -36,28 +36,27 @@ udiv32pastzero:
     @ Move the denominator to r2 and start to build a counter that
     @ counts the difference on the number of bits on each numerator
     @ and denominator
-    @ From now on: r0 = quot/num, r1 = mod, r2 = denom, r3 = counter
-    mov     r2, r1
+    @ From now on: r0 = quot/num, r1 = mod, r2 = -denom, r3 = counter
+    rsb     r2, r1, #0
     mov     r3, #28             @ first guess on difference
     mov     r1, r0, lsr #4      @ r1 = num >> 4
 
     @ Iterate three times to get the counter up to 4-bit precision
-    cmp     r2, r1, lsr #12
-    suble   r3, r3, #16
-    movle   r1, r1, lsr #16
+    cmn     r2, r1, lsr #12     @ if denom <= (r1 >> 12)
+    subge   r3, r3, #16         @ then -denom >= -(r1 >> 12)
+    movge   r1, r1, lsr #16
 
-    cmp     r2, r1, lsr #4
-    suble   r3, r3, #8
-    movle   r1, r1, lsr #8
+    cmn     r2, r1, lsr #4
+    subge   r3, r3, #8
+    movge   r1, r1, lsr #8
 
-    cmp     r2, r1
-    suble   r3, r3, #4
-    movle   r1, r1, lsr #4
+    cmn     r2, r1
+    subge   r3, r3, #4
+    movge   r1, r1, lsr #4
 
-    @ shift the numerator by the counter and flip the sign of the denom
+    @ shift the numerator by the counter
     mov     r0, r0, lsl r3
-    adds    r0, r0, r0
-    rsb     r2, r2, #0
+    adds    r0, r0, r0              @ bump r0 a first time
 
     @ dynamically jump to the exact copy of the iteration
     add     r3, r3, r3, lsl #1      @ counter *= 3
@@ -66,11 +65,11 @@ udiv32pastzero:
 
     @ here, r0 = num << (r3 + 1), r1 = num >> (32-r3), r2 = -denom
     @ now, the real iteration part
-    .global divIteration
-divIteration:
+    .global div32Iteration
+div32Iteration:
     .rept 32
     adcs    r1, r2, r1, lsl #1
-    sublo   r1, r1, r2
+    subcc   r1, r1, r2
     adcs    r0, r0, r0
     .endr
 

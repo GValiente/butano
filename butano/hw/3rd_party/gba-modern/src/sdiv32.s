@@ -1,7 +1,7 @@
 @--------------------------------------------------------------------------------
-@ udiv.s
+@ sdiv32.s
 @--------------------------------------------------------------------------------
-@ Provides an implementation of signed division
+@ Provides an implementation of 32-bit/32-bit signed division
 @--------------------------------------------------------------------------------
 
 @ refer to the unsigned division
@@ -32,12 +32,12 @@ __aeabi_idiv:
 
     @ bit 28 is whether the numerator is negative
     cmp     r0, #0
-    rsblt   r0, #0
+    rsblt   r0, r0, #0
     orrlt   r12, #1 << 28
 
     @ bit 31 is whether the denominator is negative
     cmp     r1, #0
-    rsblt   r1, #0
+    rsblt   r1, r1, #0
     orrlt   r12, #1 << 31
 
     @ Call the unsigned division

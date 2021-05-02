@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_11_0 6.11.0 (next release)
+ * @section changelog_6_11_0 6.11.0
  *
  * * An external tool can be called from the project's Makefile.
  * See the `external_tool` example to learn how to call it.

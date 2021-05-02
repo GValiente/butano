@@ -66,6 +66,9 @@ public:
         _truncate_and_round_test(1.5);
         _truncate_and_round_test(2);
         _truncate_and_round_test(2.5);
+
+        BN_ASSERT(bn::fixed(unsigned(4)) == bn::fixed(4));
+        BN_ASSERT(bn::fixed(4).unsigned_integer() == 4);
     }
 
 private:

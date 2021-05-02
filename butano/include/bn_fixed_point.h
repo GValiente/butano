@@ -132,18 +132,6 @@ public:
 
     /**
      * @brief Multiplies both coordinates by the given factor.
-     * @param value Unsigned integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr fixed_point& operator*=(unsigned value)
-    {
-        _x *= value;
-        _y *= value;
-        return *this;
-    }
-
-    /**
-     * @brief Multiplies both coordinates by the given factor.
      * @param value Fixed point multiplication factor.
      * @return Reference to this.
      */
@@ -160,18 +148,6 @@ public:
      * @return Reference to this.
      */
     constexpr fixed_point& operator/=(int value)
-    {
-        _x /= value;
-        _y /= value;
-        return *this;
-    }
-
-    /**
-     * @brief Divides both coordinates by the given divisor.
-     * @param value Valid unsigned integer divisor (!= 0).
-     * @return Reference to this.
-     */
-    constexpr fixed_point& operator/=(unsigned value)
     {
         _x /= value;
         _y /= value;
@@ -217,14 +193,6 @@ public:
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_point operator*(const fixed_point& a, unsigned b)
-    {
-        return fixed_point(a._x * b, a._y * b);
-    }
-
-    /**
-     * @brief Returns a multiplied by b.
-     */
     [[nodiscard]] constexpr friend fixed_point operator*(const fixed_point& a, fixed b)
     {
         return fixed_point(a._x * b, a._y * b);
@@ -234,14 +202,6 @@ public:
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, int b)
-    {
-        return fixed_point(a._x / b, a._y / b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend fixed_point operator/(const fixed_point& a, unsigned b)
     {
         return fixed_point(a._x / b, a._y / b);
     }

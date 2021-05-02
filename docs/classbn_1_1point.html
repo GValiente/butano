@@ -114,15 +114,7 @@
             </dt>
             <dd>Multiplies both coordinates by the given factor.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a795df709511182702892a1ffda2ee7fc" class="m-doc">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Multiplies both coordinates by the given factor.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a01949909abca0cf07f167a416eedd873" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Divides both coordinates by the given divisor.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad09a298899b652a34a627476d16caf7f" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) -&gt; <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Divides both coordinates by the given divisor.</dd>
           </dl>
@@ -145,19 +137,9 @@
               int b) -&gt; friend <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a multiplied by b.</dd>
-            <dt id="a1999e48a4b290fdbe7f088ade5e7428f">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1999e48a4b290fdbe7f088ade5e7428f" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; a,
-              unsigned b) -&gt; friend <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns a multiplied by b.</dd>
             <dt id="a1955a71406d93cd82a604309e48734d7">
               <span class="m-doc-wrap-bumper">auto <a href="#a1955a71406d93cd82a604309e48734d7" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; a,
               int b) -&gt; friend <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns a divided by b.</dd>
-            <dt id="a7a1a06275ba4d958261ab231828d467a">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7a1a06275ba4d958261ab231828d467a" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; a,
-              unsigned b) -&gt; friend <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a divided by b.</dd>
             <dt id="af2a48d297a63a1dd812d34a66b50dc85">
@@ -260,29 +242,6 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a795df709511182702892a1ffda2ee7fc"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1point.html" class="m-doc">point</a>&amp; bn::<wbr />point::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a795df709511182702892a1ffda2ee7fc" class="m-doc-self">operator*=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Multiplies both coordinates by the given factor.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Unsigned integer multiplication factor.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Reference to this.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
           <section class="m-doc-details" id="a01949909abca0cf07f167a416eedd873"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1point.html" class="m-doc">point</a>&amp; bn::<wbr />point::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a01949909abca0cf07f167a416eedd873" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
@@ -296,29 +255,6 @@
                 <tr>
                   <td style="width: 1%">value</td>
                   <td>Valid integer divisor (!= 0).</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Reference to this.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ad09a298899b652a34a627476d16caf7f"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1point.html" class="m-doc">point</a>&amp; bn::<wbr />point::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad09a298899b652a34a627476d16caf7f" class="m-doc-self">operator/=</a>(</span><span class="m-doc-wrap">unsigned value) <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Divides both coordinates by the given divisor.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Valid unsigned integer divisor (!= 0).</td>
                 </tr>
               </tbody>
               <tfoot>

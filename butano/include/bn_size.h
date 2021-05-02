@@ -127,37 +127,11 @@ public:
     }
 
     /**
-     * @brief Multiplies both width and height by the given factor.
-     * @param value Unsigned integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr size& operator*=(unsigned value)
-    {
-        _width *= value;
-        _height *= value;
-        return *this;
-    }
-
-    /**
      * @brief Divides both width and height by the given divisor.
      * @param value Valid integer divisor (> 0).
      * @return Reference to this.
      */
     constexpr size& operator/=(int value)
-    {
-        BN_ASSERT(value > 0, "Invalid value: ", value);
-
-        _width /= value;
-        _height /= value;
-        return *this;
-    }
-
-    /**
-     * @brief Divides both width and height by the given divisor.
-     * @param value Valid unsigned integer divisor (> 0).
-     * @return Reference to this.
-     */
-    constexpr size& operator/=(unsigned value)
     {
         BN_ASSERT(value > 0, "Invalid value: ", value);
 
@@ -193,27 +167,9 @@ public:
     }
 
     /**
-     * @brief Returns a multiplied by b.
-     */
-    [[nodiscard]] constexpr friend size operator*(const size& a, unsigned b)
-    {
-        return size(a._width * b, a._height * b);
-    }
-
-    /**
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend size operator/(const size& a, int b)
-    {
-        BN_ASSERT(b > 0, "Invalid value: ", b);
-
-        return size(a._width / b, a._height / b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend size operator/(const size& a, unsigned b)
     {
         BN_ASSERT(b > 0, "Invalid value: ", b);
 

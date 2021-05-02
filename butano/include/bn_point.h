@@ -121,37 +121,11 @@ public:
     }
 
     /**
-     * @brief Multiplies both coordinates by the given factor.
-     * @param value Unsigned integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr point& operator*=(unsigned value)
-    {
-        _x *= value;
-        _y *= value;
-        return *this;
-    }
-
-    /**
      * @brief Divides both coordinates by the given divisor.
      * @param value Valid integer divisor (!= 0).
      * @return Reference to this.
      */
     constexpr point& operator/=(int value)
-    {
-        BN_ASSERT(value != 0, "Invalid value: ", value);
-
-        _x /= value;
-        _y /= value;
-        return *this;
-    }
-
-    /**
-     * @brief Divides both coordinates by the given divisor.
-     * @param value Valid unsigned integer divisor (!= 0).
-     * @return Reference to this.
-     */
-    constexpr point& operator/=(unsigned value)
     {
         BN_ASSERT(value != 0, "Invalid value: ", value);
 
@@ -185,27 +159,9 @@ public:
     }
 
     /**
-     * @brief Returns a multiplied by b.
-     */
-    [[nodiscard]] constexpr friend point operator*(const point& a, unsigned b)
-    {
-        return point(a._x * b, a._y * b);
-    }
-
-    /**
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend point operator/(const point& a, int b)
-    {
-        BN_ASSERT(b != 0, "Invalid value: ", b);
-
-        return point(a._x / b, a._y / b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend point operator/(const point& a, unsigned b)
     {
         BN_ASSERT(b != 0, "Invalid value: ", b);
 

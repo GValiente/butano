@@ -200,14 +200,6 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t multiplication(unsigned value) const
-    {
-        return from_data(_data * value);
-    }
-
-    /**
      * @brief Returns the multiplication of this value by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
@@ -232,14 +224,6 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t safe_multiplication(unsigned value) const
-    {
-        return multiplication(value);
-    }
-
-    /**
      * @brief Returns the multiplication of this value by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
@@ -257,14 +241,6 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t unsafe_multiplication(unsigned value) const
-    {
-        return multiplication(value);
-    }
-
-    /**
      * @brief Returns the multiplication of this value by the given fixed point value
      * without trying to avoid overflow.
      */
@@ -277,14 +253,6 @@ public:
      * @brief Returns the division of this value by the given integer value.
      */
     [[nodiscard]] constexpr fixed_t division(int value) const
-    {
-        return from_data(_data / value);
-    }
-
-    /**
-     * @brief Returns the division of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t division(unsigned value) const
     {
         return from_data(_data / value);
     }
@@ -314,14 +282,6 @@ public:
     }
 
     /**
-     * @brief Returns the division of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t safe_division(unsigned value) const
-    {
-        return division(value);
-    }
-
-    /**
      * @brief Returns the division of this value by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
@@ -334,14 +294,6 @@ public:
      * @brief Returns the division of this value by the given integer value.
      */
     [[nodiscard]] constexpr fixed_t unsafe_division(int value) const
-    {
-        return division(value);
-    }
-
-    /**
-     * @brief Returns the division of this value by the given unsigned integer value.
-     */
-    [[nodiscard]] constexpr fixed_t unsafe_division(unsigned value) const
     {
         return division(value);
     }
@@ -397,17 +349,6 @@ public:
 
     /**
      * @brief Multiplies this fixed_t by the given factor.
-     * @param value Unsigned integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr fixed_t& operator*=(unsigned value)
-    {
-        *this = multiplication(value);
-        return *this;
-    }
-
-    /**
-     * @brief Multiplies this fixed_t by the given factor.
      * @param other Fixed point multiplication factor.
      * @return Reference to this.
      */
@@ -423,17 +364,6 @@ public:
      * @return Reference to this.
      */
     constexpr fixed_t& operator/=(int value)
-    {
-        *this = division(value);
-        return *this;
-    }
-
-    /**
-     * @brief Divides this fixed_t by the given divisor.
-     * @param value Valid unsigned integer divisor (!= 0).
-     * @return Reference to this.
-     */
-    constexpr fixed_t& operator/=(unsigned value)
     {
         *this = division(value);
         return *this;
@@ -477,14 +407,6 @@ public:
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, unsigned b)
-    {
-        return a.multiplication(b);
-    }
-
-    /**
-     * @brief Returns a multiplied by b.
-     */
     [[nodiscard]] constexpr friend fixed_t operator*(fixed_t a, fixed_t b)
     {
         return a.multiplication(b);
@@ -494,14 +416,6 @@ public:
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, int b)
-    {
-        return a.division(b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, unsigned b)
     {
         return a.division(b);
     }

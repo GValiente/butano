@@ -1592,6 +1592,7 @@
  * * Big numbers to string conversion optimized.
  * * 32bit integer division optimized.
  * * 64bit integer division by 0 assert added.
+ * * Big maps maximum valid position fixed.
  * * Compressed tiles warning fixed.
  * * GCC11 warning fixed.
  * * Some 8x8 sprite text characters fixed.

@@ -14,6 +14,7 @@
 
 #include "bn_regular_bg_items_big_map_4.h"
 #include "bn_regular_bg_items_big_map_8.h"
+#include "bn_regular_bg_items_border_map.h"
 
 namespace
 {
@@ -39,7 +40,7 @@ namespace
 
             if(bn::keypad::left_held())
             {
-                bg.set_x(bn::max(bg.x().right_shift_integer() - inc, 1 - x_limit));
+                bg.set_x(bn::max(bg.x().right_shift_integer() - inc, -x_limit));
             }
             else if(bn::keypad::right_held())
             {
@@ -48,7 +49,7 @@ namespace
 
             if(bn::keypad::up_held())
             {
-                bg.set_y(bn::max(bg.y().right_shift_integer() - inc, 1 - y_limit));
+                bg.set_y(bn::max(bg.y().right_shift_integer() - inc, -y_limit));
             }
             else if(bn::keypad::down_held())
             {
@@ -73,6 +74,9 @@ int main()
         bn::core::update();
 
         big_map_scene("1280x768 BPP4 regular BG", bn::regular_bg_items::big_map_4, text_generator);
+        bn::core::update();
+
+        big_map_scene("512x1024 BPP4 regular BG", bn::regular_bg_items::border_map, text_generator);
         bn::core::update();
     }
 }

@@ -13,6 +13,7 @@
 #include "variable_8x16_sprite_font.h"
 
 #include "bn_affine_bg_items_big_map.h"
+#include "bn_affine_bg_items_border_map.h"
 
 namespace
 {
@@ -38,7 +39,7 @@ namespace
 
             if(bn::keypad::left_held())
             {
-                bg.set_x(bn::max(bg.x().right_shift_integer() - inc, 1 - x_limit));
+                bg.set_x(bn::max(bg.x().right_shift_integer() - inc, -x_limit));
             }
             else if(bn::keypad::right_held())
             {
@@ -47,7 +48,7 @@ namespace
 
             if(bn::keypad::up_held())
             {
-                bg.set_y(bn::max(bg.y().right_shift_integer() - inc, 1 - y_limit));
+                bg.set_y(bn::max(bg.y().right_shift_integer() - inc, -y_limit));
             }
             else if(bn::keypad::down_held())
             {
@@ -69,6 +70,9 @@ int main()
     while(true)
     {
         big_map_scene("4096x4096 affine BG", bn::affine_bg_items::big_map, text_generator);
+        bn::core::update();
+
+        big_map_scene("512x1024 affine BG", bn::affine_bg_items::border_map, text_generator);
         bn::core::update();
     }
 }

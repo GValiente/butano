@@ -243,7 +243,7 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(x >= 0 && x < (half_dimensions.width() * 2) - display::width(),
+                BN_ASSERT(x >= 0 && x <= (half_dimensions.width() * 2) - display::width(),
                           "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
                           x, " - ", (half_dimensions.width() * 2) - display::width());
 
@@ -258,7 +258,7 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(y >= 0 && y < (half_dimensions.height() * 2) - display::height(),
+                BN_ASSERT(y >= 0 && y <= (half_dimensions.height() * 2) - display::height(),
                           "Regular BGs with big maps\ndon't allow vertical wrapping: ",
                           y, " - ", (half_dimensions.height() * 2) - display::height());
 
@@ -287,8 +287,8 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(affine_map_position().x() >= 0 && affine_map_position().x() <
-                          (half_dimensions.width() / 4) - (display::width() / 8),
+                BN_ASSERT(affine_map_position().x() >= 0 &&
+                          affine_map_position().x() <= (half_dimensions.width() / 4) - (display::width() / 8),
                           "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
                           affine_map_position().x(), " - ", (half_dimensions.width() / 4) - (display::width() / 8));
 
@@ -304,8 +304,8 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(affine_map_position().y() >= 0 && affine_map_position().y() <
-                          (half_dimensions.height() / 4) - (display::height() / 8),
+                BN_ASSERT(affine_map_position().y() >= 0 &&
+                          affine_map_position().y() <= (half_dimensions.height() / 4) - (display::height() / 8),
                           "Affine BGs with big maps\ndon't allow vertical wrapping: ",
                           affine_map_position().y(), " - ", (half_dimensions.height() / 4) - (display::height() / 8));
 

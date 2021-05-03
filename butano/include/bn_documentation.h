@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_12_0 6.12.0 (next release)
+ * @section changelog_6_12_0 6.12.0
  *
  * * Multiplication and division methods added to bn::fixed_point, bn::fixed_size and bn::fixed_rect.
  * * Colors count added to palettes manager status log.
